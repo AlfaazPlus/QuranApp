@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ActivityReader">
+
+    <com.quranapp.android.views.reader.ReaderHeader
+        android:id="@+id/readerHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <me.dkzwm.widget.srl.SmoothRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:sr_enableLoadMore="true"
+        app:sr_enablePullToRefresh="true"
+        app:sr_maxMoveRatio="1.5"
+        app:sr_ratioToRefresh="2"
+        app:sr_resistance="4">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/readerVerses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/dmnPadMassive" />
+    </me.dkzwm.widget.srl.SmoothRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/playerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="vertical"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
+
+        <View
+            android:id="@+id/navigationBarDummy"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 31/1/2022.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/dr_bg_chapter_card"
+    android:clipChildren="false"
+    android:padding="15dp">
+
+    <FrameLayout
+        android:id="@+id/iconCont"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/txt"
+        app:layout_constraintEnd_toStartOf="@id/txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/dmnActionButtonSmall"
+            android:layout_height="@dimen/dmnActionButtonSmall"
+            android:layout_gravity="center"
+            android:src="@drawable/dr_icon_update_app" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progress="50"
+            android:visibility="gone"
+            app:indicatorDirectionCircular="clockwise"
+            app:indicatorInset="0dp"
+            app:indicatorSize="30dp"
+            app:trackColor="@android:color/transparent"
+            app:trackThickness="4dp" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="@string/strMsgUpdateAvailable"
+        android:textSize="@dimen/dmnCommonSize2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@id/iconCont"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/button"
+        style="@style/ButtonAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/strLabelUpdate"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

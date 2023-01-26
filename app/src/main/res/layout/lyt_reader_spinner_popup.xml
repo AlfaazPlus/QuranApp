@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#151515"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/strTitleReaderChapters"
+                android:textColor="@color/white3"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close"
+                android:layout_width="@dimen/dmnActionButtonSmall"
+                android:layout_height="@dimen/dmnActionButtonSmall"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:contentDescription="@string/strLabelClose"
+                android:padding="5dp"
+                android:src="@drawable/dr_icon_close"
+                app:tint="@color/white3" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:autofillHints="@null"
+                android:background="@drawable/dr_bg_reader_chapter_search"
+                android:hint="@string/strHintSearchChapter"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="#80FFFFFF" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnClear"
+                style="@style/EditTextBtnClear"
+                android:layout_marginStart="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.quranapp.android.views.helper.RecyclerView2
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="always"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dmnPadBig"
+        android:scrollbars="none" />
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorIcon">#AAAAAA</color>
+    <color name="colorIconDragger">#80AAAAAA</color>
+
+    <color name="colorBorderAppbar">#191919</color>
+
+    <color name="colorRadioButtonProRadio">#CCCCCC</color>
+    <color name="colorRadioButtonProLabel">#DDDDDD</color>
+    <color name="colorRadioButtonProMessage">#A6A6A6</color>
+
+    <color name="colorBackgroundCard">#222222</color>
+
+    <color name="colorBackgroundPeaceDialog">#181818</color>
+    <color name="colorPeaceDialogButtonsDivider">#383838</color>
+    <color name="colorPeaceDialogMessage">#BBBBBB</color>
+
+    <color name="colorBorderSheetDialog">#202020</color>
+    <color name="colorBackgroundSheetDialog">#181818</color>
+
+    <color name="colorBackgroundQuickActionMenu">#252525</color>
+    <color name="colorBackgroundQuickActionMenuItem">#333333</color>
+</resources>

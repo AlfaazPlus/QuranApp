@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:background="@drawable/dr_bg_hover_round"
+        android:contentDescription="@string/strLabelBack"
+        android:padding="7dp"
+        android:rotation="@integer/intActionBtnRotation"
+        android:src="@drawable/dr_icon_chevron_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+
+    <com.quranapp.android.views.helper.TabLayout2
+        android:id="@+id/readerTabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/dr_bg_reader_tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="center"
+        app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="fixed"
+        app:tabRippleColor="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/quranTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/strTitleHolyQuran"
+            android:src="@drawable/quran_kareem"
+            app:tint="@color/colorPrimary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/strTitleHolyQuran"
+            android:textSize="@dimen/dmnCommonSize3"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sort"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/dr_bg_hover_round"
+        android:padding="7dp"
+        android:src="@drawable/dr_icon_sort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:background="@drawable/dr_bg_hover_round"
+        android:contentDescription="@string/strHintSearch"
+        android:padding="7dp"
+        android:src="@drawable/dr_icon_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,177 @@
+@font-face {
+   font-family: surah-icon;
+   src: url('https://assets-font/surah-icon') format("truetype");
+}
+
+@font-face {
+   font-family: content-font;
+   src: url('https://assets-font/content') format("truetype");
+}
+
+* {
+   user-select: none;
+   -webkit-user-select: none;
+   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   margin: 0;
+   padding: 10px 20px;
+   padding-bottom: 100px;
+}
+
+html,
+html.light {
+   background-color: transparent;
+}
+
+html.dark {
+   background-color: #151515;
+   color: #BBBBBB;
+}
+
+p {
+   font-size: 16px;
+}
+
+h2 {
+   font-size: 18px;
+}
+
+a[href] {
+   text-decoration: none;
+   border-radius: 5px;
+   padding: 1px 3px;
+   color: #008B5B;
+   font-weight: bold;
+   background-color: rgba(0, 139, 90, .20);
+}
+
+a[href]:active {
+   color: #006944;
+   background-color: rgba(0, 139, 90, .30);
+}
+
+hr {
+   margin: 15px 0;
+   border: none;
+   border-top: 1px solid transparent;
+}
+
+html.light hr {
+   border-color: #c4c4c4;
+}
+
+html.dark hr {
+   border-color: #575757;
+}
+
+
+.info-card-container {
+   display: flex;
+   flex-wrap: nowrap;
+   align-items: center;
+   justify-content: center;
+}
+
+.info-card {
+   padding: 10px 15px;
+   text-align: center;
+   background: linear-gradient(#e0e0e0, #f0f0f0);;
+   border-radius: 10px;
+   flex-grow: 1;
+   overflow: hidden;
+   margin-top: 3px;
+   margin-bottom: 3px;
+}
+html.dark .info-card {
+   background: linear-gradient(#404040, #202020);
+}
+
+.info-card:first-child {
+   margin-right: 1px;
+}
+
+.info-card:last-child {
+   margin-left: 1px;
+}
+
+.info-card:not(:first-child):not(:last-child) {
+   margin-right: 1px;
+   margin-left: 1px;
+}
+
+.info-card .title {
+   font-size: 12px;
+   color: #474747;
+   white-space: nowrap;
+}
+
+html.dark .info-card .title {
+   color: #c5c5c5;
+}
+
+.info-card .value {
+   font-size: 15px;
+   font-weight: bold;
+   white-space: nowrap;
+}
+
+.big-title {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 20px 0;
+}
+
+.revelation-image {
+   width: 30%;
+   margin-right: 20px;
+   border-radius: 15px;
+   transform-origin: 50% 50%;
+}
+
+
+.chapter-title {
+   flex-grow: 1;
+   text-align: center;
+}
+
+.chapter-title-icon {
+   font-family: surah-icon !important;
+   font-size: 35px;
+   margin-right: 10px;
+   color: #008B5B;
+}
+
+.chapter-title-trans {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+.chapter-no {
+   margin-top: 5px;
+   font-size: 12px;
+   color: #474747;
+}
+
+html.dark .chapter-no {
+   color: #c5c5c5;
+}
+
+.content {
+   font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   text-align: justify;
+}
+
+span.ar {
+   direction: rtl;
+   padding: 10px 15px;
+   border-radius: 10px;
+   background-color: #F0F0F0;
+}
+
+html.dark span.ar {
+   background-color: #202020;
+}

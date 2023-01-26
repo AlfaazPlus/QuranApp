@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/thumb"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/dr_bg_last_verses_chapter_no"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chapterNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="22sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/check"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/dr_icon_check"
+            android:visibility="gone"
+            app:tint="@color/white" />
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/menu"
+        app:layout_constraintStart_toEndOf="@+id/thumb"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menu"
+        android:layout_width="@dimen/dmnActionButtonSmall"
+        android:layout_height="@dimen/dmnActionButtonSmall"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/dr_bg_hover_round"
+        android:padding="5dp"
+        android:src="@drawable/dr_icon_menu"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/colorIcon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) Faisal Khan (https://github.com/faisalcodes)
+  ~ Created on 6/3/2022.
+  ~ All rights reserved.
+  -->
+
+
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="15dp"
+    android:text="Ramadan Important Verses Ramadan Important Verses"
+    android:textSize="@dimen/dmnCommonSizeMedium" />
+

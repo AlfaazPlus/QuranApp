@@ -1,0 +1,26 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
+    app:cardBackgroundColor="@color/colorBGCardVariable"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp">
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/dr_bg_hover"
+        android:drawablePadding="18dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="4"
+        android:paddingVertical="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp" />
+
+</androidx.cardview.widget.CardView>

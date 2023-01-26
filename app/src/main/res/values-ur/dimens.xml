@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 25/10/2021.
+  -->
+
+<resources>
+    <dimen name="dmnCommonSize">17sp</dimen>
+    <dimen name="dmnCommonSize1_5">16sp</dimen>
+    <dimen name="dmnCommonSize2">15sp</dimen>
+    <dimen name="dmnCommonSize2_5">14sp</dimen>
+    <dimen name="dmnCommonSize3">13sp</dimen>
+    <dimen name="dmnCommonSize3_5">12sp</dimen>
+    <dimen name="dmnCommonSize4">11sp</dimen>
+    <dimen name="dmnCommonSize4_5">10sp</dimen>
+</resources>

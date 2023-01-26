@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/juzSerial"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif"
+    android:maxLines="1"
+    android:padding="15dp"
+    android:textColor="@color/color_reader_spinner_item_label"
+    android:textStyle="bold" />
+
+

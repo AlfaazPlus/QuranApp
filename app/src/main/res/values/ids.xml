@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="themeDark" type="id" />
+    <item name="themeLight" type="id" />
+    <item name="systemDefault" type="id" />
+    <item name="recitationPlayer" type="id" />
+
+    <item name="on" type="id" />
+    <item name="off" type="id" />
+
+
+
+    <item name="btnPlayControl" type="id" />
+    <item name="btnFootnotes" type="id" />
+    <item name="btnTafsir" type="id" />
+    <item name="btnBookmark" type="id" />
+    <item name="btnQuickEdit" type="id" />
+    <item name="btnShare" type="id" />
+    <item name="btnReport" type="id" />
+
+    <item name="btnClear" type="id" />
+
+    <item name="navHome" type="id" />
+    <item name="navSearch" type="id" />
+
+    <item name="chapterCardSerial" type="id" />
+    <item name="chapterCardName" type="id" />
+    <item name="chapterCardIcon" type="id" />
+    <item name="chapterCardVerseCount" type="id" />
+
+    <item name="appUpdateLayout" type="id" />
+
+    <item name="appUpdateContainer" type="id" />
+    <item name="homepageVOTD" type="id" />
+    <item name="homepageReadHistoryLayout" type="id" />
+    <item name="homepageAdLayout" type="id" />
+    <item name="homepageReadingLayout" type="id" />
+    <item name="homepageTopicsLayout" type="id" />
+    <item name="homepageProphetsLayout" type="id" />
+    <item name="homepageDuaLayout" type="id" />
+</resources>

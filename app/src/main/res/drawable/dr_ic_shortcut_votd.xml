@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 10/11/2021.
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size android:width="20dp" android:height="20dp" />
+            <solid android:color="#F7F7F7" />
+            <padding android:bottom="7dp" android:left="7dp" android:right="7dp" android:top="7dp" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/dr_icon_heart_filled" />
+</layer-list>

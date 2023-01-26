@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 2/2/2022.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="15dp" />
+    <solid android:color="@color/colorBGCardVariable" />
+</shape>

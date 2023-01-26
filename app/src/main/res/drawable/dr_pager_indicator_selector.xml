@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 27/10/2021.
+  -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/dr_pager_indicator_selected" android:state_selected="true" />
+
+    <item android:drawable="@drawable/dr_pager_indicator_def" />
+</selector>

@@ -1,0 +1,55 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.QuranApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
+
+        <item name="colorControlNormal">@color/colorIcon</item>
+
+        <item name="android:windowBackground">@color/colorBGPage</item>
+        <item name="android:statusBarColor">?android:windowBackground</item>
+
+        <item name="android:textSize">@dimen/dmnCommonSize</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
+
+        <item name="android:clipToPadding">false</item>
+
+        <item name="android:autofillHints" tools:targetApi="o">@null</item>
+        <item name="android:importantForAutofill" tools:targetApi="o">no</item>
+
+        <item name="android:dropDownListViewStyle">@style/ListView</item>
+        <item name="android:colorEdgeEffect">@android:color/transparent</item>
+
+        <item name="chipGroupStyle">@style/ChipGroupStyle</item>
+        <item name="chipStyle">@style/ChipStyle</item>
+    </style>
+
+    <style name="Theme.QuranApp.Splash">
+        <item name="android:windowBackground">@drawable/dr_bg_splash</item>
+        <item name="android:statusBarColor">@color/colorBGPage</item>
+        <item name="android:navigationBarColor">@color/colorBGPage</item>
+    </style>
+
+    <style name="Theme.QuranApp.Reader">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.QuranApp.Licenses">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:statusBarColor">#80000000</item>
+        <item name="android:navigationBarColor">#80000000</item>
+        <item name="colorPrimary">@color/colorBGPage</item>
+    </style>
+</resources>

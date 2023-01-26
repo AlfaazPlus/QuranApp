@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 12/2/2022.
+  -->
+
+<resources>
+    <integer name="intActionBtnRotation">180</integer>
+</resources>

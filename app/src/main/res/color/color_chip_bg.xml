@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 5/9/2021.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/colorPrimary" android:state_selected="true" />
+    <item android:color="@color/colorBGOverHomePageItem" android:state_selected="false" />
+</selector>

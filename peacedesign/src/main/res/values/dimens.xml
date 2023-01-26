@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Texts  -->
+    <dimen name="dmnAppNameSize">24sp</dimen>
+    <dimen name="dmnCommonSizeHuge">20sp</dimen>
+    <dimen name="dmnCommonSizeLarger">19sp</dimen>
+    <dimen name="dmnCommonSizeLarge">18sp</dimen>
+    <dimen name="dmnCommonSize">17sp</dimen>
+    <dimen name="dmnCommonSizeTitle">@dimen/dmnCommonSize</dimen>
+    <dimen name="dmnCommonSizeHighlighted">@dimen/dmnCommonSize</dimen>
+    <dimen name="dmnCommonSizeSec">15sp</dimen>
+    <dimen name="dmnCommonSizeTer">14sp</dimen>
+    <dimen name="dmnCommonSizeQuad">12sp</dimen>
+    <dimen name="dmnCommonSizePent">10sp</dimen>
+    <dimen name="dmnCommonSizeTiny">8sp</dimen>
+    <dimen name="dmnTopicCommentSize">16sp</dimen>
+    <dimen name="dmnPageHugeTitleSize">22sp</dimen>
+    <dimen name="dmnPageBigTitleSize">20sp</dimen>
+    <dimen name="dmnPageTitleSize">19sp</dimen>
+    <dimen name="dmnPageAlertHeading">25sp</dimen>
+    <dimen name="dmnFontToolIconSize">20sp</dimen>
+    <!--  Views  -->
+    <dimen name="dmnBottomNavigationHeight">50dp</dimen>
+    <dimen name="dmnAppBarHeight">50dp</dimen>
+    <dimen name="dmnTagsContainerHeightSingle">60dp</dimen>
+    <dimen name="dmnEditorInlineToolsContainer">50dp</dimen>
+    <dimen name="dmnEditorLayerTool">80dp</dimen>
+    <dimen name="dmnEditorCropTool">60dp</dimen>
+
+    <!--  Padding  -->
+    <dimen name="dmnPadBig">100dp</dimen>
+
+
+    <!--  Color Picker  -->
+    <dimen name="dmnColorPickerHSVHeight">240dp</dimen>
+    <dimen name="dmnColorPickerHSVWidth">240dp</dimen>
+    <dimen name="dmnColorPickerHueWidth">30dp</dimen>
+    <dimen name="dmnColorPickerSpacer">5dp</dimen>
+
+    <dimen name="dmnDialogWidthPortrait">90%</dimen>
+    <dimen name="dmnDialogWidthLand">60%</dimen>
+
+    <dimen name="dmnActionButton">38dp</dimen>
+</resources>

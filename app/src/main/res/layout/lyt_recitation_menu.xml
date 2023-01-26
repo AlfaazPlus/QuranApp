@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="locale"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="start"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/strTitleRecitationOptions"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dmnCommonSize1_5"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/repeat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <com.quranapp.android.widgets.IconedTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:paddingVertical="10dp"
+            android:text="@string/strTitleRepeatVerse"
+            android:textSize="@dimen/dmnCommonSize2"
+            app:drawableEndDimen="20dp"
+            app:drawableStartCompat="@drawable/dr_icon_player_repeat"
+            app:drawableStartDimen="20dp" />
+
+        <com.quranapp.android.views.helper.CheckBox2
+            android:id="@+id/repeatCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:scaleX="0.8"
+            android:scaleY="0.8" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/autoplay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repeat">
+
+        <com.quranapp.android.widgets.IconedTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:paddingVertical="10dp"
+            android:text="@string/strTitleAutoPlayNext"
+            android:textSize="@dimen/dmnCommonSize2"
+            app:drawableEndDimen="20dp"
+            app:drawableStartCompat="@drawable/dr_icon_play_verse"
+            app:drawableStartDimen="20dp"
+            app:drawableTint="@color/colorIcon" />
+
+        <com.quranapp.android.views.helper.CheckBox2
+            android:id="@+id/autoplayCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:scaleX="0.8"
+            android:scaleY="0.8" />
+    </LinearLayout>
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/selectReciter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/strTitleRecitations"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:drawableEndDimen="20dp"
+        app:drawableStartDimen="20dp"
+        app:drawableTint="@color/colorIcon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/autoplay" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrReaderStyle">
+        <item>@string/strTitleTranslations</item>
+        <item>@string/strLabelReading</item>
+    </string-array>
+
+    <integer-array name="arrBookmarkItemMenuIcons">
+        <item>@drawable/dr_icon_view</item>
+        <item>@drawable/dr_icon_open</item>
+        <item>@drawable/dr_icon_bookmark_remove</item>
+    </integer-array>
+
+    <string-array name="arrBookmarkItemMenuLabels">
+        <item>@string/strLabelView</item>
+        <item>@string/strLabelOpen</item>
+        <item>@string/strLabelRemoveBookmark</item>
+    </string-array>
+
+    <string-array name="arrBookmarkItemMenuDescs">
+        <item>@null</item>
+        <item>@string/strLabelOpenInReader</item>
+        <item>@null</item>
+    </string-array>
+
+    <string-array name="arrTopicFilterItems">
+        <item>A-Z</item>
+        <item>@string/strLabelMostPlaces</item>
+    </string-array>
+    <string-array name="arrProphetFilterItems">
+        <item>A-Z</item>
+        <item>@string/strLabelOrder</item>
+    </string-array>
+
+    <string-array name="arrLocales">
+        <item>@string/strLabelSystemDefault</item>
+        <item>English</item>
+        <item>हिन्दी</item>
+        <item>اردو</item>
+    </string-array>
+
+    <!--  Verse options  -->
+    <string-array name="arrVODIds">
+        <item>@id/btnPlayControl</item>
+        <item>@id/btnFootnotes</item>
+        <item>@id/btnTafsir</item>
+        <item>@id/btnBookmark</item>
+        <item>@id/btnQuickEdit</item>
+        <item>@id/btnShare</item>
+        <item>@id/btnReport</item>
+    </string-array>
+
+    <string-array name="arrVODLabels">
+        <item>@string/strLabelPlay</item>
+        <item>@string/strTitleFootnotes</item>
+        <item>@string/strTitleTafsir</item>
+        <item>@string/strLabelBookmark</item>
+        <item>@string/strTitleQuickEdit</item>
+        <item>@string/strLabelShare</item>
+        <item>@string/strLabelReport</item>
+    </string-array>
+
+    <array name="arrVODIcons">
+        <item>@drawable/dr_icon_play_verse</item>
+        <item>@drawable/dr_icon_footnote</item>
+        <item>@drawable/dr_icon_tafsir</item>
+        <item>@drawable/dr_icon_bookmark_outlined</item>
+        <item>@drawable/dr_icon_quick_edit</item>
+        <item>@drawable/dr_icon_share</item>
+        <item>@drawable/dr_icon_report_problem</item>
+    </array>
+
+    <string-array name="arrFeaturedQuranItems">
+        <item>1</item>
+        <item>2:255</item>
+        <item>18</item>
+        <item>36</item>
+        <item>55</item>
+        <item>59</item>
+        <item>59:22–24</item>
+        <item>62</item>
+        <item>67</item>
+    </string-array>
+    <string-array name="arrOnboardingTitles">
+        <item>Select Theme</item>
+        <item>Select Translations</item>
+        <item>Select Reciter</item>
+    </string-array>
+    <string-array name="arrOnboardingDescs">
+        <item>You can always change this later.</item>
+        <item>You can always change this later. You can download more translations from the settings.</item>
+        <item>You can always change this later. You can find more reciters in the settings.</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures">
+        <item>No ads</item>
+        <item>Access to all Translations</item>
+        <item>Access to all reciters</item>
+        <item>More Qur\'an fonts</item>
+        <item>Cancel anytime</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2">
+        <item>Ad free experience</item>
+        <item>All translations</item>
+        <item>All reciters</item>
+        <item>All fonts</item>
+        <item>Many more…</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2Desc">
+        <item>No advertisement will be shown</item>
+        <item>You can download and read any translation</item>
+        <item>You can listen to any recitation</item>
+        <item>Read the Qur\'an in any font available in the app</item>
+        <item>Get benefited from all the premium features</item>
+    </string-array>
+
+    <string-array name="arrPremiumPlans">
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+    <string-array name="arrReportReasons">
+        <item>Select reason</item>
+        <item>Issue with Arabic text</item>
+        <item>Issue with translations</item>
+        <item>Issue with recitation</item>
+        <item>Issue with footnotes</item>
+    </string-array>
+
+    <string-array name="arrEditShareTabs">
+        <item>Background</item>
+        <item>Colours</item>
+        <item>Options</item>
+        <item>Translations</item>
+        <item>Size</item>
+    </string-array>
+
+    <string-array name="arrGenders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Rather not say</item>
+    </string-array>
+
+    <integer-array name="arrGenderCodes">
+        <item>0</item>
+        <item>1</item>
+        <item>-1</item>
+    </integer-array>
+</resources>

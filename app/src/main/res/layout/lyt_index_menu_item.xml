@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 19/11/2021.
+  -->
+
+<com.quranapp.android.widgets.IconedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dr_bg_hover"
+    android:drawablePadding="17dp"
+    android:fontFamily="sans-serif-medium"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"
+    android:textSize="@dimen/dmnCommonSize1_5"
+    app:drawableStartDimen="20dp" />

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="PeaceBottomSheetTheme" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/SheetDialogStyle</item>
+        <item name="android:windowAnimationStyle">@style/PeaceBottomSheetAnimations</item>
+    </style>
+
+    <style name="PeaceBottomSheetTitleStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PeaceBottomSheetAnimations" parent="Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@anim/peace_bottom_sheet_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/peace_bottom_sheet_slide_out</item>
+    </style>
+
+    <style name="RadioButtonPro">
+        <item name="android:buttonTint">@color/radio_button_tint</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:drawablePadding">0dp</item>
+    </style>
+
+    <style name="RadioButtonProLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RadioButtonProMessage" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorRadioButtonProMessage</item>
+    </style>
+
+    <style name="PeaceCheckBox">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="PeaceCheckBoxTextAppearance" parent="TextAppearance.AppCompat" />
+
+    <style name="PeaceRadioTextAppearance" parent="TextAppearance.AppCompat" />
+
+    <style name="PeaceRadioSubTextAppearance" parent="TextAppearance.AppCompat" />
+
+    <style name="LoaderProTextAppearance" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/SheetDialogStyle</item>
+    </style>
+
+    <style name="SheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="SheetDialogAnimations" parent="Animation.AppCompat.Dialog" />
+
+    <style name="SheetDialogAnimations.NoAnimations">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
+
+    <style name="SheetDialogAnimations.EnterOnly">
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
+
+    <style name="SheetDialogAnimations.ExitOnly">
+        <item name="android:windowEnterAnimation">@null</item>
+    </style>
+
+
+    <attr name="peaceDialogLayoutBackgroundColor" format="color" />
+    <attr name="peaceDialogButtonsDividerColor" format="color" />
+
+    <style name="PeaceDialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">?isLightTheme</item>
+        <item name="peaceDialogLayoutBackgroundColor">@color/colorBackgroundPeaceDialog</item>
+        <item name="android:windowBackground">@drawable/dr_bg_peace_dialog_cornered</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowSoftInputMode">adjustNothing</item>
+        <item name="android:windowAnimationStyle">@style/PeaceDialogAnimation</item>
+        <item name="android:windowMinWidthMinor">@dimen/dmnDialogWidthPortrait</item>
+        <item name="android:windowMinWidthMajor">@dimen/dmnDialogWidthLand</item>
+
+        <item name="android:windowTitleStyle">@style/PeaceDialogTitleStyle</item>
+
+        <item name="peaceDialogButtonsDividerColor">@color/colorPeaceDialogButtonsDivider</item>
+    </style>
+
+    <style name="PeaceDialogTitleStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">0.80</item>
+    </style>
+
+    <style name="PeaceDialogMessageStyle">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorPeaceDialogMessage</item>
+    </style>
+
+    <style name="PeaceDialogButtonStyle">
+        <item name="android:textSize">17sp</item>
+        <item name="android:background">@drawable/dr_bg_list_item</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <!--        <item name="android:maxLines">1</item>-->
+        <item name="android:lineSpacingMultiplier">0.80</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="PeaceDialogAnimation" parent="android:Animation.Dialog" />
+
+    <style name="PeaceDialogAnimation.Fullscreen" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowEnterAnimation">@anim/abc_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/abc_popup_exit</item>
+    </style>
+
+    <style name="PeaceDialogAnimation.TOP">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_top</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_top</item>
+    </style>
+
+    <style name="PeaceDialogAnimation.BOTTOM">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_bottom</item>
+    </style>
+
+    <style name="PopupMenuAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_menu_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_menu_exit</item>
+    </style>
+
+    <style name="PopupMenuAnimation.EnterOnly">
+        <item name="android:windowEnterAnimation">@anim/popup_menu_enter</item>
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
+
+    <style name="PopupMenuAnimation.ExitOnly">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@anim/popup_menu_exit</item>
+    </style>
+
+    <attr name="simpleListItemIconStyle" format="reference" />
+    <attr name="simpleListItemLabelStyle" format="reference" />
+    <attr name="simpleListItemMessageStyle" format="reference" />
+
+    <style name="SimpleListItemStyle">
+        <item name="android:padding">10dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/dr_bg_list_item</item>
+        <item name="android:gravity">center_vertical</item>
+
+        <item name="simpleListItemIconStyle">@style/SimpleListItemIconStyle</item>
+        <item name="simpleListItemLabelStyle">@style/SimpleListItemLabelStyle</item>
+        <item name="simpleListItemMessageStyle">@style/SimpleListItemMessageStyle</item>
+    </style>
+
+    <style name="SimpleListItemIconStyle">
+        <item name="android:padding">7dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="SimpleListItemLabelStyle" parent="Widget.AppCompat.TextView" />
+
+    <style name="SimpleListItemMessageStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

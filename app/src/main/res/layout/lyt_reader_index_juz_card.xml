@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/dr_bg_juz_card"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:fontFamily="sans-serif"
+        android:gravity="start"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="7dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dmnCommonSize2"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDividerVariable" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chapterList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:paddingVertical="10dp" />
+</LinearLayout>
+

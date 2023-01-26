@@ -1,0 +1,203 @@
+@font-face {
+   font-family: me_quran;
+   src: url('https://assets-font/me_quran_4_uthmani_text');
+   /* src: url(https://cdn.qurancdn.com/assets/quran_fonts/me_quran/me_quran-40c3436c134c511aba4c25355f70915ee2a0b8a850080691742aabd5216dfdbe.ttf); */
+   font-display: swap;
+}
+
+@font-face {
+   font-family: verse-font;
+   src: url('https://assets-font/verse-preview');
+   /* src: local("_PDMS_Saleem_QuranFont Regular"), url(https://cdn.qurancdn.com/assets/quran_fonts/pdms/pdms-saleem-quranfont-19f5948c4a230b80ed02c1779e40cc7bd9fcd35ca7aec1e426d78b3c83c06f0f.ttf); */
+   font-display: swap;
+}
+
+
+@font-face {
+   font-family: content-font;
+   src: url('https://assets-font/content') format("truetype");
+}
+
+* {
+   user-select: none;
+   -webkit-user-select: none;
+   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   margin: 0;
+   padding: 10px 20px;
+   padding-bottom: 100px;
+}
+
+html,
+html.light {
+   background-color: transparent;
+   color: #000;
+}
+
+html.dark {
+   background-color: #151515 !important;
+   color: #BBBBBB;
+}
+
+p {
+   font-size: 16px;
+}
+
+h2 {
+   font-size: 18px;
+}
+
+a[href] {
+   text-decoration: none;
+   border-radius: 5px;
+   padding: 1px 3px;
+   color: #008B5B;
+   font-weight: bold;
+   background-color: rgba(0, 139, 90, .20);
+}
+
+a[href]:active {
+   color: #006944;
+   background-color: rgba(0, 139, 90, .30);
+}
+
+hr {
+   margin: 20px 0;
+   border: none;
+   border-top: 1px solid var(--border);
+   border-color: #c4c4c4;
+}
+
+html.dark hr {
+   border-color: #3d3d3d !important;
+}
+
+.big-title {
+   text-align: center;
+   margin: 20px 0;
+}
+
+.verse-info-title {
+   font-weight: bold;
+   font-size: 14px;
+}
+
+.tafsir-title {
+   font-weight: bold;
+   font-size: 25px;
+   color: #008B5B;
+}
+
+.arabic,
+.verse-preview {
+   direction: rtl;
+   padding: 10px 15px;
+   border-radius: 10px;
+   margin: 5px 0;
+   background-color: #F0F0F0;
+   text-align: right;
+}
+
+html.dark .arabic,
+html.dark .verse-preview {
+   background-color: #202020 !important;
+}
+
+.text_uthmani,
+.uthmani {
+   font-family: me_quran;
+   font-size: 20px;
+}
+
+.verse-preview {
+   text-align: center;
+   font-family: verse-font;
+   font-size: 30px;
+}
+
+.navigator {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.navigator .btn-action {
+   height: 55px;
+   cursor: pointer;
+   background-color: #F0F0F0;
+   margin: 3px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+html.dark .navigator .btn-action {
+   background-color: #252525 !important;
+}
+
+.navigator .btn-action:not(.go-to-top) {
+   flex-grow: 1;
+   flex-basis: 0%;
+}
+
+.navigator .btn-action.go-to-top {
+   width: 50px;
+}
+
+.navigator .btn-action:active {
+   background-color: #d4d4d4;
+}
+
+html.dark .navigator .btn-action:active {
+   background-color: #424242 !important;
+}
+
+.navigator .btn-action.disabled {
+   cursor: not-allowed;
+   opacity: 0.3;
+   pointer-events: none;
+}
+
+.navigator .btn-action .title {
+   font-weight: bold;
+   font-size: 15px;
+   white-space: nowrap;
+}
+
+.navigator .btn-action .label {
+   font-size: 11px;
+   white-space: nowrap;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.go-to-verse {
+   font-weight: bold;
+   font-size: 15px;
+   white-space: nowrap;
+   padding: 8px 15px;
+   margin: 20px;
+   cursor: pointer;
+   background-color: #008B5B;
+   color: white;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.go-to-verse:active {
+   background-color: #007444;
+}
+
+.content {
+   font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   text-align: justify;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.quranapp.android.views.helper.RecyclerView2
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dmnPadBig"
+        android:scrollbars="none" />
+
+    <RelativeLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBGPage">
+
+        <ProgressBar
+            android:layout_width="@dimen/dmnProgressBarSize"
+            android:layout_height="@dimen/dmnProgressBarSize"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

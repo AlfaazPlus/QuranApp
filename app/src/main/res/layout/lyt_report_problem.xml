@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/strTitleSelectReason"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dmnCommonSize1_5"
+        android:textStyle="bold" />
+
+    <com.quranapp.android.views.helper.Spinner2
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/dr_bg_search_result_item"
+        android:popupBackground="@drawable/dr_bg_simple_spinner" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/strTitleExplainIssue"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dmnCommonSize1_5"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/dr_bg_edit_text"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:minHeight="130dp"
+        android:padding="10dp" />
+</LinearLayout>

@@ -1,0 +1,7 @@
+<!--
+  ~ (c) Faisal Khan. Created on 26/10/2021.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="32dp" android:height="5dp" android:tint="@color/colorIconDragger" android:viewportWidth="32" android:viewportHeight="5">
+    <path android:fillColor="#FF000000" android:pathData="M29.5,4.5h-27c-1.1,0 -2,-0.9 -2,-2v0c0,-1.1 0.9,-2 2,-2h27c1.1,0 2,0.9 2,2v0C31.5,3.6 30.6,4.5 29.5,4.5z" />
+</vector>

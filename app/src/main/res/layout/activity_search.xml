@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".activities.ActivitySearch">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBGPage"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:contentDescription="@string/strLabelBack"
+                android:padding="5dp"
+                android:rotation="@integer/intActionBtnRotation"
+                android:src="@drawable/dr_icon_arrow_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorIcon" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="5dp"
+                android:autofillHints="@null"
+                android:background="@drawable/dr_bg_reader_verse_action"
+                android:hint="@string/strHintSearchQuran"
+                android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textColorHint="@color/colorText3"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toStartOf="@id/voiceSearch"
+                app:layout_constraintStart_toEndOf="@id/back"
+                app:layout_constraintTop_toTopOf="@id/back" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/voiceSearch"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:padding="5dp"
+                android:src="@drawable/dr_icon_mic"
+                app:layout_constraintBottom_toBottomOf="@id/search"
+                app:layout_constraintEnd_toStartOf="@id/filter"
+                app:layout_constraintTop_toTopOf="@id/search"
+                app:tint="@color/colorIcon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/filter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:padding="5dp"
+                android:src="@drawable/dr_icon_filter"
+                app:layout_constraintBottom_toBottomOf="@id/search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/search"
+                app:tint="@color/colorIcon" />
+
+            <com.quranapp.android.widgets.IconedTextView
+                android:id="@+id/btnSelectTransl"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/dr_bg_reader_verse_action_selector"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="5dp"
+                android:text="@string/strLabelSelectTranslation"
+                android:textSize="@dimen/dmnCommonSizeSec"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnQuickLinks"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/back" />
+
+            <com.peacedesign.android.widget.checkbox.PeaceCheckBox
+                android:id="@+id/btnQuickLinks"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/dr_bg_reader_verse_action_selector"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:text="@string/strLabelQuickLinks"
+                android:textSize="@dimen/dmnCommonSizeSec"
+                app:layout_constraintBottom_toBottomOf="@id/btnSelectTransl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnSelectTransl"
+                app:layout_constraintTop_toTopOf="@id/btnSelectTransl" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header" />
+</RelativeLayout>

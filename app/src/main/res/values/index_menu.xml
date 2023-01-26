@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 19/11/2021.
+  -->
+
+<resources>
+    <item name="indexMenuItemProfile" type="id" />
+    <item name="indexMenuItemBookmark" type="id" />
+    <item name="indexMenuItemSettings" type="id" />
+    <item name="indexMenuItemFeedback" type="id" />
+    <item name="indexMenuItemHelp" type="id" />
+    <item name="indexMenuItemPrivacy" type="id" />
+    <item name="indexMenuItemAbout" type="id" />
+    <item name="indexMenuItemRate" type="id" />
+    <item name="indexMenuItemShare" type="id" />
+
+    <!--  IDs  -->
+    <array name="arrIndexMenuIds">
+        <item>@array/arrIndexMenuIds1</item>
+        <item>@array/arrIndexMenuIds2</item>
+        <item>@array/arrIndexMenuIds3</item>
+    </array>
+
+    <array name="arrIndexMenuIds1">
+        <item>@id/indexMenuItemProfile</item>
+        <item>@id/indexMenuItemBookmark</item>
+        <item>@id/indexMenuItemSettings</item>
+    </array>
+
+    <array name="arrIndexMenuIds2">
+        <item>@id/indexMenuItemFeedback</item>
+        <item>@id/indexMenuItemHelp</item>
+        <item>@id/indexMenuItemPrivacy</item>
+        <item>@id/indexMenuItemAbout</item>
+    </array>
+
+    <array name="arrIndexMenuIds3">
+        <item>@id/indexMenuItemRate</item>
+        <item>@id/indexMenuItemShare</item>
+    </array>
+
+    <!--  ICONS  -->
+    <array name="arrIndexMenuIcons">
+        <item>@array/arrIndexMenuIcons1</item>
+        <item>@array/arrIndexMenuIcons2</item>
+        <item>@array/arrIndexMenuIcons3</item>
+    </array>
+
+    <array name="arrIndexMenuIcons1">
+        <item>@drawable/dr_icon_user</item>
+        <item>@drawable/dr_icon_bookmarks</item>
+        <item>@drawable/dr_icon_settings</item>
+    </array>
+
+    <array name="arrIndexMenuIcons2">
+        <item>@drawable/dr_icon_bug</item>
+        <item>@drawable/dr_icon_help</item>
+        <item>@drawable/dr_icon_privacy_policy</item>
+        <item>@drawable/dr_icon_info</item>
+    </array>
+
+    <array name="arrIndexMenuIcons3">
+        <item>@drawable/dr_icon_rate</item>
+        <item>@drawable/dr_icon_share</item>
+    </array>
+
+    <!--  LABELS  -->
+    <array name="arrIndexMenuLabels">
+        <item>@array/arrIndexMenuLabels1</item>
+        <item>@array/arrIndexMenuLabels2</item>
+        <item>@array/arrIndexMenuLabels3</item>
+    </array>
+
+    <array name="arrIndexMenuLabels1">
+        <item>@string/strTitleProfile</item>
+        <item>@string/strTitleBookmarks</item>
+        <item>@string/strTitleSettings</item>
+    </array>
+
+    <array name="arrIndexMenuLabels2">
+        <item>@string/strTitleSendFeedback</item>
+        <item>@string/strTitleHelpSupport</item>
+        <item>@string/strTitlePrivacyPolicy</item>
+        <item>@string/strTitleAboutUs</item>
+    </array>
+
+    <array name="arrIndexMenuLabels3">
+        <item>@string/strTitleRateApp</item>
+        <item>@string/strTitleShareApp</item>
+    </array>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/2/2022.
+  -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/color1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#da0045"
+            android:layout_weight="1" />
+
+        <View
+            android:id="@+id/color2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00BD19"
+            android:layout_weight="1" />
+
+        <View
+            android:id="@+id/color3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00CCFF"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bgInner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dr_quran_wallpaper"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.cardview.widget.CardView>
+

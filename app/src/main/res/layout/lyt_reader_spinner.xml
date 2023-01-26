@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.quranapp.android.widgets.IconedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/readerSpinnerText"
+    android:layout_width="wrap_content"
+    android:layout_height="16dp"
+    android:layout_gravity="center"
+    android:background="@drawable/dr_bg_action_cornered"
+    android:drawablePadding="-5dp"
+    android:fontFamily="sans-serif"
+    android:gravity="center"
+    android:includeFontPadding="false"
+    android:paddingStart="6dp"
+    android:paddingEnd="0dp"
+    android:textColor="@color/colorIcon"
+    android:textSize="@dimen/dmnCommonSize3_5"
+    app:drawableEndCompat="@drawable/dr_icon_arrow_drop_down"
+    app:drawableEndDimen="20dp"
+    app:drawableTint="@color/colorIcon" />

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 30/10/2021.
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorBGPage" android:gravity="fill" />
+    <item android:drawable="@drawable/dr_logo_splash" android:gravity="center" />
+</layer-list>

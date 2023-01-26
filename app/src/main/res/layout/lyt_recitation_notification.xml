@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="135dp"
+    android:background="#01281A">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:alpha=".15"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dr_quran_wallpaper" />
+
+    <LinearLayout
+        android:id="@+id/topContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dmnCommonSize3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dmnCommonSize" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/white3"
+            android:textSize="@dimen/dmnCommonSize2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topContent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/prevVerse"
+            android:layout_width="@dimen/dmnActionButton"
+            android:layout_height="@dimen/dmnActionButton"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:src="@drawable/dr_icon_player_seek_left"
+            app:tint="@color/white2" />
+
+
+        <ImageView
+            android:id="@+id/playControl"
+            android:layout_width="@dimen/dmnActionButton"
+            android:layout_height="@dimen/dmnActionButton"
+            android:layout_marginHorizontal="15dp"
+            android:padding="5dp"
+            android:src="@drawable/dr_icon_play2" />
+
+
+        <ImageView
+            android:id="@+id/nextVerse"
+            android:layout_width="@dimen/dmnActionButton"
+            android:layout_height="@dimen/dmnActionButton"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:src="@drawable/dr_icon_player_seek_right"
+            app:tint="@color/white2" />
+    </LinearLayout>
+</RelativeLayout>

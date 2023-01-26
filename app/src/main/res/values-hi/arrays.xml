@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/11/2021.
+  -->
+
+<resources>
+    <string-array name="arrPremiumFeatures">
+        <item>कोई विज्ञापन नहीं</item>
+        <item>सभी अनुवाद उपलब्ध</item>
+        <item>सभी क़ारी उपलब्ध</item>
+        <item>अधिक कुरआन फ़ॉन्ट्स</item>
+        <item>कभी भी रद्द करें</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2">
+        <item>विज्ञापन मुक्त अनुभव</item>
+        <item>सभी अनुवाद</item>
+        <item>सभी क़ारी</item>
+        <item>सभी फ़ॉन्ट्स</item>
+        <item>और बहुत कुछ…</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2Desc">
+        <item>कोई विज्ञापन नहीं दिखाया जाएगा</item>
+        <item>आप कोई भी अनुवाद डाउनलोड करके पढ़ सकते हैं</item>
+        <item>आप कोई भी पाठ सुन सकते हैं</item>
+        <item>ऐप में उपलब्ध किसी भी फॉन्ट में कुरान पढ़ें</item>
+        <item>सभी प्रीमियम सुविधाओं का लाभ उठाएं</item>
+    </string-array>
+
+    <string-array name="arrPremiumPlans">
+        <item>मासिक</item>
+        <item>सालाना</item>
+    </string-array>
+
+    <string-array name="arrEditShareTabs">
+        <item>बैकग्राउंड</item>
+        <item>रंग</item>
+        <item>विकल्प</item>
+        <item>अनुवाद</item>
+        <item>अनुवाद</item>
+    </string-array>
+
+    <string-array name="arrGenders">
+        <item>पुरुष</item>
+        <item>महिला</item>
+        <item>नहीं कहना</item>
+    </string-array>
+</resources>

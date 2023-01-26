@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 28/1/2022.
+  -->
+
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="7dp"
+    android:background="@drawable/dr_bg_button_verify_email"
+    android:gravity="center"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"
+    android:text="Verify email address"
+    android:textColor="@color/white" />

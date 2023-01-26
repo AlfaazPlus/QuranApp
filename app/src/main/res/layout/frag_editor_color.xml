@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 20/9/2021.
+  -->
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.quranapp.android.views.helper.TabLayout2
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginVertical="7dp"
+        android:background="@drawable/dr_bg_reader_tab_layout_variable"
+        app:tabGravity="center"
+        app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="fixed"
+        app:tabRippleColor="@android:color/transparent" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="7dp"
+            android:src="@drawable/dr_icon_hash"
+            app:tint="@color/colorIcon" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/hexCode"
+            android:layout_width="110dp"
+            android:layout_height="35dp"
+            android:background="@drawable/dr_bg_edit_text"
+            android:gravity="center"
+            android:paddingStart="35dp"
+            android:paddingEnd="10dp"
+            android:textAppearance="@style/TextAppearanceCommonTitle" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/colors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="10dp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

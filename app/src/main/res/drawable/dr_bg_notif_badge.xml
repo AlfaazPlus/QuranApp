@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/10/2021.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="#B72F2F" />
+    <stroke android:width="1dip" android:color="@color/colorBGHomePageItem" />
+</shape>

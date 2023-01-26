@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="5dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textTranslation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:layerType="software"
+        android:paddingHorizontal="5dp" />
+
+    <FrameLayout
+        android:id="@+id/footnoteContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:gravity="start"
+        android:layerType="software"
+        android:paddingHorizontal="5dp"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/dmnCommonSize3" />
+</LinearLayout>
+

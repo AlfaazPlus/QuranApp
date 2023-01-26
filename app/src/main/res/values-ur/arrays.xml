@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/11/2021.
+  -->
+
+<resources>
+    <string-array name="arrPremiumFeatures">
+        <item>کوئی اشتہار نہیں</item>
+        <item>تمام تراجم تک رسائی</item>
+        <item>تمام قاری تک رسائی</item>
+        <item>مزید قرآنی فونٹس</item>
+        <item>کسی بھی وقت منسوخ کریں</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2">
+        <item>اشتہارات سے پاک تجربہ</item>
+        <item>تمام قاری</item>
+        <item>تمام قاری</item>
+        <item>تمام فونٹس</item>
+        <item>اور بھی بہت کچھ…</item>
+    </string-array>
+
+    <string-array name="arrPremiumFeatures2Desc">
+        <item>کوئی اشتہار نہیں دکھایا جائے گا</item>
+        <item>آپ کوئی بھی ترجمہ ڈاؤن لوڈ اور پڑھ سکتے ہیں</item>
+        <item>آپ کوئی بھی تلاوت سن سکتے ہیں</item>
+        <item>ایپ میں دستیاب کسی بھی فونٹ میں قرآن پڑھیں</item>
+        <item>تمام پریمیم خصوصیات سے فائدہ اٹھائیں</item>
+    </string-array>
+
+    <string-array name="arrPremiumPlans">
+        <item>ہر مہینے</item>
+        <item>سالانہ</item>
+    </string-array>
+
+    <string-array name="arrEditShareTabs">
+        <item> بیکگراؤنڈ</item>
+        <item>رنگ</item>
+        <item>اختیارات</item>
+        <item>ترجمے</item>
+        <item>سائز</item>
+    </string-array>
+
+    <string-array name="arrGenders">
+        <item>مرد</item>
+        <item>عورت</item>
+        <item>کہنے کی ضرورت نہیں</item>
+    </string-array>
+</resources>

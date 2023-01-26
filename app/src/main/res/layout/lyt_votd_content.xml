@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 31/10/2021.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/dr_bg_votd"
+        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:indeterminateTint="@color/white"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="#806C6C6C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verseInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-condensed-light"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dmnCommonSize3" />
+
+
+        <!--<androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnQuickEdit"
+            android:layout_width="@dimen/dmnActionButtonSmall"
+            android:layout_height="@dimen/dmnActionButtonSmall"
+            android:layout_marginStart="7dp"
+            android:background="@drawable/dr_bg_action_round" />-->
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/votdBookmark"
+            android:layout_width="@dimen/dmnActionButtonSmall"
+            android:layout_height="@dimen/dmnActionButtonSmall"
+            android:layout_marginStart="7dp"
+            android:background="@drawable/dr_bg_action_round" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

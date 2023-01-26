@@ -1,0 +1,3 @@
+rootProject.name = "QuranApp"
+include ':app'
+include ':peacedesign'

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="chapterNumber" format="integer" />
+
+    <declare-styleable name="ChapterIcon">
+        <attr name="chapterNumber" />
+        <attr name="includePrefix" format="boolean" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+    </declare-styleable>
+    <declare-styleable name="ChapterTitleView">
+        <attr name="chapterNumber" />
+        <attr name="chapterTitleSize" format="enum">
+            <enum name="small" value="0" />
+            <enum name="medium" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="PageNoView">
+        <attr name="pageNumber" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CardSection">
+        <attr name="cardSectionExpandable" format="boolean|reference" />
+        <attr name="cardSectionExpanded" format="boolean|reference" />
+        <attr name="cardSectionTitle" format="string|reference" />
+        <attr name="cardSectionTitleIcon" format="reference" />
+        <attr name="cardSectionTitleDividerEnabled" format="boolean|reference" />
+        <attr name="cardSection_titlePaddingHorizontal" format="dimension|reference" />
+        <attr name="cardSection_titlePaddingVertical" format="dimension|reference" />
+        <attr name="cardSection_contentPadding" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingHorizontal" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingVertical" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingStart" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingTop" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingEnd" format="dimension|reference" />
+        <attr name="cardSection_contentPaddingBottom" format="dimension|reference" />
+        <attr name="android:orientation" />
+    </declare-styleable>
+
+    <declare-styleable name="IconedTextView">
+        <attr name="drawableStartDimen" format="dimension" />
+        <attr name="drawableTopDimen" format="dimension" />
+        <attr name="drawableEndDimen" format="dimension" />
+        <attr name="drawableBottomDimen" format="dimension" />
+        <attr name="android:drawablePadding" />
+        <attr name="android:gravity" />
+    </declare-styleable>
+
+    <declare-styleable name="UnscaledTextView">
+        <attr name="android:textSize" />
+    </declare-styleable>
+
+    <attr name="PeaceFFTitle" format="string|reference" />
+    <attr name="PeaceFFRequired" format="boolean|reference" />
+    <attr name="PeaceFFText" format="string|reference" />
+
+    <declare-styleable name="PeaceFormInputField">
+        <attr name="PeaceFFTitle" />
+        <attr name="PeaceFFRequired" />
+        <attr name="PeaceFFText" />
+        <attr name="PeaceFFHint" format="string|reference" />
+        <attr name="android:imeOptions" />
+        <attr name="android:inputType" />
+    </declare-styleable>
+    <declare-styleable name="PeaceFormSelectField">
+        <attr name="PeaceFFTitle" />
+        <attr name="PeaceFFRequired" />
+    </declare-styleable>
+</resources>

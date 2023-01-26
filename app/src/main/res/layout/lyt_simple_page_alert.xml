@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by Faisal Khan on (c) 17/8/2021.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGPage"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/strMsgNoInternetLong"
+        android:textSize="@dimen/dmnCommonSizeLarge" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnRetry"
+        style="@style/ButtonAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:letterSpacing="0"
+        android:minWidth="150dp"
+        android:text="@string/strLabelRetry" />
+</LinearLayout>

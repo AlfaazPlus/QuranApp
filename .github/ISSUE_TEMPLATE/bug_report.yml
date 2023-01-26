@@ -1,0 +1,71 @@
+name: 🐞 Issue Report
+description: Report a issue to help us improve the QuranApp
+labels: [bug]
+body:
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce it?
+      placeholder: |
+        Example:
+          1. Step 1
+          2. Step 2
+          3. See the issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      placeholder: |
+          "This should happen..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      placeholder: |
+          "This happened instead..."
+    validations:
+      required: true
+
+  - type: input
+    id: quranapp-version
+    attributes:
+      label: QuranApp version
+      description: |
+        You can find your QuranApp version in **Menu > About**.
+    validations:
+      required: true
+
+  - type: input
+    id: android-version
+    attributes:
+      label: Android version
+      placeholder: |
+        Example: "Android 12"
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-details
+    attributes:
+      label: Other details
+      placeholder: |
+        Attach screenshots/videos or provide additional details.
+
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Acknowledgements
+      description: Your issue will be closed if you haven't done these steps.
+      options:
+        - label: I have searched the existing issues and this is a new ticket, **NOT** a duplicate or related to another open issue.
+          required: true
+        - label: I have written a short but informative title.
+          required: true

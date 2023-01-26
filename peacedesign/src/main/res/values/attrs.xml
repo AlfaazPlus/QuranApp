@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PeaceRadioGroup">
+        <attr name="android:checkedButton" />
+        <attr name="android:orientation" />
+    </declare-styleable>
+
+    <declare-styleable name="RadioButtonPro">
+        <attr name="radioLabel" format="string|reference" localization="suggested" />
+        <attr name="radioMessage" format="string|reference" localization="suggested" />
+        <attr name="radioMessageTextAppearance" format="reference" />
+        <attr name="radioLabelTextAppearance" format="reference" />
+        <attr name="android:checked" />
+    </declare-styleable>
+
+    <declare-styleable name="PeaceCompoundButton">
+        <attr name="peaceComp_subText" format="string|reference" />
+        <attr name="peaceComp_direction" format="enum">
+            <enum name="textStart" value="0" />
+            <enum name="textTop" value="1" />
+            <enum name="textEnd" value="2" />
+            <enum name="textBottom" value="3" />
+        </attr>
+        <attr name="peaceComp_spaceBetween" format="dimension|reference" />
+        <attr name="peaceComp_subTextAppearance" format="reference" />
+        <attr name="peaceComp_textGravity" format="enum">
+            <enum name="start" value="0" />
+            <enum name="end" value="1" />
+            <enum name="center" value="2" />
+            <enum name="left" value="3" />
+            <enum name="right" value="4" />
+        </attr>
+        <attr name="peaceComp_buttonCompat" format="reference" />
+        <attr name="android:text" />
+        <attr name="android:checked" />
+        <attr name="android:textAppearance" />
+    </declare-styleable>
+
+    <declare-styleable name="LoaderPro">
+        <attr name="supportsOverlay" format="boolean" />
+        <attr name="loaderOverlayColor" format="color|reference" />
+        <attr name="loaderText" format="string|reference" />
+        <attr name="loaderColor" format="color|reference" />
+        <attr name="loaderDimension" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PeaceSpinner">
+        <attr name="spinner_popupBackground" format="reference" />
+        <attr name="spinner_arrow" format="reference" />
+        <attr name="spinner_textColor" format="color|reference" />
+        <attr name="spinner_textSize" format="dimension" />
+        <attr name="spinner_arrowTint" format="color|reference" />
+        <attr name="spinner_itemLabelColor" format="color|reference" />
+    </declare-styleable>
+</resources>

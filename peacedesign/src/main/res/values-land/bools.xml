@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) Faisal Khan (https://github.com/faisalcodes)
+  ~ Created on 26/7/2022.
+  ~ All rights reserved.
+  -->
+
+<resources>
+    <bool name="isLandscape">true</bool>
+</resources>

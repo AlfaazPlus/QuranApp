@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBGHomePageItem"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="10dp">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/dr_bg_votd"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp">
+
+            <com.quranapp.android.widgets.IconedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/dr_bg_votd_title"
+                android:drawablePadding="5dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="@string/strTitleVOTD"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dmnCommonSize3"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/dr_icon_heart_filled"
+                app:drawableStartDimen="15dp"
+                app:drawableTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/read"
+                style="@style/ButtonActionAlphaSmall"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/dr_bg_votd_read"
+                android:paddingHorizontal="10dp"
+                android:text="@string/strLabelRead"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/top_shadow_gradient" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBGCardVariable"
+        android:orientation="vertical"
+        android:paddingVertical="15dp">
+
+        <LinearLayout
+            android:id="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/progress"
+                style="@style/SeekBarStyleRecitationPlayer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/progressText"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/colorText2"
+                android:textSize="@dimen/dmnCommonSize2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/verseSync"
+                android:layout_width="@dimen/dmnActionButtonSmall"
+                android:layout_height="@dimen/dmnActionButtonSmall"
+                android:padding="5dp"
+                android:src="@drawable/dr_icon_scroll_sync"
+                app:tint="@color/color_icon_primary_selector" />
+
+            <LinearLayout
+                android:id="@+id/actions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/prevVerse"
+                    android:layout_width="@dimen/dmnActionButtonSmall"
+                    android:layout_height="@dimen/dmnActionButtonSmall"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/dr_bg_hover_round"
+                    android:padding="3dp"
+                    android:src="@drawable/dr_icon_player_seek_left" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/seekLeft"
+                    android:layout_width="@dimen/dmnActionButtonSmall"
+                    android:layout_height="@dimen/dmnActionButtonSmall"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="@drawable/dr_bg_hover_round"
+                    android:padding="3dp"
+                    android:src="@drawable/dr_icon_backward_5" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/playControl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/dr_icon_play2" />
+
+                    <ProgressBar
+                        android:id="@+id/loader"
+                        android:layout_width="@dimen/dmnActionButton"
+                        android:layout_height="@dimen/dmnActionButton"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/seekRight"
+                    android:layout_width="@dimen/dmnActionButtonSmall"
+                    android:layout_height="@dimen/dmnActionButtonSmall"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="@drawable/dr_bg_hover_round"
+                    android:padding="3dp"
+                    android:src="@drawable/dr_icon_forward_5" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/nextVerse"
+                    android:layout_width="@dimen/dmnActionButtonSmall"
+                    android:layout_height="@dimen/dmnActionButtonSmall"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/dr_bg_hover_round"
+                    android:padding="3dp"
+                    android:src="@drawable/dr_icon_player_seek_right" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/menu"
+                android:layout_width="@dimen/dmnActionButtonSmall"
+                android:layout_height="@dimen/dmnActionButtonSmall"
+                android:background="@drawable/dr_bg_reader_verse_action_selector_round"
+                android:padding="5dp"
+                android:src="@drawable/dr_icon_menu"
+                app:tint="@color/colorIcon" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

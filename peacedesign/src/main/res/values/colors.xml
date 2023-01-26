@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Must be overridden by app colors -->
+    <color name="colorPrimary" />
+
+    <color name="colorOverlay">#80000000</color>
+
+    <color name="colorIcon">#504F4F</color>
+    <color name="colorIconDragger">#80504F4F</color>
+
+    <color name="colorBorderAppbar">#f0f0f0</color>
+
+    <color name="colorRadioButtonProRadio">#444444</color>
+    <color name="colorRadioButtonProLabel">#000000</color>
+    <color name="colorRadioButtonProMessage">#555555</color>
+
+    <color name="colorBackgroundCard">#E8E8E8</color>
+
+    <color name="colorBackgroundPeaceDialog">#ffffff</color>
+    <color name="colorPeaceDialogButtonsDivider">#DADADA</color>
+    <color name="colorPeaceDialogMessage">#252525</color>
+
+    <color name="colorBorderSheetDialog">@color/colorBorderAppbar</color>
+    <color name="colorBackgroundSheetDialog">@color/colorBackgroundPeaceDialog</color>
+
+    <color name="colorBackgroundQuickActionMenu">#ffffff</color>
+    <color name="colorSeparatorQuickActionMenuTitle">@color/colorPeaceDialogButtonsDivider</color>
+    <color name="colorBackgroundQuickActionMenuItem">?colorControlHighlight</color>
+
+    <color name="bottom_drawer_outside_background">#80000000</color>
+    <color name="bottom_drawer_background">#FFFFFF</color>
+    <color name="bottom_drawer_handle_view_color">#E0E0E0</color>
+</resources>

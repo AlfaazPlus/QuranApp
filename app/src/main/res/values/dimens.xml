@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Texts  -->
+    <dimen name="dmnAppNameSize">24sp</dimen>
+    <dimen name="dmnCommonSizeLarger">20sp</dimen>
+    <dimen name="dmnCommonSizeLarge">18sp</dimen>
+    <dimen name="dmnCommonSizeMedium">17sp</dimen>
+    <dimen name="dmnCommonSize">16sp</dimen>
+    <dimen name="dmnCommonSize1_5">15sp</dimen>
+    <dimen name="dmnCommonSize2">14sp</dimen>
+    <dimen name="dmnCommonSize2_5">13sp</dimen>
+    <dimen name="dmnCommonSize3">12sp</dimen>
+    <dimen name="dmnCommonSize3_5">11sp</dimen>
+    <dimen name="dmnCommonSize4">10sp</dimen>
+    <dimen name="dmnCommonSize4_5">9sp</dimen>
+    <dimen name="dmnCommonSizeTitle">@dimen/dmnCommonSize</dimen>
+    <dimen name="dmnCommonSizeHighlighted">@dimen/dmnCommonSize</dimen>
+    <dimen name="dmnPageBigTitleSize">20sp</dimen>
+    <dimen name="dmnPageAlertHeading">25sp</dimen>
+
+    <dimen name="dmnReaderHeaderHeight">65dp</dimen>
+    <dimen name="dmnFootnoteSize">16sp</dimen>
+    <dimen name="dmnFootnoteDescSize">13sp</dimen>
+
+    <!--  Views  -->
+    <dimen name="dmnAppBarHeight">55dp</dimen>
+    <dimen name="dmnAppBarHeight1_5">50dp</dimen>
+    <dimen name="dmnAppBarHeight2">40dp</dimen>
+
+    <!--  Padding  -->
+    <dimen name="dmnPadBig">50dp</dimen>
+    <dimen name="dmnPadHuge">100dp</dimen>
+    <dimen name="dmnPadMassive">150dp</dimen>
+
+    <dimen name="dmnActionButton">38dp</dimen>
+    <dimen name="dmnActionButtonSmall">30dp</dimen>
+    <dimen name="dmnActionButtonTiny">25dp</dimen>
+
+    <dimen name="dmnReaderTextSizeTransl">16sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakMedium">30sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakSmall">27sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakSmall2">24sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniMedium">22sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniSmall">19sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniSmall2">17sp</dimen>
+
+    <dimen name="dmnEditScreen">350dp</dimen>
+
+    <dimen name="dmnChapterIcon">31sp</dimen>
+    <dimen name="dmnChapterIcon2">25sp</dimen>
+
+    <dimen name="dmnChipGroupHeight">45dp</dimen>
+
+    <fraction name="dmnIndexMenuWidth">85%</fraction>
+
+    <dimen name="dmnProgressBarSize">35dp</dimen>
+</resources>

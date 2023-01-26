@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/11/2021.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient android:angle="90" android:endColor="@color/colorSplashGradient1" android:startColor="@color/colorSplashGradient2" />
+</shape>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 27/10/2021.
+  -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:innerRadius="0dp" android:shape="ring" android:thickness="6dp" android:useLevel="false">
+    <solid android:color="@color/colorPrimary" />
+</shape>

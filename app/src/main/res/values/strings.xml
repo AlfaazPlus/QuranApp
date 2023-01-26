@@ -1,0 +1,470 @@
+<resources>
+    <string name="strTitleAppVersion">App version</string>
+    <string name="strVersion" formatted="false">Version %s</string>
+    <string name="strTitleLicenses">Licenses</string>
+
+    <string name="strLabelClose">Close</string>
+    <string name="strLabelOkay">Okay</string>
+    <string name="strLabelGotIt">Got it</string>
+    <string name="strLabelCancel">Cancel</string>
+    <string name="strLabelApply">Apply</string>
+    <string name="strLabelSend">Send</string>
+    <string name="strLabelRemove">Remove</string>
+    <string name="strLabelDelete">Delete</string>
+    <string name="strLabelRemoveAll">Remove all</string>
+    <string name="strLabelCopy">Copy</string>
+    <string name="strLabelBack">Back</string>
+    <string name="strLabelTop">Top</string>
+    <string name="strLabelReset">Reset</string>
+    <string name="strLabelRetry">Retry</string>
+    <string name="strLabelRefresh">Refresh</string>
+    <string name="strLabelDismiss">Dismiss</string>
+    <string name="strLabelDiscard">Discard</string>
+    <string name="strLabelHide">Hide</string>
+    <string name="strLabelEdit">Edit</string>
+    <string name="strLabelDone">Done</string>
+    <string name="strLabelRestart">Restart</string>
+    <string name="strLabelView">View</string>
+    <string name="strLabelOpen">Open</string>
+    <string name="strLabelOpenInReader">Open in Reader</string>
+    <string name="strLabelRead">Read »</string>
+    <string name="strLabelViewAll">View all</string>
+    <string name="strLabelChangeNRestart">Change &amp; Restart</string>
+    <string name="strLabelAdvertisement">Advertisement</string>
+    <string name="strLabelSkip">Skip</string>
+    <string name="strLabelNotNow">Not now</string>
+    <string name="strLabelPrevious">Previous</string>
+    <string name="strLabelNext">Next</string>
+    <string name="strLabelStart">Start</string>
+    <string name="strLabelUpdateQuranApp">Update QuranApp</string>
+    <string name="strLabelDownloadNow">DOWNLOAD NOW</string>
+    <string name="strLabelUpdate">Update</string>
+    <string name="strLabelInstall">Install</string>
+    <string name="strLabelNew">New</string>
+    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelOn">On</string>
+    <string name="strLabelOff">Off</string>
+
+    <string name="strLabelThemeDark">Dark</string>
+    <string name="strLabelThemeLight">Light</string>
+    <string name="strLabelSystemDefault">System Default</string>
+
+    <string name="strLabelPreviousChapter">Previous chapter</string>
+    <string name="strLabelNextChapter">Next chapter</string>
+    <string name="strLabelNoPreviousChapter">No previous chapter</string>
+    <string name="strLabelNoNextChapter">No next chapter</string>
+    <string name="strLabelPreviousJuz">Previous juz</string>
+    <string name="strLabelNextJuz">Next juz</string>
+    <string name="strLabelNoPreviousJuz">No previous juz</string>
+    <string name="strLabelNoNextJuz">No next juz</string>
+    <string name="strLabelFullChapter">Read full chapter</string>
+    <string name="strLabelContinueChapter">Continue chapter</string>
+    <string name="strLabelPreviousVerse">Previous verse</string>
+    <string name="strLabelNextVerse">Next verse</string>
+    <string name="strLabelVersesText">Verses</string>
+    <string name="strLabelSurah" formatted="false">Surah %s</string>
+    <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strLabelVerseNo" formatted="false">Verse %d</string>
+    <string name="strLabelVerses" formatted="false">Verses %d–%d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Verse : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Verses : %d–%d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Verses: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Verse %d:%d</string>
+    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surah %s %d: Verse %d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surah %s │ Verse %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Surah %s : Verse %d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Chapter No. %d │ Verses %d–%d</string>
+
+    <string name="strTitleAppUser">QuranApp user</string>
+    <string name="strTitleHolyQuran">The Holy Quran</string>
+    <string name="strTitleQuran">Quran</string>
+    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleFootnote">Footnote</string>
+    <string name="strTitleFootnotes">Footnotes</string>
+    <string name="strTitleReaderChapters">Surahs (Chapters)</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleReaderChapters2">Surahs</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleReaderVerses">Verses</string>
+    <string name="strTitleReaderJumpToVerse">Jump to verse</string>
+    <string name="strTitleVerseOptions">Verse options</string>
+    <string name="strTitleVerseRecitation">Verse Recitation</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Surah %s : %d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Read Verses %d - %d</string>
+
+    <string name="strTitleReaderLayoutStyle">Layout style</string>
+    <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
+    <string name="strTitleReaderTextSizeTransl">Translation text size</string>
+
+    <string name="strTitleSettings">Settings</string>
+    <string name="strTitleBookmark">Bookmark</string>
+    <string name="strTitleSendFeedback">Send Feedback</string>
+    <string name="strTitleHelpSupport">Help &amp; Support</string>
+    <string name="strTitleAboutUs">About Us</string>
+    <string name="strTitleBookmarks">Bookmarks</string>
+    <string name="strTitleShareApp">Share App</string>
+    <string name="strTitleAddNote">Add note</string>
+    <string name="strTitleNote">Note</string>
+    <string name="strTitleRateApp">Rate App</string>
+    <string name="strTitleSubscription">Subscription</string>
+    <string name="strTitleFilters">Filters</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleAboutSurah">About Surah</string>
+    <string name="strTitleTranslations">Translations</string>
+    <string name="strTitleDownloadTranslations">Download</string>
+    <string name="strTitleRecitations">Select Reciter</string>
+    <string name="strTitleScripts">Select Script</string>
+    <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
+    <string name="strTitleBookmarkDeleteAll">Remove all bookmarks?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Remove %d bookmarks?</string>
+    <string name="strTitleTranslDelete">Delete Translation?</string>
+    <string name="strTitleResetReaderSettings">Reset Reader Settings?</string>
+    <string name="strTitleHideAd">Hide Ad</string>
+    <string name="strTitleRecitationOptions">Options</string>
+    <string name="strTitleRepeatVerse">Repeat verse</string>
+    <string name="strTitleAutoPlayNext">Autoplay next</string>
+    <string name="strTitleQuickEdit">Quick Edit</string>
+    <string name="strTitleShareVerse">Share Verse</string>
+    <string name="strTitleReportVerse">Report Verse</string>
+    <string name="strTitleSelectReason">Select Reason</string>
+    <string name="strTitleExplainIssue">Explain the issue</string>
+    <string name="strTitleFeaturedQuran">Featured Reading</string>
+    <string name="strTitleVOTD">Verse of The Day</string>
+    <string name="strTitleTopics">Topics</string>
+    <string name="strTitleDuas">Quranic Duas</string>
+    <string name="strTitleProphets">Prophets</string>
+    <string name="strTitleFeaturedTopics">Topics in Quran</string>
+    <string name="strTitleFeaturedDuas">Duas in Quran</string>
+    <string name="strTitleFeaturedProphets">Prophets in Quran</string>
+    <string name="strTitlePrivacyPolicy">Privacy Policy</string>
+    <string name="strTitleFailed">Failed</string>
+    <string name="strTitleSuccess">Success</string>
+    <string name="strTitleThresholdReached">Threshold Reached</string>
+
+    <string name="strChapInfoSeeMore">See more info ›</string>
+    <string name="strTitleChapInfoChapterNo">Chapter Number</string>
+    <string name="strTitleChapInfoJuzNo">Juz No.</string>
+    <string name="strTitleChapInfoVerses">Verses</string>
+    <string name="strTitleChapInfoRukus">Rukus</string>
+    <string name="strTitleChapInfoPages">Pages</string>
+    <string name="strTitleChapInfoRevOrder">Revelation Order</string>
+    <string name="strTitleChapInfoRevType">Revelation Type</string>
+
+    <string name="strMsgChapInfoFailedLoad">Failed to load surah information. Please try again later.</string>
+
+    <string name="strTitleAppSettings">App Settings</string>
+    <string name="strTitleReaderSettings">Reader Settings</string>
+    <string name="strTitleAppLanguage">App Language</string>
+    <string name="strTitleChangeLanguage">Change language?</string>
+    <string name="strTitleTheme">Theme</string>
+    <string name="strTitleNoInternet">No Internet</string>
+
+    <string name="strLabelPlay">Play</string>
+    <string name="strLabelPause">Pause</string>
+    <string name="strLabelBookmark">Bookmark</string>
+    <string name="strLabelRemoveBookmark">Remove Bookmark</string>
+    <string name="strLabelBookmarked">Bookmarked</string>
+    <string name="strLabelRemoveAds">Remove Ads</string>
+    <string name="strLabelShare">Share</string>
+    <string name="strLabelReport">Report</string>
+    <string name="strLabelContinueReading">Continue Reading »</string>
+    <string name="strLabelReading">Reading</string>
+    <string name="strLabelMostPlaces">Most mentions</string>
+    <string name="strLabelOrder">Order</string>
+    <string name="strLabelSelectedCount" formatted="false">%d selected</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d more translations</string>
+    <string name="strLabelAdvanceSharing">Advance Sharing</string>
+    <string name="strLabelSelectVerse">Select Verses</string>
+    <string name="strLabelCurrentVerse">Current verse</string>
+    <string name="strLabelVerseRange">Verse range</string>
+    <string name="strLabelSelectTranslations">Select translations</string>
+    <string name="strLabelSelectTranslation">Select translation</string>
+    <string name="strLabelWhatsappStyling">Whatsapp styling</string>
+    <string name="strLabelIncludeArabic">Include arabic</string>
+    <string name="strLabelIncludeFootnotes">Include footnotes</string>
+    <string name="strLabelIncludeTranslation">Include translation</string>
+    <string name="strLabelIncludeReference">Include reference</string>
+    <string name="strLabelQuickLinks">Quick links</string>
+    <string name="strLabelLater">Later</string>
+
+    <string name="strHintSearch">Search</string>
+    <string name="strHintSearchQuran">Type a term e.g., \"Life\"</string>
+    <string name="strHintSearchTopic">Search topic</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Search topic in \"%s\"</string>
+    <string name="strHintSearchProphet">Search prophet</string>
+    <string name="strHintSearchChapter">Search surah</string>
+    <string name="strHintSearchVerse">Search verse</string>
+    <string name="strHintSearchJuz">Search juz</string>
+    <string name="strHintSearchTranslation">Search translation</string>
+    <string name="strHintSearchReciter">Search reciter</string>
+    <string name="strHintSearchScript">Search script</string>
+    <string name="strHintSearchLanguage">Search language</string>
+    <string name="strHintFromVerse">From verse</string>
+    <string name="strHintToVerse">To verse</string>
+    <string name="strHintFeedback">Write your feedback here…</string>
+    <string name="strHintFeedbackEmail">Email</string>
+    <string name="strHintFeedbackMessage">Message</string>
+    <string name="strHintBookmarkViewerNote">Write an additional note on this bookmark here…</string>
+
+    <string name="strNotFound">Not found</string>
+
+    <string name="strBismillahEntity" translatable="false">&#xFDFD;</string>
+
+    <string name="strMsgThemeDark">Dark mode reduces power consumption.</string>
+    <string name="strMsgThemeDefault">Adjust according to system settings.</string>
+    <string name="strMsgVOTDOn">Get a notification daily in the morning.</string>
+
+    <string name="strMsgYouAreReadingVerses">You are reading verses:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d is not a valid Surah No.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%d is not a valid Verse No. for Surah No. %d</string>
+    <string name="strMsgInvalidVersesRange">Not a valid verse range.</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%d-%d is not a valid verse range for Surah No. %d</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d is not a valid Juz (Para) No.</string>
+    <string name="strMsgBookmarkAdded">Verse successfully added to bookmarks</string>
+    <string name="strMsgBookmarkAddFailed">Verse failed to add to bookmarks</string>
+    <string name="strMsgBookmarkAddedAlready">Verse is already added to bookmarks</string>
+    <string name="strMsgBookmarkRemoved">Verse successfully removed from bookmarks</string>
+    <string name="strMsgBookmarkRemoveFailed">Verse failed to remove from bookmarks</string>
+    <string name="strMsgBookmarkRemovedAlready">Verse is not in the bookmarks</string>
+    <string name="strMsgBookmarkNoItems">No bookmarks</string>
+    <string name="strMsgBookmarkDeleteSelected">Selected bookmarks will be removed.</string>
+    <string name="strMsgBookmarkDeleteAll">All bookmarks will be removed.</string>
+
+    <string name="strTitleReadHistory">Read History</string>
+    <string name="strMsgReadShowupHere">Your read history will show up here.</string>
+    <string name="strMsgReadHistoryRemoved">Read history successfully removed.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Read history failed to remove.</string>
+    <string name="strMsgReadHistoryRemovedAlready">Read history is already removed.</string>
+    <string name="strMsgReadHistoryNoItems">No read history</string>
+    <string name="strMsgReadHistoryDeleteSelected">Selected read histories will be removed.</string>
+    <string name="strMsgReadHistoryDeleteAll">All read histories will be removed.</string>
+
+    <string name="strMsgBookmarkDate" formatted="false">%s at %s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Today at %s</string>
+
+    <string name="strMsgHistoryRemove">Remove this history?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" removed from history</string>
+
+    <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %s: %d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
+    <string
+        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
+    <string name="strMsgSearchWordPart">Search for word part</string>
+    <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
+    <string name="strMsgSearchArabic">Search in Arabic text</string>
+
+    <string name="strMsgChangeLanguage">The app will be restarted to affect language change.</string>
+    <string name="strMsgResetReaderSettings">Reset all settings to the default.</string>
+
+    <string name="strMsgProphetsOrder">Showing prophets in chronological order</string>
+    <string name="strMsgShareRange" formatted="false">Enter range between %d%s%d</string>
+    <string name="strMsgEnterValidRange">Please enter a valid range</string>
+
+    <string name="strMsgTranslLoadFailed">Could not load translations from the server. Please try again later.</string>
+    <string name="strMsgTranslNoDownloads">No downloaded translations available</string>
+    <string name="strMsgTranslNoDownloadsAvailable">No downloads available</string>
+    <string name="strMsgTranslDownloadThresholdReached" formatted="false">You have already attempted to download \"%s\" %d times in last 24 hrs. Please try again later.</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Failed to download \"%s\".</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Downloaded: \"%s\".</string>
+    <string name="strMsgTranslNoneSelected">No translation is selected. Go to settings to find translations.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Maximum %d translations can be selected at once. Please unselect one before selecting another. This is to avoid performance loss.</string>
+
+    <string name="strMsgRecitationsLoadFailed">Could not load recitations from the server. Please try again later.</string>
+    <string name="strMsgRecitationsNoAvailable">No recitations available</string>
+
+    <string name="strDescAddToBookmarks">Add to bookmarks</string>
+    <string name="strDescGoBack">Go back</string>
+    <string name="strDescClose">Close</string>
+    <string name="strDescVerseNo" formatted="false">Verse number %d.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Surah %s, verse number %d.</string>
+    <string name="strMsgNoInternet">Please check your internet connection.</string>
+    <string name="strMsgNoInternetLong">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.</string>
+    <string name="strMsgSubsNotSubscribed">Looks like you have not purchased premium membership.</string>
+    <string name="strMsgSubs">Subscribe to get full control of the app</string>
+    <string name="strMsgSubsNotSupported">Sorry! Subscription is not supported on your device.</string>
+    <string name="strMsgSubsPlayStoreUpdate">Sorry! Subscription is not Supported. Please Update the Play Store.</string>
+    <string name="strMsgSubsFinishFailed">Failed to finish subscription! Ensure that you have an active internet connection and try again later by restarting the app. If your amount has deducted, please don\'t worry. It will be refunded back to you. If you have any query, feel free to contact us.</string>
+    <string name="strMsgSubsPendingTransaction">Purchase is pending. Please complete the transaction</string>
+    <string name="strMsgSubsPurchaseCanceled">Purchase canceled</string>
+    <string name="strMsgSubsFailed">Failed to subscribe</string>
+    <string name="strMsgSubsSucceed">Subscribed successfully</string>
+    <string name="strMsgSubsSucceed2">Subscription Successful!</string>
+    <string name="strMsgSubsRestart">Please restart the app to finish the subscription.</string>
+    <string name="strMsgFinishing">Finishing Subscription…</string>
+    <string name="strMsgSubsProgressWarning">Please do not close the window</string>
+    <string name="strMsgSubsGreet" formatted="false">Salam %s, and Congratulations! &#127881;&#127881;</string>
+    <string name="strMsgSubsUnlock" formatted="false">Now you have unlocked -</string>
+    <string name="strMsgVerseReportSuccess">Report sent successfully</string>
+    <string name="strMsgVerseReportFailed">Failed to send Report</string>
+    <string name="strMsgFeedbackSendSuccess">Feedback sent successfully</string>
+    <string name="strMsgFeedbackSendFailed">Failed to send feedback</string>
+    <string name="strMsgInvalidEmail">Enter your valid email</string>
+    <string name="strMsgSomethingWrong">Something went wrong!</string>
+    <string name="strMsgSomethingWrongFixing">Something went wrong! We are working to fix this.</string>
+    <string name="strMsgVerseCredsInvalid">Verse credentials are not valid.</string>
+    <string name="strMsgTryLater">Please try again later.</string>
+    <string name="strMsgReportUs">Please report us.</string>
+    <string name="strMsgCouldNotOpenPage">Could not open the page.</string>
+
+    <string name="strLabelNavHome">Home</string>
+    <string name="strLabelNavSearch">Search</string>
+
+    <string name="strTextPreparing">Preparing…</string>
+    <string name="strTextPleaseWait">Please wait…</string>
+    <string name="strTextSending">Sending…</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+
+    <string name="strTitleProfile">Profile</string>
+    <string name="strTitleEditProfile">Edit Profile</string>
+    <string name="strTitleError">Error!</string>
+    <string name="strTitleInfo">Info!</string>
+    <string name="strTitleOops">Oops!</string>
+    <string name="strLabelProceed">PROCEED</string>
+    <string name="strTextUpdating">Updating…</string>
+    <string name="strTextInstalling">Installing…</string>
+    <string name="strTextLoading">Loading…</string>
+    <string name="strTextLoggingIn">Logging in…</string>
+    <string name="strTextCreatingAccount">Creating account…</string>
+    <string name="strTitleVerifyPassword">Verify password</string>
+    <string name="strTitleDeleteAccount">Delete Account?</string>
+    <string name="strMsgDeleteAccount">Are you sure want to delete your account permanently? Once you click \"Delete Account\" button below, your account will be permanently deleted and it cannot be undone. Due to this action, you may lose some control of the app.</string>
+    <string name="strLabelDeleteAccount">Delete account</string>
+    <string name="strTextDeletingAccount">Deleting account…</string>
+    <string name="strTitleAccountDeleted">Account deleted</string>
+    <string name="strMsgAccountDeleted">Your account has permanently deleted.</string>
+    <string name="strMsgAccountDeleteFailed">Could not delete account. Please try again later.</string>
+    <string name="strMsgEmailNotValid">Email address is not valid</string>
+    <string name="strMsgFieldNotValid" formatted="false">%s is not valid</string>
+    <string name="strMsgEmailAlreadyTaken">Email address is already associated with another account</string>
+    <string name="strMsgProfileUpdateFailed">Could not update profile. Please try again later.</string>
+    <string name="strTitleEmailSent">Email sent!</string>
+    <string name="strMsgEmailSentVerifyEmail"
+        formatted="false">Follow the instructions sent to %s to verify your email address.</string>
+    <string name="strMsgEmailSentResetPassword" formatted="false">Follow the instructions sent to %s to reset your password.</string>
+    <string name="strLabelLogout">Logout</string>
+    <string name="strMsgLogout">Are you sure want to logout?</string>
+    <string name="strMsgFieldRequired" formatted="false">%s is required</string>
+    <string name="strMsgEmailRequired">Email Address is required</string>
+    <string name="strMsgEnterAssocEmail">Enter email address associated with your account</string>
+    <string name="strMsgPasswordRequired">Password is required</string>
+    <string name="strMsgIncorrectPassword">Password is incorrect</string>
+    <string name="strMsgRepeatPasswordProceed">To proceed, please enter your password</string>
+    <string name="strMsgNewPassword">Please enter a new password</string>
+    <string name="strMsgMinPassword">Password length must be at least 8</string>
+    <string name="strMsgMinCPasswordUnmatched">Confirm password does not match</string>
+    <string name="strMsgInvalidUser">User does not exist.</string>
+    <string name="strMsgDisabledUser">This account has been disabled for some reason. Please contact us to get it enabled.</string>
+    <string name="strMsgInvalidUserRightNow">We are unable to work on this account right now.</string>
+    <string name="strMsgInvalidUserCreateAccount">User does not exist. You can create a new account.</string>
+    <string name="strMsgAlreadyLoggedIn">You are already logged in. Logout first to continue.</string>
+    <string name="strMsgLoginFailed">Failed to login. Please try again later.</string>
+    <string name="strMsgRegisterFailed">Could not create account. Please try again later.</string>
+    <string name="strMsgLoginToContinue">Please login to continue</string>
+    <string name="strMsgNowLoggedIn">Now you are logged in</string>
+    <string name="strTitleSessionExpired">Session Expired</string>
+    <string name="strMsgWeakPassword">Enter a strong password of more than 8 characters</string>
+    <string name="strMsgPasswordChanged">Password has successfully changed. Use the new credentials to log in.</string>
+    <string name="strMsgPasswordChangeFailed">Failed to change password</string>
+    <string name="strMsgRepeatNewPassword">Enter the new password again</string>
+    <string name="strLabelLogin">Login</string>
+    <string name="strLabelRegister">Register</string>
+    <string name="strTitleCreateAccount">Create Account</string>
+    <string name="strLabelResetPassword">Reset password</string>
+    <string name="strLabelForgotPassword">Forgot password?</string>
+    <string name="strLabelCreateNew">Create new</string>
+    <string name="strLabelClickLogin">Click to login</string>
+    <string name="strMsgDontHaveAccount">Don\'t have an account?</string>
+    <string name="strMsgHaveAccount">Already registered?</string>
+    <string name="strLabelChangePassword">Change password</string>
+    <string name="strLabelNewPassword">New password</string>
+    <string name="strLabelSendEmail">Send email</string>
+    <string name="strLabelEditProfile">Edit profile</string>
+
+    <string name="strFieldTitleFName">First Name</string>
+    <string name="strFieldTitleLName">Last Name</string>
+    <string name="strFieldTitleName">Name</string>
+    <string name="strFieldTitleEmail">Email Address</string>
+    <string name="strFieldTitlePassword">Password</string>
+    <string name="strFieldTitleCPassword">Confirm Password</string>
+    <string name="strFieldTitleGender">Gender</string>
+    <string name="strFieldHintFName">Enter your first name</string>
+    <string name="strFieldHintLName">Enter your last name</string>
+    <string name="strFieldHintEmail">Enter your email address</string>
+    <string name="strFieldHintPassword">Enter your password</string>
+    <string name="strFieldHintNewPassword">Create new password</string>
+    <string name="strFieldHintCPassword">Repeat password</string>
+
+    <string name="strGenderMale">Male</string>
+    <string name="strGenderFemale">Female</string>
+    <string name="strGenderNotSpecified">Not specified</string>
+
+    <string name="strMsgLoginFree">Login or create account, It\'s free!</string>
+    <string name="strMsgLogin4Service" formatted="false">IT\'S FREE AND QUICK! %s, you need to be logged in. If you don\'t have an account yet, create now.</string>
+    <string name="strMsgLogin4Subs">To use the subscription service</string>
+    <string name="strMsgLogin4Transl">To download translations</string>
+    <string name="strMsgVerifyEmail">Verify your email</string>
+    <string name="strMsgVerifyEmailLong">Your email address is not verified yet, to continue please verify it.</string>
+    <string name="strLabelVerify">Verify</string>
+    <string
+        name="strMsgAccountReminder">To get most out of the QuranApp, please login or create an account. IT\'S FREE AND QUICK.</string>
+
+    <string name="strMsgUpdateAvailable">UPDATE AVAILABLE! Please update the app to get the latest features.</string>
+    <string name="strMsgUpdateAvailable4Dialog">UPDATE AVAILABLE!\nPlease update the app.</string>
+    <string name="strMsgUpdateAvailable2Continue">UPDATE REQUIRED!\nPlease update the app to continue.</string>
+    <string name="strMsgUpdateDownloaded">UPDATE DOWNLOADED! Please install to complete the update.</string>
+
+    <string name="strLabelAllChapters">All Chapters</string>
+    <string name="strLabelDownloadImage">Download image</string>
+    <string name="strLabelShareImage">Share image</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Image saved with name: %s</string>
+    <string name="strTitleAlphaBG">Alpha background</string>
+    <string name="strMsgEditShareTransl">Translations selected from the settings, are only shown here.</string>
+    <string name="strMsgEditShareLongTransl">Translation is very long, it may not fit properly.</string>
+
+    <string name="strMsgReferenceInQuran" formatted="false">%s in Quran</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Found verses related to %s at total %d places.</string>
+    <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
+
+
+    <string name="strSalam">Assalam Alaikum</string>
+    <string name="strSalamShort">Salam</string>
+    <string name="strPremiumDialogTitle">Premium Features at Cheap Price</string>
+    <string name="strPremiumDialogButton">Go Premium</string>
+    <string name="strMsgVOTDNoPremium">Verse of The Day and daily verse reminder are only available for premium users.</string>
+
+    <string name="strPremiumWatchToUnlock">Watch video to unlock</string>
+    <string name="strPremiumWatchToUnlock2">Watch the video till the end to unlock</string>
+    <string name="strPremiumUnlockContent" formatted="false">Watch the video to unlock \"%s\" for one hour</string>
+    <string name="strPremiumLabelUnlock1Hour">Unlock for 1 hour</string>
+
+    <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
+    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
+    <string name="strPreviewTextTransl" translatable="false">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
+
+    <string name="strNotifChannelRecitation" translatable="false">Recitation Player</string>
+    <string name="strNotifChannelIdRecitation" translatable="false">recitation_player</string>
+
+    <string name="strNotifChannelDefault" translatable="false">Default Channel</string>
+    <string name="strNotifChannelIdDefault" translatable="false">default</string>
+    <string name="strNotifChannelVOTD" translatable="false">@string/strTitleVOTD</string>
+    <string name="strNotifChannelIdVOTD" translatable="false">votd</string>
+    <string name="strNotifChannelDownloads" translatable="false">Downloads</string>
+    <string name="strNotifChannelIdDownloads" translatable="false">downloads</string>
+    <string name="strShortcutIdVOTD" translatable="false">@string/strNotifChannelIdVOTD</string>
+    <string name="strShortcutIdLastVerses" translatable="false">last_verses</string>
+
+    <string name="strMsgShareApp" formatted="false" translatable="false">
+        QuranApp\n\nBest free app to read the Noble Qur\'an with translations. This app has nice and clean look and many other features. \n\nDOWNLOAD NOW:\n%s
+    </string>
+
+    <string name="google_play_console_key" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiAGakIyyjTrIbzQagxH74sTpsrQOmbLz1IWtclY5v1OFWft+JwNKZwXqskW8bdmb7LaPyBz9UsIWea1KabkEA+T+sjgBjSnvjlf0YVHBK6S90zuTXMiFXvER31fKbFvQ7DlyzlQkKzngTo7U1agxZ0isvuWA+XfE24PQflHE5yvUh5NLPQuQL/DGBV3QT6okHke+P+d/5HDsZHc2jV/D8N6nk2K9VE9M8SwSKfqn2KRuPiB2D4t3PidlYI7mc8mCIhvmCcG2X2p7nfUeoadsZGkZ9kPxPDDCGFG2W14npEFtVAx/fJdeCUp6Jn3zhXQCf1Rf+ujE/fSmuMHX/fGbbwIDAQAB</string>
+</resources>

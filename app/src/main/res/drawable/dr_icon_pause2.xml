@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="@dimen/dmnActionButton"
+                android:height="@dimen/dmnActionButton" />
+            <solid android:color="@color/colorPrimary" />
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/dr_icon_pause_verse" />
+</layer-list>

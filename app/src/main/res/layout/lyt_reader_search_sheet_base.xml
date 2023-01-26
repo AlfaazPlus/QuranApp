@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) Faisal Khan (https://github.com/faisalcodes)
+  ~ Created on 24/7/2022.
+  ~ All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dr_bg_jcv_selector_section"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/strTitleReaderVerses"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:autofillHints="@null"
+        android:background="@drawable/dr_bg_jcv_selector_search"
+        android:gravity="center"
+        android:hint="@string/strHintSearchChapter"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintBottom_toTopOf="@id/list"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.quranapp.android.views.helper.RecyclerView2
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="always"
+        android:paddingHorizontal="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dmnPadBig"
+        android:requiresFadingEdge="vertical"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search" />
+</LinearLayout>

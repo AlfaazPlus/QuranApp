@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by Faisal Khan on (c) 30/8/2021.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/advanced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/dr_bg_wrapped_radio"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/strLabelAdvanceSharing"
+        android:textAppearance="@style/TextAppearanceCommonTitle"
+        android:textColor="@color/colorPrimary" />
+
+    <LinearLayout
+        android:id="@+id/advancedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp"
+        android:paddingBottom="15dp"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="15dp"
+            android:text="@string/strLabelSelectVerse"
+            android:textAppearance="@style/TextAppearanceCommonTitle"
+            android:textColor="@color/colorPrimary" />
+
+        <com.peacedesign.android.widget.radio.PeaceRadioGroup
+            android:id="@+id/selectVerses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:checkedButton="@id/currVerse"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
+
+            <com.peacedesign.android.widget.radio.PeaceRadioButton
+                android:id="@+id/currVerse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/dr_bg_wrapped_radio"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="@dimen/dmnCommonSize1_5"
+                android:paddingVertical="10dp"
+                android:text="@string/strLabelCurrentVerse"
+                android:textAppearance="@style/TextAppearance"
+                app:peaceComp_direction="textBottom" />
+
+            <com.peacedesign.android.widget.radio.PeaceRadioButton
+                android:id="@+id/verseRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/dr_bg_wrapped_radio"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="@dimen/dmnCommonSize1_5"
+                android:paddingVertical="10dp"
+                android:text="@string/strLabelVerseRange"
+                android:textAppearance="@style/TextAppearance"
+                app:peaceComp_direction="textBottom" />
+        </com.peacedesign.android.widget.radio.PeaceRadioGroup>
+
+        <TextView
+            android:id="@+id/rangeInputsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/rangeInputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fromVerse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/dr_bg_edit_text"
+                android:gravity="center"
+                android:hint="@string/strHintFromVerse"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@color/colorText" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/toVerse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/dr_bg_edit_text"
+                android:gravity="center"
+                android:hint="@string/strHintToVerse"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <com.peacedesign.android.widget.checkbox.PeaceCheckBox
+            android:id="@+id/whatsappStyling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="@string/strLabelWhatsappStyling"
+            android:textAppearance="@style/TextAppearanceCommonTitle" />
+
+        <com.peacedesign.android.widget.checkbox.PeaceCheckBox
+            android:id="@+id/includeAr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="@string/strLabelIncludeArabic"
+            android:textAppearance="@style/TextAppearanceCommonTitle" />
+
+        <com.peacedesign.android.widget.checkbox.PeaceCheckBox
+            android:id="@+id/includeFootnotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="@string/strLabelIncludeFootnotes"
+            android:textAppearance="@style/TextAppearanceCommonTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/translsGroupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:paddingHorizontal="15dp"
+            android:text="@string/strLabelSelectTranslations"
+            android:textAppearance="@style/TextAppearanceCommonTitle"
+            android:textColor="@color/colorPrimary" />
+
+        <com.peacedesign.android.widget.checkbox.PeaceCheckboxGroup
+            android:id="@+id/translsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

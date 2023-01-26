@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets xmlns:android="http://schemas.android.com/apk/res/android">
+    <prophet honorific="عليه السلام" icon-res="prophet_adam" name-ar="آدم" name-trans="Adam" order="1" android:drawable="@drawable/prophet_adam">
+        <![CDATA[2:31-37,3:33,3:59,7:11-35,7:172,17:61,17:70,18:50,19:58,20:115-121,36:60,38:69]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="اليسع" name-en="Elisha" name-trans="Al-Yasaa" order="20" android:drawable="@drawable/prophet_al_yasaa">
+        <![CDATA[6:86,38:48]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="أيوب" name-en="Job" name-trans="Ayyub" order="12" android:drawable="@drawable/prophet_ayyub">
+        <![CDATA[4:163,6:84,21:83,38:41]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="داوود" name-en="David" name-trans="Dawud" order="17" android:drawable="@drawable/prophet_dawud">
+        <![CDATA[2:251,4:163,5:78,6:84,17:55,21:78-79,27:15,27:16,34:10-13,38:17,38:24-30]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="ذو الكفل" name-trans="Dhul-Kifl" order="16" android:drawable="@drawable/prophet_dhul_kifl">
+        <![CDATA[21:85,38:48]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="هارون" name-en="Aaron" name-trans="Harun" order="15" android:drawable="@drawable/prophet_harun">
+        <![CDATA[2:248,4:163,6:84,7:122,7:142,7:150,10:75,10:89,19:28,19:53,20:30,20:70,20:90-94,21:48,23:45,25:35,26:13,26:48,28:34,37:114,37:120]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="هود" name-trans="Hud" order="4" android:drawable="@drawable/prophet_hud">
+        <![CDATA[7:65-71,11:50-60,11:89,26:124]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="ابراهيم" name-en="Abraham" name-trans="Ibrahim" order="6" android:drawable="@drawable/prophet_ibrahim">
+        <![CDATA[2:124-140,2:258,2:260,3:33,3:65,3:67-68,3:84,3:95,3:97,4:54,4:125,4:163,6:74-75,6:83-84,6:161,9:70,9:114,11:69,11:74-76,12:6,12:38,14:35,15:51-52,15:57,16:120,16:123,19:41,19:46-47,19:58,21:51,21:60,21:62,21:69,22:26,22:43,22:78,26:69,29:16,29:24-26,29:31-32,33:7,37:83,37:104,37:109,38:45,42:13,43:26,51:24,51:31,53:37,57:26,60:4,87:19]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="إدريس" name-en="Enoch" name-trans="Idrees" order="2" android:drawable="@drawable/prophet_idrees">
+        <![CDATA[19:56,21:85]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="إلياس" name-en="Elias" name-trans="Iliyas" order="19" android:drawable="@drawable/prophet_iliyas">
+        <![CDATA[6:85,37:123-130]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="عيسى بن مريم" name-en="Jesus, Son of Marry" name-trans="Isa Ibn Maryam" order="24" android:drawable="@drawable/prophet_isa">
+        <![CDATA[2:87,2:136,2:253,3:45-59,3:84,4:157-159,4:163,4:171,5:46,5:78,5:110-116,6:85,19:19-21,19:29-37,19:88,19:91-92,21:91,33:7,42:13,43:59-63,57:27,61:6,61:14]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="إسحاق" name-en="Isaac" name-trans="Ishaq" order="9" android:drawable="@drawable/prophet_ishaq">
+        <![CDATA[2:133,2:136,2:140,3:84,4:163,6:84,11:71,12:6,12:38,14:39,19:49,21:72,29:27,37:112-113,38:45]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="إسماعيل" name-en="Ishmael" name-trans="Ismail" order="8" android:drawable="@drawable/prophet_ismail">
+        <![CDATA[2:125,2:127,2:133,2:136,2:140,3:84,4:163,6:86,14:39,19:54,21:85,38:48]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="لوط" name-en="Lot" name-trans="Lut" order="7" android:drawable="@drawable/prophet_lut">
+        <![CDATA[6:86,7:80,9:70,11:70-71,11:74,11:77,11:81,11:89,15:59,15:61,15:68,15:71,21:71,21:74,22:43,25:40,26:160-161,26:167,27:54-56,29:26,29:28-33,29:40,37:133,38:13,50:13,51:36,53:53,54:33-34,54:36,54:43,66:10,69:9]]></prophet>
+    <prophet honorific="ﷺ" name-ar="محمد" name-trans="Muhammad" order="25" android:drawable="@drawable/prophet_muhammad">
+        <![CDATA[3:144,5:41,11:2,13:43,16:101,17:1,25:1,33:9,33:40,47:2,48:29,61:6,73:1,74:1,88:21]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="موسی" name-en="Moses" name-trans="Musa" order="14" android:drawable="@drawable/prophet_musa">
+        <![CDATA[2:51,2:53-55,2:60-61,2:67-71,2:87,2:92,2:108,2:136,2:246,2:248,3:84,4:153,4:164,5:20-25,6:84,6:91,6:154,7:103-160,10:75-88,11:17,11:96,11:110,14:5-6,14:8,17:2,17:101-102,18:60-78,19:51,20:9-11,20:17-40,20:49-52,20:57-77,20:83-97,21:48,22:44,23:45,23:49,25:35,26:10-52,26:61-67,27:7-10,28:3,28:7,28:10,28:15-20,28:28-38,28:43-46,28:48,28:76,29:39,32:23,33:7,33:69,37:114,37:120,40:23,40:26-27,40:37,40:53,41:45,42:13,43:46,43:49,43:52,44:17,46:12,46:30,51:38,53:36,61:5,79:15,87:19]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="نوح" name-en="Noah" name-trans="Nuh" order="3" android:drawable="@drawable/prophet_nuh">
+        <![CDATA[3:33,4:163,6:84,7:59,7:61,7:69,9:70,10:71,11:25-34,11:36-48,11:89,14:9,17:3,17:17,19:58,21:76,22:42,23:23-28,25:37,26:105-106,26:116,29:14,33:7,37:75-79,38:12,40:5,40:31,42:13,50:12,51:46,53:52,54:9,57:26,66:10,71:1,71:21-26]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="صالح" name-trans="Saleh" order="5" android:drawable="@drawable/prophet_saleh">
+        <![CDATA[7:73-79,11:61-66,11:89,26:142,27:45,91:13]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="شعيب" name-trans="Shu’aib" order="13" android:drawable="@drawable/prophet_shuaib">
+        <![CDATA[7:85-93,11:84-95,26:177,29:36]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="سليمان" name-en="Solomon" name-trans="Sulayman" order="18" android:drawable="@drawable/prophet_sulayman">
+        <![CDATA[2:102,4:163,6:84,21:78-82,27:15-44,34:12-14,38:30,38:34]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="يحيى" name-en="John" name-trans="Yahya" order="23" android:drawable="@drawable/prophet_yahya">
+        <![CDATA[3:39,6:85,19:7,19:12,21:90]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="يعقوب" name-en="Jacob" name-trans="Yaqub" order="10" android:drawable="@drawable/prophet_yaqub">
+        <![CDATA[2:132-133,2:136,2:140,3:84,3:93,4:163,6:84,11:71,12:6,12:13,12:18,12:38,12:66,12:68,12:83,19:6,19:49,19:58,21:72,29:27,38:45]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="يونس" name-en="Jonah" name-trans="Yunus" order="21" android:drawable="@drawable/prophet_yunus">
+        <![CDATA[4:163,6:86,10:98,21:87,37:139,68:48]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="يوسف" name-en="Joseph" name-trans="Yusuf" order="11" android:drawable="@drawable/prophet_yusuf">
+        <![CDATA[6:84,12:4-101,40:34]]></prophet>
+    <prophet honorific="عليه السلام" name-ar="زكريا" name-en="Zachariah" name-trans="Zakariyya" order="22" android:drawable="@drawable/prophet_zakariyya">
+        <![CDATA[3:37-38,6:85,19:2-11,21:89]]></prophet>
+</prophets>

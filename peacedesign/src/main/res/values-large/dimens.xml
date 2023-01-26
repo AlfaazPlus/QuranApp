@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dmnDialogWidthPortrait">80%</dimen>
+    <dimen name="dmnDialogWidthLand">55%</dimen>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 19/10/2021.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dmnAppBarHeight"
+    android:background="@drawable/dr_bg_sheet_dialog_header">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/closeReference"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/dr_bg_action_round"
+        android:padding="7dp"
+        android:src="@drawable/dr_icon_chevron_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnBookmark"
+        app:layout_constraintStart_toEndOf="@id/closeReference"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@id/btnBookmark"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/dr_bg_hover_round"
+        android:gravity="center"
+        android:padding="8dp"
+        android:src="@drawable/dr_icon_bookmark_outlined"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnOpen"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnOpen"
+        android:layout_width="@dimen/dmnActionButtonSmall"
+        android:layout_height="@dimen/dmnActionButtonSmall"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/dr_bg_secondary_cornered_selector"
+        android:gravity="center"
+        android:padding="5dp"
+        android:src="@drawable/dr_icon_open"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

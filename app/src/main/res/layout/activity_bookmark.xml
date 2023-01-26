@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGPageVariable">
+
+    <com.quranapp.android.views.BoldHeader
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dmnPadBig" />
+
+    <LinearLayout
+        android:id="@+id/noItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:background="@color/colorBGPage"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/noItemsIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:tint="@color/colorIconPageBG" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/noItemsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorText3" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:background="@color/colorBGPage"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="@dimen/dmnProgressBarSize"
+            android:layout_height="@dimen/dmnProgressBarSize"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

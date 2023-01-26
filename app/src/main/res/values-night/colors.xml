@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Comfort white -->
+    <color name="white">#FFD9D9D9</color>
+
+    <color name="colorBGLightGrey">#FF252525</color>
+    <color name="colorBGOverHomePageItem">#FF303030</color>
+
+    <color name="colorBGPage">#151515</color>
+    <color name="colorBGPage1_5">#202020</color>
+    <color name="colorBGPage2">#252525</color>
+    <color name="colorBGHomePage">#151515</color>
+    <color name="colorBGHomePageItem">@color/colorBGPage1_5</color>
+    <color name="colorBGHomePageItemHover">#303030</color>
+    <color name="colorBGLastVersesChapterNo">#303030</color>
+    <color name="colorVOTDDivider">#303030</color>
+
+
+    <color name="colorBGWrappedRadio">#1AFFFFFF</color>
+    <color name="colorBGWrappedRadioBorder">#1AFFFFFF</color>
+
+    <color name="colorBGPageVariable">@color/colorBGPage</color>
+    <color name="colorBGPageVariableInverse">@color/colorBGPage1_5</color>
+    <color name="colorBGIndexMenu">@color/colorBGPage1_5</color>
+    <color name="colorBGRecitationMenu">#303030</color>
+
+    <color name="colorText">@color/white</color>
+    <color name="colorText2">#B0B0B0</color>
+    <color name="colorText3">#858585</color>
+    <color name="colorText4">#606060</color>
+
+    <color name="colorTextNoArabic">#999999</color>
+    <color name="colorTextArabic">#D0D0D0</color>
+
+    <color name="colorIcon">#A5A5A5</color>
+    <color name="colorIcon2">#858585</color>
+    <color name="colorDivider">#202020</color>
+    <color name="colorDividerContrast">#3E3E3E</color>
+    <color name="colorDividerVariable">#FF303030</color>
+    <color name="colorDividerCardOnlyLight">@color/colorBGCardVariable</color>
+
+    <color name="colorBGReaderSpinner">#FF252525</color>
+    <!--    <color name="colorBGReaderHeader">#FF151515</color>-->
+    <color name="colorBGReaderChapterSerial">#FF333333</color>
+
+    <color name="colorBGCardVariable">@color/colorBGPage1_5</color>
+    <color name="colorIconPageBG">#3F3F3F</color>
+
+    <color name="colorBGChapterInfoCard">@color/colorBGPage2</color>
+
+    <color name="colorBGScrollBarThumb">#545454</color>
+
+    <color name="colorBorderFormField">#303030</color>
+</resources>

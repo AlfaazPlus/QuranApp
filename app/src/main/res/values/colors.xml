@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008B5B</color>
+    <color name="colorPrimaryVariant">#478778</color>
+    <color name="colorPrimaryDark">#007444</color>
+    <color name="colorPrimaryHover">#004A30</color>
+    <color name="colorPrimaryAlpha50">#80008B5B</color>
+    <color name="colorPrimaryAlpha30">#4D008B5B</color>
+    <color name="colorPrimaryAlpha20">#33008B5B</color>
+    <color name="colorPrimaryAlpha10">#1A008B5B</color>
+
+    <color name="colorSecondary">#0094A7</color>
+    <color name="colorSecondaryDark">#006774</color>
+
+    <color name="colorTertiary">#9c3e00</color>
+    <color name="colorTertiaryDark">#6D2C01</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="white2">#FFE0E0E0</color>
+    <color name="white3">#FFC0C0C0</color>
+    <color name="white4">#FFA0A0A0</color>
+
+    <color name="black">#FF000000</color>
+    <color name="black2">#FF333333</color>
+    <color name="black3">#FF777777</color>
+    <color name="black4">#FFAAAAAA</color>
+
+    <color name="colorBGLightGrey">#F0F0F0</color>
+    <color name="colorBGOverHomePageItem">#F0F0F0</color>
+
+    <color name="colorBGPage">@color/white</color>
+    <color name="colorBGPage1_5">#F0F0F0</color>
+    <color name="colorBGPage2">#E0E0E0</color>
+    <color name="colorBGHomePage">#FFE0E0E0</color>
+    <color name="colorBGHomePageItem">@color/white</color>
+    <color name="colorBGHomePageItemHover">#FFE6E6E6</color>
+    <color name="colorBGLastVersesChapterNo">#FFE6E6E6</color>
+    <color name="colorVOTDDivider">#FFE0E0E0</color>
+
+    <color name="colorBGBottomNavigation">@color/colorBGHomePageItem</color>
+    <color name="colorBottomNavigationBorder">@color/colorVOTDDivider</color>
+
+    <color name="colorBGWrappedRadio">#1A000000</color>
+    <color name="colorBGWrappedRadioBorder">#1A000000</color>
+
+    <color name="colorBGPageVariable">@color/colorBGPage1_5</color>
+    <color name="colorBGPageVariableInverse">@color/colorBGPage</color>
+    <color name="colorBGIndexMenu">@color/colorBGPage</color>
+    <color name="colorBGRecitationMenu">@color/colorBGPage</color>
+
+    <color name="colorText">#FF000000</color>
+    <color name="colorText2">#FF333333</color>
+    <color name="colorText3">#FF777777</color>
+    <color name="colorText4">#FFAAAAAA</color>
+
+    <color name="colorTextNoArabic">#606060</color>
+    <color name="colorTextArabic">#454545</color>
+
+    <color name="colorIcon">#5A5A5A</color>
+    <color name="colorIcon2">#7A7A7A</color>
+    <color name="colorDivider">#FFE0E0E0</color>
+    <color name="colorDividerContrast">#BDBDBD</color>
+    <color name="colorDividerVariable">@color/colorDivider</color>
+    <color name="colorDividerCardOnlyLight">@color/colorDivider</color>
+    <color name="colorDividerVerse">@color/colorDividerVariable</color>
+
+    <color name="colorBGReaderSpinner">@color/colorBGPage</color>
+    <color name="colorBGReaderHeader">@color/colorBGCardVariable</color>
+    <color name="colorBGReaderVerseSelected">#33008B5B</color>
+    <color name="colorBGReaderVerseActionHover">?colorControlHighlight</color>
+    <color name="colorBGReaderChapterSerial">#E8E8E8</color>
+
+    <color name="colorBGCardVariable">@color/colorBGPage</color>
+    <color name="colorIconPageBG">#C8C8C8</color>
+
+    <color name="colorTintChapterTitleBG">@color/colorPrimary</color>
+    <color name="colorBGQuranPageHeader">@color/colorDividerVerse</color>
+    <color name="colorBGChapterInfoCard">@color/colorBGPage</color>
+
+    <color name="colorBGScrollBarThumb">#807D7D7D</color>
+    <color name="colorBGUnlockPopup">#D9011810</color>
+
+    <color name="colorLogoSecondary">#d4af37</color>
+    <color name="colorLogoSecondaryDark">#A28423</color>
+    <color name="colorLogoSecondaryAlpha50">#80D4AF37</color>
+    <color name="colorLogoSecondaryAlpha40">#66D4AF37</color>
+    <color name="colorSplashGradient1">#0D2C27</color>
+    <color name="colorSplashGradient2">#043137</color>
+
+    <color name="colorHintFormField">#80848484</color>
+    <color name="colorBorderFormField">#E6E6E6</color>
+
+    <color name="colorDanger">#FFDC3545</color>
+    <color name="colorDangerDark">#AC2330</color>
+</resources>

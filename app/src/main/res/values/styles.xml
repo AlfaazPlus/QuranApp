@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearanceBismillah">
+        <item name="android:fontFamily">@font/bismillah</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="TextAppearanceChapterIcon">
+        <item name="android:fontFamily">@font/suracon</item>
+    </style>
+
+    <style name="TextAppearanceChapterIconReaderTitleSmall" parent="TextAppearanceChapterIcon">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextAppearanceChapterIconReaderTitleMedium" parent="TextAppearanceChapterIcon">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">31sp</item>
+    </style>
+
+    <style name="TextAppearanceChapterIconSpinnerItem" parent="TextAppearanceChapterIcon">
+        <item name="android:textColor">@color/color_reader_spinner_item_label</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/dmnCommonSize</item>
+    </style>
+
+    <style name="TextAppearanceCommonTitle" parent="TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dmnCommonSize</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextAppearanceCommonTitleLarge" parent="TextAppearanceCommonTitle">
+        <item name="android:textSize">@dimen/dmnCommonSizeLarger</item>
+    </style>
+
+    <style name="SubTextAppearanceThin" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/dmnCommonSize2</item>
+    </style>
+
+    <style name="ButtonReaderVerseInfoLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ButtonReaderVerseInfoIcon">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/dr_bg_reader_verse_action_selector_round</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="ButtonReaderVerseInfoLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dmnCommonSize3_5</item>
+        <item name="android:textColor">@color/colorIcon</item>
+    </style>
+
+    <style name="ButtonAuthTypeSelector">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/dr_bg_btn_auth_type_selector</item>
+        <item name="android:textColor">@color/color_btn_auth_type_selector</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="ButtonAction">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dr_bg_button_action</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="drawableEndDimen">20dp</item>
+        <item name="drawableStartDimen">20dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="drawableTint">@color/white</item>
+    </style>
+
+    <style name="ButtonActionSecondary" parent="ButtonAction">
+        <item name="android:background">@drawable/dr_bg_button_action_secondary</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ButtonActionAlpha">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dr_bg_button_action_alpha</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">@dimen/dmnCommonSize1_5</item>
+        <item name="android:drawablePadding">0dp</item>
+        <item name="drawableEndDimen">20dp</item>
+        <item name="drawableStartDimen">20dp</item>
+    </style>
+
+    <style name="ButtonActionAlphaSmall" parent="ButtonActionAlpha">
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textSize">@dimen/dmnCommonSize3</item>
+    </style>
+
+    <style name="ButtonActionRound">
+        <item name="android:layout_width">@dimen/dmnActionButton</item>
+        <item name="android:layout_height">@dimen/dmnActionButton</item>
+        <item name="android:background">@drawable/dr_bg_action_round</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">7dp</item>
+    </style>
+
+    <style name="EditTextBtnClear">
+        <item name="android:layout_width">@dimen/dmnActionButtonTiny</item>
+        <item name="android:layout_height">@dimen/dmnActionButtonTiny</item>
+        <item name="android:background">@drawable/dr_bg_edittext_clear</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:src">@drawable/dr_icon_close</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+    <style name="PeaceCheckBox">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorText2</item>
+        <item name="buttonCompat">@drawable/dr_checkbox</item>
+    </style>
+
+    <style name="IndexMenuAnimation">
+        <item name="android:windowEnterAnimation">@anim/index_menu_enter</item>
+        <item name="android:windowExitAnimation">@anim/index_menu_exit</item>
+    </style>
+
+    <style name="SeekBarStyle">
+        <item name="android:maxHeight">10dp</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:progressDrawable">@drawable/seekbar_style</item>
+        <item name="android:splitTrack">false</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+    </style>
+
+    <style name="SeekBarStyleRecitationPlayer" parent="SeekBarStyle">
+        <item name="android:maxHeight">6dp</item>
+        <item name="android:minHeight">6dp</item>
+    </style>
+
+    <style name="ListView" parent="@android:style/Widget.Holo.Light.ListView">
+        <item name="android:listSelector">@drawable/dr_bg_spinner_item</item>
+    </style>
+
+    <style name="ChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="singleSelection">true</item>
+        <item name="selectionRequired">true</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="checkedIcon">@null</item>
+        <item name="chipBackgroundColor">@color/color_chip_bg</item>
+        <item name="chipStartPadding">5dp</item>
+        <item name="chipEndPadding">7dp</item>
+        <item name="android:textColor">@color/color_reader_spinner_item_label</item>
+        <item name="android:textSize">@dimen/dmnCommonSize2</item>
+        <item name="android:textAlignment">center</item>
+        <item name="singleLine">true</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="PeaceDialogThemeFullscreen" parent="PeaceDialogTheme">
+        <item name="peaceDialogLayoutBackgroundColor">@color/colorBGPage</item>
+        <item name="android:windowBackground">@color/colorBGPage</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

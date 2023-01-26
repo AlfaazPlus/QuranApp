@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGPageVariable"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/lyt_topics_activity_header" />
+
+    <com.quranapp.android.views.helper.RecyclerView2
+        android:id="@+id/topics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:paddingHorizontal="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dmnPadHuge" />
+</LinearLayout>

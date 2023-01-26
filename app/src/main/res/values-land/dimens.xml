@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 19/11/2021.
+  -->
+
+<resources>
+    <fraction name="dmnIndexMenuWidth">65%</fraction>
+</resources>

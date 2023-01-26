@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 4/11/2021.
+  -->
+
+<resources>
+    <integer name="intActionBtnRotation">0</integer>
+    <integer name="intBGTransition">120</integer>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ (c) Faisal Khan. Created on 27/1/2022.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/field"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fieldTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/colorText2"
+        android:textSize="@dimen/dmnCommonSize1_5" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fieldInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_form_field"
+        android:padding="10dp"
+        android:textColorHint="@color/colorHintFormField" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fieldMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#FF0000"
+        android:textSize="@dimen/dmnCommonSize2"
+        android:visibility="gone" />
+
+</LinearLayout>
