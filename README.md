@@ -15,11 +15,13 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 <div align="left">
 
 # Screenshots
-<img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1'/>
-<img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2'/>
-<img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3'/>
-<img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4'/>
 
+<div style="width:100%; display:flex; justify-content:space-between;">
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1'/>
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2'/>
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3'/>
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4'/>
+</div>
 
 
 | Features                    |     |
