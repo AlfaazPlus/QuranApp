@@ -17,14 +17,17 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 # Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1' width=25% />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2' width=25% />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3' width=25% />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4' width=25% />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1' width='24.5%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2' width='24.5%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3' width='24.5%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4' width='24.5%' />
 </div>
 
+See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots).
 
-| Features                    |     |
+## Features
+
+| Salient Features                    |     |
 |-----------------------------|-----|
 | Multiple Translations       | ✅   |
 | Multiple Recitations        | ✅   |
@@ -45,6 +48,6 @@ See [CONTRIBUTING.md](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIB
 
 ## License
 
-[See here](https://github.com/AlfaazPlus/QuranApp/blob/master/LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/AlfaazPlus/QuranApp/blob/master/LICENSE)
 
 </div>
