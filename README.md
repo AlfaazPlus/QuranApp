@@ -4,7 +4,7 @@
 <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.png" alt='QuranApp logo' height="140"/>
 
 ### QuranApp: Read and Explore
-The QuranApp is a leading mobile application that facilitates reading the Qur’an on daily basis at any time and place. [Know more](https://quran.alfaazplus.com/about)
+The QuranApp is a leading mobile application that facilitates reading the Holy Qur’an on daily basis at any time and place. [Know more](https://quran.alfaazplus.com/about)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
       alt='Get it on Google Play'
