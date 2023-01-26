@@ -35,18 +35,6 @@ object FirebaseUtils {
         return FirebaseFirestore.getInstance()
     }
 
-    @JvmStatic
-    fun functions(): FirebaseFunctions {
-        val functions = FirebaseFunctions.getInstance()
-        if (FIREBASE_EMULATOR_ACTIVE) {
-            try {
-                functions.useEmulator(FIREBASE_EMULATOR_HOST, FIREBASE_EMULATOR_PORT_FUNCTIONS)
-            } catch (e: Exception) {
-            }
-        }
-        return functions
-    }
-
     fun storage(): FirebaseStorage {
         val storage = FirebaseStorage.getInstance()
         if (FIREBASE_EMULATOR_ACTIVE) {
