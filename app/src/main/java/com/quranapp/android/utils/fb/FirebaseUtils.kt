@@ -17,7 +17,6 @@ import com.google.firebase.storage.StorageReference
 import com.quranapp.android.BuildConfig
 
 object FirebaseUtils {
-    const val FUNCTIONS_VERIFY_PURCHASE = "verifyPurchases"
     const val FIRESTORE_USERS_COLLECTION = "users"
     const val RTDB_VERSE_REPORTS = "verseReports"
     const val STORAGE_BUCKET = "gs://the-quranapp.appspot.com"
