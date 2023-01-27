@@ -11,6 +11,8 @@ Thank you for considering contributing to the QuranApp! May Allah reward you for
 - Documentation improvements
 - Design suggestions
 
+We welcome your contribution to even this page.
+
 ## Before you start
 Please note that all new code contributions must be written in Kotlin. Please follow the [Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html) and the [Android Kotlin Style Guide](https://developer.android.com/kotlin/style-guide). You may also setup our [kotlin_code_style.xml](https://github.com/AlfaazPlus/QuranApp/blob/master/kotlin_code_style.xml) in your IDE.
 
