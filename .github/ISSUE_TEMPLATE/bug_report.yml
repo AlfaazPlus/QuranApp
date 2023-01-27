@@ -1,5 +1,5 @@
 name: 🐞 Issue Report
-description: Report a issue to help us improve the QuranApp
+description: Report an issue to help us improve the QuranApp
 labels: [bug]
 body:
 
@@ -39,7 +39,7 @@ body:
     attributes:
       label: QuranApp version
       description: |
-        You can find your QuranApp version in **Menu > About**.
+        You can find your QuranApp version in **Menu > About Us**.
     validations:
       required: true
 
