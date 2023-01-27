@@ -17,10 +17,10 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 # Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1' width='24.5%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2' width='24.5%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3' width='24.5%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4' width='24.5%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot2.jpg" alt='Screenshot 2' width='21%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot3.jpg" alt='Screenshot 3' width='21%' />
+    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
 </div>
 
 See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots).
