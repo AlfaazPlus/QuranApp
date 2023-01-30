@@ -37,7 +37,7 @@ public final class ActivityBuffer<R extends FragmentActivity> {
     /**
      * Executes the Runnable if there's an available Context. Otherwise, defers execution until it becomes available.
      */
-    public final void safely(final ActivityAvailableListener<R> listener) {
+    public void safely(final ActivityAvailableListener<R> listener) {
         // Synchronize along the current instance.
         synchronized (this) {
             // Do we have a context available?
@@ -54,7 +54,7 @@ public final class ActivityBuffer<R extends FragmentActivity> {
     /**
      * Called to inform the ActivityBuffer that there's an available Activity reference.
      */
-    public final void onActivityGained(final R activity) {
+    public void onActivityGained(final R activity) {
         // Synchronize along ourself.
         synchronized (this) {
             // Update the Activity reference.
@@ -78,7 +78,7 @@ public final class ActivityBuffer<R extends FragmentActivity> {
     /**
      * Called to inform the ActivityBuffer that the Context has been lost.
      */
-    public final void onActivityLost() {
+    public void onActivityLost() {
         // Synchronize along ourself.
         synchronized (this) {
             // Remove the Context reference.
@@ -89,7 +89,7 @@ public final class ActivityBuffer<R extends FragmentActivity> {
     /**
      * Defines whether there's a safe Context available for the ActivityBuffer.
      */
-    public final boolean isContextAvailable() {
+    public boolean isContextAvailable() {
         // Synchronize upon ourself.
         synchronized (this) {
             // Return the state of the Activity reference.

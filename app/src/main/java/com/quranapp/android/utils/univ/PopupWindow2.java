@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.univ;
 
-import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +8,10 @@ import android.view.WindowManager;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.utils.Log;
 
 public class PopupWindow2 extends RelativePopupWindow {
     private float mDimAmount;
     private boolean mClipBackground;
-
-    public PopupWindow2(Context context) {
-        super(context);
-    }
-
-    public PopupWindow2() {
-    }
-
-    public PopupWindow2(View contentView) {
-        super(contentView);
-    }
-
-    public PopupWindow2(int width, int height) {
-        super(width, height);
-    }
-
-    public PopupWindow2(View contentView, int width, int height) {
-        super(contentView, width, height);
-    }
-
-    public PopupWindow2(View contentView, int width, int height, boolean focusable) {
-        super(contentView, width, height, focusable);
-    }
 
     public void setDimBehind(float dimAmount) {
         mDimAmount = dimAmount;

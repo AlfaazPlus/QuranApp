@@ -45,7 +45,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("RegExpRedundantEscape")
 public class RecitationUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "recitations");
     public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
@@ -55,16 +54,6 @@ public class RecitationUtils {
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
     public static final String KEY_RECITATION_CONTINUE_CHAPTER = "key.recitation.continue_chapter";
     public static final String KEY_RECITATION_VERSE_SYNC = "key.recitation.verse_sync";
-
-    /*public static final String REC_MISHARY_RASHID = "mishary-rashid";
-    public static final String REC_AS_SUDAIS = "as-sudais";
-    public static final String REC_AR_RIFAI = "ar-rifai";
-    public static final String REC_ABDUL_BASIT = "abdul-basit";
-    public static final String REC_AL_SHATRI = "al-shatri";
-    public static final String REC_AL_SHURAYM = "as-shuraym";
-
-    public static final String RECITATION_DEFAULT_RECITER = REC_AR_RIFAI;*/
-
     public static final boolean RECITATION_DEFAULT_REPEAT = false;
     public static final boolean RECITATION_DEFAULT_CONTINUE_CHAPTER = true;
     public static final boolean RECITATION_DEFAULT_VERSE_SYNC = true;
