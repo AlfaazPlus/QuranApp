@@ -1,14 +1,11 @@
-package com.quranapp.android.utils.univ;
+package com.quranapp.android.utils.univ
 
-import android.text.Spannable;
+import android.text.Spannable
 
-public class SpannableFactory extends Spannable.Factory {
-    @Override
-    public Spannable newSpannable(CharSequence source) {
-        if (source instanceof Spannable) {
-            return (Spannable) source;
-        }
-
-        return super.newSpannable(source);
+class SpannableFactory : Spannable.Factory() {
+    override fun newSpannable(source: CharSequence): Spannable {
+        return if (source is Spannable) {
+            source
+        } else super.newSpannable(source)
     }
 }

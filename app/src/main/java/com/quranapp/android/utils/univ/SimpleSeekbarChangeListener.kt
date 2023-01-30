@@ -1,17 +1,9 @@
-package com.quranapp.android.utils.univ;
+package com.quranapp.android.utils.univ
 
-import android.widget.SeekBar;
+import android.widget.SeekBar
 
-public abstract class SimpleSeekbarChangeListener implements SeekBar.OnSeekBarChangeListener {
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-    }
+abstract class SimpleSeekbarChangeListener : SeekBar.OnSeekBarChangeListener {
+    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {}
+    override fun onStartTrackingTouch(seekBar: SeekBar) {}
+    override fun onStopTrackingTouch(seekBar: SeekBar) {}
 }

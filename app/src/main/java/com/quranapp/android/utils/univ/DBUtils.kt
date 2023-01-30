@@ -3,22 +3,21 @@
  * Created on 25/2/2022.
  * All rights reserved.
  */
+package com.quranapp.android.utils.univ
 
-package com.quranapp.android.utils.univ;
-
-public final class DBUtils {
-    public static String createDBSelection(String... cols) {
-        StringBuilder selection = new StringBuilder();
-        int l = cols.length;
-        int lastIndex = l - 1;
-        for (int i = 0; i < l; i++) {
-            String col = cols[i];
-            selection.append(col).append("=?");
-
+object DBUtils {
+    @JvmStatic
+    fun createDBSelection(vararg cols: String?): String {
+        val selection = StringBuilder()
+        val l = cols.size
+        val lastIndex = l - 1
+        for (i in 0 until l) {
+            val col = cols[i]
+            selection.append(col).append("=?")
             if (i < lastIndex) {
-                selection.append(" AND ");
+                selection.append(" AND ")
             }
         }
-        return selection.toString();
+        return selection.toString()
     }
 }

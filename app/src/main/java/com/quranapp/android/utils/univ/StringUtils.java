@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.univ;
 
-import static com.quranapp.android.utils.univ.RegexPattern.DIACRITICS_PATTERN;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC_LOWER;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC_UPPER;
@@ -140,7 +139,7 @@ public abstract class StringUtils {
 
     public static String stripDiacritics(String str) {
         str = Normalizer.normalize(str, Normalizer.Form.NFD);
-        str = DIACRITICS_PATTERN.matcher(str).replaceAll("");
+        str = RegexPattern.DIACRITICS_PATTERN.matcher(str).replaceAll("");
         return str;
     }
 

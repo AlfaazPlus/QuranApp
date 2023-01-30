@@ -8,19 +8,16 @@ import static com.quranapp.android.utils.reader.TextSizeUtils.KEY_TEXT_SIZE_MULT
 import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
 import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT;
 import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_VERSE_SYNC;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_REPEAT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_READER_STYLE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.univ.Keys;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -132,10 +129,10 @@ public abstract class SPReader {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
 
         if (!sp.contains(KEY_RECITATION_REPEAT)) {
-            setRecitationRepeatVerse(context, RECITATION_DEFAULT_REPEAT);
+            setRecitationRepeatVerse(context, RecitationUtils.RECITATION_DEFAULT_REPEAT);
         }
 
-        return sp.getBoolean(KEY_RECITATION_REPEAT, RECITATION_DEFAULT_REPEAT);
+        return sp.getBoolean(KEY_RECITATION_REPEAT, RecitationUtils.RECITATION_DEFAULT_REPEAT);
     }
 
     public static void setRecitationRepeatVerse(Context context, boolean repeatVerse) {
@@ -148,34 +145,37 @@ public abstract class SPReader {
     public static boolean getRecitationContinueChapter(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
 
-        if (!sp.contains(KEY_RECITATION_CONTINUE_CHAPTER)) {
-            setRecitationContinueChapter(context, RECITATION_DEFAULT_CONTINUE_CHAPTER);
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER)) {
+            setRecitationContinueChapter(context, RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER);
         }
 
-        return sp.getBoolean(KEY_RECITATION_CONTINUE_CHAPTER, RECITATION_DEFAULT_CONTINUE_CHAPTER);
+        return sp.getBoolean(
+                RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER,
+                RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
+        );
     }
 
     public static void setRecitationContinueChapter(Context context, boolean continueChapter) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(KEY_RECITATION_CONTINUE_CHAPTER, continueChapter);
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER, continueChapter);
         editor.apply();
     }
 
     public static boolean getRecitationScrollSync(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
 
-        if (!sp.contains(KEY_RECITATION_VERSE_SYNC)) {
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_VERSE_SYNC)) {
             setRecitationVerseSync(context, RECITATION_DEFAULT_VERSE_SYNC);
         }
 
-        return sp.getBoolean(KEY_RECITATION_VERSE_SYNC, RECITATION_DEFAULT_VERSE_SYNC);
+        return sp.getBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, RECITATION_DEFAULT_VERSE_SYNC);
     }
 
     public static void setRecitationVerseSync(Context context, boolean sync) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(KEY_RECITATION_VERSE_SYNC, sync);
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, sync);
         editor.apply();
     }
 
@@ -199,18 +199,18 @@ public abstract class SPReader {
     public static int getSavedReaderStyle(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
 
-        if (!sp.contains(READER_KEY_READER_STYLE)) {
+        if (!sp.contains(Keys.READER_KEY_READER_STYLE)) {
             setSavedReaderStyle(context, READER_STYLE_DEFAULT);
         }
 
         sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
-        return sp.getInt(READER_KEY_READER_STYLE, READER_STYLE_DEFAULT);
+        return sp.getInt(Keys.READER_KEY_READER_STYLE, READER_STYLE_DEFAULT);
     }
 
     public static void setSavedReaderStyle(Context context, int readerStyle) {
         SharedPreferences sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(READER_KEY_READER_STYLE, readerStyle);
+        editor.putInt(Keys.READER_KEY_READER_STYLE, readerStyle);
         editor.apply();
     }
 }
