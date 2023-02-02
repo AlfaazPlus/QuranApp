@@ -9,7 +9,6 @@ package com.quranapp.android.frags.settings;
 import static android.content.Context.BIND_AUTO_CREATE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.quranapp.android.utils.account.AccManager.isLoggedIn;
 import static com.quranapp.android.utils.receivers.TranslDownloadReceiver.ACTION_NO_MORE_DOWNLOADS;
 import static com.quranapp.android.utils.receivers.TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS;
 import static com.quranapp.android.utils.receivers.TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED;
@@ -42,8 +41,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.adapters.transl.ADPDownloadTransls;
@@ -55,7 +52,6 @@ import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.FragSettingsTranslBinding;
 import com.quranapp.android.exc.NoInternetException;
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl;
-import com.quranapp.android.utils.account.AccManager;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
@@ -85,21 +81,19 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 
-public class FragSettingsTranslDownload extends FragSettingsBase implements TranslDownloadReceiver.TranslDownloadStateListener,
-        ServiceConnection, AccManager.EmailVerificationListener, TranslDownloadExplorerImpl {
+public class FragSettingsTranslDownload extends FragSettingsBase implements
+        TranslDownloadReceiver.TranslDownloadStateListener,
+        ServiceConnection, TranslDownloadExplorerImpl {
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final CallableTaskRunner<String> mTaskRunner = new CallableTaskRunner<>(mHandler);
-    private FirebaseAuth mAuth;
-    private AccManager.EmailVerifyHelper mEmailVerifyHelper;
     private FragSettingsTranslBinding mBinding;
     private ADPDownloadTransls mAdapter;
     private FileUtils mFileUtils;
     private QuranTranslFactory mTranslFactory;
     private TranslDownloadReceiver mTranslDownloadReceiver;
     private TranslDownloadService mTranslDownloadService;
-    private String[] mNewTransls;
-    private ProgressDialog mProgressDialog;
+    private String[] mNewTranslations;
     private PageAlert mPageAlert;
 
     @Override
@@ -190,13 +184,12 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
 
     @Override
     public void onViewReady(@NonNull Context ctx, @NonNull View view, @Nullable Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
         mFileUtils = FileUtils.newInstance(ctx);
         mTranslFactory = new QuranTranslFactory(ctx);
         mBinding = FragSettingsTranslBinding.bind(view);
 
         Bundle args = getArgs();
-        mNewTransls = args.getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS);
+        mNewTranslations = args.getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS);
 
         view.post(() -> init(ctx));
     }
@@ -338,28 +331,8 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
             return;
         }
 
-        if (!isLoggedIn(mAuth)) {
-            AccManager.alertNotLoggedIn(ctx, this, R.string.strMsgLogin4Transl);
-            return;
-        }
-
-        if (mEmailVerifyHelper == null) {
-            mEmailVerifyHelper = new AccManager.EmailVerifyHelper(ctx, mAuth.getCurrentUser(), this);
-        }
-
         mAdapter.onDownloadStatus(bookInfo.getSlug(), true);
-        mEmailVerifyHelper.checkEmailVerified(bool -> {
-            if (bool == null) {
-                failedDownloadInitiation(ctx, bookInfo.getSlug());
-            } else {
-                if (bool) {
-                    onDownloadCheckpointFinal(ctx, bookInfo);
-                } else {
-                    mEmailVerifyHelper.alertEmailNotVerified();
-                    mAdapter.onDownloadStatus(bookInfo.getSlug(), false);
-                }
-            }
-        });
+        onDownloadCheckpointFinal(ctx, bookInfo);
     }
 
     private void onDownloadCheckpointFinal(Context ctx, QuranTranslBookInfo bookInfo) {
@@ -387,12 +360,6 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
         if (getActivity() != null) {
             bindTranslService(getActivity());
         }
-    }
-
-    private void failedDownloadInitiation(Context ctx, String slug) {
-        NotifUtils.popMsg(ctx, ctx.getString(R.string.strTitleError),
-                ctx.getString(R.string.strMsgSomethingWrong), ctx.getString(R.string.strLabelRetry), null);
-        mAdapter.onDownloadStatus(slug, false);
     }
 
     @Override
@@ -437,24 +404,6 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mTranslDownloadService = null;
-    }
-
-    @Override
-    public void preEmailVerificationSend() {
-        if (mBinding == null) {
-            return;
-        }
-
-        mProgressDialog = new ProgressDialog(mBinding.getRoot().getContext());
-        mProgressDialog.setMessage(R.string.strTextPleaseWait);
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void postEmailVerificationSend() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
     }
 
     private void showLoader() {
@@ -594,7 +543,7 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
 
                     isAlreadyDownloaded = isTranslDownloaded(bookInfo.getSlug());
 
-                    if (ArrayUtils.contains(mNewTransls, bookInfo.getSlug())) {
+                    if (ArrayUtils.contains(mNewTranslations, bookInfo.getSlug())) {
                         model.addMiniInfo(mCtx.getString(R.string.strLabelNew));
                     }
 
@@ -633,11 +582,13 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements Tran
         }
 
         private boolean isUpdatable(TranslModel model) {
-            QuranTranslBookInfo oldTranslBookInfo = mTranslFactory.getTranslationBookInfo(model.getBookInfo().getSlug());
+            QuranTranslBookInfo oldTranslBookInfo = mTranslFactory.getTranslationBookInfo(
+                    model.getBookInfo().getSlug());
 
             boolean isUpdatable = false;
             if (oldTranslBookInfo.getLastUpdated() != -1 && model.getBookInfo().getLastUpdated() != -1) {
-                isUpdatable = DateUtils.isNewer(oldTranslBookInfo.getLastUpdated(), model.getBookInfo().getLastUpdated());
+                isUpdatable = DateUtils.isNewer(oldTranslBookInfo.getLastUpdated(),
+                        model.getBookInfo().getLastUpdated());
                 if (isUpdatable) {
                     model.addMiniInfo(mCtx.getString(R.string.strLabelUpdate));
                 }

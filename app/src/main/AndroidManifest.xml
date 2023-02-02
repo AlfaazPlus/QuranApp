@@ -97,14 +97,6 @@
         <activity android:name=".activities.test.ActivityExperiment" />
 
         <activity
-            android:name=".activities.account.ActivityAccount"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activities.account.ActivityProfile" />
-        <activity
-            android:name=".activities.account.ActivityEditProfile"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.QuranApp.Licenses" />
         <activity

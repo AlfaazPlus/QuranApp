@@ -16,16 +16,12 @@ import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.account.ActivityAccount;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
 import com.quranapp.android.databinding.ActivityMainBinding;
-import com.quranapp.android.databinding.LytAccountReminderBinding;
 import com.quranapp.android.frags.main.FragMain;
 import com.quranapp.android.suppliments.IndexMenu;
-import com.quranapp.android.utils.account.AccManager;
 import com.quranapp.android.utils.app.AppActions;
 import com.quranapp.android.utils.app.UpdateManager;
 import com.quranapp.android.utils.sp.SPAppActions;
@@ -107,10 +103,6 @@ public class MainActivity extends BaseActivity {
 
         if (isOnboardingRequired()) {
             return;
-        }
-
-        if (SPAppActions.getRequireAccReminder(this) && !AccManager.isLoggedIn()) {
-            initAccountReminder();
         }
 
         init();
@@ -217,29 +209,5 @@ public class MainActivity extends BaseActivity {
     private void initOnboarding() {
         launchActivity(ActivityOnboarding.class);
         finish();
-    }
-
-    private void initAccountReminder() {
-        LytAccountReminderBinding binding = LytAccountReminderBinding.inflate(getLayoutInflater(), null, false);
-        PeaceBottomSheet dialog = new PeaceBottomSheet();
-        PeaceBottomSheet.PeaceBottomSheetParams p = dialog.getDialogParams();
-        p.disableDragging = true;
-        p.headerShown = false;
-        p.disableBackKey = true;
-        p.setContentView(binding.getRoot());
-        dialog.setCancelable(false);
-        dialog.show(getSupportFragmentManager());
-
-        binding.btnLogin.setOnClickListener(v -> {
-            ActivityAccount.launchLogin(this);
-            dialog.dismiss();
-        });
-        binding.btnRegister.setOnClickListener(v -> {
-            ActivityAccount.launchRegister(this);
-            dialog.dismiss();
-        });
-        binding.btnSkip.setOnClickListener(v -> dialog.dismiss());
-
-        SPAppActions.setRequireAccReminder(this, false);
     }
 }

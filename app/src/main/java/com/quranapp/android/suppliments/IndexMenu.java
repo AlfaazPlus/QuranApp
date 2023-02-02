@@ -24,7 +24,6 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityAbout;
 import com.quranapp.android.activities.ActivityBookmark;
-import com.quranapp.android.activities.account.ActivityProfile;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.databinding.LytIndexMenuBinding;
@@ -60,7 +59,8 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
             setup(mBinding);
         });
 
-        mPopup.setWidth((int) (Dimen.getWindowWidth(getContext()) * ResUtils.getFraction(getContext(), R.fraction.dmnIndexMenuWidth)));
+        mPopup.setWidth((int) (Dimen.getWindowWidth(getContext()) * ResUtils.getFraction(getContext(),
+                R.fraction.dmnIndexMenuWidth)));
         mPopup.setHeight(WRAP_CONTENT);
         mPopup.setFocusable(true);
         mPopup.setDimBehind(0.7f);
@@ -153,7 +153,8 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
 
         int[] strokeWidthsHeader = Dimen.createBorderWidthsForBG(0, 0, 0, stroke);
         float[] radiiHeader = Dimen.createRadiiForBG(radius, radius, 0, 0);
-        binding.header.setBackground(DrawableUtils.createBackgroundStroked(mBgColor, mBorderColor, strokeWidthsHeader, radiiHeader));
+        binding.header.setBackground(
+                DrawableUtils.createBackgroundStroked(mBgColor, mBorderColor, strokeWidthsHeader, radiiHeader));
         binding.close.setOnClickListener(v -> close());
     }
 
@@ -178,9 +179,7 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
         close();
 
         int id = v.getId();
-        if (id == R.id.indexMenuItemProfile) {
-            mActivity.launchActivity(ActivityProfile.class);
-        } else if (id == R.id.indexMenuItemBookmark) {
+        if (id == R.id.indexMenuItemBookmark) {
             mActivity.launchActivity(ActivityBookmark.class);
         } else if (id == R.id.indexMenuItemSettings) {
             mActivity.launchActivity(ActivitySettings.class);

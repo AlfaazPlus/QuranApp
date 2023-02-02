@@ -3,7 +3,6 @@
   -->
 
 <resources>
-    <item name="indexMenuItemProfile" type="id" />
     <item name="indexMenuItemBookmark" type="id" />
     <item name="indexMenuItemSettings" type="id" />
     <item name="indexMenuItemFeedback" type="id" />
@@ -21,7 +20,6 @@
     </array>
 
     <array name="arrIndexMenuIds1">
-        <item>@id/indexMenuItemProfile</item>
         <item>@id/indexMenuItemBookmark</item>
         <item>@id/indexMenuItemSettings</item>
     </array>
@@ -46,7 +44,6 @@
     </array>
 
     <array name="arrIndexMenuIcons1">
-        <item>@drawable/dr_icon_user</item>
         <item>@drawable/dr_icon_bookmarks</item>
         <item>@drawable/dr_icon_settings</item>
     </array>
@@ -71,7 +68,6 @@
     </array>
 
     <array name="arrIndexMenuLabels1">
-        <item>@string/strTitleProfile</item>
         <item>@string/strTitleBookmarks</item>
         <item>@string/strTitleSettings</item>
     </array>

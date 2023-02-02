@@ -6,41 +6,44 @@ package com.quranapp.android.views.reader.dialogs;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
 
-import android.os.Handler;
-import android.os.Looper;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.peacedesign.android.utils.ResUtils;
+import com.peacedesign.android.utils.Dimen;
+import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.sheet.SheetDialog;
+import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
+import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
+import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.adapters.ADPQuickReference;
 import com.quranapp.android.components.bookmark.BookmarkModel;
+import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.components.quran.QuranTransl;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
+import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytSheetVerseReferenceBinding;
 import com.quranapp.android.databinding.LytSheetVerseReferenceHeaderBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
-import com.quranapp.android.readerhandler.ActionController;
+import com.quranapp.android.utils.Logger;
+import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
@@ -48,114 +51,181 @@ import com.quranapp.android.views.CardMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
-@Deprecated
-public class QuickReference implements BookmarkCallbacks, Destroyable {
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private final CallableTaskRunner<ArrayList<Verse>> mTaskRunner = new CallableTaskRunner<>(handler);
-    private final SheetDialog mPopup = new SheetDialog();
-    private final LytSheetVerseReferenceHeaderBinding mHeaderBinding;
-    private final LytSheetVerseReferenceBinding mBinding;
-    private final ReaderPossessingActivity mActivity;
-    private final ActionController mActionController;
+public class QuickReference extends PeaceBottomSheet implements BookmarkCallbacks, Destroyable {
+    private final CallableTaskRunner<List<Verse>> mTaskRunner = new CallableTaskRunner<>();
+    private ReaderPossessingActivity mActivity;
+    private LytSheetVerseReferenceBinding mBinding;
 
-    public QuickReference(ReaderPossessingActivity activity, ActionController actionController) {
-        mActivity = activity;
-        mActionController = actionController;
+    private Set<String> mTranslSlugs;
+    private int mChapterNo;
+    private int[] mVerses;
+    private int[] mVerseRange;
+    private boolean mIsVerseRange;
 
-        final LayoutInflater inflater = LayoutInflater.from(mActivity);
-        mHeaderBinding = LytSheetVerseReferenceHeaderBinding.inflate(inflater);
-        ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(MATCH_PARENT, ResUtils.getDimenPx(activity, R.dimen.dmnAppBarHeight));
-        mHeaderBinding.getRoot().setLayoutParams(p);
-        mBinding = LytSheetVerseReferenceBinding.inflate(inflater);
-
-        init();
+    public QuickReference() {
     }
 
-    private void init() {
-        SheetDialog.SheetDialogParams popupParams = mPopup.getDialogParams();
-        popupParams.customHeader = mHeaderBinding.getRoot();
-        popupParams.initialBehaviorState = BottomSheetBehavior.STATE_EXPANDED;
-        popupParams.resetRoundedCornersOnFullHeight = false;
-        popupParams.supportsRoundedCorners = false;
-        mPopup.setOnDismissListener(this::destroy);
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putStringArray("translSlugs", mTranslSlugs.toArray(new String[0]));
+        outState.putInt("chapterNo", mChapterNo);
+        outState.putIntArray("verses", mVerses);
+        outState.putIntArray("verseRange", mVerseRange);
+        outState.putBoolean("isVerseRange", mIsVerseRange);
 
-        mPopup.setContentView(mBinding.getRoot());
+        super.onSaveInstanceState(outState);
+    }
 
-        setupContent();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mTranslSlugs = Arrays.stream(savedInstanceState.getStringArray("translSlugs")).collect(Collectors.toSet());
+            mChapterNo = savedInstanceState.getInt("chapterNo");
+            mVerses = savedInstanceState.getIntArray("verses");
+            mVerseRange = savedInstanceState.getIntArray("verseRange");
+            mIsVerseRange = savedInstanceState.getBoolean("isVerseRange");
+        }
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof ReaderPossessingActivity) {
+            mActivity = (ReaderPossessingActivity) context;
+        }
     }
 
     @Override
     public void destroy() {
         mTaskRunner.cancel();
-        mBinding.referenceVerses.setAdapter(null);
-        mHeaderBinding.title.setText(null);
-        mHeaderBinding.btnBookmark.setVisibility(GONE);
-        mHeaderBinding.btnOpen.setVisibility(GONE);
-    }
 
-    private void setupContent() {
-        mBinding.referenceVerses.setLayoutManager(new LinearLayoutManager(mActivity));
-        mHeaderBinding.closeReference.setOnClickListener(v -> close());
-    }
+        mTranslSlugs = null;
+        mChapterNo = -1;
+        mIsVerseRange = false;
+        mVerseRange = null;
+        mVerses = null;
 
-    private void initActions(int chapterNo, int[] verseRange, boolean isRange) {
-        if (!isRange) {
-            mHeaderBinding.btnBookmark.setVisibility(GONE);
-            mHeaderBinding.btnOpen.setVisibility(GONE);
+        if (mBinding == null) {
             return;
         }
 
-        mHeaderBinding.btnBookmark.setVisibility(VISIBLE);
-        mHeaderBinding.btnOpen.setVisibility(VISIBLE);
+        ViewUtils.removeView(mBinding.getRoot().findViewById(R.id.message));
 
-        mHeaderBinding.btnBookmark.setOnClickListener(v -> {
+        mBinding.referenceVerses.setAdapter(null);
+
+        LytSheetVerseReferenceHeaderBinding header = mBinding.header;
+        header.title.setText(null);
+        header.btnBookmark.setVisibility(GONE);
+        header.btnOpen.setVisibility(GONE);
+    }
+
+    @Override
+    protected void setupDialogInternal(Dialog dialog, int style, PeaceBottomSheetParams params) {
+        if (mActivity == null || (mIsVerseRange && mVerseRange == null) || (!mIsVerseRange && mVerses == null)) {
+            return;
+        }
+
+        if (mBinding == null) {
+            AsyncLayoutInflater inflater = new AsyncLayoutInflater(dialog.getContext());
+            inflater.inflate(R.layout.lyt_sheet_verse_reference, null, (view, resid, parent) -> {
+                mBinding = LytSheetVerseReferenceBinding.bind(view);
+                setup(mActivity, mBinding);
+                setupContent(mActivity, dialog, mBinding, params);
+            });
+        } else {
+            setupContent(mActivity, dialog, mBinding, params);
+        }
+    }
+
+    private void setupContent(ReaderPossessingActivity actvt, Dialog dialog,
+                              LytSheetVerseReferenceBinding binding, PeaceBottomSheetParams params) {
+        binding.referenceVerses.setVisibility(GONE);
+        binding.loader.setVisibility(VISIBLE);
+
+        ViewUtils.removeView(binding.getRoot());
+        dialog.setContentView(binding.getRoot());
+        setupDialogStyles(dialog, binding.getRoot(), params);
+
+
+        if (mIsVerseRange) {
+            initializeShowSingleVerseOrRange(actvt, binding, mTranslSlugs, mChapterNo, mVerseRange);
+        } else {
+            initializeShowVerses(actvt, binding, mTranslSlugs, mChapterNo, mVerses);
+        }
+    }
+
+    private void setup(Context ctx, LytSheetVerseReferenceBinding binding) {
+        binding.referenceVerses.setLayoutManager(new LinearLayoutManager(ctx));
+        binding.header.closeReference.setOnClickListener(v -> dismiss());
+        binding.header.getRoot().setElevation(Dimen.dp2px(ctx, 4));
+    }
+
+    private void initActions(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, int chapterNo, int[] verseRange, boolean isRange) {
+        LytSheetVerseReferenceHeaderBinding header = binding.header;
+        if (!isRange) {
+            header.btnBookmark.setVisibility(GONE);
+            header.btnOpen.setVisibility(GONE);
+            return;
+        }
+
+        header.btnBookmark.setVisibility(VISIBLE);
+        header.btnOpen.setVisibility(VISIBLE);
+
+        header.btnBookmark.setOnClickListener(v -> {
             if (chapterNo == -1 || verseRange == null) {
                 return;
             }
 
-            boolean isBookmarked = mActivity.isBookmarked(chapterNo, verseRange[0], verseRange[1]);
+            boolean isBookmarked = actvt.isBookmarked(chapterNo, verseRange[0], verseRange[1]);
 
             if (isBookmarked) {
-                mActivity.onBookmarkView(chapterNo, verseRange[0], verseRange[1], this);
+                actvt.onBookmarkView(chapterNo, verseRange[0], verseRange[1], this);
             } else {
-                mActivity.addVerseToBookmark(chapterNo, verseRange[0], verseRange[1], this);
+                actvt.addVerseToBookmark(chapterNo, verseRange[0], verseRange[1], this);
             }
         });
 
-        mHeaderBinding.btnOpen.setOnClickListener(v -> {
+        header.btnOpen.setOnClickListener(v -> {
             if (chapterNo == -1 || verseRange == null) {
                 return;
             }
 
-            mActionController.openVerseReference(chapterNo, verseRange);
-            close();
+            actvt.mActionController.openVerseReference(chapterNo, verseRange);
+            dismiss();
         });
     }
 
-    private void preShow(int chapterNo, int[] verseRange) {
+    private void preShow(ReaderPossessingActivity actvt, LytSheetVerseReferenceHeaderBinding header, int chapterNo, int[] verseRange) {
         if (verseRange == null) {
-            mHeaderBinding.btnBookmark.setVisibility(GONE);
+            header.btnBookmark.setVisibility(GONE);
             return;
         }
 
-        mHeaderBinding.btnBookmark.setVisibility(VISIBLE);
-        setupBookmarkIcon(mHeaderBinding.btnBookmark, mActivity.isBookmarked(chapterNo, verseRange[0], verseRange[1]));
+        header.btnBookmark.setVisibility(VISIBLE);
+        setupBookmarkIcon(header.btnBookmark, actvt.isBookmarked(chapterNo, verseRange[0], verseRange[1]));
     }
 
-    private void initializeShowVerses(Set<String> translSlugs, int chapterNo, int[] verses) {
-        makeReferenceVerses(mBinding.referenceVerses, translSlugs, chapterNo, verses, false);
+    private void initializeShowVerses(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs, int chapterNo, int[] verses) {
+        preShow(actvt, binding.header, chapterNo, null);
+        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, verses, false);
     }
 
-    private void initializeShowSingleVerseOrRange(Set<String> translSlugs, int chapterNo, int[] verseRange) {
-        makeReferenceVerses(mBinding.referenceVerses, translSlugs, chapterNo, verseRange, true);
+    private void initializeShowSingleVerseOrRange(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs, int chapterNo, int[] verseRange) {
+        preShow(actvt, binding.header, chapterNo, verseRange);
+        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, verseRange, true);
     }
 
     private void setupBookmarkIcon(ImageView btnBookmark, boolean isBookmarked) {
-        int filter = ContextCompat.getColor(mActivity, isBookmarked ? R.color.colorPrimary : R.color.colorIcon);
+        int filter = ContextCompat.getColor(getContext(), isBookmarked ? R.color.colorPrimary : R.color.colorIcon);
         btnBookmark.setColorFilter(filter);
         btnBookmark.setImageResource(isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined);
     }
@@ -178,76 +248,116 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
         titleView.setText(title.toString());
     }
 
-    private void makeReferenceVerses(RecyclerView container, Set<String> translSlugs,
+    private void makeReferenceVerses(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs,
                                      int chapterNo, int[] versesInts, boolean isRange) {
+        QuranMeta.prepareInstance(actvt, quranMeta -> {
+            if (!QuranMeta.isChapterValid(chapterNo)) {
+                binding.loader.setVisibility(GONE);
+                return;
+            }
+            // --
+            Quran.prepareInstance(actvt, quranMeta, quran -> {
+                makeReferenceVersesAsync(actvt, binding, quranMeta, quran,
+                        translSlugs, chapterNo, versesInts, isRange);
+            });
+        });
+    }
+
+    private void makeReferenceVersesAsync(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding,
+                                          QuranMeta quranMeta, Quran quran,
+                                          Set<String> translSlugs, int chapterNo, int[] versesInts, boolean isRange) {
         mTaskRunner.cancel();
 
-        mTaskRunner.callAsync(new BaseCallableTask<ArrayList<Verse>>() {
+        mTaskRunner.callAsync(new BaseCallableTask<List<Verse>>() {
             @Override
             public void preExecute() {
-                //                mBinding.loader.setVisibility(VISIBLE);
+                binding.referenceVerses.setVisibility(GONE);
+                binding.loader.setVisibility(VISIBLE);
             }
 
             @Override
-            public ArrayList<Verse> call() {
-                ArrayList<Verse> verses = new ArrayList<>();
-
-                /*Quran quran = mActivity.mQuranRef.get();
-                QuranTransl quranTransl = mActivity.mQuranTranslRef.get();
-
+            public List<Verse> call() throws Exception {
+                List<Verse> verses = new ArrayList<>();
                 Chapter chapter = quran.getChapter(chapterNo);
+                if (chapter == null) {
+                    throw new Exception("could not get chapter object from quranMeta for the chapterNo. [QuickReference]");
+                }
 
+                Map<String, QuranTranslBookInfo> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(
+                        translSlugs);
                 if (isRange) {
-                    QuranUtils.intRangeIterate(versesInts, verseNo -> prepareVerse(chapter, verseNo, verses, quranTransl));
+                    List<List<Translation>> transls = actvt.mTranslFactory.getTranslationsVerseRange(translSlugs, chapterNo,
+                            versesInts[0], versesInts[1]);
+                    QuranUtils.intRangeIterateWithIndex(versesInts, (index, verseNo) -> {
+                        // --
+                        prepareVerse(chapter, verseNo, verses, transls.get(index), booksInfo);
+                    });
                 } else {
-                    for (int verseNo : versesInts) {
-                        prepareVerse(chapter, verseNo, verses, quranTransl);
+                    List<List<Translation>> transls = actvt.mTranslFactory.getTranslationsDistinctVerses(translSlugs, chapterNo,
+                            versesInts);
+                    for (int i = 0, l = versesInts.length; i < l; i++) {
+                        int verseNo = versesInts[i];
+                        if (quranMeta.isVerseValid4Chapter(chapterNo, verseNo)) {
+                            prepareVerse(chapter, verseNo, verses, transls.get(i), booksInfo);
+                        }
                     }
-                }*/
+                }
 
                 return verses;
             }
 
-            private void prepareVerse(Chapter chapter, int verseNo, ArrayList<Verse> verses, QuranTransl quranTransl) {
-                /*Verse verse = chapter.getVerse(verseNo).copy();
+            private void prepareVerse(Chapter chapter, int verseNo, List<Verse> verses,
+                                      List<Translation> transls, Map<String, QuranTranslBookInfo> booksInfo) {
+                Verse verse = chapter.getVerse(verseNo).copy();
+                if (verse == null) {
+                    return;
+                }
+
                 verse.setIncludeChapterNameInSerial(true);
-
-                ArrayList<Translation> transls = quranTransl.getTranslations(translSlugs, verse.getChapterNo(), verseNo);
                 verse.setTranslations(transls);
+                verse.setTranslTextSpannable(actvt.prepareTranslSpannable(verse, transls, booksInfo));
 
-                verse.setTranslTextSpannable(mActivity.prepareTranslSpannable(verse, transls));
-
-                verses.add(verse);*/
+                verses.add(verse);
             }
 
             @Override
-            public void onComplete(ArrayList<Verse> verses) {
-                ADPQuickReference adp = new ADPQuickReference(mActivity);
+            public void onComplete(List<Verse> verses) {
+                ADPQuickReference adp = new ADPQuickReference(actvt);
                 adp.setVerses(verses);
-                container.setAdapter(adp);
+                binding.referenceVerses.setAdapter(adp);
 
-                setupReferenceTitle(mHeaderBinding.title, chapterNo, versesInts, isRange);
-                initActions(chapterNo, versesInts, isRange);
+                setupReferenceTitle(binding.header.title, chapterNo, versesInts, isRange);
+                initActions(actvt, binding, chapterNo, versesInts, isRange);
 
+
+                ViewUtils.removeView(mBinding.getRoot().findViewById(R.id.message));
                 if (translSlugs == null || translSlugs.isEmpty()) {
-                    if (!(mBinding.getRoot().getChildAt(0) instanceof CardMessage)) {
-                        CardMessage warning = CardMessage.warning(mActivity, R.string.strMsgTranslNoneSelected);
-                        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-                        p.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                        mBinding.getRoot().addView(warning, 0, p);
-
-                        ViewGroup.LayoutParams p2 = mBinding.referenceVerses.getLayoutParams();
-                        if (p2 instanceof RelativeLayout.LayoutParams) {
-                            ((RelativeLayout.LayoutParams) p2).addRule(RelativeLayout.BELOW, warning.getId());
-                            mBinding.referenceVerses.setLayoutParams(p2);
+                    if (!(binding.getRoot().getChildAt(0) instanceof CardMessage)) {
+                        CardMessage msgView = CardMessage.warning(actvt, R.string.strMsgTranslNoneSelected);
+                        msgView.setId(R.id.message);
+                        if (actvt instanceof ActivityReader) {
+                            msgView.setActionText(actvt.str(R.string.strTitleSettings), () -> {
+                                // --
+                                ((ActivityReader) actvt).mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSL);
+                            });
                         }
+
+                        int headerPos = binding.getRoot().indexOfChild(binding.header.getRoot());
+                        binding.getRoot().addView(msgView, headerPos + 1);
                     }
                 }
             }
 
             @Override
+            public void onFailed(@NonNull Exception e) {
+                super.onFailed(e);
+                Logger.reportError(e);
+            }
+
+            @Override
             public void postExecute() {
-                //                mBinding.loader.setVisibility(GONE);
+                binding.loader.setVisibility(GONE);
+                binding.referenceVerses.setVisibility(VISIBLE);
             }
         });
     }
@@ -259,9 +369,9 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
      *                  7-8 (Verse range)
      *                  7 (Single verse)
      */
-    public void show(Set<String> translSlugs, int chapterNo, String versesStr) {
+    public void show(ReaderPossessingActivity actvt, Set<String> translSlugs, int chapterNo, String versesStr) {
         if (TextUtils.isEmpty(versesStr)) {
-            showReferenceChapter(translSlugs, chapterNo);
+            showReferenceChapter(actvt, translSlugs, chapterNo);
             return;
         }
 
@@ -269,8 +379,8 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
 
         String[] verses = versesStr.split(",");
         if (verses.length > 1) {
-            int[] verseInts = Arrays.stream(verses).mapToInt(Integer::parseInt).toArray();
-            showReferenceVerses(translSlugs, chapterNo, verseInts);
+            int[] verseInts = Arrays.stream(verses).mapToInt(Integer::parseInt).sorted().toArray();
+            showReferenceVerses(actvt, translSlugs, chapterNo, verseInts);
         } else {
             Matcher matcher = VERSE_RANGE_PATTERN.matcher(versesStr);
             MatchResult result;
@@ -284,7 +394,7 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
                 verseRange = new int[]{verseNo, verseNo};
             }
 
-            showSingleVerseOrRange(translSlugs, chapterNo, verseRange);
+            showSingleVerseOrRange(actvt, translSlugs, chapterNo, verseRange);
         }
     }
 
@@ -295,23 +405,23 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
     }
 
     /**
-     * Pattern <reference chapter="\d+">()</reference>
+     * Pattern \<reference chapter="\d+">()</reference>
      */
-    private void showReferenceChapter(Set<String> translSlugs, int chapterNo) {
-        QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
+    private void showReferenceChapter(ReaderPossessingActivity actvt, Set<String> translSlugs, int chapterNo) {
+        QuranMeta quranMeta = actvt.mQuranMetaRef.get();
 
         if (!QuranMeta.isChapterValid(chapterNo)) {
             return;
         }
 
-        PeaceDialog.Builder builder = PeaceDialog.newBuilder(mActivity);
+        PeaceDialog.Builder builder = PeaceDialog.newBuilder(actvt);
         builder.setTitle("Open chapter?");
-        builder.setMessage("Surah " + quranMeta.getChapterName(mActivity, chapterNo));
+        builder.setMessage("Surah " + quranMeta.getChapterName(actvt, chapterNo));
         builder.setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         builder.setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         builder.setNeutralButton(R.string.strLabelCancel, null);
         builder.setPositiveButton(R.string.strLabelOpen,
-                (dialog, which) -> ReaderFactory.startChapter(mActivity, translSlugs.toArray(new String[0]), false, chapterNo));
+                (dialog, which) -> ReaderFactory.startChapter(actvt, translSlugs.toArray(new String[0]), false, chapterNo));
         builder.show();
     }
 
@@ -320,17 +430,20 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
      *
      * @param verses comma separated verses from pattern <reference chapter="\d+" verses="\d+,\d+,...">()</reference>
      */
-    private void showReferenceVerses(Set<String> translSlugs, int chapterNo, int[] verses) {
+    private void showReferenceVerses(ReaderPossessingActivity actvt, Set<String> translSlugs, int chapterNo, int[] verses) {
         if (!QuranMeta.isChapterValid(chapterNo)) {
             return;
         }
 
-        close();
+        dismiss();
 
-        mPopup.show(mActivity.getSupportFragmentManager());
+        mActivity = actvt;
+        mTranslSlugs = translSlugs;
+        mChapterNo = chapterNo;
+        mVerses = verses;
+        mIsVerseRange = false;
 
-        preShow(chapterNo, null);
-        initializeShowVerses(translSlugs, chapterNo, verses);
+        show(actvt.getSupportFragmentManager());
     }
 
     /**
@@ -340,33 +453,55 @@ public class QuickReference implements BookmarkCallbacks, Destroyable {
      *                   Pattern <reference chapter="\d+" verses="\d+-\d+">()</reference>
      *                   or Pattern <reference chapter="\d+" verses="\d+">()</reference>
      */
-    public void showSingleVerseOrRange(Set<String> translSlugs, int chapterNo, int[] verseRange) {
-        if (!QuranMeta.isChapterValid(chapterNo) ||
-                !mActivity.mQuranMetaRef.get().isVerseRangeValid4Chapter(chapterNo, verseRange[0], verseRange[1])) {
+    public void showSingleVerseOrRange(ReaderPossessingActivity actvt, Set<String> translSlugs, int chapterNo, int[] verseRange) {
+        QuranUtils.correctVerseInRange(actvt.mQuranMetaRef.get(), chapterNo, verseRange);
+        if (!QuranMeta.isChapterValid(chapterNo)
+                || !actvt.mQuranMetaRef.get().isVerseRangeValid4Chapter(chapterNo, verseRange[0], verseRange[1])) {
             return;
         }
+        dismiss();
 
-        close();
+        mActivity = actvt;
+        mTranslSlugs = translSlugs;
+        mChapterNo = chapterNo;
+        mVerseRange = verseRange;
+        mIsVerseRange = true;
 
-        mPopup.show(mActivity.getSupportFragmentManager());
-
-        preShow(chapterNo, verseRange);
-        initializeShowSingleVerseOrRange(translSlugs, chapterNo, verseRange);
+        show(actvt.getSupportFragmentManager());
     }
 
-    public void close() {
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (!isShowing()) {
+            if (mBinding != null) {
+                mBinding.referenceVerses.setAdapter(null);
+            }
+            mBinding = null;
+        }
+    }
+
+    @Override
+    public void dismiss() {
         try {
-            mPopup.dismissAllowingStateLoss();
+            dismissAllowingStateLoss();
         } catch (Exception ignored) {}
+        destroy();
     }
 
     @Override
     public void onBookmarkRemoved(BookmarkModel model) {
-        setupBookmarkIcon(mHeaderBinding.btnBookmark, false);
+        if (mBinding == null) {
+            return;
+        }
+        setupBookmarkIcon(mBinding.header.btnBookmark, false);
     }
 
     @Override
     public void onBookmarkAdded(BookmarkModel model) {
-        setupBookmarkIcon(mHeaderBinding.btnBookmark, true);
+        if (mBinding == null) {
+            return;
+        }
+        setupBookmarkIcon(mBinding.header.btnBookmark, true);
     }
 }
