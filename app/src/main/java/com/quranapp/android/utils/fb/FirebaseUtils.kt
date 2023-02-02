@@ -6,20 +6,18 @@
  */
 package com.quranapp.android.utils.fb
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.quranapp.android.ApiConfig.FB_STORAGE_BUCKET
 import com.quranapp.android.BuildConfig
 
 object FirebaseUtils {
-    const val FIRESTORE_USERS_COLLECTION = "users"
     const val RTDB_VERSE_REPORTS = "verseReports"
-    const val STORAGE_BUCKET = "gs://the-quranapp.appspot.com"
+    const val STORAGE_BUCKET = FB_STORAGE_BUCKET
 
     private const val FIREBASE_EMULATOR_HOST = BuildConfig.DEVELOPER_MACHINE_IP
     private val FIREBASE_EMULATOR_ACTIVE = false && BuildConfig.DEBUG
@@ -29,17 +27,12 @@ object FirebaseUtils {
     private const val FIREBASE_EMULATOR_PORT_FUNCTIONS = 5001
     private const val FIREBASE_EMULATOR_PORT_STORAGE = 9199
 
-    @JvmStatic
-    fun firestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
-
     fun storage(): FirebaseStorage {
         val storage = FirebaseStorage.getInstance()
         if (FIREBASE_EMULATOR_ACTIVE) {
             try {
                 storage.useEmulator(FIREBASE_EMULATOR_HOST, FIREBASE_EMULATOR_PORT_STORAGE)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
 

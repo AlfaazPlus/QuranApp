@@ -30,11 +30,10 @@ import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.peacedesign.android.utils.Dimen;
+import com.peacedesign.android.utils.Log;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
@@ -52,8 +51,6 @@ import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.databinding.LytReportProblemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.readerhandler.ReaderParams;
-import com.peacedesign.android.utils.Log;
-import com.quranapp.android.utils.account.AccManager;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sp.SPReader;
@@ -132,8 +129,10 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         }
     }
 
-    private void setupContent(ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
-                              LinearLayout dialogLayout, Verse verse) {
+    private void setupContent(
+            ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
+            LinearLayout dialogLayout, Verse verse
+    ) {
         ViewUtils.removeView(vodBinding.getRoot());
         dialogLayout.addView(vodBinding.getRoot());
 
@@ -298,7 +297,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             }
         });
 
-        SpinnerAdapter2<SpinnerItem> adapter = new SpinnerAdapter2<>(ctx, R.layout.lyt_simple_spinner_item, R.id.text, reasons);
+        SpinnerAdapter2<SpinnerItem> adapter = new SpinnerAdapter2<>(ctx, R.layout.lyt_simple_spinner_item, R.id.text,
+                reasons);
         spinner.setAdapter(adapter);
 
         binding.message.addTextChangedListener(new SimpleTextWatcher() {
@@ -324,8 +324,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         map.put("verseInformation", getVerseInformation(actvt, verse));
         map.put("appConfigs", AppUtils.getAppConfigs(actvt));
         map.put("deviceInformation", getDeviceInformation(actvt));
+        map.put("date", DateUtils.getDateTimeNow());
 
-        getReportInfo(map, actvt);
         Map<String, Object> readerInfo = null;
         if (actvt instanceof ActivityReader) {
             readerInfo = getReaderInformation((ActivityReader) actvt);
@@ -344,23 +344,13 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         });
     }
 
-    private void getReportInfo(Map<String, Object> map, Context ctx) {
-        map.put("date", DateUtils.getDateTimeNow());
-
-        Map<String, Object> reporter = null;
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (fbUser != null) {
-            reporter = AccManager.getUserFromSP(ctx, fbUser).toMap();
-        }
-        map.put("reporter", reporter);
-    }
-
     public Map<String, Object> getVerseInformation(ReaderPossessingActivity actvt, Verse verse) {
         Map<String, Object> map = new HashMap<>();
 
         map.put("chapterNo", verse.getChapterNo());
         map.put("verseNo", verse.getVerseNo());
-        map.put("translations", verse.getTranslations().stream().map(Translation::getBookSlug).collect(Collectors.toList()));
+        map.put("translations",
+                verse.getTranslations().stream().map(Translation::getBookSlug).collect(Collectors.toList()));
 
         map.put("script", SPReader.getSavedScript(actvt));
         map.put("reciter", SPReader.getSavedRecitationSlug(actvt));

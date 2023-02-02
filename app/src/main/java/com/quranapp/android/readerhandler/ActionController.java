@@ -21,7 +21,7 @@ import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.views.reader.dialogs.FootnotePresenter;
-import com.quranapp.android.views.reader.dialogs.QuickReference2;
+import com.quranapp.android.views.reader.dialogs.QuickReference;
 import com.quranapp.android.views.reader.dialogs.VerseOptionsDialog;
 
 import java.util.Set;
@@ -32,7 +32,7 @@ public class ActionController implements Destroyable {
     private final RunnableTaskRunner taskRunner = new RunnableTaskRunner(handler);
     private final VerseOptionsDialog mVOD = new VerseOptionsDialog();
     private final FootnotePresenter mFootnotePresenter = new FootnotePresenter();
-    private final QuickReference2 mQuickReference = new QuickReference2();
+    private final QuickReference mQuickReference = new QuickReference();
     private final ProgressDialog mProgressDialog;
 
     public ActionController(ReaderPossessingActivity readerPossessingActivity) {
