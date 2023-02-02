@@ -18,8 +18,8 @@ android {
         targetSdkVersion 33
         // I don't know why I've used such a weird versioning scheme initially,
         // but I can't change it now as the app is already in the Play Store
-        versionCode 23_01_25_001
-        versionName "2023.01.25.1"
+        versionCode 23_02_02_001
+        versionName "2023.02.02.1"
 
         resValue "string", "app_name", "QuranApp"
 
@@ -123,7 +123,7 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-config-ktx'
-    debugImplementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
+    implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
 
     implementation 'com.google.android.play:core:1.10.3'
 
