@@ -195,7 +195,7 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements
     }
 
     private void init(Context ctx) {
-        refreshTranslations(ctx, SPAppActions.getFetchTranslationsForce(ctx));
+        refreshTranslations(ctx, SPAppActions.getFetchTranslsForce(ctx));
     }
 
     private void initPageAlert(Context ctx) {
@@ -610,7 +610,7 @@ public class FragSettingsTranslDownload extends FragSettingsBase implements
             } else {
                 noDownloadsAvailable(mCtx);
             }
-            SPAppActions.setFetchTranslationsForce(mCtx, false);
+            SPAppActions.setFetchTranslsForce(mCtx, false);
             hideLoader();
         }
 

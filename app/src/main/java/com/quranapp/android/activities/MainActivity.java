@@ -89,8 +89,6 @@ public class MainActivity extends BaseActivity {
 
 
         mUpdateManager = new UpdateManager(this, null);
-        mUpdateManager.refreshAppUpdatesJson();
-        
         if (mUpdateManager.check4CriticalUpdate()) {
             return;
         }

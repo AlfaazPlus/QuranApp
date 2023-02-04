@@ -23,45 +23,21 @@ import com.peacedesign.android.utils.kotlin_utils.removeView
 import com.peacedesign.android.utils.kotlin_utils.visible
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
-import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.AppUpdateInfo
 import com.quranapp.android.databinding.LytUpdateAppBinding
 import com.quranapp.android.databinding.LytUpdateAppDialogBinding
 import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.univ.FileUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.math.pow
 
 class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
     private val mIconAnimationHandler = Handler(Looper.getMainLooper())
     private var mIconAnimators = ArrayList<ObjectAnimator>()
 
-    fun refreshAppUpdatesJson() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val updatesString = RetrofitInstance.github.getAppUpdates()
-                Logger.print("updatesString: $updatesString")
-
-                FileUtils.newInstance(ctx).apply {
-                    val updatesFile = appUpdatesFile
-
-                    if (createFile(updatesFile)) {
-                        writeToFile(updatesFile, updatesString)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
     /**
      * Returns true if there is an update available
      */
     fun check4CriticalUpdate(): Boolean {
-        if (AppUpdateInfo(ctx).getMostImportantUpdate().priority == AppUpdateInfo.CRITICAL) {
+        if (AppUpdateInfo().getMostImportantUpdate().priority == AppUpdateInfo.CRITICAL) {
             Logger.print("UpdateManager:", "Critical update available")
             showUpdateAvailableDialog(true)
             return true
@@ -73,7 +49,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
      * Returns true if there is an update available
      */
     fun check4NonCriticalUpdate(): Boolean {
-        val priority = AppUpdateInfo(ctx).getMostImportantUpdate().priority
+        val priority = AppUpdateInfo().getMostImportantUpdate().priority
         Logger.print("Update priority = $priority")
 
         when (priority) {
