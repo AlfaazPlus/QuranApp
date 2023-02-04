@@ -1,146 +1,107 @@
-package com.quranapp.android.utils.app;
+package com.quranapp.android.utils.app
 
-import android.content.Context;
-import android.graphics.Point;
-import android.os.Build;
-import android.telephony.TelephonyManager;
-import android.view.WindowManager;
+import android.content.Context
+import android.graphics.Point
+import android.os.Build
+import android.telephony.TelephonyManager
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import com.peacedesign.android.utils.WindowUtils
+import com.quranapp.android.BuildConfig
+import com.quranapp.android.R
+import com.quranapp.android.utils.sp.SPAppConfigs
+import com.quranapp.android.utils.univ.FileUtils
+import java.util.*
 
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
+object AppUtils {
+    @JvmField
+    val BASE_APP_DOWNLOADED_SAVED_DATA_DIR: String = FileUtils.createPath("downloaded", "saved_data")!!
 
-import com.peacedesign.android.utils.WindowUtils;
-import com.quranapp.android.BuildConfig;
-import com.quranapp.android.R;
-import com.quranapp.android.utils.sp.SPAppActions;
-import com.quranapp.android.utils.sp.SPAppConfigs;
-import com.quranapp.android.utils.univ.FileUtils;
+    @JvmField
+    val APP_OTHER_DIR: String = FileUtils.createPath(BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "other")!!
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-
-public class AppUtils {
-    public static final String DEFAULT_DB_NAME = "QuranApp.db";
-    public static final String BASE_APP_DOWNLOADED_SAVED_DATA_DIR = FileUtils.createPath("downloaded", "saved_data");
-
-    public static String resolveThemeTextFromMode(Context context) {
-        final int strId;
-        switch (SPAppConfigs.getThemeMode(context)) {
-            case SPAppConfigs.THEME_MODE_DARK:
-                strId = R.string.strLabelThemeDark;
-                break;
-            case SPAppConfigs.THEME_MODE_LIGHT:
-                strId = R.string.strLabelThemeLight;
-                break;
-            case SPAppConfigs.THEME_MODE_DEFAULT:
-            default:
-                strId = R.string.strLabelSystemDefault;
-                break;
-        }
-
-        return context.getString(strId);
+    @JvmStatic
+    fun resolveThemeTextFromMode(context: Context): String {
+        return context.getString(
+            when (SPAppConfigs.getThemeMode(context)) {
+                SPAppConfigs.THEME_MODE_DARK -> R.string.strLabelThemeDark
+                SPAppConfigs.THEME_MODE_LIGHT -> R.string.strLabelThemeLight
+                SPAppConfigs.THEME_MODE_DEFAULT -> R.string.strLabelSystemDefault
+                else -> R.string.strLabelSystemDefault
+            }
+        )
     }
 
-    public static int resolveThemeIdFromMode(Context context) {
-        switch (SPAppConfigs.getThemeMode(context)) {
-            case SPAppConfigs.THEME_MODE_DARK:
-                return R.id.themeDark;
-            case SPAppConfigs.THEME_MODE_LIGHT:
-                return R.id.themeLight;
-            case SPAppConfigs.THEME_MODE_DEFAULT:
-            default:
-                return R.id.systemDefault;
+    @JvmStatic
+    fun resolveThemeIdFromMode(context: Context?): Int {
+        return when (SPAppConfigs.getThemeMode(context)) {
+            SPAppConfigs.THEME_MODE_DARK -> R.id.themeDark
+            SPAppConfigs.THEME_MODE_LIGHT -> R.id.themeLight
+            SPAppConfigs.THEME_MODE_DEFAULT -> R.id.systemDefault
+            else -> R.id.systemDefault
         }
     }
 
-    public static String resolveThemeModeFromId(int id) {
-        final String themeMode;
-
-        if (id == R.id.themeDark) {
-            themeMode = SPAppConfigs.THEME_MODE_DARK;
-        } else if (id == R.id.themeLight) {
-            themeMode = SPAppConfigs.THEME_MODE_LIGHT;
-        } else {
-            themeMode = SPAppConfigs.THEME_MODE_DEFAULT;
+    @JvmStatic
+    fun resolveThemeModeFromId(id: Int): String {
+        return when (id) {
+            R.id.themeDark -> {
+                SPAppConfigs.THEME_MODE_DARK
+            }
+            R.id.themeLight -> {
+                SPAppConfigs.THEME_MODE_LIGHT
+            }
+            else -> {
+                SPAppConfigs.THEME_MODE_DEFAULT
+            }
         }
-        return themeMode;
     }
 
-    public static int resolveThemeModeFromSP(Context context) {
-        final String themeMode = SPAppConfigs.getThemeMode(context);
-        final int mode;
-        switch (themeMode) {
-            case SPAppConfigs.THEME_MODE_DARK:
-                mode = AppCompatDelegate.MODE_NIGHT_YES;
-                break;
-            case SPAppConfigs.THEME_MODE_LIGHT:
-                mode = AppCompatDelegate.MODE_NIGHT_NO;
-                break;
-            case SPAppConfigs.THEME_MODE_DEFAULT:
-            default:
-                mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-                break;
+    @JvmStatic
+    fun resolveThemeModeFromSP(context: Context?): Int {
+        return when (SPAppConfigs.getThemeMode(context)) {
+            SPAppConfigs.THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            SPAppConfigs.THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            SPAppConfigs.THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
-        return mode;
     }
 
-    public static Map<String, Object> getAppConfigs(Context ctx) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("locale", Locale.getDefault().toString());
-        map.put("theme", SPAppConfigs.getThemeMode(ctx));
-        map.put("orientation", WindowUtils.isLandscapeMode(ctx) ? "landscape" : "portrait");
-        return map;
-    }
-
-    public static Map<String, Object> getDeviceInformation(Context ctx) {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("appVersionCode", BuildConfig.VERSION_CODE);
-        map.put("appVersionName", BuildConfig.VERSION_NAME);
-
-        map.put("screenSize", getScreenSize(ctx));
-
-        TimeZone tz = TimeZone.getDefault();
-        map.put("timeZone", tz.getDisplayName(false, TimeZone.SHORT) + " " + tz.getID());
-
-        TelephonyManager tm = ContextCompat.getSystemService(ctx, TelephonyManager.class);
-        map.put("country", tm != null ? tm.getNetworkCountryIso() : null);
-
-        map.put("model", Build.MODEL);
-        map.put("id", Build.ID);
-        map.put("manufacturer", Build.MANUFACTURER);
-        map.put("brand", Build.BRAND);
-        map.put("type", Build.TYPE);
-        map.put("user", Build.USER);
-        map.put("base", Build.VERSION_CODES.BASE);
-        map.put("incremental", Build.VERSION.INCREMENTAL);
-        map.put("sdkInt", Build.VERSION.SDK_INT);
-        map.put("board", Build.BOARD);
-        map.put("host", Build.HOST);
-        map.put("fingerprint", Build.FINGERPRINT);
-        map.put("versionRelease", Build.VERSION.RELEASE);
-        return map;
-    }
-
-    private static String getScreenSize(Context ctx) {
-        WindowManager wm = ContextCompat.getSystemService(ctx, WindowManager.class);
-        if (wm == null) {
-            return null;
+    @JvmStatic
+    fun getAppConfigs(ctx: Context?): Map<String, Any> {
+        return HashMap<String, Any>().apply {
+            this["locale"] = Locale.getDefault().toString()
+            this["theme"] = SPAppConfigs.getThemeMode(ctx)
+            this["orientation"] = if (WindowUtils.isLandscapeMode(ctx!!)) "landscape" else "portrait"
         }
-
-        Point out = new Point();
-        wm.getDefaultDisplay().getRealSize(out);
-        return out.x + "*" + out.y;
     }
 
-    public static boolean isUpdateAvailable(Context ctx) {
-        long latestVerFromSP = SPAppActions.getLatestAppVersion(ctx);
-        if (latestVerFromSP == -1) {
-            return false;
+    @JvmStatic
+    fun getDeviceInformation(ctx: Context): Map<String, Any?> {
+        return HashMap<String, Any?>().apply {
+            this["appVersionCode"] = BuildConfig.VERSION_CODE
+            this["appVersionName"] = BuildConfig.VERSION_NAME
+            this["screenSize"] = getScreenSize(ctx)
+            this["timeZone"] = TimeZone.getDefault().apply { "${getDisplayName(false, TimeZone.SHORT)} $id" }
+            this["country"] = ContextCompat.getSystemService(ctx, TelephonyManager::class.java)?.networkCountryIso
+            this["model"] = Build.MODEL
+            this["id"] = Build.ID
+            this["manufacturer"] = Build.MANUFACTURER
+            this["brand"] = Build.BRAND
+            this["sdkInt"] = Build.VERSION.SDK_INT
+            this["versionRelease"] = Build.VERSION.RELEASE
         }
+    }
 
-        return latestVerFromSP > BuildConfig.VERSION_CODE;
+    private fun getScreenSize(ctx: Context): String? {
+        val wm = ContextCompat.getSystemService(
+            ctx,
+            WindowManager::class.java
+        )
+            ?: return null
+        val out = Point()
+        wm.defaultDisplay.getRealSize(out)
+        return out.x.toString() + "*" + out.y
     }
 }

@@ -3,6 +3,9 @@ import java.time.Instant
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlinx-serialization'
+
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.android.gms.oss-licenses-plugin'
@@ -89,8 +92,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -98,18 +99,6 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     implementation project(path: ':peacedesign')
-
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
-    implementation 'androidx.annotation:annotation:1.5.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation "androidx.webkit:webkit:1.6.0"
-    implementation "androidx.media:media:1.6.0"
-    implementation 'com.android.databinding:viewbinding:7.4.1'
 
     // FIREBASE
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
@@ -119,23 +108,39 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-functions'
-//    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
 
     implementation 'com.google.android.play:core:1.10.3'
 
-    // SmoothRefreshLayout start
-    implementation 'com.github.dkzwm:srl-core:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-classics:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-material:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-dynamic-rebound:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-horizontal:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-two-level:1.7.2.4'
-    implementation 'com.github.dkzwm:srl-ext-util:1.7.2.4'
-    // SmoothRefreshLayout ends
+    implementation libs.androidx.coreKtx
+    implementation libs.androidx.annotation
+    implementation libs.androidx.legacySupport
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.webkit
+    implementation libs.androidx.media
+
+    coreLibraryDesugaring libs.desugaring
+    implementation libs.ossLicenses
+    implementation libs.material
+    implementation libs.apache.commons
+    implementation libs.viewbinding
+
+    /* kotlinx serialization */
+    implementation libs.retrofit
+    implementation libs.kotlinxSerialization
+    implementation libs.kotlinxRetrofit
+
+    /* SmoothRefreshLayout */
+    implementation libs.srlCore
+    implementation libs.srlExtClassics
+    implementation libs.srlExtMaterial
+    implementation libs.srlExtDynamicRebound
+    implementation libs.srlExtHorizontal
+    implementation libs.srlExtTwoLevel
+    implementation libs.srlExtUtil
 }
 
 
