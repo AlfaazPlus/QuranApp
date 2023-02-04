@@ -1,11 +1,12 @@
 package com.quranapp.android.components
 
-import com.google.firebase.remoteconfig.ktx.get
+import android.content.Context
 import com.quranapp.android.BuildConfig
-import com.quranapp.android.utils.fb.FirebaseUtils
-import org.json.JSONArray
+import com.quranapp.android.api.JsonHelper
+import com.quranapp.android.utils.univ.FileUtils
+import kotlinx.serialization.decodeFromString
 
-class AppUpdateInfo {
+class AppUpdateInfo(private val ctx: Context) {
     companion object {
         const val CRITICAL = 5
         const val MAJOR = 4
@@ -13,45 +14,14 @@ class AppUpdateInfo {
         const val MINOR = 2
         const val COSMETIC = 1
         const val NONE = 0
-
-
-        private fun priorityIntToName(priorityInt: Int): String {
-            return when (priorityInt) {
-                CRITICAL -> "CRITICAL"
-                MAJOR -> "MAJOR"
-                MODERATE -> "MODERATE"
-                MINOR -> "MINOR"
-                COSMETIC -> "COSMETIC"
-                else -> "NONE"
-            }
-        }
     }
 
-    data class AppUpdate(val version: Long, val priority: Int) {
-        val priorityName = priorityIntToName(priority)
-
-        override fun toString(): String {
-            return "AppUpdate(version=$version, priority=$priority, priorityName=$priorityName)"
-        }
-    }
-
-    private val updates: List<AppUpdate> = ArrayList<AppUpdate>().apply {
-        try {
-            val arr = JSONArray(FirebaseUtils.remoteConfig()["updates"].asString())
-
-            for (i in 0 until arr.length()) {
-                arr.optJSONObject(i)?.let { updateObj ->
-                    add(
-                        AppUpdate(
-                            updateObj.optLong("version"),
-                            updateObj.optInt("updatePriority")
-                        )
-                    )
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    private val updates: List<AppUpdate> = try {
+        val fileUtils = FileUtils.newInstance(ctx)
+        val updatesString = fileUtils.readFile(fileUtils.appUpdatesFile)
+        JsonHelper.json.decodeFromString(updatesString)
+    } catch (e: Exception) {
+        ArrayList()
     }
 
     fun getMostImportantUpdate(): AppUpdate {
@@ -62,5 +32,4 @@ class AppUpdateInfo {
             .sortedBy { it.priority }
         return mostImportantUpdate.takeIf { it.isNotEmpty() }?.get(0) ?: AppUpdate(0, NONE)
     }
-
 }

@@ -1,7 +1,6 @@
 package com.quranapp.android.utils.reader.recitation;
 
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_COMMON_HOST;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_PREMIUM;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_RECITERS;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_RECITER_NAME;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_SLUG;
@@ -46,9 +45,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RecitationUtils {
-    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "recitations");
-    public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
-    public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
+    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
+            "recitations");
+    public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)}", Pattern.CASE_INSENSITIVE);
+    public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)}", Pattern.CASE_INSENSITIVE);
 
     public static final String KEY_RECITATION_RECITER = "key.recitation.reciter";
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
@@ -152,8 +152,10 @@ public class RecitationUtils {
         return recitationModel;
     }
 
-    public static synchronized void obtainRecitationSlug(Context ctx, boolean force, OnResultReadyCallback<String> callback,
-                                                         OnResultReadyCallback<Exception> failCallback) {
+    public static synchronized void obtainRecitationSlug(
+            Context ctx, boolean force, OnResultReadyCallback<String> callback,
+            OnResultReadyCallback<Exception> failCallback
+    ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
         if (!force && RecitationManifest.getInstance() != null && !TextUtils.isEmpty(savedSlug)) {
             if (RecitationManifest.getInstance().getModel(savedSlug) != null) {
@@ -221,8 +223,10 @@ public class RecitationUtils {
         });
     }
 
-    private static void getASafeRecitationSlug(Context ctx, String manifest, String slug,
-                                               OnResultReadyCallback<String> callback) throws Exception {
+    private static void getASafeRecitationSlug(
+            Context ctx, String manifest, String slug,
+            OnResultReadyCallback<String> callback
+    ) throws Exception {
         JSONObject manifestObj = new JSONObject(manifest);
         String commonHost = manifestObj.getJSONObject(KEY_URL_INFO).getString(KEY_COMMON_HOST);
         JSONObject reciters = manifestObj.getJSONObject(KEY_RECITERS);
