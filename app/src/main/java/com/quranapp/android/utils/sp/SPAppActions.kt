@@ -1,149 +1,117 @@
 /*
  * (c) Faisal Khan. Created on 17/10/2021.
  */
-
 /*
  * (c) Faisal Khan. Created on 12/10/2021.
  */
+package com.quranapp.android.utils.sp
 
-package com.quranapp.android.utils.sp;
+import android.content.Context
+import android.text.TextUtils
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
-
-import java.util.HashSet;
-import java.util.Set;
-
-public class SPAppActions {
-    public static final String SP_APP_ACTION = "sp_app_action";
+object SPAppActions {
+    private const val SP_APP_ACTION = "sp_app_action"
 
     // Fetch translations forced in ActivityTranslationDownload.
-    public static final String KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE = "app.action.translations.fetch_force";
-    public static final String KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force";
-    public static final String KEY_APP_ACTION_SP_URLS_FETCH_FORCE = "app.action.urls.fetch_force";
-    public static final String KEY_APP_ACTION_SP_PENDING = "app.action.pending";
-    public static final String KEY_APP_ACTION_ONBOARDING_REQUIRED = "app.action.onboarding_required";
-    public static final String KEY_APP_ACTION_ACC_REMINDER_REQUIRED = "app.action.acc_reminder_required";
-    public static final String KEY_APP_LATEST_APP_VERSION = "app.action.app_latest_version";
+    private const val KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE = "app.action.translations.fetch_force"
+    private const val KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
+    private const val KEY_APP_ACTION_SP_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
+    private const val KEY_APP_ACTION_SP_PENDING = "app.action.pending"
+    private const val KEY_APP_ACTION_ONBOARDING_REQUIRED = "app.action.onboarding_required"
 
-    public static void setFetchTranslsForce(Context ctx, boolean fetchForce) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, fetchForce);
-        editor.apply();
+    @JvmStatic
+    fun setFetchTranslationsForce(ctx: Context, fetchForce: Boolean) {
+        val editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit()
+        editor.putBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, fetchForce)
+        editor.apply()
     }
 
-    public static boolean getFetchTranslsForce(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        return sp.getBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, false);
+    @JvmStatic
+    fun getFetchTranslationsForce(ctx: Context): Boolean {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        return sp.getBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, false)
     }
 
-    public static void setFetchRecitationsForce(Context ctx, boolean fetchForce) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, fetchForce);
-        editor.apply();
+    @JvmStatic
+    fun setFetchRecitationsForce(ctx: Context, fetchForce: Boolean) {
+        val editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit()
+        editor.putBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, fetchForce)
+        editor.apply()
     }
 
-    public static boolean getFetchRecitationsForce(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        return sp.getBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, false);
+    @JvmStatic
+    fun getFetchRecitationsForce(ctx: Context): Boolean {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        return sp.getBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, false)
     }
 
-    public static void setFetchUrlsForce(Context ctx, boolean fetchForce) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, fetchForce);
-        editor.apply();
+    @JvmStatic
+    fun setFetchUrlsForce(ctx: Context, fetchForce: Boolean) {
+        val editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit()
+        editor.putBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, fetchForce)
+        editor.apply()
     }
 
-    public static boolean getFetchUrlsForce(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        return sp.getBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, false);
+    @JvmStatic
+    fun getFetchUrlsForce(ctx: Context): Boolean {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        return sp.getBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, false)
     }
 
-    public static void addToPendingAction(Context ctx, String action, String victim) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-
-        Set<String> pendingActionsSP = sp.getStringSet(KEY_APP_ACTION_SP_PENDING, null);
-
-        final Set<String> pendingActions;
-        if (pendingActionsSP != null && !pendingActionsSP.isEmpty()) {
-            pendingActions = new HashSet<>(pendingActionsSP);
+    @JvmStatic
+    fun addToPendingAction(ctx: Context, action: String, victim: String) {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        val pendingActionsSP = sp.getStringSet(KEY_APP_ACTION_SP_PENDING, null)
+        val pendingActions = if (pendingActionsSP != null && pendingActionsSP.isNotEmpty()) {
+            HashSet(pendingActionsSP)
         } else {
-            pendingActions = new HashSet<>();
+            HashSet()
         }
-
-        pendingActions.add(makePendingActionKey(action, victim));
-
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions);
-        editor.apply();
+        pendingActions.add(makePendingActionKey(action, victim))
+        val editor = sp.edit()
+        editor.putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions)
+        editor.apply()
     }
 
-    public static void removeFromPendingAction(Context ctx, String action, String victim) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-
-        Set<String> pendingActionsSP = sp.getStringSet(KEY_APP_ACTION_SP_PENDING, null);
-
-        if (pendingActionsSP != null && !pendingActionsSP.isEmpty()) {
-            final Set<String> pendingActions = new HashSet<>(pendingActionsSP);
-            pendingActions.remove(makePendingActionKey(action, victim));
-
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions);
-            editor.apply();
+    @JvmStatic
+    fun removeFromPendingAction(ctx: Context, action: String, victim: String) {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        val pendingActionsSP = sp.getStringSet(KEY_APP_ACTION_SP_PENDING, null)
+        if (pendingActionsSP != null && pendingActionsSP.isNotEmpty()) {
+            val pendingActions: MutableSet<String> = HashSet(pendingActionsSP)
+            pendingActions.remove(makePendingActionKey(action, victim))
+            val editor = sp.edit()
+            editor.putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions)
+            editor.apply()
         }
     }
 
-    private static String makePendingActionKey(String action, String victim) {
-        if (TextUtils.isEmpty(victim)) {
-            return action;
-        }
-        return action + ":" + victim;
+    private fun makePendingActionKey(action: String, victim: String): String {
+        return if (TextUtils.isEmpty(victim)) {
+            action
+        } else "$action:$victim"
     }
 
-    public static Set<String> getPendingActions(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        return sp.getStringSet(KEY_APP_ACTION_SP_PENDING, new HashSet<>());
+    fun getPendingActions(ctx: Context): Set<String> {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
+        return sp.getStringSet(KEY_APP_ACTION_SP_PENDING, HashSet()) ?: HashSet()
     }
 
-    public static boolean getRequireOnboarding(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getRequireOnboarding(ctx: Context): Boolean {
+        val sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE)
         if (!sp.contains(KEY_APP_ACTION_ONBOARDING_REQUIRED)) {
-            setRequireOnboarding(ctx, true);
-            return true;
+            setRequireOnboarding(ctx, true)
+            return true
         }
-        return sp.getBoolean(KEY_APP_ACTION_ONBOARDING_REQUIRED, false);
+        return sp.getBoolean(KEY_APP_ACTION_ONBOARDING_REQUIRED, false)
     }
 
-    public static void setRequireOnboarding(Context ctx, boolean require) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putBoolean(KEY_APP_ACTION_ONBOARDING_REQUIRED, require);
-        editor.apply();
+    @JvmStatic
+    fun setRequireOnboarding(ctx: Context, require: Boolean) {
+        val editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit()
+        editor.putBoolean(KEY_APP_ACTION_ONBOARDING_REQUIRED, require)
+        editor.apply()
     }
 
-    public static boolean getRequireAccReminder(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        if (!sp.contains(KEY_APP_ACTION_ACC_REMINDER_REQUIRED)) {
-            setRequireAccReminder(ctx, true);
-            return true;
-        }
-        return sp.getBoolean(KEY_APP_ACTION_ACC_REMINDER_REQUIRED, false);
-    }
-
-    public static void setRequireAccReminder(Context ctx, boolean require) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putBoolean(KEY_APP_ACTION_ACC_REMINDER_REQUIRED, require);
-        editor.apply();
-    }
-
-    public static long getLatestAppVersion(Context ctx) {
-        SharedPreferences sp = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE);
-        return sp.getLong(KEY_APP_LATEST_APP_VERSION, -1);
-    }
-
-    public static void setLatestAppVersion(Context ctx, long version) {
-        SharedPreferences.Editor editor = ctx.getSharedPreferences(SP_APP_ACTION, Context.MODE_PRIVATE).edit();
-        editor.putLong(KEY_APP_LATEST_APP_VERSION, version);
-        editor.apply();
-    }
 }

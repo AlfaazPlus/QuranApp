@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
+import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
@@ -39,7 +40,6 @@ import java.util.StringJoiner;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class FileUtils {
-
     private final Context mContext;
 
     private FileUtils(@NonNull Context context) {
@@ -70,7 +70,8 @@ public final class FileUtils {
 
     public File getRecitationAudioFile(String reciterSlug, int chapterNo, int verseNo) {
         File recitationDir = getRecitationDir();
-        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo, verseNo);
+        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo,
+                verseNo);
         return new File(recitationDir, audioSubPathWithReciter);
     }
 
@@ -85,13 +86,15 @@ public final class FileUtils {
 
     public File getSingleTranslationInfoFile(String langCode, String translSlug) {
         File translationDir = getTranslationDir();
-        String translInfoSubPathWithLangCode = TranslUtils.prepareTranslInfoPathForSpecificLangNSlug(langCode, translSlug);
+        String translInfoSubPathWithLangCode = TranslUtils.prepareTranslInfoPathForSpecificLangNSlug(langCode,
+                translSlug);
         return new File(translationDir, translInfoSubPathWithLangCode);
     }
 
     public File getSingleTranslationFile(int translId, String langCode, String translSlug) {
         File translationDir = getTranslationDir();
-        String translSubPathWithLangCode = TranslUtils.prepareTranslPathForSpecificLangNSlug(translId, langCode, translSlug);
+        String translSubPathWithLangCode = TranslUtils.prepareTranslPathForSpecificLangNSlug(translId, langCode,
+                translSlug);
         return new File(translationDir, translSubPathWithLangCode);
     }
 
@@ -124,6 +127,14 @@ public final class FileUtils {
         File tafsirDir = getTafsirDir();
         String tafsirSubPath = TafsirUtils.prepareTafsirFilePathFullChapter(tafsirSlug, chapterNo);
         return new File(tafsirDir, tafsirSubPath);
+    }
+
+    public File getOtherDirectory() {
+        return makeAndGetAppResourceDir(AppUtils.APP_OTHER_DIR);
+    }
+
+    public File getAppUpdatesFile() {
+        return new File(getOtherDirectory(), "app_updates.json");
     }
 
     public File makeAndGetAppResourceDir(String resourceDirName) {
@@ -267,7 +278,8 @@ public final class FileUtils {
      */
     @NonNull
     public Uri getFileURI(@NonNull File file) {
-        return FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", file);
+        return FileProvider.getUriForFile(getContext(),
+                getContext().getApplicationContext().getPackageName() + ".provider", file);
     }
 
     @Nullable

@@ -22,15 +22,14 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.remoteconfig.ktx.get
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.ActivityReference
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.fb.FirebaseUtils
 import com.quranapp.android.utils.quran.parser.ParserUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
@@ -41,29 +40,31 @@ import com.quranapp.android.utils.sp.SPAppConfigs
 import com.quranapp.android.utils.sp.SPVerses
 import com.quranapp.android.utils.univ.RegexPattern
 import com.quranapp.android.utils.votd.VOTDUtils
-import org.json.JSONObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object AppActions {
     const val APP_ACTION_KEY = "app.action.key"
     const val APP_ACTION_VICTIM_KEY = "app.action.victim_key"
-    const val APP_ACTION_UPDATE = "app.action.update"
-    const val APP_ACTION_PRIVACY_UPDATE = "app.action.privacy_update"
-    const val APP_ACTION_ABOUT_UPDATE = "app.action.about_update"
-    const val APP_ACTION_SUBS_REMINDER = "app.action.subscription_reminder"
-    const val APP_ACTION_TRANSL_DELETE = "app.action.translation.delete"
+    private const val APP_ACTION_UPDATE = "app.action.update"
+    private const val APP_ACTION_PRIVACY_UPDATE = "app.action.privacy_update"
+    private const val APP_ACTION_ABOUT_UPDATE = "app.action.about_update"
+    private const val APP_ACTION_SUBS_REMINDER = "app.action.subscription_reminder"
+    private const val APP_ACTION_TRANSL_DELETE = "app.action.translation.delete"
     const val APP_ACTION_TRANSL_UPDATE = "app.action.translation.update"
-    const val APP_ACTION_TRANSL_NEW = "app.action.translation.new"
-    const val APP_ACTION_TRANSL_INFO_UPDATE = "app.action.translation_info.update"
-    const val APP_ACTION_OPEN_LINK = "app.action.open_link"
+    private const val APP_ACTION_TRANSL_NEW = "app.action.translation.new"
+    private const val APP_ACTION_TRANSL_INFO_UPDATE = "app.action.translation_info.update"
+    private const val APP_ACTION_OPEN_LINK = "app.action.open_link"
     const val APP_ACTION_URLS_UPDATE = "app.action.urls_update"
-    const val APP_ACTION_OPEN_READER_JUZ = "app.action.open_reader_juz"
-    const val APP_ACTION_OPEN_READER_CHAPTER = "app.action.open_reader_chapter"
-    const val APP_ACTION_OPEN_READER_VERSES = "app.action.open_reader_verses"
-    const val APP_ACTION_OPEN_REFERENCES = "app.action.open_references"
-    const val APP_ACTION_REFERENCES_TITLE = "app.action.references_title"
-    const val APP_ACTION_REFERENCES_DESC = "app.action.references_desc"
-    const val APP_ACTION_REFERENCES_TRANSL_SLUGS = "app.action.references_transl_slugs"
-    const val APP_ACTION_REFERENCES_SHOW_CHAP_SUGG = "app.action.references_show_chap_sugg"
+    private const val APP_ACTION_OPEN_READER_JUZ = "app.action.open_reader_juz"
+    private const val APP_ACTION_OPEN_READER_CHAPTER = "app.action.open_reader_chapter"
+    private const val APP_ACTION_OPEN_READER_VERSES = "app.action.open_reader_verses"
+    private const val APP_ACTION_OPEN_REFERENCES = "app.action.open_references"
+    private const val APP_ACTION_REFERENCES_TITLE = "app.action.references_title"
+    private const val APP_ACTION_REFERENCES_DESC = "app.action.references_desc"
+    private const val APP_ACTION_REFERENCES_TRANSL_SLUGS = "app.action.references_transl_slugs"
+    private const val APP_ACTION_REFERENCES_SHOW_CHAP_SUGG = "app.action.references_show_chap_sugg"
 
     /**
      * @param action     The action which is to be performed. Like [.APP_ACTION_TRANSL_UPDATE] etc.
@@ -84,7 +85,7 @@ object AppActions {
         } else if (APP_ACTION_URLS_UPDATE == action) {
             UrlsManager.newInstance(ctx).updateUrls()
         } else if (APP_ACTION_TRANSL_NEW == action) {
-            SPAppActions.setFetchTranslsForce(ctx, true)
+            SPAppActions.setFetchTranslationsForce(ctx, true)
             if (fromNotif) {
                 val intent = Intent(ctx, ActivitySettings::class.java)
                 intent.putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_TRANSL_DOWNLOAD)
@@ -95,7 +96,7 @@ object AppActions {
                 ctx.startActivity(intent)
             }
         } else if (APP_ACTION_TRANSL_DELETE == action) {
-            SPAppActions.setFetchTranslsForce(ctx, true)
+            SPAppActions.setFetchTranslationsForce(ctx, true)
             if (victim != null) {
                 val factory = QuranTranslFactory(ctx)
                 factory.deleteTranslation(victim)
@@ -109,7 +110,7 @@ object AppActions {
                 updateTransl(ctx, victim)
             }
         } else if (APP_ACTION_TRANSL_INFO_UPDATE == action) {
-            SPAppActions.setFetchTranslsForce(ctx, true)
+            SPAppActions.setFetchTranslationsForce(ctx, true)
         } else if (APP_ACTION_OPEN_LINK == action) {
             if (victim != null) {
                 handleOpenLink(ctx, remoteMessage, victim, fromNotif)
@@ -296,41 +297,37 @@ object AppActions {
      * */
     @JvmStatic
     fun checkForResourcesVersions(ctx: Context) {
-        try {
-            val remoteConfig = FirebaseUtils.remoteConfig()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val (urlsVersion, translationsVersion, recitationsVersion) = RetrofitInstance.github.getResourcesVersions()
 
-            val obj = JSONObject(remoteConfig["resourceVersions"].asString())
-            val serverUrlsVersion = obj.optLong("urls", -1)
-            val serverTranslationsVersion = obj.optLong("translations", -1)
-            val serverRecitationsVersion = obj.optLong("recitations", -1)
+                val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
+                val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
+                val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
 
-            val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
-            val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
-            val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
+                Logger.print("RESOURCE VERSIONS: URLs: local: $localUrlsVersion, server: $urlsVersion")
+                if (urlsVersion > localUrlsVersion) {
+                    SPAppActions.setFetchUrlsForce(ctx, true)
+                    SPAppConfigs.setUrlsVersion(ctx, urlsVersion)
+                    Logger.print("Updated URLs version from $localUrlsVersion to $urlsVersion")
+                }
 
+                Logger.print("RESOURCE VERSIONS: TRANSLATIONS: local: $localTranslationsVersion, server: $translationsVersion")
+                if (translationsVersion > localTranslationsVersion) {
+                    SPAppActions.setFetchTranslationsForce(ctx, true)
+                    SPAppConfigs.setTranslationsVersion(ctx, translationsVersion)
+                    Logger.print("Updated translations version from $localTranslationsVersion to $translationsVersion")
+                }
 
-            Logger.print("RESOURCE VERSIONS: URLs: local: $localUrlsVersion, server: $serverUrlsVersion")
-            if (serverUrlsVersion > localUrlsVersion) {
-                SPAppActions.setFetchUrlsForce(ctx, true)
-                SPAppConfigs.setUrlsVersion(ctx, serverUrlsVersion)
-                Logger.print("Updated URLs version from $localUrlsVersion to $serverUrlsVersion")
+                Logger.print("RESOURCE VERSIONS: RECITATIONS: local: $localRecitationsVersion, server: $recitationsVersion")
+                if (recitationsVersion > localRecitationsVersion) {
+                    SPAppActions.setFetchRecitationsForce(ctx, true)
+                    SPAppConfigs.setRecitationsVersion(ctx, recitationsVersion)
+                    Logger.print("Updated recitations version from $localRecitationsVersion to $recitationsVersion")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            Logger.print("RESOURCE VERSIONS: TRANSLATIONS: local: $localTranslationsVersion, server: $serverTranslationsVersion")
-            if (serverTranslationsVersion > localTranslationsVersion) {
-                SPAppActions.setFetchTranslsForce(ctx, true)
-                SPAppConfigs.setTranslationsVersion(ctx, serverTranslationsVersion)
-                Logger.print("Updated translations version from $localTranslationsVersion to $serverTranslationsVersion")
-            }
-
-            Logger.print("RESOURCE VERSIONS: RECITATIONS: local: $localRecitationsVersion, server: $serverRecitationsVersion")
-            if (serverRecitationsVersion > localRecitationsVersion) {
-                SPAppActions.setFetchRecitationsForce(ctx, true)
-                SPAppConfigs.setRecitationsVersion(ctx, serverRecitationsVersion)
-                Logger.print("Updated recitations version from $localRecitationsVersion to $serverRecitationsVersion")
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 }
