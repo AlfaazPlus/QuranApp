@@ -15,20 +15,29 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: quranapp-version
-    attributes:
-      label: QuranApp version
-      description: |
-        You can find your QuranApp version in **Menu > About Us**.
-    validations:
-      required: true
-
   - type: textarea
     id: screenshot
     attributes:
       label: Screenshot
       placeholder: |
         Attach screenshots or videos.
+    validations:
+      required: true
+
+  - type: input
+    id: chapter-verse
+    attributes:
+      label: Chapter and verse numbers
+      description: |
+        For example: Chapter No: 0 and verse no: 0
+    validations:
+      required: true
+
+  - type: input
+    id: quranapp-version
+    attributes:
+      label: QuranApp version
+      description: |
+        You can find your QuranApp version in **Menu > About Us**.
     validations:
       required: true
