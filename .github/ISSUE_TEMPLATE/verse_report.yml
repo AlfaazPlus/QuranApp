@@ -1,6 +1,9 @@
-name: 🐞 Verse report
+name: ⚠️ Verse report
 description: Report an issue with translations or verses in the app.
+title: "[Verse Report]: "
 labels: ["verse report"]
+assignees:
+  - faisalcodes
 body:
 
   - type: textarea
