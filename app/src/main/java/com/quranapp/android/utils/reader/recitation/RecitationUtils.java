@@ -47,8 +47,8 @@ import java.util.regex.Pattern;
 public class RecitationUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
             "recitations");
-    public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)}", Pattern.CASE_INSENSITIVE);
-    public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)}", Pattern.CASE_INSENSITIVE);
+    public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
+    public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
 
     public static final String KEY_RECITATION_RECITER = "key.recitation.reciter";
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
