@@ -1,0 +1,140 @@
+{
+  "translations": {
+    "en": {
+      "en_hilali-khan": {
+        "book": "Hilali & Khan",
+        "author": "Muhammad Taqi-ud-Din al-Hilali & Muhammad Muhsin Khan",
+        "displayName": "Hilali & Khan",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_hilali-khan.json"
+      },
+      "en_pickthall": {
+        "book": "English Translation (Pickthall)",
+        "author": "Mohammed Marmaduke William Pickthall",
+        "displayName": "Pickthall",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_pickthall.json"
+      },
+      "en_yusuf-ali": {
+        "book": "English Translation (Yusuf Ali)",
+        "author": "Yusuf Ali",
+        "displayName": "Yusuf Ali",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_yusuf-ali.json"
+      },
+      "en_irving": {
+        "book": "Dr. T.B. Irving [Muhammad Hijab]",
+        "author": "Dr. T.B. Irving",
+        "displayName": "T.B. Irving",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_irving.json"
+      },
+      "en_taqi-usmani": {
+        "book": "Mufti Taqi Usmani",
+        "author": "Mufti Taqi Usmani",
+        "displayName": "Taqi Usmani",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_taqi-usmani.json"
+      },
+      "en_mahmoud-ghali": {
+        "book": "Dr. Mahmoud Ghali",
+        "author": "Dr. Mahmoud Ghali",
+        "displayName": "Mahmoud Ghali",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_mahmoud-ghali.json"
+      },
+      "en_transliteration": {
+        "book": "Transliteration",
+        "author": "",
+        "displayName": "Transliteration",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_transliteration.json"
+      },
+      "en_maududi": {
+        "book": "Tafhim-ul-Quran",
+        "author": "Syed Abul Ala Maududi",
+        "displayName": "Abul Ala Maududi",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/en/en_maududi.json"
+      }
+    },
+    "ur": {
+      "ur_jalandhari": {
+        "book": "فتح محمد جالندھری",
+        "author": "فتح محمد جالندھری",
+        "displayName": "جالندھری",
+        "langCode": "ur",
+        "langName": "Urdu",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/ur/ur_jalandhari.json"
+      },
+      "ur_israr-ahmad": {
+        "book": "بیان القرآن",
+        "author": "ڈاکٹر اسرار احمد",
+        "displayName": "اسرار احمد",
+        "langCode": "ur",
+        "langName": "Urdu",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/ur/ur_israr-ahmad.json"
+      },
+      "ur_maududi": {
+        "book": "تفہيم القرآن",
+        "author": "سید ابو الاعلیٰ مودودی",
+        "displayName": "ابو الاعلیٰ مودودی",
+        "langCode": "ur",
+        "langName": "Urdu",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/ur/ur_maududi.json"
+      }
+    },
+    "hi": {
+      "hi_azizul-haque": {
+        "book": "मौलाना अजीजूल हक़ अल-उमरी",
+        "author": "Maulana Azizul Haque al-Umari",
+        "displayName": "अजीजूल हक़",
+        "langCode": "hi",
+        "langName": "Hindi",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
+      }
+    },
+    "bn": {
+      "bn_mujibur-rahman": {
+        "book": "Sheikh Mujibur Rahman",
+        "author": "Sheikh Mujibur Rahman",
+        "displayName": "Mujibur Rahman",
+        "langCode": "bn",
+        "langName": "Bengali",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/bn/bn_mujibur-rahman.json"
+      }
+    },
+    "in": {
+      "in_quran-complex": {
+        "book": "King Fahad Quran Complex",
+        "author": "King Fahad Quran Complex",
+        "displayName": "King Fahad Quran Complex",
+        "langCode": "in",
+        "langName": "Indonesian",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/in/in_quran-complex.json"
+      }
+    }
+  }
+}
