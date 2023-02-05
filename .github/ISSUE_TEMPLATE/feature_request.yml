@@ -1,6 +1,6 @@
 name: 💡 Feature request
 description: Suggest a feature to improve the QuranApp
-labels: [feature request]
+labels: ["feature request"]
 body:
 
   - type: textarea
