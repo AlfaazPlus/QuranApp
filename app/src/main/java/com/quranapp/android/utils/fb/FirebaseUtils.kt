@@ -6,10 +6,6 @@
  */
 package com.quranapp.android.utils.fb
 
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.quranapp.android.ApiConfig.FB_STORAGE_BUCKET
@@ -21,10 +17,6 @@ object FirebaseUtils {
 
     private const val FIREBASE_EMULATOR_HOST = BuildConfig.DEVELOPER_MACHINE_IP
     private val FIREBASE_EMULATOR_ACTIVE = false && BuildConfig.DEBUG
-    private const val FIREBASE_EMULATOR_PORT_AUTH = 9099
-    private const val FIREBASE_EMULATOR_PORT_FIRESTORE = 8080
-    private const val FIREBASE_EMULATOR_PORT_RTDB = 9000
-    private const val FIREBASE_EMULATOR_PORT_FUNCTIONS = 5001
     private const val FIREBASE_EMULATOR_PORT_STORAGE = 9199
 
     fun storage(): FirebaseStorage {
@@ -44,15 +36,4 @@ object FirebaseUtils {
         return storage().getReferenceFromUrl(STORAGE_BUCKET)
     }
 
-
-    @JvmStatic
-    fun remoteConfig(): FirebaseRemoteConfig {
-        val remoteConfig = Firebase.remoteConfig
-        val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 60 else 3600
-        }
-        remoteConfig.setConfigSettingsAsync(configSettings)
-
-        return remoteConfig
-    }
 }

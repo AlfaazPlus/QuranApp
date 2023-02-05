@@ -305,7 +305,6 @@ public class TranslUtils {
                         continue;
                     }
 
-                    QuranTranslBookInfo bookInfo = pair.first;
                     translInfosAndFiles.add(pair);
                 } catch (Exception e) {
                     Logger.print(

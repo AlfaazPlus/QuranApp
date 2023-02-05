@@ -83,7 +83,7 @@ public class InfoUtils {
         return new CustomTabsIntent.Builder()
                 .setToolbarColor(ContextCompat.getColor(context, R.color.colorBGPage))
                 .setShowTitle(true)
-                .enableUrlBarHiding()
+                .setUrlBarHidingEnabled(true)
                 .build();
     }
 }

@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.Log;
 import com.peacedesign.android.utils.ViewUtils;
@@ -420,7 +421,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         } else if (id == R.id.btnShare) {
             openShareDialog(actvt, mVerse.getChapterNo(), mVerse.getVerseNo());
         } else if (id == R.id.btnReport) {
-            openReportDialog(actvt, mVerse);
+            // redirect to github issues
+            AppBridge.newOpener(actvt).browseLink("https://github.com/AlfaazPlus/QuranApp/issues/new?template=verse_report.yml");
         }
     }
 

@@ -126,13 +126,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".utils.services.FirebaseNotifService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
         <service android:name=".utils.services.TranslDownloadService" />
         <service android:name=".utils.reader.recitation.RecitationNotificationService" />
 
