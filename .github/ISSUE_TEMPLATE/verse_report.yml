@@ -1,0 +1,31 @@
+name: 🐞 Verse report
+description: Report an issue with translations or verses in the app.
+labels: ["verse report"]
+body:
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      placeholder: |
+        Kindly provide a proper explanation...
+    validations:
+      required: true
+
+  - type: input
+    id: quranapp-version
+    attributes:
+      label: QuranApp version
+      description: |
+        You can find your QuranApp version in **Menu > About Us**.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      placeholder: |
+        Attach screenshots or videos.
+    validations:
+      required: true
