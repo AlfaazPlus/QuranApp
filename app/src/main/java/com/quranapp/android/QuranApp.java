@@ -46,18 +46,6 @@ public class QuranApp extends Application {
         }
 
         FirebaseApp.initializeApp(this);
-        FirebaseUtils.remoteConfig().fetchAndActivate().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Logger.print("Fetched and activated remoteConfig params");
-            } else {
-                Logger.print("Failed to fetch remoteConfig params");
-
-                Exception exception = task.getException();
-                if (exception != null) {
-                    exception.printStackTrace();
-                }
-            }
-        });
 
         FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
                 BuildConfig.DEBUG

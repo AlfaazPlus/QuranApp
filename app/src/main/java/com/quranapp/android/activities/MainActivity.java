@@ -75,12 +75,6 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        initActions(intent);
-    }
-
-    @Override
     protected void initCreate(Bundle savedInstanceState) {
         if (isOnboardingRequired()) {
             initOnboarding();
@@ -112,7 +106,7 @@ public class MainActivity extends BaseActivity {
 
     private void init() {
         initContent();
-        initActions(getIntent());
+        initActions();
     }
 
     private void initHeader() {
@@ -123,26 +117,9 @@ public class MainActivity extends BaseActivity {
         //        ViewUtils.addStrokedBGToHeader(mBinding.header.getRoot(), R.color.colorBGHomePageItem, R.color.colorDivider);
     }
 
-    private void initActions(Intent intent) {
+    private void initActions() {
         AppActions.checkForResourcesVersions(this);
-        AppActions.doPendingActions(this);
-
-        Bundle data = intent.getExtras();
-        if (data == null) {
-            return;
-        }
-
-        String action = data.getString(APP_ACTION_KEY);
-        if (!TextUtils.isEmpty(action)) {
-            String victim = data.getString(APP_ACTION_VICTIM_KEY);
-            AppActions.doAction(this, null, data, action, victim, true, false);
-        }
-
-        data.remove(APP_ACTION_KEY);
-        data.remove(APP_ACTION_VICTIM_KEY);
-
-        intent.putExtras(data);
-        setIntent(intent);
+        AppActions.scheduleActions(this);
     }
 
     private void initContent() {

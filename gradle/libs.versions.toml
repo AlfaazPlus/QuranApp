@@ -8,9 +8,11 @@ appcompat = "1.6.0"
 material = "1.8.0"
 constraintlayout = "2.1.4"
 apacheCommons = "3.12.0"
+guava = "31.0.1-jre"
 webkit = "1.6.0"
 media = "1.6.0"
 viewbinding = "7.4.1"
+browser= "1.4.0"
 
 # SmoothRefreshLayout
 srlCore = "1.7.2.4"
@@ -37,7 +39,9 @@ desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.r
 ossLicenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 apache-commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommons" }
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 viewbinding = { group = "com.android.databinding", name = "viewbinding", version.ref = "viewbinding" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # SmoothRefreshLayout
 srlCore = { group = "com.github.dkzwm", name = 'srl-core', version.ref = "srlCore" }

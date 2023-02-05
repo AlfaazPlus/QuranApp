@@ -14,7 +14,8 @@ object SPAppActions {
 
     // Fetch translations forced in ActivityTranslationDownload.
     private const val KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE = "app.action.translations.fetch_force"
-    private const val KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
+    private const val KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE =
+        "app.action.recitations.fetch_force"
     private const val KEY_APP_ACTION_SP_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
     private const val KEY_APP_ACTION_SP_PENDING = "app.action.pending"
     private const val KEY_APP_ACTION_ONBOARDING_REQUIRED = "app.action.onboarding_required"

@@ -13,6 +13,7 @@ plugins {
 
 android {
     compileSdkVersion 33
+    buildToolsVersion "33.0.1"
 
     defaultConfig {
         applicationId "com.quranapp.android"
@@ -104,11 +105,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-storage'
-    implementation 'com.google.firebase:firebase-inappmessaging-display'
-    implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
-    implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
 
     implementation 'com.google.android.play:core:1.10.3'
@@ -120,11 +118,13 @@ dependencies {
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.webkit
     implementation libs.androidx.media
+    implementation libs.androidx.browser
 
     coreLibraryDesugaring libs.desugaring
     implementation libs.ossLicenses
     implementation libs.material
     implementation libs.apache.commons
+    implementation libs.guava
     implementation libs.viewbinding
 
     /* kotlinx serialization */
