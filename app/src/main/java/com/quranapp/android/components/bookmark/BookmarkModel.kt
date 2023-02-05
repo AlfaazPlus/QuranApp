@@ -28,7 +28,10 @@ class BookmarkModel(
             val cal = Calendar.getInstance()
             return if (cal.get(Calendar.YEAR) == year) {
                 if (cal.get(Calendar.MONTH) + 1 == month && cal.get(Calendar.DAY_OF_MONTH) == day) {
-                    ctx.getString(R.string.strMsgBookmarkDateToday, DateTimeFormatter.ofPattern("hh:mm a").format(oldDate))
+                    ctx.getString(
+                        R.string.strMsgBookmarkDateToday,
+                        DateTimeFormatter.ofPattern("hh:mm a").format(oldDate)
+                    )
                 } else {
                     val datePart1 = DateTimeFormatter.ofPattern("dd MMM").format(oldDate)
                     val datePart2 = DateTimeFormatter.ofPattern("hh:mm a").format(oldDate)
@@ -47,9 +50,9 @@ class BookmarkModel(
     }
 
     fun copy(): BookmarkModel {
-        val model = BookmarkModel(id, chapterNo, fromVerseNo, toVerseNo, date)
-        model.note = note
-        return model
+        return BookmarkModel(id, chapterNo, fromVerseNo, toVerseNo, date).apply {
+            note = this@BookmarkModel.note
+        }
     }
 
     override fun toString(): String {
@@ -60,14 +63,12 @@ class BookmarkModel(
         if (this === other) return true
         if (other !is BookmarkModel) return false
 
-        if (id != other.id) return false
-        if (chapterNo != other.chapterNo) return false
-        if (fromVerseNo != other.fromVerseNo) return false
-        if (toVerseNo != other.toVerseNo) return false
-        if (date != other.date) return false
-        if (note != other.note) return false
-
-        return true
+        return id == other.id &&
+                chapterNo == other.chapterNo &&
+                fromVerseNo == other.fromVerseNo &&
+                toVerseNo == other.toVerseNo &&
+                date == other.date &&
+                note == other.note
     }
 
     override fun hashCode(): Int {
