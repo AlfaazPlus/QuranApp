@@ -100,7 +100,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
 
             @Override
             public void onRightIconClick() {
-                launchFrag(FragSettingsTranslDownload.class, null);
+                launchFrag(FragSettingsTranslationsDownload.class, null);
             }
 
             @Override
@@ -138,7 +138,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
     private void initPageAlert(Context ctx) {
         mPageAlert = new PageAlert(ctx);
         mPageAlert.setMessage(ctx.getString(R.string.strMsgTranslNoDownloads), null);
-        mPageAlert.setActionButton(R.string.strTitleDownloadTranslations, () -> launchFrag(FragSettingsTranslDownload.class, null));
+        mPageAlert.setActionButton(R.string.strTitleDownloadTranslations, () -> launchFrag(FragSettingsTranslationsDownload.class, null));
     }
 
     private void initTranslations(Context ctx) {

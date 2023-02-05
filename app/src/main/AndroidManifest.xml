@@ -126,7 +126,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".utils.services.TranslDownloadService" />
+        <service android:name=".utils.services.TranslationDownloadService" />
         <service android:name=".utils.reader.recitation.RecitationNotificationService" />
 
         <meta-data

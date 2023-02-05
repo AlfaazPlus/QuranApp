@@ -8,7 +8,7 @@ import android.content.ContextWrapper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
-import com.quranapp.android.utils.services.TranslDownloadService
+import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sp.SPAppActions
 import com.quranapp.android.utils.sp.SPAppConfigs
 import com.quranapp.android.utils.sp.SPVerses
@@ -31,7 +31,7 @@ object AppActions {
 
             // The slug could be empty. Check factory.getTranslationBookInfo(slug) for more info.
             if (bookInfo.slug.isNotEmpty()) {
-                TranslDownloadService.startDownloadService(ctx, bookInfo)
+                TranslationDownloadService.startDownloadService(ctx, bookInfo)
             }
         }
         factory.close()

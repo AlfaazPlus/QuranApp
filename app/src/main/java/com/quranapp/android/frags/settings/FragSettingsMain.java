@@ -230,7 +230,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initAppLanguage(LinearLayout parent) {
-        LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
+        LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
+                false);
 
         setupLauncherParams(R.drawable.dr_icon_language, appLangExplorerBinding);
         setupAppLangTitle(appLangExplorerBinding);
@@ -364,6 +365,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void alarmPermission() {
         // TODO: 13-Mar-22
+        // TODO: 05/02/23 Notification permission
     }
 
     private void initReaderSettings(Context ctx) {
@@ -465,7 +467,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupScriptTitle() {
         if (mScriptExplorerBinding == null) return;
 
-        String subtitle = ScriptUtils.getScriptName(SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
+        String subtitle = ScriptUtils.getScriptName(
+                SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
         prepareTitle(mScriptExplorerBinding, R.string.strTitleScripts, subtitle);
     }
 
@@ -612,7 +615,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         }
         mVerseDecorator.onSharedPrefChanged();
 
-        int scriptPreviewRes = ScriptUtils.getScriptPreviewRes(SPReader.getSavedScript(mLytTextSizeArabic.getRoot().getContext()));
+        int scriptPreviewRes = ScriptUtils.getScriptPreviewRes(
+                SPReader.getSavedScript(mLytTextSizeArabic.getRoot().getContext()));
         mLytTextSizeArabic.demoText.setText(scriptPreviewRes);
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText);

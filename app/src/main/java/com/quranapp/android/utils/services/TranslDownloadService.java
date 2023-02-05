@@ -47,7 +47,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TranslDownloadService extends Service {
-    private final TranslDownloadServiceBinder mBinder = new TranslDownloadServiceBinder();
+    private final TranslationDownloadServiceBinder mBinder = new TranslationDownloadServiceBinder();
     private final Set<String> mCurrentDownloads = new HashSet<>();
     private final CallableTaskRunner<String> mTaskRunner = new CallableTaskRunner<>();
     private static boolean mStartedByActivity;
@@ -64,7 +64,8 @@ public class TranslDownloadService extends Service {
         super.onCreate();
 
         if (mStartedByActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notification notification = NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads));
+            Notification notification = NotificationUtils.createEmptyNotif(this,
+                    getString(R.string.strNotifChannelIdDownloads));
             startForeground(1, notification);
         }
     }
@@ -86,7 +87,8 @@ public class TranslDownloadService extends Service {
         int flag = START_NOT_STICKY;
 
         if (intent == null) {
-            Notification notification = NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads));
+            Notification notification = NotificationUtils.createEmptyNotif(this,
+                    getString(R.string.strNotifChannelIdDownloads));
             startForeground(1, notification);
             finish();
             return flag;
@@ -113,7 +115,8 @@ public class TranslDownloadService extends Service {
     }
 
     private void startDownload(QuranTranslBookInfo bookInfo, NotificationCompat.Builder notifBuilder, NotificationManagerCompat notifManager) {
-        LoadSingleTranslTask loadSingleTranslTask = new LoadSingleTranslTask(this, bookInfo, notifBuilder, notifManager);
+        LoadSingleTranslTask loadSingleTranslTask = new LoadSingleTranslTask(this, bookInfo, notifBuilder,
+                notifManager);
         TranslUtils.prepareSingleTranslUrlFB(bookInfo, uri -> {
             loadSingleTranslTask.setUrl(uri.toString());
             mTaskRunner.callAsync(loadSingleTranslTask);
@@ -140,7 +143,8 @@ public class TranslDownloadService extends Service {
         }
         Intent activityIntent = new Intent(this, ActivitySettings.class);
         activityIntent.putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_TRANSL_DOWNLOAD);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, bookInfo.getSlug().hashCode(), activityIntent, flag);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, bookInfo.getSlug().hashCode(), activityIntent,
+                flag);
         builder.setContentIntent(pendingIntent);
 
         return builder;
@@ -165,7 +169,7 @@ public class TranslDownloadService extends Service {
         stopSelf();
     }
 
-    public class TranslDownloadServiceBinder extends Binder {
+    public class TranslationDownloadServiceBinder extends Binder {
         public TranslDownloadService getService() {
             return TranslDownloadService.this;
         }

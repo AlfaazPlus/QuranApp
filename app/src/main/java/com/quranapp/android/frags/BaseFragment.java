@@ -20,7 +20,8 @@ import com.quranapp.android.interfaceUtils.ActivityResultStarter;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
-public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener, ActivityResultStarter {
+public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener,
+        ActivityResultStarter {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     private NetworkStateReceiver mNetworkReceiver;
 
@@ -70,6 +71,12 @@ public abstract class BaseFragment extends ResHelperFragment implements NetworkS
     public void launchActivity(Context ctx, Class<?> cls) {
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+    }
+
+    public void runOnUIThread(Runnable runnable) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(runnable);
+        }
     }
 
     @Override

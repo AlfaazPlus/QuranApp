@@ -14,8 +14,7 @@ import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.db.transl.QuranTranslDBHelper
 import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
-import com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.KEY_FOOTNOTE_SINGLE_TEXT
-import com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.KEY_NUMBER
+import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION
 import com.quranapp.android.utils.search.SearchFilters
@@ -26,8 +25,8 @@ import java.util.*
 
 
 /**
- * This factory makes contents of translations to the requesters.
- * The content may [QuranTranslBookInfo] or the actual contents.
+ * This factory prepares contents of translations for the requesters.
+ * The content may be [QuranTranslBookInfo] or the actual translation contents.
  * */
 class QuranTranslFactory(private val context: Context) : Closeable {
 
@@ -137,7 +136,6 @@ class QuranTranslFactory(private val context: Context) : Closeable {
                 displayName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DISPLAY_NAME))
                 langName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_NAME))
                 langCode = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_CODE))
-                isPremium = cursor.getInt(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_IS_PREMIUM)) == 1
                 lastUpdated = cursor.getLong(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LAST_UPDATED))
                 downloadPath = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DOWNLOAD_PATH))
             }
@@ -339,8 +337,8 @@ class QuranTranslFactory(private val context: Context) : Closeable {
             val footnote = Footnote().apply {
                 this.chapterNo = chapterNo
                 this.verseNo = verseNo
-                number = footnoteObj.optInt(KEY_NUMBER, -1)
-                text = footnoteObj.optString(KEY_FOOTNOTE_SINGLE_TEXT, "")
+                number = footnoteObj.optInt(QuranConstants.KEY_NUMBER, -1)
+                text = footnoteObj.optString(QuranConstants.KEY_FOOTNOTE_SINGLE_TEXT, "")
                 bookSlug = translSlug
             }
             footnotesMap[footnote.number] = footnote

@@ -14,7 +14,7 @@ import com.peacedesign.android.utils.Log
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
-import com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.*
+import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
@@ -123,7 +123,7 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
     }
 
     private fun readAndInsertChapters(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo, root: JSONObject) {
-        val chapters = root.optJSONArray(KEY_CHAPTER_LIST) ?: return
+        val chapters = root.optJSONArray(QuranConstants.KEY_CHAPTER_LIST) ?: return
         for (i in 0 until chapters.length()) {
             val chapterObj = chapters.optJSONObject(i) ?: continue
             readAndInsertSingleChapter(DB, bookInfo, chapterObj)
@@ -131,23 +131,30 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
     }
 
     private fun readAndInsertSingleChapter(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo, chapterObj: JSONObject) {
-        val chapterNo = chapterObj.optInt(KEY_NUMBER, -1)
-        val verses = chapterObj.optJSONArray(KEY_VERSE_LIST) ?: return
+        val chapterNo = chapterObj.optInt(QuranConstants.KEY_NUMBER, -1)
+        val verses = chapterObj.optJSONArray(QuranConstants.KEY_VERSE_LIST) ?: return
         for (i in 0 until verses.length()) {
             val verseObj = verses.optJSONObject(i) ?: continue
-            val footnotes = verseObj.optJSONArray(KEY_FOOTNOTE_LIST)?.toString() ?: "[]"
+            val footnotes = verseObj.optJSONArray(QuranConstants.KEY_FOOTNOTE_LIST)?.toString() ?: "[]"
             insertTranslationQuery(
                 DB,
                 bookInfo.slug,
                 chapterNo,
-                verseObj.optInt(KEY_NUMBER, -1),
-                verseObj.optString(KEY_TRANSLATION_TEXT, ""),
+                verseObj.optInt(QuranConstants.KEY_NUMBER, -1),
+                verseObj.optString(QuranConstants.KEY_TRANSLATION_TEXT, ""),
                 footnotes
             )
         }
     }
 
-    private fun insertTranslationQuery(DB: SQLiteDatabase, tableName: String, chapterNo: Int, verseNo: Int, text: String, footnotes: String?) {
+    private fun insertTranslationQuery(
+        DB: SQLiteDatabase,
+        tableName: String,
+        chapterNo: Int,
+        verseNo: Int,
+        text: String,
+        footnotes: String?
+    ) {
         val values = ContentValues().apply {
             put(_ID, makeVerseKey(chapterNo, verseNo))
             put(COL_CHAPTER_NO, chapterNo)
@@ -166,7 +173,6 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
             put(QuranTranslInfoEntry.COL_BOOK_NAME, bookInfo.bookName)
             put(QuranTranslInfoEntry.COL_AUTHOR_NAME, bookInfo.authorName)
             put(QuranTranslInfoEntry.COL_DISPLAY_NAME, bookInfo.displayName)
-            put(QuranTranslInfoEntry.COL_IS_PREMIUM, if (bookInfo.isPremium) 1 else 0)
             put(QuranTranslInfoEntry.COL_LAST_UPDATED, bookInfo.lastUpdated)
             put(QuranTranslInfoEntry.COL_DOWNLOAD_PATH, bookInfo.downloadPath)
         }
