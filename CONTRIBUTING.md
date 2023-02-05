@@ -30,9 +30,7 @@ Our project uses Firebase for various functionality, including authentication an
 2. Add an Android app to the project and download the `google-services.json` file. 
 3. Place the `google-services.json` file in the `app` directory of the project. 
 4. Following services are being used:
-   - Realtime Database
    - Cloud Storage
-   - Remote Config
 5. You don't really need to enable all of them if you are not working on features requiring them.
 
 ## Quran Translations
