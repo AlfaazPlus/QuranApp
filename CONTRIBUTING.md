@@ -25,13 +25,14 @@ Please note that all new code contributions must be written in Kotlin. Only crit
 6. Push your changes to your fork and submit a pull request with a proper explanation.
 
 ## Firebase Configuration
-Our project uses Firebase for various functionality, including authentication and storage. In order to build and run the project on your local machine, you will need to at least set up a Firebase project and configure the app with your own Firebase credentials.
+Our project uses Firebase for storage. In order to build and run the project on your local machine, you will need to at least set up a Firebase project and configure the app with your own Firebase credentials.
 1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project. 
 2. Add an Android app to the project and download the `google-services.json` file. 
 3. Place the `google-services.json` file in the `app` directory of the project. 
 4. Following services are being used:
    - Cloud Storage
 5. You don't really need to enable all of them if you are not working on features requiring them.
+6. We are working on to move away from Firebase.
 
 ## Quran Translations
 The quran translations used in the app are in a special format. If you would like to contribute a translation, you can find the format in one of the [pre-built translations](https://github.com/AlfaazPlus/QuranApp/tree/master/app/src/main/assets/prebuilt_translations). You must consider the following points:
