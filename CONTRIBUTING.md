@@ -40,7 +40,7 @@ The quran translations used in the app are in a special format. If you would lik
 2. Every footnote reference must be enclosed in html syntax or it will not be parsed correctly. The syntax is `<fn id="[id]" index="[index]">`. Explanation:
     - `[id]` is the id of the footnote. It is unique to the whole translation file.
     - `[index]` is the one-based index of the footnote in the specific verse. It is unique to the verse.
-    - Example: `<fn id="1" index="1">`. This means that the footnote with id 1 is the first footnote in the verse.
+    - Example: `<fn id="9" index="1">1</fn>`. This means that the footnote with id 9 is the first footnote in the verse.
 3. Every verse reference must be enclosed in html syntax or it will not be parsed correctly. The verse references have several syntax which are:
     - `<reference chapter="[chapter_no]" verses="[verse_no]">[display_text]</reference>`.
     
