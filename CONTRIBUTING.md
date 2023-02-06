@@ -37,7 +37,7 @@ Our project uses Firebase for storage. In order to build and run the project on 
 ## Quran Translations
 The quran translations used in the app are in a special format. If you would like to contribute a translation, you can find the format in one of the [pre-built translations](https://github.com/AlfaazPlus/QuranApp/tree/master/app/src/main/assets/prebuilt_translations). You must consider the following points:
 1. The translation must be in JSON format and illegal characters like quotes, backslashes, etc. must be escaped.
-2. Every footnote reference must be enclosed in html syntax or it will not be parsed correctly. The syntax is `<fn id="[id]" index="[index]">`. Explanation:
+2. Every footnote reference must be enclosed in html syntax or it will not be parsed correctly. The syntax is `<fn id="[id]" index="[index]">[display_text]</fn>`. Explanation:
     - `[id]` is the id of the footnote. It is unique to the whole translation file.
     - `[index]` is the one-based index of the footnote in the specific verse. It is unique to the verse.
     - Example: `<fn id="9" index="1">1</fn>`. This means that the footnote with id 9 is the first footnote in the verse.
