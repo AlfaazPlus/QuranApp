@@ -29,7 +29,7 @@ See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots).
 
 | Salient Features                    |     |
 |-----------------------------|-----|
-| No Ads                      | ✅   |
+| No Ads or Purchases         | ✅   |
 | Multiple Translations       | ✅   |
 | Multiple Recitations        | ✅   |
 | Multiple Quran Fonts        | ✅   |
@@ -46,6 +46,11 @@ Data sources for the development of this app include [QuranEnc](https://quranenc
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTING.md) to learn the ways to get started.
+
+## App Translations
+<a href="https://hosted.weblate.org/engage/AlfaazPlus/">
+<img src="https://hosted.weblate.org/widgets/AlfaazPlus/-/QuranApp/287x66-black.png" alt="Translation status" />
+</a>
 
 ## License
 
