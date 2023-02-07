@@ -58,7 +58,7 @@
     <string name="strLabelThemeLight">Claro</string>
     <string name="strLabelSystemDefault">Sistema por defecto</string>
     <string name="strLabelPreviousChapter">Capítulo previo</string>
-    <string name="strLabelNextChapter">Siguiente previo</string>
+    <string name="strLabelNextChapter">Capítulo Siguiente</string>
     <string name="strLabelNoPreviousChapter">Sin capitulo anterior</string>
     <string name="strLabelNoNextChapter">sin proximo capitulo</string>
     <string name="strLabelFullChapter">Leer capítulo completo</string>
