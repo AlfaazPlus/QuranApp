@@ -28,7 +28,7 @@ Please note that all new code contributions must be written in Kotlin. Only crit
 The quran translations used in the app are in a special format. If you would like to contribute a translation, you can find the format in one of the translations in the [inventory](https://github.com/faisalcodes/QuranApp/tree/master/inventory/translations). You must consider the following points:
 1. The translation must be in JSON format and illegal characters like quotes, backslashes, etc. must be escaped.
 2. Every footnote reference must be enclosed in html syntax or it will not be parsed correctly. The syntax is `<fn id="[id]" index="[index]">[display_text]</fn>`. Explanation:
-    - `[id]` is the id of the footnote. It is unique to the whole translation file.
+    - `[id]` is the id of the footnote. It is unique to the whole translazzztion file.
     - `[index]` is the one-based index of the footnote in the specific verse. It is unique to the verse.
     - Example: `<fn id="9" index="1">1</fn>`. This means that the footnote with id 9 is the first footnote in the verse.
 3. Every verse reference must be enclosed in html syntax or it will not be parsed correctly. The verse references have several syntax which are:
@@ -45,8 +45,3 @@ The quran translations used in the app are in a special format. If you would lik
 
 ## Recitations
 You can provide free api links to recitations.
-
-## App Translations
-<a href="https://hosted.weblate.org/projects/alfaazplus/#languages">
-<img src="https://hosted.weblate.org/widgets/alfaazplus/-/287x66-grey.png" alt="Translation status" />
-</a>
