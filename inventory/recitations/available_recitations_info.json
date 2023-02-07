@@ -1,0 +1,49 @@
+{
+  "url-info": {
+    "common-host": "verses.quran.com"
+  },
+  "reciters": [
+    {
+      "slug": "mishary-rashid",
+      "reciter": "Mishari Rashid al-Afasy",
+      "style": null,
+      "url-host": null,
+      "url-path": "/Alafasy/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "abdul-basit",
+      "reciter": "Abdul Basit 'Abd us-Samad",
+      "style": "Mujawwad",
+      "url-host": null,
+      "url-path": "/AbdulBaset/Mujawwad/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "al-shatri",
+      "reciter": "Abu Bakr al-Shatri",
+      "style": null,
+      "url-host": null,
+      "url-path": "/Shatri/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "as-shuraym",
+      "reciter": "Saud Al-Shuraim",
+      "style": null,
+      "url-host": null,
+      "url-path": "/Shuraym/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "ar-rifai",
+      "reciter": "Hani ar-Rifai",
+      "style": null,
+      "url-host": null,
+      "url-path": "/Rifai/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "as-sudais",
+      "reciter": "Abdur-Rahman as-Sudais",
+      "style": null,
+      "url-host": null,
+      "url-path": "/Sudais/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    }
+  ]
+}

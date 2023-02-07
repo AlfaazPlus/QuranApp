@@ -94,7 +94,7 @@ public class BoldHeader extends AppBarLayout {
         });
         binding.search.searchBox.addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
                 if (!mShowSearchIcon) {
                     return;
                 }

@@ -26,7 +26,6 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.radio.PeaceRadioButton;
 import com.peacedesign.android.widget.radio.PeaceRadioGroup;
 import com.quranapp.android.R;
-import com.quranapp.android.components.quran.QuranTransl;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
 import com.quranapp.android.utils.sp.SPReader;
 
@@ -59,13 +58,13 @@ public class FragEditorTransls extends FragEditorBase {
         Context ctx = view.getContext();
 
         Set<String> translSlugs = SPReader.getSavedTranslations(ctx);
-        QuranTransl.prepareInstance(ctx, translSlugs, transl -> initViews(transl, translSlugs, layout));
+        //        QuranTransl.prepareInstance(ctx, translSlugs, transl -> initViews(transl, translSlugs, layout));
     }
 
-    private void initViews(QuranTransl transl, Set<String> translSlugs, LinearLayout parent) {
+    /*private void initViews(QuranTransl transl, Set<String> translSlugs, LinearLayout parent) {
         initMsgView(parent);
         initRadios(parent, translSlugs, transl);
-    }
+    }*/
 
     private void initMsgView(LinearLayout parent) {
         Context ctx = parent.getContext();
@@ -81,7 +80,7 @@ public class FragEditorTransls extends FragEditorBase {
         parent.addView(msgView, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
     }
 
-    private void initRadios(LinearLayout parent, Set<String> translSlugs, QuranTransl transl) {
+    /*private void initRadios(LinearLayout parent, Set<String> translSlugs, QuranTransl transl) {
         mRadioGroup = new PeaceRadioGroup(parent.getContext());
         for (String slug : translSlugs) {
             makeRadio(mRadioGroup, transl.getParsedTranslBook(slug));
@@ -98,7 +97,7 @@ public class FragEditorTransls extends FragEditorBase {
 
         parent.addView(mRadioGroup, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         selectFirst();
-    }
+    }*/
 
     private void makeRadio(PeaceRadioGroup radioGroup, TranslationBook book) {
         PeaceRadioButton radio = new PeaceRadioButton(radioGroup.getContext());

@@ -100,17 +100,6 @@ dependencies {
 
     implementation project(path: ':peacedesign')
 
-    // FIREBASE
-    implementation platform('com.google.firebase:firebase-bom:31.1.1')
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-storage'
-    implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
-    implementation 'com.google.firebase:firebase-appcheck-debug:16.1.1'
-
-    implementation 'com.google.android.play:core:1.10.3'
-
     implementation libs.androidx.coreKtx
     implementation libs.androidx.annotation
     implementation libs.androidx.legacySupport

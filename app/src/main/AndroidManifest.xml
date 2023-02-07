@@ -126,15 +126,8 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".utils.services.TranslDownloadService" />
+        <service android:name=".utils.services.TranslationDownloadService" />
         <service android:name=".utils.reader.recitation.RecitationNotificationService" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/dr_logo_primary" />
-        <meta-data
-            android:name="firebase_analytics_collection_deactivated"
-            android:value="@bool/FIREBASE_ANALYTICS_DEACTIVATED" />
 
     </application>
 

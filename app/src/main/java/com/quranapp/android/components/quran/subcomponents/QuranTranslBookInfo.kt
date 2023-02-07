@@ -13,6 +13,7 @@ import java.io.Serializable
  * Holds information about a translation book.
  * e.g., information about Sahih International
  * */
+
 class QuranTranslBookInfo(val slug: String) : Serializable {
     companion object {
         const val DISPLAY_NAME_DEFAULT_WITHOUT_HYPHEN = false
@@ -23,7 +24,6 @@ class QuranTranslBookInfo(val slug: String) : Serializable {
     var displayName = ""
     var langName = ""
     var langCode = ""
-    var isPremium = false
     var lastUpdated: Long = -1
     var downloadPath = ""
 
@@ -38,7 +38,7 @@ class QuranTranslBookInfo(val slug: String) : Serializable {
     }
 
     override fun toString(): String {
-        return "QuranTranslBookInfo(slug='$slug', langCode='$langCode', isPremium=$isPremium)"
+        return "QuranTranslBookInfo(slug='$slug', langCode='$langCode'"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -56,7 +56,6 @@ class QuranTranslBookInfo(val slug: String) : Serializable {
         result = 31 * result + displayName.hashCode()
         result = 31 * result + langName.hashCode()
         result = 31 * result + langCode.hashCode()
-        result = 31 * result + isPremium.hashCode()
         result = 31 * result + isUrdu.hashCode()
         return result
     }

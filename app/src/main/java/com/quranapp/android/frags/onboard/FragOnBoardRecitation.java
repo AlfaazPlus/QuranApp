@@ -8,7 +8,6 @@ package com.quranapp.android.frags.onboard;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.quranapp.android.utils.univ.ExceptionCause.REQUIRE_RECITATION_FORCE_LOAD;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,16 +23,17 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.recitation.ADPRecitations;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.LytOnboardRecitationsBinding;
-import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.sp.SPAppActions;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
-import com.quranapp.android.utils.thread.tasks.recitation.LoadRecitationsTask;
 import com.quranapp.android.widgets.PageAlert;
 
 import java.util.List;
+
+import kotlin.Unit;
 
 public class FragOnBoardRecitation extends FragOnBoardBase {
     private final CallableTaskRunner<String> mRecitationTaskRunner = new CallableTaskRunner<>();
@@ -83,21 +83,26 @@ public class FragOnBoardRecitation extends FragOnBoardBase {
     }
 
     private void refresh(RecyclerView list, boolean force) {
-        LoadRecitationsTaskOnBoard loadManifestTask = new LoadRecitationsTaskOnBoard(list, force);
-        if (force) {
-            if (!NetworkStateReceiver.isNetworkConnected(list.getContext())) {
-                noInternet();
-                return;
+        if (force && !NetworkStateReceiver.isNetworkConnected(list.getContext())) {
+            noInternet();
+            return;
+        }
+
+        showLoader();
+
+        RecitationManager.prepare(list.getContext(), force, () -> {
+            List<RecitationModel> models = RecitationManager.getModels();
+
+            if (models != null && models.size() > 0) {
+                populateRecitation(list, models);
+            } else {
+                noRecitersAvailable();
             }
 
-            showLoader();
-            RecitationUtils.prepareRecitationsManifestUrlFB(uri -> {
-                loadManifestTask.setUrl(uri.toString());
-                mRecitationTaskRunner.callAsync(loadManifestTask);
-            }, loadManifestTask::onFailed);
-        } else {
-            mRecitationTaskRunner.callAsync(loadManifestTask);
-        }
+            SPAppActions.setFetchRecitationsForce(list.getContext(), false);
+            hideLoader();
+            return Unit.INSTANCE;
+        });
     }
 
     private void initPageAlert(Context ctx) {
@@ -129,46 +134,10 @@ public class FragOnBoardRecitation extends FragOnBoardBase {
 
     private void hideAlert() {
         mPageAlert.remove();
-        //        mBinding.pageAlert.getRoot().setVisibility(GONE);
     }
 
     private void noInternet() {
         mPageAlert.setupForNoInternet(() -> refresh(mBinding.list, true));
         mPageAlert.show(mBinding.getRoot());
-    }
-
-    private class LoadRecitationsTaskOnBoard extends LoadRecitationsTask {
-        private final RecyclerView mList;
-
-        public LoadRecitationsTaskOnBoard(RecyclerView list, boolean force) {
-            super(list.getContext(), null, force);
-            mList = list;
-        }
-
-        @Override
-        public void preExecute() {
-            showLoader();
-        }
-
-        @Override
-        protected void onComplete(@NonNull List<RecitationModel> items) {
-            if (items.size() > 0) {
-                populateRecitation(mList, items);
-            } else {
-                noRecitersAvailable();
-            }
-            SPAppActions.setFetchRecitationsForce(mList.getContext(), false);
-            hideLoader();
-        }
-
-        @Override
-        public void onFailed(@NonNull Exception e) {
-            super.onFailed(e);
-            if (e.getMessage() != null && e.getMessage().contains(REQUIRE_RECITATION_FORCE_LOAD)) {
-                refresh(mList, true);
-            } else {
-                hideLoader();
-            }
-        }
     }
 }

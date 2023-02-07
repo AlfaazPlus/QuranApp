@@ -1,22 +1,16 @@
 package com.quranapp.android.utils.reader;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.StorageReference;
 import com.peacedesign.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.fb.FirebaseUtils;
 import com.quranapp.android.utils.sp.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.NotifUtils;
@@ -33,7 +27,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class TranslUtils {
-    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "translations");
+    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
+            "translations");
     public static final String DIR_NAME_4_AVAILABLE_DOWNLOADS =
             FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "available_translation_downloads");
     public static final String TRANSL_INFO_FILE_NAME = "manifest.json";
@@ -92,7 +87,6 @@ public class TranslUtils {
         bookInfo.setAuthorName(getPrebuiltTranslAuthorName(slug));
         bookInfo.setDisplayName(getPrebuiltTranslDisplayName(slug));
         bookInfo.setLangName(langName);
-        bookInfo.setPremium(false);
         return bookInfo;
     }
 
@@ -212,66 +206,6 @@ public class TranslUtils {
         return FileUtils.createPath(path2TranslDir, filename);
     }
 
-    public static Task<Uri> getDownloadUrl(String... children) {
-        StorageReference reference = FirebaseUtils.storageRef();
-        for (String child : children) {
-            reference = reference.child(child);
-        }
-        Log.d(reference);
-        return reference.getDownloadUrl();
-    }
-
-    public static void prepareTranslsInfoUrlFB(OnSuccessListener<Uri> successListener, OnFailureListener failureListener) {
-        Task<Uri> downloadUrl = getDownloadUrl("translation2.0", "available_translations_info.json");
-        downloadUrl.addOnSuccessListener(successListener).addOnFailureListener(failureListener);
-    }
-
-    public static void prepareSingleTranslUrlFB(QuranTranslBookInfo bookInfo, OnSuccessListener<Uri> successListener, OnFailureListener failureListener) {
-        Task<Uri> downloadUrl = getDownloadUrl(bookInfo.getDownloadPath());
-        downloadUrl.addOnSuccessListener(successListener).addOnFailureListener(failureListener);
-    }
-
-    /*DONE*/
-    public static TranslModel readTranslInfo(FileUtils fileUtils, File infoFile) {
-        try {
-            String jsonStr = fileUtils.readFile(infoFile);
-            return readTranslInfo(new JSONObject(jsonStr));
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /*DONE*/
-    public static TranslModel readTranslInfo(JSONObject translObject) throws JSONException {
-        String slug = translObject.getString("slug");
-        String langCode = translObject.getString("lang-code");
-
-        QuranTranslBookInfo bookInfo = new QuranTranslBookInfo(slug);
-        bookInfo.setLangCode(langCode);
-
-        if (translObject.has("book")) {
-            bookInfo.setBookName(translObject.getString("book"));
-        }
-        if (translObject.has("author")) {
-            bookInfo.setAuthorName(translObject.getString("author"));
-        }
-        if (translObject.has("display-name")) {
-            bookInfo.setDisplayName(translObject.getString("display-name"));
-        }
-        if (translObject.has("lang-name")) {
-            bookInfo.setLangName(translObject.getString("lang-name"));
-        }
-
-        if (translObject.has("premium")) {
-            bookInfo.setPremium(translObject.getBoolean("premium"));
-        } else {
-            bookInfo.setPremium(false);
-        }
-
-        return new TranslModel(bookInfo);
-    }
-
     @Nullable
     public static List<Pair<QuranTranslBookInfo, File>> getTranslInfosAndFilesForMigration(FileUtils fileUtils, File translDir) throws Exception {
         File[] dirsOfLangCodes = translDir.listFiles();
@@ -300,7 +234,8 @@ public class TranslUtils {
                     File infoJSONFile = new File(singleTranslDir, TRANSL_INFO_FILE_NAME);
                     Pair<QuranTranslBookInfo, File> pair = readTranslInfoFromJSONFile(fileUtils, infoJSONFile);
                     if (pair == null) {
-                        Logger.print("Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
+                        Logger.print(
+                                "Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
                         fileUtils.deleteDirWithChildren(singleTranslDir);
                         continue;
                     }
@@ -345,7 +280,6 @@ public class TranslUtils {
         bookInfo.setAuthorName(jsonObject.optString("author", ""));
         bookInfo.setLangName(jsonObject.optString("lang-name", ""));
         bookInfo.setDisplayName(jsonObject.optString("display-name", ""));
-        bookInfo.setPremium(jsonObject.optBoolean("premium"));
         bookInfo.setLastUpdated(1636309799000L /* 2021-11-07 23:59 */);
         return new Pair<>(bookInfo, translFile);
     }

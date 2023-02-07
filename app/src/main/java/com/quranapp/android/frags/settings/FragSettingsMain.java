@@ -64,7 +64,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.components.recitation.RecitationManifest;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
@@ -93,10 +93,12 @@ import com.quranapp.android.views.BoldHeader;
 import com.quranapp.android.widgets.IconedTextView;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import kotlin.Unit;
 
 public class FragSettingsMain extends FragSettingsBase implements FragmentResultListener {
     private FragSettingsMainBinding mBinding;
@@ -230,7 +232,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initAppLanguage(LinearLayout parent) {
-        LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
+        LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
+                false);
 
         setupLauncherParams(R.drawable.dr_icon_language, appLangExplorerBinding);
         setupAppLangTitle(appLangExplorerBinding);
@@ -364,6 +367,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void alarmPermission() {
         // TODO: 13-Mar-22
+        // TODO: 05/02/23 Notification permission
     }
 
     private void initReaderSettings(Context ctx) {
@@ -435,7 +439,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         setupLauncherParams(R.drawable.dr_icon_recitation, mRecitationExplorerBinding);
         setupRecitationTitle();
 
-        mRecitationExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsRecitation.class, null));
+        mRecitationExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsRecitations.class, null));
 
         parent.addView(mRecitationExplorerBinding.getRoot());
     }
@@ -445,9 +449,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         Context ctx = mRecitationExplorerBinding.getRoot().getContext();
 
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, null);
-        RecitationManifest.prepareInstance(ctx, false, manifest -> {
-            String subtitle = RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx), manifest);
-            prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, subtitle);
+        RecitationManager.prepare(ctx, false, () -> {
+            prepareTitle(
+                    mRecitationExplorerBinding,
+                    R.string.strTitleRecitations,
+                    RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
+            );
+
+            return Unit.INSTANCE;
         });
     }
 
@@ -465,7 +474,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupScriptTitle() {
         if (mScriptExplorerBinding == null) return;
 
-        String subtitle = ScriptUtils.getScriptName(SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
+        String subtitle = ScriptUtils.getScriptName(
+                SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
         prepareTitle(mScriptExplorerBinding, R.string.strTitleScripts, subtitle);
     }
 
@@ -612,7 +622,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         }
         mVerseDecorator.onSharedPrefChanged();
 
-        int scriptPreviewRes = ScriptUtils.getScriptPreviewRes(SPReader.getSavedScript(mLytTextSizeArabic.getRoot().getContext()));
+        int scriptPreviewRes = ScriptUtils.getScriptPreviewRes(
+                SPReader.getSavedScript(mLytTextSizeArabic.getRoot().getContext()));
         mLytTextSizeArabic.demoText.setText(scriptPreviewRes);
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText);
@@ -697,16 +708,21 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         SPReader.setSavedScript(ctx, ScriptUtils.SCRIPT_DEFAULT);
         initTranslSlugs = TranslUtils.defaultTranslationSlugs().toArray(new String[0]);
 
-        RecitationManifest.prepareInstance(ctx, false, manifest -> {
-            Map<String, RecitationModel> models = manifest.getModels();
-            for (String slug : models.keySet()) {
-                RecitationModel model = models.get(slug);
-                if (model != null) {
-                    SPReader.setSavedRecitationSlug(ctx, slug);
-                    break;
+        RecitationManager.prepare(ctx, false, () -> {
+            List<RecitationModel> models = RecitationManager.getModels();
+
+            if (models != null) {
+                for (RecitationModel model : models) {
+                    if (model != null) {
+                        SPReader.setSavedRecitationSlug(ctx, model.getSlug());
+                        break;
+                    }
                 }
+
+                setupRecitationTitle();
             }
-            setupRecitationTitle();
+
+            return Unit.INSTANCE;
         });
 
         setupTranslTitle();

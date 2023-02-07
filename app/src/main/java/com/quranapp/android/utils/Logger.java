@@ -12,19 +12,16 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.quranapp.android.utils.univ.StringUtils;
 
 public abstract class Logger {
     private static final String TAG = "QuranAppLogs";
 
     public static void reportError(@NonNull Throwable throwable) {
-        FirebaseCrashlytics.getInstance().recordException(throwable);
     }
 
 
     public static void logMsg(String msg) {
-        FirebaseCrashlytics.getInstance().log(msg);
     }
 
     public static void i(@Nullable Object... msgs) {

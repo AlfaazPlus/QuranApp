@@ -70,8 +70,7 @@ public final class FileUtils {
 
     public File getRecitationAudioFile(String reciterSlug, int chapterNo, int verseNo) {
         File recitationDir = getRecitationDir();
-        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo,
-                verseNo);
+        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo, verseNo);
         return new File(recitationDir, audioSubPathWithReciter);
     }
 

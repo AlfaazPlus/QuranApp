@@ -24,10 +24,10 @@ import com.quranapp.android.databinding.ActivitySettingsBinding;
 import com.quranapp.android.frags.settings.FragSettingsBase;
 import com.quranapp.android.frags.settings.FragSettingsLanguage;
 import com.quranapp.android.frags.settings.FragSettingsMain;
-import com.quranapp.android.frags.settings.FragSettingsRecitation;
+import com.quranapp.android.frags.settings.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.FragSettingsScripts;
 import com.quranapp.android.frags.settings.FragSettingsTransl;
-import com.quranapp.android.frags.settings.FragSettingsTranslDownload;
+import com.quranapp.android.frags.settings.FragSettingsTranslationsDownload;
 import com.quranapp.android.views.BoldHeader;
 
 import java.util.Objects;
@@ -133,10 +133,10 @@ public class ActivitySettings extends BaseActivity {
                 destFrag = FragSettingsTransl.class;
                 break;
             case SETTINGS_TRANSL_DOWNLOAD:
-                destFrag = FragSettingsTranslDownload.class;
+                destFrag = FragSettingsTranslationsDownload.class;
                 break;
             case SETTINGS_RECITER:
-                destFrag = FragSettingsRecitation.class;
+                destFrag = FragSettingsRecitations.class;
                 break;
             case SETTINGS_SCRIPT:
                 destFrag = FragSettingsScripts.class;

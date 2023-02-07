@@ -1,5 +1,8 @@
 package com.quranapp.android.frags;
 
+import static kotlinx.coroutines.BuildersKt.runBlocking;
+import static kotlinx.coroutines.BuildersKt.withContext;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +23,12 @@ import com.quranapp.android.interfaceUtils.ActivityResultStarter;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
-public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener, ActivityResultStarter {
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.CoroutineScopeKt;
+import kotlinx.coroutines.Dispatchers;
+
+public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener,
+        ActivityResultStarter {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     private NetworkStateReceiver mNetworkReceiver;
 
@@ -70,6 +78,12 @@ public abstract class BaseFragment extends ResHelperFragment implements NetworkS
     public void launchActivity(Context ctx, Class<?> cls) {
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+    }
+
+    public void runOnUIThread(Runnable runnable) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(runnable);
+        }
     }
 
     @Override

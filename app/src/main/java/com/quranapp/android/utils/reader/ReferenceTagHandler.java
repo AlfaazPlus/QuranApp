@@ -1,11 +1,6 @@
 package com.quranapp.android.utils.reader;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.FOOTNOTE_REF_ATTR_INDEX;
-import static com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.FOOTNOTE_REF_TAG;
-import static com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.REFERENCE_ATTR_CHAPTER_NO;
-import static com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.REFERENCE_ATTR_VERSES;
-import static com.quranapp.android.utils.quran.parser.QuranTranslParserJSON.REFERENCE_TAG;
 
 import android.text.Editable;
 import android.text.TextPaint;
@@ -17,10 +12,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.quranapp.android.utils.parser.HtmlParser;
-import com.quranapp.android.utils.quran.parser.QuranTranslParserJSON;
 import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 import com.peacedesign.android.utils.span.SuperscriptSpan2;
+import com.quranapp.android.utils.parser.HtmlParser;
+import com.quranapp.android.utils.quran.QuranConstants;
 
 import org.xml.sax.Attributes;
 
@@ -41,7 +36,7 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
 
     /**
      * @param translSlugs         Slug of the translation which created this reference.
-     * @param refTagClickCallback Callback to invoke if the clicked tag is {@link QuranTranslParserJSON#REFERENCE_TAG}
+     * @param refTagClickCallback Callback to invoke if the clicked tag is {@link QuranConstants#REFERENCE_TAG}
      */
 
     public ReferenceTagHandler(Set<String> translSlugs, int refTxtColor, int refBGColor, int refBGColorPres, OnReferenceTagClickCallback refTagClickCallback) {
@@ -50,11 +45,13 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
 
     /**
      * @param translSlug          Slug of the translation which created this reference.
-     * @param refTagClickCallback Callback to invoke if the clicked tag is {@link QuranTranslParserJSON#REFERENCE_TAG}
-     * @param fnTagClickCallback  Callback to invoke if the clicked tag is {@link QuranTranslParserJSON#FOOTNOTE_REF_TAG}
+     * @param refTagClickCallback Callback to invoke if the clicked tag is {@link QuranConstants#REFERENCE_TAG}
+     * @param fnTagClickCallback  Callback to invoke if the clicked tag is {@link QuranConstants#FOOTNOTE_REF_TAG}
      */
-    public ReferenceTagHandler(Set<String> translSlug, int refTxtColor, int refBGColor, int refBGColorPres,
-                               OnReferenceTagClickCallback refTagClickCallback, OnFootnoteReferenceTagClickCallback fnTagClickCallback) {
+    public ReferenceTagHandler(
+            Set<String> translSlug, int refTxtColor, int refBGColor, int refBGColorPres,
+            OnReferenceTagClickCallback refTagClickCallback, OnFootnoteReferenceTagClickCallback fnTagClickCallback
+    ) {
         mTranslSlugs = translSlug;
         mRefTxtColor = refTxtColor;
         mRefBGColor = refBGColor;
@@ -65,19 +62,19 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
 
     @Override
     public boolean handleTag(boolean opening, String tag, Editable output, Attributes attributes) {
-        if (REFERENCE_TAG.equals(tag)) {
+        if (QuranConstants.REFERENCE_TAG.equals(tag)) {
             if (opening) {
                 refTagStartIndex = output.length();
-                chapter = HtmlParser.getValue(attributes, REFERENCE_ATTR_CHAPTER_NO);
-                verses = HtmlParser.getValue(attributes, REFERENCE_ATTR_VERSES);
+                chapter = HtmlParser.getValue(attributes, QuranConstants.REFERENCE_ATTR_CHAPTER_NO);
+                verses = HtmlParser.getValue(attributes, QuranConstants.REFERENCE_ATTR_VERSES);
             } else {
                 final int refTagEndIndex = output.length();
                 setQuranRefSpans(output, refTagStartIndex, refTagEndIndex, Integer.parseInt(chapter), verses);
             }
-        } else if (FOOTNOTE_REF_TAG.equals(tag)) {
+        } else if (QuranConstants.FOOTNOTE_REF_TAG.equals(tag)) {
             if (opening) {
                 footnoteRefTagStartIndex = output.length();
-                footnoteNo = HtmlParser.getValue(attributes, FOOTNOTE_REF_ATTR_INDEX);
+                footnoteNo = HtmlParser.getValue(attributes, QuranConstants.FOOTNOTE_REF_ATTR_INDEX);
             } else {
                 final int footnoteRefTagEndIndex = output.length();
                 setFootnoteRefSpans(output, footnoteRefTagStartIndex, footnoteRefTagEndIndex, footnoteNo);
