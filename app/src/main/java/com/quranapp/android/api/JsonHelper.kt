@@ -6,5 +6,6 @@ object JsonHelper {
     val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
+        coerceInputValues = true
     }
 }

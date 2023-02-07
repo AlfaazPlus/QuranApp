@@ -10,8 +10,8 @@ import kotlinx.serialization.Serializable
 data class RecitationModel(
     val slug: String,
     val reciter: String,
-    val style: String,
-    @SerialName("url-host") var urlHost: String,
+    val style: String?,
+    @SerialName("url-host") var urlHost: String?,
     @SerialName("url-path") val urlPath: String,
     var isChecked: Boolean = false
 ) {
