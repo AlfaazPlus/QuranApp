@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ import com.peacedesign.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.components.recitation.RecitationManifest;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.exc.NoInternetException;
 import com.quranapp.android.interfaceUtils.Destroyable;
@@ -196,7 +194,8 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
 
         P = playerSS.recitationParams;
         if (P.lastMediaURI != null) {
-            prepareMediaPlayer(P.lastMediaURI, P.currentReciterSlug, P.getCurrChapterNo(), P.getCurrVerseNo(), P.previouslyPlaying);
+            prepareMediaPlayer(P.lastMediaURI, P.currentReciterSlug, P.getCurrChapterNo(), P.getCurrVerseNo(),
+                    P.previouslyPlaying);
         }
     }
 
@@ -517,8 +516,10 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
     }
 
     private String formatTime(int millis) {
-        final long m = TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis));
-        final long s = TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis));
+        final long m = TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
+                TimeUnit.MILLISECONDS.toHours(millis));
+        final long s = TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
+                TimeUnit.MILLISECONDS.toMinutes(millis));
         return String.format(Locale.getDefault(), "%02d:%02d", m, s);
     }
 
@@ -706,21 +707,14 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         }
 
         mVerseLoadCallback.preLoad();
-        RecitationUtils.obtainRecitationSlug(getContext(), mForceManifestFetch, slug -> {
+        RecitationUtils.obtainRecitationModel(getContext(), mForceManifestFetch, model -> {
             // Saved recitation slug successfully fetched, now proceed.
-            if (mForceManifestFetch) {
-                mForceManifestFetch = false;
-            }
+            mForceManifestFetch = false;
 
-            if (!TextUtils.isEmpty(slug)) {
-                RecitationModel model = RecitationManifest.getInstance().getModel(slug);
-                if (model != null) {
-                    reciteVerseOnSlugAvailable(model, chapterNo, verseNo);
-                } else {
-                    mVerseLoadCallback.onFailed(null, null);
-                    mVerseLoadCallback.postLoad();
-                }
+            if (model != null) {
+                reciteVerseOnSlugAvailable(model, chapterNo, verseNo);
             } else {
+                mVerseLoadCallback.onFailed(null, null);
                 mVerseLoadCallback.postLoad();
                 destroy();
                 pauseMedia();
@@ -767,7 +761,8 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
 
         //        int loadAheadCount = P.continueRange ? 5 : 1;
         int loadAheadCount = 2;
-        int l = Math.min(mActivity.mQuranMetaRef.get().getChapterVerseCount(chapterNo) - firstVerseToLoad, loadAheadCount - 1);
+        int l = Math.min(mActivity.mQuranMetaRef.get().getChapterVerseCount(chapterNo) - firstVerseToLoad,
+                loadAheadCount - 1);
         // Start from 1 so that the current verse is skipped.
         for (int i = 1; i <= l; i++) {
             int verseToLoad = firstVerseToLoad + i;
@@ -843,8 +838,9 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
 
         if (!ACTION_STOP.equals(action)) {
             QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
-            String title = quranMeta.getChapterName(getContext(), P.getCurrChapterNo()) + " : Verse " + P.getCurrVerseNo();
-            String reciter = RecitationUtils.getReciterName(P.currentReciterSlug, RecitationManifest.getInstance());
+            String title = quranMeta.getChapterName(getContext(),
+                    P.getCurrChapterNo()) + " : Verse " + P.getCurrVerseNo();
+            String reciter = RecitationUtils.getReciterName(P.currentReciterSlug);
             i.putExtra(KEY_TITLE, title);
             i.putExtra(KEY_RECITER, reciter);
             i.putExtra(KEY_PLAYING, isPlaying());

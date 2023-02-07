@@ -212,25 +212,6 @@ public class TranslUtils {
         return FileUtils.createPath(path2TranslDir, filename);
     }
 
-    public static Task<Uri> getDownloadUrl(String... children) {
-        StorageReference reference = FirebaseUtils.storageRef();
-        for (String child : children) {
-            reference = reference.child(child);
-        }
-        Log.d(reference);
-        return reference.getDownloadUrl();
-    }
-
-    public static void prepareTranslsInfoUrlFB(OnSuccessListener<Uri> successListener, OnFailureListener failureListener) {
-        Task<Uri> downloadUrl = getDownloadUrl("translation2.0", "available_translations_info.json");
-        downloadUrl.addOnSuccessListener(successListener).addOnFailureListener(failureListener);
-    }
-
-    public static void prepareSingleTranslUrlFB(QuranTranslBookInfo bookInfo, OnSuccessListener<Uri> successListener, OnFailureListener failureListener) {
-        Task<Uri> downloadUrl = getDownloadUrl(bookInfo.getDownloadPath());
-        downloadUrl.addOnSuccessListener(successListener).addOnFailureListener(failureListener);
-    }
-
     @Nullable
     public static List<Pair<QuranTranslBookInfo, File>> getTranslInfosAndFilesForMigration(FileUtils fileUtils, File translDir) throws Exception {
         File[] dirsOfLangCodes = translDir.listFiles();

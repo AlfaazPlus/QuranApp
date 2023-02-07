@@ -179,6 +179,7 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
 
     private fun loadAvailableTranslations(ctx: Context, storedAvailableDownloadsFile: File) {
         if (!NetworkStateReceiver.isNetworkConnected(ctx)) {
+            hideLoader()
             noInternet(ctx)
             return
         }

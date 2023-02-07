@@ -24,12 +24,14 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.components.recitation.RecitationManifest;
+import com.quranapp.android.components.recitation.Recitation;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sp.SPReader;
 import com.quranapp.android.utils.univ.PopupWindow2;
 import com.quranapp.android.views.reader.RecitationPlayer;
+
+import kotlin.Unit;
 
 public class RecitationMenu {
     private final RecitationPlayer mPlayer;
@@ -71,15 +73,18 @@ public class RecitationMenu {
             mPlayer.mActivity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_RECITER);
         });
 
-        int resId = WindowUtils.isRTL(mPlayer.getContext()) ? R.drawable.dr_icon_chevron_left : R.drawable.dr_icon_chevron_right;
+        int resId = WindowUtils.isRTL(
+                mPlayer.getContext()) ? R.drawable.dr_icon_chevron_left : R.drawable.dr_icon_chevron_right;
         Drawable chevronRight = mPlayer.mActivity.drawable(resId);
-        binding.selectReciter.setDrawables(mPlayer.mActivity.drawable(R.drawable.dr_icon_recitation), null, chevronRight, null);
+        binding.selectReciter.setDrawables(mPlayer.mActivity.drawable(R.drawable.dr_icon_recitation), null,
+                chevronRight, null);
 
         binding.repeatCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mPlayer.setRepeat(isChecked);
             ViewUtils.disableView(binding.autoplay, isChecked);
         });
-        binding.autoplayCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> mPlayer.setContinueChapter(isChecked));
+        binding.autoplayCheckbox.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> mPlayer.setContinueChapter(isChecked));
     }
 
     private void reSetup(LytRecitationMenuBinding binding) {
@@ -90,9 +95,11 @@ public class RecitationMenu {
         ViewUtils.disableView(binding.autoplay, repeatEnabled);
 
         binding.selectReciter.setText(prepareRecitationTitle(null));
-        RecitationManifest.prepareInstance(getContext(), false, manifest -> {
-            String subtitle = RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(getContext()), manifest);
+        Recitation.prepare(getContext(), false, () -> {
+            String subtitle = RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(getContext()));
             binding.selectReciter.setText(prepareRecitationTitle(subtitle));
+
+            return Unit.INSTANCE;
         });
     }
 
@@ -103,7 +110,8 @@ public class RecitationMenu {
 
         if (!TextUtils.isEmpty(subtitle)) {
             SpannableString spannable = new SpannableString(subtitle);
-            spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.colorText2)), 0, subtitle.length(),
+            spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.colorText2)), 0,
+                    subtitle.length(),
                     SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new RelativeSizeSpan(0.93f), 0, subtitle.length(),
                     SPAN_EXCLUSIVE_EXCLUSIVE);

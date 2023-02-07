@@ -13,4 +13,13 @@ object QuranConstants {
     const val REFERENCE_ATTR_CHAPTER_NO = "chapter"
     const val REFERENCE_ATTR_VERSES = "verses"
     const val FOOTNOTE_REF_TAG = "fn"
+
+    const val KEY_RECITATION_URL_INFO = "url-info"
+    const val KEY_RECITATION_COMMON_HOST = "common-host"
+    const val KEY_RECITATION_RECITERS = "reciters"
+    const val KEY_RECITATION_SLUG = "slug"
+    const val KEY_RECITATION_RECITER_NAME = "reciter"
+    const val KEY_RECITATION_STYLE = "style"
+    const val KEY_RECITATION_URL_HOST = "url-host"
+    const val KEY_RECITATION_URL_PATH = "url-path"
 }

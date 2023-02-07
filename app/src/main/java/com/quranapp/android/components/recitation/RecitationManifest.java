@@ -37,7 +37,6 @@ public class RecitationManifest {
     public static final String KEY_STYLE = "style";
     public static final String KEY_URL_HOST = "url-host";
     public static final String KEY_URL_PATH = "url-path";
-    public static final String KEY_PREMIUM = "premium";
 
     private static RecitationManifest sInstance;
     private String commonHost;

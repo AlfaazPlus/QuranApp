@@ -18,4 +18,7 @@ interface GithubApi {
 
     @GET("{path}")
     suspend fun getTranslation(@Path("path") path: String): ResponseBody
+
+    @GET("inventory/recitations/available_recitations_info.json")
+    suspend fun getAvailableRecitations(): ResponseBody
 }

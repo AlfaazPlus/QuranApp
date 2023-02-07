@@ -32,7 +32,6 @@ import com.quranapp.android.views.BoldHeader;
 public abstract class FragSettingsBase extends BaseFragment {
     private final ActivityBuffer<ActivitySettings> mActivityBuffer = new ActivityBuffer<>();
 
-
     @CallSuper
     @Override
     public void onAttach(@NonNull Context context) {

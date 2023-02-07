@@ -1,29 +1,22 @@
 package com.quranapp.android.utils.reader.recitation;
 
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_COMMON_HOST;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_RECITERS;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_RECITER_NAME;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_SLUG;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_STYLE;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_URL_HOST;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_URL_INFO;
 import static com.quranapp.android.components.recitation.RecitationManifest.KEY_URL_PATH;
-import static com.quranapp.android.components.recitation.RecitationManifest.prepareInstance;
-import static com.quranapp.android.utils.univ.ExceptionCause.RECITATIONS_LOAD_MAX_ATTEMPT;
-import static com.quranapp.android.utils.univ.ExceptionCause.REQUIRE_RECITATION_FORCE_LOAD;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.quranapp.android.components.recitation.RecitationManifest;
+import com.quranapp.android.components.recitation.Recitation;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.app.AppUtils;
@@ -31,18 +24,16 @@ import com.quranapp.android.utils.fb.FirebaseUtils;
 import com.quranapp.android.utils.sp.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.SimpleDataLoaderTask;
-import com.quranapp.android.utils.thread.tasks.recitation.LoadRecitationsManifestTask;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.URLBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import kotlin.Unit;
 
 public class RecitationUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
@@ -66,15 +57,16 @@ public class RecitationUtils {
     }
 
     @Nullable
-    public static String getReciterName(String slug, RecitationManifest manifest) {
-        if (slug == null || manifest == null) {
+    public static String getReciterName(String slug) {
+        if (slug == null) {
             return null;
         }
 
-        RecitationModel model = manifest.getModel(slug);
+        RecitationModel model = Recitation.getModel(slug);
         if (model == null) {
             return null;
         }
+
         return model.getReciter();
     }
 
@@ -152,66 +144,28 @@ public class RecitationUtils {
         return recitationModel;
     }
 
-    public static synchronized void obtainRecitationSlug(
-            Context ctx, boolean force, OnResultReadyCallback<String> callback,
+    public static synchronized void obtainRecitationModel(
+            Context ctx,
+            boolean force,
+            OnResultReadyCallback<RecitationModel> callback,
             OnResultReadyCallback<Exception> failCallback
     ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
-        if (!force && RecitationManifest.getInstance() != null && !TextUtils.isEmpty(savedSlug)) {
-            if (RecitationManifest.getInstance().getModel(savedSlug) != null) {
-                callback.onReady(savedSlug);
-                return;
-            }
-        }
 
-        AtomicInteger reloadAttempt = new AtomicInteger(0);
-        CallableTaskRunner<String> taskRunner = new CallableTaskRunner<>();
-        LoadRecitationsManifestTask loadManifestTask = new LoadRecitationsManifestTask(ctx, null) {
-            @Override
-            public void onComplete(String manifest) {
-                try {
-                    if (RecitationManifest.getInstance() == null || RecitationManifest.getInstance().getModel(
-                            savedSlug) == null || force) {
-                        prepareInstance(ctx, manifest);
-                    }
-                    getASafeRecitationSlug(ctx, manifest, savedSlug, callback);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    if (e instanceof JSONException && reloadAttempt.getAndIncrement() <= 3) {
-                        prepareRecitationsManifestUrlFBAndLoad(taskRunner, this, failCallback);
-                    } else {
-                        if (failCallback != null) {
-                            failCallback.onReady(e);
-                        }
-                    }
+        Recitation.prepare(ctx, force, () -> {
+            String slug = savedSlug;
+
+            if (TextUtils.isEmpty(slug)) {
+                List<RecitationModel> models = Recitation.getModels();
+                if (models != null && models.size() > 0) {
+                    slug = models.get(0).getSlug();
                 }
             }
 
-            @Override
-            public void onFailed(@NonNull Exception e) {
-                super.onFailed(e);
-                if (e instanceof CancellationException) {
-                    if (failCallback != null) failCallback.onReady(e);
-                    return;
-                }
+            callback.onReady(Recitation.getModel(slug));
 
-                if (e.getMessage() != null && e.getMessage().contains(REQUIRE_RECITATION_FORCE_LOAD)) {
-                    if (reloadAttempt.getAndIncrement() >= 3) {
-                        if (failCallback != null) failCallback.onReady(new Exception(RECITATIONS_LOAD_MAX_ATTEMPT));
-                    } else {
-                        prepareRecitationsManifestUrlFBAndLoad(taskRunner, this, failCallback);
-                    }
-                } else {
-                    if (failCallback != null) failCallback.onReady(e);
-                }
-            }
-        };
-
-        if (force) {
-            prepareRecitationsManifestUrlFBAndLoad(taskRunner, loadManifestTask, failCallback);
-        } else {
-            taskRunner.callAsync(loadManifestTask);
-        }
+            return Unit.INSTANCE;
+        });
     }
 
     public static void prepareRecitationsManifestUrlFBAndLoad(CallableTaskRunner<String> taskRunner, SimpleDataLoaderTask task, OnResultReadyCallback<Exception> failCallback) {
@@ -221,42 +175,5 @@ public class RecitationUtils {
         }, e -> {
             if (failCallback != null) failCallback.onReady(e);
         });
-    }
-
-    private static void getASafeRecitationSlug(
-            Context ctx, String manifest, String slug,
-            OnResultReadyCallback<String> callback
-    ) throws Exception {
-        JSONObject manifestObj = new JSONObject(manifest);
-        String commonHost = manifestObj.getJSONObject(KEY_URL_INFO).getString(KEY_COMMON_HOST);
-        JSONObject reciters = manifestObj.getJSONObject(KEY_RECITERS);
-
-        if (TextUtils.isEmpty(slug)) {
-            slug = findARecitationSlug(ctx, reciters, commonHost);
-        }
-
-        callback.onReady(slug);
-    }
-
-    private static String findARecitationSlug(Context ctx, JSONObject reciters, String commonHost) throws Exception {
-        String slug = null;
-        JSONArray ids = reciters.names();
-        if (ids == null) {
-            throw new NullPointerException();
-        }
-
-
-        for (int i = 0, l = ids.length(); i < l; i++) {
-            if (slug != null) break;
-
-            String id = ids.getString(i);
-
-            JSONObject reciterObj = reciters.getJSONObject(id);
-
-            slug = reciterObj.getString(KEY_SLUG);
-        }
-
-        SPReader.setSavedRecitationSlug(ctx, slug);
-        return slug;
     }
 }
