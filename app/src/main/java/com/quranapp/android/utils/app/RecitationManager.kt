@@ -90,7 +90,7 @@ object RecitationManager {
             val availableRecitationsModel = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(stringData)
 
             availableRecitationsModel.reciters.forEach { recitationModel ->
-                if (recitationModel.urlHost.isEmpty() || recitationModel.urlHost == "null") {
+                if (recitationModel.urlHost.isNullOrEmpty()) {
                     recitationModel.urlHost = availableRecitationsModel.urlInfo.commonHost
                 }
             }
@@ -105,7 +105,7 @@ object RecitationManager {
 
     @JvmStatic
     fun getModel(slug: String): RecitationModel? {
-        return availableRecitationsModel?.reciters?.first { it.slug == slug }
+        return availableRecitationsModel?.reciters?.firstOrNull { it.slug == slug }
     }
 
     @JvmStatic
