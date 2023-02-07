@@ -47,8 +47,8 @@ The quran translations used in the app are in a special format. If you would lik
 You can provide free api links to recitations.
 
 ## App Translations
-If you would like to translate the app in your language, you can do so by visiting this [link](https://hosted.weblate.org/engage/AlfaazPlus/).
+If you would like to translate the app in your language, you can do so by visiting this [link](https://hosted.weblate.org/projects/AlfaazPlus/#languages).
 
-<a href="https://hosted.weblate.org/engage/AlfaazPlus/">
+<a href="https://hosted.weblate.org/projects/AlfaazPlus/#languages">
 <img src="https://hosted.weblate.org/widgets/AlfaazPlus/-/QuranApp/287x66-black.png" alt="Translation status" />
 </a>
