@@ -45,3 +45,8 @@ The quran translations used in the app are in a special format. If you would lik
 
 ## Recitations
 You can provide free api links to recitations.
+
+## Translations
+<a href="https://hosted.weblate.org/projects/alfaazplus/#languages">
+<img src="https://hosted.weblate.org/widgets/alfaazplus/-/287x66-grey.png" alt="Translation status" />
+</a>
