@@ -13,7 +13,7 @@ data class RecitationModel(
     val style: String,
     @SerialName("url-host") var urlHost: String,
     @SerialName("url-path") val urlPath: String,
-    val isChecked: Boolean = false
+    var isChecked: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if (other !is RecitationModel) {

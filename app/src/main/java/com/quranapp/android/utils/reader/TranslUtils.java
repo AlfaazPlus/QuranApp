@@ -1,22 +1,16 @@
 package com.quranapp.android.utils.reader;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.StorageReference;
 import com.peacedesign.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.fb.FirebaseUtils;
 import com.quranapp.android.utils.sp.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.NotifUtils;

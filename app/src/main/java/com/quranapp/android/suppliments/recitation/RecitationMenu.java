@@ -24,7 +24,7 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.components.recitation.Recitation;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sp.SPReader;
@@ -95,7 +95,7 @@ public class RecitationMenu {
         ViewUtils.disableView(binding.autoplay, repeatEnabled);
 
         binding.selectReciter.setText(prepareRecitationTitle(null));
-        Recitation.prepare(getContext(), false, () -> {
+        RecitationManager.prepare(getContext(), false, () -> {
             String subtitle = RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(getContext()));
             binding.selectReciter.setText(prepareRecitationTitle(subtitle));
 

@@ -64,7 +64,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.components.recitation.Recitation;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
@@ -449,7 +449,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         Context ctx = mRecitationExplorerBinding.getRoot().getContext();
 
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, null);
-        Recitation.prepare(ctx, false, () -> {
+        RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
                     mRecitationExplorerBinding,
                     R.string.strTitleRecitations,
@@ -708,8 +708,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         SPReader.setSavedScript(ctx, ScriptUtils.SCRIPT_DEFAULT);
         initTranslSlugs = TranslUtils.defaultTranslationSlugs().toArray(new String[0]);
 
-        Recitation.prepare(ctx, false, () -> {
-            List<RecitationModel> models = Recitation.getModels();
+        RecitationManager.prepare(ctx, false, () -> {
+            List<RecitationModel> models = RecitationManager.getModels();
 
             if (models != null) {
                 for (RecitationModel model : models) {

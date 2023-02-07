@@ -5,80 +5,48 @@
 package com.quranapp.android.views.reader.dialogs;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.utils.app.AppUtils.getDeviceInformation;
-import static com.quranapp.android.utils.fb.FirebaseUtils.RTDB_VERSE_REPORTS;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.Log;
 import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
-import com.quranapp.android.adapters.utility.SpinnerAdapter2;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
-import com.quranapp.android.components.utility.SpinnerItem;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
-import com.quranapp.android.databinding.LytReportProblemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
-import com.quranapp.android.readerhandler.ReaderParams;
-import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.sp.SPReader;
-import com.quranapp.android.utils.univ.DateUtils;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
-import com.quranapp.android.views.helper.Spinner2;
 import com.quranapp.android.views.reader.RecitationPlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClickListener, BookmarkCallbacks {
-    private final DatabaseReference mReportVerseDB;
     private ReaderPossessingActivity mActivity;
     private VODLayout mVODLayout;
     private LytReaderVodBinding mVODBinding;
     private Verse mVerse;
     private BookmarkCallbacks mVerseViewCallbacks;
     private VerseShareDialog mVSD;
-
-    public VerseOptionsDialog() {
-        mReportVerseDB = FirebaseDatabase.getInstance().getReference().child(RTDB_VERSE_REPORTS);
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -262,124 +230,6 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         }
 
         mVSD.dismiss();
-    }
-
-    private void openReportDialog(ReaderPossessingActivity actvt, Verse verse) {
-        LytReportProblemBinding binding = LytReportProblemBinding.inflate(LayoutInflater.from(actvt));
-
-        PeaceDialog.Builder builder = PeaceDialog.newBuilder(actvt);
-        builder.setTitle(R.string.strTitleReportVerse);
-        builder.setView(binding.getRoot());
-        builder.setDialogGravity(PeaceDialog.GRAVITY_BOTTOM); builder.setCanceledOnTouchOutside(false);
-        builder.setNeutralButton(R.string.strLabelClose, null);
-        builder.setPositiveButton(R.string.strLabelReport, (dialog, which) -> report(actvt, verse, binding));
-        builder.setFocusOnPositive(true);
-
-        PeaceDialog dialog = builder.create();
-        setupReportDialog(actvt, dialog, binding);
-        dialog.show();
-    }
-
-    private void setupReportDialog(Context ctx, PeaceDialog dialog, LytReportProblemBinding binding) {
-        dialog.setButtonEnabled(DialogInterface.BUTTON_POSITIVE, false);
-
-        final List<SpinnerItem> reasons = new ArrayList<>();
-
-        for (String reason : ctx.getResources().getStringArray(R.array.arrReportReasons)) {
-            reasons.add(new SpinnerItem(reason));
-        }
-
-        Spinner2 spinner = binding.spinner;
-        spinner.setOnItemSelectedListener(new Spinner2.SimplerSpinnerItemSelectListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boolean enabled = position != 0 && !TextUtils.isEmpty(binding.message.getText());
-                dialog.setButtonEnabled(DialogInterface.BUTTON_POSITIVE, enabled);
-            }
-        });
-
-        SpinnerAdapter2<SpinnerItem> adapter = new SpinnerAdapter2<>(ctx, R.layout.lyt_simple_spinner_item, R.id.text,
-                reasons);
-        spinner.setAdapter(adapter);
-
-        binding.message.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                boolean enabled = spinner.getSelectedItemPosition() != 0 && !TextUtils.isEmpty(s);
-                dialog.setButtonEnabled(DialogInterface.BUTTON_POSITIVE, enabled);
-            }
-        });
-    }
-
-    private void report(ReaderPossessingActivity actvt, Verse verse, LytReportProblemBinding binding) {
-        String key = mReportVerseDB.push().getKey();
-        if (key == null) {
-            return;
-        }
-
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("reason", ((SpinnerItem) binding.spinner.getSelectedItem()).getName());
-        map.put("additionalMessage", String.valueOf(binding.message.getText()));
-        map.put("activity", actvt.getClass().getName());
-        map.put("verseInformation", getVerseInformation(actvt, verse));
-        map.put("appConfigs", AppUtils.getAppConfigs(actvt));
-        map.put("deviceInformation", getDeviceInformation(actvt));
-        map.put("date", DateUtils.getDateTimeNow());
-
-        Map<String, Object> readerInfo = null;
-        if (actvt instanceof ActivityReader) {
-            readerInfo = getReaderInformation((ActivityReader) actvt);
-        }
-        map.put("readerInformation", readerInfo);
-
-        Toast.makeText(actvt, R.string.strTextSending, Toast.LENGTH_LONG).show();
-        mReportVerseDB.child(key).setValue(map, (error, ref) -> {
-            if (error == null) {
-                Toast.makeText(actvt, R.string.strMsgVerseReportSuccess, Toast.LENGTH_LONG).show();
-            } else {
-                error.toException().printStackTrace();
-                Log.d(error.toException());
-                Toast.makeText(actvt, R.string.strMsgVerseReportFailed, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public Map<String, Object> getVerseInformation(ReaderPossessingActivity actvt, Verse verse) {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("chapterNo", verse.getChapterNo());
-        map.put("verseNo", verse.getVerseNo());
-        map.put("translations",
-                verse.getTranslations().stream().map(Translation::getBookSlug).collect(Collectors.toList()));
-
-        map.put("script", SPReader.getSavedScript(actvt));
-        map.put("reciter", SPReader.getSavedRecitationSlug(actvt));
-
-        map.put("isBookmarked", actvt.isBookmarked(verse.getChapterNo(), verse.getVerseNo(), verse.getVerseNo()));
-
-        return map;
-    }
-
-    public Map<String, Object> getReaderInformation(ActivityReader reader) {
-        ReaderParams params = reader.mReaderParams;
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("readType", params.readType);
-        map.put("readerStyle", params.getReaderStyle());
-        map.put("verseRange", Arrays.toString(params.verseRange));
-        map.put("visibleTranslSlugs", params.getVisibleTranslSlugs().toString());
-        map.put("saveTranslChanges", params.saveTranslChanges);
-
-        if (reader.mPlayer != null) {
-            boolean wasPlaying = reader.mPlayer.P().previouslyPlaying;
-            map.put("wasPlaying", wasPlaying);
-            if (wasPlaying) {
-                map.put("playingVerse", Arrays.toString(reader.mPlayer.P().currVerse));
-            }
-        }
-
-        return map;
     }
 
     @Override

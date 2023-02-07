@@ -11,10 +11,10 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.adapters.recitation.ADPRecitations
-import com.quranapp.android.components.recitation.Recitation
 import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.interfaceUtils.RecitationExplorerImpl
+import com.quranapp.android.utils.app.RecitationManager
 import com.quranapp.android.utils.sp.SPAppActions
 import com.quranapp.android.utils.sp.SPReader
 import com.quranapp.android.utils.univ.FileUtils
@@ -99,10 +99,10 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
 
     private fun refresh(ctx: Context, force: Boolean) {
         showLoader()
-        Recitation.prepare(ctx, force) { availableRecitationsModel ->
-            val models = availableRecitationsModel.reciters
+        RecitationManager.prepare(ctx, force) {
+            val models = RecitationManager.getModels()
 
-            if (models.isNotEmpty()) {
+            if (!models.isNullOrEmpty()) {
                 populateTranslations(ctx, models)
             } else {
                 noRecitersAvailable(ctx)

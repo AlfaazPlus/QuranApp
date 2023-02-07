@@ -1,18 +1,22 @@
-package com.quranapp.android.components.recitation
+package com.quranapp.android.utils.app
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.AvailableRecitationsModel
+import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.utils.sp.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 
-object Recitation {
+object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
 
     @JvmStatic
@@ -27,7 +31,7 @@ object Recitation {
         }
 
         loadRecitations(ctx, force) { availableRecitationsModel ->
-            Recitation.availableRecitationsModel = availableRecitationsModel
+            RecitationManager.availableRecitationsModel = availableRecitationsModel
             readyCallback()
         }
     }
@@ -44,10 +48,14 @@ object Recitation {
                     fileUtils.createFile(recitationsFile)
                     fileUtils.writeToFile(recitationsFile, stringData)
 
-                    postRecitationsLoad(ctx, stringData, callback)
+                    withContext(Dispatchers.Main) {
+                        postRecitationsLoad(ctx, stringData, callback)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    callback(null)
+                    withContext(Dispatchers.Main) {
+                        callback(null)
+                    }
                 }
             }
         } else {

@@ -719,10 +719,6 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
                 destroy();
                 pauseMedia();
             }
-        }, e -> {
-            e.printStackTrace();
-            mVerseLoadCallback.postLoad();
-            mVerseLoadCallback.onFailed(e, null);
         });
     }
 

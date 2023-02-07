@@ -7,14 +7,8 @@ import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
-import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
-import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.app.NotificationUtils;
-import com.quranapp.android.utils.fb.FirebaseUtils;
 
 import java.util.Objects;
 
@@ -44,13 +38,5 @@ public class QuranApp extends Application {
             String process = getProcessName();
             if (!Objects.equals(getPackageName(), process)) WebView.setDataDirectorySuffix(process);
         }
-
-        FirebaseApp.initializeApp(this);
-
-        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
-                BuildConfig.DEBUG
-                        ? DebugAppCheckProviderFactory.getInstance()
-                        : PlayIntegrityAppCheckProviderFactory.getInstance()
-        );
     }
 }

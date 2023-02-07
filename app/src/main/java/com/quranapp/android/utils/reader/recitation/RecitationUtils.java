@@ -1,35 +1,21 @@
 package com.quranapp.android.utils.reader.recitation;
 
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_RECITER_NAME;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_SLUG;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_STYLE;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_URL_HOST;
-import static com.quranapp.android.components.recitation.RecitationManifest.KEY_URL_PATH;
-
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.quranapp.android.components.recitation.Recitation;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.fb.FirebaseUtils;
 import com.quranapp.android.utils.sp.SPReader;
-import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
-import com.quranapp.android.utils.thread.tasks.SimpleDataLoaderTask;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.URLBuilder;
 
-import org.json.JSONObject;
-
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,7 +48,7 @@ public class RecitationUtils {
             return null;
         }
 
-        RecitationModel model = Recitation.getModel(slug);
+        RecitationModel model = RecitationManager.getModel(slug);
         if (model == null) {
             return null;
         }
@@ -103,77 +89,30 @@ public class RecitationUtils {
     }
 
     public static String prepareAudioPathForSpecificReciter(String reciterSlug, int chapterNo, int verseNo) {
-        final String audioName = String.format(RECITATION_AUDIO_NAME_FORMAT_LOCAL, chapterNo, verseNo);
+        final String audioName = String.format(Locale.ENGLISH, RECITATION_AUDIO_NAME_FORMAT_LOCAL, chapterNo, verseNo);
         return FileUtils.createPath(reciterSlug, audioName);
-    }
-
-    public static void prepareRecitationsManifestUrlFB(OnSuccessListener<Uri> successListener, OnFailureListener failureListener) {
-        Task<Uri> downloadUrl = FirebaseUtils.storageRef()
-                .child("recitations")
-                .child("available_recitations_info.json")
-                .getDownloadUrl();
-        downloadUrl.addOnSuccessListener(successListener).addOnFailureListener(failureListener);
-    }
-
-    public static RecitationModel readRecitationInfo(String id, JSONObject reciterObj, String commonHost) throws Exception {
-        String slug = reciterObj.optString(KEY_SLUG, "");
-        RecitationModel recitationModel = new RecitationModel(Integer.parseInt(id), slug);
-
-        recitationModel.setReciter(reciterObj.optString(KEY_RECITER_NAME, ""));
-
-        if (reciterObj.has(KEY_STYLE)) {
-            String style = reciterObj.getString(KEY_STYLE);
-            if ("null".equalsIgnoreCase(style) || TextUtils.isEmpty(style)) {
-                style = "";
-            }
-            recitationModel.setStyle(style);
-        }
-        if (reciterObj.has(KEY_URL_HOST)) {
-            String host = reciterObj.optString(KEY_URL_HOST);
-            if ("null".equalsIgnoreCase(host) || TextUtils.isEmpty(host)) {
-                recitationModel.setUrlHost(commonHost);
-            } else {
-                recitationModel.setUrlHost(host);
-            }
-        } else {
-            recitationModel.setUrlHost(commonHost);
-        }
-
-        recitationModel.setUrlPath(reciterObj.optString(KEY_URL_PATH, ""));
-
-        return recitationModel;
     }
 
     public static synchronized void obtainRecitationModel(
             Context ctx,
             boolean force,
-            OnResultReadyCallback<RecitationModel> callback,
-            OnResultReadyCallback<Exception> failCallback
+            OnResultReadyCallback<RecitationModel> callback
     ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
 
-        Recitation.prepare(ctx, force, () -> {
+        RecitationManager.prepare(ctx, force, () -> {
             String slug = savedSlug;
 
             if (TextUtils.isEmpty(slug)) {
-                List<RecitationModel> models = Recitation.getModels();
+                List<RecitationModel> models = RecitationManager.getModels();
                 if (models != null && models.size() > 0) {
                     slug = models.get(0).getSlug();
                 }
             }
 
-            callback.onReady(Recitation.getModel(slug));
+            callback.onReady(RecitationManager.getModel(slug));
 
             return Unit.INSTANCE;
-        });
-    }
-
-    public static void prepareRecitationsManifestUrlFBAndLoad(CallableTaskRunner<String> taskRunner, SimpleDataLoaderTask task, OnResultReadyCallback<Exception> failCallback) {
-        prepareRecitationsManifestUrlFB(uri -> {
-            task.setUrl(uri.toString());
-            taskRunner.callAsync(task);
-        }, e -> {
-            if (failCallback != null) failCallback.onReady(e);
         });
     }
 }

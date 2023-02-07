@@ -1,5 +1,5 @@
-package com.quranapp.android.interfaceUtils;
+package com.quranapp.android.interfaceUtils
 
-public interface OnResultReadyCallback<R> {
-    void onReady(R r);
+interface OnResultReadyCallback<R> {
+    fun onReady(r: R)
 }
