@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ (c) Faisal Khan. Created on 24/10/2021.
-  -->
-
-<resources>
+  --><resources>
     <string name="strTitleAppVersion">ऐप संस्करण</string>
     <string name="strVersion" formatted="false">संस्करण %s</string>
     <string name="strTitleLicenses">लाइसेंस</string>
-
     <string name="strLabelClose">बंद करें</string>
     <string name="strLabelOkay">ठीक है</string>
     <string name="strLabelGotIt">समझ गए</string>
@@ -48,11 +46,9 @@
     <string name="strLabelPremium">प्रीमियम</string>
     <string name="strLabelOn">चालू</string>
     <string name="strLabelOff">बंद</string>
-
     <string name="strLabelThemeDark">डार्क</string>
     <string name="strLabelThemeLight">लाइट</string>
     <string name="strLabelSystemDefault">सिस्टम डिफ़ॉल्ट</string>
-
     <string name="strLabelPreviousChapter">पिछला सूरह</string>
     <string name="strLabelNextChapter">अगला सूरह</string>
     <string name="strLabelNoPreviousChapter">कोई पिछला सूरह नहीं</string>
@@ -82,7 +78,6 @@
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">सूरह %s │ आयत %d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">सूरह %s : आयत %d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">सूरह सं %d │ आयत %d–%d</string>
-
     <string name="strTitleAppUser">QuranApp यूजर</string>
     <string name="strTitleHolyQuran">पवित्र क़ुरआन</string>
     <string name="strTitleQuran">क़ुरआन</string>
@@ -101,11 +96,9 @@
     <string name="strTitleReaderVerseInformation" formatted="false">सूरह %s : %d</string>
     <string name="strTitleGotoVerseNo" formatted="false">आयत %d पर जाएं</string>
     <string name="strTitleReadVerseRange" formatted="false">%d से %d आयतें पढ़ें</string>
-
     <string name="strTitleReaderLayoutStyle">लेआउट स्टाइल</string>
     <string name="strTitleReaderTextSizeArabic">अरबी का आकार</string>
     <string name="strTitleReaderTextSizeTransl">अनुवाद का आकार</string>
-
     <string name="strTitleSettings">सेटिंग्स</string>
     <string name="strTitleBookmark">बुकमार्क</string>
     <string name="strTitleSendFeedback">फीडबैक भेजें</string>
@@ -125,10 +118,10 @@
     <string name="strTitleDownloadTranslations">डाउनलोड</string>
     <string name="strTitleRecitations">क़ारी चुनें</string>
     <string name="strTitleScripts">फॉन्ट चुनें</string>
-    <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें</string>
+    <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें?</string>
     <string name="strTitleTranslDelete">अनुवाद डिलीट करें?</string>
-    <string name="strTitleResetReaderSettings">रीडर सेटिंग्स रेसेट करें</string>
+    <string name="strTitleResetReaderSettings">रीडर सेटिंग्स रेसेट करें\?</string>
     <string name="strTitleHideAd">विज्ञापन छुपायें</string>
     <string name="strTitleRecitationOptions">विकल्प</string>
     <string name="strTitleRepeatVerse">आयत दुहराएं</string>
@@ -149,7 +142,6 @@
     <string name="strTitleFailed">असफल हुआ</string>
     <string name="strTitleSuccess">सफल हुआ</string>
     <string name="strTitleThresholdReached">हद पर पहुंच गया</string>
-
     <string name="strChapInfoSeeMore">अधिक जानकारी देखें ›</string>
     <string name="strTitleChapInfoChapterNo">सूरह संख्या</string>
     <string name="strTitleChapInfoJuzNo">पारा सं.</string>
@@ -158,16 +150,13 @@
     <string name="strTitleChapInfoPages">पन्ने</string>
     <string name="strTitleChapInfoRevOrder">रहस्योद्घाटन क्रम</string>
     <string name="strTitleChapInfoRevType">रहस्योद्घाटन प्रकार</string>
-
     <string name="strMsgChapInfoFailedLoad">सूरा जानकारी लोड करने में विफल। बाद में पुन: प्रयास करें।</string>
-
     <string name="strTitleAppSettings">एप्प सेटिंग्स</string>
     <string name="strTitleReaderSettings">रीडर सेटिंग्स</string>
     <string name="strTitleAppLanguage">एप्प भाषा</string>
     <string name="strTitleChangeLanguage">भाषा बदले?</string>
     <string name="strTitleTheme">थीम</string>
     <string name="strTitleNoInternet">इंटरनेट नहीं है</string>
-
     <string name="strLabelPlay">प्ले</string>
     <string name="strLabelPause">पाऊस</string>
     <string name="strLabelBookmark">बुकमार्क करें</string>
@@ -191,7 +180,6 @@
     <string name="strLabelWhatsappStyling">व्हाट्सप्प स्टाइलिंग</string>
     <string name="strLabelIncludeArabic">अरबी शामिल करें</string>
     <string name="strLabelIncludeFootnotes">फुटनोट शामिल करें</string>
-
     <string name="strHintSearch">खोजें</string>
     <string name="strHintSearchQuran">क़ुरआन मे खोजें</string>
     <string name="strHintSearchTopic">विषय खोजें</string>
@@ -210,13 +198,10 @@
     <string name="strHintFeedbackEmail">ईमेल</string>
     <string name="strHintFeedbackMessage">संदेश</string>
     <string name="strHintBookmarkViewerNote">इस बुकमार्क पर एक अतिरिक्त नोट यहाँ लिखें…</string>
-
     <string name="strNotFound">कुछ नहीं मिला</string>
-
     <string name="strMsgThemeDark">डार्क मोड बैटरी की खपत को कम करता है।</string>
     <string name="strMsgThemeDefault">सिस्टम सेटिंग्स के अनुसार समायोजित करें।</string>
     <string name="strMsgVOTDOn">प्रतिदिन सुबह एक सूचना प्राप्त करें।</string>
-
     <string name="strMsgYouAreReadingVerses">आप पढ़ रहे है आयत:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d एक अमान्य सूरह संख्या है</string>
     <string name="strMsgInvalidVerseNo" formatted="false">आयत संख्या %d, सूरह संख्या %d के लिए अमान्य है</string>
@@ -232,30 +217,23 @@
     <string name="strMsgBookmarkNoItems">कोई बुकमार्क्स नहीं</string>
     <string name="strMsgBookmarkDeleteSelected">चुने गए बुकमार्क्स हटायें जाएंगे</string>
     <string name="strMsgBookmarkDeleteAll">सभी बुकमार्क्स हटायें जाएंगे</string>
-
     <string name="strMsgBookmarkDate" formatted="false">%s %s बजे</string>
     <string name="strMsgBookmarkDateToday" formatted="false">आज %s बजे</string>
-
     <string name="strMsgHistoryRemove">हिस्ट्री से हटायें?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" को हिस्ट्री से हटाया गया</string>
-
     <string name="strMsgSearchMultResultsFound" formatted="false">%s मे कुल परिणाम मिलें: %d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s मे सिर्फ एक परिणाम मिला</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s मे कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
-    <string
-        name="strMsgSearchNoResultsFound">कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
+    <string name="strMsgSearchNoResultsFound">कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें।</string>
     <string name="strMsgSearchWordPart">शब्द भाग भी खोजें</string>
     <string name="strMsgSearchWordPartExample">उदाहरण: \'इंसानियत\' में \'इंसान\'</string>
     <string name="strMsgSearchArabic">अरबी टेक्स्ट में भी खोजें</string>
-
     <string name="strMsgChangeLanguage">भाषा बदलने के लिए एप्प को दुबारा शुरू करना होगा</string>
     <string name="strMsgResetReaderSettings">सभी रीडर सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें</string>
-
     <string name="strMsgProphetsOrder">कालानुक्रमिक क्रम में अम्बिया को दिखा रहा है</string>
     <string name="strMsgShareRange" formatted="false">%d%s%d के बीच का रेंज लिखे</string>
     <string name="strMsgEnterValidRange">कृपया एक मान्य रेंज दर्ज करें</string>
-
     <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें</string>
     <string name="strMsgTranslNoDownloads">कोई डाउनलोड किया गया अनुवाद उपलब्ध नहीं है</string>
     <string name="strMsgTranslNoDownloadsAvailable">कोई डाउनलोड उपलब्ध नहीं</string>
@@ -263,15 +241,13 @@
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" डाउनलोड होने में विफल रहा।</string>
     <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: \"%s\"।</string>
     <string name="strMsgTranslNoneSelected">कोई अनुवाद नहीं चुना गया है। अनुवाद ढूंढने के लिए सेटिंग में जाएं।</string>
-
     <string name="strDescAddToBookmarks">बुकमार्क करें</string>
     <string name="strDescGoBack">पीछे जाएं</string>
     <string name="strDescClose">बंद करें</string>
     <string name="strDescVerseNo" formatted="false">आयत संख्या %d।</string>
     <string name="strDescVerseNoWithChapter" formatted="false">सूरह संख्या %s, आयत संख्या %d।</string>
     <string name="strMsgNoInternet">कृपया अपने इंटरनेट कनेक्शन की जाँच करें</string>
-    <string
-        name="strMsgNoInternetLong">कोई इंटरनेट कनेक्शन नहीं। सुनिश्चित करें कि वाई-फ़ाई या सेल्युलर डेटा चालू है, फिर प्रयास करें।</string>
+    <string name="strMsgNoInternetLong">कोई इंटरनेट कनेक्शन नहीं। सुनिश्चित करें कि वाई-फ़ाई या सेल्युलर डेटा चालू है, फिर प्रयास करें।</string>
     <string name="strMsgSubsNotSubscribed">ऐसा लगता है कि आपने प्रीमियम सदस्यता नहीं खरीदी है।</string>
     <string name="strMsgSubs">ऐप का पूरा नियंत्रण पाने के लिए सदस्यता लें</string>
     <string name="strMsgSubsNotSupported">माफ़ करिए! आपके डिवाइस पर सब्सक्रिप्शन उपलब्ध नहीं है।</string>
@@ -285,7 +261,7 @@
     <string name="strMsgSubsRestart">सदस्यता को पूरा करने के लिए कृपया ऐप को पुनरारंभ करें।</string>
     <string name="strMsgFinishing">सदस्यता पूरी की जा रही है…</string>
     <string name="strMsgSubsProgressWarning">कृपया विंडो बंद ना करें</string>
-    <string name="strMsgSubsGreet" formatted="false">सलाम %s, और बधाई! &#127881;&#127881;</string>
+    <string name="strMsgSubsGreet" formatted="false">सलाम %s, और बधाई! 🎉🎉</string>
     <string name="strMsgSubsUnlock" formatted="false">अब आपने अनलॉक कर दिया है -</string>
     <string name="strMsgVerseReportSuccess">रिपोर्ट सफलतापूर्वक भेजी गई</string>
     <string name="strMsgVerseReportFailed">रिपोर्ट भेजने में विफल</string>
@@ -298,21 +274,18 @@
     <string name="strMsgTryLater">कृपया बाद में पुन: प्रयास करें।</string>
     <string name="strMsgReportUs">कृपया हमें सूचना दें।</string>
     <string name="strMsgCouldNotOpenPage">पेज नहीं खोल सके।</string>
-
     <string name="strLabelNavHome">होम</string>
     <string name="strLabelNavSearch">खोजें</string>
-
     <string name="strTextPreparing">तैयार किया जा रहा…</string>
     <string name="strTextPleaseWait">कृपया प्रतीक्षा करें…</string>
     <string name="strTextSending">भेजा जा रहा है…</string>
     <string name="strAyatulKursi">आयतुल कुर्सी</string>
-
     <string name="strTitleProfile">प्रोफ़ाइल</string>
     <string name="strTitleEditProfile">प्रोफ़ाइल संपादित करें</string>
     <string name="strTitleError">त्रुटि!</string>
     <string name="strTitleInfo">सूचना!</string>
     <string name="strTitleOops">उफ़!</string>
-    <string name="strLabelProceed">"आगे बढ़े "</string>
+    <string name="strLabelProceed">आगे बढ़े</string>
     <string name="strTextUpdating">अपडेट हो रहा है…</string>
     <string name="strTextInstalling">इंस्टॉल किया जा रहा है…</string>
     <string name="strTextLoading">लोड हो रहा है…</string>
@@ -332,8 +305,7 @@
     <string name="strMsgProfileUpdateFailed">प्रोफ़ाइल अपडेट नहीं की जा सकी। बाद में पुन: प्रयास करें।</string>
     <string name="strTitleEmailSent">ईमेल भेजा गया!</string>
     <string name="strMsgEmailSentVerifyEmail" formatted="false">अपना ईमेल पता सत्यापित करने के लिए %s को भेजे गए निर्देशों का पालन करें।</string>
-    <string name="strMsgEmailSentResetPassword"
-        formatted="false">अपना पासवर्ड रीसेट करने के लिए %s को भेजे गए निर्देशों का पालन करें।</string>
+    <string name="strMsgEmailSentResetPassword" formatted="false">अपना पासवर्ड रीसेट करने के लिए %s को भेजे गए निर्देशों का पालन करें।</string>
     <string name="strLabelLogout">लॉग आउट</string>
     <string name="strMsgLogout">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
     <string name="strMsgFieldRequired" formatted="false">%s आवश्यक है</string>
@@ -372,7 +344,6 @@
     <string name="strLabelNewPassword">नया पासवर्ड</string>
     <string name="strLabelSendEmail">ईमेल भेजें</string>
     <string name="strLabelEditProfile">प्रोफ़ाइल संपादित करें</string>
-
     <string name="strFieldTitleFName">पहला नाम</string>
     <string name="strFieldTitleLName">अंतिम नाम</string>
     <string name="strFieldTitleName">नाम</string>
@@ -386,11 +357,9 @@
     <string name="strFieldHintPassword">अपना पासवर्ड दर्ज करें</string>
     <string name="strFieldHintNewPassword">नया पासवर्ड बनाएं</string>
     <string name="strFieldHintCPassword">पासवर्ड दोहराएं</string>
-
     <string name="strGenderMale">पुरुष</string>
     <string name="strGenderFemale">महिला</string>
     <string name="strGenderNotSpecified">नहीं बताया गया</string>
-
     <string name="strMsgLoginFree">लॉगिन करें या खाता बनाएं, यह मुफ़्त है!</string>
     <string name="strMsgLogin4Service" formatted="false">%s, आपको लॉग इन करने की आवश्यकता है। यदि आपके पास अभी तक कोई खाता नहीं है, तो अभी बनाएं।</string>
     <string name="strMsgLogin4Subs">सदस्यता सेवा का उपयोग करने के लिए</string>
@@ -399,18 +368,15 @@
     <string name="strMsgVerifyEmailLong">आपका ईमेल पता अभी तक सत्यापित नहीं है, जारी रखने के लिए कृपया इसे सत्यापित करें।</string>
     <string name="strLabelVerify">सत्यापित करें</string>
     <string name="strMsgAccountReminder">QuranApp का अधिक से अधिक लाभ उठाने के लिए, कृपया लॉगिन करें या एक खाता बनाएं। यह मुफ़्त और तेज़ है।</string>
-
     <string name="strMsgUpdateAvailable">अपडेट उपलब्ध! नवीनतम सुविधाओं को प्राप्त करने के लिए कृपया ऐप को अपडेट करें।</string>
     <string name="strMsgUpdateAvailable4Dialog">अपडेट उपलब्ध!\nकृपया ऐप को अपडेट करें।</string>
     <string name="strMsgUpdateAvailable2Continue">अपडेट आवश्यक है!\nजारी रखने के लिए कृपया ऐप को अपडेट करें।</string>
     <string name="strMsgUpdateDownloaded">अपडेट डाउनलोड किया गया! कृपया अपडेट को पूरा करने के लिए स्थापित करें।</string>
-
     <string name="strSalam">अस्सलाम अलैकुम</string>
     <string name="strSalamShort">सलाम</string>
     <string name="strPremiumDialogTitle">प्रीमियम सुविधाएँ सस्ती कीमत पर</string>
     <string name="strPremiumDialogButton">प्रीमियम बनें</string>
     <string name="strMsgVOTDNoPremium">दिन की आयत और डेली आयत रिमाइंडर केवल प्रीमियम उपयोगकर्ताओं के लिए उपलब्ध हैं।</string>
-
     <string name="strPremiumWatchToUnlock">अनलॉक करने के लिए वीडियो देखें</string>
     <string name="strPremiumWatchToUnlock2">अनलॉक करने के लिए वीडियो को अंत तक देखें</string>
     <string name="strPremiumUnlockContent" formatted="false">\"%s\" को एक घंटे के लिए अनलॉक करने के लिए वीडियो देखें</string>
@@ -423,10 +389,8 @@
     <string name="strLabelLater">बाद में</string>
     <string name="strLabelIncludeTranslation">अनुवाद शामिल करें</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">एक बार में अधिकतम %d अनुवादों का चयन किया जा सकता है। कृपया दूसरे को चुनने से पहले एक को अचयनित करें। यह प्रदर्शन में कमी से बचने के लिए है।।</string>
-
     <string name="strMsgRecitationsLoadFailed">सर्वर से तिलावत लोड नहीं कर सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgRecitationsNoAvailable">कोई तिलावत उपलब्ध नहीं</string>
-
     <string name="strTitleQuickEdit">क्विक एडिट</string>
     <string name="strTitleBookmarkDeleteThis">यह बुकमार्क हटाएं?</string>
     <string name="strMsgEditShareTransl">केवल सेटिंग से चयनित अनुवाद यहां दिखाए गए हैं।</string>
