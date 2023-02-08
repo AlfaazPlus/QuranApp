@@ -98,7 +98,9 @@
     <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Read Verses %d - %d</string>
 
-    <string name="strTitleReaderLayoutStyle">Layout style</string>
+    <string name="strTitleReaderLayoutStyle">Quran view style</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Translations view</string>
+    <string name="strTitleReaderLayoutStylePageView">Page view</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
 
