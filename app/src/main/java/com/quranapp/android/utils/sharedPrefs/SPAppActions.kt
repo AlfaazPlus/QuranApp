@@ -4,10 +4,9 @@
 /*
  * (c) Faisal Khan. Created on 12/10/2021.
  */
-package com.quranapp.android.utils.sp
+package com.quranapp.android.utils.sharedPrefs
 
 import android.content.Context
-import android.text.TextUtils
 
 object SPAppActions {
     private const val SP_APP_ACTION = "sp_app_action"

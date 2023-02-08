@@ -27,7 +27,7 @@ import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.LytOnboardRecitationsBinding;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
-import com.quranapp.android.utils.sp.SPAppActions;
+import com.quranapp.android.utils.sharedPrefs.SPAppActions;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.widgets.PageAlert;
 

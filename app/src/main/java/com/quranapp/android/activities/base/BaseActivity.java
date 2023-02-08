@@ -7,7 +7,7 @@ package com.quranapp.android.activities.base;
 import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
 import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
 import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
-import static com.quranapp.android.utils.sp.SPAppConfigs.LOCALE_DEFAULT;
+import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -48,7 +48,7 @@ import com.quranapp.android.interfaceUtils.ActivityResultStarter;
 import com.quranapp.android.utils.IntentUtils;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
-import com.quranapp.android.utils.sp.SPAppConfigs;
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 
 import java.util.Locale;
 import java.util.Objects;

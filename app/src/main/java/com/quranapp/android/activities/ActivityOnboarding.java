@@ -22,8 +22,8 @@ import com.quranapp.android.databinding.ActivityOnboardBinding;
 import com.quranapp.android.frags.onboard.FragOnBoardRecitation;
 import com.quranapp.android.frags.onboard.FragOnBoardThemes;
 import com.quranapp.android.frags.onboard.FragOnBoardTransls;
-import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.sp.SPAppActions;
+import com.quranapp.android.utils.app.ThemeUtils;
+import com.quranapp.android.utils.sharedPrefs.SPAppActions;
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
 
 public class ActivityOnboarding extends BaseActivity {
@@ -159,7 +159,7 @@ public class ActivityOnboarding extends BaseActivity {
     private void finishSetup() {
         SPAppActions.setRequireOnboarding(this, false);
         if (mThemeChanged) {
-            AppCompatDelegate.setDefaultNightMode(AppUtils.resolveThemeModeFromSP(this));
+            AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeFromSP(this));
         }
         launchMainActivity();
         finish();

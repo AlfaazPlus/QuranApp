@@ -19,7 +19,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.quranapp.android.utils.sp.SPVerses;
+import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.verse.VerseUtils;
 import com.quranapp.android.utils.votd.VOTDUtils;

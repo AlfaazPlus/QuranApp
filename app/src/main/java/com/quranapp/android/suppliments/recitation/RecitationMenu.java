@@ -27,7 +27,7 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.PopupWindow2;
 import com.quranapp.android.views.reader.RecitationPlayer;
 

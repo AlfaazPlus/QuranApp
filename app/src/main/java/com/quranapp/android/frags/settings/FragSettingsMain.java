@@ -64,7 +64,6 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
@@ -76,15 +75,16 @@ import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.readerhandler.VerseDecorator;
-import com.quranapp.android.utils.app.AppUtils;
+import com.quranapp.android.utils.app.RecitationManager;
+import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.reader.ScriptUtils;
 import com.quranapp.android.utils.reader.TextSizeUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.sp.SPAppConfigs;
-import com.quranapp.android.utils.sp.SPReader;
-import com.quranapp.android.utils.sp.SPVerses;
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.univ.SimpleSeekbarChangeListener;
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
@@ -164,7 +164,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     @Override
-    protected boolean shouldCreateScroller() {
+    protected boolean getShouldCreateScrollerView() {
         return true;
     }
 
@@ -262,7 +262,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupThemeTitle() {
         if (mThemeExplorerBinding == null) return;
 
-        String selectedTheme = AppUtils.resolveThemeTextFromMode(mThemeExplorerBinding.getRoot().getContext());
+        String selectedTheme = ThemeUtils.resolveThemeTextFromMode(mThemeExplorerBinding.getRoot().getContext());
         prepareTitle(mThemeExplorerBinding, R.string.strTitleTheme, selectedTheme);
     }
 
@@ -278,7 +278,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         params.headerTitle = getString(R.string.strTitleTheme);
 
         LytThemeExplorerBinding binding = LytThemeExplorerBinding.inflate(mInflater);
-        binding.themeGroup.check(AppUtils.resolveThemeIdFromMode(ctx));
+        binding.themeGroup.check(ThemeUtils.resolveThemeIdFromMode(ctx));
         params.setContentView(binding.getRoot());
 
         binding.themeGroup.setOnCheckedChangedListener((button, checkedId) -> {
@@ -553,7 +553,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         bindingLayoutStyle.tabLayout.addOnTabSelectedListener(new SimpleTabSelectorListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(@NonNull TabLayout.Tab tab) {
                 Integer style = (Integer) tab.getTag();
 
                 if (style == null) {

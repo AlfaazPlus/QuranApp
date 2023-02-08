@@ -18,7 +18,7 @@ import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.utils.quran.QuranUtils;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

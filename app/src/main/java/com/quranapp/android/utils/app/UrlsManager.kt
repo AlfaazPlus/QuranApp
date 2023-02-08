@@ -6,9 +6,9 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.AppUrls
 import com.quranapp.android.utils.app.AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sp.SPAppActions
-import com.quranapp.android.utils.sp.SPAppActions.addToPendingAction
-import com.quranapp.android.utils.sp.SPAppActions.setFetchUrlsForce
+import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.sharedPrefs.SPAppActions.addToPendingAction
+import com.quranapp.android.utils.sharedPrefs.SPAppActions.setFetchUrlsForce
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

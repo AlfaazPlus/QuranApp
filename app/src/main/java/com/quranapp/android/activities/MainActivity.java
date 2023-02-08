@@ -1,11 +1,6 @@
 package com.quranapp.android.activities;
 
-import static com.quranapp.android.utils.app.AppActions.APP_ACTION_KEY;
-import static com.quranapp.android.utils.app.AppActions.APP_ACTION_VICTIM_KEY;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
@@ -24,7 +19,7 @@ import com.quranapp.android.frags.main.FragMain;
 import com.quranapp.android.suppliments.IndexMenu;
 import com.quranapp.android.utils.app.AppActions;
 import com.quranapp.android.utils.app.UpdateManager;
-import com.quranapp.android.utils.sp.SPAppActions;
+import com.quranapp.android.utils.sharedPrefs.SPAppActions;
 import com.quranapp.android.widgets.tablayout.BottomTab;
 import com.quranapp.android.widgets.tablayout.BottomTabLayout;
 

@@ -8,7 +8,7 @@ import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.quran.parser.QuranParserJSON;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.util.HashMap;
 import java.util.Map;

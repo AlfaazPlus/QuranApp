@@ -45,7 +45,7 @@ import com.quranapp.android.utils.reader.recitation.RecitationParams;
 import com.quranapp.android.utils.reader.recitation.RecitationPlayerImpl;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.Duration;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.NotifUtils;

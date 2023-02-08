@@ -7,16 +7,16 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.peacedesign.android.utils.Log
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.adapters.recitation.ADPRecitations
 import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
-import com.quranapp.android.interfaceUtils.RecitationExplorerImpl
 import com.quranapp.android.utils.app.RecitationManager
-import com.quranapp.android.utils.sp.SPAppActions
-import com.quranapp.android.utils.sp.SPReader
+import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.views.BoldHeader
@@ -24,32 +24,23 @@ import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 import com.quranapp.android.widgets.PageAlert
 import java.util.regex.Pattern
 
-class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
+class FragSettingsRecitations : FragSettingsBase() {
 
     private lateinit var mBinding: FragSettingsTranslBinding
     private lateinit var mFileUtils: FileUtils
 
-    private var mSavedRecitation: String? = null
-    private var mAdapter: ADPRecitations? = null
+    private val mAdapter = ADPRecitations()
     private var mModels: List<RecitationModel>? = null
     private var mPageAlert: PageAlert? = null
 
-    override var savedReciter: String?
-        get() = mSavedRecitation
-        set(value) {
-            mSavedRecitation = value
-        }
+    private var mInitialRecitation: String? = null
 
-    override fun getFragTitle(ctx: Context): String {
-        return ctx.getString(R.string.strTitleRecitations)
-    }
+    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleRecitations)
 
-    override fun getLayoutResource(): Int {
-        return R.layout.frag_settings_transl
-    }
+    override val layoutResource: Int = R.layout.frag_settings_transl
 
-    override fun getFinishingResult(ctx: Context?): Bundle? {
-        if (SPReader.getSavedRecitationSlug(ctx) != mSavedRecitation) {
+    override fun getFinishingResult(ctx: Context): Bundle? {
+        if (SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
             return bundleOf(ActivityReader.KEY_RECITER_CHANGED to true)
         }
         return null
@@ -82,7 +73,7 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         mFileUtils = FileUtils.newInstance(ctx)
-        mSavedRecitation = SPReader.getSavedRecitationSlug(ctx)
+        mInitialRecitation = SPReader.getSavedRecitationSlug(ctx)
         mBinding = FragSettingsTranslBinding.bind(view)
 
         init(ctx)
@@ -113,11 +104,10 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
     }
 
     private fun search(query: CharSequence) {
-        val adapter = mAdapter ?: return
         val models = mModels ?: return
 
         if (query.isEmpty()) {
-            if (adapter.itemCount != models.size) {
+            if (mAdapter.itemCount != models.size) {
                 resetAdapter(models)
             }
             return
@@ -146,23 +136,18 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
         mModels = models
 
         mBinding.list.layoutManager = LinearLayoutManager(ctx)
-        val itemAnimator = mBinding.list.itemAnimator
-        if (itemAnimator is SimpleItemAnimator) {
-            itemAnimator.supportsChangeAnimations = false
-        }
-
-        mAdapter = ADPRecitations()
+        (mBinding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         resetAdapter(models)
 
-        (activity as? ActivitySettings)?.header?.apply {
+        activity()?.header?.apply {
             setShowSearchIcon(true)
             setShowRightIcon(true)
         }
     }
 
     private fun resetAdapter(models: List<RecitationModel>) {
-        mAdapter?.setModels(models)
+        mAdapter.setModels(models)
         mBinding.list.adapter = mAdapter
     }
 
@@ -174,7 +159,7 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
         hideAlert()
         mBinding.loader.visibility = View.VISIBLE
 
-        (activity as? ActivitySettings)?.header?.apply {
+        activity()?.header?.apply {
             setShowRightIcon(false)
             setShowSearchIcon(false)
         }
@@ -183,7 +168,10 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
     private fun hideLoader() {
         mBinding.loader.visibility = View.GONE
 
-        (activity as? ActivitySettings)?.header?.apply {
+        Log.d("HERE OUTSIDE")
+        activity()?.header?.apply {
+            Log.d("HERE")
+
             setShowRightIcon(true)
             setShowSearchIcon(true)
         }
@@ -203,7 +191,7 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
             show(mBinding.container)
         }
 
-        (activity as? ActivitySettings)?.header?.apply {
+        activity()?.header?.apply {
             setShowSearchIcon(false)
             setShowRightIcon(true)
         }
@@ -224,7 +212,7 @@ class FragSettingsRecitations : FragSettingsBase(), RecitationExplorerImpl {
             show(mBinding.container)
         }
 
-        (activity as? ActivitySettings)?.header?.apply {
+        activity()?.header?.apply {
             setShowSearchIcon(false)
             setShowRightIcon(true)
         }

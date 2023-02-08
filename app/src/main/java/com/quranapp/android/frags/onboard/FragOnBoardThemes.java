@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 
 import com.quranapp.android.activities.ActivityOnboarding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
-import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.sp.SPAppConfigs;
+import com.quranapp.android.utils.app.ThemeUtils;
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 
 public class FragOnBoardThemes extends FragOnBoardBase {
     public static FragOnBoardThemes newInstance() {
@@ -41,7 +41,7 @@ public class FragOnBoardThemes extends FragOnBoardBase {
             if (getActivity() instanceof ActivityOnboarding) {
                 ((ActivityOnboarding) getActivity()).mThemeChanged = true;
             }
-            final String themeMode = AppUtils.resolveThemeModeFromId(checkedId);
+            final String themeMode = ThemeUtils.resolveThemeModeFromId(checkedId);
             SPAppConfigs.setThemeMode(button.getContext(), themeMode);
         });
     }

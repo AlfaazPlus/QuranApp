@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Only add locales having at least 60% translations-->
+
+    <string-array name="availableLocalesNames">
+        <item>@string/strLabelSystemDefault</item>
+        <item>English</item>
+        <item>हिन्दी</item>
+        <item>اردو</item>
+        <!--        <item>Española</item>-->
+    </string-array>
+
+    <string-array name="availableLocalesValues">
+        <item>default</item>
+        <item>en</item>
+        <item>hi</item>
+        <item>ur</item>
+        <!--        <item>es</item>-->
+    </string-array>
+</resources>

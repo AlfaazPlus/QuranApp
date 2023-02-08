@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.LytSettingsRecitationItemBinding;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,6 @@ public class ADPRecitations extends RecyclerView.Adapter<ADPRecitations.VHRecita
             }
 
             mBinding.radio.setVisibility(View.VISIBLE);
-            mBinding.iconPremium.setVisibility(View.GONE);
 
             mBinding.getRoot().setOnClickListener(v -> {
                 select(getAdapterPosition());

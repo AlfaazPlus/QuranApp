@@ -268,26 +268,6 @@
     <string name="strMsgNoInternet">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں</string>
     <string
         name="strMsgNoInternetLong">انٹرنیٹ کنکشن نہیں ہے۔ یقینی بنائیں کہ Wi-Fi یا سیلولر ڈیٹا آن ہے، پھر دوبارہ کوشش کریں۔</string>
-    <string name="strMsgSubsNotSubscribed">ایسا لگتا ہے کہ آپ نے پریمیم نہیں خریدی ہے۔</string>
-    <string name="strMsgSubs">ایپ کا مکمل کٹرول حاصل کرنے کے لیے سبسکرائب کریں۔</string>
-    <string name="strMsgSubsNotSupported">معذرت! آپ کے آلے پر سبسکرپشن دستیاب نہیں ہے۔</string>
-    <string name="strMsgSubsPlayStoreUpdate">معذرت! سبسکرپشن دستیاب نہیں ہے۔ پلے اسٹور کو اپ ڈیٹ کریں۔</string>
-    <string name="strMsgSubsFinishFailed">سبسکرپشن مکمل کرنے میں ناکام! یقینی بنائیں کہ آپ کے پاس ایک فعال انٹرنیٹ کنکشن ہے اور ایپ کو دوبارہ شروع کر کے بعد میں دوبارہ کوشش کریں۔ اگر آپ کی رقم کاٹ لی گئی ہے، تو براہ کرم فکر نہ کریں۔ یہ آپ کو واپس کر دیا جائے گا۔ اگر آپ کے پاس کوئی سوال ہے تو بلا جھجھک ہم سے رابطہ کریں۔</string>
-    <string name="strMsgSubsPendingTransaction">خریداری زیر التواء ہے۔ براہ کرم ٹرانزیکشن مکمل کریں۔</string>
-    <string name="strMsgSubsPurchaseCanceled">خریداری منسوخ کر دی گئی</string>
-    <string name="strMsgSubsFailed">سبسکرائب کرنے میں ناکام</string>
-    <string name="strMsgSubsSucceed">کامیابی سے سبسکرائب ہو گیا</string>
-    <string name="strMsgSubsSucceed2">سبسکرپشن کامیاب!</string>
-    <string name="strMsgSubsRestart">سبسکرپشن مکمل کرنے کے لیے براہ کرم ایپ کو دوبارہ شروع کریں۔</string>
-    <string name="strMsgFinishing">سبسکرپشن مکمل ہو رہی ہے…</string>
-    <string name="strMsgSubsProgressWarning">براہ کرم ونڈو بند نہ کریں</string>
-    <string name="strMsgSubsGreet" formatted="false">سلام %s، اور مبارک ہو!&#127881;&#127881;</string>
-    <string name="strMsgSubsUnlock" formatted="false">اب آپ کو مل گیا -</string>
-    <string name="strMsgVerseReportSuccess">رپورٹ کامیابی سے بھیج دی گئی</string>
-    <string name="strMsgVerseReportFailed">رپورٹ بھیجنے میں ناکام</string>
-    <string name="strMsgFeedbackSendSuccess">رائے کامیابی سے بھیج دیے گئے</string>
-    <string name="strMsgFeedbackSendFailed">رائے بھیجنے میں ناکام</string>
-    <string name="strMsgInvalidEmail">اپنا درست ای میل درج کریں</string>
     <string name="strMsgSomethingWrong">کچھ غلط ہو گیا!</string>
     <string name="strMsgSomethingWrongFixing">کچھ غلط ہو گیا! ہم اسے ٹھیک کرنے کے لیے کام کر رہے ہیں۔</string>
     <string name="strMsgVerseCredsInvalid">آیت کی تفصیلات درست نہیں ہیں۔</string>
@@ -303,8 +283,6 @@
     <string name="strTextSending">بھیجا جا رہا ہے…</string>
     <string name="strAyatulKursi">اية الكرسي</string>
 
-    <string name="strTitleProfile">پروفائل</string>
-    <string name="strTitleEditProfile">پروفائل ترمیم کریں</string>
     <string name="strTitleError">غلطی!</string>
     <string name="strTitleInfo">معلومات!</string>
     <string name="strTitleOops">افسوس!</string>
@@ -312,90 +290,6 @@
     <string name="strTextUpdating">اپ ڈیٹ ہو رہا ہے…</string>
     <string name="strTextInstalling">انسٹال ہو رہا ہے…</string>
     <string name="strTextLoading">لوڈ ہو رہا ہے…</string>
-    <string name="strTextLoggingIn">لاگ ان ہو رہا ہے…</string>
-    <string name="strTextCreatingAccount">اکاؤنٹ بنایا جا رہا ہے…</string>
-    <string name="strTitleVerifyPassword">پاس ورڈ کی تصدیق کریں۔</string>
-    <string name="strTitleDeleteAccount">اکاؤنٹ حذف کریں؟</string>
-    <string name="strMsgDeleteAccount">کیا آپ واقعی اپنا اکاؤنٹ مستقل طور پر حذف کرنا چاہتے ہیں؟ ایک بار جب آپ نیچے دیئے گئے \"اکاؤنٹ حذف کریں\" بٹن پر کلک کریں گے، تو آپ کا اکاؤنٹ مستقل طور پر حذف ہو جائے گا اور اسے واپس نہیں کیا جا سکتا۔ اس کارروائی کی وجہ سے، آپ ایپ کا کچھ کنٹرول کھو سکتے ہیں۔</string>
-    <string name="strLabelDeleteAccount">اکاؤنٹ حذف کریں</string>
-    <string name="strTextDeletingAccount">اکاؤنٹ حذف ہو رہا ہے…</string>
-    <string name="strTitleAccountDeleted">اکاؤنٹ حذف کر دیا گیا</string>
-    <string name="strMsgAccountDeleted">آپ کا اکاؤنٹ مستقل طور پر حذف ہو گیا ہے۔</string>
-    <string name="strMsgAccountDeleteFailed">اکاؤنٹ حذف نہیں کیا جا سکا۔ براہ کرم کچھ دیر بعد کوشش کریں.</string>
-    <string name="strMsgEmailNotValid">ای میل ایڈریس درست نہیں ہے</string>
-    <string name="strMsgFieldNotValid" formatted="false">%s درست نہیں ہے</string>
-    <string name="strMsgEmailAlreadyTaken">ای میل ایڈریس پہلے ہی کسی دوسرے اکاؤنٹ سے وابستہ ہے</string>
-    <string name="strMsgProfileUpdateFailed">پروفائل کو اپ ڈیٹ نہیں کیا جا سکا۔ براہ کرم کچھ دیر بعد کوشش کریں.</string>
-    <string name="strTitleEmailSent">ای میل بھیج دی گئ!</string>
-    <string name="strMsgEmailSentVerifyEmail"
-        formatted="false">اپنے ای میل ایڈریس کی تصدیق کے لیے %s کو بھیجی گئی ہدایات پر عمل کریں۔</string>
-    <string name="strMsgEmailSentResetPassword" formatted="false">اپنا پاس ورڈ دوبارہ ترتیب دینے کے لیے %s کو بھیجی گئی ہدایات پر عمل کریں۔</string>
-    <string name="strLabelLogout">لاگ آوٹ</string>
-    <string name="strMsgLogout">کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟</string>
-    <string name="strMsgFieldRequired" formatted="false">%s ضروری ہے</string>
-    <string name="strMsgEmailRequired">ای میل ایڈریس ضروری ہے</string>
-    <string name="strMsgEnterAssocEmail">اپنے اکاؤنٹ سے وابستہ ای میل ایڈریس درج کریں</string>
-    <string name="strMsgPasswordRequired">پاس ورڈ ضروری ہے</string>
-    <string name="strMsgIncorrectPassword">پاس ورڈ غلط ہے</string>
-    <string name="strMsgRepeatPasswordProceed">آگے بڑھنے کے لیے، براہ کرم اپنا پاس ورڈ درج کریں</string>
-    <string name="strMsgNewPassword">براہ کرم ایک نیا پاس ورڈ درج کریں</string>
-    <string name="strMsgMinPassword">پاس ورڈ کی لمبائی کم از کم 8 ہونی چاہیے</string>
-    <string name="strMsgMinCPasswordUnmatched">تصدیقی پاس ورڈ مماثل نہیں ہے</string>
-    <string name="strMsgInvalidUser">اس ای میل کے ساتھ کوئی صارف موجود نہیں ہے۔</string>
-    <string
-        name="strMsgDisabledUser">یہ اکاؤنٹ کسی وجہ سے غیر فعال کر دیا گیا ہے۔ اسے فعال کرنے کے لیے براہ کرم ہم سے رابطہ کریں۔</string>
-    <string name="strMsgInvalidUserRightNow">ہم ابھی اس اکاؤنٹ پر کام کرنے سے قاصر ہیں۔</string>
-    <string name="strMsgInvalidUserCreateAccount">صارف موجود نہیں. آپ نیا اکاؤنٹ بنا سکتے ہیں۔</string>
-    <string name="strMsgAlreadyLoggedIn">آپ پہلے ہی لاگ ان ہیں۔ جاری رکھنے کے لیے پہلے لاگ آؤٹ کریں۔</string>
-    <string name="strMsgLoginFailed">لاگ ان کرنے میں ناکام۔ براہ کرم کچھ دیر بعد کوشش کریں.</string>
-    <string name="strMsgRegisterFailed">اکاؤنٹ نہیں بنا سکا۔ براہ کرم کچھ دیر بعد کوشش کریں.</string>
-    <string name="strMsgLoginToContinue">جاری رکھنے کے لئے لاگ ان کریں</string>
-    <string name="strMsgNowLoggedIn">اب آپ لاگ ان ہو گئے ہیں</string>
-    <string name="strTitleSessionExpired">مدت ختم ہو گئی</string>
-    <string name="strMsgWeakPassword">8 حروف سے زیادہ کا مضبوط پاس ورڈ درج کریں۔</string>
-    <string name="strMsgPasswordChanged">پاس ورڈ کامیابی سے تبدیل ہو گیا ہے۔ لاگ ان کرنے کے لیے نئی اسناد کا استعمال کریں۔</string>
-    <string name="strMsgPasswordChangeFailed">پاس ورڈ تبدیل کرنے میں ناکام</string>
-    <string name="strMsgRepeatNewPassword">نیا پاس ورڈ دوبارہ درج کریں</string>
-    <string name="strLabelLogin">لاگ ان کریں</string>
-    <string name="strLabelRegister">رجسٹر کریں</string>
-    <string name="strTitleCreateAccount">اکاؤنٹ بنائیں</string>
-    <string name="strLabelResetPassword">پاس ورڈ ری سیٹ</string>
-    <string name="strLabelForgotPassword">پاسورڈ بھول گے؟</string>
-    <string name="strLabelCreateNew">نیا بنائیں</string>
-    <string name="strLabelClickLogin">لاگ ان کرنے کے لیے کلک کریں</string>
-    <string name="strMsgDontHaveAccount">کیا آپ کا اکاؤنٹ نہیں ہے؟</string>
-    <string name="strMsgHaveAccount">پہلے سے ہی رجسٹرڈ ہیں؟</string>
-    <string name="strLabelChangePassword">پاس ورڈ تبدیل کریں</string>
-    <string name="strLabelNewPassword">نیا پاس ورڈ</string>
-    <string name="strLabelSendEmail">ای میل بھیجیں</string>
-    <string name="strLabelEditProfile">پروفائل میں ترمیم کریں</string>
-
-    <string name="strFieldTitleFName">پہلا نام</string>
-    <string name="strFieldTitleLName">آخری نام</string>
-    <string name="strFieldTitleName">نام</string>
-    <string name="strFieldTitleEmail">ای میل اڈریس</string>
-    <string name="strFieldTitlePassword">پاس ورڈ</string>
-    <string name="strFieldTitleCPassword">پاس ورڈ کی تصدیق کریں</string>
-    <string name="strFieldTitleGender">جنس</string>
-    <string name="strFieldHintFName">اپنا پہلا نام درج کریں</string>
-    <string name="strFieldHintLName">اپنا آخری نام درج کریں</string>
-    <string name="strFieldHintEmail">اپنا ای میل ایڈریس درج کریں</string>
-    <string name="strFieldHintPassword">اپنا پاس ورڈ درج کریں</string>
-    <string name="strFieldHintNewPassword">نیا پاس ورڈ بنائیں</string>
-    <string name="strFieldHintCPassword">پاس ورڈ دہراؤ</string>
-
-    <string name="strGenderMale">مرد</string>
-    <string name="strGenderFemale">عورت</string>
-    <string name="strGenderNotSpecified">بیان نہیں کیا گیا</string>
-
-    <string name="strMsgLoginFree">لاگ ان کریں یا اکاؤنٹ بنائیں، یہ مفت ہے!</string>
-    <string name="strMsgLogin4Service" formatted="false">%s، آپ کو لاگ ان ہونے کی ضرورت ہے۔ اگر آپ کا ابھی تک اکاؤنٹ نہیں ہے، تو ابھی بنائیں۔</string>
-    <string name="strMsgLogin4Subs">سبسکرپشن سروس استعمال کرنے کے لیے</string>
-    <string name="strMsgLogin4Transl">ترجمہ ڈاؤن لوڈ کرنے کے لیے</string>
-    <string name="strMsgVerifyEmail">اپنے ای میل کی تصدیق کریں</string>
-    <string name="strMsgVerifyEmailLong">آپ کا ای میل پتہ ابھی تصدیق شدہ نہیں ہے، جاری رکھنے کے لیے براہ کرم اس کی تصدیق کریں۔</string>
-    <string name="strLabelVerify">تصدیق کریں</string>
-    <string name="strMsgAccountReminder">QuranApp سے زیادہ سے زیادہ فائدہ اٹھانے کے لیے، براہ کرم لاگ ان کریں یا ایک اکاؤنٹ بنائیں۔ یہ مفت اور فوری ہے۔</string>
 
     <string name="strMsgUpdateAvailable">اپ ڈیٹ دستیاب ہے! تازہ ترین خصوصیات حاصل کرنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="strMsgUpdateAvailable4Dialog">اپ ڈیٹ دستیاب ہے!\براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
@@ -404,14 +298,7 @@
 
     <string name="strSalam">السلام علیکم</string>
     <string name="strSalamShort">سلام</string>
-    <string name="strPremiumDialogTitle">سستی قیمت پر پریمیم خصوصیات</string>
-    <string name="strPremiumDialogButton">پریمیم بنیں</string>
-    <string name="strMsgVOTDNoPremium">دن کی آیت اور روزانہ آیت کی ریمنڈر صرف پریمیم صارفین کے لیے دستیاب ہے۔</string>
 
-    <string name="strPremiumWatchToUnlock">انلاک کرنے کے لیے ویڈیو دیکھیں</string>
-    <string name="strPremiumWatchToUnlock2">انلاک کرنے کے لیے ویڈیو آخر تک دیکھیں</string>
-    <string name="strPremiumUnlockContent" formatted="false">ایک گھنٹے کے لیے \"%s\" کو انلاک کرنے کے لیے ویڈیو دیکھیں</string>
-    <string name="strPremiumLabelUnlock1Hour">1 گھنٹے کے لیے انلاک کریں</string>
     <string name="strLabelAllChapters">تمام سورہ</string>
     <string name="strTitleAlphaBG">بیکگراؤنڈ دھندلاپن</string>
     <string name="strTitleImageSavedWithName" formatted="false">تصویر محفوظ کی گئی: %s</string>

@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.sp;
+package com.quranapp.android.utils.sharedPrefs;
 
 import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_DEFAULT;
 import static com.quranapp.android.utils.reader.ScriptUtils.KEY_SCRIPT;
@@ -15,6 +15,7 @@ import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECIT
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.univ.Keys;
@@ -123,6 +124,8 @@ public abstract class SPReader {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(KEY_RECITATION_RECITER, recitation);
         editor.apply();
+
+        RecitationManager.setSavedRecitationSlug(recitation);
     }
 
     public static boolean getRecitationRepeatVerse(Context context) {

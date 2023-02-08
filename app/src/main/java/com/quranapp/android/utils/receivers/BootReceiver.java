@@ -8,7 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.quranapp.android.utils.sp.SPVerses;
+import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.votd.VOTDUtils;
 
 public class BootReceiver extends BroadcastReceiver {
