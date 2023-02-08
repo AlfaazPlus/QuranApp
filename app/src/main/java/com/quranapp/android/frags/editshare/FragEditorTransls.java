@@ -27,7 +27,7 @@ import com.peacedesign.android.widget.radio.PeaceRadioButton;
 import com.peacedesign.android.widget.radio.PeaceRadioGroup;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.util.Set;
 

@@ -28,7 +28,7 @@ import com.quranapp.android.utils.receivers.TranslDownloadReceiver
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver.TranslDownloadStateListener
 import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.services.TranslationDownloadService.TranslationDownloadServiceBinder
-import com.quranapp.android.utils.sp.SPAppActions
+import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.NotifUtils
 import com.quranapp.android.utils.univ.StringUtils
@@ -56,14 +56,9 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
     private var mNewTranslations: Array<String>? = null
     private var mPageAlert: PageAlert? = null
 
-    override fun getFragTitle(ctx: Context): String {
-        return ctx.getString(R.string.strTitleDownloadTranslations)
-    }
+    override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleDownloadTranslations)
 
-    override fun getLayoutResource(): Int {
-        return R.layout.frag_settings_transl
-    }
-
+    override val layoutResource = R.layout.frag_settings_transl
 
     override fun onStart() {
         super.onStart()
@@ -136,7 +131,7 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         mTranslFactory = QuranTranslFactory(ctx)
         mBinding = FragSettingsTranslBinding.bind(view)
 
-        mNewTranslations = args.getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
+        mNewTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
 
         view.post { init(ctx) }
     }

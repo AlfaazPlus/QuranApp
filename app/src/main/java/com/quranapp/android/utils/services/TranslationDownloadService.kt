@@ -23,8 +23,8 @@ import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
-import com.quranapp.android.utils.sp.SPAppActions.removeFromPendingAction
-import com.quranapp.android.utils.sp.SPReader
+import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
+import com.quranapp.android.utils.sharedPrefs.SPReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

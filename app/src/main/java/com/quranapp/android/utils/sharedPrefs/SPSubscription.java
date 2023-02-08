@@ -6,7 +6,7 @@
  * (c) Faisal Khan. Created on 12/10/2021.
  */
 
-package com.quranapp.android.utils.sp;
+package com.quranapp.android.utils.sharedPrefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;

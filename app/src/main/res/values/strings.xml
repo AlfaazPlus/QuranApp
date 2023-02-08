@@ -290,26 +290,6 @@
     <string name="strDescVerseNoWithChapter" formatted="false">Surah %s, verse number %d.</string>
     <string name="strMsgNoInternet">Please check your internet connection.</string>
     <string name="strMsgNoInternetLong">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.</string>
-    <string name="strMsgSubsNotSubscribed">Looks like you have not purchased premium membership.</string>
-    <string name="strMsgSubs">Subscribe to get full control of the app</string>
-    <string name="strMsgSubsNotSupported">Sorry! Subscription is not supported on your device.</string>
-    <string name="strMsgSubsPlayStoreUpdate">Sorry! Subscription is not Supported. Please Update the Play Store.</string>
-    <string name="strMsgSubsFinishFailed">Failed to finish subscription! Ensure that you have an active internet connection and try again later by restarting the app. If your amount has deducted, please don\'t worry. It will be refunded back to you. If you have any query, feel free to contact us.</string>
-    <string name="strMsgSubsPendingTransaction">Purchase is pending. Please complete the transaction</string>
-    <string name="strMsgSubsPurchaseCanceled">Purchase canceled</string>
-    <string name="strMsgSubsFailed">Failed to subscribe</string>
-    <string name="strMsgSubsSucceed">Subscribed successfully</string>
-    <string name="strMsgSubsSucceed2">Subscription Successful!</string>
-    <string name="strMsgSubsRestart">Please restart the app to finish the subscription.</string>
-    <string name="strMsgFinishing">Finishing Subscription…</string>
-    <string name="strMsgSubsProgressWarning">Please do not close the window</string>
-    <string name="strMsgSubsGreet" formatted="false">Salam %s, and Congratulations! &#127881;&#127881;</string>
-    <string name="strMsgSubsUnlock" formatted="false">Now you have unlocked -</string>
-    <string name="strMsgVerseReportSuccess">Report sent successfully</string>
-    <string name="strMsgVerseReportFailed">Failed to send Report</string>
-    <string name="strMsgFeedbackSendSuccess">Feedback sent successfully</string>
-    <string name="strMsgFeedbackSendFailed">Failed to send feedback</string>
-    <string name="strMsgInvalidEmail">Enter your valid email</string>
     <string name="strMsgSomethingWrong">Something went wrong!</string>
     <string name="strMsgSomethingWrongFixing">Something went wrong! We are working to fix this.</string>
     <string name="strMsgVerseCredsInvalid">Verse credentials are not valid.</string>
@@ -325,8 +305,6 @@
     <string name="strTextSending">Sending…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>
 
-    <string name="strTitleProfile">Profile</string>
-    <string name="strTitleEditProfile">Edit Profile</string>
     <string name="strTitleError">Error!</string>
     <string name="strTitleInfo">Info!</string>
     <string name="strTitleOops">Oops!</string>
@@ -334,90 +312,6 @@
     <string name="strTextUpdating">Updating…</string>
     <string name="strTextInstalling">Installing…</string>
     <string name="strTextLoading">Loading…</string>
-    <string name="strTextLoggingIn">Logging in…</string>
-    <string name="strTextCreatingAccount">Creating account…</string>
-    <string name="strTitleVerifyPassword">Verify password</string>
-    <string name="strTitleDeleteAccount">Delete Account?</string>
-    <string name="strMsgDeleteAccount">Are you sure want to delete your account permanently? Once you click \"Delete Account\" button below, your account will be permanently deleted and it cannot be undone. Due to this action, you may lose some control of the app.</string>
-    <string name="strLabelDeleteAccount">Delete account</string>
-    <string name="strTextDeletingAccount">Deleting account…</string>
-    <string name="strTitleAccountDeleted">Account deleted</string>
-    <string name="strMsgAccountDeleted">Your account has permanently deleted.</string>
-    <string name="strMsgAccountDeleteFailed">Could not delete account. Please try again later.</string>
-    <string name="strMsgEmailNotValid">Email address is not valid</string>
-    <string name="strMsgFieldNotValid" formatted="false">%s is not valid</string>
-    <string name="strMsgEmailAlreadyTaken">Email address is already associated with another account</string>
-    <string name="strMsgProfileUpdateFailed">Could not update profile. Please try again later.</string>
-    <string name="strTitleEmailSent">Email sent!</string>
-    <string name="strMsgEmailSentVerifyEmail"
-        formatted="false">Follow the instructions sent to %s to verify your email address.</string>
-    <string name="strMsgEmailSentResetPassword" formatted="false">Follow the instructions sent to %s to reset your password.</string>
-    <string name="strLabelLogout">Logout</string>
-    <string name="strMsgLogout">Are you sure want to logout?</string>
-    <string name="strMsgFieldRequired" formatted="false">%s is required</string>
-    <string name="strMsgEmailRequired">Email Address is required</string>
-    <string name="strMsgEnterAssocEmail">Enter email address associated with your account</string>
-    <string name="strMsgPasswordRequired">Password is required</string>
-    <string name="strMsgIncorrectPassword">Password is incorrect</string>
-    <string name="strMsgRepeatPasswordProceed">To proceed, please enter your password</string>
-    <string name="strMsgNewPassword">Please enter a new password</string>
-    <string name="strMsgMinPassword">Password length must be at least 8</string>
-    <string name="strMsgMinCPasswordUnmatched">Confirm password does not match</string>
-    <string name="strMsgInvalidUser">User does not exist.</string>
-    <string name="strMsgDisabledUser">This account has been disabled for some reason. Please contact us to get it enabled.</string>
-    <string name="strMsgInvalidUserRightNow">We are unable to work on this account right now.</string>
-    <string name="strMsgInvalidUserCreateAccount">User does not exist. You can create a new account.</string>
-    <string name="strMsgAlreadyLoggedIn">You are already logged in. Logout first to continue.</string>
-    <string name="strMsgLoginFailed">Failed to login. Please try again later.</string>
-    <string name="strMsgRegisterFailed">Could not create account. Please try again later.</string>
-    <string name="strMsgLoginToContinue">Please login to continue</string>
-    <string name="strMsgNowLoggedIn">Now you are logged in</string>
-    <string name="strTitleSessionExpired">Session Expired</string>
-    <string name="strMsgWeakPassword">Enter a strong password of more than 8 characters</string>
-    <string name="strMsgPasswordChanged">Password has successfully changed. Use the new credentials to log in.</string>
-    <string name="strMsgPasswordChangeFailed">Failed to change password</string>
-    <string name="strMsgRepeatNewPassword">Enter the new password again</string>
-    <string name="strLabelLogin">Login</string>
-    <string name="strLabelRegister">Register</string>
-    <string name="strTitleCreateAccount">Create Account</string>
-    <string name="strLabelResetPassword">Reset password</string>
-    <string name="strLabelForgotPassword">Forgot password?</string>
-    <string name="strLabelCreateNew">Create new</string>
-    <string name="strLabelClickLogin">Click to login</string>
-    <string name="strMsgDontHaveAccount">Don\'t have an account?</string>
-    <string name="strMsgHaveAccount">Already registered?</string>
-    <string name="strLabelChangePassword">Change password</string>
-    <string name="strLabelNewPassword">New password</string>
-    <string name="strLabelSendEmail">Send email</string>
-    <string name="strLabelEditProfile">Edit profile</string>
-
-    <string name="strFieldTitleFName">First Name</string>
-    <string name="strFieldTitleLName">Last Name</string>
-    <string name="strFieldTitleName">Name</string>
-    <string name="strFieldTitleEmail">Email Address</string>
-    <string name="strFieldTitlePassword">Password</string>
-    <string name="strFieldTitleCPassword">Confirm Password</string>
-    <string name="strFieldTitleGender">Gender</string>
-    <string name="strFieldHintFName">Enter your first name</string>
-    <string name="strFieldHintLName">Enter your last name</string>
-    <string name="strFieldHintEmail">Enter your email address</string>
-    <string name="strFieldHintPassword">Enter your password</string>
-    <string name="strFieldHintNewPassword">Create new password</string>
-    <string name="strFieldHintCPassword">Repeat password</string>
-
-    <string name="strGenderMale">Male</string>
-    <string name="strGenderFemale">Female</string>
-    <string name="strGenderNotSpecified">Not specified</string>
-
-    <string name="strMsgLoginFree">Login or create account, It\'s free!</string>
-    <string name="strMsgLogin4Service" formatted="false">IT\'S FREE AND QUICK! %s, you need to be logged in. If you don\'t have an account yet, create now.</string>
-    <string name="strMsgLogin4Subs">To use the subscription service</string>
-    <string name="strMsgLogin4Transl">To download translations</string>
-    <string name="strMsgVerifyEmail">Verify your email</string>
-    <string name="strMsgVerifyEmailLong">Your email address is not verified yet, to continue please verify it.</string>
-    <string name="strLabelVerify">Verify</string>
-    <string
-        name="strMsgAccountReminder">To get most out of the QuranApp, please login or create an account. IT\'S FREE AND QUICK.</string>
 
     <string name="strMsgUpdateAvailable">UPDATE AVAILABLE! Please update the app to get the latest features.</string>
     <string name="strMsgUpdateAvailable4Dialog">UPDATE AVAILABLE!\nPlease update the app.</string>
@@ -439,14 +333,6 @@
 
     <string name="strSalam">Assalam Alaikum</string>
     <string name="strSalamShort">Salam</string>
-    <string name="strPremiumDialogTitle">Premium Features at Cheap Price</string>
-    <string name="strPremiumDialogButton">Go Premium</string>
-    <string name="strMsgVOTDNoPremium">Verse of The Day and daily verse reminder are only available for premium users.</string>
-
-    <string name="strPremiumWatchToUnlock">Watch video to unlock</string>
-    <string name="strPremiumWatchToUnlock2">Watch the video till the end to unlock</string>
-    <string name="strPremiumUnlockContent" formatted="false">Watch the video to unlock \"%s\" for one hour</string>
-    <string name="strPremiumLabelUnlock1Hour">Unlock for 1 hour</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
@@ -467,6 +353,4 @@
     <string name="strMsgShareApp" formatted="false" translatable="false">
         QuranApp\n\nBest free app to read the Noble Qur\'an with translations. This app has nice and clean look and many other features. \n\nDOWNLOAD NOW:\n%s
     </string>
-
-    <string name="google_play_console_key" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiAGakIyyjTrIbzQagxH74sTpsrQOmbLz1IWtclY5v1OFWft+JwNKZwXqskW8bdmb7LaPyBz9UsIWea1KabkEA+T+sjgBjSnvjlf0YVHBK6S90zuTXMiFXvER31fKbFvQ7DlyzlQkKzngTo7U1agxZ0isvuWA+XfE24PQflHE5yvUh5NLPQuQL/DGBV3QT6okHke+P+d/5HDsZHc2jV/D8N6nk2K9VE9M8SwSKfqn2KRuPiB2D4t3PidlYI7mc8mCIhvmCcG2X2p7nfUeoadsZGkZ9kPxPDDCGFG2W14npEFtVAx/fJdeCUp6Jn3zhXQCf1Rf+ujE/fSmuMHX/fGbbwIDAQAB</string>
 </resources>

@@ -18,7 +18,7 @@ import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION
 import com.quranapp.android.utils.search.SearchFilters
-import com.quranapp.android.utils.sp.SPReader
+import com.quranapp.android.utils.sharedPrefs.SPReader
 import org.json.JSONArray
 import java.io.Closeable
 import java.util.*

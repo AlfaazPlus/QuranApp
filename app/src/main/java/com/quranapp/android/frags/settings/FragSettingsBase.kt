@@ -3,149 +3,86 @@
  * Created on 3/4/2022.
  * All rights reserved.
  */
+package com.quranapp.android.frags.settings
 
-package com.quranapp.android.frags.settings;
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import androidx.annotation.CallSuper
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
+import androidx.core.widget.NestedScrollView
+import com.quranapp.android.R
+import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.frags.BaseFragment
+import com.quranapp.android.views.BoldHeader
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+abstract class FragSettingsBase : BaseFragment() {
+    protected fun activity(): ActivitySettings? = activity as? ActivitySettings
 
-import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+    protected open val shouldCreateScrollerView = false
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.ColorInt;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+    protected open fun getFragView(ctx: Context): View? = null
 
-import com.quranapp.android.R;
-import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.frags.BaseFragment;
-import com.quranapp.android.utils.univ.ActivityBuffer;
-import com.quranapp.android.views.BoldHeader;
+    fun getArgs(): Bundle = arguments ?: Bundle()
 
-public abstract class FragSettingsBase extends BaseFragment {
-    private final ActivityBuffer<ActivitySettings> mActivityBuffer = new ActivityBuffer<>();
+    abstract fun getFragTitle(ctx: Context): String?
 
-    @CallSuper
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof ActivitySettings) {
-            mActivityBuffer.onActivityGained((ActivitySettings) context);
-        }
-    }
-
-    @CallSuper
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mActivityBuffer.onActivityLost();
-    }
-
-    protected void getActivitySafely(ActivityBuffer.ActivityAvailableListener<ActivitySettings> listener) {
-        mActivityBuffer.safely(listener);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (shouldCreateScroller()) {
-            NestedScrollView scroller = new NestedScrollView(inflater.getContext());
-            scroller.setId(R.id.scrollView);
-            scroller.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
-
-            View mainView = getFragView(inflater.getContext());
-
-            if (mainView == null) {
-                mainView = inflater.inflate(getLayoutResource(), scroller, false);
-            }
-
-            scroller.addView(mainView);
-
-            return scroller;
-        } else {
-            View mainView = getFragView(inflater.getContext());
-
-            if (mainView == null) {
-                mainView = inflater.inflate(getLayoutResource(), container, false);
-            }
-            return mainView;
-        }
-    }
-
-    protected boolean shouldCreateScroller() {
-        return false;
-    }
-
-    protected View getFragView(Context ctx) {
-        return null;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundColor(getPageBackgroundColor(view.getContext()));
-
-        if (shouldCreateScroller()) {
-            onViewReady(view.getContext(), ((ViewGroup) view).getChildAt(0), savedInstanceState);
-        } else {
-            onViewReady(view.getContext(), view, savedInstanceState);
-        }
-    }
-
-    @NonNull
-    public Bundle getArgs() {
-        Bundle args = getArguments();
-        if (args == null) {
-            args = new Bundle();
-        }
-        return args;
-    }
-
-    public abstract String getFragTitle(Context ctx);
-
-    @LayoutRes
-    public abstract int getLayoutResource();
+    @get:LayoutRes
+    abstract val layoutResource: Int
 
     @ColorInt
-    public int getPageBackgroundColor(Context ctx) {
-        return color(ctx, R.color.colorBGPage);
-    }
+    open fun getPageBackgroundColor(ctx: Context): Int = color(ctx, R.color.colorBGPage)
 
-    public abstract void onViewReady(@NonNull Context ctx, @NonNull View view, @Nullable Bundle savedInstanceState);
+    open fun getFinishingResult(ctx: Context): Bundle? = null
 
     @CallSuper
-    public void setupHeader(ActivitySettings activity, BoldHeader header) {
-        header.setTitleText(getFragTitle(activity));
+    open fun onNewArguments(args: Bundle) {
+        arguments = args
     }
 
-    public void launchFrag(Class<? extends FragSettingsBase> cls, Bundle args) {
-        FragmentManager fm = getParentFragmentManager();
-        FragmentTransaction t = fm.beginTransaction();
-        /*t.setCustomAnimations(
-                R.anim.slide_in_right,  // enter
-                R.anim.slide_out_left,  // exit
-                R.anim.slide_in_left,   // popEnter
-                R.anim.slide_out_right  // popExit
-        );*/
-        t.replace(R.id.frags_container, cls, args, cls.getSimpleName());
-        t.setReorderingAllowed(true);
-        t.addToBackStack(cls.getSimpleName());
-        t.commit();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return if (shouldCreateScrollerView) {
+            NestedScrollView(inflater.context).apply {
+                id = R.id.scrollView
+                layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+
+                addView(
+                    getFragView(inflater.context) ?: inflater.inflate(layoutResource, this, false)
+                )
+            }
+        } else {
+            getFragView(inflater.context) ?: inflater.inflate(layoutResource, container, false)
+        }
     }
 
-    public Bundle getFinishingResult(Context ctx) {
-        return null;
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.setBackgroundColor(getPageBackgroundColor(view.context))
+
+        if (shouldCreateScrollerView) {
+            onViewReady(view.context, (view as ViewGroup).getChildAt(0), savedInstanceState)
+        } else {
+            onViewReady(view.context, view, savedInstanceState)
+        }
     }
+
+    abstract fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?)
 
     @CallSuper
-    public void onNewArguments(Bundle args) {
-        setArguments(args);
+    open fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
+        header.setTitleText(getFragTitle(activity))
+    }
+
+    fun launchFrag(cls: Class<out FragSettingsBase?>, args: Bundle?) {
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.frags_container, cls, args, cls.simpleName)
+            setReorderingAllowed(true)
+            addToBackStack(cls.simpleName)
+            commit()
+        }
     }
 }

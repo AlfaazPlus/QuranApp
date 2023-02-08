@@ -36,7 +36,7 @@ import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 import com.quranapp.android.utils.univ.Keys;

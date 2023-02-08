@@ -31,8 +31,6 @@ import com.quranapp.android.utils.univ.SimpleTextWatcher;
 public class BoldHeader extends AppBarLayout {
     private final LytBoldHeaderBinding mBinding;
     private BoldHeaderCallback mCallback;
-    private boolean mShowSearchIcon;
-    private boolean mShowRightIcon;
 
     public BoldHeader(@NonNull Context context) {
         this(context, null);
@@ -55,8 +53,6 @@ public class BoldHeader extends AppBarLayout {
     private void init(LytBoldHeaderBinding binding) {
         initThis();
 
-        mBinding.searchIcon.setVisibility(mShowSearchIcon ? VISIBLE : GONE);
-        mBinding.rightIcon.setVisibility(mShowRightIcon ? VISIBLE : GONE);
         TooltipCompat.setTooltipText(mBinding.searchIcon, getContext().getString(R.string.strHintSearch));
 
         binding.back.setOnClickListener(v -> {
@@ -69,12 +65,12 @@ public class BoldHeader extends AppBarLayout {
             }
         });
         binding.searchIcon.setOnClickListener(v -> {
-            if (mShowSearchIcon) {
+            if (binding.searchIcon.getVisibility() == VISIBLE) {
                 toggleSearchBox(binding.search, true);
             }
         });
         binding.rightIcon.setOnClickListener(v -> {
-            if (mShowRightIcon) {
+            if (binding.rightIcon.getVisibility() == VISIBLE) {
                 if (mCallback != null) {
                     mCallback.onRightIconClick();
                 }
@@ -82,7 +78,7 @@ public class BoldHeader extends AppBarLayout {
         });
 
         binding.search.searchBox.setOnEditorActionListener((v, actionId, event) -> {
-            if (!mShowSearchIcon) {
+            if (binding.searchIcon.getVisibility() != VISIBLE) {
                 return true;
             }
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -95,7 +91,7 @@ public class BoldHeader extends AppBarLayout {
         binding.search.searchBox.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
-                if (!mShowSearchIcon) {
+                if (binding.searchIcon.getVisibility() != VISIBLE) {
                     return;
                 }
                 if (mCallback != null) {
@@ -115,7 +111,8 @@ public class BoldHeader extends AppBarLayout {
 
         EditText searchBox = searchBoxBinding.searchBox;
 
-        InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
 
         if (showSearch) {
             searchBox.requestFocus();
@@ -167,12 +164,10 @@ public class BoldHeader extends AppBarLayout {
     }
 
     public void setShowSearchIcon(boolean showSearchIcon) {
-        mShowSearchIcon = showSearchIcon;
         mBinding.searchIcon.setVisibility(showSearchIcon ? VISIBLE : GONE);
     }
 
     public void setShowRightIcon(boolean showRightIcon) {
-        mShowRightIcon = showRightIcon;
         mBinding.rightIcon.setVisibility(showRightIcon ? VISIBLE : GONE);
     }
 

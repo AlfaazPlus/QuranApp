@@ -20,12 +20,11 @@ import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.interfaceUtils.VOTDCallback;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.others.ShortcutUtils;
 import com.quranapp.android.utils.reader.ArabicUtils;
 import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
-import com.quranapp.android.utils.sp.SPVerses;
+import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 

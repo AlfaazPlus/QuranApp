@@ -13,7 +13,7 @@ import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.reader.ScriptUtils;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.verse.VerseUtils;
 
 public class VerseDecorator implements Destroyable {

@@ -12,7 +12,6 @@
     <string name="strHintFeedbackMessage">Mensaje</string>
     <string name="strLabelNavHome">Inicio</string>
     <string name="strTextPreparing">Cargando…</string>
-    <string name="strTitleProfile">Perfil</string>
     <string name="strTitleInfo">Información!</string>
     <string name="strTitleAppVersion">Versión de aplicación</string>
     <string name="strVersion" formatted="false">Versión %s</string>
@@ -21,8 +20,6 @@
     <string name="strLabelOkay">Entendido</string>
     <string name="strLabelGotIt">Entendido</string>
     <string name="strLabelCancel">Cancelar</string>
-    <string name="strLabelLogin">Ingresar</string>
-    <string name="strFieldTitleName">Nombre</string>
     <string name="strLabelRemove">Remover</string>
     <string name="strLabelDelete">Eliminar</string>
     <string name="strLabelRemoveAll">Remover todo</string>
@@ -70,42 +67,12 @@
     <string name="strLabelShare">Compartir</string>
     <string name="strLabelReport">Reportar</string>
     <string name="strLabelReading">Leyendo</string>
-    <string name="strMsgSubsPlayStoreUpdate">¡Error! La suscripción no es compatible. Actualice la Play Store.</string>
     <string name="strTextSending">Enviando…</string>
     <string name="strTitleError">Error!</string>
     <string name="strTitleOops">Oops!</string>
     <string name="strTextUpdating">Actualizando…</string>
     <string name="strTextInstalling">Instalando…</string>
     <string name="strTextLoading">Cargando…</string>
-    <string name="strMsgEmailSentResetPassword" formatted="false">Siga las instrucciones enviadas a %s para restaurar su contraseña.</string>
-    <string name="strLabelLogout">Cerrar sesión</string>
-    <string name="strMsgLogout">Está seguro que quiere cerrar sesión\?</string>
-    <string name="strMsgFieldRequired" formatted="false">%s es requerido</string>
-    <string name="strMsgEmailRequired">Se requiere una dirección de correo electrónico</string>
-    <string name="strMsgEnterAssocEmail">Ingrese la dirección de correo electrónico asociado a su cuenta</string>
-    <string name="strMsgPasswordRequired">se requiere contraseña</string>
-    <string name="strMsgRepeatPasswordProceed">Por favor ingrese su contraseña, para continuar</string>
-    <string name="strMsgNewPassword">Por favor ingrese su nueva contraseña</string>
-    <string name="strMsgMinPassword">La longitud de la contraseña debe ser de al menos 8 caracteres</string>
-    <string name="strMsgMinCPasswordUnmatched">Contraseña de confirmación no coincide</string>
-    <string name="strMsgDisabledUser">Esta cuenta ha sido deshabilitada por algún motivo. Póngase en contacto con nosotros para habilitarlo.</string>
-    <string name="strMsgInvalidUserCreateAccount">El usuario no existe. Puede crear una cuenta nueva.</string>
-    <string name="strMsgAlreadyLoggedIn">Ya ha iniciado sesión. Cierre la sesión primero para continuar.</string>
-    <string name="strMsgLoginFailed">Error de inicio de sesión. Por favor, inténtelo más tarde.</string>
-    <string name="strMsgRegisterFailed">No se pudo crear la cuenta. Por favor, inténtelo de nuevo más tarde.</string>
-    <string name="strLabelRegister">Registrarse</string>
-    <string name="strFieldTitlePassword">Contraseña</string>
-    <string name="strFieldTitleGender">Género</string>
-    <string name="strMsgLoginToContinue">Por favor inicie sesión para continuar</string>
-    <string name="strMsgNowLoggedIn">Ahora estás conectado</string>
-    <string name="strMsgWeakPassword">Introduzca una contraseña segura de más de 8 caracteres</string>
-    <string name="strMsgPasswordChanged">La contraseña ha cambiado con éxito. Utilice las nuevas credenciales para iniciar sesión.</string>
-    <string name="strMsgRepeatNewPassword">Introduce la nueva contraseña de nuevo</string>
-    <string name="strFieldTitleEmail">Correo electrónico</string>
-    <string name="strFieldTitleCPassword">confirmar Contraseña</string>
-    <string name="strGenderMale">Masculino</string>
-    <string name="strGenderFemale">Femenino</string>
-    <string name="strLabelVerify">Verificar</string>
     <string name="strSalamShort">Saludos</string>
     <string name="strLabelApply">Aplicar</string>
     <string name="strLabelSend">Enviar</string>
@@ -113,11 +80,6 @@
     <string name="strLabelCopy">Copiar</string>
     <string name="strMsgTranslNoneSelected">No se selecciona ninguna traducción. Vaya a la configuración para encontrar traducciones.</string>
     <string name="strTitleQuran">Corán</string>
-    <string name="strMsgInvalidUserRightNow">No es posible usar esta cuenta en este momento.</string>
-    <string name="strMsgInvalidUser">El usuario no existe.</string>
-    <string name="strMsgIncorrectPassword">Contraseña incorrecta</string>
-    <string name="strMsgPasswordChangeFailed">No se pudo cambiar la contraseña</string>
-    <string name="strTitleSessionExpired">Sesión expirada</string>
     <string name="strLabelAdvertisement">Anuncio</string>
     <string name="strLabelPreviousVerse">Verso anterior</string>
     <string name="strLabelNextVerse">siguiente verso</string>
@@ -132,12 +94,6 @@
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capitulo %s %d: Verso %d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">Capítulo %s │ Verso %d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %s : Verso %d</string>
-    <string name="strMsgLogin4Service" formatted="false">¡ES GRATIS Y RÁPIDO! %s, debe iniciar sesión. Si no tiene una cuenta, cree ahora.</string>
-    <string name="strGenderNotSpecified">No especificado</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
-    <string name="strMsgSubsFinishFailed">¡Error al finalizar la suscripción! Asegúrese de tener una conexión a Internet estable y vuelva a intentarlo más tarde reiniciando la aplicación. Si el valor ha sido deducido, no se preocupe. Se le reembolsará. Si tiene alguna consulta, no dude en contactarnos.</string>
-    <string name="strPremiumLabelUnlock1Hour">Desbloquear por 1 hora</string>
-    <string name="strMsgDeleteAccount">¿Está seguro de que desea eliminar su cuenta de forma permanente\? Una vez que haga clic en el botón \"Eliminar cuenta\" su cuenta se eliminará de forma permanente y no se podrá deshacer. Debido a esta acción, es posible que pierda parte del control de la aplicación.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Puede seleccionar un máximo de %d traducciones. Por favor anule la seleccione uno u otro. Esto es para evitar la perdida de rendimiento.</string>
-    <string name="strPremiumWatchToUnlock">Ver video para desbloquear</string>
 </resources>

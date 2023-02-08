@@ -10,28 +10,14 @@
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp">
 
-    <RelativeLayout
-        android:id="@+id/radioCont"
+    <com.peacedesign.android.widget.radio.PeaceRadioButton
+        android:id="@+id/radio"
         android:layout_width="22dp"
         android:layout_height="22dp"
+        android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.peacedesign.android.widget.radio.PeaceRadioButton
-            android:id="@+id/radio"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iconPremium"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:src="@drawable/dr_icon_premium" />
-    </RelativeLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reciter"
@@ -43,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/radioCont"
+        app:layout_constraintStart_toEndOf="@id/radio"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -60,7 +46,7 @@
         android:textSize="@dimen/dmnCommonSize2_5"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/radioCont"
+        app:layout_constraintStart_toEndOf="@id/radio"
         app:layout_constraintTop_toBottomOf="@id/reciter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

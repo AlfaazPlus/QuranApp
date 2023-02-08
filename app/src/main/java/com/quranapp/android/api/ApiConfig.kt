@@ -4,9 +4,8 @@
  * All rights reserved.
  */
 
-package com.quranapp.android
+package com.quranapp.android.api
 
 object ApiConfig {
-    const val FB_STORAGE_BUCKET = "gs://the-quranapp.appspot.com"
     const val GITHUB_ROOT_URL = "https://raw.githubusercontent.com/AlfaazPlus/QuranApp/master/"
 }

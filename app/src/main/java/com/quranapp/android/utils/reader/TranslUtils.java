@@ -11,7 +11,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.NotifUtils;
 

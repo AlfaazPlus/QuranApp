@@ -1,13 +1,12 @@
 package com.quranapp.android.utils.app
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.AvailableRecitationsModel
 import com.quranapp.android.components.recitation.RecitationModel
-import com.quranapp.android.utils.sp.SPAppActions
+import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -85,6 +84,7 @@ object RecitationManager {
         callback: (AvailableRecitationsModel?) -> Unit
     ) {
         SPAppActions.setFetchRecitationsForce(ctx, false)
+        val savedRecitationSlug = SPReader.getSavedRecitationSlug(ctx)
 
         try {
             val availableRecitationsModel = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(stringData)
@@ -93,6 +93,8 @@ object RecitationManager {
                 if (recitationModel.urlHost.isNullOrEmpty()) {
                     recitationModel.urlHost = availableRecitationsModel.urlInfo.commonHost
                 }
+
+                recitationModel.isChecked = recitationModel.slug == savedRecitationSlug
             }
 
             callback(availableRecitationsModel)
@@ -111,5 +113,12 @@ object RecitationManager {
     @JvmStatic
     fun getModels(): List<RecitationModel>? {
         return availableRecitationsModel?.reciters
+    }
+
+    @JvmStatic
+    fun setSavedRecitationSlug(slug: String) {
+        availableRecitationsModel?.reciters?.forEach { recitationModel ->
+            recitationModel.isChecked = recitationModel.slug == slug
+        }
     }
 }

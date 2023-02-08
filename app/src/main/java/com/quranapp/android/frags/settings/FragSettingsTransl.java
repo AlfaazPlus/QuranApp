@@ -36,7 +36,7 @@ import com.quranapp.android.databinding.FragSettingsTranslBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
-import com.quranapp.android.utils.sp.SPReader;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.FileUtils;
