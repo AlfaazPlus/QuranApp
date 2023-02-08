@@ -121,4 +121,23 @@
     <string name="strLabelAdvertisement">Anuncio</string>
     <string name="strLabelPreviousVerse">Verso anterior</string>
     <string name="strLabelNextVerse">siguiente verso</string>
+    <string name="strLabelVerseNo" formatted="false">Verso %d</string>
+    <string name="strLabelVerses" formatted="false">Versos %d–%d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Verso : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Versos : %d–%d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Versos: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Verso %d:%d</string>
+    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capitulo %s %d: Verso %d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Capítulo %s │ Verso %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %s : Verso %d</string>
+    <string name="strMsgLogin4Service" formatted="false">¡ES GRATIS Y RÁPIDO! %s, debe iniciar sesión. Si no tiene una cuenta, cree ahora.</string>
+    <string name="strGenderNotSpecified">No especificado</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
+    <string name="strMsgSubsFinishFailed">¡Error al finalizar la suscripción! Asegúrese de tener una conexión a Internet estable y vuelva a intentarlo más tarde reiniciando la aplicación. Si el valor ha sido deducido, no se preocupe. Se le reembolsará. Si tiene alguna consulta, no dude en contactarnos.</string>
+    <string name="strPremiumLabelUnlock1Hour">Desbloquear por 1 hora</string>
+    <string name="strMsgDeleteAccount">¿Está seguro de que desea eliminar su cuenta de forma permanente\? Una vez que haga clic en el botón \"Eliminar cuenta\" su cuenta se eliminará de forma permanente y no se podrá deshacer. Debido a esta acción, es posible que pierda parte del control de la aplicación.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Puede seleccionar un máximo de %d traducciones. Por favor anule la seleccione uno u otro. Esto es para evitar la perdida de rendimiento.</string>
+    <string name="strPremiumWatchToUnlock">Ver video para desbloquear</string>
 </resources>
