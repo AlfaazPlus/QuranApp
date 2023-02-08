@@ -96,7 +96,7 @@
     <string name="strTitleReaderVerseInformation" formatted="false">सूरह %s : %d</string>
     <string name="strTitleGotoVerseNo" formatted="false">आयत %d पर जाएं</string>
     <string name="strTitleReadVerseRange" formatted="false">%d से %d आयतें पढ़ें</string>
-    <string name="strTitleReaderLayoutStyle">लेआउट स्टाइल</string>
+    <string name="strTitleReaderLayoutStyle">कुरान दृश्य शैली</string>
     <string name="strTitleReaderTextSizeArabic">अरबी का आकार</string>
     <string name="strTitleReaderTextSizeTransl">अनुवाद का आकार</string>
     <string name="strTitleSettings">सेटिंग्स</string>

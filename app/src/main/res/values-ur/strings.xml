@@ -99,7 +99,7 @@
     <string name="strTitleGotoVerseNo" formatted="false">آیت %d پر جائیں</string>
     <string name="strTitleReadVerseRange" formatted="false">آیات %d سے %d تک پڑھیں</string>
 
-    <string name="strTitleReaderLayoutStyle">قرآن کی ترتیب</string>
+    <string name="strTitleReaderLayoutStyle">قرآنی نظارے کا انداز</string>
     <string name="strTitleReaderTextSizeArabic">عربی حرف کا سائز</string>
     <string name="strTitleReaderTextSizeTransl">ترجمہ کے حرف کا سائز</string>
 
