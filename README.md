@@ -45,7 +45,7 @@ Data sources for the development of this app include [QuranEnc](https://quranenc
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTING.md) to learn the ways to get started.
+If you want to contribute, kindly visit [CONTRIBUTING.md](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTING.md) to learn the ways to get started. See [this page](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTORS.md) to know about the contributors.
 
 ## App Translations
 <a href="https://hosted.weblate.org/projects/QuranApp/#languages">
