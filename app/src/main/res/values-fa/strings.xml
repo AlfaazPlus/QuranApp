@@ -1,2 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strLabelRestart">شروع دوباره</string>
+    <string name="strLabelFullChapter">فصل کامل را بخوانید</string>
+    <string name="strLabelNoPreviousJuz">بدون جزء قبلی</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سوره %s │ آیه %d</string>
+    <string name="strTitleFootnotes">پانویسها و منابع</string>
+    <string name="strTitleAppVersion">نسخه برنامه</string>
+    <string name="strVersion" formatted="false">نسخه %s</string>
+    <string name="strTitleLicenses">مجوزها</string>
+    <string name="strLabelClose">بستن</string>
+    <string name="strLabelOkay">باشه</string>
+    <string name="strLabelGotIt">فهمیدم</string>
+    <string name="strLabelCancel">انصراف</string>
+    <string name="strLabelApply">اعمال کردن</string>
+    <string name="strLabelSend">ارسال کردن</string>
+    <string name="strLabelRemove">برداشتن</string>
+    <string name="strLabelDelete">حذف کردن</string>
+    <string name="strLabelRemoveAll">برداشتن همه</string>
+    <string name="strLabelCopy">رونوشت</string>
+    <string name="strLabelBack">بازگشت</string>
+    <string name="strLabelTop">بالا</string>
+    <string name="strLabelReset">بازنشانی</string>
+    <string name="strLabelRetry">دوباره</string>
+    <string name="strLabelRefresh">تازه کردن</string>
+    <string name="strLabelDismiss">رد کردن</string>
+    <string name="strLabelDiscard">دور انداختن</string>
+    <string name="strLabelHide">پنهان کردن</string>
+    <string name="strLabelEdit">ویرایش</string>
+    <string name="strLabelDone">انجام شد</string>
+    <string name="strLabelView">دیدن</string>
+    <string name="strLabelOpen">باز کردن</string>
+    <string name="strLabelOpenInReader">باز کردن در Reader</string>
+    <string name="strLabelRead">خواندن »</string>
+    <string name="strLabelViewAll">دیدن همه</string>
+    <string name="strLabelChangeNRestart">تغییر &amp; راه اندازی مجدد</string>
+    <string name="strLabelAdvertisement">تبلیغات</string>
+    <string name="strLabelSkip">پرش</string>
+    <string name="strLabelNotNow">اکنون نه</string>
+    <string name="strLabelPrevious">قبلی</string>
+    <string name="strLabelNext">بعدی</string>
+    <string name="strLabelStart">شروع</string>
+    <string name="strLabelUpdateQuranApp">آپدیت برنامه قرآن</string>
+    <string name="strLabelDownloadNow">اکنون بارگیری کن</string>
+    <string name="strLabelUpdate">آپدیت</string>
+    <string name="strLabelInstall">نصب کردن</string>
+    <string name="strLabelNew">جدید</string>
+    <string name="strLabelPremium">پولی</string>
+    <string name="strLabelOn">روی</string>
+    <string name="strLabelOff">خاموش</string>
+    <string name="strLabelThemeDark">تاریک</string>
+    <string name="strLabelThemeLight">روشن</string>
+    <string name="strLabelSystemDefault">پیشفرض سیستم</string>
+    <string name="strLabelPreviousChapter">فصل قبل</string>
+    <string name="strLabelNextChapter">فصل بعد</string>
+    <string name="strLabelNoPreviousChapter">بدون فصل قبلی</string>
+    <string name="strLabelNoNextChapter">بدون فصل بعدی</string>
+    <string name="strLabelPreviousJuz">جزء قبلی</string>
+    <string name="strLabelNextJuz">جزء بعدی</string>
+    <string name="strLabelContinueChapter">ادامه فصل</string>
+    <string name="strLabelPreviousVerse">آیه قبل</string>
+    <string name="strLabelNextVerse">آیه بعدی</string>
+    <string name="strLabelVersesText">آیه ها</string>
+    <string name="strLabelSurah" formatted="false">سوره %s</string>
+    <string name="strLabelPageNo" formatted="false">صفحه %d</string>
+    <string name="strLabelJuzNo" formatted="false">جزء %d</string>
+    <string name="strLabelVerseNo" formatted="false">آیه %d</string>
+    <string name="strLabelVerses" formatted="false">آیات %d–%d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">آیه : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">آیات : %d–%d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">آیات: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">آیه %d:%d</string>
+    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سوره %s %d: آیه %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سوره %s : آیه %d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">شماره فصل. %d │ آیات %d–%d</string>
+    <string name="strTitleAppUser">کاربر برنامه قرآن</string>
+    <string name="strTitleHolyQuran">قرآن مقدس</string>
+    <string name="strTitleQuran">قرآن</string>
+    <string name="strTitleMakki">مکی</string>
+    <string name="strTitleMadani">مدنی</string>
+    <string name="strTitleFootnote">پاورقی</string>
+    <string name="strTitleReaderChapters">سوره ها (فصل ها)</string>
+    <string name="strTitleReaderJuz">جزء(پارا)</string>
+    <string name="strTitleReaderChapters2">سوره ها</string>
+    <string name="strTitleReaderJuz2">جزء</string>
+    <string name="strTitleReaderVerses">آیات</string>
+    <string name="strTitleReaderJumpToVerse">پرش به آیه</string>
+    <string name="strTitleVerseOptions">گزینه های آیه</string>
+    <string name="strTitleVerseRecitation">تلاوت آیه</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">سوره %s : %d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">به آیه %d بروید</string>
+    <string name="strTitleReadVerseRange" formatted="false">آیات %d - %d را بخوانید</string>
+    <string name="strTitleReaderLayoutStyle">سبک نگاه به قرآن</string>
+    <string name="strTitleReaderTextSizeArabic">اندازه متن عربی</string>
+    <string name="strTitleReaderTextSizeTransl">اندازه متن ترجمه</string>
+    <string name="strTitleSettings">تنظیمات</string>
+    <string name="strTitleBookmark">نشانک</string>
+    <string name="strTitleSendFeedback">ارسال بازخورد</string>
+    <string name="strTitleHelpSupport">کمک &amp; پشتیبانی</string>
+    <string name="strTitleAboutUs">درباره ما</string>
+    <string name="strTitleBookmarks">نشانک ها</string>
+    <string name="strTitleShareApp">اشتراک گذاری برنامه</string>
+    <string name="strTitleAddNote">افزودن یادداشت</string>
+    <string name="strTitleNote">یادداشت</string>
+    <string name="strTitleRateApp">امتیاز دادن به برنامه</string>
+    <string name="strTitleSubscription">اشتراک</string>
+    <string name="strTitleFilters">فیلترها</string>
+    <string name="strTitleTranslations">ترجمه ها</string>
+    <string name="strTitleDownloadTranslations">بارگیری</string>
+    <string name="strTitleRecitations">انتخاب قاری</string>
+    <string name="strTitleScripts">‪انتخاب اسکریپت</string>
+    <string name="strTitleBookmarkDeleteThis">این نشانک حذف شود؟</string>
+    <string name="strTitleBookmarkDeleteAll">همه نشانک ها حذف شوند؟</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d نشانک حذف شود؟</string>
+    <string name="strTitleTranslDelete">ترجمه حذف شود؟</string>
+    <string name="strTitleResetReaderSettings">تنظیمات Reader بازنشانی شود؟</string>
+    <string name="strTitleHideAd">پنهان کردن تبلیغ</string>
+    <string name="strTitleRepeatVerse">تکرار آیه</string>
+    <string name="strTitleQuickEdit">ویرایش سریع</string>
+    <string name="strTitleReportVerse">گزارش آیه</string>
+    <string name="strTitleSelectReason">دلیل را انتخاب کنید</string>
+    <string name="strTitleExplainIssue">موضوع را توضیح دهید</string>
+    <string name="strTitleFeaturedQuran">خواندن ویژه</string>
+    <string name="strTitleVOTD">آیه روز</string>
+    <string name="strTitleTopics">موضوعات</string>
+    <string name="strTitleDuas">دعاهای قرآنی</string>
+    <string name="strTitleProphets">پیامبران</string>
+    <string name="strTitleFeaturedTopics">مباحث قرآن</string>
+    <string name="strTitleFeaturedDuas">دعاها در قرآن</string>
+    <string name="strTitleFeaturedProphets">پیامبران در قرآن</string>
+    <string name="strTitlePrivacyPolicy">سیاست حفظ حریم خصوصی</string>
+    <string name="strTitleSuccess">موفق</string>
+    <string name="strChapInfoSeeMore">مشاهده اطلاعات بیشتر ›</string>
+    <string name="strTitleChapInfoChapterNo">شماره فصل</string>
+    <string name="strTitleChapInfoJuzNo">شماره جزء</string>
+    <string name="strTitleChapInfoVerses">آیات</string>
+    <string name="strTitleChapInfoRukus">رکوس</string>
+    <string name="strTitleChapInfoRevType">نوع مکاشفه</string>
+    <string name="strTitleAppSettings">تنظیمات برنامه</string>
+    <string name="strTitleReaderSettings">تنظیمات خواندن</string>
+    <string name="strTitleAppLanguage">زبان برنامه</string>
+    <string name="strTitleNoInternet">اینترنت وصل نیست</string>
+    <string name="strLabelPlay">پخش</string>
+    <string name="strLabelPause">مکث</string>
+    <string name="strLabelBookmark">نشانک</string>
+    <string name="strLabelRemoveBookmark">حذف نشانک</string>
+    <string name="strLabelBookmarked">نشانک گذاری شده است</string>
+    <string name="strLabelRemoveAds">حذف تبلیغات</string>
+    <string name="strLabelShare">اشتراک گذاری</string>
+    <string name="strLabelReport">گزارش کردن</string>
+    <string name="strLabelReading">خواندن</string>
+    <string name="strLabelOrder">سفارش</string>
+    <string name="strHintSearch">جستجو</string>
+    <string name="strLabelLater">بعدا</string>
+    <string name="strLabelAdvanceSharing">اشتراک گذاری پیشرفته</string>
+    <string name="strLabelQuickLinks">لینک های سریع</string>
+    <string name="strHintSearchQuran">عبارتی را تایپ کنید، مثلاً «زندگی»</string>
+    <string name="strHintSearchTopic">جستجوی موضوع</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">جستجوی موضوع در \"%s\"</string>
+    <string name="strHintSearchProphet">جستجوی پیامبر</string>
+    <string name="strHintSearchChapter">جستجو سوره</string>
+    <string name="strHintSearchVerse">جستجو آیه</string>
+    <string name="strHintSearchJuz">جستجو جزء</string>
+    <string name="strHintSearchTranslation">جستجو ترجمه</string>
+    <string name="strHintSearchReciter">جستجو قاری</string>
+    <string name="strHintSearchScript">جستجو اسکریپت</string>
+    <string name="strHintSearchLanguage">جستجو زبان</string>
+    <string name="strHintFromVerse">از آیه</string>
+    <string name="strHintToVerse">برای آیه</string>
+    <string name="strHintFeedback">نظرات خود را اینجا بنویسید…</string>
+    <string name="strHintFeedbackEmail">ایمیل</string>
+    <string name="strHintFeedbackMessage">پیام</string>
+    <string name="strHintBookmarkViewerNote">یک یادداشت اضافی در مورد این نشانک در اینجا بنویسید…</string>
+    <string name="strNotFound">پیدا نشد</string>
+    <string name="strMsgThemeDark">حالت تاریک مصرف انرژی را کاهش می دهد.</string>
+    <string name="strMsgThemeDefault">با توجه به تنظیمات سیستم تنظیم کنید.</string>
+    <string name="strMsgVOTDOn">هر روز صبح یک اعلان دریافت کنید.</string>
+    <string name="strMsgYouAreReadingVerses">شما در حال خواندن آیات هستید:</string>
+    <string name="strLabelNoNextJuz">بدون جزء بعدی</string>
+    <string name="strTitleMenu">فهرست</string>
+    <string name="strTitleAboutSurah">درباره سوره</string>
+    <string name="strTitleTafsir">تفسیر</string>
+    <string name="strTitleRecitationOptions">گزینه ها</string>
+    <string name="strTitleAutoPlayNext">پخش خودکار بعدی</string>
+    <string name="strTitleShareVerse">اشتراک گذاری آیه</string>
+    <string name="strTitleFailed">ناموفق</string>
+    <string name="strTitleThresholdReached">آستانه رسیده است</string>
+    <string name="strTitleChangeLanguage">زبان تغییر کند؟</string>
+    <string name="strMsgChapInfoFailedLoad">اطلاعات سوره بارگیری نشد. لطفاً بعداً دوباره امتحان کنید.</string>
+    <string name="strTitleTheme">تم</string>
+    <string name="strLabelContinueReading">ادامه مطلب »</string>
+    <string name="strTitleChapInfoRevOrder">دستور وحی</string>
+    <string name="strTitleChapInfoPages">صفحات</string>
+    <string name="strLabelMostPlaces">بیشترین اشاره</string>
+</resources>
