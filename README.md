@@ -30,6 +30,7 @@ See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots).
 | Salient Features                    |     |
 |-----------------------------|-----|
 | No Ads or Purchases         | ✅   |
+| No permission required      | ✅   |
 | Multiple Translations       | ✅   |
 | Multiple Recitations        | ✅   |
 | Multiple Quran Fonts        | ✅   |
