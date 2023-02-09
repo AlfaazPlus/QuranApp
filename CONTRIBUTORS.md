@@ -2,4 +2,5 @@
 
 ### App Translations
 
-Spanish (es) - [JnBenites](https://github.com/JnBenites)
+🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
+🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
