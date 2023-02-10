@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strVersion" formatted="false">Versione</string>
+    <string name="strVersion" formatted="false">Versione %s</string>
     <string name="strTitleLicenses">Licenze</string>
     <string name="strLabelClose">Vicino</string>
     <string name="strLabelGotIt">Fatto</string>
