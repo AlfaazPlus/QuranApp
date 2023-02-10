@@ -52,7 +52,7 @@ If you want to contribute, kindly visit [CONTRIBUTING.md](https://github.com/Alf
 
 ## App Translations
 <a href="https://hosted.weblate.org/projects/QuranApp/#languages">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/287x66-black.png" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/horizontal-auto.svg" alt="Translation status" />
 </a>
 
 ## License
