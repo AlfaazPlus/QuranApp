@@ -205,7 +205,7 @@
     <string name="strMsgYouAreReadingVerses">आप पढ़ रहे है आयत:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d एक अमान्य सूरह संख्या है</string>
     <string name="strMsgInvalidVerseNo" formatted="false">आयत संख्या %d, सूरह संख्या %d के लिए अमान्य है</string>
-    <string name="strMsgInvalidVersesRange">अमान्य रेंज</string>
+    <string name="strMsgInvalidVersesRange">अमान्य रेंज।</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%d-%d, सूरह संख्या %d के लिए एक अमान्य रेंज है</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d एक अमान्य पारा संख्या है</string>
     <string name="strMsgBookmarkAdded">आयत बुकमार्क किया गया</string>
@@ -215,8 +215,8 @@
     <string name="strMsgBookmarkRemoveFailed">आयत बुकमार्क से नहीं हटाया गया</string>
     <string name="strMsgBookmarkRemovedAlready">आयत पहले से बुकमार्क नहीं है</string>
     <string name="strMsgBookmarkNoItems">कोई बुकमार्क्स नहीं</string>
-    <string name="strMsgBookmarkDeleteSelected">चुने गए बुकमार्क्स हटायें जाएंगे</string>
-    <string name="strMsgBookmarkDeleteAll">सभी बुकमार्क्स हटायें जाएंगे</string>
+    <string name="strMsgBookmarkDeleteSelected">चुने गए बुकमार्क्स हटायें जाएंगे।</string>
+    <string name="strMsgBookmarkDeleteAll">सभी बुकमार्क्स हटायें जाएंगे।</string>
     <string name="strMsgBookmarkDate" formatted="false">%s %s बजे</string>
     <string name="strMsgBookmarkDateToday" formatted="false">आज %s बजे</string>
     <string name="strMsgHistoryRemove">हिस्ट्री से हटायें?</string>
@@ -229,12 +229,12 @@
     <string name="strMsgSearchWordPart">शब्द भाग भी खोजें</string>
     <string name="strMsgSearchWordPartExample">उदाहरण: \'इंसानियत\' में \'इंसान\'</string>
     <string name="strMsgSearchArabic">अरबी टेक्स्ट में भी खोजें</string>
-    <string name="strMsgChangeLanguage">भाषा बदलने के लिए एप्प को दुबारा शुरू करना होगा</string>
-    <string name="strMsgResetReaderSettings">सभी रीडर सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें</string>
+    <string name="strMsgChangeLanguage">भाषा बदलने के लिए एप्प को दुबारा शुरू करना होगा।</string>
+    <string name="strMsgResetReaderSettings">सभी रीडर सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें।</string>
     <string name="strMsgProphetsOrder">कालानुक्रमिक क्रम में अम्बिया को दिखा रहा है</string>
     <string name="strMsgShareRange" formatted="false">%d%s%d के बीच का रेंज लिखे</string>
     <string name="strMsgEnterValidRange">कृपया एक मान्य रेंज दर्ज करें</string>
-    <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें</string>
+    <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslNoDownloads">कोई डाउनलोड किया गया अनुवाद उपलब्ध नहीं है</string>
     <string name="strMsgTranslNoDownloadsAvailable">कोई डाउनलोड उपलब्ध नहीं</string>
     <string name="strMsgTranslDownloadThresholdReached" formatted="false">आप पिछले 24 घंटों में \"%s\" डाउनलोड करने के लिए पहले ही %d बार प्रयास कर चुके हैं। बाद में पुन: प्रयास करें।</string>
@@ -246,7 +246,7 @@
     <string name="strDescClose">बंद करें</string>
     <string name="strDescVerseNo" formatted="false">आयत संख्या %d।</string>
     <string name="strDescVerseNoWithChapter" formatted="false">सूरह संख्या %s, आयत संख्या %d।</string>
-    <string name="strMsgNoInternet">कृपया अपने इंटरनेट कनेक्शन की जाँच करें</string>
+    <string name="strMsgNoInternet">कृपया अपने इंटरनेट कनेक्शन की जाँच करें।</string>
     <string name="strMsgNoInternetLong">कोई इंटरनेट कनेक्शन नहीं। सुनिश्चित करें कि वाई-फ़ाई या सेल्युलर डेटा चालू है, फिर प्रयास करें।</string>
     <string name="strMsgSomethingWrong">कुछ गलत हो गया!</string>
     <string name="strMsgSomethingWrongFixing">कुछ गलत हो गया! हम इसे ठीक करने के लिए काम कर रहे हैं।</string>
