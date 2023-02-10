@@ -14,4 +14,5 @@
     <string name="strLabelTop">Superiore</string>
     <string name="strLabelOkay">Va bene</string>
     <string name="strLabelCopy">Copia</string>
+    <string name="strTitleAppVersion">Versione dell\'app</string>
 </resources>
