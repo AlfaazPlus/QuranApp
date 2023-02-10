@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strVersion" formatted="false">Versione</string>
+    <string name="strTitleLicenses">Licenze</string>
+    <string name="strLabelClose">Vicino</string>
+    <string name="strLabelGotIt">Fatto</string>
+    <string name="strLabelCancel">Annulla</string>
+    <string name="strLabelApply">fare domanda</string>
+    <string name="strLabelSend">Inviare</string>
+    <string name="strLabelRemove">rimuovere</string>
+    <string name="strLabelDelete">Eliminare</string>
+    <string name="strLabelRemoveAll">Rimuovi tutto</string>
+    <string name="strLabelBack">Indietro</string>
+    <string name="strLabelTop">Superiore</string>
+    <string name="strLabelOkay">Va bene</string>
+    <string name="strLabelCopy">Copia</string>
+    <string name="strTitleAppVersion">Versione dell\'app</string>
+</resources>
