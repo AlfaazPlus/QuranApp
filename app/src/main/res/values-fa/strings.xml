@@ -3,7 +3,7 @@
     <string name="strLabelRestart">شروع دوباره</string>
     <string name="strLabelFullChapter">فصل کامل را بخوانید</string>
     <string name="strLabelNoPreviousJuz">بدون جزء قبلی</string>
-    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سوره %s │ آیه %d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سوره %1$s │ آیه %2$d</string>
     <string name="strTitleFootnotes">پانویسها و منابع</string>
     <string name="strTitleAppVersion">نسخه برنامه</string>
     <string name="strVersion" formatted="false">نسخه %s</string>
@@ -65,17 +65,17 @@
     <string name="strLabelPageNo" formatted="false">صفحه %d</string>
     <string name="strLabelJuzNo" formatted="false">جزء %d</string>
     <string name="strLabelVerseNo" formatted="false">آیه %d</string>
-    <string name="strLabelVerses" formatted="false">آیات %d–%d</string>
+    <string name="strLabelVerses" formatted="false">آیات %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">آیه : %d</string>
-    <string name="strLabelVersesWithColon" formatted="false">آیات : %d–%d</string>
+    <string name="strLabelVersesWithColon" formatted="false">آیات : %1$d–%2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">آیات: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
-    <string name="strLabelVerseWithChapNo" formatted="false">آیه %d:%d</string>
-    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
-    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سوره %s %d: آیه %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سوره %s : آیه %d</string>
-    <string name="strLabelFeatureQuranMiniInfo" formatted="false">شماره فصل. %d │ آیات %d–%d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">آیه %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سوره %1$s %2$d: آیه %3$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سوره %1$s: آیه %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">شماره فصل %1$d │ آیات %2$d–%3$d</string>
     <string name="strTitleAppUser">کاربر برنامه قرآن</string>
     <string name="strTitleHolyQuran">قرآن مقدس</string>
     <string name="strTitleQuran">قرآن</string>
@@ -90,9 +90,9 @@
     <string name="strTitleReaderJumpToVerse">پرش به آیه</string>
     <string name="strTitleVerseOptions">گزینه های آیه</string>
     <string name="strTitleVerseRecitation">تلاوت آیه</string>
-    <string name="strTitleReaderVerseInformation" formatted="false">سوره %s : %d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">سوره %1$s: %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">به آیه %d بروید</string>
-    <string name="strTitleReadVerseRange" formatted="false">آیات %d - %d را بخوانید</string>
+    <string name="strTitleReadVerseRange" formatted="false">آیات %1$d - %2$d را بخوانید</string>
     <string name="strTitleReaderLayoutStyle">سبک نگاه به قرآن</string>
     <string name="strTitleReaderTextSizeArabic">اندازه متن عربی</string>
     <string name="strTitleReaderTextSizeTransl">اندازه متن ترجمه</string>
