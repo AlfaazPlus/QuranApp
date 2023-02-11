@@ -5,10 +5,10 @@
     <string-array name="availableLocalesNames">
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
-        <item>فارسی (Persian)</item>
+        <item>فارسی</item>
         <item>हिन्दी</item>
-        <item>Italian</item>
-        <item>اردو (Urdu)</item>
+        <item>Italiano</item>
+        <item>اردو</item>
     </string-array>
 
     <string-array name="availableLocalesValues">
