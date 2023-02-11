@@ -300,4 +300,6 @@
     <string name="strSalam">السلام علیکم</string>
     <string name="strSalamShort">سلام</string>
     <string name="strDescVerseNoWithChapter" formatted="false">سوره %1$s، شماره آیه %2$d.</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">نمای صفحه</string>
+    <string name="strTitleReaderLayoutStylePageView">نمای صفحه</string>
 </resources>
