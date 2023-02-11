@@ -5,6 +5,7 @@
     <string-array name="availableLocalesNames">
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
+        <item>Español</item>
         <item>فارسی</item>
         <item>हिन्दी</item>
         <item>Italiano</item>
@@ -14,6 +15,7 @@
     <string-array name="availableLocalesValues">
         <item>default</item>
         <item>en</item>
+        <item>es</item>
         <item>fa</item>
         <item>hi</item>
         <item>it</item>
