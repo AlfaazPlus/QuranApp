@@ -197,4 +197,108 @@
     <string name="strLabelDismiss">Congedare</string>
     <string name="strLabelOpen">Aprire</string>
     <string name="strLabelDiscard">Scartare</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d non è una sura n. valida.</string>
+    <string name="strMsgThemeDefault">Regolare in base alle impostazioni di sistema.</string>
+    <string name="strMsgVOTDOn">Ricevi una notifica ogni giorno al mattino.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d non è un numero di versetto valido per la sura n. %2$d</string>
+    <string name="strTitleReaderLayoutStylePageView">Visualizzazioni di pagina</string>
+    <string name="strMsgBookmarkAddFailed">Versetto non è stato aggiunto ai segnalibri</string>
+    <string name="strMsgBookmarkAdded">Versetto aggiunto con successo ai segnalibri</string>
+    <string name="strTitleReadHistory">Leggi Storia</string>
+    <string name="strMsgReadShowupHere">La cronologia delle tue letture verrà visualizzata qui.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Impossibile rimuovere la cronologia delle letture.</string>
+    <string name="strMsgBookmarkAddedAlready">Il verso è già stato aggiunto ai segnalibri</string>
+    <string name="strMsgBookmarkRemoved">Versetto rimosso con successo dai segnalibri</string>
+    <string name="strMsgBookmarkRemoveFailed">Verso non è stato rimosso dai segnalibri</string>
+    <string name="strMsgReadHistoryRemoved">Cronologia di lettura rimossa con successo.</string>
+    <string name="strMsgReadHistoryNoItems">Nessuna cronologia di lettura</string>
+    <string name="strMsgReadHistoryRemovedAlready">La cronologia di lettura è già stata rimossa.</string>
+    <string name="strMsgReadHistoryDeleteSelected">Le cronologie di lettura selezionate verranno rimosse.</string>
+    <string name="strMsgReadHistoryDeleteAll">Tutte le cronologie di lettura verranno rimosse.</string>
+    <string name="strMsgHistoryRemove">Rimuovere questa cronologia\?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" rimosso dalla cronologia</string>
+    <string name="strMsgSearchWordPart">Cerca la parte della parola</string>
+    <string name="strMsgSearchArabic">Cerca nel testo arabo</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Nessun risultato trovato in %s. Controlla i filtri di ricerca o cerca in un\'altra traduzione.</string>
+    <string name="strMsgSearchNoResultsFound">Nessun risultato trovato. Controlla i filtri di ricerca o cerca in un\'altra traduzione.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Nessun risultato trovato. Si prega di controllare i filtri di ricerca.</string>
+    <string name="strLabelNavSearch">Ricerca</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Impossibile scaricare \"%s\".</string>
+    <string name="strMsgTranslLoadFailed">Impossibile caricare le traduzioni dal server. Per favore riprova più tardi.</string>
+    <string name="strMsgTranslNoDownloads">Nessuna traduzione scaricata disponibile</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Scaricato: \"%s\".</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Nessun scarimento disponibile</string>
+    <string name="strMsgTranslNoneSelected">Nessuna traduzione selezionata. Vai alle impostazioni per trovare le traduzioni.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">È possibile selezionare contemporaneamente il massimo %d e la traduzione. Selezionane uno prima di selezionarne un altro. Questo per evitare perdite di prestazioni.</string>
+    <string name="strMsgRecitationsLoadFailed">Impossibile caricare le recitazioni dal server. Per favore riprova più tardi.</string>
+    <string name="strMsgRecitationsNoAvailable">Nessuna recitazione disponibile</string>
+    <string name="strDescAddToBookmarks">Aggiungi ai segnalibri</string>
+    <string name="strMsgNoInternetLong">Nessuna connessione internet. Assicurati che il Wi-Fi o i dati cellulare siano attivi, quindi riprova.</string>
+    <string name="strMsgSomethingWrongFixing">Qualcosa è andato storto! Stiamo lavorando per risolvere questo problema.</string>
+    <string name="strMsgVerseCredsInvalid">Le credenziali Verso non sono valide.</string>
+    <string name="strMsgReportUs">Per favore segnalaci.</string>
+    <string name="strDescClose">Vicino</string>
+    <string name="strDescVerseNo" formatted="false">Versetto numero %d.</string>
+    <string name="strMsgSomethingWrong">Qualcosa è andato storto!</string>
+    <string name="strMsgTryLater">Per favore riprova più tardi.</string>
+    <string name="strMsgCouldNotOpenPage">Impossibile aprire la pagina.</string>
+    <string name="strLabelNavHome">Casa</string>
+    <string name="strMsgResetReaderSettings">Ripristina tutte le impostazioni ai valori predefiniti.</string>
+    <string name="strMsgChangeLanguage">L\'app verrà riavviata per modificare la lingua.</string>
+    <string name="strMsgProphetsOrder">Mostra profeti in ordine cronologico</string>
+    <string name="strMsgEnterValidRange">Inserisci un intervallo valido</string>
+    <string name="strTextPreparing">Preparazione…</string>
+    <string name="strTextPleaseWait">Attendere prego…</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="strTextSending">Invio…</string>
+    <string name="strTitleError">Errore!</string>
+    <string name="strTitleInfo">Informazioni!</string>
+    <string name="strTitleOops">Ops!</string>
+    <string name="strTextInstalling">Installazione…</string>
+    <string name="strLabelProceed">PROCEDERE</string>
+    <string name="strTextUpdating">In aggiornamento…</string>
+    <string name="strTextLoading">Caricamento…</string>
+    <string name="strMsgUpdateAvailable">AGGIORNAMENTO DISPONIBILE! Aggiorna l\'app per ottenere le funzionalità più recenti.</string>
+    <string name="strTitleAlphaBG">Sfondo alfa</string>
+    <string name="strLabelAllChapters">Tutti i capitoli</string>
+    <string name="strMsgUpdateDownloaded">AGGIORNAMENTO SCARICATO! Si prega di installare per completare l\'aggiornamento.</string>
+    <string name="strLabelDownloadImage">Scarica l\'immagine</string>
+    <string name="strMsgEditShareTransl">Le traduzioni selezionate dalle impostazioni, vengono mostrate solo qui.</string>
+    <string name="strLabelShareImage">Condividi immagine</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s nel Corano</string>
+    <string name="strMsgEditShareLongTransl">La traduzione è molto lunga, potrebbe non adattarsi correttamente.</string>
+    <string name="strMsgReferenceDuas">Raccolto alcuni duas dal Corano.</string>
+    <string name="strSalam">Ti saluto</string>
+    <string name="strSalamShort">Salam</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Visualizzazione della traduzione</string>
+    <string name="strHintToVerse">Al verso</string>
+    <string name="strHintFeedback">Scrivi qui il tuo feedback…</string>
+    <string name="strHintFeedbackEmail">E-mail</string>
+    <string name="strHintBookmarkViewerNote">Scrivi una nota aggiuntiva su questo segnalibro qui…</string>
+    <string name="strHintFeedbackMessage">Messaggio</string>
+    <string name="strNotFound">Non trovato</string>
+    <string name="strMsgThemeDark">La modalità oscura riduce il consumo energetico.</string>
+    <string name="strMsgYouAreReadingVerses">Stai leggendo versi:</string>
+    <string name="strMsgInvalidVersesRange">Non è un intervallo di versi valido.</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d non è un intervallo di versi valido per la sura n. %3$d</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d non è un Juz (Para) N. valido.</string>
+    <string name="strMsgBookmarkRemovedAlready">Il verso non è nei segnalibri</string>
+    <string name="strMsgBookmarkNoItems">Nessun segnalibro</string>
+    <string name="strMsgBookmarkDeleteSelected">I segnalibri selezionati verranno rimossi.</string>
+    <string name="strMsgBookmarkDeleteAll">Tutti i segnalibri verranno rimossi.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Oggi alle %s</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Solo 1 risultato trovato in %s</string>
+    <string name="strMsgSearchWordPartExample">Ad esempio: \'uomo\' in \'umanità\'</string>
+    <string name="strDescGoBack">Torna indietro</string>
+    <string name="strMsgNoInternet">Per favore controlla la tua connessione Internet.</string>
+    <string name="strMsgUpdateAvailable4Dialog">AGGIORNAMENTO DISPONIBILE
+\nSi prega di aggiornare l\'app.</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Immagine salvata con nome: %s</string>
+    <string name="strMsgShareRange" formatted="false">Inserisci un intervallo compreso tra %1$d%2$s%3$d</string>
+    <string name="strMsgTranslDownloadThresholdReached" formatted="false">Hai già tentato di scaricare \"%1$s\" %2$d volte nelle ultime 24 ore. Per favore riprova più tardi.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Sura %1$s, versetto numero %2$d.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Sono stati trovati versi relativi a %1$s in %2$d posizioni totali.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s a %2$s</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Risultati totali trovati in %1$s: %2$d</string>
+    <string name="strMsgUpdateAvailable2Continue">Aggiornamento richiesto! Aggiorna l\'app per continuare.</string>
 </resources>
