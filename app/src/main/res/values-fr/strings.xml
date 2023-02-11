@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strTitleAppVersion">version de l\'application</string>
+    <string name="strVersion" formatted="false">Version %s</string>
+    <string name="strTitleLicenses">Licences</string>
+    <string name="strLabelClose">Fermer</string>
+</resources>
