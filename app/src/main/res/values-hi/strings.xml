@@ -300,4 +300,6 @@
     <string name="strMsgReferenceInQuran" formatted="false">कुरान में %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s से सम्बंधित आयात कुल %2$d स्थानों पर मिले।</string>
     <string name="strMsgReferenceDuas">कुरान से कुछ दुआएं इकट्ठी की हैं।</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">अनुवाद दृश्य</string>
+    <string name="strTitleReaderLayoutStylePageView">पृष्ठ दृश्य</string>
 </resources>
