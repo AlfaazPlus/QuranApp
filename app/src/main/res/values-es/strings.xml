@@ -69,7 +69,7 @@
     <string name="strLabelReading">Leyendo</string>
     <string name="strTextSending">Enviando…</string>
     <string name="strTitleError">Error!</string>
-    <string name="strTitleOops">Oops!</string>
+    <string name="strTitleOops">¡Ups!</string>
     <string name="strTextUpdating">Actualizando…</string>
     <string name="strTextInstalling">Instalando…</string>
     <string name="strTextLoading">Cargando…</string>
@@ -147,4 +147,159 @@
     <string name="strMsgReadHistoryRemoveFailed">No se pudo eliminar el historial de lectura.</string>
     <string name="strMsgTranslDownloadThresholdReached" formatted="false">Se a intentado descargar \"%1$s\" %2$d veces en las ultimas 24 Hrs. Por favor, intentelo mas tarde.</string>
     <string name="strMsgEditShareLongTransl">La traducción es muy larga, puede no encajar correctamente.</string>
+    <string name="strTitleChapInfoVerses">Versos</string>
+    <string name="strTitleDuas">Suplicas Coránicos</string>
+    <string name="strTitleChapInfoRukus">Rukus</string>
+    <string name="strSalam">Assalam Alaikum</string>
+    <string name="strTitleBookmarkDeleteThis">¿Quitar este marcador\?</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Imagen guardada con nombre: %s</string>
+    <string name="strMsgSearchWordPart">Buscar parte de la palabra</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">¿Quitar %d marcadores\?</string>
+    <string name="strTitleResetReaderSettings">¿Restablecer la configuración del lector\?</string>
+    <string name="strMsgCouldNotOpenPage">No se pudo abrir la página.</string>
+    <string name="strHintFeedback">Escribe tus comentarios aquí…</string>
+    <string name="strMsgYouAreReadingVerses">Estás leyendo versos:</string>
+    <string name="strTitleHolyQuran">El sagrado Corán</string>
+    <string name="strMsgSearchArabic">Buscar en texto árabe</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" eliminado del historial</string>
+    <string name="strMsgShareRange" formatted="false">Ingrese el rango entre %1$d%2$s%3$d</string>
+    <string name="strTitleReaderChapters2">Suras</string>
+    <string name="strTitleReaderJumpToVerse">Saltar al verso</string>
+    <string name="strTitleAboutSurah">Acerca de Surah</string>
+    <string name="strTitleBookmarkDeleteAll">¿Quitar todos los marcadores\?</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s a %2$s</string>
+    <string name="strMsgHistoryRemove">¿Eliminar este historial\?</string>
+    <string name="strTitleChapInfoJuzNo">Juz Nro.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Hoy a las %s</string>
+    <string name="strMsgReadHistoryNoItems">Sin historial de lectura</string>
+    <string name="strMsgTranslNoDownloadsAvailable">No hay descargas disponibles</string>
+    <string name="strDescVerseNo" formatted="false">Número de verso %d.</string>
+    <string name="strTitleAppUser">Usuario de QuranApp</string>
+    <string name="strHintSearchChapter">Buscar surah</string>
+    <string name="strDescAddToBookmarks">Añadir a marcadores</string>
+    <string name="strTitleRecitations">Seleccionar recitador</string>
+    <string name="strTitleScripts">Seleccionar guión</string>
+    <string name="strTitleRepeatVerse">Repetir verso</string>
+    <string name="strTitleQuickEdit">Edición rapida</string>
+    <string name="strTitleShareVerse">Compartir verso</string>
+    <string name="strTitleReportVerse">Versículo de informe</string>
+    <string name="strTitleTranslDelete">¿Eliminar traducción\?</string>
+    <string name="strTitleHideAd">Ocultar anuncio</string>
+    <string name="strTitleAutoPlayNext">Reproducción automática siguiente</string>
+    <string name="strTitleFeaturedQuran">Lectura destacada</string>
+    <string name="strTitlePrivacyPolicy">Política de privacidad</string>
+    <string name="strTitleThresholdReached">Umbral alcanzado</string>
+    <string name="strTitleChapInfoChapterNo">Número de capítulo</string>
+    <string name="strTitleAlphaBG">Fondo principal</string>
+    <string name="strTitleAppLanguage">Idioma de la aplicación</string>
+    <string name="strLabelSelectedCount" formatted="false">%d seleccionado</string>
+    <string name="strLabelAdvanceSharing">Uso compartido avanzado</string>
+    <string name="strHintSearchVerse">Buscar verso</string>
+    <string name="strLabelSelectVerse">Seleccionar versos</string>
+    <string name="strLabelVerseRange">Rango de verso</string>
+    <string name="strLabelSelectTranslations">Seleccionar traducciones</string>
+    <string name="strLabelSelectTranslation">Seleccionar traducción</string>
+    <string name="strLabelWhatsappStyling">Estilo whatsapp</string>
+    <string name="strLabelIncludeArabic">Incluir Árabe</string>
+    <string name="strLabelIncludeFootnotes">Incluir notas al pie</string>
+    <string name="strLabelIncludeTranslation">Incluir traducción</string>
+    <string name="strHintSearchProphet">Buscar profeta</string>
+    <string name="strHintFromVerse">Del verso</string>
+    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleReaderChapters">Surahs (Capítulos)</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strHintSearchJuz">Buscar juz</string>
+    <string name="strHintToVerse">Al verso</string>
+    <string name="strNotFound">No encontrado</string>
+    <string name="strMsgBookmarkNoItems">Sin marcadores</string>
+    <string name="strTitleReadHistory">Leer historial</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Descargado: \"%s\".</string>
+    <string name="strLabelVersesText">Versos</string>
+    <string name="strDescGoBack">Regresar</string>
+    <string name="strTitleSubscription">Suscripcion</string>
+    <string name="strLabelDownloadImage">Descargar imagen</string>
+    <string name="strLabelAllChapters">Todos los capítulos</string>
+    <string name="strTitleFootnote">Nota</string>
+    <string name="strTitleFootnotes">Notas</string>
+    <string name="strTitleReaderVerses">Versos</string>
+    <string name="strTitleFilters">Filtros</string>
+    <string name="strTitleSuccess">Exitoso</string>
+    <string name="strTitleMenu">Menú</string>
+    <string name="strTitleDownloadTranslations">Descargar</string>
+    <string name="strTitleProphets">Profetas</string>
+    <string name="strTitleRecitationOptions">Opciones</string>
+    <string name="strTitleTopics">Temas</string>
+    <string name="strTitleFailed">Fallido</string>
+    <string name="strTitleTranslations">Traducciones</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleFeaturedDuas">Suplicas en el Corán</string>
+    <string name="strTitleHelpSupport">Ayuda y Soporte</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Ver traducciones</string>
+    <string name="strTitleReaderLayoutStylePageView">Ver pagina</string>
+    <string name="strTitleAboutUs">Sobre nosotros</string>
+    <string name="strTitleShareApp">Compartir aplicación</string>
+    <string name="strTitleAddNote">Añadir notas</string>
+    <string name="strTitleRateApp">Calificar aplicacion</string>
+    <string name="strTitleBookmarks">Marcadores</string>
+    <string name="strTitleNote">Nota</string>
+    <string name="strTitleExplainIssue">Explicar el problema</string>
+    <string name="strTitleVOTD">Verso del día</string>
+    <string name="strChapInfoSeeMore">Ver más información ›</string>
+    <string name="strTitleFeaturedTopics">Temas en el Corán</string>
+    <string name="strTitleFeaturedProphets">Profetas en el Corán</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d más traducciones</string>
+    <string name="strTitleChangeLanguage">¿Cambiar idioma\?</string>
+    <string name="strTitleNoInternet">Sin internet</string>
+    <string name="strLabelCurrentVerse">Verso real</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Capitulo %1$s, verso número %2$d.</string>
+    <string name="strMsgTranslNoDownloads">No hay traducciones descargadas disponibles</string>
+    <string name="strMsgSomethingWrong">¡Algo salió mal!</string>
+    <string name="strMsgReportUs">Por favor repórtanos.</string>
+    <string name="strLabelProceed">PROCEDER</string>
+    <string name="strLabelRetry">Volver a procesar</string>
+    <string name="strLabelNoPreviousJuz">Sin juz anterior</string>
+    <string name="strLabelNoNextJuz">No hay siguiente juz</string>
+    <string name="strLabelPreviousJuz">Juz anterior</string>
+    <string name="strLabelNextJuz">Suguiente juz</string>
+    <string name="strLabelSurah" formatted="false">Capítulo %s</string>
+    <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Capitulo %1$s:%2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Ir al Verso %d</string>
+    <string name="strTitleReaderLayoutStyle">Estilo de vista del Corán</string>
+    <string name="strTitleReaderTextSizeArabic">Tamaño de texto Árabe</string>
+    <string name="strTitleVerseOptions">Opciones de verso</string>
+    <string name="strTitleVerseRecitation">Recitación de versos</string>
+    <string name="strTitleReaderTextSizeTransl">Tamaño del texto de traducción</string>
+    <string name="strTitleSendFeedback">Enviar comentarios</string>
+    <string name="strTitleSettings">Ajustes</string>
+    <string name="strTitleBookmark">Marcador</string>
+    <string name="strTitleSelectReason">Seleccionar motivo</string>
+    <string name="strTitleChapInfoRevOrder">Orden de revelación</string>
+    <string name="strTitleChapInfoRevType">Tipo de revelación</string>
+    <string name="strTitleAppSettings">Ajustes de Aplicacion</string>
+    <string name="strTitleReaderSettings">Configuración del lector</string>
+    <string name="strLabelContinueReading">Seguir leyendo »</string>
+    <string name="strLabelRemoveBookmark">Quitar marcador</string>
+    <string name="strLabelRemoveAds">Quitar anuncios</string>
+    <string name="strLabelMostPlaces">Más menciones</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Buscar tema en \"%s\"</string>
+    <string name="strLabelIncludeReference">Incluir referencia</string>
+    <string name="strLabelQuickLinks">Enlaces rápidos</string>
+    <string name="strHintSearchTopic">Tema de búsqueda</string>
+    <string name="strHintSearchTranslation">Buscar traducción</string>
+    <string name="strHintSearchReciter">Buscar recitador</string>
+    <string name="strHintSearchScript">Guión de búsqueda</string>
+    <string name="strHintSearchLanguage">Idioma de búsqueda</string>
+    <string name="strMsgReadHistoryRemoved">El historial de lectura se eliminó con éxito.</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Descarga fallida \"%s\".</string>
+    <string name="strMsgRecitationsNoAvailable">No hay recitaciones disponibles</string>
+    <string name="strMsgNoInternet">Por favor revise su conexion a internet.</string>
+    <string name="strMsgVerseCredsInvalid">Las credenciales de Verse no son válidas.</string>
+    <string name="strMsgTryLater">Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="strTextPleaseWait">Espere por favor…</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="strLabelShareImage">Compartir imagen</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s en el Corán</string>
 </resources>
