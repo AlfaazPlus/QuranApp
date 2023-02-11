@@ -229,7 +229,7 @@
     <string name="strMsgTranslDownloaded" formatted="false">Scaricato: \"%s\".</string>
     <string name="strMsgTranslNoDownloadsAvailable">Nessun scarimento disponibile</string>
     <string name="strMsgTranslNoneSelected">Nessuna traduzione selezionata. Vai alle impostazioni per trovare le traduzioni.</string>
-    <string name="strMsgTranslSelectionLimit" formatted="false">È possibile selezionare contemporaneamente il massimo % e la traduzione. Selezionane uno prima di selezionarne un altro. Questo per evitare perdite di prestazioni.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">È possibile selezionare contemporaneamente il massimo %d e la traduzione. Selezionane uno prima di selezionarne un altro. Questo per evitare perdite di prestazioni.</string>
     <string name="strMsgRecitationsLoadFailed">Impossibile caricare le recitazioni dal server. Per favore riprova più tardi.</string>
     <string name="strMsgRecitationsNoAvailable">Nessuna recitazione disponibile</string>
     <string name="strDescAddToBookmarks">Aggiungi ai segnalibri</string>
