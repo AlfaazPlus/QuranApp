@@ -22,4 +22,4 @@
 
 -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
--dontwarn com.facebook.infer.annotation.Nullsafe
+-keep class com.quranapp.android.api.models.** { *; } # Keep all api models

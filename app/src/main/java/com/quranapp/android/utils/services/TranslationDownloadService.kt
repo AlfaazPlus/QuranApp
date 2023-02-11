@@ -188,7 +188,7 @@ class TranslationDownloadService : Service() {
         return mCurrentDownloads.contains(slug)
     }
 
-    fun removeDownload(slug: String?) {
+    private fun removeDownload(slug: String?) {
         mCurrentDownloads.remove(slug)
         if (mCurrentDownloads.size == 0) {
             sendBroadcast(Intent(TranslDownloadReceiver.ACTION_NO_MORE_DOWNLOADS))
