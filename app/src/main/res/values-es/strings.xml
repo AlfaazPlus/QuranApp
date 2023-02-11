@@ -96,4 +96,55 @@
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %1$s : Verso %2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Puede seleccionar un máximo de %d traducciones. Por favor anule la seleccione uno u otro. Esto es para evitar la perdida de rendimiento.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">1 solo resultado encontrado en %s</string>
+    <string name="strMsgSearchNoResultsFound">No se han encontrado resultados. Por favor revisa los filtros de búsqueda o busca en otra traducción.</string>
+    <string name="strMsgBookmarkRemovedAlready">El verso no esta en los marcadores</string>
+    <string name="strMsgChangeLanguage">La aplicación se reiniciará para cambiar de idioma.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Se encontraron versos relacionados con %1$s en %2$d lugares.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d no es un Juz valido (Para) Nro.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Sin resultados. Por favor revise los filtros de búsqueda.</string>
+    <string name="strMsgBookmarkRemoveFailed">No se pudo elimnar el verso de los marcadores</string>
+    <string name="strMsgBookmarkAddedAlready">El verso no se puede agregar a los marcadores</string>
+    <string name="strMsgBookmarkAddFailed">No se pudo agregar a los marcadores</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Resultados totales encontrados en %1$s: %2$d</string>
+    <string name="strMsgResetReaderSettings">Restablece todas las configuraciones a los valores predeterminados.</string>
+    <string name="strMsgReferenceDuas">Reuní algunas Suplicas del Quran.</string>
+    <string name="strMsgBookmarkAdded">Verso añadido a los marcadores</string>
+    <string name="strMsgBookmarkRemoved">Verso eliminado con éxito de los marcadores</string>
+    <string name="strMsgBookmarkDeleteSelected">Se eliminarán los marcadores seleccionados.</string>
+    <string name="strMsgBookmarkDeleteAll">Se eliminarán todos los marcadores.</string>
+    <string name="strMsgSearchWordPartExample">Por ejemplo: \'huma\' en \'humanidad\'</string>
+    <string name="strMsgProphetsOrder">Mostrando profetas en orden cronológico</string>
+    <string name="strMsgEnterValidRange">Por favor ingrese un rango válido</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d no es un verso valido para el Capitulo Nro. %3$d</string>
+    <string name="strMsgVOTDOn">Recibir una notificación todos los días por la mañana.</string>
+    <string name="strMsgThemeDark">El modo oscuro reduce el consumo de energía.</string>
+    <string name="strMsgThemeDefault">Tema según la configuración del sistema.</string>
+    <string name="strMsgReadHistoryDeleteSelected">Se eliminarán los historiales de lectura seleccionados.</string>
+    <string name="strMsgReadHistoryDeleteAll">Se elimino todo el historial de lectura.</string>
+    <string name="strMsgReadHistoryRemovedAlready">El historial de lectura ya se eliminó.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">No se han encontrado resultados en %s. Por favor revise los filtros de busqueda o busque otra traduccion.</string>
+    <string name="strMsgTranslLoadFailed">No se pudieron cargar las traducciones desde el servidor. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="strMsgRecitationsLoadFailed">No se pudieron cargar recitaciones desde el servidor. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="strMsgNoInternetLong">Sin conexion a internet. Asegurece de tener conexion a Wi-Fi o datos moviles e intentarlo nuevamente.</string>
+    <string name="strMsgUpdateAvailable">¡ACTUALIZACIÓN DISPONIBLE! Actualice la aplicación para obtener las funciones más recientes.</string>
+    <string name="strMsgUpdateAvailable4Dialog">¡ACTUALIZACIÓN DISPONIBLE!
+\nActualice la aplicación.</string>
+    <string name="strMsgUpdateAvailable2Continue">¡ACTUALIZACIÓN REQUERIDA!
+\nActualice la aplicación para continuar.</string>
+    <string name="strMsgUpdateDownloaded">¡ACTUALIZACIÓN DESCARGADA! Instale para completar la actualización.</string>
+    <string name="strMsgSomethingWrongFixing">¡Algo salió mal! Estamos trabajando para arreglar esto.</string>
+    <string name="strMsgEditShareTransl">Las traducciones seleccionadas de la configuración solo se muestran aquí.</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Capitulo Nro. %1$d | Versos %2$d–%3$d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Leer Versos %1$d - %2$d</string>
+    <string name="strMsgChapInfoFailedLoad">No se pudo cargar la información del Capitulo. Por favor, inténtelo más tarde.</string>
+    <string name="strHintSearchQuran">Escriba un termino, ejemplo: \"Vida\"</string>
+    <string name="strHintBookmarkViewerNote">Escriba una nota adicional enel marcador de aquí…</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d es un Nro. de capitulo no valido.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d no es un numero de verso valido. Para el Capitulo Nro. %2$d</string>
+    <string name="strMsgInvalidVersesRange">No es un rango de verso válido.</string>
+    <string name="strMsgReadShowupHere">Su historial de lectura aparecerá aquí.</string>
+    <string name="strMsgReadHistoryRemoveFailed">No se pudo eliminar el historial de lectura.</string>
+    <string name="strMsgTranslDownloadThresholdReached" formatted="false">Se a intentado descargar \"%1$s\" %2$d veces en las ultimas 24 Hrs. Por favor, intentelo mas tarde.</string>
+    <string name="strMsgEditShareLongTransl">La traducción es muy larga, puede no encajar correctamente.</string>
 </resources>
