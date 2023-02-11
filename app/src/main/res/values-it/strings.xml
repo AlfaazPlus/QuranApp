@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strVersion" formatted="false">Versione</string>
+    <string name="strVersion" formatted="false">Versione %s</string>
     <string name="strTitleLicenses">Licenze</string>
     <string name="strLabelClose">Vicino</string>
     <string name="strLabelGotIt">Fatto</string>
@@ -15,4 +15,186 @@
     <string name="strLabelOkay">Va bene</string>
     <string name="strLabelCopy">Copia</string>
     <string name="strTitleAppVersion">Versione dell\'app</string>
+    <string name="strLabelSkip">Saltare</string>
+    <string name="strLabelNotNow">Non adesso</string>
+    <string name="strLabelNext">Prossimo</string>
+    <string name="strLabelNew">Nuovo</string>
+    <string name="strLabelPremium">Premio</string>
+    <string name="strLabelThemeDark">Buio</string>
+    <string name="strLabelSystemDefault">Default del sistema</string>
+    <string name="strLabelPreviousChapter">Capitolo precedente</string>
+    <string name="strLabelNoPreviousChapter">Nessun capitolo precedente</string>
+    <string name="strLabelNoPreviousJuz">Nessun Juz precedente</string>
+    <string name="strLabelNextVerse">Verso successivo</string>
+    <string name="strLabelVersesText">Versi</string>
+    <string name="strLabelContinueChapter">Continua capitolo</string>
+    <string name="strLabelNoNextJuz">Nessun prossimo juz</string>
+    <string name="strLabelFullChapter">Leggi il capitolo intero</string>
+    <string name="strLabelVerses" formatted="false">Versi %1$d–%2$d</string>
+    <string name="strTitleFootnotes">Note a piè di pagina</string>
+    <string name="strLabelSurah" formatted="false">Sura %s</string>
+    <string name="strLabelPageNo" formatted="false">Pagina %d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strTitleReaderVerses">Versi</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Sura %1$s %2$d: Verso %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Sura %1$s │Verso %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Capitolo n. %1$d │ Versetti %2$d–%3$d</string>
+    <string name="strTitleFootnote">Nota</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Sura %1$s : %2$d</string>
+    <string name="strTitleReaderChapters2">Sura</string>
+    <string name="strTitleShareApp">Condividi app</string>
+    <string name="strTitleReaderTextSizeTransl">Dimensione del testo di traduzione</string>
+    <string name="strTitleReaderTextSizeArabic">Dimensione del testo arabo</string>
+    <string name="strTitleSendFeedback">Invia feedback</string>
+    <string name="strTitleSettings">Impostazioni</string>
+    <string name="strTitleHelpSupport">Aiuto &amp;Supporto</string>
+    <string name="strTitleAboutUs">Chi siamo</string>
+    <string name="strTitleAddNote">Aggiungi nota</string>
+    <string name="strTitleNote">Nota</string>
+    <string name="strTitleSubscription">Sottoscrizione</string>
+    <string name="strTitleRateApp">Valuta l\'app</string>
+    <string name="strTitleFilters">Filtri</string>
+    <string name="strTitleMenu">Menù</string>
+    <string name="strTitleBookmarkDeleteAll">Rimuovere tutti i segnalibri\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Rimuovere %d segnalibri\?</string>
+    <string name="strTitleResetReaderSettings">Ripristinare le impostazioni del lettore\?</string>
+    <string name="strTitleRepeatVerse">Ripeti il verso</string>
+    <string name="strTitleHideAd">Nascondi annuncio</string>
+    <string name="strTitleShareVerse">Condividi Versetto</string>
+    <string name="strTitleTopics">Temi</string>
+    <string name="strTitleExplainIssue">Spiega il problema</string>
+    <string name="strTitleFeaturedQuran">lettura in primo piano</string>
+    <string name="strTitleVOTD">Versetto del giorno</string>
+    <string name="strTitleFailed">Fallito</string>
+    <string name="strTitleThresholdReached">Soglia raggiunta</string>
+    <string name="strLabelPlay">Suonare</string>
+    <string name="strTitleFeaturedProphets">Profeti nel Corano</string>
+    <string name="strTitleChapInfoJuzNo">Juz N.</string>
+    <string name="strMsgChapInfoFailedLoad">Impossibile caricare le informazioni sulla sura. Per favore riprova più tardi.</string>
+    <string name="strLabelBookmark">Segnalibro</string>
+    <string name="strLabelContinueReading">Continua a leggere,,</string>
+    <string name="strLabelSelectedCount" formatted="false">%d selezionato</string>
+    <string name="strLabelSelectVerse">Seleziona Versetti</string>
+    <string name="strLabelSelectTranslation">Seleziona le traduzione</string>
+    <string name="strLabelIncludeReference">Includi riferimento</string>
+    <string name="strLabelWhatsappStyling">Stile Whatsapp</string>
+    <string name="strLabelIncludeFootnotes">Includi note a piè di pagina</string>
+    <string name="strLabelIncludeArabic">Includi l\'arabo</string>
+    <string name="strLabelIncludeTranslation">Includi la traduzione</string>
+    <string name="strLabelQuickLinks">Link veloci</string>
+    <string name="strLabelLater">Dopo</string>
+    <string name="strHintSearchReciter">Cerca recitatore</string>
+    <string name="strHintSearchScript">Scritta di ricerca</string>
+    <string name="strHintSearchLanguage">Lingua di ricerca</string>
+    <string name="strLabelReset">Ripristina</string>
+    <string name="strLabelRetry">Riprova</string>
+    <string name="strLabelRefresh">Ricaricare</string>
+    <string name="strLabelHide">Nascondere</string>
+    <string name="strLabelEdit">Modificare</string>
+    <string name="strLabelDone">Fatto</string>
+    <string name="strLabelRestart">Ricomincia</string>
+    <string name="strLabelView">Visualizzazione</string>
+    <string name="strLabelOpenInReader">aperto nel lettore</string>
+    <string name="strLabelRead">Leggere</string>
+    <string name="strLabelViewAll">Nostra tutto</string>
+    <string name="strLabelChangeNRestart">Cambia e Riavvia</string>
+    <string name="strLabelAdvertisement">Annuncio</string>
+    <string name="strLabelPrevious">precedente</string>
+    <string name="strLabelStart">Inizio</string>
+    <string name="strLabelUpdateQuranApp">Aggiorna l\'app Corano</string>
+    <string name="strLabelDownloadNow">Scarica ora</string>
+    <string name="strLabelUpdate">Aggiornamento</string>
+    <string name="strLabelInstall">Installare</string>
+    <string name="strLabelOn">Su</string>
+    <string name="strLabelOff">Spento</string>
+    <string name="strLabelThemeLight">Leggero</string>
+    <string name="strLabelNextChapter">Prossimo capitolo</string>
+    <string name="strLabelNoNextChapter">Nessun capitolo successivo</string>
+    <string name="strLabelPreviousJuz">Juz precedente</string>
+    <string name="strLabelNextJuz">Il prossimo Juz</string>
+    <string name="strLabelPreviousVerse">Verso precedente</string>
+    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strLabelVerseNo" formatted="false">Verso %d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Verso : %d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Versi: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Verso %1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Sura %1$s : Verso %2$d</string>
+    <string name="strTitleAppUser">Utente QuranApp</string>
+    <string name="strTitleHolyQuran">Il sacro Corano</string>
+    <string name="strTitleQuran">Corano</string>
+    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleReaderChapters">Sure (capitoli)</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleReaderJumpToVerse">Salta al verso</string>
+    <string name="strTitleVerseOptions">Opzioni di versi</string>
+    <string name="strTitleVerseRecitation">Recitazione di versi</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Vai al versetto %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Leggi i versi %1$d - %2$d</string>
+    <string name="strTitleReaderLayoutStyle">Stile di visualizzazione del Corano</string>
+    <string name="strTitleBookmark">Segnalibro</string>
+    <string name="strTitleBookmarks">Segnalibri</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleAboutSurah">A proposito di Sura</string>
+    <string name="strTitleTranslations">Traduzioni</string>
+    <string name="strTitleDownloadTranslations">Scaricamento</string>
+    <string name="strTitleRecitations">Seleziona Recitatore</string>
+    <string name="strTitleScripts">Seleziona Copione</string>
+    <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro\?</string>
+    <string name="strTitleTranslDelete">Elimina traduzione\?</string>
+    <string name="strTitleRecitationOptions">Opzioni</string>
+    <string name="strTitleAutoPlayNext">Riproduzione automatica successiva</string>
+    <string name="strTitleQuickEdit">Modifica rapida</string>
+    <string name="strTitleReportVerse">Rapporto Versetto</string>
+    <string name="strTitleSelectReason">Seleziona Motivo</string>
+    <string name="strTitleDuas">Coranico Duas</string>
+    <string name="strTitleProphets">Profeti</string>
+    <string name="strTitleFeaturedTopics">Argomenti nel Corano</string>
+    <string name="strTitleFeaturedDuas">Duas nel Corano</string>
+    <string name="strTitlePrivacyPolicy">politica sulla riservatezza</string>
+    <string name="strTitleSuccess">Successo</string>
+    <string name="strChapInfoSeeMore">Vedi maggiori informazioni ›</string>
+    <string name="strTitleChapInfoChapterNo">Numero di capitolo</string>
+    <string name="strTitleChapInfoVerses">Versi</string>
+    <string name="strTitleChapInfoRukus">Rukus</string>
+    <string name="strTitleChapInfoPages">Pagine</string>
+    <string name="strTitleChapInfoRevOrder">Ordine di rivelazione</string>
+    <string name="strTitleChapInfoRevType">Ordine di rivelazione</string>
+    <string name="strTitleAppSettings">Impostazioni dell\'app</string>
+    <string name="strTitleReaderSettings">Impostazioni lettore</string>
+    <string name="strTitleAppLanguage">Lingua dell\'app</string>
+    <string name="strTitleChangeLanguage">Cambia lingua\?</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strTitleNoInternet">Senza internet</string>
+    <string name="strLabelPause">Pausa</string>
+    <string name="strLabelRemoveBookmark">Rimuovi segnalibro</string>
+    <string name="strLabelBookmarked">Segnalibro</string>
+    <string name="strLabelRemoveAds">Rimuovere gli annunci</string>
+    <string name="strLabelShare">condividere</string>
+    <string name="strLabelReport">Rapporto</string>
+    <string name="strLabelReading">Lettura</string>
+    <string name="strLabelMostPlaces">La maggior parte delle menzioni</string>
+    <string name="strLabelOrder">Ordine</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d traduzioni in più</string>
+    <string name="strLabelAdvanceSharing">Condivisione anticipata</string>
+    <string name="strLabelCurrentVerse">Versetto attuale</string>
+    <string name="strLabelVerseRange">Gamma di versi</string>
+    <string name="strLabelSelectTranslations">Seleziona le traduzioni</string>
+    <string name="strHintSearch">Ricerca</string>
+    <string name="strHintSearchQuran">Digita un termine, ad esempio \"Vita\"</string>
+    <string name="strHintSearchTopic">Argomento di ricerca</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Cerca argomento in \"%s\"</string>
+    <string name="strHintSearchProphet">Cerca profeta</string>
+    <string name="strHintSearchChapter">Cerca sura</string>
+    <string name="strHintSearchVerse">versi di ricerca</string>
+    <string name="strHintSearchJuz">Cerca juz</string>
+    <string name="strHintSearchTranslation">Cerca traduzione</string>
+    <string name="strHintFromVerse">Dal verso</string>
+    <string name="strLabelVersesWithColon" formatted="false">Versi : %1$d–%2$d</string>
+    <string name="strLabelDismiss">Congedare</string>
+    <string name="strLabelOpen">Aprire</string>
+    <string name="strLabelDiscard">Scartare</string>
 </resources>

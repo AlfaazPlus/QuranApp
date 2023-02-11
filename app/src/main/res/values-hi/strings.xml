@@ -66,18 +66,18 @@
     <string name="strLabelPageNo" formatted="false">पृष्ठ %d</string>
     <string name="strLabelJuzNo" formatted="false">पारा %d</string>
     <string name="strLabelVerseNo" formatted="false">आयत %d</string>
-    <string name="strLabelVerses" formatted="false">आयत %d–%d</string>
+    <string name="strLabelVerses" formatted="false">आयत %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">आयत : %d</string>
-    <string name="strLabelVersesWithColon" formatted="false">आयत : %d–%d</string>
+    <string name="strLabelVersesWithColon" formatted="false">आयत : %1$d–%2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">आयतें: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
-    <string name="strLabelVerseWithChapNo" formatted="false">आयत %d:%d</string>
-    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
-    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">सूरह %s %d: आयत %d</string>
-    <string name="strLabelVerseWithChapNameWithBar" formatted="false">सूरह %s │ आयत %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">सूरह %s : आयत %d</string>
-    <string name="strLabelFeatureQuranMiniInfo" formatted="false">सूरह सं %d │ आयत %d–%d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">आयत %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">सूरह %1$s %2$d: आयत %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">सूरह %1$s │ आयत %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">सूरह %1$s : आयत %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">सूरह सं %1$d │ आयत %2$d–%3$d</string>
     <string name="strTitleAppUser">QuranApp यूजर</string>
     <string name="strTitleHolyQuran">पवित्र क़ुरआन</string>
     <string name="strTitleQuran">क़ुरआन</string>
@@ -93,9 +93,9 @@
     <string name="strTitleReaderJumpToVerse">आयत पर जाएं</string>
     <string name="strTitleVerseOptions">आयत विकल्प</string>
     <string name="strTitleVerseRecitation">आयत की तिलावत</string>
-    <string name="strTitleReaderVerseInformation" formatted="false">सूरह %s : %d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">सूरह %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">आयत %d पर जाएं</string>
-    <string name="strTitleReadVerseRange" formatted="false">%d से %d आयतें पढ़ें</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d से %2$d आयतें पढ़ें</string>
     <string name="strTitleReaderLayoutStyle">कुरान दृश्य शैली</string>
     <string name="strTitleReaderTextSizeArabic">अरबी का आकार</string>
     <string name="strTitleReaderTextSizeTransl">अनुवाद का आकार</string>
@@ -204,9 +204,9 @@
     <string name="strMsgVOTDOn">प्रतिदिन सुबह एक सूचना प्राप्त करें।</string>
     <string name="strMsgYouAreReadingVerses">आप पढ़ रहे है आयत:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d एक अमान्य सूरह संख्या है</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">आयत संख्या %d, सूरह संख्या %d के लिए अमान्य है</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">आयत संख्या %1$d, सूरह संख्या %2$d के लिए अमान्य है</string>
     <string name="strMsgInvalidVersesRange">अमान्य रेंज।</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%d-%d, सूरह संख्या %d के लिए एक अमान्य रेंज है</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d, सूरह संख्या %3$d के लिए एक अमान्य रेंज है</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d एक अमान्य पारा संख्या है</string>
     <string name="strMsgBookmarkAdded">आयत बुकमार्क किया गया</string>
     <string name="strMsgBookmarkAddFailed">आयत बुकमार्क नहीं किया गया</string>
@@ -217,11 +217,11 @@
     <string name="strMsgBookmarkNoItems">कोई बुकमार्क्स नहीं</string>
     <string name="strMsgBookmarkDeleteSelected">चुने गए बुकमार्क्स हटायें जाएंगे।</string>
     <string name="strMsgBookmarkDeleteAll">सभी बुकमार्क्स हटायें जाएंगे।</string>
-    <string name="strMsgBookmarkDate" formatted="false">%s %s बजे</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s %2$s बजे</string>
     <string name="strMsgBookmarkDateToday" formatted="false">आज %s बजे</string>
     <string name="strMsgHistoryRemove">हिस्ट्री से हटायें?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" को हिस्ट्री से हटाया गया</string>
-    <string name="strMsgSearchMultResultsFound" formatted="false">%s मे कुल परिणाम मिलें: %d</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s मे कुल परिणाम मिलें: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s मे सिर्फ एक परिणाम मिला</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s मे कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
     <string name="strMsgSearchNoResultsFound">कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
@@ -232,12 +232,12 @@
     <string name="strMsgChangeLanguage">भाषा बदलने के लिए एप्प को दुबारा शुरू करना होगा।</string>
     <string name="strMsgResetReaderSettings">सभी रीडर सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें।</string>
     <string name="strMsgProphetsOrder">कालानुक्रमिक क्रम में अम्बिया को दिखा रहा है</string>
-    <string name="strMsgShareRange" formatted="false">%d%s%d के बीच का रेंज लिखे</string>
+    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d के बीच का रेंज लिखे</string>
     <string name="strMsgEnterValidRange">कृपया एक मान्य रेंज दर्ज करें</string>
     <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslNoDownloads">कोई डाउनलोड किया गया अनुवाद उपलब्ध नहीं है</string>
     <string name="strMsgTranslNoDownloadsAvailable">कोई डाउनलोड उपलब्ध नहीं</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">आप पिछले 24 घंटों में \"%s\" डाउनलोड करने के लिए पहले ही %d बार प्रयास कर चुके हैं। बाद में पुन: प्रयास करें।</string>
+    <string name="strMsgTranslDownloadThresholdReached" formatted="false">आप पिछले 24 घंटों में \"%1$s\" डाउनलोड करने के लिए पहले ही %2$d बार प्रयास कर चुके हैं। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" डाउनलोड होने में विफल रहा।</string>
     <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: \"%s\"।</string>
     <string name="strMsgTranslNoneSelected">कोई अनुवाद नहीं चुना गया है। अनुवाद ढूंढने के लिए सेटिंग में जाएं।</string>
@@ -245,7 +245,7 @@
     <string name="strDescGoBack">पीछे जाएं</string>
     <string name="strDescClose">बंद करें</string>
     <string name="strDescVerseNo" formatted="false">आयत संख्या %d।</string>
-    <string name="strDescVerseNoWithChapter" formatted="false">सूरह संख्या %s, आयत संख्या %d।</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">सूरह संख्या %1$s, आयत संख्या %2$d।</string>
     <string name="strMsgNoInternet">कृपया अपने इंटरनेट कनेक्शन की जाँच करें।</string>
     <string name="strMsgNoInternetLong">कोई इंटरनेट कनेक्शन नहीं। सुनिश्चित करें कि वाई-फ़ाई या सेल्युलर डेटा चालू है, फिर प्रयास करें।</string>
     <string name="strMsgSomethingWrong">कुछ गलत हो गया!</string>
@@ -298,6 +298,8 @@
     <string name="strMsgReadHistoryDeleteSelected">चयनित इतिहास हटा दिया जाएगा।</string>
     <string name="strMsgReadHistoryDeleteAll">सभी पढ़े गए इतिहास को हटा दिया जाएगा।</string>
     <string name="strMsgReferenceInQuran" formatted="false">कुरान में %s</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">%s से सम्बंधित आयात कुल %d स्थानों पर मिले।</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s से सम्बंधित आयात कुल %2$d स्थानों पर मिले।</string>
     <string name="strMsgReferenceDuas">कुरान से कुछ दुआएं इकट्ठी की हैं।</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">अनुवाद दृश्य</string>
+    <string name="strTitleReaderLayoutStylePageView">पृष्ठ दृश्य</string>
 </resources>

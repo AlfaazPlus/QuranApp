@@ -64,18 +64,18 @@
     <string name="strLabelPageNo" formatted="false">صفحہ %d</string>
     <string name="strLabelJuzNo" formatted="false">پارہ %d</string>
     <string name="strLabelVerseNo" formatted="false">آیت %d</string>
-    <string name="strLabelVerses" formatted="false">آیات %d سے %d</string>
+    <string name="strLabelVerses" formatted="false">آیات %1$d سے %2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">آیت : %d</string>
-    <string name="strLabelVersesWithColon" formatted="false">آیات : %d سے %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">آیات : %1$d سے %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">آیات: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%d سے %d</string>
-    <string name="strLabelVerseWithChapNo" formatted="false">آیت %d:%d</string>
-    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
-    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورہ %s %d: آیت %d</string>
-    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورہ %s │ آیت %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورہ %s : آیت %d</string>
-    <string name="strLabelFeatureQuranMiniInfo" formatted="false">سورہ نمبر %d | آیات %d سے %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d سے %2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">آیت %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورہ %1$s %2$d: آیت %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورہ %1$s │ آیت %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورہ %1$s : آیت %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">باب نمبر %1$d │ آیات %2$d–%3$d</string>
     <string name="strTitleAppUser">QuranApp استعمال کنندہ</string>
     <string name="strTitleHolyQuran">قرآن کریم</string>
     <string name="strTitleQuran">قرآن</string>
@@ -91,9 +91,9 @@
     <string name="strTitleReaderJumpToVerse">آیت پر جائیں</string>
     <string name="strTitleVerseOptions">آیت کے اختیارات</string>
     <string name="strTitleVerseRecitation">آیت کی تلاوت</string>
-    <string name="strTitleReaderVerseInformation" formatted="false">سورہ %s : %d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">سورہ %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">آیت %d پر جائیں</string>
-    <string name="strTitleReadVerseRange" formatted="false">آیات %d سے %d تک پڑھیں</string>
+    <string name="strTitleReadVerseRange" formatted="false">آیات %1$d - %2$d پڑھیں</string>
     <string name="strTitleReaderLayoutStyle">قرآنی نظارے کا انداز</string>
     <string name="strTitleReaderTextSizeArabic">عربی حرف کا سائز</string>
     <string name="strTitleReaderTextSizeTransl">ترجمہ کے حرف کا سائز</string>
@@ -201,9 +201,9 @@
     <string name="strMsgVOTDOn">روزانہ صبح ایک اطلاع حاصل کریں۔</string>
     <string name="strMsgYouAreReadingVerses">آپ پڑھ رہے ہیں آیات:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d درست سورہ نمبر نہیں ہے</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%d سورہ نمبر %d کے لیے صحیح آیت نمبر نہیں ہے</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d سورہ نمبر %2$d کے لیے صحیح آیت نمبر نہیں ہے</string>
     <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں۔</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%d سے %d سورہ نمبر %d کے لیے صحیح آیت کی حد نہیں ہے</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d سورہ نمبر %3$d کے لیے صحیح آیت کی حد نہیں ہے</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ایک درست پارہ نمبر نہیں ہے</string>
     <string name="strMsgBookmarkAdded">آیت بک مارک کی گئی</string>
     <string name="strMsgBookmarkAddFailed">آیت بک مارک کرنے میں ناکام ہوگئ</string>
@@ -214,11 +214,11 @@
     <string name="strMsgBookmarkNoItems">کوئی بک مارک نہیں</string>
     <string name="strMsgBookmarkDeleteSelected">منتخب بک مارکس کو ہٹا دیا جائے گا۔</string>
     <string name="strMsgBookmarkDeleteAll">تمام بک مارکس کو ہٹا دیا جائے گا۔</string>
-    <string name="strMsgBookmarkDate" formatted="false">%s %s بجے</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s %2$s بجے</string>
     <string name="strMsgBookmarkDateToday" formatted="false">آج %s بجے</string>
     <string name="strMsgHistoryRemove">اس سرگزشت کو ہٹایں؟</string>
     <string name="strMsgHistoryRemoved" formatted="false">‏کو گزشت سے ہٹا دیا گیا \"%s\"</string>
-    <string name="strMsgSearchMultResultsFound" formatted="false">%s میں کل نتائج ملے: %d</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s میں کل نتائج ملے: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s میں صرف 1 نتیجہ ملا</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s میں کوئی نتیجہ نہیں ملا۔ براہ کرم سرچ فلٹرز چیک کریں یا کسی اور ترجمہ میں تلاش کریں۔</string>
     <string name="strMsgSearchNoResultsFound">کوئی نتیجہ نہیں ملا۔ براہ کرم سرچ فلٹرز چیک کریں یا کسی اور ترجمہ میں تلاش کریں۔</string>
@@ -229,12 +229,12 @@
     <string name="strMsgChangeLanguage">زبان تبدیل کرنے کے لیے ایپ کو دوبارہ شروع کیا جائے گا۔</string>
     <string name="strMsgResetReaderSettings">تمام ریڈر سیٹنگز کو ڈیفالٹ پر سیٹ کریں۔</string>
     <string name="strMsgProphetsOrder">تاریخ کے لحاظ سے پیغمبروں کو دکھایا جا رہا ہے</string>
-    <string name="strMsgShareRange" formatted="false">%d%s%d کے درمیان رینج درج کریں</string>
+    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d کے درمیان رینج درج کریں</string>
     <string name="strMsgEnterValidRange">براہ کرم ایک درست رینج درج کریں</string>
     <string name="strMsgTranslLoadFailed">ترجمے لوڈ نہیں کیے جا سکے۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
     <string name="strMsgTranslNoDownloads">کوئی ترجمہ ڈاؤن لوڈ نہیں ہے</string>
     <string name="strMsgTranslNoDownloadsAvailable">کوئی ڈاؤن لوڈ دستیاب نہیں ہے</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">آپ پچھلے 24 گھنٹوں میں \"%s\" ڈاؤن لوڈ کرنے کے لیے پہلے ہی %d بار کوشش کر چکے ہیں۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
+    <string name="strMsgTranslDownloadThresholdReached" formatted="false">آپ پچھلے 24 گھنٹوں میں \"%1$s\" ڈاؤن لوڈ کرنے کے لیے پہلے ہی %2$d بار کوشش کر چکے ہیں۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ڈاؤن لوڈ ہونے میں ناکام رہا۔</string>
     <string name="strMsgTranslDownloaded" formatted="false">ڈاؤن لوڈ کیا گیا: \"%s\"۔</string>
     <string name="strMsgTranslNoneSelected">کوئی ترجمہ منتخب نہیں ہے۔ ترجمے تلاش کرنے کے لیے ترتیبات پر جائیں۔</string>
@@ -242,7 +242,7 @@
     <string name="strDescGoBack">واپس جائے</string>
     <string name="strDescClose">بند کریں</string>
     <string name="strDescVerseNo" formatted="false">آیت نمبر %d۔</string>
-    <string name="strDescVerseNoWithChapter" formatted="false">سورہ نمبر %s، آیت نمبر %d۔</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">سورہ نمبر %1$s، آیت نمبر %2$d۔</string>
     <string name="strMsgNoInternet">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں۔</string>
     <string name="strMsgNoInternetLong">انٹرنیٹ کنکشن نہیں ہے۔ یقینی بنائیں کہ Wi-Fi یا سیلولر ڈیٹا آن ہے، پھر دوبارہ کوشش کریں۔</string>
     <string name="strMsgSomethingWrong">کچھ غلط ہو گیا!</string>
@@ -298,6 +298,8 @@
     <string name="strMsgReadHistoryDeleteSelected">منتخب کردہ سرگزشت ہٹا دی جائے گی۔</string>
     <string name="strMsgReadHistoryDeleteAll">تمام پڑھی ہوئی سرگزشت ہٹا دی جائے گی۔</string>
     <string name="strMsgReferenceInQuran" formatted="false">قرآن میں %s</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">‏%s سے متعلق آیات کل %d جگہوں پر پائی گئیں۔</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s سے متعلق آیات کل %2$d جگہوں پر پائی گئیں۔</string>
     <string name="strMsgReferenceDuas">قرآن سے چند دعائیں جمع کی ہیں۔</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">ترجمہ</string>
+    <string name="strTitleReaderLayoutStylePageView">صفحہ</string>
 </resources>

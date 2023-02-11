@@ -84,16 +84,16 @@
     <string name="strLabelPreviousVerse">Verso anterior</string>
     <string name="strLabelNextVerse">siguiente verso</string>
     <string name="strLabelVerseNo" formatted="false">Verso %d</string>
-    <string name="strLabelVerses" formatted="false">Versos %d–%d</string>
+    <string name="strLabelVerses" formatted="false">Versos %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Verso : %d</string>
-    <string name="strLabelVersesWithColon" formatted="false">Versos : %d–%d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Versos : %1$d–%2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">Versos: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%d–%d</string>
-    <string name="strLabelVerseWithChapNo" formatted="false">Verso %d:%d</string>
-    <string name="strLabelVerseSerial" formatted="false">%d:%d</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capitulo %s %d: Verso %d</string>
-    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Capítulo %s │ Verso %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %s : Verso %d</string>
-    <string name="strLabelVerseSerialWithChapter" formatted="false">%s %d:%d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Verso %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capitulo %1$s %2$d: Verso %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Capítulo %1$s │ Verso %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %1$s : Verso %2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Puede seleccionar un máximo de %d traducciones. Por favor anule la seleccione uno u otro. Esto es para evitar la perdida de rendimiento.</string>
 </resources>
