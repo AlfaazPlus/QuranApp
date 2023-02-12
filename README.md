@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/AlfaazPlus/QuranApp/blob/master/app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.png" alt='QuranApp logo' height="140"/>
+<img src="/app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.png" alt='QuranApp logo' height="140"/>
 
 ### QuranApp: Read and Explore
 
@@ -17,13 +17,13 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 # Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots/screenshot2.jpg" alt='Screenshot 2' width='21%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots/screenshot3.jpg" alt='Screenshot 3' width='21%' />
-    <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot2.jpg" alt='Screenshot 2' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot3.jpg" alt='Screenshot 3' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
 </div>
 
-See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots).
+See more [here](/repo_assets/screenshots).
 
 ## Features
 
@@ -45,11 +45,11 @@ See all the features [here](/FEATURES.md).
 
 Data sources for the development of this app include [QuranEnc](https://quranenc.com/en/home), [Tanzil](https://tanzil.net/), [quran.com](https://quran.com/) API and other online verified Quran projects.
 
-See [this page](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTORS.md) to know about the contributors.
+See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
 ## Contributing
 
-If you want to contribute, kindly visit [CONTRIBUTING.md](https://github.com/AlfaazPlus/QuranApp/blob/master/CONTRIBUTING.md) to learn the ways to get started.
+If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
 ## App Translations
 <a href="https://hosted.weblate.org/projects/QuranApp/#languages">
@@ -58,6 +58,6 @@ If you want to contribute, kindly visit [CONTRIBUTING.md](https://github.com/Alf
 
 ## License
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/AlfaazPlus/QuranApp/blob/master/LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](/LICENSE)
 
 </div>
