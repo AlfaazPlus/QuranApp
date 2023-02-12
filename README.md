@@ -23,22 +23,23 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
     <img src="https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
 </div>
 
-See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/screenshots).
+See more [here](https://github.com/AlfaazPlus/QuranApp/blob/master/repo_assets/screenshots).
 
 ## Features
 
-| Salient Features                    |     |
-|-----------------------------|-----|
+| Salient Features               |     |
+|--------------------------------|-----|
 | 🚫 No Ads or Purchases         | ✅   |
-| 🛡️ No permission required      | ✅   |
+| 🛡️ No permission required     | ✅   |
 | 📙 Multiple Translations       | ✅   |
-| 🎙️ Multiple Recitations        | ✅   |
+| 🎙️ Multiple Recitations       | ✅   |
 | 🎨 Multiple Quran Fonts        | ✅   |
-| ❤️ Verse Reminder              | ✅   |
+| ❤️Verse Reminder               | ✅   |
 | 🔗 Advanced Verse Interlinking | ✅   |
 | 🌐 Research Ready              | ✅   |
-| ⚡ Many more...                | ✅   |
+| ⚡ Many more...                 | ✅   |
 
+See all the features [here](/FEATURES.md).
 
 ## Credits
 
