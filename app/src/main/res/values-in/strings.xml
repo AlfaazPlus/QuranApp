@@ -55,4 +55,5 @@
     <string name="strLabelNextJuz">Juz selanjutnya</string>
     <string name="strLabelNoPreviousJuz">Tidak ada Juz sebelumnya</string>
     <string name="strLabelContinueChapter">Lanjutkan bab</string>
+    <string name="strVersion" formatted="false">Versi %s</string>
 </resources>
