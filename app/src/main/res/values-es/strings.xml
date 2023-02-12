@@ -145,7 +145,6 @@
     <string name="strMsgInvalidVersesRange">No es un rango de verso válido.</string>
     <string name="strMsgReadShowupHere">Su historial de lectura aparecerá aquí.</string>
     <string name="strMsgReadHistoryRemoveFailed">No se pudo eliminar el historial de lectura.</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">Se a intentado descargar \"%1$s\" %2$d veces en las ultimas 24 Hrs. Por favor, intentelo mas tarde.</string>
     <string name="strMsgEditShareLongTransl">La traducción es muy larga, puede no encajar correctamente.</string>
     <string name="strTitleChapInfoVerses">Versos</string>
     <string name="strTitleDuas">Suplicas Coránicos</string>

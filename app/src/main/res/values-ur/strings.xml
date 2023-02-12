@@ -234,7 +234,6 @@
     <string name="strMsgTranslLoadFailed">ترجمے لوڈ نہیں کیے جا سکے۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
     <string name="strMsgTranslNoDownloads">کوئی ترجمہ ڈاؤن لوڈ نہیں ہے</string>
     <string name="strMsgTranslNoDownloadsAvailable">کوئی ڈاؤن لوڈ دستیاب نہیں ہے</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">آپ پچھلے 24 گھنٹوں میں \"%1$s\" ڈاؤن لوڈ کرنے کے لیے پہلے ہی %2$d بار کوشش کر چکے ہیں۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ڈاؤن لوڈ ہونے میں ناکام رہا۔</string>
     <string name="strMsgTranslDownloaded" formatted="false">ڈاؤن لوڈ کیا گیا: \"%s\"۔</string>
     <string name="strMsgTranslNoneSelected">کوئی ترجمہ منتخب نہیں ہے۔ ترجمے تلاش کرنے کے لیے ترتیبات پر جائیں۔</string>

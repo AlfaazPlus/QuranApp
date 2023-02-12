@@ -210,7 +210,6 @@
     <string name="strMsgReadHistoryRemovedAlready">سابقه خواندن قبلاً حذف شده است.</string>
     <string name="strMsgChangeLanguage">برنامه برای تأثیر بر تغییر زبان راه اندازی مجدد می شود.</string>
     <string name="strMsgTranslLoadFailed">ترجمه ها از سرور بارگیری نشد. لطفاً بعداً دوباره امتحان کنید.</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">شما قبلاً در 24 ساعت گذشته %2$d بار سعی کرده اید \"%1$s\" را دانلود کنید. لطفاً بعداً دوباره امتحان کنید.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">حداکثر %d ترجمه را می توان همزمان انتخاب کرد. لطفاً قبل از انتخاب دیگری، یکی را لغو انتخاب کنید. این برای جلوگیری از افت عملکرد است.</string>
     <string name="strLabelSelectedCount" formatted="false">%d انتخاب شد</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d ترجمه های بیشتر</string>

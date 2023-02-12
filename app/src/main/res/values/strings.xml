@@ -252,7 +252,6 @@
     <string name="strMsgTranslLoadFailed">Could not load translations from the server. Please try again later.</string>
     <string name="strMsgTranslNoDownloads">No downloaded translations available</string>
     <string name="strMsgTranslNoDownloadsAvailable">No downloads available</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">You have already attempted to download \"%1$s\" %2$d times in last 24 hrs. Please try again later.</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Failed to download \"%s\".</string>
     <string name="strMsgTranslDownloaded" formatted="false">Downloaded: \"%s\".</string>
     <string name="strMsgTranslNoneSelected">No translation is selected. Go to settings to find translations.</string>

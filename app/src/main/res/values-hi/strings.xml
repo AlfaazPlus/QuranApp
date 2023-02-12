@@ -237,7 +237,6 @@
     <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslNoDownloads">कोई डाउनलोड किया गया अनुवाद उपलब्ध नहीं है</string>
     <string name="strMsgTranslNoDownloadsAvailable">कोई डाउनलोड उपलब्ध नहीं</string>
-    <string name="strMsgTranslDownloadThresholdReached" formatted="false">आप पिछले 24 घंटों में \"%1$s\" डाउनलोड करने के लिए पहले ही %2$d बार प्रयास कर चुके हैं। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" डाउनलोड होने में विफल रहा।</string>
     <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: \"%s\"।</string>
     <string name="strMsgTranslNoneSelected">कोई अनुवाद नहीं चुना गया है। अनुवाद ढूंढने के लिए सेटिंग में जाएं।</string>

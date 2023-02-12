@@ -8,8 +8,6 @@
     <item name="on" type="id" />
     <item name="off" type="id" />
 
-
-
     <item name="btnPlayControl" type="id" />
     <item name="btnFootnotes" type="id" />
     <item name="btnTafsir" type="id" />
@@ -33,7 +31,6 @@
     <item name="appUpdateContainer" type="id" />
     <item name="homepageVOTD" type="id" />
     <item name="homepageReadHistoryLayout" type="id" />
-    <item name="homepageAdLayout" type="id" />
     <item name="homepageReadingLayout" type="id" />
     <item name="homepageTopicsLayout" type="id" />
     <item name="homepageProphetsLayout" type="id" />
