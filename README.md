@@ -10,6 +10,7 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
 
+[![Android CI](https://github.com/AlfaazPlus/QuranApp/actions/workflows/android.yml/badge.svg?branch=master)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/android.yml)
 </div>
 
 <div align="left">
