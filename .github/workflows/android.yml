@@ -1,10 +1,21 @@
 name: Android CI
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "master" ]
+    paths-ignore:
+      - "**.md"
+      - "inventory/**"
+      - "repo_assets/**"
+      - ".github/**"
+      - "kotlin_code_style.xml"
   pull_request:
-    branches: [ "master" ]
+    paths-ignore:
+      - "**.md"
+      - "inventory/**"
+      - "repo_assets/**"
+      - ".github/**"
+      - "kotlin_code_style.xml"
 
 jobs:
   build:
