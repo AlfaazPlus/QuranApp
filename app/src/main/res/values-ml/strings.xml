@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strLabelOkay">ശരി</string>
+    <string name="strTitleLicenses">ലൈസൻസ്</string>
+    <string name="strLabelTop">മുകളിൽ</string>
+    <string name="strTitleAppVersion">അപ്ലിക്കേഷൻ പതിപ്പ്</string>
+    <string name="strVersion" formatted="false">പതിപ്പ്</string>
+    <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
+    <string name="strLabelCancel">റദ്ദാക്കുക</string>
+    <string name="strLabelGotIt">പിടി കിട്ടി</string>
+    <string name="strLabelApply">പ്രയോഗിക്കുക</string>
+    <string name="strLabelSend">അയക്കുക</string>
+    <string name="strLabelDelete">ഇല്ലാതാക്കുക</string>
+    <string name="strLabelRemoveAll">എല്ലാം നീക്കം ചെയ്യുക</string>
+    <string name="strLabelCopy">പകർത്തുക</string>
+    <string name="strLabelBack">പുറകെ</string>
+    <string name="strLabelView">കാണുക</string>
+    <string name="strLabelOpenInReader">റീഡറിൽ തുറക്കുക</string>
+    <string name="strLabelReset">പുനഃസജ്ജമാക്കുക</string>
+    <string name="strLabelRetry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="strLabelRefresh">പുതുക്കുക</string>
+    <string name="strLabelDismiss">നിരസിക്കുക</string>
+    <string name="strLabelEdit">തിരുത്തുക</string>
+    <string name="strLabelHide">മറച്ചുവയ്‌ക്കുക</string>
+    <string name="strLabelRestart">പുനരാരംഭിക്കുക</string>
+    <string name="strLabelDiscard">ഒഴിവാക്കുക</string>
+    <string name="strLabelDone">ചെയ്തു കഴിഞ്ഞു</string>
+    <string name="strLabelUpdateQuranApp">QuranApp അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="strLabelOpen">തുറക്കുക</string>
+    <string name="strLabelSkip">ഒഴിവാക്കുക</string>
+    <string name="strLabelViewAll">എല്ലാം കാണുക</string>
+    <string name="strLabelAdvertisement">പരസ്യം</string>
+    <string name="strLabelChangeNRestart">മാറ്റുക &amp; പുനരാരംഭിക്കുക</string>
+    <string name="strLabelRead">വായിക്കുക</string>
+    <string name="strLabelNew">പുതിയത്</string>
+    <string name="strLabelNext">അടുത്തത്</string>
+    <string name="strLabelNotNow">ഇപ്പോള്‍ വേണ്ട</string>
+    <string name="strLabelStart">ആരംഭിക്കുക</string>
+    <string name="strLabelPrevious">മുന്പിലേത്തത്</string>
+    <string name="strLabelDownloadNow">ഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക</string>
+    <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
+    <string name="strLabelClose">അടയ്ക്കുക</string>
 </resources>
