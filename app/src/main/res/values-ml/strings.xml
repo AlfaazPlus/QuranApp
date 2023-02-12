@@ -4,7 +4,7 @@
     <string name="strTitleLicenses">ലൈസൻസ്</string>
     <string name="strLabelTop">മുകളിൽ</string>
     <string name="strTitleAppVersion">അപ്ലിക്കേഷൻ പതിപ്പ്</string>
-    <string name="strVersion" formatted="false">പതിപ്പ്</string>
+    <string name="strVersion" formatted="false">പതിപ്പ് %s</string>
     <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
     <string name="strLabelCancel">റദ്ദാക്കുക</string>
     <string name="strLabelGotIt">പിടി കിട്ടി</string>
@@ -79,7 +79,7 @@
     <string name="strLabelVersesText">വാക്യങ്ങൾ</string>
     <string name="strLabelVerses" formatted="false">വാക്യങ്ങൾ %1$d–%2$d</string>
     <string name="strLabelVerseNo" formatted="false">വാക്യം %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">"സൂറത്ത്  %1$s : വാക്യം %2$d"</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">സൂറത്ത് %1$s : വാക്യം %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">അധ്യായം നമ്പർ. %1$d│വാക്യങ്ങൾ %2$d–%3$d</string>
     <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
     <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
