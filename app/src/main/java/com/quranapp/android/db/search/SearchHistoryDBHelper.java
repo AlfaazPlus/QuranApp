@@ -24,12 +24,10 @@ import java.util.ArrayList;
 public class SearchHistoryDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "SearchHistory.db";
     public static final int DB_VERSION = 1;
-    private final Context mContext;
 
 
     public SearchHistoryDBHelper(@NonNull Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        mContext = context;
     }
 
     @Override
@@ -119,11 +117,6 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
-    public void removeAllHistories() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_NAME, null, null);
-    }
-
     public ArrayList<SearchResultModelBase> getHistories(String query) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -144,9 +137,9 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, sortOrder);
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(_ID));
-            String text = cursor.getString(cursor.getColumnIndex(COL_TEXT));
-            String date = cursor.getString(cursor.getColumnIndex(COL_DATETIME));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
+            String text = cursor.getString(cursor.getColumnIndexOrThrow(COL_TEXT));
+            String date = cursor.getString(cursor.getColumnIndexOrThrow(COL_DATETIME));
 
             SearchHistoryModel historyModel = new SearchHistoryModel(id, text, date);
             histories.add(historyModel);
