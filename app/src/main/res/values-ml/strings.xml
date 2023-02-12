@@ -41,4 +41,63 @@
     <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
     <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
     <string name="strLabelClose">അടയ്ക്കുക</string>
+    <string name="strTitleReaderLayoutStylePageView">പേജ് കാഴ്ച</string>
+    <string name="strTitleReaderLayoutStyle">ഖുർആൻ വീക്ഷണ ശൈലി</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">വിവർത്തനം കാഴ്ച</string>
+    <string name="strTitleReaderTextSizeArabic">അറബിക് ടെക്സ്റ്റ് വലിപ്പം</string>
+    <string name="strLabelNoNextChapter">അടുത്ത അധ്യായം ഇല്ല</string>
+    <string name="strLabelOff">ഓഫ് ആക്കുക</string>
+    <string name="strLabelOn">ഓൺ ആക്കുക</string>
+    <string name="strLabelPremium">പ്രീമിയം</string>
+    <string name="strLabelPreviousJuz">മുമ്പത്തെ ജുസുഅ്</string>
+    <string name="strLabelThemeDark">ഇരുണ്ടത്</string>
+    <string name="strLabelSystemDefault">സിസ്റ്റത്തിനനുസരിച്ച്</string>
+    <string name="strLabelThemeLight">വെളുത്തത്</string>
+    <string name="strLabelPreviousChapter">മുൻ അധ്യായം</string>
+    <string name="strLabelNoPreviousChapter">മുൻ അധ്യായം ഇല്ല</string>
+    <string name="strLabelNextChapter">അടുത്ത അധ്യായം</string>
+    <string name="strLabelNoPreviousJuz">മുമ്പത്തെ ജുസുഅ് ഇല്ല</string>
+    <string name="strLabelNoNextJuz">അടുത്ത ജുസുഅ് ഇല്ല</string>
+    <string name="strLabelNextJuz">അടുത്ത് ജുസുഅ്</string>
+    <string name="strLabelFullChapter">മുഴുവൻ അധ്യായവും വായിക്കുക</string>
+    <string name="strLabelJuzNo" formatted="false">ജുസുഅ് %d</string>
+    <string name="strLabelContinueChapter">അദ്ധ്യായം തുടരുക</string>
+    <string name="strLabelPreviousVerse">മുൻ വാക്യം</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">സൂറത്ത് %1$s │വാക്യം %2$d</string>
+    <string name="strLabelSurah" formatted="false">സൂറത്ത് %s</string>
+    <string name="strLabelPageNo" formatted="false">പേജ് %d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">വാക്യം : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">വാക്യങ്ങൾ : %1$d–%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">വാക്യങ്ങൾ : %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">വാക്യം %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">സൂറത്ത് %1$s %2$d: വാക്യം %3$d</string>
+    <string name="strTitleReaderTextSizeTransl">വിവർത്തന ടെക്സ്റ്റ് വലുപ്പം</string>
+    <string name="strLabelNextVerse">അടുത്ത വാക്യം</string>
+    <string name="strLabelVersesText">വാക്യങ്ങൾ</string>
+    <string name="strLabelVerses" formatted="false">വാക്യങ്ങൾ %1$d–%2$d</string>
+    <string name="strLabelVerseNo" formatted="false">വാക്യം %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">"സൂറത്ത്  %1$s : വാക്യം %2$d"</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">അധ്യായം നമ്പർ. %1$d│വാക്യങ്ങൾ %2$d–%3$d</string>
+    <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
+    <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
+    <string name="strTitleQuran">ഖുർആൻ</string>
+    <string name="strTitleMakki">മാക്കി</string>
+    <string name="strTitleMadani">മദനി</string>
+    <string name="strTitleFootnote">അടിക്കുറിപ്പ്</string>
+    <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
+    <string name="strTitleReaderChapters">സൂറത്തുകൾ (അധ്യായങ്ങൾ)</string>
+    <string name="strTitleReaderJuz">ജുസുഅ് (പാര)</string>
+    <string name="strTitleReaderChapters2">സൂറത്തുകൾ</string>
+    <string name="strTitleReaderJuz2">ജുസുഅ്</string>
+    <string name="strTitleReaderVerses">വാക്യങ്ങൾ</string>
+    <string name="strTitleReaderJumpToVerse">വാക്യത്തിലേക്ക് പോകുക</string>
+    <string name="strTitleVerseOptions">വാക്യ ഓപ്ഷനുകൾ</string>
+    <string name="strTitleVerseRecitation">വാക്യപാരായണം</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">സൂറത്ത് %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">വാക്യത്തിലേക്ക് പോകുക %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">വാക്യങ്ങൾ വായിക്കുക %1$d - %2$d</string>
+    <string name="strTitleSettings">ക്രമീകരണങ്ങൾ</string>
 </resources>
