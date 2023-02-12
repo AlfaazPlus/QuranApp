@@ -1,2 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strLabelThemeLight">Terang</string>
+    <string name="strLabelReset">Atur ulang</string>
+    <string name="strLabelNext">Selanjutnya</string>
+    <string name="strTitleLicenses">Lisensi</string>
+    <string name="strLabelGotIt">Mengerti</string>
+    <string name="strLabelCancel">Batal</string>
+    <string name="strTitleAppVersion">Versi aplikasi</string>
+    <string name="strLabelClose">Tutup</string>
+    <string name="strLabelOkay">Oke</string>
+    <string name="strLabelApply">Terapkan</string>
+    <string name="strLabelSend">Kirim</string>
+    <string name="strLabelRemove">Hapus</string>
+    <string name="strLabelDelete">Hapus</string>
+    <string name="strLabelRemoveAll">Hapus semua</string>
+    <string name="strLabelBack">Kembali</string>
+    <string name="strLabelCopy">Salin</string>
+    <string name="strLabelTop">Atas</string>
+    <string name="strLabelDismiss">Abaikan</string>
+    <string name="strLabelHide">Sembunyikan</string>
+    <string name="strLabelRefresh">Segarkan</string>
+    <string name="strLabelRetry">Ulangi</string>
+    <string name="strLabelDone">Selesai</string>
+    <string name="strLabelRestart">Mulai ulang</string>
+    <string name="strLabelDiscard">Buang</string>
+    <string name="strLabelOff">Mati</string>
+    <string name="strLabelThemeDark">Gelap</string>
+    <string name="strLabelEdit">Ubah</string>
+    <string name="strLabelView">Lihat</string>
+    <string name="strLabelSkip">Lewati</string>
+    <string name="strLabelNoNextJuz">Tidak ada juz selanjutnya</string>
+    <string name="strLabelOpen">Buka</string>
+    <string name="strLabelOpenInReader">Buka di Pembaca</string>
+    <string name="strLabelChangeNRestart">Ubah &amp; Mulai ulang</string>
+    <string name="strLabelRead">Baca »</string>
+    <string name="strLabelViewAll">Lihat semua</string>
+    <string name="strLabelAdvertisement">Iklan</string>
+    <string name="strLabelPrevious">Sebelumnya</string>
+    <string name="strLabelStart">Mulai</string>
+    <string name="strLabelUpdateQuranApp">Perbarui QuranApp</string>
+    <string name="strLabelDownloadNow">UNDUH SEKARANG</string>
+    <string name="strLabelNotNow">Tidak sekarang</string>
+    <string name="strLabelNoPreviousChapter">Tidak ada bab sebelumnya</string>
+    <string name="strLabelPreviousJuz">Juz sebelumnya</string>
+    <string name="strLabelFullChapter">Baca full bab</string>
+    <string name="strLabelUpdate">Perbarui</string>
+    <string name="strLabelInstall">Install</string>
+    <string name="strLabelNew">Baru</string>
+    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelNoNextChapter">Tidak ada bab selanjutnya</string>
+    <string name="strLabelSystemDefault">Sistem Bawaan</string>
+    <string name="strLabelPreviousChapter">Bab Sebelumnya</string>
+    <string name="strLabelNextChapter">Bab Selanjutnya</string>
+    <string name="strLabelNextJuz">Juz selanjutnya</string>
+    <string name="strLabelNoPreviousJuz">Tidak ada Juz sebelumnya</string>
+    <string name="strLabelContinueChapter">Lanjutkan bab</string>
+    <string name="strVersion" formatted="false">Versi %s</string>
+</resources>
