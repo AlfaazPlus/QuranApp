@@ -1,4 +1,4 @@
-<img src="/repo_assets/banner.jpg" alt='QuranApp banner' />
+<img src="/repo_assets/banner2.jpg" alt='QuranApp banner' />
 
 ## Features of the QuranApp
 The following features are the reason why you should use the QuranApp.
