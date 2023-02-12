@@ -56,4 +56,80 @@
     <string name="strLabelNoPreviousJuz">Tidak ada Juz sebelumnya</string>
     <string name="strLabelContinueChapter">Lanjutkan bab</string>
     <string name="strVersion" formatted="false">Versi %s</string>
+    <string name="strLabelPreviousVerse">Ayat sebelumnya</string>
+    <string name="strLabelNextVerse">Ayat selanjutnya</string>
+    <string name="strLabelVersesText">Ayat</string>
+    <string name="strLabelSurah" formatted="false">Surah %s</string>
+    <string name="strLabelVerseNo" formatted="false">Ayat %d</string>
+    <string name="strLabelVerses" formatted="false">Ayat %1$d–%2$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Ayat : %1$d–%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Ayat: %d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Ayat %1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surah %1$s %2$d: Ayat %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surah %1$s │ Ayat %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Surah %1$s : Ayat %2$d</string>
+    <string name="strTitleAppUser">Pengguna QuranApp</string>
+    <string name="strTitleHolyQuran">Kitab suci Al Quran</string>
+    <string name="strTitleQuran">Al Quran</string>
+    <string name="strTitleMakki">Makkiyah</string>
+    <string name="strTitleMadani">Madaniyah</string>
+    <string name="strTitleFootnote">Catatan Kaki</string>
+    <string name="strTitleReaderChapters2">Surah</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleReaderVerses">Ayat</string>
+    <string name="strTitleReaderJumpToVerse">Pergi ke ayat</string>
+    <string name="strTitleVerseOptions">Pilihan ayat</string>
+    <string name="strTitleVerseRecitation">Pembacaan ayat</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Pergi ke ayat %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Baca Ayat %1$d - %2$d</string>
+    <string name="strTitleReaderLayoutStyle">Tampilan Al Quran</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Tampilan terjemahan</string>
+    <string name="strTitleReaderLayoutStylePageView">Tampilan halaman</string>
+    <string name="strTitleReaderTextSizeArabic">Ukuran teks Bahasa Arab</string>
+    <string name="strTitleReaderTextSizeTransl">Ukuran teks terjemahan</string>
+    <string name="strTitleSettings">Pengaturan</string>
+    <string name="strTitleBookmark">Bookmark</string>
+    <string name="strTitleHelpSupport">Bantu &amp; Dukung</string>
+    <string name="strTitleAboutUs">Tentang Kami</string>
+    <string name="strTitleBookmarks">Bookmarks</string>
+    <string name="strTitleShareApp">Berbagi Aplikasi</string>
+    <string name="strTitleAddNote">Tambahkan catatan</string>
+    <string name="strTitleNote">Catatan</string>
+    <string name="strTitleRateApp">Beri Rating</string>
+    <string name="strTitleSubscription">Berlangganan</string>
+    <string name="strTitleFilters">Filter</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleAboutSurah">Tentang Surah</string>
+    <string name="strTitleTranslations">Terjemahan</string>
+    <string name="strTitleDownloadTranslations">Unduh</string>
+    <string name="strTitleRecitations">Pilih Pembaca</string>
+    <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
+    <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Hapus bookmark %d \?</string>
+    <string name="strTitleResetReaderSettings">Atur ulang Pengaturan Pembaca\?</string>
+    <string name="strTitleHideAd">Sembunyikan Iklan</string>
+    <string name="strTitleQuickEdit">Edit Cepat</string>
+    <string name="strTitleShareVerse">Bagikan Ayat</string>
+    <string name="strTitleProphets">Nabi dan Rasul</string>
+    <string name="strTitleFeaturedTopics">Topik dalam Al Quran</string>
+    <string name="strTitleFeaturedProphets">Nabi dan Rasul dalam Al Quran</string>
+    <string name="strLabelPageNo" formatted="false">Halaman %d</string>
+    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Ayat : %d</string>
+    <string name="strTitleFootnotes">Catatan Kaki</string>
+    <string name="strTitleSendFeedback">Beri Umpan Balik</string>
+    <string name="strTitleReportVerse">Laporkan Ayat</string>
+    <string name="strTitleExplainIssue">Jelaskan masalahnya</string>
+    <string name="strTitleRecitationOptions">Pilihan</string>
+    <string name="strTitleSelectReason">Pilih Alasan</string>
+    <string name="strTitleFeaturedQuran">Bacaan unggulan</string>
+    <string name="strTitleTranslDelete">Hapus terjemahan\?</string>
+    <string name="strTitleAutoPlayNext">Putar Otomatis Berikutnya</string>
+    <string name="strTitleTopics">Topik</string>
+    <string name="strTitleRepeatVerse">Ulangi Ayat</string>
+    <string name="strTitleVOTD">Ayat Hari Ini</string>
+    <string name="strTitleDuas">Doa-doa</string>
+    <string name="strTitleFeaturedDuas">Doa dalam Al Quran</string>
 </resources>
