@@ -2,7 +2,7 @@
 <resources>
     <string name="strLabelThemeLight">Terang</string>
     <string name="strLabelReset">Atur ulang</string>
-    <string name="strLabelNext">Selanjutnya</string>
+    <string name="strLabelNext">Berikutnya</string>
     <string name="strTitleLicenses">Lisensi</string>
     <string name="strLabelGotIt">Mengerti</string>
     <string name="strLabelCancel">Batal</string>
@@ -27,7 +27,7 @@
     <string name="strLabelOff">Mati</string>
     <string name="strLabelThemeDark">Gelap</string>
     <string name="strLabelEdit">Ubah</string>
-    <string name="strLabelView">Lihat</string>
+    <string name="strLabelView"></string>
     <string name="strLabelSkip">Lewati</string>
     <string name="strLabelNoNextJuz">Tidak ada juz selanjutnya</string>
     <string name="strLabelOpen">Buka</string>
@@ -132,4 +132,77 @@
     <string name="strTitleVOTD">Ayat Hari Ini</string>
     <string name="strTitleDuas">Doa-doa</string>
     <string name="strTitleFeaturedDuas">Doa dalam Al Quran</string>
+    <string name="strTitlePrivacyPolicy">Kebijakan Pribadi</string>
+    <string name="strTitleFailed">Gagal</string>
+    <string name="strTitleSuccess">Berhasil</string>
+    <string name="strTitleThresholdReached">Pencapaian</string>
+    <string name="strChapInfoSeeMore">Lihat info selengkapnya ›</string>
+    <string name="strTitleChapInfoJuzNo">Juz No.</string>
+    <string name="strTitleChapInfoVerses">Ayat</string>
+    <string name="strTitleChapInfoPages">Halaman</string>
+    <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
+    <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
+    <string name="strTitleReaderSettings">Pengaturan Murattal</string>
+    <string name="strTitleAppLanguage">Bahasa</string>
+    <string name="strTitleChangeLanguage">Ubah bahasa\?</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strTitleNoInternet">Tidak ada internet</string>
+    <string name="strLabelPlay">Putar</string>
+    <string name="strLabelRemoveBookmark">Hapus Bookmark</string>
+    <string name="strLabelBookmarked">Ditandai</string>
+    <string name="strLabelRemoveAds">Hapus Iklan</string>
+    <string name="strLabelShare">Bagikan</string>
+    <string name="strLabelReport">Laporkan</string>
+    <string name="strLabelReading">Bacaan</string>
+    <string name="strLabelMostPlaces">Paling banyak disebutkan</string>
+    <string name="strLabelSelectedCount" formatted="false">%d terpilih</string>
+    <string name="strLabelAdvanceSharing">Berbagi Terlebih Dahulu</string>
+    <string name="strLabelSelectVerse">Pilih Ayat</string>
+    <string name="strLabelVerseRange">Rentang ayat</string>
+    <string name="strLabelSelectTranslations">Pilih terjemahan</string>
+    <string name="strLabelSelectTranslation">Pilih terjemahan</string>
+    <string name="strLabelWhatsappStyling">Gaya Whatsapp</string>
+    <string name="strLabelIncludeArabic">Sertakan Arabic</string>
+    <string name="strLabelIncludeFootnotes">Sertakan catatan kaki</string>
+    <string name="strLabelIncludeTranslation">Sertakan terjemahan</string>
+    <string name="strLabelIncludeReference">Sertakan referensi</string>
+    <string name="strLabelQuickLinks">Tautan cepat</string>
+    <string name="strLabelLater">Nanti</string>
+    <string name="strHintSearchQuran">Ketik kata kunci contoh : \"Kehidupan\"</string>
+    <string name="strHintSearch">Pencarian</string>
+    <string name="strHintSearchTopic">Cari topik</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Cari topik di \"%s\"</string>
+    <string name="strHintSearchProphet">Cari Nabi</string>
+    <string name="strHintSearchChapter">Cari surah</string>
+    <string name="strHintSearchVerse">Cari ayat</string>
+    <string name="strHintSearchJuz">Cari juz</string>
+    <string name="strHintSearchTranslation">Cari terjemahan</string>
+    <string name="strHintSearchReciter">Cari Qori Murattal</string>
+    <string name="strHintSearchLanguage">Cari bahasa</string>
+    <string name="strHintFromVerse">Dari ayat</string>
+    <string name="strHintToVerse">Ke ayat</string>
+    <string name="strHintFeedback">Tulis feedbackmu disini…</string>
+    <string name="strHintFeedbackEmail">Email</string>
+    <string name="strHintFeedbackMessage">Pesan</string>
+    <string name="strHintBookmarkViewerNote">Tulis catatan tambahan di bookmark ini…</string>
+    <string name="strNotFound">Tidak ditemukan</string>
+    <string name="strMsgThemeDark">Mode gelap mengurangi konsumsi daya</string>
+    <string name="strMsgThemeDefault">Menyesuaikan dengan pengaturan sistem.</string>
+    <string name="strMsgVOTDOn">Dapatkan sebuah notifikasi harian di pagi hari.</string>
+    <string name="strMsgYouAreReadingVerses">Kamu sedang membaca ayat:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d tidak valid Surah No.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d tidak valid Ayat No. untuk Surah No. %2$d</string>
+    <string name="strMsgInvalidVersesRange">Rentang Ayat tidak valid.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d tidak valid Juz No.</string>
+    <string name="strMsgBookmarkAdded">Ayat berhasil ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkAddFailed">Ayat gagal ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkAddedAlready">Ayat sudah ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkRemoved">Ayat berhasil dihapus dari Bookmark</string>
+    <string name="strMsgBookmarkRemoveFailed">Ayat gagal dihapus dari Bookmark</string>
+    <string name="strMsgBookmarkRemovedAlready">Ayat tidak ada di Bookmark</string>
+    <string name="strLabelContinueReading">Lanjutkan membaca »</string>
+    <string name="strLabelOrder">Urutan</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d lebih banyak terjemahan</string>
+    <string name="strLabelBookmark">Bookmark</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d tidak valid rentang ayat untuk Surah No. %3$d</string>
 </resources>
