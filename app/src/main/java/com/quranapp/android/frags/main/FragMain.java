@@ -197,17 +197,9 @@ public class FragMain extends BaseFragment {
         return pos;
     }
 
-    private int resolvePosAdMain(View root) {
+    private int resolvePosFeaturedReading(View root) {
         int pos = resolvePosReadHistory(root) + 1;
         if (root.findViewById(R.id.homepageReadHistoryLayout) == null) {
-            pos--;
-        }
-        return pos;
-    }
-
-    private int resolvePosFeaturedReading(View root) {
-        int pos = resolvePosAdMain(root) + 1;
-        if (root.findViewById(R.id.homepageAdLayout) == null) {
             pos--;
         }
         return pos;
