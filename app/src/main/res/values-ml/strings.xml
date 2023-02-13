@@ -152,4 +152,11 @@
     <string name="strTitleChapInfoRevType">വെളിപാട് തരം</string>
     <string name="strTitleFeaturedProphets">ഖുർആനിലെ പ്രവാചകന്മാർ</string>
     <string name="strTitleVOTD">ഇന്നത്തെ വാക്യം</string>
+    <string name="strTitleAppSettings">ആപ്പ് ക്രമീകരണങ്ങൾ</string>
+    <string name="strTitleReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ</string>
+    <string name="strTitleChangeLanguage">ഭാഷ മാറ്റുക\?</string>
+    <string name="strTitleTheme">തീം</string>
+    <string name="strTitleNoInternet">ഇന്റർനെറ്റ് ഇല്ല</string>
+    <string name="strMsgChapInfoFailedLoad">സൂറത്തിന്റെ വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="strTitleAppLanguage">അപ്ലിക്കേഷൻ ഭാഷ</string>
 </resources>
