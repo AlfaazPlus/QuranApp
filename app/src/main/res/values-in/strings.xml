@@ -78,7 +78,7 @@
     <string name="strTitleReaderVerses">Ayat</string>
     <string name="strTitleReaderJumpToVerse">Pergi ke ayat</string>
     <string name="strTitleVerseOptions">Pilihan ayat</string>
-    <string name="strTitleVerseRecitation">Pembacaan ayat</string>
+    <string name="strTitleVerseRecitation">Ayat Murattal</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Pergi ke ayat %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Baca Ayat %1$d - %2$d</string>
@@ -141,7 +141,7 @@
     <string name="strTitleChapInfoPages">Halaman</string>
     <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
     <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
-    <string name="strTitleReaderSettings">Pengaturan Murattal</string>
+    <string name="strTitleReaderSettings">Qori Murattal</string>
     <string name="strTitleAppLanguage">Bahasa</string>
     <string name="strTitleChangeLanguage">Ubah bahasa\?</string>
     <string name="strTitleTheme">Tema</string>
@@ -204,4 +204,12 @@
     <string name="strLabelMoreTranslations" formatted="false">+%d lebih banyak terjemahan</string>
     <string name="strLabelBookmark">Bookmark</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d tidak valid rentang ayat untuk Surah No. %3$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Chapter No. %1$d │ Verses %2$d–%3$d</string>
+    <string name="strTitleReaderJuz">Juz</string>
+    <string name="strTitleChapInfoRevOrder">Urutan Wahyu</string>
+    <string name="strSalam">Assalamualaikum</string>
+    <string name="strLabelView">Lihat</string>
 </resources>
