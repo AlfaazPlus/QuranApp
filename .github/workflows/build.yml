@@ -8,6 +8,8 @@ on:
       - "repo_assets/**"
       - ".github/**"
       - "kotlin_code_style.xml"
+      
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,7 +25,5 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      run: chmod +x gradlew && ./gradlew assembleDebug
