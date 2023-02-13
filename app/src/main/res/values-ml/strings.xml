@@ -1,4 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strLabelOkay">ശരി</string>
+    <string name="strTitleLicenses">ലൈസൻസ്</string>
+    <string name="strLabelTop">മുകളിൽ</string>
+    <string name="strTitleAppVersion">അപ്ലിക്കേഷൻ പതിപ്പ്</string>
+    <string name="strVersion" formatted="false">പതിപ്പ് %s</string>
+    <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
+    <string name="strLabelCancel">റദ്ദാക്കുക</string>
+    <string name="strLabelGotIt">പിടി കിട്ടി</string>
+    <string name="strLabelApply">പ്രയോഗിക്കുക</string>
+    <string name="strLabelSend">അയക്കുക</string>
+    <string name="strLabelDelete">ഇല്ലാതാക്കുക</string>
+    <string name="strLabelRemoveAll">എല്ലാം നീക്കം ചെയ്യുക</string>
+    <string name="strLabelCopy">പകർത്തുക</string>
+    <string name="strLabelBack">പുറകെ</string>
+    <string name="strLabelView">കാണുക</string>
+    <string name="strLabelOpenInReader">റീഡറിൽ തുറക്കുക</string>
+    <string name="strLabelReset">പുനഃസജ്ജമാക്കുക</string>
+    <string name="strLabelRetry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="strLabelRefresh">പുതുക്കുക</string>
+    <string name="strLabelDismiss">നിരസിക്കുക</string>
+    <string name="strLabelEdit">തിരുത്തുക</string>
+    <string name="strLabelHide">മറച്ചുവയ്‌ക്കുക</string>
+    <string name="strLabelRestart">പുനരാരംഭിക്കുക</string>
+    <string name="strLabelDiscard">ഒഴിവാക്കുക</string>
+    <string name="strLabelDone">ചെയ്തു കഴിഞ്ഞു</string>
+    <string name="strLabelUpdateQuranApp">QuranApp അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="strLabelOpen">തുറക്കുക</string>
+    <string name="strLabelSkip">ഒഴിവാക്കുക</string>
+    <string name="strLabelViewAll">എല്ലാം കാണുക</string>
+    <string name="strLabelAdvertisement">പരസ്യം</string>
+    <string name="strLabelChangeNRestart">മാറ്റുക &amp; പുനരാരംഭിക്കുക</string>
+    <string name="strLabelRead">വായിക്കുക</string>
+    <string name="strLabelNew">പുതിയത്</string>
+    <string name="strLabelNext">അടുത്തത്</string>
+    <string name="strLabelNotNow">ഇപ്പോള്‍ വേണ്ട</string>
+    <string name="strLabelStart">ആരംഭിക്കുക</string>
+    <string name="strLabelPrevious">മുന്പിലേത്തത്</string>
+    <string name="strLabelDownloadNow">ഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക</string>
+    <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
+    <string name="strLabelClose">അടയ്ക്കുക</string>
+    <string name="strTitleReaderLayoutStylePageView">പേജ് കാഴ്ച</string>
+    <string name="strTitleReaderLayoutStyle">ഖുർആൻ വീക്ഷണ ശൈലി</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">വിവർത്തനം കാഴ്ച</string>
+    <string name="strTitleReaderTextSizeArabic">അറബിക് ടെക്സ്റ്റ് വലിപ്പം</string>
+    <string name="strLabelNoNextChapter">അടുത്ത അധ്യായം ഇല്ല</string>
+    <string name="strLabelOff">ഓഫ് ആക്കുക</string>
+    <string name="strLabelOn">ഓൺ ആക്കുക</string>
+    <string name="strLabelPremium">പ്രീമിയം</string>
+    <string name="strLabelPreviousJuz">മുമ്പത്തെ ജുസുഅ്</string>
+    <string name="strLabelThemeDark">ഇരുണ്ടത്</string>
+    <string name="strLabelSystemDefault">സിസ്റ്റത്തിനനുസരിച്ച്</string>
+    <string name="strLabelThemeLight">വെളുത്തത്</string>
+    <string name="strLabelPreviousChapter">മുൻ അധ്യായം</string>
+    <string name="strLabelNoPreviousChapter">മുൻ അധ്യായം ഇല്ല</string>
+    <string name="strLabelNextChapter">അടുത്ത അധ്യായം</string>
+    <string name="strLabelNoPreviousJuz">മുമ്പത്തെ ജുസുഅ് ഇല്ല</string>
+    <string name="strLabelNoNextJuz">അടുത്ത ജുസുഅ് ഇല്ല</string>
+    <string name="strLabelNextJuz">അടുത്ത് ജുസുഅ്</string>
+    <string name="strLabelFullChapter">മുഴുവൻ അധ്യായവും വായിക്കുക</string>
+    <string name="strLabelJuzNo" formatted="false">ജുസുഅ് %d</string>
+    <string name="strLabelContinueChapter">അദ്ധ്യായം തുടരുക</string>
+    <string name="strLabelPreviousVerse">മുൻ വാക്യം</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">സൂറത്ത് %1$s │വാക്യം %2$d</string>
+    <string name="strLabelSurah" formatted="false">സൂറത്ത് %s</string>
+    <string name="strLabelPageNo" formatted="false">പേജ് %d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">വാക്യം : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">വാക്യങ്ങൾ : %1$d–%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">വാക്യങ്ങൾ : %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">വാക്യം %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">സൂറത്ത് %1$s %2$d: വാക്യം %3$d</string>
+    <string name="strTitleReaderTextSizeTransl">വിവർത്തന ടെക്സ്റ്റ് വലുപ്പം</string>
+    <string name="strLabelNextVerse">അടുത്ത വാക്യം</string>
+    <string name="strLabelVersesText">വാക്യങ്ങൾ</string>
+    <string name="strLabelVerses" formatted="false">വാക്യങ്ങൾ %1$d–%2$d</string>
+    <string name="strLabelVerseNo" formatted="false">വാക്യം %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">സൂറത്ത് %1$s : വാക്യം %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">അധ്യായം നമ്പർ. %1$d│വാക്യങ്ങൾ %2$d–%3$d</string>
+    <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
+    <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
+    <string name="strTitleQuran">ഖുർആൻ</string>
+    <string name="strTitleMakki">മാക്കി</string>
+    <string name="strTitleMadani">മദനി</string>
+    <string name="strTitleFootnote">അടിക്കുറിപ്പ്</string>
+    <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
+    <string name="strTitleReaderChapters">സൂറത്തുകൾ (അധ്യായങ്ങൾ)</string>
+    <string name="strTitleReaderJuz">ജുസുഅ് (പാര)</string>
+    <string name="strTitleReaderChapters2">സൂറത്തുകൾ</string>
+    <string name="strTitleReaderJuz2">ജുസുഅ്</string>
+    <string name="strTitleReaderVerses">വാക്യങ്ങൾ</string>
+    <string name="strTitleReaderJumpToVerse">വാക്യത്തിലേക്ക് പോകുക</string>
+    <string name="strTitleVerseOptions">വാക്യ ഓപ്ഷനുകൾ</string>
+    <string name="strTitleVerseRecitation">വാക്യപാരായണം</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">സൂറത്ത് %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">വാക്യത്തിലേക്ക് പോകുക %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">വാക്യങ്ങൾ വായിക്കുക %1$d - %2$d</string>
+    <string name="strTitleSettings">ക്രമീകരണങ്ങൾ</string>
+    <string name="strTitleAddNote">കുറിപ്പ് ചേർക്കുക</string>
+    <string name="strTitleNote">കുറിപ്പ്</string>
+    <string name="strTitleRateApp">ആപ്പ് റേറ്റ് ചെയ്യുക</string>
+    <string name="strTitleSubscription">സബ്സ്ക്രിപ്ഷൻ</string>
+    <string name="strTitleFilters">ഫിൽട്ടറുകൾ</string>
+    <string name="strTitleMenu">മെനു</string>
+    <string name="strTitleTafsir">തഫ്സീർ</string>
+    <string name="strTitleAboutSurah">സൂറത്തിനെ കുറിച്ച്</string>
+    <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
+    <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
+    <string name="strTitleRecitations">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleTranslDelete">വിവർത്തനം ഇല്ലാതാക്കണോ\?</string>
+    <string name="strTitleHideAd">പരസ്യം മറയ്ക്കുക</string>
+    <string name="strTitleRecitationOptions">ഓപ്ഷനുകൾ</string>
+    <string name="strTitleRepeatVerse">വാക്യം ആവർത്തിക്കുക</string>
+    <string name="strTitleAutoPlayNext">അടുത്തത് സ്വയമേവ പ്ലേ ചെയ്യുക</string>
+    <string name="strTitleQuickEdit">പെട്ടെന്നുള്ള തിരുത്തൽ</string>
+    <string name="strTitleResetReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ\?</string>
+    <string name="strTitleBookmark">ബുക്ക്മാർക്ക്</string>
+    <string name="strTitleAboutUs">ഞങ്ങളേക്കുറിച്ച്</string>
+    <string name="strTitleSendFeedback">ഫീഡ്ബാക്ക് അയയ്ക്കുക</string>
+    <string name="strTitleHelpSupport">സഹായവും പിന്തുണയും</string>
+    <string name="strTitleBookmarks">ബുക്ക്മാർക്കുകൾ</string>
+    <string name="strTitleShareApp">ആപ്പ് പങ്കിടുക</string>
+    <string name="strTitleShareVerse">വാക്യം പങ്കിടുക</string>
+    <string name="strTitleReportVerse">വാക്യം റിപ്പോർട്ട് ചെയ്യുക</string>
+    <string name="strTitleSelectReason">കാരണം തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleExplainIssue">പ്രശ്നം വിശദീകരിക്കുക</string>
+    <string name="strTitleFeaturedQuran">ഫീച്ചർ ചെയ്ത റീഡിംഗ്</string>
+    <string name="strTitleTopics">വിഷയങ്ങൾ</string>
+    <string name="strTitleDuas">ഖുർആനിക ദുആകൾ</string>
+    <string name="strTitleProphets">പ്രവാചകന്മാർ</string>
+    <string name="strTitleFeaturedTopics">ഖുർആനിലെ വിഷയങ്ങൾ</string>
+    <string name="strTitleFeaturedDuas">ഖുർആനിലെ ദുആകൾ</string>
+    <string name="strTitlePrivacyPolicy">സ്വകാര്യതാ നയം</string>
+    <string name="strTitleFailed">തെറ്റി</string>
+    <string name="strTitleSuccess">ശെരിയായി</string>
+    <string name="strTitleThresholdReached">പരിധി എത്തി</string>
+    <string name="strChapInfoSeeMore">കൂടുതൽ വിവരങ്ങൾ കാണുക ›</string>
+    <string name="strTitleChapInfoChapterNo">അധ്യായം നമ്പർ</string>
+    <string name="strTitleChapInfoJuzNo">ജുസുഅ് നമ്പർ.</string>
+    <string name="strTitleChapInfoVerses">വാക്യങ്ങൾ</string>
+    <string name="strTitleChapInfoRukus">റുകൂഉകൾ</string>
+    <string name="strTitleChapInfoPages">പേജുകൾ</string>
+    <string name="strTitleChapInfoRevOrder">വെളിപാട് ഉത്തരവ്</string>
+    <string name="strTitleChapInfoRevType">വെളിപാട് തരം</string>
+    <string name="strTitleFeaturedProphets">ഖുർആനിലെ പ്രവാചകന്മാർ</string>
+    <string name="strTitleVOTD">ഇന്നത്തെ വാക്യം</string>
 </resources>

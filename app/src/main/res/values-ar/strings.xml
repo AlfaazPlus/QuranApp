@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strTitleHolyQuran">القرآن الكريم</string>
+    <string name="strTitleQuran">القرآن</string>
+    <string name="strTitleMadani">مدنية</string>
+    <string name="strTitleMakki">مكية</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d الى %2$d</string>
+    <string name="strLabelVerseNo" formatted="false">آية %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">الآيات : من %1$d الى %2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">آيات : %d</string>
+    <string name="strLabelVerses" formatted="false">آيات من %1$d الى %2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">آية %1$d : %2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strSalam">السلام عليكم</string>
+    <string name="strSalamShort">سلام</string>
+    <string name="strAyatulKursi">آية الكرسي</string>
+    <string name="strLabelVersesText">آيات</string>
+    <string name="strLabelSurah" formatted="false">سورة %s</string>
+    <string name="strLabelPageNo" formatted="false">صفحة %d</string>
+    <string name="strLabelJuzNo" formatted="false">جزء %d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">الآية : %d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورة %1$s %2$d : آية %3$d</string>
+</resources>
