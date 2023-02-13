@@ -1,13 +1,6 @@
 name: Android CI
 
 on:
-  push:
-    paths-ignore:
-      - "**.md"
-      - "inventory/**"
-      - "repo_assets/**"
-      - ".github/**"
-      - "kotlin_code_style.xml"
   pull_request:
     paths-ignore:
       - "**.md"
