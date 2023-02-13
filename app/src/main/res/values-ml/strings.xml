@@ -100,4 +100,32 @@
     <string name="strTitleGotoVerseNo" formatted="false">വാക്യത്തിലേക്ക് പോകുക %d</string>
     <string name="strTitleReadVerseRange" formatted="false">വാക്യങ്ങൾ വായിക്കുക %1$d - %2$d</string>
     <string name="strTitleSettings">ക്രമീകരണങ്ങൾ</string>
+    <string name="strTitleAddNote">കുറിപ്പ് ചേർക്കുക</string>
+    <string name="strTitleNote">കുറിപ്പ്</string>
+    <string name="strTitleRateApp">ആപ്പ് റേറ്റ് ചെയ്യുക</string>
+    <string name="strTitleSubscription">സബ്സ്ക്രിപ്ഷൻ</string>
+    <string name="strTitleFilters">ഫിൽട്ടറുകൾ</string>
+    <string name="strTitleMenu">മെനു</string>
+    <string name="strTitleTafsir">തഫ്സീർ</string>
+    <string name="strTitleAboutSurah">സൂറത്തിനെ കുറിച്ച്</string>
+    <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
+    <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
+    <string name="strTitleRecitations">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleTranslDelete">വിവർത്തനം ഇല്ലാതാക്കണോ\?</string>
+    <string name="strTitleHideAd">പരസ്യം മറയ്ക്കുക</string>
+    <string name="strTitleRecitationOptions">ഓപ്ഷനുകൾ</string>
+    <string name="strTitleRepeatVerse">വാക്യം ആവർത്തിക്കുക</string>
+    <string name="strTitleAutoPlayNext">അടുത്തത് സ്വയമേവ പ്ലേ ചെയ്യുക</string>
+    <string name="strTitleQuickEdit">പെട്ടെന്നുള്ള തിരുത്തൽ</string>
+    <string name="strTitleResetReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ\?</string>
+    <string name="strTitleBookmark">ബുക്ക്മാർക്ക്</string>
+    <string name="strTitleAboutUs">ഞങ്ങളേക്കുറിച്ച്</string>
+    <string name="strTitleSendFeedback">ഫീഡ്ബാക്ക് അയയ്ക്കുക</string>
+    <string name="strTitleHelpSupport">സഹായവും പിന്തുണയും</string>
+    <string name="strTitleBookmarks">ബുക്ക്മാർക്കുകൾ</string>
+    <string name="strTitleShareApp">ആപ്പ് പങ്കിടുക</string>
 </resources>
