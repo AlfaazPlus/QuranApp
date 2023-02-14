@@ -2,7 +2,7 @@
 
 ### App Translations
 
-🇮🇩 Indonesian (id) - rraven
+🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv)
 
 🇮🇹 Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 
