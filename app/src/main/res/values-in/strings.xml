@@ -78,7 +78,7 @@
     <string name="strTitleReaderVerses">Ayat</string>
     <string name="strTitleReaderJumpToVerse">Pergi ke ayat</string>
     <string name="strTitleVerseOptions">Pilihan ayat</string>
-    <string name="strTitleVerseRecitation">Ayat Murattal</string>
+    <string name="strTitleVerseRecitation">Pelafalan Ayat</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Pergi ke ayat %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Baca Ayat %1$d - %2$d</string>
@@ -88,10 +88,10 @@
     <string name="strTitleReaderTextSizeArabic">Ukuran teks Bahasa Arab</string>
     <string name="strTitleReaderTextSizeTransl">Ukuran teks terjemahan</string>
     <string name="strTitleSettings">Pengaturan</string>
-    <string name="strTitleBookmark">Bookmark</string>
+    <string name="strTitleBookmark">Penanda Buku</string>
     <string name="strTitleHelpSupport">Bantu &amp; Dukung</string>
     <string name="strTitleAboutUs">Tentang Kami</string>
-    <string name="strTitleBookmarks">Bookmarks</string>
+    <string name="strTitleBookmarks">Bookmark</string>
     <string name="strTitleShareApp">Berbagi Aplikasi</string>
     <string name="strTitleAddNote">Tambahkan catatan</string>
     <string name="strTitleNote">Catatan</string>
@@ -134,7 +134,7 @@
     <string name="strTitlePrivacyPolicy">Kebijakan Pribadi</string>
     <string name="strTitleFailed">Gagal</string>
     <string name="strTitleSuccess">Berhasil</string>
-    <string name="strTitleThresholdReached">Pencapaian</string>
+    <string name="strTitleThresholdReached">Khatam</string>
     <string name="strChapInfoSeeMore">Lihat info selengkapnya ›</string>
     <string name="strTitleChapInfoJuzNo">Juz No.</string>
     <string name="strTitleChapInfoVerses">Ayat</string>
@@ -185,7 +185,7 @@
     <string name="strHintFeedbackMessage">Pesan</string>
     <string name="strHintBookmarkViewerNote">Tulis catatan tambahan di bookmark ini…</string>
     <string name="strNotFound">Tidak ditemukan</string>
-    <string name="strMsgThemeDark">Mode gelap mengurangi konsumsi daya</string>
+    <string name="strMsgThemeDark">Mode gelap mengurangi konsumsi daya.</string>
     <string name="strMsgThemeDefault">Menyesuaikan dengan pengaturan sistem.</string>
     <string name="strMsgVOTDOn">Dapatkan sebuah notifikasi harian di pagi hari.</string>
     <string name="strMsgYouAreReadingVerses">Kamu sedang membaca ayat:</string>
@@ -202,14 +202,103 @@
     <string name="strLabelContinueReading">Lanjutkan membaca »</string>
     <string name="strLabelOrder">Urutan</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d lebih banyak terjemahan</string>
-    <string name="strLabelBookmark">Bookmark</string>
+    <string name="strLabelBookmark">Penanda Buku</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d tidak valid rentang ayat untuk Surah No. %3$d</string>
     <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
-    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Chapter No. %1$d │ Verses %2$d–%3$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Surah No. %1$d │ Ayat %2$d–%3$d</string>
     <string name="strTitleReaderJuz">Juz</string>
     <string name="strTitleChapInfoRevOrder">Urutan Wahyu</string>
     <string name="strSalam">Assalamualaikum</string>
     <string name="strLabelView">Lihat</string>
+    <string name="strLabelOn">Hidup</string>
+    <string name="strTitleReaderChapters">Surah</string>
+    <string name="strTitleScripts">Pilih potongan ayat</string>
+    <string name="strTitleChapInfoChapterNo">Nomor Surah</string>
+    <string name="strTitleChapInfoRukus">tanda ruku\'</string>
+    <string name="strTitleChapInfoRevType">Jenis Wahyu</string>
+    <string name="strLabelPause">Pause</string>
+    <string name="strLabelCurrentVerse">Ayat saat ini</string>
+    <string name="strHintSearchScript">Cari potongan ayat</string>
+    <string name="strMsgBookmarkDeleteSelected">Bookmark yang dipilih akan dihapus.</string>
+    <string name="strMsgBookmarkNoItems">Tidak ada bookmark</string>
+    <string name="strTitleReadHistory">Histori Bacaan</string>
+    <string name="strMsgReadHistoryRemoved">Histori bacaan berhasil dihapus.</string>
+    <string name="strMsgReadShowupHere">Histori bacaan-mu akan muncul disini.</string>
+    <string name="strMsgReadHistoryDeleteSelected">Histori bacaan yang terpilih akan dihapus.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s di %2$s</string>
+    <string name="strMsgReadHistoryDeleteAll">Semua histori bacaan akan dihapus.</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Total hasil ditemukan dalam %1$s: %2$d</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" Dihapus dari histori</string>
+    <string name="strMsgHistoryRemove">Hapus histori ini\?</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Hari ini di %s</string>
+    <string name="strMsgSearchNoResultsFound">Hasil tidak ditemukan. Mohon cek filter oencarian atau cari di terjemahan lain.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Hasil tidak ditemukan dalam %s. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Hanya satu hasil ditemukan dalam %s</string>
+    <string name="strMsgSearchWordPart">Cari bagian kata</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Hasil tidak ditemukan. Mohon cek filter pencarian.</string>
+    <string name="strMsgChangeLanguage">Aplikasi akan memulai ulang untuk pergantian bahasa.</string>
+    <string name="strMsgSearchArabic">Cari di teks Arabic</string>
+    <string name="strMsgSearchWordPartExample">Contoh : \'manusia\' dalam \'umat manusia\'</string>
+    <string name="strMsgEnterValidRange">Tolong masukkan rentangan ayat yang valid</string>
+    <string name="strMsgShareRange" formatted="false">Ketik rentangan ayat diantara %1$d%2$s%3$d</string>
+    <string name="strMsgProphetsOrder">Menampilkan Nabi dan Rasul sesuai urutan kronologi</string>
+    <string name="strMsgResetReaderSettings">Atur ulang semua pengaturan ke default.</string>
+    <string name="strMsgTranslNoDownloads">Tidak ada unduhan terjemahan yang tersedia</string>
+    <string name="strMsgTranslLoadFailed">Tidak bisa memuat terjemahan dari server. Mohon coba lagi nanti.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Unduh: \"%s\".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Gagal mengunduh \"%s\".</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Tidak ada unduhan yang tersedia</string>
+    <string name="strMsgTranslNoneSelected">Tidak ada terjemahan yang dipilih. Pergi ke pengaturan untuk menemukan terjemahan.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">%d maksimum terjemahan yang bisa dipilih. Mohon batalkan satu pilihan sebelum memilih yang lain untuk menghindari kehilangan performa.</string>
+    <string name="strMsgRecitationsNoAvailable">Tidak ada Murattal yang tersedia</string>
+    <string name="strDescGoBack">Kembali</string>
+    <string name="strDescAddToBookmarks">Tambahkan ke bookmark</string>
+    <string name="strDescClose">Tutup</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, ayat %2$d.</string>
+    <string name="strDescVerseNo" formatted="false">ayat %d.</string>
+    <string name="strMsgSomethingWrongFixing">Terjadi kesalahan! Kami sedang memperbaikinya.</string>
+    <string name="strMsgSomethingWrong">Terjadi kesalahan!</string>
+    <string name="strMsgNoInternetLong">Tidak ada koneksi internet. Pastikan Wi-Fi dan data seluler anda hidup, dan coba kembali.</string>
+    <string name="strMsgNoInternet">Mohon periksa koneksi internet anda.</string>
+    <string name="strLabelNavHome">Beranda</string>
+    <string name="strMsgCouldNotOpenPage">Tidak dapat memuat halaman.</string>
+    <string name="strMsgTryLater">Mohon coba lagi nanti.</string>
+    <string name="strMsgReportUs">Tolong laporkan kami.</string>
+    <string name="strMsgVerseCredsInvalid">Ayat mandat tidak valid.</string>
+    <string name="strTextPleaseWait">Mohon tunggu…</string>
+    <string name="strTextPreparing">Menyiapkan…</string>
+    <string name="strLabelNavSearch">Pencarian</string>
+    <string name="strTitleOops">Ups!</string>
+    <string name="strTitleInfo">Informasi!</string>
+    <string name="strTitleError">Terjadi kesalahan!</string>
+    <string name="strAyatulKursi">Ayat Kursi</string>
+    <string name="strTextSending">Mengirim…</string>
+    <string name="strLabelProceed">MELANJUTKAN</string>
+    <string name="strTextUpdating">Memperbarui…</string>
+    <string name="strMsgUpdateAvailable">UPDATE TERSEDIA! Tolong perbarui aplikasi untuk mendapatkan fitur terbaru.</string>
+    <string name="strTextLoading">Memuat…</string>
+    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA!
+\nTolong perbarui aplikasi.</string>
+    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN!
+\nTolong perbarui aplikasi untuk melanjutkan.</string>
+    <string name="strMsgUpdateDownloaded">PERBARUAN TERUNDUH! Tolong install untuk menyelesaikan pembaruan.</string>
+    <string name="strLabelAllChapters">Semua Surah</string>
+    <string name="strLabelShareImage">Bagikan gambar</string>
+    <string name="strLabelDownloadImage">Unduh gambar</string>
+    <string name="strMsgEditShareTransl">Terjemahan yang dipilih dari pengaturan hanya ditampilkan disini.</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Gambar tersimpan dengan judul: %s</string>
+    <string name="strTitleAlphaBG">Latar belakang alpha</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
+    <string name="strMsgEditShareLongTransl">Terjemahan terlalu panjang.</string>
+    <string name="strSalamShort">Salam</string>
+    <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Quran.</string>
+    <string name="strTextInstalling">Menginstall…</string>
+    <string name="strMsgRecitationsLoadFailed">Tidak bisa memuat Murattal dari server. Mohon coba lagi nanti.</string>
+    <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
+    <string name="strMsgReadHistoryRemovedAlready">Histori bacaan telah dihapus.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Histori bacaan gagal dihapus.</string>
+    <string name="strMsgBookmarkDeleteAll">Semua bookmark akan dihapus.</string>
 </resources>
