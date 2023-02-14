@@ -294,7 +294,7 @@
     <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
     <string name="strMsgEditShareLongTransl">Terjemahan terlalu panjang.</string>
     <string name="strSalamShort">Salam</string>
-    <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Al Quran</string>
+    <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
     <string name="strTextInstalling">Menginstall…</string>
     <string name="strMsgRecitationsLoadFailed">Tidak bisa memuat Murattal dari server. Mohon coba lagi nanti.</string>
     <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
