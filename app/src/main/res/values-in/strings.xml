@@ -245,7 +245,7 @@
     <string name="strMsgShareRange" formatted="false">Ketik rentangan ayat diantara %1$d%2$s%3$d</string>
     <string name="strMsgProphetsOrder">Menampilkan Nabi dan Rasul sesuai urutan kronologi</string>
     <string name="strMsgResetReaderSettings">Atur ulang semua pengaturan ke default.</string>
-    <string name="strMsgTranslNoDownloads">Tidak ada unduhan terjemahan yang tersedia.</string>
+    <string name="strMsgTranslNoDownloads">Tidak ada unduhan terjemahan yang tersedia</string>
     <string name="strMsgTranslLoadFailed">Tidak bisa memuat terjemahan dari server. Mohon coba lagi nanti.</string>
     <string name="strMsgTranslDownloaded" formatted="false">Unduh: \"%s\".</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Gagal mengunduh \"%s\".</string>
@@ -290,9 +290,9 @@
     <string name="strMsgEditShareTransl">Terjemahan yang dipilih dari pengaturan hanya ditampilkan disini.</string>
     <string name="strTitleImageSavedWithName" formatted="false">Gambar tersimpan dengan judul: %s</string>
     <string name="strTitleAlphaBG">Latar belakang alpha</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d tempat.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
-    <string name="strMsgEditShareLongTransl">Terjemahan terlalu panjang</string>
+    <string name="strMsgEditShareLongTransl">Terjemahan terlalu panjang.</string>
     <string name="strSalamShort">Salam</string>
     <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Al Quran</string>
     <string name="strTextInstalling">Menginstall…</string>
