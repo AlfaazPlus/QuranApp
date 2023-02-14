@@ -159,4 +159,7 @@
     <string name="strTitleNoInternet">ഇന്റർനെറ്റ് ഇല്ല</string>
     <string name="strMsgChapInfoFailedLoad">സൂറത്തിന്റെ വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="strTitleAppLanguage">അപ്ലിക്കേഷൻ ഭാഷ</string>
+    <string name="strLabelPlay">പ്ലേ ചെയ്യുക</string>
+    <string name="strLabelPause">പോസ് ചെയ്യുക</string>
+    <string name="strLabelBookmark">ബുക്ക്മാർക്ക്</string>
 </resources>
