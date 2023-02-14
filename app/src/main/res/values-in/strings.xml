@@ -290,11 +290,11 @@
     <string name="strMsgEditShareTransl">Terjemahan yang dipilih dari pengaturan hanya ditampilkan disini.</string>
     <string name="strTitleImageSavedWithName" formatted="false">Gambar tersimpan dengan judul: %s</string>
     <string name="strTitleAlphaBG">Latar belakang alpha</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d tempat.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
     <string name="strMsgEditShareLongTransl">Terjemahan terlalu panjang.</string>
     <string name="strSalamShort">Salam</string>
-    <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
+    <string name="strMsgReferenceDuas">Gathered some duas from ‐ Quran.</string>
     <string name="strTextInstalling">Menginstall…</string>
     <string name="strMsgRecitationsLoadFailed">Tidak bisa memuat Murattal dari server. Mohon coba lagi nanti.</string>
     <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
