@@ -162,4 +162,11 @@
     <string name="strLabelPlay">പ്ലേ ചെയ്യുക</string>
     <string name="strLabelPause">പോസ് ചെയ്യുക</string>
     <string name="strLabelBookmark">ബുക്ക്മാർക്ക്</string>
+    <string name="strLabelBookmarked">ബുക്ക്മാർക്ക് ചെയ്തു</string>
+    <string name="strLabelRemoveAds">പരസ്യങ്ങൾ നീക്കം ചെയ്യുക</string>
+    <string name="strLabelShare">പങ്കിടുക</string>
+    <string name="strLabelReport">റിപ്പോർട്ട് ചെയ്യുക</string>
+    <string name="strLabelRemoveBookmark">ബുക്ക്മാർക്ക് നീക്കം ചെയ്യുക</string>
+    <string name="strLabelContinueReading">വായിക്കുന്നത് തുടരുക »</string>
+    <string name="strLabelReading">വായിക്കുന്നു</string>
 </resources>
