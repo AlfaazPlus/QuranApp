@@ -6,11 +6,13 @@
 
 The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place.
 
+<br />
+
+The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communication channel for any kind of discussion.
+
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
-
-[![Build](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml)
 </div>
 
 <div align="left">
