@@ -238,7 +238,7 @@
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Hanya satu hasil ditemukan dalam %s</string>
     <string name="strMsgSearchWordPart">Cari bagian kata</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Hasil tidak ditemukan. Mohon cek filter pencarian.</string>
-    <string name="strMsgChangeLanguage">Aplikasi akan memulai ulang untuk pergantian bahasa</string>
+    <string name="strMsgChangeLanguage">Aplikasi akan memulai ulang untuk pergantian bahasa.</string>
     <string name="strMsgSearchArabic">Cari di teks Arabic</string>
     <string name="strMsgSearchWordPartExample">Contoh : \'manusia\' dalam \'umat manusia\'</string>
     <string name="strMsgEnterValidRange">Tolong masukkan rentangan ayat yang valid</string>
@@ -297,7 +297,7 @@
     <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Al Quran</string>
     <string name="strTextInstalling">Menginstall…</string>
     <string name="strMsgRecitationsLoadFailed">Tidak bisa memuat Murattal dari server. Mohon coba lagi nanti.</string>
-    <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan.</string>
+    <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
     <string name="strMsgReadHistoryRemovedAlready">Histori bacaan telah dihapus.</string>
     <string name="strMsgReadHistoryRemoveFailed">Histori bacaan gagal dihapus.</string>
     <string name="strMsgBookmarkDeleteAll">Semua bookmark akan dihapus.</string>
