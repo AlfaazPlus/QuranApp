@@ -11,4 +11,7 @@
     <string name="strLabelDelete">ⵙⵙⴼⴹ</string>
     <string name="strLabelRemoveAll">ⴽⴽⵙ ⵎⴰⵕⵕⴰ</string>
     <string name="strLabelCopy">ⵙⵙⵏⵖⵍ</string>
+    <string name="strLabelRemove">ⴽⴽⵙ</string>
+    <string name="strLabelBack">ⴰⵖⵓⵍ</string>
+    <string name="strLabelTop">ⵉⵎⵣⵡⵓⵔⴰ</string>
 </resources>
