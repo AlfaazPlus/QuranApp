@@ -2,6 +2,8 @@
 
 ### App Translations
 
+🇮🇩 Indonesian (id) - rraven
+
 🇮🇹 Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 
 🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
