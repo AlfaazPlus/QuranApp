@@ -4,4 +4,301 @@
     <string name="strVersion" formatted="false">Version %s</string>
     <string name="strTitleLicenses">Licences</string>
     <string name="strLabelClose">Fermer</string>
+    <string name="strLabelOkay">D\'accord</string>
+    <string name="strLabelGotIt">J\'ai compris</string>
+    <string name="strLabelCancel">Annuler</string>
+    <string name="strLabelApply">Appliquer</string>
+    <string name="strLabelSend">Envoyer</string>
+    <string name="strLabelRemove">Retirer</string>
+    <string name="strLabelDelete">Supprimer</string>
+    <string name="strLabelCopy">Copie</string>
+    <string name="strLabelBack">Dos</string>
+    <string name="strLabelTop">Haut</string>
+    <string name="strLabelReset">Réinitialiser</string>
+    <string name="strLabelRetry">Recommencez</string>
+    <string name="strLabelRefresh">Rafraîchir</string>
+    <string name="strLabelDismiss">Rejeter</string>
+    <string name="strLabelDiscard">Jeter</string>
+    <string name="strLabelEdit">Modifier</string>
+    <string name="strLabelDone">Fait</string>
+    <string name="strLabelRestart">Redémarrage</string>
+    <string name="strLabelView">Voir</string>
+    <string name="strLabelOpen">Ouvrir</string>
+    <string name="strLabelOpenInReader">Ouvrir dans le lecteur</string>
+    <string name="strLabelRead">Lire \"</string>
+    <string name="strLabelViewAll">Voir tout</string>
+    <string name="strLabelChangeNRestart">Modifier et redémarrer</string>
+    <string name="strLabelAdvertisement">Publicité</string>
+    <string name="strLabelSkip">Sauter</string>
+    <string name="strLabelNotNow">Pas maintenant</string>
+    <string name="strLabelNext">Suivante</string>
+    <string name="strLabelStart">Commencer</string>
+    <string name="strLabelDownloadNow">TÉLÉCHARGER MAINTENANT</string>
+    <string name="strLabelUpdate">Mise à jour</string>
+    <string name="strLabelInstall">Installer</string>
+    <string name="strLabelNew">Nouveau</string>
+    <string name="strLabelPremium">Prime</string>
+    <string name="strLabelOn">Sur</string>
+    <string name="strLabelOff">Désactivé</string>
+    <string name="strLabelThemeDark">Sombre</string>
+    <string name="strLabelThemeLight">Lumière</string>
+    <string name="strLabelSystemDefault">défaillance du système</string>
+    <string name="strLabelNextChapter">Chapitre suivant</string>
+    <string name="strLabelNoPreviousChapter">Pas de chapitre précédent</string>
+    <string name="strLabelNoNextChapter">Pas de prochain chapitre</string>
+    <string name="strLabelPreviousJuz">Juz précédent</string>
+    <string name="strLabelNextJuz">Jus suivant</string>
+    <string name="strLabelNoPreviousJuz">Pas de juz précédent</string>
+    <string name="strLabelNoNextJuz">Pas de juz suivant</string>
+    <string name="strLabelContinueChapter">Continuer le chapitre</string>
+    <string name="strLabelPreviousVerse">Verset précédent</string>
+    <string name="strLabelNextVerse">Verset suivant</string>
+    <string name="strLabelVersesText">Versets</string>
+    <string name="strLabelSurah" formatted="false">Sourate %s</string>
+    <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelVerses" formatted="false">Versets %1$d–%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Verset : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Vers : %1$d–%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Vers : %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Verset %1$d : %2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d : %2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d : %3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Sourate %1$s %2$d : Verset %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Sourate %1$s │ Verset %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Sourate %1$s : Verset %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Chapitre n° %1$d │ Versets %2$d–%3$d</string>
+    <string name="strTitleQuran">Coran</string>
+    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleFootnote">note de bas de page</string>
+    <string name="strTitleFootnotes">Notes de bas de page</string>
+    <string name="strTitleReaderChapters">Sourates (Chapitres)</string>
+    <string name="strTitleReaderJuz">Juz (para)</string>
+    <string name="strTitleReaderChapters2">Sourates</string>
+    <string name="strTitleReaderJuz2">Jus</string>
+    <string name="strTitleReaderVerses">Versets</string>
+    <string name="strTitleVerseOptions">Options de couplet</string>
+    <string name="strTitleVerseRecitation">Récitation de versets</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Sourate %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Aller au verset %d</string>
+    <string name="strTitleReaderLayoutStyle">Style d\'affichage du Coran</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Affichage des traductions</string>
+    <string name="strTitleReaderTextSizeTransl">Taille du texte de traduction</string>
+    <string name="strTitleSettings">Paramètres</string>
+    <string name="strTitleBookmark">Signet</string>
+    <string name="strTitleSendFeedback">Envoyer des commentaires</string>
+    <string name="strTitleHelpSupport">Support d\'aide</string>
+    <string name="strTitleAboutUs">À propos de nous</string>
+    <string name="strTitleBookmarks">Signets</string>
+    <string name="strTitleShareApp">Partager l\'application</string>
+    <string name="strTitleAddNote">Ajouter une note</string>
+    <string name="strTitleNote">Note</string>
+    <string name="strTitleRateApp">Application de taux</string>
+    <string name="strTitleSubscription">Abonnement</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleAboutSurah">À propos de la sourate</string>
+    <string name="strTitleDownloadTranslations">Télécharger</string>
+    <string name="strTitleScripts">Sélectionnez Scénario</string>
+    <string name="strTitleBookmarkDeleteThis">Supprimer ce favori \?</string>
+    <string name="strTitleBookmarkDeleteAll">Supprimer tous les favoris \?</string>
+    <string name="strTitleTranslDelete">Supprimer la traduction \?</string>
+    <string name="strTitleResetReaderSettings">Réinitialiser les paramètres du lecteur \?</string>
+    <string name="strTitleHideAd">Masquer l\'annonce</string>
+    <string name="strTitleRecitationOptions">Choix</string>
+    <string name="strTitleRepeatVerse">Répéter le verset</string>
+    <string name="strTitleAutoPlayNext">Lecture automatique ensuite</string>
+    <string name="strTitleQuickEdit">Edition rapide</string>
+    <string name="strTitleShareVerse">Partager le verset</string>
+    <string name="strTitleReportVerse">Verset du rapport</string>
+    <string name="strTitleSelectReason">Sélectionnez la raison</string>
+    <string name="strTitleExplainIssue">Expliquer le problème</string>
+    <string name="strTitleFeaturedQuran">Lecture en vedette</string>
+    <string name="strTitleTopics">Les sujets</string>
+    <string name="strTitleDuas">Douas coraniques</string>
+    <string name="strTitleProphets">Prophètes</string>
+    <string name="strTitleFeaturedTopics">Sujets dans le Coran</string>
+    <string name="strTitleFeaturedDuas">Duas dans le Coran</string>
+    <string name="strTitleFeaturedProphets">Prophètes dans le Coran</string>
+    <string name="strTitleFailed">Échoué</string>
+    <string name="strTitleSuccess">Succès</string>
+    <string name="strTitleThresholdReached">Seuil atteint</string>
+    <string name="strChapInfoSeeMore">Voir plus d\'informations ›</string>
+    <string name="strTitleChapInfoChapterNo">Numéro de chapitre</string>
+    <string name="strTitleChapInfoJuzNo">Numéro Juz</string>
+    <string name="strTitleChapInfoVerses">Versets</string>
+    <string name="strTitleChapInfoRukus">Roukus</string>
+    <string name="strTitleChapInfoPages">pages</string>
+    <string name="strTitleChapInfoRevOrder">Ordre de révélation</string>
+    <string name="strTitleChapInfoRevType">Type de révélation</string>
+    <string name="strMsgChapInfoFailedLoad">Échec du chargement des informations sur les sourates. Veuillez réessayer plus tard.</string>
+    <string name="strTitleAppSettings">Paramètres de l\'application</string>
+    <string name="strTitleReaderSettings">Paramètres du lecteur</string>
+    <string name="strTitleAppLanguage">Langue de l\'application</string>
+    <string name="strTitleTheme">Thème</string>
+    <string name="strTitleNoInternet">Pas d\'Internet</string>
+    <string name="strLabelPlay">Jouer</string>
+    <string name="strLabelPause">Pause</string>
+    <string name="strLabelBookmark">Signet</string>
+    <string name="strLabelRemoveBookmark">Supprimer le signet</string>
+    <string name="strLabelBookmarked">Favoris</string>
+    <string name="strLabelShare">Partager</string>
+    <string name="strLabelReport">Rapport</string>
+    <string name="strLabelContinueReading">Continuer la lecture \"</string>
+    <string name="strLabelReading">En lisant</string>
+    <string name="strLabelMostPlaces">La plupart des mentions</string>
+    <string name="strLabelOrder">Commande</string>
+    <string name="strLabelSelectedCount" formatted="false">%d sélectionné</string>
+    <string name="strLabelAdvanceSharing">Partage avancé</string>
+    <string name="strLabelSelectVerse">Sélectionnez des versets</string>
+    <string name="strLabelCurrentVerse">Verset actuel</string>
+    <string name="strLabelWhatsappStyling">Style Whatsapp</string>
+    <string name="strLabelIncludeArabic">Inclure l\'arabe</string>
+    <string name="strLabelIncludeFootnotes">Inclure des notes de bas de page</string>
+    <string name="strLabelIncludeTranslation">Inclure la traduction</string>
+    <string name="strLabelIncludeReference">Inclure la référence</string>
+    <string name="strLabelQuickLinks">Liens rapides</string>
+    <string name="strHintSearchQuran">Saisissez un terme, par exemple \"Vie\"</string>
+    <string name="strHintSearchTopic">Rechercher un sujet</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Rechercher le sujet dans \"%s\"</string>
+    <string name="strHintSearchChapter">Recherche sourate</string>
+    <string name="strHintSearchReciter">Rechercher un récitant</string>
+    <string name="strHintSearchScript">Script de recherche</string>
+    <string name="strHintSearchLanguage">Langue de recherche</string>
+    <string name="strHintFromVerse">Du verset</string>
+    <string name="strHintToVerse">Verser</string>
+    <string name="strHintFeedback">Écrivez vos commentaires ici…</string>
+    <string name="strHintFeedbackEmail">E-mail</string>
+    <string name="strHintFeedbackMessage">Message</string>
+    <string name="strNotFound">Pas trouvé</string>
+    <string name="strMsgThemeDark">Le mode sombre réduit la consommation d\'énergie.</string>
+    <string name="strMsgThemeDefault">Réglez en fonction des paramètres du système.</string>
+    <string name="strMsgVOTDOn">Recevez une notification tous les jours le matin.</string>
+    <string name="strMsgYouAreReadingVerses">Vous lisez des vers :</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d n\'est pas un verset valide pour la sourate n° %2$d</string>
+    <string name="strMsgInvalidVersesRange">Pas une plage de versets valide.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d n\'est pas un numéro Juz (Para) valide.</string>
+    <string name="strMsgBookmarkAddedAlready">Le verset est déjà ajouté aux signets</string>
+    <string name="strMsgBookmarkRemoved">Verset supprimé avec succès des signets</string>
+    <string name="strMsgBookmarkRemoveFailed">Le verset n\'a pas pu être supprimé des favoris</string>
+    <string name="strMsgBookmarkRemovedAlready">Le verset n\'est pas dans les signets</string>
+    <string name="strMsgBookmarkNoItems">Aucun signet</string>
+    <string name="strMsgBookmarkDeleteAll">Tous les signets seront supprimés.</string>
+    <string name="strTitleReadHistory">Lire l\'historique</string>
+    <string name="strMsgReadShowupHere">Votre historique de lecture s\'affichera ici.</string>
+    <string name="strMsgReadHistoryRemoved">L\'historique de lecture a bien été supprimé.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Échec de la suppression de l\'historique de lecture.</string>
+    <string name="strMsgReadHistoryRemovedAlready">L\'historique de lecture est déjà supprimé.</string>
+    <string name="strMsgReadHistoryNoItems">Pas d\'historique de lecture</string>
+    <string name="strMsgReadHistoryDeleteAll">Tous les historiques de lecture seront supprimés.</string>
+    <string name="strMsgHistoryRemove">Supprimer cet historique \?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" supprimé de l\'historique</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Total des résultats trouvés dans %1$s : %2$d</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Aucun résultat trouvé dans %s. Veuillez vérifier les filtres de recherche ou rechercher dans une autre traduction.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Aucun résultat trouvé. Veuillez vérifier les filtres de recherche.</string>
+    <string name="strMsgSearchWordPart">Rechercher une partie de mot</string>
+    <string name="strMsgSearchWordPartExample">Par exemple : \'homme\' dans \'humanité\'</string>
+    <string name="strMsgSearchArabic">Rechercher dans le texte arabe</string>
+    <string name="strMsgChangeLanguage">L\'application sera redémarrée pour affecter le changement de langue.</string>
+    <string name="strMsgProphetsOrder">Affichage des prophètes dans l\'ordre chronologique</string>
+    <string name="strMsgShareRange" formatted="false">Saisissez une plage entre %1$d%2$s%3$d</string>
+    <string name="strMsgEnterValidRange">Veuillez entrer une plage valide</string>
+    <string name="strMsgTranslLoadFailed">Impossible de charger les traductions à partir du serveur. Veuillez réessayer plus tard.</string>
+    <string name="strMsgTranslNoDownloads">Aucune traduction téléchargée disponible</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Aucun téléchargement disponible</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Échec du téléchargement de \"%s\".</string>
+    <string name="strMsgEditShareTransl">Les traductions sélectionnées dans les paramètres sont uniquement affichées ici.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Téléchargé : \"%s\".</string>
+    <string name="strMsgRecitationsLoadFailed">Impossible de charger les récitations à partir du serveur. Veuillez réessayer plus tard.</string>
+    <string name="strMsgRecitationsNoAvailable">Aucune récitation disponible</string>
+    <string name="strDescAddToBookmarks">Ajouter aux favoris</string>
+    <string name="strDescGoBack">Retourner</string>
+    <string name="strDescClose">Fermer</string>
+    <string name="strDescVerseNo" formatted="false">Verset numéro %d.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Sourate %1$s, verset numéro %2$d.</string>
+    <string name="strMsgNoInternet">S\'il vous plait, vérifiez votre connexion internet.</string>
+    <string name="strMsgSomethingWrong">Quelque chose s\'est mal passé !</string>
+    <string name="strMsgSomethingWrongFixing">Quelque chose s\'est mal passé ! Nous travaillons pour résoudre ce problème.</string>
+    <string name="strLabelNavSearch">Recherche</string>
+    <string name="strTextPreparing">En train de préparer…</string>
+    <string name="strTextSending">Envoi en cours…</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="strTitleError">Erreur!</string>
+    <string name="strTitleInfo">Information!</string>
+    <string name="strLabelProceed">PROCÉDER</string>
+    <string name="strTextUpdating">Mise à jour…</string>
+    <string name="strTextInstalling">Installation…</string>
+    <string name="strTextLoading">Chargement…</string>
+    <string name="strMsgUpdateAvailable">MISE À JOUR DISPONIBLE! Veuillez mettre à jour l\'application pour obtenir les dernières fonctionnalités.</string>
+    <string name="strMsgUpdateAvailable4Dialog">MISE À JOUR DISPONIBLE!
+\nVeuillez mettre à jour l\'application.</string>
+    <string name="strLabelAllChapters">Tous les chapitres</string>
+    <string name="strLabelDownloadImage">Télécharger l\'image</string>
+    <string name="strLabelShareImage">Partager l\'image</string>
+    <string name="strTitleAlphaBG">Arrière-plan alpha</string>
+    <string name="strMsgEditShareLongTransl">La traduction est très longue, elle peut ne pas correspondre correctement.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s dans le Coran</string>
+    <string name="strMsgReferenceDuas">Rassemblé quelques duas du Coran.</string>
+    <string name="strSalam">Assalam Alaïkoum</string>
+    <string name="strSalamShort">Salam</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Supprimer %d favoris \?</string>
+    <string name="strTitleVOTD">Verset du jour</string>
+    <string name="strTitlePrivacyPolicy">politique de confidentialité</string>
+    <string name="strTitleChangeLanguage">Changer de langue\?</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d traductions supplémentaires</string>
+    <string name="strLabelSelectTranslations">Sélectionnez les traductions</string>
+    <string name="strHintBookmarkViewerNote">Écrivez une note supplémentaire sur ce signet ici…</string>
+    <string name="strLabelRemoveAds">Supprimez la pub</string>
+    <string name="strHintSearchJuz">Recherche juz</string>
+    <string name="strLabelVerseRange">Gamme de vers</string>
+    <string name="strLabelLater">Plus tard</string>
+    <string name="strHintSearchProphet">Recherche prophète</string>
+    <string name="strHintSearchVerse">Verset de recherche</string>
+    <string name="strHintSearchTranslation">Recherche de traduction</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d n\'est pas un numéro de sourate valide.</string>
+    <string name="strMsgBookmarkAdded">Verset ajouté avec succès aux signets</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d n\'est pas une série de versets valides pour la sourate n° %3$d</string>
+    <string name="strMsgBookmarkAddFailed">Le verset n\'a pas pu être ajouté aux signets</string>
+    <string name="strMsgBookmarkDeleteSelected">Les signets sélectionnés seront supprimés.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Aujourd\'hui à %s</string>
+    <string name="strMsgSearchNoResultsFound">Aucun résultat trouvé. Veuillez vérifier les filtres de recherche ou rechercher dans une autre traduction.</string>
+    <string name="strMsgNoInternetLong">Pas de connexion Internet. Assurez-vous que le Wi-Fi ou les données cellulaires sont activés, puis réessayez.</string>
+    <string name="strMsgReadHistoryDeleteSelected">Les historiques de lecture sélectionnés seront supprimés.</string>
+    <string name="strLabelRemoveAll">Enlever tout</string>
+    <string name="strLabelHide">Cacher</string>
+    <string name="strTitleHolyQuran">Le Coran</string>
+    <string name="strLabelPrevious">Précédente</string>
+    <string name="strLabelUpdateQuranApp">Mettre à jour l\'application Quran</string>
+    <string name="strLabelPreviousChapter">Chapitre précédent</string>
+    <string name="strLabelFullChapter">Lire le chapitre complet</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s à %2$s</string>
+    <string name="strLabelJuzNo" formatted="false">Jus %d</string>
+    <string name="strTitleAppUser">Utilisateur de QuranApp</string>
+    <string name="strLabelVerseNo" formatted="false">Verset %d</string>
+    <string name="strHintSearch">Recherche</string>
+    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleReaderJumpToVerse">Aller au verset</string>
+    <string name="strTitleReaderLayoutStylePageView">Affichage des pages</string>
+    <string name="strTitleReadVerseRange" formatted="false">Lire les versets %1$d - %2$d</string>
+    <string name="strLabelSelectTranslation">Sélectionnez la traduction</string>
+    <string name="strTitleReaderTextSizeArabic">Taille du texte arabe</string>
+    <string name="strTitleTranslations">Traductions</string>
+    <string name="strTitleFilters">Filtres</string>
+    <string name="strTitleRecitations">Sélectionnez le récitant</string>
+    <string name="strMsgUpdateAvailable2Continue">MISE À JOUR REQUISE!
+\nVeuillez mettre à jour l\'application pour continuer.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Un seul résultat trouvé dans %s</string>
+    <string name="strMsgResetReaderSettings">Réinitialisez tous les paramètres par défaut.</string>
+    <string name="strMsgTranslNoneSelected">Aucune traduction n\'est sélectionnée. Accédez aux paramètres pour rechercher des traductions.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Le % maximum et la traduction peuvent être sélectionnés en même temps. Veuillez en sélectionner un avant d\'en sélectionner un autre. Ceci afin d\'éviter une perte de performances.</string>
+    <string name="strMsgCouldNotOpenPage">Impossible d\'ouvrir la page.</string>
+    <string name="strMsgReportUs">Merci de nous signaler.</string>
+    <string name="strLabelNavHome">Maison</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Image enregistrée avec le nom : %s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Versets trouvés liés à %1$s au total %2$d endroits.</string>
+    <string name="strMsgTryLater">Veuillez réessayer plus tard.</string>
+    <string name="strTextPleaseWait">S\'il vous plaît, attendez…</string>
+    <string name="strMsgVerseCredsInvalid">Les informations d\'identification du verset ne sont pas valides.</string>
+    <string name="strTitleOops">Oops!</string>
+    <string name="strMsgUpdateDownloaded">MISE À JOUR TÉLÉCHARGÉE ! Veuillez installer pour terminer la mise à jour.</string>
 </resources>
