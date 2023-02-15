@@ -6,6 +6,8 @@
 
 🇮🇹 Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 
+🇮🇳 Malayalam (ml) - [Fayaz](https://github.com/Sharpentine)
+
 🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
 
 🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
