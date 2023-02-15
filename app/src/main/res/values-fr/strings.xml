@@ -223,14 +223,14 @@
     <string name="strTextPreparing">En train de préparer…</string>
     <string name="strTextSending">Envoi en cours…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>
-    <string name="strTitleError">Erreur!</string>
-    <string name="strTitleInfo">Information!</string>
+    <string name="strTitleError">Erreur !</string>
+    <string name="strTitleInfo">Information !</string>
     <string name="strLabelProceed">PROCÉDER</string>
     <string name="strTextUpdating">Mise à jour…</string>
     <string name="strTextInstalling">Installation…</string>
     <string name="strTextLoading">Chargement…</string>
-    <string name="strMsgUpdateAvailable">MISE À JOUR DISPONIBLE! Veuillez mettre à jour l\'application pour obtenir les dernières fonctionnalités.</string>
-    <string name="strMsgUpdateAvailable4Dialog">MISE À JOUR DISPONIBLE!
+    <string name="strMsgUpdateAvailable">MISE À JOUR DISPONIBLE ! Veuillez mettre à jour l\'application pour obtenir les dernières fonctionnalités.</string>
+    <string name="strMsgUpdateAvailable4Dialog">MISE À JOUR DISPONIBLE !
 \nVeuillez mettre à jour l\'application.</string>
     <string name="strLabelAllChapters">Tous les chapitres</string>
     <string name="strLabelDownloadImage">Télécharger l\'image</string>
@@ -285,12 +285,12 @@
     <string name="strTitleTranslations">Traductions</string>
     <string name="strTitleFilters">Filtres</string>
     <string name="strTitleRecitations">Sélectionnez le récitant</string>
-    <string name="strMsgUpdateAvailable2Continue">MISE À JOUR REQUISE!
+    <string name="strMsgUpdateAvailable2Continue">MISE À JOUR REQUISE !
 \nVeuillez mettre à jour l\'application pour continuer.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Un seul résultat trouvé dans %s</string>
     <string name="strMsgResetReaderSettings">Réinitialisez tous les paramètres par défaut.</string>
     <string name="strMsgTranslNoneSelected">Aucune traduction n\'est sélectionnée. Accédez aux paramètres pour rechercher des traductions.</string>
-    <string name="strMsgTranslSelectionLimit" formatted="false">Le % maximum et la traduction peuvent être sélectionnés en même temps. Veuillez en sélectionner un avant d\'en sélectionner un autre. Ceci afin d\'éviter une perte de performances.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Le %d maximum et la traduction peuvent être sélectionnés en même temps. Veuillez en sélectionner un avant d\'en sélectionner un autre. Ceci afin d\'éviter une perte de performances.</string>
     <string name="strMsgCouldNotOpenPage">Impossible d\'ouvrir la page.</string>
     <string name="strMsgReportUs">Merci de nous signaler.</string>
     <string name="strLabelNavHome">Maison</string>
@@ -299,6 +299,6 @@
     <string name="strMsgTryLater">Veuillez réessayer plus tard.</string>
     <string name="strTextPleaseWait">S\'il vous plaît, attendez…</string>
     <string name="strMsgVerseCredsInvalid">Les informations d\'identification du verset ne sont pas valides.</string>
-    <string name="strTitleOops">Oops!</string>
+    <string name="strTitleOops">Oops !</string>
     <string name="strMsgUpdateDownloaded">MISE À JOUR TÉLÉCHARGÉE ! Veuillez installer pour terminer la mise à jour.</string>
 </resources>
