@@ -111,16 +111,16 @@
     <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
     <string name="strTitleSelectReciter">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
     <string name="strTitleSelectScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
-    <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ?</string>
-    <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ?</string>
-    <string name="strTitleTranslDelete">വിവർത്തനം ഇല്ലാതാക്കണോ?</string>
+    <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ\?</string>
+    <string name="strTitleTranslDelete">വിവർത്തനം ഇല്ലാതാക്കണോ\?</string>
     <string name="strTitleHideAd">പരസ്യം മറയ്ക്കുക</string>
     <string name="strTitleRecitationOptions">ഓപ്ഷനുകൾ</string>
     <string name="strTitleRepeatVerse">വാക്യം ആവർത്തിക്കുക</string>
     <string name="strTitleAutoPlayNext">അടുത്തത് സ്വയമേവ പ്ലേ ചെയ്യുക</string>
     <string name="strTitleQuickEdit">പെട്ടെന്നുള്ള തിരുത്തൽ</string>
-    <string name="strTitleResetReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ?</string>
+    <string name="strTitleResetReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ\?</string>
     <string name="strTitleBookmark">ബുക്ക്മാർക്ക്</string>
     <string name="strTitleAboutUs">ഞങ്ങളേക്കുറിച്ച്</string>
     <string name="strTitleSendFeedback">ഫീഡ്ബാക്ക് അയയ്ക്കുക</string>
@@ -153,7 +153,7 @@
     <string name="strTitleVOTD">ഇന്നത്തെ വാക്യം</string>
     <string name="strTitleAppSettings">ആപ്പ് ക്രമീകരണങ്ങൾ</string>
     <string name="strTitleReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ</string>
-    <string name="strTitleChangeLanguage">ഭാഷ മാറ്റുക?</string>
+    <string name="strTitleChangeLanguage">ഭാഷ മാറ്റുക\?</string>
     <string name="strTitleTheme">തീം</string>
     <string name="strTitleNoInternet">ഇന്റർനെറ്റ് ഇല്ല</string>
     <string name="strMsgChapInfoFailedLoad">സൂറത്തിന്റെ വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
@@ -196,7 +196,7 @@
     <string name="strMsgReadHistoryDeleteSelected">തിരഞ്ഞെടുത്ത വായന ഹിസ്റ്ററി നീക്കം ചെയ്യപ്പെടും.</string>
     <string name="strMsgBookmarkDate" formatted="false">%2$sൽ %1$s</string>
     <string name="strMsgBookmarkDateToday" formatted="false">ഇന്ന് %sൽ</string>
-    <string name="strMsgHistoryRemove">ഈ ഹിസ്റ്ററി നീക്കം ചെയ്യണോ?</string>
+    <string name="strMsgHistoryRemove">ഈ ഹിസ്റ്ററി നീക്കം ചെയ്യണോ\?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" ഹിസ്റ്ററിയിൽ നിന്ന് നീക്കം ചെയ്തു</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">1 ഫലം മാത്രം %sൽ കണ്ടെത്തി</string>
     <string name="strMsgSearchNoResultsFound">ഒരു ഫലവും കണ്ടെത്താനായില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക അല്ലെങ്കിൽ മറ്റൊരു വിവർത്തനത്തിൽ തിരയുക.</string>
@@ -284,8 +284,10 @@
     <string name="strMsgBookmarkDeleteSelected">തിരഞ്ഞെടുത്ത ബുക്ക്മാർക്കുകൾ നീക്കം ചെയ്യപ്പെടും.</string>
     <string name="strMsgBookmarkRemoved">ബുക്ക്‌മാർക്കുകളിൽ നിന്ന് വാക്യം നീക്കം ചെയ്തു</string>
     <string name="strMsgBookmarkDeleteAll">എല്ലാ ബുക്ക്മാർക്കുകളും നീക്കം ചെയ്യപ്പെടും.</string>
-    <string name="strMsgUpdateAvailable4Dialog">അപ്ഡേറ്റ് ലഭ്യമാണ്! \nആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
-    <string name="strMsgUpdateAvailable2Continue">അപ്ഡേറ്റ് ആവശ്യമാണ്! \nതുടരാൻ ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
+    <string name="strMsgUpdateAvailable4Dialog">അപ്ഡേറ്റ് ലഭ്യമാണ്!
+\nആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
+    <string name="strMsgUpdateAvailable2Continue">അപ്ഡേറ്റ് ആവശ്യമാണ്!
+\nതുടരാൻ ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="strMsgUpdateAvailable">അപ്ഡേറ്റ് ലഭ്യമാണ്! ഏറ്റവും പുതിയ ഫീച്ചറുകൾ ലഭിക്കാൻ ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="strMsgEditShareTransl">ക്രമീകരണങ്ങളിൽ നിന്ന് തിരഞ്ഞെടുത്ത വിവർത്തനങ്ങൾ, ഇവിടെ മാത്രം കാണിക്കുന്നു.</string>
     <string name="strMsgEditShareLongTransl">വിവർത്തനം വളരെ ദൈർഘ്യമേറിയതാണ്, അത് ശരിയായി യോജിക്കണമെന്നില്ല.</string>
