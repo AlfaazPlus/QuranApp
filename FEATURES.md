@@ -23,7 +23,7 @@ The following features are the reason why you should use the QuranApp.
 - Automatic scroll to match current verse
 
 ### Fonts
-- Multiple fonts
+- Multiple fonts (Uthmani and Indopak, will be adding KFQPC fonts soon Inshaa Allah)
 - Customize Arabic text size
 - Customise translation text size
 
