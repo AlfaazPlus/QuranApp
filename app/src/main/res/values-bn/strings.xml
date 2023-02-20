@@ -1,2 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strLabelReset">রিসেট</string>
+    <string name="strLabelPrevious">পূর্ববর্তী</string>
+    <string name="strLabelView">দেখুন</string>
+    <string name="strLabelNoPreviousChapter">পূর্বে কোনো সূরা নেই</string>
+    <string name="strLabelContinueChapter">সূরাটি চালিয়ে যান</string>
+    <string name="strLabelSurah" formatted="false">সূরা %s</string>
+    <string name="strLabelGotIt">বুঝেছি</string>
+    <string name="strLabelNotNow">এখন না</string>
+    <string name="strLabelEdit">সম্পাদনা করুন</string>
+    <string name="strLabelDownloadNow">এখনই ডাউনলোড করুন</string>
+    <string name="strLabelNextChapter">পরবর্তী সূরা</string>
+    <string name="strLabelCopy">কপি করুন</string>
+    <string name="strLabelPreviousVerse">পূর্ববর্তী আয়াত</string>
+    <string name="strLabelVersesText">আয়াতসমূহ</string>
+    <string name="strLabelNoPreviousJuz">পূর্বে কোনো পারা নেই</string>
+    <string name="strLabelNoNextChapter">পরে আর কোনো সূরা নেই</string>
+    <string name="strLabelJuzNo" formatted="false">পারা %d</string>
+    <string name="strLabelVerseNo" formatted="false">আয়াত %d</string>
+    <string name="strTitleAppVersion">অ্যাপ সংস্করণ</string>
+    <string name="strVersion" formatted="false">সংস্করণ %s</string>
+    <string name="strTitleLicenses">লাইসেন্স</string>
+    <string name="strLabelClose">বন্ধ করুন</string>
+    <string name="strLabelOkay">ঠিক আছে</string>
+    <string name="strLabelCancel">বাতিল করুন</string>
+    <string name="strLabelApply">প্রয়োগ করুন</string>
+    <string name="strLabelSend">প্রেরণ করুন</string>
+    <string name="strLabelRemove">অপসারণ করুন</string>
+    <string name="strLabelDelete">মুছে ফেলুন</string>
+    <string name="strLabelRemoveAll">সবগুলো অপসারণ করুন</string>
+    <string name="strLabelBack">পেছনে</string>
+    <string name="strLabelTop">শীর্ষ</string>
+    <string name="strLabelRetry">পুনরায় চেষ্টা করুন</string>
+    <string name="strLabelRefresh">সতেজ করুন</string>
+    <string name="strLabelDismiss">খারিজ করুন</string>
+    <string name="strLabelDiscard">পরিত্যাগ করুন</string>
+    <string name="strLabelHide">লুকান</string>
+    <string name="strLabelDone">সম্পন্ন</string>
+    <string name="strLabelRestart">রিস্টার্ট করুন</string>
+    <string name="strLabelOpen">খুলুন</string>
+    <string name="strLabelOpenInReader">রিডারে খুলুন</string>
+    <string name="strLabelRead">পড়ুন »</string>
+    <string name="strLabelViewAll">সবগুলো দেখুন</string>
+    <string name="strLabelChangeNRestart">পরিবর্তন করুন এবং রিস্টার্ট করুন</string>
+    <string name="strLabelAdvertisement">বিজ্ঞাপন</string>
+    <string name="strLabelSkip">এড়িয়ে যান</string>
+    <string name="strLabelNext">পরবর্তী</string>
+    <string name="strLabelStart">শুরু করুন</string>
+    <string name="strLabelUpdateQuranApp">কুরআন অ্যাপ আপডেট করুন</string>
+    <string name="strLabelUpdate">আপডেট করুন</string>
+    <string name="strLabelInstall">ইনস্টল করুন</string>
+    <string name="strLabelNew">নতুন</string>
+    <string name="strLabelPremium">প্রিমিয়াম</string>
+    <string name="strLabelOn">চালু</string>
+    <string name="strLabelOff">বন্ধ</string>
+    <string name="strLabelThemeDark">অন্ধকার</string>
+    <string name="strLabelSystemDefault">সিস্টেম ডিফল্ট</string>
+    <string name="strLabelThemeLight">আলোকোজ্জ্বল</string>
+    <string name="strLabelPreviousJuz">পূর্ববর্তী পারা</string>
+    <string name="strLabelNextJuz">পরবর্তী পারা</string>
+    <string name="strLabelNoNextJuz">পরে আর কোনো পারা নেই</string>
+    <string name="strLabelFullChapter">পুরো সূরা পড়ুন</string>
+    <string name="strLabelNextVerse">পরবর্তী আয়াত</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">আয়াতসমূহ: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d থেকে %2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">আয়াত %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">সূরা %1$s %2$d: আয়াত %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">সূরা %1$s │ আয়াত %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">সূরা %1$s : আয়াত %2$d</string>
+    <string name="strTitleAppUser">কুরআন অ্যাপ ব্যবহারকারী</string>
+    <string name="strTitleHolyQuran">পবিত্র কুরআন</string>
+    <string name="strTitleQuran">কুরআন</string>
+    <string name="strTitleMakki">মক্কী</string>
+    <string name="strTitleMadani">মাদানী</string>
+    <string name="strTitleFootnote">পাদটীকা</string>
+    <string name="strTitleFootnotes">পাদটীকা</string>
+    <string name="strTitleReaderChapters">সূরা (অধ্যায়)</string>
+    <string name="strTitleReaderJuz">জুজ (পারা)</string>
+    <string name="strTitleReaderChapters2">সূরাসমূহ</string>
+    <string name="strTitleReaderJuz2">পারা</string>
+    <string name="strTitleReaderJumpToVerse">আয়াতে যান</string>
+    <string name="strTitleVerseOptions">আয়াতের অপশনগুলো</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">সূরা %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">%d নং আয়াতে যান</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d থেকে %2$d নং আয়াতগুলো পড়ুন</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদ প্রদর্শনী</string>
+    <string name="strTitleReaderLayoutStylePageView">পৃষ্ঠা প্রদর্শনী</string>
+    <string name="strTitleReaderTextSizeArabic">আরবি হরফের আকার</string>
+    <string name="strTitleSettings">সেটিংস</string>
+    <string name="strTitleBookmark">বুকমার্ক</string>
+    <string name="strTitleSendFeedback">মতামত পাঠান</string>
+    <string name="strTitleHelpSupport">সাহায্য ও সহযোগিতা</string>
+    <string name="strTitleAboutUs">আমাদের সম্পর্কে</string>
+    <string name="strTitleAddNote">নোট যোগ করুন</string>
+    <string name="strTitleNote">নোট</string>
+    <string name="strTitleRateApp">অ্যাপ রেটিং দিন</string>
+    <string name="strTitleSubscription">সদস্যতা</string>
+    <string name="strTitleFilters">ফিল্টার</string>
+    <string name="strTitleMenu">মেনু</string>
+    <string name="strTitleTafsir">তাফসির</string>
+    <string name="strTitleAboutSurah">সূরা সম্পর্কে</string>
+    <string name="strTitleTranslations">অনুবাদসমূহ</string>
+    <string name="strTitleRecitations">ক্বারী নির্বাচন করুন</string>
+    <string name="strTitleScripts">স্ক্রিপ্ট (লেখার ধরণ) নির্বাচন করুন</string>
+    <string name="strTitleBookmarkDeleteAll">সমস্ত বুকমার্ক মুছে ফেলবেন\?</string>
+    <string name="strTitleTranslDelete">অনুবাদ মুছে ফেলবেন\?</string>
+    <string name="strTitleResetReaderSettings">রিডার সেটিংস রিসেট করবেন\?</string>
+    <string name="strTitleHideAd">বিজ্ঞাপন লুকান</string>
+    <string name="strTitleRecitationOptions">অপশন</string>
+    <string name="strTitleRepeatVerse">আয়াত পুনরাবৃত্তি করুন</string>
+    <string name="strTitleQuickEdit">দ্রুত সম্পাদনা করুন</string>
+    <string name="strTitleShareVerse">আয়াত শেয়ার করুন</string>
+    <string name="strTitleSelectReason">কারণ নির্বাচন করুন</string>
+    <string name="strTitleExplainIssue">সমস্যাটি ব্যাখ্যা করুন</string>
+    <string name="strLabelPreviousChapter">পূর্ববর্তী সূরা</string>
+    <string name="strLabelPageNo" formatted="false">পৃষ্ঠা %d</string>
+    <string name="strLabelVerses" formatted="false">আয়াত %1$d থেকে %2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">আয়াত : %d</string>
+    <string name="strTitleAutoPlayNext">তিলাওয়াত স্বয়ংক্রিয় জারি রাখুন</string>
+    <string name="strTitleBookmarks">বুকমার্কসমূহ</string>
+    <string name="strTitleDownloadTranslations">ডাউনলোড করুন</string>
+    <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটি অপসারণ করবেন\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d বুকমার্কগুলি অপসারণ করবেন\?</string>
+    <string name="strLabelVersesWithColon" formatted="false">আয়াতসমূহ : %1$d থেকে %2$d</string>
+    <string name="strTitleReaderVerses">আয়াতসমূহ</string>
+    <string name="strTitleVerseRecitation">আয়াত তিলাওয়াত</string>
+    <string name="strTitleReaderLayoutStyle">কুরআন প্রদর্শনী</string>
+    <string name="strTitleReaderTextSizeTransl">অনুবাদ হরফের আকার</string>
+    <string name="strTitleShareApp">অ্যাপ শেয়ার করুন</string>
+    <string name="strTitleReportVerse">আয়াত রিপোর্ট করুন</string>
+</resources>
