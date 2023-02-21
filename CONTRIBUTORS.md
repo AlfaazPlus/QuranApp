@@ -2,6 +2,8 @@
 
 ### App Translations
 
+🇧🇩 Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77)
+
 🇫🇷 French (fr) - [Sanya Gautam](https://instagram.com/_sanyagautam)
 
 🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv)
