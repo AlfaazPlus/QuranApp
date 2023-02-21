@@ -6,6 +6,8 @@
 
 🇫🇷 French (fr) - [Sanya Gautam](https://instagram.com/_sanyagautam)
 
+🇮🇳 Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
+
 🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv)
 
 🇮🇹 Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
@@ -15,3 +17,5 @@
 🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
 
 🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
+
+🇵🇰 Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
