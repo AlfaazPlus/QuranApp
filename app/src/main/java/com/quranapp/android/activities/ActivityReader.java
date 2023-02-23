@@ -9,17 +9,17 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_READING;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.BISMILLAH;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.IS_VOTD;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_PAGE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.IS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
 import static com.quranapp.android.utils.quran.QuranUtils.doesVerseRangeEqualWhole;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_NEXT_VERSE;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PLAY_CONTROL;
@@ -70,8 +70,8 @@ import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.components.reader.ReaderRecyclerItemModel;
 import com.quranapp.android.databinding.ActivityReaderBinding;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
-import com.quranapp.android.readerhandler.Navigator;
-import com.quranapp.android.readerhandler.ReaderParams;
+import com.quranapp.android.reader_managers.Navigator;
+import com.quranapp.android.reader_managers.ReaderParams;
 import com.quranapp.android.suppliments.ReaderLayoutManager;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
@@ -96,8 +96,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+import java.util.stream.IntStream;
+
+import kotlin.Pair;
 
 public class ActivityReader extends ReaderPossessingActivity {
     public static final String KEY_AR_TEXT_SIZE_CHANGED = "arabic.textsize.changed";
@@ -276,7 +280,8 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
 
         mReaderParams.saveTranslChanges = intent.getBooleanExtra(READER_KEY_SAVE_TRANSL_CHANGES, true);
-        mReaderParams.setReaderStyle(this, intent.getIntExtra(READER_KEY_READER_STYLE, mReaderParams.defaultStyle(this)));
+        mReaderParams.setReaderStyle(this,
+            intent.getIntExtra(READER_KEY_READER_STYLE, mReaderParams.defaultStyle(this)));
 
         prepareReader(getIntent());
     }
@@ -305,17 +310,17 @@ public class ActivityReader extends ReaderPossessingActivity {
                 } else {
                     int chapterNo = Integer.parseInt(firstSeg);
 
-                    final int[] verseRange;
+                    final Pair<Integer, Integer> verseRange;
                     Matcher matcher = VERSE_RANGE_PATTERN.matcher(secondSeg);
                     MatchResult result;
                     if (matcher.find() && (result = matcher.toMatchResult()).groupCount() >= 2) {
                         final int fromVerse = Integer.parseInt(result.group(1));
                         final int toVerse = Integer.parseInt(result.group(2));
 
-                        verseRange = new int[]{fromVerse, toVerse};
+                        verseRange = new Pair(fromVerse, toVerse);
                     } else {
                         int verseNo = Integer.parseInt(secondSeg);
-                        verseRange = new int[]{verseNo, verseNo};
+                        verseRange = new Pair(verseNo, verseNo);
                     }
 
                     intent.putExtras(ReaderFactory.prepareVerseRangeIntent(chapterNo, verseRange));
@@ -413,7 +418,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         int initJuzNo = intent.getIntExtra(READER_KEY_JUZ_NO, 1);
         int initChapterNo = intent.getIntExtra(READER_KEY_CHAPTER_NO, 1);
-        int[] initVerses = intent.getIntArrayExtra(READER_KEY_VERSES);
+        Pair<Integer, Integer> initVerses = (Pair<Integer, Integer>) intent.getSerializableExtra(READER_KEY_VERSES);
 
         int[] pendingScroll = intent.getIntArrayExtra(READER_KEY_PENDING_SCROLL);
         if (pendingScroll != null) {
@@ -430,19 +435,25 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (mReaderParams.readType == READER_READ_TYPE_VERSES) {
             boolean anyError = false;
-            if (initVerses == null || initVerses.length < 2) {
+            if (initVerses == null) {
                 makeMessage(str(R.string.strMsgInvalidVersesRange));
                 anyError = true;
             } else if (QuranUtils.doesRangeDenoteSingle(initVerses) && !quranMeta.isVerseValid4Chapter(initChapterNo,
-                    initVerses[0])) {
-                makeMessage(str(R.string.strMsgInvalidVerseNo, initVerses[0], initChapterNo));
+                initVerses.getFirst())) {
+                makeMessage(str(R.string.strMsgInvalidVerseNo, initVerses.getFirst(), initChapterNo));
                 anyError = true;
             } else {
-                QuranUtils.swapVerseRangeIfNeeded(initVerses);
+                initVerses = QuranUtils.swapVerseRangeIfNeeded(initVerses);
+
                 if (!quranMeta.isVerseRangeValid4Chapter(initChapterNo, initVerses)) {
-                    String msg = str(R.string.strMsgInvalidVersesRange2, initVerses[0], initVerses[1], initChapterNo);
+                    String msg = str(
+                        R.string.strMsgInvalidVersesRange2,
+                        initVerses.getFirst(),
+                        initVerses.getSecond(),
+                        initChapterNo
+                    );
                     makeMessage(msg);
-                    QuranUtils.correctVerseInRange(mQuranMetaRef.get(), initChapterNo, initVerses);
+                    initVerses = QuranUtils.correctVerseInRange(mQuranMetaRef.get(), initChapterNo, initVerses);
                 }
             }
 
@@ -459,7 +470,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         Chapter initialChapter = quran.getChapter(initChapterNo);
 
         if (initVerses == null) {
-            initVerses = new int[]{1, initialChapter.getVerseCount()};
+            initVerses = new Pair<>(1, initialChapter.getVerseCount());
         }
 
         switch (mReaderParams.readType) {
@@ -479,7 +490,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.setCurrChapter(chapter);
         mReaderParams.currJuzNo = -1;
 
-        mReaderParams.verseRange = new int[]{1, chapter.getVerseCount()};
+        mReaderParams.verseRange = new Pair<>(1, chapter.getVerseCount());
         mBinding.readerHeader.initChapterSelector();
         mBinding.readerHeader.selectChapterIntoSpinner(mNavigator.getCurrChapterNo());
         mBinding.readerHeader.initVerseSelector(null, chapter.getChapterNumber());
@@ -506,7 +517,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     private void initChapterReading(Chapter chapter) {
         mReaderParams.setReaderStyle(this, READER_STYLE_READING);
 
-        makePages(new int[]{chapter.getChapterNumber(), chapter.getChapterNumber()}, chapter.getPages(), false);
+        makePages(new Pair<>(chapter.getChapterNumber(), chapter.getChapterNumber()), chapter.getPageRange());
     }
 
     private void initChapterTranslation(Chapter chapter) {
@@ -515,8 +526,9 @@ public class ActivityReader extends ReaderPossessingActivity {
         initTranslationVerses(chapter, 1, chapter.getVerseCount());
     }
 
-    public void initVerseRange(Chapter chapter, int[] verseRange) {
-        if (doesVerseRangeEqualWhole(mQuranMetaRef.get(), chapter.getChapterNumber(), verseRange[0], verseRange[1])) {
+    public void initVerseRange(Chapter chapter, Pair<Integer, Integer> verseRange) {
+        if (doesVerseRangeEqualWhole(mQuranMetaRef.get(), chapter.getChapterNumber(), verseRange.getFirst(),
+            verseRange.getSecond())) {
             initChapter(chapter);
             return;
         }
@@ -527,7 +539,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (mPlayer != null) {
             if (!preventRecitationPlayerReset && (!chapter.equals(mReaderParams.currChapter))) {
-                mPlayer.onChapterChanged(chapter.getChapterNumber(), verseRange[0], verseRange[1]);
+                mPlayer.onChapterChanged(chapter.getChapterNumber(), verseRange.getFirst(), verseRange.getSecond());
             } else {
                 mPlayer.reveal();
             }
@@ -544,9 +556,9 @@ public class ActivityReader extends ReaderPossessingActivity {
         mBinding.readerHeader.initChapterSelector();
         mBinding.readerHeader.selectChapterIntoSpinner(mNavigator.getCurrChapterNo());
         mBinding.readerHeader.setupHeaderForReadType();
-        updateVerseNumber(chapter.getChapterNumber(), verseRange[0]);
+        updateVerseNumber(chapter.getChapterNumber(), verseRange.getFirst());
 
-        initTranslationVerses(chapter, verseRange[0], verseRange[1]);
+        initTranslationVerses(chapter, verseRange.getFirst(), verseRange.getSecond());
     }
 
     private void initTranslationVerses(Chapter chapter, int fromVerse, int toVerse) {
@@ -558,7 +570,20 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (!mReaderParams.isSingleVerse()) {
             mActionController.showLoader();
         }
-        new Thread(() -> initTranslationVersesFinalAsync(chapter, fromVerse, toVerse)).start();
+
+        new Thread(() -> {
+            Pair<Integer, Integer> KFQPCPageRange = null;
+            if (mVerseDecorator.isKFQPCScript()) {
+                Verse firstVerse = chapter.getVerse(fromVerse);
+                Verse lastVerse = chapter.getVerse(toVerse);
+
+                KFQPCPageRange = new Pair<>(firstVerse.pageNo, lastVerse.pageNo);
+            }
+
+            mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+
+            initTranslationVersesFinalAsync(chapter, fromVerse, toVerse);
+        }).start();
     }
 
     private void initTranslationVersesFinalAsync(Chapter chapter, int fromVerse, int toVerse) {
@@ -576,19 +601,22 @@ public class ActivityReader extends ReaderPossessingActivity {
             models.add(new ReaderRecyclerItemModel().setViewType(NO_TRANSL_SELECTED));
         }
 
-        if (chapter.canShowBismillah() && doesVerseRangeEqualWhole(mQuranMetaRef.get(), chapterNo, fromVerse, toVerse)) {
+        if (chapter.canShowBismillah() && doesVerseRangeEqualWhole(mQuranMetaRef.get(), chapterNo, fromVerse,
+            toVerse)) {
             ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
             model.setViewType(BISMILLAH);
             models.add(model);
         }
 
-        List<List<Translation>> transls = mTranslFactory.getTranslationsVerseRange(slugs, chapterNo, fromVerse, toVerse);
+        List<List<Translation>> listOfTranslations = mTranslFactory.getTranslationsVerseRange(slugs, chapterNo,
+            fromVerse,
+            toVerse);
 
         for (int verseNo = fromVerse, pos = 0; verseNo <= toVerse; verseNo++, pos++) {
             ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
             final Verse verse = chapter.getVerse(verseNo);
 
-            List<Translation> translations = transls.get(pos);
+            List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
 
             CharSequence translSpannable = prepareTranslSpannable(verse, translations, booksInfo);
@@ -628,7 +656,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         mNavigator.setupNavigator();
 
         final QuranMeta quranMeta = mQuranMetaRef.get();
-        int[] chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
+        Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
 
         if (mReaderParams.getReaderStyle() == READER_STYLE_READING) {
             initJuzReading(juzNo, quranMeta);
@@ -642,44 +670,52 @@ public class ActivityReader extends ReaderPossessingActivity {
     private void initJuzReading(int juzNo, QuranMeta quranMeta) {
         mReaderParams.setReaderStyle(this, READER_STYLE_READING);
 
-        makePages(null, quranMeta.getJuzPages(juzNo), true);
+        makePages(null, quranMeta.getJuzPageRange(juzNo));
     }
 
-    private void initJuzTranslation(int juzNo, int[] chaptersInJuz, QuranMeta quranMeta) {
+    private void initJuzTranslation(int juzNo, Pair<Integer, Integer> chaptersInJuz, QuranMeta quranMeta) {
         mActionController.showLoader();
-        new Thread(() -> initJuzTranslationAsync(juzNo, chaptersInJuz, quranMeta)).start();
+        new Thread(() -> {
+            Pair<Integer, Integer> KFQPCPageRange = null;
+            if (mVerseDecorator.isKFQPCScript()) {
+                KFQPCPageRange = mQuranMetaRef.get().getJuzPageRange(juzNo);
+            }
+
+            mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+            initJuzTranslationAsync(juzNo, chaptersInJuz, quranMeta);
+        }).start();
     }
 
-    private void initJuzTranslationAsync(int juzNo, int[] chaptersInJuz, QuranMeta quranMeta) {
+    private void initJuzTranslationAsync(int juzNo, Pair<Integer, Integer> chaptersInJuz, QuranMeta quranMeta) {
         ArrayList<ReaderRecyclerItemModel> models = new ArrayList<>();
 
         if (mReaderParams.getVisibleTranslSlugs() == null || mReaderParams.getVisibleTranslSlugs().isEmpty()) {
             models.add(new ReaderRecyclerItemModel().setViewType(NO_TRANSL_SELECTED));
         }
 
-        int firstChapterInJuz = chaptersInJuz[0];
-        for (int chapterNo = firstChapterInJuz, toChapter = chaptersInJuz[1]; chapterNo <= toChapter; chapterNo++) {
-            int[] verses = quranMeta.getVersesOfChapterInJuz(juzNo, chapterNo);
-            int fromVerse = verses[0];
-            int toVerse = verses[1];
+        IntStream.rangeClosed(chaptersInJuz.getFirst(), chaptersInJuz.getSecond())
+            .forEach(chapterNo -> {
+                Pair<Integer, Integer> verses = quranMeta.getVerseRangeOfChapterInJuz(juzNo, chapterNo);
+                int fromVerse = verses.getFirst();
+                int toVerse = verses.getSecond();
 
-            final boolean startOfChapter = mReaderParams.readType == READER_READ_TYPE_JUZ && mReaderParams.currJuzNo == juzNo && fromVerse == 1;
+                final boolean startOfChapter = mReaderParams.readType == READER_READ_TYPE_JUZ && mReaderParams.currJuzNo == juzNo && fromVerse == 1;
 
-            if (startOfChapter) {
-                ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
-                model.setViewType(CHAPTER_TITLE);
-                model.setChapterNo(chapterNo);
-                models.add(model);
+                if (startOfChapter) {
+                    ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
+                    model.setViewType(CHAPTER_TITLE);
+                    model.setChapterNo(chapterNo);
+                    models.add(model);
 
-                if (canShowBismillah(chapterNo)) {
-                    ReaderRecyclerItemModel bismillahModel = new ReaderRecyclerItemModel();
-                    bismillahModel.setViewType(BISMILLAH);
-                    models.add(bismillahModel);
+                    if (canShowBismillah(chapterNo)) {
+                        ReaderRecyclerItemModel bismillahModel = new ReaderRecyclerItemModel();
+                        bismillahModel.setViewType(BISMILLAH);
+                        models.add(bismillahModel);
+                    }
                 }
-            }
 
-            makeJuzTranslationVerses(models, mQuranRef.get().getChapter(chapterNo), fromVerse, toVerse);
-        }
+                makeJuzTranslationVerses(models, mQuranRef.get().getChapter(chapterNo), fromVerse, toVerse);
+            });
 
         runOnUiThread(() -> {
             resetAdapter(new ADPReader(this, null, models));
@@ -687,18 +723,27 @@ public class ActivityReader extends ReaderPossessingActivity {
         });
     }
 
-    private void makeJuzTranslationVerses(ArrayList<ReaderRecyclerItemModel> models, Chapter chapter, int fromVerse, int toVerse) {
+    private void makeJuzTranslationVerses(
+        ArrayList<ReaderRecyclerItemModel> models,
+        Chapter chapter,
+        int fromVerse,
+        int toVerse
+    ) {
         Set<String> slugs = mReaderParams.getVisibleTranslSlugs();
         Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(slugs);
 
-        List<List<Translation>> transls = mTranslFactory.getTranslationsVerseRange(slugs, chapter.getChapterNumber(),
-                fromVerse, toVerse);
+        List<List<Translation>> listOfTranslations = mTranslFactory.getTranslationsVerseRange(
+            slugs,
+            chapter.getChapterNumber(),
+            fromVerse,
+            toVerse
+        );
 
         for (int verseNo = fromVerse, pos = 0; verseNo <= toVerse; verseNo++, pos++) {
             Verse verse = chapter.getVerse(verseNo);
             ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
 
-            List<Translation> translations = transls.get(pos);
+            List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
 
             CharSequence translSpannable = prepareTranslSpannable(verse, translations, booksInfo);
@@ -708,43 +753,49 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
     }
 
-    private void makeVerseSpinnerJuzItems(int juzNo, int[] chaptersInJuz, QuranMeta quranMeta) {
+    private void makeVerseSpinnerJuzItems(int juzNo, Pair<Integer, Integer> chaptersInJuz, QuranMeta quranMeta) {
         new Thread(() -> {
             List<VerseSpinnerItem> mVerseSpinnerItems = new ArrayList<>();
             String verseNoText = str(R.string.strLabelVerseWithChapNo);
 
-            int firstChapterInJuz = chaptersInJuz[0];
-            int firstVerseInJuz = -1;
+            int firstChapterInJuz = chaptersInJuz.getFirst();
+            final AtomicInteger firstVerseInJuz = new AtomicInteger(-1);
 
-            for (int chapterNo = firstChapterInJuz, toChapter = chaptersInJuz[1]; chapterNo <= toChapter; chapterNo++) {
-                int[] verses = quranMeta.getVersesOfChapterInJuz(juzNo, chapterNo);
+            IntStream.rangeClosed(firstChapterInJuz, chaptersInJuz.getSecond())
+                .forEach(chapterNo -> {
+                    Pair<Integer, Integer> verses = quranMeta.getVerseRangeOfChapterInJuz(juzNo, chapterNo);
 
-                int firstVerse = verses[0];
-                if (firstVerseInJuz == -1) {
-                    firstVerseInJuz = firstVerse;
-                }
+                    if (firstVerseInJuz.get() == -1) {
+                        firstVerseInJuz.set(verses.getFirst());
+                    }
 
-                for (int verseNo = firstVerse; verseNo <= verses[1]; verseNo++) {
-                    makeVerseSpinnerItemJUZ(mVerseSpinnerItems, chapterNo, verseNo, verseNoText);
-                }
-            }
+                    IntStream.rangeClosed(verses.getFirst(), verses.getSecond())
+                        .forEach(verseNo -> makeVerseSpinnerItemJuz(
+                            mVerseSpinnerItems,
+                            chapterNo,
+                            verseNo,
+                            verseNoText
+                        ));
+                });
 
-            int finalFirstVerseInJuz = firstVerseInJuz;
             runOnUiThread(() -> {
                 VerseSelectorAdapter2 adapter = new VerseSelectorAdapter2(mVerseSpinnerItems);
                 mBinding.readerHeader.initVerseSelector(adapter, -1);
-                updateVerseNumber(firstChapterInJuz, finalFirstVerseInJuz);
+                updateVerseNumber(firstChapterInJuz, firstVerseInJuz.get());
             });
         }).start();
     }
 
-    private void makeVerseSpinnerItemJUZ(List<VerseSpinnerItem> list, int chapterNo, int verseNo, String verseNoText) {
+    private void makeVerseSpinnerItemJuz(List<VerseSpinnerItem> list, int chapterNo, int verseNo, String verseNoText) {
         VerseSpinnerItem item = new VerseSpinnerItem(chapterNo, verseNo);
         item.setLabel(String.format(verseNoText, chapterNo, verseNo));
         list.add(item);
     }
 
-    private void makePages(int[] chapters, int[] pages, boolean isJuz) {
+    private void makePages(
+        @Nullable Pair<Integer, Integer> chapters,
+        Pair<Integer, Integer> pages
+    ) {
         final QuranMeta quranMeta = mQuranMetaRef.get();
 
         mPagesTaskRunner.cancel();
@@ -757,7 +808,14 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             @Override
             public ArrayList<QuranPageModel> call() {
-                return makePagesAsync(chapters, pages, isJuz, quranMeta);
+                Pair<Integer, Integer> KFQPCPageRange = null;
+                if (mVerseDecorator.isKFQPCScript()) {
+                    KFQPCPageRange = pages;
+                }
+
+                mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+
+                return makePagesAsync(chapters, pages, quranMeta);
             }
 
             @Override
@@ -767,11 +825,12 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             @Override
             public void onComplete(ArrayList<QuranPageModel> models) {
-                mBinding.readerVerses.setLayoutManager(new LinearLayoutManager(ActivityReader.this, RecyclerView.VERTICAL, false));
+                mBinding.readerVerses.setLayoutManager(
+                    new LinearLayoutManager(ActivityReader.this, RecyclerView.VERTICAL, false));
 
                 QuranMeta.ChapterMeta chapterInfoMeta = null;
-                if (!isJuz) {
-                    chapterInfoMeta = quranMeta.getChapterMeta(chapters[0]);
+                if (chapters != null) {
+                    chapterInfoMeta = quranMeta.getChapterMeta(chapters.getFirst());
                 }
 
                 resetAdapter(new ADPQuranPages(ActivityReader.this, chapterInfoMeta, models));
@@ -781,13 +840,21 @@ public class ActivityReader extends ReaderPossessingActivity {
         });
     }
 
-    private ArrayList<QuranPageModel> makePagesAsync(int[] chapters, int[] pages, boolean isJuz, QuranMeta quranMeta) {
+    private ArrayList<QuranPageModel> makePagesAsync(
+        @Nullable Pair<Integer, Integer> chapterRange,
+        Pair<Integer, Integer> pageRange,
+        QuranMeta quranMeta
+    ) {
+        final boolean isJuz = chapterRange == null;
         final Quran quran = mQuranRef.get();
 
         ArrayList<QuranPageModel> models = new ArrayList<>();
 
-        for (int pageNo = pages[0], l = pages[1]; pageNo <= l; pageNo++) {
-            QuranPageModel pageModel = createPage(isJuz ? quranMeta.getChaptersOnPage(pageNo) : chapters, pageNo, quranMeta, quran);
+        for (int pageNo = pageRange.getFirst(), l = pageRange.getSecond(); pageNo <= l; pageNo++) {
+            QuranPageModel pageModel = createPage(
+                isJuz ? quranMeta.getChaptersOnPage(pageNo) : chapterRange, pageNo,
+                quranMeta, quran
+            );
             pageModel.setViewType(READER_PAGE);
             models.add(pageModel);
         }
@@ -795,31 +862,45 @@ public class ActivityReader extends ReaderPossessingActivity {
         return models;
     }
 
-    private QuranPageModel createPage(int[] chapters, int pageNo, QuranMeta quranMeta, Quran quran) {
+    private QuranPageModel createPage(
+        Pair<Integer, Integer> chapterRange,
+        int pageNo,
+        QuranMeta quranMeta,
+        Quran quran
+    ) {
         ArrayList<QuranPageSectionModel> sections = new ArrayList<>();
 
         StringBuilder chaptersName = new StringBuilder();
-        int firstChapterOnPage = chapters[0];
-        for (int chapterNo = firstChapterOnPage, toChapterNo = chapters[1]; chapterNo <= toChapterNo; chapterNo++) {
+        int firstChapterOnPage = chapterRange.getFirst();
+
+        for (int chapterNo = firstChapterOnPage, toChapterNo = chapterRange.getSecond(); chapterNo <= toChapterNo; chapterNo++) {
             QuranPageSectionModel section = new QuranPageSectionModel();
             ArrayList<Verse> verses = new ArrayList<>();
 
-            final int[] verseNos = quranMeta.getVersesOfChapterOnPage(pageNo, chapterNo);
-            final int firstVerse = verseNos[0];
+            final Pair<Integer, Integer> verseRange = quranMeta.getVerseRangeOfChapterOnPage(pageNo, chapterNo);
+            final int firstVerse = verseRange.getFirst();
 
             if (firstVerse == 1) {
                 section.setShowTitle(true);
                 section.setShowBismillah(canShowBismillah(chapterNo));
             }
 
-
             SpannableStringBuilder verseContentSB = new SpannableStringBuilder();
-            for (int verseNo = firstVerse, toVerseNo = verseNos[1]; verseNo <= toVerseNo; verseNo++) {
-                Verse verse = quran.getVerse(chapterNo, verseNo);
-                verses.add(verse);
 
-                verseContentSB.append(" ").append(mVerseDecorator.setupArabicTextQuranPage(verse.getArabicText(), verse.getVerseNo()));
-            }
+            final int finalChapterNo = chapterNo;
+            IntStream.rangeClosed(firstVerse, verseRange.getSecond())
+                .forEach(verseNo -> {
+                    Verse verse = quran.getVerse(finalChapterNo, verseNo);
+                    verses.add(verse);
+
+                    verseContentSB.append(" ").append(
+                        mVerseDecorator.setupArabicTextQuranPage(
+                            verse.arabicText,
+                            verse.verseNo,
+                            verse.pageNo
+                        )
+                    );
+                });
 
             section.setContentSpannable(verseContentSB);
             section.setChapterNo(chapterNo);
@@ -833,7 +914,8 @@ public class ActivityReader extends ReaderPossessingActivity {
             }
         }
 
-        return new QuranPageModel(pageNo, quranMeta.getJuzForPage(pageNo), chapters, chaptersName.toString(), sections);
+        return new QuranPageModel(pageNo, quranMeta.getJuzForPage(pageNo), chapterRange, chaptersName.toString(),
+            sections);
     }
 
     public void handleVerseSpinnerSelectedVerseNo(int chapterNo, int verseNo) {
@@ -906,7 +988,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             adapter.notifyItemChanged(i);
 
             Verse verse = item.getVerse();
-            final boolean isCurrVerse = verse.getChapterNo() == chapterNo && verse.getVerseNo() == verseNo;
+            final boolean isCurrVerse = verse.chapterNo == chapterNo && verse.verseNo == verseNo;
             final boolean bool = reciting && isCurrVerse;
             if (bool && mPlayer.P().verseSync) {
                 mLayoutManager.scrollToPositionWithOffset(i, 0);
@@ -937,7 +1019,8 @@ public class ActivityReader extends ReaderPossessingActivity {
                 final boolean bool = reciting && isCurrVerse;
 
                 if (bool && mPlayer.P().verseSync) {
-                    mNavigator.scrollToVerseOnPageValidate(pos, verseNo, mLayoutManager.findViewByPosition(pos), section, false);
+                    mNavigator.scrollToVerseOnPageValidate(pos, verseNo, mLayoutManager.findViewByPosition(pos),
+                        section, false);
                     break outer;
                 }
             }
@@ -965,7 +1048,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     @Override
-    protected void onQuranReparsed(Quran quran) {
+    protected void onQuranReParsed(Quran quran) {
         mActionController.showLoader();
         initQuran(getIntent());
         mActionController.dismissLoader();
@@ -996,8 +1079,9 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.setVisibleTranslSlugs(translSlugsSet);
         // Reassign readerStyle regardless of style change.
         mReaderParams.setReaderStyle(this, SPReader.getSavedReaderStyle(this));
-        // Reset decorator regardless of any change in it.
-        mVerseDecorator.onSharedPrefChanged();
+
+        // Refresh decorator regardless of any change in it.
+        mVerseDecorator.refresh();
 
         if (scriptChanged) {
             reparseQuran();
@@ -1056,7 +1140,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                     if (vh != null && vh.itemView instanceof VerseView) {
                         Verse verse = ((VerseView) vh.itemView).getVerse();
                         if (verse != null) {
-                            mNavigator.pendingScrollVerse = new int[]{verse.getChapterNo(), verse.getVerseNo()};
+                            mNavigator.pendingScrollVerse = new int[]{verse.chapterNo, verse.verseNo};
                             break;
                         }
                     }
@@ -1130,10 +1214,10 @@ public class ActivityReader extends ReaderPossessingActivity {
         // If we could not find the last verse item then Verse will be null OR both verses are not of the same chapter,
         // then use the first verse no as the last.
         final int lastVerseNo;
-        if (lastVerse == null || lastVerse.getChapterNo() != firstVerse.getChapterNo()) {
-            lastVerseNo = firstVerse.getVerseNo();
+        if (lastVerse == null || lastVerse.chapterNo != firstVerse.chapterNo) {
+            lastVerseNo = firstVerse.verseNo;
         } else {
-            lastVerseNo = lastVerse.getVerseNo();
+            lastVerseNo = lastVerse.verseNo;
         }
 
         if (mReadHistoryDBHelper == null) {
@@ -1141,15 +1225,15 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
         // Finally save it.
         VerseUtils.saveLastVerses(
-                this,
-                mReadHistoryDBHelper,
-                mQuranMetaRef.get(),
-                mReaderParams.readType,
-                mReaderParams.getReaderStyle(),
-                mReaderParams.currJuzNo,
-                firstVerse.getChapterNo(),
-                firstVerse.getVerseNo(),
-                lastVerseNo
+            this,
+            mReadHistoryDBHelper,
+            mQuranMetaRef.get(),
+            mReaderParams.readType,
+            mReaderParams.getReaderStyle(),
+            mReaderParams.currJuzNo,
+            firstVerse.chapterNo,
+            firstVerse.verseNo,
+            lastVerseNo
         );
     }
 
@@ -1171,7 +1255,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                 if (!QuranMeta.isChapterValid(chapterNo)) {
                     return;
                 }
-                int[] verses = data.getIntArrayExtra(READER_KEY_VERSES);
+                Pair<Integer, Integer> verses = (Pair<Integer, Integer>) data.getSerializableExtra(READER_KEY_VERSES);
                 mActionController.openVerseReference(chapterNo, verses);
             }
         });

@@ -53,10 +53,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
+
+import kotlin.Pair;
 
 public class QuickReference extends PeaceBottomSheet implements BookmarkCallbacks, Destroyable {
     private final CallableTaskRunner<List<Verse>> mTaskRunner = new CallableTaskRunner<>();
@@ -66,7 +69,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
     private Set<String> mTranslSlugs;
     private int mChapterNo;
     private int[] mVerses;
-    private int[] mVerseRange;
+    private Pair<Integer, Integer> mVerseRange;
     private boolean mIsVerseRange;
 
     public QuickReference() {
@@ -77,7 +80,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         outState.putStringArray("translSlugs", mTranslSlugs.toArray(new String[0]));
         outState.putInt("chapterNo", mChapterNo);
         outState.putIntArray("verses", mVerses);
-        outState.putIntArray("verseRange", mVerseRange);
+        outState.putSerializable("verseRange", mVerseRange);
         outState.putBoolean("isVerseRange", mIsVerseRange);
 
         super.onSaveInstanceState(outState);
@@ -89,7 +92,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
             mTranslSlugs = Arrays.stream(savedInstanceState.getStringArray("translSlugs")).collect(Collectors.toSet());
             mChapterNo = savedInstanceState.getInt("chapterNo");
             mVerses = savedInstanceState.getIntArray("verses");
-            mVerseRange = savedInstanceState.getIntArray("verseRange");
+            mVerseRange = (Pair<Integer, Integer>) savedInstanceState.getSerializable("verseRange");
             mIsVerseRange = savedInstanceState.getBoolean("isVerseRange");
         }
 
@@ -146,8 +149,10 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         }
     }
 
-    private void setupContent(ReaderPossessingActivity actvt, Dialog dialog,
-                              LytSheetVerseReferenceBinding binding, PeaceBottomSheetParams params) {
+    private void setupContent(
+        ReaderPossessingActivity actvt, Dialog dialog,
+        LytSheetVerseReferenceBinding binding, PeaceBottomSheetParams params
+    ) {
         binding.referenceVerses.setVisibility(GONE);
         binding.loader.setVisibility(VISIBLE);
 
@@ -169,9 +174,14 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         binding.header.getRoot().setElevation(Dimen.dp2px(ctx, 4));
     }
 
-    private void initActions(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, int chapterNo, int[] verseRange, boolean isRange) {
+    private void initActions(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceBinding binding,
+        int chapterNo,
+        @Nullable Pair<Integer, Integer> verseRange
+    ) {
         LytSheetVerseReferenceHeaderBinding header = binding.header;
-        if (!isRange) {
+        if (verseRange == null) {
             header.btnBookmark.setVisibility(GONE);
             header.btnOpen.setVisibility(GONE);
             return;
@@ -181,21 +191,21 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         header.btnOpen.setVisibility(VISIBLE);
 
         header.btnBookmark.setOnClickListener(v -> {
-            if (chapterNo == -1 || verseRange == null) {
+            if (chapterNo == -1) {
                 return;
             }
 
-            boolean isBookmarked = actvt.isBookmarked(chapterNo, verseRange[0], verseRange[1]);
+            boolean isBookmarked = actvt.isBookmarked(chapterNo, verseRange.getFirst(), verseRange.getSecond());
 
             if (isBookmarked) {
-                actvt.onBookmarkView(chapterNo, verseRange[0], verseRange[1], this);
+                actvt.onBookmarkView(chapterNo, verseRange.getFirst(), verseRange.getSecond(), this);
             } else {
-                actvt.addVerseToBookmark(chapterNo, verseRange[0], verseRange[1], this);
+                actvt.addVerseToBookmark(chapterNo, verseRange.getFirst(), verseRange.getSecond(), this);
             }
         });
 
         header.btnOpen.setOnClickListener(v -> {
-            if (chapterNo == -1 || verseRange == null) {
+            if (chapterNo == -1) {
                 return;
             }
 
@@ -204,42 +214,68 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         });
     }
 
-    private void preShow(ReaderPossessingActivity actvt, LytSheetVerseReferenceHeaderBinding header, int chapterNo, int[] verseRange) {
+    private void preShow(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceHeaderBinding header,
+        int chapterNo,
+        Pair<Integer, Integer> verseRange
+    ) {
         if (verseRange == null) {
             header.btnBookmark.setVisibility(GONE);
             return;
         }
 
         header.btnBookmark.setVisibility(VISIBLE);
-        setupBookmarkIcon(header.btnBookmark, actvt.isBookmarked(chapterNo, verseRange[0], verseRange[1]));
+        setupBookmarkIcon(
+            header.btnBookmark,
+            actvt.isBookmarked(chapterNo, verseRange.getFirst(), verseRange.getSecond())
+        );
     }
 
-    private void initializeShowVerses(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs, int chapterNo, int[] verses) {
+    private void initializeShowVerses(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceBinding binding,
+        Set<String> translSlugs,
+        int chapterNo,
+        int[] verses
+    ) {
         preShow(actvt, binding.header, chapterNo, null);
-        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, verses, false);
+        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, null, verses);
     }
 
-    private void initializeShowSingleVerseOrRange(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs, int chapterNo, int[] verseRange) {
+    private void initializeShowSingleVerseOrRange(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceBinding binding,
+        Set<String> translSlugs,
+        int chapterNo,
+        Pair<Integer, Integer> verseRange
+    ) {
         preShow(actvt, binding.header, chapterNo, verseRange);
-        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, verseRange, true);
+        makeReferenceVerses(actvt, binding, translSlugs, chapterNo, verseRange, null);
     }
 
     private void setupBookmarkIcon(ImageView btnBookmark, boolean isBookmarked) {
         int filter = ContextCompat.getColor(getContext(), isBookmarked ? R.color.colorPrimary : R.color.colorIcon);
         btnBookmark.setColorFilter(filter);
-        btnBookmark.setImageResource(isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined);
+        btnBookmark.setImageResource(
+            isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined);
     }
 
-    private void setupReferenceTitle(TextView titleView, int chapterNo, int[] verseInts, boolean isRange) {
+    private void setupReferenceTitle(
+        TextView titleView,
+        int chapterNo,
+        @Nullable Pair<Integer, Integer> verseRange,
+        @Nullable int[] versesInts
+    ) {
         StringBuilder title = new StringBuilder("Quran ").append(chapterNo).append(":");
-        if (isRange) {
-            title.append(verseInts[0]);
-            if (verseInts[0] != verseInts[1]) {
-                title.append("-").append(verseInts[1]);
+        if (verseRange != null) {
+            title.append(verseRange.getFirst());
+            if (!Objects.equals(verseRange.getFirst(), verseRange.getSecond())) {
+                title.append("-").append(verseRange.getSecond());
             }
         } else {
-            for (int i = 0, l = verseInts.length; i < l; i++) {
-                title.append(verseInts[i]);
+            for (int i = 0, l = versesInts.length; i < l; i++) {
+                title.append(versesInts[i]);
                 if (i < l - 1) {
                     title.append(", ");
                 }
@@ -248,24 +284,44 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         titleView.setText(title.toString());
     }
 
-    private void makeReferenceVerses(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding, Set<String> translSlugs,
-                                     int chapterNo, int[] versesInts, boolean isRange) {
+    private void makeReferenceVerses(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceBinding binding,
+        Set<String> translSlugs,
+        int chapterNo,
+        @Nullable Pair<Integer, Integer> verseRange,
+        @Nullable int[] versesInts
+    ) {
         QuranMeta.prepareInstance(actvt, quranMeta -> {
             if (!QuranMeta.isChapterValid(chapterNo)) {
                 binding.loader.setVisibility(GONE);
                 return;
             }
-            // --
             Quran.prepareInstance(actvt, quranMeta, quran -> {
-                makeReferenceVersesAsync(actvt, binding, quranMeta, quran,
-                        translSlugs, chapterNo, versesInts, isRange);
+                // --
+                makeReferenceVersesAsync(actvt,
+                    binding,
+                    quranMeta,
+                    quran,
+                    translSlugs,
+                    chapterNo,
+                    verseRange,
+                    versesInts
+                );
             });
         });
     }
 
-    private void makeReferenceVersesAsync(ReaderPossessingActivity actvt, LytSheetVerseReferenceBinding binding,
-                                          QuranMeta quranMeta, Quran quran,
-                                          Set<String> translSlugs, int chapterNo, int[] versesInts, boolean isRange) {
+    private void makeReferenceVersesAsync(
+        ReaderPossessingActivity actvt,
+        LytSheetVerseReferenceBinding binding,
+        QuranMeta quranMeta,
+        Quran quran,
+        Set<String> translSlugs,
+        int chapterNo,
+        @Nullable Pair<Integer, Integer> verseRange,
+        @Nullable int[] versesInts
+    ) {
         mTaskRunner.cancel();
 
         mTaskRunner.callAsync(new BaseCallableTask<List<Verse>>() {
@@ -280,25 +336,37 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 List<Verse> verses = new ArrayList<>();
                 Chapter chapter = quran.getChapter(chapterNo);
                 if (chapter == null) {
-                    throw new Exception("could not get chapter object from quranMeta for the chapterNo. [QuickReference]");
+                    throw new Exception(
+                        "could not get chapter object from quranMeta for the chapterNo. [QuickReference]");
                 }
 
                 Map<String, QuranTranslBookInfo> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(
-                        translSlugs);
-                if (isRange) {
-                    List<List<Translation>> transls = actvt.mTranslFactory.getTranslationsVerseRange(translSlugs, chapterNo,
-                            versesInts[0], versesInts[1]);
-                    QuranUtils.intRangeIterateWithIndex(versesInts, (index, verseNo) -> {
+                    translSlugs
+                );
+
+                if (verseRange != null) {
+                    List<List<Translation>> translations = actvt.mTranslFactory.getTranslationsVerseRange(
+                        translSlugs,
+                        chapterNo,
+                        verseRange.getFirst(),
+                        verseRange.getSecond()
+                    );
+                    QuranUtils.intRangeIterateWithIndex(verseRange, (index, verseNo) -> {
                         // --
-                        prepareVerse(chapter, verseNo, verses, transls.get(index), booksInfo);
+                        prepareVerse(chapter, verseNo, verses, translations.get(index), booksInfo);
                     });
                 } else {
-                    List<List<Translation>> transls = actvt.mTranslFactory.getTranslationsDistinctVerses(translSlugs, chapterNo,
-                            versesInts);
+                    assert versesInts != null;
+
+                    List<List<Translation>> translations = actvt.mTranslFactory.getTranslationsDistinctVerses(
+                        translSlugs,
+                        chapterNo,
+                        versesInts
+                    );
                     for (int i = 0, l = versesInts.length; i < l; i++) {
                         int verseNo = versesInts[i];
                         if (quranMeta.isVerseValid4Chapter(chapterNo, verseNo)) {
-                            prepareVerse(chapter, verseNo, verses, transls.get(i), booksInfo);
+                            prepareVerse(chapter, verseNo, verses, translations.get(i), booksInfo);
                         }
                     }
                 }
@@ -306,8 +374,10 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 return verses;
             }
 
-            private void prepareVerse(Chapter chapter, int verseNo, List<Verse> verses,
-                                      List<Translation> transls, Map<String, QuranTranslBookInfo> booksInfo) {
+            private void prepareVerse(
+                Chapter chapter, int verseNo, List<Verse> verses,
+                List<Translation> transls, Map<String, QuranTranslBookInfo> booksInfo
+            ) {
                 Verse verse = chapter.getVerse(verseNo).copy();
                 if (verse == null) {
                     return;
@@ -326,8 +396,8 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 adp.setVerses(verses);
                 binding.referenceVerses.setAdapter(adp);
 
-                setupReferenceTitle(binding.header.title, chapterNo, versesInts, isRange);
-                initActions(actvt, binding, chapterNo, versesInts, isRange);
+                setupReferenceTitle(binding.header.title, chapterNo, verseRange, versesInts);
+                initActions(actvt, binding, chapterNo, verseRange);
 
 
                 ViewUtils.removeView(mBinding.getRoot().findViewById(R.id.message));
@@ -338,7 +408,8 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                         if (actvt instanceof ActivityReader) {
                             msgView.setActionText(actvt.str(R.string.strTitleSettings), () -> {
                                 // --
-                                ((ActivityReader) actvt).mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSL);
+                                ((ActivityReader) actvt).mBinding.readerHeader.openReaderSetting(
+                                    ActivitySettings.SETTINGS_TRANSL);
                             });
                         }
 
@@ -375,12 +446,12 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
             return;
         }
 
-        final int[] verseRange;
+        final Pair<Integer, Integer> verseRange;
 
         String[] verses = versesStr.split(",");
         if (verses.length > 1) {
-            int[] verseInts = Arrays.stream(verses).mapToInt(Integer::parseInt).sorted().toArray();
-            showReferenceVerses(actvt, translSlugs, chapterNo, verseInts);
+            int[] versesInts = Arrays.stream(verses).mapToInt(Integer::parseInt).sorted().toArray();
+            showReferenceVerses(actvt, translSlugs, chapterNo, versesInts);
         } else {
             Matcher matcher = VERSE_RANGE_PATTERN.matcher(versesStr);
             MatchResult result;
@@ -388,10 +459,10 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 final int fromVerse = Integer.parseInt(result.group(1));
                 final int toVerse = Integer.parseInt(result.group(2));
 
-                verseRange = new int[]{fromVerse, toVerse};
+                verseRange = new Pair<>(fromVerse, toVerse);
             } else {
                 int verseNo = Integer.parseInt(versesStr);
-                verseRange = new int[]{verseNo, verseNo};
+                verseRange = new Pair<>(verseNo, verseNo);
             }
 
             showSingleVerseOrRange(actvt, translSlugs, chapterNo, verseRange);
@@ -421,7 +492,8 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         builder.setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         builder.setNeutralButton(R.string.strLabelCancel, null);
         builder.setPositiveButton(R.string.strLabelOpen,
-                (dialog, which) -> ReaderFactory.startChapter(actvt, translSlugs.toArray(new String[0]), false, chapterNo));
+            (dialog, which) -> ReaderFactory.startChapter(actvt, translSlugs.toArray(new String[0]), false,
+                chapterNo));
         builder.show();
     }
 
@@ -453,10 +525,20 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
      *                   Pattern <reference chapter="\d+" verses="\d+-\d+">()</reference>
      *                   or Pattern <reference chapter="\d+" verses="\d+">()</reference>
      */
-    public void showSingleVerseOrRange(ReaderPossessingActivity actvt, Set<String> translSlugs, int chapterNo, int[] verseRange) {
-        QuranUtils.correctVerseInRange(actvt.mQuranMetaRef.get(), chapterNo, verseRange);
-        if (!QuranMeta.isChapterValid(chapterNo)
-                || !actvt.mQuranMetaRef.get().isVerseRangeValid4Chapter(chapterNo, verseRange[0], verseRange[1])) {
+    public void showSingleVerseOrRange(
+        ReaderPossessingActivity actvt,
+        Set<String> translSlugs,
+        int chapterNo,
+        Pair<Integer, Integer> verseRange
+    ) {
+        verseRange = QuranUtils.correctVerseInRange(actvt.mQuranMetaRef.get(), chapterNo, verseRange);
+        if (!QuranMeta.isChapterValid(chapterNo) ||
+            !actvt.mQuranMetaRef.get().isVerseRangeValid4Chapter(
+                chapterNo,
+                verseRange.getFirst(),
+                verseRange.getSecond()
+            )
+        ) {
             return;
         }
         dismiss();

@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
-import com.quranapp.android.utils.quran.parser.QuranParserJSON;
+import com.quranapp.android.utils.quran.parser.QuranParser;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.util.HashMap;
@@ -15,13 +15,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+import kotlin.Unit;
+
 public class Quran {
     private static final AtomicReference<Quran> sQuranRef = new AtomicReference<>();
     private final String mScript;
-    private Map<Integer, Chapter> chapters = new HashMap<>();
+    private final Map<Integer, Chapter> chapters;
 
-    public Quran(String script) {
+    public Quran(String script, Map<Integer, Chapter> chapters) {
         mScript = script;
+        this.chapters = chapters;
     }
 
     private Quran(Quran quran) {
@@ -48,8 +51,11 @@ public class Quran {
     }
 
     private static void prepare(Context context, String script, @Nullable QuranMeta quranMeta, OnResultReadyCallback<Quran> resultReadyCallback) {
-        QuranParserJSON parser = new QuranParserJSON(context);
-        parser.parseQuran(script, quranMeta, sQuranRef, () -> resultReadyCallback.onReady(sQuranRef.get()));
+        QuranParser parser = new QuranParser(context);
+        parser.parse(script, quranMeta, sQuranRef, () -> {
+            resultReadyCallback.onReady(sQuranRef.get());
+            return Unit.INSTANCE;
+        });
     }
 
     public String getScript() {
@@ -58,10 +64,6 @@ public class Quran {
 
     public Map<Integer, Chapter> getChapters() {
         return chapters;
-    }
-
-    public void setChapters(HashMap<Integer, Chapter> chapters) {
-        this.chapters = chapters;
     }
 
     public Chapter getChapter(int chapterNo) {

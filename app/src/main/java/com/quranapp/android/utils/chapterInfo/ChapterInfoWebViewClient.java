@@ -9,10 +9,10 @@ import android.webkit.WebViewClient;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
+import com.peacedesign.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.quran.QuranUtils;
 
 import org.json.JSONException;
@@ -23,8 +23,10 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.stream.IntStream;
+
+import kotlin.Pair;
 
 public class ChapterInfoWebViewClient extends WebViewClient {
     private final QuranMeta.ChapterMeta mChapterInfoMeta;
@@ -88,7 +90,8 @@ public class ChapterInfoWebViewClient extends WebViewClient {
         Map<String, String> headers = request.getRequestHeaders();
         headers.put("Access-Control-Allow-Origin", "*");
 
-        return new WebResourceResponse(URLConnection.guessContentTypeFromName(uri.getPath()), "utf-8", 200, "OK", headers, data);
+        return new WebResourceResponse(URLConnection.guessContentTypeFromName(uri.getPath()), "utf-8", 200, "OK",
+            headers, data);
     }
 
     @Override
@@ -131,7 +134,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
         contentJson.put("juz-no", text(R.string.strTitleChapInfoJuzNo, prepareJuzs()));
         contentJson.put("verse-count", text(R.string.strTitleChapInfoVerses, mChapterInfoMeta.verseCount));
         contentJson.put("ruku-count", text(R.string.strTitleChapInfoRukus, mChapterInfoMeta.rukuCount));
-        contentJson.put("pages", text(R.string.strTitleChapInfoPages, preparePages(mChapterInfoMeta.pages)));
+        contentJson.put("pages", text(R.string.strTitleChapInfoPages, preparePages(mChapterInfoMeta.pageRange)));
         contentJson.put("revelation-order", text(R.string.strTitleChapInfoRevOrder, mChapterInfoMeta.revelationOrder));
         contentJson.put("revelation-type", text(R.string.strTitleChapInfoRevType, mChapterInfoMeta.revelationType));
 
@@ -147,7 +150,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
 
     private String prepareTextDirection() {
         return "ur".equals(mActivityChapInfo.mLanguage) || "ar".equals(
-                mActivityChapInfo.mLanguage) ? "rtl" : "ltr";
+            mActivityChapInfo.mLanguage) ? "rtl" : "ltr";
     }
 
     private String prepareChapterIconUnicode() {
@@ -167,13 +170,13 @@ public class ChapterInfoWebViewClient extends WebViewClient {
         return juzs;
     }
 
-    private String preparePages(int[] pages) {
+    private String preparePages(Pair<Integer, Integer> pages) {
         final String page;
-        if (pages[0] == pages[1]) {
-            page = String.valueOf(pages[0]);
+        if (Objects.equals(pages.getFirst(), pages.getSecond())) {
+            page = String.valueOf(pages.getFirst());
         } else {
             StringJoiner joiner = new StringJoiner("-");
-            IntStream.of(pages).forEach(x -> joiner.add(String.valueOf(x)));
+            joiner.add(pages.getFirst().toString()).add(pages.getSecond().toString());
             page = joiner.toString();
         }
         return page;

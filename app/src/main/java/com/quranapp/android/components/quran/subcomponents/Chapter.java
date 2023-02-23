@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import kotlin.Pair;
+
 public class Chapter implements Serializable {
     private int currentVerseNo = 1;
     private int chapterNumber;
@@ -13,7 +15,7 @@ public class Chapter implements Serializable {
     private ArrayList<Integer> juzs;
     private ArrayList<Verse> verses = new ArrayList<>();
 
-    public Chapter() { }
+    public Chapter() {}
 
     public Chapter(Chapter chapter) {
         currentVerseNo = chapter.currentVerseNo;
@@ -36,8 +38,8 @@ public class Chapter implements Serializable {
     }
 
     public void setChapterNumber(int chapterNo, QuranMeta quranMeta) {
-        this.chapterNumber = chapterNo;
-        this.chapterMeta = quranMeta.getChapterMeta(chapterNo);
+        chapterNumber = chapterNo;
+        chapterMeta = quranMeta.getChapterMeta(chapterNo);
 
         setJuzs(quranMeta.getChapterJuzs(chapterNo));
     }
@@ -87,8 +89,8 @@ public class Chapter implements Serializable {
         }
     }
 
-    public int[] getPages() {
-        return chapterMeta.pages;
+    public Pair<Integer, Integer> getPageRange() {
+        return chapterMeta.pageRange;
     }
 
     public String getTags() {

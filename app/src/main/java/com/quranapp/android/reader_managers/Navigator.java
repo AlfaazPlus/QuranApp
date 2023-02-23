@@ -1,10 +1,10 @@
-package com.quranapp.android.readerhandler;
+package com.quranapp.android.reader_managers;
 
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_PAGE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
 
 import android.view.View;
 
@@ -29,6 +29,7 @@ import com.quranapp.android.views.reader.ReaderFooter;
 import com.quranapp.android.views.reader.swipe.ViewSwipeToNext;
 import com.quranapp.android.views.reader.swipe.ViewSwipeToPrevious;
 
+import kotlin.Pair;
 import me.dkzwm.widget.srl.SmoothRefreshLayout;
 
 public class Navigator {
@@ -271,7 +272,7 @@ public class Navigator {
     }
 
     public void continueChapter() {
-        pendingScrollVerse = new int[]{mReaderParams.currChapter.getChapterNumber(), mReaderParams.verseRange[1]};
+        pendingScrollVerse = new int[]{mReaderParams.currChapter.getChapterNumber(), mReaderParams.verseRange.getSecond()};
         mActivity.initChapter(mReaderParams.currChapter);
     }
 
@@ -295,10 +296,10 @@ public class Navigator {
 
         switch (mReaderParams.readType) {
             case READER_READ_TYPE_VERSES: {
-                int[] range = mReaderParams.verseRange;
+                Pair<Integer, Integer> range = mReaderParams.verseRange;
                 if (QuranUtils.doesRangeDenoteSingle(range)) {
-                    if (range[0] != verseNo) {
-                        mActivity.initVerseRange(mReaderParams.currChapter, new int[]{verseNo, verseNo});
+                    if (range.getFirst() != verseNo) {
+                        mActivity.initVerseRange(mReaderParams.currChapter, range);
                     }
                 } else {
                     if (QuranUtils.isVerseInRange(verseNo, range)) {
@@ -351,7 +352,7 @@ public class Navigator {
 
             final Verse verse = item.getVerse();
 
-            if (verse.getChapterNo() != chapterNo || verse.getVerseNo() != verseNo) {
+            if (verse.chapterNo != chapterNo || verse.verseNo != verseNo) {
                 continue;
             }
 

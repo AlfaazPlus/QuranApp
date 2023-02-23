@@ -29,7 +29,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
-import com.quranapp.android.readerhandler.ReaderParams
+import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.univ.RegexPattern
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener
 import com.quranapp.android.utils.univ.SimpleTextWatcher

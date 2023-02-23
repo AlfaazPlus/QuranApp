@@ -57,7 +57,7 @@ import com.quranapp.android.frags.editshare.FragEditorOptions;
 import com.quranapp.android.frags.editshare.FragEditorSize;
 import com.quranapp.android.frags.editshare.FragEditorTransls;
 import com.quranapp.android.interfaceUtils.editor.OnEditorChangeListener;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.editor.EditorUtils;
 import com.quranapp.android.utils.univ.DateUtils;
@@ -79,7 +79,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private ActivityEditShareBinding mBinding;
     private FileUtils mFileUtils;
-    private VerseDecorator mDecorator;
+    private ReaderVerseDecorator mDecorator;
     private VerseEditor mVerseEditor;
     private LytEditorTemplateScreenBinding mScreenMainBinding;
     private Typeface mUrduTypeface;
@@ -124,7 +124,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         mFileUtils = FileUtils.newInstance(this);
-        mDecorator = new VerseDecorator(this);
+        mDecorator = new ReaderVerseDecorator(this);
         showLoader();
     }
 
@@ -183,13 +183,15 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
 
         Verse verse = quran.getVerse(mVerseEditor.getChapNo(), mVerseEditor.getVerseNo());
         mVerseEditor.setVerse(verse);
-        mScreenMainBinding.txtArabic.setText(mDecorator.setupArabicText(verse.getArabicText(), mVerseEditor.getVerseNo()));
+        //        mScreenMainBinding.txtArabic.setText(
+        //            mDecorator.setupArabicText(verse.getArabicText(), mVerseEditor.getVerseNo()));
 
-        String textRef = String.format("%s Qur'an %d:%d", StringUtils.DASH, mVerseEditor.getChapNo(), mVerseEditor.getVerseNo());
+        String textRef = String.format("%s Qur'an %d:%d", StringUtils.DASH, mVerseEditor.getChapNo(),
+            mVerseEditor.getVerseNo());
         mScreenMainBinding.txtRef.setText(textRef);
 
         mDecorator.setTextSizeArabic(mScreenMainBinding.txtArabic, .7f);
-        mDecorator.setFontArabic(mScreenMainBinding.txtArabic);
+        //        mDecorator.setFontArabic(mScreenMainBinding.txtArabic);
 
         mDecorator.setTextSizeTransl(mScreenMainBinding.txtTransl, 1f);
     }
@@ -328,7 +330,8 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             if (mTmpImageToSaveTitle != null) {
-                Toast.makeText(this, str(R.string.strTitleImageSavedWithName, mTmpImageToSaveTitle), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, str(R.string.strTitleImageSavedWithName, mTmpImageToSaveTitle),
+                    Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Logger.reportError(e);
@@ -362,7 +365,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
                 mVerseEditor.setBGAlphaColor(Color.BLACK);
             }
             mScreenMainBinding.bgInner.setBackgroundColor(
-                    ColorUtils.createAlphaColor(mVerseEditor.getBGAlphaColor(), mVerseEditor.getBGAlpha()));
+                ColorUtils.createAlphaColor(mVerseEditor.getBGAlphaColor(), mVerseEditor.getBGAlpha()));
         } else if (nBg.getBgType() == BG_TYPE_COLORS) {
             mVerseEditor.setBGAlpha(0);
             mScreenMainBinding.bgImage.setImageDrawable(null);
@@ -447,7 +450,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
         if (mTranslShowingFirstTime) {
             mTranslShowingFirstTime = false;
             hideLoader();
-            if ((transl.getText().length() + mVerseEditor.getVerse().getArabicText().length()) > 650) {
+            if ((transl.getText().length() + mVerseEditor.getVerse().arabicText.length()) > 650) {
                 setOptionsVisibility(false, true, true);
 
                 if (transl.getText().length() > 700) {

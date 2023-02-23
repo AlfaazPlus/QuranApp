@@ -19,6 +19,8 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.List;
 
+import kotlin.Pair;
+
 public class ADPFeaturedQuran extends RecyclerView.Adapter<ADPFeaturedQuran.VHFeaturedQuran> {
     private final List<FeaturedQuranModel> mModels;
     private final QuranMeta mQuranMeta;
@@ -59,14 +61,14 @@ public class ADPFeaturedQuran extends RecyclerView.Adapter<ADPFeaturedQuran.VHFe
 
         @SuppressLint("ClickableViewAccessibility")
         public void bind(FeaturedQuranModel model) {
-            binding.name.setText(model.getName());
-            binding.miniInfo.setText(model.getMiniInfo());
+            binding.name.setText(model.name);
+            binding.miniInfo.setText(model.miniInfo);
 
             binding.getRoot().setOnClickListener(v -> {
-                int chapterNo = model.getChapterNo();
-                int[] verseRange = model.getVerseRange();
+                int chapterNo = model.chapterNo;
+                Pair<Integer, Integer> verseRange = model.verseRange;
                 if (QuranMeta.isChapterValid(chapterNo) &&
-                        mQuranMeta.isVerseRangeValid4Chapter(chapterNo, verseRange[0], verseRange[1])) {
+                        mQuranMeta.isVerseRangeValid4Chapter(chapterNo, verseRange.getFirst(), verseRange.getSecond())) {
                     ReaderFactory.startVerseRange(itemView.getContext(), chapterNo, verseRange);
                 }
             });

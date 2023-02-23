@@ -37,12 +37,15 @@
     <dimen name="dmnActionButtonTiny">25dp</dimen>
 
     <dimen name="dmnReaderTextSizeTransl">16sp</dimen>
+
     <dimen name="dmnReaderTextSizeArIndoPakMedium">30sp</dimen>
-    <dimen name="dmnReaderTextSizeArIndoPakSmall">27sp</dimen>
-    <dimen name="dmnReaderTextSizeArIndoPakSmall2">24sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakSmall">25sp</dimen>
+
     <dimen name="dmnReaderTextSizeArUthmaniMedium">22sp</dimen>
-    <dimen name="dmnReaderTextSizeArUthmaniSmall">19sp</dimen>
-    <dimen name="dmnReaderTextSizeArUthmaniSmall2">17sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniSmall">17sp</dimen>
+
+    <dimen name="dmnReaderTextSizeArKFQPCMedium">33sp</dimen>
+    <dimen name="dmnReaderTextSizeArKFQPCSmall">28sp</dimen>
 
     <dimen name="dmnEditScreen">350dp</dimen>
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import kotlin.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,11 +20,11 @@ import com.quranapp.android.components.IndexJuzItemModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytReaderIndexJuzCardBinding;
 import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;
-import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ADPJuzList extends ADPReaderIndexBase<ADPJuzList.VHJuz> {
     // private final RecyclerView.RecycledViewPool mViewPool;
@@ -66,8 +67,11 @@ public class ADPJuzList extends ADPReaderIndexBase<ADPJuzList.VHJuz> {
         model.juzTitle = ctx.getString(R.string.strLabelJuzNo, juzNo);
 
         List<QuranMeta.ChapterMeta> chapterMetas = new ArrayList<>();
-        QuranUtils.intRangeIterate(quranMeta.getChaptersInJuz(juzNo),
-                chapterNo -> chapterMetas.add(quranMeta.getChapterMeta(chapterNo)));
+
+        Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
+
+        IntStream.rangeClosed(chaptersInJuz.getFirst(), chaptersInJuz.getSecond())
+                .forEach(chapterNo -> chapterMetas.add(quranMeta.getChapterMeta(chapterNo)));
 
         model.chapters = ImmutableList.copyOf(chapterMetas);
 

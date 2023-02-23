@@ -1,8 +1,8 @@
-package com.quranapp.android.readerhandler;
+package com.quranapp.android.reader_managers;
 
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -25,6 +25,8 @@ import com.quranapp.android.views.reader.dialogs.QuickReference;
 import com.quranapp.android.views.reader.dialogs.VerseOptionsDialog;
 
 import java.util.Set;
+
+import kotlin.Pair;
 
 public class ActionController implements Destroyable {
     private final ReaderPossessingActivity mActivity;
@@ -72,11 +74,15 @@ public class ActionController implements Destroyable {
         }
     }
 
-    public void showReferenceSingleVerseOrRange(Set<String> translSlugs, int chapterNo, int[] verseRange) {
+    public void showReferenceSingleVerseOrRange(
+        Set<String> translSlugs,
+        int chapterNo,
+        Pair<Integer, Integer> verseRange
+    ) {
         mQuickReference.showSingleVerseOrRange(mActivity, translSlugs, chapterNo, verseRange);
     }
 
-    public void openVerseReference(int chapterNo, int[] verseRange) {
+    public void openVerseReference(int chapterNo, Pair<Integer, Integer> verseRange) {
         if (mActivity instanceof ActivityReader) {
             openVerseReferenceWithinReader((ActivityReader) mActivity, chapterNo, verseRange);
         } else {
@@ -86,7 +92,7 @@ public class ActionController implements Destroyable {
         closeDialogs(true);
     }
 
-    private void openVerseReferenceWithinReader(ActivityReader activity, int chapterNo, int[] verseRange) {
+    private void openVerseReferenceWithinReader(ActivityReader activity, int chapterNo, Pair<Integer, Integer> verseRange) {
         ReaderParams readerParams = activity.mReaderParams;
         if (!QuranMeta.isChapterValid(chapterNo) || verseRange == null) {
             return;
@@ -99,11 +105,12 @@ public class ActionController implements Destroyable {
 
         if (isReferencedVerseSingle) {
             if (readerParams.readType == READER_READ_TYPE_JUZ) {
-                initNewRange = !mActivity.mQuranMetaRef.get().isVerseValid4Juz(readerParams.currJuzNo, chapterNo, verseRange[0]);
+                initNewRange = !mActivity.mQuranMetaRef.get().isVerseValid4Juz(readerParams.currJuzNo, chapterNo,
+                    verseRange.getFirst());
             } else if (readerParams.readType == READER_READ_TYPE_CHAPTER || readerParams.isSingleVerse()) {
                 initNewRange = !chapter.equals(readerParams.currChapter);
             } else if (readerParams.readType == READER_READ_TYPE_VERSES) {
-                initNewRange = !QuranUtils.isVerseInRange(verseRange[0], readerParams.verseRange);
+                initNewRange = !QuranUtils.isVerseInRange(verseRange.getFirst(), readerParams.verseRange);
             } else {
                 initNewRange = true;
             }
@@ -114,7 +121,7 @@ public class ActionController implements Destroyable {
         if (initNewRange) {
             activity.initVerseRange(chapter, verseRange);
         } else {
-            activity.mNavigator.jumpToVerse(chapterNo, verseRange[0], false);
+            activity.mNavigator.jumpToVerse(chapterNo, verseRange.getFirst(), false);
         }
     }
 

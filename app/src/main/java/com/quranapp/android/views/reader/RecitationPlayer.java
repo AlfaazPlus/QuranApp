@@ -54,6 +54,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import kotlin.Pair;
+
 @SuppressLint("ViewConstructor")
 public class RecitationPlayer extends FrameLayout implements RecitationPlayerImpl, Destroyable {
     private static final int SEEK_LEFT = -1;
@@ -134,13 +136,13 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
 
         final QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
 
-        final int[] chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
-        final int firstChapter = chaptersInJuz[0];
-        final int firstVerse = quranMeta.getVersesOfChapterInJuz(juzNo, firstChapter)[0];
-        final int lastChapter = chaptersInJuz[chaptersInJuz.length - 1];
+        final Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
+        final int firstChapter = chaptersInJuz.getFirst();
+        final int firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).getFirst();
+        final int lastChapter = chaptersInJuz.getSecond();
 
-        final int[] lastChapFromToVerses = quranMeta.getVersesOfChapterInJuz(juzNo, lastChapter);
-        final int lastVerse = lastChapFromToVerses[1];
+        final Pair<Integer, Integer> lastChapFromToVerses = quranMeta.getVerseRangeOfChapterInJuz(juzNo, lastChapter);
+        final int lastVerse = lastChapFromToVerses.getSecond();
 
         P.fromVerse = new int[]{firstChapter, firstVerse};
         P.toVerse = new int[]{lastChapter, lastVerse};

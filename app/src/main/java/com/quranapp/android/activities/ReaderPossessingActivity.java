@@ -31,8 +31,8 @@ import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
-import com.quranapp.android.readerhandler.ActionController;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ActionController;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import kotlin.Pair;
+
 public abstract class ReaderPossessingActivity extends BaseActivity implements BookmarkCallbacks {
     public final AtomicReference<QuranMeta> mQuranMetaRef = new AtomicReference<>(); //don't initialize QuranMeta as it is being null checked in getQuranMetaSafely.
     public final AtomicReference<Quran> mQuranRef = new AtomicReference<>();
@@ -54,7 +56,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
 
     private final Set<OnResultReadyCallback<QuranMeta>> mPendingMetaRequesters = new HashSet<>();
 
-    public VerseDecorator mVerseDecorator;
+    public ReaderVerseDecorator mVerseDecorator;
     public ActionController mActionController;
 
     public int mColorSecondary;
@@ -88,9 +90,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
             mActionController.destroy();
         }
 
-        if (mVerseDecorator != null) {
-            mVerseDecorator.destroy();
-        }
+        mVerseDecorator = null;
 
         super.onDestroy();
     }
@@ -102,7 +102,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
 
         mBookmarkDBHelper = new BookmarkDBHelper(this);
         mBookmarkViewer = new BookmarkViewer(this, mQuranMetaRef, mBookmarkDBHelper, this);
-        mVerseDecorator = new VerseDecorator(this);
+        mVerseDecorator = new ReaderVerseDecorator(this);
         mActionController = new ActionController(this);
 
         mColorSecondary = color(R.color.colorSecondary);
@@ -136,11 +136,11 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
     protected void reparseQuran() {
         Quran.prepareInstance(this, mQuranMetaRef.get(), quran -> {
             mQuranRef.set(quran);
-            onQuranReparsed(quran);
+            onQuranReParsed(quran);
         });
     }
 
-    protected void onQuranReparsed(Quran quran) {
+    protected void onQuranReParsed(Quran quran) {
     }
 
     @CallSuper
@@ -180,7 +180,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
                 String author = bookInfo.getDisplayName(false);
                 Typeface authorFont = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;
                 sb.append(VerseUtils.prepareTranslAuthorText(author, mColorSecondary, mAuthorTextSize,
-                        authorFont, TranslUtils.TRANSL_TRANSLITERATION.equals(bookSlug)));
+                    authorFont, TranslUtils.TRANSL_TRANSLITERATION.equals(bookSlug)));
             }
 
             sb.append(i < l2 ? "\n\n" : "\n");
@@ -197,9 +197,10 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
 
         Set<String> translSlugs = Collections.singleton(translation.getBookSlug());
 
-        ReferenceTagHandler tagHandler = new ReferenceTagHandler(translSlugs, mRefHighlightTxtColor, mRefHighlightBGColor,
-                mRefHighlightBGColorPres, this::showVerseReference,
-                footnoteNo -> showFootnote(verse, translation.getFootnote(footnoteNo), translation.isUrdu()));
+        ReferenceTagHandler tagHandler = new ReferenceTagHandler(translSlugs, mRefHighlightTxtColor,
+            mRefHighlightBGColor,
+            mRefHighlightBGColorPres, this::showVerseReference,
+            footnoteNo -> showFootnote(verse, translation.getFootnote(footnoteNo), translation.isUrdu()));
 
         // to prevent clickable span to be invoked on empty space.
         translationText += " ";
@@ -255,7 +256,11 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         mActionController.showVerseReference(translSlug, chapterNo, verses);
     }
 
-    public void showReferenceSingleVerseOrRange(Set<String> translSlugs, int chapterNo, int[] verseRange) {
+    public void showReferenceSingleVerseOrRange(
+        Set<String> translSlugs,
+        int chapterNo,
+        Pair<Integer, Integer> verseRange
+    ) {
         mActionController.showReferenceSingleVerseOrRange(translSlugs, chapterNo, verseRange);
     }
 

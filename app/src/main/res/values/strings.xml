@@ -37,6 +37,7 @@
     <string name="strLabelNext">Next</string>
     <string name="strLabelStart">Start</string>
     <string name="strLabelUpdateQuranApp">Update QuranApp</string>
+    <string name="labelDownload">Download</string>
     <string name="strLabelDownloadNow">DOWNLOAD NOW</string>
     <string name="strLabelUpdate">Update</string>
     <string name="strLabelInstall">Install</string>
@@ -239,7 +240,8 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
-    <string name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string
+        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
@@ -300,8 +302,13 @@
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
     <string name="strSalam">Assalam Alaikum</string>
     <string name="strSalamShort">Salam</string>
+    <string name="titleDownloadScriptResources">Download resources for this script?</string>
+    <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
+    <string name="msgDownloadKFQPCResourcesScript">Script: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts">Fonts: %1$d downloaded of total %2$d (~%3$s remaining)</string>
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
+    <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>
     <string name="strPreviewTextTransl" translatable="false">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="strNotifChannelRecitation" translatable="false">Recitation Player</string>
     <string name="strNotifChannelIdRecitation" translatable="false">recitation_player</string>

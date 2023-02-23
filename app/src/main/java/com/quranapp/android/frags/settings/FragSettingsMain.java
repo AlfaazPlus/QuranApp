@@ -16,9 +16,9 @@ import static android.widget.LinearLayout.VERTICAL;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_READING;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
 import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
 import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
 import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
@@ -59,6 +59,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
+import com.peacedesign.android.utils.kotlin_utils.ContextUtilsKt;
 import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
@@ -74,10 +75,11 @@ import com.quranapp.android.databinding.LytReaderSettingsTextSizeBinding;
 import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.app.ThemeUtils;
-import com.quranapp.android.utils.reader.ScriptUtils;
+import com.quranapp.android.utils.reader.QuranScriptUtils;
+import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TextSizeUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
@@ -98,6 +100,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import kotlin.Pair;
 import kotlin.Unit;
 
 public class FragSettingsMain extends FragSettingsBase implements FragmentResultListener {
@@ -108,7 +111,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private LytReaderSettingsItemBinding mRecitationExplorerBinding;
     private LytReaderSettingsItemBinding mScriptExplorerBinding;
     private QuranTranslFactory mTranslFactory;
-    private VerseDecorator mVerseDecorator;
+    private ReaderVerseDecorator mVerseDecorator;
     private LayoutInflater mInflater;
 
     private boolean mIsFromReader;
@@ -140,12 +143,12 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     @Override
-    public int getPageBackgroundColor(Context ctx) {
+    public int getPageBackgroundColor(@NonNull Context ctx) {
         return color(ctx, R.color.colorBGPageVariable);
     }
 
     @Override
-    public void onNewArguments(Bundle args) {
+    public void onNewArguments(@NonNull Bundle args) {
         super.onNewArguments(args);
         if (getContext() == null) {
             return;
@@ -156,7 +159,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     @Override
-    public void setupHeader(ActivitySettings activity, BoldHeader header) {
+    public void setupHeader(@NonNull ActivitySettings activity, @NonNull BoldHeader header) {
         super.setupHeader(activity, header);
         header.setCallback(activity::onBackPressed);
         header.setShowSearchIcon(false);
@@ -173,15 +176,15 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mBinding = FragSettingsMainBinding.bind(view);
 
         mTranslFactory = new QuranTranslFactory(ctx);
-        mVerseDecorator = new VerseDecorator(ctx);
+        mVerseDecorator = new ReaderVerseDecorator(ctx);
         mInflater = LayoutInflater.from(ctx);
 
         init(ctx);
 
         getParentFragmentManager().setFragmentResultListener(
-                String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
-                getViewLifecycleOwner(),
-                this
+            String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
+            getViewLifecycleOwner(),
+            this
         );
     }
 
@@ -219,13 +222,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mBinding.appSettings.getRoot().setVisibility(!mIsFromReader ? VISIBLE : GONE);
 
         if (!mIsFromReader) {
-            iniAppSettings(ctx);
+            iniAppSettings();
         }
 
         initReaderSettings(ctx);
     }
 
-    private void iniAppSettings(Context ctx) {
+    private void iniAppSettings() {
         initAppLanguage(mBinding.appSettings.getRoot());
         initThemes(mBinding.appSettings.getRoot());
         initVOTDToggleLauncher(mBinding.appSettings.getRoot());
@@ -233,7 +236,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initAppLanguage(LinearLayout parent) {
         LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
-                false);
+            false);
 
         setupLauncherParams(R.drawable.dr_icon_language, appLangExplorerBinding);
         setupAppLangTitle(appLangExplorerBinding);
@@ -324,7 +327,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         }
 
         String status = mVOTDToggleBinding.getRoot().getContext().getString(SPVerses.getVOTDReminderEnabled(
-                mVOTDToggleBinding.getRoot().getContext()) ? R.string.strLabelOn : R.string.strLabelOff);
+            mVOTDToggleBinding.getRoot().getContext()) ? R.string.strLabelOn : R.string.strLabelOff);
         prepareTitle(mVOTDToggleBinding, R.string.strTitleVOTD, status);
     }
 
@@ -451,9 +454,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, null);
         RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
-                    mRecitationExplorerBinding,
-                    R.string.strTitleRecitations,
-                    RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
+                mRecitationExplorerBinding,
+                R.string.strTitleRecitations,
+                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
             );
 
             return Unit.INSTANCE;
@@ -474,8 +477,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupScriptTitle() {
         if (mScriptExplorerBinding == null) return;
 
-        String subtitle = ScriptUtils.getScriptName(
-                SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
+        String subtitle = QuranScriptUtilsKt.getQuranScriptName(
+            SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
         prepareTitle(mScriptExplorerBinding, R.string.strTitleScripts, subtitle);
     }
 
@@ -570,7 +573,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initDecorator(Context ctx) {
         LytReaderSettingsTextDecoratorBinding binding = LytReaderSettingsTextDecoratorBinding.inflate(mInflater,
-                mBinding.readerSettings.getRoot(), true);
+            mBinding.readerSettings.getRoot(), true);
 
         boolean isLandscape = WindowUtils.isLandscapeMode(ctx);
         int orientation = isLandscape ? HORIZONTAL : VERTICAL;
@@ -601,7 +604,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         seekbar.setOnSeekBarChangeListener(new SimpleSeekbarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(@NonNull SeekBar seekBar, int progress, boolean fromUser) {
                 progress = progress + TEXT_SIZE_MIN_PROGRESS;
                 final String text = progress + "%";
                 mLytTextSizeArabic.progressText.setText(text);
@@ -609,7 +612,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
                 SPReader.setSavedTextSizeMultArabic(seekBar.getContext(), TextSizeUtils.calculateMultiplier(progress));
             }
@@ -620,13 +623,23 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mLytTextSizeArabic == null) {
             return;
         }
-        mVerseDecorator.onSharedPrefChanged();
+        Context ctx = mLytTextSizeArabic.getRoot().getContext();
 
-        int scriptPreviewRes = ScriptUtils.getScriptPreviewRes(
-                SPReader.getSavedScript(mLytTextSizeArabic.getRoot().getContext()));
+        mVerseDecorator.refresh();
+        mVerseDecorator.refreshQuranTextFonts(mVerseDecorator.isKFQPCScript() ? new Pair<>(1, 1) : null);
+
+        final String savedScript = SPReader.getSavedScript(ctx);
+
+        int scriptPreviewRes = QuranScriptUtilsKt.getScriptPreviewRes(savedScript);
         mLytTextSizeArabic.demoText.setText(scriptPreviewRes);
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
-        mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText);
+        if (QuranScriptUtilsKt.isKFQPCScript(savedScript)) {
+            mLytTextSizeArabic.demoText.setTypeface(
+                ContextUtilsKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
+            );
+        } else {
+            mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText, -1);
+        }
     }
 
     private void initTextSizeTransl(LytReaderSettingsTextDecoratorBinding parent, boolean isLandscape) {
@@ -655,7 +668,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         seekbar.setOnSeekBarChangeListener(new SimpleSeekbarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(@NonNull SeekBar seekBar, int progress, boolean fromUser) {
                 progress = progress + TEXT_SIZE_MIN_PROGRESS;
                 final String text = progress + "%";
                 mLytTextSizeTransl.progressText.setText(text);
@@ -663,17 +676,17 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
                 SPReader.setSavedTextSizeMultTransl(seekBar.getContext(), TextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
 
-    private void setProgressAndTextArabic(float mult) {
+    private void setProgressAndTextArabic(float multiplier) {
         if (mLytTextSizeArabic == null) return;
-        mLytTextSizeArabic.seekbar.setProgress(TextSizeUtils.calculateProgress(mult));
-        final String text = TextSizeUtils.calculateProgressText(mult) + "%";
+        mLytTextSizeArabic.seekbar.setProgress(TextSizeUtils.calculateProgress(multiplier));
+        final String text = TextSizeUtils.calculateProgressText(multiplier) + "%";
         mLytTextSizeArabic.progressText.setText(text);
     }
 
@@ -682,14 +695,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        final float size = mVerseDecorator.mTextSizeArabic * TextSizeUtils.calculateMultiplier(progress);
+        final float size = mVerseDecorator.getTextSizeArabic() * TextSizeUtils.calculateMultiplier(progress);
         mLytTextSizeArabic.demoText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
-    private void setProgressAndTextTransl(float mult) {
+    private void setProgressAndTextTransl(float multiplier) {
         if (mLytTextSizeTransl == null) return;
-        mLytTextSizeTransl.seekbar.setProgress(TextSizeUtils.calculateProgress(mult));
-        final String text = TextSizeUtils.calculateProgressText(mult) + "%";
+        mLytTextSizeTransl.seekbar.setProgress(TextSizeUtils.calculateProgress(multiplier));
+        final String text = TextSizeUtils.calculateProgressText(multiplier) + "%";
         mLytTextSizeTransl.progressText.setText(text);
     }
 
@@ -698,14 +711,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        final float size = mVerseDecorator.mTextSizeTransl * TextSizeUtils.calculateMultiplier(progress);
+        final float size = mVerseDecorator.getTextSizeTransl() * TextSizeUtils.calculateMultiplier(progress);
         mLytTextSizeTransl.demoText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
     private void resetToDefault(Context ctx) {
         SPReader.setSavedTextSizeMultArabic(ctx, TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT);
         SPReader.setSavedTextSizeMultTransl(ctx, TextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT);
-        SPReader.setSavedScript(ctx, ScriptUtils.SCRIPT_DEFAULT);
+        SPReader.setSavedScript(ctx, QuranScriptUtils.SCRIPT_DEFAULT);
         initTranslSlugs = TranslUtils.defaultTranslationSlugs().toArray(new String[0]);
 
         RecitationManager.prepare(ctx, false, () -> {
@@ -745,13 +758,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         builder.setDialogGravity(PeaceDialog.GRAVITY_BOTTOM);
         builder.setNeutralButton(R.string.strLabelCancel, null);
         builder.setPositiveButton(R.string.strLabelReset, color(ctx, R.color.colorSecondary),
-                (dialog1, which) -> resetToDefault(ctx));
+            (dialog1, which) -> resetToDefault(ctx));
         builder.setFocusOnPositive(true);
         builder.show();
     }
 
     @Override
-    public Bundle getFinishingResult(Context ctx) {
+    public Bundle getFinishingResult(@NonNull Context ctx) {
         Bundle data = new Bundle();
         data.putStringArray(READER_KEY_TRANSL_SLUGS, initTranslSlugs);
         if (saveTranslChanges && initTranslSlugs != null) {

@@ -1,9 +1,9 @@
 package com.quranapp.android.views.reader;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,9 +29,11 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytReaderFooterBinding;
-import com.quranapp.android.readerhandler.Navigator;
-import com.quranapp.android.readerhandler.ReaderParams;
+import com.quranapp.android.reader_managers.Navigator;
+import com.quranapp.android.reader_managers.ReaderParams;
 import com.quranapp.android.utils.quran.QuranUtils;
+
+import kotlin.Pair;
 
 @SuppressLint("ViewConstructor")
 public class ReaderFooter extends FrameLayout {
@@ -159,7 +161,7 @@ public class ReaderFooter extends FrameLayout {
         switch (mReaderParams.readType) {
             case READER_READ_TYPE_CHAPTER: setupFooterForChapter(); break;
             case READER_READ_TYPE_VERSES:
-                int[] range = mReaderParams.verseRange;
+                Pair<Integer, Integer> range = mReaderParams.verseRange;
                 if (QuranUtils.doesRangeDenoteSingle(range)) {
                     setupFooterForSingle();
                 } else {
@@ -175,14 +177,14 @@ public class ReaderFooter extends FrameLayout {
 
             setPrevJuz(mNavigator.getCurrJuzNo() == 1 ? null : String.format(juzNoFormat, mNavigator.getPrevJuzNo()));
             setNextJuz(mNavigator.getCurrJuzNo() == QuranMeta.totalJuzs()
-                    ? null : String.format(juzNoFormat, mNavigator.getNextJuzNo()));
+                ? null : String.format(juzNoFormat, mNavigator.getNextJuzNo()));
 
             return;
         }
 
-        int[] verseRange = mReaderParams.verseRange;
+        Pair<Integer, Integer> verseRange = mReaderParams.verseRange;
         int chapterNo = mReaderParams.currChapter.getChapterNumber();
-        if (verseRange[1] < quranMeta.getChapterVerseCount(chapterNo)) {
+        if (verseRange.getSecond() < quranMeta.getChapterVerseCount(chapterNo)) {
             mFullChapterLabelRes = R.string.strLabelContinueChapter;
         } else {
             mFullChapterLabelRes = R.string.strLabelFullChapter;
@@ -194,8 +196,10 @@ public class ReaderFooter extends FrameLayout {
         int txtSizeFullChapName = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5);
         int txtClrFullChapName = ContextCompat.getColor(getContext(), R.color.colorIcon);
         SpannableString SSFullChapName = new SpannableString(mReaderParams.currChapter.getName());
-        SSFullChapName.setSpan(new AbsoluteSizeSpan(txtSizeFullChapName), 0, SSFullChapName.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        SSFullChapName.setSpan(new ForegroundColorSpan(txtClrFullChapName), 0, SSFullChapName.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        SSFullChapName.setSpan(new AbsoluteSizeSpan(txtSizeFullChapName), 0, SSFullChapName.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
+        SSFullChapName.setSpan(new ForegroundColorSpan(txtClrFullChapName), 0, SSFullChapName.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
 
         mBinding.fullChapter.setText(TextUtils.concat(SSFullChapTitle, "\n", SSFullChapName));
 
@@ -236,17 +240,20 @@ public class ReaderFooter extends FrameLayout {
         mBinding.chapterNavigator.setVisibility(VISIBLE);
     }
 
-    private void setupFooterForVersesRange(int[] range) {
+    private void setupFooterForVersesRange(Pair<Integer, Integer> range) {
         setupFooterForNone();
         mBinding.verseNavigator.setVisibility(VISIBLE);
         mBinding.rangeMessage.setVisibility(VISIBLE);
 
-        String rangeText = range[0] + "-" + range[1];
+        String rangeText = range.getFirst() + "-" + range.getSecond();
         SpannableString rangeTextSpannable = new SpannableString(rangeText);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        rangeTextSpannable.setSpan(new TypefaceSpan("sans-serif-black"), 0, rangeText.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(
+            ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        rangeTextSpannable.setSpan(new TypefaceSpan("sans-serif-black"), 0, rangeText.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
         rangeTextSpannable.setSpan(colorSpan, 0, rangeText.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        CharSequence textFin = TextUtils.concat(getContext().getString(R.string.strMsgYouAreReadingVerses), " ", rangeTextSpannable);
+        CharSequence textFin = TextUtils.concat(getContext().getString(R.string.strMsgYouAreReadingVerses), " ",
+            rangeTextSpannable);
         mBinding.rangeMessage.setText(textFin);
     }
 

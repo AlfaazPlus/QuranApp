@@ -2,13 +2,13 @@ package com.quranapp.android.adapters;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.BISMILLAH;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.IS_VOTD;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_FOOTER;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.IS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +168,7 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
             }
 
             if (mActivity.mPlayer != null) {
-                verseView.onRecite(mActivity.mPlayer.isReciting(verse.getChapterNo(), verse.getVerseNo()));
+                verseView.onRecite(mActivity.mPlayer.isReciting(verse.chapterNo, verse.verseNo));
             }
         }
 

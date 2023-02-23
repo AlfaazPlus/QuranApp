@@ -9,8 +9,8 @@ import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
-import com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER
-import com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ
+import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER
+import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
@@ -74,7 +74,7 @@ object ReaderFactory {
     }
 
     @JvmStatic
-    fun startVerseRange(context: Context, chapterNo: Int, range: IntArray) {
+    fun startVerseRange(context: Context, chapterNo: Int, range: Pair<Int, Int>) {
         context.startActivity(
             prepareVerseRangeIntent(chapterNo, range).setClass(
                 context,
@@ -121,11 +121,11 @@ object ReaderFactory {
 
     @JvmStatic
     fun prepareVerseRangeIntent(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
-        return prepareVerseRangeIntent(chapterNo, intArrayOf(fromVerse, toVerse))
+        return prepareVerseRangeIntent(chapterNo, Pair(fromVerse, toVerse))
     }
 
     @JvmStatic
-    fun prepareVerseRangeIntent(chapterNo: Int, range: IntArray): Intent {
+    fun prepareVerseRangeIntent(chapterNo: Int, range: Pair<Int, Int>): Intent {
         val intent = Intent()
         intent.putExtra(Keys.READER_KEY_READ_TYPE, 4)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)

@@ -16,6 +16,8 @@ import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.widgets.chapterCard.ChapterCardJuz;
 
+import kotlin.Pair;
+
 public class ADPJuzListChapterList extends RecyclerView.Adapter<ADPJuzListChapterList.VHJuzChapter> {
     private final BaseFragReaderIndex mFragment;
     private final ImmutableList<QuranMeta.ChapterMeta> mChapterMetas;
@@ -71,9 +73,9 @@ public class ADPJuzListChapterList extends RecyclerView.Adapter<ADPJuzListChapte
             chapterCard.setChapterNumber(chapterMeta.chapterNo);
             chapterCard.setName(chapterMeta.getName(), chapterMeta.getNameTranslation());
 
-            int[] versesInJuz = mFragment.getQuranMeta().getVersesOfChapterInJuz(mJuzNo, chapterMeta.chapterNo);
+            Pair<Integer, Integer> versesInJuz = mFragment.getQuranMeta().getVerseRangeOfChapterInJuz(mJuzNo, chapterMeta.chapterNo);
             if (versesInJuz != null) {
-                chapterCard.setVersesCount(mVersesStr, versesInJuz[0], versesInJuz[1]);
+                chapterCard.setVersesCount(mVersesStr, versesInJuz.getFirst(), versesInJuz.getSecond());
                 chapterCard.setOnClickListener(
                         v -> ReaderFactory.startVerseRange(v.getContext(), chapterMeta.chapterNo, versesInJuz));
             }

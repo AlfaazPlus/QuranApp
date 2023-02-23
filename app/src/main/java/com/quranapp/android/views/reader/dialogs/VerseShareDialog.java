@@ -284,7 +284,7 @@ public class VerseShareDialog extends PeaceDialog {
             }
 
             if (incAr) {
-                sb.append(mActivity.mQuranRef.get().getVerse(chapNo, verseNo).getArabicText());
+                sb.append(mActivity.mQuranRef.get().getVerse(chapNo, verseNo).arabicText);
             }
 
 

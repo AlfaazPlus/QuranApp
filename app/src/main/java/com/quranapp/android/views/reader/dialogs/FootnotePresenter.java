@@ -40,7 +40,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVerseFootnoteBinding;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
@@ -110,7 +110,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
         outState.putSerializable("lastSelectedPos", authorsGroup.indexOfChild(chip));
 
         mLastSelectedFootnotes = new HashMap<>(
-                mActivity.mTranslFactory.getFootnotesSingleVerse((String) chip.getTag(), mVerse.getChapterNo(), mVerse.getVerseNo()));
+            mActivity.mTranslFactory.getFootnotesSingleVerse((String) chip.getTag(), mVerse.chapterNo,
+                mVerse.verseNo));
         outState.putSerializable("lastSelectedFootnotes", mLastSelectedFootnotes);
     }
 
@@ -122,7 +123,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
             mFootnote = (Footnote) savedInstanceState.getSerializable("footnote");
             mIsUrduSlug = savedInstanceState.getBoolean("isUrduSlug", false);
             mLastSelectedSlug = savedInstanceState.getString("lastSelectedSlug");
-            mLastSelectedFootnotes = (HashMap<Integer, Footnote>) savedInstanceState.getSerializable("lastSelectedFootnotes");
+            mLastSelectedFootnotes = (HashMap<Integer, Footnote>) savedInstanceState.getSerializable(
+                "lastSelectedFootnotes");
             mLastSelectedPos = savedInstanceState.getInt("lastSelectedPos", -1);
         }
 
@@ -171,7 +173,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
             binding.authors.getRoot().setVisibility(View.GONE);
 
             if (mFootnote != null) {
-                Spanned footnoteText = prepareFootnoteText(actvt, binding, mFootnote, TranslUtils.isUrdu(mFootnote.bookSlug));
+                Spanned footnoteText = prepareFootnoteText(actvt, binding, mFootnote,
+                    TranslUtils.isUrdu(mFootnote.bookSlug));
                 setText(binding, footnoteText);
                 return;
             }
@@ -227,9 +230,9 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     private void setupDesc(QuranMeta meta, QuranTranslBookInfo bookInfo, Verse verse, TextView descView, Footnote footnote) {
-        String chapterName = meta.getChapterName(descView.getContext(), verse.getChapterNo());
+        String chapterName = meta.getChapterName(descView.getContext(), verse.chapterNo);
 
-        String descText = chapterName + " " + verse.getChapterNo() + ":" + verse.getVerseNo();
+        String descText = chapterName + " " + verse.chapterNo + ":" + verse.verseNo;
 
         if (footnote == null) {
             descView.setText(descText);
@@ -254,8 +257,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
         Set<String> translSlugs = Collections.singleton(footnote.bookSlug);
 
         ReferenceTagHandler tagHandler = new ReferenceTagHandler(translSlugs, mRefHighlightTxtColor,
-                mRefHighlightBGColor,
-                mRefHighlightBGColorPres, actvt::showVerseReference);
+            mRefHighlightBGColor,
+            mRefHighlightBGColorPres, actvt::showVerseReference);
 
         String text = footnote.text;
 
@@ -265,8 +268,10 @@ public class FootnotePresenter extends PeaceBottomSheet {
         return HtmlParser.buildSpannedText(text, tagHandler);
     }
 
-    private void prepareFootnotes(ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding,
-                                  String slug, Map<Integer, Footnote> footnotes) {
+    private void prepareFootnotes(
+        ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding,
+        String slug, Map<Integer, Footnote> footnotes
+    ) {
         mLastSelectedSlug = slug;
 
         SpannableStringBuilder sb = new SpannableStringBuilder();
@@ -289,18 +294,21 @@ public class FootnotePresenter extends PeaceBottomSheet {
         String numberStr = number + ". ";
 
         SpannableString author = new SpannableString(numberStr);
-        author.setSpan(new TypefaceSpan2(Typeface.create(typeface, Typeface.BOLD)), 0, author.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        author.setSpan(new TypefaceSpan2(Typeface.create(typeface, Typeface.BOLD)), 0, author.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
         author.setSpan(new ForegroundColorSpan(mColorSecondary), 0, author.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return author;
     }
 
-    public void setupWithDecorator(LytReaderVerseFootnoteBinding binding, VerseDecorator decorator) {
+    public void setupWithDecorator(LytReaderVerseFootnoteBinding binding, ReaderVerseDecorator decorator) {
         decorator.setTextColorNonArabic(binding.footnoteText);
         decorator.setTextSizeTransl(binding.footnoteText);
     }
 
-    private void setupChips(ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding,
-                            Verse verse, List<Translation> translations) {
+    private void setupChips(
+        ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding,
+        Verse verse, List<Translation> translations
+    ) {
         binding.authors.getRoot().setVisibility(View.VISIBLE);
         binding.authors.getRoot().smoothScrollTo(0, 0);
 
@@ -330,8 +338,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
 
             String slug = (String) chip.getTag();
 
-            Map<Integer, Footnote> footnotes = actvt.mTranslFactory.getFootnotesSingleVerse(slug, verse.getChapterNo(),
-                    verse.getVerseNo());
+            Map<Integer, Footnote> footnotes = actvt.mTranslFactory.getFootnotesSingleVerse(slug, verse.chapterNo,
+                verse.verseNo);
             prepareFootnotes(actvt, binding, slug, footnotes);
         });
 
