@@ -21,4 +21,25 @@
     <string name="strLabelVerseNoWithColon" formatted="false">الآية : %d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورة %1$s %2$d : آية %3$d</string>
+    <string name="strTitleLicenses">التراخيص</string>
+    <string name="strTitleAppVersion">إصدار التطبيق</string>
+    <string name="strVersion" formatted="false">الإصدار %s</string>
+    <string name="strLabelClose">غلق</string>
+    <string name="strLabelOkay">حسنًا</string>
+    <string name="strLabelGotIt">فهمتها</string>
+    <string name="strLabelCancel">ألغ</string>
+    <string name="strLabelApply">تطبيق</string>
+    <string name="strLabelSend">أرسل</string>
+    <string name="strLabelRemove">أبعد</string>
+    <string name="strLabelDelete">حذف</string>
+    <string name="strLabelRemoveAll">حذف الكل</string>
+    <string name="strLabelCopy">نسخ</string>
+    <string name="strLabelBack">العودة</string>
+    <string name="strLabelTop">أعلى</string>
+    <string name="strLabelReset">إعادة ضبط</string>
+    <string name="strLabelRetry">أعد المحاولة</string>
+    <string name="strLabelRefresh">تحديث</string>
+    <string name="strLabelDismiss">رفض</string>
+    <string name="strLabelHide">أخفى</string>
+    <string name="strLabelRestart">إعادة تشغيل</string>
 </resources>

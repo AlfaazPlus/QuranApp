@@ -2,7 +2,11 @@
 
 ### App Translations
 
+🇧🇩 Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77)
+
 🇫🇷 French (fr) - [Sanya Gautam](https://instagram.com/_sanyagautam)
+
+🇮🇳 Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
 
 🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv)
 
@@ -13,3 +17,5 @@
 🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
 
 🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
+
+🇵🇰 Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
