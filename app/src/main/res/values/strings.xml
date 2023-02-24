@@ -304,16 +304,19 @@
     <string name="strSalamShort">Salam</string>
     <string name="titleDownloadScriptResources">Download resources for this script?</string>
     <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
-    <string name="msgDownloadKFQPCResourcesScript">Script: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts">Fonts: %1$d downloaded of total %2$d (~%3$s remaining)</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: %1$d downloaded of total %2$d (~%3$s remaining)</string>
     <string name="msgDownloadFailed">Download failed</string>
-    <string name="msgDownloadingScript">Downloading %s script</string>
-    <string name="msgDownloadingFonts">Downloading %s fonts</string>
-    <string name="msgFontsDonwloadProgress">%1$d of %2$d fonts downloaded</string>
-    <string name="msgFontsDonwloadProgressShort">%1$d of %2$d</string>
-    <string name="msgDownloadingResource">Downloading %s</string>
+    <string name="msgDownloadingScript">Downloading script</string>
+    <string name="msgDownloadingFonts">Downloading fonts</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d of %2$d fonts downloaded</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d of %2$d</string>
+    <string name="msgDownloadingResource" formatted="false">Downloading %s</string>
+    <string name="msgScriptFontsDownloaded">Scripts and fonts downloaded successfully.</string>
     <string name="textDownloading">Downloading…</string>
-    <string name="textPercentage">%d%%</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">Background download</string>
+    <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>

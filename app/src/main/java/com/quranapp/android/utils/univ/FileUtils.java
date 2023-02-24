@@ -135,7 +135,7 @@ public final class FileUtils {
     }
 
     public File getScriptFile(String scriptKey) {
-        return new File(getScriptDir(), scriptKey);
+        return new File(getScriptDir(), scriptKey + ".json");
     }
 
     public File getScriptFontDir() {

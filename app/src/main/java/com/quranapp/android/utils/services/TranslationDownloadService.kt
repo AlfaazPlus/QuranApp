@@ -32,10 +32,10 @@ import kotlinx.coroutines.launch
 
 class TranslationDownloadService : Service() {
     companion object {
-        private var mStartedByActivity = false
+        private var STARTED_BY_USER = false
 
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
-            mStartedByActivity = true
+            STARTED_BY_USER = true
             val service = Intent(wrapper, TranslationDownloadService::class.java)
             service.putExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO, bookInfo)
             ContextCompat.startForegroundService(wrapper, service)
@@ -47,7 +47,7 @@ class TranslationDownloadService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        if (mStartedByActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
                 1,
                 NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
@@ -57,7 +57,7 @@ class TranslationDownloadService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mStartedByActivity = false
+        STARTED_BY_USER = false
     }
 
     override fun onBind(intent: Intent): IBinder {

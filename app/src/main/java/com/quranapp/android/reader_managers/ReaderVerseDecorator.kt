@@ -6,7 +6,6 @@ import android.os.Build
 import android.text.SpannableString
 import android.util.TypedValue
 import android.widget.TextView
-import com.peacedesign.android.utils.Log
 import com.peacedesign.android.utils.kotlin_utils.color
 import com.peacedesign.android.utils.kotlin_utils.getDimension
 import com.peacedesign.android.utils.kotlin_utils.getFont
@@ -71,9 +70,13 @@ class ReaderVerseDecorator(private val ctx: Context) {
             fontQuranText = null
 
             for (pageNo in KFQPCPageRange.first..KFQPCPageRange.second) {
-                fontsArabicKFQPC[pageNo] = Typeface.createFromFile(
-                    File(fileUtils.getKFQPCScriptFontDir(savedScript), pageNo.toKFQPCFontFilename())
-                )
+                try {
+                    fontsArabicKFQPC[pageNo] = Typeface.createFromFile(
+                        File(fileUtils.getKFQPCScriptFontDir(savedScript), pageNo.toKFQPCFontFilename())
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
         } else {
@@ -100,7 +103,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
         return VerseUtils.decorateVerse(
             arabicText,
             if (!isKFQPC) verseNo else null,
-            if (isKFQPC) fontsArabicKFQPC[pageNo] else fontQuranText,
+            if (isKFQPC) fontsArabicKFQPC[pageNo] ?: Typeface.DEFAULT else fontQuranText,
             getFontSerial(),
             textSize
         )

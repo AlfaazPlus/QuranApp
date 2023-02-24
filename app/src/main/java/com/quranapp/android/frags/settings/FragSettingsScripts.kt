@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.updatePaddingRelative
-import com.peacedesign.android.utils.Log
 import com.peacedesign.android.utils.ResUtils
 import com.peacedesign.android.utils.kotlin_utils.visible
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
@@ -42,11 +41,18 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     private var mScriptDownloadReceiver: KFQPCScriptFontsDownloadReceiver? = null
     private var scriptDownloadService: KFQPCScriptFontsDownloadService? = null
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStart() {
+        super.onStart()
+
+        activity?.let { bindDownloadService(it) }
+    }
+
+    override fun onStop() {
+        super.onStop()
 
         unregisterDownloadService()
     }
+
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleScripts)
 
@@ -133,6 +139,15 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         scriptDownloaded: Boolean,
         kfqpcFontDownloadedCount: Triple<Int, Int, Int>
     ) {
+        if (scriptDownloadService?.isDownloadRunning == true) {
+            if (slug == scriptDownloadService?.currentScriptKey) {
+                showProgressDialog(ctx, slug)
+            } else {
+                alertDownloadInProgress(ctx)
+            }
+            return
+        }
+
         val msg = StringBuilder(ctx.getString(R.string.msgDownloadKFQPCResources)).append("\n")
         if (!scriptDownloaded) {
             msg.append("\n").append(ctx.getString(R.string.msgDownloadKFQPCResourcesScript, slug.getQuranScriptName()))
@@ -165,49 +180,60 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     }
 
     private fun startScriptDownload(ctx: Context, scriptKey: String) {
-        val binding = LytScriptDownloadProgressBinding.inflate(LayoutInflater.from(ctx))
+        showProgressDialog(ctx, scriptKey)
 
+        KFQPCScriptFontsDownloadService.STARTED_BY_USER = true
+        ContextCompat.startForegroundService(ctx, Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
+            putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
+        })
+        bindDownloadService(ctx)
+    }
+
+    private fun showProgressDialog(ctx: Context, scriptKey: String) {
+        val binding = LytScriptDownloadProgressBinding.inflate(LayoutInflater.from(ctx))
 
         val dialog = PeaceDialog.newBuilder(ctx).apply {
             setTitle(R.string.textDownloading)
             setView(binding.root)
             setCancelable(false)
+            setButtonsDirection(PeaceDialog.STACKED)
             setNegativeButton(R.string.strLabelCancel) { _, _ ->
                 scriptDownloadService?.cancel()
                 unregisterDownloadService()
+            }
+            setPositiveButton(R.string.labelBackgroundDownload) { _, _ ->
+                mScriptDownloadReceiver?.removeListener()
             }
         }.create()
 
         dialog.show()
 
-        val txtDownloadingScript = ctx.getString(R.string.msgDownloadingScript, scriptKey.getQuranScriptName())
-        val txtDownloadingFonts = ctx.getString(R.string.msgDownloadingFonts, scriptKey.getQuranScriptName())
+        binding.title.text = scriptKey.getQuranScriptName()
+
+        val txtDownloadingScript = ctx.getString(R.string.msgDownloadingScript)
+        val txtDownloadingFonts = ctx.getString(R.string.msgDownloadingFonts)
 
         var lastPageNo: Int? = -1
 
         mScriptDownloadReceiver = KFQPCScriptFontsDownloadReceiver().apply {
             setDownloadStateListener(object : KFQPCScriptFontsDownloadReceiver.KFQPCScriptFontsDownload {
                 override fun onStart(pageNo: Int?) {
+                    binding.progressIndicator.isIndeterminate = false
+
                     if (pageNo == null) {
-                        binding.title.text = txtDownloadingScript
-                        binding.progressIndicator.isIndeterminate = false
+                        binding.subtitle.text = txtDownloadingScript
                     } else {
-                        binding.title.text = txtDownloadingFonts
+                        binding.subtitle.text = txtDownloadingFonts
                     }
 
-                    binding.title.visible()
+                    binding.subtitle.visible()
 
-                    if (lastPageNo != pageNo) {
-                        dialog.setupDimension()
-                        lastPageNo = pageNo
-                    }
+                    dialog.setupDimension()
+                    lastPageNo = pageNo
                 }
 
                 override fun onProgress(pageNo: Int?, progress: Int) {
                     binding.progressIndicator.progress = progress
-
-                    binding.progressText.text = ctx.getString(R.string.textPercentage, progress)
-                    binding.progressText.visible()
 
                     if (pageNo != null) {
                         binding.countText.text = ctx.getString(
@@ -225,6 +251,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 override fun onComplete(pageNo: Int?) {
                     if (pageNo == PAGE_NO_ALL_DOWNLOADS_FINISHED) {
                         dialog.dismiss()
+                        showCompletedDialog(ctx, false)
                         scriptDownloadService?.finish()
                         unregisterDownloadService()
                     }
@@ -233,7 +260,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 override fun onFailed(pageNo: Int?) {
                     if (pageNo == null) {
                         dialog.dismiss()
-                        showFailedDialog(ctx)
+                        showCompletedDialog(ctx, true)
                         scriptDownloadService?.finish()
                         unregisterDownloadService()
                     }
@@ -245,19 +272,21 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 IntentFilter(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS)
             )
         }
-
-        ContextCompat.startForegroundService(ctx, Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
-            putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
-        })
-
-        bindDownloadService(ctx)
     }
 
-    private fun showFailedDialog(ctx: Context) {
+    private fun showCompletedDialog(ctx: Context, isFailed: Boolean) {
         PeaceDialog.newBuilder(ctx).apply {
-            setTitle(R.string.strTitleError)
-            setMessage(R.string.msgDownloadFailed)
+            setTitle(if (isFailed) R.string.strTitleError else R.string.strTitleSuccess)
+            setMessage(if (isFailed) R.string.msgDownloadFailed else R.string.msgScriptFontsDownloaded)
             setPositiveButton(R.string.strLabelOkay, null)
+        }.show()
+    }
+
+    private fun alertDownloadInProgress(ctx: Context) {
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.strTitleInfo)
+            setMessage(ctx.getString(R.string.msgAnotherDownloadInProgress))
+            setNeutralButton(R.string.strLabelGotIt, null)
         }.show()
     }
 
@@ -273,26 +302,29 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         }
         try {
             actvt.unbindService(this)
-        } catch (ignored: Exception) {
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-        Log.d(name)
         scriptDownloadService = (binder as KFQPCScriptFontsDownloadService.LocalBinder).service
     }
 
     override fun onServiceDisconnected(name: ComponentName) {
-        Log.d(name)
         scriptDownloadService = null
     }
 
     private fun unregisterDownloadService() {
-        if (mScriptDownloadReceiver != null && activity != null) {
-            mScriptDownloadReceiver!!.removeListener()
-            requireActivity().unregisterReceiver(mScriptDownloadReceiver)
+        try {
+            mScriptDownloadReceiver?.removeListener()
 
-            unbindDownloadService(requireActivity())
+            activity?.let {
+                it.unregisterReceiver(mScriptDownloadReceiver)
+                unbindDownloadService(it)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
