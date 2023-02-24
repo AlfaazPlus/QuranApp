@@ -1,4 +1,4 @@
-name: Build Debug
+name: CI
 
 on:
   pull_request:
@@ -8,7 +8,13 @@ on:
       - "repo_assets/**"
       - ".github/**"
       - "kotlin_code_style.xml"
-      
+  push:
+    paths-ignore:
+      - "**.md"
+      - "inventory/**"
+      - "repo_assets/**"
+      - ".github/**"
+      - "kotlin_code_style.xml"
   workflow_dispatch:
 
 jobs:
