@@ -98,6 +98,8 @@ dependencies {
     implementation project(path: ':peacedesign')
 
     implementation libs.androidx.coreKtx
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.service
     implementation libs.androidx.annotation
     implementation libs.androidx.legacySupport
     implementation libs.androidx.appcompat

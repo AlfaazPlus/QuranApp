@@ -306,6 +306,15 @@
     <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
     <string name="msgDownloadKFQPCResourcesScript">Script: %s (~1MB)</string>
     <string name="msgDownloadKFQPCResourcesFonts">Fonts: %1$d downloaded of total %2$d (~%3$s remaining)</string>
+    <string name="msgDownloadFailed">Download failed</string>
+    <string name="msgDownloadingScript">Downloading %s script</string>
+    <string name="msgDownloadingFonts">Downloading %s fonts</string>
+    <string name="msgFontsDonwloadProgress">%1$d of %2$d fonts downloaded</string>
+    <string name="msgFontsDonwloadProgressShort">%1$d of %2$d</string>
+    <string name="msgDownloadingResource">Downloading %s</string>
+    <string name="textDownloading">Downloading…</string>
+    <string name="textPercentage">%d%%</string>
+
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>

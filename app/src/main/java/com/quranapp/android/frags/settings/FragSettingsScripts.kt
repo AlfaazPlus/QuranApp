@@ -5,30 +5,48 @@
  */
 package com.quranapp.android.frags.settings
 
-import android.content.Context
+import android.app.Activity
+import android.content.*
 import android.os.Bundle
+import android.os.IBinder
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.updatePaddingRelative
+import com.peacedesign.android.utils.Log
 import com.peacedesign.android.utils.ResUtils
+import com.peacedesign.android.utils.kotlin_utils.visible
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
 import com.quranapp.android.utils.reader.*
+import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
+import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
+import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService.Companion.PAGE_NO_ALL_DOWNLOADS_FINISHED
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.views.BoldHeader
 import kotlin.math.ceil
 
-class FragSettingsScripts : FragSettingsBase() {
+class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
     private var initScript: String? = null
+    private var mScriptDownloadReceiver: KFQPCScriptFontsDownloadReceiver? = null
+    private var scriptDownloadService: KFQPCScriptFontsDownloadService? = null
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        unregisterDownloadService()
+    }
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleScripts)
 
@@ -56,7 +74,6 @@ class FragSettingsScripts : FragSettingsBase() {
             setShowRightIcon(false)
         }
     }
-
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         initScript = SPReader.getSavedScript(ctx)
@@ -142,8 +159,141 @@ class FragSettingsScripts : FragSettingsBase() {
             setMessageTextAlignment(View.TEXT_ALIGNMENT_TEXT_START)
             setNeutralButton(R.string.strLabelNotNow, null)
             setPositiveButton(R.string.labelDownload) { _, _ ->
+                startScriptDownload(ctx, slug)
             }
         }.show()
+    }
+
+    private fun startScriptDownload(ctx: Context, scriptKey: String) {
+        val binding = LytScriptDownloadProgressBinding.inflate(LayoutInflater.from(ctx))
+
+
+        val dialog = PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.textDownloading)
+            setView(binding.root)
+            setCancelable(false)
+            setNegativeButton(R.string.strLabelCancel) { _, _ ->
+                scriptDownloadService?.cancel()
+                unregisterDownloadService()
+            }
+        }.create()
+
+        dialog.show()
+
+        val txtDownloadingScript = ctx.getString(R.string.msgDownloadingScript, scriptKey.getQuranScriptName())
+        val txtDownloadingFonts = ctx.getString(R.string.msgDownloadingFonts, scriptKey.getQuranScriptName())
+
+        var lastPageNo: Int? = -1
+
+        mScriptDownloadReceiver = KFQPCScriptFontsDownloadReceiver().apply {
+            setDownloadStateListener(object : KFQPCScriptFontsDownloadReceiver.KFQPCScriptFontsDownload {
+                override fun onStart(pageNo: Int?) {
+                    if (pageNo == null) {
+                        binding.title.text = txtDownloadingScript
+                        binding.progressIndicator.isIndeterminate = false
+                    } else {
+                        binding.title.text = txtDownloadingFonts
+                    }
+
+                    binding.title.visible()
+
+                    if (lastPageNo != pageNo) {
+                        dialog.setupDimension()
+                        lastPageNo = pageNo
+                    }
+                }
+
+                override fun onProgress(pageNo: Int?, progress: Int) {
+                    binding.progressIndicator.progress = progress
+
+                    binding.progressText.text = ctx.getString(R.string.textPercentage, progress)
+                    binding.progressText.visible()
+
+                    if (pageNo != null) {
+                        binding.countText.text = ctx.getString(
+                            R.string.msgFontsDonwloadProgress,
+                            pageNo - 1, QuranMeta.totalPages()
+                        )
+                        binding.countText.visible()
+                    }
+
+                    if (lastPageNo != pageNo) {
+                        dialog.setupDimension()
+                    }
+                }
+
+                override fun onComplete(pageNo: Int?) {
+                    if (pageNo == PAGE_NO_ALL_DOWNLOADS_FINISHED) {
+                        dialog.dismiss()
+                        scriptDownloadService?.finish()
+                        unregisterDownloadService()
+                    }
+                }
+
+                override fun onFailed(pageNo: Int?) {
+                    if (pageNo == null) {
+                        dialog.dismiss()
+                        showFailedDialog(ctx)
+                        scriptDownloadService?.finish()
+                        unregisterDownloadService()
+                    }
+                }
+            })
+
+            ctx.registerReceiver(
+                this,
+                IntentFilter(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS)
+            )
+        }
+
+        ContextCompat.startForegroundService(ctx, Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
+            putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
+        })
+
+        bindDownloadService(ctx)
+    }
+
+    private fun showFailedDialog(ctx: Context) {
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.strTitleError)
+            setMessage(R.string.msgDownloadFailed)
+            setPositiveButton(R.string.strLabelOkay, null)
+        }.show()
+    }
+
+    private fun bindDownloadService(ctx: Context) {
+        ctx.bindService(Intent(ctx, KFQPCScriptFontsDownloadService::class.java), this, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun unbindDownloadService(actvt: Activity) {
+        // if scriptDownloadService is null, it means the service is already unbound
+        // or it was not bound in the first place.
+        if (scriptDownloadService == null) {
+            return
+        }
+        try {
+            actvt.unbindService(this)
+        } catch (ignored: Exception) {
+        }
+    }
+
+    override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+        Log.d(name)
+        scriptDownloadService = (binder as KFQPCScriptFontsDownloadService.LocalBinder).service
+    }
+
+    override fun onServiceDisconnected(name: ComponentName) {
+        Log.d(name)
+        scriptDownloadService = null
+    }
+
+    private fun unregisterDownloadService() {
+        if (mScriptDownloadReceiver != null && activity != null) {
+            mScriptDownloadReceiver!!.removeListener()
+            requireActivity().unregisterReceiver(mScriptDownloadReceiver)
+
+            unbindDownloadService(requireActivity())
+        }
     }
 
     override fun getFinishingResult(ctx: Context): Bundle? {
