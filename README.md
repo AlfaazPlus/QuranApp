@@ -6,7 +6,12 @@
 
 The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place.
 
-<br />
+[![CI](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml/badge.svg)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml)
+<img alt="Stars" src="https://img.shields.io/github/stars/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
+<img alt="Issues" src="https://img.shields.io/github/issues/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
+<img alt="Last Commit" src="https://img.shields.io/github/last-commit/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
+<img alt="License" src="https://img.shields.io/github/license/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
+<hr />
 
 The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communication channel for any kind of discussion.
 
