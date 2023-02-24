@@ -1,7 +1,6 @@
 name: CI
 
 on:
-  workflow_dispatch:
   pull_request:
     paths-ignore:
       - "**.md"
@@ -16,7 +15,6 @@ on:
       - "repo_assets/**"
       - ".github/**"
       - "kotlin_code_style.xml"
-      
   workflow_dispatch:
 
 jobs:
