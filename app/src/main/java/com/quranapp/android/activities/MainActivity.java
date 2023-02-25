@@ -108,13 +108,12 @@ public class MainActivity extends BaseActivity {
         initMenu();
 
         mBinding.header.indexMenu.setOnClickListener(v -> mIndexMenu.open());
-
-        //        ViewUtils.addStrokedBGToHeader(mBinding.header.getRoot(), R.color.colorBGHomePageItem, R.color.colorDivider);
     }
 
     private void initActions() {
         AppActions.checkForResourcesVersions(this);
         AppActions.scheduleActions(this);
+        AppActions.checkForCrashLogs(this);
     }
 
     private void initContent() {

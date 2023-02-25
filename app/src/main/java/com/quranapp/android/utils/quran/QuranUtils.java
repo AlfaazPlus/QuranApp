@@ -2,6 +2,10 @@ package com.quranapp.android.utils.quran;
 
 import com.quranapp.android.components.quran.QuranMeta;
 
+import java.util.stream.IntStream;
+
+import kotlin.Pair;
+
 public abstract class QuranUtils {
     public static String getBismillahUnicode() {
         return "\ufdfd";
@@ -254,45 +258,34 @@ public abstract class QuranUtils {
         return fromVerse == 1 && toVerse == quranMeta.getChapterVerseCount(chapterNo);
     }
 
-    public static void correctVerseInRange(QuranMeta quranMeta, int chapterNo, int[] range) {
+    public static Pair<Integer, Integer> correctVerseInRange(QuranMeta quranMeta, int chapterNo, Pair<Integer, Integer> range) {
         int count = quranMeta.getChapterVerseCount(chapterNo);
 
-        range[0] = Math.max(range[0], 1);
-        range[1] = Math.min(range[1], count);
+        return new Pair<>(Math.max(range.getFirst(), 1), Math.min(range.getSecond(), count));
     }
 
-    public static void swapVerseRangeIfNeeded(int[] range) {
-        if (range[0] > range[1]) {
-            int tmp = range[0];
-            range[0] = range[1];
-            range[1] = tmp;
+    public static Pair<Integer, Integer> swapVerseRangeIfNeeded(Pair<Integer, Integer> range) {
+        if (range.getFirst() > range.getSecond()) {
+            return new Pair<>(range.getSecond(), range.getFirst());
         }
+        return range;
     }
 
-    public static boolean isVerseInRange(int verseNo, int[] range) {
-        return verseNo >= range[0] && verseNo <= range[1];
+    public static boolean isVerseInRange(int verseNo, Pair<Integer, Integer> range) {
+        return verseNo >= range.getFirst() && verseNo <= range.getSecond();
+    }
+
+    public static boolean doesRangeDenoteSingle(Pair<Integer, Integer> range) {
+        return doesRangeDenoteSingle(range.getFirst(), range.getSecond());
     }
 
     public static boolean doesRangeDenoteSingle(int fromVerse, int toVerse) {
         return fromVerse == toVerse;
     }
 
-    public static boolean doesRangeDenoteSingle(int[] range) {
-        return range[0] == range[1];
-    }
 
-    public static void intRangeIterate(int[] range, IterationItemCatcher itemCatcher) {
-        intRangeIterate(range[0], range[1], itemCatcher);
-    }
-
-    public static void intRangeIterateWithIndex(int[] range, IterationItemCatcherWithIndex itemCatcher) {
-        intRangeIterateWithIndex(range[0], range[1], itemCatcher);
-    }
-
-    public static void intRangeIterate(int from, int to, IterationItemCatcher itemCatcher) {
-        for (int currentItem = from; currentItem <= to; currentItem++) {
-            itemCatcher.currentItem(currentItem);
-        }
+    public static void intRangeIterateWithIndex(Pair<Integer, Integer> range, IterationItemCatcherWithIndex itemCatcher) {
+        intRangeIterateWithIndex(range.getFirst(), range.getFirst(), itemCatcher);
     }
 
     public static void intRangeIterateWithIndex(int from, int to, IterationItemCatcherWithIndex itemCatcher) {
@@ -303,15 +296,11 @@ public abstract class QuranUtils {
     }
 
     public static void iterateChapterNo(IterationItemCatcher itemCatcher) {
-        for (int currentItem = 1; currentItem <= QuranMeta.totalChapters(); currentItem++) {
-            itemCatcher.currentItem(currentItem);
-        }
+        IntStream.rangeClosed(1, QuranMeta.totalChapters()).forEach(itemCatcher::currentItem);
     }
 
     public static void iterateJuzNo(IterationItemCatcher itemCatcher) {
-        for (int currentItem = 1; currentItem <= QuranMeta.totalJuzs(); currentItem++) {
-            itemCatcher.currentItem(currentItem);
-        }
+        IntStream.rangeClosed(1, QuranMeta.totalJuzs()).forEach(itemCatcher::currentItem);
     }
 
     public interface IterationItemCatcher {

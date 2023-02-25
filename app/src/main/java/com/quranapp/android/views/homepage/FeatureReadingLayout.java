@@ -23,6 +23,8 @@ import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Pair;
+
 public class FeatureReadingLayout extends HomepageCollectionLayoutBase {
     private final CallableTaskRunner<List<FeaturedQuranModel>> taskRunner = new CallableTaskRunner<>();
     private boolean mFirstTime = true;
@@ -85,29 +87,29 @@ public class FeatureReadingLayout extends HomepageCollectionLayoutBase {
 
                         if (versesSplits.length >= 2) {
                             verses[1] = Integer.parseInt(versesSplits[1]);
-                            model.setName(String.format(chapNameFormat, quranMeta.getChapterName(ctx, chapterNo)));
-                            model.setMiniInfo(String.format(versesFormat, verses[0], verses[1]));
+                            model.name = String.format(chapNameFormat, quranMeta.getChapterName(ctx, chapterNo));
+                            model.miniInfo = String.format(versesFormat, verses[0], verses[1]);
                         } else {
                             verses[1] = verses[0];
 
                             String chapterName = quranMeta.getChapterName(ctx, chapterNo);
                             if (chapterNo == 2 && verses[0] == 255) {
-                                model.setName(ctx.getString(R.string.strAyatulKursi));
-                                model.setMiniInfo(String.format(miniInfoFormat, chapterName, 255));
+                                model.name = ctx.getString(R.string.strAyatulKursi);
+                                model.miniInfo = String.format(miniInfoFormat, chapterName, 255);
                             } else {
-                                model.setName(String.format(chapNameFormat, chapterName));
-                                model.setMiniInfo(String.format(verseNoFormat, verses[0]));
+                                model.name = String.format(chapNameFormat, chapterName);
+                                model.miniInfo = String.format(verseNoFormat, verses[0]);
                             }
                         }
                     } else {
                         verses[0] = 1;
                         verses[1] = quranMeta.getChapterVerseCount(chapterNo);
-                        model.setName(String.format(chapNameFormat, quranMeta.getChapterName(ctx, chapterNo)));
-                        model.setMiniInfo(String.format(miniInfoChapFormat, chapterNo, 1, verses[1]));
+                        model.name = String.format(chapNameFormat, quranMeta.getChapterName(ctx, chapterNo));
+                        model.miniInfo = String.format(miniInfoChapFormat, chapterNo, 1, verses[1]);
                     }
 
-                    model.setChapterNo(chapterNo);
-                    model.setVerseRange(verses);
+                    model.chapterNo = chapterNo;
+                    model.verseRange = new Pair<>(verses[0], verses[1]);
                     models.add(model);
                 }
 

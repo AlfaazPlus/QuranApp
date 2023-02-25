@@ -1,13 +1,13 @@
-package com.quranapp.android.readerhandler;
+package com.quranapp.android.reader_managers;
 
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.BISMILLAH;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.IS_VOTD;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_FOOTER;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_PAGE;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.IS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
 
 import android.content.Context;
 
@@ -23,6 +23,8 @@ import com.quranapp.android.utils.sharedPrefs.SPReader;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
+
+import kotlin.Pair;
 
 public class ReaderParams {
     public static final int READER_STYLE_TRANSLATION = 0x1;
@@ -45,7 +47,7 @@ public class ReaderParams {
     public float translTextSizeMult;
     public Chapter currChapter;
     public int currJuzNo;
-    public int[] verseRange;
+    public Pair<Integer, Integer> verseRange;
     private Set<String> visibleTranslSlugs;
     public boolean saveTranslChanges;
 
@@ -85,7 +87,8 @@ public class ReaderParams {
         switch (readType) {
             case READER_READ_TYPE_VERSES:
             case READER_READ_TYPE_CHAPTER:
-                return currChapter.getChapterNumber() == chapterNo && quranMeta.isVerseValid4Chapter(chapterNo, verseNo);
+                return currChapter.getChapterNumber() == chapterNo && quranMeta.isVerseValid4Chapter(chapterNo,
+                        verseNo);
             case READER_READ_TYPE_JUZ:
                 return quranMeta.isVerseValid4Juz(currJuzNo, chapterNo, verseNo);
         }

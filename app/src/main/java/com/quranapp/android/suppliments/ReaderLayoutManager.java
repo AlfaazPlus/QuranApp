@@ -34,7 +34,7 @@ public class ReaderLayoutManager extends LinearLayoutManager {
 
                 if (view instanceof VerseView) {
                     final VerseView verseView = (VerseView) view;
-                    if (verseView.getVerse().getVerseNo() == verseNumber) {
+                    if (verseView.getVerse().verseNo == verseNumber) {
                         verseView.highlightOnScroll();
                     }
                 }

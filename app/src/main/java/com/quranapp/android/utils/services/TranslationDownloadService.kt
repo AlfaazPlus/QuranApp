@@ -21,6 +21,7 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
@@ -31,22 +32,22 @@ import kotlinx.coroutines.launch
 
 class TranslationDownloadService : Service() {
     companion object {
-        private var mStartedByActivity = false
+        private var STARTED_BY_USER = false
 
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
-            mStartedByActivity = true
+            STARTED_BY_USER = true
             val service = Intent(wrapper, TranslationDownloadService::class.java)
             service.putExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO, bookInfo)
             ContextCompat.startForegroundService(wrapper, service)
         }
     }
 
-    private val mBinder: TranslationDownloadServiceBinder = TranslationDownloadServiceBinder()
+    private val mBinder = TranslationDownloadServiceBinder()
     private val mCurrentDownloads = HashSet<String>()
 
     override fun onCreate() {
         super.onCreate()
-        if (mStartedByActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
                 1,
                 NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
@@ -56,10 +57,10 @@ class TranslationDownloadService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mStartedByActivity = false
+        STARTED_BY_USER = false
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent): IBinder {
         return mBinder
     }
 
@@ -72,7 +73,9 @@ class TranslationDownloadService : Service() {
             return START_NOT_STICKY
         }
 
-        val bookInfo = intent.getSerializableExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO) as QuranTranslBookInfo
+        val bookInfo = intent.serializableExtra<QuranTranslBookInfo>(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO)
+            ?: return START_NOT_STICKY
+
         mCurrentDownloads.add(bookInfo.slug)
 
         val notifBuilder = prepareNotification(bookInfo)
@@ -167,7 +170,7 @@ class TranslationDownloadService : Service() {
             setShowWhen(false)
             setSmallIcon(R.drawable.dr_logo)
             setContentTitle(bookInfo.bookName)
-            setSubText("Downloading")
+            setSubText(getString(R.string.textDownloading))
             setCategory(NotificationCompat.CATEGORY_PROGRESS)
             setProgress(0, 0, true)
         }

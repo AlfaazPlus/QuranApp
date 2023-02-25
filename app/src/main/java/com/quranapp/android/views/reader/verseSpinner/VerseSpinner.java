@@ -1,6 +1,6 @@
 package com.quranapp.android.views.reader.verseSpinner;
 
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
 
 import android.content.Context;

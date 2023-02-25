@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Only add locales having at least 60% translations-->
+    <!--
+    Only add locales having at least 60% translations.
+    Locales are sorted alphabetically by their language code.
+    Make sure to match the index of locale name and locale code.
+    -->
 
     <string-array name="availableLocalesNames">
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
         <item>Español</item>
         <item>فارسی</item>
+        <item>Français</item>
         <item>हिन्दी</item>
+        <item>Indonesian</item>
         <item>Italiano</item>
+        <item>മലയാളം</item>
         <item>اردو</item>
     </string-array>
 
@@ -17,8 +24,11 @@
         <item>en</item>
         <item>es</item>
         <item>fa</item>
+        <item>fr</item>
         <item>hi</item>
+        <item>id</item>
         <item>it</item>
+        <item>ml</item>
         <item>ur</item>
     </string-array>
 </resources>

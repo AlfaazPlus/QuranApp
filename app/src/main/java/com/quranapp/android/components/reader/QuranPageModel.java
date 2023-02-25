@@ -1,17 +1,19 @@
 package com.quranapp.android.components.reader;
 
 import com.quranapp.android.components.quran.subcomponents.Verse;
-import com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewTypeConst;
+import com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewTypeConst;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import kotlin.Pair;
+
 public class QuranPageModel {
     private int pageNo;
     private String chaptersName;
     private ArrayList<QuranPageSectionModel> sections;
-    private int[] chaptersOnPage;
+    private Pair<Integer, Integer> chaptersOnPage;
     private final Map<Integer, int[]> fromToVerses = new TreeMap<>();
     private int juzNo;
     private int scrollHighlightPendingChapterNo = -1;
@@ -22,7 +24,7 @@ public class QuranPageModel {
     public QuranPageModel() {
     }
 
-    public QuranPageModel(int pageNo, int juzNo, int[] chaptersOnPage, String chaptersName, ArrayList<QuranPageSectionModel> sections) {
+    public QuranPageModel(int pageNo, int juzNo, Pair<Integer, Integer> chaptersOnPage, String chaptersName, ArrayList<QuranPageSectionModel> sections) {
         this.pageNo = pageNo;
         this.juzNo = juzNo;
         this.chaptersOnPage = chaptersOnPage;
@@ -31,7 +33,7 @@ public class QuranPageModel {
 
         for (QuranPageSectionModel section : sections) {
             ArrayList<Verse> verses = section.getVerses();
-            int[] verseNos = {verses.get(0).getVerseNo(), verses.get(verses.size() - 1).getVerseNo()};
+            int[] verseNos = {verses.get(0).verseNo, verses.get(verses.size() - 1).verseNo};
             fromToVerses.put(section.getChapterNo(), verseNos);
         }
     }
@@ -63,7 +65,7 @@ public class QuranPageModel {
     }
 
     public boolean hasChapter(int chapterNo) {
-        return chaptersOnPage[0] <= chapterNo && chapterNo <= chaptersOnPage[1];
+        return chaptersOnPage.getFirst() <= chapterNo && chapterNo <= chaptersOnPage.getSecond();
     }
 
     public boolean hasVerse(int chapterNo, int verseNo) {

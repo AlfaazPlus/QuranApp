@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider;
 
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils;
+import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.tafsir.TafsirUtils;
@@ -70,7 +71,8 @@ public final class FileUtils {
 
     public File getRecitationAudioFile(String reciterSlug, int chapterNo, int verseNo) {
         File recitationDir = getRecitationDir();
-        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo, verseNo);
+        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo,
+            verseNo);
         return new File(recitationDir, audioSubPathWithReciter);
     }
 
@@ -86,14 +88,14 @@ public final class FileUtils {
     public File getSingleTranslationInfoFile(String langCode, String translSlug) {
         File translationDir = getTranslationDir();
         String translInfoSubPathWithLangCode = TranslUtils.prepareTranslInfoPathForSpecificLangNSlug(langCode,
-                translSlug);
+            translSlug);
         return new File(translationDir, translInfoSubPathWithLangCode);
     }
 
     public File getSingleTranslationFile(int translId, String langCode, String translSlug) {
         File translationDir = getTranslationDir();
         String translSubPathWithLangCode = TranslUtils.prepareTranslPathForSpecificLangNSlug(translId, langCode,
-                translSlug);
+            translSlug);
         return new File(translationDir, translSubPathWithLangCode);
     }
 
@@ -126,6 +128,22 @@ public final class FileUtils {
         File tafsirDir = getTafsirDir();
         String tafsirSubPath = TafsirUtils.prepareTafsirFilePathFullChapter(tafsirSlug, chapterNo);
         return new File(tafsirDir, tafsirSubPath);
+    }
+
+    public File getScriptDir() {
+        return makeAndGetAppResourceDir(QuranScriptUtils.INSTANCE.getSCRIPT_DIR_NAME());
+    }
+
+    public File getScriptFile(String scriptKey) {
+        return new File(getScriptDir(), scriptKey + ".json");
+    }
+
+    public File getScriptFontDir() {
+        return makeAndGetAppResourceDir(QuranScriptUtils.INSTANCE.getFONTS_DIR_NAME());
+    }
+
+    public File getKFQPCScriptFontDir(String scriptSlug) {
+        return new File(getScriptFontDir(), scriptSlug);
     }
 
     public File getOtherDirectory() {
@@ -278,7 +296,7 @@ public final class FileUtils {
     @NonNull
     public Uri getFileURI(@NonNull File file) {
         return FileProvider.getUriForFile(getContext(),
-                getContext().getApplicationContext().getPackageName() + ".provider", file);
+            getContext().getApplicationContext().getPackageName() + ".provider", file);
     }
 
     @Nullable

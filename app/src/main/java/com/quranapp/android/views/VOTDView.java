@@ -11,9 +11,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -41,9 +39,9 @@ import com.quranapp.android.databinding.LytVotdContentBinding;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
-import com.quranapp.android.utils.reader.ScriptUtils;
+import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
@@ -57,19 +55,23 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import kotlin.Pair;
+
 public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallbacks {
     private final CallableTaskRunner<Pair<QuranTranslBookInfo, Translation>> taskRunner = new CallableTaskRunner<>();
     private final BookmarkDBHelper mBookmarkDBHelper;
     private final BookmarkViewer mBookmarkViewer;
     private final LytVotdBinding mBinding;
-    private final VerseDecorator mVerseDecorator;
+    private final ReaderVerseDecorator mVerseDecorator;
     private final int mColorNormal;
     private final int mColorBookmarked;
     private LytVotdContentBinding mContent;
     private int mChapterNo = -1;
     private int mVerseNo = -1;
     private String mLastScript;
-    private String mLastTranslSlug;
+    private String mLastTranslationSlug;
+    private SpannableString mLastTranslationText;
+    private SpannableString mLastAuthorText;
     private CharSequence mArText;
 
     public VOTDView(@NonNull Context context) {
@@ -84,7 +86,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         super(context, attrs, defStyleAttr);
         mBookmarkDBHelper = new BookmarkDBHelper(context);
         mBookmarkViewer = new BookmarkViewer(context, new AtomicReference<>(null), mBookmarkDBHelper, this);
-        mVerseDecorator = new VerseDecorator(context);
+        mVerseDecorator = new ReaderVerseDecorator(context);
         mColorNormal = ContextCompat.getColor(context, R.color.white3);
         mColorBookmarked = ContextCompat.getColor(context, R.color.colorPrimary);
 
@@ -175,7 +177,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         if (!Objects.equals(mLastScript, SPReader.getSavedScript(context))) {
             Quran.prepareInstance(context, quranMeta, quran -> setupQuran(quranMeta, quran));
         } else {
-            prepareTransl(getContext());
+            prepareTransl(getContext(), null);
         }
     }
 
@@ -184,24 +186,32 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             initVotd(quranMeta, quran, () -> installVotdContents(quranMeta));
             return;
         }
-        mLastScript = quran.getScript();
 
         Chapter chapter = quran.getChapter(mChapterNo);
 
-        String info = getContext().getString(R.string.strLabelVerseWithChapNameAndNo, chapter.getName(), mChapterNo, mVerseNo);
+        String info = getContext().getString(R.string.strLabelVerseWithChapNameAndNo, chapter.getName(), mChapterNo,
+            mVerseNo);
         mContent.verseInfo.setText(info);
 
-        mVerseDecorator.onSharedPrefChanged();
+        Verse verse = quran.getChapter(mChapterNo).getVerse(mVerseNo);
 
-        final int txtSizeRes = ScriptUtils.getScriptTextSizeSmall2Res(quran.getScript());
+        mVerseDecorator.refresh();
+        mVerseDecorator.refreshQuranTextFonts(
+            mVerseDecorator.isKFQPCScript()
+                ? new Pair<>(verse.pageNo, verse.pageNo)
+                : null
+        );
+
+        final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
         int textSize = ResUtils.getDimenPx(getContext(), txtSizeRes);
 
-        Verse verse = quran.getChapter(mChapterNo).getVerse(mVerseNo);
-        mArText = mVerseDecorator.setupArabicText(verse.getArabicText(), mVerseNo, textSize);
-        prepareTransl(getContext());
+        mArText = mVerseDecorator.setupArabicText(verse.arabicText, mVerseNo, verse.pageNo, textSize);
+        prepareTransl(getContext(), quran.getScript());
+
+        mLastScript = quran.getScript();
     }
 
-    private void prepareTransl(Context context) {
+    private void prepareTransl(Context context, String scriptKey) {
         AtomicReference<ProgressDialog> progressDialog = new AtomicReference<>();
 
         Handler handler = new Handler(Looper.getMainLooper());
@@ -231,18 +241,24 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             @Override
             public Pair<QuranTranslBookInfo, Translation> call() {
                 QuranTranslBookInfo bookInfo = obtainOptimalSlug(context, factory);
-                if (Objects.equals(mLastTranslSlug, bookInfo.getSlug())) {
+                if (Objects.equals(mLastTranslationSlug, bookInfo.getSlug())) {
                     return null;
                 }
 
-                Translation translation = factory.getTranslationsSingleSlugVerse(bookInfo.getSlug(), mChapterNo, mVerseNo);
+                Translation translation = factory.getTranslationsSingleSlugVerse(
+                    bookInfo.getSlug(),
+                    mChapterNo,
+                    mVerseNo
+                );
                 return new Pair<>(bookInfo, translation);
             }
 
             @Override
             public void onComplete(@Nullable Pair<QuranTranslBookInfo, Translation> result) {
                 if (result != null) {
-                    setupTranslation(mArText, result.first, result.second);
+                    setupTranslation(mArText, result.getFirst(), result.getSecond());
+                } else if (scriptKey != null && !Objects.equals(mLastTranslationSlug, scriptKey)) {
+                    setupTranslation(mArText, null, null);
                 }
             }
         });
@@ -267,12 +283,12 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     }
 
     private void setupTranslation(CharSequence mArText, QuranTranslBookInfo bookInfo, Translation translation) {
-        mLastTranslSlug = translation.getBookSlug();
-
-        if (TextUtils.isEmpty(translation.getText())) {
-            mContent.text.setVisibility(View.GONE);
+        if (bookInfo == null || translation == null || TextUtils.isEmpty(translation.getText())) {
+            showText(mArText, mLastTranslationText, mLastAuthorText);
             return;
         }
+
+        mLastTranslationSlug = translation.getBookSlug();
 
         String transl = StringUtils.removeHTML(translation.getText(), false);
         int txtSize = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
@@ -284,6 +300,9 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             author = StringUtils.HYPHEN + " " + author;
             authorText = mVerseDecorator.setupAuthorText(author, translation.isUrdu());
         }
+
+        mLastTranslationText = translText;
+        mLastAuthorText = authorText;
 
         showText(mArText, translText, authorText);
     }
@@ -311,6 +330,8 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         }
 
         mContent.text.setText(sb, TextView.BufferType.SPANNABLE);
+        mContent.text.requestLayout();
+        mContent.text.invalidate();
 
         ViewUtils.removeView(findViewById(R.id.loader));
     }

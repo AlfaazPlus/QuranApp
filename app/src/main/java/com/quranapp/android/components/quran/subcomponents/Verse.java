@@ -11,60 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Verse implements Cloneable, Serializable {
-    private int id;
-    private int chapterNo;
-    private int verseNo;
-    private String arabicText;
+public class Verse implements Serializable {
+    public final int id;
+    public final int pageNo;
+    public final int chapterNo;
+    public final int verseNo;
+    public final String arabicText;
     private List<Translation> translations = new ArrayList<>();
     private boolean includeChapterNameInSerial;
     private transient CharSequence mTranslTextSpannable;
 
-    public Verse(int chapterNo, int verseNo) {
-        setChapterNo(chapterNo);
-        setVerseNo(verseNo);
+    public Verse(int id, int chapterNo, int verseNo, int pageNo, String arabicText) {
+        this.id = id;
+        this.chapterNo = chapterNo;
+        this.verseNo = verseNo;
+        this.pageNo = pageNo;
+        this.arabicText = arabicText;
     }
 
     public Verse(Verse verse) {
         id = verse.id;
         chapterNo = verse.chapterNo;
         verseNo = verse.verseNo;
+        pageNo = verse.pageNo;
         arabicText = verse.arabicText;
         // not copying
         translations = verse.translations;
         includeChapterNameInSerial = verse.includeChapterNameInSerial;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getVerseNo() {
-        return verseNo;
-    }
-
-    private void setVerseNo(int verseNo) {
-        this.verseNo = verseNo;
-    }
-
-    public int getChapterNo() {
-        return chapterNo;
-    }
-
-    public void setChapterNo(int chapterNo) {
-        this.chapterNo = chapterNo;
-    }
-
-    public String getArabicText() {
-        return arabicText;
-    }
-
-    public void setArabicText(String arabicText) {
-        this.arabicText = arabicText;
     }
 
     public List<Translation> getTranslations() {
@@ -96,11 +69,11 @@ public class Verse implements Cloneable, Serializable {
     }
 
     public boolean isVOTD(Context ctx) {
-        return VerseUtils.isVOTD(ctx, getChapterNo(), getVerseNo());
+        return VerseUtils.isVOTD(ctx, chapterNo, verseNo);
     }
 
     public boolean isIdealForVOTD() {
-        int l = getArabicText().length();
+        int l = arabicText.length();
         return l > 5 && l <= 300;
     }
 

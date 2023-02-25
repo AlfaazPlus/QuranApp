@@ -6,8 +6,8 @@
 
 package com.quranapp.android.views.reader.swipe;
 
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.readerhandler.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
 
 import android.content.Context;
 import android.widget.TextView;

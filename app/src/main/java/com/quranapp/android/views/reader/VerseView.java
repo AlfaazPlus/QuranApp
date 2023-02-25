@@ -24,13 +24,13 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVerseBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
-import com.quranapp.android.readerhandler.VerseDecorator;
+import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 
 @SuppressLint("ViewConstructor")
 public class VerseView extends FrameLayout implements BookmarkCallbacks {
-    public final VerseDecorator mVerseDecorator;
+    public final ReaderVerseDecorator mVerseDecorator;
     public final ReaderPossessingActivity mActivity;
     private final LytReaderVerseBinding mBinding;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -102,7 +102,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             }
 
             // Necessary to prevent the problem in recyclerView when fast scrolled
-            if (mVerse != null && mVerse.getVerseNo() == mCurrentlyHighlightingVerseNo) {
+            if (mVerse != null && mVerse.verseNo == mCurrentlyHighlightingVerseNo) {
                 setBackgroundColor((int) animation.getAnimatedValue());
             }
         });
@@ -139,8 +139,8 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             }
         });
 
-        int chapterNo = mVerse.getChapterNo();
-        int verseNo = mVerse.getVerseNo();
+        int chapterNo = mVerse.chapterNo;
+        int verseNo = mVerse.verseNo;
 
         mBinding.btnVerseRecitation.setOnClickListener(v -> {
             if (mActivity instanceof ActivityReader) {
@@ -164,7 +164,8 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
     }
 
     private void onBookmarkChanged(boolean isBookmarked) {
-        final int filter = ContextCompat.getColor(getContext(), isBookmarked ? R.color.colorPrimary : R.color.colorIcon2);
+        final int filter = ContextCompat.getColor(getContext(),
+            isBookmarked ? R.color.colorPrimary : R.color.colorIcon2);
         mBinding.btnBookmark.setColorFilter(filter);
 
         final int res = isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined;
@@ -179,7 +180,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         mVerse = verse;
 
         if (mScrollHighlightInProgress && !mScrollHighlightAnimationStarted
-                && mCurrentlyHighlightingVerseNo == verse.getVerseNo()) {
+            && mCurrentlyHighlightingVerseNo == verse.verseNo) {
             setBackgroundColor(mHighlightedBGColor);
         } else {
             setBackgroundColor(mUnhighlightedBGColor);
@@ -196,13 +197,13 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
     private void mapAyahContents(Verse verse) {
         setupWithDecorator();
 
-        int chapterNo = verse.getChapterNo();
-        int verseNo = verse.getVerseNo();
+        int chapterNo = verse.chapterNo;
+        int verseNo = verse.verseNo;
 
         final String verseSerial;
         final String verseSerialDesc;
         if (verse.getIncludeChapterNameInSerial()) {
-            String name = mActivity.mQuranMetaRef.get().getChapterName(getContext(), verse.getChapterNo());
+            String name = mActivity.mQuranMetaRef.get().getChapterName(getContext(), chapterNo);
             verseSerial = getContext().getString(R.string.strLabelVerseSerialWithChapter, name, chapterNo, verseNo);
             verseSerialDesc = getContext().getString(R.string.strDescVerseNoWithChapter, name, verseNo);
         } else {
@@ -213,7 +214,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         mBinding.verseSerial.setContentDescription(verseSerialDesc);
         mBinding.verseSerial.setText(verseSerial);
 
-        mBinding.textArabic.setText(mVerseDecorator.setupArabicText(verse.getArabicText(), verseNo));
+        mBinding.textArabic.setText(mVerseDecorator.setupArabicText(verse.arabicText, verseNo, verse.pageNo));
         setupTranslations(verse);
     }
 
@@ -238,7 +239,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         setBackgroundColor(mActivity.mVerseHighlightedBGColor);
 
         if (mVerse != null) {
-            mCurrentlyHighlightingVerseNo = mVerse.getVerseNo();
+            mCurrentlyHighlightingVerseNo = mVerse.verseNo;
         }
 
         mScrollHighlightInProgress = true;

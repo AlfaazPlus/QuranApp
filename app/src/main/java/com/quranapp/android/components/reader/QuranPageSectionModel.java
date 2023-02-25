@@ -37,7 +37,7 @@ public class QuranPageSectionModel {
 
     public void setVerses(ArrayList<Verse> verses) {
         this.verses = verses;
-        setFromToVerses(new int[]{verses.get(0).getVerseNo(), verses.get(verses.size() - 1).getVerseNo()});
+        setFromToVerses(new int[]{verses.get(0).verseNo, verses.get(verses.size() - 1).verseNo});
     }
 
     private void setFromToVerses(int[] fromToVerses) {

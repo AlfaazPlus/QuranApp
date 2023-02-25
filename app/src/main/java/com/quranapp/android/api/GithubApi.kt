@@ -23,6 +23,12 @@ interface GithubApi {
     @GET("{path}")
     suspend fun getTranslation(@Path("path") path: String): ResponseBody
 
+    @GET("inventory/quran_scripts/{filename}")
+    suspend fun getQuranScript(@Path("filename") filename: String): ResponseBody
+
+    @GET("inventory/fonts/{scriptKey}/{filename}")
+    suspend fun getKFQPCFont(@Path("scriptKey") scriptKey: String, @Path("filename") filename: String): ResponseBody
+
     @GET("inventory/recitations/available_recitations_info.json")
     suspend fun getAvailableRecitations(): ResponseBody
 }

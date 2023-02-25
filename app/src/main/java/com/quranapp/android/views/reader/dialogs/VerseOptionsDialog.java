@@ -99,8 +99,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     private void setupContent(
-            ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
-            LinearLayout dialogLayout, Verse verse
+        ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
+        LinearLayout dialogLayout, Verse verse
     ) {
         ViewUtils.removeView(vodBinding.getRoot());
         dialogLayout.addView(vodBinding.getRoot());
@@ -153,16 +153,16 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
 
         disableButton(vodLayout.btnFootnotes, !hasFootnotes);
 
-        final int chapterNo = verse.getChapterNo();
-        final int verseNo = verse.getVerseNo();
+        final int chapterNo = verse.chapterNo;
+        final int verseNo = verse.verseNo;
         onBookmarkChanged(actvt.isBookmarked(chapterNo, verseNo, verseNo));
 
         vodBinding.scrollView.scrollTo(0, 0);
     }
 
     private void setupDialogTitle(Context ctx, QuranMeta quranMeta, Verse verse) {
-        String chapterName = quranMeta.getChapterName(ctx, mVerse.getChapterNo());
-        String title = ctx.getString(R.string.strTitleReaderVerseInformation, chapterName, verse.getVerseNo());
+        String chapterName = quranMeta.getChapterName(ctx, mVerse.chapterNo);
+        String title = ctx.getString(R.string.strTitleReaderVerseInformation, chapterName, verse.verseNo);
         setHeaderTitle(title);
         updateHeaderTitle();
     }
@@ -182,7 +182,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             return;
         }
 
-        isReciting &= mVerse != null && mVerse.getChapterNo() == chapterNo && mVerse.getVerseNo() == verseNo;
+        isReciting &= mVerse != null && mVerse.chapterNo == chapterNo && mVerse.verseNo == verseNo;
 
         int resId = isReciting ? R.drawable.dr_icon_pause_verse : R.drawable.dr_icon_play_verse;
         mVODLayout.btnPlayControlIcon.setImageResource(resId);
@@ -245,19 +245,19 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             if (actvt instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) actvt;
                 if (reader.mPlayer != null) {
-                    reader.mPlayer.reciteControl(mVerse.getChapterNo(), mVerse.getVerseNo());
+                    reader.mPlayer.reciteControl(mVerse.chapterNo, mVerse.verseNo);
                 }
             }
         } else if (id == R.id.btnFootnotes) {
             actvt.showFootnotes(mVerse);
         } else if (id == R.id.btnTafsir) {
             /*
-            Intent intent = ReaderFactory.prepareTafsirIntent(actvt, mVerse.getChapterNo(), mVerse.getVerseNo());
+            Intent intent = ReaderFactory.prepareTafsirIntent(actvt, mVerse.chapterNo, mVerse.verseNo);
             actvt.startActivity4Result(intent, null);
             */
         } else if (id == R.id.btnBookmark) {
-            final int chapterNo = mVerse.getChapterNo();
-            final int verseNo = mVerse.getVerseNo();
+            final int chapterNo = mVerse.chapterNo;
+            final int verseNo = mVerse.verseNo;
 
             boolean isBookmarked = actvt.isBookmarked(chapterNo, verseNo, verseNo);
 
@@ -269,10 +269,11 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         } else if (id == R.id.btnQuickEdit) {
             /* actvt.startQuickEditShare(mVerse);*/
         } else if (id == R.id.btnShare) {
-            openShareDialog(actvt, mVerse.getChapterNo(), mVerse.getVerseNo());
+            openShareDialog(actvt, mVerse.chapterNo, mVerse.verseNo);
         } else if (id == R.id.btnReport) {
             // redirect to github issues
-            AppBridge.newOpener(actvt).browseLink("https://github.com/AlfaazPlus/QuranApp/issues/new?template=verse_report.yml");
+            AppBridge.newOpener(actvt).browseLink(
+                "https://github.com/AlfaazPlus/QuranApp/issues/new?template=verse_report.yml");
         }
     }
 

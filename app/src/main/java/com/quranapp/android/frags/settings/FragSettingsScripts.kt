@@ -5,28 +5,54 @@
  */
 package com.quranapp.android.frags.settings
 
-import android.content.Context
+import android.app.Activity
+import android.content.*
 import android.os.Bundle
+import android.os.IBinder
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.utils.ResUtils
+import com.peacedesign.android.utils.kotlin_utils.visible
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
-import com.quranapp.android.utils.reader.ScriptUtils
+import com.quranapp.android.utils.reader.*
+import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
+import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
+import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService.Companion.PAGE_NO_ALL_DOWNLOADS_FINISHED
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.views.BoldHeader
+import kotlin.math.ceil
 
-class FragSettingsScripts : FragSettingsBase() {
+class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
     private var initScript: String? = null
+    private var mScriptDownloadReceiver: KFQPCScriptFontsDownloadReceiver? = null
+    private var scriptDownloadService: KFQPCScriptFontsDownloadService? = null
+
+    override fun onStart() {
+        super.onStart()
+
+        activity?.let { bindDownloadService(it) }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        unregisterDownloadService()
+    }
+
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleScripts)
 
@@ -55,26 +81,24 @@ class FragSettingsScripts : FragSettingsBase() {
         }
     }
 
-
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         initScript = SPReader.getSavedScript(ctx)
-        makeScriptOptions(view as LinearLayout, initScript)
+        makeScriptOptions(view as LinearLayout, initScript!!)
     }
 
-    private fun makeScriptOptions(list: LinearLayout, initialScript: String?) {
+    private fun makeScriptOptions(list: LinearLayout, initialScript: String) {
         val ctx = list.context
-        val availableScriptSlugs = ScriptUtils.availableScriptSlugs()
+        val availableScriptSlugs = QuranScriptUtils.availableScriptSlugs()
 
         for (slug in availableScriptSlugs) {
             LytSettingsScriptItemBinding.inflate(LayoutInflater.from(ctx), list, false).apply {
-                miniInfo.visibility = View.GONE
-                radio.text = ScriptUtils.getScriptName(slug)
+                radio.text = slug.getQuranScriptName()
                 radio.isChecked = slug == initialScript
-                preview.setText(ScriptUtils.getScriptPreviewRes(slug))
-                preview.typeface = ResUtils.getFont(ctx, ScriptUtils.getScriptFontRes(slug))
+                preview.setText(slug.getScriptPreviewRes())
+                preview.typeface = ResUtils.getFont(ctx, slug.getQuranScriptFontRes())
                 preview.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    ResUtils.getDimenPx(ctx, ScriptUtils.getScriptFontDimenRes(slug)).toFloat()
+                    ResUtils.getDimenPx(ctx, slug.getQuranScriptFontDimenRes()).toFloat()
                 )
                 root.setOnClickListener { onItemClick(list, this, slug) }
 
@@ -86,6 +110,18 @@ class FragSettingsScripts : FragSettingsBase() {
     private fun onItemClick(list: LinearLayout, binding: LytSettingsScriptItemBinding, slug: String) {
         if (binding.radio.isChecked) return
 
+        val ctx = list.context
+
+        if (slug.isKFQPCScript()) {
+            val scriptDownloaded = QuranScriptUtils.verifyKFQPCScriptDownloaded(ctx, slug)
+            val fontDownloadedCount = QuranScriptUtils.getKFQPCFontDownloadedCount(ctx, slug)
+
+            if (!scriptDownloaded || fontDownloadedCount.third > 0) {
+                alertToDownloadScriptResources(ctx, slug, scriptDownloaded, fontDownloadedCount)
+                return
+            }
+        }
+
         list.children.forEach {
             it.findViewById<RadioButton>(R.id.radio)?.isChecked = false
         }
@@ -93,7 +129,202 @@ class FragSettingsScripts : FragSettingsBase() {
         binding.radio.isChecked = true
 
         if (binding.radio.isChecked) {
-            SPReader.setSavedScript(list.context, slug)
+            SPReader.setSavedScript(ctx, slug)
+        }
+    }
+
+    private fun alertToDownloadScriptResources(
+        ctx: Context,
+        slug: String,
+        scriptDownloaded: Boolean,
+        kfqpcFontDownloadedCount: Triple<Int, Int, Int>
+    ) {
+        if (scriptDownloadService?.isDownloadRunning == true) {
+            if (slug == scriptDownloadService?.currentScriptKey) {
+                showProgressDialog(ctx, slug)
+            } else {
+                alertDownloadInProgress(ctx)
+            }
+            return
+        }
+
+        val msg = StringBuilder(ctx.getString(R.string.msgDownloadKFQPCResources)).append("\n")
+        if (!scriptDownloaded) {
+            msg.append("\n").append(ctx.getString(R.string.msgDownloadKFQPCResourcesScript, slug.getQuranScriptName()))
+        }
+
+        val averageFontKB = 161.23
+        val remainingMB = ceil(((kfqpcFontDownloadedCount.third * averageFontKB) / 1024).toFloat()).toInt()
+
+        if (kfqpcFontDownloadedCount.third > 0) {
+            msg.append("\n").append(
+                ctx.getString(
+                    R.string.msgDownloadKFQPCResourcesFonts,
+                    kfqpcFontDownloadedCount.second,
+                    kfqpcFontDownloadedCount.first,
+                    "${remainingMB}MB"
+                )
+            )
+        }
+
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.titleDownloadScriptResources)
+            setMessage(msg)
+            setTitleTextAlignment(View.TEXT_ALIGNMENT_TEXT_START)
+            setMessageTextAlignment(View.TEXT_ALIGNMENT_TEXT_START)
+            setNeutralButton(R.string.strLabelNotNow, null)
+            setPositiveButton(R.string.labelDownload) { _, _ ->
+                startScriptDownload(ctx, slug)
+            }
+        }.show()
+    }
+
+    private fun startScriptDownload(ctx: Context, scriptKey: String) {
+        showProgressDialog(ctx, scriptKey)
+
+        KFQPCScriptFontsDownloadService.STARTED_BY_USER = true
+        ContextCompat.startForegroundService(ctx, Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
+            putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
+        })
+        bindDownloadService(ctx)
+    }
+
+    private fun showProgressDialog(ctx: Context, scriptKey: String) {
+        val binding = LytScriptDownloadProgressBinding.inflate(LayoutInflater.from(ctx))
+
+        val dialog = PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.textDownloading)
+            setView(binding.root)
+            setCancelable(false)
+            setButtonsDirection(PeaceDialog.STACKED)
+            setNegativeButton(R.string.strLabelCancel) { _, _ ->
+                scriptDownloadService?.cancel()
+                unregisterDownloadService()
+            }
+            setPositiveButton(R.string.labelBackgroundDownload) { _, _ ->
+                mScriptDownloadReceiver?.removeListener()
+            }
+        }.create()
+
+        dialog.show()
+
+        binding.title.text = scriptKey.getQuranScriptName()
+
+        val txtDownloadingScript = ctx.getString(R.string.msgDownloadingScript)
+        val txtDownloadingFonts = ctx.getString(R.string.msgDownloadingFonts)
+
+        var lastPageNo: Int? = -1
+
+        mScriptDownloadReceiver = KFQPCScriptFontsDownloadReceiver().apply {
+            setDownloadStateListener(object : KFQPCScriptFontsDownloadReceiver.KFQPCScriptFontsDownload {
+                override fun onStart(pageNo: Int?) {
+                    binding.progressIndicator.isIndeterminate = false
+
+                    if (pageNo == null) {
+                        binding.subtitle.text = txtDownloadingScript
+                    } else {
+                        binding.subtitle.text = txtDownloadingFonts
+                    }
+
+                    binding.subtitle.visible()
+
+                    dialog.setupDimension()
+                    lastPageNo = pageNo
+                }
+
+                override fun onProgress(pageNo: Int?, progress: Int) {
+                    binding.progressIndicator.progress = progress
+
+                    if (pageNo != null) {
+                        binding.countText.text = ctx.getString(
+                            R.string.msgFontsDonwloadProgress,
+                            pageNo - 1, QuranMeta.totalPages()
+                        )
+                        binding.countText.visible()
+                    }
+
+                    if (lastPageNo != pageNo) {
+                        dialog.setupDimension()
+                    }
+                }
+
+                override fun onComplete(pageNo: Int?) {
+                    if (pageNo == PAGE_NO_ALL_DOWNLOADS_FINISHED) {
+                        dialog.dismiss()
+                        showCompletedDialog(ctx, false)
+                        scriptDownloadService?.finish()
+                        unregisterDownloadService()
+                    }
+                }
+
+                override fun onFailed(pageNo: Int?) {
+                    if (pageNo == null) {
+                        dialog.dismiss()
+                        showCompletedDialog(ctx, true)
+                        scriptDownloadService?.finish()
+                        unregisterDownloadService()
+                    }
+                }
+            })
+
+            ctx.registerReceiver(
+                this,
+                IntentFilter(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS)
+            )
+        }
+    }
+
+    private fun showCompletedDialog(ctx: Context, isFailed: Boolean) {
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(if (isFailed) R.string.strTitleError else R.string.strTitleSuccess)
+            setMessage(if (isFailed) R.string.msgDownloadFailed else R.string.msgScriptFontsDownloaded)
+            setPositiveButton(R.string.strLabelOkay, null)
+        }.show()
+    }
+
+    private fun alertDownloadInProgress(ctx: Context) {
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.strTitleInfo)
+            setMessage(ctx.getString(R.string.msgAnotherDownloadInProgress))
+            setNeutralButton(R.string.strLabelGotIt, null)
+        }.show()
+    }
+
+    private fun bindDownloadService(ctx: Context) {
+        ctx.bindService(Intent(ctx, KFQPCScriptFontsDownloadService::class.java), this, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun unbindDownloadService(actvt: Activity) {
+        // if scriptDownloadService is null, it means the service is already unbound
+        // or it was not bound in the first place.
+        if (scriptDownloadService == null) {
+            return
+        }
+        try {
+            actvt.unbindService(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+        scriptDownloadService = (binder as KFQPCScriptFontsDownloadService.LocalBinder).service
+    }
+
+    override fun onServiceDisconnected(name: ComponentName) {
+        scriptDownloadService = null
+    }
+
+    private fun unregisterDownloadService() {
+        try {
+            mScriptDownloadReceiver?.removeListener()
+
+            activity?.let {
+                it.unregisterReceiver(mScriptDownloadReceiver)
+                unbindDownloadService(it)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

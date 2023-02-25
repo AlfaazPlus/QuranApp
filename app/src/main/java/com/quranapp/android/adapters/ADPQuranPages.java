@@ -2,9 +2,9 @@ package com.quranapp.android.adapters;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_FOOTER;
-import static com.quranapp.android.readerhandler.ReaderParams.RecyclerItemViewType.READER_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
 
 import android.view.View;
 import android.view.ViewGroup;

@@ -128,6 +128,7 @@
         </receiver>
 
         <service android:name=".utils.services.TranslationDownloadService" />
+        <service android:name=".utils.services.KFQPCScriptFontsDownloadService" />
         <service android:name=".utils.reader.recitation.RecitationNotificationService" />
 
     </application>

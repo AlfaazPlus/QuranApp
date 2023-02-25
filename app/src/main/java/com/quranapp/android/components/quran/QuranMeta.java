@@ -7,16 +7,19 @@ import androidx.annotation.NonNull;
 
 import com.quranapp.android.R;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
+import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.quran.parser.QuranMetaParserJSON;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
+
+import kotlin.Pair;
 
 public class QuranMeta implements Serializable {
     private static final AtomicReference<QuranMeta> sQuranMetaRef = new AtomicReference<>();
@@ -152,11 +155,11 @@ public class QuranMeta implements Serializable {
 
 
         for (int i = 1; i <= totalJuzs(); i++) {
-            int[] fromToChapters = getChaptersInJuz(i);
+            Pair<Integer, Integer> fromToChapters = getChaptersInJuz(i);
 
             boolean contains = false;
 
-            for (int chapterNumber = fromToChapters[0], toChapter = fromToChapters[1]; chapterNumber <= toChapter; chapterNumber++) {
+            for (int chapterNumber = fromToChapters.getFirst(), toChapter = fromToChapters.getSecond(); chapterNumber <= toChapter; chapterNumber++) {
                 if (chapterNumber == chapterNo) {
                     contains = true;
                     break;
@@ -176,8 +179,8 @@ public class QuranMeta implements Serializable {
         return juzNos;
     }
 
-    public int[] getChapterPages(int chapterNo) {
-        return getChapterMeta(chapterNo).pages;
+    public Pair<Integer, Integer> getChapterPageRange(int chapterNo) {
+        return getChapterMeta(chapterNo).pageRange;
     }
 
     public String getChapterTags(int chapterNo) {
@@ -188,13 +191,13 @@ public class QuranMeta implements Serializable {
         return verseNo >= 1 && verseNo <= getChapterVerseCount(chapterNo);
     }
 
-    public boolean isVerseRangeValid4Chapter(int chapterNo, int[] range) {
-        return isVerseRangeValid4Chapter(chapterNo, range[0], range[1]);
+    public boolean isVerseRangeValid4Chapter(int chapterNo, Pair<Integer, Integer> range) {
+        return isVerseRangeValid4Chapter(chapterNo, range.getFirst(), range.getSecond());
     }
 
     public boolean isVerseRangeValid4Chapter(int chapterNo, int fromVerse, int toVerse) {
         return 1 <= fromVerse && fromVerse <= toVerse && fromVerse <= getChapterVerseCount(chapterNo)
-                && toVerse <= getChapterVerseCount(chapterNo);
+            && toVerse <= getChapterVerseCount(chapterNo);
     }
 
     public JuzMeta getJuzMeta(int juzNo) {
@@ -209,31 +212,31 @@ public class QuranMeta implements Serializable {
         return getJuzMeta(juzNo).nameTrans;
     }
 
-    public int[] getChaptersInJuz(int juzNo) {
+    public Pair<Integer, Integer> getChaptersInJuz(int juzNo) {
         return getJuzMeta(juzNo).chapters;
     }
 
-    public int[] getVersesOfChapterInJuz(int juzNo, int chapterNo) {
-        return getJuzMeta(juzNo).versesOfChapter.get(chapterNo);
+    public Pair<Integer, Integer> getVerseRangeOfChapterInJuz(int juzNo, int chapterNo) {
+        return getJuzMeta(juzNo).verseRangeOfChapter.get(chapterNo);
     }
 
     public int getJuzVerseCount(int juzNo) {
         return getJuzMeta(juzNo).verseCount;
     }
 
-    public int[] getJuzPages(int juzNo) {
+    public Pair<Integer, Integer> getJuzPageRange(int juzNo) {
         return getJuzMeta(juzNo).pages;
     }
 
     public boolean isChapterValid4Juz(int juzNo, int chapterNo) {
-        int[] chaptersInJuz = getChaptersInJuz(juzNo);
-        return chaptersInJuz[0] <= chapterNo && chapterNo <= chaptersInJuz[1];
+        Pair<Integer, Integer> chaptersInJuz = getChaptersInJuz(juzNo);
+        return chaptersInJuz.getFirst() <= chapterNo && chapterNo <= chaptersInJuz.getSecond();
     }
 
     public boolean isVerseValid4Juz(int juzNo, int chapterNo, int verseNo) {
         if (isChapterValid4Juz(juzNo, chapterNo)) {
-            int[] versesOfChapterInJuz = getVersesOfChapterInJuz(juzNo, chapterNo);
-            return versesOfChapterInJuz[0] <= verseNo && verseNo <= versesOfChapterInJuz[1];
+            Pair<Integer, Integer> verseRangeOfChapterInJuz = getVerseRangeOfChapterInJuz(juzNo, chapterNo);
+            return verseRangeOfChapterInJuz.getFirst() <= verseNo && verseNo <= verseRangeOfChapterInJuz.getSecond();
         }
         return false;
     }
@@ -242,20 +245,60 @@ public class QuranMeta implements Serializable {
         return pageMetaMap.get(pageNo);
     }
 
-    public int[] getChaptersOnPage(int pageNo) {
+    public Pair<Integer, Integer> getChaptersOnPage(int pageNo) {
         return getPageMeta(pageNo).chapters;
     }
 
-    public int[] getVersesOfChapterOnPage(int pageNo, int chapterNo) {
-        return getPageMeta(pageNo).versesOfChapter.get(chapterNo);
+    public Pair<Integer, Integer> getVerseRangeOfChapterOnPage(int pageNo, int chapterNo) {
+        return getPageMeta(pageNo).verseRangeOfChapter.get(chapterNo);
+    }
+
+    public Pair<Integer, Integer> getPageRangeOfVerseRangeOfChapter(int chapterNo, int fromVerse, int toVerse) {
+        final Pair<Integer, Integer> chapterPageRange = getChapterPageRange(chapterNo);
+
+        PageMeta fromPageMeta = getPageMeta(chapterPageRange.getFirst());
+        PageMeta toPageMeta = getPageMeta(chapterPageRange.getSecond());
+
+        int fromPage = -1;
+        int toPage = -1;
+
+        while (fromPageMeta.pageNo <= toPageMeta.pageNo) {
+            if (QuranUtils.isVerseInRange(
+                fromVerse,
+                Objects.requireNonNull(fromPageMeta.verseRangeOfChapter.get(chapterNo))
+            )) {
+                fromPage = fromPageMeta.pageNo;
+                break;
+            }
+
+            fromPageMeta = getPageMeta(fromPageMeta.pageNo + 1);
+        }
+
+        if (!QuranUtils.doesRangeDenoteSingle(fromVerse, toVerse)) {
+            while (fromPageMeta.pageNo >= toPageMeta.pageNo) {
+                if (QuranUtils.isVerseInRange(
+                    toVerse,
+                    Objects.requireNonNull(toPageMeta.verseRangeOfChapter.get(chapterNo))
+                )) {
+                    toPage = toPageMeta.pageNo;
+                    break;
+                }
+
+                toPageMeta = getPageMeta(toPageMeta.pageNo - 1);
+            }
+        } else {
+            toPage = fromPage;
+        }
+
+        return new Pair<>(fromPage, toPage);
     }
 
     public int getJuzForPage(int pageNo) {
         int juz = -1;
         for (int i = 0, l = juzMetaMap.size(); i < l; i++) {
             JuzMeta juzMeta = juzMetaMap.valueAt(i);
-            int[] pages = juzMeta.pages;
-            if (pages[0] <= pageNo && pageNo <= pages[1]) {
+            Pair<Integer, Integer> pages = juzMeta.pages;
+            if (pages.getFirst() <= pageNo && pageNo <= pages.getSecond()) {
                 juz = juzMeta.juzNo;
                 break;
             }
@@ -281,7 +324,7 @@ public class QuranMeta implements Serializable {
         /**
          * from page to page, both equal if this chapter is expanded to only one page.
          */
-        public int[] pages;
+        public Pair<Integer, Integer> pageRange;
         /**
          * from juz to juz, both equal if this chapter is expanded to only one juz.
          */
@@ -335,15 +378,15 @@ public class QuranMeta implements Serializable {
         /**
          * from page to page.
          */
-        public int[] pages;
+        public Pair<Integer, Integer> pages;
         /**
          * from chapter to chapter, both equal if juz contains only one chapter.
          */
-        public int[] chapters;
+        public Pair<Integer, Integer> chapters;
         /**
-         * Integer -> chapterNo, int[] -> from verse to verse (contained in this juz for the particular chapter).
+         * Integer -> chapterNo, Pair<Integer, Integer> -> from verse to verse (contained in this juz for the particular chapter).
          */
-        public Map<Integer, int[]> versesOfChapter = new TreeMap<>();
+        public Map<Integer, Pair<Integer, Integer>> verseRangeOfChapter = new TreeMap<>();
         public int verseCount;
     }
 
@@ -352,24 +395,21 @@ public class QuranMeta implements Serializable {
         /**
          * from chapter to chapter, both equal if page contains only one chapter.
          */
-        public int[] chapters;
+        public Pair<Integer, Integer> chapters;
         /**
          * Integer -> chapterNo, int[] -> from verse to verse (contained on this page for the particular chapter).
          */
-        public Map<Integer, int[]> versesOfChapter = new TreeMap<>();
-
-        public PageMeta() {
-        }
+        public Map<Integer, Pair<Integer, Integer>> verseRangeOfChapter = new TreeMap<>();
 
         public boolean isPageNoForChapter(int chapterNo) {
-            return Arrays.stream(chapters).anyMatch(chapter -> chapter == chapterNo);
+            return chapters.getFirst() <= chapterNo && chapterNo <= chapters.getSecond();
         }
 
         public boolean isPageNoForVerse(int chapterNo, int verseNo) {
-            if (versesOfChapter.containsKey(chapterNo)) {
-                final int[] verses = versesOfChapter.get(chapterNo);
-                if (verses != null) {
-                    return Arrays.stream(verses).anyMatch(verse -> verse == verseNo);
+            if (verseRangeOfChapter.containsKey(chapterNo)) {
+                final Pair<Integer, Integer> verseRange = verseRangeOfChapter.get(chapterNo);
+                if (verseRange != null) {
+                    return verseRange.getFirst() <= verseNo && verseNo <= verseRange.getSecond();
                 }
             }
             return false;

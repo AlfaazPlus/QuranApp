@@ -37,9 +37,18 @@ public abstract class VerseUtils {
     private static int VOTD_chap_no = -1;
     private static int VOTD_verse_no = -1;
 
-    public static CharSequence decorateVerse(String arabicText, int verseNo, Typeface verseFont, Typeface verseSerialFont, int textSize) {
+    /**
+     * verseSerial and verseSerialFont will be null if isKFQPCFont() is true
+     */
+    public static CharSequence decorateVerse(
+        String arabicText,
+        Integer verseSerial,
+        Typeface verseFont,
+        Typeface verseSerialFont,
+        int textSize
+    ) {
         if (TextUtils.isEmpty(arabicText)) {
-            return null;
+            return "";
         }
 
         SpannableString arabicSS = new SpannableString(arabicText);
@@ -49,7 +58,11 @@ public abstract class VerseUtils {
             arabicSS.setSpan(new AbsoluteSizeSpan(textSize), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        SpannableString verseSerialSS = prepareVerseSerial(verseNo, verseSerialFont);
+        if (verseSerial == null) {
+            return arabicSS;
+        }
+
+        SpannableString verseSerialSS = prepareVerseSerial(verseSerial, verseSerialFont);
         if (textSize > 0) {
             verseSerialSS.setSpan(new AbsoluteSizeSpan(textSize), 0, verseSerialSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -57,7 +70,10 @@ public abstract class VerseUtils {
         return TextUtils.concat(arabicSS, " ", verseSerialSS);
     }
 
-    public static CharSequence decorateVerseQuranPage(String arabicText, int verseNo, Typeface verseFont, Typeface verseSerialFont) {
+    /**
+     * verseSerialFont will be null if isKFQPCFont() is true
+     */
+    public static CharSequence decorateQuranPageVerse(String arabicText, int verseNo, Typeface verseFont, Typeface verseSerialFont) {
         if (TextUtils.isEmpty(arabicText)) {
             return "";
         }
@@ -66,7 +82,13 @@ public abstract class VerseUtils {
         // Set the typeface to span over arabic text
         arabicSS.setSpan(new TypefaceSpan2(verseFont), 0, arabicSS.length(), SPAN_POINT_MARK);
 
-        CharSequence concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verseNo, verseSerialFont));
+        final CharSequence concat;
+
+        if (verseSerialFont != null) {
+            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verseNo, verseSerialFont));
+        } else {
+            concat = arabicSS;
+        }
 
         SpannableStringBuilder builder = new SpannableStringBuilder(concat);
         builder.setSpan(new VerseArabicHighlightSpan(verseNo), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -112,8 +134,10 @@ public abstract class VerseUtils {
         return transl;
     }
 
-    public static SpannableString prepareTranslAuthorText(String authorText, int authorClr, int txtSize,
-                                                          Typeface authorFont, boolean isTransliteration) {
+    public static SpannableString prepareTranslAuthorText(
+        String authorText, int authorClr, int txtSize,
+        Typeface authorFont, boolean isTransliteration
+    ) {
         int flag = SPAN_EXCLUSIVE_EXCLUSIVE;
 
         SpannableString author = new SpannableString(authorText);
@@ -138,8 +162,10 @@ public abstract class VerseUtils {
                     VOTD_chap_no = randomVerse[0];
                     VOTD_verse_no = randomVerse[1];
 
-                    if (QuranMeta.isChapterValid(VOTD_chap_no) && quranMeta.isVerseValid4Chapter(VOTD_chap_no, VOTD_verse_no)) {
-                        boolean breakable = quran == null || quran.getVerse(VOTD_chap_no, VOTD_verse_no).isIdealForVOTD();
+                    if (QuranMeta.isChapterValid(VOTD_chap_no) && quranMeta.isVerseValid4Chapter(VOTD_chap_no,
+                        VOTD_verse_no)) {
+                        boolean breakable = quran == null || quran.getVerse(VOTD_chap_no,
+                            VOTD_verse_no).isIdealForVOTD();
                         if (breakable) {
                             break;
                         }
@@ -231,12 +257,15 @@ public abstract class VerseUtils {
         return chapterNo == VOTD_chap_no && verseNo == VOTD_verse_no;
     }
 
-    public static void saveLastVerses(Context ctx, ReadHistoryDBHelper dbHelper, QuranMeta quranMeta,
-                                      int readType, int readerStyle, int juzNo, int chapterNo, int fromVerse, int toVerse) {
+    public static void saveLastVerses(
+        Context ctx, ReadHistoryDBHelper dbHelper, QuranMeta quranMeta,
+        int readType, int readerStyle, int juzNo, int chapterNo, int fromVerse, int toVerse
+    ) {
         dbHelper.addToHistory(readType, readerStyle, juzNo, chapterNo, fromVerse, toVerse, null);
 
         try {
-            ShortcutUtils.pushLastVersesShortcut(ctx, quranMeta, readType, readerStyle, juzNo, chapterNo, fromVerse, toVerse);
+            ShortcutUtils.pushLastVersesShortcut(ctx, quranMeta, readType, readerStyle, juzNo, chapterNo, fromVerse,
+                toVerse);
         } catch (Exception e) {
             e.printStackTrace();
             Logger.reportError(e);

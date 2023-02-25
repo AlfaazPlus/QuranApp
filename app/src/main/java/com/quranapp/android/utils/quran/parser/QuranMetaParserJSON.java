@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.util.SparseArray;
 
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.univ.RegexPattern;
 import com.quranapp.android.utils.univ.StringUtils;
 
@@ -21,6 +20,9 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+import java.util.stream.IntStream;
+
+import kotlin.Pair;
 
 public final class QuranMetaParserJSON {
     private static final String ATTR_INDEX = "index";
@@ -98,7 +100,7 @@ public final class QuranMetaParserJSON {
         chapterMeta.startsVerseId = chapterObj.getInt(CHAPTERS_ATTR_VERSE_START) + 1;
         chapterMeta.revelationOrder = chapterObj.getInt(CHAPTERS_ATTR_REVLTN_ORDER);
         chapterMeta.revelationType = chapterObj.getString(CHAPTERS_ATTR_REVLTN_TYPE);
-        chapterMeta.pages = prepareRangeItem(chapterObj.getString(ATTR_PAGES));
+        chapterMeta.pageRange = prepareRangeItem(chapterObj.getString(ATTR_PAGES));
         chapterMeta.tags = chapterObj.getString(CHAPTERS_ATTR_TAGS);
 
         StringBuilder nameTags = new StringBuilder();
@@ -132,7 +134,7 @@ public final class QuranMetaParserJSON {
         juzMeta.juzNo = juzObj.getInt(ATTR_INDEX);
         juzMeta.pages = prepareRangeItem(juzObj.getString(ATTR_PAGES));
         juzMeta.chapters = prepareRangeItem(juzObj.getString(ATTR_CHAPTERS));
-        juzMeta.versesOfChapter = prepareVersesOfChapters(juzObj.getString(ATTR_CHAPTERS_VERSES));
+        juzMeta.verseRangeOfChapter = prepareVersesOfChapters(juzObj.getString(ATTR_CHAPTERS_VERSES));
         juzMeta.verseCount = 0;
 
         JSONObject name = juzObj.getJSONObject(ATTR_NAME);
@@ -140,10 +142,10 @@ public final class QuranMetaParserJSON {
         juzMeta.nameAr = name.getString("ar");
         juzMeta.nameTrans = name.getString("en");
 
-        QuranUtils.intRangeIterate(juzMeta.chapters, chapterNo -> {
-            int[] verses = juzMeta.versesOfChapter.get(chapterNo);
+        IntStream.rangeClosed(juzMeta.chapters.getFirst(), juzMeta.chapters.getSecond()).forEach(chapterNo -> {
+            Pair<Integer, Integer> verses = juzMeta.verseRangeOfChapter.get(chapterNo);
             if (verses != null) {
-                juzMeta.verseCount += (verses[1] - verses[0]) + 1;
+                juzMeta.verseCount += (verses.getSecond() - verses.getFirst()) + 1;
             }
         });
 
@@ -153,7 +155,7 @@ public final class QuranMetaParserJSON {
     /**
      * Prepare chapters in Juz or on page
      */
-    private int[] prepareRangeItem(String attrValue) {
+    private Pair<Integer, Integer> prepareRangeItem(String attrValue) {
         final String[] split = attrValue.split("-");
         final int from;
         final int to;
@@ -164,15 +166,15 @@ public final class QuranMetaParserJSON {
             from = Integer.parseInt(split[0]);
             to = Integer.parseInt(split[1]);
         }
-        return new int[]{from, to};
+        return new Pair<>(from, to);
     }
 
     /**
      * Prepare verses of chapters in Juz or on page
      */
-    private Map<Integer, int[]> prepareVersesOfChapters(String attrValue) {
+    private Map<Integer, Pair<Integer, Integer>> prepareVersesOfChapters(String attrValue) {
         // 9:93-123,10:1-109,11:1-5
-        Map<Integer, int[]> versesOnChapter = new TreeMap<>();
+        Map<Integer, Pair<Integer, Integer>> verseRangeOfChapter = new TreeMap<>();
         final Matcher matcher = RegexPattern.VERSE_RANGE_JUMP_PATTERN.matcher(attrValue);
 
         while (matcher.find()) {
@@ -181,16 +183,16 @@ public final class QuranMetaParserJSON {
             int fromVerseNo = Integer.parseInt(result.group(2));
             int toVerseNo = Integer.parseInt(result.group(3));
 
-            versesOnChapter.put(chapterNo, new int[]{fromVerseNo, toVerseNo});
+            verseRangeOfChapter.put(chapterNo, new Pair<>(fromVerseNo, toVerseNo));
         }
-        return versesOnChapter;
+        return verseRangeOfChapter;
     }
 
     private QuranMeta.PageMeta makePageMeta(JSONObject pageObj) throws JSONException {
         QuranMeta.PageMeta pageMeta = new QuranMeta.PageMeta();
         pageMeta.pageNo = pageObj.getInt(ATTR_INDEX);
         pageMeta.chapters = prepareRangeItem(pageObj.getString(ATTR_CHAPTERS));
-        pageMeta.versesOfChapter = prepareVersesOfChapters(pageObj.getString(ATTR_CHAPTERS_VERSES));
+        pageMeta.verseRangeOfChapter = prepareVersesOfChapters(pageObj.getString(ATTR_CHAPTERS_VERSES));
         return pageMeta;
     }
 }

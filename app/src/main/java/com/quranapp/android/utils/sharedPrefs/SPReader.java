@@ -1,8 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs;
 
-import static com.quranapp.android.readerhandler.ReaderParams.READER_STYLE_DEFAULT;
-import static com.quranapp.android.utils.reader.ScriptUtils.KEY_SCRIPT;
-import static com.quranapp.android.utils.reader.ScriptUtils.SCRIPT_DEFAULT;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
 import static com.quranapp.android.utils.reader.TextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
 import static com.quranapp.android.utils.reader.TextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
 import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
@@ -16,6 +14,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.quranapp.android.utils.app.RecitationManager;
+import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.univ.Keys;
@@ -185,17 +184,17 @@ public abstract class SPReader {
     public static String getSavedScript(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE);
 
-        if (!sp.contains(KEY_SCRIPT)) {
-            setSavedScript(context, SCRIPT_DEFAULT);
+        if (!sp.contains(QuranScriptUtils.KEY_SCRIPT)) {
+            setSavedScript(context, QuranScriptUtils.SCRIPT_DEFAULT);
         }
 
-        return sp.getString(KEY_SCRIPT, SCRIPT_DEFAULT);
+        return sp.getString(QuranScriptUtils.KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT);
     }
 
     public static void setSavedScript(Context context, String font) {
         SharedPreferences sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(KEY_SCRIPT, font);
+        editor.putString(QuranScriptUtils.KEY_SCRIPT, font);
         editor.apply();
     }
 

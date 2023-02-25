@@ -157,7 +157,7 @@ public class TafsirWebViewClient extends WebViewClient {
         contentJson.put("tafsir-title", TafsirUtils.getTafsirName(tafsirSlug));
         contentJson.put("verse-info-title",
                 mActivityTafsir.str(R.string.strLabelVerseWithChapNameWithBar, chapter.getName(), verseNo));
-        contentJson.put("verse-preview", chapter.getVerse(verseNo).getArabicText());
+        contentJson.put("verse-preview", chapter.getVerse(verseNo).arabicText);
         contentJson.put("previous-tafsir-title", preparePrevVerseTitle(verseNo));
         contentJson.put("next-tafsir-title", prepareNextVerseTitle(verseNo, chapter.getVerseCount()));
 
