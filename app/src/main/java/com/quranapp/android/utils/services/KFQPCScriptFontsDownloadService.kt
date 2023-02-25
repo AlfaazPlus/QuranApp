@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
-import com.peacedesign.android.utils.Log
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
@@ -86,14 +85,6 @@ class KFQPCScriptFontsDownloadService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-
-        Log.d(intent)
-
-        if (intent?.action == KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_CANCEL) {
-            cancel()
-            return START_NOT_STICKY
-        }
-
         if (isDownloadRunning) return START_NOT_STICKY
 
         val script = intent?.getStringExtra(QuranScriptUtils.KEY_SCRIPT)
@@ -251,15 +242,6 @@ class KFQPCScriptFontsDownloadService : Service() {
     }
 
     private fun showProgressNotification(pageNo: Int?, progress: Int, scriptKey: String) {
-        val notifCancelIntent = PendingIntent.getBroadcast(
-            this,
-            scriptKey.hashCode(),
-            Intent(this, KFQPCScriptFontsDownloadReceiver::class.java).apply {
-                action = KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_CANCEL
-            },
-            notifFlag
-        )
-
         val builder = NotificationCompat
             .Builder(this, getString(R.string.strNotifChannelIdDownloads))
             .setSmallIcon(R.drawable.dr_logo)
@@ -274,17 +256,11 @@ class KFQPCScriptFontsDownloadService : Service() {
             )
             .setProgress(100, progress, false)
             .setOngoing(true)
+            .setShowWhen(false)
             .setContentIntent(notifActivityIntent)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
             .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_SUMMARY)
-            .clearActions()
-            .addAction(
-                NotificationCompat.Action(
-                    R.drawable.dr_icon_close,
-                    getString(R.string.strLabelCancel),
-                    notifCancelIntent
-                )
-            )
+            .setCategory(NotificationCompat.CATEGORY_PROGRESS)
             .setGroup(DOWNLOAD_NOTIF_GROUP)
 
         notifManager.notify(DOWNLOAD_SCRIPT_NOTIFICATION_ID, builder.build())

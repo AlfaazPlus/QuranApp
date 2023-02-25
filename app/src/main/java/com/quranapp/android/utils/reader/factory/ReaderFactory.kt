@@ -133,6 +133,18 @@ object ReaderFactory {
         return intent
     }
 
+    /**
+     * This function creates intent for reader verse range using intArray instead of Pair
+     * which will be used in [ShortcutUtils][com.quranapp.android.utils.others.ShortcutUtils], because shortcut uses
+     * persistable bundle which doesn't support Pair.
+     */
+    fun prepareVerseRangeIntentForShortcut(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
+        val intent = Intent()
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, 4)
+        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
+        intent.putExtra(Keys.READER_KEY_VERSES, intArrayOf(fromVerse, toVerse))
+        return intent
+    }
 
     @JvmStatic
     fun startReferenceVerse(
@@ -204,6 +216,38 @@ object ReaderFactory {
             if (readerStyle != -1) {
                 intent.putExtra(Keys.READER_KEY_READER_STYLE, readerStyle)
             }
+        }
+
+        return intent
+    }
+
+    /**
+     * This function creates intent for reader verse range using intArray instead of Pair
+     * which will be used in [ShortcutUtils][com.quranapp.android.utils.others.ShortcutUtils], because shortcut uses
+     * persistable bundle which doesn't support Pair.
+     */
+    fun prepareLastVersesIntentForShortcut(
+        quranMeta: QuranMeta,
+        juzNo: Int,
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int,
+        readType: Int,
+        readerStyle: Int
+    ): Intent? {
+        var intent: Intent? = null
+        if (readType == READER_READ_TYPE_CHAPTER && QuranMeta.isChapterValid(chapterNo)) {
+            intent = prepareChapterIntent(chapterNo)
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+        } else if (readType == READER_READ_TYPE_JUZ && QuranMeta.isJuzValid(juzNo)) {
+            intent = prepareJuzIntent(juzNo)
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+        } else if (quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
+            intent = prepareVerseRangeIntentForShortcut(chapterNo, fromVerse, toVerse)
+        }
+
+        if (intent != null && readerStyle != -1) {
+            intent.putExtra(Keys.READER_KEY_READER_STYLE, readerStyle)
         }
 
         return intent

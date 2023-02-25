@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
+import com.quranapp.android.utils.CustomExceptionHandler
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 
@@ -30,5 +31,8 @@ class QuranApp : Application() {
             val process = getProcessName()
             if (packageName != process) WebView.setDataDirectorySuffix(process)
         }
+
+        // Handler for uncaught exceptions
+        Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
     }
 }

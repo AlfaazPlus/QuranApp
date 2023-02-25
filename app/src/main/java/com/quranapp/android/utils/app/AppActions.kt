@@ -5,12 +5,19 @@ package com.quranapp.android.utils.app
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.widget.Toast
+import com.peacedesign.android.utils.AppBridge
+import com.peacedesign.android.utils.Log
+import com.peacedesign.android.utils.kotlin_utils.copyToClipboard
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
+import com.quranapp.android.R
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
 import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
+import com.quranapp.android.utils.sharedPrefs.SPLog
 import com.quranapp.android.utils.sharedPrefs.SPVerses
 import com.quranapp.android.utils.votd.VOTDUtils
 import kotlinx.coroutines.CoroutineScope
@@ -82,5 +89,33 @@ object AppActions {
                 e.printStackTrace()
             }
         }
+    }
+
+    @JvmStatic
+    fun checkForCrashLogs(ctx: Context) {
+        val lastCrashLog = SPLog.getLastCrashLog(ctx)
+
+        Log.d(lastCrashLog)
+
+        if (lastCrashLog.isNullOrEmpty()) return
+
+        PeaceDialog.newBuilder(ctx)
+            .setTitle(R.string.lastCrashLog)
+            .setMessage(lastCrashLog)
+            .setNeutralButton(R.string.strLabelCopy) { _, _ ->
+                ctx.copyToClipboard(lastCrashLog)
+                SPLog.removeLastCrashLog(ctx)
+            }
+            .setPositiveButton(R.string.createIssue) { _, _ ->
+                ctx.copyToClipboard(lastCrashLog)
+                SPLog.removeLastCrashLog(ctx)
+                // redirect to github issues
+                AppBridge.newOpener(ctx).browseLink(
+                    "https://github.com/AlfaazPlus/QuranApp/issues/new?template=bug_report.yml"
+                )
+                Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
+            }
+            .show()
+
     }
 }

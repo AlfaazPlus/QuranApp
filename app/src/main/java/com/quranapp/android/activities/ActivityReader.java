@@ -89,6 +89,7 @@ import com.quranapp.android.views.reader.VerseView;
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -418,7 +419,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         int initJuzNo = intent.getIntExtra(READER_KEY_JUZ_NO, 1);
         int initChapterNo = intent.getIntExtra(READER_KEY_CHAPTER_NO, 1);
-        Pair<Integer, Integer> initVerses = (Pair<Integer, Integer>) intent.getSerializableExtra(READER_KEY_VERSES);
+        Pair<Integer, Integer> initVerses = resolveIntentVerseRange(intent);
 
         int[] pendingScroll = intent.getIntArrayExtra(READER_KEY_PENDING_SCROLL);
         if (pendingScroll != null) {
@@ -479,6 +480,21 @@ public class ActivityReader extends ReaderPossessingActivity {
             case READER_READ_TYPE_CHAPTER:
             default: initChapter(initialChapter); break;
         }
+    }
+
+    private Pair<Integer, Integer> resolveIntentVerseRange(Intent intent) {
+        Serializable serializable = intent.getSerializableExtra(READER_KEY_VERSES);
+
+        // The verse range could be passed as a pair or a two items list (as from ShortcutUtils).
+
+        if (serializable instanceof Pair) {
+            return (Pair<Integer, Integer>) serializable;
+        } else if (serializable instanceof int[]) {
+            int[] verses = (int[]) serializable;
+            return new Pair<>(verses[0], verses[1]);
+        }
+
+        return null;
     }
 
     private void makeMessage(String msg) {
