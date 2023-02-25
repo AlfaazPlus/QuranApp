@@ -95,8 +95,6 @@ object AppActions {
     fun checkForCrashLogs(ctx: Context) {
         val lastCrashLog = SPLog.getLastCrashLog(ctx)
 
-        Log.d(lastCrashLog)
-
         if (lastCrashLog.isNullOrEmpty()) return
 
         PeaceDialog.newBuilder(ctx)
