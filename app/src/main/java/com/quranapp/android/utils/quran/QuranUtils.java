@@ -285,7 +285,7 @@ public abstract class QuranUtils {
 
 
     public static void intRangeIterateWithIndex(Pair<Integer, Integer> range, IterationItemCatcherWithIndex itemCatcher) {
-        intRangeIterateWithIndex(range.getFirst(), range.getFirst(), itemCatcher);
+        intRangeIterateWithIndex(range.getFirst(), range.getSecond(), itemCatcher);
     }
 
     public static void intRangeIterateWithIndex(int from, int to, IterationItemCatcherWithIndex itemCatcher) {

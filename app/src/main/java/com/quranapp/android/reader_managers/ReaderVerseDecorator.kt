@@ -23,6 +23,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
     private val fileUtils by lazy { FileUtils.newInstance(ctx) }
 
     private var savedScript = SPReader.getSavedScript(ctx)
+    private var savedFontScript = ""
 
     private val textColorArabic by lazy { ctx.color(R.color.colorTextArabic) }
     private val textColorNonArabic by lazy { ctx.color(R.color.colorTextNoArabic) }
@@ -70,6 +71,8 @@ class ReaderVerseDecorator(private val ctx: Context) {
             fontQuranText = null
 
             for (pageNo in KFQPCPageRange.first..KFQPCPageRange.second) {
+                if (fontsArabicKFQPC[pageNo] != null) continue
+
                 try {
                     fontsArabicKFQPC[pageNo] = Typeface.createFromFile(
                         File(fileUtils.getKFQPCScriptFontDir(savedScript), pageNo.toKFQPCFontFilename())
@@ -82,7 +85,10 @@ class ReaderVerseDecorator(private val ctx: Context) {
         } else {
             fontsArabicKFQPC.clear()
 
-            fontQuranText = ctx.getFont(savedScript.getQuranScriptFontRes())
+            if (savedScript != savedFontScript || fontQuranText == null) {
+                fontQuranText = ctx.getFont(savedScript.getQuranScriptFontRes())
+                savedFontScript = savedScript
+            }
         }
     }
 

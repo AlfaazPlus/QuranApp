@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.peacedesign.android.utils.Dimen;
+import com.peacedesign.android.utils.Log;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
@@ -376,22 +377,25 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
 
             private void prepareVerse(
                 Chapter chapter, int verseNo, List<Verse> verses,
-                List<Translation> transls, Map<String, QuranTranslBookInfo> booksInfo
+                List<Translation> translations, Map<String, QuranTranslBookInfo> booksInfo
             ) {
                 Verse verse = chapter.getVerse(verseNo).copy();
                 if (verse == null) {
                     return;
                 }
 
+                actvt.mVerseDecorator.refreshQuranTextFonts(new Pair<>(verse.pageNo, verse.pageNo));
+
                 verse.setIncludeChapterNameInSerial(true);
-                verse.setTranslations(transls);
-                verse.setTranslTextSpannable(actvt.prepareTranslSpannable(verse, transls, booksInfo));
+                verse.setTranslations(translations);
+                verse.setTranslTextSpannable(actvt.prepareTranslSpannable(verse, translations, booksInfo));
 
                 verses.add(verse);
             }
 
             @Override
             public void onComplete(List<Verse> verses) {
+                Log.d(verses);
                 ADPQuickReference adp = new ADPQuickReference(actvt);
                 adp.setVerses(verses);
                 binding.referenceVerses.setAdapter(adp);
