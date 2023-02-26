@@ -2,4 +2,6 @@
 <resources>
     <string name="strTitleAppVersion">Versão do aplicativo</string>
     <string name="strVersion" formatted="false">Versão %s</string>
+    <string name="strTitleLicenses">Licenças</string>
+    <string name="strLabelClose">Fechar</string>
 </resources>
