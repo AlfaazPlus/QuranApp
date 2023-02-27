@@ -40,4 +40,25 @@
     <string name="strLabelRead">Ler »</string>
     <string name="strLabelNext">Próximo</string>
     <string name="strLabelStart">Iniciar</string>
+    <string name="strLabelContinueChapter">Continuar capítulo</string>
+    <string name="strLabelNextChapter">Próximo capítulo</string>
+    <string name="strLabelNoNextChapter">Sem próximo capítulo</string>
+    <string name="strLabelFullChapter">Ler capítulo inteiro</string>
+    <string name="strLabelVersesText">Versículos</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Versículos: %d</string>
+    <string name="strTitleAppUser">Usuário QuranApp</string>
+    <string name="strLabelPreviousChapter">Capítulo anterior</string>
+    <string name="strLabelNoPreviousChapter">Sem capítulo anterior</string>
+    <string name="strLabelNextVerse">Próximo versículo</string>
+    <string name="strLabelVerseNo" formatted="false">Versículo %d</string>
+    <string name="strLabelPreviousVerse">Versículo anterior</string>
+    <string name="strLabelPageNo" formatted="false">Página %d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Versículo %1$d:%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Versículo : %d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Capítulo nº %1$d │ Versículos %2$d–%3$d</string>
+    <string name="strTitleReaderVerses">Versículos</string>
+    <string name="strLabelVerses" formatted="false">Versículos %1$d–%2$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Versículos : %1$d–%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
 </resources>
