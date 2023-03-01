@@ -37,7 +37,7 @@ class FragSettingsRecitations : FragSettingsBase() {
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleRecitations)
 
-    override val layoutResource: Int = R.layout.frag_settings_transl
+    override val layoutResource = R.layout.frag_settings_transl
 
     override fun getFinishingResult(ctx: Context): Bundle? {
         if (SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
@@ -63,8 +63,6 @@ class FragSettingsRecitations : FragSettingsBase() {
                 }
             })
 
-            setShowSearchIcon(false)
-            setShowRightIcon(false)
             disableRightBtn(false)
             setSearchHint(R.string.strHintSearchReciter)
             setRightIconRes(R.drawable.dr_icon_refresh, activity.getString(R.string.strLabelRefresh))
@@ -168,10 +166,7 @@ class FragSettingsRecitations : FragSettingsBase() {
     private fun hideLoader() {
         mBinding.loader.visibility = View.GONE
 
-        Log.d("HERE OUTSIDE")
         activity()?.header?.apply {
-            Log.d("HERE")
-
             setShowRightIcon(true)
             setShowSearchIcon(true)
         }

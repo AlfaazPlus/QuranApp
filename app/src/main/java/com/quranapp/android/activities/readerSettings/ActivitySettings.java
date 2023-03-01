@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.peacedesign.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.databinding.ActivitySettingsBinding;
@@ -43,6 +44,11 @@ public class ActivitySettings extends BaseActivity {
     public static final int SETTINGS_SCRIPT = 0x7;
 
     private ActivitySettingsBinding mBinding;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     @Override
     public void onBackPressed() {
@@ -168,6 +174,7 @@ public class ActivitySettings extends BaseActivity {
     private void initHeader(BoldHeader header) {
         header.setCallback(this::onBackPressed);
         header.setBGColor(R.color.colorBGPage);
+        Log.d(header.getLayoutDirection());
     }
 
     public BoldHeader getHeader() {
