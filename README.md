@@ -7,10 +7,12 @@
 The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place.
 
 [![CI](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml/badge.svg)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml)
-<img alt="Stars" src="https://img.shields.io/github/stars/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
-<img alt="Issues" src="https://img.shields.io/github/issues/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
-<img alt="Last Commit" src="https://img.shields.io/github/last-commit/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
-<img alt="License" src="https://img.shields.io/github/license/AlfaazPlus/QuranApp?color=025e3e&style=flat-square">
+[![Version](https://img.shields.io/github/v/release/AlfaazPlus/QuranApp?include_prereleases&sort=semver&color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/releases/latest)
+[![Stars](https://img.shields.io/github/stars/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/stargazers)
+[![Issues](https://img.shields.io/github/issues/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/commits/master)
+[![License](https://img.shields.io/github/license/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/blob/master/LICENSE)
+
 <hr />
 
 The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communication channel for any kind of discussion.
@@ -18,6 +20,9 @@ The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communic
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
+[<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
+      alt='Get it on GitHub'
+      height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 </div>
 
 <div align="left">
@@ -42,7 +47,7 @@ See more [here](/repo_assets/screenshots).
 | 📙 Multiple Translations       | ✅   |
 | 🎙️ Multiple Recitations       | ✅   |
 | 🎨 Multiple Quran Fonts        | ✅   |
-| ❤️Verse Reminder               | ✅   |
+| ❤️ Verse Reminder               | ✅   |
 | 🔗 Advanced Verse Interlinking | ✅   |
 | ⚡ Many more...                 | ✅   |
 
