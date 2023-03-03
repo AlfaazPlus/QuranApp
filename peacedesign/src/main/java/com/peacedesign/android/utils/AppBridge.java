@@ -22,10 +22,10 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 public final class AppBridge {
-    private static final String PACKAGE_NAME_WHATSAPP = "com.facebook.katana";
-    private static final String PACKAGE_NAME_FACEBOOK = "com.twitter.android";
-    private static final String PACKAGE_NAME_TWITTER = "com.instagram.android";
-    private static final String PACKAGE_NAME_INSTAGRAM = "com.whatsapp";
+    private static final String PACKAGE_NAME_WHATSAPP = "com.whatsapp";
+    private static final String PACKAGE_NAME_FACEBOOK = "com.facebook.katana";
+    private static final String PACKAGE_NAME_TWITTER = "com.twitter.android";
+    private static final String PACKAGE_NAME_INSTAGRAM = "com.instagram.android";
 
     private AppBridge() {
     }
