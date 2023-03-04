@@ -41,6 +41,8 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
@@ -110,7 +112,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
         /*mContent.btnQuickEdit.setImageResource(R.drawable.dr_icon_quick_edit);
         ViewUtils.setPaddings(mContent.btnQuickEdit, pad);*/
-        ViewUtils.setPaddings(mContent.votdBookmark, pad);
+        ViewPaddingKt.updatePaddings(mContent.votdBookmark, pad);
 
         /*mContent.btnQuickEdit.setOnClickListener(v -> ReaderFactory.startQuickEditShare(getContext(), mChapterNo, mVerseNo));*/
         mContent.votdBookmark.setOnClickListener(v -> bookmark(mChapterNo, mVerseNo));
@@ -190,16 +192,16 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         Chapter chapter = quran.getChapter(mChapterNo);
 
         String info = getContext().getString(R.string.strLabelVerseWithChapNameAndNo, chapter.getName(), mChapterNo,
-            mVerseNo);
+                mVerseNo);
         mContent.verseInfo.setText(info);
 
         Verse verse = quran.getChapter(mChapterNo).getVerse(mVerseNo);
 
         mVerseDecorator.refresh();
         mVerseDecorator.refreshQuranTextFonts(
-            mVerseDecorator.isKFQPCScript()
-                ? new Pair<>(verse.pageNo, verse.pageNo)
-                : null
+                mVerseDecorator.isKFQPCScript()
+                        ? new Pair<>(verse.pageNo, verse.pageNo)
+                        : null
         );
 
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
@@ -246,9 +248,9 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
                 }
 
                 Translation translation = factory.getTranslationsSingleSlugVerse(
-                    bookInfo.getSlug(),
-                    mChapterNo,
-                    mVerseNo
+                        bookInfo.getSlug(),
+                        mChapterNo,
+                        mVerseNo
                 );
                 return new Pair<>(bookInfo, translation);
             }
@@ -333,7 +335,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mContent.text.requestLayout();
         mContent.text.invalidate();
 
-        ViewUtils.removeView(findViewById(R.id.loader));
+        ViewKt.removeView(findViewById(R.id.loader));
     }
 
     private void setupVOTDBookmarkIcon(boolean isBookmarked) {

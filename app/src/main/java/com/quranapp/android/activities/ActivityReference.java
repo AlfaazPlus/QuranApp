@@ -126,7 +126,6 @@ public class ActivityReference extends ReaderPossessingActivity {
         mBinding.titleHeader.setBackground(bg);
 
         mBinding.back.setOnClickListener(v -> finish());
-        ViewUtils.setBounceOverScrollRV(mBinding.verses);
         mBinding.verses.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

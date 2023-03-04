@@ -31,6 +31,8 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytReaderFooterBinding;
 import com.quranapp.android.reader_managers.Navigator;
 import com.quranapp.android.reader_managers.ReaderParams;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 
 import kotlin.Pair;
@@ -129,7 +131,7 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getStartPointingArrow(Context context, boolean isRTL) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
 
         if (!isRTL) return arrowLeft;
@@ -137,7 +139,7 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getEndPointingArrow(Context context, boolean isRTL) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
         if (isRTL) {
             return arrowLeft;
@@ -147,13 +149,13 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getTopPointingArrow(Context context) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
         return DrawableUtils.rotate(context, arrowLeft, 90);
     }
 
     public void clearParent() {
-        ViewUtils.removeView(this);
+        ViewKt.removeView(this);
     }
 
     public void setupBottomNavigator() {

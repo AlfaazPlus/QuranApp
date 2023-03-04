@@ -33,6 +33,7 @@ import com.quranapp.android.components.reader.QuranPageModel;
 import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.databinding.LytQuranPageBinding;
 import com.quranapp.android.databinding.LytQuranPageSectionBinding;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 import com.quranapp.android.utils.univ.SpannableFactory;
@@ -264,7 +265,7 @@ public class QuranPageView extends FrameLayout {
             int lineForStart = layout.getLineForOffset(text.getSpanStart(verseSpan));
             layout.getLineBounds(lineForStart, rectWithinSection);
 
-            rectWithinSection.top += ViewUtils.getRelativeTop(tv, QuranPageView.class, false);
+            rectWithinSection.top += ViewKt.getRelativeTopRecursive(tv, QuranPageView.class, false);
 
             return rectWithinSection.top;
         }

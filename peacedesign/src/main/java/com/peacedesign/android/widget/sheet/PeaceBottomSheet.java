@@ -92,7 +92,7 @@ public class PeaceBottomSheet extends BottomSheetDialogFragment {
 
     private void resolveTitle() {
         if (P.headerTitle == null) {
-            P.headerTitle = ResUtils.getString(getContext(), P.headerTitleResource);
+            P.headerTitle = getContext().getString(P.headerTitleResource);
         }
     }
 

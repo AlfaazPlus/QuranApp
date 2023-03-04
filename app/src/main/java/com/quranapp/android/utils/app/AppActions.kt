@@ -8,7 +8,7 @@ import android.content.ContextWrapper
 import android.widget.Toast
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.Log
-import com.peacedesign.android.utils.kotlin_utils.copyToClipboard
+import com.quranapp.android.utils.extensions.copyToClipboard
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig

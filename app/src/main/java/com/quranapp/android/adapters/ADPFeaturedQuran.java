@@ -1,7 +1,5 @@
 package com.quranapp.android.adapters;
 
-import static com.peacedesign.android.utils.touchutils.HoverPushEffect.Pressure.LOW;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
 import com.quranapp.android.components.FeaturedQuranModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytFeaturedQuranItemBinding;
+import com.quranapp.android.utils.gesture.HoverPushEffect;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public class ADPFeaturedQuran extends RecyclerView.Adapter<ADPFeaturedQuran.VHFe
                 }
             });
 
-            binding.getRoot().setOnTouchListener(new HoverPushOpacityEffect(LOW));
+            binding.getRoot().setOnTouchListener(new HoverPushOpacityEffect(HoverPushEffect.Pressure.LOW));
         }
     }
 }

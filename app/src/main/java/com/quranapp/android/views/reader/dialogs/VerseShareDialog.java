@@ -40,6 +40,7 @@ import com.quranapp.android.components.quran.subcomponents.Footnote;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.LytVerseShareBinding;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.univ.NotifUtils;
 import com.quranapp.android.utils.univ.StringUtils;
 
@@ -186,8 +187,7 @@ public class VerseShareDialog extends PeaceDialog {
 
             bookInfos.forEach((slug, book) -> {
                 PeaceCheckBox checkBox = new PeaceCheckBox(getContext());
-                ViewUtils.setPaddingHorizontal(checkBox, Dimen.dp2px(getContext(), 15));
-                ViewUtils.setPaddingVertical(checkBox, Dimen.dp2px(getContext(), 10));
+                ViewPaddingKt.updatePaddings(checkBox, Dimen.dp2px(getContext(), 15), Dimen.dp2px(getContext(), 10));
 
                 checkBox.setBackgroundResource(R.drawable.dr_bg_hover_cornered);
                 checkBox.setText(book.getDisplayName(true));

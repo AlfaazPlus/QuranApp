@@ -140,7 +140,4 @@ public class ArrayListPro<E> extends ArrayList<E> {
     public int getObserversCount() {
         return observers.size();
     }
-
-    public void pauseObserver(@NonNull ObserverPro<ArrayListPro<E>> observer) {
-    }
 }

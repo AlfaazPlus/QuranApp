@@ -60,6 +60,7 @@ import com.quranapp.android.interfaceUtils.editor.OnEditorChangeListener;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.editor.EditorUtils;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.univ.DateUtils;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.Keys;
@@ -167,7 +168,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     }
 
     private void initHeader(LytEditShareHeaderBinding header) {
-        ViewUtils.addStrokedBGToHeader(header.getRoot(), R.color.colorBGPage, R.color.colorDivider);
+        // ViewUtils.addStrokedBGToHeader(header.getRoot(), R.color.colorBGPage, R.color.colorDivider);
 
         header.close.setOnClickListener(v -> finish());
         header.done.setOnClickListener(v -> done());
@@ -283,8 +284,8 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     private void togglePreview(LytEditorFinishBinding finishBinding, boolean show) {
         finishBinding.progressCont.setVisibility(show ? View.GONE : View.VISIBLE);
         finishBinding.preview.setVisibility(show ? View.VISIBLE : View.GONE);
-        ViewUtils.disableView(finishBinding.download, !show);
-        ViewUtils.disableView(finishBinding.share, !show);
+        ViewKt.disableView(finishBinding.download, !show);
+        ViewKt.disableView(finishBinding.share, !show);
     }
 
     private Bitmap prepareImageFromView(View view) {

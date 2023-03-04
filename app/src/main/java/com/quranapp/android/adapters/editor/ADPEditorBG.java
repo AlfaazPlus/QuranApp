@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.peacedesign.android.widget.sheet.SheetDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.EditorBG;

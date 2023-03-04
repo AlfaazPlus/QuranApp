@@ -28,6 +28,7 @@ import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytChapterInfocardBinding;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.univ.Keys;
 
 import java.util.Locale;
@@ -76,7 +77,7 @@ public class ChapterInfoCardView extends CardView {
         setCardElevation(Dimen.dp2px(getContext(), 4));
         setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBGChapterInfoCard));
         FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        ViewUtils.setMargins(p, Dimen.dp2px(getContext(), 5));
+        LayoutParamsKt.updateMargins(p, Dimen.dp2px(getContext(), 5));
         p.bottomMargin = Dimen.dp2px(getContext(), 10);
         setLayoutParams(p);
         addView(mBinding.getRoot());

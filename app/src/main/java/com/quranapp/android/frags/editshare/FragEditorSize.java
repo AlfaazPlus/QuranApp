@@ -22,6 +22,7 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytSeekbarBinding;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
+import com.quranapp.android.utils.extensions.ViewKt;
 
 public class FragEditorSize extends FragEditorBase {
     private LytSeekbarBinding mArTxtSizeSlider;
@@ -108,14 +109,14 @@ public class FragEditorSize extends FragEditorBase {
         mDisableArSeekbar = disable;
 
         if (mArTxtSizeSlider != null) {
-            ViewUtils.disableView(mArTxtSizeSlider.seekbar, disable);
+            ViewKt.disableView(mArTxtSizeSlider.seekbar, disable);
         }
     }
 
     public void disableTranslSeekbar(boolean disable) {
         mDisableTranslSeekbar = disable;
         if (mTranslTxtSizeSlider != null) {
-            ViewUtils.disableView(mTranslTxtSizeSlider.seekbar, disable);
+            ViewKt.disableView(mTranslTxtSizeSlider.seekbar, disable);
         }
     }
 }

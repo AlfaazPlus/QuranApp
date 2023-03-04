@@ -19,6 +19,7 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.components.search.VerseJumpModel;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 public class VHVerseJump extends VHSearchResultBase {
@@ -28,8 +29,7 @@ public class VHVerseJump extends VHSearchResultBase {
         super(textView);
         mTextView = textView;
 
-        ViewUtils.setPaddingHorizontal(textView, Dimen.dp2px(textView.getContext(), 15));
-        ViewUtils.setPaddingVertical(textView, Dimen.dp2px(textView.getContext(), 10));
+        ViewPaddingKt.updatePaddings(textView, Dimen.dp2px(textView.getContext(), 15), Dimen.dp2px(textView.getContext(), 10));
         setupJumperView(textView, applyMargins);
     }
 

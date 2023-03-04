@@ -31,6 +31,7 @@ import com.quranapp.android.adapters.editor.ADPEditorBG;
 import com.quranapp.android.components.editor.EditorBG;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import java.io.InputStream;
 
@@ -47,8 +48,8 @@ public class FragEditorBG extends FragEditorBase {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Context ctx = inflater.getContext();
         RecyclerView view = new RecyclerView(ctx);
-        ViewUtils.setPaddingHorizontal(view, dp2px(ctx, 8));
-        ViewUtils.setPaddingVertical(view, dp2px(ctx, 10));
+        ViewPaddingKt.updatePaddingHorizontal(view, dp2px(ctx, 8));
+        ViewPaddingKt.updatePaddingVertical(view, dp2px(ctx, 10));
         view.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         view.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         return view;

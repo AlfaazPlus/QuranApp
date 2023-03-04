@@ -1,4 +1,4 @@
-package com.peacedesign.android.utils.kotlin_utils
+package com.quranapp.android.utils.extensions
 
 import android.content.SharedPreferences
 import android.os.Handler

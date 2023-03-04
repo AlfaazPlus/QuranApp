@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
 
 public class ResHelperActivity extends AppCompatActivity {
     static class ActivityState {
@@ -150,11 +151,11 @@ public class ResHelperActivity extends AppCompatActivity {
     }
 
     public Typeface font(@FontRes int fontResId) {
-        return ResUtils.getFont(this, fontResId);
+        return ContextKt.getFont(this, fontResId);
     }
 
     public Drawable drawable(@DrawableRes int drawableResId) {
-        return ResUtils.getDrawable(this, drawableResId);
+        return ContextKt.drawable(this, drawableResId);
     }
 
     public int dimen(@DimenRes int dimenResId) {

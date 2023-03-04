@@ -28,6 +28,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewKt;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.peacedesign.android.utils.DrawableUtils;
@@ -49,6 +50,7 @@ import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.frags.search.FragSearchSuggestions;
 import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.search.SearchFilters;
@@ -342,14 +344,14 @@ public class ActivitySearch extends BaseActivity {
     private void showTranslationSheet() {
         PeaceBottomSheet sheet = new PeaceBottomSheet();
         PeaceRadioGroup radioGroup = new PeaceRadioGroup(this);
-        ViewUtils.setPaddingVertical(radioGroup, dp2px(15F), dp2px(25F));
+        ViewPaddingKt.updatePaddingVertical(radioGroup, dp2px(15F), dp2px(25F));
         int padH = dp2px(25F);
         int padV = dp2px(13F);
         int spaceBtwn = dp2px(15F);
 
         for (QuranTranslBookInfo bookInfo : availableTranslModels.values()) {
             PeaceRadioButton radio = new PeaceRadioButton(this);
-            ViewUtils.setPaddings(radio, padH, padV);
+            ViewPaddingKt.updatePaddings(radio, padH, padV);
             radio.setBackgroundResource(com.peacedesign.R.drawable.dr_bg_action);
             radio.setText(bookInfo.getBookName());
             radio.setTag(bookInfo);

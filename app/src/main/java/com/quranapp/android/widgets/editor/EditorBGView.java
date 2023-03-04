@@ -30,6 +30,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.VerseEditor;
+import com.quranapp.android.utils.extensions.ContextKt;
 
 public class EditorBGView extends View {
     private final int mIconSize;
@@ -48,7 +49,7 @@ public class EditorBGView extends View {
 
     public EditorBGView(Context context) {
         super(context);
-        mPrimaryColor = ResUtils.obtainPrimaryColor(getContext());
+        mPrimaryColor = ContextKt.obtainPrimaryColor(getContext());
         mIconSize = Dimen.dp2px(context, 20);
         generateIconPaint(R.drawable.dr_icon_opacity);
     }

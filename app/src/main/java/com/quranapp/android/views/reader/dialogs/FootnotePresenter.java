@@ -41,6 +41,7 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVerseFootnoteBinding;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
@@ -159,7 +160,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     private void setupContent(ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding, LinearLayout dialogLayout) {
-        ViewUtils.removeView(binding.getRoot());
+        ViewKt.removeView(binding.getRoot());
         dialogLayout.addView(binding.getRoot());
 
         binding.getRoot().setSaveEnabled(true);

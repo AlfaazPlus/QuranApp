@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.ViewUtils;
+import com.quranapp.android.utils.extensions.ViewKt;
 
 public class PopupWindow2 extends RelativePopupWindow {
     private float mDimAmount;
@@ -61,7 +62,7 @@ public class PopupWindow2 extends RelativePopupWindow {
         // To avoid menu item views to spread out of its parent, set clipping on th parent.
         // Since this cannot be set before the window is visible, this has to be done immediately after show method is called.
         if (getContentView() == null) return;
-        ViewUtils.clipChildren(getContentView(), true);
+        ViewKt.clipChildren(getContentView(), true);
     }
 
     private void dimBehind() {

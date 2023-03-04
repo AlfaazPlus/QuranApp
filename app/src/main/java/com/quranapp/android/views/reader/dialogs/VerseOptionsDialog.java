@@ -38,6 +38,8 @@ import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.views.reader.RecitationPlayer;
 
@@ -103,7 +105,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
         LinearLayout dialogLayout, Verse verse
     ) {
-        ViewUtils.removeView(vodBinding.getRoot());
+        ViewKt.removeView(vodBinding.getRoot());
         dialogLayout.addView(vodBinding.getRoot());
 
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) vodBinding.getRoot().getLayoutParams();
@@ -352,7 +354,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
                 binding.icon.setColorFilter(tint);
 
                 ViewGroup.MarginLayoutParams p = new ViewGroup.MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-                ViewUtils.setMargins(p, marg);
+                LayoutParamsKt.updateMargins(p, marg);
 
                 binding.getRoot().setId(id);
                 binding.getRoot().setOnClickListener(VerseOptionsDialog.this);

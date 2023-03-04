@@ -144,7 +144,6 @@ public class ActivityTopics extends BaseActivity {
     @Override
     protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
         mBinding = ActivityTopicsBinding.bind(activityView);
-        ViewUtils.setBounceOverScrollRV(mBinding.topics);
 
         QuranMeta.prepareInstance(this, quranMeta -> QuranTopic.prepareInstance(this, quranMeta, quranTopic -> {
             mQuranTopic = quranTopic;
@@ -172,7 +171,12 @@ public class ActivityTopics extends BaseActivity {
         initTopicFilters(header.filter);
 
         EditText searchBox = header.searchContainer.searchBox;
-        ViewUtils.setPaddingStart(searchBox, dp2px(5));
+        searchBox.setPaddingRelative(
+                dp2px(5),
+                searchBox.getPaddingTop(),
+                searchBox.getPaddingEnd(),
+                searchBox.getPaddingBottom()
+        );
         header.searchContainer.btnClear.setOnClickListener(v -> header.searchContainer.searchBox.setText(null));
         searchBox.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {

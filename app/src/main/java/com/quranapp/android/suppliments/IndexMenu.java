@@ -30,6 +30,7 @@ import com.quranapp.android.databinding.LytIndexMenuBinding;
 import com.quranapp.android.databinding.LytIndexMenuItemBinding;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.app.InfoUtils;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.univ.PopupWindow2;
 import com.quranapp.android.widgets.IconedTextView;
 
@@ -138,7 +139,7 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
         MaterialDivider divider = new MaterialDivider(getContext());
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(MATCH_PARENT, Dimen.dp2px(getContext(), 1));
-        ViewUtils.setMarginVertical(p, Dimen.dp2px(getContext(), 3));
+        LayoutParamsKt.updateMarginVertical(p, Dimen.dp2px(getContext(), 3));
 
         mActivity.runOnUiThread(() -> container.addView(divider, p));
     }

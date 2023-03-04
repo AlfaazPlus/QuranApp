@@ -27,6 +27,7 @@ import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -119,7 +120,7 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
                 p.width = mItemWidth;
             } else {
                 p = new RecyclerView.LayoutParams(mItemWidth, WRAP_CONTENT);
-                ViewUtils.setMargins((ViewGroup.MarginLayoutParams) p, Dimen.dp2px(binding.getRoot().getContext(), 3));
+                LayoutParamsKt.updateMargins((ViewGroup.MarginLayoutParams) p, Dimen.dp2px(binding.getRoot().getContext(), 3));
             }
             root.setLayoutParams(p);
 

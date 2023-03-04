@@ -72,7 +72,6 @@ public class ActivityReadHistory extends BaseActivity implements ReadHistoryCall
     @Override
     protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
         mBinding = ActivityBookmarkBinding.bind(activityView);
-        ViewUtils.setBounceOverScrollRV(mBinding.list);
 
         initHeader(mBinding.header);
 

@@ -23,6 +23,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityTafsir;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.extensions.ContextKt;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,7 +113,7 @@ public class TafsirWebViewClient extends WebViewClient {
     }
 
     private InputStream createArrowDrawableStream(Context context, float rotate) {
-        Drawable drawable = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable drawable = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (drawable == null) {
             return null;
         }

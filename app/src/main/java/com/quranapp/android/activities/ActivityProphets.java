@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewKt;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.peacedesign.android.utils.ViewUtils;
@@ -119,7 +120,12 @@ public class ActivityProphets extends BaseActivity {
         header.back.setOnClickListener(v -> onBackPressed());
 
         EditText searchBox = header.searchContainer.searchBox;
-        ViewUtils.setPaddingStart(searchBox, dp2px(5));
+        searchBox.setPaddingRelative(
+                dp2px(5),
+                searchBox.getPaddingTop(),
+                searchBox.getPaddingEnd(),
+                searchBox.getPaddingBottom()
+        );
         header.searchContainer.btnClear.setOnClickListener(v -> header.searchContainer.searchBox.setText(null));
         searchBox.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {

@@ -27,7 +27,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
@@ -53,7 +56,7 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     private void initThis(Context context) {
         setBackgroundColor(ContextCompat.getColor(context, R.color.colorBGHomePageItem));
         setOrientation(VERTICAL);
-        ViewUtils.setPaddingVertical(this, dp2px(context, 10));
+        ViewPaddingKt.updatePaddingVertical(this, dp2px(context, 10));
     }
 
     private void initTitle(Context context) {
@@ -108,7 +111,7 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
         ProgressBar loader = new ProgressBar(ctx);
         loader.setId(R.id.loader);
 
-        ViewUtils.setPaddings(loader, dp2px(ctx, 15));
+        ViewPaddingKt.updatePaddings(loader, dp2px(ctx, 15));
 
         int size = dp2px(ctx, 35);
         addView(loader, new LayoutParams(size, size));
@@ -117,7 +120,7 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     protected void hideLoader() {
         View loader = findViewById(R.id.loader);
         if (loader != null) {
-            ViewUtils.removeView(loader);
+            ViewKt.removeView(loader);
         }
     }
 
@@ -134,8 +137,7 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     private RecyclerView makeRecView(Context ctx) {
         RecyclerView recyclerView = new RecyclerView(ctx);
         recyclerView.setId(R.id.list);
-        ViewUtils.setBounceOverScrollRV(recyclerView);
-        ViewUtils.setPaddings(recyclerView, dp2px(ctx, 10));
+        ViewPaddingKt.updatePaddings(recyclerView, dp2px(ctx, 10));
         recyclerView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ctx, RecyclerView.HORIZONTAL, false));
@@ -147,7 +149,7 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
         if (params instanceof MarginLayoutParams) {
-            ViewUtils.setMarginVertical((MarginLayoutParams) params, dp2px(getContext(), 3));
+            LayoutParamsKt.updateMarginVertical((MarginLayoutParams) params, dp2px(getContext(), 3));
         }
         super.setLayoutParams(params);
     }

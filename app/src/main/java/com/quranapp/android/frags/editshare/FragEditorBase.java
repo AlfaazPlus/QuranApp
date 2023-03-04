@@ -18,6 +18,7 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.frags.BaseFragment;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 public class FragEditorBase extends BaseFragment {
     protected VerseEditor mVerseEditor;
@@ -28,8 +29,7 @@ public class FragEditorBase extends BaseFragment {
         Context context = view.getContext();
 
         view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBGPage));
-        ViewUtils.setPaddingTop(view, Dimen.dp2px(context, 10));
-        ViewUtils.setPaddingBottom(view, ResUtils.getDimenPx(context, R.dimen.dmnPadBig));
+        ViewPaddingKt.updatePaddingVertical(view, Dimen.dp2px(context, 10), ResUtils.getDimenPx(context, R.dimen.dmnPadBig));
     }
 
     public void setEditor(VerseEditor verseEditor) {

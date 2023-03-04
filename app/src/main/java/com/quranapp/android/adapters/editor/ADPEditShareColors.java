@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.R;
 import com.quranapp.android.frags.editshare.FragEditorColors;
 

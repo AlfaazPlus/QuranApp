@@ -11,6 +11,7 @@ import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytChapterTitleBinding;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 
 public class ChapterTitleView extends FrameLayout {
     private static final int SIZE_SMALL = 0;
@@ -54,7 +55,7 @@ public class ChapterTitleView extends FrameLayout {
     public void setLayoutParams(ViewGroup.LayoutParams params) {
         if (params instanceof MarginLayoutParams) {
             //            params.width = WRAP_CONTENT;
-            ViewUtils.setMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(),20));
+            LayoutParamsKt.updateMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(),20));
         }
         super.setLayoutParams(params);
     }

@@ -39,6 +39,8 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBottomSheetActionBtn1Binding;
 import com.quranapp.android.databinding.LytReaderVrdBinding;
 import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -93,11 +95,11 @@ public class VerseReminderDialog extends PeaceBottomSheet {
         binding.btn.setText("Set Reminder");
         binding.getRoot().setBackgroundColor(getSheetBGColor());
 
-        ViewUtils.disableView(binding.btn, true);
+        ViewKt.disableView(binding.btn, true);
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.gravity = Gravity.BOTTOM;
-        ViewUtils.removeView(binding.getRoot());
+        ViewKt.removeView(binding.getRoot());
         containerLayout.addView(binding.getRoot(), lp);
 
         binding.getRoot().post(() -> {
@@ -143,7 +145,7 @@ public class VerseReminderDialog extends PeaceBottomSheet {
                     setupContent(quranMeta, mBinding);
                 });
             } else {
-                ViewUtils.removeView(mBinding.getRoot());
+                ViewKt.removeView(mBinding.getRoot());
                 contentContainer.addView(mBinding.getRoot());
                 setupContent(quranMeta, mBinding);
             }
@@ -171,13 +173,13 @@ public class VerseReminderDialog extends PeaceBottomSheet {
             binding.duration.setText(prepareDuration(hourOfDay, minute));
 
             if (mActionBinding != null) {
-                ViewUtils.disableView(mActionBinding.btn, false);
+                ViewKt.disableView(mActionBinding.btn, false);
             }
         });
 
         if (mActionBinding != null) {
             mActionBinding.btn.setOnClickListener(v -> {});
-            ViewUtils.disableView(mActionBinding.btn, true);
+            ViewKt.disableView(mActionBinding.btn, true);
         }
     }
 
@@ -205,7 +207,7 @@ public class VerseReminderDialog extends PeaceBottomSheet {
         AbsoluteSizeSpan txtSizeSpan = new AbsoluteSizeSpan(ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSizeMedium));
         verseSS.setSpan(txtSizeSpan, 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         verseSS.setSpan(new StyleSpan(Typeface.BOLD), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        verseSS.setSpan(new ForegroundColorSpan(ResUtils.obtainPrimaryColor(ctx)), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        verseSS.setSpan(new ForegroundColorSpan(ContextKt.obtainPrimaryColor(ctx)), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(reminderMsg, "\n", verseSS);
     }

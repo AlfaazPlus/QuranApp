@@ -17,19 +17,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.peacedesign.android.utils.ResUtils
 import com.peacedesign.android.utils.kotlin_utils.*
-import com.peacedesign.android.utils.kotlin_utils.DimenKT.dp2px
-import com.peacedesign.android.utils.kotlin_utils.DimenKT.getWindowHeight
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
 import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.extensions.*
 import com.quranapp.android.utils.univ.RegexPattern
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener
 import com.quranapp.android.utils.univ.SimpleTextWatcher
@@ -80,7 +80,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
 
     private fun initThis() {
         gravity = Gravity.CENTER
-        setPaddingHorizontal(context.dp2px(6F), 0)
+        updatePaddingRelative(start = context.dp2px(6F), end = 0)
 
         setTextSize(TypedValue.COMPLEX_UNIT_SP, ResUtils.getDimenSp(context, R.dimen.dmnCommonSize3))
 
@@ -307,9 +307,9 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
 
     private fun setupPopupDimensions(binding: LytJuzChapterVerseSheetBinding) {
         binding.let {
-            var height = getWindowHeight(context)
-            if (height >= dp2px(context, 70f)) {
-                height = dp2px(context, 650f)
+            var height = context.getWindowHeight()
+            if (height >= context.dp2px(70f)) {
+                height = context.dp2px(650f)
             }
             it.root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
         }

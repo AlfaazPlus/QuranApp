@@ -33,6 +33,9 @@ import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.TextViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.views.reader.ChapterIcon;
 
 public class ChapterCard extends ConstraintLayout {
@@ -52,7 +55,7 @@ public class ChapterCard extends ConstraintLayout {
 
     private void init() {
         setLayoutParams(new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-        ViewUtils.setPaddings(this, Dimen.dp2px(getContext(), 10));
+        ViewPaddingKt.updatePaddings(this, Dimen.dp2px(getContext(), 10));
 
         View serialView = createSerialView();
         View nameView = createNameView();
@@ -95,7 +98,7 @@ public class ChapterCard extends ConstraintLayout {
         v.setGravity(Gravity.CENTER);
         v.setMaxLines(1);
         v.setTextColor(ContextCompat.getColorStateList(getContext(), R.color.color_reader_spinner_item_label));
-        ViewUtils.setTextSizePx(v, R.dimen.dmnCommonSize2);
+        TextViewKt.setTextSizePx(v, R.dimen.dmnCommonSize2);
 
         int size = Dimen.dp2px(getContext(), 35);
         v.setLayoutParams(new ConstraintLayout.LayoutParams(size, size));
@@ -108,7 +111,7 @@ public class ChapterCard extends ConstraintLayout {
         AppCompatTextView v = new AppCompatTextView(getContext());
         v.setId(R.id.chapterCardName);
         LayoutParams p = new LayoutParams(0, WRAP_CONTENT);
-        ViewUtils.setMarginHorizontal(p, Dimen.dp2px(getContext(), 10));
+        LayoutParamsKt.updateMarginHorizontal(p, Dimen.dp2px(getContext(), 10));
         v.setLayoutParams(p);
 
         addView(v);
@@ -119,7 +122,7 @@ public class ChapterCard extends ConstraintLayout {
     protected View createRightView() {
         ChapterIcon v = new ChapterIcon(getContext());
         v.setId(R.id.chapterCardIcon);
-        ViewUtils.setTextSizePx(v, R.dimen.dmnChapterIcon2);
+        TextViewKt.setTextSizePx(v, R.dimen.dmnChapterIcon2);
         v.setLayoutParams(new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         v.setTextColor(ContextCompat.getColorStateList(getContext(), R.color.color_reader_spinner_item_label));
         addView(v);

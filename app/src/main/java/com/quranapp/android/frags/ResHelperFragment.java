@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
 
 public class ResHelperFragment extends Fragment {
     private int mPrimaryClr = -213;
@@ -62,11 +63,11 @@ public class ResHelperFragment extends Fragment {
     }
 
     public Typeface font(Context ctx, @FontRes int fontResId) {
-        return ResUtils.getFont(ctx, fontResId);
+        return ContextKt.getFont(ctx, fontResId);
     }
 
     public Drawable drawable(Context ctx, @DrawableRes int drawableResId) {
-        return ResUtils.getDrawable(ctx, drawableResId);
+        return ContextKt.drawable(ctx, drawableResId);
     }
 
     public int dimen(Context ctx, @DimenRes int dimenResId) {

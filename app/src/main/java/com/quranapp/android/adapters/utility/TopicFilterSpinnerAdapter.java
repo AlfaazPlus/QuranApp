@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.components.utility.SpinnerItem;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class TopicFilterSpinnerAdapter extends SpinnerAdapter2<SpinnerItem> {
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
-        ViewUtils.setPaddingVertical(view, Dimen.dp2px(parent.getContext(),10));
-        ViewUtils.setPaddingHorizontal(view, Dimen.dp2px(parent.getContext(),15));
+        ViewPaddingKt.updatePaddingVertical(view, Dimen.dp2px(parent.getContext(),10));
+        ViewPaddingKt.updatePaddingHorizontal(view, Dimen.dp2px(parent.getContext(),15));
         return view;
     }
 }

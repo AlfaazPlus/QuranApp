@@ -22,6 +22,7 @@ import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.checkbox.PeaceCheckBox;
 import com.peacedesign.android.widget.compound.PeaceCompoundButton.OnCompoundCheckChangedListener;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 public class FragEditorOptions extends FragEditorBase {
     private boolean mInitShowAr = true;
@@ -70,8 +71,7 @@ public class FragEditorOptions extends FragEditorBase {
         PeaceCheckBox checkBox = new PeaceCheckBox(context);
         checkBox.setTextAppearance(R.style.TextAppearanceCommonTitle);
         checkBox.setBackgroundResource(R.drawable.dr_bg_action);
-        ViewUtils.setPaddingHorizontal(checkBox, dp2px(context, 15));
-        ViewUtils.setPaddingVertical(checkBox, dp2px(context, 10));
+        ViewPaddingKt.updatePaddings(checkBox, dp2px(context, 15), dp2px(context, 10));
         checkBox.setText(txtRes);
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);

@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import com.peacedesign.android.utils.Dimen
 import com.peacedesign.android.utils.ViewUtils
 import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.updatePaddings
 import com.quranapp.android.views.reader.chapterSpinner.ChapterSpinnerItem
 import com.quranapp.android.views.reader.juzSpinner.JuzSpinnerItem
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem
@@ -28,8 +30,7 @@ class JuzSelectorAdapter2(items: MutableList<JuzSpinnerItem>) : ADPJuzChapterVer
 
     private fun makeItemView(context: Context): TextView {
         val txtView = TextView(context)
-        ViewUtils.setPaddingHorizontal(txtView, Dimen.dp2px(context, 15f))
-        ViewUtils.setPaddingVertical(txtView, Dimen.dp2px(context, 10f))
+        txtView.updatePaddings(context.dp2px(15f), context.dp2px(10f))
         txtView.setTextColor(ContextCompat.getColorStateList(context, R.color.color_reader_spinner_item_label))
         txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return txtView
@@ -51,8 +52,7 @@ class VerseSelectorAdapter2(items: MutableList<VerseSpinnerItem>) :
 
     private fun makeItemView(context: Context): TextView {
         val txtView = TextView(context)
-        ViewUtils.setPaddingHorizontal(txtView, Dimen.dp2px(context, 8f))
-        ViewUtils.setPaddingVertical(txtView, Dimen.dp2px(context, 10f))
+        txtView.updatePaddings(context.dp2px(8f), context.dp2px(10f))
         txtView.setTextColor(ContextCompat.getColorStateList(context, R.color.color_reader_spinner_item_label))
         txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return txtView

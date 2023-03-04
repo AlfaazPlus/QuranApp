@@ -17,16 +17,16 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peacedesign.android.utils.ArrayListPro;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BottomTabLayout extends LinearLayout {
-    private final ArrayListPro<BottomTab> mTabs = new ArrayListPro<>();
+    private final ArrayList<BottomTab> mTabs = new ArrayList<>();
     boolean mProtectFromViewPagerChange;
     private LinearLayout mTabsContainer;
     private BottomTab mSelectedTab;

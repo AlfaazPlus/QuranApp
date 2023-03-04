@@ -59,8 +59,9 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
-import com.peacedesign.android.utils.kotlin_utils.ContextUtilsKt;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
@@ -484,13 +485,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {
         Context context = textView.getContext();
-        Drawable chevronRight = ResUtils.getDrawable(context, R.drawable.dr_icon_chevron_right);
+        Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
 
         if (chevronRight != null && WindowUtils.isRTL(context)) {
             chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
         }
 
-        textView.setDrawables(ResUtils.getDrawable(context, startIconRes), null, chevronRight, null);
+        textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
 
     @SuppressLint("RtlHardcoded")
@@ -519,8 +520,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupLauncherParams(int startIconRes, LytReaderSettingsItemBinding launcherBinding) {
         View launcherRoot = launcherBinding.getRoot();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        ViewUtils.setMarginVertical(params, dp2px(launcherRoot.getContext(), 5));
-        ViewUtils.setMarginHorizontal(params, dp2px(launcherRoot.getContext(), 10));
+        LayoutParamsKt.updateMarginHorizontal(params, dp2px(launcherRoot.getContext(), 10));
+        LayoutParamsKt.updateMarginVertical(params, dp2px(launcherRoot.getContext(), 5));
         launcherRoot.setLayoutParams(params);
 
         setupLauncherIcon(startIconRes, launcherBinding.launcher);
@@ -635,7 +636,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         if (QuranScriptUtilsKt.isKFQPCScript(savedScript)) {
             mLytTextSizeArabic.demoText.setTypeface(
-                ContextUtilsKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
+                ContextKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
             );
         } else {
             mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText, -1);

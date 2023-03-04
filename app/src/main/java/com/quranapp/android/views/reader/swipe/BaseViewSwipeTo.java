@@ -37,6 +37,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import me.dkzwm.widget.srl.SmoothRefreshLayout;
 import me.dkzwm.widget.srl.extra.IRefreshView;
@@ -96,7 +97,7 @@ public abstract class BaseViewSwipeTo extends LinearLayout implements IRefreshVi
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
         setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-        ViewUtils.setPaddings(this, Dimen.dp2px(getContext(), 15));
+        ViewPaddingKt.updatePaddings(this, Dimen.dp2px(getContext(), 15));
     }
 
     private void createViews(Context context) {
@@ -109,7 +110,7 @@ public abstract class BaseViewSwipeTo extends LinearLayout implements IRefreshVi
 
         arrow.setVisibility(GONE);
         arrow.setImageResource(getArrowResource());
-        ViewUtils.setPaddings(arrow, Dimen.dp2px(ctx, 3));
+        ViewPaddingKt.updatePaddings(arrow, Dimen.dp2px(ctx, 3));
         arrow.setRotation(getRotationBeforeReach());
 
         int dimen = Dimen.dp2px(ctx, 26);

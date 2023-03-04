@@ -1,4 +1,4 @@
-package com.peacedesign.android.utils.kotlin_utils
+package com.quranapp.android.utils.extensions
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,8 +10,11 @@ import android.graphics.drawable.Drawable
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import androidx.annotation.*
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.peacedesign.R
+import com.peacedesign.android.utils.Dimen
 import com.peacedesign.android.utils.ResUtils
 
 fun Context.getPackageNameRelease(): String {
@@ -31,11 +34,38 @@ fun Context.getTypedArray(@ArrayRes arrayResId: Int): TypedArray = resources.obt
 @ColorInt
 fun Context.color(@ColorRes colorResId: Int): Int = ContextCompat.getColor(this, colorResId)
 
+@ColorInt
+fun Context.obtainPrimaryColor(): Int {
+    return ContextCompat.getColor(this, R.color.colorPrimary)
+}
+
+@ColorInt
+fun Context.obtainWindowBackgroundColor(): Int {
+    val attributes = this.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
+    @ColorInt val backgroundColor = attributes.getColor(0, 0)
+    attributes.recycle()
+    return backgroundColor
+}
+
 fun Context.colorStateList(@ColorRes colorResId: Int): ColorStateList? = ContextCompat.getColorStateList(this, colorResId)
 
-fun Context.getFont(@FontRes fontResId: Int): Typeface? = ResUtils.getFont(this, fontResId)
+fun Context.getFont(@FontRes fontResId: Int): Typeface? {
+    return try {
+        ResourcesCompat.getFont(this, fontResId)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
 
-fun Context.drawable(@DrawableRes drawableResId: Int): Drawable? = ResUtils.getDrawable(this, drawableResId)
+fun Context.drawable(@DrawableRes drawableResId: Int): Drawable? {
+    return try {
+        AppCompatResources.getDrawable(this, drawableResId)
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+        null
+    }
+}
 
 fun Context.getDimension(@DimenRes dimenResId: Int): Int = ResUtils.getDimenPx(this, dimenResId)
 
@@ -50,6 +80,16 @@ fun Context.copyToClipboard(text: CharSequence): Boolean {
 }
 
 fun Context.getDisplayMetrics(): DisplayMetrics = resources.displayMetrics
+
+@Dimension
+fun Context.getDimenPx(@DimenRes dimenRes: Int): Int {
+    return resources.getDimensionPixelSize(dimenRes)
+}
+
+@Dimension(unit = Dimension.SP)
+fun Context.getDimenSp(@DimenRes dimenRes: Int): Float {
+    return px2sp(getDimenPx(dimenRes).toFloat())
+}
 
 @Dimension
 fun Context.dp2px(@Dimension(unit = Dimension.DP) dpValue: Float): Int {
@@ -75,3 +115,7 @@ fun Context.sp2px(@Dimension(unit = Dimension.SP) spValue: Float): Int {
  * @see [sp2px]
  */
 fun Context.px2sp(@Dimension pxValue: Float): Float = pxValue / getDisplayMetrics().scaledDensity
+
+fun Context.getWindowHeight(): Int {
+    return getDisplayMetrics().heightPixels
+}

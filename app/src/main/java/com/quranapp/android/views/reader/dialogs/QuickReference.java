@@ -44,6 +44,7 @@ import com.quranapp.android.databinding.LytSheetVerseReferenceHeaderBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.Logger;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
@@ -122,7 +123,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
             return;
         }
 
-        ViewUtils.removeView(mBinding.getRoot().findViewById(R.id.message));
+        ViewKt.removeView(mBinding.getRoot().findViewById(R.id.message));
 
         mBinding.referenceVerses.setAdapter(null);
 
@@ -157,7 +158,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
         binding.referenceVerses.setVisibility(GONE);
         binding.loader.setVisibility(VISIBLE);
 
-        ViewUtils.removeView(binding.getRoot());
+        ViewKt.removeView(binding.getRoot());
         dialog.setContentView(binding.getRoot());
         setupDialogStyles(dialog, binding.getRoot(), params);
 
@@ -404,7 +405,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 initActions(actvt, binding, chapterNo, verseRange);
 
 
-                ViewUtils.removeView(mBinding.getRoot().findViewById(R.id.message));
+                ViewKt.removeView(mBinding.getRoot().findViewById(R.id.message));
                 if (translSlugs == null || translSlugs.isEmpty()) {
                     if (!(binding.getRoot().getChildAt(0) instanceof CardMessage)) {
                         CardMessage msgView = CardMessage.warning(actvt, R.string.strMsgTranslNoneSelected);

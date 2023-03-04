@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheetMenu;
@@ -54,6 +53,10 @@ import com.quranapp.android.databinding.LytSearchResultItemBinding;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.interfaceUtils.Destroyable;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.vh.search.VHChapterJump;
@@ -92,7 +95,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         mColorSecondary = ContextCompat.getColor(context, R.color.colorText3);
         mColorPrimary = ContextCompat.getColor(context, R.color.colorPrimary);
         mMoreTransText = context.getString(R.string.strLabelMoreTranslations);
-        fontUrdu = ResUtils.getFont(context, R.font.font_urdu);
+        fontUrdu = ContextKt.getFont(context, R.font.font_urdu);
         defaultTransFont = Typeface.DEFAULT;
         mQueryHighlightTypeface = Typeface.create("sans-serif", Typeface.BOLD_ITALIC);
 
@@ -165,8 +168,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         params.topMargin = mActivity.dp2px(5);
         resultCountView.setLayoutParams(params);
 
-        ViewUtils.setPaddingHorizontal(resultCountView, mActivity.dp2px(15));
-        ViewUtils.setPaddingVertical(resultCountView, mActivity.dp2px(2));
+        ViewPaddingKt.updatePaddingHorizontal(resultCountView, mActivity.dp2px(15));
+        ViewPaddingKt.updatePaddingVertical(resultCountView, mActivity.dp2px(2));
 
         resultCountView.setTextColor(mColorSecondary);
         resultCountView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAuthorTextSize);
@@ -244,7 +247,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             if (model.translationsView == null) {
                 model.translationsView = makeTranslations(model);
             } else {
-                ViewUtils.removeView(model.translationsView);
+                ViewKt.removeView(model.translationsView);
             }
             mBinding.transPlaceholder.addView(model.translationsView);
             itemView.setOnClickListener(v -> openItem(itemView.getContext(), model));
@@ -278,7 +281,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             translRoot.setOrientation(LinearLayout.VERTICAL);
 
             AppCompatTextView transTextView = new AppCompatTextView(context);
-            ViewUtils.setPaddingHorizontal(transTextView, mActivity.dp2px(10));
+            ViewPaddingKt.updatePaddingHorizontal(transTextView, mActivity.dp2px(10));
             transTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTransTextSize);
             transTextView.setText(prepareTransText(translation.getText(), startIndex, endIndex, translation.isUrdu()));
             transTextView.setShadowLayer(mTransTextSize, 0f, 0f, Color.TRANSPARENT);
@@ -286,7 +289,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             translRoot.addView(transTextView, new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
             AppCompatTextView authorTextView = new AppCompatTextView(context);
-            ViewUtils.setPaddingHorizontal(authorTextView, mActivity.dp2px(10));
+            ViewPaddingKt.updatePaddingHorizontal(authorTextView, mActivity.dp2px(10));
             authorTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAuthorTextSize);
             authorTextView.setTextColor(mColorSecondary);
             authorTextView.setShadowLayer(mAuthorTextSize, 0f, 0f, Color.TRANSPARENT);
@@ -308,14 +311,14 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             translRoot.addView(authorTextView, params);
 
             LinearLayout.LayoutParams rootParams = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            ViewUtils.setMarginVertical(rootParams, mActivity.dp2px(5));
+            LayoutParamsKt.updateMarginVertical(rootParams, mActivity.dp2px(5));
 
             container.addView(translRoot, rootParams);
         }
 
         private void makeMoreTransNavigator(VerseResultModel verseResultModel, LinearLayout container, int visibleTransCount, int hideableCount, VerseResultModel model) {
             AppCompatTextView moreTransView = new AppCompatTextView(itemView.getContext());
-            ViewUtils.setPaddings(moreTransView, mActivity.dp2px(5));
+            ViewPaddingKt.updatePaddings(moreTransView, mActivity.dp2px(5));
 
             moreTransView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mMoreBtnTextSize);
             moreTransView.setText(String.format(mMoreTransText, hideableCount));
@@ -323,12 +326,12 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             moreTransView.setBackgroundResource(R.drawable.dr_bg_hover_cornered);
             moreTransView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-            ViewUtils.setMarginHorizontal(params, mActivity.dp2px(10));
-            ViewUtils.setMarginVertical(params, mActivity.dp2px(5));
+            LayoutParamsKt.updateMarginHorizontal(params, mActivity.dp2px(10));
+            LayoutParamsKt.updateMarginVertical(params, mActivity.dp2px(5));
             container.addView(moreTransView, params);
 
             moreTransView.setOnClickListener(v -> {
-                ViewUtils.removeView(moreTransView);
+                ViewKt.removeView(moreTransView);
                 List<Translation> translations = model.translations;
                 for (int i = visibleTransCount, l = translations.size(); i < l; i++) {
                     Translation translation = translations.get(i);

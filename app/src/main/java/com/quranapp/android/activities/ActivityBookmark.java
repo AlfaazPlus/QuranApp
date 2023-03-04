@@ -176,7 +176,6 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
             int spanCount = WindowUtils.isLandscapeMode(context) ? 2 : 1;
             GridLayoutManager layoutManager = new GridLayoutManager(context, spanCount);
             mBinding.list.setLayoutManager(layoutManager);
-            ViewUtils.setBounceOverScrollRV(mBinding.list);
 
             mAdapter = new ADPBookmark(this, models);
             mBinding.list.setAdapter(mAdapter);

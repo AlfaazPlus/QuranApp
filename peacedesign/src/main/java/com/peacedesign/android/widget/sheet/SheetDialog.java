@@ -148,7 +148,7 @@ public class SheetDialog extends BottomSheetDialogFragment {
     private void setupTitle(View sheetHeader) {
         mTitleView = sheetHeader.findViewById(R.id.title);
         if (P.headerTitle == null) {
-            P.headerTitle = ResUtils.getString(getContext(), P.headerTitleResource);
+            P.headerTitle = getContext().getString(P.headerTitleResource);
         }
 
         if (P.headerTitle == null) {

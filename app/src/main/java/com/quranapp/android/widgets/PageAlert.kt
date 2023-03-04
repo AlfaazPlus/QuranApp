@@ -31,6 +31,10 @@ import com.peacedesign.android.utils.Dimen
 import com.peacedesign.android.utils.ResUtils
 import com.peacedesign.android.utils.ViewUtils
 import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.obtainWindowBackgroundColor
+import com.quranapp.android.utils.extensions.removeView
+import com.quranapp.android.utils.extensions.updatePaddings
 
 open class PageAlert : LinearLayout {
     private lateinit var mIconView: AppCompatImageView
@@ -67,10 +71,9 @@ open class PageAlert : LinearLayout {
     private fun initThis() {
         orientation = VERTICAL
         gravity = Gravity.CENTER
-        ViewUtils.setPaddingVertical(this, Dimen.dp2px(context, 25F))
-        ViewUtils.setPaddingHorizontal(this, Dimen.dp2px(context, 50F))
+        updatePaddings(context.dp2px(25F), context.dp2px(50F))
 
-        setBackgroundColor(ResUtils.obtainWindowBackgroundColor(context))
+        setBackgroundColor(context.obtainWindowBackgroundColor())
         setOnTouchListener { _, _ -> true }
     }
 
@@ -193,7 +196,7 @@ open class PageAlert : LinearLayout {
     }
 
     fun remove() {
-        ViewUtils.removeView(this)
+        removeView()
     }
 
     fun setupForNoInternet(actionListener: Runnable?) {

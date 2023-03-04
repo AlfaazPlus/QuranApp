@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 
-import com.peacedesign.android.utils.touchutils.HoverOpacityEffect;
+import com.quranapp.android.utils.gesture.HoverOpacityEffect;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranDua;
 import com.quranapp.android.components.quran.QuranMeta;

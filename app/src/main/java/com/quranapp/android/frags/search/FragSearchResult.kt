@@ -82,7 +82,6 @@ class FragSearchResult : BaseFragment(), Destroyable {
         mVerseResultsAdapter = ADPVerseResults(context, this)
 
         mBinding.let {
-            ViewUtils.setBounceOverScrollRV(it.results)
             it.results.adapter = mVerseResultsAdapter
             it.results.itemAnimator = null
             it.results.layoutManager = LinearLayoutManager(context)
