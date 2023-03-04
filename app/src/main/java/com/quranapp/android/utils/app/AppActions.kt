@@ -11,6 +11,7 @@ import com.peacedesign.android.utils.Log
 import com.peacedesign.android.utils.kotlin_utils.copyToClipboard
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
+import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
@@ -108,9 +109,7 @@ object AppActions {
                 ctx.copyToClipboard(lastCrashLog)
                 SPLog.removeLastCrashLog(ctx)
                 // redirect to github issues
-                AppBridge.newOpener(ctx).browseLink(
-                    "https://github.com/AlfaazPlus/QuranApp/issues/new?template=bug_report.yml"
-                )
+                AppBridge.newOpener(ctx).browseLink(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
                 Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
             }
             .show()

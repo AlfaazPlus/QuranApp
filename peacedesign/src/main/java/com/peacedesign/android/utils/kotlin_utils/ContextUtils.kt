@@ -11,11 +11,14 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
+import com.peacedesign.R
 import com.peacedesign.android.utils.ResUtils
 
 fun Context.getPackageNameRelease(): String {
     return packageName.replace(".debug", "")
 }
+
+fun Context.isRTL() = getBoolean(R.bool.isRTL)
 
 fun Context.getBoolean(@BoolRes boolResId: Int): Boolean = resources.getBoolean(boolResId)
 
