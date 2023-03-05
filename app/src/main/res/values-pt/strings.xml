@@ -61,4 +61,56 @@
     <string name="strLabelVersesWithColon" formatted="false">Versículos : %1$d–%2$d</string>
     <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strTitleSendFeedback">Enviar Feedback</string>
+    <string name="strTitleHelpSupport">Ajuda &amp; Suporte</string>
+    <string name="strTitleAboutUs">Sobre nós</string>
+    <string name="strTitleBookmarks">Favoritos</string>
+    <string name="strTitleAddNote">Adicionar nota</string>
+    <string name="strTitleRateApp">Avaliar app</string>
+    <string name="strTitleDownloadTranslations">Baixar</string>
+    <string name="strTitleTranslDelete">Apagar tradução\?</string>
+    <string name="strTitleHideAd">Esconder anúncio</string>
+    <string name="strTitleRecitationOptions">Opções</string>
+    <string name="strTitleExplainIssue">Explique o problema</string>
+    <string name="strTitlePrivacyPolicy">Política de Privacidade</string>
+    <string name="strTitleSuccess">Sucesso</string>
+    <string name="strTitleFailed">Falhou</string>
+    <string name="strTitleNoInternet">Sem Internet</string>
+    <string name="strLabelPlay">Tocar</string>
+    <string name="strLabelPause">Pausar</string>
+    <string name="strLabelRemoveBookmark">Remover Favorito</string>
+    <string name="strHintFeedbackEmail">E-mail</string>
+    <string name="strTitleSettings">Configurações</string>
+    <string name="strTitleShareApp">Compartilhar app</string>
+    <string name="strTitleNote">Nota</string>
+    <string name="strTitleSubscription">Inscrição</string>
+    <string name="strTitleFilters">Filtros</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleBookmarkDeleteAll">Remover todos os favoritos\?</string>
+    <string name="strTitleBookmarkDeleteThis">Remover este favorito\?</string>
+    <string name="strTitleQuickEdit">Edição rápida</string>
+    <string name="strTitleRepeatVerse">Repetir versículo</string>
+    <string name="strTitleShareVerse">Compartilhar versículo</string>
+    <string name="strTitleReportVerse">Reportar versículo</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strLabelBookmark">Favorito</string>
+    <string name="strLabelReport">Reportar</string>
+    <string name="strLabelReading">Lendo</string>
+    <string name="strHintFromVerse">Do versículo</string>
+    <string name="strHintToVerse">Para o versículo</string>
+    <string name="strNotFound">Não encontrado</string>
+    <string name="strMsgBookmarkNoItems">Sem favoritos</string>
+    <string name="strTitleVOTD">Versículo do dia</string>
+    <string name="strTitleChapInfoVerses">Versículos</string>
+    <string name="strTitleScripts">Selecionar script</string>
+    <string name="strTitleBookmark">Favoritos</string>
+    <string name="strTitleTranslations">Traduções</string>
+    <string name="strLabelContinueReading">Continuar Lendo »</string>
+    <string name="strTitleChapInfoPages">Páginas</string>
+    <string name="strTitleTopics">Tópicos</string>
+    <string name="strTitleAppLanguage">Idioma do app</string>
+    <string name="strLabelShare">Compartilhar</string>
+    <string name="strTitleChangeLanguage">Mudar idioma\?</string>
+    <string name="strHintFeedbackMessage">Mensagem</string>
+    <string name="strTitleReadHistory">Histórico de Leitura</string>
 </resources>

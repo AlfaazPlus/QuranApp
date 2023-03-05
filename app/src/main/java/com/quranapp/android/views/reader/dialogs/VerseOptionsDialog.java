@@ -30,6 +30,7 @@ import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
+import com.quranapp.android.api.ApiConfig;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Translation;
@@ -272,8 +273,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             openShareDialog(actvt, mVerse.chapterNo, mVerse.verseNo);
         } else if (id == R.id.btnReport) {
             // redirect to github issues
-            AppBridge.newOpener(actvt).browseLink(
-                "https://github.com/AlfaazPlus/QuranApp/issues/new?template=verse_report.yml");
+            AppBridge.newOpener(actvt).browseLink(ApiConfig.GITHUB_ISSUES_VERSE_REPORT_URL);
         }
     }
 
