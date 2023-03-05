@@ -19,8 +19,6 @@ import com.google.android.material.divider.MaterialDivider;
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityAbout;
 import com.quranapp.android.activities.ActivityBookmark;
@@ -30,6 +28,7 @@ import com.quranapp.android.databinding.LytIndexMenuBinding;
 import com.quranapp.android.databinding.LytIndexMenuItemBinding;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.app.InfoUtils;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.univ.PopupWindow2;
 import com.quranapp.android.widgets.IconedTextView;
@@ -60,7 +59,7 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
             setup(mBinding);
         });
 
-        mPopup.setWidth((int) (Dimen.getWindowWidth(getContext()) * ResUtils.getFraction(getContext(),
+        mPopup.setWidth((int) (Dimen.getWindowWidth(getContext()) * ContextKt.getFraction(getContext(),
                 R.fraction.dmnIndexMenuWidth)));
         mPopup.setHeight(WRAP_CONTENT);
         mPopup.setFocusable(true);

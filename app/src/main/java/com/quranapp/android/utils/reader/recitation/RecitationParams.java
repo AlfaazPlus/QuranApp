@@ -4,8 +4,8 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.peacedesign.android.utils.Log;
 
 public class RecitationParams implements Parcelable {
     public int[] currVerse = {-1, -1};

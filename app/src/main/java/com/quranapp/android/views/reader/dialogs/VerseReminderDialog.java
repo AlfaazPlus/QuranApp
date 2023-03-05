@@ -30,15 +30,13 @@ import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
+import com.quranapp.android.utils.Log;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheetDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBottomSheetActionBtn1Binding;
 import com.quranapp.android.databinding.LytReaderVrdBinding;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 
@@ -204,7 +202,7 @@ public class VerseReminderDialog extends PeaceBottomSheet {
         String reminderMsg = "Set reminder for:";
         SpannableString verseSS = new SpannableString(String.format("%s, Verse %d", chapterName, mVerseNo));
 
-        AbsoluteSizeSpan txtSizeSpan = new AbsoluteSizeSpan(ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSizeMedium));
+        AbsoluteSizeSpan txtSizeSpan = new AbsoluteSizeSpan(ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSizeMedium));
         verseSS.setSpan(txtSizeSpan, 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         verseSS.setSpan(new StyleSpan(Typeface.BOLD), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         verseSS.setSpan(new ForegroundColorSpan(ContextKt.obtainPrimaryColor(ctx)), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);

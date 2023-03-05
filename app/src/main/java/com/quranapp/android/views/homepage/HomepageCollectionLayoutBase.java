@@ -26,14 +26,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ViewUtils;
+import com.quranapp.android.R;
+import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding;
+import com.quranapp.android.utils.extended.GapedItemDecoration;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
-import com.quranapp.android.R;
-import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding;
-import com.quranapp.android.utils.extended.GapedItemDecoration;
 
 public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     public HomepageCollectionLayoutBase(Context context) {

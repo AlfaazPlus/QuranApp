@@ -1,7 +1,7 @@
 package com.quranapp.android.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.peacedesign.android.utils.Log
+import com.quranapp.android.utils.Log
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.MediaType
 import okhttp3.OkHttpClient

@@ -5,7 +5,7 @@ import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslModel;
@@ -13,7 +13,7 @@ import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -290,7 +290,7 @@ public class TranslUtils {
             if (slugSet.size() >= TRANSL_MAX_SELECTION_LIMIT) {
                 String msg = ctx.getString(R.string.strMsgTranslSelectionLimit, TRANSL_MAX_SELECTION_LIMIT);
                 String btn = ctx.getString(R.string.strLabelGotIt);
-                NotifUtils.popMsg(ctx, ctx.getString(R.string.strTitleInfo), msg, btn, null);
+                MessageUtils.popMessage(ctx, ctx.getString(R.string.strTitleInfo), msg, btn, null);
                 return false;
             }
             slugSet.add(slug);

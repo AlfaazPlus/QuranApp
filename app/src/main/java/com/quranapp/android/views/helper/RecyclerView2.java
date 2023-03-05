@@ -9,8 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ViewUtils;
-
 /**
  * Overridden
  * {@link #isPaddingOffsetRequired},

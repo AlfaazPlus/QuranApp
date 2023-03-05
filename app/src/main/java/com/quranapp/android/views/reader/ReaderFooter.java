@@ -23,8 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -195,8 +193,8 @@ public class ReaderFooter extends FrameLayout {
         SpannableString SSFullChapTitle = new SpannableString(getContext().getString(mFullChapterLabelRes));
         SSFullChapTitle.setSpan(new StyleSpan(Typeface.BOLD), 0, SSFullChapTitle.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        int txtSizeFullChapName = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5);
-        int txtClrFullChapName = ContextCompat.getColor(getContext(), R.color.colorIcon);
+        int txtSizeFullChapName = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5);
+        int txtClrFullChapName = ContextKt.color(getContext(), R.color.colorIcon);
         SpannableString SSFullChapName = new SpannableString(mReaderParams.currChapter.getName());
         SSFullChapName.setSpan(new AbsoluteSizeSpan(txtSizeFullChapName), 0, SSFullChapName.length(),
             SPAN_EXCLUSIVE_EXCLUSIVE);

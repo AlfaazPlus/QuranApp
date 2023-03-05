@@ -16,9 +16,6 @@ import android.widget.LinearLayout
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.DrawableUtils
-import com.quranapp.android.utils.extensions.isRTL
-import com.quranapp.android.utils.extensions.updateMarginHorizontal
-import com.quranapp.android.utils.extensions.updateMarginVertical
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
@@ -26,6 +23,9 @@ import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.databinding.ActivityAboutBinding
 import com.quranapp.android.databinding.LytReaderSettingsItemBinding
 import com.quranapp.android.utils.app.InfoUtils.openAbout
+import com.quranapp.android.utils.extensions.isRTL
+import com.quranapp.android.utils.extensions.updateMarginHorizontal
+import com.quranapp.android.utils.extensions.updateMarginVertical
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.widgets.IconedTextView
 

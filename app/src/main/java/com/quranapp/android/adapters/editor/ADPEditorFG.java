@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.components.editor.EditorFG;
 import com.quranapp.android.components.editor.VerseEditor;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.widgets.editor.EditorFGView;
 
 public class ADPEditorFG extends RecyclerView.Adapter<ADPEditorFG.VHEditorFG> {

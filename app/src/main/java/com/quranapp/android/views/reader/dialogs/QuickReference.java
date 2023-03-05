@@ -23,8 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.Log;
-import com.peacedesign.android.utils.ViewUtils;
+import com.quranapp.android.utils.Log;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;

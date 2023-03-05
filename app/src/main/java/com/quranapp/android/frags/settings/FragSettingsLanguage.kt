@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.utils.WindowUtils
-import com.peacedesign.android.widget.compound.PeaceCompoundButton
-import com.peacedesign.android.widget.radio.PeaceRadioButton
+import com.quranapp.android.widgets.compound.PeaceCompoundButton
+import com.quranapp.android.widgets.radio.PeaceRadioButton
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.FragSettingsLangBinding
@@ -81,7 +81,7 @@ class FragSettingsLanguage : FragSettingsBase() {
             binding.list.check(preCheckedRadioId)
         }
 
-        binding.list.setOnCheckedChangedListener { button, _ ->
+        binding.list.onCheckChangedListener = { button, _ ->
             val localeValue = button.tag as String
             setLocale(ctx, localeValue)
 

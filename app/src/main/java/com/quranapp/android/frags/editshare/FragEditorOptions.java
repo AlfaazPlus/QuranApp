@@ -18,11 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
-import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.checkbox.PeaceCheckBox;
-import com.peacedesign.android.widget.compound.PeaceCompoundButton.OnCompoundCheckChangedListener;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.quranapp.android.R;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.widgets.compound.PeaceCompoundButton;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 public class FragEditorOptions extends FragEditorBase {
     private boolean mInitShowAr = true;
@@ -65,7 +67,7 @@ public class FragEditorOptions extends FragEditorBase {
         setOptionsVisibility(mInitShowAr, mInitShowTrans, mInitShowRef);
     }
 
-    private PeaceCheckBox makeCheckbox(LinearLayout container, int txtRes, OnCompoundCheckChangedListener l) {
+    private PeaceCheckBox makeCheckbox(LinearLayout container, int txtRes, Function2<PeaceCompoundButton, Boolean, Unit> l) {
         Context context = container.getContext();
 
         PeaceCheckBox checkBox = new PeaceCheckBox(context);
@@ -79,7 +81,7 @@ public class FragEditorOptions extends FragEditorBase {
         container.addView(checkBox, p);
 
         checkBox.setChecked(false);
-        checkBox.setOnCheckedChangedListener(l);
+        checkBox.setOnCheckChangedListener(l);
 
         return checkBox;
     }
@@ -108,11 +110,13 @@ public class FragEditorOptions extends FragEditorBase {
         mIncludeRef.setChecked(showRef);
     }
 
-    private void dispatchOptions(boolean showAr, boolean showTrans, boolean showRef) {
+    private Unit dispatchOptions(boolean showAr, boolean showTrans, boolean showRef) {
         if (mVerseEditor == null) {
-            return;
+            return Unit.INSTANCE;
         }
 
         mVerseEditor.getListener().onOptionChange(showAr, showTrans, showRef);
+
+        return Unit.INSTANCE;
     }
 }

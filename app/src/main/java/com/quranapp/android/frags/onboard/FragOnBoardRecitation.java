@@ -23,9 +23,9 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.recitation.ADPRecitations;
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.components.recitation.RecitationModel;
 import com.quranapp.android.databinding.LytOnboardRecitationsBinding;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.sharedPrefs.SPAppActions;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;

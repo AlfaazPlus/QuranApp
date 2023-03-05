@@ -9,7 +9,7 @@ package com.quranapp.android.utils.thread.tasks.recitation;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.quranapp.android.exc.HttpNotFoundException;
+import com.quranapp.android.utils.exceptions.HttpNotFoundException;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 
 import java.io.BufferedInputStream;

@@ -7,13 +7,12 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.widget.Toast
 import com.peacedesign.android.utils.AppBridge
-import com.peacedesign.android.utils.Log
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory
 import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -103,6 +102,7 @@ object AppActions {
             .setMessage(lastCrashLog)
             .setNeutralButton(R.string.strLabelCopy) { _, _ ->
                 ctx.copyToClipboard(lastCrashLog)
+                Toast.makeText(ctx, R.string.copiedToClipboard, Toast.LENGTH_LONG).show()
                 SPLog.removeLastCrashLog(ctx)
             }
             .setPositiveButton(R.string.createIssue) { _, _ ->

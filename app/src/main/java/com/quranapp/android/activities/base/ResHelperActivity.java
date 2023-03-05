@@ -27,7 +27,6 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.utils.extensions.ContextKt;
 
@@ -159,7 +158,7 @@ public class ResHelperActivity extends AppCompatActivity {
     }
 
     public int dimen(@DimenRes int dimenResId) {
-        return ResUtils.getDimenPx(this, dimenResId);
+        return ContextKt.getDimenPx(this, dimenResId);
     }
 
     public int dp2px(@Dimension(unit = Dimension.DP) float dpValue) {

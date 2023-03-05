@@ -17,10 +17,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.ColorUtils
-import com.peacedesign.android.utils.ViewUtils
-import com.quranapp.android.utils.extensions.dp2px
-import com.quranapp.android.utils.extensions.removeView
-import com.quranapp.android.utils.extensions.visible
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.JsonHelper
@@ -29,7 +25,10 @@ import com.quranapp.android.components.AppUpdateInfo
 import com.quranapp.android.databinding.LytUpdateAppBinding
 import com.quranapp.android.databinding.LytUpdateAppDialogBinding
 import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.extensions.updateMargins
+import com.quranapp.android.utils.extensions.visible
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

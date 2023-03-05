@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 object SPLog {
@@ -8,10 +9,11 @@ object SPLog {
 
     private fun sp(ctx: Context) = ctx.getSharedPreferences(SP_CRASH_LOG, Context.MODE_PRIVATE)
 
+    @SuppressLint("ApplySharedPref")
     fun saveLastCrashLog(ctx: Context, stackTraceString: String) {
         sp(ctx).edit().apply {
             putString(KEY_SP_LAST_CRASH_LOG, stackTraceString)
-            apply()
+            commit() // We want to save it immediately
         }
     }
 

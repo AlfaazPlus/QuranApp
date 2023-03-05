@@ -66,4 +66,28 @@
         <attr name="PeaceFFTitle" />
         <attr name="PeaceFFRequired" />
     </declare-styleable>
+
+    <declare-styleable name="PeaceCompoundButton">
+        <attr name="peaceComp_subText" format="string|reference" />
+        <attr name="peaceComp_direction" format="enum">
+            <enum name="textStart" value="0" />
+            <enum name="textTop" value="1" />
+            <enum name="textEnd" value="2" />
+            <enum name="textBottom" value="3" />
+        </attr>
+        <attr name="peaceComp_spaceBetween" format="dimension|reference" />
+        <attr name="peaceComp_subTextAppearance" format="reference" />
+        <attr name="peaceComp_textGravity" format="enum">
+            <enum name="start" value="0" />
+            <enum name="end" value="1" />
+            <enum name="center" value="2" />
+            <enum name="left" value="3" />
+            <enum name="right" value="4" />
+        </attr>
+        <attr name="peaceComp_buttonCompat" format="reference" />
+        <attr name="android:text" />
+        <attr name="android:checked" />
+        <attr name="android:textAppearance" />
+    </declare-styleable>
+
 </resources>

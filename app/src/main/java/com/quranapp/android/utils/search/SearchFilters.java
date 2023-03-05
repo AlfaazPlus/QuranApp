@@ -9,6 +9,8 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivitySearch;
 import com.quranapp.android.databinding.LytSearchFiltersBinding;
 
+import kotlin.Unit;
+
 public class SearchFilters {
     private final ActivitySearch mActivitySearch;
     private PeaceDialog mFiltersDialog;
@@ -53,7 +55,10 @@ public class SearchFilters {
     }
 
     private void setupCheckBoxes() {
-        mBinding.searchWordPart.setOnCheckedChangedListener((buttonView, isChecked) -> mTmpSearchWordPart = isChecked);
+        mBinding.searchWordPart.setOnCheckChangedListener((buttonView, isChecked) -> {
+            mTmpSearchWordPart = isChecked;
+            return Unit.INSTANCE;
+        });
     }
 
     private boolean commitChanges() {

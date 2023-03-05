@@ -36,8 +36,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.peacedesign.R;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.Log;
-import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.list.base.BaseListAdapter;
@@ -222,7 +220,6 @@ public class SheetDialog extends BottomSheetDialogFragment {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                Log.d(slideOffset);
             }
         });
 

@@ -27,7 +27,6 @@ import androidx.core.content.ContextCompat;
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.utils.extensions.ContextKt;

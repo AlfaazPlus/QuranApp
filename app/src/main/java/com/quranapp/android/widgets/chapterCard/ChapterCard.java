@@ -30,9 +30,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.TextViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
@@ -160,7 +159,7 @@ public class ChapterCard extends ConstraintLayout {
 
         if (!TextUtils.isEmpty(chapterTransl)) {
             ColorStateList translClr = ContextCompat.getColorStateList(ctx, R.color.color_reader_spinner_item_label2);
-            int dimen2 = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2);
+            int dimen2 = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2);
 
             SpannableString translSS = new SpannableString(chapterTransl);
             setSpan(translSS, new TextAppearanceSpan(SANS_SERIF, Typeface.NORMAL, dimen2, translClr, null));

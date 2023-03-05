@@ -1,4 +1,4 @@
-package com.quranapp.android.utils
+package com.quranapp.android.utils.exceptions
 
 import android.content.Context
 import com.quranapp.android.utils.sharedPrefs.SPLog

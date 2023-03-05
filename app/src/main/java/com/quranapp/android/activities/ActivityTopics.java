@@ -35,8 +35,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.shape.ShapeAppearanceModel;
 import com.peacedesign.android.utils.ArrayUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.anim.DimensionAnimator;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -49,6 +47,7 @@ import com.quranapp.android.databinding.ActivityTopicsBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
 import com.quranapp.android.databinding.LytTopicsActivityHeaderBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 import com.quranapp.android.utils.univ.SimpleTextWatcher;
@@ -284,7 +283,7 @@ public class ActivityTopics extends BaseActivity {
             return;
         }
 
-        int dimen = ResUtils.getDimenPx(alphabetsContainer.getContext(), R.dimen.dmnChipGroupHeight);
+        int dimen = ContextKt.getDimenPx(alphabetsContainer.getContext(), R.dimen.dmnChipGroupHeight);
         DimensionAnimator animator = DimensionAnimator.Companion.ofHeight(alphabetsContainer, hide ? dimen : 0, hide ? 0 : dimen);
         animator.setDuration(70);
 

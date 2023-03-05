@@ -30,7 +30,7 @@ import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.services.TranslationDownloadService.TranslationDownloadServiceBinder
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
-import com.quranapp.android.utils.univ.NotifUtils
+import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
@@ -391,7 +391,7 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         }
 
         if (title != null && context != null) {
-            NotifUtils.popMsg(context, title, msg, ctx.getString(R.string.strLabelClose), null)
+            MessageUtils.popMessage(context, title, msg, ctx.getString(R.string.strLabelClose), null)
         }
     }
 

@@ -20,9 +20,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.gesture.HoverPushEffect;
 
@@ -146,12 +145,12 @@ public class BottomTabView extends LinearLayout {
         labelView.setText(tab.getTabLabel());
         labelView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 
-        labelView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5));
+        labelView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5));
 
         if (isKingTab) {
             labelView.setTextColor(kingTabTintColor);
         } else {
-            labelView.setTextColor(getColorStateList(getContext(), R.color.color_bottom_tablayout_label));
+            labelView.setTextColor(ContextKt.colorStateList(getContext(), R.color.color_bottom_tablayout_label));
         }
 
         addView(labelView);

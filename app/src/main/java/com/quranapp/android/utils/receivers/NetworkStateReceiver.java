@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,7 +40,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
     public static boolean canProceed(@NonNull Context context, boolean cancelable, Runnable runOnDismissIfCantProceed) {
         if (!isNetworkConnected(context)) {
-            NotifUtils.popNoInternetMsg(context, cancelable, runOnDismissIfCantProceed);
+            MessageUtils.popNoInternetMessage(context, cancelable, runOnDismissIfCantProceed);
             return false;
         }
         return true;

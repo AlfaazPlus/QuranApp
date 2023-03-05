@@ -21,8 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
@@ -41,6 +39,7 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
@@ -205,7 +204,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         );
 
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
-        int textSize = ResUtils.getDimenPx(getContext(), txtSizeRes);
+        int textSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
         mArText = mVerseDecorator.setupArabicText(verse.arabicText, mVerseNo, verse.pageNo, textSize);
         prepareTransl(getContext(), quran.getScript());
@@ -293,7 +292,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mLastTranslationSlug = translation.getBookSlug();
 
         String transl = StringUtils.removeHTML(translation.getText(), false);
-        int txtSize = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
+        int txtSize = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
         SpannableString translText = mVerseDecorator.setupTranslText(transl, -1, txtSize, translation.isUrdu());
 
         SpannableString authorText = null;

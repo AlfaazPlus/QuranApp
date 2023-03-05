@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivitySearch;
 import com.quranapp.android.adapters.search.ADPSearchSugg;
@@ -25,7 +26,6 @@ import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.databinding.FragSearchSuggestionsBinding;
 import com.quranapp.android.frags.BaseFragment;
 import com.quranapp.android.interfaceUtils.Destroyable;
-import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 
 import java.util.ArrayList;
 

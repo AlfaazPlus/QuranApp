@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peacedesign.android.utils.Dimen
-import com.peacedesign.android.utils.Log
-import com.peacedesign.android.utils.ViewUtils
+import com.quranapp.android.utils.Log
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
 import com.quranapp.android.adapters.search.ADPVerseResults

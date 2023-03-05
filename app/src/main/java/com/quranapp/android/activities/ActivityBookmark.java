@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
@@ -24,7 +23,6 @@ import com.quranapp.android.databinding.ActivityBookmarkBinding;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.suppliments.BookmarkViewer;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;

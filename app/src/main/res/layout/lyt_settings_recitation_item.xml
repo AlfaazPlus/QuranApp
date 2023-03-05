@@ -10,7 +10,7 @@
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp">
 
-    <com.peacedesign.android.widget.radio.PeaceRadioButton
+    <com.quranapp.android.widgets.radio.PeaceRadioButton
         android:id="@+id/radio"
         android:layout_width="22dp"
         android:layout_height="22dp"

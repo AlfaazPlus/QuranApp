@@ -10,8 +10,6 @@ import android.content.Context
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.peacedesign.android.utils.Dimen
-import com.peacedesign.android.utils.ViewUtils
 import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.updatePaddings

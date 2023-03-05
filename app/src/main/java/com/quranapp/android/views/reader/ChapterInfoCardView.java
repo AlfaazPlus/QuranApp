@@ -21,7 +21,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityChapInfo;

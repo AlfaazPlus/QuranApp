@@ -10,7 +10,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.peacedesign.android.utils.Log
+import com.quranapp.android.utils.Log
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry

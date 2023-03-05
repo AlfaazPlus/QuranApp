@@ -15,7 +15,6 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -25,7 +24,6 @@ import com.quranapp.android.databinding.LytBookmarkDialogBinding;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;

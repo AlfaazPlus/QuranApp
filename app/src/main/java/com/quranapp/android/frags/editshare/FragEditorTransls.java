@@ -22,9 +22,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.NestedScrollView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.radio.PeaceRadioButton;
-import com.peacedesign.android.widget.radio.PeaceRadioGroup;
+import com.quranapp.android.widgets.radio.PeaceRadioButton;
+import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;

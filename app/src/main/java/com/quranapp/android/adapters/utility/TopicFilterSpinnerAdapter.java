@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.components.utility.SpinnerItem;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 

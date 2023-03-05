@@ -12,7 +12,7 @@ import com.peacedesign.android.widget.dialog.loader.ProgressDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.models.AppUrls
 import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.univ.NotifUtils
+import com.quranapp.android.utils.univ.MessageUtils
 import java.util.concurrent.CancellationException
 
 object InfoUtils {
@@ -52,7 +52,7 @@ object InfoUtils {
             dialog.dismiss()
             if (e !is CancellationException) {
                 Logger.reportError(e)
-                NotifUtils.popMsg(
+                MessageUtils.popMessage(
                     context,
                     context.getString(R.string.strMsgSomethingWrong),
                     "${context.getString(R.string.strMsgCouldNotOpenPage)} ${context.getString(R.string.strMsgTryLater)}",

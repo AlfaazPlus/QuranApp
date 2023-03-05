@@ -13,9 +13,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
+import com.quranapp.android.utils.extensions.ContextKt;
 
 public class TabLayout2 extends TabLayout {
     private ViewPagerAdapter2 mAdapter;
@@ -79,7 +79,7 @@ public class TabLayout2 extends TabLayout {
     private void setupTabAppearances(Tab tab) {
         TooltipCompat.setTooltipText(tab.view, null);
 
-        float textSize = ResUtils.getDimenSp(getContext(), R.dimen.dmnCommonSize);
+        float textSize = ContextKt.getDimenSp(getContext(), R.dimen.dmnCommonSize);
         int childCount = tab.view.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = tab.view.getChildAt(i);

@@ -25,10 +25,9 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.utility.CardMessageParams;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
@@ -42,7 +41,7 @@ public class CardMessage extends LinearLayout {
 
     public static CardMessage warning(Context ctx, @StringRes int strResId) {
         CardMessage msgView = new CardMessage(ctx);
-        msgView.setElevation(Dimen.dp2px(ctx, 4));
+        msgView.setElevation(ContextKt.dp2px(ctx, 4));
         msgView.setMessageStyle(STYLE_WARNING);
         msgView.setMessage(ctx.getString(strResId));
         return msgView;
@@ -55,7 +54,7 @@ public class CardMessage extends LinearLayout {
 
     private void init(Context context) {
         setId(View.generateViewId());
-        ViewPaddingKt.updatePaddings(this, Dimen.dp2px(context, 15));
+        ViewPaddingKt.updatePaddings(this, ContextKt.dp2px(context, 15));
         setOrientation(HORIZONTAL);
         setBackgroundResource(R.drawable.dr_bg_chapter_card);
         setGravity(Gravity.CENTER_VERTICAL);
@@ -67,7 +66,7 @@ public class CardMessage extends LinearLayout {
         }
 
         mIconView = new AppCompatImageView(getContext());
-        int dimen = ResUtils.getDimenPx(getContext(), R.dimen.dmnActionButtonSmall);
+        int dimen = ContextKt.getDimenPx(getContext(), R.dimen.dmnActionButtonSmall);
         addView(mIconView, resolveIconViewIndex(), new ViewGroup.LayoutParams(dimen, dimen));
     }
 
@@ -77,7 +76,7 @@ public class CardMessage extends LinearLayout {
         }
 
         mMessageView = new AppCompatTextView(getContext());
-        mMessageView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
+        mMessageView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
         mMessageView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 
         LinearLayout.LayoutParams p = new LayoutParams(0, WRAP_CONTENT);
@@ -93,8 +92,8 @@ public class CardMessage extends LinearLayout {
         }
 
         mActionView = new AppCompatTextView(new ContextThemeWrapper(getContext(), R.style.ButtonAction));
-        mActionView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
-        ViewPaddingKt.updatePaddingHorizontal(mActionView, Dimen.dp2px(getContext(), 8));
+        mActionView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
+        ViewPaddingKt.updatePaddingHorizontal(mActionView, ContextKt.dp2px(getContext(), 8));
 
         mActionView.setOnClickListener(v -> {
             if (mParams.getActionListener() != null) {

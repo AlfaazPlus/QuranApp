@@ -5,8 +5,8 @@
 package com.quranapp.android.views.reader.dialogs;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.peacedesign.android.widget.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
-import static com.peacedesign.android.widget.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
 import static com.quranapp.android.utils.univ.StringUtils.DASH;
 import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
 
@@ -27,10 +27,9 @@ import androidx.core.widget.NestedScrollView;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
-import com.peacedesign.android.widget.checkbox.PeaceCheckBox;
-import com.peacedesign.android.widget.checkbox.PeaceCheckboxGroup;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
+import com.quranapp.android.widgets.checkbox.PeaceCheckboxGroup;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.dialog.base.PeaceDialogController;
 import com.quranapp.android.R;
@@ -41,7 +40,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.LytVerseShareBinding;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.univ.StringUtils;
 
 import java.util.List;
@@ -241,7 +240,7 @@ public class VerseShareDialog extends PeaceDialog {
             boolean incFootnotes = binding.includeFootnotes.isChecked();
 
             if (!quranMeta.isVerseRangeValid4Chapter(mChapterNo, fromVerse, toVerse)) {
-                NotifUtils.showRemovableText(mActivity, getContext().getString(R.string.strMsgEnterValidRange), Toast.LENGTH_LONG);
+                MessageUtils.showRemovableToast(mActivity, getContext().getString(R.string.strMsgEnterValidRange), Toast.LENGTH_LONG);
                 return;
             }
 

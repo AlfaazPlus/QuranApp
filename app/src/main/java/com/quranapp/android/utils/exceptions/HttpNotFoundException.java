@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.exc;
+package com.quranapp.android.utils.exceptions;
 
 public class HttpNotFoundException extends RuntimeException {
     public HttpNotFoundException() {

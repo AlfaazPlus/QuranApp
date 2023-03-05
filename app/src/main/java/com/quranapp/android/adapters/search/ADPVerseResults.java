@@ -27,12 +27,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheetMenu;
@@ -89,11 +87,11 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         mFragSearch = fragSearchResult;
         mFm = fragSearchResult.getParentFragmentManager();
         mInflater = LayoutInflater.from(context);
-        mTransTextSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSize);
-        mAuthorTextSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSize2);
-        mMoreBtnTextSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSize2);
-        mColorSecondary = ContextCompat.getColor(context, R.color.colorText3);
-        mColorPrimary = ContextCompat.getColor(context, R.color.colorPrimary);
+        mTransTextSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize);
+        mAuthorTextSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize2);
+        mMoreBtnTextSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize2);
+        mColorSecondary = ContextKt.color(context, R.color.colorText3);
+        mColorPrimary = ContextKt.color(context, R.color.colorPrimary);
         mMoreTransText = context.getString(R.string.strLabelMoreTranslations);
         fontUrdu = ContextKt.getFont(context, R.font.font_urdu);
         defaultTransFont = Typeface.DEFAULT;

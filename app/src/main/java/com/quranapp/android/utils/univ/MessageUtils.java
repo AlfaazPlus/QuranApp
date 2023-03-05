@@ -8,10 +8,10 @@ import com.quranapp.android.R;
 
 import java.lang.ref.WeakReference;
 
-public class NotifUtils {
+public class MessageUtils {
     private static WeakReference<Toast> mToast;
 
-    public static void showRemovableText(Context context, CharSequence msg, int duration) {
+    public static void showRemovableToast(Context context, CharSequence msg, int duration) {
         try {
             mToast.get().cancel();
         } catch (Exception ignored) {}
@@ -20,7 +20,7 @@ public class NotifUtils {
         mToast.get().show();
     }
 
-    public static void popNoInternetMsg(Context ctx, boolean cancelable, Runnable runOnDismiss) {
+    public static void popNoInternetMessage(Context ctx, boolean cancelable, Runnable runOnDismiss) {
         PeaceDialog.Builder builder = PeaceDialog.newBuilder(ctx);
         builder.setTitle(R.string.strTitleNoInternet);
         builder.setMessage(R.string.strMsgNoInternetLong);
@@ -33,7 +33,7 @@ public class NotifUtils {
         builder.show();
     }
 
-    public static void popMsg(Context context, String title, String msg, String btn, Runnable action) {
+    public static void popMessage(Context context, String title, String msg, String btn, Runnable action) {
         PeaceDialog.Builder builder = PeaceDialog.newBuilder(context);
         builder.setTitle(title);
         builder.setMessage(msg);

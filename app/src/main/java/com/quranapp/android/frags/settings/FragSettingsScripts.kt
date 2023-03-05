@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.updatePaddingRelative
-import com.peacedesign.android.utils.ResUtils
-import com.quranapp.android.utils.extensions.visible
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
@@ -27,7 +25,9 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
+import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.extensions.getFont
+import com.quranapp.android.utils.extensions.visible
 import com.quranapp.android.utils.reader.*
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
@@ -99,7 +99,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 preview.typeface = ctx.getFont(slug.getQuranScriptFontRes())
                 preview.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    ResUtils.getDimenPx(ctx, slug.getQuranScriptFontDimenRes()).toFloat()
+                    ctx.getDimenPx(slug.getQuranScriptFontDimenRes()).toFloat()
                 )
                 root.setOnClickListener { onItemClick(list, this, slug) }
 

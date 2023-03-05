@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.list.base.BaseListAdapter;
 import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.peacedesign.android.widget.list.base.BaseListItemView;

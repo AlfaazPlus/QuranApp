@@ -28,8 +28,6 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
@@ -45,6 +43,7 @@ import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.univ.ResUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 import com.quranapp.android.utils.univ.SpannableFactory;
 

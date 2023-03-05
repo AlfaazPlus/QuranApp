@@ -14,8 +14,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.peacedesign.R
-import com.peacedesign.android.utils.Dimen
-import com.peacedesign.android.utils.ResUtils
 
 fun Context.getPackageNameRelease(): String {
     return packageName.replace(".debug", "")
@@ -67,7 +65,7 @@ fun Context.drawable(@DrawableRes drawableResId: Int): Drawable? {
     }
 }
 
-fun Context.getDimension(@DimenRes dimenResId: Int): Int = ResUtils.getDimenPx(this, dimenResId)
+fun Context.getDimension(@DimenRes dimenResId: Int): Int = getDimenPx(dimenResId)
 
 fun Context.copyToClipboard(text: CharSequence): Boolean {
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
@@ -89,6 +87,10 @@ fun Context.getDimenPx(@DimenRes dimenRes: Int): Int {
 @Dimension(unit = Dimension.SP)
 fun Context.getDimenSp(@DimenRes dimenRes: Int): Float {
     return px2sp(getDimenPx(dimenRes).toFloat())
+}
+
+fun Context.getFraction(@FractionRes dimenRes: Int): Float {
+    return resources.getFraction(dimenRes, 1, 1)
 }
 
 @Dimension

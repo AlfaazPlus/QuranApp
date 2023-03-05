@@ -4,9 +4,7 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.exc;
-
-import android.content.res.Resources;
+package com.quranapp.android.utils.exceptions;
 
 public class NoInternetException extends RuntimeException {
     public NoInternetException() {

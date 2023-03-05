@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.adapters.editor.ADPEditorBG;
 import com.quranapp.android.components.editor.EditorBG;
 import com.quranapp.android.components.editor.VerseEditor;

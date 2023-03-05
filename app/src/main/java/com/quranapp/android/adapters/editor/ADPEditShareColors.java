@@ -20,9 +20,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.R;
 import com.quranapp.android.frags.editshare.FragEditorColors;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 
 public class ADPEditShareColors extends RecyclerView.Adapter<ADPEditShareColors.VHColor> {
     private final int[] colors = {0xFFFFFFFF, 0xFF000000, 0xFF151515, 0xFFDCE310, 0xFF7CC1D6, 0xFF470500, 0xFF003B13, 0xFF286159, 0xFFff8b82, 0xFFff96f4, 0xFF012a36, 0xFF40083a};

@@ -3,7 +3,7 @@ package com.quranapp.android.utils.thread.tasks;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.quranapp.android.exc.HttpNotFoundException;
+import com.quranapp.android.utils.exceptions.HttpNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

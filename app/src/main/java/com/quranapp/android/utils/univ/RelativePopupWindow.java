@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.univ;
 
-import android.content.Context;
 import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.View;

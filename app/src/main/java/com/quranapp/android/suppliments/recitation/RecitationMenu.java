@@ -20,12 +20,11 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
+import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;

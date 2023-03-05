@@ -22,7 +22,6 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.peacedesign.android.utils.ResUtils
 import com.peacedesign.android.utils.kotlin_utils.*
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
@@ -82,7 +81,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
         gravity = Gravity.CENTER
         updatePaddingRelative(start = context.dp2px(6F), end = 0)
 
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, ResUtils.getDimenSp(context, R.dimen.dmnCommonSize3))
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, context.getDimenSp(R.dimen.dmnCommonSize3))
 
         val txtColor = context.color(R.color.colorIcon)
         setTextColor(txtColor)

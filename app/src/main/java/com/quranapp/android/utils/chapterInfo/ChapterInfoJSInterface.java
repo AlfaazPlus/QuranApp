@@ -3,11 +3,11 @@ package com.quranapp.android.utils.chapterInfo;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 
 import kotlin.Pair;
 
@@ -25,7 +25,7 @@ public class ChapterInfoJSInterface {
         if (!QuranMeta.isChapterValid(chapterNo) || !quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse,
             toVerse)) {
             Log.d(chapterNo, fromVerse, toVerse);
-            NotifUtils.showRemovableText(mActivity, "Could not open references", Toast.LENGTH_LONG);
+            MessageUtils.showRemovableToast(mActivity, "Could not open references", Toast.LENGTH_LONG);
             return;
         }
 

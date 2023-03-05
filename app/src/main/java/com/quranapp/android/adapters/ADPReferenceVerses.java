@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
+import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivityReference;
@@ -35,8 +35,8 @@ import com.quranapp.android.components.ReferenceVerseModel;
 import com.quranapp.android.databinding.LytActivityReferenceDescriptionBinding;
 import com.quranapp.android.databinding.LytReferenceVerseTitleBinding;
 import com.quranapp.android.interfaceUtils.Destroyable;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.views.reader.VerseView;
 
 import java.util.ArrayList;

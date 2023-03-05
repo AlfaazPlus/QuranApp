@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import kotlin.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +24,8 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import kotlin.Pair;
 
 public class ADPJuzList extends ADPReaderIndexBase<ADPJuzList.VHJuz> {
     // private final RecyclerView.RecycledViewPool mViewPool;

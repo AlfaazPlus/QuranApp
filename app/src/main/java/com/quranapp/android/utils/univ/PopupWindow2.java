@@ -7,7 +7,6 @@ import android.view.WindowManager;
 
 import androidx.core.content.ContextCompat;
 
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.utils.extensions.ViewKt;
 
 public class PopupWindow2 extends RelativePopupWindow {

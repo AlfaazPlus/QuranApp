@@ -3,7 +3,7 @@ package com.quranapp.android.activities;
 import static android.view.View.FOCUS_DOWN;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.peacedesign.android.widget.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
 import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
@@ -28,13 +28,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewKt;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.radio.PeaceRadioButton;
-import com.peacedesign.android.widget.radio.PeaceRadioGroup;
+import com.quranapp.android.utils.Log;
+import com.quranapp.android.widgets.radio.PeaceRadioButton;
+import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -49,7 +48,6 @@ import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.frags.search.FragSearchSuggestions;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
@@ -64,6 +62,8 @@ import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import kotlin.Unit;
 
 public class ActivitySearch extends BaseActivity {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
@@ -190,9 +190,11 @@ public class ActivitySearch extends BaseActivity {
         mBinding.btnSelectTransl.setDrawables(null, null, chevronRight, null);
 
         mBinding.btnSelectTransl.setOnClickListener(v -> showTranslationSheet());
-        mBinding.btnQuickLinks.setOnCheckedChangedListener((button, isChecked) -> {
+        mBinding.btnQuickLinks.setOnCheckChangedListener((button, isChecked) -> {
             mSearchFilters.showQuickLinks = isChecked;
             reSearch();
+
+            return Unit.INSTANCE;
         });
 
         mBinding.filter.setVisibility(GONE);

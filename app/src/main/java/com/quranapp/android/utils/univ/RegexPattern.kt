@@ -4,14 +4,20 @@ import java.util.regex.Pattern
 
 object RegexPattern {
     @JvmField
-    val DIACRITICS_PATTERN = Pattern.compile("[^\\p{ASCII}]")
-    val DIACRITICS_PATTERN_UNICODE = Pattern.compile("\\p{M}")
+    val DIACRITICS_PATTERN: Pattern = Pattern.compile("[^\\p{ASCII}]")
+
     @JvmField
-    val VERSE_RANGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)")
+    val DIACRITICS_PATTERN_UNICODE: Pattern = Pattern.compile("\\p{M}")
+
     @JvmField
-    val CHAPTER_OR_JUZ_PATTERN = Pattern.compile("(\\d+)")
+    val VERSE_RANGE_PATTERN: Pattern = Pattern.compile("(\\d+)-(\\d+)")
+
     @JvmField
-    val VERSE_JUMP_PATTERN = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)")
+    val CHAPTER_OR_JUZ_PATTERN: Pattern = Pattern.compile("(\\d+)")
+
     @JvmField
-    val VERSE_RANGE_JUMP_PATTERN = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)[\\-](\\d+)")
+    val VERSE_JUMP_PATTERN: Pattern = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)")
+
+    @JvmField
+    val VERSE_RANGE_JUMP_PATTERN: Pattern = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)[\\-](\\d+)")
 }

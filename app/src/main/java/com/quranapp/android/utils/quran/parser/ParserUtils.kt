@@ -5,7 +5,6 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.QuranMeta
-import com.peacedesign.android.utils.Log
 
 object ParserUtils {
     @JvmStatic

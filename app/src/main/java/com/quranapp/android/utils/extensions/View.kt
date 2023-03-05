@@ -30,7 +30,9 @@ fun ViewGroup.disableViewRecursively(disable: Boolean) {
     }
 }
 
-fun View.removeView() {
+fun View?.removeView() {
+    if (this == null) return
+
     if (parent is ViewGroup) {
         (parent as ViewGroup).removeView(this)
     }

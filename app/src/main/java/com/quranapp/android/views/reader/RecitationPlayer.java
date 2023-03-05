@@ -30,12 +30,12 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.recitation.RecitationModel;
-import com.quranapp.android.exc.NoInternetException;
+import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.interfaceUtils.PlayerVerseLoadCallback;
 import com.quranapp.android.suppliments.recitation.RecitationMenu;
@@ -48,7 +48,7 @@ import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.Duration;
 import com.quranapp.android.utils.univ.FileUtils;
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 
 import java.io.File;
 import java.util.Locale;
@@ -823,7 +823,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
     }
 
     public void popMiniMsg(String msg, int duration) {
-        NotifUtils.showRemovableText(getContext(), msg, duration);
+        MessageUtils.showRemovableToast(getContext(), msg, duration);
     }
 
     private void showNotification(String action) {

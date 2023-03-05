@@ -6,10 +6,10 @@ import android.os.Build
 import android.text.SpannableString
 import android.util.TypedValue
 import android.widget.TextView
+import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
-import com.quranapp.android.R
 import com.quranapp.android.utils.reader.getQuranScriptFontDimenRes
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.isKFQPCScript

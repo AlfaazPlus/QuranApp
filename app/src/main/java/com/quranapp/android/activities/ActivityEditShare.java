@@ -31,7 +31,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;

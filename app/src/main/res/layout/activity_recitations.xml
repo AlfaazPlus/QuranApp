@@ -15,7 +15,7 @@
         android:overScrollMode="never"
         android:scrollbars="none">
 
-        <com.peacedesign.android.widget.radio.PeaceRadioGroup
+        <com.quranapp.android.widgets.radio.PeaceRadioGroup
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

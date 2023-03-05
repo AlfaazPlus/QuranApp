@@ -21,8 +21,6 @@ import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytBoldHeaderBinding;
 import com.quranapp.android.databinding.LytSimpleSearchBoxBinding;

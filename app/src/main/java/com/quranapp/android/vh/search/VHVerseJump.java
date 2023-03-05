@@ -14,11 +14,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.components.search.VerseJumpModel;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
@@ -53,8 +52,8 @@ public class VHVerseJump extends VHSearchResultBase {
         ssb.append(nameSS);
 
         if (!TextUtils.isEmpty(subtext)) {
-            ColorStateList translClr = ContextCompat.getColorStateList(ctx, R.color.color_reader_spinner_item_label2);
-            int dimen2 = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2);
+            ColorStateList translClr = ContextKt.colorStateList(ctx, R.color.color_reader_spinner_item_label2);
+            int dimen2 = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2);
 
             SpannableString translSS = new SpannableString(subtext);
             setSpan(translSS, new TextAppearanceSpan(SANS_SERIF, Typeface.NORMAL, dimen2, translClr, null));
