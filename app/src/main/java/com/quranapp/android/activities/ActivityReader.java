@@ -588,15 +588,11 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
 
         new Thread(() -> {
-            Pair<Integer, Integer> KFQPCPageRange = null;
-            if (mVerseDecorator.isKFQPCScript()) {
-                Verse firstVerse = chapter.getVerse(fromVerse);
-                Verse lastVerse = chapter.getVerse(toVerse);
-
-                KFQPCPageRange = new Pair<>(firstVerse.pageNo, lastVerse.pageNo);
-            }
-
-            mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+            mVerseDecorator.refreshQuranTextFonts(
+                mVerseDecorator.isKFQPCScript()
+                    ? new Pair<>(chapter.getVerse(fromVerse).pageNo, chapter.getVerse(toVerse).pageNo)
+                    : null
+            );
 
             initTranslationVersesFinalAsync(chapter, fromVerse, toVerse);
         }).start();
@@ -692,12 +688,9 @@ public class ActivityReader extends ReaderPossessingActivity {
     private void initJuzTranslation(int juzNo, Pair<Integer, Integer> chaptersInJuz, QuranMeta quranMeta) {
         mActionController.showLoader();
         new Thread(() -> {
-            Pair<Integer, Integer> KFQPCPageRange = null;
-            if (mVerseDecorator.isKFQPCScript()) {
-                KFQPCPageRange = mQuranMetaRef.get().getJuzPageRange(juzNo);
-            }
-
-            mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+            mVerseDecorator.refreshQuranTextFonts(
+                mVerseDecorator.isKFQPCScript() ? mQuranMetaRef.get().getJuzPageRange(juzNo) : null
+            );
             initJuzTranslationAsync(juzNo, chaptersInJuz, quranMeta);
         }).start();
     }
@@ -824,12 +817,9 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             @Override
             public ArrayList<QuranPageModel> call() {
-                Pair<Integer, Integer> KFQPCPageRange = null;
-                if (mVerseDecorator.isKFQPCScript()) {
-                    KFQPCPageRange = pages;
-                }
-
-                mVerseDecorator.refreshQuranTextFonts(KFQPCPageRange);
+                mVerseDecorator.refreshQuranTextFonts(
+                    mVerseDecorator.isKFQPCScript() ? pages : null
+                );
 
                 return makePagesAsync(chapters, pages, quranMeta);
             }
