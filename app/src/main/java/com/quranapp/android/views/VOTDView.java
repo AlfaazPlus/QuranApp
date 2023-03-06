@@ -5,8 +5,6 @@ import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATI
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -22,7 +20,6 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
 import com.quranapp.android.components.bookmark.BookmarkModel;
@@ -191,16 +188,16 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         Chapter chapter = quran.getChapter(mChapterNo);
 
         String info = getContext().getString(R.string.strLabelVerseWithChapNameAndNo, chapter.getName(), mChapterNo,
-                mVerseNo);
+            mVerseNo);
         mContent.verseInfo.setText(info);
 
         Verse verse = quran.getChapter(mChapterNo).getVerse(mVerseNo);
 
         mVerseDecorator.refresh();
         mVerseDecorator.refreshQuranTextFonts(
-                mVerseDecorator.isKFQPCScript()
-                        ? new Pair<>(verse.pageNo, verse.pageNo)
-                        : null
+            mVerseDecorator.isKFQPCScript()
+                ? new Pair<>(verse.pageNo, verse.pageNo)
+                : null
         );
 
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
@@ -213,30 +210,17 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     }
 
     private void prepareTransl(Context context, String scriptKey) {
-        AtomicReference<ProgressDialog> progressDialog = new AtomicReference<>();
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable runnable = () -> {
-            ProgressDialog dialog = new ProgressDialog(context);
-            progressDialog.set(dialog);
-            dialog.show();
-        };
-
         taskRunner.callAsync(new BaseCallableTask<Pair<QuranTranslBookInfo, Translation>>() {
             QuranTranslFactory factory;
 
             @Override
             public void preExecute() {
                 factory = new QuranTranslFactory(context);
-                handler.postDelayed(runnable, 1500);
             }
 
             @Override
             public void postExecute() {
                 if (factory != null) factory.close();
-                if (progressDialog.get() != null) progressDialog.get().dismiss();
-
-                handler.removeCallbacks(runnable);
             }
 
             @Override
@@ -247,9 +231,9 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
                 }
 
                 Translation translation = factory.getTranslationsSingleSlugVerse(
-                        bookInfo.getSlug(),
-                        mChapterNo,
-                        mVerseNo
+                    bookInfo.getSlug(),
+                    mChapterNo,
+                    mVerseNo
                 );
                 return new Pair<>(bookInfo, translation);
             }

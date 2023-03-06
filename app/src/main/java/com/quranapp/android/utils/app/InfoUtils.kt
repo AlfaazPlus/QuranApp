@@ -8,11 +8,11 @@ import android.content.DialogInterface
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.models.AppUrls
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.widgets.dialog.loader.PeaceProgressDialog
 import java.util.concurrent.CancellationException
 
 object InfoUtils {
@@ -38,7 +38,7 @@ object InfoUtils {
 
     private fun openTab(context: Context, urlKey: String) {
         val urlsManager = UrlsManager(context)
-        val dialog = ProgressDialog(context).apply {
+        val dialog = PeaceProgressDialog(context).apply {
             setMessage(R.string.strTextPleaseWait)
             setButton(DialogInterface.BUTTON_NEUTRAL, context.getString(R.string.strLabelCancel)) { _, _ ->
                 urlsManager.cancel()

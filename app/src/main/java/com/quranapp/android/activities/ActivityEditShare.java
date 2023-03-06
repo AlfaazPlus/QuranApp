@@ -32,7 +32,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
@@ -65,6 +64,7 @@ import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.views.helper.TabLayout2;
+import com.quranapp.android.widgets.dialog.loader.PeaceProgressDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -85,7 +85,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     private Typeface mUrduTypeface;
     private boolean mTranslShowingFirstTime = true;
     private ViewPagerAdapter2 mPagerAdapter;
-    private ProgressDialog mProgressDialog;
+    private PeaceProgressDialog mProgressDialog;
     private File mTmpImageFile;
     private Bitmap mTmpImageToSave;
     private String mTmpImageToSaveTitle;
@@ -491,7 +491,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     }
 
     private void showLoader() {
-        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog = new PeaceProgressDialog(this);
         mProgressDialog.show();
     }
 
