@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -54,7 +53,8 @@ public class FragEditorColors extends FragEditorBase {
 
         for (int i = 0, l = labels.length; i < l; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
-            LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(LayoutInflater.from(tabLayout.getContext()));
+            LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(
+                LayoutInflater.from(tabLayout.getContext()));
             tab.setCustomView(binding.getRoot());
             binding.tabTitle.setText(labels[i]);
 

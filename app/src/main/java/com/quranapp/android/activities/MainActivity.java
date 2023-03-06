@@ -2,7 +2,6 @@ package com.quranapp.android.activities;
 
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -147,7 +146,7 @@ public class MainActivity extends BaseActivity {
         BottomTabLayout bottomTabLayout = mBinding.bottomTabLayout;
         bottomTabLayout.setTabs(getBottomTabs());
         bottomTabLayout.setKingTab(new BottomTab(R.drawable.quran_kareem),
-                kingTab -> launchActivity(ActivityReaderIndexPage.class));
+            kingTab -> launchActivity(ActivityReaderIndexPage.class));
 
         bottomTabLayout.setSelectionChangeListener(tab -> {
             if (tab.getId() == R.id.navSearch) {

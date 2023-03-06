@@ -8,10 +8,10 @@ import android.os.Looper
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
 
 object QuranDuaParser {
     private const val DUAS_TAG_ROOT = "prophets"

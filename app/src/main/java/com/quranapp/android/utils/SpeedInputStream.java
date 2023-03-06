@@ -10,7 +10,7 @@ import java.io.InputStream;
 public class SpeedInputStream extends InputStream {
     private static final long ONE_SECOND = 1000;
     private final int mMaxSpeed;
-    private long downloadedWithinOneSecond = 0L;
+    private long downloadedWithinOneSecond;
     private long lastTime;
 
     private final InputStream inputStream;
@@ -25,7 +25,7 @@ public class SpeedInputStream extends InputStream {
     public int read() throws IOException {
         long currentTime;
         if (downloadedWithinOneSecond >= mMaxSpeed
-                && (((currentTime = System.currentTimeMillis()) - lastTime) < ONE_SECOND)) {
+            && (((currentTime = System.currentTimeMillis()) - lastTime) < ONE_SECOND)) {
             try {
                 Thread.sleep(ONE_SECOND - (currentTime - lastTime));
             } catch (InterruptedException e) {

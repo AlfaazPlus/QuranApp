@@ -14,7 +14,6 @@ open class PeaceBottomSheetMenu : PeaceBottomSheet() {
     var onItemClickListener: OnItemClickListener? = null
     var adapter: BaseListAdapter? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,7 +50,6 @@ open class PeaceBottomSheetMenu : PeaceBottomSheet() {
 
         return listView
     }
-
 
     interface OnItemClickListener {
         fun onItemClick(dialog: PeaceBottomSheetMenu, item: BaseListItem)

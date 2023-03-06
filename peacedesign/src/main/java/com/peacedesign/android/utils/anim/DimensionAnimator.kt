@@ -12,7 +12,14 @@ import android.animation.ValueAnimator
 import android.view.View
 import java.lang.ref.WeakReference
 
-class DimensionAnimator private constructor(requestedDimen: Int, v: View, startWidth: Int, targetWidth: Int, startHeight: Int, targetHeight: Int) {
+class DimensionAnimator private constructor(
+    requestedDimen: Int,
+    v: View,
+    startWidth: Int,
+    targetWidth: Int,
+    startHeight: Int,
+    targetHeight: Int
+) {
     companion object {
         private const val DIMEN_BOTH = 0x0
         private const val DIMEN_HEIGHT = 0x1
@@ -20,9 +27,15 @@ class DimensionAnimator private constructor(requestedDimen: Int, v: View, startW
         private const val DURATION_DEFAULT: Long = 200
 
         fun ofBoth(v: View, startWidth: Int, targetWidth: Int, startHeight: Int, targetHeight: Int): DimensionAnimator {
-            return DimensionAnimator(DIMEN_BOTH, v, startWidth, targetWidth, startHeight, targetHeight)
+            return DimensionAnimator(
+                DIMEN_BOTH,
+                v,
+                startWidth,
+                targetWidth,
+                startHeight,
+                targetHeight
+            )
         }
-
 
         fun ofWidth(v: View, startWidth: Int, targetWidth: Int): DimensionAnimator {
             return DimensionAnimator(DIMEN_WIDTH, v, startWidth, targetWidth, -1, -1)
@@ -83,7 +96,6 @@ class DimensionAnimator private constructor(requestedDimen: Int, v: View, startW
         }
     }
 
-
     private fun prepareBothInternal(): Animator {
         val animatorW = ValueAnimator.ofInt(mStartWidth, mTargetWidth)
         animatorW.duration = mDurationWidth
@@ -119,7 +131,10 @@ class DimensionAnimator private constructor(requestedDimen: Int, v: View, startW
         val interpolator = if (isHeight) mHeightInterpolator else mWidthInterpolator
         val duration = if (isHeight) mDurationHeight else mDurationWidth
 
-        val animator = ValueAnimator.ofInt(if (isHeight) mStartHeight else mStartWidth, if (isHeight) mTargetHeight else mTargetWidth)
+        val animator = ValueAnimator.ofInt(
+            if (isHeight) mStartHeight else mStartWidth,
+            if (isHeight) mTargetHeight else mTargetWidth
+        )
         animator.duration = duration
 
         if (interpolator != null) {

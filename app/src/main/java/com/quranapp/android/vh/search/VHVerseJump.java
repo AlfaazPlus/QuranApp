@@ -1,7 +1,5 @@
 package com.quranapp.android.vh.search;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -9,9 +7,9 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
-
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
@@ -28,7 +26,8 @@ public class VHVerseJump extends VHSearchResultBase {
         super(textView);
         mTextView = textView;
 
-        ViewPaddingKt.updatePaddings(textView, Dimen.dp2px(textView.getContext(), 15), Dimen.dp2px(textView.getContext(), 10));
+        ViewPaddingKt.updatePaddings(textView, Dimen.dp2px(textView.getContext(), 15),
+            Dimen.dp2px(textView.getContext(), 10));
         setupJumperView(textView, applyMargins);
     }
 
@@ -38,7 +37,7 @@ public class VHVerseJump extends VHSearchResultBase {
 
         mTextView.setText(makeName(itemView.getContext(), model.titleText, model.chapterNameText));
         mTextView.setOnClickListener(v -> ReaderFactory.startVerseRange(v.getContext(),
-                model.chapterNo, model.fromVerseNo, model.toVerseNo));
+            model.chapterNo, model.fromVerseNo, model.toVerseNo));
     }
 
     private CharSequence makeName(Context ctx, String text, String subtext) {

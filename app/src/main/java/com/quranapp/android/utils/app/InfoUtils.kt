@@ -55,7 +55,11 @@ object InfoUtils {
                 MessageUtils.popMessage(
                     context,
                     context.getString(R.string.strMsgSomethingWrong),
-                    "${context.getString(R.string.strMsgCouldNotOpenPage)} ${context.getString(R.string.strMsgTryLater)}",
+                    "${context.getString(R.string.strMsgCouldNotOpenPage)} ${
+                        context.getString(
+                            R.string.strMsgTryLater
+                        )
+                    }",
                     context.getString(R.string.strLabelClose),
                     null
                 )

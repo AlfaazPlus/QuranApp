@@ -1,7 +1,6 @@
 package com.quranapp.android.utils.tafsir;
 
 import android.annotation.SuppressLint;
-
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.utils.app.AppUtils;

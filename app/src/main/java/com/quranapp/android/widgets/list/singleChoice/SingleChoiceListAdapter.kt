@@ -8,7 +8,6 @@ import com.quranapp.android.widgets.list.base.BaseListItem
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 import com.quranapp.android.widgets.radio.PeaceRadioGroup
 
-
 class SingleChoiceListAdapter(context: Context) : BaseListAdapter(context) {
     override fun onCreateItemView(item: BaseListItem, position: Int): View {
         val radio = PeaceRadioButton(context).apply {

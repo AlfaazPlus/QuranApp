@@ -1,7 +1,6 @@
 package com.quranapp.android.components.quran;
 
 import android.content.Context;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
@@ -33,7 +32,7 @@ public class QuranProphet {
 
     private static void prepare(Context context, QuranMeta quranMeta, OnResultReadyCallback<QuranProphet> resultReadyCallback) {
         QuranProphetParser.parseProphet(context, quranMeta, sQuranProphetRef,
-                () -> resultReadyCallback.onReady(sQuranProphetRef.get()));
+            () -> resultReadyCallback.onReady(sQuranProphetRef.get()));
     }
 
 
@@ -62,8 +61,9 @@ public class QuranProphet {
         @NonNull
         @Override
         public String toString() {
-            return MessageFormat.format("Prophet: {0} ({1}) {2} : [order={3}, iconRes={4}]", nameTrans, nameEn, honorific, order,
-                    iconRes);
+            return MessageFormat.format("Prophet: {0} ({1}) {2} : [order={3}, iconRes={4}]", nameTrans, nameEn,
+                honorific, order,
+                iconRes);
         }
     }
 }

@@ -1,15 +1,13 @@
 package com.quranapp.android.activities;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
@@ -119,7 +117,8 @@ public class ActivityReadHistory extends BaseActivity implements ReadHistoryCall
     }
 
     public void onOpen(ReadHistoryModel model) {
-        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(), model.getToVerseNo());
+        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
+            model.getToVerseNo());
         intent.setClass(this, ActivityReader.class);
         startActivity(intent);
     }

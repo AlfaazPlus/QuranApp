@@ -17,7 +17,8 @@ import com.quranapp.android.widgets.compound.PeaceCompoundButton
  * a radio group, checking one radio button unchecks all the others.</p>
  * </p>
  */
-class PeaceRadioButton @JvmOverloads constructor(context: Context,
+class PeaceRadioButton @JvmOverloads constructor(
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : PeaceCompoundButton(context, attrs, defStyleAttr) {
@@ -31,7 +32,10 @@ class PeaceRadioButton @JvmOverloads constructor(context: Context,
     private fun makeRadio() {
         radio = RadioHelper(context).apply {
             isChecked = initialChecked
-            layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams = LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
     }
 

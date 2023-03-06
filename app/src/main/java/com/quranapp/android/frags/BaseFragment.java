@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,7 +20,7 @@ import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
 public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener,
-        ActivityResultStarter {
+    ActivityResultStarter {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     private NetworkStateReceiver mNetworkReceiver;
 

@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;

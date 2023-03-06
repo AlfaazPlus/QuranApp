@@ -35,17 +35,20 @@ import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 import com.quranapp.android.widgets.PageAlert
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.serialization.json.*
 import java.io.File
 import java.io.IOException
 import java.util.*
 import java.util.regex.Pattern
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.*
 
-class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadStateListener,
-    ServiceConnection, TranslDownloadExplorerImpl {
+class FragSettingsTranslationsDownload :
+    FragSettingsBase(),
+    TranslDownloadStateListener,
+    ServiceConnection,
+    TranslDownloadExplorerImpl {
 
     private lateinit var mBinding: FragSettingsTranslBinding
     private lateinit var mFileUtils: FileUtils
@@ -77,7 +80,11 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
     }
 
     private fun bindTranslService(actvt: Activity) {
-        actvt.bindService(Intent(actvt, TranslationDownloadService::class.java), this, Context.BIND_AUTO_CREATE)
+        actvt.bindService(
+            Intent(actvt, TranslationDownloadService::class.java),
+            this,
+            Context.BIND_AUTO_CREATE
+        )
     }
 
     private fun unbindTranslationService(actvt: Activity) {
@@ -104,7 +111,6 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         mTranslFactory?.close()
     }
 
-
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.setCallback(object : BoldHeaderCallback {
@@ -123,7 +129,10 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         header.setShowSearchIcon(false)
         header.setShowRightIcon(false)
         header.setSearchHint(R.string.strHintSearchTranslation)
-        header.setRightIconRes(R.drawable.dr_icon_refresh, activity.getString(R.string.strLabelRefresh))
+        header.setRightIconRes(
+            R.drawable.dr_icon_refresh,
+            activity.getString(R.string.strLabelRefresh)
+        )
     }
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
@@ -143,7 +152,6 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
     private fun initPageAlert(ctx: Context) {
         mPageAlert = PageAlert(ctx)
     }
-
 
     private fun refreshTranslations(ctx: Context, force: Boolean) {
         showLoader()
@@ -219,7 +227,11 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
                 var traceAddedTranslCount = 0
 
                 for (slug in slugs) {
-                    val model = readTranslInfo(langCode, slug, translationsForLanguageCode[slug]!!.jsonObject)
+                    val model = readTranslInfo(
+                        langCode,
+                        slug,
+                        translationsForLanguageCode[slug]!!.jsonObject
+                    )
 
                     if (mNewTranslations?.contains(slug) == true) {
                         model.addMiniInfo(ctx.getString(R.string.strLabelNew))
@@ -250,7 +262,6 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
 
         hideLoader()
     }
-
 
     private fun readTranslInfo(langCode: String, slug: String, translObject: JsonObject): TranslModel {
         val bookInfo = QuranTranslBookInfo(slug)
@@ -317,7 +328,6 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         }
     }
 
-
     private fun noDownloadsAvailable(ctx: Context) {
         showAlert(
             0,
@@ -379,8 +389,10 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED -> {}
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED -> {
                 title = ctx.getString(R.string.strTitleFailed)
-                msg = (ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName)
-                        + " " + ctx.getString(R.string.strMsgTryLater))
+                msg = (
+                    ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
+                        " " + ctx.getString(R.string.strMsgTryLater)
+                    )
             }
 
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED -> {
@@ -391,7 +403,13 @@ class FragSettingsTranslationsDownload : FragSettingsBase(), TranslDownloadState
         }
 
         if (title != null && context != null) {
-            MessageUtils.popMessage(context, title, msg, ctx.getString(R.string.strLabelClose), null)
+            MessageUtils.popMessage(
+                context,
+                title,
+                msg,
+                ctx.getString(R.string.strLabelClose),
+                null
+            )
         }
     }
 

@@ -2,7 +2,6 @@ package com.quranapp.android.views.reader.chapterSpinner;
 
 import android.content.Context;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.components.quran.subcomponents.Chapter;

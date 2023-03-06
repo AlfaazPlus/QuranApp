@@ -2,13 +2,12 @@ package com.quranapp.android.utils.reader;
 
 import android.content.Context;
 import android.util.Pair;
-
 import androidx.annotation.Nullable;
 
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslModel;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
@@ -28,9 +27,9 @@ import java.util.Set;
 
 public class TranslUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
-            "translations");
+        "translations");
     public static final String DIR_NAME_4_AVAILABLE_DOWNLOADS =
-            FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "available_translation_downloads");
+        FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "available_translation_downloads");
     public static final String TRANSL_INFO_FILE_NAME = "manifest.json";
     public static final String KEY_TRANSLATIONS = "key.translations";
     public static final String KEY_NEW_TRANSLATIONS = "key.translations_new";
@@ -235,7 +234,7 @@ public class TranslUtils {
                     Pair<QuranTranslBookInfo, File> pair = readTranslInfoFromJSONFile(fileUtils, infoJSONFile);
                     if (pair == null) {
                         Logger.print(
-                                "Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
+                            "Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
                         fileUtils.deleteDirWithChildren(singleTranslDir);
                         continue;
                     }
@@ -243,7 +242,7 @@ public class TranslUtils {
                     translInfosAndFiles.add(pair);
                 } catch (Exception e) {
                     Logger.print(
-                            "Error occurred, deleting translation directory with its manifest and data files dire: " + singleTranslDir.getName());
+                        "Error occurred, deleting translation directory with its manifest and data files dire: " + singleTranslDir.getName());
                     fileUtils.deleteDirWithChildren(singleTranslDir);
                     e.printStackTrace();
                 }

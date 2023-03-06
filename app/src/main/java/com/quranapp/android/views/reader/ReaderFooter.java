@@ -1,10 +1,5 @@
 package com.quranapp.android.views.reader;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -18,9 +13,12 @@ import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
@@ -159,7 +157,8 @@ public class ReaderFooter extends FrameLayout {
     public void setupBottomNavigator() {
         final QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
         switch (mReaderParams.readType) {
-            case READER_READ_TYPE_CHAPTER: setupFooterForChapter(); break;
+            case READER_READ_TYPE_CHAPTER: setupFooterForChapter();
+                break;
             case READER_READ_TYPE_VERSES:
                 Pair<Integer, Integer> range = mReaderParams.verseRange;
                 if (QuranUtils.doesRangeDenoteSingle(range)) {
@@ -168,8 +167,10 @@ public class ReaderFooter extends FrameLayout {
                     setupFooterForVersesRange(range);
                 }
                 break;
-            case READER_READ_TYPE_JUZ: setupFooterForJuz(); break;
-            default: setupFooterForNone(); break;
+            case READER_READ_TYPE_JUZ: setupFooterForJuz();
+                break;
+            default: setupFooterForNone();
+                break;
         }
 
         if (mReaderParams.readType == READER_READ_TYPE_JUZ) {

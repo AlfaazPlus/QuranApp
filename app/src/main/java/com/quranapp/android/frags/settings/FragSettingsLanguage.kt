@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.utils.WindowUtils
-import com.quranapp.android.widgets.compound.PeaceCompoundButton
-import com.quranapp.android.widgets.radio.PeaceRadioButton
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.FragSettingsLangBinding
@@ -15,6 +13,8 @@ import com.quranapp.android.utils.IntentUtils
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.getLocale
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.setLocale
 import com.quranapp.android.views.BoldHeader
+import com.quranapp.android.widgets.compound.PeaceCompoundButton
+import com.quranapp.android.widgets.radio.PeaceRadioButton
 
 class FragSettingsLanguage : FragSettingsBase() {
     private var initialLocale: String? = null
@@ -47,8 +47,11 @@ class FragSettingsLanguage : FragSettingsBase() {
         val availableLocalesValues = strArray(ctx, R.array.availableLocalesValues)
         val availableLocaleNames = strArray(ctx, R.array.availableLocalesNames)
 
-        val forcedTextGravity = if (WindowUtils.isRTL(ctx)) PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
-        else PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT
+        val forcedTextGravity = if (WindowUtils.isRTL(ctx)) {
+            PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
+        } else {
+            PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT
+        }
 
         var preCheckedRadioId = View.NO_ID
 
@@ -85,10 +88,11 @@ class FragSettingsLanguage : FragSettingsBase() {
             val localeValue = button.tag as String
             setLocale(ctx, localeValue)
 
-            ctx.sendBroadcast(Intent(IntentUtils.INTENT_ACTION_APP_LANGUAGE_CHANGED).apply {
-                putExtra("locale", localeValue)
-            })
+            ctx.sendBroadcast(
+                Intent(IntentUtils.INTENT_ACTION_APP_LANGUAGE_CHANGED).apply {
+                    putExtra("locale", localeValue)
+                }
+            )
         }
     }
-
 }

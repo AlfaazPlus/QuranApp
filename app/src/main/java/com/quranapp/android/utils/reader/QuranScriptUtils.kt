@@ -9,8 +9,14 @@ import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
 
 object QuranScriptUtils {
-    val FONTS_DIR_NAME: String = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "script_fonts")
-    val SCRIPT_DIR_NAME: String = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "scripts")
+    val FONTS_DIR_NAME: String = FileUtils.createPath(
+        AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
+        "script_fonts"
+    )
+    val SCRIPT_DIR_NAME: String = FileUtils.createPath(
+        AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
+        "scripts"
+    )
 
     const val KEY_SCRIPT = "key.script"
 
@@ -20,7 +26,11 @@ object QuranScriptUtils {
 
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
 
-    fun availableScriptSlugs(): Array<String> = arrayOf(SCRIPT_INDO_PAK, SCRIPT_UTHMANI, SCRIPT_KFQPC_V1)
+    fun availableScriptSlugs(): Array<String> = arrayOf(
+        SCRIPT_INDO_PAK,
+        SCRIPT_UTHMANI,
+        SCRIPT_KFQPC_V1
+    )
 
     fun verifyKFQPCScriptDownloaded(ctx: Context, kfqpcScriptSlug: String): Boolean {
         return FileUtils.newInstance(ctx).getScriptFile(kfqpcScriptSlug).length() > 0
@@ -42,7 +52,6 @@ object QuranScriptUtils {
         return Triple(totalPages, downloaded, totalPages - downloaded)
     }
 }
-
 
 fun String.isKFQPCScript(): Boolean = when (this) {
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> true

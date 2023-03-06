@@ -1,13 +1,12 @@
 package com.quranapp.android.utils;
 
-import static androidx.recyclerview.widget.RecyclerView.LayoutManager;
-import static androidx.recyclerview.widget.RecyclerView.OnScrollListener;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import static androidx.recyclerview.widget.RecyclerView.LayoutManager;
+import static androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
 /**
  * Custom Scroll Listener for recycler view to listen to up and down scroll

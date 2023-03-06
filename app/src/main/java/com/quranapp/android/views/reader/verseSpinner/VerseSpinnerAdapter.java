@@ -1,14 +1,12 @@
 package com.quranapp.android.views.reader.verseSpinner;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;

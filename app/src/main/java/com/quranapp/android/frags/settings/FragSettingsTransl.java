@@ -6,24 +6,22 @@
 
 package com.quranapp.android.frags.settings;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.DOTALL;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import static java.util.regex.Pattern.DOTALL;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
@@ -138,7 +136,8 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
     private void initPageAlert(Context ctx) {
         mPageAlert = new PageAlert(ctx);
         mPageAlert.setMessage(ctx.getString(R.string.strMsgTranslNoDownloads), null);
-        mPageAlert.setActionButton(R.string.strTitleDownloadTranslations, () -> launchFrag(FragSettingsTranslationsDownload.class, null));
+        mPageAlert.setActionButton(R.string.strTitleDownloadTranslations,
+            () -> launchFrag(FragSettingsTranslationsDownload.class, null));
     }
 
     private void initTranslations(Context ctx) {
@@ -240,7 +239,8 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
 
     @Override
     public boolean onSelectionChanged(Context ctx, TranslModel translModel, boolean isSelected) {
-        boolean succeed = TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, translModel, isSelected, saveTranslChanges);
+        boolean succeed = TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, translModel, isSelected,
+            saveTranslChanges);
         if (succeed) {
             // Update the args so that it can reflect when this fragment is recreated.
             Bundle args = getArgs();
@@ -268,8 +268,8 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         }
 
         getParentFragmentManager().setFragmentResult(
-                String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
-                getFinishingResult(getContext())
+            String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
+            getFinishingResult(getContext())
         );
     }
 

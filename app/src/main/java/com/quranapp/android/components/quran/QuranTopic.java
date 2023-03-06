@@ -1,7 +1,6 @@
 package com.quranapp.android.components.quran;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
@@ -33,7 +32,8 @@ public class QuranTopic {
     }
 
     private static void prepare(Context context, QuranMeta quranMeta, OnResultReadyCallback<QuranTopic> resultReadyCallback) {
-        QuranTopicParser.parseTopics(context, quranMeta, sQuranTopicRef, () -> resultReadyCallback.onReady(sQuranTopicRef.get()));
+        QuranTopicParser.parseTopics(context, quranMeta, sQuranTopicRef,
+            () -> resultReadyCallback.onReady(sQuranTopicRef.get()));
     }
 
     public void setAvailableAlphabets(Character[] availableAlphabets) {
@@ -77,7 +77,7 @@ public class QuranTopic {
 
     public static class Topic implements Serializable {
         public int id;
-        public boolean isFeatured = false;
+        public boolean isFeatured;
         public String name;
         /**
          * Maybe empty or null, Separated by comma if multiple
@@ -97,10 +97,10 @@ public class QuranTopic {
         @Override
         public String toString() {
             return "Topic{" +
-                    "id=" + id +
-                    ", name='" + name + '\'' +
-                    ", verses=" + verses +
-                    '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", verses=" + verses +
+                '}';
         }
     }
 }

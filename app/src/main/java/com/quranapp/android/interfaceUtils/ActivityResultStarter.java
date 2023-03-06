@@ -7,7 +7,6 @@
 package com.quranapp.android.interfaceUtils;
 
 import android.content.Intent;
-
 import androidx.core.app.ActivityOptionsCompat;
 
 public interface ActivityResultStarter {

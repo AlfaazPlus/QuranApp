@@ -12,16 +12,15 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.quranapp.android.utils.Log;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityTafsir;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.univ.ResUtils;
 
@@ -38,7 +37,7 @@ public class TafsirWebViewClient extends WebViewClient {
     private final boolean isDarkTheme;
 
     public TafsirWebViewClient(ActivityTafsir activityTafsir) {
-        this.mActivityTafsir = activityTafsir;
+        mActivityTafsir = activityTafsir;
         isDarkTheme = WindowUtils.isNightMode(activityTafsir);
     }
 
@@ -75,8 +74,9 @@ public class TafsirWebViewClient extends WebViewClient {
                     data = ctx.getResources().openRawResource(+R.font.me_quran_4_uthmani_text);
                 } else if (uriStr.contains("verse-preview")) {
                     data = ctx.getResources().openRawResource(+R.font.pdms);
-                } else if (TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR.equals(mActivityTafsir.mTafsirSlug) && uriStr.contains(
-                        "content")) {
+                } else if (TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR.equals(
+                    mActivityTafsir.mTafsirSlug) && uriStr.contains(
+                    "content")) {
                     data = view.getContext().getResources().openRawResource(+R.font.font_urdu);
                 }
                 break;
@@ -109,7 +109,8 @@ public class TafsirWebViewClient extends WebViewClient {
         Map<String, String> headers = request.getRequestHeaders();
         headers.put("Access-Control-Allow-Origin", "*");
 
-        return new WebResourceResponse(URLConnection.guessContentTypeFromName(uri.getPath()), "utf-8", 200, "OK", headers, data);
+        return new WebResourceResponse(URLConnection.guessContentTypeFromName(uri.getPath()), "utf-8", 200, "OK",
+            headers, data);
     }
 
     private InputStream createArrowDrawableStream(Context context, float rotate) {
@@ -122,7 +123,8 @@ public class TafsirWebViewClient extends WebViewClient {
 
         drawable.setTint(isDarkTheme ? Color.parseColor("#BBBBBB") : Color.BLACK);
 
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+            Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         if (rotate != 0) {
             canvas.rotate(rotate, drawable.getIntrinsicWidth() >> 1, drawable.getIntrinsicHeight() >> 1);
@@ -157,12 +159,12 @@ public class TafsirWebViewClient extends WebViewClient {
         JSONObject contentJson = new JSONObject();
         contentJson.put("tafsir-title", TafsirUtils.getTafsirName(tafsirSlug));
         contentJson.put("verse-info-title",
-                mActivityTafsir.str(R.string.strLabelVerseWithChapNameWithBar, chapter.getName(), verseNo));
+            mActivityTafsir.str(R.string.strLabelVerseWithChapNameWithBar, chapter.getName(), verseNo));
         contentJson.put("verse-preview", chapter.getVerse(verseNo).arabicText);
         contentJson.put("previous-tafsir-title", preparePrevVerseTitle(verseNo));
         contentJson.put("next-tafsir-title", prepareNextVerseTitle(verseNo, chapter.getVerseCount()));
 
-        String js = "javascript:installContents('" + contentJson.toString() + "')";
+        String js = "javascript:installContents('" + contentJson + "')";
         webView.loadUrl(js);
     }
 

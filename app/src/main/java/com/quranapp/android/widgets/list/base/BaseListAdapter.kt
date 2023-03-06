@@ -32,7 +32,6 @@ open class BaseListAdapter(val context: Context) {
         }
     }
 
-
     open fun onCreateItem(item: BaseListItem, index: Int) {
         val itemView = onCreateItemView(item, index) ?: return
 
@@ -47,7 +46,6 @@ open class BaseListAdapter(val context: Context) {
             onAppendItemView(it, itemView, index)
         }
     }
-
 
     protected open fun onCreateItemView(item: BaseListItem, position: Int): View? {
         return BaseListItemView(context, item)
@@ -97,7 +95,6 @@ open class BaseListAdapter(val context: Context) {
     private fun isLaidOut(): Boolean {
         return container?.isLaidOut == true
     }
-
 
     fun removeItem(index: Int) {
         removeItem(items[index])

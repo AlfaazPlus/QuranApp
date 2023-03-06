@@ -4,9 +4,6 @@
 
 package com.quranapp.android.views;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.components.utility.CardMessageParams.STYLE_WARNING;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -17,11 +14,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import static com.quranapp.android.components.utility.CardMessageParams.STYLE_WARNING;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.Dimen;
@@ -76,7 +74,8 @@ public class CardMessage extends LinearLayout {
         }
 
         mMessageView = new AppCompatTextView(getContext());
-        mMessageView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
+        mMessageView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+            ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize2));
         mMessageView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 
         LinearLayout.LayoutParams p = new LayoutParams(0, WRAP_CONTENT);

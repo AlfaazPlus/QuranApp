@@ -6,26 +6,6 @@
 
 package com.quranapp.android.frags.settings;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -45,13 +25,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentResultListener;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -84,9 +82,9 @@ import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
-import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
+import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
 import com.quranapp.android.widgets.IconedTextView;
@@ -615,7 +613,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             @Override
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
-                SPReader.setSavedTextSizeMultArabic(seekBar.getContext(), ReaderTextSizeUtils.calculateMultiplier(progress));
+                SPReader.setSavedTextSizeMultArabic(seekBar.getContext(),
+                    ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
@@ -679,7 +678,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             @Override
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
-                SPReader.setSavedTextSizeMultTransl(seekBar.getContext(), ReaderTextSizeUtils.calculateMultiplier(progress));
+                SPReader.setSavedTextSizeMultTransl(seekBar.getContext(),
+                    ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }

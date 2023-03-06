@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,7 +66,7 @@ public class ADPFeaturedQuran extends RecyclerView.Adapter<ADPFeaturedQuran.VHFe
                 int chapterNo = model.chapterNo;
                 Pair<Integer, Integer> verseRange = model.verseRange;
                 if (QuranMeta.isChapterValid(chapterNo) &&
-                        mQuranMeta.isVerseRangeValid4Chapter(chapterNo, verseRange.getFirst(), verseRange.getSecond())) {
+                    mQuranMeta.isVerseRangeValid4Chapter(chapterNo, verseRange.getFirst(), verseRange.getSecond())) {
                     ReaderFactory.startVerseRange(itemView.getContext(), chapterNo, verseRange);
                 }
             });

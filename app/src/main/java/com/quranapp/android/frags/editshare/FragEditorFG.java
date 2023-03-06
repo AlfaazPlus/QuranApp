@@ -4,18 +4,16 @@
 
 package com.quranapp.android.frags.editshare;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.quranapp.android.adapters.editor.ADPEditorFG;
 import com.quranapp.android.components.editor.VerseEditor;

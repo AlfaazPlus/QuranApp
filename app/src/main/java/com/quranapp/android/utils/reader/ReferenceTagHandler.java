@@ -1,7 +1,5 @@
 package com.quranapp.android.utils.reader;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
@@ -9,8 +7,8 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.view.View;
-
 import androidx.annotation.NonNull;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 import com.peacedesign.android.utils.span.SuperscriptSpan2;
@@ -28,8 +26,8 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
     private final int mRefBGColorPressed;
     private final OnReferenceTagClickCallback mRefTagClickCallback;
     private final OnFootnoteReferenceTagClickCallback mFootnoteRefTagClickCallback;
-    private int refTagStartIndex = 0;
-    private int footnoteRefTagStartIndex = 0;
+    private int refTagStartIndex;
+    private int footnoteRefTagStartIndex;
     private String chapter = "-1";
     private String verses = "-1";
     private String footnoteNo = "-1";
@@ -49,8 +47,8 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
      * @param fnTagClickCallback  Callback to invoke if the clicked tag is {@link QuranConstants#FOOTNOTE_REF_TAG}
      */
     public ReferenceTagHandler(
-            Set<String> translSlug, int refTxtColor, int refBGColor, int refBGColorPres,
-            OnReferenceTagClickCallback refTagClickCallback, OnFootnoteReferenceTagClickCallback fnTagClickCallback
+        Set<String> translSlug, int refTxtColor, int refBGColor, int refBGColorPres,
+        OnReferenceTagClickCallback refTagClickCallback, OnFootnoteReferenceTagClickCallback fnTagClickCallback
     ) {
         mTranslSlugs = translSlug;
         mRefTxtColor = refTxtColor;

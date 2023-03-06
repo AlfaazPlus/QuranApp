@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -36,7 +35,8 @@ public class IconedTextView extends AppCompatTextView {
         mDrawableTopDimen = a.getDimensionPixelOffset(R.styleable.IconedTextView_drawableTopDimen, -1);
         mDrawableEndDimen = a.getDimensionPixelOffset(R.styleable.IconedTextView_drawableEndDimen, -1);
         mDrawableBottomDimen = a.getDimensionPixelOffset(R.styleable.IconedTextView_drawableBottomDimen, -1);
-        int mDrawablePadding = a.getDimensionPixelOffset(R.styleable.IconedTextView_android_drawablePadding, Dimen.dp2px(context, 10));
+        int mDrawablePadding = a.getDimensionPixelOffset(R.styleable.IconedTextView_android_drawablePadding,
+            Dimen.dp2px(context, 10));
         int mGravity = a.getInt(R.styleable.IconedTextView_android_gravity, Gravity.CENTER_VERTICAL);
         a.recycle();
 

@@ -75,13 +75,15 @@ class ReaderVerseDecorator(private val ctx: Context) {
 
                 try {
                     fontsArabicKFQPC[pageNo] = Typeface.createFromFile(
-                        File(fileUtils.getKFQPCScriptFontDir(savedScript), pageNo.toKFQPCFontFilename())
+                        File(
+                            fileUtils.getKFQPCScriptFontDir(savedScript),
+                            pageNo.toKFQPCFontFilename()
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-
         } else {
             fontsArabicKFQPC.clear()
 
@@ -155,7 +157,6 @@ class ReaderVerseDecorator(private val ctx: Context) {
     fun TextView.setTextSizeTransl(multiplier: Float = savedTextSizeTranslMultiplier) {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeTransl * multiplier)
     }
-
 
     fun TextView.setFontArabic(pageNo: Int) {
         typeface = if (isKFQPCScript()) {

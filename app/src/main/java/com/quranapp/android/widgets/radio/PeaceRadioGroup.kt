@@ -39,7 +39,6 @@ class PeaceRadioGroup @JvmOverloads constructor(
 
     private var passThroughListener = PassThroughHierarchyChangeListener()
 
-
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.PeaceRadioGroup, defStyleAttr, 0)
 
@@ -72,7 +71,6 @@ class PeaceRadioGroup @JvmOverloads constructor(
         protectFromCheckedChange = false
     }
 
-
     override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
         if (child !is PeaceRadioButton) return
 
@@ -103,7 +101,6 @@ class PeaceRadioGroup @JvmOverloads constructor(
         protectFromCheckedChange = false
     }
 
-
     override fun checkAtPosition(position: Int) {
         val view = getChildAt(position) ?: return
 
@@ -119,7 +116,6 @@ class PeaceRadioGroup @JvmOverloads constructor(
             checkInternal(id)
         }
     }
-
 
     private fun checkInternal(@IdRes id: Int) {
         setCheckedForView(checkedId, false) // uncheck previously checked button

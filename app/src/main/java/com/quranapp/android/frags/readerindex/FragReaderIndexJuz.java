@@ -1,7 +1,6 @@
 package com.quranapp.android.frags.readerindex;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.quranapp.android.adapters.quranIndex.ADPJuzList;

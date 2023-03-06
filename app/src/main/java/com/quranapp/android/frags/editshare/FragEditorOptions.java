@@ -4,23 +4,21 @@
 
 package com.quranapp.android.frags.editshare;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.quranapp.android.R;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.quranapp.android.widgets.compound.PeaceCompoundButton;
 
 import kotlin.Unit;
@@ -59,11 +57,11 @@ public class FragEditorOptions extends FragEditorBase {
 
     private void init(LinearLayout container) {
         mIncludeAr = makeCheckbox(container, R.string.strLabelIncludeArabic,
-                (buttonView, isChecked) -> dispatchOptions(isChecked, mIncludeTrans.isChecked(), mIncludeRef.isChecked()));
+            (buttonView, isChecked) -> dispatchOptions(isChecked, mIncludeTrans.isChecked(), mIncludeRef.isChecked()));
         mIncludeTrans = makeCheckbox(container, R.string.strLabelIncludeTranslation,
-                (buttonView, isChecked) -> dispatchOptions(mIncludeAr.isChecked(), isChecked, mIncludeRef.isChecked()));
+            (buttonView, isChecked) -> dispatchOptions(mIncludeAr.isChecked(), isChecked, mIncludeRef.isChecked()));
         mIncludeRef = makeCheckbox(container, R.string.strLabelIncludeReference,
-                (buttonView, isChecked) -> dispatchOptions(mIncludeAr.isChecked(), mIncludeTrans.isChecked(), isChecked));
+            (buttonView, isChecked) -> dispatchOptions(mIncludeAr.isChecked(), mIncludeTrans.isChecked(), isChecked));
         setOptionsVisibility(mInitShowAr, mInitShowTrans, mInitShowRef);
     }
 

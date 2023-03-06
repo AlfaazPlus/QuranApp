@@ -4,10 +4,6 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,12 +11,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;

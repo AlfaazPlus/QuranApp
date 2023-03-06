@@ -1,17 +1,15 @@
 package com.quranapp.android.utils.univ;
 
+import android.os.Bundle;
+import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC_LOWER;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHABETIC_UPPER;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHANUMERIC_LOWER;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.ALPHANUMERIC_UPPER;
 import static com.quranapp.android.utils.univ.StringUtils.RandomPattern.NUMERIC;
-
-import android.os.Bundle;
-import android.text.TextUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -196,9 +194,11 @@ public abstract class StringUtils {
      * @return Returns first character of every word appended.
      */
     @NonNull
-    public static String appendFirstChars(@NonNull String string,
-                                          @NonNull String sepDelimiter,
-                                          @NonNull String apdDelimiter, int count) {
+    public static String appendFirstChars(
+        @NonNull String string,
+        @NonNull String sepDelimiter,
+        @NonNull String apdDelimiter, int count
+    ) {
         String[] substringArr = string.split(sepDelimiter);
         StringBuilder res = new StringBuilder();
         int len = substringArr.length;
@@ -228,13 +228,20 @@ public abstract class StringUtils {
     public static String random(int length, int randomPattern) {
         final String chars;
         switch (randomPattern) {
-            case ALPHABETIC: chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;
-            case ALPHABETIC_LOWER: chars = "abcdefghijklmnopqrstuvwxyz"; break;
-            case ALPHABETIC_UPPER: chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;
-            case ALPHANUMERIC_LOWER: chars = "abcdefghijklmnopqrstuvwxyz1234567890"; break;
-            case ALPHANUMERIC_UPPER: chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; break;
-            case NUMERIC: chars = "1234567890"; break;
-            default: chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; break;
+            case ALPHABETIC: chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                break;
+            case ALPHABETIC_LOWER: chars = "abcdefghijklmnopqrstuvwxyz";
+                break;
+            case ALPHABETIC_UPPER: chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                break;
+            case ALPHANUMERIC_LOWER: chars = "abcdefghijklmnopqrstuvwxyz1234567890";
+                break;
+            case ALPHANUMERIC_UPPER: chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                break;
+            case NUMERIC: chars = "1234567890";
+                break;
+            default: chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                break;
         }
 
         StringBuilder string = new StringBuilder();
@@ -265,9 +272,9 @@ public abstract class StringUtils {
     public static boolean isRTL(char c) {
         byte d = Character.getDirectionality(c);
         return d == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE;
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC ||
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING ||
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE;
     }
 
     /**

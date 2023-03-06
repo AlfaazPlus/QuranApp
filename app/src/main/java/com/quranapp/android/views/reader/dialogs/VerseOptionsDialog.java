@@ -4,8 +4,6 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,11 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;

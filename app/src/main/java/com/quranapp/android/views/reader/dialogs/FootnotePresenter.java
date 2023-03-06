@@ -4,9 +4,6 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -19,11 +16,12 @@ import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
+import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;

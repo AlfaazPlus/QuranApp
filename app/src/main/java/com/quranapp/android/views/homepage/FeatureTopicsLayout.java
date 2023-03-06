@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.AttributeSet;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

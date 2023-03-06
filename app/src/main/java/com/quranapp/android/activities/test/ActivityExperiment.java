@@ -8,15 +8,14 @@ package com.quranapp.android.activities.test;
 
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.ActivityExperimentBinding;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
@@ -62,8 +61,9 @@ public class ActivityExperiment extends BaseActivity {
         Log.d(transls);
 
         int[] ints = {1, 7, 2, 3};
-        Log.d(translFactory.getTranslationsDistinctVerses(Collections.singleton(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN), 88,
-                ints));
+        Log.d(translFactory.getTranslationsDistinctVerses(
+            Collections.singleton(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN), 88,
+            ints));
 
         Log.d(translFactory.getTranslationsVerseRange(2, 10, 12));
         Log.d(translFactory.getTranslationBookInfo(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN));

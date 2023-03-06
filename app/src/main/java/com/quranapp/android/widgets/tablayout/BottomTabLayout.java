@@ -1,8 +1,5 @@
 package com.quranapp.android.widgets.tablayout;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -11,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -36,7 +34,7 @@ public class BottomTabLayout extends LinearLayout {
     private OnTabSelectionUpdateListener mSelectionUpdateListener;
     private BottomTab mKingTab;
     private OnKingTabClickListener mKingTabClickCallback;
-    private int mPreSelectedTabIndex = 0;
+    private int mPreSelectedTabIndex;
     private boolean firstTime = true;
 
     public BottomTabLayout(@NonNull Context context) {
@@ -143,8 +141,9 @@ public class BottomTabLayout extends LinearLayout {
 
     public void addTab(@NonNull BottomTab tab, int position) {
         if (position > mTabs.size()) {
-            String msg = String.format("position cannot be larger than size of tabLayout items. Position: %s , Size: %s", position,
-                    mTabs.size());
+            String msg = String.format(
+                "position cannot be larger than size of tabLayout items. Position: %s , Size: %s", position,
+                mTabs.size());
             throw new IllegalArgumentException(msg);
         }
 

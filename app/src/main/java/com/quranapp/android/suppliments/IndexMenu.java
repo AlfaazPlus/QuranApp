@@ -1,8 +1,5 @@
 package com.quranapp.android.suppliments;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -11,9 +8,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.google.android.material.divider.MaterialDivider;
 import com.peacedesign.android.utils.AppBridge;
@@ -60,7 +58,7 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
         });
 
         mPopup.setWidth((int) (Dimen.getWindowWidth(getContext()) * ContextKt.getFraction(getContext(),
-                R.fraction.dmnIndexMenuWidth)));
+            R.fraction.dmnIndexMenuWidth)));
         mPopup.setHeight(WRAP_CONTENT);
         mPopup.setFocusable(true);
         mPopup.setDimBehind(0.7f);
@@ -154,7 +152,7 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
         int[] strokeWidthsHeader = Dimen.createBorderWidthsForBG(0, 0, 0, stroke);
         float[] radiiHeader = Dimen.createRadiiForBG(radius, radius, 0, 0);
         binding.header.setBackground(
-                DrawableUtils.createBackgroundStroked(mBgColor, mBorderColor, strokeWidthsHeader, radiiHeader));
+            DrawableUtils.createBackgroundStroked(mBgColor, mBorderColor, strokeWidthsHeader, radiiHeader));
         binding.close.setOnClickListener(v -> close());
     }
 
@@ -201,8 +199,8 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
     private void shareApp() {
         AppBridge.Sharer sharer = AppBridge.newSharer(getContext());
         sharer.setData(mActivity.str(R.string.strMsgShareApp, AppBridge.preparePlayStoreLink(getContext(), false)))
-                .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
-                .setChooserTitle(getContext().getString(R.string.strTitleShareApp));
+            .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
+            .setChooserTitle(getContext().getString(R.string.strTitleShareApp));
         sharer.share();
     }
 

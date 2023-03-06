@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -40,12 +39,12 @@ public class QuranPageHeadView extends FrameLayout {
     }
 
     public void setPageNumber(int pageNumber) {
-        mBinding.pageNo.setText(getContext().getString(R.string.strLabelPageNo,pageNumber));
+        mBinding.pageNo.setText(getContext().getString(R.string.strLabelPageNo, pageNumber));
     }
 
     private void setJuzChapter(int juzNumber, String chaptersName) {
         mBinding.chapter.setText(chaptersName);
 
-        mBinding.juz.setText(getContext().getString(R.string.strLabelJuzNo,juzNumber));
+        mBinding.juz.setText(getContext().getString(R.string.strLabelJuzNo, juzNumber));
     }
 }

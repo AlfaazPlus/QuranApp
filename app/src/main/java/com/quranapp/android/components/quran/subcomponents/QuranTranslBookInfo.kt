@@ -59,5 +59,4 @@ class QuranTranslBookInfo(val slug: String) : Serializable {
         result = 31 * result + isUrdu.hashCode()
         return result
     }
-
 }

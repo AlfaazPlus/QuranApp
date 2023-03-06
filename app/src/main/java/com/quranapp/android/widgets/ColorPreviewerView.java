@@ -10,7 +10,6 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -44,7 +43,8 @@ public class ColorPreviewerView extends View {
     private void init() {
         setBackgroundResource(R.drawable.dr_bg_cornered_preview);
         setClipToOutline(true);
-        BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getContext(), R.drawable.dr_img_checkered_tiled);
+        BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getContext(),
+            R.drawable.dr_img_checkered_tiled);
         if (drawable != null) {
             Bitmap checkeredBitmap = drawable.getBitmap();
             bitmapShader = new BitmapShader(checkeredBitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);

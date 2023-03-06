@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
@@ -140,7 +139,8 @@ public class FragMain extends BaseFragment {
         mBinding.container.addView(readingLayout, resolvePosFeaturedReading(root));
         readingLayout.post(() -> {
             readingLayout.refresh(quranMeta);
-            QuranDua.Companion.prepareInstance(root.getContext(), quranMeta, quranDua -> initFeaturedDua(root, quranMeta, quranDua));
+            QuranDua.Companion.prepareInstance(root.getContext(), quranMeta,
+                quranDua -> initFeaturedDua(root, quranMeta, quranDua));
         });
     }
 
@@ -152,7 +152,7 @@ public class FragMain extends BaseFragment {
                 String title = context.getString(R.string.strTitleDuas);
                 String desc = context.getString(R.string.strMsgReferenceDuas);
                 ReaderFactory.startReferenceVerse(context, true, title, desc, new String[]{}, quranDua.getChapters(),
-                        quranDua.getVerses());
+                    quranDua.getVerses());
             });
             binding.getRoot().setOnTouchListener(new HoverOpacityEffect());
             mBinding.container.addView(binding.getRoot(), resolvePosFeaturedDua(root));

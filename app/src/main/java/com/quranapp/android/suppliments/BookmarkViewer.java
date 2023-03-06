@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
@@ -213,16 +212,18 @@ public class BookmarkViewer implements Destroyable {
         toggleEdit(false, binding);
 
         if (!model.equals(mInitialModel)) {
-            mDBHelper.updateBookmark(model.getChapterNo(), model.getFromVerseNo(), model.getToVerseNo(), model.getNote(), nModel -> {
-                if (mBookmarkCallbacks != null) {
-                    mBookmarkCallbacks.onBookmarkUpdated(nModel);
-                }
-            });
+            mDBHelper.updateBookmark(model.getChapterNo(), model.getFromVerseNo(), model.getToVerseNo(),
+                model.getNote(), nModel -> {
+                    if (mBookmarkCallbacks != null) {
+                        mBookmarkCallbacks.onBookmarkUpdated(nModel);
+                    }
+                });
         }
     }
 
     public void open(BookmarkModel model) {
-        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(), model.getToVerseNo());
+        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
+            model.getToVerseNo());
         intent.setClass(mContext, ActivityReader.class);
         mContext.startActivity(intent);
     }
@@ -234,7 +235,8 @@ public class BookmarkViewer implements Destroyable {
         builder.setButtonsDirection(PeaceDialog.STACKED);
         builder.setDialogGravity(PeaceDialog.GRAVITY_BOTTOM);
         builder.setNeutralButton(R.string.strLabelCancel, null);
-        builder.setNegativeButton(R.string.strLabelRemove, ColorUtils.DANGER, (dialog, which) -> removeBookmarkFinal(model));
+        builder.setNegativeButton(R.string.strLabelRemove, ColorUtils.DANGER,
+            (dialog, which) -> removeBookmarkFinal(model));
         builder.setFocusOnNegative(true);
         builder.show();
     }

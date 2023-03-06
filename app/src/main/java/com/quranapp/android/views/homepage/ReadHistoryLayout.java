@@ -6,22 +6,20 @@
 
 package com.quranapp.android.views.homepage;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.peacedesign.android.utils.Dimen.dp2px;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.peacedesign.android.utils.Dimen.dp2px;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReadHistory;

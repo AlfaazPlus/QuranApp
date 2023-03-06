@@ -69,10 +69,13 @@ object NotificationUtils {
             setShowBadge(true)
             enableVibration(true)
 
-            setSound(Settings.System.DEFAULT_NOTIFICATION_URI, AudioAttributes.Builder().apply {
-                setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-            }.build())
+            setSound(
+                Settings.System.DEFAULT_NOTIFICATION_URI,
+                AudioAttributes.Builder().apply {
+                    setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                }.build()
+            )
         }
     }
 
@@ -80,7 +83,7 @@ object NotificationUtils {
     private fun createDownloadsChannel(ctx: Context): NotificationChannel {
         return createChannel(
             ctx.getString(R.string.strNotifChannelIdDownloads),
-            ctx.getString(R.string.strNotifChannelDownloads),
+            ctx.getString(R.string.strNotifChannelDownloads)
         )
     }
 
@@ -88,7 +91,7 @@ object NotificationUtils {
     private fun createRecitationChannel(ctx: Context): NotificationChannel {
         return createChannel(
             ctx.getString(R.string.strNotifChannelIdRecitation),
-            "Recitation Player",
+            "Recitation Player"
         )
     }
 

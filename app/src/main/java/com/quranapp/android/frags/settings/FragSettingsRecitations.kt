@@ -64,7 +64,10 @@ class FragSettingsRecitations : FragSettingsBase() {
 
             disableRightBtn(false)
             setSearchHint(R.string.strHintSearchReciter)
-            setRightIconRes(R.drawable.dr_icon_refresh, activity.getString(R.string.strLabelRefresh))
+            setRightIconRes(
+                R.drawable.dr_icon_refresh,
+                activity.getString(R.string.strLabelRefresh)
+            )
         }
     }
 
@@ -83,7 +86,6 @@ class FragSettingsRecitations : FragSettingsBase() {
     private fun initPageAlert(ctx: Context) {
         mPageAlert = PageAlert(ctx)
     }
-
 
     private fun refresh(ctx: Context, force: Boolean) {
         showLoader()
@@ -128,7 +130,6 @@ class FragSettingsRecitations : FragSettingsBase() {
         resetAdapter(found)
     }
 
-
     private fun populateTranslations(ctx: Context, models: List<RecitationModel>) {
         mModels = models
 
@@ -149,7 +150,9 @@ class FragSettingsRecitations : FragSettingsBase() {
     }
 
     private fun noRecitersAvailable(ctx: Context) {
-        showAlert(ctx, 0, R.string.strMsgRecitationsNoAvailable, R.string.strLabelRefresh) { refresh(ctx, true) }
+        showAlert(ctx, 0, R.string.strMsgRecitationsNoAvailable, R.string.strLabelRefresh) {
+            refresh(ctx, true)
+        }
     }
 
     private fun showLoader() {
@@ -194,7 +197,6 @@ class FragSettingsRecitations : FragSettingsBase() {
     private fun hideAlert() {
         mPageAlert?.remove()
     }
-
 
     private fun noInternet(ctx: Context) {
         if (mPageAlert == null) {

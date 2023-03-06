@@ -6,11 +6,6 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,10 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.quranapp.android.R;

@@ -1,7 +1,9 @@
 package com.quranapp.android.adapters;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
@@ -9,12 +11,8 @@ import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemView
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
-
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -125,7 +123,7 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
         msgView.setElevation(activity.dp2px(4));
         msgView.setMessageStyle(CardMessageParams.STYLE_WARNING);
         msgView.setActionText(activity.str(R.string.strTitleSettings),
-                () -> activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSL));
+            () -> activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSL));
         return msgView;
     }
 
@@ -146,9 +144,12 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
             int viewType = getViewType(position);
 
             switch (viewType) {
-                case CHAPTER_INFO: ((ChapterInfoCardView) itemView).setInfo(mChapterInfoMeta); break;
-                case VERSE: setupVerseView(model); break;
-                case CHAPTER_TITLE: setupTitleView(model); break;
+                case CHAPTER_INFO: ((ChapterInfoCardView) itemView).setInfo(mChapterInfoMeta);
+                    break;
+                case VERSE: setupVerseView(model);
+                    break;
+                case CHAPTER_TITLE: setupTitleView(model);
+                    break;
             }
         }
 

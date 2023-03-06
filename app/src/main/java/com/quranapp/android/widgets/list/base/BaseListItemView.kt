@@ -64,7 +64,6 @@ class BaseListItemView(context: Context, val item: BaseListItem) : FrameLayout(c
         containerView.addView(iconView)
     }
 
-
     private fun initLabelCont() {
         labelCont.apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
@@ -102,7 +101,7 @@ class BaseListItemView(context: Context, val item: BaseListItem) : FrameLayout(c
         mMessageView.setEllipsize(TextUtils.TruncateAt.END);*/
 
         updateDescription()
-        labelCont!!.addView(messageView)
+        labelCont.addView(messageView)
     }
 
     fun updateIcon() {
@@ -117,7 +116,6 @@ class BaseListItemView(context: Context, val item: BaseListItem) : FrameLayout(c
         }
 
         iconView?.setImageDrawable(context.drawable(item.icon))
-
     }
 
     fun updateLabel() {
@@ -182,5 +180,4 @@ class BaseListItemView(context: Context, val item: BaseListItem) : FrameLayout(c
     private fun resolveItemMassageStyle(): Context {
         return ContextThemeWrapper(context, R.style.SimpleListItemMessageStyle)
     }
-
 }

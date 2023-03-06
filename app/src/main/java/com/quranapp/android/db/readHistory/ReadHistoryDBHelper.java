@@ -1,5 +1,12 @@
 package com.quranapp.android.db.readHistory;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import androidx.annotation.NonNull;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_CHAPTER_NO;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_DATETIME;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_FROM_VERSE_NO;
@@ -10,15 +17,6 @@ import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistor
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.TABLE_NAME;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry._ID;
 import static java.lang.String.valueOf;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.NonNull;
 
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
@@ -40,14 +38,14 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
-                COL_READ_TYPE + " INTEGER," +
-                COL_READER_STYLE + " INTEGER," +
-                COL_JUZ_NO + " INTEGER," +
-                COL_CHAPTER_NO + " INTEGER," +
-                COL_FROM_VERSE_NO + " INTEGER," +
-                COL_TO_VERSE_NO + " INTEGER," +
-                COL_DATETIME + " TEXT)";
+            _ID + " INTEGER PRIMARY KEY," +
+            COL_READ_TYPE + " INTEGER," +
+            COL_READER_STYLE + " INTEGER," +
+            COL_JUZ_NO + " INTEGER," +
+            COL_CHAPTER_NO + " INTEGER," +
+            COL_FROM_VERSE_NO + " INTEGER," +
+            COL_TO_VERSE_NO + " INTEGER," +
+            COL_DATETIME + " TEXT)";
         DB.execSQL(CREATE_TABLE);
     }
 
@@ -66,48 +64,52 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
     private void removeOldHistories() {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + "" +
-                " WHERE " + _ID + " IN " +
-                "(SELECT " + _ID + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT -1 OFFSET " + HISTORY_LIMIT + ");");
+            " WHERE " + _ID + " IN " +
+            "(SELECT " + _ID + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT -1 OFFSET " + HISTORY_LIMIT + ");");
     }
 
     private boolean isAlreadyAdded(int readType, int readStyle, int juzNo, int chapterNo, int fromVerse, int toVerse) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selection = DBUtils.createDBSelection(COL_READ_TYPE, COL_READER_STYLE, COL_JUZ_NO,
-                COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
+            COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
         String[] selectionArgs = {
-                valueOf(readType),
-                valueOf(readStyle),
-                valueOf(juzNo),
-                valueOf(chapterNo),
-                valueOf(fromVerse),
-                valueOf(toVerse)
+            valueOf(readType),
+            valueOf(readStyle),
+            valueOf(juzNo),
+            valueOf(chapterNo),
+            valueOf(fromVerse),
+            valueOf(toVerse)
         };
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME, selection, selectionArgs) > 0;
     }
 
-    private void deleteHistory(SQLiteDatabase db, int readType, int readStyle, int juzNo,
-                               int chapterNo, int fromVerse, int toVerse) {
+    private void deleteHistory(
+        SQLiteDatabase db, int readType, int readStyle, int juzNo,
+        int chapterNo, int fromVerse, int toVerse
+    ) {
         if (db == null) {
             db = getWritableDatabase();
         }
 
         String where = DBUtils.createDBSelection(COL_READ_TYPE, COL_READER_STYLE, COL_JUZ_NO,
-                COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
+            COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
         String[] whereArgs = {
-                valueOf(readType),
-                valueOf(readStyle),
-                valueOf(juzNo),
-                valueOf(chapterNo),
-                valueOf(fromVerse),
-                valueOf(toVerse)
+            valueOf(readType),
+            valueOf(readStyle),
+            valueOf(juzNo),
+            valueOf(chapterNo),
+            valueOf(fromVerse),
+            valueOf(toVerse)
         };
 
         db.delete(TABLE_NAME, where, whereArgs);
     }
 
-    public void addToHistory(int readType, int readStyle, int juzNo, int chapterNo, int fromVerse, int toVerse,
-                             OnResultReadyCallback<ReadHistoryModel> callback) {
+    public void addToHistory(
+        int readType, int readStyle, int juzNo, int chapterNo, int fromVerse, int toVerse,
+        OnResultReadyCallback<ReadHistoryModel> callback
+    ) {
 
         SQLiteDatabase db = getWritableDatabase();
 
@@ -131,7 +133,8 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
         removeOldHistories();
 
         if (inserted && callback != null) {
-            callback.onReady(new ReadHistoryModel(rowId, readType, readStyle, juzNo, chapterNo, fromVerse, toVerse, dateTime));
+            callback.onReady(
+                new ReadHistoryModel(rowId, readType, readStyle, juzNo, chapterNo, fromVerse, toVerse, dateTime));
         }
     }
 
@@ -155,7 +158,8 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
             int toVerseNo = cursor.getInt(cursor.getColumnIndexOrThrow(COL_TO_VERSE_NO));
             String date = cursor.getString(cursor.getColumnIndexOrThrow(COL_DATETIME));
 
-            ReadHistoryModel model = new ReadHistoryModel(id, readType, readerStyle, juzNo, chapterNo, fromVerseNo, toVerseNo, date);
+            ReadHistoryModel model = new ReadHistoryModel(id, readType, readerStyle, juzNo, chapterNo, fromVerseNo,
+                toVerseNo, date);
             verses.add(model);
         }
         cursor.close();

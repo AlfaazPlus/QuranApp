@@ -4,8 +4,6 @@
 
 package com.quranapp.android.widgets.editor;
 
-import static android.graphics.Paint.ANTI_ALIAS_FLAG;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,9 +14,9 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
+import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;

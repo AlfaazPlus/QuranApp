@@ -44,7 +44,11 @@ abstract class FragSettingsBase : BaseFragment() {
         arguments = args
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return if (shouldCreateScrollerView) {
             NestedScrollView(inflater.context).apply {
                 id = R.id.scrollView

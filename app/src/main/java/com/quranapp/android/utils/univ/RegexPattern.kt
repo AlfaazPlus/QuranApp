@@ -19,5 +19,7 @@ object RegexPattern {
     val VERSE_JUMP_PATTERN: Pattern = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)")
 
     @JvmField
-    val VERSE_RANGE_JUMP_PATTERN: Pattern = Pattern.compile("(\\d+)[\\s+]?:[\\s+]?(\\d+)[\\-](\\d+)")
+    val VERSE_RANGE_JUMP_PATTERN: Pattern = Pattern.compile(
+        "(\\d+)[\\s+]?:[\\s+]?(\\d+)[\\-](\\d+)"
+    )
 }

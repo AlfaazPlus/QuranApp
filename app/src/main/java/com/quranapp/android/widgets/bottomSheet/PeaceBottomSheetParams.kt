@@ -43,7 +43,6 @@ class PeaceBottomSheetParams : Serializable {
     @LayoutRes
     var contentViewResId = 0
 
-
     fun supportsNoAnimation(): Boolean {
         return !supportsAnimations || !supportsEnterAnimation && !supportsExitAnimation
     }

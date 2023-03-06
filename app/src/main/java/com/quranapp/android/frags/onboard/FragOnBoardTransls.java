@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,19 +60,20 @@ public class FragOnBoardTransls extends FragOnBoardBase {
     }
 
     private void showTransls(RecyclerView list) {
-        mTranslTaskRunner.callAsync(new FragSettingsTransl.LoadTranslsTask(FileUtils.newInstance(list.getContext()), mTranslSlugs) {
-            @Override
-            public void onComplete(List<TranslBaseModel> translItems) {
-                if (!translItems.isEmpty()) {
-                    populateTransls(list, translItems);
+        mTranslTaskRunner.callAsync(
+            new FragSettingsTransl.LoadTranslsTask(FileUtils.newInstance(list.getContext()), mTranslSlugs) {
+                @Override
+                public void onComplete(List<TranslBaseModel> translItems) {
+                    if (!translItems.isEmpty()) {
+                        populateTransls(list, translItems);
+                    }
                 }
-            }
-        });
+            });
     }
 
     private void populateTransls(RecyclerView list, List<TranslBaseModel> translItems) {
         ADPTransls adapter = new ADPTransls(list.getContext(), translItems, false,
-                (ctx, model, isSelected) -> TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, model, isSelected, true));
+            (ctx, model, isSelected) -> TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, model, isSelected, true));
         list.setAdapter(adapter);
     }
 }

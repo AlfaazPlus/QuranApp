@@ -3,7 +3,6 @@ package com.quranapp.android.views.helper;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;

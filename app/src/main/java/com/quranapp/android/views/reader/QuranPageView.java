@@ -1,8 +1,5 @@
 package com.quranapp.android.views.reader;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
@@ -21,10 +18,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -145,7 +143,8 @@ public class QuranPageView extends FrameLayout {
                 public void onAnimationEnd(Animator animation) {
                     VerseArabicHighlightSpan span = verseSpanToAnimate.get();
                     if (span != null) {
-                        span.setBackgroundColor(span.verseNo == recitingVerseNo ? mBGHighlightBGColor : Color.TRANSPARENT);
+                        span.setBackgroundColor(
+                            span.verseNo == recitingVerseNo ? mBGHighlightBGColor : Color.TRANSPARENT);
                     }
                 }
             });
@@ -196,7 +195,8 @@ public class QuranPageView extends FrameLayout {
 
             if (!mScrollHighlightInProgress) {
                 Spannable spannable2 = (Spannable) mBinding.content.getText();
-                VerseArabicHighlightSpan[] spans = spannable2.getSpans(0, spannable2.length(), VerseArabicHighlightSpan.class);
+                VerseArabicHighlightSpan[] spans = spannable2.getSpans(0, spannable2.length(),
+                    VerseArabicHighlightSpan.class);
 
                 boolean anyReciting = false;
                 for (VerseArabicHighlightSpan span : spans) {
@@ -239,7 +239,8 @@ public class QuranPageView extends FrameLayout {
             }
 
             Spannable spannableStr = (Spannable) verseText;
-            final VerseArabicHighlightSpan[] spans = spannableStr.getSpans(0, spannableStr.length(), VerseArabicHighlightSpan.class);
+            final VerseArabicHighlightSpan[] spans = spannableStr.getSpans(0, spannableStr.length(),
+                VerseArabicHighlightSpan.class);
 
             if (spans == null) {
                 return null;
@@ -283,7 +284,8 @@ public class QuranPageView extends FrameLayout {
             }
 
             SpannableString spannableStr = (SpannableString) verseText;
-            final VerseArabicHighlightSpan[] spans = spannableStr.getSpans(0, spannableStr.length(), VerseArabicHighlightSpan.class);
+            final VerseArabicHighlightSpan[] spans = spannableStr.getSpans(0, spannableStr.length(),
+                VerseArabicHighlightSpan.class);
 
             if (spans == null) {
                 return;

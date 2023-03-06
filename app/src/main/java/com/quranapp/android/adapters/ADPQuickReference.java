@@ -1,7 +1,6 @@
 package com.quranapp.android.adapters;
 
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 

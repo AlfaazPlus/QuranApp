@@ -1,7 +1,5 @@
 package com.quranapp.android.activities;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -12,11 +10,11 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;

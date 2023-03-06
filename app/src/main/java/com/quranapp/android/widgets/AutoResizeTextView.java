@@ -19,10 +19,10 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
          * text, it takes less space than {@code availableSpace}, > 0
          * otherwise
          */
-        public int onTestSize(int suggestedSize, RectF availableSpace);
+        int onTestSize(int suggestedSize, RectF availableSpace);
     }
 
-    private RectF mTextRect = new RectF();
+    private final RectF mTextRect = new RectF();
 
     private RectF mAvailableSpaceRect;
 
@@ -132,7 +132,7 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
         else
             r = c.getResources();
         mMaxTextSize = TypedValue.applyDimension(unit, size,
-                r.getDisplayMetrics());
+            r.getDisplayMetrics());
         mTextCachedSizes.clear();
         adjustTextSize(getText().toString());
     }
@@ -146,7 +146,6 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
 
     /**
      * Set the lower text size limit and invalidate the view
-     *
      */
     public void setMinTextSize(float minTextSize) {
         mMinTextSize = minTextSize;
@@ -163,15 +162,15 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
         }
         int startSize = (int) mMinTextSize;
         int heightLimit = getMeasuredHeight() - getCompoundPaddingBottom()
-                - getCompoundPaddingTop();
+            - getCompoundPaddingTop();
         mWidthLimit = getMeasuredWidth() - getCompoundPaddingLeft()
-                - getCompoundPaddingRight();
+            - getCompoundPaddingRight();
         mAvailableSpaceRect.right = mWidthLimit;
         mAvailableSpaceRect.bottom = heightLimit;
         super.setTextSize(
-                TypedValue.COMPLEX_UNIT_PX,
-                efficientTextSizeSearch(startSize, (int) mMaxTextSize,
-                        mSizeTester, mAvailableSpaceRect));
+            TypedValue.COMPLEX_UNIT_PX,
+            efficientTextSizeSearch(startSize, (int) mMaxTextSize,
+                mSizeTester, mAvailableSpaceRect));
     }
 
     private final SizeTester mSizeTester = new SizeTester() {
@@ -185,11 +184,11 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
                 mTextRect.right = mPaint.measureText(text);
             } else {
                 StaticLayout layout = new StaticLayout(text, mPaint,
-                        mWidthLimit, Alignment.ALIGN_NORMAL, mSpacingMult,
-                        mSpacingAdd, true);
+                    mWidthLimit, Alignment.ALIGN_NORMAL, mSpacingMult,
+                    mSpacingAdd, true);
                 // return early if we have more lines
                 if (getMaxLines() != NO_LINE_LIMIT
-                        && layout.getLineCount() > getMaxLines()) {
+                    && layout.getLineCount() > getMaxLines()) {
                     return 1;
                 }
                 mTextRect.bottom = layout.getHeight();
@@ -242,8 +241,10 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
         return size;
     }
 
-    private static int binarySearch(int start, int end, SizeTester sizeTester,
-                                    RectF availableSpace) {
+    private static int binarySearch(
+        int start, int end, SizeTester sizeTester,
+        RectF availableSpace
+    ) {
         int lastBest = start;
         int lo = start;
         int hi = end - 1;
@@ -267,15 +268,19 @@ public class AutoResizeTextView extends androidx.appcompat.widget.AppCompatTextV
     }
 
     @Override
-    protected void onTextChanged(final CharSequence text, final int start,
-                                 final int before, final int after) {
+    protected void onTextChanged(
+        final CharSequence text, final int start,
+        final int before, final int after
+    ) {
         super.onTextChanged(text, start, before, after);
         reAdjust();
     }
 
     @Override
-    protected void onSizeChanged(int width, int height, int oldWidth,
-                                 int oldHeight) {
+    protected void onSizeChanged(
+        int width, int height, int oldWidth,
+        int oldHeight
+    ) {
         mTextCachedSizes.clear();
         super.onSizeChanged(width, height, oldWidth, oldHeight);
         if (width != oldWidth || height != oldHeight) {

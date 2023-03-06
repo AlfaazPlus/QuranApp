@@ -4,12 +4,10 @@
 
 package com.quranapp.android.adapters.editor;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.components.editor.EditorFG;
@@ -47,7 +45,8 @@ public class ADPEditorFG extends RecyclerView.Adapter<ADPEditorFG.VHEditorFG> {
         public VHEditorFG(@NonNull EditorFGView editorFGView) {
             super(editorFGView);
             mEditorFGView = editorFGView;
-            editorFGView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, Dimen.dp2px(editorFGView.getContext(), 120)));
+            editorFGView.setLayoutParams(
+                new ViewGroup.LayoutParams(MATCH_PARENT, Dimen.dp2px(editorFGView.getContext(), 120)));
             editorFGView.setOnTouchListener(new HoverPushOpacityEffect());
         }
 

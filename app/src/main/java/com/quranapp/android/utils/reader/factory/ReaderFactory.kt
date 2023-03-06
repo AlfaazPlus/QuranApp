@@ -62,7 +62,6 @@ object ReaderFactory {
         )
     }
 
-
     @JvmStatic
     fun startVerseRange(context: Context, chapterNo: Int, fromVerse: Int, toVerse: Int) {
         context.startActivity(
@@ -118,7 +117,6 @@ object ReaderFactory {
         return prepareVerseRangeIntent(chapterNo, verseNo, verseNo)
     }
 
-
     @JvmStatic
     fun prepareVerseRangeIntent(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
         return prepareVerseRangeIntent(chapterNo, Pair(fromVerse, toVerse))
@@ -156,11 +154,17 @@ object ReaderFactory {
         chapters: List<Int>,
         verses: List<String>
     ) {
-        val intent = prepareReferenceVerseIntent(showChapterSugg, title, desc, translSlug, chapters, verses)
+        val intent = prepareReferenceVerseIntent(
+            showChapterSugg,
+            title,
+            desc,
+            translSlug,
+            chapters,
+            verses
+        )
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
     }
-
 
     @JvmStatic
     fun startReferenceVerse(context: Context, referenceVerseModel: ReferenceVerseModel) {
@@ -168,7 +172,6 @@ object ReaderFactory {
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
     }
-
 
     @JvmStatic
     fun prepareReferenceVerseIntent(
@@ -179,10 +182,16 @@ object ReaderFactory {
         chapters: List<Int>,
         verses: List<String>
     ): Intent {
-        val referenceVerseModel = ReferenceVerseModel(showChapterSugg, title, desc, translSlug, chapters, verses)
+        val referenceVerseModel = ReferenceVerseModel(
+            showChapterSugg,
+            title,
+            desc,
+            translSlug,
+            chapters,
+            verses
+        )
         return prepareReferenceVerseIntent(referenceVerseModel)
     }
-
 
     @JvmStatic
     fun prepareReferenceVerseIntent(referenceVerseModel: ReferenceVerseModel): Intent {

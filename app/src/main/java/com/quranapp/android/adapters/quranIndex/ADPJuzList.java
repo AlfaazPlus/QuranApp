@@ -8,7 +8,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,7 +71,7 @@ public class ADPJuzList extends ADPReaderIndexBase<ADPJuzList.VHJuz> {
         Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
 
         IntStream.rangeClosed(chaptersInJuz.getFirst(), chaptersInJuz.getSecond())
-                .forEach(chapterNo -> chapterMetas.add(quranMeta.getChapterMeta(chapterNo)));
+            .forEach(chapterNo -> chapterMetas.add(quranMeta.getChapterMeta(chapterNo)));
 
         model.chapters = ImmutableList.copyOf(chapterMetas);
 
@@ -93,7 +92,7 @@ public class ADPJuzList extends ADPReaderIndexBase<ADPJuzList.VHJuz> {
     @Override
     public VHJuz onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LytReaderIndexJuzCardBinding binding = LytReaderIndexJuzCardBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
+            LayoutInflater.from(parent.getContext()), parent, false);
         binding.getRoot().setClipChildren(true);
         binding.getRoot().setClipToOutline(true);
         binding.chapterList.setLayoutManager(new LinearLayoutManager(parent.getContext()));

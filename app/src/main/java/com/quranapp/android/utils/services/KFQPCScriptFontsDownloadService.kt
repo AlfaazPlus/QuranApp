@@ -18,14 +18,14 @@ import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.univ.FileUtils
+import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.io.File
-import java.io.InputStream
-import java.io.OutputStream
 
 class KFQPCScriptFontsDownloadService : Service() {
     companion object {
@@ -40,7 +40,9 @@ class KFQPCScriptFontsDownloadService : Service() {
     private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
     private val binder = LocalBinder()
-    private val notifManager by lazy { getSystemService(NOTIFICATION_SERVICE) as NotificationManager }
+    private val notifManager by lazy {
+        getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    }
     var isDownloadRunning = false
     var currentScriptKey: String? = null
 
@@ -118,7 +120,9 @@ class KFQPCScriptFontsDownloadService : Service() {
                         emit(DownloadFlow.Start(null))
                         emit(DownloadFlow.Progress(null, 0))
 
-                        val scriptResBody = RetrofitInstance.github.getQuranScript("script_$scriptKey.json")
+                        val scriptResBody = RetrofitInstance.github.getQuranScript(
+                            "script_$scriptKey.json"
+                        )
                         val byteStream = scriptResBody.byteStream()
 
                         val totalBytes = byteStream.available()
@@ -132,13 +136,11 @@ class KFQPCScriptFontsDownloadService : Service() {
 
                         emit(DownloadFlow.Complete(null))
                     }
-
                 } catch (e: Exception) {
                     emit(DownloadFlow.Failed(null))
                     e.printStackTrace()
                     return@flow
                 }
-
 
                 val fontsDir = fileUtils.getKFQPCScriptFontDir(scriptKey)
                 for (pageNo in 1..QuranMeta.totalPages()) {
@@ -179,14 +181,21 @@ class KFQPCScriptFontsDownloadService : Service() {
                 emit(DownloadFlow.Complete(PAGE_NO_ALL_DOWNLOADS_FINISHED))
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
-                sendBroadcast(Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
-                    putExtra(KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW, DownloadFlow.Failed(null))
-                })
+                sendBroadcast(
+                    Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
+                        putExtra(
+                            KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW,
+                            DownloadFlow.Failed(null)
+                        )
+                    }
+                )
                 finish()
             }.collect {
-                sendBroadcast(Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
-                    putExtra(KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW, it)
-                })
+                sendBroadcast(
+                    Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
+                        putExtra(KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW, it)
+                    }
+                )
 
                 if (it is DownloadFlow.Complete && it.pageNo == PAGE_NO_ALL_DOWNLOADS_FINISHED || it is DownloadFlow.Failed && it.pageNo == null) {
                     finish()
@@ -194,7 +203,6 @@ class KFQPCScriptFontsDownloadService : Service() {
                     showProgressNotification(it.pageNo, it.progress, scriptKey)
                 }
             }
-
         }
     }
 
@@ -218,7 +226,9 @@ class KFQPCScriptFontsDownloadService : Service() {
                     outS.write(buffer, 0, bytes)
                     progressBytes += bytes
 
-                    flowCollector.emit(DownloadFlow.Progress(pageNo, ((progressBytes * 100) / totalBytes).toInt()))
+                    flowCollector.emit(
+                        DownloadFlow.Progress(pageNo, ((progressBytes * 100) / totalBytes).toInt())
+                    )
                 }
             }
         }
@@ -246,13 +256,23 @@ class KFQPCScriptFontsDownloadService : Service() {
             .Builder(this, getString(R.string.strNotifChannelIdDownloads))
             .setSmallIcon(R.drawable.dr_logo)
             .setContentTitle(
-                if (pageNo == null) getString(R.string.msgDownloadingScript)
-                else getString(R.string.msgDownloadingFonts)
+                if (pageNo == null) {
+                    getString(R.string.msgDownloadingScript)
+                } else {
+                    getString(R.string.msgDownloadingFonts)
+                }
             )
             .setContentText(scriptKey.getQuranScriptName())
             .setSubText(
-                if (pageNo == null) null
-                else getString(R.string.msgFontsDonwloadProgressShort, pageNo - 1, QuranMeta.totalPages())
+                if (pageNo == null) {
+                    null
+                } else {
+                    getString(
+                        R.string.msgFontsDonwloadProgressShort,
+                        pageNo - 1,
+                        QuranMeta.totalPages()
+                    )
+                }
             )
             .setProgress(100, progress, false)
             .setOngoing(true)
@@ -279,7 +299,6 @@ class KFQPCScriptFontsDownloadService : Service() {
     inner class LocalBinder : Binder() {
         val service get() = this@KFQPCScriptFontsDownloadService
     }
-
 }
 
 sealed class DownloadFlow : java.io.Serializable {

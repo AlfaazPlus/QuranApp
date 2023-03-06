@@ -1,10 +1,8 @@
 package com.quranapp.android.frags.readerindex;
 
-import static androidx.recyclerview.widget.RecyclerView.VERTICAL;
-
 import android.content.Context;
-
 import androidx.recyclerview.widget.GridLayoutManager;
+import static androidx.recyclerview.widget.RecyclerView.VERTICAL;
 
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.adapters.quranIndex.ADPChaptersList;

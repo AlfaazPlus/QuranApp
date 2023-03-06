@@ -50,7 +50,10 @@ class TranslationDownloadService : Service() {
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
                 1,
-                NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
+                NotificationUtils.createEmptyNotif(
+                    this,
+                    getString(R.string.strNotifChannelIdDownloads)
+                )
             )
         }
     }
@@ -65,15 +68,19 @@ class TranslationDownloadService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         if (intent == null) {
-            val notification = NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
+            val notification = NotificationUtils.createEmptyNotif(
+                this,
+                getString(R.string.strNotifChannelIdDownloads)
+            )
             startForeground(1, notification)
             finish()
             return START_NOT_STICKY
         }
 
-        val bookInfo = intent.serializableExtra<QuranTranslBookInfo>(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO)
+        val bookInfo = intent.serializableExtra<QuranTranslBookInfo>(
+            TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO
+        )
             ?: return START_NOT_STICKY
 
         mCurrentDownloads.add(bookInfo.slug)
@@ -87,19 +94,21 @@ class TranslationDownloadService : Service() {
         return START_NOT_STICKY
     }
 
-    private fun showNotification(notifId: Int, notification: Notification, notifManager: NotificationManagerCompat) {
+    private fun showNotification(
+        notifId: Int,
+        notification: Notification,
+        notifManager: NotificationManagerCompat
+    ) {
         notifManager.cancel(1)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
         startForeground(notifId, notification)
     }
-
 
     private fun startDownload(
         bookInfo: QuranTranslBookInfo,
         notifBuilder: NotificationCompat.Builder,
         notifManager: NotificationManagerCompat
     ) {
-
         CoroutineScope(Dispatchers.IO).launch {
             val notifId = bookInfo.slug.hashCode()
 
@@ -111,7 +120,10 @@ class TranslationDownloadService : Service() {
                 val data = responseBody.string()
 
                 if (data.isEmpty()) {
-                    sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
+                    sendStatusBroadcast(
+                        TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED,
+                        bookInfo
+                    )
                     return@launch
                 }
 
@@ -142,7 +154,11 @@ class TranslationDownloadService : Service() {
         }
     }
 
-    private fun notify(notifId: Int, notifManager: NotificationManagerCompat, notification: Notification) {
+    private fun notify(
+        notifId: Int,
+        notifManager: NotificationManagerCompat,
+        notification: Notification
+    ) {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
@@ -154,12 +170,13 @@ class TranslationDownloadService : Service() {
         notifManager.notify(notifId, notification)
     }
 
-
     private fun sendStatusBroadcast(status: String, bookInfo: QuranTranslBookInfo) {
-        sendBroadcast(Intent(TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS).apply {
-            putExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO, bookInfo)
-            putExtra(TranslDownloadReceiver.KEY_TRANSL_DOWNLOAD_STATUS, status)
-        })
+        sendBroadcast(
+            Intent(TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS).apply {
+                putExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO, bookInfo)
+                putExtra(TranslDownloadReceiver.KEY_TRANSL_DOWNLOAD_STATUS, status)
+            }
+        )
     }
 
     private fun prepareNotification(bookInfo: QuranTranslBookInfo): NotificationCompat.Builder {
@@ -181,8 +198,16 @@ class TranslationDownloadService : Service() {
         }
 
         val activityIntent = Intent(this, ActivitySettings::class.java)
-        activityIntent.putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_TRANSL_DOWNLOAD)
-        val pendingIntent = PendingIntent.getActivity(this, bookInfo.slug.hashCode(), activityIntent, flag)
+        activityIntent.putExtra(
+            ActivitySettings.KEY_SETTINGS_DESTINATION,
+            ActivitySettings.SETTINGS_TRANSL_DOWNLOAD
+        )
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            bookInfo.slug.hashCode(),
+            activityIntent,
+            flag
+        )
         builder.setContentIntent(pendingIntent)
         return builder
     }

@@ -1,11 +1,10 @@
 package com.quranapp.android.reader_managers;
 
+import android.os.Handler;
+import android.os.Looper;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-
-import android.os.Handler;
-import android.os.Looper;
 
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;

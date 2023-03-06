@@ -6,10 +6,6 @@
 
 package com.quranapp.android.views.homepage;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.peacedesign.android.utils.Dimen.dp2px;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -17,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
@@ -25,6 +20,9 @@ import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.peacedesign.android.utils.Dimen.dp2px;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding;
@@ -59,7 +57,8 @@ public abstract class HomepageCollectionLayoutBase extends LinearLayout {
     }
 
     private void initTitle(Context context) {
-        LytHomepageTitledItemTitleBinding binding = LytHomepageTitledItemTitleBinding.inflate(LayoutInflater.from(context));
+        LytHomepageTitledItemTitleBinding binding = LytHomepageTitledItemTitleBinding.inflate(
+            LayoutInflater.from(context));
 
         int headerIcon = getHeaderIcon();
         if (headerIcon != 0) {

@@ -8,12 +8,12 @@ import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
+import java.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
-import java.io.IOException
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -35,7 +35,11 @@ object RecitationManager {
         }
     }
 
-    private fun loadRecitations(ctx: Context, force: Boolean, callback: (AvailableRecitationsModel?) -> Unit) {
+    private fun loadRecitations(
+        ctx: Context,
+        force: Boolean,
+        callback: (AvailableRecitationsModel?) -> Unit
+    ) {
         val fileUtils = FileUtils.newInstance(ctx)
 
         val recitationsFile = fileUtils.recitationsManifestFile
@@ -87,7 +91,9 @@ object RecitationManager {
         val savedRecitationSlug = SPReader.getSavedRecitationSlug(ctx)
 
         try {
-            val availableRecitationsModel = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(stringData)
+            val availableRecitationsModel = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
+                stringData
+            )
 
             availableRecitationsModel.reciters.forEach { recitationModel ->
                 if (recitationModel.urlHost.isNullOrEmpty()) {
@@ -103,7 +109,6 @@ object RecitationManager {
             callback(null)
         }
     }
-
 
     @JvmStatic
     fun getModel(slug: String): RecitationModel? {

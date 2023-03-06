@@ -1,11 +1,5 @@
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,10 +13,14 @@ import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -42,7 +40,8 @@ import com.quranapp.android.views.reader.VerseView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.VHReferenceVerse> implements Destroyable {
+public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.VHReferenceVerse> implements
+    Destroyable {
     public static final int VIEWTYPE_DESCRIPTION = 0x0;
     public static final int VIEWTYPE_TITLE = 0x1;
     public static final int VIEWTYPE_VERSE = 0x2;
@@ -83,7 +82,8 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
     public VHReferenceVerse onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final VHReferenceVerse vh;
         if (viewType == VIEWTYPE_DESCRIPTION) {
-            LytActivityReferenceDescriptionBinding binding = LytActivityReferenceDescriptionBinding.inflate(mInflater, parent, false);
+            LytActivityReferenceDescriptionBinding binding = LytActivityReferenceDescriptionBinding.inflate(mInflater,
+                parent, false);
             vh = new VHReferenceVerse(binding);
         } else if (viewType == VIEWTYPE_TITLE) {
             LytReferenceVerseTitleBinding binding = LytReferenceVerseTitleBinding.inflate(mInflater, parent, false);
@@ -191,7 +191,8 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             binding.titleText.setText(model.getTitleText());
             binding.openInReader.setOnTouchListener(new HoverPushOpacityEffect());
             binding.openInReader.setOnClickListener(v -> {
-                Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerse(), model.getToVerse());
+                Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerse(),
+                    model.getToVerse());
                 intent.setClass(mActivity, ActivityReader.class);
                 intent.putExtra(READER_KEY_TRANSL_SLUGS, mActivity.mSelectedTranslSlugs.toArray(new String[0]));
                 intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);

@@ -7,7 +7,6 @@
 package com.quranapp.android.adapters.quranIndex;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;

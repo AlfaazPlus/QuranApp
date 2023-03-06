@@ -4,8 +4,6 @@
 
 package com.quranapp.android.adapters.transl;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -13,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
@@ -160,7 +158,8 @@ public class ADPDownloadTransls extends ADPTranslBase<ADPDownloadTransls.VHDownl
                 miniInfoView.setBackgroundResource(R.drawable.dr_bg_primary_cornered);
                 miniInfoView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
                 miniInfoView.setTextColor(ContextKt.color(ctx, R.color.white));
-                miniInfoView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2_5));
+                miniInfoView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                    ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2_5));
 
                 ViewPaddingKt.updatePaddingVertical(miniInfoView, Dimen.dp2px(ctx, 2));
                 ViewPaddingKt.updatePaddingHorizontal(miniInfoView, Dimen.dp2px(ctx, 5));

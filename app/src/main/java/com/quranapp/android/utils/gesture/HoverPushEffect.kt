@@ -52,7 +52,6 @@ open class HoverPushEffect(pressure: Pressure = Pressure.MEDIUM) : View.OnTouchL
         }.start()
     }
 
-
     enum class Pressure {
         LOW, MEDIUM, HIGH
     }

@@ -1,10 +1,5 @@
 package com.quranapp.android.suppliments.recitation;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.utils.univ.RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT;
-import static com.quranapp.android.utils.univ.RelativePopupWindow.VerticalPosition.ABOVE;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
@@ -14,9 +9,12 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.view.View;
-
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
+import static com.quranapp.android.utils.univ.RelativePopupWindow.HorizontalPosition.ALIGN_RIGHT;
+import static com.quranapp.android.utils.univ.RelativePopupWindow.VerticalPosition.ABOVE;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -74,17 +72,17 @@ public class RecitationMenu {
         });
 
         int resId = WindowUtils.isRTL(
-                mPlayer.getContext()) ? R.drawable.dr_icon_chevron_left : R.drawable.dr_icon_chevron_right;
+            mPlayer.getContext()) ? R.drawable.dr_icon_chevron_left : R.drawable.dr_icon_chevron_right;
         Drawable chevronRight = mPlayer.mActivity.drawable(resId);
         binding.selectReciter.setDrawables(mPlayer.mActivity.drawable(R.drawable.dr_icon_recitation), null,
-                chevronRight, null);
+            chevronRight, null);
 
         binding.repeatCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mPlayer.setRepeat(isChecked);
             ViewKt.disableView(binding.autoplay, isChecked);
         });
         binding.autoplayCheckbox.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> mPlayer.setContinueChapter(isChecked));
+            (buttonView, isChecked) -> mPlayer.setContinueChapter(isChecked));
     }
 
     private void reSetup(LytRecitationMenuBinding binding) {
@@ -111,12 +109,12 @@ public class RecitationMenu {
         if (!TextUtils.isEmpty(subtitle)) {
             SpannableString spannable = new SpannableString(subtitle);
             spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.colorText2)), 0,
-                    subtitle.length(),
-                    SPAN_EXCLUSIVE_EXCLUSIVE);
+                subtitle.length(),
+                SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new RelativeSizeSpan(0.93f), 0, subtitle.length(),
-                    SPAN_EXCLUSIVE_EXCLUSIVE);
+                SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new TypefaceSpan("sans-serif"), 0, subtitle.length(),
-                    SPAN_EXCLUSIVE_EXCLUSIVE);
+                SPAN_EXCLUSIVE_EXCLUSIVE);
             ssb.append("\n").append(spannable);
         }
 

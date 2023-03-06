@@ -22,7 +22,6 @@ class HoverOpacityEffect(
         return true
     }
 
-
     private fun down(v: View) {
         v.alpha = toOpacity
     }

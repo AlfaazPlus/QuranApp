@@ -7,7 +7,6 @@ package com.quranapp.android.frags.editshare;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -26,7 +25,8 @@ public class FragEditorBase extends BaseFragment {
         Context context = view.getContext();
 
         view.setBackgroundColor(ContextKt.color(context, R.color.colorBGPage));
-        ViewPaddingKt.updatePaddingVertical(view, ContextKt.dp2px(context, 10), ContextKt.getDimenPx(context, R.dimen.dmnPadBig));
+        ViewPaddingKt.updatePaddingVertical(view, ContextKt.dp2px(context, 10),
+            ContextKt.getDimenPx(context, R.dimen.dmnPadBig));
     }
 
     public void setEditor(VerseEditor verseEditor) {

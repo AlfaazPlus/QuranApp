@@ -14,7 +14,7 @@ import com.quranapp.android.utils.extensions.updatePaddingVertical
 open class BaseListView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
+    defStyleAttr: Int = 0
 ) : NestedScrollView(context, attrs, defStyleAttr) {
     companion object {
         const val DEFAULT_ITEM_ANIMATOR = -1
@@ -46,7 +46,6 @@ open class BaseListView @JvmOverloads constructor(
     open fun onCreate() {
         create()
     }
-
 
     private fun create() {
         container.removeAllViews()
@@ -86,10 +85,14 @@ open class BaseListView @JvmOverloads constructor(
     }
 
     private fun resolveAnimation(): Animation? {
-        return if (itemAnimator == 0) null else try {
-            AnimationUtils.loadAnimation(context, itemAnimator)
-        } catch (e: Exception) {
-            AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
+        return if (itemAnimator == 0) {
+            null
+        } else {
+            try {
+                AnimationUtils.loadAnimation(context, itemAnimator)
+            } catch (e: Exception) {
+                AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
+            }
         }
     }
 
@@ -109,7 +112,6 @@ open class BaseListView @JvmOverloads constructor(
     open fun dispatchItemClick(item: BaseListItem) {
         onItemClickListener?.onItemClick(item)
     }
-
 
     open fun setOnItemClickListener(listener: OnItemClickListener) {
         onItemClickListener = listener

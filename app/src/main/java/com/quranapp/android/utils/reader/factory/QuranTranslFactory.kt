@@ -19,10 +19,9 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION
 import com.quranapp.android.utils.search.SearchFilters
 import com.quranapp.android.utils.sharedPrefs.SPReader
-import org.json.JSONArray
 import java.io.Closeable
 import java.util.*
-
+import org.json.JSONArray
 
 /**
  * This factory prepares contents of translations for the requesters.
@@ -41,7 +40,11 @@ class QuranTranslFactory(private val context: Context) : Closeable {
         db.beginTransaction()
         try {
             db.execSQL("DROP TABLE IF EXISTS '$translSlug'")
-            db.delete(QuranTranslInfoEntry.TABLE_NAME, "${QuranTranslInfoEntry.COL_SLUG}=?", arrayOf(translSlug))
+            db.delete(
+                QuranTranslInfoEntry.TABLE_NAME,
+                "${QuranTranslInfoEntry.COL_SLUG}=?",
+                arrayOf(translSlug)
+            )
             db.setTransactionSuccessful()
         } finally {
             db.endTransaction()
@@ -100,7 +103,9 @@ class QuranTranslFactory(private val context: Context) : Closeable {
     private fun getTranslationBooksInfo(slugs: Set<String>? = null): Map<String, QuranTranslBookInfo> {
         val selection = if (slugs != null) {
             List(slugs.size) { "${QuranTranslInfoEntry.COL_SLUG}=?" }.joinToString(" OR ")
-        } else null
+        } else {
+            null
+        }
         val selectionArgs = slugs?.toTypedArray()
 
         val cursor = dbHelper.readableDatabase.query(
@@ -130,14 +135,30 @@ class QuranTranslFactory(private val context: Context) : Closeable {
     private fun getTranslationBookInfoFromCursor(cursor: Cursor): HashMap<String, QuranTranslBookInfo> {
         val bookInfos = HashMap<String, QuranTranslBookInfo>()
         while (cursor.moveToNext()) {
-            val bookInfo = QuranTranslBookInfo(cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_SLUG))).apply {
-                bookName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_BOOK_NAME))
-                authorName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_AUTHOR_NAME))
-                displayName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DISPLAY_NAME))
-                langName = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_NAME))
-                langCode = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_CODE))
-                lastUpdated = cursor.getLong(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LAST_UPDATED))
-                downloadPath = cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DOWNLOAD_PATH))
+            val bookInfo = QuranTranslBookInfo(
+                cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_SLUG))
+            ).apply {
+                bookName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_BOOK_NAME)
+                )
+                authorName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_AUTHOR_NAME)
+                )
+                displayName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DISPLAY_NAME)
+                )
+                langName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_NAME)
+                )
+                langCode = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LANG_CODE)
+                )
+                lastUpdated = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_LAST_UPDATED)
+                )
+                downloadPath = cursor.getString(
+                    cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_DOWNLOAD_PATH)
+                )
             }
             bookInfos[bookInfo.slug] = bookInfo
         }
@@ -177,7 +198,12 @@ class QuranTranslFactory(private val context: Context) : Closeable {
     }
 
     fun getTranslationsVerseRange(chapNo: Int, fromVerse: Int, toVerse: Int): List<List<Translation>> {
-        return getTranslationsVerseRange(SPReader.getSavedTranslations(context), chapNo, fromVerse, toVerse)
+        return getTranslationsVerseRange(
+            SPReader.getSavedTranslations(context),
+            chapNo,
+            fromVerse,
+            toVerse
+        )
     }
 
     /**
@@ -189,7 +215,12 @@ class QuranTranslFactory(private val context: Context) : Closeable {
      *            [<Transl-of-Slug1>, <Transl-of-Slug2>, <Transl-of-Slug3>] -> verse 1:4
      *       ]
      * */
-    fun getTranslationsVerseRange(slugs: Set<String>?, chapNo: Int, fromVerse: Int, toVerse: Int): List<List<Translation>> {
+    fun getTranslationsVerseRange(
+        slugs: Set<String>?,
+        chapNo: Int,
+        fromVerse: Int,
+        toVerse: Int
+    ): List<List<Translation>> {
         val transls = List(toVerse - fromVerse + 1) { ArrayList<Translation>() }.toMutableList()
 
         if (slugs.isNullOrEmpty()) {
@@ -218,7 +249,11 @@ class QuranTranslFactory(private val context: Context) : Closeable {
     * The returned verses will be sorted by verse number regardless of order of the passed verse numbers..
     * */
     fun getTranslationsDistinctVerses(chapNo: Int, vararg verses: Int): List<List<Translation>> {
-        return getTranslationsDistinctVerses(SPReader.getSavedTranslations(context), chapNo, *verses)
+        return getTranslationsDistinctVerses(
+            SPReader.getSavedTranslations(context),
+            chapNo,
+            *verses
+        )
     }
 
     /*
@@ -282,7 +317,11 @@ class QuranTranslFactory(private val context: Context) : Closeable {
         return getTranslationBooksInfoValidated(translSlugs).keys
     }
 
-    private fun getTranslationsFromQuery(translSlug: String, selection: String, selectionArgs: Array<String>): List<Translation>? {
+    private fun getTranslationsFromQuery(
+        translSlug: String,
+        selection: String,
+        selectionArgs: Array<String>
+    ): List<Translation>? {
         return try {
             val cols = arrayOf(COL_CHAPTER_NO, COL_VERSE_NO, COL_TEXT, COL_FOOTNOTES)
             val cursor = dbHelper.readableDatabase.query(
@@ -312,7 +351,8 @@ class QuranTranslFactory(private val context: Context) : Closeable {
                     try {
                         footnotes = readFootnotes(
                             translSlug,
-                            this.chapterNo, this.verseNo,
+                            this.chapterNo,
+                            this.verseNo,
                             cursor1.getString(cursor1.getColumnIndexOrThrow(COL_FOOTNOTES))
                         )
                     } catch (e: Exception) {
@@ -329,7 +369,12 @@ class QuranTranslFactory(private val context: Context) : Closeable {
      * [footnoteString] is the string of JsonArray.
      */
     @Throws(Exception::class)
-    private fun readFootnotes(translSlug: String, chapterNo: Int, verseNo: Int, footnoteString: String): HashMap<Int, Footnote> {
+    private fun readFootnotes(
+        translSlug: String,
+        chapterNo: Int,
+        verseNo: Int,
+        footnoteString: String
+    ): HashMap<Int, Footnote> {
         val footnotesMap = HashMap<Int, Footnote>()
         val footnotes = JSONArray(footnoteString)
         for (i in 0 until footnotes.length()) {
@@ -361,7 +406,8 @@ class QuranTranslFactory(private val context: Context) : Closeable {
         return if (cursor.moveToNext()) {
             val footnotes = readFootnotes(
                 translSlug,
-                chapNo, verseNo,
+                chapNo,
+                verseNo,
                 cursor.getString(cursor.getColumnIndexOrThrow(COL_FOOTNOTES))
             )
             cursor.close()
@@ -371,10 +417,18 @@ class QuranTranslFactory(private val context: Context) : Closeable {
         }
     }
 
-    fun prepareQuerySingle(filters: SearchFilters, query: String, slug: String, limit: Int, offset: Int): String {
+    fun prepareQuerySingle(
+        filters: SearchFilters,
+        query: String,
+        slug: String,
+        limit: Int,
+        offset: Int
+    ): String {
         val nQuery = query.replace(Regex("'", RegexOption.LITERAL), "''")
         val tableName = QuranTranslDBHelper.escapeTableName(slug)
-        val sqlQuery = StringBuilder("SELECT $COL_CHAPTER_NO, $COL_VERSE_NO, $COL_TEXT FROM $tableName")
+        val sqlQuery = StringBuilder(
+            "SELECT $COL_CHAPTER_NO, $COL_VERSE_NO, $COL_TEXT FROM $tableName"
+        )
         sqlQuery.append(" WHERE")
         if (filters.searchWordPart) {
             sqlQuery.append(" $COL_TEXT LIKE '%$nQuery%'")
@@ -434,5 +488,4 @@ class QuranTranslFactory(private val context: Context) : Closeable {
         }
         return cols.joinToString(",")
     }
-
 }

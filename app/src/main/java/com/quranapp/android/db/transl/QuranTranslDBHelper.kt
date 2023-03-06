@@ -10,18 +10,23 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.quranapp.android.utils.Log
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
-import org.json.JSONObject
 import java.io.File
+import org.json.JSONObject
 
-class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
+    context,
+    DB_NAME,
+    null,
+    DB_VERSION
+) {
     companion object {
         private const val DB_NAME = "QuranTranslation.db"
         const val DB_VERSION = 1
@@ -56,7 +61,9 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
         try {
             for (bookInfo in TranslUtils.preBuiltTranslBooksInfo()) {
                 val prebuiltTranslPath = TranslUtils.getPrebuiltTranslPath(bookInfo.slug)
-                val translStrData = StringUtils.readInputStream(context.assets.open(prebuiltTranslPath))
+                val translStrData = StringUtils.readInputStream(
+                    context.assets.open(prebuiltTranslPath)
+                )
                 storeTranslation(bookInfo, translStrData, DB)
             }
 
@@ -88,22 +95,24 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
             e.printStackTrace()
         } finally {
             fileUtils.deleteDirWithChildren(translDir)
-            Log.d("Migration finished anyhow, deleting root translation directory: " + translDir.name)
+            Log.d(
+                "Migration finished anyhow, deleting root translation directory: " + translDir.name
+            )
         }
     }
 
     private fun createTranslInfoTable(DB: SQLiteDatabase) {
         DB.execSQL(
             "CREATE TABLE ${QuranTranslInfoEntry.TABLE_NAME} (" +
-                    "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
-                    "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
-                    "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
-                    "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
-                    "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
-                    "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
-                    "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
-                    "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
-                    "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
+                "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
+                "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
+                "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
+                "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
+                "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
+                "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
+                "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
+                "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
+                "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
         )
     }
 
@@ -114,15 +123,19 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
     private fun createTranslTable(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo) {
         DB.execSQL(
             "CREATE TABLE IF NOT EXISTS ${escapeTableName(bookInfo.slug)} (" +
-                    "$_ID TEXT PRIMARY KEY," +
-                    "$COL_CHAPTER_NO INTEGER," +
-                    "$COL_VERSE_NO INTEGER," +
-                    "$COL_TEXT TEXT," +
-                    "$COL_FOOTNOTES TEXT)"
+                "$_ID TEXT PRIMARY KEY," +
+                "$COL_CHAPTER_NO INTEGER," +
+                "$COL_VERSE_NO INTEGER," +
+                "$COL_TEXT TEXT," +
+                "$COL_FOOTNOTES TEXT)"
         )
     }
 
-    private fun readAndInsertChapters(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo, root: JSONObject) {
+    private fun readAndInsertChapters(
+        DB: SQLiteDatabase,
+        bookInfo: QuranTranslBookInfo,
+        root: JSONObject
+    ) {
         val chapters = root.optJSONArray(QuranConstants.KEY_CHAPTER_LIST) ?: return
         for (i in 0 until chapters.length()) {
             val chapterObj = chapters.optJSONObject(i) ?: continue
@@ -130,7 +143,11 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(conte
         }
     }
 
-    private fun readAndInsertSingleChapter(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo, chapterObj: JSONObject) {
+    private fun readAndInsertSingleChapter(
+        DB: SQLiteDatabase,
+        bookInfo: QuranTranslBookInfo,
+        chapterObj: JSONObject
+    ) {
         val chapterNo = chapterObj.optInt(QuranConstants.KEY_NUMBER, -1)
         val verses = chapterObj.optJSONArray(QuranConstants.KEY_VERSE_LIST) ?: return
         for (i in 0 until verses.length()) {

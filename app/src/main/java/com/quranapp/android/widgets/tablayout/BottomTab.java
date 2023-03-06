@@ -12,7 +12,7 @@ import com.quranapp.android.utils.univ.StringUtils;
 public class BottomTab extends ComponentBase {
     private String tabLabel;
     @DrawableRes
-    private int tabIcon = 0;
+    private int tabIcon;
     private BottomTabView tabView;
     private boolean mIsKingTab;
     private Fragment attachedFragment;
@@ -43,7 +43,7 @@ public class BottomTab extends ComponentBase {
 
     @DrawableRes
     public int getTabIcon() {
-        return this.tabIcon;
+        return tabIcon;
     }
 
     public void setTabIcon(@DrawableRes int tabIcon) {

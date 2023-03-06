@@ -4,13 +4,6 @@
 
 package com.quranapp.android.activities;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.DOTALL;
-import static java.util.regex.Pattern.LITERAL;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
@@ -25,11 +18,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import static java.util.regex.Pattern.DOTALL;
+import static java.util.regex.Pattern.LITERAL;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -48,9 +46,9 @@ import com.quranapp.android.databinding.LytChipgroupBinding;
 import com.quranapp.android.databinding.LytTopicsActivityHeaderBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
 import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
-import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.views.helper.Spinner2;
 
 import java.util.ArrayList;
@@ -171,10 +169,10 @@ public class ActivityTopics extends BaseActivity {
 
         EditText searchBox = header.searchContainer.searchBox;
         searchBox.setPaddingRelative(
-                dp2px(5),
-                searchBox.getPaddingTop(),
-                searchBox.getPaddingEnd(),
-                searchBox.getPaddingBottom()
+            dp2px(5),
+            searchBox.getPaddingTop(),
+            searchBox.getPaddingEnd(),
+            searchBox.getPaddingBottom()
         );
         header.searchContainer.btnClear.setOnClickListener(v -> header.searchContainer.searchBox.setText(null));
         searchBox.setOnFocusChangeListener((v, hasFocus) -> {
@@ -198,7 +196,8 @@ public class ActivityTopics extends BaseActivity {
         }
 
         int itemLayoutRes = R.layout.lyt_topic_filter_spinner_item;
-        TopicFilterSpinnerAdapter adapter = new TopicFilterSpinnerAdapter(spinner.getContext(), itemLayoutRes, R.id.text, filters);
+        TopicFilterSpinnerAdapter adapter = new TopicFilterSpinnerAdapter(spinner.getContext(), itemLayoutRes,
+            R.id.text, filters);
         spinner.setAdapterWithDynamicWidth(adapter);
 
         spinner.setOnItemSelectedListener(new Spinner2.SimplerSpinnerItemSelectListener() {
@@ -267,7 +266,8 @@ public class ActivityTopics extends BaseActivity {
 
         if (showSearch) {
             searchBox.requestFocus();
-            InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         } else {
             searchBox.clearFocus();
@@ -284,7 +284,8 @@ public class ActivityTopics extends BaseActivity {
         }
 
         int dimen = ContextKt.getDimenPx(alphabetsContainer.getContext(), R.dimen.dmnChipGroupHeight);
-        DimensionAnimator animator = DimensionAnimator.Companion.ofHeight(alphabetsContainer, hide ? dimen : 0, hide ? 0 : dimen);
+        DimensionAnimator animator = DimensionAnimator.Companion.ofHeight(alphabetsContainer, hide ? dimen : 0,
+            hide ? 0 : dimen);
         animator.setDuration(70);
 
         if (hide) {
@@ -303,7 +304,8 @@ public class ActivityTopics extends BaseActivity {
     }
 
     private void initAlphabets() {
-        mAlphabetsGroupBinding = LytChipgroupBinding.inflate(LayoutInflater.from(this), mBinding.header.getRoot(), true);
+        mAlphabetsGroupBinding = LytChipgroupBinding.inflate(LayoutInflater.from(this), mBinding.header.getRoot(),
+            true);
         initAlphabetsAsync(mAlphabetsGroupBinding);
     }
 

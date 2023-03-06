@@ -7,7 +7,6 @@ package com.quranapp.android.activities;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;

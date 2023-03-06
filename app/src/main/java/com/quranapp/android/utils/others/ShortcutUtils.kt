@@ -36,12 +36,24 @@ object ShortcutUtils {
 
     @JvmStatic
     fun pushLastVersesShortcut(
-        ctx: Context, quranMeta: QuranMeta, readType: Int, readerStyle: Int,
-        juzNo: Int, chapterNo: Int, fromVerse: Int, toVerse: Int
+        ctx: Context,
+        quranMeta: QuranMeta,
+        readType: Int,
+        readerStyle: Int,
+        juzNo: Int,
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int
     ) {
         val id = ctx.getString(R.string.strShortcutIdLastVerses)
         val intent = ReaderFactory.prepareLastVersesIntentForShortcut(
-            quranMeta, juzNo, chapterNo, fromVerse, toVerse, readType, readerStyle
+            quranMeta,
+            juzNo,
+            chapterNo,
+            fromVerse,
+            toVerse,
+            readType,
+            readerStyle
         )
 
         if (intent == null) {

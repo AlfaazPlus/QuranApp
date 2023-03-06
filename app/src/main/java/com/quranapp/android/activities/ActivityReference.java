@@ -1,11 +1,5 @@
 package com.quranapp.android.activities;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -13,11 +7,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
+import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
+import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;

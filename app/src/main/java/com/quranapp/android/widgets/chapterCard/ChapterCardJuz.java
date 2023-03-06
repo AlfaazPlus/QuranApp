@@ -6,9 +6,6 @@
 
 package com.quranapp.android.widgets.chapterCard;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -18,11 +15,12 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
@@ -65,7 +63,8 @@ public class ChapterCardJuz extends ChapterCard {
             SpannableString spannableCount = new SpannableString(versesInJuzCount);
 
             spannablePrefix.setSpan(new RelativeSizeSpan(0.75f), 0, spannablePrefix.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannableCount.setSpan(new TypefaceSpan("sans-serif-medium"), 0, spannableCount.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableCount.setSpan(new TypefaceSpan("sans-serif-medium"), 0, spannableCount.length(),
+                SPAN_EXCLUSIVE_EXCLUSIVE);
 
             ((TextView) verseCount).setText(TextUtils.concat(spannablePrefix, spannableCount));
         }

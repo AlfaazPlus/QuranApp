@@ -2,7 +2,6 @@ package com.quranapp.android.components.quran;
 
 import android.content.Context;
 import android.util.SparseArray;
-
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.R;

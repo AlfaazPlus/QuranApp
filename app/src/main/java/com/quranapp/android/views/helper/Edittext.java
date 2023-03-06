@@ -2,7 +2,6 @@ package com.quranapp.android.views.helper;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 

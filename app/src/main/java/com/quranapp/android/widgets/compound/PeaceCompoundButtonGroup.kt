@@ -3,7 +3,6 @@ package com.quranapp.android.widgets.compound
 import androidx.annotation.IdRes
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 
-
 interface PeaceCompoundButtonGroup {
     fun clearCheck()
 

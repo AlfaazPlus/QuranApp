@@ -1,16 +1,14 @@
 package com.quranapp.android.adapters;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
-
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.activities.ActivityReader;
@@ -77,7 +75,7 @@ public class ADPQuranPages extends RecyclerView.Adapter<ADPQuranPages.VHQuranPag
         } else if (viewType == READER_PAGE) {
             final QuranPageView quranPageView = new QuranPageView(mActivity);
             final ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            LayoutParamsKt.updateMargins(params, Dimen.dp2px(parent.getContext(),3));
+            LayoutParamsKt.updateMargins(params, Dimen.dp2px(parent.getContext(), 3));
             quranPageView.setLayoutParams(params);
             view = quranPageView;
         } else if (viewType == READER_FOOTER) {

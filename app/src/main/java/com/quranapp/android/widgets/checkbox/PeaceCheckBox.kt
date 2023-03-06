@@ -21,11 +21,18 @@ class PeaceCheckBox @JvmOverloads constructor(
     private lateinit var checkBox: CheckBoxHelper
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.PeaceCompoundButton, defStyleAttr, 0)
+        val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.PeaceCompoundButton,
+            defStyleAttr,
+            0
+        )
 
         if (a.hasValue(R.styleable.PeaceCompoundButton_peaceComp_buttonCompat)) {
             hasInitialButtonDrawable = true
-            checkBoxButtonCompat = a.getDrawable(R.styleable.PeaceCompoundButton_peaceComp_buttonCompat)
+            checkBoxButtonCompat = a.getDrawable(
+                R.styleable.PeaceCompoundButton_peaceComp_buttonCompat
+            )
         }
 
         a.recycle()
@@ -35,7 +42,6 @@ class PeaceCheckBox @JvmOverloads constructor(
         super.initThis()
         super.setOnClickListener { toggle() }
     }
-
 
     override fun makeComponents() {
         makeCheckBox()
@@ -56,7 +62,6 @@ class PeaceCheckBox @JvmOverloads constructor(
         return checkBox
     }
 
-
     fun setButtonDrawable(buttonDrawable: Drawable?) {
         checkBox.buttonDrawable = buttonDrawable
     }
@@ -69,7 +74,11 @@ class PeaceCheckBox @JvmOverloads constructor(
         throw IllegalStateException("Use setOnCheckedChangedListener instead.")
     }
 
-    internal class CheckBoxHelper(context: Context) : AppCompatCheckBox(ContextThemeWrapper(context, R.style.PeaceCheckBox), null, 0) {
+    internal class CheckBoxHelper(context: Context) : AppCompatCheckBox(
+        ContextThemeWrapper(context, R.style.PeaceCheckBox),
+        null,
+        0
+    ) {
         init {
             setPaddingRelative(0, 0, 0, 0)
         }

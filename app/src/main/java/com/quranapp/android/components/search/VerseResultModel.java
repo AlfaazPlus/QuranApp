@@ -1,7 +1,6 @@
 package com.quranapp.android.components.search;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.components.quran.subcomponents.Translation;

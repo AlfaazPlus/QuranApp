@@ -6,7 +6,6 @@ package com.quranapp.android.activities;
 
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

@@ -62,7 +62,7 @@ public final class QuranProphetParser {
                     lastProphet.nameTrans = parser.getAttributeValue(null, PROPHETS_ATTR_PROPHET_NAME_TRANS);
                     lastProphet.honorific = parser.getAttributeValue(null, PROPHETS_ATTR_PROPHET_HONORIFIC);
                     lastProphet.iconRes = parser.getAttributeResourceValue("http://schemas.android.com/apk/res/android",
-                            PROPHETS_ATTR_PROPHET_ICON_RES, -1);
+                        PROPHETS_ATTR_PROPHET_ICON_RES, -1);
 
                     prophetList.add(lastProphet);
                 }
@@ -70,7 +70,8 @@ public final class QuranProphetParser {
                 if (lastProphet != null) {
                     lastProphet.verses = ParserUtils.prepareVersesList(parser.getText(), true);
                     lastProphet.chapters = ParserUtils.prepareChaptersList(lastProphet.verses);
-                    lastProphet.inChapters = ParserUtils.prepareChapterText(context, quranMeta, lastProphet.chapters, 2);
+                    lastProphet.inChapters = ParserUtils.prepareChapterText(context, quranMeta, lastProphet.chapters,
+                        2);
                 }
             }
             eventType = parser.next();

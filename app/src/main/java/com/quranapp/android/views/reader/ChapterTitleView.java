@@ -54,7 +54,7 @@ public class ChapterTitleView extends FrameLayout {
     public void setLayoutParams(ViewGroup.LayoutParams params) {
         if (params instanceof MarginLayoutParams) {
             //            params.width = WRAP_CONTENT;
-            LayoutParamsKt.updateMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(),20));
+            LayoutParamsKt.updateMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(), 20));
         }
         super.setLayoutParams(params);
     }

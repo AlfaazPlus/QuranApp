@@ -8,12 +8,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
@@ -24,6 +22,7 @@ import com.quranapp.android.databinding.LytSettingsTranslItemBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 
 import java.util.List;
 
@@ -80,7 +79,8 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
                 return;
             }
 
-            mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(), translModel.getBookInfo().getAuthorName());
+            mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(),
+                translModel.getBookInfo().getAuthorName());
             mBinding.checkbox.setChecked(translModel.isChecked());
 
             mBinding.checkbox.setBeforeCheckChangeListener((button, newState) -> {
@@ -106,7 +106,7 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
             PeaceDialog.Builder builder = PeaceDialog.newBuilder(ctx);
             builder.setTitle(R.string.strTitleTranslDelete);
             builder.setMessage(
-                    bookInfo.getBookName() + "\n" + bookInfo.getAuthorName() + "\n\n" + "You will need to download it again.");
+                bookInfo.getBookName() + "\n" + bookInfo.getAuthorName() + "\n\n" + "You will need to download it again.");
             builder.setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             builder.setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             builder.setNeutralButton(R.string.strLabelCancel, null);

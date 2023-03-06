@@ -4,10 +4,15 @@
 
 package com.quranapp.android.utils.reader.recitation;
 
-import static android.app.PendingIntent.FLAG_IMMUTABLE;
-import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static android.app.PendingIntent.getActivity;
-import static android.app.PendingIntent.getBroadcast;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
+import android.os.Build;
+import android.os.IBinder;
+import android.widget.RemoteViews;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_NEXT_VERSE;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PAUSE;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PLAY;
@@ -17,17 +22,10 @@ import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTI
 import static com.quranapp.android.utils.univ.Codes.NOTIF_ID_REC_PLAYER;
 import static com.quranapp.android.utils.univ.Codes.REQ_CODE_REC_PLAYER;
 import static com.quranapp.android.utils.univ.Keys.KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION;
-
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
-import android.os.Build;
-import android.os.IBinder;
-import android.widget.RemoteViews;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static android.app.PendingIntent.getActivity;
+import static android.app.PendingIntent.getBroadcast;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -50,7 +48,7 @@ public class RecitationNotificationService extends Service {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Notification notification = NotificationUtils.createEmptyNotif(this,
-                    getString(R.string.strNotifChannelIdRecitation));
+                getString(R.string.strNotifChannelIdRecitation));
             startForeground(NOTIF_ID_REC_PLAYER, notification);
         }
     }
@@ -71,8 +69,8 @@ public class RecitationNotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) {
             Notification notification = NotificationUtils.createEmptyNotif(
-                    this,
-                    getString(R.string.strNotifChannelIdRecitation)
+                this,
+                getString(R.string.strNotifChannelIdRecitation)
             );
             startForeground(NOTIF_ID_REC_PLAYER, notification);
             finish();

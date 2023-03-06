@@ -13,7 +13,10 @@ open class VHSearchResultBase(itemView: View) : RecyclerView.ViewHolder(itemView
     open fun bind(model: SearchResultModelBase, pos: Int) {}
 
     protected fun setupJumperView(view: View, applyMargins: Boolean) {
-        view.layoutParams = MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+        view.layoutParams = MarginLayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
             if (applyMargins) {
                 val marg = Dimen.dp2px(view.context, 10f)
                 updateMarginsRelative(start = marg, end = marg, bottom = 10)

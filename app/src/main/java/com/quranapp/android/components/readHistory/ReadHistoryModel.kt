@@ -8,11 +8,20 @@ class ReadHistoryModel(
     val chapterNo: Int,
     val fromVerseNo: Int,
     val toVerseNo: Int,
-    val date: String?,
+    val date: String?
 ) {
 
     fun copy(): ReadHistoryModel {
-        return ReadHistoryModel(id, readType, readerStyle, juzNo, chapterNo, fromVerseNo, toVerseNo, date)
+        return ReadHistoryModel(
+            id,
+            readType,
+            readerStyle,
+            juzNo,
+            chapterNo,
+            fromVerseNo,
+            toVerseNo,
+            date
+        )
     }
 
     override fun equals(other: Any?): Boolean {
@@ -42,5 +51,4 @@ class ReadHistoryModel(
         result = 31 * result + (date?.hashCode() ?: 0)
         return result
     }
-
 }

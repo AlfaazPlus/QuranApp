@@ -12,12 +12,12 @@ import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
+import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
-import java.util.concurrent.atomic.AtomicReference
 
 private const val KEY_CHAPTER_LIST = "suras"
 private const val KEY_VERSE_LIST = "ayas"
@@ -27,7 +27,12 @@ private const val KEY_NUMBER = "index"
 private const val KEY_PAGE_NUMBER = "page"
 
 class QuranParser(private val ctx: Context) {
-    fun parse(scriptKey: String, quranMeta: QuranMeta?, quranRef: AtomicReference<Quran>, postRunnable: () -> Unit) {
+    fun parse(
+        scriptKey: String,
+        quranMeta: QuranMeta?,
+        quranRef: AtomicReference<Quran>,
+        postRunnable: () -> Unit
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 initQuranParse(scriptKey, quranMeta, quranRef)
@@ -41,7 +46,11 @@ class QuranParser(private val ctx: Context) {
         }
     }
 
-    private fun initQuranParse(scriptKey: String, quranMeta: QuranMeta?, quranRef: AtomicReference<Quran>) {
+    private fun initQuranParse(
+        scriptKey: String,
+        quranMeta: QuranMeta?,
+        quranRef: AtomicReference<Quran>
+    ) {
         val quranStringContent: String = if (scriptKey.isKFQPCScript()) {
             val fileUtils = FileUtils.newInstance(ctx)
             val scriptFile = fileUtils.getScriptFile(scriptKey)
@@ -50,12 +59,13 @@ class QuranParser(private val ctx: Context) {
                 fileUtils.readFile(scriptFile)
             } else {
                 SPReader.setSavedScript(ctx, QuranScriptUtils.SCRIPT_DEFAULT)
-                StringUtils.readInputStream(ctx.assets.open(QuranScriptUtils.SCRIPT_DEFAULT.getQuranScriptResPath()))
+                StringUtils.readInputStream(
+                    ctx.assets.open(QuranScriptUtils.SCRIPT_DEFAULT.getQuranScriptResPath())
+                )
             }
         } else {
             StringUtils.readInputStream(ctx.assets.open(scriptKey.getQuranScriptResPath()))
         }
-
 
         val quranElement = JsonHelper.json.parseToJsonElement(quranStringContent)
 

@@ -3,7 +3,6 @@ package com.quranapp.android.views.reader.juzSpinner;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -32,7 +31,7 @@ public class JuzSpinner extends ReaderSpinner {
     protected boolean search(ReaderSpinnerItem item, Pattern pattern) {
         JuzSpinnerItem juzSpinnerItem = (JuzSpinnerItem) item;
         return pattern.matcher(String.valueOf(juzSpinnerItem.getJuzNumber())).find()
-                || pattern.matcher(juzSpinnerItem.getLabel()).find();
+            || pattern.matcher(juzSpinnerItem.getLabel()).find();
     }
 
     @Override

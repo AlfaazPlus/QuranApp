@@ -1,8 +1,5 @@
 package com.quranapp.android.utils.verse;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.text.Spanned.SPAN_POINT_MARK;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -12,8 +9,9 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-
 import androidx.annotation.NonNull;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.text.Spanned.SPAN_POINT_MARK;
 
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.components.quran.Quran;

@@ -3,7 +3,6 @@ package com.quranapp.android.utils.reader.recitation;
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
-
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.components.recitation.RecitationModel;
@@ -23,7 +22,7 @@ import kotlin.Unit;
 
 public class RecitationUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
-            "recitations");
+        "recitations");
     public static final Pattern URL_CHAPTER_PATTERN = Pattern.compile("\\{chapNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
     public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
 
@@ -94,9 +93,9 @@ public class RecitationUtils {
     }
 
     public static synchronized void obtainRecitationModel(
-            Context ctx,
-            boolean force,
-            OnResultReadyCallback<RecitationModel> callback
+        Context ctx,
+        boolean force,
+        OnResultReadyCallback<RecitationModel> callback
     ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
 

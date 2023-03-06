@@ -1,5 +1,7 @@
 package com.quranapp.android.utils.sharedPrefs;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
@@ -9,9 +11,6 @@ import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.reader.QuranScriptUtils;
@@ -152,8 +151,8 @@ public abstract class SPReader {
         }
 
         return sp.getBoolean(
-                RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER,
-                RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
+            RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER,
+            RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
         );
     }
 

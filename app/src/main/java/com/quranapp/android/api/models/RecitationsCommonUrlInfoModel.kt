@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RecitationsCommonUrlInfoModel(
-    @SerialName("common-host") val commonHost: String,
+    @SerialName("common-host") val commonHost: String
 )

@@ -1,8 +1,5 @@
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -13,10 +10,11 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -52,7 +50,7 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
     }
 
     public void setProphets(List<QuranProphet.Prophet> topics) {
-        this.mTopics = topics;
+        mTopics = topics;
     }
 
     public List<QuranProphet.Prophet> getTopics() {
@@ -83,8 +81,9 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
         subTitleSS.setSpan(new LineHeightSpan2(20, false, true), 0, subTitleSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         SpannableString chaptersSS = new SpannableString(inChapters);
-        TextAppearanceSpan inChaptersTASpan = new TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, mTxtSize, mTxtColor2,
-                null);
+        TextAppearanceSpan inChaptersTASpan = new TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, mTxtSize,
+            mTxtColor2,
+            null);
         chaptersSS.setSpan(inChaptersTASpan, 0, chaptersSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", chaptersSS);
@@ -136,7 +135,8 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
 
             title = ctx.getString(R.string.strMsgReferenceInQuran, title);
 
-            Intent intent = ReaderFactory.prepareReferenceVerseIntent(true, title, desc, new String[]{}, prophet.chapters, prophet.verses);
+            Intent intent = ReaderFactory.prepareReferenceVerseIntent(true, title, desc, new String[]{},
+                prophet.chapters, prophet.verses);
             intent.setClass(ctx, ActivityReference.class);
             mBinding.getRoot().setOnClickListener(v -> ctx.startActivity(intent));
         }

@@ -1,5 +1,14 @@
 package com.quranapp.android.views.reader;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP;
@@ -8,17 +17,6 @@ import static com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
-import android.content.Context;
-import android.content.Intent;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.peacedesign.android.utils.Dimen;
@@ -81,7 +79,8 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
         mBinding.btnTranslLauncher.setOnClickListener(v -> openReaderSetting(ActivitySettings.SETTINGS_TRANSL));
 
         ViewCompat.setTooltipText(mBinding.readerSetting, getContext().getString(R.string.strTitleReaderSettings));
-        ViewCompat.setTooltipText(mBinding.btnTranslLauncher, getContext().getString(R.string.strLabelSelectTranslations));
+        ViewCompat.setTooltipText(mBinding.btnTranslLauncher,
+            getContext().getString(R.string.strLabelSelectTranslations));
 
         mBinding.readerTitle.getRoot().setOnClickListener(v -> mJCVSelectorView.showPopup());
         mJCVSelectorView.setJuzIconView(mBinding.readerTitle.juzIcon);
@@ -102,10 +101,10 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
 
     private void initThis() {
         setBackground(DrawableUtils.createBackgroundStroked(
-                ContextCompat.getColor(getContext(), R.color.colorBGReaderHeader),
-                ContextCompat.getColor(getContext(), R.color.colorDivider),
-                Dimen.createBorderWidthsForBG(0, 0, 0, Dimen.dp2px(getContext(), 1)),
-                null
+            ContextCompat.getColor(getContext(), R.color.colorBGReaderHeader),
+            ContextCompat.getColor(getContext(), R.color.colorDivider),
+            Dimen.createBorderWidthsForBG(0, 0, 0, Dimen.dp2px(getContext(), 1)),
+            null
         ));
 
         ViewGroup.LayoutParams params = mBinding.getRoot().getLayoutParams();
@@ -121,7 +120,7 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
             return;
         }
         if (mReaderParams != null && mReaderParams.readType == READER_READ_TYPE_JUZ
-                && mJCVSelectorView.getJuzOrChapterAdapter() instanceof JuzSelectorAdapter2) {
+            && mJCVSelectorView.getJuzOrChapterAdapter() instanceof JuzSelectorAdapter2) {
             return;
         }
 
@@ -134,7 +133,7 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
         }
 
         if (mReaderParams != null && mReaderParams.readType != READER_READ_TYPE_JUZ
-                && mJCVSelectorView.getJuzOrChapterAdapter() instanceof ChapterSelectorAdapter2) {
+            && mJCVSelectorView.getJuzOrChapterAdapter() instanceof ChapterSelectorAdapter2) {
             return;
         }
 
@@ -149,7 +148,8 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
         if (adapter == null) {
             String verseNoText = getContext().getString(R.string.strLabelVerseNo);
             ArrayList<VerseSpinnerItem> items = new ArrayList<>();
-            for (int verseNo = 1, l = mActivity.mQuranMetaRef.get().getChapterVerseCount(chapterNo); verseNo <= l; verseNo++) {
+            for (int verseNo = 1, l = mActivity.mQuranMetaRef.get().getChapterVerseCount(
+                chapterNo); verseNo <= l; verseNo++) {
                 VerseSpinnerItem item = new VerseSpinnerItem(chapterNo, verseNo);
                 item.setLabel(String.format(verseNoText, verseNo));
                 items.add(item);

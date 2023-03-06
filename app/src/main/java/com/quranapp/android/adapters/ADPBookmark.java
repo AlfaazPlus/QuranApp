@@ -4,8 +4,6 @@
 
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -15,10 +13,10 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -220,9 +218,12 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
                 dialog1.dismiss();
 
                 switch (item.getPosition()) {
-                    case 0: mActivity.onView(model, getAdapterPosition()); break;
-                    case 1: mActivity.onOpen(model); break;
-                    case 2: mActivity.removeVerseFromBookmark(model, getAdapterPosition()); break;
+                    case 0: mActivity.onView(model, getAdapterPosition());
+                        break;
+                    case 1: mActivity.onOpen(model);
+                        break;
+                    case 2: mActivity.removeVerseFromBookmark(model, getAdapterPosition());
+                        break;
                 }
             });
 

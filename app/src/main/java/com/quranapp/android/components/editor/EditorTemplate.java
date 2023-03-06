@@ -5,7 +5,6 @@
 package com.quranapp.android.components.editor;
 
 import android.graphics.Color;
-
 import androidx.annotation.DrawableRes;
 
 import com.quranapp.android.R;

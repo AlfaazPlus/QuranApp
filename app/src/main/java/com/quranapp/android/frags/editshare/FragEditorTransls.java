@@ -4,9 +4,6 @@
 
 package com.quranapp.android.frags.editshare;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,19 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.NestedScrollView;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
-import com.quranapp.android.widgets.radio.PeaceRadioButton;
-import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
+import com.quranapp.android.widgets.radio.PeaceRadioButton;
+import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 
 import java.util.Set;
 

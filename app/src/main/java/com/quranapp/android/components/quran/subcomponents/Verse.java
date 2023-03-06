@@ -1,7 +1,6 @@
 package com.quranapp.android.components.quran.subcomponents;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.utils.verse.VerseUtils;

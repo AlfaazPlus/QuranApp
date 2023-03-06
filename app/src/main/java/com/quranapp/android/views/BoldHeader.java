@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -105,10 +104,10 @@ public class BoldHeader extends AppBarLayout {
         setBackgroundColor(Color.TRANSPARENT);
 
         mBinding.search.searchBox.setPaddingRelative(
-                ContextKt.dp2px(getContext(), 5),
-                mBinding.search.searchBox.getPaddingTop(),
-                mBinding.search.searchBox.getPaddingEnd(),
-                mBinding.search.searchBox.getPaddingBottom()
+            ContextKt.dp2px(getContext(), 5),
+            mBinding.search.searchBox.getPaddingTop(),
+            mBinding.search.searchBox.getPaddingEnd(),
+            mBinding.search.searchBox.getPaddingBottom()
         );
     }
 
@@ -118,7 +117,7 @@ public class BoldHeader extends AppBarLayout {
         EditText searchBox = searchBoxBinding.searchBox;
 
         InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
+            Context.INPUT_METHOD_SERVICE);
 
         if (showSearch) {
             searchBox.requestFocus();

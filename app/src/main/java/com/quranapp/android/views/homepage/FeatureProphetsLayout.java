@@ -9,7 +9,6 @@ package com.quranapp.android.views.homepage;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

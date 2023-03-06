@@ -5,7 +5,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.core.widget.PopupWindowCompat;
@@ -20,11 +19,11 @@ import java.lang.annotation.RetentionPolicy;
 public class RelativePopupWindow extends PopupWindow {
 
     @IntDef({
-            VerticalPosition.CENTER,
-            VerticalPosition.ABOVE,
-            VerticalPosition.BELOW,
-            VerticalPosition.ALIGN_TOP,
-            VerticalPosition.ALIGN_BOTTOM,
+        VerticalPosition.CENTER,
+        VerticalPosition.ABOVE,
+        VerticalPosition.BELOW,
+        VerticalPosition.ALIGN_TOP,
+        VerticalPosition.ALIGN_BOTTOM,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface VerticalPosition {
@@ -36,11 +35,11 @@ public class RelativePopupWindow extends PopupWindow {
     }
 
     @IntDef({
-            HorizontalPosition.CENTER,
-            HorizontalPosition.LEFT,
-            HorizontalPosition.RIGHT,
-            HorizontalPosition.ALIGN_LEFT,
-            HorizontalPosition.ALIGN_RIGHT,
+        HorizontalPosition.CENTER,
+        HorizontalPosition.LEFT,
+        HorizontalPosition.RIGHT,
+        HorizontalPosition.ALIGN_LEFT,
+        HorizontalPosition.ALIGN_RIGHT,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface HorizontalPosition {
@@ -59,9 +58,9 @@ public class RelativePopupWindow extends PopupWindow {
      * @param horizPos Horizontal Position Flag
      */
     public void showOnAnchor(
-            @NonNull View anchor,
-            @VerticalPosition int vertPos,
-            @HorizontalPosition int horizPos
+        @NonNull View anchor,
+        @VerticalPosition int vertPos,
+        @HorizontalPosition int horizPos
     ) {
         showOnAnchor(anchor, vertPos, horizPos, 0, 0);
     }
@@ -75,10 +74,10 @@ public class RelativePopupWindow extends PopupWindow {
      * @param fitInScreen Automatically fit in screen or not
      */
     public void showOnAnchor(
-            @NonNull View anchor,
-            @VerticalPosition int vertPos,
-            @HorizontalPosition int horizPos,
-            boolean fitInScreen
+        @NonNull View anchor,
+        @VerticalPosition int vertPos,
+        @HorizontalPosition int horizPos,
+        boolean fitInScreen
     ) {
         showOnAnchor(anchor, vertPos, horizPos, 0, 0, fitInScreen);
     }
@@ -93,11 +92,11 @@ public class RelativePopupWindow extends PopupWindow {
      * @param y        Translation Y
      */
     public void showOnAnchor(
-            @NonNull View anchor,
-            @VerticalPosition int vertPos,
-            @HorizontalPosition int horizPos,
-            int x,
-            int y
+        @NonNull View anchor,
+        @VerticalPosition int vertPos,
+        @HorizontalPosition int horizPos,
+        int x,
+        int y
     ) {
         showOnAnchor(anchor, vertPos, horizPos, x, y, true);
     }
@@ -113,12 +112,12 @@ public class RelativePopupWindow extends PopupWindow {
      * @param fitInScreen Automatically fit in screen or not
      */
     public void showOnAnchor(
-            @NonNull View anchor,
-            @VerticalPosition int vertPos,
-            @HorizontalPosition int horizPos,
-            int x,
-            int y,
-            boolean fitInScreen
+        @NonNull View anchor,
+        @VerticalPosition int vertPos,
+        @HorizontalPosition int horizPos,
+        int x,
+        int y,
+        boolean fitInScreen
     ) {
         setClippingEnabled(fitInScreen);
         final View contentView = getContentView();
@@ -127,8 +126,8 @@ public class RelativePopupWindow extends PopupWindow {
         final int windowW = windowRect.width();
         final int windowH = windowRect.height();
         contentView.measure(
-                makeDropDownMeasureSpec(getWidth(), windowW),
-                makeDropDownMeasureSpec(getHeight(), windowH)
+            makeDropDownMeasureSpec(getWidth(), windowW),
+            makeDropDownMeasureSpec(getHeight(), windowH)
         );
         final int measuredW = contentView.getMeasuredWidth();
         final int measuredH = contentView.getMeasuredHeight();
@@ -187,8 +186,8 @@ public class RelativePopupWindow extends PopupWindow {
 
     private static int makeDropDownMeasureSpec(int measureSpec, int maxSize) {
         return View.MeasureSpec.makeMeasureSpec(
-                getDropDownMeasureSpecSize(measureSpec, maxSize),
-                getDropDownMeasureSpecMode(measureSpec)
+            getDropDownMeasureSpecSize(measureSpec, maxSize),
+            getDropDownMeasureSpecMode(measureSpec)
         );
     }
 

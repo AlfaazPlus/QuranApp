@@ -1,9 +1,5 @@
 package com.quranapp.android.activities;
 
-import static com.quranapp.android.components.editor.VerseEditor.BG_ALPHA_DEFAULT;
-import static com.quranapp.android.components.editor.VerseEditor.BG_TYPE_COLORS;
-import static com.quranapp.android.components.editor.VerseEditor.BG_TYPE_IMAGE;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,12 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
+import static com.quranapp.android.components.editor.VerseEditor.BG_ALPHA_DEFAULT;
+import static com.quranapp.android.components.editor.VerseEditor.BG_TYPE_COLORS;
+import static com.quranapp.android.components.editor.VerseEditor.BG_TYPE_IMAGE;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.ColorUtils;
