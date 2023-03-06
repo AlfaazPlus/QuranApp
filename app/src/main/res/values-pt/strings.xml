@@ -113,4 +113,50 @@
     <string name="strTitleChangeLanguage">Mudar idioma\?</string>
     <string name="strHintFeedbackMessage">Mensagem</string>
     <string name="strTitleReadHistory">Histórico de Leitura</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Visualização de traduções</string>
+    <string name="strLabelBookmarked">Favoritado</string>
+    <string name="strLabelOrder">Ordenar</string>
+    <string name="strLabelSelectVerse">Selecionar Versículos</string>
+    <string name="strHintSearch">Procurar</string>
+    <string name="strHintSearchTopic">Buscar tópico</string>
+    <string name="strHintSearchTranslation">Buscar tradução</string>
+    <string name="strMsgBookmarkAddFailed">Falha ao adicionar versículo aos favoritos</string>
+    <string name="strMsgBookmarkAdded">Versículo adicionado aos favoritos com sucesso</string>
+    <string name="strMsgBookmarkDeleteAll">Todos os favoritos foram removidos.</string>
+    <string name="strMsgBookmarkDeleteSelected">Os favoritos selecionados foram removidos.</string>
+    <string name="strMsgReadShowupHere">Seu histórico de leitura aparecerá aqui.</string>
+    <string name="strMsgReadHistoryRemoved">Seu histórico de leitura foi removido com sucesso.</string>
+    <string name="strMsgReadHistoryRemovedAlready">O histórico de leitura já foi removido.</string>
+    <string name="strMsgReadHistoryNoItems">Sem histórico de leitura</string>
+    <string name="strMsgSearchArabic">Buscar em texto árabe</string>
+    <string name="strTitleReaderLayoutStylePageView">Visualização de página</string>
+    <string name="strTitleAppSettings">Configurações de app</string>
+    <string name="strLabelCurrentVerse">Versículo atual</string>
+    <string name="strMsgBookmarkRemovedAlready">O versículo não está nos favoritos</string>
+    <string name="strLabelVerseRange">Intervalo de versículo</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Buscar tópico em \"%s\"</string>
+    <string name="strHintSearchVerse">Buscar versículo</string>
+    <string name="strMsgBookmarkRemoveFailed">Falha ao remover versículo dos favoritos</string>
+    <string name="strMsgReadHistoryRemoveFailed">Falha ao remover o histórico de leitura.</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Falha ao baixar \"%s\".</string>
+    <string name="strMsgReadHistoryDeleteSelected">Os históricos de leitura foram removidos.</string>
+    <string name="strMsgEnterValidRange">Por favor, insira um intervalo válido</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Baixado: \"%s\".</string>
+    <string name="strLabelDismiss">Dispensar</string>
+    <string name="strLabelDownloadNow">BAIXAR AGORA</string>
+    <string name="strTitleReaderTextSizeArabic">Tamanho de texto árabe</string>
+    <string name="strLabelRemoveAds">Remover anúncios</string>
+    <string name="strLabelSelectedCount" formatted="false">%d selecionado</string>
+    <string name="strLabelSelectTranslations">Selecionar traduções</string>
+    <string name="strLabelSelectTranslation">Selecionar tradução</string>
+    <string name="strLabelIncludeArabic">Incluir árabe</string>
+    <string name="strLabelIncludeTranslation">Incluir tradução</string>
+    <string name="strLabelIncludeFootnotes">Incluir notas de rodapé</string>
+    <string name="strLabelIncludeReference">Incluir referência</string>
+    <string name="strLabelQuickLinks">Links rápidos</string>
+    <string name="strHintSearchLanguage">Buscar idioma</string>
+    <string name="strMsgInvalidVersesRange">Não é um intervalo de versículo válido.</string>
+    <string name="strMsgBookmarkAddedAlready">O versículo já foi adicionado aos favoritos</string>
+    <string name="strMsgBookmarkRemoved">Versículo removido dos favoritos com sucesso</string>
+    <string name="strMsgHistoryRemove">Remover este histórico\?</string>
 </resources>
