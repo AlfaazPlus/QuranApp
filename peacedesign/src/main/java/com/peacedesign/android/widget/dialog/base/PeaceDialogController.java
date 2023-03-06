@@ -45,6 +45,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -52,7 +53,6 @@ import androidx.core.widget.TextViewCompat;
 
 import com.peacedesign.R;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog.DialogButtonsDirection;
@@ -172,7 +172,7 @@ public class PeaceDialogController {
         WindowManager.LayoutParams windowParams = window.getAttributes();
         // Get the resource id of rounded corner background if the dialog is to be displayed fullscreen.
         @DrawableRes int bgRes = mFullscreen ? R.drawable.dr_bg_peace_dialog : R.drawable.dr_bg_peace_dialog_cornered;
-        Drawable bgDrawable = ResUtils.getDrawable(mContext, bgRes);
+        Drawable bgDrawable = AppCompatResources.getDrawable(mContext, bgRes);
         window.setBackgroundDrawable(bgDrawable);
         // Set dialog to clip to its rounded cornered (if it is set) outline.
         window.getDecorView().setClipToOutline(true);

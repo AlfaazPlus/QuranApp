@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPReferenceVerses;
 import com.quranapp.android.components.ReferenceVerseItemModel;
