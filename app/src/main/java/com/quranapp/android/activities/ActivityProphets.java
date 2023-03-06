@@ -4,13 +4,6 @@
 
 package com.quranapp.android.activities;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.DOTALL;
-import static java.util.regex.Pattern.LITERAL;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,11 +16,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import static java.util.regex.Pattern.DOTALL;
+import static java.util.regex.Pattern.LITERAL;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -39,7 +37,7 @@ import com.quranapp.android.components.utility.SpinnerItem;
 import com.quranapp.android.databinding.ActivityTopicsBinding;
 import com.quranapp.android.databinding.LytTopicsActivityHeaderBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.views.helper.Spinner2;
 
 import java.util.ArrayList;
@@ -119,10 +117,10 @@ public class ActivityProphets extends BaseActivity {
 
         EditText searchBox = header.searchContainer.searchBox;
         searchBox.setPaddingRelative(
-                dp2px(5),
-                searchBox.getPaddingTop(),
-                searchBox.getPaddingEnd(),
-                searchBox.getPaddingBottom()
+            dp2px(5),
+            searchBox.getPaddingTop(),
+            searchBox.getPaddingEnd(),
+            searchBox.getPaddingBottom()
         );
         header.searchContainer.btnClear.setOnClickListener(v -> header.searchContainer.searchBox.setText(null));
         searchBox.setOnFocusChangeListener((v, hasFocus) -> {
@@ -144,7 +142,8 @@ public class ActivityProphets extends BaseActivity {
         }
 
         int itemLayoutRes = R.layout.lyt_topic_filter_spinner_item;
-        TopicFilterSpinnerAdapter adapter = new TopicFilterSpinnerAdapter(spinner.getContext(), itemLayoutRes, R.id.text, filters);
+        TopicFilterSpinnerAdapter adapter = new TopicFilterSpinnerAdapter(spinner.getContext(), itemLayoutRes,
+            R.id.text, filters);
         spinner.setAdapterWithDynamicWidth(adapter);
 
         // running it twice before and after setting listener to prevent it to be invoked for the first time.
@@ -194,7 +193,8 @@ public class ActivityProphets extends BaseActivity {
 
         if (showSearch) {
             searchBox.requestFocus();
-            InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) searchBox.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         } else {
             searchBox.clearFocus();

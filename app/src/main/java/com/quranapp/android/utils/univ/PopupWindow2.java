@@ -4,7 +4,6 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
 import androidx.core.content.ContextCompat;
 
 import com.quranapp.android.utils.extensions.ViewKt;

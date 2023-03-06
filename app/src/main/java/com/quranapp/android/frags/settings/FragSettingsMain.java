@@ -6,26 +6,6 @@
 
 package com.quranapp.android.frags.settings;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
-import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -45,13 +25,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentResultListener;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -77,16 +75,16 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
-import com.quranapp.android.utils.reader.TextSizeUtils;
+import com.quranapp.android.utils.reader.ReaderTextSizeUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
+import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 import com.quranapp.android.utils.univ.Keys;
-import com.quranapp.android.utils.univ.SimpleSeekbarChangeListener;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
 import com.quranapp.android.widgets.IconedTextView;
@@ -615,7 +613,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             @Override
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
-                SPReader.setSavedTextSizeMultArabic(seekBar.getContext(), TextSizeUtils.calculateMultiplier(progress));
+                SPReader.setSavedTextSizeMultArabic(seekBar.getContext(),
+                    ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
@@ -679,15 +678,16 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             @Override
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
-                SPReader.setSavedTextSizeMultTransl(seekBar.getContext(), TextSizeUtils.calculateMultiplier(progress));
+                SPReader.setSavedTextSizeMultTransl(seekBar.getContext(),
+                    ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
 
     private void setProgressAndTextArabic(float multiplier) {
         if (mLytTextSizeArabic == null) return;
-        mLytTextSizeArabic.seekbar.setProgress(TextSizeUtils.calculateProgress(multiplier));
-        final String text = TextSizeUtils.calculateProgressText(multiplier) + "%";
+        mLytTextSizeArabic.seekbar.setProgress(ReaderTextSizeUtils.calculateProgress(multiplier));
+        final String text = ReaderTextSizeUtils.calculateProgressText(multiplier) + "%";
         mLytTextSizeArabic.progressText.setText(text);
     }
 
@@ -696,14 +696,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        final float size = mVerseDecorator.getTextSizeArabic() * TextSizeUtils.calculateMultiplier(progress);
+        final float size = mVerseDecorator.getTextSizeArabic() * ReaderTextSizeUtils.calculateMultiplier(progress);
         mLytTextSizeArabic.demoText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
     private void setProgressAndTextTransl(float multiplier) {
         if (mLytTextSizeTransl == null) return;
-        mLytTextSizeTransl.seekbar.setProgress(TextSizeUtils.calculateProgress(multiplier));
-        final String text = TextSizeUtils.calculateProgressText(multiplier) + "%";
+        mLytTextSizeTransl.seekbar.setProgress(ReaderTextSizeUtils.calculateProgress(multiplier));
+        final String text = ReaderTextSizeUtils.calculateProgressText(multiplier) + "%";
         mLytTextSizeTransl.progressText.setText(text);
     }
 
@@ -712,13 +712,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        final float size = mVerseDecorator.getTextSizeTransl() * TextSizeUtils.calculateMultiplier(progress);
+        final float size = mVerseDecorator.getTextSizeTransl() * ReaderTextSizeUtils.calculateMultiplier(progress);
         mLytTextSizeTransl.demoText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
     private void resetToDefault(Context ctx) {
-        SPReader.setSavedTextSizeMultArabic(ctx, TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT);
-        SPReader.setSavedTextSizeMultTransl(ctx, TextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT);
+        SPReader.setSavedTextSizeMultArabic(ctx, ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT);
+        SPReader.setSavedTextSizeMultTransl(ctx, ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT);
         SPReader.setSavedScript(ctx, QuranScriptUtils.SCRIPT_DEFAULT);
         initTranslSlugs = TranslUtils.defaultTranslationSlugs().toArray(new String[0]);
 
@@ -743,10 +743,10 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         setupScriptTitle();
         setupTextSizeArabicPreview();
 
-        demonstrateTextSizeArabic(TextSizeUtils.TEXT_SIZE_DEFAULT_PROGRESS);
-        demonstrateTextSizeTransl(TextSizeUtils.TEXT_SIZE_DEFAULT_PROGRESS);
-        setProgressAndTextArabic(TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT);
-        setProgressAndTextTransl(TextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT);
+        demonstrateTextSizeArabic(ReaderTextSizeUtils.TEXT_SIZE_DEFAULT_PROGRESS);
+        demonstrateTextSizeTransl(ReaderTextSizeUtils.TEXT_SIZE_DEFAULT_PROGRESS);
+        setProgressAndTextArabic(ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT);
+        setProgressAndTextTransl(ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT);
     }
 
     private void resetCheckpoint(Context ctx) {

@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.univ
+package com.quranapp.android.utils.simplified
 
 import com.google.android.material.tabs.TabLayout
 

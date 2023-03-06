@@ -15,7 +15,10 @@ object SPAppConfigs {
     const val THEME_MODE_LIGHT = "app.theme.light"
     const val THEME_MODE_DARK = "app.theme.dark"
 
-    private fun sp(context: Context) = context.getSharedPreferences(SP_APP_CONFIGS, Context.MODE_PRIVATE)
+    private fun sp(context: Context) = context.getSharedPreferences(
+        SP_APP_CONFIGS,
+        Context.MODE_PRIVATE
+    )
 
     @JvmStatic
     fun setThemeMode(ctx: Context, themeMode: String?) {

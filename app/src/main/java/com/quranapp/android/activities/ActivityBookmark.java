@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -137,8 +136,9 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
 
     private void deleteAllWithCheckpoint() {
         boolean isSelecting = mAdapter != null && mAdapter.mIsSelecting && !mAdapter.mSelectedModels.isEmpty();
-        String title = isSelecting ? getString(R.string.strTitleBookmarkDeleteCount, mAdapter.mSelectedModels.size()) : getString(
-                R.string.strTitleBookmarkDeleteAll);
+        String title = isSelecting ? getString(R.string.strTitleBookmarkDeleteCount,
+            mAdapter.mSelectedModels.size()) : getString(
+            R.string.strTitleBookmarkDeleteAll);
         int dec = isSelecting ? R.string.strMsgBookmarkDeleteSelected : R.string.strMsgBookmarkDeleteAll;
         int labelNeg = isSelecting ? R.string.strLabelRemove : R.string.strLabelRemoveAll;
 
@@ -229,7 +229,8 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     }
 
     public void onOpen(BookmarkModel model) {
-        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(), model.getToVerseNo());
+        Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
+            model.getToVerseNo());
         intent.setClass(this, ActivityReader.class);
         startActivity(intent);
     }

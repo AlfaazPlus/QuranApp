@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peacedesign.android.utils.Dimen
-import com.quranapp.android.utils.Log
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
 import com.quranapp.android.adapters.search.ADPVerseResults
@@ -20,6 +19,7 @@ import com.quranapp.android.databinding.FragSearchResultsBinding
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.Destroyable
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extended.GapedItemDecoration
 import com.quranapp.android.utils.search.SearchFilters
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner
@@ -44,7 +44,11 @@ class FragSearchResult : BaseFragment(), Destroyable {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         if (firstTime || !::mBinding.isInitialized) {
             mBinding = FragSearchResultsBinding.inflate(inflater, container, false)
         }
@@ -166,21 +170,33 @@ class FragSearchResult : BaseFragment(), Destroyable {
                 mBinding.loader.visibility = View.GONE
                 if (isVisible) {
                     activity.mBinding.filter.visibility = View.VISIBLE
-                    activity.mBinding.voiceSearch.visibility = if (activity.mSupportsVoiceInput) View.VISIBLE else View.GONE
+                    activity.mBinding.voiceSearch.visibility =
+                        if (activity.mSupportsVoiceInput) View.VISIBLE else View.GONE
                 }
             }
         })
     }
 
     fun searchInDB(
-        actvt: ActivitySearch, meta: QuranMeta,
-        results: ArrayList<SearchResultModelBase?>, slug: String,
-        query: String, limit: Int, offset: Int,
-        resultCount: AtomicInteger, pattern: Pattern
+        actvt: ActivitySearch,
+        meta: QuranMeta,
+        results: ArrayList<SearchResultModelBase?>,
+        slug: String,
+        query: String,
+        limit: Int,
+        offset: Int,
+        resultCount: AtomicInteger,
+        pattern: Pattern
     ) {
         val bookInfo = actvt.mTranslFactory.getTranslationBookInfo(slug)
         val db = actvt.mTranslFactory.dbHelper.readableDatabase
-        val rawQuery = actvt.mTranslFactory.prepareQuerySingle(actvt.mSearchFilters, query, slug, limit, offset)
+        val rawQuery = actvt.mTranslFactory.prepareQuerySingle(
+            actvt.mSearchFilters,
+            query,
+            slug,
+            limit,
+            offset
+        )
         val cursor = db.rawQuery(rawQuery, null, null)
         Log.d(rawQuery, Arrays.toString(cursor.columnNames), cursor.count)
 
@@ -204,7 +220,9 @@ class FragSearchResult : BaseFragment(), Destroyable {
                 translation.text = StringUtils.removeHTML(translation.text, false)
 
                 if ("en" == bookInfo.langCode) {
-                    translation.text = org.apache.commons.lang3.StringUtils.stripAccents(translation.text)
+                    translation.text = org.apache.commons.lang3.StringUtils.stripAccents(
+                        translation.text
+                    )
                 }
 
                 val matcher = pattern.matcher(translation.text)
@@ -246,10 +264,15 @@ class FragSearchResult : BaseFragment(), Destroyable {
     }
 
     private fun prepareVerseResult(
-        activity: ActivitySearch, quranMeta: QuranMeta,
-        chapterNo: Int, verseNo: Int,
-        translSlugs: Set<String>, translDisplayNames: List<String>, translations: List<Translation>,
-        startIndices: List<Int>, endIndices: List<Int>
+        activity: ActivitySearch,
+        quranMeta: QuranMeta,
+        chapterNo: Int,
+        verseNo: Int,
+        translSlugs: Set<String>,
+        translDisplayNames: List<String>,
+        translations: List<Translation>,
+        startIndices: List<Int>,
+        endIndices: List<Int>
     ): VerseResultModel {
         return VerseResultModel().apply {
             this.chapterNo = chapterNo

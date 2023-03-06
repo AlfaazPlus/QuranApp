@@ -45,7 +45,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         const val COMPOUND_TEXT_GRAVITY_RIGHT = 4
     }
 
-
     protected var initialChecked = false
 
     @TextGravity
@@ -65,14 +64,28 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     private var txtView: AppCompatTextView? = null
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.PeaceCompoundButton, defStyleAttr, 0)
+        val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.PeaceCompoundButton,
+            defStyleAttr,
+            0
+        )
 
         text = a.getText(R.styleable.PeaceCompoundButton_android_text)
         subText = a.getText(R.styleable.PeaceCompoundButton_peaceComp_subText)
         initialChecked = a.getBoolean(R.styleable.PeaceCompoundButton_android_checked, false)
-        compoundDirection = a.getInt(R.styleable.PeaceCompoundButton_peaceComp_direction, COMPOUND_TEXT_RIGHT)
-        spaceBetween = a.getDimensionPixelSize(R.styleable.PeaceCompoundButton_peaceComp_spaceBetween, context.dp2px(10f))
-        textGravity = a.getInt(R.styleable.PeaceCompoundButton_peaceComp_textGravity, COMPOUND_TEXT_GRAVITY_START)
+        compoundDirection = a.getInt(
+            R.styleable.PeaceCompoundButton_peaceComp_direction,
+            COMPOUND_TEXT_RIGHT
+        )
+        spaceBetween = a.getDimensionPixelSize(
+            R.styleable.PeaceCompoundButton_peaceComp_spaceBetween,
+            context.dp2px(10f)
+        )
+        textGravity = a.getInt(
+            R.styleable.PeaceCompoundButton_peaceComp_textGravity,
+            COMPOUND_TEXT_GRAVITY_START
+        )
         textAppearanceResId = a.getResourceId(
             R.styleable.PeaceCompoundButton_android_textAppearance,
             R.style.PeaceRadioTextAppearance
@@ -91,7 +104,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         makeComponents()
     }
 
-
     @CallSuper
     protected open fun initThis() {
         super.setOrientation(HORIZONTAL)
@@ -106,14 +118,16 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
 
     private fun makeTexts() {
         txtView = AppCompatTextView(context).apply {
-            layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            layoutParams = LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
                 weight = 1f
             }
             gravity = resolveTextGravity(textGravity)
         }
         setTextAppearancesInternal(textAppearanceResId, subTextAppearanceResId)
     }
-
 
     protected open fun addCompoundButton() {
         val compoundButton = getCompoundButton()
@@ -150,7 +164,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
 
     protected abstract fun getCompoundButton(): CompoundButton?
 
-
     @SuppressLint("RtlHardcoded")
     private fun resolveTextGravity(@TextGravity textGravity: Int): Int {
         return when (textGravity) {
@@ -162,7 +175,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
             else -> Gravity.START
         }
     }
-
 
     private fun setTextInternal(text: CharSequence?, subtext: CharSequence?) {
         val ssb = SpannableStringBuilder()
@@ -183,7 +195,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         txtView!!.visibility = if (ssb.isNotEmpty()) VISIBLE else GONE
     }
 
-
     @SuppressLint("CustomViewStyleable")
     private fun setTextAppearanceSpan(ss: SpannableString, styleId: Int, isSubText: Boolean) {
         val txtSizeDef = context.sp2px(if (isSubText) 14F else 16.toFloat())
@@ -196,7 +207,9 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
             if (font != null) {
                 ss.setSpan(TypefaceSpan2(font), 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             } else {
-                family = resolveFontFamily(ta.getString(R.styleable.TextAppearance_android_fontFamily))
+                family = resolveFontFamily(
+                    ta.getString(R.styleable.TextAppearance_android_fontFamily)
+                )
             }
         } else {
             family = resolveFontFamily(ta.getString(R.styleable.TextAppearance_android_fontFamily))
@@ -216,7 +229,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         ta.recycle()
     }
 
-
     private fun resolveFontFamily(s: String?): String {
         return if ("sans-serif".equals(s, ignoreCase = true) ||
             "sans-serif-light".equals(s, ignoreCase = true) ||
@@ -224,9 +236,12 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
             "sans-serif-black".equals(s, ignoreCase = true) ||
             "sans-serif-thin".equals(s, ignoreCase = true) ||
             "sans-serif-medium".equals(s, ignoreCase = true)
-        ) s!! else "sans-serif"
+        ) {
+            s!!
+        } else {
+            "sans-serif"
+        }
     }
-
 
     private fun setSpaceBetweenInternal(spaceBetween: Int) {
         (txtView!!.layoutParams as LayoutParams).apply {
@@ -244,13 +259,11 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         txtView!!.requestLayout()
     }
 
-
     private fun setTextAppearancesInternal(textAppearanceResId: Int, subTextAppearanceResId: Int) {
         this.textAppearanceResId = textAppearanceResId
         this.subTextAppearanceResId = subTextAppearanceResId
         setTextInternal(text, subText)
     }
-
 
     fun setTextAppearance(@StyleRes styleResId: Int) {
         textAppearanceResId = styleResId
@@ -281,7 +294,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         setTextInternal(text, subText)
     }
 
-
     fun getSubText(): CharSequence? {
         return subText
     }
@@ -305,7 +317,10 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         setSpaceBetweenInternal(spaceBetween)
     }
 
-    fun setTextAppearances(@StyleRes textAppearanceResId: Int, @StyleRes subTextAppearanceResId: Int) {
+    fun setTextAppearances(
+        @StyleRes textAppearanceResId: Int,
+        @StyleRes subTextAppearanceResId: Int
+    ) {
         setTextAppearancesInternal(textAppearanceResId, subTextAppearanceResId)
     }
 
@@ -313,7 +328,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         subTextAppearanceResId = styleResId
         setTextAppearances(textAppearanceResId, styleResId)
     }
-
 
     fun setForceTextGravity(@TextGravity gravity: Int) {
         textGravity = gravity
@@ -338,15 +352,20 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
 
     override fun toggle() {
         val btn = getCompoundButton() ?: return
-        if (beforeCheckChangeListener == null || beforeCheckChangeListener!!.invoke(this, !isChecked)) {
+        if (beforeCheckChangeListener == null || beforeCheckChangeListener!!.invoke(
+                this,
+                !isChecked
+            )
+        ) {
             btn.toggle()
         }
     }
 
-
     @CallSuper
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        background?.state = intArrayOf(if (isChecked) android.R.attr.state_checked else -android.R.attr.state_checked)
+        background?.state = intArrayOf(
+            if (isChecked) android.R.attr.state_checked else -android.R.attr.state_checked
+        )
 
         onCheckChangedListener?.invoke(this, isChecked)
     }
@@ -358,7 +377,6 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         return true
     }
-
 
     @IntDef(COMPOUND_TEXT_LEFT, COMPOUND_TEXT_TOP, COMPOUND_TEXT_RIGHT, COMPOUND_TEXT_BOTTOM)
     @Retention(AnnotationRetention.SOURCE)
@@ -373,6 +391,4 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     )
     @Retention(AnnotationRetention.SOURCE)
     annotation class TextGravity
-
-
 }

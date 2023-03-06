@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -50,7 +49,8 @@ public class PeaceFormSelectField extends FrameLayout {
 
     public PeaceFormSelectField(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PeaceFormSelectField, defStyleAttr, defStyleRes);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PeaceFormSelectField, defStyleAttr,
+            defStyleRes);
         mFieldTitle = a.getString(R.styleable.PeaceFormSelectField_PeaceFFTitle);
         mFieldRequired = a.getBoolean(R.styleable.PeaceFormSelectField_PeaceFFRequired, false);
 
@@ -127,8 +127,9 @@ public class PeaceFormSelectField extends FrameLayout {
 
     public void setOptions(List<SpinnerItem> options, SimplerSpinnerItemSelectListener selectListener) {
         mFieldSpinnerView.setOnItemSelectedListener(selectListener);
-        SpinnerAdapter2<SpinnerItem> adapter = new SpinnerAdapter2<>(getContext(), R.layout.lyt_simple_spinner_item, R.id.text,
-                options);
+        SpinnerAdapter2<SpinnerItem> adapter = new SpinnerAdapter2<>(getContext(), R.layout.lyt_simple_spinner_item,
+            R.id.text,
+            options);
         mFieldSpinnerView.setAdapter(adapter);
     }
 

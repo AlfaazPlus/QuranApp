@@ -7,7 +7,6 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-
 @OptIn(ExperimentalSerializationApi::class)
 object RetrofitInstance {
     private val client: OkHttpClient = OkHttpClient.Builder()

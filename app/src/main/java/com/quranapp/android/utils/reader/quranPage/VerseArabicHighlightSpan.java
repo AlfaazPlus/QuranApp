@@ -5,8 +5,8 @@ import android.text.TextPaint;
 import android.text.style.BackgroundColorSpan;
 
 public class VerseArabicHighlightSpan extends BackgroundColorSpan {
-    private int BGColor = 0;
-    public int verseNo = 0;
+    private int BGColor;
+    public int verseNo;
 
     public VerseArabicHighlightSpan(int verseNo) {
         super(0);

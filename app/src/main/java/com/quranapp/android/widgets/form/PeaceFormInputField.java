@@ -19,13 +19,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.quranapp.android.R;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 
 public class PeaceFormInputField extends FrameLayout {
     private CharSequence mFieldTitle;
@@ -53,7 +52,8 @@ public class PeaceFormInputField extends FrameLayout {
 
     public PeaceFormInputField(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PeaceFormInputField, defStyleAttr, defStyleRes);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PeaceFormInputField, defStyleAttr,
+            defStyleRes);
         mFieldTitle = a.getString(R.styleable.PeaceFormInputField_PeaceFFTitle);
         mFieldHint = a.getString(R.styleable.PeaceFormInputField_PeaceFFHint);
         mFieldText = a.getString(R.styleable.PeaceFormInputField_PeaceFFText);

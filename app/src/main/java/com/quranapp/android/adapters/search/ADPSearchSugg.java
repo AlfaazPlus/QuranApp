@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +46,7 @@ public class ADPSearchSugg extends RecyclerView.Adapter<VHSearchResultBase> {
     @SuppressLint("NotifyDataSetChanged")
     public void setSuggModels(ActivitySearch activitySearch, ArrayList<SearchResultModelBase> suggModels) {
         mActivitySearch = activitySearch;
-        this.mSuggModels = suggModels;
+        mSuggModels = suggModels;
     }
 
     @Override

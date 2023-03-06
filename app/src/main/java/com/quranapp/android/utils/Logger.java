@@ -8,7 +8,6 @@ package com.quranapp.android.utils;
 
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -45,8 +44,9 @@ public abstract class Logger {
         StackTraceElement trc = Thread.currentThread().getStackTrace()[4];
         String className = trc.getClassName();
         className = className.substring(className.lastIndexOf(".") + 1);
-        sb.append("(").append(className).append("=>").append(trc.getMethodName()).append(":").append(trc.getLineNumber()).append(
-                "): ");
+        sb.append("(").append(className).append("=>").append(trc.getMethodName()).append(":").append(
+            trc.getLineNumber()).append(
+            "): ");
 
         if (msgs != null) {
             int len = msgs.length;

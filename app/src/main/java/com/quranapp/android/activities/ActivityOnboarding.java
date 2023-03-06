@@ -7,7 +7,6 @@ package com.quranapp.android.activities;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -24,7 +23,7 @@ import com.quranapp.android.frags.onboard.FragOnBoardTransls;
 import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.sharedPrefs.SPAppActions;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 
 public class ActivityOnboarding extends BaseActivity {
     private ActivityOnboardBinding mBinding;

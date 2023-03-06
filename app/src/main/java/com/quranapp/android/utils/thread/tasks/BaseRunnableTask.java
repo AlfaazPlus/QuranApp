@@ -1,13 +1,12 @@
 package com.quranapp.android.utils.thread.tasks;
 
 import android.os.Build;
-
 import androidx.annotation.NonNull;
 
 import java.net.HttpURLConnection;
 
 public abstract class BaseRunnableTask implements TaskRunnable {
-    private boolean mDone = false;
+    private boolean mDone;
 
     @Override
     public void preExecute() {

@@ -70,7 +70,9 @@ class ActivityAbout : BaseActivity() {
         setup(
             binding,
             LytReaderSettingsItemBinding.inflate(layoutInflater).apply {
-                root.setOnClickListener { AppBridge.newOpener(it.context).browseLink(ApiConfig.GITHUB_REPOSITORY_URL) }
+                root.setOnClickListener {
+                    AppBridge.newOpener(it.context).browseLink(ApiConfig.GITHUB_REPOSITORY_URL)
+                }
             },
             R.drawable.icon_github,
             R.string.github
@@ -102,18 +104,36 @@ class ActivityAbout : BaseActivity() {
         parent.container.addView(binding.root)
     }
 
-    private fun prepareTitle(binding: LytReaderSettingsItemBinding, titleRes: Int, subtitle: String?) {
+    private fun prepareTitle(
+        binding: LytReaderSettingsItemBinding,
+        titleRes: Int,
+        subtitle: String?
+    ) {
         val ssb = SpannableStringBuilder()
 
-        ssb.append(SpannableString(str(titleRes)).apply {
-            setSpan(StyleSpan(Typeface.BOLD), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        })
+        ssb.append(
+            SpannableString(str(titleRes)).apply {
+                setSpan(StyleSpan(Typeface.BOLD), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        )
 
         if (!subtitle.isNullOrEmpty()) {
-            ssb.append("\n").append(SpannableString(subtitle).apply {
-                setSpan(AbsoluteSizeSpan(dimen(R.dimen.dmnCommonSize2)), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setSpan(ForegroundColorSpan(color(R.color.colorText3)), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            })
+            ssb.append("\n").append(
+                SpannableString(subtitle).apply {
+                    setSpan(
+                        AbsoluteSizeSpan(dimen(R.dimen.dmnCommonSize2)),
+                        0,
+                        length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    setSpan(
+                        ForegroundColorSpan(color(R.color.colorText3)),
+                        0,
+                        length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            )
         }
 
         binding.launcher.text = ssb
@@ -126,7 +146,6 @@ class ActivityAbout : BaseActivity() {
         }
         textView.setDrawables(drawable(startIconRes), null, chevronRight, null)
     }
-
 
     private fun setupLauncherParams(launcherView: View) {
         launcherView.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {

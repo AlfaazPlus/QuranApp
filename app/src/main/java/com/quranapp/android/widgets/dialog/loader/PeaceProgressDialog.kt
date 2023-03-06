@@ -33,9 +33,9 @@ class PeaceProgressDialog(context: Context) : PeaceDialog(context) {
         controller.setAllowOutsideTouches(allow)
     }
 
-
     internal class ProgressDialogController(
-        context: Context, dialog: PeaceDialog
+        context: Context,
+        dialog: PeaceDialog
     ) : PeaceDialogController(context, dialog) {
         override fun setupContent(contentPanel: ViewGroup) {
             super.setupContent(contentPanel)
@@ -68,5 +68,4 @@ class PeaceProgressDialog(context: Context) : PeaceDialog(context) {
             return 0
         }
     }
-
 }

@@ -6,5 +6,4 @@ public interface RecitationNotificationCallbacks {
     void previousVerse();
 
     void nextVerse();
-
 }

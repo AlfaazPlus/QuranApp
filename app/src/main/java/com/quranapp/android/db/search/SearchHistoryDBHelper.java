@@ -1,10 +1,5 @@
 package com.quranapp.android.db.search;
 
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.COL_TEXT;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.TABLE_NAME;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry._ID;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,8 +7,11 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.COL_TEXT;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.TABLE_NAME;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry._ID;
 
 import com.quranapp.android.components.search.SearchHistoryModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
@@ -33,9 +31,9 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
-                COL_TEXT + " TEXT," +
-                SearchHistoryContract.SearchEntry.COL_DATE + " TEXT)";
+            _ID + " INTEGER PRIMARY KEY," +
+            COL_TEXT + " TEXT," +
+            SearchHistoryContract.SearchEntry.COL_DATE + " TEXT)";
         DB.execSQL(CREATE_TABLE);
     }
 

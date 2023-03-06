@@ -1,9 +1,5 @@
 package com.quranapp.android.utils.univ;
 
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
-import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_AVAILABLE_DOWNLOADS_FILE_NAME;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATIONS_FILENAME;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +8,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_AVAILABLE_DOWNLOADS_FILE_NAME;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATIONS_FILENAME;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils;
@@ -301,10 +299,10 @@ public final class FileUtils {
 
     @Nullable
     public String getPathFromUri(@NonNull Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
+        String[] projection = {MediaStore.MediaColumns.DATA};
         Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         cursor.moveToFirst();
         String path = cursor.getString(column_index);
         cursor.close();

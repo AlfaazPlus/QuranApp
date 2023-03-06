@@ -5,7 +5,6 @@
 package com.quranapp.android.adapters.quranIndex;
 
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,11 +72,12 @@ public class ADPJuzListChapterList extends RecyclerView.Adapter<ADPJuzListChapte
             chapterCard.setChapterNumber(chapterMeta.chapterNo);
             chapterCard.setName(chapterMeta.getName(), chapterMeta.getNameTranslation());
 
-            Pair<Integer, Integer> versesInJuz = mFragment.getQuranMeta().getVerseRangeOfChapterInJuz(mJuzNo, chapterMeta.chapterNo);
+            Pair<Integer, Integer> versesInJuz = mFragment.getQuranMeta().getVerseRangeOfChapterInJuz(mJuzNo,
+                chapterMeta.chapterNo);
             if (versesInJuz != null) {
                 chapterCard.setVersesCount(mVersesStr, versesInJuz.getFirst(), versesInJuz.getSecond());
                 chapterCard.setOnClickListener(
-                        v -> ReaderFactory.startVerseRange(v.getContext(), chapterMeta.chapterNo, versesInJuz));
+                    v -> ReaderFactory.startVerseRange(v.getContext(), chapterMeta.chapterNo, versesInJuz));
             }
         }
     }

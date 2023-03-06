@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="simpleListItemIconStyle" format="reference" />
+    <attr name="simpleListItemLabelStyle" format="reference" />
+    <attr name="simpleListItemMessageStyle" format="reference" />
+
+    <style name="SimpleListItemStyle">
+        <item name="android:padding">10dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/dr_bg_list_item</item>
+        <item name="android:gravity">center_vertical</item>
+
+        <item name="simpleListItemIconStyle">@style/SimpleListItemIconStyle</item>
+        <item name="simpleListItemLabelStyle">@style/SimpleListItemLabelStyle</item>
+        <item name="simpleListItemMessageStyle">@style/SimpleListItemMessageStyle</item>
+    </style>
+
+    <style name="SimpleListItemIconStyle">
+        <item name="android:padding">7dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="SimpleListItemLabelStyle" parent="Widget.AppCompat.TextView" />
+
+    <style name="SimpleListItemMessageStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

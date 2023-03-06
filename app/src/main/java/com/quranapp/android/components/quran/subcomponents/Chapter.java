@@ -69,7 +69,7 @@ public class Chapter implements Serializable {
     }
 
     public void setCurrentVerseNo(int verseNo) {
-        this.currentVerseNo = verseNo;
+        currentVerseNo = verseNo;
     }
 
     public ArrayList<Verse> getVerses() {

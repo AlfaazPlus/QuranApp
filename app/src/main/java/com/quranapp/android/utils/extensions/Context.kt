@@ -23,11 +23,15 @@ fun Context.isRTL() = getBoolean(R.bool.isRTL)
 
 fun Context.getBoolean(@BoolRes boolResId: Int): Boolean = resources.getBoolean(boolResId)
 
-fun Context.getStringArray(@ArrayRes arrayResId: Int): Array<String?> = resources.getStringArray(arrayResId)
+fun Context.getStringArray(@ArrayRes arrayResId: Int): Array<String?> = resources.getStringArray(
+    arrayResId
+)
 
 fun Context.getIntArray(@ArrayRes arrayResId: Int): IntArray = resources.getIntArray(arrayResId)
 
-fun Context.getTypedArray(@ArrayRes arrayResId: Int): TypedArray = resources.obtainTypedArray(arrayResId)
+fun Context.getTypedArray(@ArrayRes arrayResId: Int): TypedArray = resources.obtainTypedArray(
+    arrayResId
+)
 
 @ColorInt
 fun Context.color(@ColorRes colorResId: Int): Int = ContextCompat.getColor(this, colorResId)
@@ -40,6 +44,7 @@ fun Context.obtainPrimaryColor(): Int {
 @ColorInt
 fun Context.obtainWindowBackgroundColor(): Int {
     val attributes = this.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
+
     @ColorInt val backgroundColor = attributes.getColor(0, 0)
     attributes.recycle()
     return backgroundColor

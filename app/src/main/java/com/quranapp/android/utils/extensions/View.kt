@@ -9,7 +9,6 @@ import androidx.core.view.children
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
-
 fun View.alphaDisableView(disable: Boolean) {
     alpha = if (disable) 0.5f else 1f
 }
@@ -56,7 +55,12 @@ fun RecyclerView.enableSnappingOnRecyclerView(): LinearSnapHelper {
     }
 }
 
-fun getDeepChildOffset(mainParent: ViewGroup, parent: ViewParent, child: View, accumulatedOffset: Point) {
+fun getDeepChildOffset(
+    mainParent: ViewGroup,
+    parent: ViewParent,
+    child: View,
+    accumulatedOffset: Point
+) {
     val parentGroup = parent as ViewGroup
     accumulatedOffset.y += child.top
 
@@ -90,13 +94,17 @@ fun getRelativeTopRecursive(view: View?, till: Class<*>, inclusiveTill: Boolean 
     return if (till.name.equals(view.javaClass.name, ignoreCase = true)) {
         if (inclusiveTill) {
             view.top
-        } else 0
+        } else {
+            0
+        }
     } else {
         val top = view.top
         val parent = view.parent
         if (parent !is View || parent === view.rootView) {
             top
-        } else top + getRelativeTopRecursive(parent as View, till, inclusiveTill)
+        } else {
+            top + getRelativeTopRecursive(parent as View, till, inclusiveTill)
+        }
     }
 }
 

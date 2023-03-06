@@ -22,16 +22,15 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.peacedesign.android.utils.kotlin_utils.*
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.extensions.*
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener
+import com.quranapp.android.utils.simplified.SimpleTextWatcher
 import com.quranapp.android.utils.univ.RegexPattern
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener
-import com.quranapp.android.utils.univ.SimpleTextWatcher
 import com.quranapp.android.views.reader.ChapterIcon
 import com.quranapp.android.views.reader.chapterSpinner.ChapterSpinnerItem
 import com.quranapp.android.views.reader.juzSpinner.JuzSpinnerItem
@@ -73,7 +72,6 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
     var juzIconView: TextView? = null
     var chapterIconView: ChapterIcon? = null
     var activity: ActivityReader? = null
-
 
     init {
         initThis()
@@ -133,8 +131,8 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tempJuzOrChapterItemSelectListener = null
 
-                val isAlternateTab = (tab.position == 0 && juzOrChapterAdapter !is ChapterSelectorAdapter2)
-                        || (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
+                val isAlternateTab = (tab.position == 0 && juzOrChapterAdapter !is ChapterSelectorAdapter2) ||
+                    (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
 
                 activity?.let {
                     if (isAlternateTab) {
@@ -155,7 +153,10 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
         })
     }
 
-    private fun selectTab(binding: LytJuzChapterVerseSheetBinding, adapter: ADPJuzChapterVerseBase<*, *>) {
+    private fun selectTab(
+        binding: LytJuzChapterVerseSheetBinding,
+        adapter: ADPJuzChapterVerseBase<*, *>
+    ) {
         var tab: TabLayout.Tab? = null
         if (adapter is ChapterSelectorAdapter2) {
             tab = binding.tabLayout.getTabAt(0)
@@ -237,7 +238,10 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
             }
         } else {
             val chapter = activity!!.mReaderParams.currChapter ?: return
-            activity!!.handleVerseSpinnerSelectedVerseNo(chapter.chapterNumber, searchQuery.toString().toInt())
+            activity!!.handleVerseSpinnerSelectedVerseNo(
+                chapter.chapterNumber,
+                searchQuery.toString().toInt()
+            )
         }
     }
 
@@ -279,7 +283,10 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
                 if (juzOrChapterItem is ChapterSpinnerItem) {
                     text = juzOrChapterItem.label
                 } else {
-                    text = activity?.mQuranMetaRef?.get()?.getChapterName(context, spinnerItem.chapterNo) ?: ""
+                    text = activity?.mQuranMetaRef?.get()?.getChapterName(
+                        context,
+                        spinnerItem.chapterNo
+                    ) ?: ""
                     verseText = context.getString(R.string.strLabelVerseNo, spinnerItem.verseNo)
                 }
             }
@@ -317,7 +324,10 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
             if (height >= context.dp2px(70f)) {
                 height = context.dp2px(650f)
             }
-            it.root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
+            it.root.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                height
+            )
         }
     }
 
@@ -412,18 +422,21 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
 
         val juzAdapter = JuzSelectorAdapter2(items)
 
-        setJuzOrChapterAdapter(juzAdapter, object : OnItemSelectedListener {
-            override fun onItemSelect(item: ReaderSpinnerItem) {
-                val juzSpinnerItem = item as JuzSpinnerItem
-                if (activity.mNavigator.currJuzNo != juzSpinnerItem.juzNumber) {
-                    activity.mNavigator.goToJuz(juzSpinnerItem.juzNumber)
+        setJuzOrChapterAdapter(
+            juzAdapter,
+            object : OnItemSelectedListener {
+                override fun onItemSelect(item: ReaderSpinnerItem) {
+                    val juzSpinnerItem = item as JuzSpinnerItem
+                    if (activity.mNavigator.currJuzNo != juzSpinnerItem.juzNumber) {
+                        activity.mNavigator.goToJuz(juzSpinnerItem.juzNumber)
+                    }
                 }
-            }
-        }, isTemporary)
+            },
+            isTemporary
+        )
 
         return juzAdapter
     }
-
 
     fun prepareAndSetChapterAdapter(activity: ActivityReader, isTemporary: Boolean = false): ChapterSelectorAdapter2 {
         val quran = activity.mQuranRef.get()
@@ -435,14 +448,18 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
             items.add(chapterSpinnerItem)
         }
         val chapterAdapter = ChapterSelectorAdapter2(items)
-        setJuzOrChapterAdapter(chapterAdapter, object : OnItemSelectedListener {
-            override fun onItemSelect(item: ReaderSpinnerItem) {
-                val chapterItem = item as ChapterSpinnerItem
-                if (activity.mReaderParams.currChapter?.chapterNumber != chapterItem.chapter.chapterNumber) {
-                    activity.mNavigator.goToChapter(chapterItem.chapter.chapterNumber)
+        setJuzOrChapterAdapter(
+            chapterAdapter,
+            object : OnItemSelectedListener {
+                override fun onItemSelect(item: ReaderSpinnerItem) {
+                    val chapterItem = item as ChapterSpinnerItem
+                    if (activity.mReaderParams.currChapter?.chapterNumber != chapterItem.chapter.chapterNumber) {
+                        activity.mNavigator.goToChapter(chapterItem.chapter.chapterNumber)
+                    }
                 }
-            }
-        }, isTemporary)
+            },
+            isTemporary
+        )
 
         return chapterAdapter
     }

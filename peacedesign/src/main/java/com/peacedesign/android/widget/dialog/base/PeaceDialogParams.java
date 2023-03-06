@@ -1,11 +1,5 @@
 package com.peacedesign.android.widget.dialog.base;
 
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
-import static android.content.DialogInterface.BUTTON_NEUTRAL;
-import static android.content.DialogInterface.BUTTON_POSITIVE;
-import static android.content.DialogInterface.OnDismissListener;
-import static android.content.DialogInterface.OnKeyListener;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface.OnCancelListener;
@@ -13,14 +7,15 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnShowListener;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.peacedesign.android.widget.list.base.BaseListAdapter;
-import com.peacedesign.android.widget.list.base.BaseListItem;
+import static android.content.DialogInterface.BUTTON_NEGATIVE;
+import static android.content.DialogInterface.BUTTON_NEUTRAL;
+import static android.content.DialogInterface.BUTTON_POSITIVE;
+import static android.content.DialogInterface.OnDismissListener;
+import static android.content.DialogInterface.OnKeyListener;
 
 class PeaceDialogParams {
     @SuppressLint("UnknownNullness")

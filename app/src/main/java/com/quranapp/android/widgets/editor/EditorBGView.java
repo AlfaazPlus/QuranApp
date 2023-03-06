@@ -4,8 +4,6 @@
 
 package com.quranapp.android.widgets.editor;
 
-import static android.graphics.Paint.ANTI_ALIAS_FLAG;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,9 +18,9 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
+import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.Dimen;
@@ -115,7 +113,8 @@ public class EditorBGView extends View {
 
         if (bgType == VerseEditor.BG_TYPE_COLORS && colors.length > 0) {
             if (colors.length > 1) {
-                LinearGradient gradient = new LinearGradient(0, 0, getWidth(), getHeight(), colors, null, Shader.TileMode.CLAMP);
+                LinearGradient gradient = new LinearGradient(0, 0, getWidth(), getHeight(), colors, null,
+                    Shader.TileMode.CLAMP);
                 mBGPaint.setShader(gradient);
             } else {
                 mBGPaint.setColor(colors[0]);

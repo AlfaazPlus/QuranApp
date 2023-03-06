@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 import android.widget.SpinnerAdapter;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -91,6 +90,6 @@ public class Spinner2 extends AppCompatSpinner {
 
     public abstract static class SimplerSpinnerItemSelectListener implements OnItemSelectedListener {
         @Override
-        public void onNothingSelected(AdapterView<?> parent) { }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 }

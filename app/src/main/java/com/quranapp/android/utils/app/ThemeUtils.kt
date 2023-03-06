@@ -43,7 +43,6 @@ object ThemeUtils {
         }
     }
 
-
     @JvmStatic
     fun resolveThemeModeFromSP(context: Context): Int {
         return when (SPAppConfigs.getThemeMode(context)) {

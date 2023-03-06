@@ -21,7 +21,10 @@ import com.quranapp.android.views.readerSpinner2.adapters.JuzSelectorAdapter2
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2
 import com.quranapp.android.widgets.chapterCard.ChapterCard
 
-class VHJuzSpinner(adapter: JuzSelectorAdapter2, view: View) : VHJuzChapterVerseBase<JuzSpinnerItem>(adapter, view) {
+class VHJuzSpinner(adapter: JuzSelectorAdapter2, view: View) : VHJuzChapterVerseBase<JuzSpinnerItem>(
+    adapter,
+    view
+) {
     override fun bind(item: JuzSpinnerItem) {
         super.bind(item)
         (itemView as TextView).text = item.label
@@ -38,14 +41,20 @@ class VHChapterSpinner(adapter: ChapterSelectorAdapter2, private val chapterCard
     }
 }
 
-class VHVerseSpinner(adapter: VerseSelectorAdapter2, view: View) : VHJuzChapterVerseBase<VerseSpinnerItem>(adapter, view) {
+class VHVerseSpinner(adapter: VerseSelectorAdapter2, view: View) : VHJuzChapterVerseBase<VerseSpinnerItem>(
+    adapter,
+    view
+) {
     override fun bind(item: VerseSpinnerItem) {
         super.bind(item)
         (itemView as TextView).text = item.label
     }
 }
 
-open class VHJuzChapterVerseBase<T : ReaderSpinnerItem>(private val adapter: ADPJuzChapterVerseBase<T, *>, itemView: View) :
+open class VHJuzChapterVerseBase<T : ReaderSpinnerItem>(
+    private val adapter: ADPJuzChapterVerseBase<T, *>,
+    itemView: View
+) :
     RecyclerView.ViewHolder(itemView) {
     init {
         itemView.setBackgroundResource(R.drawable.dr_bg_juz_chapter_verse_item)
@@ -53,7 +62,7 @@ open class VHJuzChapterVerseBase<T : ReaderSpinnerItem>(private val adapter: ADP
 
     @CallSuper
     open fun bind(item: T) {
-        itemView.isSelected = item.isSelected
+        itemView.isSelected = item.selected
         itemView.setOnClickListener { adapter.onItemSelectInAdapter(item, true) }
     }
 }

@@ -2,7 +2,6 @@ package com.quranapp.android.utils.thread.runner;
 
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.annotation.NonNull;
 import androidx.core.os.HandlerCompat;
 

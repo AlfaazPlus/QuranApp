@@ -5,7 +5,7 @@ import com.quranapp.android.utils.sharedPrefs.SPLog
 import org.apache.commons.lang3.exception.ExceptionUtils
 
 class CustomExceptionHandler(
-    private val ctx: Context,
+    private val ctx: Context
 ) : Thread.UncaughtExceptionHandler {
     private val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
 

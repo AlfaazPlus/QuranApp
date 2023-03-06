@@ -1,16 +1,15 @@
 package com.quranapp.android.views.reader.verseSpinner;
 
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
-
 import android.content.Context;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
 
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
@@ -95,7 +94,7 @@ public class VerseSpinner extends ReaderSpinner {
             return;
         }
 
-        int inputType = mActivity.mReaderParams.readType == READER_READ_TYPE_JUZ ? EditorInfo.TYPE_CLASS_TEXT : EditorInfo.TYPE_CLASS_NUMBER;
+        int inputType = mActivity.mReaderParams.readType == READER_READ_TYPE_JUZ ? InputType.TYPE_CLASS_TEXT : InputType.TYPE_CLASS_NUMBER;
         mSearchBox.setInputType(inputType);
     }
 }

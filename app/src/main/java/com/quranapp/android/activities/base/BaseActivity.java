@@ -4,11 +4,6 @@
 
 package com.quranapp.android.activities.base;
 
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
-import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
-
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +20,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -40,6 +34,10 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedLi
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
+import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
 
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
@@ -53,7 +51,8 @@ import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 import java.util.Locale;
 import java.util.Objects;
 
-public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener, ActivityResultStarter {
+public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener,
+    ActivityResultStarter {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     protected final AsyncLayoutInflater mAsyncInflater = new AsyncLayoutInflater(this);
     private NetworkStateReceiver mNetworkReceiver;
@@ -75,8 +74,8 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
             }
         }
     };
-    private String mCurrentLocale = null;
-    private boolean shouldRecreateDueToLocaleChange = false;
+    private String mCurrentLocale;
+    private boolean shouldRecreateDueToLocaleChange;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -376,7 +375,8 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     protected void hideSystemBars() {
         Window window = getWindow();
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**

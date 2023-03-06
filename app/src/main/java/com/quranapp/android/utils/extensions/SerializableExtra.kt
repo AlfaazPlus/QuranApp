@@ -11,6 +11,9 @@ inline fun <reified T : Serializable> Bundle.serializableExtra(key: String): T? 
 }
 
 inline fun <reified T : Serializable> Intent.serializableExtra(key: String): T? = when {
-    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(key, T::class.java)
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(
+        key,
+        T::class.java
+    )
     else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
 }

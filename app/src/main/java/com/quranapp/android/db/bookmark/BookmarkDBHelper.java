@@ -1,13 +1,5 @@
 package com.quranapp.android.db.bookmark;
 
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_CHAPTER_NO;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_FROM_VERSE_NO;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_NOTE;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_TO_VERSE_NO;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.TABLE_NAME;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry._ID;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,8 +7,14 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_CHAPTER_NO;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_FROM_VERSE_NO;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_NOTE;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_TO_VERSE_NO;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.TABLE_NAME;
+import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry._ID;
 
 import com.quranapp.android.R;
 import com.quranapp.android.components.bookmark.BookmarkModel;
@@ -40,12 +38,12 @@ public class BookmarkDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
-                COL_CHAPTER_NO + " INTEGER," +
-                COL_FROM_VERSE_NO + " INTEGER," +
-                COL_TO_VERSE_NO + " INTEGER," +
-                COL_DATETIME + " TEXT," +
-                COL_NOTE + " TEXT)";
+            _ID + " INTEGER PRIMARY KEY," +
+            COL_CHAPTER_NO + " INTEGER," +
+            COL_FROM_VERSE_NO + " INTEGER," +
+            COL_TO_VERSE_NO + " INTEGER," +
+            COL_DATETIME + " TEXT," +
+            COL_NOTE + " TEXT)";
         DB.execSQL(CREATE_TABLE);
     }
 
@@ -172,9 +170,9 @@ public class BookmarkDBHelper extends SQLiteOpenHelper {
 
         String selection = DBUtils.createDBSelection(COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
         String[] selectionArgs = {
-                String.valueOf(chapterNo),
-                String.valueOf(fromVerse),
-                String.valueOf(toVerse)
+            String.valueOf(chapterNo),
+            String.valueOf(fromVerse),
+            String.valueOf(toVerse)
         };
 
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME, selection, selectionArgs);

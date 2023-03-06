@@ -1,8 +1,5 @@
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -13,11 +10,12 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -77,7 +75,8 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
     @NonNull
     @Override
     public VHReadHistory onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LytBookmarkItemBinding binding = LytBookmarkItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        LytBookmarkItemBinding binding = LytBookmarkItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+            parent, false);
         return new VHReadHistory(binding);
     }
 
@@ -97,8 +96,9 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
         subTitleSS.setSpan(new LineHeightSpan2(20, false, true), 0, subTitleSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         SpannableString continueReadingSS = new SpannableString(continueReading);
-        TextAppearanceSpan continueReadingTASpan = new TextAppearanceSpan("sans-serif-medium", Typeface.NORMAL, mTxtSize2,
-                mColorPrimary, null);
+        TextAppearanceSpan continueReadingTASpan = new TextAppearanceSpan("sans-serif-medium", Typeface.NORMAL,
+            mTxtSize2,
+            mColorPrimary, null);
         continueReadingSS.setSpan(continueReadingTASpan, 0, continueReadingSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", continueReadingSS);
@@ -119,7 +119,8 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
                 p.width = mItemWidth;
             } else {
                 p = new RecyclerView.LayoutParams(mItemWidth, WRAP_CONTENT);
-                LayoutParamsKt.updateMargins((ViewGroup.MarginLayoutParams) p, Dimen.dp2px(binding.getRoot().getContext(), 3));
+                LayoutParamsKt.updateMargins((ViewGroup.MarginLayoutParams) p,
+                    Dimen.dp2px(binding.getRoot().getContext(), 3));
             }
             root.setLayoutParams(p);
 
@@ -138,8 +139,9 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
             mBinding.chapterNo.setText(String.valueOf(history.getChapterNo()));
 
             String chapterName = mQuranMeta.getChapterName(itemView.getContext(), history.getChapterNo(), true);
-            CharSequence txt = prepareTexts(chapterName, prepareSubtitleTitle(history.getFromVerseNo(), history.getToVerseNo()),
-                    mTxtContinueReading);
+            CharSequence txt = prepareTexts(chapterName,
+                prepareSubtitleTitle(history.getFromVerseNo(), history.getToVerseNo()),
+                mTxtContinueReading);
             mBinding.text.setText(txt);
 
             setupActions(history);

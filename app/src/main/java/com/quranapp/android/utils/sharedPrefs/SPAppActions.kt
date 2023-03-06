@@ -29,7 +29,10 @@ object SPAppActions {
     }
 
     @JvmStatic
-    fun getFetchTranslationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, false)
+    fun getFetchTranslationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
+        KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE,
+        false
+    )
 
     @JvmStatic
     fun setFetchRecitationsForce(ctx: Context, fetchForce: Boolean) {
@@ -40,7 +43,10 @@ object SPAppActions {
     }
 
     @JvmStatic
-    fun getFetchRecitationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, false)
+    fun getFetchRecitationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
+        KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE,
+        false
+    )
 
     @JvmStatic
     fun setFetchUrlsForce(ctx: Context, fetchForce: Boolean) {
@@ -51,7 +57,10 @@ object SPAppActions {
     }
 
     @JvmStatic
-    fun getFetchUrlsForce(ctx: Context): Boolean = sp(ctx).getBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, false)
+    fun getFetchUrlsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
+        KEY_APP_ACTION_SP_URLS_FETCH_FORCE,
+        false
+    )
 
     @JvmStatic
     fun addToPendingAction(ctx: Context, action: String, victim: String?) {
@@ -111,5 +120,4 @@ object SPAppActions {
             apply()
         }
     }
-
 }

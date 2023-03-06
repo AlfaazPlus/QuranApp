@@ -6,7 +6,8 @@ import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.univ.FileUtils;
 
 public class ChapterInfoUtils {
-    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "chapters_info");
+    public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
+        "chapters_info");
 
     public static final String CHAPTER_INFO_FILE_NAME_FORMAT = "chapter_info_%d-%s.txt";
 

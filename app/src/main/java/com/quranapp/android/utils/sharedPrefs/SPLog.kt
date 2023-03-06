@@ -19,7 +19,6 @@ object SPLog {
 
     fun getLastCrashLog(ctx: Context): String? = sp(ctx).getString(KEY_SP_LAST_CRASH_LOG, null)
 
-
     fun removeLastCrashLog(ctx: Context) {
         sp(ctx).edit().apply {
             remove(KEY_SP_LAST_CRASH_LOG)

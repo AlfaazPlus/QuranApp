@@ -29,5 +29,4 @@ data class RecitationModel(
     override fun hashCode(): Int {
         return slug.hashCode()
     }
-
 }

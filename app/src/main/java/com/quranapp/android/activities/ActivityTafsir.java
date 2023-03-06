@@ -11,16 +11,15 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.quranapp.android.utils.Log;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.ActivityChapterInfoBinding;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.tafsir.TafsirJSInterface;

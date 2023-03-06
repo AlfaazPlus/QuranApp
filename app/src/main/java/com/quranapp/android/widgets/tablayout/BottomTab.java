@@ -6,13 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.peacedesign.android.utils.ComponentBase;
+import com.quranapp.android.components.ComponentBase;
 import com.quranapp.android.utils.univ.StringUtils;
 
 public class BottomTab extends ComponentBase {
     private String tabLabel;
     @DrawableRes
-    private int tabIcon = 0;
+    private int tabIcon;
     private BottomTabView tabView;
     private boolean mIsKingTab;
     private Fragment attachedFragment;
@@ -43,7 +43,7 @@ public class BottomTab extends ComponentBase {
 
     @DrawableRes
     public int getTabIcon() {
-        return this.tabIcon;
+        return tabIcon;
     }
 
     public void setTabIcon(@DrawableRes int tabIcon) {

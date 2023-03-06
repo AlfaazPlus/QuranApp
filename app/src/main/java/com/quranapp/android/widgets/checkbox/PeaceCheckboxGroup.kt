@@ -120,5 +120,4 @@ class PeaceCheckboxGroup @JvmOverloads constructor(
             }
         }
     }
-
 }

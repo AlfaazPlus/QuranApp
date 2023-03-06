@@ -6,20 +6,18 @@
 
 package com.quranapp.android.frags.onboard;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.recitation.ADPRecitations;
@@ -111,7 +109,7 @@ public class FragOnBoardRecitation extends FragOnBoardBase {
 
     private void noRecitersAvailable() {
         showAlert(R.string.strMsgRecitationsNoAvailable, R.string.strLabelRefresh,
-                () -> refresh(mBinding.list, true));
+            () -> refresh(mBinding.list, true));
     }
 
     private void showLoader() {

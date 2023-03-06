@@ -1,9 +1,5 @@
 package com.quranapp.android.widgets.tablayout;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static androidx.core.content.ContextCompat.getColorStateList;
-import static com.peacedesign.android.utils.Dimen.dp2px;
-
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -12,11 +8,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import static com.peacedesign.android.utils.Dimen.dp2px;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static androidx.core.content.ContextCompat.getColorStateList;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -36,12 +34,12 @@ public class BottomTabView extends LinearLayout {
 
     public BottomTabView(@NonNull BottomTabLayout tabLayout, @NonNull BottomTab tab) {
         super(tabLayout.getContext());
-        this.mTabLayout = tabLayout;
-        this.mTab = tab;
-        this.isKingTab = tab.isKingTab();
-        this.primaryColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-        this.primaryColorDark = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
-        this.kingTabTintColor = ContextCompat.getColor(getContext(), R.color.white);
+        mTabLayout = tabLayout;
+        mTab = tab;
+        isKingTab = tab.isKingTab();
+        primaryColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+        primaryColorDark = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
+        kingTabTintColor = ContextCompat.getColor(getContext(), R.color.white);
         init();
     }
 
@@ -65,7 +63,8 @@ public class BottomTabView extends LinearLayout {
             int padV = dp2px(getContext(), 5);
             setPadding(padH, padV, padH, padV);
 
-            Drawable background = DrawableUtils.createBackground(primaryColor, primaryColorDark, Dimen.dp2px(getContext(), 100));
+            Drawable background = DrawableUtils.createBackground(primaryColor, primaryColorDark,
+                dp2px(getContext(), 100));
             setBackground(background);
 
             setOnTouchListener(new HoverPushEffect());
@@ -126,7 +125,8 @@ public class BottomTabView extends LinearLayout {
         if (isKingTab) {
             drawable.setTint(kingTabTintColor);
         } else {
-            DrawableCompat.setTintList(drawable.mutate(), getColorStateList(getContext(), R.color.color_bottom_tablayout_icon));
+            DrawableCompat.setTintList(drawable.mutate(),
+                getColorStateList(getContext(), R.color.color_bottom_tablayout_icon));
         }
         iconView.setImageDrawable(drawable);
 

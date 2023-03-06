@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +47,7 @@ public class ADPEditShareColors extends RecyclerView.Adapter<ADPEditShareColors.
         holder.bind(colors[position]);
     }
 
-     class VHColor extends RecyclerView.ViewHolder {
+    class VHColor extends RecyclerView.ViewHolder {
         public VHColor(@NonNull View itemView) {
             super(itemView);
         }
@@ -64,12 +63,12 @@ public class ADPEditShareColors extends RecyclerView.Adapter<ADPEditShareColors.
         private final int normalColor;
         private final int activeColor;
         private int bgColor = Color.TRANSPARENT;
-        private boolean selected = false;
+        private boolean selected;
 
         public ColorView(@NonNull Context context) {
             super(context);
-            this.normalColor = ContextCompat.getColor(context, R.color.colorDivider);
-            this.activeColor = ContextCompat.getColor(context, R.color.colorPrimary);
+            normalColor = ContextCompat.getColor(context, R.color.colorDivider);
+            activeColor = ContextCompat.getColor(context, R.color.colorPrimary);
 
             init();
         }
@@ -113,7 +112,7 @@ public class ADPEditShareColors extends RecyclerView.Adapter<ADPEditShareColors.
 
         @Override
         public void setBackgroundColor(int color) {
-            this.bgColor = color;
+            bgColor = color;
             invalidate();
         }
     }

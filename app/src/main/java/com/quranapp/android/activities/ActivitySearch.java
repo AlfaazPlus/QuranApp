@@ -1,13 +1,5 @@
 package com.quranapp.android.activities;
 
-import static android.view.View.FOCUS_DOWN;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
-import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -23,12 +15,18 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
+import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+import static android.view.View.FOCUS_DOWN;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
@@ -50,7 +48,7 @@ import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
 import com.quranapp.android.utils.search.SearchFilters;
 import com.quranapp.android.utils.search.SearchLocalHistoryManager;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;

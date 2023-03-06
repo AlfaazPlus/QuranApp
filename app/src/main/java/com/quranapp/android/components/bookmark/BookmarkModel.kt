@@ -13,7 +13,7 @@ class BookmarkModel(
     val chapterNo: Int,
     val fromVerseNo: Int,
     val toVerseNo: Int,
-    val date: String?,
+    val date: String?
 ) {
     var note: String? = null
 
@@ -64,11 +64,11 @@ class BookmarkModel(
         if (other !is BookmarkModel) return false
 
         return id == other.id &&
-                chapterNo == other.chapterNo &&
-                fromVerseNo == other.fromVerseNo &&
-                toVerseNo == other.toVerseNo &&
-                date == other.date &&
-                note == other.note
+            chapterNo == other.chapterNo &&
+            fromVerseNo == other.fromVerseNo &&
+            toVerseNo == other.toVerseNo &&
+            date == other.date &&
+            note == other.note
     }
 
     override fun hashCode(): Int {
@@ -80,5 +80,4 @@ class BookmarkModel(
         result = 31 * result + (note?.hashCode() ?: 0)
         return result
     }
-
 }

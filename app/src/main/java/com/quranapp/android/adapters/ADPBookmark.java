@@ -4,8 +4,6 @@
 
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -15,14 +13,13 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
-import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
 import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
@@ -31,6 +28,7 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
+import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

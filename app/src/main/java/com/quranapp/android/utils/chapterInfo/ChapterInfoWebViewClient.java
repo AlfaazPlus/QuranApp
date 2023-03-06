@@ -5,14 +5,13 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.components.quran.QuranMeta;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.quran.QuranUtils;
 
 import org.json.JSONException;

@@ -4,15 +4,13 @@
 
 package com.quranapp.android.adapters.quranIndex;
 
-import static android.view.ViewGroup.LayoutParams;
-import static android.view.ViewGroup.MarginLayoutParams;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams;
+import static android.view.ViewGroup.MarginLayoutParams;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;

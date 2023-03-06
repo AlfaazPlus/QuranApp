@@ -54,7 +54,6 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         unregisterDownloadService()
     }
 
-
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleScripts)
 
     override val layoutResource = 0
@@ -151,7 +150,9 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
         val msg = StringBuilder(ctx.getString(R.string.msgDownloadKFQPCResources)).append("\n")
         if (!scriptDownloaded) {
-            msg.append("\n").append(ctx.getString(R.string.msgDownloadKFQPCResourcesScript, slug.getQuranScriptName()))
+            msg.append("\n").append(
+                ctx.getString(R.string.msgDownloadKFQPCResourcesScript, slug.getQuranScriptName())
+            )
         }
 
         val averageFontKB = 161.23
@@ -184,9 +185,12 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         showProgressDialog(ctx, scriptKey)
 
         KFQPCScriptFontsDownloadService.STARTED_BY_USER = true
-        ContextCompat.startForegroundService(ctx, Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
-            putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
-        })
+        ContextCompat.startForegroundService(
+            ctx,
+            Intent(ctx, KFQPCScriptFontsDownloadService::class.java).apply {
+                putExtra(QuranScriptUtils.KEY_SCRIPT, scriptKey)
+            }
+        )
         bindDownloadService(ctx)
     }
 
@@ -239,7 +243,8 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                     if (pageNo != null) {
                         binding.countText.text = ctx.getString(
                             R.string.msgFontsDonwloadProgress,
-                            pageNo - 1, QuranMeta.totalPages()
+                            pageNo - 1,
+                            QuranMeta.totalPages()
                         )
                         binding.countText.visible()
                     }
@@ -278,7 +283,9 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     private fun showCompletedDialog(ctx: Context, isFailed: Boolean) {
         PeaceDialog.newBuilder(ctx).apply {
             setTitle(if (isFailed) R.string.strTitleError else R.string.strTitleSuccess)
-            setMessage(if (isFailed) R.string.msgDownloadFailed else R.string.msgScriptFontsDownloaded)
+            setMessage(
+                if (isFailed) R.string.msgDownloadFailed else R.string.msgScriptFontsDownloaded
+            )
             setPositiveButton(R.string.strLabelOkay, null)
         }.show()
     }
@@ -292,7 +299,11 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     }
 
     private fun bindDownloadService(ctx: Context) {
-        ctx.bindService(Intent(ctx, KFQPCScriptFontsDownloadService::class.java), this, Context.BIND_AUTO_CREATE)
+        ctx.bindService(
+            Intent(ctx, KFQPCScriptFontsDownloadService::class.java),
+            this,
+            Context.BIND_AUTO_CREATE
+        )
     }
 
     private fun unbindDownloadService(actvt: Activity) {

@@ -37,7 +37,9 @@ class QuranDua(
             resultReadyCallback: OnResultReadyCallback<QuranDua>
         ) {
             QuranDuaParser.parseDua(
-                context, quranMeta, sQuranProphetRef
+                context,
+                quranMeta,
+                sQuranProphetRef
             ) { resultReadyCallback.onReady(sQuranProphetRef.get()) }
         }
     }

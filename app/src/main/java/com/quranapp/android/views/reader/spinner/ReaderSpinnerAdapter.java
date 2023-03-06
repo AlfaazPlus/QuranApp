@@ -3,7 +3,6 @@ package com.quranapp.android.views.reader.spinner;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +11,8 @@ import com.quranapp.android.R;
 
 import java.util.List;
 
-public abstract class ReaderSpinnerAdapter<VH extends ReaderSpinnerAdapter.VHReaderSpinner> extends RecyclerView.Adapter<VH> {
+public abstract class ReaderSpinnerAdapter<VH extends ReaderSpinnerAdapter.VHReaderSpinner> extends
+    RecyclerView.Adapter<VH> {
     private final LayoutInflater mInflater;
     private List<ReaderSpinnerItem> mItems;
     private ReaderSpinner mSpinner;
@@ -126,7 +126,7 @@ public abstract class ReaderSpinnerAdapter<VH extends ReaderSpinnerAdapter.VHRea
 
         @CallSuper
         public void bind(ReaderSpinnerItem item) {
-            itemView.setSelected(item.isSelected());
+            itemView.setSelected(item.getSelected());
             itemView.setOnClickListener(v -> {
                 if (mAdapter != null) {
                     mAdapter.onItemSelect(item, true);

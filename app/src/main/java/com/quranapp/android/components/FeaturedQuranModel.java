@@ -2,8 +2,6 @@ package com.quranapp.android.components;
 
 import androidx.annotation.NonNull;
 
-import com.peacedesign.android.utils.ComponentBase;
-
 import kotlin.Pair;
 
 public class FeaturedQuranModel extends ComponentBase {

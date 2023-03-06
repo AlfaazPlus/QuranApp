@@ -10,7 +10,6 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.annotation.ArrayRes;
 import androidx.annotation.BoolRes;
 import androidx.annotation.ColorInt;
@@ -32,7 +31,7 @@ import com.quranapp.android.utils.extensions.ContextKt;
 
 public class ResHelperActivity extends AppCompatActivity {
     static class ActivityState {
-        static int CREATED = 0, RESUMED = 1, STARTED = 2, PAUSED = 3, STOPPED = 4, DESTROYED = 5;
+        static int CREATED, RESUMED = 1, STARTED = 2, PAUSED = 3, STOPPED = 4, DESTROYED = 5;
     }
 
     private int mPrimaryClr = -213;

@@ -30,11 +30,11 @@ import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.extensions.updateMargins
 import com.quranapp.android.utils.extensions.visible
 import com.quranapp.android.utils.univ.FileUtils
+import kotlin.math.pow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
-import kotlin.math.pow
 
 class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
     private val mIconAnimationHandler = Handler(Looper.getMainLooper())
@@ -100,7 +100,9 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
 
     private fun showUpdateAvailableDialog(isCritical: Boolean, runOnDismiss: Runnable? = null) {
         val binding = LytUpdateAppDialogBinding.inflate(LayoutInflater.from(ctx))
-        binding.txt.setText(if (isCritical) R.string.strMsgUpdateAvailable2Continue else R.string.strMsgUpdateAvailable4Dialog)
+        binding.txt.setText(
+            if (isCritical) R.string.strMsgUpdateAvailable2Continue else R.string.strMsgUpdateAvailable4Dialog
+        )
         mIconAnimators.add(animateUpdateIcon(binding.icon))
 
         val builder = PeaceDialog.newBuilder(ctx)
@@ -148,11 +150,18 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
 
             parent.visible()
         }
-
     }
 
     private fun animateUpdateIcon(iconView: View): ObjectAnimator {
-        val pvhTransY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, 11f, -20f, 10f, -3f, 0f)
+        val pvhTransY = PropertyValuesHolder.ofFloat(
+            View.TRANSLATION_Y,
+            0f,
+            11f,
+            -20f,
+            10f,
+            -3f,
+            0f
+        )
         val pvhScaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 1.1f, .8f, 1.3f, 1.03f, 1f)
         val pvhScaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, .8f, 1.1f, 0.9f, 1f, 1f)
         return ObjectAnimator.ofPropertyValuesHolder(iconView, pvhTransY, pvhScaleX, pvhScaleY).apply {

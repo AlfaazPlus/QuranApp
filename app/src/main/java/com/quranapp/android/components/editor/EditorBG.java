@@ -4,13 +4,11 @@
 
 package com.quranapp.android.components.editor;
 
-import static com.quranapp.android.components.editor.VerseEditor.BRIGHTNESS_DARK;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-
 import androidx.appcompat.content.res.AppCompatResources;
+import static com.quranapp.android.components.editor.VerseEditor.BRIGHTNESS_DARK;
 
 import com.quranapp.android.R;
 

@@ -45,7 +45,11 @@ open class PageAlert : LinearLayout {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
@@ -127,7 +131,7 @@ open class PageAlert : LinearLayout {
     private fun prepareMessage(title: CharSequence?, msg: CharSequence?): CharSequence {
         val ssb = SpannableStringBuilder()
 
-        val hasTitle = !TextUtils.isEmpty(title);
+        val hasTitle = !TextUtils.isEmpty(title)
         if (hasTitle) {
             ssb.append(prepareTitleSpannable(title))
         }
@@ -196,7 +200,10 @@ open class PageAlert : LinearLayout {
 
     fun setupForNoInternet(actionListener: Runnable?) {
         setIcon(R.drawable.dr_icon_no_internet)
-        setMessage(context.getString(R.string.strTitleNoInternet), context.getString(R.string.strMsgNoInternetLong))
+        setMessage(
+            context.getString(R.string.strTitleNoInternet),
+            context.getString(R.string.strMsgNoInternetLong)
+        )
         setActionButton(context.getString(R.string.strLabelRetry), actionListener)
     }
 

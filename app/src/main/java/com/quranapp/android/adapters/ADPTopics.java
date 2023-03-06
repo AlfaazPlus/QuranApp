@@ -1,8 +1,5 @@
 package com.quranapp.android.adapters;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -12,11 +9,12 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -64,8 +62,9 @@ public class ADPTopics extends RecyclerView.Adapter<ADPTopics.VHTopic> {
     @NonNull
     @Override
     public VHTopic onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LytQuranTopicItemBinding binding = LytQuranTopicItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent,
-                false);
+        LytQuranTopicItemBinding binding = LytQuranTopicItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+            parent,
+            false);
         return new VHTopic(binding);
     }
 
@@ -85,8 +84,9 @@ public class ADPTopics extends RecyclerView.Adapter<ADPTopics.VHTopic> {
         subTitleSS.setSpan(new LineHeightSpan2(20, false, true), 0, subTitleSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         SpannableString chaptersSS = new SpannableString(inChapters);
-        TextAppearanceSpan inChaptersTASpan = new TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, mTxtSize, mTxtColor2,
-                null);
+        TextAppearanceSpan inChaptersTASpan = new TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, mTxtSize,
+            mTxtColor2,
+            null);
         chaptersSS.setSpan(inChaptersTASpan, 0, chaptersSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", chaptersSS);

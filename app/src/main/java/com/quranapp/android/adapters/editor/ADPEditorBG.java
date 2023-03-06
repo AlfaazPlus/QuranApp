@@ -4,8 +4,6 @@
 
 package com.quranapp.android.adapters.editor;
 
-import static android.provider.MediaStore.Images;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,20 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.provider.MediaStore.Images;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.EditorBG;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.databinding.LytEditorAlphaDialogBinding;
 import com.quranapp.android.frags.editshare.FragEditorBG;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
-import com.quranapp.android.utils.univ.SimpleSeekbarChangeListener;
+import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
 import com.quranapp.android.widgets.ColorPreviewerView;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 import com.quranapp.android.widgets.editor.EditorBGView;
 import com.quranapp.android.widgets.editor.EditorSelectImageView;

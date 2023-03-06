@@ -15,6 +15,4 @@ class JuzChapterVerseSheet : PeaceBottomSheet() {
 
         super.onCreate(savedInstanceState)
     }
-
-
 }

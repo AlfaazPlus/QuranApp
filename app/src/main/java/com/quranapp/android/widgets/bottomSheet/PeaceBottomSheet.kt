@@ -26,7 +26,7 @@ import com.quranapp.android.utils.extensions.*
 
 open class PeaceBottomSheet : BottomSheetDialogFragment() {
     var params = PeaceBottomSheetParams()
-    var onShowListener: OnPeaceBottomSheetShowListener? = null
+    var onPeaceBottomSheetShowListener: OnPeaceBottomSheetShowListener? = null
     var onDismissListener: OnPeaceBottomSheetDismissListener? = null
 
     private var dialogLayout: LinearLayout? = null
@@ -66,11 +66,7 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun resolveTitle(context: Context) {
-        try {
-            params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
     }
 
 
@@ -268,7 +264,7 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         }
 
         dialog.setOnShowListener {
-            onShowListener?.onShow()
+            onPeaceBottomSheetShowListener?.onShow()
             setupDialogOnStateChange(dialog, dialogModal, P.initialBehaviorState)
         }
 

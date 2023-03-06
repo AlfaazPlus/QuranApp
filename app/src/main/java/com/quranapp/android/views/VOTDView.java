@@ -1,8 +1,5 @@
 package com.quranapp.android.views;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION;
-
 import android.content.Context;
 import android.content.Intent;
 import android.text.SpannableString;
@@ -13,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;

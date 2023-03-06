@@ -65,25 +65,35 @@ object AppActions {
                 val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
                 val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
 
-                Logger.print("RESOURCE VERSIONS: URLs: local: $localUrlsVersion, server: $urlsVersion")
+                Logger.print(
+                    "RESOURCE VERSIONS: URLs: local: $localUrlsVersion, server: $urlsVersion"
+                )
                 if (urlsVersion > localUrlsVersion) {
                     SPAppActions.setFetchUrlsForce(ctx, true)
                     SPAppConfigs.setUrlsVersion(ctx, urlsVersion)
                     Logger.print("Updated URLs version from $localUrlsVersion to $urlsVersion")
                 }
 
-                Logger.print("RESOURCE VERSIONS: TRANSLATIONS: local: $localTranslationsVersion, server: $translationsVersion")
+                Logger.print(
+                    "RESOURCE VERSIONS: TRANSLATIONS: local: $localTranslationsVersion, server: $translationsVersion"
+                )
                 if (translationsVersion > localTranslationsVersion) {
                     SPAppActions.setFetchTranslationsForce(ctx, true)
                     SPAppConfigs.setTranslationsVersion(ctx, translationsVersion)
-                    Logger.print("Updated translations version from $localTranslationsVersion to $translationsVersion")
+                    Logger.print(
+                        "Updated translations version from $localTranslationsVersion to $translationsVersion"
+                    )
                 }
 
-                Logger.print("RESOURCE VERSIONS: RECITATIONS: local: $localRecitationsVersion, server: $recitationsVersion")
+                Logger.print(
+                    "RESOURCE VERSIONS: RECITATIONS: local: $localRecitationsVersion, server: $recitationsVersion"
+                )
                 if (recitationsVersion > localRecitationsVersion) {
                     SPAppActions.setFetchRecitationsForce(ctx, true)
                     SPAppConfigs.setRecitationsVersion(ctx, recitationsVersion)
-                    Logger.print("Updated recitations version from $localRecitationsVersion to $recitationsVersion")
+                    Logger.print(
+                        "Updated recitations version from $localRecitationsVersion to $recitationsVersion"
+                    )
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -113,6 +123,5 @@ object AppActions {
                 Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
             }
             .show()
-
     }
 }

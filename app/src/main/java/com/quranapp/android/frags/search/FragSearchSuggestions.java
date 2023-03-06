@@ -1,7 +1,5 @@
 package com.quranapp.android.frags.search;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -11,12 +9,12 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
 import com.quranapp.android.R;
@@ -126,9 +124,10 @@ public class FragSearchSuggestions extends BaseFragment implements Destroyable {
         SpannableString spannable = new SpannableString(spanned);
         if (setBG) {
             spannable.setSpan(new RoundedBG_FGSpan(spannableBGColor, spannableTextColor), 0, spanned.length(),
-                    SPAN_EXCLUSIVE_EXCLUSIVE);
+                SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
-            spannable.setSpan(new ForegroundColorSpan(spannableTextColor), 0, spanned.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new ForegroundColorSpan(spannableTextColor), 0, spanned.length(),
+                SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return spannable;
     }
@@ -142,7 +141,8 @@ public class FragSearchSuggestions extends BaseFragment implements Destroyable {
         ArrayList<SearchResultModelBase> suggModels = new ArrayList<>();
 
         if (!isEmpty) {
-            ArrayList<SearchResultModelBase> jumperSuggs = activitySearch.prepareJumper(activitySearch.mQuranMeta, query);
+            ArrayList<SearchResultModelBase> jumperSuggs = activitySearch.prepareJumper(activitySearch.mQuranMeta,
+                query);
             suggModels.addAll(jumperSuggs);
         }
 

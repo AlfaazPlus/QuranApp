@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,7 +21,7 @@ import com.quranapp.android.adapters.editor.ADPEditShareColors;
 import com.quranapp.android.databinding.FragEditorColorBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 import com.quranapp.android.views.helper.TabLayout2;
 
 public class FragEditorColors extends FragEditorBase {
@@ -54,7 +53,8 @@ public class FragEditorColors extends FragEditorBase {
 
         for (int i = 0, l = labels.length; i < l; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
-            LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(LayoutInflater.from(tabLayout.getContext()));
+            LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(
+                LayoutInflater.from(tabLayout.getContext()));
             tab.setCustomView(binding.getRoot());
             binding.tabTitle.setText(labels[i]);
 
