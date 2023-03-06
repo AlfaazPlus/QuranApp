@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.components.quran.QuranMeta;

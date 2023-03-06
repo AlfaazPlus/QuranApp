@@ -29,7 +29,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.ADPProphets;
@@ -119,7 +118,12 @@ public class ActivityProphets extends BaseActivity {
         header.back.setOnClickListener(v -> onBackPressed());
 
         EditText searchBox = header.searchContainer.searchBox;
-        ViewUtils.setPaddingStart(searchBox, dp2px(5));
+        searchBox.setPaddingRelative(
+                dp2px(5),
+                searchBox.getPaddingTop(),
+                searchBox.getPaddingEnd(),
+                searchBox.getPaddingBottom()
+        );
         header.searchContainer.btnClear.setOnClickListener(v -> header.searchContainer.searchBox.setText(null));
         searchBox.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {

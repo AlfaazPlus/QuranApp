@@ -9,7 +9,6 @@ import android.os.Looper;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.QuranTopic;
-import com.peacedesign.android.utils.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -24,7 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public final class QuranTopicParser {
     private static final String TOPICS_TAG_ROOT = "topics";

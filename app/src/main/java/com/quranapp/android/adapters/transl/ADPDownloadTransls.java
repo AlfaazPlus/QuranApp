@@ -13,17 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.Log;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslBaseModel;
@@ -31,6 +26,9 @@ import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.LytSettingsDownlTranslItemBinding;
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import java.util.List;
 import java.util.Objects;
@@ -134,7 +132,7 @@ public class ADPDownloadTransls extends ADPTranslBase<ADPDownloadTransls.VHDownl
 
             mBinding.loader.setVisibility(translModel.isDownloading() ? View.VISIBLE : View.GONE);
             mBinding.iconDownload.setVisibility(translModel.isDownloading() ? View.GONE : View.VISIBLE);
-            ViewUtils.disableView(mBinding.iconDownload, translModel.isDownloadingDisabled());
+            ViewKt.disableView(mBinding.iconDownload, translModel.isDownloadingDisabled());
 
             createMiniInfos(mBinding.miniInfosCont, translModel.getMiniInfos());
 
@@ -161,11 +159,11 @@ public class ADPDownloadTransls extends ADPTranslBase<ADPDownloadTransls.VHDownl
                 miniInfoView.setText(miniInfo);
                 miniInfoView.setBackgroundResource(R.drawable.dr_bg_primary_cornered);
                 miniInfoView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-                miniInfoView.setTextColor(ContextCompat.getColor(ctx, R.color.white));
-                miniInfoView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2_5));
+                miniInfoView.setTextColor(ContextKt.color(ctx, R.color.white));
+                miniInfoView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2_5));
 
-                ViewUtils.setPaddingVertical(miniInfoView, Dimen.dp2px(ctx, 2));
-                ViewUtils.setPaddingHorizontal(miniInfoView, Dimen.dp2px(ctx, 5));
+                ViewPaddingKt.updatePaddingVertical(miniInfoView, Dimen.dp2px(ctx, 2));
+                ViewPaddingKt.updatePaddingHorizontal(miniInfoView, Dimen.dp2px(ctx, 5));
 
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
                 lp.setMarginEnd(Dimen.dp2px(ctx, 6));

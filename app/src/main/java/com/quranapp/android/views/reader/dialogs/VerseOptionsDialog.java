@@ -25,8 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
@@ -38,8 +36,12 @@ import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.views.reader.RecitationPlayer;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClickListener, BookmarkCallbacks {
     private ReaderPossessingActivity mActivity;
@@ -103,7 +105,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout,
         LinearLayout dialogLayout, Verse verse
     ) {
-        ViewUtils.removeView(vodBinding.getRoot());
+        ViewKt.removeView(vodBinding.getRoot());
         dialogLayout.addView(vodBinding.getRoot());
 
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) vodBinding.getRoot().getLayoutParams();
@@ -164,7 +166,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private void setupDialogTitle(Context ctx, QuranMeta quranMeta, Verse verse) {
         String chapterName = quranMeta.getChapterName(ctx, mVerse.chapterNo);
         String title = ctx.getString(R.string.strTitleReaderVerseInformation, chapterName, verse.verseNo);
-        setHeaderTitle(title);
+        getParams().setHeaderTitle(title);
         updateHeaderTitle();
     }
 
@@ -352,7 +354,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
                 binding.icon.setColorFilter(tint);
 
                 ViewGroup.MarginLayoutParams p = new ViewGroup.MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-                ViewUtils.setMargins(p, marg);
+                LayoutParamsKt.updateMargins(p, marg);
 
                 binding.getRoot().setId(id);
                 binding.getRoot().setOnClickListener(VerseOptionsDialog.this);

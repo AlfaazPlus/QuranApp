@@ -20,11 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ResUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.databinding.LytReaderSpinnerBinding;
 import com.quranapp.android.databinding.LytReaderSpinnerPopupBinding;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.univ.PopupWindow2;
 import com.quranapp.android.utils.univ.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
@@ -60,7 +60,7 @@ public class ReaderSpinner extends FrameLayout {
     public ReaderSpinner(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mInflater = LayoutInflater.from(getContext());
-        mPopupBG = ResUtils.getDrawable(context, R.drawable.dr_bg_reader_spinner_popup);
+        mPopupBG = ContextKt.drawable(context, R.drawable.dr_bg_reader_spinner_popup);
 
         init(context);
     }

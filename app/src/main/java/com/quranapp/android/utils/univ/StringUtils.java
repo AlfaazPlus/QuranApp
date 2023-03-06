@@ -22,7 +22,6 @@ import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 @SuppressWarnings({"unused", "SpellCheckingInspection"})

@@ -19,12 +19,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
+import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReference;
 import com.quranapp.android.components.quran.QuranProphet;
 import com.quranapp.android.databinding.LytQuranProphetItemBinding;
-import com.peacedesign.android.utils.span.LineHeightSpan2;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.text.MessageFormat;
@@ -42,7 +42,7 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
         mItemWidth = itemWidth;
         mLimit = limit;
 
-        mTxtSize = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2);
+        mTxtSize = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2);
         mTxtColor2 = ContextCompat.getColorStateList(ctx, R.color.colorText2);
     }
 
@@ -116,7 +116,7 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
             mBinding.nameEng.setText(nameEng);
             mBinding.chapters.setText(prophet.inChapters);*/
 
-            mBinding.icon.setImageDrawable(ResUtils.getDrawable(mBinding.getRoot().getContext(), prophet.iconRes));
+            mBinding.icon.setImageDrawable(ContextKt.drawable(mBinding.getRoot().getContext(), prophet.iconRes));
 
             String name = MessageFormat.format("{0} ({1})", prophet.nameTrans, prophet.honorific);
             String nameEng = "English : " + (prophet.nameEn == null ? prophet.nameTrans : prophet.nameEn);

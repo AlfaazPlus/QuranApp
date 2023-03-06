@@ -46,6 +46,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.core.widget.TextViewCompat;
 
@@ -54,7 +55,6 @@ import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
-import com.peacedesign.android.utils.kotlin_utils.DimenKT;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog.DialogButtonsDirection;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog.DialogGravity;
 
@@ -181,7 +181,7 @@ public class PeaceDialogController {
             if (mElevation != -1) {
                 window.setElevation(mElevation);
             } else {
-                window.setElevation(DimenKT.INSTANCE.dp2px(getContext(), 16));
+                window.setElevation(Dimen.dp2px(getContext(), 16));
             }
         }
 
@@ -349,7 +349,7 @@ public class PeaceDialogController {
         View inflate = null;
         try {
             inflate = mDialog.getWindow().getLayoutInflater().inflate(mViewResId, mScrollView, false);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {}
 
         if (inflate != null) {
             mView = inflate;
@@ -479,7 +479,7 @@ public class PeaceDialogController {
         if (textColor != 0) {
             button.setTextColor(textColor);
         } else if (focus) {
-            button.setTextColor(ResUtils.obtainPrimaryColor(mContext));
+            button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
         }
 
         button.setOnClickListener(mButtonClickHandler);

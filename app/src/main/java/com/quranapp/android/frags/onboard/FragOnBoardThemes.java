@@ -19,6 +19,8 @@ import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 
+import kotlin.Unit;
+
 public class FragOnBoardThemes extends FragOnBoardBase {
     public static FragOnBoardThemes newInstance() {
         return new FragOnBoardThemes();
@@ -37,12 +39,14 @@ public class FragOnBoardThemes extends FragOnBoardBase {
     }
 
     private void setupThemeBinding(LytThemeExplorerBinding binding) {
-        binding.themeGroup.setOnCheckedChangedListener((button, checkedId) -> {
+        binding.themeGroup.setOnCheckChangedListener((button, checkedId) -> {
             if (getActivity() instanceof ActivityOnboarding) {
                 ((ActivityOnboarding) getActivity()).mThemeChanged = true;
             }
             final String themeMode = ThemeUtils.resolveThemeModeFromId(checkedId);
             SPAppConfigs.setThemeMode(button.getContext(), themeMode);
+
+            return Unit.INSTANCE;
         });
     }
 }

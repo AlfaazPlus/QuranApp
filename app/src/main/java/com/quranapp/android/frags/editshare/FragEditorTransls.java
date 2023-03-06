@@ -22,11 +22,11 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.NestedScrollView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
-import com.peacedesign.android.widget.radio.PeaceRadioButton;
-import com.peacedesign.android.widget.radio.PeaceRadioGroup;
+import com.quranapp.android.widgets.radio.PeaceRadioButton;
+import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import java.util.Set;
@@ -69,8 +69,8 @@ public class FragEditorTransls extends FragEditorBase {
     private void initMsgView(LinearLayout parent) {
         Context ctx = parent.getContext();
         AppCompatTextView msgView = new AppCompatTextView(ctx);
-        ViewUtils.setPaddingHorizontal(msgView, dp2px(ctx, 15));
-        ViewUtils.setPaddingVertical(msgView, dp2px(ctx, 10));
+        ViewPaddingKt.updatePaddingHorizontal(msgView, dp2px(ctx, 15));
+        ViewPaddingKt.updatePaddingVertical(msgView, dp2px(ctx, 10));
 
         msgView.setText(R.string.strMsgEditShareTransl);
         msgView.setTypeface(Typeface.SANS_SERIF, Typeface.ITALIC);
@@ -101,8 +101,7 @@ public class FragEditorTransls extends FragEditorBase {
 
     private void makeRadio(PeaceRadioGroup radioGroup, TranslationBook book) {
         PeaceRadioButton radio = new PeaceRadioButton(radioGroup.getContext());
-        ViewUtils.setPaddingVertical(radio, Dimen.dp2px(radio.getContext(), 10));
-        ViewUtils.setPaddingHorizontal(radio, Dimen.dp2px(radio.getContext(), 15));
+        ViewPaddingKt.updatePaddings(radio, Dimen.dp2px(radio.getContext(), 10), Dimen.dp2px(radio.getContext(), 15));
 
         radio.setTag(book.getSlug());
         radio.setBackgroundResource(R.drawable.dr_bg_action);

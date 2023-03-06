@@ -9,8 +9,8 @@ package com.quranapp.android.interfaceUtils;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.peacedesign.android.utils.Log;
-import com.quranapp.android.exc.HttpNotFoundException;
+import com.quranapp.android.utils.Log;
+import com.quranapp.android.utils.exceptions.HttpNotFoundException;
 import com.quranapp.android.views.reader.RecitationPlayer;
 
 import java.io.File;

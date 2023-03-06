@@ -54,15 +54,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.google.android.material.tabs.TabLayout;
-import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
-import com.peacedesign.android.utils.kotlin_utils.ContextUtilsKt;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.components.recitation.RecitationModel;
@@ -78,6 +72,9 @@ import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.app.ThemeUtils;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TextSizeUtils;
@@ -93,6 +90,8 @@ import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
 import com.quranapp.android.widgets.IconedTextView;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.Arrays;
 import java.util.List;
@@ -277,14 +276,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void launchThemeExplorer(Context ctx) {
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
-        PeaceBottomSheet.PeaceBottomSheetParams params = sheetDialog.getDialogParams();
-        params.headerTitle = getString(R.string.strTitleTheme);
+        PeaceBottomSheetParams params = sheetDialog.getParams();
+        params.setHeaderTitle(getString(R.string.strTitleTheme));
 
         LytThemeExplorerBinding binding = LytThemeExplorerBinding.inflate(mInflater);
         binding.themeGroup.check(ThemeUtils.resolveThemeIdFromMode(ctx));
         params.setContentView(binding.getRoot());
 
-        binding.themeGroup.setOnCheckedChangedListener((button, checkedId) -> {
+        binding.themeGroup.setOnCheckChangedListener((button, checkedId) -> {
             final String themeMode;
             final int mode;
 
@@ -302,6 +301,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             SPAppConfigs.setThemeMode(ctx, themeMode);
             sheetDialog.dismiss();
             AppCompatDelegate.setDefaultNightMode(mode);
+
+            return Unit.INSTANCE;
         });
 
         sheetDialog.setOnDismissListener(this::setupThemeTitle);
@@ -339,8 +340,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void launchVOTDToggleExplorer(Context ctx) {
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
-        PeaceBottomSheet.PeaceBottomSheetParams params = sheetDialog.getDialogParams();
-        params.headerTitle = getString(R.string.strTitleVOTD);
+        PeaceBottomSheetParams params = sheetDialog.getParams();
+        params.setHeaderTitle(getString(R.string.strTitleVOTD));
 
         LytSettingsVotdToggleBinding binding = LytSettingsVotdToggleBinding.inflate(mInflater);
         binding.getRoot().check(SPVerses.getVOTDReminderEnabled(ctx) ? R.id.on : R.id.off);
@@ -348,7 +349,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
 
-        binding.getRoot().setBeforeCheckedChangeListener((group, newButtonId) -> {
+        binding.getRoot().setBeforeCheckChangeListener((group, newButtonId) -> {
             if (newButtonId == R.id.on) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
                     alarmPermission();
@@ -484,13 +485,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {
         Context context = textView.getContext();
-        Drawable chevronRight = ResUtils.getDrawable(context, R.drawable.dr_icon_chevron_right);
+        Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
 
         if (chevronRight != null && WindowUtils.isRTL(context)) {
             chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
         }
 
-        textView.setDrawables(ResUtils.getDrawable(context, startIconRes), null, chevronRight, null);
+        textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
 
     @SuppressLint("RtlHardcoded")
@@ -519,8 +520,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupLauncherParams(int startIconRes, LytReaderSettingsItemBinding launcherBinding) {
         View launcherRoot = launcherBinding.getRoot();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        ViewUtils.setMarginVertical(params, dp2px(launcherRoot.getContext(), 5));
-        ViewUtils.setMarginHorizontal(params, dp2px(launcherRoot.getContext(), 10));
+        LayoutParamsKt.updateMarginHorizontal(params, dp2px(launcherRoot.getContext(), 10));
+        LayoutParamsKt.updateMarginVertical(params, dp2px(launcherRoot.getContext(), 5));
         launcherRoot.setLayoutParams(params);
 
         setupLauncherIcon(startIconRes, launcherBinding.launcher);
@@ -635,7 +636,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         if (QuranScriptUtilsKt.isKFQPCScript(savedScript)) {
             mLytTextSizeArabic.demoText.setTypeface(
-                ContextUtilsKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
+                ContextKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
             );
         } else {
             mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText, -1);
@@ -649,9 +650,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         p.width = isLandscape ? 0 : MATCH_PARENT;
         if (isLandscape) {
             p.weight = 1;
-            p.leftMargin = Dimen.dp2px(parent.getRoot().getContext(), 15);
+            p.leftMargin = ContextKt.dp2px(parent.getRoot().getContext(), 15);
         } else {
-            p.topMargin = Dimen.dp2px(parent.getRoot().getContext(), 15);
+            p.topMargin = ContextKt.dp2px(parent.getRoot().getContext(), 15);
         }
 
         mLytTextSizeTransl.getRoot().setLayoutParams(p);

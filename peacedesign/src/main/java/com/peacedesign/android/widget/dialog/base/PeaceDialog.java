@@ -24,10 +24,6 @@ import androidx.annotation.StringRes;
 
 import com.peacedesign.R;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.widget.list.base.BaseListAdapter;
-import com.peacedesign.android.widget.list.base.BaseListItem;
-import com.peacedesign.android.widget.list.simple.SimpleListAdapter;
-import com.peacedesign.android.widget.list.singleChoice.SingleChoiceListAdapter;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -294,10 +290,6 @@ public class PeaceDialog extends Dialog {
     @IntDef({DIRECTION_AUTO, SIDE_BY_SIDE, STACKED})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DialogButtonsDirection {}
-
-    public interface OnItemClickListener {
-        void onItemClick(@NonNull PeaceDialog dialog, @NonNull BaseListItem item);
-    }
 
     public static class Builder {
         private final PeaceDialogParams P;
@@ -600,33 +592,6 @@ public class PeaceDialog extends Dialog {
         @NonNull
         public Builder setView(@NonNull View view) {
             P.contentView = view;
-            return this;
-        }
-
-        /**
-         * Set an adapter to the dialog show its items as list.
-         * It is recommended not to set an adapter and a long dialog message text together.
-         *
-         * @param adapter  The adapter. Can be one of
-         *                 {@link SimpleListAdapter},
-         *                 {@link SingleChoiceListAdapter}
-         *                 or any adapter which extends {@link BaseListAdapter}.
-         * @param listener Listener interface to listen to adapter item click.
-         * @return This Builder object to allow for chaining of calls to set methods
-         */
-        @NonNull
-        public Builder setAdapter(@NonNull BaseListAdapter<BaseListItem> adapter, @Nullable OnItemClickListener listener) {
-            P.adapter = adapter;
-            P.mOnItemClickListener = listener;
-            return this;
-        }
-
-        @NonNull
-        public Builder setMultiChoiceAdapter(@NonNull BaseListAdapter<BaseListItem> adapter, @Nullable OnMultiChoiceClickListener listener) {
-            P.adapter = adapter;
-            P.multiChoiceListener = listener;
-
-            P.isMultiChoiceAdapter = true;
             return this;
         }
 

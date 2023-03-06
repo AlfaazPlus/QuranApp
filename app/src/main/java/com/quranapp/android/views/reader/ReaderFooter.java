@@ -23,14 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytReaderFooterBinding;
 import com.quranapp.android.reader_managers.Navigator;
 import com.quranapp.android.reader_managers.ReaderParams;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 
 import kotlin.Pair;
@@ -129,7 +129,7 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getStartPointingArrow(Context context, boolean isRTL) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
 
         if (!isRTL) return arrowLeft;
@@ -137,7 +137,7 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getEndPointingArrow(Context context, boolean isRTL) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
         if (isRTL) {
             return arrowLeft;
@@ -147,13 +147,13 @@ public class ReaderFooter extends FrameLayout {
     }
 
     private Drawable getTopPointingArrow(Context context) {
-        Drawable arrowLeft = ResUtils.getDrawable(context, R.drawable.dr_icon_arrow_left);
+        Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
         if (arrowLeft == null) return null;
         return DrawableUtils.rotate(context, arrowLeft, 90);
     }
 
     public void clearParent() {
-        ViewUtils.removeView(this);
+        ViewKt.removeView(this);
     }
 
     public void setupBottomNavigator() {
@@ -193,8 +193,8 @@ public class ReaderFooter extends FrameLayout {
         SpannableString SSFullChapTitle = new SpannableString(getContext().getString(mFullChapterLabelRes));
         SSFullChapTitle.setSpan(new StyleSpan(Typeface.BOLD), 0, SSFullChapTitle.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        int txtSizeFullChapName = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5);
-        int txtClrFullChapName = ContextCompat.getColor(getContext(), R.color.colorIcon);
+        int txtSizeFullChapName = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize3_5);
+        int txtClrFullChapName = ContextKt.color(getContext(), R.color.colorIcon);
         SpannableString SSFullChapName = new SpannableString(mReaderParams.currChapter.getName());
         SSFullChapName.setSpan(new AbsoluteSizeSpan(txtSizeFullChapName), 0, SSFullChapName.length(),
             SPAN_EXCLUSIVE_EXCLUSIVE);

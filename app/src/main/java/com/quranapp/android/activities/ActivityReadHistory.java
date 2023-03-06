@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -72,7 +71,6 @@ public class ActivityReadHistory extends BaseActivity implements ReadHistoryCall
     @Override
     protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
         mBinding = ActivityBookmarkBinding.bind(activityView);
-        ViewUtils.setBounceOverScrollRV(mBinding.list);
 
         initHeader(mBinding.header);
 

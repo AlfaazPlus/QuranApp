@@ -13,7 +13,7 @@ object SPLog {
     fun saveLastCrashLog(ctx: Context, stackTraceString: String) {
         sp(ctx).edit().apply {
             putString(KEY_SP_LAST_CRASH_LOG, stackTraceString)
-            commit()
+            commit() // We want to save it immediately
         }
     }
 

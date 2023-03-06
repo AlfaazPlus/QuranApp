@@ -21,11 +21,11 @@ import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.databinding.LytBoldHeaderBinding;
 import com.quranapp.android.databinding.LytSimpleSearchBoxBinding;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.univ.SimpleTextWatcher;
 
 public class BoldHeader extends AppBarLayout {
@@ -103,7 +103,13 @@ public class BoldHeader extends AppBarLayout {
 
     private void initThis() {
         setBackgroundColor(Color.TRANSPARENT);
-        ViewUtils.setPaddingStart(mBinding.search.searchBox, Dimen.dp2px(getContext(), 5));
+
+        mBinding.search.searchBox.setPaddingRelative(
+                ContextKt.dp2px(getContext(), 5),
+                mBinding.search.searchBox.getPaddingTop(),
+                mBinding.search.searchBox.getPaddingEnd(),
+                mBinding.search.searchBox.getPaddingBottom()
+        );
     }
 
     private void toggleSearchBox(LytSimpleSearchBoxBinding searchBoxBinding, boolean showSearch) {
@@ -172,7 +178,7 @@ public class BoldHeader extends AppBarLayout {
     }
 
     public void disableRightBtn(boolean disable) {
-        ViewUtils.disableView(mBinding.rightIcon, disable);
+        ViewKt.disableView(mBinding.rightIcon, disable);
     }
 
     public void setCallback(BoldHeaderCallback callback) {

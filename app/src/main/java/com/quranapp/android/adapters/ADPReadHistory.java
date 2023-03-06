@@ -20,16 +20,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
+import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.peacedesign.android.utils.span.LineHeightSpan2;
 
 import java.util.List;
 
@@ -50,8 +50,8 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
         mQuranMeta = quranMeta;
         mHistories = histories;
 
-        mTxtSize = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2);
-        mTxtSize2 = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2_5);
+        mTxtSize = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2);
+        mTxtSize2 = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2_5);
         mColorPrimary = ContextCompat.getColorStateList(ctx, R.color.colorPrimary);
 
         mVerseNoFormat = ctx.getString(R.string.strLabelVerseNoWithColon);
@@ -119,7 +119,7 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
                 p.width = mItemWidth;
             } else {
                 p = new RecyclerView.LayoutParams(mItemWidth, WRAP_CONTENT);
-                ViewUtils.setMargins((ViewGroup.MarginLayoutParams) p, Dimen.dp2px(binding.getRoot().getContext(), 3));
+                LayoutParamsKt.updateMargins((ViewGroup.MarginLayoutParams) p, Dimen.dp2px(binding.getRoot().getContext(), 3));
             }
             root.setLayoutParams(p);
 

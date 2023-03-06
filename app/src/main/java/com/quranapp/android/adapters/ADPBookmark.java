@@ -21,16 +21,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
+import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.peacedesign.android.widget.list.base.BaseListItem;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheetMenu;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
 import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
-import com.peacedesign.android.utils.span.LineHeightSpan2;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -51,7 +51,7 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
         mQuranMetaRef = activity.quranMetaRef;
         mBookmarkModels = bookmarkModels;
 
-        datetimeTxtSize = ResUtils.getDimenPx(mActivity, R.dimen.dmnCommonSize3);
+        datetimeTxtSize = ContextKt.getDimenPx(mActivity, R.dimen.dmnCommonSize3);
         datetimeColor = ContextCompat.getColorStateList(mActivity, R.color.colorText3);
     }
 
@@ -114,7 +114,8 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
     @NonNull
     @Override
     public VHBookmark onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LytBookmarkItemBinding binding = LytBookmarkItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        LytBookmarkItemBinding binding = LytBookmarkItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+            parent, false);
         return new VHBookmark(binding);
     }
 
@@ -134,8 +135,9 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
         subTitleSS.setSpan(new LineHeightSpan2(20, false, true), 0, subTitleSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         SpannableString datetimeSS = new SpannableString(datetime);
-        TextAppearanceSpan datetimeTASpan = new TextAppearanceSpan("sans-serif", Typeface.NORMAL, datetimeTxtSize, datetimeColor,
-                null);
+        TextAppearanceSpan datetimeTASpan = new TextAppearanceSpan("sans-serif", Typeface.NORMAL, datetimeTxtSize,
+            datetimeColor,
+            null);
         datetimeSS.setSpan(datetimeTASpan, 0, datetimeSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", datetimeSS);
@@ -165,8 +167,8 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
 
             String chapterName = mQuranMetaRef.get().getChapterName(itemView.getContext(), model.getChapterNo(), true);
             CharSequence txt = prepareTexts(chapterName,
-                    mActivity.prepareSubtitleTitle(model.getFromVerseNo(), model.getToVerseNo()),
-                    model.getFormattedDate(mActivity));
+                mActivity.prepareSubtitleTitle(model.getFromVerseNo(), model.getToVerseNo()),
+                model.getFormattedDate(mActivity));
             mBinding.text.setText(txt);
 
             mBinding.getRoot().setOnLongClickListener(v -> {
@@ -188,7 +190,7 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
                         title = String.format("%s %d:%d", chapterName, model.getChapterNo(), model.getFromVerseNo());
                     } else {
                         title = String.format("%s %d:%d-%d", chapterName, model.getChapterNo(), model.getFromVerseNo(),
-                                model.getToVerseNo());
+                            model.getToVerseNo());
                     }
                     openItemMenu(title, model);
                 }
@@ -198,7 +200,7 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
 
         private void openItemMenu(String title, BookmarkModel model) {
             PeaceBottomSheetMenu dialog = new PeaceBottomSheetMenu();
-            dialog.setHeaderTitle(title);
+            dialog.getParams().setHeaderTitle(title);
 
             TypedArray ta = mActivity.typedArray(R.array.arrBookmarkItemMenuIcons);
             String[] labels = mActivity.strArray(R.array.arrBookmarkItemMenuLabels);

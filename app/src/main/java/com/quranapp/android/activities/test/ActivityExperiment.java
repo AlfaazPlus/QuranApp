@@ -12,7 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.quran.subcomponents.Translation;

@@ -34,9 +34,9 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import me.dkzwm.widget.srl.SmoothRefreshLayout;
 import me.dkzwm.widget.srl.extra.IRefreshView;
@@ -60,12 +60,12 @@ public abstract class BaseViewSwipeTo extends LinearLayout implements IRefreshVi
 
     public BaseViewSwipeTo(Context context) {
         super(context);
-        mTitleTxtSize = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize3);
-        mChapterTxtSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSize1_5);
-        mArrowBGClrNormal = ContextCompat.getColor(getContext(), R.color.colorBGPage2);
-        mArrowBGClrCompleted = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-        mArrowTintNormal = ContextCompat.getColor(getContext(), R.color.colorIcon);
-        mArrowTintCompleted = ContextCompat.getColor(getContext(), R.color.white);
+        mTitleTxtSize = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize3);
+        mChapterTxtSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize1_5);
+        mArrowBGClrNormal = ContextKt.color(getContext(), R.color.colorBGPage2);
+        mArrowBGClrCompleted = ContextKt.color(getContext(), R.color.colorPrimary);
+        mArrowTintNormal = ContextKt.color(getContext(), R.color.colorIcon);
+        mArrowTintCompleted = ContextKt.color(getContext(), R.color.white);
 
         init();
         createViews(context);
@@ -96,7 +96,7 @@ public abstract class BaseViewSwipeTo extends LinearLayout implements IRefreshVi
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
         setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-        ViewUtils.setPaddings(this, Dimen.dp2px(getContext(), 15));
+        ViewPaddingKt.updatePaddings(this, Dimen.dp2px(getContext(), 15));
     }
 
     private void createViews(Context context) {
@@ -109,7 +109,7 @@ public abstract class BaseViewSwipeTo extends LinearLayout implements IRefreshVi
 
         arrow.setVisibility(GONE);
         arrow.setImageResource(getArrowResource());
-        ViewUtils.setPaddings(arrow, Dimen.dp2px(ctx, 3));
+        ViewPaddingKt.updatePaddings(arrow, Dimen.dp2px(ctx, 3));
         arrow.setRotation(getRotationBeforeReach());
 
         int dimen = Dimen.dp2px(ctx, 26);

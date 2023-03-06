@@ -319,6 +319,7 @@
     <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
     <string name="lastCrashLog">Last crash log</string>
     <string name="createIssue">Create issue</string>
+    <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
 

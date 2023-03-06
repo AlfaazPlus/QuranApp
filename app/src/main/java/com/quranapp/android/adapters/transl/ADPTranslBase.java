@@ -18,11 +18,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.transls.TranslBaseModel;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,13 +85,13 @@ public abstract class ADPTranslBase<VH extends RecyclerView.ViewHolder> extends 
         AppCompatTextView titleView = new AppCompatTextView(context);
         titleView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
-        ViewUtils.setPaddingHorizontal(titleView, Dimen.dp2px(context, 20));
+        ViewPaddingKt.updatePaddingHorizontal(titleView, Dimen.dp2px(context, 20));
 
         titleView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         titleView.setTextColor(mColorPrimary);
 
         ViewGroup.MarginLayoutParams p = new ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        ViewUtils.setMarginVertical(p, Dimen.dp2px(context, 10));
+        LayoutParamsKt.updateMarginVertical(p, Dimen.dp2px(context, 10));
         titleView.setLayoutParams(p);
 
         return titleView;

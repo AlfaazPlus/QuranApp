@@ -4,7 +4,6 @@
 
 package com.quranapp.android.interfaceUtils;
 
-import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 
 public interface ReadHistoryCallbacks {

@@ -31,9 +31,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
@@ -60,11 +58,13 @@ import com.quranapp.android.interfaceUtils.editor.OnEditorChangeListener;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.editor.EditorUtils;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.univ.DateUtils;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.views.helper.TabLayout2;
+import com.quranapp.android.widgets.dialog.loader.PeaceProgressDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -85,7 +85,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     private Typeface mUrduTypeface;
     private boolean mTranslShowingFirstTime = true;
     private ViewPagerAdapter2 mPagerAdapter;
-    private ProgressDialog mProgressDialog;
+    private PeaceProgressDialog mProgressDialog;
     private File mTmpImageFile;
     private Bitmap mTmpImageToSave;
     private String mTmpImageToSaveTitle;
@@ -167,7 +167,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     }
 
     private void initHeader(LytEditShareHeaderBinding header) {
-        ViewUtils.addStrokedBGToHeader(header.getRoot(), R.color.colorBGPage, R.color.colorDivider);
+        // ViewUtils.addStrokedBGToHeader(header.getRoot(), R.color.colorBGPage, R.color.colorDivider);
 
         header.close.setOnClickListener(v -> finish());
         header.done.setOnClickListener(v -> done());
@@ -283,8 +283,8 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     private void togglePreview(LytEditorFinishBinding finishBinding, boolean show) {
         finishBinding.progressCont.setVisibility(show ? View.GONE : View.VISIBLE);
         finishBinding.preview.setVisibility(show ? View.VISIBLE : View.GONE);
-        ViewUtils.disableView(finishBinding.download, !show);
-        ViewUtils.disableView(finishBinding.share, !show);
+        ViewKt.disableView(finishBinding.download, !show);
+        ViewKt.disableView(finishBinding.share, !show);
     }
 
     private Bitmap prepareImageFromView(View view) {
@@ -491,7 +491,7 @@ public class ActivityEditShare extends BaseActivity implements OnEditorChangeLis
     }
 
     private void showLoader() {
-        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog = new PeaceProgressDialog(this);
         mProgressDialog.show();
     }
 

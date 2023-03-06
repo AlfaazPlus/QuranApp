@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.components.quran.QuranMeta;
 
 public class RecitationParams implements Parcelable {

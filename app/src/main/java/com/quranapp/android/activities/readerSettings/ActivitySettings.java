@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.databinding.ActivitySettingsBinding;

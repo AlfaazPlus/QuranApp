@@ -28,9 +28,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.peacedesign.android.utils.Dimen
-import com.peacedesign.android.utils.ResUtils
-import com.peacedesign.android.utils.ViewUtils
 import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.*
 
 open class PageAlert : LinearLayout {
     private lateinit var mIconView: AppCompatImageView
@@ -67,10 +66,9 @@ open class PageAlert : LinearLayout {
     private fun initThis() {
         orientation = VERTICAL
         gravity = Gravity.CENTER
-        ViewUtils.setPaddingVertical(this, Dimen.dp2px(context, 25F))
-        ViewUtils.setPaddingHorizontal(this, Dimen.dp2px(context, 50F))
+        updatePaddings(context.dp2px(25F), context.dp2px(50F))
 
-        setBackgroundColor(ResUtils.obtainWindowBackgroundColor(context))
+        setBackgroundColor(context.obtainWindowBackgroundColor())
         setOnTouchListener { _, _ -> true }
     }
 
@@ -143,8 +141,8 @@ open class PageAlert : LinearLayout {
 
     fun prepareMsgSpannable(msg: CharSequence?, hasTitle: Boolean): CharSequence {
         val msgSS = SpannableString(msg)
-        val txtSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSize)
-        val txtColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorText2))
+        val txtSize = context.getDimenPx(R.dimen.dmnCommonSize)
+        val txtColor = ColorStateList.valueOf(context.color(R.color.colorText2))
         val span = TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, txtColor, null)
         msgSS.setSpan(span, 0, msgSS.length, SPAN_EXCLUSIVE_EXCLUSIVE)
 
@@ -159,7 +157,7 @@ open class PageAlert : LinearLayout {
 
     fun prepareTitleSpannable(title: CharSequence?): CharSequence {
         val titleSS = SpannableString(title)
-        val txtSize = ResUtils.getDimenPx(context, R.dimen.dmnCommonSizeLarger)
+        val txtSize = context.getDimenPx(R.dimen.dmnCommonSizeLarger)
 
         val span = TextAppearanceSpan("sans-serif", Typeface.BOLD, txtSize, null, null)
         titleSS.setSpan(span, 0, titleSS.length, SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -193,7 +191,7 @@ open class PageAlert : LinearLayout {
     }
 
     fun remove() {
-        ViewUtils.removeView(this)
+        removeView()
     }
 
     fun setupForNoInternet(actionListener: Runnable?) {

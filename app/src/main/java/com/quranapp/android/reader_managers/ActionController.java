@@ -7,7 +7,6 @@ import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE
 import android.os.Handler;
 import android.os.Looper;
 
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -23,6 +22,7 @@ import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.views.reader.dialogs.FootnotePresenter;
 import com.quranapp.android.views.reader.dialogs.QuickReference;
 import com.quranapp.android.views.reader.dialogs.VerseOptionsDialog;
+import com.quranapp.android.widgets.dialog.loader.PeaceProgressDialog;
 
 import java.util.Set;
 
@@ -35,12 +35,12 @@ public class ActionController implements Destroyable {
     private final VerseOptionsDialog mVOD = new VerseOptionsDialog();
     private final FootnotePresenter mFootnotePresenter = new FootnotePresenter();
     private final QuickReference mQuickReference = new QuickReference();
-    private final ProgressDialog mProgressDialog;
+    private final PeaceProgressDialog mProgressDialog;
 
     public ActionController(ReaderPossessingActivity readerPossessingActivity) {
         mActivity = readerPossessingActivity;
 
-        mProgressDialog = new ProgressDialog(mActivity);
+        mProgressDialog = new PeaceProgressDialog(mActivity);
         mProgressDialog.setDimAmount(0);
         mProgressDialog.setElevation(0);
     }

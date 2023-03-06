@@ -6,10 +6,10 @@ import android.os.Build
 import android.text.SpannableString
 import android.util.TypedValue
 import android.widget.TextView
-import com.peacedesign.android.utils.kotlin_utils.color
-import com.peacedesign.android.utils.kotlin_utils.getDimension
-import com.peacedesign.android.utils.kotlin_utils.getFont
 import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.getDimension
+import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.reader.getQuranScriptFontDimenRes
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.isKFQPCScript

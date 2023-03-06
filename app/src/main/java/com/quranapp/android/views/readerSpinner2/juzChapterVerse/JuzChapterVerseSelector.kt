@@ -17,19 +17,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.peacedesign.android.utils.ResUtils
 import com.peacedesign.android.utils.kotlin_utils.*
-import com.peacedesign.android.utils.kotlin_utils.DimenKT.dp2px
-import com.peacedesign.android.utils.kotlin_utils.DimenKT.getWindowHeight
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
 import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.extensions.*
 import com.quranapp.android.utils.univ.RegexPattern
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener
 import com.quranapp.android.utils.univ.SimpleTextWatcher
@@ -44,6 +43,7 @@ import com.quranapp.android.views.readerSpinner2.adapters.ChapterSelectorAdapter
 import com.quranapp.android.views.readerSpinner2.adapters.JuzSelectorAdapter2
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2
 import com.quranapp.android.widgets.IconedTextView
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 
 class JuzChapterVerseSelector @JvmOverloads constructor(
     context: Context,
@@ -53,10 +53,12 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
     private var mPopupBinding: LytJuzChapterVerseSheetBinding? = null
 
     private val mPopup = JuzChapterVerseSheet().apply {
-        setOnDismissListener {
-            mPopupBinding?.let {
-                it.juzChapterSec.search.setText("")
-                it.verseSec.search.setText("")
+        onDismissListener = object : PeaceBottomSheet.OnPeaceBottomSheetDismissListener {
+            override fun onDismissed() {
+                mPopupBinding?.let {
+                    it.juzChapterSec.search.setText("")
+                    it.verseSec.search.setText("")
+                }
             }
         }
     }
@@ -80,9 +82,9 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
 
     private fun initThis() {
         gravity = Gravity.CENTER
-        setPaddingHorizontal(context.dp2px(6F), 0)
+        updatePaddingRelative(start = context.dp2px(6F), end = 0)
 
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, ResUtils.getDimenSp(context, R.dimen.dmnCommonSize3))
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, context.getDimenSp(R.dimen.dmnCommonSize3))
 
         val txtColor = context.color(R.color.colorIcon)
         setTextColor(txtColor)
@@ -102,11 +104,11 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
                 initRecyclerViews(it, context)
                 setupVerseHeaders(it)
                 setupPopupDimensions(it)
-                mPopup.setContentView(it.root)
+                mPopup.params.contentView = it.root
 
-                if (mPopup.isShowing) {
+                if (mPopup.isShowing()) {
                     view.removeView()
-                    mPopup.dialogLayout.addView(view)
+                    mPopup.getDialogLayout().addView(view)
                 }
 
                 if (juzOrChapterAdapter != null && juzOrChapterItemSelectListener != null) {
@@ -177,8 +179,12 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
         })
     }
 
-    private fun setupJuzOrChapterHeader(binding: LytJuzChapterVerseSheetBinding, adapter: ADPJuzChapterVerseBase<*, *>) {
-        val titleRes = if (adapter is JuzSelectorAdapter2) R.string.strTitleReaderJuz2 else R.string.strTitleReaderChapters2
+    private fun setupJuzOrChapterHeader(
+        binding: LytJuzChapterVerseSheetBinding,
+        adapter: ADPJuzChapterVerseBase<*, *>
+    ) {
+        val titleRes =
+            if (adapter is JuzSelectorAdapter2) R.string.strTitleReaderJuz2 else R.string.strTitleReaderChapters2
         val hintRes = if (adapter is JuzSelectorAdapter2) R.string.strHintSearchJuz else R.string.strHintSearchChapter
         binding.juzChapterSec.title.setText(titleRes)
         binding.juzChapterSec.search.setHint(hintRes)
@@ -307,9 +313,9 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
 
     private fun setupPopupDimensions(binding: LytJuzChapterVerseSheetBinding) {
         binding.let {
-            var height = getWindowHeight(context)
-            if (height >= dp2px(context, 70f)) {
-                height = dp2px(context, 650f)
+            var height = context.getWindowHeight()
+            if (height >= context.dp2px(70f)) {
+                height = context.dp2px(650f)
             }
             it.root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
         }

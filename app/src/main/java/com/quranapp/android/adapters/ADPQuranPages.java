@@ -13,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.reader.QuranPageModel;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.views.reader.ChapterInfoCardView;
 import com.quranapp.android.views.reader.QuranPageView;
 import com.quranapp.android.views.reader.ReaderFooter;
@@ -77,7 +77,7 @@ public class ADPQuranPages extends RecyclerView.Adapter<ADPQuranPages.VHQuranPag
         } else if (viewType == READER_PAGE) {
             final QuranPageView quranPageView = new QuranPageView(mActivity);
             final ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            ViewUtils.setMargins(params, Dimen.dp2px(parent.getContext(),3));
+            LayoutParamsKt.updateMargins(params, Dimen.dp2px(parent.getContext(),3));
             quranPageView.setLayoutParams(params);
             view = quranPageView;
         } else if (viewType == READER_FOOTER) {

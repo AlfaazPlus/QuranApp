@@ -20,12 +20,12 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
+import com.quranapp.android.utils.app.RecitationManager;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.PopupWindow2;
@@ -81,7 +81,7 @@ public class RecitationMenu {
 
         binding.repeatCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mPlayer.setRepeat(isChecked);
-            ViewUtils.disableView(binding.autoplay, isChecked);
+            ViewKt.disableView(binding.autoplay, isChecked);
         });
         binding.autoplayCheckbox.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> mPlayer.setContinueChapter(isChecked));
@@ -92,7 +92,7 @@ public class RecitationMenu {
         binding.repeatCheckbox.setChecked(repeatEnabled);
         binding.autoplayCheckbox.setChecked(SPReader.getRecitationContinueChapter(getContext()));
 
-        ViewUtils.disableView(binding.autoplay, repeatEnabled);
+        ViewKt.disableView(binding.autoplay, repeatEnabled);
 
         binding.selectReciter.setText(prepareRecitationTitle(null));
         RecitationManager.prepare(getContext(), false, () -> {

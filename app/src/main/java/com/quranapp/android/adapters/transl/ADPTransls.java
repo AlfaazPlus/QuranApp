@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.widget.checkbox.PeaceCheckBox;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
@@ -83,7 +83,7 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
             mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(), translModel.getBookInfo().getAuthorName());
             mBinding.checkbox.setChecked(translModel.isChecked());
 
-            mBinding.checkbox.setOnBeforeCheckChangedListener((button, newState) -> {
+            mBinding.checkbox.setBeforeCheckChangeListener((button, newState) -> {
                 if (mListener.onSelectionChanged(button.getContext(), translModel, newState)) {
                     translModel.setChecked(newState);
                     return true;

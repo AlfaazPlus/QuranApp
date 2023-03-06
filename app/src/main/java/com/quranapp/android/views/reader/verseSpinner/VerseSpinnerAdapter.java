@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.views.reader.spinner.ReaderSpinnerAdapter;
 import com.quranapp.android.views.reader.spinner.ReaderSpinnerItem;
 
@@ -42,8 +42,7 @@ public class VerseSpinnerAdapter extends ReaderSpinnerAdapter<VerseSpinnerAdapte
     private TextView makeItemView(Context context) {
         TextView txtView = new TextView(context);
 
-        ViewUtils.setPaddingHorizontal(txtView, Dimen.dp2px(context, 15));
-        ViewUtils.setPaddingVertical(txtView, Dimen.dp2px(context, 10));
+        ViewPaddingKt.updatePaddings(txtView, Dimen.dp2px(context, 15), Dimen.dp2px(context, 10));
 
         txtView.setTextColor(ContextCompat.getColorStateList(context, R.color.color_reader_spinner_item_label));
 

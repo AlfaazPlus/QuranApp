@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
-import com.quranapp.android.utils.CustomExceptionHandler
+import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 

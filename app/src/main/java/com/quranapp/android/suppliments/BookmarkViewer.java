@@ -15,7 +15,6 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -25,8 +24,9 @@ import com.quranapp.android.databinding.LytBookmarkDialogBinding;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
-import com.peacedesign.android.utils.Log;
 import com.quranapp.android.utils.Logger;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.univ.SimpleTextWatcher;
@@ -77,7 +77,7 @@ public class BookmarkViewer implements Destroyable {
         mPopup = builder.create();
         mPopup.show();
 
-        ViewUtils.removeView(view);
+        ViewKt.removeView(view);
         mPopup.setContentView(view);
     }
 
@@ -112,7 +112,10 @@ public class BookmarkViewer implements Destroyable {
             return true;
         });
 
-        ViewUtils.addHoverPushOpacityEffect(binding.edit, binding.delete, binding.done, binding.openInReader);
+        for (View button : new View[]{binding.edit, binding.delete, binding.done, binding.openInReader}) {
+            button.setOnTouchListener(new HoverPushOpacityEffect());
+        }
+
         binding.edit.setOnClickListener(v -> editBookmark(binding));
         binding.delete.setOnClickListener(v -> {
             if (mModel != null) {

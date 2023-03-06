@@ -19,12 +19,11 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityTopics;
 import com.quranapp.android.components.quran.QuranTopic;
 import com.quranapp.android.databinding.LytQuranTopicItemBinding;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.LinkedList;
@@ -40,7 +39,7 @@ public class ADPTopics extends RecyclerView.Adapter<ADPTopics.VHTopic> {
     public ADPTopics(Context ctx, int itemWidth) {
         mItemWidth = itemWidth;
 
-        mTxtSize = ResUtils.getDimenPx(ctx, R.dimen.dmnCommonSize2);
+        mTxtSize = ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2);
         mTxtColor2 = ContextCompat.getColorStateList(ctx, R.color.colorText2);
     }
 

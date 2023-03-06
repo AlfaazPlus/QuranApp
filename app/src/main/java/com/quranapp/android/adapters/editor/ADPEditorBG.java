@@ -19,15 +19,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.utils.touchutils.HoverPushOpacityEffect;
-import com.peacedesign.android.widget.sheet.SheetDialog;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.EditorBG;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.databinding.LytEditorAlphaDialogBinding;
 import com.quranapp.android.frags.editshare.FragEditorBG;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.univ.SimpleSeekbarChangeListener;
 import com.quranapp.android.widgets.ColorPreviewerView;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 import com.quranapp.android.widgets.editor.EditorBGView;
 import com.quranapp.android.widgets.editor.EditorSelectImageView;
 
@@ -37,7 +38,7 @@ public class ADPEditorBG extends RecyclerView.Adapter<ADPEditorBG.VHEditorBG> {
     private final FragEditorBG mFrag;
     private final VerseEditor mEditor;
     private int mSelected;
-    private SheetDialog mDialog;
+    private PeaceBottomSheet mDialog;
 
     public ADPEditorBG(FragEditorBG frag, VerseEditor editor) {
         mFrag = frag;
@@ -127,15 +128,16 @@ public class ADPEditorBG extends RecyclerView.Adapter<ADPEditorBG.VHEditorBG> {
 
                     float alpha = (float) progress / 100;
                     mEditor.setBGAlpha(alpha);
-                    mEditor.getListener().onBGAlphaColorChange(ColorUtils.createAlphaColor(mEditor.getBGAlphaColor(), alpha));
+                    mEditor.getListener().onBGAlphaColorChange(
+                        ColorUtils.createAlphaColor(mEditor.getBGAlphaColor(), alpha));
                 }
             });
 
-            mDialog = new SheetDialog();
-            SheetDialog.SheetDialogParams p = mDialog.getDialogParams();
-            p.headerTitle = ctx.getString(R.string.strTitleAlphaBG);
+            mDialog = new PeaceBottomSheet();
+            PeaceBottomSheetParams p = mDialog.getParams();
+            p.setHeaderTitle(ctx.getString(R.string.strTitleAlphaBG));
             p.setContentView(alphaDialogBinding.getRoot());
-            p.windowDimAmount = 0;
+            p.setWindowDimAmount(0);
             mDialog.show(mFrag.getParentFragmentManager());
         }
 

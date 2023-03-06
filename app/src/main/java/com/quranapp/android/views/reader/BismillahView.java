@@ -12,8 +12,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.TextViewCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.LayoutParamsKt;
 
 public class BismillahView extends AppCompatTextView {
     public BismillahView(Context context) {
@@ -40,7 +40,7 @@ public class BismillahView extends AppCompatTextView {
     public void setLayoutParams(ViewGroup.LayoutParams params) {
         if (params instanceof MarginLayoutParams) {
             params.width = MATCH_PARENT;
-            ViewUtils.setMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(), 10));
+            LayoutParamsKt.updateMarginVertical((MarginLayoutParams) params, Dimen.dp2px(getContext(), 10));
         }
         super.setLayoutParams(params);
     }

@@ -5,8 +5,6 @@ import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATI
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -21,10 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
-import com.peacedesign.android.widget.dialog.loader.ProgressDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
 import com.quranapp.android.components.bookmark.BookmarkModel;
@@ -41,6 +36,9 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
+import com.quranapp.android.utils.extensions.ContextKt;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
@@ -110,7 +108,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
         /*mContent.btnQuickEdit.setImageResource(R.drawable.dr_icon_quick_edit);
         ViewUtils.setPaddings(mContent.btnQuickEdit, pad);*/
-        ViewUtils.setPaddings(mContent.votdBookmark, pad);
+        ViewPaddingKt.updatePaddings(mContent.votdBookmark, pad);
 
         /*mContent.btnQuickEdit.setOnClickListener(v -> ReaderFactory.startQuickEditShare(getContext(), mChapterNo, mVerseNo));*/
         mContent.votdBookmark.setOnClickListener(v -> bookmark(mChapterNo, mVerseNo));
@@ -203,7 +201,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         );
 
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
-        int textSize = ResUtils.getDimenPx(getContext(), txtSizeRes);
+        int textSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
         mArText = mVerseDecorator.setupArabicText(verse.arabicText, mVerseNo, verse.pageNo, textSize);
         prepareTransl(getContext(), quran.getScript());
@@ -212,30 +210,17 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     }
 
     private void prepareTransl(Context context, String scriptKey) {
-        AtomicReference<ProgressDialog> progressDialog = new AtomicReference<>();
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable runnable = () -> {
-            ProgressDialog dialog = new ProgressDialog(context);
-            progressDialog.set(dialog);
-            dialog.show();
-        };
-
         taskRunner.callAsync(new BaseCallableTask<Pair<QuranTranslBookInfo, Translation>>() {
             QuranTranslFactory factory;
 
             @Override
             public void preExecute() {
                 factory = new QuranTranslFactory(context);
-                handler.postDelayed(runnable, 1500);
             }
 
             @Override
             public void postExecute() {
                 if (factory != null) factory.close();
-                if (progressDialog.get() != null) progressDialog.get().dismiss();
-
-                handler.removeCallbacks(runnable);
             }
 
             @Override
@@ -291,7 +276,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mLastTranslationSlug = translation.getBookSlug();
 
         String transl = StringUtils.removeHTML(translation.getText(), false);
-        int txtSize = ResUtils.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
+        int txtSize = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
         SpannableString translText = mVerseDecorator.setupTranslText(transl, -1, txtSize, translation.isUrdu());
 
         SpannableString authorText = null;
@@ -333,7 +318,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mContent.text.requestLayout();
         mContent.text.invalidate();
 
-        ViewUtils.removeView(findViewById(R.id.loader));
+        ViewKt.removeView(findViewById(R.id.loader));
     }
 
     private void setupVOTDBookmarkIcon(boolean isBookmarked) {

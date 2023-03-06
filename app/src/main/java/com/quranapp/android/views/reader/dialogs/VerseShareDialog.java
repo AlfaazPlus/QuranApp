@@ -5,10 +5,10 @@
 package com.quranapp.android.views.reader.dialogs;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.peacedesign.android.widget.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
-import static com.peacedesign.android.widget.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
 import static com.quranapp.android.utils.univ.StringUtils.DASH;
 import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +27,7 @@ import androidx.core.widget.NestedScrollView;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.WindowUtils;
-import com.peacedesign.android.widget.checkbox.PeaceCheckBox;
-import com.peacedesign.android.widget.checkbox.PeaceCheckboxGroup;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.peacedesign.android.widget.dialog.base.PeaceDialogController;
 import com.quranapp.android.R;
@@ -40,8 +37,11 @@ import com.quranapp.android.components.quran.subcomponents.Footnote;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.LytVerseShareBinding;
-import com.quranapp.android.utils.univ.NotifUtils;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.univ.StringUtils;
+import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
+import com.quranapp.android.widgets.checkbox.PeaceCheckboxGroup;
 
 import java.util.List;
 import java.util.Map;
@@ -50,6 +50,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import kotlin.Unit;
 
 public class VerseShareDialog extends PeaceDialog {
     private final ReaderPossessingActivity mActivity;
@@ -135,8 +137,10 @@ public class VerseShareDialog extends PeaceDialog {
                 LytVerseShareBinding binding = LytVerseShareBinding.bind(view);
                 mBinding = binding;
 
-                binding.selectVerses.setOnCheckedChangedListener(
-                        (button, checkedId) -> showRangeInputs(binding, checkedId == R.id.verseRange));
+                binding.selectVerses.setOnCheckChangedListener((button, checkedId) -> {
+                    showRangeInputs(binding, checkedId == R.id.verseRange);
+                    return Unit.INSTANCE;
+                });
                 binding.advanced.setOnClickListener(v -> showAdvancedSharing(binding, true));
 
                 setView(binding.getRoot());
@@ -181,13 +185,12 @@ public class VerseShareDialog extends PeaceDialog {
             }
 
             int forcedTextGravity = WindowUtils.isRTL(translsGroup.getContext())
-                    ? COMPOUND_TEXT_GRAVITY_RIGHT
-                    : COMPOUND_TEXT_GRAVITY_LEFT;
+                ? COMPOUND_TEXT_GRAVITY_RIGHT
+                : COMPOUND_TEXT_GRAVITY_LEFT;
 
             bookInfos.forEach((slug, book) -> {
                 PeaceCheckBox checkBox = new PeaceCheckBox(getContext());
-                ViewUtils.setPaddingHorizontal(checkBox, Dimen.dp2px(getContext(), 15));
-                ViewUtils.setPaddingVertical(checkBox, Dimen.dp2px(getContext(), 10));
+                ViewPaddingKt.updatePaddings(checkBox, Dimen.dp2px(getContext(), 15), Dimen.dp2px(getContext(), 10));
 
                 checkBox.setBackgroundResource(R.drawable.dr_bg_hover_cornered);
                 checkBox.setText(book.getDisplayName(true));
@@ -241,15 +244,19 @@ public class VerseShareDialog extends PeaceDialog {
             boolean incFootnotes = binding.includeFootnotes.isChecked();
 
             if (!quranMeta.isVerseRangeValid4Chapter(mChapterNo, fromVerse, toVerse)) {
-                NotifUtils.showRemovableText(mActivity, getContext().getString(R.string.strMsgEnterValidRange), Toast.LENGTH_LONG);
+                MessageUtils.showRemovableToast(mActivity, getContext().getString(R.string.strMsgEnterValidRange),
+                    Toast.LENGTH_LONG);
                 return;
             }
 
-            prepareNShare(mChapterNo, fromVerse, toVerse, slugs, whatsappStyling, incAr, incFootnotes, fromVerse == toVerse);
+            prepareNShare(mChapterNo, fromVerse, toVerse, slugs, whatsappStyling, incAr, incFootnotes,
+                fromVerse == toVerse);
         }
 
-        private void prepareNShare(int chapNo, int fromVerse, int toVerse, Set<String> slugs, boolean whatsappStyling,
-                                   boolean incAr, boolean incFootnotes, boolean isSingleVerse) {
+        private void prepareNShare(
+            int chapNo, int fromVerse, int toVerse, Set<String> slugs, boolean whatsappStyling,
+            boolean incAr, boolean incFootnotes, boolean isSingleVerse
+        ) {
 
             StringBuilder sb = new StringBuilder();
 
@@ -273,8 +280,10 @@ public class VerseShareDialog extends PeaceDialog {
             shareFinal(sb, getContext());
         }
 
-        private void makeVerse(StringBuilder sb, int chapNo, int verseNo, Set<String> slugs, boolean whatsappStyling,
-                               boolean incAr, boolean incFootnotes, boolean isSingleVerse) {
+        private void makeVerse(
+            StringBuilder sb, int chapNo, int verseNo, Set<String> slugs, boolean whatsappStyling,
+            boolean incAr, boolean incFootnotes, boolean isSingleVerse
+        ) {
 
             List<Translation> transls = mActivity.mTranslFactory.getTranslationsSingleVerse(slugs, chapNo, verseNo);
             boolean hasMultiTransls = transls.size() > 1;

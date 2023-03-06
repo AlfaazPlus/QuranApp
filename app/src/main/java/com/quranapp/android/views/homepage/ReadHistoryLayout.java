@@ -23,7 +23,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReadHistory;
 import com.quranapp.android.adapters.ADPReadHistory;
@@ -32,6 +31,9 @@ import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.interfaceUtils.Destroyable;
+import com.quranapp.android.utils.extensions.TextViewKt;
+import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 
@@ -128,7 +130,7 @@ public class ReadHistoryLayout extends HomepageCollectionLayoutBase implements D
     private void makeNoHistoryAlert() {
         View list = findViewById(R.id.list);
         if (list != null) {
-            ViewUtils.removeView(list);
+            ViewKt.removeView(list);
         }
 
         if (findViewById(R.id.text) != null) {
@@ -139,9 +141,9 @@ public class ReadHistoryLayout extends HomepageCollectionLayoutBase implements D
         AppCompatTextView tv = new AppCompatTextView(ctx);
         tv.setId(R.id.text);
 
-        ViewUtils.setPaddings(tv, dp2px(ctx, 20), dp2px(ctx, 15));
-        ViewUtils.setTextSizePx(tv, R.dimen.dmnCommonSize1_5);
-        ViewUtils.setTextColor(tv, R.color.colorText2);
+        ViewPaddingKt.updatePaddings(tv, dp2px(ctx, 20), dp2px(ctx, 15));
+        TextViewKt.setTextSizePx(tv, R.dimen.dmnCommonSize1_5);
+        TextViewKt.setTextColorResource(tv, R.color.colorText2);
 
         tv.setTypeface(Typeface.SANS_SERIF, Typeface.ITALIC);
         tv.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
@@ -151,7 +153,7 @@ public class ReadHistoryLayout extends HomepageCollectionLayoutBase implements D
 
     @Override
     protected RecyclerView resolveListView() {
-        ViewUtils.removeView(findViewById(R.id.text));
+        ViewKt.removeView(findViewById(R.id.text));
         return super.resolveListView();
     }
 

@@ -15,14 +15,13 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.peacedesign.android.utils.ResUtils;
+import com.quranapp.android.utils.Log;
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.ActivityChapterInfoBinding;
-import com.quranapp.android.exc.NoInternetException;
-import com.peacedesign.android.utils.Log;
+import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.tafsir.TafsirJSInterface;
 import com.quranapp.android.utils.tafsir.TafsirUtils;
@@ -31,6 +30,7 @@ import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.Keys;
+import com.quranapp.android.utils.univ.ResUtils;
 import com.quranapp.android.widgets.PageAlert;
 
 import org.jetbrains.annotations.NotNull;

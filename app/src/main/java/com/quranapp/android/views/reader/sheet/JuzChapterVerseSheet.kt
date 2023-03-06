@@ -2,11 +2,11 @@ package com.quranapp.android.views.reader.sheet
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 
 class JuzChapterVerseSheet : PeaceBottomSheet() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        dialogParams.apply {
+        params.apply {
             initialBehaviorState = BottomSheetBehavior.STATE_EXPANDED
             disableDragging = true
             fullHeight = false

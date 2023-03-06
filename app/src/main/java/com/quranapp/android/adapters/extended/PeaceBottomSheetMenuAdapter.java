@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.widget.list.base.BaseListAdapter;
 import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.peacedesign.android.widget.list.base.BaseListItemView;
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 public class PeaceBottomSheetMenuAdapter extends BaseListAdapter<BaseListItem> {
     private final int mMessageColor;
@@ -26,7 +26,7 @@ public class PeaceBottomSheetMenuAdapter extends BaseListAdapter<BaseListItem> {
     protected View onCreateItemView(@NonNull BaseListItem item, int position) {
         BaseListItemView view = (BaseListItemView) super.onCreateItemView(item, position);
         if (TextUtils.isEmpty(item.getMessage())) {
-            ViewUtils.setPaddingVertical(view.mContainerView, Dimen.dp2px(getContext(), 3));
+            ViewPaddingKt.updatePaddingVertical(view.mContainerView, Dimen.dp2px(getContext(), 3));
         } else {
             view.mMessageView.setTextColor(mMessageColor);
         }

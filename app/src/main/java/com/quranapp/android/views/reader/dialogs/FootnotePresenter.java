@@ -28,10 +28,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.peacedesign.android.utils.ResUtils;
-import com.peacedesign.android.utils.ViewUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -41,11 +38,15 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVerseFootnoteBinding;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.univ.ResUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 import com.quranapp.android.utils.univ.SpannableFactory;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -75,9 +76,9 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     private void init() {
-        PeaceBottomSheetParams popupParams = getDialogParams();
-        popupParams.headerShown = false;
-        popupParams.initialBehaviorState = BottomSheetBehavior.STATE_EXPANDED;
+        PeaceBottomSheetParams popupParams = getParams();
+        popupParams.setHeaderShown(false);
+        popupParams.setInitialBehaviorState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     private void initColors(Context context) {
@@ -159,7 +160,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     private void setupContent(ReaderPossessingActivity actvt, LytReaderVerseFootnoteBinding binding, LinearLayout dialogLayout) {
-        ViewUtils.removeView(binding.getRoot());
+        ViewKt.removeView(binding.getRoot());
         dialogLayout.addView(binding.getRoot());
 
         binding.getRoot().setSaveEnabled(true);

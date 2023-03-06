@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
-import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
@@ -23,6 +22,7 @@ import com.quranapp.android.frags.onboard.FragOnBoardRecitation;
 import com.quranapp.android.frags.onboard.FragOnBoardThemes;
 import com.quranapp.android.frags.onboard.FragOnBoardTransls;
 import com.quranapp.android.utils.app.ThemeUtils;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.sharedPrefs.SPAppActions;
 import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
 
@@ -65,7 +65,11 @@ public class ActivityOnboarding extends BaseActivity {
 
         prepare();
         navigate(boardIndex);
-        ViewUtils.addHoverPushOpacityEffect(mBinding.previous, mBinding.next);
+
+        for (View button : new View[]{mBinding.previous, mBinding.next}) {
+            button.setOnTouchListener(new HoverPushOpacityEffect());
+        }
+
         mBinding.skip.setOnClickListener(v -> finishSetup());
         mBinding.previous.setOnClickListener(v -> {
             if (boardIndex == 0) {

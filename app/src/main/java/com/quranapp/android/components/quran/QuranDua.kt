@@ -3,7 +3,6 @@ package com.quranapp.android.components.quran
 import android.content.Context
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.quran.parser.QuranDuaParser
-import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
 class QuranDua(
