@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.peacedesign.android.utils.DrawableUtils;
-import com.quranapp.android.utils.Log;
+import com.peacedesign.android.utils.ViewUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPReferenceVerses;
 import com.quranapp.android.components.ReferenceVerseItemModel;
@@ -48,6 +48,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import kotlin.Pair;
 
 public class ActivityReference extends ReaderPossessingActivity {
     public Set<String> mSelectedTranslSlugs;
@@ -148,7 +150,8 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void init(Intent intent) {
-        ReferenceVerseModel refModel = (ReferenceVerseModel) intent.getSerializableExtra(Keys.KEY_REFERENCE_VERSE_MODEL);
+        ReferenceVerseModel refModel = (ReferenceVerseModel) intent.getSerializableExtra(
+            Keys.KEY_REFERENCE_VERSE_MODEL);
         if (refModel == null) {
             return;
         }
@@ -164,7 +167,8 @@ public class ActivityReference extends ReaderPossessingActivity {
             mSelectedTranslSlugs = new TreeSet<>(Arrays.asList(requestedTransls));
         }
 
-        mSelectedTranslSlugs = mSelectedTranslSlugs.stream().filter(s -> !TextUtils.isEmpty(s)).collect(Collectors.toSet());
+        mSelectedTranslSlugs = mSelectedTranslSlugs.stream().filter(s -> !TextUtils.isEmpty(s)).collect(
+            Collectors.toSet());
 
         if (mSelectedTranslSlugs.size() == 0) {
             mSelectedTranslSlugs = TranslUtils.defaultTranslationSlugs();
@@ -203,12 +207,15 @@ public class ActivityReference extends ReaderPossessingActivity {
             return;
         }
 
-        LytChipgroupBinding chaptersGroupBinding = LytChipgroupBinding.inflate(LayoutInflater.from(context), mBinding.header, false);
+        LytChipgroupBinding chaptersGroupBinding = LytChipgroupBinding.inflate(LayoutInflater.from(context),
+            mBinding.header, false);
         initChaptersSuggAsync(chaptersGroupBinding, chapters, verseModel);
     }
 
-    private void initChaptersSuggAsync(LytChipgroupBinding chipGroupBinding,
-                                       List<Integer> chapters, ReferenceVerseModel verseModel) {
+    private void initChaptersSuggAsync(
+        LytChipgroupBinding chipGroupBinding,
+        List<Integer> chapters, ReferenceVerseModel verseModel
+    ) {
         ChipGroup chaptersGroup = chipGroupBinding.chipGroup;
         chaptersGroup.setChipSpacingHorizontal(dp2px(5));
 
@@ -217,7 +224,8 @@ public class ActivityReference extends ReaderPossessingActivity {
             public void runTask() {
                 makeChapterChip(0, chaptersGroup, str(R.string.strLabelAllChapters));
                 for (int chapterNo : chapters) {
-                    makeChapterChip(chapterNo, chaptersGroup, mQuranMeta.getChapterName(ActivityReference.this, chapterNo));
+                    makeChapterChip(chapterNo, chaptersGroup,
+                        mQuranMeta.getChapterName(ActivityReference.this, chapterNo));
                 }
             }
 
@@ -263,9 +271,26 @@ public class ActivityReference extends ReaderPossessingActivity {
 
             @Override
             public void runTask() throws NumberFormatException {
-                long millis = System.currentTimeMillis();
                 models = prepareVerses(requestedChapterNo, verseModel);
-                Log.d("prepareVerses: " + (System.currentTimeMillis() - millis));
+
+                if (mVerseDecorator.isKFQPCScript()) {
+                    for (ReferenceVerseItemModel model : models) {
+                        if (model.getViewType() != VIEWTYPE_VERSE) {
+                            continue;
+                        }
+
+                        Verse verse = model.getVerse();
+                        if (verse == null) {
+                            continue;
+                        }
+
+                        mVerseDecorator.refreshQuranTextFonts(
+                            new Pair<>(verse.pageNo, verse.pageNo)
+                        );
+                    }
+                } else {
+                    mVerseDecorator.refreshQuranTextFonts(null);
+                }
             }
 
             @Override
@@ -287,7 +312,8 @@ public class ActivityReference extends ReaderPossessingActivity {
         List<ReferenceVerseItemModel> models = new ArrayList<>();
         models.add(new ReferenceVerseItemModel(VIEWTYPE_DESCRIPTION, null, -1, -1, -1, null));
 
-        Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(mSelectedTranslSlugs);
+        Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(
+            mSelectedTranslSlugs);
 
         for (String verseStr : verseModel.getVerses()) {
             String[] chapterVerses = verseStr.split(":");
@@ -303,13 +329,15 @@ public class ActivityReference extends ReaderPossessingActivity {
             final int fromVerse = Integer.parseInt(split[0].trim());
 
             if (split.length == 1) {
-                String titleText = String.format("%s %d:%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo, fromVerse);
+                String titleText = String.format("%s %d:%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo,
+                    fromVerse);
                 models.add(prepareTitleModel(chapterNo, fromVerse, fromVerse, titleText));
                 models.add(prepareVerseModel(chapterNo, fromVerse, booksInfo));
             } else {
                 final int toVerse = Integer.parseInt(split[1].trim());
-                String titleText = String.format("%s %d:%d-%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo, fromVerse,
-                        toVerse);
+                String titleText = String.format("%s %d:%d-%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo,
+                    fromVerse,
+                    toVerse);
                 models.add(prepareTitleModel(chapterNo, fromVerse, toVerse, titleText));
                 for (int verseNo = fromVerse; verseNo <= toVerse; verseNo++) {
                     models.add(prepareVerseModel(chapterNo, verseNo, booksInfo));
@@ -329,7 +357,8 @@ public class ActivityReference extends ReaderPossessingActivity {
 
         mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo, verseNo);
 
-        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo, verseNo);
+        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo,
+            verseNo);
         verse.setTranslations(translations);
 
         CharSequence spannable = prepareTranslSpannable(verse, translations, booksInfo);

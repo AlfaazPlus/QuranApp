@@ -384,7 +384,11 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                     return;
                 }
 
-                actvt.mVerseDecorator.refreshQuranTextFonts(new Pair<>(verse.pageNo, verse.pageNo));
+                if (actvt.mVerseDecorator.isKFQPCScript()) {
+                    actvt.mVerseDecorator.refreshQuranTextFonts(new Pair<>(verse.pageNo, verse.pageNo));
+                } else {
+                    actvt.mVerseDecorator.refreshQuranTextFonts(null);
+                }
 
                 verse.setIncludeChapterNameInSerial(true);
                 verse.setTranslations(translations);

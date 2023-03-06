@@ -80,8 +80,6 @@ public class RecitationParams implements Parcelable {
         final int toChapterNo = toVerse[0];
         final int toVerseNo = toVerse[1];
 
-        Log.d(currChapterNo + ":" + currVerseNo, toChapterNo + ":" + toVerseNo);
-
         if (!QuranMeta.isChapterValid(currChapterNo) || !quranMeta.isVerseValid4Chapter(currChapterNo, currVerseNo)) {
             return new int[]{-1, -1};
         }
@@ -90,8 +88,14 @@ public class RecitationParams implements Parcelable {
         int nextVerseNo = currVerseNo + 1;
 
         if (nextVerseNo > quranMeta.getChapterVerseCount(currChapterNo)) {
-            nextChapterNo += 1;
-            nextVerseNo = 1;
+            // If we are at the last verse of the chapter, go to the first verse of the next chapter if possible.
+            // Otherwise, stay at the current verse.
+            if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
+                nextChapterNo++;
+                nextVerseNo = 1;
+            } else {
+                nextVerseNo = quranMeta.getChapterVerseCount(currChapterNo);
+            }
         }
 
         if (nextChapterNo > toChapterNo || nextVerseNo > toVerseNo) {
@@ -116,10 +120,18 @@ public class RecitationParams implements Parcelable {
         int prevVerseNo = currVerseNo - 1;
 
         if (prevVerseNo < 1) {
-            prevChapterNo -= 1;
-            prevVerseNo = quranMeta.getChapterVerseCount(prevChapterNo);
+            // If we are at the first verse of the chapter, go to the last verse of the previous chapter if possible.
+            // Otherwise, stay at the current verse.
+            if (QuranMeta.isChapterValid(prevChapterNo - 1)) {
+                prevChapterNo--;
+                prevVerseNo = quranMeta.getChapterVerseCount(prevChapterNo);
+            } else {
+                prevVerseNo = 1;
+            }
         }
 
+        // If the previous verse or chapter goes beyond the current range,
+        // then return -1 for both so that the player doesn't change anything.
         if (prevChapterNo < fromChapterNo || prevVerseNo < fromVerseNo) {
             prevChapterNo = -1;
             prevVerseNo = -1;
