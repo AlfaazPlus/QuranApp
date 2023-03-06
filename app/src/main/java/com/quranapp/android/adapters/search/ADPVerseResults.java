@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
-import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivitySearch;
@@ -62,6 +61,7 @@ import com.quranapp.android.vh.search.VHSearchResultBase;
 import com.quranapp.android.vh.search.VHVerseJump;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
+import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.List;
