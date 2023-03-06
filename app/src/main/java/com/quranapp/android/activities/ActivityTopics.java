@@ -50,7 +50,7 @@ import com.quranapp.android.utils.extended.GapedItemDecoration;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.views.helper.Spinner2;
 
 import java.util.ArrayList;

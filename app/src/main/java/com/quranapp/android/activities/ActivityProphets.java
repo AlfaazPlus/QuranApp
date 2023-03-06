@@ -39,7 +39,7 @@ import com.quranapp.android.components.utility.SpinnerItem;
 import com.quranapp.android.databinding.ActivityTopicsBinding;
 import com.quranapp.android.databinding.LytTopicsActivityHeaderBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.views.helper.Spinner2;
 
 import java.util.ArrayList;

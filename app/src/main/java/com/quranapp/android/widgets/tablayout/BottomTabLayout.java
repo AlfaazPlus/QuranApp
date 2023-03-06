@@ -227,7 +227,7 @@ public class BottomTabLayout extends LinearLayout {
         if (getTabsCount() == 0) return;
 
         BottomTab tabToSelect = mTabs.get(position);
-        if (tabToSelect.isSelected()) return;
+        if (tabToSelect.getSelected()) return;
 
         mProtectFromViewPagerChange = true;
         selectTab(tabToSelect);

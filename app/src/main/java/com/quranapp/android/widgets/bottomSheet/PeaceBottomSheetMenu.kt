@@ -4,15 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import com.peacedesign.android.widget.list.base.BaseListAdapter
-import com.peacedesign.android.widget.list.base.BaseListItem
-import com.peacedesign.android.widget.list.simple.SimpleListView
-import com.peacedesign.android.widget.list.singleChoice.SingleChoiceListAdapter
-import com.peacedesign.android.widget.list.singleChoice.SingleChoiceListView
+import com.quranapp.android.widgets.list.base.BaseListAdapter
+import com.quranapp.android.widgets.list.base.BaseListItem
+import com.quranapp.android.widgets.list.base.BaseListView
+import com.quranapp.android.widgets.list.singleChoice.SingleChoiceListAdapter
+import com.quranapp.android.widgets.list.singleChoice.SingleChoiceListView
 
 open class PeaceBottomSheetMenu : PeaceBottomSheet() {
     var onItemClickListener: OnItemClickListener? = null
-    var adapter: BaseListAdapter<out BaseListItem>? = null
+    var adapter: BaseListAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,18 +34,20 @@ open class PeaceBottomSheetMenu : PeaceBottomSheet() {
         dialogLayout.addView(createAdapterView(dialogLayout.context, adapter!!))
     }
 
-    protected open fun createAdapterView(context: Context, listAdapter: BaseListAdapter<out BaseListItem>): View {
+    protected open fun createAdapterView(context: Context, listAdapter: BaseListAdapter): View {
         val listView = if (listAdapter is SingleChoiceListAdapter) {
             SingleChoiceListView(context)
         } else {
-            SimpleListView(context)
+            BaseListView(context)
         }
 
-        listView.setOnItemClickListener { item ->
-            onItemClickListener?.onItemClick(this, item)
-        }
+        listView.setOnItemClickListener(object : BaseListView.OnItemClickListener {
+            override fun onItemClick(item: BaseListItem) {
+                onItemClickListener?.onItemClick(this@PeaceBottomSheetMenu, item)
+            }
+        })
 
-        listView.post { listView.adapter = adapter }
+        listView.post { listView.setAdapter(adapter) }
 
         return listView
     }

@@ -1,10 +1,10 @@
 package com.quranapp.android.utils.sharedPrefs;
 
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
-import static com.quranapp.android.utils.reader.TextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
-import static com.quranapp.android.utils.reader.TextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
-import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
-import static com.quranapp.android.utils.reader.TextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT;
 import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;

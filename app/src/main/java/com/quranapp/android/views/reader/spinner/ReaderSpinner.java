@@ -26,7 +26,7 @@ import com.quranapp.android.databinding.LytReaderSpinnerBinding;
 import com.quranapp.android.databinding.LytReaderSpinnerPopupBinding;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.univ.PopupWindow2;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
 
 import java.util.ArrayList;

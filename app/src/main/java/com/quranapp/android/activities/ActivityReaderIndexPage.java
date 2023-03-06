@@ -18,7 +18,7 @@ import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.frags.readerindex.FragReaderIndexChapters;
 import com.quranapp.android.frags.readerindex.FragReaderIndexJuz;
 import com.quranapp.android.interfaceUtils.readerIndex.FragReaderIndexCallback;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.peacedesign.android.utils.ComponentBase;
+import com.quranapp.android.components.ComponentBase;
 import com.quranapp.android.utils.univ.StringUtils;
 
 public class BottomTab extends ComponentBase {

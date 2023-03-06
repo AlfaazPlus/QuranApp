@@ -26,7 +26,7 @@ import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.databinding.LytEditorAlphaDialogBinding;
 import com.quranapp.android.frags.editshare.FragEditorBG;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
-import com.quranapp.android.utils.univ.SimpleSeekbarChangeListener;
+import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
 import com.quranapp.android.widgets.ColorPreviewerView;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 import com.quranapp.android.widgets.editor.EditorBGView;

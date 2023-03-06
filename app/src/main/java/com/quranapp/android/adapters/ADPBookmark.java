@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
-import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
 import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
@@ -31,6 +30,7 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
+import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

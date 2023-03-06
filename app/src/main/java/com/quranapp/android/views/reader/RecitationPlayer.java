@@ -30,15 +30,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.recitation.RecitationModel;
-import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.interfaceUtils.PlayerVerseLoadCallback;
 import com.quranapp.android.suppliments.recitation.RecitationMenu;
+import com.quranapp.android.utils.Log;
+import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.utils.reader.recitation.RecitationLoadTaskRunner;
 import com.quranapp.android.utils.reader.recitation.RecitationNotificationService;
 import com.quranapp.android.utils.reader.recitation.RecitationParams;
@@ -46,7 +46,6 @@ import com.quranapp.android.utils.reader.recitation.RecitationPlayerImpl;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
-import com.quranapp.android.utils.univ.Duration;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.MessageUtils;
 
@@ -322,7 +321,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         mediaPlayer = MediaPlayer.create(getContext(), audioURI);
 
         if (mediaPlayer == null) {
-            popMiniMsg("Something happened wrong while playing the audio", Duration.DURATION_LONG);
+            popMiniMsg("Something happened wrong while playing the audio", Toast.LENGTH_LONG);
             return;
         }
 

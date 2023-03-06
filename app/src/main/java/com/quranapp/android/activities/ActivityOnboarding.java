@@ -24,7 +24,7 @@ import com.quranapp.android.frags.onboard.FragOnBoardTransls;
 import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.sharedPrefs.SPAppActions;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 
 public class ActivityOnboarding extends BaseActivity {
     private ActivityOnboardBinding mBinding;

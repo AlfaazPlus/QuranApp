@@ -1,35 +1,27 @@
-package com.quranapp.android.adapters.extended;
+package com.quranapp.android.adapters.extended
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.updatePaddingVertical
+import com.quranapp.android.widgets.list.base.BaseListAdapter
+import com.quranapp.android.widgets.list.base.BaseListItem
+import com.quranapp.android.widgets.list.base.BaseListItemView
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+class PeaceBottomSheetMenuAdapter(context: Context) : BaseListAdapter(context) {
+    private val mMessageColor = context.color(R.color.colorText2)
 
-import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.widget.list.base.BaseListAdapter;
-import com.peacedesign.android.widget.list.base.BaseListItem;
-import com.peacedesign.android.widget.list.base.BaseListItemView;
-import com.quranapp.android.R;
-import com.quranapp.android.utils.extensions.ViewPaddingKt;
+    override fun onCreateItemView(item: BaseListItem, position: Int): View {
+        val view = super.onCreateItemView(item, position) as BaseListItemView
 
-public class PeaceBottomSheetMenuAdapter extends BaseListAdapter<BaseListItem> {
-    private final int mMessageColor;
-
-    public PeaceBottomSheetMenuAdapter(@NonNull Context context) {
-        super(context);
-        mMessageColor = ContextCompat.getColor(context, R.color.colorText2);
-    }
-
-    @Override
-    protected View onCreateItemView(@NonNull BaseListItem item, int position) {
-        BaseListItemView view = (BaseListItemView) super.onCreateItemView(item, position);
-        if (TextUtils.isEmpty(item.getMessage())) {
-            ViewPaddingKt.updatePaddingVertical(view.mContainerView, Dimen.dp2px(getContext(), 3));
+        if (item.message.isNullOrEmpty()) {
+            view.containerView.updatePaddingVertical(context.dp2px(3f))
         } else {
-            view.mMessageView.setTextColor(mMessageColor);
+            view.messageView?.setTextColor(mMessageColor)
         }
-        return view;
+
+        return view
     }
 }

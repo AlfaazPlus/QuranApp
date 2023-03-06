@@ -26,7 +26,7 @@ import com.quranapp.android.databinding.LytBoldHeaderBinding;
 import com.quranapp.android.databinding.LytSimpleSearchBoxBinding;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 
 public class BoldHeader extends AppBarLayout {
     private final LytBoldHeaderBinding mBinding;

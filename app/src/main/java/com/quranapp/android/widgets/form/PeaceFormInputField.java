@@ -25,7 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.quranapp.android.R;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 
 public class PeaceFormInputField extends FrameLayout {
     private CharSequence mFieldTitle;

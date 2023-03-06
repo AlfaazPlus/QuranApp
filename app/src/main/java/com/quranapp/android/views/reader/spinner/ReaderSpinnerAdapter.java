@@ -126,7 +126,7 @@ public abstract class ReaderSpinnerAdapter<VH extends ReaderSpinnerAdapter.VHRea
 
         @CallSuper
         public void bind(ReaderSpinnerItem item) {
-            itemView.setSelected(item.isSelected());
+            itemView.setSelected(item.getSelected());
             itemView.setOnClickListener(v -> {
                 if (mAdapter != null) {
                     mAdapter.onItemSelect(item, true);

@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.reader;
 
-public class TextSizeUtils {
+public class ReaderTextSizeUtils {
     public static final String KEY_TEXT_SIZE_MULT_ARABIC = "key.textsize.mult.arabic";
     public static final String KEY_TEXT_SIZE_MULT_TRANSL = "key.textsize.mult.translation";
 

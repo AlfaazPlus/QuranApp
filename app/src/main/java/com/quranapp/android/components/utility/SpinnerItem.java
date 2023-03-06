@@ -1,6 +1,6 @@
 package com.quranapp.android.components.utility;
 
-import com.peacedesign.android.utils.ComponentBase;
+import com.quranapp.android.components.ComponentBase;
 
 public class SpinnerItem extends ComponentBase {
     private CharSequence name;

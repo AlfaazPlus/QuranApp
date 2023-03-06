@@ -29,7 +29,7 @@ import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.quranapp.android.utils.univ.SimpleTextWatcher;
+import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 
 import java.util.concurrent.atomic.AtomicReference;
 

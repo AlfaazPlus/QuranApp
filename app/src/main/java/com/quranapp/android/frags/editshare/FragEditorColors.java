@@ -22,7 +22,7 @@ import com.quranapp.android.adapters.editor.ADPEditShareColors;
 import com.quranapp.android.databinding.FragEditorColorBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 import com.quranapp.android.views.helper.TabLayout2;
 
 public class FragEditorColors extends FragEditorBase {

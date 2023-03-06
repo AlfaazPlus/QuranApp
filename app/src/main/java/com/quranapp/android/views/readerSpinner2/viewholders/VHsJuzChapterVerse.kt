@@ -53,7 +53,7 @@ open class VHJuzChapterVerseBase<T : ReaderSpinnerItem>(private val adapter: ADP
 
     @CallSuper
     open fun bind(item: T) {
-        itemView.isSelected = item.isSelected
+        itemView.isSelected = item.selected
         itemView.setOnClickListener { adapter.onItemSelectInAdapter(item, true) }
     }
 }

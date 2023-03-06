@@ -71,11 +71,11 @@ abstract class ADPJuzChapterVerseBase<ITEM : ReaderSpinnerItem, VH : VHJuzChapte
         mSpinner?.onItemSelectInSpinner(item, invokeListener)
 
         selectedItem?.let {
-            it.isSelected = false
+            it.selected = false
             notifyItemChanged(it.position)
         }
 
-        item.isSelected = true
+        item.selected = true
         notifyItemChanged(item.position)
         selectedItem = item
     }

@@ -30,8 +30,8 @@ import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.extensions.*
 import com.quranapp.android.utils.univ.RegexPattern
-import com.quranapp.android.utils.univ.SimpleTabSelectorListener
-import com.quranapp.android.utils.univ.SimpleTextWatcher
+import com.quranapp.android.utils.simplified.SimpleTabSelectorListener
+import com.quranapp.android.utils.simplified.SimpleTextWatcher
 import com.quranapp.android.views.reader.ChapterIcon
 import com.quranapp.android.views.reader.chapterSpinner.ChapterSpinnerItem
 import com.quranapp.android.views.reader.juzSpinner.JuzSpinnerItem
