@@ -125,6 +125,7 @@ public class PeaceBottomSheet extends BottomSheetDialogFragment {
         if (params.disableDragging) {
             return;
         }
+        
         AppCompatImageView dragIcon = new AppCompatImageView(container.getContext());
         dragIcon.setId(R.id.dragIcon);
         dragIcon.setImageResource(R.drawable.dr_icon_drag);

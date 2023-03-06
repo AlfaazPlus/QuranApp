@@ -363,12 +363,14 @@ public class ActivitySearch extends BaseActivity {
             radio.setSpaceBetween(spaceBtwn);
             radioGroup.addView(radio);
         }
-        radioGroup.setOnCheckedChangedListener((btn, id) -> {
+        radioGroup.setOnCheckChangedListener((btn, id) -> {
             sheet.dismiss();
             QuranTranslBookInfo bookInfo = (QuranTranslBookInfo) btn.getTag();
             mSearchFilters.selectedTranslSlug = bookInfo.getSlug();
             mBinding.btnSelectTransl.setText(bookInfo.getBookName());
             reSearch();
+
+            return Unit.INSTANCE;
         });
 
         PeaceBottomSheet.PeaceBottomSheetParams params = sheet.getDialogParams();

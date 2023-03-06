@@ -207,4 +207,26 @@
         <item name="android:windowBackground">@color/colorBGPage</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="PeaceBottomSheetTheme" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/SheetDialogStyle</item>
+        <item name="android:windowAnimationStyle">@style/PeaceBottomSheetAnimations</item>
+    </style>
+
+    <style name="PeaceBottomSheetTitleStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PeaceBottomSheetAnimations" parent="Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@anim/peace_bottom_sheet_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/peace_bottom_sheet_slide_out</item>
+    </style>
+
 </resources>

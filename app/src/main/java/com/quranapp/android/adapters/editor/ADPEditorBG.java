@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.widget.sheet.SheetDialog;
+import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.EditorBG;
 import com.quranapp.android.components.editor.VerseEditor;
@@ -37,7 +37,7 @@ public class ADPEditorBG extends RecyclerView.Adapter<ADPEditorBG.VHEditorBG> {
     private final FragEditorBG mFrag;
     private final VerseEditor mEditor;
     private int mSelected;
-    private SheetDialog mDialog;
+    private PeaceBottomSheet mDialog;
 
     public ADPEditorBG(FragEditorBG frag, VerseEditor editor) {
         mFrag = frag;
@@ -127,12 +127,13 @@ public class ADPEditorBG extends RecyclerView.Adapter<ADPEditorBG.VHEditorBG> {
 
                     float alpha = (float) progress / 100;
                     mEditor.setBGAlpha(alpha);
-                    mEditor.getListener().onBGAlphaColorChange(ColorUtils.createAlphaColor(mEditor.getBGAlphaColor(), alpha));
+                    mEditor.getListener().onBGAlphaColorChange(
+                        ColorUtils.createAlphaColor(mEditor.getBGAlphaColor(), alpha));
                 }
             });
 
-            mDialog = new SheetDialog();
-            SheetDialog.SheetDialogParams p = mDialog.getDialogParams();
+            mDialog = new PeaceBottomSheet();
+            PeaceBottomSheet.PeaceBottomSheetParams p = mDialog.getDialogParams();
             p.headerTitle = ctx.getString(R.string.strTitleAlphaBG);
             p.setContentView(alphaDialogBinding.getRoot());
             p.windowDimAmount = 0;

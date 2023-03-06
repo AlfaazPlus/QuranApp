@@ -54,7 +54,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.google.android.material.tabs.TabLayout;
-import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
@@ -283,7 +282,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         binding.themeGroup.check(ThemeUtils.resolveThemeIdFromMode(ctx));
         params.setContentView(binding.getRoot());
 
-        binding.themeGroup.setOnCheckedChangedListener((button, checkedId) -> {
+        binding.themeGroup.setOnCheckChangedListener((button, checkedId) -> {
             final String themeMode;
             final int mode;
 
@@ -301,6 +300,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             SPAppConfigs.setThemeMode(ctx, themeMode);
             sheetDialog.dismiss();
             AppCompatDelegate.setDefaultNightMode(mode);
+
+            return Unit.INSTANCE;
         });
 
         sheetDialog.setOnDismissListener(this::setupThemeTitle);
@@ -347,7 +348,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
 
-        binding.getRoot().setBeforeCheckedChangeListener((group, newButtonId) -> {
+        binding.getRoot().setBeforeCheckChangeListener((group, newButtonId) -> {
             if (newButtonId == R.id.on) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
                     alarmPermission();
@@ -648,9 +649,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         p.width = isLandscape ? 0 : MATCH_PARENT;
         if (isLandscape) {
             p.weight = 1;
-            p.leftMargin = Dimen.dp2px(parent.getRoot().getContext(), 15);
+            p.leftMargin = ContextKt.dp2px(parent.getRoot().getContext(), 15);
         } else {
-            p.topMargin = Dimen.dp2px(parent.getRoot().getContext(), 15);
+            p.topMargin = ContextKt.dp2px(parent.getRoot().getContext(), 15);
         }
 
         mLytTextSizeTransl.getRoot().setLayoutParams(p);

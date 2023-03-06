@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.peacedesign.android.widget.list.base.BaseListItem;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheetMenu;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivitySearch;
@@ -61,6 +60,7 @@ import com.quranapp.android.vh.search.VHChapterJump;
 import com.quranapp.android.vh.search.VHJuzJump;
 import com.quranapp.android.vh.search.VHSearchResultBase;
 import com.quranapp.android.vh.search.VHVerseJump;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
 
 import java.util.ArrayList;
@@ -206,7 +206,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                 if (model.resultCount == 1) {
                     text = context.getString(R.string.strMsgSearchOneResultFoundIn, translModel.getBookName());
                 } else {
-                    text = context.getString(R.string.strMsgSearchMultResultsFound, translModel.getBookName(), model.resultCount);
+                    text = context.getString(R.string.strMsgSearchMultResultsFound, translModel.getBookName(),
+                        model.resultCount);
                 }
             } else {
                 if (translModel != null) {
@@ -259,8 +260,9 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
             List<Translation> translations = model.translations;
             for (int i = 0, l = Math.min(translations.size(), visibleTransCount); i < l; i++) {
-                makeSingleTranslation(container, model.translDisplayNames.get(i), translations.get(i), model.startIndices.get(i),
-                        model.endIndices.get(i));
+                makeSingleTranslation(container, model.translDisplayNames.get(i), translations.get(i),
+                    model.startIndices.get(i),
+                    model.endIndices.get(i));
             }
 
             int hideableTransCount = model.translations.size() - visibleTransCount;
@@ -271,8 +273,10 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             return container;
         }
 
-        private void makeSingleTranslation(LinearLayout container, String translDisplayName,
-                                           Translation translation, int startIndex, int endIndex) {
+        private void makeSingleTranslation(
+            LinearLayout container, String translDisplayName,
+            Translation translation, int startIndex, int endIndex
+        ) {
             Context context = itemView.getContext();
 
             LinearLayout translRoot = new LinearLayout(context);
@@ -334,7 +338,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                 for (int i = visibleTransCount, l = translations.size(); i < l; i++) {
                     Translation translation = translations.get(i);
                     makeSingleTranslation(container, model.translDisplayNames.get(i),
-                            translation, model.startIndices.get(i), model.endIndices.get(i));
+                        translation, model.startIndices.get(i), model.endIndices.get(i));
                 }
             });
         }
@@ -374,7 +378,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         private CharSequence highlightQuery(CharSequence textPart, int start, int end, boolean isUrdu) {
             SpannableString ss = new SpannableString(textPart);
             ss.setSpan(new ForegroundColorSpan(mColorPrimary), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new TypefaceSpan2(isUrdu ? fontUrdu : mQueryHighlightTypeface), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new TypefaceSpan2(isUrdu ? fontUrdu : mQueryHighlightTypeface), start, end,
+                SPAN_EXCLUSIVE_EXCLUSIVE);
             return ss;
         }
 
@@ -384,7 +389,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             final boolean isBookmarked = dbHelper.isBookmarked(model.chapterNo, model.verseNo, model.verseNo);
 
             PeaceBottomSheetMenu dialog = new PeaceBottomSheetMenu();
-            dialog.setHeaderTitle(model.chapterName + " " + model.verseSerial);
+            dialog.getParams().setHeaderTitle(model.chapterName + " " + model.verseSerial);
 
             int[] icons = {R.drawable.dr_icon_open, isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_add};
             int[] labels = {R.string.strLabelOpen, isBookmarked ? R.string.strLabelRemoveBookmark : R.string.strDescAddToBookmarks};

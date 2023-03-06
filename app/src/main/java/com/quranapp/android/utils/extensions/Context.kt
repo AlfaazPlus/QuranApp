@@ -45,7 +45,8 @@ fun Context.obtainWindowBackgroundColor(): Int {
     return backgroundColor
 }
 
-fun Context.colorStateList(@ColorRes colorResId: Int): ColorStateList? = ContextCompat.getColorStateList(this, colorResId)
+fun Context.colorStateList(@ColorRes colorResId: Int): ColorStateList? =
+    ContextCompat.getColorStateList(this, colorResId)
 
 fun Context.getFont(@FontRes fontResId: Int): Typeface? {
     return try {
@@ -56,13 +57,8 @@ fun Context.getFont(@FontRes fontResId: Int): Typeface? {
     }
 }
 
-fun Context.drawable(@DrawableRes drawableResId: Int): Drawable? {
-    return try {
-        AppCompatResources.getDrawable(this, drawableResId)
-    } catch (e: java.lang.Exception) {
-        e.printStackTrace()
-        null
-    }
+fun Context.drawable(@DrawableRes drawableResId: Int): Drawable {
+    return AppCompatResources.getDrawable(this, drawableResId)!!
 }
 
 fun Context.getDimension(@DimenRes dimenResId: Int): Int = getDimenPx(dimenResId)
@@ -120,4 +116,8 @@ fun Context.px2sp(@Dimension pxValue: Float): Float = pxValue / getDisplayMetric
 
 fun Context.getWindowHeight(): Int {
     return getDisplayMetrics().heightPixels
+}
+
+fun Context.getWindowWidth(): Int {
+    return getDisplayMetrics().widthPixels
 }

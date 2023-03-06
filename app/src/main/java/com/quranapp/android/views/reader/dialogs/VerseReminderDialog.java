@@ -30,15 +30,16 @@ import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.quranapp.android.utils.Log;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheetDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBottomSheetActionBtn1Binding;
 import com.quranapp.android.databinding.LytReaderVrdBinding;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetDialog;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -51,9 +52,9 @@ public class VerseReminderDialog extends PeaceBottomSheet {
     private LytBottomSheetActionBtn1Binding mActionBinding;
 
     public VerseReminderDialog() {
-        PeaceBottomSheetParams P = getDialogParams();
-        P.headerTitle = "Verse Reminder";
-        P.initialBehaviorState = BottomSheetBehavior.STATE_EXPANDED;
+        PeaceBottomSheetParams P = getParams();
+        P.setHeaderTitle("Verse Reminder");
+        P.setInitialBehaviorState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @NonNull
@@ -77,10 +78,11 @@ public class VerseReminderDialog extends PeaceBottomSheet {
                 }
 
                 if (mActionBinding == null) {
-                    getAsyncInflater().inflate(R.layout.lyt_bottom_sheet_action_btn_1, containerLayout, (view, resid, parent) -> {
-                        mActionBinding = LytBottomSheetActionBtn1Binding.bind(view);
-                        setupActionButton(mActionBinding, coordinator, containerLayout);
-                    });
+                    getAsyncInflater().inflate(R.layout.lyt_bottom_sheet_action_btn_1, containerLayout,
+                        (view, resid, parent) -> {
+                            mActionBinding = LytBottomSheetActionBtn1Binding.bind(view);
+                            setupActionButton(mActionBinding, coordinator, containerLayout);
+                        });
                 } else {
                     setupActionButton(mActionBinding, coordinator, containerLayout);
                 }
@@ -91,7 +93,7 @@ public class VerseReminderDialog extends PeaceBottomSheet {
 
     private void setupActionButton(LytBottomSheetActionBtn1Binding binding, View coordinator, ViewGroup containerLayout) {
         binding.btn.setText("Set Reminder");
-        binding.getRoot().setBackgroundColor(getSheetBGColor());
+        binding.getRoot().setBackgroundColor(getParams().getSheetBGColor());
 
         ViewKt.disableView(binding.btn, true);
 
@@ -102,8 +104,8 @@ public class VerseReminderDialog extends PeaceBottomSheet {
 
         binding.getRoot().post(() -> {
             binding.getRoot().measure(
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
             );
 
             ViewGroup.MarginLayoutParams lp1 = (ViewGroup.MarginLayoutParams) coordinator.getLayoutParams();
@@ -205,7 +207,8 @@ public class VerseReminderDialog extends PeaceBottomSheet {
         AbsoluteSizeSpan txtSizeSpan = new AbsoluteSizeSpan(ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSizeMedium));
         verseSS.setSpan(txtSizeSpan, 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         verseSS.setSpan(new StyleSpan(Typeface.BOLD), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        verseSS.setSpan(new ForegroundColorSpan(ContextKt.obtainPrimaryColor(ctx)), 0, verseSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        verseSS.setSpan(new ForegroundColorSpan(ContextKt.obtainPrimaryColor(ctx)), 0, verseSS.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return TextUtils.concat(reminderMsg, "\n", verseSS);
     }
