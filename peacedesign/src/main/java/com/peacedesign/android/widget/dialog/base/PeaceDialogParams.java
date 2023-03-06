@@ -19,6 +19,9 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.peacedesign.android.widget.list.base.BaseListAdapter;
+import com.peacedesign.android.widget.list.base.BaseListItem;
+
 class PeaceDialogParams {
     @SuppressLint("UnknownNullness")
     public Context context;

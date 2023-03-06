@@ -4,6 +4,12 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.quranapp.android.utils.univ.StringUtils.DASH;
+import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
@@ -13,15 +19,11 @@ import android.view.View;
 import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import static com.quranapp.android.utils.univ.StringUtils.DASH;
-import static com.quranapp.android.utils.univ.StringUtils.HYPHEN;
-import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
-import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;

@@ -22,16 +22,14 @@ open class PeaceBottomSheetDialog constructor(
         val targetWidth = context.dp2px(450f)
 
         window.setLayout(
-            if (context.getWindowWidth() > targetWidth) {
-                targetWidth
-            } else {
-                LayoutParams.MATCH_PARENT
-            },
+            if (context.getWindowWidth() > targetWidth) targetWidth
+            else LayoutParams.MATCH_PARENT,
             LayoutParams.MATCH_PARENT
         )
 
         setupDialogInternal(window)
     }
+
 
     protected fun setupDialogInternal(window: Window) {
         if (params.supportsNoAnimation()) {

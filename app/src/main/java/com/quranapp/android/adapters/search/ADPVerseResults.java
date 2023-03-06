@@ -1,5 +1,16 @@
 package com.quranapp.android.adapters.search;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,23 +24,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
+import com.peacedesign.android.widget.list.base.BaseListItem;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivitySearch;
@@ -59,7 +62,6 @@ import com.quranapp.android.vh.search.VHSearchResultBase;
 import com.quranapp.android.vh.search.VHVerseJump;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
-import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -408,8 +410,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                 switch (item.getId()) {
                     case 0: {
                         openItem(context, model);
-                    }
-                    break;
+                    } break;
                     case 1: {
                         if (isBookmarked) {
                             dbHelper.removeFromBookmark(model.chapterNo, model.verseNo, model.verseNo, null);
