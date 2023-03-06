@@ -35,8 +35,12 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
     <img src="/repo_assets/screenshots/screenshot3.jpg" alt='Screenshot 3' width='21%' />
     <img src="/repo_assets/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
 </div>
-
-See more [here](/repo_assets/screenshots).
+<div style="width:100%; display:flex; justify-content:space-between;">
+    <img src="/repo_assets/screenshots/screenshot5.jpg" alt='Screenshot 5' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot6.jpg" alt='Screenshot 6' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot7.jpg" alt='Screenshot 7' width='21%' />
+    <img src="/repo_assets/screenshots/screenshot8.jpg" alt='Screenshot 8' width='21%' />
+</div>
 
 ## Features
 
