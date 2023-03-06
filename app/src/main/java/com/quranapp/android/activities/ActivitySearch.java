@@ -3,10 +3,10 @@ package com.quranapp.android.activities;
 import static android.view.View.FOCUS_DOWN;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
 import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -31,10 +31,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.peacedesign.android.utils.DrawableUtils;
-import com.quranapp.android.utils.Log;
-import com.quranapp.android.widgets.radio.PeaceRadioButton;
-import com.quranapp.android.widgets.radio.PeaceRadioGroup;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -48,6 +44,7 @@ import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.frags.search.FragSearchSuggestions;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
@@ -55,6 +52,10 @@ import com.quranapp.android.utils.search.SearchFilters;
 import com.quranapp.android.utils.search.SearchLocalHistoryManager;
 import com.quranapp.android.utils.univ.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
+import com.quranapp.android.widgets.radio.PeaceRadioButton;
+import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,7 +247,8 @@ public class ActivitySearch extends BaseActivity {
     private void initVoiceInput() {
         // Disable button if no recognition service is present
         PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),
+            0);
         mSupportsVoiceInput = activities.size() != 0;
         if (!mSupportsVoiceInput) {
             mBinding.voiceSearch.setEnabled(false);
@@ -373,8 +375,8 @@ public class ActivitySearch extends BaseActivity {
             return Unit.INSTANCE;
         });
 
-        PeaceBottomSheet.PeaceBottomSheetParams params = sheet.getDialogParams();
-        params.headerTitleResource = R.string.strLabelSelectTranslation;
+        PeaceBottomSheetParams params = sheet.getParams();
+        params.setHeaderTitleResource(R.string.strLabelSelectTranslation);
         params.setContentView(radioGroup);
         sheet.show(getSupportFragmentManager());
     }
@@ -550,7 +552,7 @@ public class ActivitySearch extends BaseActivity {
 
     private void makeChapterSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo) {
         collection.add(new ChapterJumpModel(chapNo, String.valueOf(chapNo), quranMeta.getChapterName(this, chapNo),
-                quranMeta.getChapterNameTranslation(chapNo)));
+            quranMeta.getChapterNameTranslation(chapNo)));
     }
 
     private void makeVerseSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int fromVerse, int toVerse) {

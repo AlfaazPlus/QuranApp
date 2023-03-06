@@ -23,9 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.peacedesign.android.utils.Dimen;
-import com.quranapp.android.utils.Log;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
@@ -42,6 +40,7 @@ import com.quranapp.android.databinding.LytSheetVerseReferenceBinding;
 import com.quranapp.android.databinding.LytSheetVerseReferenceHeaderBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.quran.QuranUtils;
@@ -49,6 +48,8 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.views.CardMessage;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.ArrayList;
 import java.util.Arrays;

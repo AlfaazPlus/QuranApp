@@ -57,7 +57,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.components.recitation.RecitationModel;
@@ -91,6 +90,8 @@ import com.quranapp.android.utils.univ.SimpleTabSelectorListener;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
 import com.quranapp.android.widgets.IconedTextView;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.Arrays;
 import java.util.List;
@@ -275,8 +276,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void launchThemeExplorer(Context ctx) {
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
-        PeaceBottomSheet.PeaceBottomSheetParams params = sheetDialog.getDialogParams();
-        params.headerTitle = getString(R.string.strTitleTheme);
+        PeaceBottomSheetParams params = sheetDialog.getParams();
+        params.setHeaderTitle(getString(R.string.strTitleTheme));
 
         LytThemeExplorerBinding binding = LytThemeExplorerBinding.inflate(mInflater);
         binding.themeGroup.check(ThemeUtils.resolveThemeIdFromMode(ctx));
@@ -339,8 +340,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void launchVOTDToggleExplorer(Context ctx) {
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
-        PeaceBottomSheet.PeaceBottomSheetParams params = sheetDialog.getDialogParams();
-        params.headerTitle = getString(R.string.strTitleVOTD);
+        PeaceBottomSheetParams params = sheetDialog.getParams();
+        params.setHeaderTitle(getString(R.string.strTitleVOTD));
 
         LytSettingsVotdToggleBinding binding = LytSettingsVotdToggleBinding.inflate(mInflater);
         binding.getRoot().check(SPVerses.getVOTDReminderEnabled(ctx) ? R.id.on : R.id.off);

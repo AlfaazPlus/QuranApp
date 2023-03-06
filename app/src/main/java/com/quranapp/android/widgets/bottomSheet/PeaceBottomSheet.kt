@@ -26,8 +26,8 @@ import com.quranapp.android.utils.extensions.*
 
 open class PeaceBottomSheet : BottomSheetDialogFragment() {
     var params = PeaceBottomSheetParams()
-    var onPeaceBottomSheetShowListener: OnPeaceBottomSheetShowListener? = null
-    var onPeaceBottomSheetDismissListener: OnPeaceBottomSheetDismissListener? = null
+    var onShowListener: OnPeaceBottomSheetShowListener? = null
+    var onDismissListener: OnPeaceBottomSheetDismissListener? = null
 
     private var dialogLayout: LinearLayout? = null
 
@@ -66,7 +66,11 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun resolveTitle(context: Context) {
-        params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
+        try {
+            params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
@@ -167,23 +171,23 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     }
 
     protected open fun setupContentView(dialogLayout: LinearLayout, params: PeaceBottomSheetParams) {
-        if (params.mContentView == null) {
-            if (params.mContentViewResId != 0) {
-                params.mContentView = LayoutInflater.from(context).inflate(
-                    params.mContentViewResId,
+        if (params.contentView == null) {
+            if (params.contentViewResId != 0) {
+                params.contentView = LayoutInflater.from(context).inflate(
+                    params.contentViewResId,
                     dialogLayout,
                     false
                 )
             }
         }
 
-        if (params.mContentView != null) {
-            params.mContentView.removeView()
-            dialogLayout.addView(params.mContentView)
+        if (params.contentView != null) {
+            params.contentView.removeView()
+            dialogLayout.addView(params.contentView)
         }
 
-        if (!params.headerShown && params.mContentView != null) {
-            val closeBtn: View? = params.mContentView!!.findViewById(R.id.close)
+        if (!params.headerShown && params.contentView != null) {
+            val closeBtn: View? = params.contentView!!.findViewById(R.id.close)
             closeBtn?.setOnClickListener { dismiss() }
         }
     }
@@ -264,7 +268,7 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         }
 
         dialog.setOnShowListener {
-            onPeaceBottomSheetShowListener?.onShow()
+            onShowListener?.onShow()
             setupDialogOnStateChange(dialog, dialogModal, P.initialBehaviorState)
         }
 
@@ -332,13 +336,13 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         params.cancellable = cancelable
     }
 
-    fun getDialogLayout(): LinearLayout? {
-        return dialogLayout
+    fun getDialogLayout(): LinearLayout {
+        return dialogLayout!!
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        if (onPeaceBottomSheetDismissListener != null) onPeaceBottomSheetDismissListener!!.onDismissed()
+        if (onDismissListener != null) onDismissListener!!.onDismissed()
     }
 
     fun isShowing() = isAdded

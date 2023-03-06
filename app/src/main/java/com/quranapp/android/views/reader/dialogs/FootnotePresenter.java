@@ -29,7 +29,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -46,6 +45,8 @@ import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.univ.ResUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 import com.quranapp.android.utils.univ.SpannableFactory;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -75,9 +76,9 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     private void init() {
-        PeaceBottomSheetParams popupParams = getDialogParams();
-        popupParams.headerShown = false;
-        popupParams.initialBehaviorState = BottomSheetBehavior.STATE_EXPANDED;
+        PeaceBottomSheetParams popupParams = getParams();
+        popupParams.setHeaderShown(false);
+        popupParams.setInitialBehaviorState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     private void initColors(Context context) {

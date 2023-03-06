@@ -38,10 +38,10 @@ class PeaceBottomSheetParams : Serializable {
     var headerTitleResource = 0
 
     @Transient
-    var mContentView: View? = null
+    var contentView: View? = null
 
     @LayoutRes
-    var mContentViewResId = 0
+    var contentViewResId = 0
 
 
     fun supportsNoAnimation(): Boolean {

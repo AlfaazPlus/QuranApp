@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.widget.sheet.PeaceBottomSheet;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
@@ -41,6 +40,8 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.views.reader.RecitationPlayer;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
 public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClickListener, BookmarkCallbacks {
     private ReaderPossessingActivity mActivity;
@@ -165,7 +166,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private void setupDialogTitle(Context ctx, QuranMeta quranMeta, Verse verse) {
         String chapterName = quranMeta.getChapterName(ctx, mVerse.chapterNo);
         String title = ctx.getString(R.string.strTitleReaderVerseInformation, chapterName, verse.verseNo);
-        setHeaderTitle(title);
+        getParams().setHeaderTitle(title);
         updateHeaderTitle();
     }
 
