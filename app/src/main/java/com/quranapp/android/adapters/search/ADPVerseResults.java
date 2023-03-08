@@ -75,8 +75,6 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
     private final int mColorSecondary;
     private final String mMoreTransText;
     private final Typeface fontUrdu;
-    @NonNull
-    private final FragSearchResult mFragSearch;
     private final Typeface defaultTransFont;
     private final Typeface mQueryHighlightTypeface;
     private final LayoutInflater mInflater;
@@ -84,7 +82,6 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
     private ActivitySearch mActivity;
 
     public ADPVerseResults(Context context, FragSearchResult fragSearchResult) {
-        mFragSearch = fragSearchResult;
         mFm = fragSearchResult.getParentFragmentManager();
         mInflater = LayoutInflater.from(context);
         mTransTextSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize);

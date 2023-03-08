@@ -42,7 +42,6 @@ public class TranslUtils {
 
     public static final String TRANSL_SLUG_EN_SAHIH_INTERNATIONAL = "en_101_sahih-international";
     public static final String TRANSL_SLUG_EN_THE_CLEAR_QURAN = "en_102_the-clear-quran";
-    //    public static final String TRANSL_SLUG_EN_HILALI_KHAN = "en_103_hilali-khan";
     public static final String TRANSL_SLUG_UR_JUNAGARHI = "ur_201_junagarhi";
 
 
@@ -154,7 +153,7 @@ public class TranslUtils {
     public static String getPrebuiltTranslInfoPath(String slug) {
         switch (slug) {
             case TRANSL_SLUG_EN_SAHIH_INTERNATIONAL:
-                return "prebuilt_translations/en_saheeh_v1_1_0/manifest.json";
+                return "prebuilt_translations/en_saheeh_v1_1_1/manifest.json";
             case TRANSL_SLUG_UR_JUNAGARHI:
                 return "prebuilt_translations/ur_junagarhi/manifest.json";
             case TRANSL_SLUG_EN_THE_CLEAR_QURAN:
@@ -166,7 +165,7 @@ public class TranslUtils {
     public static String getPrebuiltTranslPath(String slug) {
         switch (slug) {
             case TRANSL_SLUG_EN_SAHIH_INTERNATIONAL:
-                return "prebuilt_translations/en_saheeh_v1_1_0/en_saheeh_v1_1_0.json";
+                return "prebuilt_translations/en_saheeh_v1_1_1/en_saheeh_v1_1_1.json";
             case TRANSL_SLUG_UR_JUNAGARHI:
                 return "prebuilt_translations/ur_junagarhi/ur_junagarhi.json";
             case TRANSL_SLUG_EN_THE_CLEAR_QURAN:

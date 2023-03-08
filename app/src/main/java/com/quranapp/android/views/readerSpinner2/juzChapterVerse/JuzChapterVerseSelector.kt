@@ -12,6 +12,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -26,6 +27,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytJuzChapterVerseSheetBinding
+import com.quranapp.android.databinding.LytReaderIndexTabBinding
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.extensions.*
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener
@@ -123,7 +125,11 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
         val labels = arrayOf(R.string.strTitleReaderChapters, R.string.strTitleReaderJuz)
         labels.forEach { labelRes ->
             val tab = binding.tabLayout.newTab()
-            tab.text = context.getString(labelRes)
+
+            val tabBinding = LytReaderIndexTabBinding.inflate(LayoutInflater.from(context))
+            tab.customView = tabBinding.root
+            tabBinding.tabTitle.setText(labelRes)
+
             binding.tabLayout.addTab(tab)
         }
 

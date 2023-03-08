@@ -66,6 +66,8 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun resolveTitle(context: Context) {
+        if (params.headerTitleResource == 0) return
+
         params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
     }
 
