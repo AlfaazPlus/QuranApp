@@ -322,6 +322,7 @@
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
+    <string name="titleStorageCleanup">Storage cleanup</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
