@@ -118,8 +118,8 @@
     <string name="strLabelOrder">Ordenar</string>
     <string name="strLabelSelectVerse">Selecionar Versículos</string>
     <string name="strHintSearch">Procurar</string>
-    <string name="strHintSearchTopic">Buscar tópico</string>
-    <string name="strHintSearchTranslation">Buscar tradução</string>
+    <string name="strHintSearchTopic">Procurar tópico</string>
+    <string name="strHintSearchTranslation">Procurar tradução</string>
     <string name="strMsgBookmarkAddFailed">Falha ao adicionar versículo aos favoritos</string>
     <string name="strMsgBookmarkAdded">Versículo adicionado aos favoritos com sucesso</string>
     <string name="strMsgBookmarkDeleteAll">Todos os favoritos foram removidos.</string>
@@ -128,14 +128,14 @@
     <string name="strMsgReadHistoryRemoved">Seu histórico de leitura foi removido com sucesso.</string>
     <string name="strMsgReadHistoryRemovedAlready">O histórico de leitura já foi removido.</string>
     <string name="strMsgReadHistoryNoItems">Sem histórico de leitura</string>
-    <string name="strMsgSearchArabic">Buscar em texto árabe</string>
+    <string name="strMsgSearchArabic">Procurar em texto árabe</string>
     <string name="strTitleReaderLayoutStylePageView">Visualização de página</string>
     <string name="strTitleAppSettings">Configurações de app</string>
     <string name="strLabelCurrentVerse">Versículo atual</string>
     <string name="strMsgBookmarkRemovedAlready">O versículo não está nos favoritos</string>
     <string name="strLabelVerseRange">Intervalo de versículo</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">Buscar tópico em \"%s\"</string>
-    <string name="strHintSearchVerse">Buscar versículo</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Procurar tópico em \"%s\"</string>
+    <string name="strHintSearchVerse">Procurar versículo</string>
     <string name="strMsgBookmarkRemoveFailed">Falha ao remover versículo dos favoritos</string>
     <string name="strMsgReadHistoryRemoveFailed">Falha ao remover o histórico de leitura.</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Falha ao baixar \"%s\".</string>
@@ -154,9 +154,33 @@
     <string name="strLabelIncludeFootnotes">Incluir notas de rodapé</string>
     <string name="strLabelIncludeReference">Incluir referência</string>
     <string name="strLabelQuickLinks">Links rápidos</string>
-    <string name="strHintSearchLanguage">Buscar idioma</string>
+    <string name="strHintSearchLanguage">Procurar idioma</string>
     <string name="strMsgInvalidVersesRange">Não é um intervalo de versículo válido.</string>
     <string name="strMsgBookmarkAddedAlready">O versículo já foi adicionado aos favoritos</string>
     <string name="strMsgBookmarkRemoved">Versículo removido dos favoritos com sucesso</string>
     <string name="strMsgHistoryRemove">Remover este histórico\?</string>
+    <string name="strTitleFootnote">Nota de rodapé</string>
+    <string name="strLabelLater">Mais tarde</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Sem downloads disponíveis</string>
+    <string name="strDescAddToBookmarks">Adicionar aos favoritos</string>
+    <string name="strDescGoBack">Voltar</string>
+    <string name="strMsgTryLater">Por favor, tente novamentes mais tarde.</string>
+    <string name="strTextPreparing">Preparando…</string>
+    <string name="strTextPleaseWait">Por favor, aguarde…</string>
+    <string name="strTextSending">Enviando…</string>
+    <string name="strTitleError">Erro!</string>
+    <string name="strTextUpdating">Atualizando…</string>
+    <string name="strTextInstalling">Instalando…</string>
+    <string name="strTextLoading">Carregando…</string>
+    <string name="strLabelDownloadImage">Baixar imagem</string>
+    <string name="strLabelNavHome">Início</string>
+    <string name="strLabelNavSearch">Procurar</string>
+    <string name="strLabelAllChapters">Todos os capítulos</string>
+    <string name="strTitleChapInfoChapterNo">Número de capítulo</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Apenas 1 resultado encontrado em %s</string>
+    <string name="strMsgResetReaderSettings">Redefinir todas as configurações para o padrão.</string>
+    <string name="strDescClose">Fechar</string>
+    <string name="strLabelShareImage">Compartilhar imagem</string>
+    <string name="strTitleFootnotes">Notas de rodapé</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
 </resources>

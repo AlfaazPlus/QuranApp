@@ -42,4 +42,21 @@
     <string name="strLabelDismiss">رفض</string>
     <string name="strLabelHide">أخفى</string>
     <string name="strLabelRestart">إعادة تشغيل</string>
+    <string name="strLabelDiscard">إحذف</string>
+    <string name="strLabelEdit">تعديل</string>
+    <string name="strLabelDone">تم</string>
+    <string name="strLabelView">أنظر</string>
+    <string name="strLabelOpen">إفتح</string>
+    <string name="strLabelOpenInReader">إفتح بالقارء</string>
+    <string name="strLabelRead">إقرأ »</string>
+    <string name="strLabelViewAll">مشاهدة الكل</string>
+    <string name="strLabelChangeNRestart">عدل و أعد التشغيل</string>
+    <string name="strLabelAdvertisement">إعلان</string>
+    <string name="strLabelSkip">تخطى</string>
+    <string name="strLabelDownloadNow">حمل الآن</string>
+    <string name="strLabelUpdate">تحديث</string>
+    <string name="strLabelNotNow">ليس الآن</string>
+    <string name="strLabelPrevious">السابق</string>
+    <string name="strLabelNext">اللاحق</string>
+    <string name="strLabelStart">إبتدأ</string>
 </resources>
