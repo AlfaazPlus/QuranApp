@@ -59,7 +59,7 @@ See all the features [here](/FEATURES.md).
 
 ## Credits
 
-Data sources for the development of this app include [QuranEnc](https://quranenc.com/en/home), [Tanzil](https://tanzil.net/), [quran.com](https://quran.com/) API and other online verified Quran projects. The KFQPC fonts are taken from [this repository](https://github.com/mustafa0x/qpc-fonts) which actually belong to [King Fahd Quran Complex](https://qurancomplex.gov.sa/).
+Data sources for the development of this app include [QuranEnc](https://quranenc.com/en/home), [Tanzil](https://tanzil.net/), [quran.com](https://quran.com/) API and other online verified Quran projects. The KFQPC fonts are taken from [this repository](https://github.com/mustafa0x/qpc-fonts) which actually belong to [King Fahd Quran Complex](https://qurancomplex.gov.sa/). Quran recitation audios come from [everyayah.com](https://everyayah.com/) and [quran.com](https://quran.com/).
 
 See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
