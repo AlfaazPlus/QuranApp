@@ -44,6 +44,20 @@
       "style": null,
       "url-host": null,
       "url-path": "/Sudais/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "al-ghamdi",
+      "reciter": "Saad Al-Ghamdi",
+      "style": null,
+      "url-host": "everyayah.com",
+      "url-path": "/data/Ghamadi_40kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+    },
+    {
+      "slug": "al-hudhaify",
+      "reciter": "Ali ibn Abdur-Rahman al Hudhaify",
+      "style": null,
+      "url-host": "everyayah.com",
+      "url-path": "/data/Hudhaify_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
     }
   ]
 }
