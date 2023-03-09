@@ -182,4 +182,5 @@
     <string name="strDescClose">Fechar</string>
     <string name="strLabelShareImage">Compartilhar imagem</string>
     <string name="strTitleFootnotes">Notas de rodapé</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
 </resources>
