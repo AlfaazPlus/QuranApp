@@ -274,4 +274,6 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false"></string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false"></string>
 </resources>
