@@ -16,7 +16,7 @@ The following features are the reason why you should use the QuranApp.
 - Quick preview of verse references
 
 ### Recitations
-- 5+ Recitations
+- 15+ Recitations
 - Repeat single verse
 - Play verse range
 - Play recitation continuously
