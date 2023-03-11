@@ -14,6 +14,7 @@ import com.quranapp.android.utils.univ.FileUtils
 
 class FragStorageCleanupMain : FragStorageCleanupBase() {
     private lateinit var fileUtils: FileUtils
+    private lateinit var binding: FragStorageCleanupMainBinding
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.titleStorageCleanup)
 
@@ -23,9 +24,14 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fileUtils = FileUtils.newInstance(view.context)
-        init(FragStorageCleanupMainBinding.bind(view))
+        binding = FragStorageCleanupMainBinding.bind(view)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        init(binding)
     }
 
     private fun init(binding: FragStorageCleanupMainBinding) {

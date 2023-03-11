@@ -20,6 +20,5 @@
             android:layout_marginBottom="20dp"
             android:text="@string/storageCleanupMessage"
             android:textColor="@color/colorText2" />
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
