@@ -77,7 +77,7 @@ import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
@@ -107,7 +107,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private LytReaderSettingsItemBinding mTranslExplorerBinding;
     private LytReaderSettingsItemBinding mRecitationExplorerBinding;
     private LytReaderSettingsItemBinding mScriptExplorerBinding;
-    private QuranTranslFactory mTranslFactory;
+    private QuranTranslationFactory mTranslFactory;
     private ReaderVerseDecorator mVerseDecorator;
     private LayoutInflater mInflater;
 
@@ -172,7 +172,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     public void onViewReady(@NonNull Context ctx, @NonNull View view, @Nullable Bundle savedInstanceState) {
         mBinding = FragSettingsMainBinding.bind(view);
 
-        mTranslFactory = new QuranTranslFactory(ctx);
+        mTranslFactory = new QuranTranslationFactory(ctx);
         mVerseDecorator = new ReaderVerseDecorator(ctx);
         mInflater = LayoutInflater.from(ctx);
 
@@ -450,11 +450,11 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mRecitationExplorerBinding == null) return;
         Context ctx = mRecitationExplorerBinding.getRoot().getContext();
 
-        prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, null);
+        prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
                 mRecitationExplorerBinding,
-                R.string.strTitleRecitations,
+                R.string.strTitleSelectReciter,
                 RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
             );
 
@@ -478,7 +478,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         String subtitle = QuranScriptUtilsKt.getQuranScriptName(
             SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
-        prepareTitle(mScriptExplorerBinding, R.string.strTitleScripts, subtitle);
+        prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
     }
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {

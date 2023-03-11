@@ -22,7 +22,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.extensions.serializableExtra
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -129,7 +129,7 @@ class TranslationDownloadService : Service() {
 
                 val context = this@TranslationDownloadService
 
-                val factory = QuranTranslFactory(context)
+                val factory = QuranTranslationFactory(context)
                 factory.dbHelper.storeTranslation(bookInfo, data)
                 factory.close()
 

@@ -35,7 +35,7 @@ import com.quranapp.android.suppliments.BookmarkViewer;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.verse.VerseUtils;
 
 import java.util.Collections;
@@ -50,7 +50,7 @@ import kotlin.Pair;
 public abstract class ReaderPossessingActivity extends BaseActivity implements BookmarkCallbacks {
     public final AtomicReference<QuranMeta> mQuranMetaRef = new AtomicReference<>(); //don't initialize QuranMeta as it is being null checked in getQuranMetaSafely.
     public final AtomicReference<Quran> mQuranRef = new AtomicReference<>();
-    public QuranTranslFactory mTranslFactory;
+    public QuranTranslationFactory mTranslFactory;
 
     private final Set<OnResultReadyCallback<QuranMeta>> mPendingMetaRequesters = new HashSet<>();
 
@@ -96,7 +96,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
     @CallSuper
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
-        mTranslFactory = new QuranTranslFactory(this);
+        mTranslFactory = new QuranTranslationFactory(this);
 
         mBookmarkDBHelper = new BookmarkDBHelper(this);
         mBookmarkViewer = new BookmarkViewer(this, mQuranMetaRef, mBookmarkDBHelper, this);

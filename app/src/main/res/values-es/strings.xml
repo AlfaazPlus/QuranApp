@@ -176,8 +176,8 @@
     <string name="strTitleAppUser">Usuario de QuranApp</string>
     <string name="strHintSearchChapter">Buscar surah</string>
     <string name="strDescAddToBookmarks">Añadir a marcadores</string>
-    <string name="strTitleRecitations">Seleccionar recitador</string>
-    <string name="strTitleScripts">Seleccionar guión</string>
+    <string name="strTitleSelectReciter">Seleccionar recitador</string>
+    <string name="strTitleSelectScripts">Seleccionar guión</string>
     <string name="strTitleRepeatVerse">Repetir verso</string>
     <string name="strTitleQuickEdit">Edición rapida</string>
     <string name="strTitleShareVerse">Compartir verso</string>

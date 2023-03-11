@@ -45,7 +45,7 @@ import com.quranapp.android.frags.search.FragSearchSuggestions;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.quran.QuranUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.search.SearchFilters;
 import com.quranapp.android.utils.search.SearchLocalHistoryManager;
 import com.quranapp.android.utils.simplified.SimpleTextWatcher;
@@ -67,7 +67,7 @@ import kotlin.Unit;
 public class ActivitySearch extends BaseActivity {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     public ActivitySearchBinding mBinding;
-    public QuranTranslFactory mTranslFactory;
+    public QuranTranslationFactory mTranslFactory;
     public BookmarkDBHelper mBookmarkDBHelper;
     public SearchHistoryDBHelper mHistoryDBHelper;
     private FragSearchResult mFragSearchResult;
@@ -114,7 +114,7 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
-        mTranslFactory = new QuranTranslFactory(this);
+        mTranslFactory = new QuranTranslationFactory(this);
         mBookmarkDBHelper = new BookmarkDBHelper(this);
         mHistoryDBHelper = new SearchHistoryDBHelper(this);
     }

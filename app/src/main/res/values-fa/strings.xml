@@ -110,8 +110,8 @@
     <string name="strTitleFilters">فیلترها</string>
     <string name="strTitleTranslations">ترجمه ها</string>
     <string name="strTitleDownloadTranslations">بارگیری</string>
-    <string name="strTitleRecitations">انتخاب قاری</string>
-    <string name="strTitleScripts">‪انتخاب اسکریپت</string>
+    <string name="strTitleSelectReciter">انتخاب قاری</string>
+    <string name="strTitleSelectScripts">‪انتخاب اسکریپت</string>
     <string name="strTitleBookmarkDeleteThis">این نشانک حذف شود؟</string>
     <string name="strTitleBookmarkDeleteAll">همه نشانک ها حذف شوند؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d نشانک حذف شود؟</string>

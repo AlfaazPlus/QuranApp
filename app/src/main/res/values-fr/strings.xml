@@ -99,7 +99,7 @@
     <string name="strTitleTafsir">Tafsir</string>
     <string name="strTitleAboutSurah">À propos de la sourate</string>
     <string name="strTitleDownloadTranslations">Télécharger</string>
-    <string name="strTitleScripts">Sélectionnez Scénario</string>
+    <string name="strTitleSelectScripts">Sélectionnez Scénario</string>
     <string name="strTitleBookmarkDeleteThis">Supprimer ce favori \?</string>
     <string name="strTitleBookmarkDeleteAll">Supprimer tous les favoris \?</string>
     <string name="strTitleTranslDelete">Supprimer la traduction \?</string>
@@ -284,7 +284,7 @@
     <string name="strTitleReaderTextSizeArabic">Taille du texte arabe</string>
     <string name="strTitleTranslations">Traductions</string>
     <string name="strTitleFilters">Filtres</string>
-    <string name="strTitleRecitations">Sélectionnez le récitant</string>
+    <string name="strTitleSelectReciter">Sélectionnez le récitant</string>
     <string name="strMsgUpdateAvailable2Continue">MISE À JOUR REQUISE !
 \nVeuillez mettre à jour l\'application pour continuer.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Un seul résultat trouvé dans %s</string>

@@ -13,7 +13,7 @@ import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
@@ -31,7 +31,7 @@ object AppActions {
     const val APP_ACTION_URLS_UPDATE = "app.action.urls_update"
 
     private fun updateTransl(ctx: ContextWrapper, slug: String) {
-        val factory = QuranTranslFactory(ctx)
+        val factory = QuranTranslationFactory(ctx)
         val translationExists = factory.isTranslationDownloaded(slug)
         if (translationExists) {
             val bookInfo = factory.getTranslationBookInfo(slug)

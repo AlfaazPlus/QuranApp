@@ -54,7 +54,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         unregisterDownloadService()
     }
 
-    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleScripts)
+    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectScripts)
 
     override val layoutResource = 0
 

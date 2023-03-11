@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -25,6 +27,7 @@ import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytChapterInfocardBinding;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.univ.Keys;
 
@@ -65,7 +68,7 @@ public class ChapterInfoCardView extends CardView {
             if (mChapterInfoMeta != null) {
                 Intent intent = new Intent(getContext(), ActivityChapInfo.class);
                 intent.putExtra(Keys.READER_KEY_CHAPTER_NO, mChapterInfoMeta.chapterNo);
-                intent.putExtra(Keys.KEY_LANGUAGE, Locale.getDefault().getLanguage());
+                intent.putExtra(Keys.KEY_LANGUAGE, Locale.getDefault().toLanguageTag());
                 mActivityReader.startActivity4Result(intent, null);
             }
         });

@@ -22,7 +22,7 @@ import com.quranapp.android.components.transls.TranslTitleModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver.TranslDownloadStateListener
@@ -52,7 +52,7 @@ class FragSettingsTranslationsDownload :
 
     private lateinit var mBinding: FragSettingsTranslBinding
     private lateinit var mFileUtils: FileUtils
-    private var mTranslFactory: QuranTranslFactory? = null
+    private var mTranslFactory: QuranTranslationFactory? = null
     private var mAdapter: ADPDownloadTransls? = null
     private var mTranslDownloadReceiver: TranslDownloadReceiver? = null
     private var mTranslDownloadService: TranslationDownloadService? = null
@@ -137,7 +137,7 @@ class FragSettingsTranslationsDownload :
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         mFileUtils = FileUtils.newInstance(ctx)
-        mTranslFactory = QuranTranslFactory(ctx)
+        mTranslFactory = QuranTranslationFactory(ctx)
         mBinding = FragSettingsTranslBinding.bind(view)
 
         mNewTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)

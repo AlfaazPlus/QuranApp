@@ -39,7 +39,7 @@ import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
@@ -209,11 +209,11 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
     private void prepareTransl(Context context, String scriptKey) {
         taskRunner.callAsync(new BaseCallableTask<Pair<QuranTranslBookInfo, Translation>>() {
-            QuranTranslFactory factory;
+            QuranTranslationFactory factory;
 
             @Override
             public void preExecute() {
-                factory = new QuranTranslFactory(context);
+                factory = new QuranTranslationFactory(context);
             }
 
             @Override
@@ -247,7 +247,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         });
     }
 
-    private QuranTranslBookInfo obtainOptimalSlug(Context ctx, QuranTranslFactory factory) {
+    private QuranTranslBookInfo obtainOptimalSlug(Context ctx, QuranTranslationFactory factory) {
         Set<String> savedTranslations = SPReader.getSavedTranslations(ctx);
 
         QuranTranslBookInfo bookInfo = null;

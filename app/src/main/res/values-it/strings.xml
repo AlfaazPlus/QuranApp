@@ -141,8 +141,8 @@
     <string name="strTitleAboutSurah">A proposito di Sura</string>
     <string name="strTitleTranslations">Traduzioni</string>
     <string name="strTitleDownloadTranslations">Scaricamento</string>
-    <string name="strTitleRecitations">Seleziona Recitatore</string>
-    <string name="strTitleScripts">Seleziona Copione</string>
+    <string name="strTitleSelectReciter">Seleziona Recitatore</string>
+    <string name="strTitleSelectScripts">Seleziona Copione</string>
     <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro\?</string>
     <string name="strTitleTranslDelete">Elimina traduzione\?</string>
     <string name="strTitleRecitationOptions">Opzioni</string>

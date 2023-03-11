@@ -17,7 +17,7 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.ActivityExperimentBinding;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.views.BoldHeader;
 
@@ -55,7 +55,7 @@ public class ActivityExperiment extends BaseActivity {
     }
 
     private void perform() {
-        QuranTranslFactory translFactory = new QuranTranslFactory(this);
+        QuranTranslationFactory translFactory = new QuranTranslationFactory(this);
 
         List<Translation> transls = translFactory.getTranslationsSingleVerse(1, 1);
         Log.d(transls);

@@ -103,7 +103,7 @@
     <string name="strTitleAboutSurah">Tentang Surah</string>
     <string name="strTitleTranslations">Terjemahan</string>
     <string name="strTitleDownloadTranslations">Unduh</string>
-    <string name="strTitleRecitations">Pilih Pembaca</string>
+    <string name="strTitleSelectReciter">Pilih Pembaca</string>
     <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
     <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Hapus bookmark %d \?</string>
@@ -214,9 +214,9 @@
     <string name="strLabelView">Lihat</string>
     <string name="strLabelOn">Hidup</string>
     <string name="strTitleReaderChapters">Surah</string>
-    <string name="strTitleScripts">Pilih potongan ayat</string>
+    <string name="strTitleSelectScripts">Pilih potongan ayat</string>
     <string name="strTitleChapInfoChapterNo">Nomor Surah</string>
-    <string name="strTitleChapInfoRukus">tanda ruku\'</string>
+    <string name="strTitleChapInfoRukus">Tanda ruku\'</string>
     <string name="strTitleChapInfoRevType">Jenis Wahyu</string>
     <string name="strLabelPause">Pause</string>
     <string name="strLabelCurrentVerse">Ayat saat ini</string>
