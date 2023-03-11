@@ -6,6 +6,7 @@ The following features are the reason why you should use the QuranApp.
 ### 🛡️ Pure
 - No ads or purchases
 - No phone permission is required
+  <br>_(Permissions that affect your privacy such as storage, gps, camera etc. are not required.)_
 - No analytics or tracking
 - No data collection or sharing
 
