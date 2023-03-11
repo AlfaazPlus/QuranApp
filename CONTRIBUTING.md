@@ -11,7 +11,7 @@ Thank you for considering contributing to the QuranApp! May Allah reward you for
 - Documentation improvements
 - Design suggestions
 
-We welcome your contribution to even this page. Also, we have aggregated some ideas for the app in [Roadmap.md](/Roadmap.md) which you may start working on.
+We welcome your contribution to even this page. Also, we have aggregated some ideas for the app in [roadmap](https://github.com/AlfaazPlus/QuranApp/wiki/Roadmap) which you may start working on.
 
 ## Before you start
 Please note that all new code contributions must be written in Kotlin. Only critical patches can be done in Java. Please follow the [Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html) and the [Android Kotlin Style Guide](https://developer.android.com/kotlin/style-guide). You may also setup our [kotlin_code_style.xml](/kotlin_code_style.xml) in your IDE.
