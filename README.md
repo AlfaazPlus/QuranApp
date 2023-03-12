@@ -20,12 +20,12 @@ The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communic
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
-[<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
-      alt='Get it on GitHub'
-      height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
       alt='Get it on GitHub'
       height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.quranapp.android)
+[<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
+      alt='Get it on GitHub'
+      height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 </div>
 
 <div align="left">
