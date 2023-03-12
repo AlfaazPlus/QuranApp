@@ -183,4 +183,90 @@
     <string name="strLabelShareImage">Compartilhar imagem</string>
     <string name="strTitleFootnotes">Notas de rodapé</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelSystemDefault">Padrão do sistema</string>
+    <string name="strLabelNextJuz">Próximo juz</string>
+    <string name="strLabelNoPreviousJuz">Sem juz anterior</string>
+    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Capítulo %1$s │ Versículo %2$d</string>
+    <string name="strTitleHolyQuran">O Alcorão Sagrado</string>
+    <string name="strTitleQuran">Alcorão</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capítulo %1$s %2$d: Versículo %3$d</string>
+    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Ir para o versículo %d</string>
+    <string name="strTitleReaderJumpToVerse">Pular para versículo</string>
+    <string name="strTitleReaderLayoutStyle">Estilo de visualização do Alcorão</string>
+    <string name="strTitleAboutSurah">Sobre Sura</string>
+    <string name="strTitleResetReaderSettings">Redefinir configurações de leitor\?</string>
+    <string name="strTitleRecitations">Selecionar recitador</string>
+    <string name="strTitleFeaturedQuran">Leitura em destaque</string>
+    <string name="strTitleFeaturedTopics">Tópicos no Alcorão</string>
+    <string name="strTitleFeaturedProphets">Profetas no Alcorão</string>
+    <string name="strTitleReaderSettings">Configurações de Leitor</string>
+    <string name="strHintSearchQuran">Escreva um termo, ex: \"Vida\"</string>
+    <string name="strHintSearchChapter">Procurar capítulo</string>
+    <string name="strHintSearchProphet">Procurar profeta</string>
+    <string name="strHintSearchJuz">Procurar juz</string>
+    <string name="strHintBookmarkViewerNote">Escreva uma nota adiciona para este favorito aqui…</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d não é um número válido de Juz (Para).</string>
+    <string name="strMsgThemeDefault">Ajustar de acordo com as configurações do sistema.</string>
+    <string name="strMsgThemeDark">Modo escuro reduz o consumo de energia.</string>
+    <string name="strMsgVOTDOn">Receber uma notificação diária de manhã.</string>
+    <string name="strMsgYouAreReadingVerses">Você está lendo versículos:</string>
+    <string name="strMsgReadHistoryDeleteAll">Todos os históricos de leitura foram removidos.</string>
+    <string name="strMsgRecitationsNoAvailable">Sem recitações disponíveis</string>
+    <string name="strMsgNoInternet">Por favor, cheque sua conexão com a Internet.</string>
+    <string name="strMsgNoInternetLong">Sem conexão com a Internet. Tenha certeza que o Wi-Fi ou os dados móveis estão ligados e tente novamente.</string>
+    <string name="strMsgSomethingWrong">Algo deu errado!</string>
+    <string name="strMsgSomethingWrongFixing">Algo deu errado! Estamos trabalhando para corrigir isso.</string>
+    <string name="strMsgCouldNotOpenPage">Não foi possível abrir a página.</string>
+    <string name="strLabelProceed">PROCEDER</string>
+    <string name="strTitleOops">Oops!</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Imagem salva com o nome: %s</string>
+    <string name="strMsgEditShareTransl">As traduções selecionadas nas configurações, aparecerão apenas aqui.</string>
+    <string name="strMsgEditShareLongTransl">A tradução é muito longa, pode não caber corretamente.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s no Alcorão</string>
+    <string name="strSalamShort">Salam</string>
+    <string name="strMsgReportUs">Por favor, informe-nos.</string>
+    <string name="strLabelOkay">Entendido</string>
+    <string name="strLabelGotIt">Entendido</string>
+    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelPreviousJuz">Juz anterior</string>
+    <string name="strTitleReaderChapters">Surahs (Capítulos)</string>
+    <string name="strTitleReaderChapters2">Suras</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleVerseRecitation">Recitação de versículos</string>
+    <string name="strTitleVerseOptions">Opções de versículo</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Remover %d favoritos\?</string>
+    <string name="strTitleAutoPlayNext">Auto reproduzir próximo</string>
+    <string name="strTitleProphets">Profetas</string>
+    <string name="strTitleChapInfoJuzNo">Juz n.</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d mais traduções</string>
+    <string name="strHintSearchReciter">Procurar recitador</string>
+    <string name="strHintFeedback">Escreva sua opinião aqui…</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d não é um número de Capítulo válido.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Hoje em %s</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" removido do histórico</string>
+    <string name="strMsgSearchNoResultsFound">Nenhum resultado encontrado. Por favor, verifique os filtros de busca ou pesquise em outra tradução.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Sem resultados. Por favor, cheque o filtro de pesquisa.</string>
+    <string name="strMsgShareRange" formatted="false">Insira um intervalo entre %1$d%2$s%3$d</string>
+    <string name="strDescVerseNo" formatted="false">Número de versículo %d.</string>
+    <string name="strLabelSurah" formatted="false">Capítulo %s</string>
+    <string name="strLabelNoNextJuz">Sem próximo juz</string>
+    <string name="strLabelAdvanceSharing">Compartilhamento Avançado</string>
+    <string name="strTitleSelectReason">Selecionar motivo</string>
+    <string name="strTitleReadVerseRange" formatted="false">Ler versículos %1$d - %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %1$s : Versículo %2$d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Capítulo %1$s : %2$d</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d não é um número válido de Versículo para Capítulo nº %2$d</string>
+    <string name="strMsgUpdateAvailable">ATUALIZAÇÃO DISPONÍVEL! Por favor, atualize o aplicativo para obter os recursos mais recentes.</string>
+    <string name="strMsgTranslNoneSelected">Nenhuma tradução está selecionada. Vá às configurações para buscar traduções.</string>
+    <string name="strMsgUpdateAvailable4Dialog">ATUALIZAÇÃO DISPONÍVEL
+\nPor favor, atualize o aplicativo.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Capítulo %1$s, versículo núm. %2$d.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s à %2$s</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Total de resultados encontrados em %1$s: %2$d</string>
+    <string name="strTitleChapInfoRukus">Rukus</string>
 </resources>
