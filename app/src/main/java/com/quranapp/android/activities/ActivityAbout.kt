@@ -1,6 +1,5 @@
 package com.quranapp.android.activities
 
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -13,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.DrawableUtils
 import com.quranapp.android.BuildConfig
@@ -76,17 +74,6 @@ class ActivityAbout : BaseActivity() {
             },
             R.drawable.icon_github,
             R.string.github
-        )
-        setup(
-            binding,
-            LytReaderSettingsItemBinding.inflate(layoutInflater).apply {
-                root.setOnClickListener {
-                    OssLicensesMenuActivity.setActivityTitle(str(R.string.strTitleLicenses))
-                    startActivity(Intent(this@ActivityAbout, OssLicensesMenuActivity::class.java))
-                }
-            },
-            R.drawable.dr_icon_article,
-            R.string.strTitleLicenses
         )
     }
 

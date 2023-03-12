@@ -96,13 +96,6 @@
         <activity android:name=".activities.ActivityAbout" />
         <activity android:name=".activities.test.ActivityExperiment" />
 
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Theme.QuranApp.Licenses" />
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/Theme.QuranApp.Licenses" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
