@@ -9,10 +9,12 @@ package com.quranapp.android.frags.settings;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -25,12 +27,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
+
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
@@ -325,8 +333,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        String status = mVOTDToggleBinding.getRoot().getContext().getString(SPVerses.getVOTDReminderEnabled(
-            mVOTDToggleBinding.getRoot().getContext()) ? R.string.strLabelOn : R.string.strLabelOff);
+        Context context = mVOTDToggleBinding.getRoot().getContext();
+
+        String status = context.getString(
+            VOTDUtils.isVOTDTrulyEnabled(context)
+                ? R.string.strLabelOn
+                : R.string.strLabelOff
+        );
         prepareTitle(mVOTDToggleBinding, R.string.strTitleVOTD, status);
     }
 
@@ -337,22 +350,39 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void launchVOTDToggleExplorer(Context ctx) {
+        AlarmManager alarmManager = ContextCompat.getSystemService(ctx, AlarmManager.class);
+
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
         PeaceBottomSheetParams params = sheetDialog.getParams();
         params.setHeaderTitle(getString(R.string.strTitleVOTD));
 
         LytSettingsVotdToggleBinding binding = LytSettingsVotdToggleBinding.inflate(mInflater);
-        binding.getRoot().check(SPVerses.getVOTDReminderEnabled(ctx) ? R.id.on : R.id.off);
-        params.setContentView(binding.getRoot());
 
-        AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        if (VOTDUtils.isVOTDTrulyEnabled(ctx)) {
+            binding.getRoot().check(R.id.on);
+        } else {
+            binding.getRoot().check(R.id.off);
+        }
+
+        params.setContentView(binding.getRoot());
 
         binding.getRoot().setBeforeCheckChangeListener((group, newButtonId) -> {
             if (newButtonId == R.id.on) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-                    alarmPermission();
+                if (alarmManager == null) {
+                    Toast.makeText(ctx, R.string.msgAlarmManagerNotAvailable, Toast.LENGTH_LONG).show();
                     return false;
                 }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !NotificationManagerCompat.from(ctx).areNotificationsEnabled()) {
+                    requestNotificationPermission(ctx);
+                    return false;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+                    requestAlarmPermission(ctx);
+                    return false;
+                }
+
                 VOTDUtils.enableVOTDReminder(ctx);
             } else {
                 VOTDUtils.disableVOTDReminder(ctx);
@@ -367,9 +397,20 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         sheetDialog.show(getParentFragmentManager());
     }
 
-    private void alarmPermission() {
-        // TODO: 13-Mar-22
-        // TODO: 05/02/23 Notification permission
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void requestNotificationPermission(Context ctx) {
+        Toast.makeText(ctx, R.string.msgVerseReminderNotifPermission, Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, ctx.getPackageName());
+        startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    private void requestAlarmPermission(Context ctx) {
+        Toast.makeText(ctx, R.string.msgVerseReminderAlarmPermission, Toast.LENGTH_LONG).show();
+
+        startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
     }
 
     private void initReaderSettings(Context ctx) {
@@ -450,11 +491,11 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mRecitationExplorerBinding == null) return;
         Context ctx = mRecitationExplorerBinding.getRoot().getContext();
 
-        prepareTitle(mRecitationExplorerBinding, R.string.strTitleRecitations, null);
+        prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
                 mRecitationExplorerBinding,
-                R.string.strTitleRecitations,
+                R.string.strTitleSelectReciter,
                 RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
             );
 
@@ -478,7 +519,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         String subtitle = QuranScriptUtilsKt.getQuranScriptName(
             SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
-        prepareTitle(mScriptExplorerBinding, R.string.strTitleScripts, subtitle);
+        prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
     }
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {

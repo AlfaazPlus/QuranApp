@@ -8,11 +8,15 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.quranapp.android.utils.receivers.BootReceiver;
 import com.quranapp.android.utils.receivers.ReceiverUtils;
 import com.quranapp.android.utils.receivers.VOTDReceiver;
+import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.univ.Codes;
 
 import java.util.Calendar;
@@ -66,5 +70,22 @@ public final class VOTDUtils {
         }
 
         return PendingIntent.getBroadcast(context, Codes.NOTIF_ID_VOTD, receiver, flag);
+    }
+
+    public static boolean isVOTDTrulyEnabled(Context context) {
+        AlarmManager alarmManager = ContextCompat.getSystemService(context, AlarmManager.class);
+
+        if (alarmManager == null) {
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return alarmManager.canScheduleExactAlarms()
+                    && NotificationManagerCompat.from(context).areNotificationsEnabled()
+                    && SPVerses.getVOTDReminderEnabled(context);
+        }
+
+        return NotificationManagerCompat.from(context).areNotificationsEnabled()
+                && SPVerses.getVOTDReminderEnabled(context);
     }
 }

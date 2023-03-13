@@ -46,7 +46,7 @@ object AppActions {
 
     @JvmStatic
     fun scheduleActions(ctx: Context) {
-        if (SPVerses.getVOTDReminderEnabled(ctx)) {
+        if (VOTDUtils.isVOTDTrulyEnabled(ctx)) {
             VOTDUtils.enableVOTDReminder(ctx)
         }
     }
