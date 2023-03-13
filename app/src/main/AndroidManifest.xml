@@ -94,7 +94,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.ActivityOnboarding" />
         <activity android:name=".activities.ActivityAbout" />
-        <activity android:name=".activities.ActivityStorageCleanup"
+        <activity
+            android:name=".activities.ActivityStorageCleanup"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -118,6 +119,16 @@
             android:name=".utils.receivers.VOTDReceiver"
             android:enabled="true"
             android:process=":remote" />
+
+        <receiver
+            android:name=".utils.receivers.AlarmPermissionReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".utils.receivers.BootReceiver"
             android:enabled="false"

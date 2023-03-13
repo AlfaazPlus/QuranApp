@@ -14,10 +14,8 @@ import com.quranapp.android.utils.votd.VOTDUtils;
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            if (SPVerses.getVOTDReminderEnabled(context)) {
-                VOTDUtils.enableVOTDReminder(context);
-            }
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) && VOTDUtils.isVOTDTrulyEnabled(context)) {
+            VOTDUtils.enableVOTDReminder(context);
         }
     }
 }

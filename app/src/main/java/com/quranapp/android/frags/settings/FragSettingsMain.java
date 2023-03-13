@@ -9,10 +9,12 @@ package com.quranapp.android.frags.settings;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -25,12 +27,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
+
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
@@ -84,6 +92,7 @@ import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
+import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
@@ -179,9 +188,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         init(ctx);
 
         getParentFragmentManager().setFragmentResultListener(
-            String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
-            getViewLifecycleOwner(),
-            this
+                String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
+                getViewLifecycleOwner(),
+                this
         );
     }
 
@@ -233,7 +242,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initAppLanguage(LinearLayout parent) {
         LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
-            false);
+                false);
 
         setupLauncherParams(R.drawable.dr_icon_language, appLangExplorerBinding);
         setupAppLangTitle(appLangExplorerBinding);
@@ -325,8 +334,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return;
         }
 
-        String status = mVOTDToggleBinding.getRoot().getContext().getString(SPVerses.getVOTDReminderEnabled(
-            mVOTDToggleBinding.getRoot().getContext()) ? R.string.strLabelOn : R.string.strLabelOff);
+        Context context = mVOTDToggleBinding.getRoot().getContext();
+
+        String status = context.getString(
+                VOTDUtils.isVOTDTrulyEnabled(context)
+                        ? R.string.strLabelOn
+                        : R.string.strLabelOff
+        );
         prepareTitle(mVOTDToggleBinding, R.string.strTitleVOTD, status);
     }
 
@@ -337,22 +351,39 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void launchVOTDToggleExplorer(Context ctx) {
+        AlarmManager alarmManager = ContextCompat.getSystemService(ctx, AlarmManager.class);
+
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
         PeaceBottomSheetParams params = sheetDialog.getParams();
         params.setHeaderTitle(getString(R.string.strTitleVOTD));
 
         LytSettingsVotdToggleBinding binding = LytSettingsVotdToggleBinding.inflate(mInflater);
-        binding.getRoot().check(SPVerses.getVOTDReminderEnabled(ctx) ? R.id.on : R.id.off);
-        params.setContentView(binding.getRoot());
 
-        AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        if (VOTDUtils.isVOTDTrulyEnabled(ctx)) {
+            binding.getRoot().check(R.id.on);
+        } else {
+            binding.getRoot().check(R.id.off);
+        }
+
+        params.setContentView(binding.getRoot());
 
         binding.getRoot().setBeforeCheckChangeListener((group, newButtonId) -> {
             if (newButtonId == R.id.on) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-                    alarmPermission();
+                if (alarmManager == null) {
+                    Toast.makeText(ctx, R.string.msgAlarmManagerNotAvailable, Toast.LENGTH_LONG).show();
                     return false;
                 }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !NotificationManagerCompat.from(ctx).areNotificationsEnabled()) {
+                    requestNotificationPermission(ctx);
+                    return false;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+                    requestAlarmPermission();
+                    return false;
+                }
+
                 VOTDUtils.enableVOTDReminder(ctx);
             } else {
                 VOTDUtils.disableVOTDReminder(ctx);
@@ -367,9 +398,16 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         sheetDialog.show(getParentFragmentManager());
     }
 
-    private void alarmPermission() {
-        // TODO: 13-Mar-22
-        // TODO: 05/02/23 Notification permission
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void requestNotificationPermission(Context ctx) {
+        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, ctx.getPackageName());
+        startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    private void requestAlarmPermission() {
+        startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
     }
 
     private void initReaderSettings(Context ctx) {
@@ -453,9 +491,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
-                mRecitationExplorerBinding,
-                R.string.strTitleSelectReciter,
-                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
+                    mRecitationExplorerBinding,
+                    R.string.strTitleSelectReciter,
+                    RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
             );
 
             return Unit.INSTANCE;
@@ -477,7 +515,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mScriptExplorerBinding == null) return;
 
         String subtitle = QuranScriptUtilsKt.getQuranScriptName(
-            SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
+                SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
         prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
     }
 
@@ -572,7 +610,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initDecorator(Context ctx) {
         LytReaderSettingsTextDecoratorBinding binding = LytReaderSettingsTextDecoratorBinding.inflate(mInflater,
-            mBinding.readerSettings.getRoot(), true);
+                mBinding.readerSettings.getRoot(), true);
 
         boolean isLandscape = WindowUtils.isLandscapeMode(ctx);
         int orientation = isLandscape ? HORIZONTAL : VERTICAL;
@@ -614,7 +652,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
                 SPReader.setSavedTextSizeMultArabic(seekBar.getContext(),
-                    ReaderTextSizeUtils.calculateMultiplier(progress));
+                        ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
@@ -635,7 +673,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         if (QuranScriptUtilsKt.isKFQPCScript(savedScript)) {
             mLytTextSizeArabic.demoText.setTypeface(
-                ContextKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
+                    ContextKt.getFont(ctx, QuranScriptUtilsKt.getQuranScriptFontRes(savedScript))
             );
         } else {
             mVerseDecorator.setFontArabic(mLytTextSizeArabic.demoText, -1);
@@ -679,7 +717,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 final int progress = TEXT_SIZE_MIN_PROGRESS + seekBar.getProgress();
                 SPReader.setSavedTextSizeMultTransl(seekBar.getContext(),
-                    ReaderTextSizeUtils.calculateMultiplier(progress));
+                        ReaderTextSizeUtils.calculateMultiplier(progress));
             }
         });
     }
@@ -759,7 +797,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         builder.setDialogGravity(PeaceDialog.GRAVITY_BOTTOM);
         builder.setNeutralButton(R.string.strLabelCancel, null);
         builder.setPositiveButton(R.string.strLabelReset, color(ctx, R.color.colorSecondary),
-            (dialog1, which) -> resetToDefault(ctx));
+                (dialog1, which) -> resetToDefault(ctx));
         builder.setFocusOnPositive(true);
         builder.show();
     }
