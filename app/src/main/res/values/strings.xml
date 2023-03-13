@@ -117,8 +117,10 @@
     <string name="strTitleAboutSurah">About Surah</string>
     <string name="strTitleTranslations">Translations</string>
     <string name="strTitleDownloadTranslations">Download</string>
-    <string name="strTitleRecitations">Select Reciter</string>
-    <string name="strTitleScripts">Select Script</string>
+    <string name="strTitleRecitations">Recitations</string>
+    <string name="strTitleSelectReciter">Select Reciter</string>
+    <string name="strTitleScripts">Scripts</string>
+    <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
     <string name="strTitleBookmarkDeleteAll">Remove all bookmarks?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Remove %d bookmarks?</string>
@@ -322,6 +324,19 @@
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
+    <string name="titleStorageCleanup">Storage cleanup</string>
+    <string name="storageCleanupMessage">Free up space by deleting unused downloaded resources. This will not delete any bookmarks or settings.\n\nFollowing resources can be freed up:</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d downloaded translations can be freed up.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d stored recitation files from %2$d reciters can be freed up.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d downloaded scripts and their fonts can be freed up.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d saved chapter information can be cleaned up.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d saved tafsirs can be cleaned up.</string>
+    <string name="titleChapterInfo">Chapter info</string>
+    <string name="labelFreeUpSpace">Free up space</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
+    <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
+    <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
+    <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
