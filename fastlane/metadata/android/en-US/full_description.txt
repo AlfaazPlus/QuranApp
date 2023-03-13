@@ -1,1 +1,79 @@
-<p>The <i>QuranApp</i> facilitates reading the Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 15+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.</p><p><b>Features:</b></p><ul><li>Reading in translation mode</li><li>Reading in page mode</li><li>Read Qur’an in different translation modes (single verse, verse range, full chapter, full juz)</li><li>Convenient navigation in single verse mode</li><li>Fast jump to any verse</li><li>Fast jump to any chapter</li><li>Advanced sharing</li><li>Multiple fonts</li><li>15+ Translations<ul><li>Read multiple translations together</li><li>Fast preview of footnotes</li><li>Fast preview of verse references</li></ul></li><li>Multiple recitations<ul><li>Repeat single verse</li><li>Play verse range</li><li>Play recitation continuously</li><li>Automatic scroll to match current verse</li></ul></li><li>Verse of the Day Reminder</li><li>Customize Arabic text size</li><li>Customise translation text size</li><li>Topics from the Qur’an<ul><li>Duas from the Qur’an</li><li>Prophets mentioned in the Qur’an</li></ul></li><li>Bookmark verses for later<ul><li>Bookmark single verse</li><li>Bookmark a verse range</li><li>Add custom notes to bookmarks</li></ul></li><li>Advanced search<ul><li>Voice search</li><li>Search history</li><li>Multi page search</li><li>Search in single translation or multiple translations</li><li>Search for full word or word part</li></ul></li><li>Dark and light themes</li><li>Multiple language support</li></ul>
+The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 15+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.
+
+~~~~~~~
+
+<h3>Features:</h3>
+
+The following features are the reason why you should use the QuranApp.
+
+<b>🛡️ Pure</b>
+
+- Open source
+- No ads or purchases
+- No phone permission is required
+- No analytics or tracking
+- No data collection or sharing
+
+<b>📙 Translations</b>
+
+- 15+ Translations
+- Read multiple translations together
+- Quick preview of footnotes
+- Quick preview of verse references
+
+<b>🎙️ Recitations</b>
+
+- 15+ Recitations
+- Repeat single verse
+- Play verse range
+- Play recitation continuously
+- Automatic scroll to match current verse
+
+<b>🎨 Fonts</b>
+
+- Multiple fonts (Uthmani, Indopak and KFQPC)
+- Customize Arabic text size
+- Customise translation text size
+
+<b>⚙ Layout</b>
+
+- Reading in translation mode
+- Reading in page mode
+- Read Qur'an in different translation modes (single verse, verse range, full chapter, full juz)
+
+<b>➡️ Navigation</b>
+
+- Convenient navigation in single verse mode
+- Quickly jump to any verse
+- Quickly jump to any chapter
+- Quickly jump to any juz
+
+<b>❤️ Contents from the Qur'an</b>
+
+- Topics from the Qur'an
+- Duas from the Qur'an
+- Prophets mentioned in the Qur'an
+
+<b>🔍 Search</b>
+
+- Advanced search
+- Voice search
+- Search history
+- Easily navigate to any translation in search results
+- Search for full word or word part
+
+<b>📌 Bookmarking</b>
+
+- Bookmark verses for later
+- Bookmark single verse
+- Bookmark a verse range
+- Add custom notes to bookmarks
+
+<b>🔥 Other Features</b>
+
+- Verse of the Day Reminder
+- Advanced sharing
+- Dark and light themes
+- Multiple language support
+
+<i>🐞 To report an issue or request a new feature, kindly visit the GitHub repository at <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
