@@ -101,7 +101,7 @@
     <string name="strMsgBookmarkRemovedAlready">El verso no esta en los marcadores</string>
     <string name="strMsgChangeLanguage">La aplicación se reiniciará para cambiar de idioma.</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Se encontraron versos relacionados con %1$s en %2$d lugares.</string>
-    <string name="strMsgInvalidJuzNo" formatted="false">%d no es un Juz valido (Para) Nro.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d no es un Juz valido Nro.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Sin resultados. Por favor revise los filtros de búsqueda.</string>
     <string name="strMsgBookmarkRemoveFailed">No se pudo elimnar el verso de los marcadores</string>
     <string name="strMsgBookmarkAddedAlready">El verso no se puede agregar a los marcadores</string>
@@ -206,7 +206,7 @@
     <string name="strHintFromVerse">Del verso</string>
     <string name="strTitleMadani">Madani</string>
     <string name="strTitleReaderChapters">Surahs (Capítulos)</string>
-    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleReaderJuz">Juz</string>
     <string name="strHintSearchJuz">Buscar juz</string>
     <string name="strHintToVerse">Al verso</string>
     <string name="strNotFound">No encontrado</string>
