@@ -177,7 +177,7 @@
     <string name="strMsgYouAreReadingVerses">Vous lisez des vers :</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d n\'est pas un verset valide pour la sourate n° %2$d</string>
     <string name="strMsgInvalidVersesRange">Pas une plage de versets valide.</string>
-    <string name="strMsgInvalidJuzNo" formatted="false">%d n\'est pas un numéro Juz (Para) valide.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d n\'est pas un numéro Juz valide.</string>
     <string name="strMsgBookmarkAddedAlready">Le verset est déjà ajouté aux signets</string>
     <string name="strMsgBookmarkRemoved">Verset supprimé avec succès des signets</string>
     <string name="strMsgBookmarkRemoveFailed">Le verset n\'a pas pu être supprimé des favoris</string>
@@ -257,7 +257,7 @@
     <string name="strHintSearchTranslation">Recherche de traduction</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d n\'est pas un numéro de sourate valide.</string>
     <string name="strMsgBookmarkAdded">Verset ajouté avec succès aux signets</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d n\'est pas une série de versets valides pour la sourate n° %3$d</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d n\'est pas une série de versets valides pour la numéro de chapitre %3$d</string>
     <string name="strMsgBookmarkAddFailed">Le verset n\'a pas pu être ajouté aux signets</string>
     <string name="strMsgBookmarkDeleteSelected">Les signets sélectionnés seront supprimés.</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Aujourd\'hui à %s</string>
