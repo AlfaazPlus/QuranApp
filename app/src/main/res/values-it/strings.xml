@@ -281,7 +281,7 @@
     <string name="strMsgYouAreReadingVerses">Stai leggendo versi:</string>
     <string name="strMsgInvalidVersesRange">Non è un intervallo di versi valido.</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d non è un intervallo di versi valido per la sura n. %3$d</string>
-    <string name="strMsgInvalidJuzNo" formatted="false">%d non è un Juz (Para) N. valido.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d non è un Juz N. valido.</string>
     <string name="strMsgBookmarkRemovedAlready">Il verso non è nei segnalibri</string>
     <string name="strMsgBookmarkNoItems">Nessun segnalibro</string>
     <string name="strMsgBookmarkDeleteSelected">I segnalibri selezionati verranno rimossi.</string>

@@ -337,9 +337,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         Context context = mVOTDToggleBinding.getRoot().getContext();
 
         String status = context.getString(
-                VOTDUtils.isVOTDTrulyEnabled(context)
-                        ? R.string.strLabelOn
-                        : R.string.strLabelOff
+            VOTDUtils.isVOTDTrulyEnabled(context)
+                ? R.string.strLabelOn
+                : R.string.strLabelOff
         );
         prepareTitle(mVOTDToggleBinding, R.string.strTitleVOTD, status);
     }
@@ -380,7 +380,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-                    requestAlarmPermission();
+                    requestAlarmPermission(ctx);
                     return false;
                 }
 
@@ -400,13 +400,15 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void requestNotificationPermission(Context ctx) {
+        Toast.makeText(ctx, R.string.msgVerseReminderNotifPermission, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, ctx.getPackageName());
         startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
-    private void requestAlarmPermission() {
+    private void requestAlarmPermission(Context ctx) {
+        Toast.makeText(ctx, R.string.msgVerseReminderAlarmPermission, Toast.LENGTH_LONG).show();
         startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
     }
 
@@ -491,9 +493,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
             prepareTitle(
-                    mRecitationExplorerBinding,
-                    R.string.strTitleSelectReciter,
-                    RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
+                mRecitationExplorerBinding,
+                R.string.strTitleSelectReciter,
+                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
             );
 
             return Unit.INSTANCE;
@@ -515,7 +517,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mScriptExplorerBinding == null) return;
 
         String subtitle = QuranScriptUtilsKt.getQuranScriptName(
-                SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext()));
+            SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext())
+        );
         prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
     }
 

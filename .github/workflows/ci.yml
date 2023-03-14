@@ -4,6 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - "**.md"
+      - "fastlane/**"
       - "inventory/**"
       - "repo_assets/**"
       - ".github/**"
@@ -11,6 +12,7 @@ on:
   push:
     paths-ignore:
       - "**.md"
+      - "fastlane/**"
       - "inventory/**"
       - "repo_assets/**"
       - ".github/**"
@@ -33,3 +35,9 @@ jobs:
 
     - name: Build with Gradle
       run: chmod +x gradlew && ./gradlew assembleDebug
+      
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk

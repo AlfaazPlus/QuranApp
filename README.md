@@ -20,6 +20,9 @@ The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communic
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+      alt='Get it on GitHub'
+      height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.quranapp.android)
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
       alt='Get it on GitHub'
       height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
@@ -27,7 +30,22 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 
 <div align="left">
 
-# Screenshots
+<details>
+<summary>Table of content</summary>
+
+- [Screenshots](#screenshots)
+- Features
+  - [Highlights](#features)
+  - [All features](/FEATURES.md)
+- [Credits](#credits)
+- Contribute
+  - [Contributing](#contributing)
+  - [Contributors](/CONTRIBUTORS.md)
+- [Roadmap](/Roadmap.md)
+- [License](/LICENSE)
+</details>
+
+## Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
     <img src="/repo_assets/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
@@ -47,14 +65,16 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 | Salient Features               |     |
 |--------------------------------|-----|
 | 🚫 No Ads or Purchases         | ✅   |
-| 🛡️ No permission required     | ✅   |
+| 🛡️ No permission required *     | ✅   |
 | 📙 Multiple Translations       | ✅   |
 | 🎙️ Multiple Recitations       | ✅   |
 | 🎨 Multiple Quran Fonts        | ✅   |
 | ❤️ Verse Reminder               | ✅   |
 | 🔗 Advanced Verse Interlinking | ✅   |
 | ⚡ Many more...                 | ✅   |
-
+      
+<sub>_* Permissions that affect your privacy such as storage, gps, camera etc. are not required._</sub>
+      
 See all the features [here](/FEATURES.md).
 
 ## Credits

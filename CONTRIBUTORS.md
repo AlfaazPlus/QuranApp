@@ -16,6 +16,8 @@
 
 🇮🇷 Persian (fa) - [rchookan](https://github.com/rchookan)
 
+🇵🇹 Portuguese (pt) - [fnogcps](https://github.com/fnogcps)
+
 🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
 
 🇵🇰 Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)

@@ -1,64 +1,79 @@
-<img src="/repo_assets/banner2.jpg" alt='QuranApp banner' />
+The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 15+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.
 
-## Features of the QuranApp
+~~~~~~~
+
+<h3>Features:</h3>
+
 The following features are the reason why you should use the QuranApp.
 
-### 🛡️ Pure
+<b>🛡️ Pure</b>
+
+- Open source
 - No ads or purchases
 - No phone permission is required
-  <br>_(Permissions that affect your privacy such as storage, gps, camera etc. are not required.)_
 - No analytics or tracking
 - No data collection or sharing
 
-### 📙 Translations
+<b>📙 Translations</b>
+
 - 15+ Translations
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
 
-### 🎙️ Recitations
+<b>🎙️ Recitations</b>
+
 - 15+ Recitations
 - Repeat single verse
 - Play verse range
 - Play recitation continuously
 - Automatic scroll to match current verse
 
-### 🎨 Fonts
+<b>🎨 Fonts</b>
+
 - Multiple fonts (Uthmani, Indopak and KFQPC)
 - Customize Arabic text size
 - Customise translation text size
 
-### ⚙ Layout
+<b>⚙ Layout</b>
+
 - Reading in translation mode
 - Reading in page mode
 - Read Qur'an in different translation modes (single verse, verse range, full chapter, full juz)
 
-### ➡️ Navigation
+<b>➡️ Navigation</b>
+
 - Convenient navigation in single verse mode
 - Quickly jump to any verse
 - Quickly jump to any chapter
 - Quickly jump to any juz
 
-### ❤️ Contents from the Qur'an
+<b>❤️ Contents from the Qur'an</b>
+
 - Topics from the Qur'an
 - Duas from the Qur'an
 - Prophets mentioned in the Qur'an
 
-### 🔍 Search
+<b>🔍 Search</b>
+
 - Advanced search
 - Voice search
 - Search history
 - Easily navigate to any translation in search results
 - Search for full word or word part
 
-### 📌 Bookmarking
+<b>📌 Bookmarking</b>
+
 - Bookmark verses for later
 - Bookmark single verse
 - Bookmark a verse range
 - Add custom notes to bookmarks
 
-### 🔥 Other Features
+<b>🔥 Other Features</b>
+
 - Verse of the Day Reminder
 - Advanced sharing
 - Dark and light themes
 - Multiple language support
+
+<i>🐞 To report an issue or request a new feature, kindly visit the GitHub repository at <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
