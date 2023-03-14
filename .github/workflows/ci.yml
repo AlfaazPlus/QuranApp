@@ -4,6 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - "**.md"
+      - "fastlane/**"
       - "inventory/**"
       - "repo_assets/**"
       - ".github/**"
@@ -11,6 +12,7 @@ on:
   push:
     paths-ignore:
       - "**.md"
+      - "fastlane/**"
       - "inventory/**"
       - "repo_assets/**"
       - ".github/**"
