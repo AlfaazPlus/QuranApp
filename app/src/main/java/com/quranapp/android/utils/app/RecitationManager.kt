@@ -126,4 +126,20 @@ object RecitationManager {
             recitationModel.isChecked = recitationModel.slug == slug
         }
     }
+
+    fun emptyModel(
+        slug: String = "",
+        reciter: String = "",
+        style: String? = null,
+        urlHost: String? = null,
+        urlPath: String = ""
+    ): RecitationModel {
+        return RecitationModel(
+            slug = slug,
+            reciter = reciter,
+            style = style,
+            urlHost = urlHost,
+            urlPath = urlPath
+        )
+    }
 }

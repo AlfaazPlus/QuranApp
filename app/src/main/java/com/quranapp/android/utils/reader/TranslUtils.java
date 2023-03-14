@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import kotlin.io.FilesKt;
+
 public class TranslUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
         "translations");
@@ -209,7 +211,7 @@ public class TranslUtils {
         File[] dirsOfLangCodes = translDir.listFiles();
         if (dirsOfLangCodes == null || dirsOfLangCodes.length == 0) {
             Log.d("Nothing was found, deleting root translation directory: " + translDir.getName());
-            fileUtils.deleteDirWithChildren(translDir);
+            FilesKt.deleteRecursively(translDir);
             return null;
         }
 
@@ -218,13 +220,13 @@ public class TranslUtils {
             File[] translFiles = langCodeDir.listFiles();
             if (translFiles == null || translFiles.length == 0) {
                 Log.d("Deleting language directory with its contents: " + langCodeDir.getName());
-                fileUtils.deleteDirWithChildren(langCodeDir);
+                FilesKt.deleteRecursively(langCodeDir);
                 continue;
             }
 
             for (File singleTranslDir : translFiles) {
                 if (!singleTranslDir.isDirectory()) {
-                    fileUtils.deleteDirWithChildren(singleTranslDir);
+                    FilesKt.deleteRecursively(singleTranslDir);
                     continue;
                 }
 
@@ -234,7 +236,7 @@ public class TranslUtils {
                     if (pair == null) {
                         Logger.print(
                             "Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
-                        fileUtils.deleteDirWithChildren(singleTranslDir);
+                        FilesKt.deleteRecursively(singleTranslDir);
                         continue;
                     }
 
@@ -242,7 +244,7 @@ public class TranslUtils {
                 } catch (Exception e) {
                     Logger.print(
                         "Error occurred, deleting translation directory with its manifest and data files dire: " + singleTranslDir.getName());
-                    fileUtils.deleteDirWithChildren(singleTranslDir);
+                    FilesKt.deleteRecursively(singleTranslDir);
                     e.printStackTrace();
                 }
             }

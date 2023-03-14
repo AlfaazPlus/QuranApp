@@ -97,7 +97,6 @@ public class FragOnBoardRecitation extends FragOnBoardBase {
                 noRecitersAvailable();
             }
 
-            SPAppActions.setFetchRecitationsForce(list.getContext(), false);
             hideLoader();
             return Unit.INSTANCE;
         });

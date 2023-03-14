@@ -34,7 +34,7 @@ class FragSettingsRecitations : FragSettingsBase() {
 
     private var mInitialRecitation: String? = null
 
-    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleRecitations)
+    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectReciter)
 
     override val layoutResource = R.layout.frag_settings_transl
 
@@ -50,7 +50,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         header.apply {
             setCallback(object : BoldHeaderCallback {
                 override fun onBackIconClick() {
-                    activity.onBackPressed()
+                    activity.onBackPressedDispatcher.onBackPressed()
                 }
 
                 override fun onRightIconClick() {

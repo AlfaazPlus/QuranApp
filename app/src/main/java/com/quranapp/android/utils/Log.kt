@@ -24,5 +24,7 @@ object Log {
             if (msg != null) sb.append(msg.toString()) else sb.append("null")
             if (i < len - 1) sb.append(", ")
         }
+
+        android.util.Log.d(TAG, sb.toString())
     }
 }

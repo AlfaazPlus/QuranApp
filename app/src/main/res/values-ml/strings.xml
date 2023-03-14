@@ -110,8 +110,8 @@
     <string name="strTitleAboutSurah">സൂറത്തിനെ കുറിച്ച്</string>
     <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
     <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
-    <string name="strTitleRecitations">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
-    <string name="strTitleScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleSelectReciter">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="strTitleSelectScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
     <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ?</string>

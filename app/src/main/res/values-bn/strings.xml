@@ -103,8 +103,8 @@
     <string name="strTitleTafsir">তাফসির</string>
     <string name="strTitleAboutSurah">সূরা সম্পর্কে</string>
     <string name="strTitleTranslations">অনুবাদসমূহ</string>
-    <string name="strTitleRecitations">ক্বারী নির্বাচন করুন</string>
-    <string name="strTitleScripts">স্ক্রিপ্ট (লেখার ধরণ) নির্বাচন করুন</string>
+    <string name="strTitleSelectReciter">ক্বারী নির্বাচন করুন</string>
+    <string name="strTitleSelectScripts">স্ক্রিপ্ট (লেখার ধরণ) নির্বাচন করুন</string>
     <string name="strTitleBookmarkDeleteAll">সমস্ত বুকমার্ক মুছে ফেলবেন\?</string>
     <string name="strTitleTranslDelete">অনুবাদ মুছে ফেলবেন\?</string>
     <string name="strTitleResetReaderSettings">রিডার সেটিংস রিসেট করবেন\?</string>

@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
@@ -33,7 +35,7 @@ import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.FragSettingsTranslBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
@@ -137,7 +139,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         mPageAlert = new PageAlert(ctx);
         mPageAlert.setMessage(ctx.getString(R.string.strMsgTranslNoDownloads), null);
         mPageAlert.setActionButton(R.string.strTitleDownloadTranslations,
-            () -> launchFrag(FragSettingsTranslationsDownload.class, null));
+                () -> launchFrag(FragSettingsTranslationsDownload.class, null));
     }
 
     private void initTranslations(Context ctx) {
@@ -240,7 +242,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
     @Override
     public boolean onSelectionChanged(Context ctx, TranslModel translModel, boolean isSelected) {
         boolean succeed = TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, translModel, isSelected,
-            saveTranslChanges);
+                saveTranslChanges);
         if (succeed) {
             // Update the args so that it can reflect when this fragment is recreated.
             Bundle args = getArgs();
@@ -268,15 +270,15 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         }
 
         getParentFragmentManager().setFragmentResult(
-            String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
-            getFinishingResult(getContext())
+                String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
+                getFinishingResult(getContext())
         );
     }
 
     public abstract static class LoadTranslsTask extends BaseCallableTask<List<TranslBaseModel>> {
         private final FileUtils mFileUtils;
         private final Set<String> mTranslSlugs;
-        private QuranTranslFactory mTranslFactory;
+        private QuranTranslationFactory mTranslFactory;
 
         public LoadTranslsTask(FileUtils fileUtils, Set<String> translSlugs) {
             mFileUtils = fileUtils;
@@ -286,7 +288,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         @CallSuper
         @Override
         public void preExecute() {
-            mTranslFactory = new QuranTranslFactory(mFileUtils.getContext());
+            mTranslFactory = new QuranTranslationFactory(mFileUtils.getContext());
         }
 
         @CallSuper
@@ -299,14 +301,10 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
 
         @Override
         public List<TranslBaseModel> call() throws Exception {
-            return getTransls();
+            return getTranslationsFromDatabase();
         }
 
-        private List<TranslBaseModel> getTransls() throws Exception {
-            return getTranslsFromDatabase();
-        }
-
-        private List<TranslBaseModel> getTranslsFromDatabase() {
+        private List<TranslBaseModel> getTranslationsFromDatabase() {
             List<TranslBaseModel> translItems = new ArrayList<>();
 
             Map<String, List<QuranTranslBookInfo>> languageAndInfo = new HashMap<>();

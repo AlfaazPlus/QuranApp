@@ -323,10 +323,10 @@
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
-    <string name="titleStorageCleanup">Storage cleanup</string>
-    <string name="storageCleanupMessage">Free up space by deleting unused downloaded resources. This will not delete any bookmarks or settings.
-\n
-\nFollowing resources can be freed up:</string>
+    <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
+    <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
+    <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
+    <string name="titleStorageCleanup">Storage cleanup</string><string name="storageCleanupMessage">Free up space by deleting unused downloaded resources. This will not delete any bookmarks or settings.\n\nFollowing resources can be freed up:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d downloaded translations can be freed up.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d stored recitation files from %2$d reciters can be freed up.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d downloaded scripts and their fonts can be freed up.</string>
@@ -334,13 +334,17 @@
     <string name="tafseerCanBeFreedUp" formatted="false">%d saved tafsirs can be cleaned up.</string>
     <string name="titleChapterInfo">Chapter info</string>
     <string name="labelFreeUpSpace">Free up space</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nYou will need to download it again.</string>
-    <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
-    <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
-    <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
+    <string name="titleRecitationCleanup">Delete recitation?</string>
+    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
+    <string name="titleScriptCleanup">Delete script?</string>
+    <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
+    <string name="titleChapterInfoCleanup">Clear chapter info?</string>
+    <string name="msgChapterInfoCleanup">All the saved chapter info will be deleted.</string>
+    <string name="nFiles" formatted="false">%d files</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
+    <string name="nothingToCleanup">There is nothing to clean up.</string>
+
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>

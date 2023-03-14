@@ -3,7 +3,7 @@ package com.quranapp.android.utils.sharedPrefs
 import android.content.Context
 
 object SPAppConfigs {
-    private const val SP_APP_CONFIGS = "sp_app_configs"
+    const val SP_APP_CONFIGS = "sp_app_configs"
     private const val KEY_APP_THEME = "key.app.theme"
     private const val KEY_APP_LANGUAGE = "key.app.language"
     private const val KEY_URLS_VERSION = "key.versions.urls"

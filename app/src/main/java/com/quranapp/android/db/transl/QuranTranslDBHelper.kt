@@ -94,7 +94,7 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         } finally {
-            fileUtils.deleteDirWithChildren(translDir)
+            translDir.deleteRecursively()
             Log.d(
                 "Migration finished anyhow, deleting root translation directory: " + translDir.name
             )

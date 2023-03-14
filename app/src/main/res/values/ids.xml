@@ -35,4 +35,6 @@
     <item name="homepageTopicsLayout" type="id" />
     <item name="homepageProphetsLayout" type="id" />
     <item name="homepageDuaLayout" type="id" />
+
+    <item name="chapterInfoCleanupCard" type="id" />
 </resources>

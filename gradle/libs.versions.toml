@@ -12,7 +12,7 @@ guava = "31.0.1-jre"
 webkit = "1.6.0"
 media = "1.6.0"
 viewbinding = "7.4.1"
-browser= "1.4.0"
+browser = "1.4.0"
 
 # SmoothRefreshLayout
 srlCore = "1.7.2.4"
@@ -26,6 +26,9 @@ srlExtUtil = "1.7.2.4"
 retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
+
+flipper = "0.183.0"
+soloader = "0.10.5"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,3 +59,6 @@ srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
+
+facebook-flipper = { group = "com.facebook.flipper", name = "flipper", version.ref = "flipper" }
+facebook-soloader = { group = "com.facebook.soloader", name = "soloader", version.ref = "soloader" }

@@ -103,7 +103,7 @@ public class RecitationMenu {
 
     private CharSequence prepareRecitationTitle(String subtitle) {
         SpannableStringBuilder ssb = new SpannableStringBuilder();
-        String title = getContext().getString(R.string.strTitleRecitations);
+        String title = getContext().getString(R.string.strTitleSelectReciter);
         ssb.append(title);
 
         if (!TextUtils.isEmpty(subtitle)) {

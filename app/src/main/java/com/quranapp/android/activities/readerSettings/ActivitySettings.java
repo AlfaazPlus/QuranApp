@@ -172,7 +172,6 @@ public class ActivitySettings extends BaseActivity {
     private void initHeader(BoldHeader header) {
         header.setCallback(this::onBackPressed);
         header.setBGColor(R.color.colorBGPage);
-        Log.d(header.getLayoutDirection());
     }
 
     public BoldHeader getHeader() {

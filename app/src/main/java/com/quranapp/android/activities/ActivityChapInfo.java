@@ -139,9 +139,10 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
     }
 
     private void loadContent() {
-        if (TextUtils.isEmpty(mLanguage) || (!"en".equalsIgnoreCase(mLanguage) && !"ur".equalsIgnoreCase(mLanguage))) {
+        if (TextUtils.isEmpty(mLanguage)) {
             mLanguage = "en";
         }
+
         mTaskRunner.callAsync(new LoadChapterInfoTask(mLanguage));
         //        renderDataTest();
     }

@@ -94,6 +94,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.ActivityOnboarding" />
         <activity android:name=".activities.ActivityAbout" />
+        <activity android:name=".activities.ActivityStorageCleanup" />
         <activity android:name=".activities.test.ActivityExperiment" />
 
         <provider

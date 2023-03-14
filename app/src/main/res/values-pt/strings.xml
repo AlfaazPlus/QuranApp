@@ -102,7 +102,7 @@
     <string name="strMsgBookmarkNoItems">Sem favoritos</string>
     <string name="strTitleVOTD">Versículo do dia</string>
     <string name="strTitleChapInfoVerses">Versículos</string>
-    <string name="strTitleScripts">Selecionar script</string>
+    <string name="strTitleSelectScripts">Selecionar script</string>
     <string name="strTitleBookmark">Favoritos</string>
     <string name="strTitleTranslations">Traduções</string>
     <string name="strLabelContinueReading">Continuar Lendo »</string>

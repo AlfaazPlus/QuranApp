@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +22,7 @@ import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.LytSettingsTranslItemBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
             }
 
             mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(),
-                translModel.getBookInfo().getAuthorName());
+                    translModel.getBookInfo().getAuthorName());
             mBinding.checkbox.setChecked(translModel.isChecked());
 
             mBinding.checkbox.setBeforeCheckChangeListener((button, newState) -> {
@@ -91,36 +92,6 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
 
                 return false;
             });
-
-            mBinding.getRoot().setOnLongClickListener(v -> {
-                if (mDeleteAllowed && !TranslUtils.isPrebuilt(translModel.getBookInfo().getSlug())) {
-                    deleteTranslCheckPoint(v.getContext(), translModel);
-                    return true;
-                }
-                return false;
-            });
-        }
-
-        private void deleteTranslCheckPoint(Context ctx, TranslModel translModel) {
-            QuranTranslBookInfo bookInfo = translModel.getBookInfo();
-            PeaceDialog.Builder builder = PeaceDialog.newBuilder(ctx);
-            builder.setTitle(R.string.strTitleTranslDelete);
-            builder.setMessage(
-                bookInfo.getBookName() + "\n" + bookInfo.getAuthorName() + "\n\n" + "You will need to download it again.");
-            builder.setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            builder.setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            builder.setNeutralButton(R.string.strLabelCancel, null);
-            builder.setNegativeButton(R.string.strLabelDelete, ColorUtils.DANGER, (dialog, which) -> {
-                QuranTranslFactory factory = new QuranTranslFactory(ctx);
-                factory.deleteTranslation(bookInfo.getSlug());
-                factory.close();
-
-                translModel.setChecked(false);
-                mListener.onSelectionChanged(ctx, translModel, false);
-                remove(bookInfo.getSlug());
-            });
-            builder.setFocusOnNegative(true);
-            builder.show();
         }
     }
 }

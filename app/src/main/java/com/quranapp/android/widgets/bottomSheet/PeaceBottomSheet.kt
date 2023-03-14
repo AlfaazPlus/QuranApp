@@ -71,7 +71,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         params.headerTitle = params.headerTitle ?: context.getString(params.headerTitleResource)
     }
 
-
     protected open fun setupHeader(dialogLayout: ViewGroup, params: PeaceBottomSheetParams) {
         if (!this.params.headerShown) return
 
@@ -94,7 +93,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         return context.drawable(R.drawable.dr_bg_sheet_dialog_header)
     }
 
-
     protected open fun prepareDragIcon(container: LinearLayout, params: PeaceBottomSheetParams) {
         if (params.disableDragging) return
 
@@ -103,11 +101,14 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
             setImageResource(R.drawable.dr_icon_drag)
         }
 
-        container.addView(dragIcon, 0, LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-            topMargin = Dimen.dp2px(container.context, 10f)
-        })
+        container.addView(
+            dragIcon,
+            0,
+            LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                topMargin = Dimen.dp2px(container.context, 10f)
+            }
+        )
     }
-
 
     protected open fun prepareTitleView(
         container: LinearLayout,
@@ -120,7 +121,9 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         var titleView: AppCompatTextView? = container.findViewById(R.id.title)
 
         if (hasTitle && titleView == null) {
-            titleView = AppCompatTextView(ContextThemeWrapper(container.context, resolveTitleThemeId()))
+            titleView = AppCompatTextView(
+                ContextThemeWrapper(container.context, resolveTitleThemeId())
+            )
             titleView.id = R.id.title
             container.addView(titleView)
         }
@@ -130,7 +133,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
             it.visibility = if (hasTitle) View.VISIBLE else View.GONE
         }
     }
-
 
     fun updateHeaderTitle() {
         val layout = dialogLayout ?: return
@@ -150,7 +152,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
             it.background = if (hasTitle) getHeaderBG(layout.context) else null
         }
     }
-
 
     private fun createHeaderView(dialogLayout: ViewGroup): LinearLayout {
         val headerView = LinearLayout(dialogLayout.context).apply {
@@ -195,7 +196,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         super.setupDialog(dialog, style)
         setupDialogInternal(dialog, style, params)
     }
-
 
     protected open fun setupDialogInternal(
         dialog: Dialog,
@@ -256,7 +256,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
             }
         })
 
-
         dialog.setOnKeyListener { dialogInterface, keyCode, event ->
             onKey(
                 dialogInterface as BottomSheetDialog,
@@ -282,7 +281,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     protected open fun onKey(dialog: BottomSheetDialog, keyCode: Int, event: KeyEvent): Boolean {
         return false
     }
-
 
     private fun setupFullHeight(modal: View) {
         if (params.fullHeight) {
@@ -328,7 +326,6 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
         show(fragmentManager, javaClass.simpleName)
     }
 
-
     override fun setCancelable(cancelable: Boolean) {
         super.setCancelable(cancelable)
         params.cancellable = cancelable
@@ -359,5 +356,4 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     interface OnPeaceBottomSheetDismissListener {
         fun onDismissed()
     }
-
 }

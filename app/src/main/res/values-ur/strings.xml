@@ -113,8 +113,8 @@
     <string name="strTitleAboutSurah">سورہ کی معلومات</string>
     <string name="strTitleTranslations">ترجمے</string>
     <string name="strTitleDownloadTranslations">ڈاؤن لوڈ کریں</string>
-    <string name="strTitleRecitations">قاری منتخب کریں</string>
-    <string name="strTitleScripts">فونٹ منتخب کریں</string>
+    <string name="strTitleSelectReciter">قاری منتخب کریں</string>
+    <string name="strTitleSelectScripts">فونٹ منتخب کریں</string>
     <string name="strTitleBookmarkDeleteAll">تمام بک مارکس ہٹائیں؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d بک مارکس ہٹائیں؟</string>
     <string name="strTitleTranslDelete">ترجمہ حذف کریں؟</string>

@@ -27,7 +27,7 @@ import org.json.JSONArray
  * This factory prepares contents of translations for the requesters.
  * The content may be [QuranTranslBookInfo] or the actual translation contents.
  * */
-class QuranTranslFactory(private val context: Context) : Closeable {
+class QuranTranslationFactory(private val context: Context) : Closeable {
 
     val dbHelper = QuranTranslDBHelper(context)
 
@@ -74,9 +74,17 @@ class QuranTranslFactory(private val context: Context) : Closeable {
     }
 
     /**
-     * Gets and prepare an instances of [QuranTranslBookInfo] from the database for all `available` slugs.
+     * Gets a map of [QuranTranslBookInfo] in [getAvailableTranslationBooksInfo] excluding the built-in translations.
+     * Only info for translations which are downloaded by the user are returned.
+     */
+    fun getDownloadedTranslationBooksInfo(): Map<String, QuranTranslBookInfo> {
+        return getTranslationBooksInfoValidated().filterKeys { !TranslUtils.isPrebuilt(it) }
+    }
+
+    /**
+     * Gets and prepare instances of [QuranTranslBookInfo] from the database for all `available` slugs.
      * Here the meaning of `available` is - all books stored in the database.
-     * When a book downloaded from the server, then its information along with its content is stored in the database.
+     * When a book is downloaded from the server, then its information along with its content is stored in the database.
      * Then the information is included in `available` slugs.
      * @return The returned value is a [Map] where the key is the corresponding slug.
      * */

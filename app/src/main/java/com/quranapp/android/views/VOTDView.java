@@ -39,7 +39,7 @@ import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslFactory;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
@@ -198,10 +198,19 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
                 : null
         );
 
-        final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
-        int textSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
+        final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptVerseTextSizeSmallRes(quran.getScript());
+        int verseTextSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
-        mArText = mVerseDecorator.setupArabicText(verse.arabicText, mVerseNo, verse.pageNo, textSize);
+        final int serialTxtSizeRes = QuranScriptUtilsKt.getQuranScriptSerialTextSizeSmallRes(quran.getScript());
+        int serialTextSize = ContextKt.getDimenPx(getContext(), serialTxtSizeRes);
+
+        mArText = mVerseDecorator.setupArabicText(
+            verse.arabicText,
+            mVerseNo,
+            verse.pageNo,
+            verseTextSize,
+            serialTextSize
+        );
         prepareTransl(getContext(), quran.getScript());
 
         mLastScript = quran.getScript();
@@ -209,11 +218,11 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
     private void prepareTransl(Context context, String scriptKey) {
         taskRunner.callAsync(new BaseCallableTask<Pair<QuranTranslBookInfo, Translation>>() {
-            QuranTranslFactory factory;
+            QuranTranslationFactory factory;
 
             @Override
             public void preExecute() {
-                factory = new QuranTranslFactory(context);
+                factory = new QuranTranslationFactory(context);
             }
 
             @Override
@@ -247,7 +256,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         });
     }
 
-    private QuranTranslBookInfo obtainOptimalSlug(Context ctx, QuranTranslFactory factory) {
+    private QuranTranslBookInfo obtainOptimalSlug(Context ctx, QuranTranslationFactory factory) {
         Set<String> savedTranslations = SPReader.getSavedTranslations(ctx);
 
         QuranTranslBookInfo bookInfo = null;

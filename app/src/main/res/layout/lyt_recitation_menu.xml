@@ -102,7 +102,7 @@
         android:maxLines="2"
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
-        android:text="@string/strTitleRecitations"
+        android:text="@string/strTitleSelectReciter"
         android:textSize="@dimen/dmnCommonSize2"
         app:drawableEndDimen="20dp"
         app:drawableStartDimen="20dp"
