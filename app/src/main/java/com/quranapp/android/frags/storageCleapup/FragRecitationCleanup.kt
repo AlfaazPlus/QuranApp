@@ -21,7 +21,11 @@ class FragRecitationCleanup : FragStorageCleanupBase() {
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleRecitations)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.frag_storage_cleanup, container, false)
     }
 

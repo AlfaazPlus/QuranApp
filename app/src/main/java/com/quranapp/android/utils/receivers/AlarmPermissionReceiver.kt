@@ -8,7 +8,9 @@ import com.quranapp.android.utils.votd.VOTDUtils
 
 class AlarmPermissionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        if (AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED == intent?.action && VOTDUtils.isVOTDTrulyEnabled(context)) {
+        if (AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED == intent?.action && VOTDUtils.isVOTDTrulyEnabled(
+                context
+            )) {
             VOTDUtils.enableVOTDReminder(context)
         }
     }

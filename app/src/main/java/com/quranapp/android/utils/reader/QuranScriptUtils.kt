@@ -92,7 +92,6 @@ fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     else -> 0
 }
 
-
 @DimenRes
 fun String.getQuranScriptSerialTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_INDO_PAK, QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArIndoPakSmall

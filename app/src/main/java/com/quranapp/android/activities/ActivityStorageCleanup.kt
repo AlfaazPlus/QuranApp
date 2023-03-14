@@ -35,12 +35,16 @@ class ActivityStorageCleanup : BaseActivity() {
     private fun initFrag(binding: ActivityStorageCleanupBinding) {
         val fm = supportFragmentManager
         val t = fm.beginTransaction()
-        t.add(R.id.frags_container, FragStorageCleanupMain::class.java, null, FragStorageCleanupMain::class.simpleName)
+        t.add(
+            R.id.frags_container,
+            FragStorageCleanupMain::class.java,
+            null,
+            FragStorageCleanupMain::class.simpleName
+        )
         t.setReorderingAllowed(true)
         t.runOnCommit { onFragChanged(binding) }
         t.commit()
     }
-
 
     private fun onFragChanged(binding: ActivityStorageCleanupBinding) {
         val frag = supportFragmentManager.findFragmentById(R.id.frags_container)
@@ -48,5 +52,4 @@ class ActivityStorageCleanup : BaseActivity() {
             frag.setupHeader(this, binding.header)
         }
     }
-
 }

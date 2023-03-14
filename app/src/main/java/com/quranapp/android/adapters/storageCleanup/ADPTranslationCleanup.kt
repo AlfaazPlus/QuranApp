@@ -30,7 +30,6 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
         return items.size
     }
 
-
     override fun getItemViewType(position: Int): Int {
         return if (items[position] is TranslTitleModel) 0 else 1
     }
@@ -61,7 +60,10 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
             setTextColor(colorPrimary)
 
             layoutParams =
-                MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                MarginLayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
                     updateMarginVertical(context.dp2px(10f))
                 }
         }
@@ -69,7 +71,6 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
 
     override fun onBindViewHolder(holder: VHTranslationCleanupItem, position: Int) {
         val model: TranslBaseModel = items[position]
-
 
         if (model is TranslTitleModel && holder.itemView is TextView) {
             (holder.itemView as TextView).text = model.langName
@@ -90,7 +91,9 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
                 it.title.text = model.bookInfo.bookName
                 it.subtitle.text = model.bookInfo.authorName
 
-                it.iconDelete.setImageResource(if (!model.isDeleted) R.drawable.dr_icon_delete else R.drawable.dr_icon_check)
+                it.iconDelete.setImageResource(
+                    if (!model.isDeleted) R.drawable.dr_icon_delete else R.drawable.dr_icon_check
+                )
 
                 if (!model.isDeleted) {
                     it.iconDelete.setOnClickListener {

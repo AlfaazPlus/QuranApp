@@ -18,7 +18,6 @@ import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.sharedPrefs.SPLog
-import com.quranapp.android.utils.sharedPrefs.SPVerses
 import com.quranapp.android.utils.votd.VOTDUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

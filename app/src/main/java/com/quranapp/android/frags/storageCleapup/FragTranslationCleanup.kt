@@ -22,7 +22,11 @@ import kotlinx.coroutines.withContext
 class FragTranslationCleanup : FragStorageCleanupBase() {
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleTranslations)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.frag_storage_cleanup, container, false)
     }
 
@@ -69,7 +73,10 @@ class FragTranslationCleanup : FragStorageCleanupBase() {
         }
     }
 
-    private fun populateTranslations(binding: FragStorageCleanupBinding, items: List<TranslBaseModel>) {
+    private fun populateTranslations(
+        binding: FragStorageCleanupBinding,
+        items: List<TranslBaseModel>
+    ) {
         val mAdapter = ADPTranslationCleanup(binding.root.context, items)
         binding.list.adapter = mAdapter
         binding.list.layoutManager = LinearLayoutManager(binding.root.context)

@@ -45,7 +45,9 @@ class ADPRecitationCleanup(
                 it.title.text = model.recitationModel.reciter
                 it.subtitle.text = it.root.context.getString(R.string.nFiles, model.downloadsCount)
 
-                it.iconDelete.setImageResource(if (!model.isCleared) R.drawable.dr_icon_delete else R.drawable.dr_icon_check)
+                it.iconDelete.setImageResource(
+                    if (!model.isCleared) R.drawable.dr_icon_delete else R.drawable.dr_icon_check
+                )
 
                 if (!model.isCleared) {
                     it.iconDelete.setOnClickListener {
@@ -66,7 +68,7 @@ class ADPRecitationCleanup(
                 setMessage(
                     itemView.context.getString(
                         R.string.msgRecitationCleanup,
-                        model.recitationModel.reciter,
+                        model.recitationModel.reciter
                     )
                 )
                 setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)

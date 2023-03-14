@@ -21,7 +21,11 @@ class FragScriptCleanup : FragStorageCleanupBase() {
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleScripts)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.frag_storage_cleanup, container, false)
     }
 
@@ -32,7 +36,6 @@ class FragScriptCleanup : FragStorageCleanupBase() {
         init(FragStorageCleanupBinding.bind(view))
     }
 
-
     private fun init(binding: FragStorageCleanupBinding) {
         binding.loader.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
@@ -42,7 +45,8 @@ class FragScriptCleanup : FragStorageCleanupBase() {
                 val scriptKey = scriptFile.nameWithoutExtension
 
                 val fontDownloadsCount = QuranScriptUtils.getKFQPCFontDownloadedCount(
-                    binding.root.context, scriptKey
+                    binding.root.context,
+                    scriptKey
                 )
 
                 scriptItems.add(

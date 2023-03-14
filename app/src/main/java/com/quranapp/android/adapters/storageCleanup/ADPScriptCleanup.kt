@@ -45,9 +45,15 @@ class ADPScriptCleanup(
         fun bind(model: ScriptCleanupItemModel) {
             binding.let {
                 it.title.text = model.scriptKey.getQuranScriptName()
-                it.subtitle.text = it.root.context.getString(R.string.nScriptsAndFonts, 1, model.fontDownloadsCount)
+                it.subtitle.text = it.root.context.getString(
+                    R.string.nScriptsAndFonts,
+                    1,
+                    model.fontDownloadsCount
+                )
 
-                it.iconDelete.setImageResource(if (!model.isCleared) R.drawable.dr_icon_delete else R.drawable.dr_icon_check)
+                it.iconDelete.setImageResource(
+                    if (!model.isCleared) R.drawable.dr_icon_delete else R.drawable.dr_icon_check
+                )
 
                 if (!model.isCleared) {
                     it.iconDelete.setOnClickListener {
@@ -68,7 +74,7 @@ class ADPScriptCleanup(
                 setMessage(
                     itemView.context.getString(
                         R.string.msgScriptCleanup,
-                        model.scriptKey.getQuranScriptName(),
+                        model.scriptKey.getQuranScriptName()
                     )
                 )
                 setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)

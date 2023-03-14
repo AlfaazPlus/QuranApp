@@ -23,7 +23,11 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.titleStorageCleanup)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.frag_storage_cleanup_main, container, false)
     }
 
@@ -117,7 +121,11 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
 
         isThereAnythingToCleanup = true
 
-        populateTexts(parentBinding, R.string.strTitleScripts, getString(R.string.scriptCanBeFreedUp, scriptsCount)) {
+        populateTexts(
+            parentBinding,
+            R.string.strTitleScripts,
+            getString(R.string.scriptCanBeFreedUp, scriptsCount)
+        ) {
             launchFrag(FragScriptCleanup::class.java)
         }
     }
@@ -149,7 +157,10 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
         }
     }
 
-    private fun deleteChapterInfoWithWarning(parentBinding: FragStorageCleanupMainBinding, chapterInfoDir: File) {
+    private fun deleteChapterInfoWithWarning(
+        parentBinding: FragStorageCleanupMainBinding,
+        chapterInfoDir: File
+    ) {
         val context = parentBinding.root.context
 
         PeaceDialog.newBuilder(context).apply {
@@ -194,5 +205,4 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
             buttonFreeUp.setOnClickListener { callback() }
         }
     }
-
 }
