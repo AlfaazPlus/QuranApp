@@ -29,11 +29,11 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
@@ -94,15 +94,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.ActivityOnboarding" />
         <activity android:name=".activities.ActivityAbout" />
-        <activity
-            android:name=".activities.ActivityStorageCleanup"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activities.ActivityStorageCleanup" />
         <activity android:name=".activities.test.ActivityExperiment" />
 
         <provider

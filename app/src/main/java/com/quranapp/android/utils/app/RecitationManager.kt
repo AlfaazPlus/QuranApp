@@ -8,12 +8,12 @@ import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
-import java.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
+import java.io.IOException
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -125,5 +125,21 @@ object RecitationManager {
         availableRecitationsModel?.reciters?.forEach { recitationModel ->
             recitationModel.isChecked = recitationModel.slug == slug
         }
+    }
+
+    fun emptyModel(
+        slug: String = "",
+        reciter: String = "",
+        style: String? = null,
+        urlHost: String? = null,
+        urlPath: String = "",
+    ): RecitationModel {
+        return RecitationModel(
+            slug = slug,
+            reciter = reciter,
+            style = style,
+            urlHost = urlHost,
+            urlPath = urlPath
+        )
     }
 }

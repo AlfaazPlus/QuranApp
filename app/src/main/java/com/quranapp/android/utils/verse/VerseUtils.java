@@ -43,7 +43,8 @@ public abstract class VerseUtils {
         Integer verseSerial,
         Typeface verseFont,
         Typeface verseSerialFont,
-        int textSize
+        int verseTextSize,
+        int serialTextSize
     ) {
         if (TextUtils.isEmpty(arabicText)) {
             return "";
@@ -52,8 +53,8 @@ public abstract class VerseUtils {
         SpannableString arabicSS = new SpannableString(arabicText);
         // Set the typeface to span over arabic text
         arabicSS.setSpan(new TypefaceSpan2(verseFont), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        if (textSize > 0) {
-            arabicSS.setSpan(new AbsoluteSizeSpan(textSize), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (verseTextSize > 0) {
+            arabicSS.setSpan(new AbsoluteSizeSpan(verseTextSize), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         if (verseSerial == null) {
@@ -61,8 +62,9 @@ public abstract class VerseUtils {
         }
 
         SpannableString verseSerialSS = prepareVerseSerial(verseSerial, verseSerialFont);
-        if (textSize > 0) {
-            verseSerialSS.setSpan(new AbsoluteSizeSpan(textSize), 0, verseSerialSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (serialTextSize > 0) {
+            verseSerialSS.setSpan(new AbsoluteSizeSpan(serialTextSize), 0, verseSerialSS.length(),
+                SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         return TextUtils.concat(arabicSS, " ", verseSerialSS);

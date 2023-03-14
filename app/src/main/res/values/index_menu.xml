@@ -5,6 +5,7 @@
 <resources>
     <item name="indexMenuItemBookmark" type="id" />
     <item name="indexMenuItemSettings" type="id" />
+    <item name="indexMenuItemStorageCleanup" type="id" />
     <item name="indexMenuItemFeedback" type="id" />
     <item name="indexMenuItemHelp" type="id" />
     <item name="indexMenuItemPrivacy" type="id" />
@@ -14,72 +15,84 @@
 
     <!--  IDs  -->
     <array name="arrIndexMenuIds">
-        <item>@array/arrIndexMenuIds1</item>
-        <item>@array/arrIndexMenuIds2</item>
-        <item>@array/arrIndexMenuIds3</item>
+        <item>@array/arrIndexMenuGroup1Ids</item>
+        <item>@array/arrIndexMenuGroup2Ids</item>
+        <item>@array/arrIndexMenuGroup3Ids</item>
     </array>
 
-    <array name="arrIndexMenuIds1">
+    <!--  Group 1 IDs  -->
+    <array name="arrIndexMenuGroup1Ids">
         <item>@id/indexMenuItemBookmark</item>
         <item>@id/indexMenuItemSettings</item>
+        <item>@id/indexMenuItemStorageCleanup</item>
     </array>
 
-    <array name="arrIndexMenuIds2">
+    <!--  Group 2 IDs  -->
+    <array name="arrIndexMenuGroup2Ids">
         <item>@id/indexMenuItemFeedback</item>
         <item>@id/indexMenuItemHelp</item>
         <item>@id/indexMenuItemPrivacy</item>
         <item>@id/indexMenuItemAbout</item>
     </array>
 
-    <array name="arrIndexMenuIds3">
+    <!--  Group 3 IDs  -->
+    <array name="arrIndexMenuGroup3Ids">
         <item>@id/indexMenuItemRate</item>
         <item>@id/indexMenuItemShare</item>
     </array>
 
     <!--  ICONS  -->
     <array name="arrIndexMenuIcons">
-        <item>@array/arrIndexMenuIcons1</item>
-        <item>@array/arrIndexMenuIcons2</item>
-        <item>@array/arrIndexMenuIcons3</item>
+        <item>@array/arrIndexMenuGroup1Icons</item>
+        <item>@array/arrIndexMenuGroup2Icons</item>
+        <item>@array/arrIndexMenuGroup3Icons</item>
     </array>
 
-    <array name="arrIndexMenuIcons1">
+    <!--  Group 1 ICONS  -->
+    <array name="arrIndexMenuGroup1Icons">
         <item>@drawable/dr_icon_bookmarks</item>
         <item>@drawable/dr_icon_settings</item>
+        <item>@drawable/icon_clean</item>
     </array>
 
-    <array name="arrIndexMenuIcons2">
+    <!--  Group 2 ICONS  -->
+    <array name="arrIndexMenuGroup2Icons">
         <item>@drawable/dr_icon_bug</item>
         <item>@drawable/dr_icon_help</item>
         <item>@drawable/dr_icon_privacy_policy</item>
         <item>@drawable/dr_icon_info</item>
     </array>
 
-    <array name="arrIndexMenuIcons3">
+    <!--  Group 3 ICONS  -->
+    <array name="arrIndexMenuGroup3Icons">
         <item>@drawable/dr_icon_rate</item>
         <item>@drawable/dr_icon_share</item>
     </array>
 
     <!--  LABELS  -->
     <array name="arrIndexMenuLabels">
-        <item>@array/arrIndexMenuLabels1</item>
-        <item>@array/arrIndexMenuLabels2</item>
-        <item>@array/arrIndexMenuLabels3</item>
+        <item>@array/arrIndexMenuGroup1Labels</item>
+        <item>@array/arrIndexMenuGroup2Labels</item>
+        <item>@array/arrIndexMenuGroup3Labels</item>
     </array>
 
-    <array name="arrIndexMenuLabels1">
+    <!--  Group 1 LABELS  -->
+    <array name="arrIndexMenuGroup1Labels">
         <item>@string/strTitleBookmarks</item>
         <item>@string/strTitleSettings</item>
+        <item>@string/titleStorageCleanup</item>
     </array>
 
-    <array name="arrIndexMenuLabels2">
+    <!--  Group 2 LABELS  -->
+    <array name="arrIndexMenuGroup2Labels">
         <item>@string/strTitleSendFeedback</item>
         <item>@string/strTitleHelpSupport</item>
         <item>@string/strTitlePrivacyPolicy</item>
         <item>@string/strTitleAboutUs</item>
     </array>
 
-    <array name="arrIndexMenuLabels3">
+    <!--  Group 3 LABELS  -->
+    <array name="arrIndexMenuGroup3Labels">
         <item>@string/strTitleRateApp</item>
         <item>@string/strTitleShareApp</item>
     </array>

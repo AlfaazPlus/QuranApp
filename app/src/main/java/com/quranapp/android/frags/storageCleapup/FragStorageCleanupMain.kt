@@ -5,16 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.peacedesign.android.utils.ColorUtils
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.databinding.FragStorageCleanupMainBinding
 import com.quranapp.android.databinding.LytStorageCleanupItemCardBinding
+import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.FileUtils
+import java.io.File
 
 class FragStorageCleanupMain : FragStorageCleanupBase() {
     private lateinit var fileUtils: FileUtils
     private lateinit var binding: FragStorageCleanupMainBinding
+    private var isThereAnythingToCleanup = false
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.titleStorageCleanup)
 
@@ -35,11 +40,21 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
     }
 
     private fun init(binding: FragStorageCleanupMainBinding) {
+        while (binding.container.childCount > 1) {
+            binding.container.removeViewAt(binding.container.childCount - 1)
+        }
+
         checkTranslations(binding)
         checkRecitations(binding)
         checkScripts(binding)
         checkChapterInfo(binding)
         // checkTafsir(binding)
+
+        if (!isThereAnythingToCleanup) {
+            binding.cleanupMessage.setText(R.string.nothingToCleanup)
+        }
+
+        binding.cleanupMessage.visibility = View.VISIBLE
     }
 
     private fun checkTranslations(parentBinding: FragStorageCleanupMainBinding) {
@@ -47,6 +62,8 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
             val downloadedTranslationsCount = it.getDownloadedTranslationBooksInfo().size
 
             if (downloadedTranslationsCount == 0) return
+
+            isThereAnythingToCleanup = true
 
             populateTexts(
                 parentBinding,
@@ -76,7 +93,13 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
 
         if (recitationsCount == 0) return
 
-        populateTexts(parentBinding, R.string.strTitleRecitations, getString(R.string.recitationCanBeFreedUp, recitationsCount, recitersCount)) {
+        isThereAnythingToCleanup = true
+
+        populateTexts(
+            parentBinding,
+            R.string.strTitleRecitations,
+            getString(R.string.recitationCanBeFreedUp, recitationsCount, recitersCount)
+        ) {
             launchFrag(FragRecitationCleanup::class.java)
         }
     }
@@ -91,6 +114,8 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
         }
 
         if (scriptsCount == 0) return
+
+        isThereAnythingToCleanup = true
 
         populateTexts(parentBinding, R.string.strTitleScripts, getString(R.string.scriptCanBeFreedUp, scriptsCount)) {
             launchFrag(FragScriptCleanup::class.java)
@@ -112,28 +137,56 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
 
         if (chapterInfoCount == 0) return
 
-        populateTexts(parentBinding, R.string.titleChapterInfo, getString(R.string.chapterInfoCanBeFreedUp, chapterInfoCount)) {
-            launchFrag(FragChapterInfoCleanup::class.java)
+        isThereAnythingToCleanup = true
+
+        populateTexts(
+            parentBinding,
+            R.string.titleChapterInfo,
+            getString(R.string.chapterInfoCanBeFreedUp, chapterInfoCount),
+            rootId = R.id.chapterInfoCleanupCard
+        ) {
+            deleteChapterInfoWithWarning(parentBinding, fileUtils.chapterInfoDir)
         }
     }
 
-    private fun checkTafsir(parentBinding: FragStorageCleanupMainBinding) {
-        /*val tafsirCount = 0
+    private fun deleteChapterInfoWithWarning(parentBinding: FragStorageCleanupMainBinding, chapterInfoDir: File) {
+        val context = parentBinding.root.context
+
+        PeaceDialog.newBuilder(context).apply {
+            setTitle(R.string.titleChapterInfoCleanup)
+            setMessage(context.getString(R.string.msgChapterInfoCleanup))
+            setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            setNeutralButton(R.string.strLabelCancel, null)
+            setDialogGravity(PeaceDialog.GRAVITY_TOP)
+            setNegativeButton(R.string.strLabelDelete, ColorUtils.DANGER) { _, _ ->
+                chapterInfoDir.deleteRecursively()
+                parentBinding.container.findViewById<View?>(R.id.chapterInfoCleanupCard)?.removeView()
+            }
+            setFocusOnNegative(true)
+        }.show()
+    }
+
+    /*private fun checkTafsir(parentBinding: FragStorageCleanupMainBinding) {
+        val tafsirCount = 0
 
         if (tafsirCount == 0) return
 
         populateTexts(parentBinding, R.string.strTitleTafsir, getString(R.string.tafseerCanBeFreedUp, tafsirCount)) {
 
-        }*/
-    }
+        }
+    }*/
 
     private fun populateTexts(
         parentBinding: FragStorageCleanupMainBinding,
         title: Int,
         description: String,
+        rootId: Int = View.generateViewId(),
         callback: () -> Unit
     ) {
         LytStorageCleanupItemCardBinding.inflate(layoutInflater, parentBinding.container, true).apply {
+            root.id = rootId
+
             this.title.setText(title)
             this.description.text = description
 

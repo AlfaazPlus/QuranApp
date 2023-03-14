@@ -20,6 +20,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityAbout;
 import com.quranapp.android.activities.ActivityBookmark;
+import com.quranapp.android.activities.ActivityStorageCleanup;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.databinding.LytIndexMenuBinding;
@@ -181,6 +182,8 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
             mActivity.launchActivity(ActivityBookmark.class);
         } else if (id == R.id.indexMenuItemSettings) {
             mActivity.launchActivity(ActivitySettings.class);
+        } else if (id == R.id.indexMenuItemStorageCleanup) {
+            mActivity.launchActivity(ActivityStorageCleanup.class);
         } else if (id == R.id.indexMenuItemHelp) {
             InfoUtils.openHelp(getContext());
         } else if (id == R.id.indexMenuItemFeedback) {

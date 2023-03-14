@@ -216,18 +216,6 @@ public final class FileUtils {
         }
     }
 
-
-    public void deleteDirWithChildren(@NonNull File dir) {
-        if (!dir.exists()) return;
-        File[] children = dir.listFiles();
-        if (children == null) return;
-        for (File child : children) {
-            if (child.isDirectory()) deleteDirWithChildren(child);
-            else child.delete();
-        }
-        dir.delete();
-    }
-
     /**
      * Decodes URI into Bitmap.
      * URI from file can be obtained by using {@link #getFileURI(File)}

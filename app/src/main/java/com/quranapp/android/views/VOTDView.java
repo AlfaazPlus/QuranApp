@@ -198,10 +198,19 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
                 : null
         );
 
-        final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptTextSizeSmallRes(quran.getScript());
-        int textSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
+        final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptVerseTextSizeSmallRes(quran.getScript());
+        int verseTextSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
-        mArText = mVerseDecorator.setupArabicText(verse.arabicText, mVerseNo, verse.pageNo, textSize);
+        final int serialTxtSizeRes = QuranScriptUtilsKt.getQuranScriptSerialTextSizeSmallRes(quran.getScript());
+        int serialTextSize = ContextKt.getDimenPx(getContext(), serialTxtSizeRes);
+
+        mArText = mVerseDecorator.setupArabicText(
+            verse.arabicText,
+            mVerseNo,
+            verse.pageNo,
+            verseTextSize,
+            serialTextSize
+        );
         prepareTransl(getContext(), quran.getScript());
 
         mLastScript = quran.getScript();

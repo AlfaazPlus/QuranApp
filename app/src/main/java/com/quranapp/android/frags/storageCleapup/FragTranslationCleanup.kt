@@ -12,7 +12,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.components.storageCleanup.TranslationCleanupItemModel
 import com.quranapp.android.components.transls.TranslBaseModel
 import com.quranapp.android.components.transls.TranslTitleModel
-import com.quranapp.android.databinding.FragStorageCleanupTranslationBinding
+import com.quranapp.android.databinding.FragStorageCleanupBinding
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,17 +23,17 @@ class FragTranslationCleanup : FragStorageCleanupBase() {
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleTranslations)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frag_storage_cleanup_translation, container, false)
+        return inflater.inflate(R.layout.frag_storage_cleanup, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragStorageCleanupTranslationBinding.bind(view)
+        val binding = FragStorageCleanupBinding.bind(view)
 
         init(binding)
     }
 
-    private fun init(binding: FragStorageCleanupTranslationBinding) {
+    private fun init(binding: FragStorageCleanupBinding) {
         binding.loader.visibility = View.VISIBLE
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -69,7 +69,7 @@ class FragTranslationCleanup : FragStorageCleanupBase() {
         }
     }
 
-    private fun populateTranslations(binding: FragStorageCleanupTranslationBinding, items: List<TranslBaseModel>) {
+    private fun populateTranslations(binding: FragStorageCleanupBinding, items: List<TranslBaseModel>) {
         val mAdapter = ADPTranslationCleanup(binding.root.context, items)
         binding.list.adapter = mAdapter
         binding.list.layoutManager = LinearLayoutManager(binding.root.context)

@@ -36,6 +36,10 @@ object QuranScriptUtils {
         return FileUtils.newInstance(ctx).getScriptFile(kfqpcScriptSlug).length() > 0
     }
 
+    /**
+     * Get the summary of the KFQPC font download.
+     * @return A triple containing counts of the total pages, total downloaded, and the remaining.
+     */
     fun getKFQPCFontDownloadedCount(ctx: Context, kfqpcScriptSlug: String): Triple<Int, Int, Int> {
         val fileUtils = FileUtils.newInstance(ctx)
         val kfqpcScriptFontDir = fileUtils.getKFQPCScriptFontDir(kfqpcScriptSlug)
@@ -73,16 +77,32 @@ fun String.getScriptPreviewRes(): Int = when (this) {
 }
 
 @DimenRes
-fun String.getQuranScriptTextSizeSmallRes(): Int = when (this) {
+fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_INDO_PAK -> R.dimen.dmnReaderTextSizeArIndoPakSmall
     QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniSmall
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCSmall
     else -> 0
 }
 
-fun String.getQuranScriptFontDimenRes(): Int = when (this) {
+@DimenRes
+fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_INDO_PAK -> R.dimen.dmnReaderTextSizeArIndoPakMedium
     QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniMedium
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCMedium
+    else -> 0
+}
+
+
+@DimenRes
+fun String.getQuranScriptSerialTextSizeSmallRes(): Int = when (this) {
+    QuranScriptUtils.SCRIPT_INDO_PAK, QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArIndoPakSmall
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCSmall
+    else -> 0
+}
+
+@DimenRes
+fun String.getQuranScriptSerialTextSizeMediumRes(): Int = when (this) {
+    QuranScriptUtils.SCRIPT_INDO_PAK, QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArIndoPakMedium
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCMedium
     else -> 0
 }

@@ -98,7 +98,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 preview.typeface = ctx.getFont(slug.getQuranScriptFontRes())
                 preview.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    ctx.getDimenPx(slug.getQuranScriptFontDimenRes()).toFloat()
+                    ctx.getDimenPx(slug.getQuranScriptVerseTextSizeMediumRes()).toFloat()
                 )
                 root.setOnClickListener { onItemClick(list, this, slug) }
 

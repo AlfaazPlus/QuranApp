@@ -335,6 +335,15 @@
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
     <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
+    <string name="titleRecitationCleanup">Delete recitation?</string>
+    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
+    <string name="titleScriptCleanup">Delete script?</string>
+    <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
+    <string name="titleChapterInfoCleanup">Clear chapter info?</string>
+    <string name="msgChapterInfoCleanup">All the saved chapter info will be deleted.</string>
+    <string name="nFiles" formatted="false">%d files</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
+    <string name="nothingToCleanup">There is nothing to clean up.</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>

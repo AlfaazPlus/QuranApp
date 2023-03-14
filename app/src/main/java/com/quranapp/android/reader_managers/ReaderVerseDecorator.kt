@@ -10,7 +10,7 @@ import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
-import com.quranapp.android.utils.reader.getQuranScriptFontDimenRes
+import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
@@ -56,7 +56,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
         savedTextSizeTranslMultiplier = SPReader.getSavedTextSizeMultTransl(ctx)
 
         savedScript = SPReader.getSavedScript(ctx)
-        textSizeArabic = ctx.getDimension(savedScript.getQuranScriptFontDimenRes()).toFloat()
+        textSizeArabic = ctx.getDimension(savedScript.getQuranScriptVerseTextSizeMediumRes()).toFloat()
     }
 
     fun isKFQPCScript(): Boolean {
@@ -105,7 +105,13 @@ class ReaderVerseDecorator(private val ctx: Context) {
     }
 
     @JvmOverloads
-    fun setupArabicText(arabicText: String, verseNo: Int, pageNo: Int, textSize: Int = -1): CharSequence {
+    fun setupArabicText(
+        arabicText: String,
+        verseNo: Int,
+        pageNo: Int,
+        verseTextSize: Int = -1,
+        serialTextSize: Int = -1
+    ): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(
@@ -113,7 +119,8 @@ class ReaderVerseDecorator(private val ctx: Context) {
             if (!isKFQPC) verseNo else null,
             if (isKFQPC) fontsArabicKFQPC[pageNo] ?: Typeface.DEFAULT else fontQuranText,
             getFontSerial(),
-            textSize
+            verseTextSize,
+            serialTextSize
         )
     }
 

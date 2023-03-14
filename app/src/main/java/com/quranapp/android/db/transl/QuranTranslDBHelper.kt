@@ -18,8 +18,8 @@ import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
-import java.io.File
 import org.json.JSONObject
+import java.io.File
 
 class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     context,
@@ -94,7 +94,7 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         } finally {
-            fileUtils.deleteDirWithChildren(translDir)
+            translDir.deleteRecursively()
             Log.d(
                 "Migration finished anyhow, deleting root translation directory: " + translDir.name
             )
@@ -104,15 +104,15 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     private fun createTranslInfoTable(DB: SQLiteDatabase) {
         DB.execSQL(
             "CREATE TABLE ${QuranTranslInfoEntry.TABLE_NAME} (" +
-                "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
-                "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
-                "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
-                "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
-                "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
+                    "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
+                    "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
+                    "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
+                    "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
+                    "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
         )
     }
 
@@ -123,11 +123,11 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     private fun createTranslTable(DB: SQLiteDatabase, bookInfo: QuranTranslBookInfo) {
         DB.execSQL(
             "CREATE TABLE IF NOT EXISTS ${escapeTableName(bookInfo.slug)} (" +
-                "$_ID TEXT PRIMARY KEY," +
-                "$COL_CHAPTER_NO INTEGER," +
-                "$COL_VERSE_NO INTEGER," +
-                "$COL_TEXT TEXT," +
-                "$COL_FOOTNOTES TEXT)"
+                    "$_ID TEXT PRIMARY KEY," +
+                    "$COL_CHAPTER_NO INTEGER," +
+                    "$COL_VERSE_NO INTEGER," +
+                    "$COL_TEXT TEXT," +
+                    "$COL_FOOTNOTES TEXT)"
         )
     }
 
