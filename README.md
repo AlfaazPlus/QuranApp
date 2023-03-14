@@ -30,7 +30,22 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 
 <div align="left">
 
-# Screenshots
+<details>
+<summary>Table of content</summary>
+
+- [Screenshots](#screenshots)
+- Features
+  - [Highlights](#features)
+  - [All features](/FEATURES.md)
+- [Credits](#credits)
+- Contribute
+  - [Contributing](#contributing)
+  - [Contributors](/CONTRIBUTORS.md)
+- [Roadmap](/Roadmap.md)
+- [License](/LICENSE)
+</details>
+
+## Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
     <img src="/repo_assets/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
