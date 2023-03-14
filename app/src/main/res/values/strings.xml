@@ -335,7 +335,6 @@
     <string name="titleChapterInfo">Chapter info</string>
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
-    <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
     <string name="titleRecitationCleanup">Delete recitation?</string>
     <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
     <string name="titleScriptCleanup">Delete script?</string>
