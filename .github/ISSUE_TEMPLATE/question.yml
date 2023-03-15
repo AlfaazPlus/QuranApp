@@ -1,0 +1,34 @@
+name: ❓ Ask a question
+description: Have a query? Ask questions about the app and its features.
+labels: [question]
+body:
+
+  - type: textarea
+    id: question
+    attributes:
+      label: What is you question?
+      description: Please be as specific as possible.
+      placeholder: |
+        Write here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information (Optional)
+      placeholder: |
+        Include any relevant additional information here, such as screenshots or links.
+
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Acknowledgements
+      description: Your issue will be closed if you haven't done these steps.
+      options:
+        - label: I have searched for existing issues and have **not** found an answer to my question.
+          required: true
+        - label: I have included all necessary details in my question.
+          required: true
+        - label: I understand that the maintainers or contributors may not be able to immediately respond to my question.
+          required: true
