@@ -301,4 +301,45 @@
     <string name="strAyatulKursi">Ayatul Kursi</string>
     <string name="strLabelShareImage">Compartir imagen</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s en el Corán</string>
+    <string name="github">GitHub</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d de %2$d fuentes descargadas</string>
+    <string name="strTitleRecitations">Recitales</string>
+    <string name="strTitleScripts">Scripts</string>
+    <string name="labelDownload">Descargar</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fuentes: %1$d descargadas del total %2$d (~%3$s restantes)</string>
+    <string name="titleDownloadScriptResources">¿Descargar recursos para este script\?</string>
+    <string name="msgScriptFontsDownloaded">Los scripts y las fuentes se han descargado correctamente.</string>
+    <string name="labelBackgroundDownload">Descarga de fondo</string>
+    <string name="msgAnotherDownloadInProgress">Otra descarga está en curso.</string>
+    <string name="msgDownloadFailed">Descarga fallida</string>
+    <string name="msgDownloadingResource" formatted="false">Descargando %s</string>
+    <string name="textDownloading">Descargando…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="msgAlarmManagerNotAvailable">El gestor de alarmas no está disponible en este dispositivo.</string>
+    <string name="msgVerseReminderNotifPermission">El permiso de notificación es necesario para activar el recordatorio de verso.</string>
+    <string name="msgVerseReminderAlarmPermission">El permiso de alarma es necesario para activar el recordatorio de verso.</string>
+    <string name="storageCleanupMessage">Libera espacio eliminando los recursos descargados que no utilices. Esto no borrará ningún marcador o configuración.
+\n
+\nSe pueden liberar los siguientes recursos:</string>
+    <string name="translationCanBeFreedUp" formatted="false">Pueden liberarse %d traducciones descargadas.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">Se pueden liberar %1$d archivos de recitado almacenados de %2$d recitadores.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">Se pueden liberar %d scripts descargados y sus fuentes.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d información del capítulo guardada puede ser limpiada.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">Se pueden limpiar %d tafsirs guardados.</string>
+    <string name="createIssue">Crear incidencia</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResources">Es necesario descargar los siguientes recursos antes de poder utilizar este script:</string>
+    <string name="msgDownloadingScript">Descargar el script</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d de %2$d</string>
+    <string name="pasteCrashLogGithubIssue">El registro de fallos se ha copiado en el portapapeles. Pégalo en la incidencia de GitHub.</string>
+    <string name="lastCrashLog">Último registro de fallos</string>
+    <string name="titleStorageCleanup">Limpieza del almacenamiento</string>
+    <string name="titleChapterInfo">Información del capítulo</string>
+    <string name="msgDownloadingFonts">Descargar las fuentes</string>
+    <string name="copiedToClipboard">Copiado al portapapeles.</string>
+    <string name="labelFreeUpSpace">Liberar espacio</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nDeberá descargarlo de nuevo.</string>
 </resources>
