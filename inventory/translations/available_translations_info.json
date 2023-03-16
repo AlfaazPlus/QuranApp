@@ -103,17 +103,6 @@
         "downloadPath": "inventory/translations/ur/ur_maududi.json"
       }
     },
-    "hi": {
-      "hi_azizul-haque": {
-        "book": "मौलाना अजीजूल हक़ अल-उमरी",
-        "author": "Maulana Azizul Haque al-Umari",
-        "displayName": "अजीजूल हक़",
-        "langCode": "hi",
-        "langName": "Hindi",
-        "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
-      }
-    },
     "bn": {
       "bn_mujibur-rahman": {
         "book": "Sheikh Mujibur Rahman",
@@ -125,6 +114,17 @@
         "downloadPath": "inventory/translations/bn/bn_mujibur-rahman.json"
       }
     },
+    "hi": {
+      "hi_azizul-haque": {
+        "book": "मौलाना अजीजूल हक़ अल-उमरी",
+        "author": "Maulana Azizul Haque al-Umari",
+        "displayName": "अजीजूल हक़",
+        "langCode": "hi",
+        "langName": "Hindi",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
+      }
+    },
     "in": {
       "in_quran-complex": {
         "book": "King Fahad Quran Complex",
@@ -134,6 +134,17 @@
         "langName": "Indonesian",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/in/in_quran-complex.json"
+      }
+    },
+    "fa": {
+      "fa_islamhouse": {
+        "book": " Islamhouse.com",
+        "author": " Islamhouse.com",
+        "displayName": " Islamhouse",
+        "langCode": "fa",
+        "langName": "Persian",
+        "lastUpdated": 1678915800000,
+        "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
       }
     }
   }
