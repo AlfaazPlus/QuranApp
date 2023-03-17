@@ -301,4 +301,45 @@
     <string name="strMsgReferenceDuas">कुरान से कुछ दुआएं इकट्ठी की हैं।</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">अनुवाद दृश्य</string>
     <string name="strTitleReaderLayoutStylePageView">पृष्ठ दृश्य</string>
+    <string name="strTitleRecitations">तिलावत</string>
+    <string name="titleDownloadScriptResources">इस स्क्रिप्ट के लिए संसाधन डाउनलोड करें\?</string>
+    <string name="msgDownloadKFQPCResources">इस स्क्रिप्ट का उपयोग करने से पहले निम्नलिखित संसाधनों को डाउनलोड करने की आवश्यकता है:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">स्क्रिप्ट: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">फोंट: कुल %2$d मे से %1$d डाउनलोड किया गया (~%3$s शेष)</string>
+    <string name="msgDownloadFailed">डाउनलोड विफल</string>
+    <string name="msgDownloadingScript">स्क्रिप्ट डाउनलोड हो रही है</string>
+    <string name="msgDownloadingFonts">फोंट्स डाउनलोड हो रही है</string>
+    <string name="msgDownloadingResource" formatted="false">%s डाउनलोड हो रही है</string>
+    <string name="textDownloading">डाउनलोड हो रही है…</string>
+    <string name="labelBackgroundDownload">बैकग्राउंड डाउनलोड</string>
+    <string name="msgAnotherDownloadInProgress">एक और डाउनलोड प्रगति पर है।</string>
+    <string name="lastCrashLog">अंतिम क्रैश लॉग</string>
+    <string name="createIssue">समस्या बनाएँ</string>
+    <string name="pasteCrashLogGithubIssue">क्रैश लॉग को क्लिपबोर्ड में कॉपी किया गया है। कृपया इसे GitHub इशू में पेस्ट करें।</string>
+    <string name="strTitleScripts">स्क्रिप्ट</string>
+    <string name="copiedToClipboard">क्लिपबोर्ड में कॉपी किया गया।</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%2$d में से %1$d फोंट डाउनलोड किए गए</string>
+    <string name="labelDownload">डाउनलोड करें</string>
+    <string name="msgVerseReminderAlarmPermission">आयात रिमाइंडर को इनैबल करने के लिए अलार्म अनुमति की आवश्यकता होती है।</string>
+    <string name="titleStorageCleanup">भंडारण सफाई</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d में से %1$d</string>
+    <string name="msgScriptFontsDownloaded">स्क्रिप्ट और फोंट सफलतापूर्वक डाउनलोड किए गए।</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="msgAlarmManagerNotAvailable">इस डिवाइस पर अलार्म मैनेजर उपलब्ध नहीं है।</string>
+    <string name="msgVerseReminderNotifPermission">आयात रिमाइंडर को इनैबल करने के लिए अधिसूचना अनुमति की आवश्यकता है।</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d डाउनलोड किए गए अनुवादों को मुक्त किया जा सकता है।</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d रिकिटर्स के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
+    <string name="storageCleanupMessage">अप्रयुक्त डाउनलोड किए गए संसाधनों को हटाकर जगह खाली करे। यह किसी भी बुकमार्क या सेटिंग्स को नहीं हटाएगा।
+\n
+\nनिम्नलिखित संसाधनों को मुक्त किया जा सकता है:</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d डाउनलोड की गई स्क्रिप्ट और उनके फोंट को मुक्त किया जा सकता है।</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d सहेजे गए अध्याय की जानकारी को साफ किया जा सकता है।</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d सहेजे गए तफ़सीर को हटाया किया जा सकता है।</string>
+    <string name="titleChapterInfo">अध्याय की जानकारी</string>
+    <string name="labelFreeUpSpace">जगह खाली करें</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nआपको इसे फिर से डाउनलोड करना होगा।</string>
+    <string name="github">GitHub</string>
 </resources>
