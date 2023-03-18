@@ -2,6 +2,7 @@ package com.quranapp.android.reader_managers;
 
 import android.os.Handler;
 import android.os.Looper;
+import androidx.annotation.Nullable;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
@@ -52,8 +53,11 @@ public class ActionController implements Destroyable {
         mFootnotePresenter.present(mActivity, verse);
     }
 
-    public void openVerseOptionDialog(Verse verse, BookmarkCallbacks verseViewCallbacks) {
+    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
         mVOD.open(mActivity, verse, verseViewCallbacks);
+    }
+
+    public void openQuickActionDialog(Verse verse) {
     }
 
     public void openShareDialog(int chapterNo, int verseNo) {

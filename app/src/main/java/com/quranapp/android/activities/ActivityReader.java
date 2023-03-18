@@ -103,11 +103,8 @@ import java.util.stream.IntStream;
 import kotlin.Pair;
 
 public class ActivityReader extends ReaderPossessingActivity {
-    public static final String KEY_AR_TEXT_SIZE_CHANGED = "arabic.textsize.changed";
-    public static final String KEY_TRANSL_TEXT_SIZE_CHANGED = "translation.textsize.changed";
     public static final String KEY_RECITER_CHANGED = "reciter.changed";
     public static final String KEY_SCRIPT_CHANGED = "script.changed";
-    public static final String KEY_READER_STYLE_CHANGED = "reader.style.changed";
 
     public final CallableTaskRunner<ArrayList<QuranPageModel>> mPagesTaskRunner = new CallableTaskRunner<>();
     public ReaderParams mReaderParams;
@@ -263,7 +260,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     private void init() {
         initReadHistory();
-        initRecitationPlayer();
+        initFloatingFooter();
         initReaderHeader(mBinding);
 
         final Intent intent = getIntent();
@@ -290,7 +287,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         initQuran(intent);
     }
 
-    private void validateIntent(Intent intent) throws Exception {
+    private void validateIntent(Intent intent) {
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -316,10 +313,10 @@ public class ActivityReader extends ReaderPossessingActivity {
                         final int fromVerse = Integer.parseInt(result.group(1));
                         final int toVerse = Integer.parseInt(result.group(2));
 
-                        verseRange = new Pair(fromVerse, toVerse);
+                        verseRange = new Pair<>(fromVerse, toVerse);
                     } else {
                         int verseNo = Integer.parseInt(secondSeg);
-                        verseRange = new Pair(verseNo, verseNo);
+                        verseRange = new Pair<>(verseNo, verseNo);
                     }
 
                     intent.putExtras(ReaderFactory.prepareVerseRangeIntent(chapterNo, verseRange));
@@ -381,9 +378,9 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReadHistoryDBHelper = new ReadHistoryDBHelper(this);
     }
 
-    private void initRecitationPlayer() {
+    private void initFloatingFooter() {
         if (!RecitationUtils.isRecitationSupported()) {
-            mBinding.playerContainer.setVisibility(GONE);
+            mBinding.floatingFooter.setVisibility(GONE);
             return;
         }
 
@@ -397,8 +394,8 @@ public class ActivityReader extends ReaderPossessingActivity {
         filter.addAction(ACTION_NEXT_VERSE);
         registerReceiver(mReceiver, filter);
 
-        mBinding.playerContainer.addView(mPlayer, 0);
-        mBinding.playerContainer.setVisibility(VISIBLE);
+        mBinding.floatingFooter.addView(mPlayer, 1);
+        mBinding.floatingFooter.setVisibility(VISIBLE);
     }
 
     private void initQuran(Intent intent) {
@@ -892,6 +889,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                 section.setShowBismillah(canShowBismillah(chapterNo));
             }
 
+            int txtColor = color(R.color.colorText);
             SpannableStringBuilder verseContentSB = new SpannableStringBuilder();
 
             final int finalChapterNo = chapterNo;
@@ -902,9 +900,11 @@ public class ActivityReader extends ReaderPossessingActivity {
 
                     verseContentSB.append(" ").append(
                         mVerseDecorator.setupArabicTextQuranPage(
+                            txtColor,
                             verse.arabicText,
                             verse.verseNo,
-                            verse.pageNo
+                            verse.pageNo,
+                            () -> openQuickActionDialog(verse)
                         )
                     );
                 });

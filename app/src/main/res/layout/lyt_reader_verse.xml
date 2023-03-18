@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -8,86 +7,9 @@
     android:orientation="vertical"
     android:paddingTop="10dp">
 
-    <LinearLayout
+    <include
         android:id="@+id/verseHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|end"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp">
-
-        <LinearLayout
-            android:id="@+id/verseActionContainer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnVerseOptions"
-                android:layout_width="@dimen/dmnActionButtonSmall"
-                android:layout_height="@dimen/dmnActionButtonSmall"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/dr_bg_hover_round"
-                android:contentDescription="@string/strTitleVerseOptions"
-                android:padding="6dp"
-                android:rotation="90"
-                android:src="@drawable/dr_icon_menu"
-                app:tint="@color/colorIcon2" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnVerseRecitation"
-                android:layout_width="@dimen/dmnActionButtonSmall"
-                android:layout_height="@dimen/dmnActionButtonSmall"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/dr_bg_hover_round"
-                android:clickable="true"
-                android:contentDescription="@string/strTitleVerseRecitation"
-                android:focusable="true"
-                android:padding="6dp"
-                android:src="@drawable/dr_icon_play2" />
-
-            <!--<androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnQuickEdit"
-                android:layout_width="@dimen/dmnActionButtonSmall"
-                android:layout_height="@dimen/dmnActionButtonSmall"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/dr_bg_hover_round"
-                android:clickable="true"
-                android:contentDescription="@string/strTitleQuickEdit"
-                android:focusable="true"
-                android:padding="6dp"
-                android:src="@drawable/dr_icon_quick_edit" />-->
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@id/btnBookmark"
-                android:layout_width="@dimen/dmnActionButtonSmall"
-                android:layout_height="@dimen/dmnActionButtonSmall"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/dr_bg_hover_round"
-                android:clickable="true"
-                android:contentDescription="@string/strDescAddToBookmarks"
-                android:focusable="true"
-                android:padding="6dp"
-                android:src="@drawable/dr_icon_bookmark_outlined"
-                app:tint="@color/colorIcon2" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/verseSerial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dr_bg_reader_verse_action"
-            android:clickable="false"
-            android:focusable="false"
-            android:fontFamily="sans-serif-light"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="3dp"
-            android:textColor="@color/colorIcon"
-            android:textSize="@dimen/dmnCommonSize2" />
-    </LinearLayout>
+        layout="@layout/lyt_reader_verse_quick_actions" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textArabic"

@@ -123,16 +123,16 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
 
     private void initActionsButtons() {
         if (mIsShowingAsReference) {
-            mBinding.verseActionContainer.setVisibility(GONE);
+            mBinding.verseHeader.verseActionContainer.setVisibility(GONE);
             return;
         } else {
-            mBinding.verseActionContainer.setVisibility(VISIBLE);
+            mBinding.verseHeader.verseActionContainer.setVisibility(VISIBLE);
         }
 
         boolean recitationSupported = RecitationUtils.isRecitationSupported() && mActivity instanceof ActivityReader;
-        mBinding.btnVerseRecitation.setVisibility(!recitationSupported ? GONE : VISIBLE);
+        mBinding.verseHeader.btnVerseRecitation.setVisibility(!recitationSupported ? GONE : VISIBLE);
 
-        mBinding.btnVerseOptions.setOnClickListener(v -> {
+        mBinding.verseHeader.btnVerseOptions.setOnClickListener(v -> {
             if (mActivity != null) {
                 mActivity.openVerseOptionDialog(mVerse, this);
             }
@@ -141,7 +141,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         int chapterNo = mVerse.chapterNo;
         int verseNo = mVerse.verseNo;
 
-        mBinding.btnVerseRecitation.setOnClickListener(v -> {
+        mBinding.verseHeader.btnVerseRecitation.setOnClickListener(v -> {
             if (mActivity instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) mActivity;
                 if (reader.mPlayer != null) {
@@ -150,10 +150,10 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             }
         });
 
-        /*mBinding.btnQuickEdit.setOnClickListener(v -> mActivity.startQuickEditShare(getVerse()));*/
+        /*mBinding.verseHeader.btnQuickEdit.setOnClickListener(v -> mActivity.startQuickEditShare(getVerse()));*/
 
         onBookmarkChanged(mActivity.isBookmarked(chapterNo, verseNo, verseNo));
-        mBinding.btnBookmark.setOnClickListener(v -> {
+        mBinding.verseHeader.btnBookmark.setOnClickListener(v -> {
             if (mActivity.isBookmarked(chapterNo, verseNo, verseNo)) {
                 mActivity.onBookmarkView(chapterNo, verseNo, verseNo, this);
             } else {
@@ -165,10 +165,10 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
     private void onBookmarkChanged(boolean isBookmarked) {
         final int filter = ContextCompat.getColor(getContext(),
             isBookmarked ? R.color.colorPrimary : R.color.colorIcon2);
-        mBinding.btnBookmark.setColorFilter(filter);
+        mBinding.verseHeader.btnBookmark.setColorFilter(filter);
 
         final int res = isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined;
-        mBinding.btnBookmark.setImageResource(res);
+        mBinding.verseHeader.btnBookmark.setImageResource(res);
     }
 
     public Verse getVerse() {
@@ -210,8 +210,8 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             verseSerialDesc = getContext().getString(R.string.strDescVerseNo, verseNo);
         }
 
-        mBinding.verseSerial.setContentDescription(verseSerialDesc);
-        mBinding.verseSerial.setText(verseSerial);
+        mBinding.verseHeader.verseSerial.setContentDescription(verseSerialDesc);
+        mBinding.verseHeader.verseSerial.setText(verseSerial);
 
         mBinding.textArabic.setText(mVerseDecorator.setupArabicText(verse.arabicText, verseNo, verse.pageNo));
         setupTranslations(verse);
@@ -258,7 +258,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         mIsReciting = isReciting;
 
         int resId = isReciting ? R.drawable.dr_icon_pause2 : R.drawable.dr_icon_play2;
-        mBinding.btnVerseRecitation.setImageResource(resId);
+        mBinding.verseHeader.btnVerseRecitation.setImageResource(resId);
 
         if (!mScrollHighlightInProgress) {
             int bgColor = isReciting ? mActivity.mVerseHighlightedBGColor : Color.TRANSPARENT;

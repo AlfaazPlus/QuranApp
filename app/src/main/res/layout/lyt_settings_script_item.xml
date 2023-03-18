@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
-    android:background="@drawable/dr_bg_reader_verse_action_selector"
+    android:background="@drawable/bg_rounded_action_selector"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingHorizontal="20dp">

@@ -5,6 +5,7 @@
 
     <color name="colorBGLightGrey">#FF252525</color>
     <color name="colorBGOverHomePageItem">#FF303030</color>
+    <color name="bgVerseQuickActions">#414141</color>
 
     <color name="colorBGPage">#151515</color>
     <color name="colorBGPage1_5">#202020</color>

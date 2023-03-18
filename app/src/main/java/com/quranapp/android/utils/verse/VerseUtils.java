@@ -23,6 +23,7 @@ import com.quranapp.android.utils.others.ShortcutUtils;
 import com.quranapp.android.utils.reader.ArabicUtils;
 import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
+import com.quranapp.android.utils.simplified.SimpleClickableSpan;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 
@@ -73,7 +74,14 @@ public abstract class VerseUtils {
     /**
      * verseSerialFont will be null if isKFQPCFont() is true
      */
-    public static CharSequence decorateQuranPageVerse(String arabicText, int verseNo, Typeface verseFont, Typeface verseSerialFont) {
+    public static CharSequence decorateQuranPageVerse(
+        int txtColor,
+        String arabicText,
+        int verseNo,
+        Typeface verseFont,
+        Typeface verseSerialFont,
+        Runnable onClick
+    ) {
         if (TextUtils.isEmpty(arabicText)) {
             return "";
         }
@@ -92,6 +100,7 @@ public abstract class VerseUtils {
 
         SpannableStringBuilder builder = new SpannableStringBuilder(concat);
         builder.setSpan(new VerseArabicHighlightSpan(verseNo), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new SimpleClickableSpan(txtColor, onClick), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }
 
