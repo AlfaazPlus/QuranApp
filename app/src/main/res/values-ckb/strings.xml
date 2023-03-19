@@ -234,4 +234,18 @@
     <string name="strTitleReaderVerses">ئایەتەکان</string>
     <string name="strTitleReaderJumpToVerse">چوون بۆ ئایەت</string>
     <string name="strTitleReaderVerseInformation" formatted="false">سورەتی %1$s : %2$d</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">سەرکەوتوو نەبوو داگرتنی \"%s\".</string>
+    <string name="strDescAddToBookmarks">زیادکردن بۆ نیشانەکراوەکان</string>
+    <string name="strMsgTranslDownloaded" formatted="false">داگیرا: \"%s\".</string>
+    <string name="strDescGoBack">گەڕانەوە</string>
+    <string name="strDescClose">داخستن</string>
+    <string name="strDescVerseNo" formatted="false">ژامرەی ئایەت %d.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nپێویستە دووبارە دایبەزێنیتەوە.</string>
+    <string name="strMsgTranslNoneSelected">هیچ وەرگێڕانێک دیارینەکراوە، بچۆ بۆ بەشی ڕێکخستن بۆ دۆزینەوەی وەرگێڕانەکان.</string>
+    <string name="strMsgEnterValidRange">تکایە مەودایەکی دروست بنووسە</string>
+    <string name="strMsgNoInternet">تکایە تۆڕی ئینتەرنێتەکەت بپشکنە.</string>
+    <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگە</string>
 </resources>
