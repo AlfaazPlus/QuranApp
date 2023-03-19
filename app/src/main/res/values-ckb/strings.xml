@@ -248,4 +248,98 @@
     <string name="strMsgEnterValidRange">تکایە مەودایەکی دروست بنووسە</string>
     <string name="strMsgNoInternet">تکایە تۆڕی ئینتەرنێتەکەت بپشکنە.</string>
     <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگە</string>
+    <string name="strMsgReadHistoryRemovedAlready">مێژووی خوێندنەوە پێشتر لابراوە</string>
+    <string name="strMsgReadHistoryNoItems">مێژووی خوێندنەوە نییە</string>
+    <string name="strMsgReadHistoryDeleteAll">سەرجەم مێژووی خوێندنەوەکان لادەبرێت</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" لابرا لە مێژووی خوێندنەوە</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">سەرجەم ئەنجامە دۆزراوەکان لە %1$s: %2$d</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">هیچ ئەنجامێک نەدۆزرایەوە، دڵنیابەرەوە لە دروستی ناوەکە.</string>
+    <string name="strMsgSearchWordPart">گەڕان بۆ بەشێکی ووشەکە</string>
+    <string name="strMsgSearchArabic">گەڕان لە دەقی عەرەبیدا</string>
+    <string name="strMsgProphetsOrder">پیشاندانی ناوی پێغەمبەران بە ڕێکوپێکی</string>
+    <string name="strMsgTranslLoadFailed">ناتوانرێ لیستی وەرگێڕانەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە.</string>
+    <string name="strMsgTranslNoDownloadsAvailable">هیچ داگرتنێک بەردەست نییە</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">زۆرترین رێژەی وەرگێڕان %d دانە لەیەک کاتدا ئەتوانرێ چالاک بکرێت، تکایە دانەیەک ناچالاک بکە لەکاتی کاراکردنی دانەیەکی نوێدا.</string>
+    <string name="strMsgRecitationsLoadFailed">ناتوانرێت لیستی قورئانخوێنەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە.</string>
+    <string name="strMsgRecitationsNoAvailable">هیچ قورئانخوێنێک بەردەست نییە</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">سورەتی %1$s، ئایەتی ژمارە %2$d.</string>
+    <string name="strMsgSomethingWrong">هەڵەیەکی نەزانراو ڕوویدا!</string>
+    <string name="strMsgVerseCredsInvalid">بڕوانامەی ئایەتەکان دروست نین.</string>
+    <string name="strMsgTryLater">تکایە دواتر دووبارە هەوڵبدەرەوە.</string>
+    <string name="strMsgReportUs">تکایە ئاگادارمان بکەرەوە.</string>
+    <string name="strMsgCouldNotOpenPage">ناتوانرێ لاپەڕەکە بکرێتەوە.</string>
+    <string name="strLabelNavHome">دەسپێک</string>
+    <string name="strLabelNavSearch">گەڕان</string>
+    <string name="strTextPreparing">ئامادە ئەکرێت…</string>
+    <string name="strAyatulKursi">ئایەت الکرسی</string>
+    <string name="strTitleError">هەڵە ڕوویدا!</string>
+    <string name="strTitleInfo">زانیاری!</string>
+    <string name="strTitleOops">بەداخەوە!</string>
+    <string name="strLabelProceed">ئەنجامدرا</string>
+    <string name="strTextInstalling">دادەبەزێت…</string>
+    <string name="strTextLoading">چاوەڕوانبە…</string>
+    <string name="strMsgUpdateDownloaded">نوێکردنەوە داگیرا! تکایە بەرنامەکە دابەزێنە بۆ تەواوکردنی نوێکردنەوەکە.</string>
+    <string name="strLabelAllChapters">هەموو بەشەکان</string>
+    <string name="strLabelShareImage">بڵاوکردنەوەی وێنە</string>
+    <string name="strTitleImageSavedWithName" formatted="false">وێنەکە هەڵگیرا بەناوی: %s</string>
+    <string name="strTitleAlphaBG">پشت شاشەی ڕوون</string>
+    <string name="strMsgEditShareLongTransl">دەقی وەرگێڕان زۆر درێژە، لەوانەیە بەباشی هەمووی دەرنەکەوێت.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">ئایەتی پەیوەندیدار بە %1$s لەسەرجەم %2$d شوێندا دۆزرایەوە.</string>
+    <string name="strMsgReferenceDuas">هەندێک نزای هەمەجۆر کە لە قورئاندا باسکراون.</string>
+    <string name="strSalam">سڵاوی خوات لێبێت</string>
+    <string name="strSalamShort">سڵاو</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">فایلی: %s (~١ مێگابایت)</string>
+    <string name="msgDownloadFailed">داگرتن سەرکەوتوو نەبوو</string>
+    <string name="msgDownloadingScript">دابەزاندنی فایل</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d لە %2$d فۆنت دابەزێنراوە</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d لە %2$d</string>
+    <string name="msgDownloadingResource" formatted="false">دابەزاندنی %s</string>
+    <string name="textDownloading">دابەزاندن…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">داگرتن لە پشت شاشە</string>
+    <string name="msgAnotherDownloadInProgress">داگرتنێکی تر لە جێبەجێکردندایە.</string>
+    <string name="lastCrashLog">دواین تۆماری لەکارکەوتن</string>
+    <string name="createIssue">ڕاگەیاندنی کێشە</string>
+    <string name="github">گیتهەب</string>
+    <string name="msgVerseReminderNotifPermission">ڕێگەپێدانی ئاگادارکردنەوەکان پێویستە بۆ بیرخستنەوەی ئایەتەکان.</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d وەرگێڕانی داگیراو ئەتوانرێ بسڕێتەوە.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d فایلی دەنگی پاشەکەوتکراو لە %2$d ئەتوانرێ بسڕێتەوە.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d فایلە دابەزێنراوەکان و فۆنتەکانیان ئەتوانرێ بسڕێتەوە.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d تەفسیری هەڵگیراو ئەتوانرێ بسڕێتەوە.</string>
+    <string name="titleChapterInfo">زانیاری بەش</string>
+    <string name="strMsgSearchWordPartExample">بۆ نمونە: \'پیاو\' لە \'مرۆڤایەتیدا\'</string>
+    <string name="strMsgChangeLanguage">بەرنامەکە دووبارە کارادەبێتەوە بۆ جێبەجێکردنی گۆڕینی زمان.</string>
+    <string name="strMsgTranslNoDownloads">هیچ وەرگێڕانێکی دابەزێنراو بەردەست نییە</string>
+    <string name="strMsgNoInternetLong">ئینتەرنێت بەردەست نییە، دڵنیابەرەوە لەوەی هێڵی ئینتەرنێتەکەت چالاککراوە لەڕێی وایفای یان داتای مۆبایل، پاشان دووبارە هەوڵبدەرەوە.</string>
+    <string name="strMsgSomethingWrongFixing">هەڵەیەکی نەزانراو ڕوویدا! لە هەوڵداین بۆ چارەسەرکردنی کێشەکە.</string>
+    <string name="strTextSending">دەنێردرێت…</string>
+    <string name="strTextPleaseWait">تکایە چاوەڕوانبە…</string>
+    <string name="strTextUpdating">نوێدەکرێتەوە…</string>
+    <string name="strMsgUpdateAvailable">وەشانی نوێ بەردەستە! تکایە بەرنامەکە تازە بکەرەوە بۆ بەردەستبوونی تایبەتمەندیە نوێیەکان.</string>
+    <string name="strMsgUpdateAvailable4Dialog">نوێکردنەوە بەردەستە!
+\nتکایە بەرنامەکە تازە بکەرەوە.</string>
+    <string name="strMsgUpdateAvailable2Continue">نوێکردنەوە پێویستە!
+\nتکایە بەرنامەکە تازە بکەرەوە بۆ بەردەوامبوون.</string>
+    <string name="strLabelDownloadImage">داگرتنی وێنە</string>
+    <string name="strMsgEditShareTransl">ئەو وەرگێڕانەی لە بەشی ڕێکخستندا دیاریکراوە، بەتەنیا لێرەدا دەرەکەوێت.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s لە قورئاندا</string>
+    <string name="strMsgReadHistoryRemoveFailed">لابردنی مێژووی خوێندنەوە سەرکەوتوو نەبوو</string>
+    <string name="strMsgReadHistoryDeleteSelected">مێژووی خوێندنەوە دیاریکراوەکان لادەبرێن</string>
+    <string name="strMsgHistoryRemove">لابردنی مێژووی خوێندنەوە؟</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ ئەنجامێک نەدۆزرایەوە لە %s، دا تکایە دڵنیابەرەوە لەوەی بەدروستی نوسراوە یان لە شوێنێکیت ترا بگەڕێ.</string>
+    <string name="strMsgSearchNoResultsFound">هیچ ئەنجامێک نەدۆزرایەوە، تکایە دڵنیابەرەوە لەوەی ناوێکی دروستت نوسیوە یان لە وەرگێڕانەکانی ترا بگەڕێ.</string>
+    <string name="titleDownloadScriptResources">دابەزاندنی سەرچاوەکانی ئەم فۆنتە؟</string>
+    <string name="msgDownloadKFQPCResources">سەرەتا پێویستە ئەم فایلانە دابەزێنرێت پاشان ئەتوانی بەکاری بهێنیت:</string>
+    <string name="msgDownloadingFonts">دابەزاندنی فۆنتەکان</string>
+    <string name="msgScriptFontsDownloaded">فایل و فۆنتەکان بەسەرکەوتوویی داگیران.</string>
+    <string name="copiedToClipboard">هەڵگیرا لەبەشی لەبەرگیراوەکاندا.</string>
+    <string name="pasteCrashLogGithubIssue">تۆماری لەکارکەوتن لەبەشی لەبەرگیراوەکاندا هەڵگیرا، تکایە لە گیتهەب دایبنێ وەک کێشە.</string>
+    <string name="msgAlarmManagerNotAvailable">ڕێکخستنی ووریاکەرەوە بەردەست نییە لەم ئامێرەدا.</string>
+    <string name="msgVerseReminderAlarmPermission">ڕێگەپێدانی ووریاکەرەوە پێویستە بۆ چالاکبونی بیرخستنەوەی ئایەتەکان.</string>
+    <string name="titleStorageCleanup">خاوێنکردنەوەی بیرگەی کاتی</string>
+    <string name="storageCleanupMessage">شوێنی زیاتری بیرگە بەتاڵبکە بە سڕینەوەی فایلە داگیراوە نا پێویستەکان، ئەمە نابێتە هۆی سڕینەوەی نیشانەکراوەکان و ڕێکخستنەکانی بەرنامەکە.
+\n
+\nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d بەشی پارێزراو ئەتوانرێ بسڕێتەوە.</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$s ماوە)</string>
 </resources>
