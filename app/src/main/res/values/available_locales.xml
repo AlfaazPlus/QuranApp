@@ -11,6 +11,7 @@
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
         <item>বাংলা</item>
+        <item>کوردی</item>
         <item>Español</item>
         <item>فارسی</item>
         <item>Français</item>
@@ -25,6 +26,7 @@
         <item>default</item>
         <item>en</item>
         <item>bn</item>
+        <item>ckb</item>
         <item>es</item>
         <item>fa</item>
         <item>fr</item>
