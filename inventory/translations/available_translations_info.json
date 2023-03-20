@@ -146,6 +146,17 @@
         "lastUpdated": 1678915800000,
         "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
       }
+    },
+    "ku": {
+      "ku_bamoki": {
+        "book": "تەفسیری کوردی",
+        "author": "محمد ساڵح بامۆکی",
+        "displayName": "محمد ساڵح بامۆکی",
+        "langCode": "ku",
+        "langName": "Kurdish",
+        "lastUpdated": 1679333216943,
+        "downloadPath": "inventory/translations/ku/ku_bamoki.json"
+      }
     }
   }
 }
