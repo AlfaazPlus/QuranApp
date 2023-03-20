@@ -4,6 +4,8 @@
 
 🇧🇩 Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77)
 
+🇮🇶 Kurdish (ckb) - [Goran Gharib](https://github.com/GoRan909)
+
 🇫🇷 French (fr) - [Sanya Gautam](https://instagram.com/_sanyagautam)
 
 🇮🇳 Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)

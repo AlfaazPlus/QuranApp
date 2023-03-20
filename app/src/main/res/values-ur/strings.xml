@@ -301,4 +301,45 @@
     <string name="strMsgReferenceDuas">قرآن سے چند دعائیں جمع کی ہیں۔</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">ترجمہ</string>
     <string name="strTitleReaderLayoutStylePageView">صفحہ</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%2$d فونٹس میں سے %1$d ڈاؤن لوڈ</string>
+    <string name="labelDownload">ڈاؤن لوڈ کریں</string>
+    <string name="titleDownloadScriptResources">اس فونٹ کے لیے وسائل ڈاؤن لوڈ کریں؟</string>
+    <string name="msgDownloadKFQPCResources">اس فونٹ کو استعمال کرنے سے پہلے درج ذیل وسائل کو ڈاؤن لوڈ کرنے کی ضرورت ہے:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">فونٹ: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فونٹس: کل %2$d میں سے %1$d ڈاؤن لوڈ (~%3$s باقی)</string>
+    <string name="msgDownloadFailed">ڈاؤن لوڈ ناکام ہو گیا</string>
+    <string name="msgDownloadingFonts">فونٹ ڈاؤن لوڈ ہو رہا ہے</string>
+    <string name="msgDownloadingScript">اسکرپٹ ڈاؤن لوڈ ہو رہا ہے</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d میں سے %1$d</string>
+    <string name="msgDownloadingResource" formatted="false">%s ڈاؤن لوڈ ہو رہا ہے</string>
+    <string name="msgAnotherDownloadInProgress">ایک اور ڈاؤن لوڈ جاری ہے۔</string>
+    <string name="strTitleRecitations">تلاوتیں</string>
+    <string name="github">GitHub</string>
+    <string name="copiedToClipboard">کلپ بورڈ پر کاپی ہو گیا۔</string>
+    <string name="msgScriptFontsDownloaded">اسکرپٹ اور فونٹس کامیابی کے ساتھ ڈاؤن لوڈ ہو گئے۔</string>
+    <string name="textDownloading">ڈاؤن لوڈ ہو رہا ہے…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">پس منظر ڈاؤن لوڈ</string>
+    <string name="lastCrashLog">آخری کریش لاگ</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کیے گئے ترجمے خالی کیے جا سکتے ہیں۔</string>
+    <string name="createIssue">مسئلہ بنائیں</string>
+    <string name="pasteCrashLogGithubIssue">کریش لاگ کو کلپ بورڈ پر کاپی کر دیا گیا ہے۔ براہ کرم اسے گٹ ہب کے مسئلے میں چسپاں کریں۔</string>
+    <string name="titleStorageCleanup">اسٹوریج کی صفائی</string>
+    <string name="storageCleanupMessage">غیر استعمال شدہ ڈاؤن لوڈ کردہ وسائل کو حذف کرکے جگہ خالی کریں۔ اس سے کوئی بک مارکس یا سیٹنگز حذف نہیں ہوں گی۔
+\n
+\nدرج ذیل وسائل کو خالی کیا جا سکتا ہے:</string>
+    <string name="strTitleScripts">فونٹ</string>
+    <string name="msgAlarmManagerNotAvailable">الارم مینیجر اس ڈیوائس پر دستیاب نہیں ہے۔</string>
+    <string name="msgVerseReminderNotifPermission">آیت کی یاد دہانی کو فعال کرنے کے لیے نوٹیفکیشن کی اجازت درکار ہے۔</string>
+    <string name="msgVerseReminderAlarmPermission">آیت کی یاد دہانی کو فعال کرنے کے لیے الارم کی اجازت درکار ہے۔</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d قاری کی %1$d ذخیرہ شدہ تلاوت کی فائلیں خالی کی جا سکتی ہیں۔</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nآپ کو اسے دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
+    <string name="labelFreeUpSpace">جگہ خالی کریں</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کردہ اسکرپٹس اور ان کے فونٹس کو خالی کیا جا سکتا ہے۔</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d محفوظ شدہ باب کی معلومات کو صاف کیا جا سکتا ہے۔</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
+    <string name="titleChapterInfo">باب کی معلومات</string>
 </resources>
