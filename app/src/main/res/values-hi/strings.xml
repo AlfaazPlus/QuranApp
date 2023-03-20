@@ -305,7 +305,7 @@
     <string name="titleDownloadScriptResources">इस स्क्रिप्ट के लिए संसाधन डाउनलोड करें\?</string>
     <string name="msgDownloadKFQPCResources">इस स्क्रिप्ट का उपयोग करने से पहले निम्नलिखित संसाधनों को डाउनलोड करने की आवश्यकता है:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">स्क्रिप्ट: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">फोंट: कुल %2$d मे से %1$d डाउनलोड किया गया (~%3$s शेष)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">फोंट: कुल %2$d मे से %1$d डाउनलोड किया गया (~%3$dMB शेष)</string>
     <string name="msgDownloadFailed">डाउनलोड विफल</string>
     <string name="msgDownloadingScript">स्क्रिप्ट डाउनलोड हो रही है</string>
     <string name="msgDownloadingFonts">फोंट्स डाउनलोड हो रही है</string>

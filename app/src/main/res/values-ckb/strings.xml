@@ -341,5 +341,5 @@
 \n
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d بەشی پارێزراو ئەتوانرێ بسڕێتەوە.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$s ماوە)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$dMB ماوە)</string>
 </resources>
