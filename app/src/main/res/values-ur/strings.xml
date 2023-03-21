@@ -306,7 +306,7 @@
     <string name="titleDownloadScriptResources">اس فونٹ کے لیے وسائل ڈاؤن لوڈ کریں؟</string>
     <string name="msgDownloadKFQPCResources">اس فونٹ کو استعمال کرنے سے پہلے درج ذیل وسائل کو ڈاؤن لوڈ کرنے کی ضرورت ہے:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">فونٹ: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فونٹس: کل %2$d میں سے %1$d ڈاؤن لوڈ (~%3$s باقی)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فونٹس: کل %2$d میں سے %1$d ڈاؤن لوڈ (~%3$dMB باقی)</string>
     <string name="msgDownloadFailed">ڈاؤن لوڈ ناکام ہو گیا</string>
     <string name="msgDownloadingFonts">فونٹ ڈاؤن لوڈ ہو رہا ہے</string>
     <string name="msgDownloadingScript">اسکرپٹ ڈاؤن لوڈ ہو رہا ہے</string>

@@ -33,12 +33,20 @@
     </me.dkzwm.widget.srl.SmoothRefreshLayout>
 
     <LinearLayout
-        android:id="@+id/playerContainer"
+        android:id="@+id/floatingFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
+
+        <com.quranapp.android.views.reader.VerseQuickActionsView
+            android:id="@+id/verseQuickActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/navigationBarDummy"

@@ -87,23 +87,22 @@ fun clipChildren(v: View, clip: Boolean) {
     }
 }
 
-fun getRelativeTopRecursive(view: View?, till: Class<*>, inclusiveTill: Boolean = false): Int {
-    if (view == null) {
-        return 0
-    }
-    return if (till.name.equals(view.javaClass.name, ignoreCase = true)) {
-        if (inclusiveTill) {
-            view.top
-        } else {
-            0
-        }
+/**
+ * @param view The view to get relative top position of.
+ * @param until The view to stop at.
+ * @param inclusive if true, the view's top will be included in the returned value
+ */
+fun getRelativeTopRecursive(view: View?, until: Class<*>, inclusive: Boolean = false): Int {
+    if (view == null) return 0
+
+    return if (until.name.equals(view.javaClass.name, ignoreCase = true)) {
+        if (inclusive) view.top else 0
     } else {
-        val top = view.top
         val parent = view.parent
         if (parent !is View || parent === view.rootView) {
-            top
+            view.top
         } else {
-            top + getRelativeTopRecursive(parent as View, till, inclusiveTill)
+            view.top + getRelativeTopRecursive(parent as View, until, inclusive)
         }
     }
 }

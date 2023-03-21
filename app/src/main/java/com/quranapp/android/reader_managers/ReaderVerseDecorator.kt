@@ -124,12 +124,20 @@ class ReaderVerseDecorator(private val ctx: Context) {
         )
     }
 
-    fun setupArabicTextQuranPage(arabicText: String, verseNo: Int, pageNo: Int): CharSequence =
+    fun setupArabicTextQuranPage(
+        txtColor: Int,
+        arabicText: String,
+        verseNo: Int,
+        pageNo: Int,
+        onClick: Runnable
+    ): CharSequence =
         VerseUtils.decorateQuranPageVerse(
+            txtColor,
             arabicText,
             verseNo,
             if (isKFQPCScript()) fontsArabicKFQPC[pageNo] else fontQuranText,
-            getFontSerial()
+            getFontSerial(),
+            onClick
         )
 
     fun setupTranslText(translText: String, translClr: Int, txtSize: Int, isUrdu: Boolean): SpannableString {

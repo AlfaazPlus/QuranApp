@@ -234,7 +234,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         });
     }
 
-    public void openVerseOptionDialog(Verse verse, BookmarkCallbacks verseViewCallbacks) {
+    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
         mActionController.openVerseOptionDialog(verse, verseViewCallbacks);
     }
 

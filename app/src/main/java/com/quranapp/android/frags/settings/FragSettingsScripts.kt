@@ -164,7 +164,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                     R.string.msgDownloadKFQPCResourcesFonts,
                     kfqpcFontDownloadedCount.second,
                     kfqpcFontDownloadedCount.first,
-                    "${remainingMB}MB"
+                    remainingMB
                 )
             )
         }

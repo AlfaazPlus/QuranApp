@@ -46,6 +46,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private VODLayout mVODLayout;
     private LytReaderVodBinding mVODBinding;
     private Verse mVerse;
+    @Nullable
     private BookmarkCallbacks mVerseViewCallbacks;
     private VerseShareDialog mVSD;
 
@@ -118,7 +119,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         }
     }
 
-    public void open(ReaderPossessingActivity actvt, Verse verse, BookmarkCallbacks verseViewCallbacks) {
+    public void open(ReaderPossessingActivity actvt, Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
         mActivity = actvt;
         mVerse = verse;
         mVerseViewCallbacks = verseViewCallbacks;

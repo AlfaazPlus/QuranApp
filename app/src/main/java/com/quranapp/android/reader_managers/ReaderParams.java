@@ -1,8 +1,10 @@
 package com.quranapp.android.reader_managers;
 
 import android.content.Context;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
+
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
@@ -26,7 +28,7 @@ import kotlin.Pair;
 
 public class ReaderParams {
     public static final int READER_STYLE_TRANSLATION = 0x1;
-    public static final int READER_STYLE_READING = 0x2;
+    public static final int READER_STYLE_PAGE = 0x2;
     public static final int READER_STYLE_DEFAULT = READER_STYLE_TRANSLATION;
 
     public static final int READER_READ_TYPE_CHAPTER = 0x3;
@@ -94,6 +96,10 @@ public class ReaderParams {
         return false;
     }
 
+    public boolean isPageReaderStyle() {
+        return readerStyle == READER_STYLE_PAGE;
+    }
+
     public int defaultStyle(Context context) {
         return SPReader.getSavedReaderStyle(context);
     }
@@ -108,7 +114,7 @@ public class ReaderParams {
     }
 
 
-    @IntDef({READER_STYLE_TRANSLATION, READER_STYLE_READING})
+    @IntDef({READER_STYLE_TRANSLATION, READER_STYLE_PAGE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ReaderStyle {}
 

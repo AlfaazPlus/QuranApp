@@ -27,6 +27,7 @@
 
     <color name="colorBGLightGrey">#F0F0F0</color>
     <color name="colorBGOverHomePageItem">#F0F0F0</color>
+    <color name="bgVerseQuickActions">#E0E0E0</color>
 
     <color name="colorBGPage">@color/white</color>
     <color name="colorBGPage1_5">#F0F0F0</color>
