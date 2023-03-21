@@ -26,7 +26,7 @@ public abstract class DateUtils {
     }
 
     public static String getDateTimeNow(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.ENGLISH);
         return formatter.format(Calendar.getInstance().getTime());
     }
 
