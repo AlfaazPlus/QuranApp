@@ -2,8 +2,10 @@ package com.quranapp.android.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_FOOTER;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
@@ -14,6 +16,7 @@ import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.reader.QuranPageModel;
+import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.views.reader.ChapterInfoCardView;
 import com.quranapp.android.views.reader.QuranPageView;
@@ -35,6 +38,15 @@ public class ADPQuranPages extends RecyclerView.Adapter<ADPQuranPages.VHQuranPag
             models.add(0, new QuranPageModel().setViewType(CHAPTER_INFO));
         }
         models.add(models.size(), new QuranPageModel().setViewType(READER_FOOTER));
+
+        for (int i = 0; i < models.size(); i++) {
+            QuranPageModel model = models.get(i);
+            if (model.getViewType() == READER_PAGE) {
+                for (QuranPageSectionModel section : model.getSections()) {
+                    section.parentIndexInAdapter = i;
+                }
+            }
+        }
 
         setHasStableIds(true);
     }
@@ -120,12 +132,8 @@ public class ADPQuranPages extends RecyclerView.Adapter<ADPQuranPages.VHQuranPag
             if (viewType == CHAPTER_INFO) {
                 ((ChapterInfoCardView) itemView).setInfo(mChapterInfoMeta);
             } else if (viewType == READER_PAGE) {
-                setupPageView(pageModel);
+                ((QuranPageView) itemView).setPageModel(pageModel);
             }
-        }
-
-        private void setupPageView(QuranPageModel pageModel) {
-            ((QuranPageView) itemView).setPageModel(pageModel);
         }
     }
 }

@@ -66,7 +66,7 @@ public class RecitationUtils {
             while (matcher.find()) {
                 String group = matcher.group(1);
                 if (group != null) {
-                    path = matcher.replaceFirst(String.format(group, chapterNo));
+                    path = matcher.replaceFirst(String.format(Locale.ENGLISH, group, chapterNo));
                     matcher.reset(path);
                 }
             }
@@ -74,7 +74,7 @@ public class RecitationUtils {
             while (matcher.find()) {
                 String group = matcher.group(1);
                 if (group != null) {
-                    path = matcher.replaceFirst(String.format(group, verseNo));
+                    path = matcher.replaceFirst(String.format(Locale.ENGLISH, group, verseNo));
                     matcher.reset(path);
                 }
             }

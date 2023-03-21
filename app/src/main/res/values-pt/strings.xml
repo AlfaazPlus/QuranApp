@@ -199,7 +199,7 @@
     <string name="strTitleReaderLayoutStyle">Estilo de visualização do Alcorão</string>
     <string name="strTitleAboutSurah">Sobre Sura</string>
     <string name="strTitleResetReaderSettings">Redefinir configurações de leitor\?</string>
-    <string name="strTitleRecitations">Selecionar recitador</string>
+    <string name="strTitleRecitations">Recitações</string>
     <string name="strTitleFeaturedQuran">Leitura em destaque</string>
     <string name="strTitleFeaturedTopics">Tópicos no Alcorão</string>
     <string name="strTitleFeaturedProphets">Profetas no Alcorão</string>
@@ -261,7 +261,7 @@
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %1$s : Versículo %2$d</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Capítulo %1$s : %2$d</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d não é um número válido de Versículo para Capítulo nº %2$d</string>
-    <string name="strMsgUpdateAvailable">ATUALIZAÇÃO DISPONÍVEL! Por favor, atualize o aplicativo para obter os recursos mais recentes.</string>
+    <string name="strMsgUpdateAvailable">ATUALIZAÇÃO DISPONÍVEL! Atualize o aplicativo para obter os recursos mais recentes.</string>
     <string name="strMsgTranslNoneSelected">Nenhuma tradução está selecionada. Vá às configurações para buscar traduções.</string>
     <string name="strMsgUpdateAvailable4Dialog">ATUALIZAÇÃO DISPONÍVEL
 \nPor favor, atualize o aplicativo.</string>
@@ -269,4 +269,8 @@
     <string name="strMsgBookmarkDate" formatted="false">%1$s à %2$s</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Total de resultados encontrados em %1$s: %2$d</string>
     <string name="strTitleChapInfoRukus">Rukus</string>
+    <string name="strMsgUpdateDownloaded">ATUALIZAÇÃO BAIXADA! Instale para completar a atualização.</string>
+    <string name="strMsgUpdateAvailable2Continue">ATUALIZAÇÃO NECESSÁRIA!
+\nPor favor, atualize o aplicativo para continuar.</string>
+    <string name="strTitleSelectReciter">Selecionar recitador</string>
 </resources>

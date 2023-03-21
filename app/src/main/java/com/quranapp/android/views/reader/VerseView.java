@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import androidx.core.content.ContextCompat;
 
 import com.quranapp.android.R;
@@ -149,8 +150,6 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
                 }
             }
         });
-
-        /*mBinding.verseHeader.btnQuickEdit.setOnClickListener(v -> mActivity.startQuickEditShare(getVerse()));*/
 
         onBookmarkChanged(mActivity.isBookmarked(chapterNo, verseNo, verseNo));
         mBinding.verseHeader.btnBookmark.setOnClickListener(v -> {

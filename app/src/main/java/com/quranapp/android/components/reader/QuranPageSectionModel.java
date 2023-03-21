@@ -15,6 +15,12 @@ public class QuranPageSectionModel {
     private QuranPageView.QuranPageSectionView sectionView;
     private int scrollHighlightPendingVerseNo;
 
+    public int parentIndexInAdapter;
+    /**
+     * The verse number that the quick actions are opened for in Page layout.
+     */
+    public int quickActionsOpenedVerseNo = -1;
+
     public void setShowBismillah(boolean showBismillah) {
         this.showBismillah = showBismillah;
     }

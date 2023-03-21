@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--
-    - Only add locales having at least 60% translations.
-    - Locales are sorted alphabetically by their language code.
-    - System default and English are always on top.
-    - Make sure to match the index of locale name and locale code.
+        • Only add locales having at least 60% translations.
+        • Locales are sorted alphabetically by their language code.
+        • System default and English are always on top.
+        • Make sure to match the index of locale name and locale code.
     -->
 
     <string-array name="availableLocalesNames">
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
         <item>বাংলা</item>
+        <item>کوردی</item>
         <item>Español</item>
         <item>فارسی</item>
         <item>Français</item>
@@ -25,6 +26,7 @@
         <item>default</item>
         <item>en</item>
         <item>bn</item>
+        <item>ckb</item>
         <item>es</item>
         <item>fa</item>
         <item>fr</item>
