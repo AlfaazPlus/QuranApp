@@ -18,7 +18,7 @@ android {
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         versionCode 23_03_21_001
-        versionName "2023.03.21.001"
+        versionName "2023.03.21.1"
 
         resValue "string", "app_name", "QuranApp"
 
