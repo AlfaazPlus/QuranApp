@@ -105,7 +105,7 @@ public class FragMain extends BaseFragment {
 
         mUpdateManager = new UpdateManager(view.getContext(), mBinding.appUpdateContainer);
         // If update is not critical, proceed to load the rest of the content
-        if (!mUpdateManager.check4NonCriticalUpdate()) {
+        if (!mUpdateManager.check4Update()) {
             QuranMeta.prepareInstance(view.getContext(), quranMeta -> initContent(view, quranMeta));
         }
     }

@@ -75,7 +75,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
     /**
      * Returns true if there is an update available
      */
-    fun check4NonCriticalUpdate(): Boolean {
+    fun check4Update(): Boolean {
         val priority = AppUpdateInfo(ctx).getMostImportantUpdate().priority
         Logger.print("Update priority = $priority")
 
@@ -153,15 +153,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
     }
 
     private fun animateUpdateIcon(iconView: View): ObjectAnimator {
-        val pvhTransY = PropertyValuesHolder.ofFloat(
-            View.TRANSLATION_Y,
-            0f,
-            11f,
-            -20f,
-            10f,
-            -3f,
-            0f
-        )
+        val pvhTransY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, 11f, -20f, 10f, -3f, 0f)
         val pvhScaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 1.1f, .8f, 1.3f, 1.03f, 1f)
         val pvhScaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, .8f, 1.1f, 0.9f, 1f, 1f)
         return ObjectAnimator.ofPropertyValuesHolder(iconView, pvhTransY, pvhScaleX, pvhScaleY).apply {
