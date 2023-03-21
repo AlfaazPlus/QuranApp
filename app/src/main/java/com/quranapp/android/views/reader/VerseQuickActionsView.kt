@@ -42,6 +42,8 @@ class VerseQuickActionsView @JvmOverloads constructor(
     }
 
     fun show(section: QuranPageSectionModel, verse: Verse) {
+        if (lastSection?.quickActionsOpenedVerseNo == verse.verseNo) return
+
         removeCallbacks(closeRunnable)
         lastSection = section
 
