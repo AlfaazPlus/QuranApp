@@ -4,6 +4,7 @@ import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewTypeConst;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -42,7 +43,7 @@ public class QuranPageModel {
         return pageNo;
     }
 
-    public ArrayList<QuranPageSectionModel> getSections() {
+    public List<QuranPageSectionModel> getSections() {
         return sections;
     }
 

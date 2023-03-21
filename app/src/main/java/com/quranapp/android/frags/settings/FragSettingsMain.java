@@ -43,7 +43,7 @@ import static com.quranapp.android.activities.readerSettings.ActivitySettings.KE
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
 import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
@@ -92,7 +92,6 @@ import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener;
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
-import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.votd.VOTDUtils;
 import com.quranapp.android.views.BoldHeader;
@@ -207,7 +206,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void setupItemsVisibility(int readerStyle) {
-        int visibilityForReadingStyle = readerStyle == READER_STYLE_READING ? GONE : VISIBLE;
+        int visibilityForReadingStyle = readerStyle == READER_STYLE_PAGE ? GONE : VISIBLE;
 
         if (mTranslExplorerBinding != null) {
             mTranslExplorerBinding.getRoot().setVisibility(visibilityForReadingStyle);
@@ -581,7 +580,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         LytSettingsLayoutStyleBinding bindingLayoutStyle = LytSettingsLayoutStyleBinding.inflate(mInflater);
         bindingLayoutStyle.title.setText(R.string.strTitleReaderLayoutStyle);
         String[] labels = strArray(ctx, R.array.arrReaderStyle);
-        int[] styles = {READER_STYLE_TRANSLATION, READER_STYLE_READING};
+        int[] styles = {READER_STYLE_TRANSLATION, READER_STYLE_PAGE};
 
         for (int i = 0, l = labels.length; i < l; i++) {
             TabLayout.Tab tab = bindingLayoutStyle.tabLayout.newTab();

@@ -238,10 +238,6 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         mActionController.openVerseOptionDialog(verse, verseViewCallbacks);
     }
 
-    public void openQuickActionDialog(Verse verse) {
-        mActionController.openQuickActionDialog(verse);
-    }
-
     public void showFootnote(Verse verse, Footnote footnote, boolean isUrduSlug) {
         if (footnote != null) {
             mActionController.showFootnote(verse, footnote, isUrduSlug);

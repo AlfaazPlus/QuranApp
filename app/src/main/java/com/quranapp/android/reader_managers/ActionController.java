@@ -57,9 +57,6 @@ public class ActionController implements Destroyable {
         mVOD.open(mActivity, verse, verseViewCallbacks);
     }
 
-    public void openQuickActionDialog(Verse verse) {
-    }
-
     public void openShareDialog(int chapterNo, int verseNo) {
         mVOD.openShareDialog(mActivity, chapterNo, verseNo);
     }

@@ -1,5 +1,8 @@
 package com.quranapp.android.views.reader;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
@@ -13,17 +16,15 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -31,7 +32,6 @@ import com.quranapp.android.components.reader.QuranPageModel;
 import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.databinding.LytQuranPageBinding;
 import com.quranapp.android.databinding.LytQuranPageSectionBinding;
-import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
@@ -146,7 +146,7 @@ public class QuranPageView extends FrameLayout {
                     VerseArabicHighlightSpan span = verseSpanToAnimate.get();
                     if (span != null) {
                         span.setBackgroundColor(
-                            span.verseNo == recitingVerseNo ? mBGHighlightBGColor : Color.TRANSPARENT);
+                            span.verseNo == recitingVerseNo /*|| isVerseQuickActionsOpened*/ ? mBGHighlightBGColor : Color.TRANSPARENT);
                     }
                 }
             });
@@ -165,8 +165,9 @@ public class QuranPageView extends FrameLayout {
             initVerses(sectionModel);
 
             post(() -> {
-                if (sectionModel.hasVerse(sectionModel.getScrollHighlightPendingVerseNo())) {
-                    highlightOnScroll(sectionModel.getScrollHighlightPendingVerseNo());
+                if (
+                    sectionModel.hasVerse(sectionModel.getScrollHighlightPendingVerseNo())) {
+                    highlightOnScroll(sectionModel);
                     sectionModel.setScrollHighlightPendingVerseNo(-1);
                 }
             });
@@ -178,13 +179,13 @@ public class QuranPageView extends FrameLayout {
             }
         }
 
-        private void highlightOnScroll(int verseNo) {
-            if (recitingVerseNo != -1) {
+        private void highlightOnScroll(QuranPageSectionModel sectionModel) {
+            if (recitingVerseNo != -1 || sectionModel.quickActionsOpenedVerseNo != -1) {
                 return;
             }
 
             mBinding.content.post(() -> {
-                VerseArabicHighlightSpan verseSpan = findVerseSpan(verseNo);
+                VerseArabicHighlightSpan verseSpan = findVerseSpan(sectionModel.getScrollHighlightPendingVerseNo());
                 if (verseSpan == null) {
                     return;
                 }
@@ -205,7 +206,11 @@ public class QuranPageView extends FrameLayout {
                     if (mActivity.mPlayer != null) {
                         anyReciting = mActivity.mPlayer.isReciting(sectionModel.getChapterNo(), span.verseNo);
                     }
-                    span.setBackgroundColor(anyReciting ? mBGHighlightBGColor : Color.TRANSPARENT);
+                    span.setBackgroundColor(
+                        anyReciting || span.verseNo == sectionModel.quickActionsOpenedVerseNo
+                            ? mBGHighlightBGColor
+                            : Color.TRANSPARENT
+                    );
 
                     if (anyReciting) {
                         recitingVerseNo = span.verseNo;

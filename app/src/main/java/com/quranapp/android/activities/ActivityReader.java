@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.SpannableStringBuilder;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,11 +23,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_READING;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
@@ -45,11 +49,9 @@ import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGE
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
-import static android.view.View.GONE;
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
@@ -271,7 +273,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             mReaderParams.setVisibleTranslSlugs(new TreeSet<>(Arrays.asList(requestedTranslSlugs)));
         }
 
-        if (mReaderParams.getVisibleTranslSlugs() == null || mReaderParams.getVisibleTranslSlugs().isEmpty()) {
+        if (!mReaderParams.isPageReaderStyle() && (mReaderParams.getVisibleTranslSlugs() == null || mReaderParams.getVisibleTranslSlugs().isEmpty())) {
             Toast.makeText(this, R.string.strMsgTranslNoneSelected, Toast.LENGTH_SHORT).show();
         }
 
@@ -329,7 +331,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             Set<String> parameters = url.getQueryParameterNames();
             if (parameters.contains("reading")) {
                 boolean reading = url.getBooleanQueryParameter("reading", false);
-                mReaderParams.setReaderStyle(this, reading ? READER_STYLE_READING : READER_STYLE_TRANSLATION);
+                mReaderParams.setReaderStyle(this, reading ? READER_STYLE_PAGE : READER_STYLE_TRANSLATION);
             }
         }
 
@@ -380,7 +382,6 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     private void initFloatingFooter() {
         if (!RecitationUtils.isRecitationSupported()) {
-            mBinding.floatingFooter.setVisibility(GONE);
             return;
         }
 
@@ -395,7 +396,6 @@ public class ActivityReader extends ReaderPossessingActivity {
         registerReceiver(mReceiver, filter);
 
         mBinding.floatingFooter.addView(mPlayer, 1);
-        mBinding.floatingFooter.setVisibility(VISIBLE);
     }
 
     private void initQuran(Intent intent) {
@@ -521,7 +521,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         preventRecitationPlayerReset = false;
 
-        if (mReaderParams.getReaderStyle() == READER_STYLE_READING) {
+        if (mReaderParams.getReaderStyle() == READER_STYLE_PAGE) {
             initChapterReading(chapter);
         } else {
             initChapterTranslation(chapter);
@@ -529,7 +529,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void initChapterReading(Chapter chapter) {
-        mReaderParams.setReaderStyle(this, READER_STYLE_READING);
+        mReaderParams.setReaderStyle(this, READER_STYLE_PAGE);
 
         makePages(new Pair<>(chapter.getChapterNumber(), chapter.getChapterNumber()), chapter.getPageRange());
     }
@@ -668,7 +668,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         final QuranMeta quranMeta = mQuranMetaRef.get();
         Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
 
-        if (mReaderParams.getReaderStyle() == READER_STYLE_READING) {
+        if (mReaderParams.getReaderStyle() == READER_STYLE_PAGE) {
             initJuzReading(juzNo, quranMeta);
         } else {
             initJuzTranslation(juzNo, chaptersInJuz, quranMeta);
@@ -678,7 +678,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void initJuzReading(int juzNo, QuranMeta quranMeta) {
-        mReaderParams.setReaderStyle(this, READER_STYLE_READING);
+        mReaderParams.setReaderStyle(this, READER_STYLE_PAGE);
 
         makePages(null, quranMeta.getJuzPageRange(juzNo));
     }
@@ -856,8 +856,10 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         for (int pageNo = pageRange.getFirst(), l = pageRange.getSecond(); pageNo <= l; pageNo++) {
             QuranPageModel pageModel = createPage(
-                isJuz ? quranMeta.getChaptersOnPage(pageNo) : chapterRange, pageNo,
-                quranMeta, quran
+                isJuz ? quranMeta.getChaptersOnPage(pageNo) : chapterRange,
+                pageNo,
+                quranMeta,
+                quran
             );
             pageModel.setViewType(READER_PAGE);
             models.add(pageModel);
@@ -904,7 +906,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                             verse.arabicText,
                             verse.verseNo,
                             verse.pageNo,
-                            () -> openQuickActionDialog(verse)
+                            () -> mBinding.verseQuickActions.show(section, verse)
                         )
                     );
                 });
@@ -1017,7 +1019,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             adapter.notifyItemChanged(pos);
 
-            for (QuranPageSectionModel section : pageModel.getSections()) {
+            /*for (QuranPageSectionModel section : pageModel.getSections()) {
                 if (section.getChapterNo() != chapterNo) {
                     continue;
                 }
@@ -1030,7 +1032,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                         section, false);
                     break outer;
                 }
-            }
+            }*/
         }
     }
 
@@ -1266,5 +1268,22 @@ public class ActivityReader extends ReaderPossessingActivity {
                 mActionController.openVerseReference(chapterNo, verses);
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        // Check if the user is touching outside the verseQuickActions view, if so, close it.
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            Rect rect = new Rect();
+            mBinding.verseQuickActions.getGlobalVisibleRect(rect);
+            if (!rect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                // Delay some time so that if VerseQuickActionsView is immediately opened again, it doesn't show weird animation.
+                mBinding.verseQuickActions.scheduleClose();
+            }
+        }
+
+
+        return super.dispatchTouchEvent(ev);
     }
 }
