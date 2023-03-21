@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strLabelOkay">Tamam</string>
+    <string name="strLabelRemove">Kaldır</string>
+    <string name="strLabelGotIt">Anladım</string>
+    <string name="strTitleLicenses">Lisanslar</string>
+    <string name="strLabelDelete">Sil</string>
+    <string name="strTitleAppVersion">Uygulama sürümü</string>
+    <string name="strVersion" formatted="false">Sürüm %s</string>
+    <string name="strLabelRetry">Yeniden dene</string>
+    <string name="strLabelRefresh">Yenile</string>
+    <string name="strLabelDismiss">Reddet</string>
+    <string name="strLabelDiscard">Kaydetme</string>
+    <string name="strLabelHide">Gizle</string>
+    <string name="strLabelEdit">Düzenle</string>
+    <string name="strLabelDone">Bitti</string>
+    <string name="strLabelPrevious">Önceki</string>
+    <string name="strLabelUpdateQuranApp">QuranApp’i Güncelle</string>
+    <string name="labelDownload">İndir</string>
+    <string name="strLabelDownloadNow">ŞİMDİ İNDİR</string>
+    <string name="strLabelNew">Yeni</string>
+    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelOn">Açık</string>
+    <string name="strLabelThemeLight">Aydınlık</string>
+    <string name="strLabelSystemDefault">Sistem Varsayılan</string>
+    <string name="strLabelPreviousChapter">Önceki cüz</string>
+    <string name="strLabelNextChapter">Sonraki cüz</string>
+    <string name="strLabelNoPreviousChapter">Önceki cüz yok</string>
+    <string name="strLabelNoNextChapter">Sonraki cüz yok</string>
+    <string name="strLabelSend">Gönder</string>
+    <string name="strLabelClose">Kapat</string>
+    <string name="strLabelCancel">İptal</string>
+    <string name="strLabelApply">Kaydet</string>
+    <string name="strLabelReset">Sıfırla</string>
+    <string name="strLabelRemoveAll">Tümünü kaldır</string>
+    <string name="strLabelBack">Geri</string>
+    <string name="strLabelTop">Üst</string>
+    <string name="strLabelCopy">Kopyala</string>
+    <string name="strLabelView">Görüntüle</string>
+    <string name="strLabelOpenInReader">Okuyucuda Aç</string>
+    <string name="strLabelSkip">Geç</string>
+    <string name="strLabelOff">Kapalı</string>
+    <string name="strLabelRestart">Yeniden başlat</string>
+    <string name="strLabelOpen">Aç</string>
+    <string name="strLabelViewAll">Tümünü görüntüle</string>
+    <string name="strLabelRead">Oku »</string>
+    <string name="strLabelChangeNRestart">Değiştir &amp; Yeniden başlat</string>
+    <string name="strLabelAdvertisement">Reklamcılık</string>
+    <string name="strLabelNotNow">Şimdi değil</string>
+    <string name="strLabelStart">Başlat</string>
+    <string name="strLabelInstall">Yükle</string>
+    <string name="strLabelNext">Sonraki</string>
+    <string name="strLabelUpdate">Güncelle</string>
+    <string name="strLabelThemeDark">Karanlık</string>
+</resources>
