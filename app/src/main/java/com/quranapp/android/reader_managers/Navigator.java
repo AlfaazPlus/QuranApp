@@ -298,7 +298,7 @@ public class Navigator {
                 Pair<Integer, Integer> range = mReaderParams.verseRange;
                 if (QuranUtils.doesRangeDenoteSingle(range)) {
                     if (range.getFirst() != verseNo) {
-                        mActivity.initVerseRange(mReaderParams.currChapter, range);
+                        mActivity.initVerseRange(mReaderParams.currChapter, new Pair<>(verseNo, verseNo));
                     }
                 } else {
                     if (QuranUtils.isVerseInRange(verseNo, range)) {
