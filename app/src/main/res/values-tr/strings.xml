@@ -10,7 +10,7 @@
     <string name="strLabelRetry">Yeniden dene</string>
     <string name="strLabelRefresh">Yenile</string>
     <string name="strLabelDismiss">Reddet</string>
-    <string name="strLabelDiscard">Kaydetme</string>
+    <string name="strLabelDiscard">Çıkar</string>
     <string name="strLabelHide">Gizle</string>
     <string name="strLabelEdit">Düzenle</string>
     <string name="strLabelDone">Bitti</string>
