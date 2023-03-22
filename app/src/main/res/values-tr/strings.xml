@@ -19,14 +19,14 @@
     <string name="labelDownload">İndir</string>
     <string name="strLabelDownloadNow">ŞİMDİ İNDİR</string>
     <string name="strLabelNew">Yeni</string>
-    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelPremium">Ücretli</string>
     <string name="strLabelOn">Açık</string>
     <string name="strLabelThemeLight">Aydınlık</string>
-    <string name="strLabelSystemDefault">Sistem Varsayılan</string>
-    <string name="strLabelPreviousChapter">Önceki cüz</string>
-    <string name="strLabelNextChapter">Sonraki cüz</string>
-    <string name="strLabelNoPreviousChapter">Önceki cüz yok</string>
-    <string name="strLabelNoNextChapter">Sonraki cüz yok</string>
+    <string name="strLabelSystemDefault">Sistem Varsayılanı</string>
+    <string name="strLabelPreviousChapter">Önceki bölüm</string>
+    <string name="strLabelNextChapter">Sonraki bölüm</string>
+    <string name="strLabelNoPreviousChapter">Önceki bölüm yok</string>
+    <string name="strLabelNoNextChapter">Sonraki bölüm yok</string>
     <string name="strLabelSend">Gönder</string>
     <string name="strLabelClose">Kapat</string>
     <string name="strLabelCancel">İptal</string>
@@ -38,7 +38,7 @@
     <string name="strLabelCopy">Kopyala</string>
     <string name="strLabelView">Görüntüle</string>
     <string name="strLabelOpenInReader">Okuyucuda Aç</string>
-    <string name="strLabelSkip">Geç</string>
+    <string name="strLabelSkip">Atla</string>
     <string name="strLabelOff">Kapalı</string>
     <string name="strLabelRestart">Yeniden başlat</string>
     <string name="strLabelOpen">Aç</string>
@@ -52,4 +52,72 @@
     <string name="strLabelNext">Sonraki</string>
     <string name="strLabelUpdate">Güncelle</string>
     <string name="strLabelThemeDark">Karanlık</string>
+    <string name="strLabelNoPreviousJuz">Önceki cüz yok</string>
+    <string name="strLabelContinueChapter">Bölüme devam et</string>
+    <string name="strLabelSurah" formatted="false">%s Suresi</string>
+    <string name="strLabelPageNo" formatted="false">%d. Sayfa</string>
+    <string name="strLabelJuzNo" formatted="false">%d. Cüz</string>
+    <string name="strLabelVerseNo" formatted="false">%d. Ayet</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Ayet : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Ayetler : %1$d–%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerses" formatted="false">%1$d–%2$d. Ayetler</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Ayet %1$d:%2$d</string>
+    <string name="strTitleAppUser">QuranApp kullanıcısı</string>
+    <string name="strTitleHolyQuran">Kur\'an\'ı Kerim</string>
+    <string name="strTitleQuran">Kur\'an</string>
+    <string name="strTitleMakki">Mekki</string>
+    <string name="strTitleFootnote">Dipnot</string>
+    <string name="strTitleReaderJuz2">Cüz</string>
+    <string name="strTitleVerseOptions">Ayet seçenekleri</string>
+    <string name="strTitleVerseRecitation">Ayet Tilaveti</string>
+    <string name="strTitleReaderJumpToVerse">Ayete atla</string>
+    <string name="strTitleReaderLayoutStyle">Kur\'an görünüm biçimi</string>
+    <string name="strTitleReaderLayoutStylePageView">Sayfa görünümü</string>
+    <string name="strTitleReaderTextSizeTransl">Meal metin boyutu</string>
+    <string name="strTitleBookmark">Yer imi</string>
+    <string name="strTitleSendFeedback">Geri bildirim gönder</string>
+    <string name="strTitleHelpSupport">Yardım &amp; Destek</string>
+    <string name="strTitleAddNote">Not ekle</string>
+    <string name="strTitleSubscription">Abonelik</string>
+    <string name="strTitleTafsir">Tefsir</string>
+    <string name="strTitleAboutSurah">Sure Hakkında</string>
+    <string name="strTitleTranslations">Meal</string>
+    <string name="strTitleRecitations">Tilavet</string>
+    <string name="strTitleSelectReciter">Hafız Seç</string>
+    <string name="strTitleGotoVerseNo" formatted="false">%d. Ayete Git</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d Ayetlerini Oku</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Meal görünümü</string>
+    <string name="strTitleNote">Not</string>
+    <string name="strTitleFilters">Filtreler</string>
+    <string name="strTitleReaderTextSizeArabic">Arapça metin boyutu</string>
+    <string name="strTitleSettings">Ayarlar</string>
+    <string name="strTitleAboutUs">Hakkımızda</string>
+    <string name="strTitleBookmarks">Yer imleri</string>
+    <string name="strTitleShareApp">Uygulamayı Paylaş</string>
+    <string name="strTitleRateApp">Uygulamayı Değerlendir</string>
+    <string name="strTitleMenu">Menü</string>
+    <string name="strTitleDownloadTranslations">İndir</string>
+    <string name="strTitleScripts">Hatlar</string>
+    <string name="strLabelVersesText">Ayetler</string>
+    <string name="strTitleMadani">Medeni</string>
+    <string name="strLabelNextJuz">Sonraki cüz</string>
+    <string name="strLabelFullChapter">Tüm bölümü oku</string>
+    <string name="strLabelPreviousVerse">Önceki ayet</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelPreviousJuz">Önceki cüz</string>
+    <string name="strLabelNoNextJuz">Sonraki cüz yok</string>
+    <string name="strLabelNextVerse">Sonraki ayet</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s Suresi│ %2$d. Ayet</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Bölüm No. %1$d │ Ayetler %2$d–%3$d</string>
+    <string name="strTitleReaderChapters">Sureler (Bölümler)</string>
+    <string name="strTitleFootnotes">Dipnotlar</string>
+    <string name="strTitleReaderJuz">Cüz (Paragraf)</string>
+    <string name="strTitleReaderChapters2">Sureler</string>
+    <string name="strTitleReaderVerses">Ayetler</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">%1$s %2$d Suresi: %3$d. Ayet</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s Suresi : %2$d. Ayet</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Ayet: %d</string>
 </resources>
