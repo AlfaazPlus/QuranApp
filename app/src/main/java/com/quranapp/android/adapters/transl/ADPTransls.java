@@ -8,32 +8,23 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peacedesign.android.utils.ColorUtils;
-import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.quranapp.android.R;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.transls.TranslBaseModel;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.LytSettingsTranslItemBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
-import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 
 import java.util.List;
 
 public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
-    private final boolean mDeleteAllowed;
     private final OnTranslSelectionChangeListener<TranslModel> mListener;
 
-    public ADPTransls(Context context, List<TranslBaseModel> models, boolean deleteAllowed, OnTranslSelectionChangeListener<TranslModel> l) {
+    public ADPTransls(Context context, List<TranslBaseModel> models, OnTranslSelectionChangeListener<TranslModel> l) {
         super(context, models);
-        mDeleteAllowed = deleteAllowed;
         mListener = l;
     }
 
@@ -81,7 +72,7 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
             }
 
             mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(),
-                    translModel.getBookInfo().getAuthorName());
+                translModel.getBookInfo().getAuthorName());
             mBinding.checkbox.setChecked(translModel.isChecked());
 
             mBinding.checkbox.setBeforeCheckChangeListener((button, newState) -> {

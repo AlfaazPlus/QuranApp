@@ -23,7 +23,11 @@ class VerseQuickActionsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), BookmarkCallbacks {
-    private val binding = LytReaderVerseQuickActionsBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = LytReaderVerseQuickActionsBinding.inflate(
+        LayoutInflater.from(context),
+        this,
+        true
+    )
     private val closeRunnable = Runnable { close() }
 
     private var lastSection: QuranPageSectionModel? = null
@@ -48,7 +52,9 @@ class VerseQuickActionsView @JvmOverloads constructor(
         lastSection = section
 
         section.quickActionsOpenedVerseNo = verse.verseNo
-        (reader.mBinding.readerVerses.adapter as? ADPQuranPages)?.notifyItemChanged(section.parentIndexInAdapter)
+        (reader.mBinding.readerVerses.adapter as? ADPQuranPages)?.notifyItemChanged(
+            section.parentIndexInAdapter
+        )
 
         visibility = VISIBLE
 
@@ -69,7 +75,6 @@ class VerseQuickActionsView @JvmOverloads constructor(
             reader.mPlayer.reciteControl(verse.chapterNo, verse.verseNo)
         }
 
-
         onBookmarkChanged(reader.isBookmarked(chapterNo, verseNo, verseNo))
         binding.btnBookmark.setOnClickListener {
             if (reader.isBookmarked(chapterNo, verseNo, verseNo)) {
@@ -83,7 +88,12 @@ class VerseQuickActionsView @JvmOverloads constructor(
         val verseSerialDesc: String
         if (verse.includeChapterNameInSerial) {
             val name: String = quranMeta.getChapterName(context, chapterNo)
-            verseSerial = context.getString(R.string.strLabelVerseSerialWithChapter, name, chapterNo, verseNo)
+            verseSerial = context.getString(
+                R.string.strLabelVerseSerialWithChapter,
+                name,
+                chapterNo,
+                verseNo
+            )
             verseSerialDesc = context.getString(R.string.strDescVerseNoWithChapter, name, verseNo)
         } else {
             verseSerial = context.getString(R.string.strLabelVerseSerial, chapterNo, verseNo)
@@ -98,13 +108,19 @@ class VerseQuickActionsView @JvmOverloads constructor(
         binding.btnBookmark.setColorFilter(
             ContextCompat.getColor(
                 context,
-                if (isBookmarked) R.color.colorPrimary
-                else R.color.colorIcon2
+                if (isBookmarked) {
+                    R.color.colorPrimary
+                } else {
+                    R.color.colorIcon2
+                }
             )
         )
         binding.btnBookmark.setImageResource(
-            if (isBookmarked) R.drawable.dr_icon_bookmark_added
-            else R.drawable.dr_icon_bookmark_outlined
+            if (isBookmarked) {
+                R.drawable.dr_icon_bookmark_added
+            } else {
+                R.drawable.dr_icon_bookmark_outlined
+            }
         )
     }
 
@@ -120,7 +136,9 @@ class VerseQuickActionsView @JvmOverloads constructor(
         visibility = GONE
         lastSection?.let {
             it.quickActionsOpenedVerseNo = -1
-            (reader.mBinding.readerVerses.adapter as? ADPQuranPages)?.notifyItemChanged(it.parentIndexInAdapter)
+            (reader.mBinding.readerVerses.adapter as? ADPQuranPages)?.notifyItemChanged(
+                it.parentIndexInAdapter
+            )
             lastSection = null
         }
     }

@@ -74,45 +74,6 @@
         <item>62</item>
         <item>67</item>
     </string-array>
-    <string-array name="arrOnboardingTitles">
-        <item>Select Theme</item>
-        <item>Select Translations</item>
-        <item>Select Reciter</item>
-    </string-array>
-    <string-array name="arrOnboardingDescs">
-        <item>You can always change this later.</item>
-        <item>You can always change this later. You can download more translations from the settings.</item>
-        <item>You can always change this later. You can find more reciters in the settings.</item>
-    </string-array>
-
-    <string-array name="arrPremiumFeatures">
-        <item>No ads</item>
-        <item>Access to all Translations</item>
-        <item>Access to all reciters</item>
-        <item>More Qur\'an fonts</item>
-        <item>Cancel anytime</item>
-    </string-array>
-
-    <string-array name="arrPremiumFeatures2">
-        <item>Ad free experience</item>
-        <item>All translations</item>
-        <item>All reciters</item>
-        <item>All fonts</item>
-        <item>Many more…</item>
-    </string-array>
-
-    <string-array name="arrPremiumFeatures2Desc">
-        <item>No advertisement will be shown</item>
-        <item>You can download and read any translation</item>
-        <item>You can listen to any recitation</item>
-        <item>Read the Qur\'an in any font available in the app</item>
-        <item>Get benefited from all the premium features</item>
-    </string-array>
-
-    <string-array name="arrPremiumPlans">
-        <item>Monthly</item>
-        <item>Yearly</item>
-    </string-array>
 
     <string-array name="arrReportReasons">
         <item>Select reason</item>
@@ -129,16 +90,4 @@
         <item>Translations</item>
         <item>Size</item>
     </string-array>
-
-    <string-array name="arrGenders">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Rather not say</item>
-    </string-array>
-
-    <integer-array name="arrGenderCodes">
-        <item>0</item>
-        <item>1</item>
-        <item>-1</item>
-    </integer-array>
 </resources>
