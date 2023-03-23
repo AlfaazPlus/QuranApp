@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="strLabelBack">กลับ</string>
+    <string name="strLabelSend">ส่ง</string>
+    <string name="strLabelRemove">ลบ</string>
+    <string name="strTitleAppVersion">เวอร์ชั่นแอพ</string>
+    <string name="strVersion" formatted="false">เวอร์ชั่น %s</string>
+    <string name="strTitleLicenses">ใบอนุญาต</string>
+    <string name="strLabelClose">ปิด</string>
+    <string name="strLabelOkay">โอเค</string>
+    <string name="strLabelCancel">ยกเลิก</string>
+    <string name="strLabelGotIt">เข้าใจแล้ว</string>
+    <string name="strLabelApply">นำมาใช้</string>
+    <string name="strLabelDelete">ลบ</string>
+    <string name="strLabelRemoveAll">ลบทั้งหมด</string>
+    <string name="strLabelCopy">ก็อปปี้</string>
+    <string name="strLabelEdit">แก้ไข</string>
+    <string name="strLabelTop">สูงสุด</string>
+    <string name="strLabelReset">รีเซ็ต</string>
+    <string name="strLabelRetry">ลองอีกครั้ง</string>
+    <string name="strLabelRefresh">รีเฟรช</string>
+    <string name="strLabelDismiss">ยกเลิก</string>
+    <string name="strLabelRestart">รีสตาร์ท</string>
+    <string name="strLabelDiscard">ทิ้ง</string>
+    <string name="strLabelHide">ซ่อน</string>
+    <string name="strLabelDone">เสร็จแล้ว</string>
+    <string name="strLabelView">ดู</string>
+    <string name="strLabelAdvertisement">โฆษณา</string>
+    <string name="strLabelOpen">เปิด</string>
+    <string name="strLabelOpenInReader">เปิดใน Reader</string>
+    <string name="strLabelRead">อ่าน »</string>
+    <string name="strLabelChangeNRestart">เปลี่ยนและรีสตาร์ท</string>
+    <string name="strLabelSkip">ข้าม</string>
+    <string name="strLabelViewAll">ดูทั้งหมด</string>
+</resources>
