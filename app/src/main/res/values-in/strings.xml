@@ -328,4 +328,13 @@
     <string name="msgDownloadingResource" formatted="false">Mengunduh %s</string>
     <string name="msgAnotherDownloadInProgress">Unduhan lain sedang berlangsung.</string>
     <string name="msgDownloadingScript">Mengunduh skrip</string>
+    <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d script dan font nya yang terunduh bisa dibersihkan.</string>
+    <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan.
+\n
+\nSumber daya yang bisa dibersihkan:</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d file murattal yang tersimpan %2$d qori murattal bisa dibersihkan.</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d terjemahan yang terunduh bisa dibersihkan.</string>
+    <string name="msgVerseReminderAlarmPermission">Izin alarm diperlukan untuk aktifkan pengingat ayat.</string>
+    <string name="msgVerseReminderNotifPermission">Izin notifikasi diperlukan untuk mengaktifkan pengingat ayat.</string>
 </resources>
