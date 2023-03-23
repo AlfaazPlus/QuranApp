@@ -27,7 +27,11 @@ class FragOnboardRecitation : FragOnboardBase() {
         super.onDestroy()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.lyt_onboard_recitations, container, false)
     }
 
@@ -73,7 +77,6 @@ class FragOnboardRecitation : FragOnboardBase() {
         }
     }
 
-
     private fun noRecitersAvailable() {
         hideLoader()
 
@@ -102,7 +105,6 @@ class FragOnboardRecitation : FragOnboardBase() {
             it.setActionButton(btnRes, action)
             it.show(binding.root)
         }
-
     }
 
     private fun hideAlert() {

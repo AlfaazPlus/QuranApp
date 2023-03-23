@@ -16,7 +16,6 @@ import com.quranapp.android.widgets.compound.PeaceCompoundButton
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 import java.util.*
 
-
 class FragSettingsLanguage : FragSettingsBase() {
     private lateinit var binding: FragSettingsLangBinding
     private var initialLocale: String? = null

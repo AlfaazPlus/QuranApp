@@ -18,13 +18,16 @@ class FragOnboardTranslations : FragOnboardBase() {
     private val translTaskRunner = CallableTaskRunner<List<TranslBaseModel>>()
     private var translSlugs: Set<String> = HashSet()
 
-
     override fun onDestroy() {
         translTaskRunner.cancel()
         super.onDestroy()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return RecyclerView(inflater.context)
     }
 
@@ -48,7 +51,8 @@ class FragOnboardTranslations : FragOnboardBase() {
                         populateTranslations(list, translItems)
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun populateTranslations(list: RecyclerView, translItems: List<TranslBaseModel>) {

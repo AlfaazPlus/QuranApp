@@ -13,7 +13,11 @@ import com.quranapp.android.utils.app.ThemeUtils.resolveThemeModeFromSP
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.setThemeMode
 
 class FragOnboardThemes : FragOnboardBase() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.lyt_theme_explorer, container, false)
     }
 

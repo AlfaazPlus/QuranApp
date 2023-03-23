@@ -14,7 +14,11 @@ import com.quranapp.android.widgets.radio.PeaceRadioButton
 import com.quranapp.android.widgets.radio.PeaceRadioGroup
 
 class FragOnboardLanguage : FragOnboardBase() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return NestedScrollView(inflater.context).apply {
             addView(PeaceRadioGroup(inflater.context))
         }
@@ -31,7 +35,6 @@ class FragOnboardLanguage : FragOnboardBase() {
 
         val availableLocalesValues = strArray(ctx, R.array.availableLocalesValues)
         val availableLocaleNames = strArray(ctx, R.array.availableLocalesNames)
-
 
         val forcedTextGravity = if (WindowUtils.isRTL(ctx)) {
             PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
@@ -77,6 +80,5 @@ class FragOnboardLanguage : FragOnboardBase() {
 
             restartMainActivity(ctx)
         }
-
     }
 }

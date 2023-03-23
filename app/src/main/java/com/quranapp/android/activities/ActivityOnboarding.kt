@@ -28,18 +28,15 @@ class ActivityOnboarding : BaseActivity() {
     private val lastPageIndex get() = titles.size - 1
     private var currentPageIndex = 0
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("currentPageIndex", currentPageIndex)
         super.onSaveInstanceState(outState)
     }
 
-
     override fun preActivityInflate(savedInstanceState: Bundle?) {
         currentPageIndex = savedInstanceState?.getInt("currentPageIndex", 0) ?: 0
         super.preActivityInflate(savedInstanceState)
     }
-
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         binding = ActivityOnboardBinding.bind(activityView)
@@ -68,7 +65,6 @@ class ActivityOnboarding : BaseActivity() {
             navigate(++currentPageIndex)
         }
     }
-
 
     private fun prepare() {
         titles = strArray(R.array.arrOnboardingTitles)
@@ -116,7 +112,9 @@ class ActivityOnboarding : BaseActivity() {
 
         binding.let {
             it.previous.visibility = if (index == 0) View.GONE else View.VISIBLE
-            it.next.setText(if (index == lastPageIndex) R.string.strLabelStart else R.string.strLabelNext)
+            it.next.setText(
+                if (index == lastPageIndex) R.string.strLabelStart else R.string.strLabelNext
+            )
             it.pagerIndicator.selectTab(it.pagerIndicator.getTabAt(index))
 
             it.title.text = titles[index]
@@ -124,7 +122,6 @@ class ActivityOnboarding : BaseActivity() {
             it.board.currentItem = index
         }
     }
-
 
     private fun takeOff() {
         setRequireOnboarding(this, false)
