@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 object SPAppConfigs {
@@ -30,16 +31,17 @@ object SPAppConfigs {
 
     fun getThemeMode(ctx: Context): String? = sp(ctx).getString(KEY_APP_THEME, THEME_MODE_DEFAULT)
 
+    @SuppressLint("ApplySharedPref")
     @JvmStatic
     fun setLocale(ctx: Context, locale: String?) {
         sp(ctx).edit().apply {
             putString(KEY_APP_LANGUAGE, locale)
-            apply()
+            commit()
         }
     }
 
     @JvmStatic
-    fun getLocale(ctx: Context): String? = sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT)
+    fun getLocale(ctx: Context): String = sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
 
     fun getUrlsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_URLS_VERSION, 0)
 

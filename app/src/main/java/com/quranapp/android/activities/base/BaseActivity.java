@@ -5,10 +5,8 @@
 package com.quranapp.android.activities.base;
 
 import android.annotation.TargetApi;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -43,7 +41,6 @@ import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.MainActivity;
 import com.quranapp.android.interfaceUtils.ActivityResultStarter;
-import com.quranapp.android.utils.IntentUtils;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
@@ -56,24 +53,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     protected final AsyncLayoutInflater mAsyncInflater = new AsyncLayoutInflater(this);
     private NetworkStateReceiver mNetworkReceiver;
-    private final BroadcastReceiver mConfigurationChangedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent == null) return;
-
-            if (Objects.equals(intent.getAction(), IntentUtils.INTENT_ACTION_APP_LANGUAGE_CHANGED)) {
-                boolean hasChanges = !Objects.equals(intent.getStringExtra("locale"), mCurrentLocale);
-
-                if (hasChanges) {
-                    if (mActivityState == ActivityState.RESUMED) {
-                        recreate();
-                    } else {
-                        shouldRecreateDueToLocaleChange = true;
-                    }
-                }
-            }
-        }
-    };
     private String mCurrentLocale;
     private boolean shouldRecreateDueToLocaleChange;
 
@@ -163,26 +142,12 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            unregisterReceiver(mConfigurationChangedReceiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
 
         mNetworkReceiver = new NetworkStateReceiver();
         mNetworkReceiver.addListener(this);
         registerReceiver(mNetworkReceiver, NetworkStateReceiver.getIntentFilter());
-
-        IntentFilter configurationFilters = new IntentFilter();
-        configurationFilters.addAction(IntentUtils.INTENT_ACTION_APP_LANGUAGE_CHANGED);
-        registerReceiver(mConfigurationChangedReceiver, configurationFilters);
     }
 
     @Override

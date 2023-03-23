@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 
-import com.quranapp.android.activities.MainActivity;
 import com.quranapp.android.interfaceUtils.ActivityResultStarter;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
@@ -48,9 +47,13 @@ public abstract class BaseFragment extends ResHelperFragment implements NetworkS
     }
 
     public void restartMainActivity(Context ctx) {
-        Intent intent = new Intent(ctx, MainActivity.class);
+        // start a new Intent of the app
+        Intent intent = ctx.getPackageManager().getLaunchIntentForPackage(ctx.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+
+        // kill the current process
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     protected boolean networkReceiverRegistrable() {

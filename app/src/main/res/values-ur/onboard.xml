@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrOnboardingTitles">
+        <item>زبان منتخب کریں</item>
+        <item>تھیم منتخب کریں</item>
+        <item>ترجمہ منتخب کریں</item>
+        <item>قاری کو منتخب کریں</item>
+    </string-array>
+
+    <string-array name="arrOnboardingDescs">
+        <item>ایپ کو اپنی زبان میں ذاتی بنائیں۔ آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</item>
+        <item>آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</item>
+        <item>آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات سے مزید ترجمے ڈاؤن لوڈ کر سکتے ہیں۔</item>
+        <item>آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات میں مزید قاری تلاش کر سکتے ہیں۔</item>
+    </string-array>
+</resources>

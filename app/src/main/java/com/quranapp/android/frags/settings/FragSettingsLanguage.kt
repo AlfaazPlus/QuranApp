@@ -1,22 +1,24 @@
 package com.quranapp.android.frags.settings
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.utils.WindowUtils
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.FragSettingsLangBinding
-import com.quranapp.android.utils.IntentUtils
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.getLocale
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.setLocale
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.views.BoldHeader
+import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 import com.quranapp.android.widgets.compound.PeaceCompoundButton
 import com.quranapp.android.widgets.radio.PeaceRadioButton
+import java.util.*
+
 
 class FragSettingsLanguage : FragSettingsBase() {
+    private lateinit var binding: FragSettingsLangBinding
     private var initialLocale: String? = null
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleAppLanguage)
@@ -26,17 +28,28 @@ class FragSettingsLanguage : FragSettingsBase() {
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.apply {
-            setCallback { activity.onBackPressed() }
+            setCallback(object : BoldHeaderCallback {
+                override fun onBackIconClick() {
+                    activity.onBackPressedDispatcher.onBackPressed()
+                }
+
+                override fun onRightIconClick() {
+                    changeCheckpoint()
+                }
+            })
+
+            setShowRightIcon(true)
+            disableRightBtn(true)
+            setRightIconRes(R.drawable.dr_icon_check, activity.getString(R.string.strLabelDone))
             setShowSearchIcon(false)
-            setShowRightIcon(false)
         }
     }
 
     override val shouldCreateScrollerView = true
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        val binding = FragSettingsLangBinding.bind(view)
-        initialLocale = getLocale(ctx)
+        binding = FragSettingsLangBinding.bind(view)
+        initialLocale = SPAppConfigs.getLocale(ctx)
 
         initLanguage(binding)
     }
@@ -85,14 +98,32 @@ class FragSettingsLanguage : FragSettingsBase() {
         }
 
         binding.list.onCheckChangedListener = { button, _ ->
-            val localeValue = button.tag as String
-            setLocale(ctx, localeValue)
-
-            ctx.sendBroadcast(
-                Intent(IntentUtils.INTENT_ACTION_APP_LANGUAGE_CHANGED).apply {
-                    putExtra("locale", localeValue)
-                }
-            )
+            activity()?.header?.disableRightBtn(button.tag == initialLocale)
         }
+    }
+
+    private fun changeCheckpoint() {
+        val button = binding.list.findViewById<View>(binding.list.getCheckedRadioId()) ?: return
+        val locale = button.tag as String?
+
+        if (locale == null || locale == initialLocale) return
+
+        PeaceDialog.newBuilder(binding.root.context)
+            .setTitle(R.string.strTitleChangeLanguage)
+            .setMessage(R.string.strMsgChangeLanguage)
+            .setNegativeButton(R.string.strLabelCancel, null)
+            .setPositiveButton(R.string.strLabelChangeNRestart) { _, _ ->
+                restartApp(binding.list.context, locale)
+            }
+            .setButtonsDirection(PeaceDialog.STACKED)
+            .setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            .setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
+            .setFocusOnPositive(true).show()
+    }
+
+    private fun restartApp(ctx: Context, locale: String) {
+        SPAppConfigs.setLocale(ctx, Locale(locale).toLanguageTag())
+        restartMainActivity(ctx)
     }
 }

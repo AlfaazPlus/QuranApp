@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrOnboardingTitles">
+        <item>زمان هەڵبژێرە</item>
+        <item>ڕووکار هەڵبژێرە</item>
+        <item>وەرگێڕان دیاریبکە</item>
+        <item>قورئانخوێن هەڵبژێرە</item>
+    </string-array>
+
+    <string-array name="arrOnboardingDescs">
+        <item>بەرنامەکە بەکاربهێنە بەزمانی دڵخوازی خۆت، ئەتوانی دواتر لە رێکخستنەکاندا بیگۆڕیت.</item>
+        <item>ئەتوانی دواتر ئەمە بگۆڕیت.</item>
+        <item>ئەتوانی دواتر ئەمە بگۆڕیت، ئەتوانی وەرگێڕانی زیاتر دابگریت لە رێکخستنەکاندا.</item>
+        <item>ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا.</item>
+    </string-array>
+</resources>

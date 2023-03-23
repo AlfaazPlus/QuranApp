@@ -187,7 +187,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
             return;
         }
 
-        mAdapter = new ADPTransls(ctx, translItems, true, this);
+        mAdapter = new ADPTransls(ctx, translItems, this);
         mBinding.list.setAdapter(mAdapter);
 
         if (getActivity() instanceof ActivitySettings) {
