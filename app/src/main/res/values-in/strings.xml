@@ -301,4 +301,14 @@
     <string name="strMsgReadHistoryRemovedAlready">Histori bacaan telah dihapus.</string>
     <string name="strMsgReadHistoryRemoveFailed">Histori bacaan gagal dihapus.</string>
     <string name="strMsgBookmarkDeleteAll">Semua bookmark akan dihapus.</string>
+    <string name="strTitleRecitations">Murattal</string>
+    <string name="labelDownload">Unduh</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d Tafsir yang tersimpan bisa di bersihkan.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d Info surah yang tersimpan bisa dibersihkan.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nAnda harus mendownload lagi.</string>
+    <string name="labelFreeUpSpace">Kosongkan ruang</string>
+    <string name="titleChapterInfo">Info surah</string>
 </resources>
