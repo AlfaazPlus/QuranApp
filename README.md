@@ -48,16 +48,11 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 ## Screenshots
 
 <div style="width:100%; display:flex; justify-content:space-between;">
-    <img src="/repo_assets/screenshots/screenshot1.jpg" alt='Screenshot 1' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot2.jpg" alt='Screenshot 2' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot3.jpg" alt='Screenshot 3' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot4.jpg" alt='Screenshot 4' width='21%' />
-</div>
-<div style="width:100%; display:flex; justify-content:space-between;">
-    <img src="/repo_assets/screenshots/screenshot5.jpg" alt='Screenshot 5' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot6.jpg" alt='Screenshot 6' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot7.jpg" alt='Screenshot 7' width='21%' />
-    <img src="/repo_assets/screenshots/screenshot8.jpg" alt='Screenshot 8' width='21%' />
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_1.png" alt='Screenshot 1' width='19%' />
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_2.png" alt='Screenshot 2' width='19%' />
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_3.png" alt='Screenshot 3' width='19%' />
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_4.png" alt='Screenshot 4' width='19%' />
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_5.png" alt='Screenshot 5' width='19%' />
 </div>
 
 ## Features
