@@ -67,7 +67,7 @@
       "en_maududi": {
         "book": "Tafhim-ul-Quran",
         "author": "Syed Abul Ala Maududi",
-        "displayName": "Abul Ala Maududi",
+        "displayName": "Tafhim-ul-Quran",
         "langCode": "en",
         "langName": "English",
         "lastUpdated": 1658517131580,
@@ -80,36 +80,36 @@
         "author": "فتح محمد جالندھری",
         "displayName": "جالندھری",
         "langCode": "ur",
-        "langName": "Urdu",
+        "langName": "اردو",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_jalandhari.json"
       },
       "ur_israr-ahmad": {
         "book": "بیان القرآن",
         "author": "ڈاکٹر اسرار احمد",
-        "displayName": "اسرار احمد",
+        "displayName": "بیان القرآن",
         "langCode": "ur",
-        "langName": "Urdu",
+        "langName": "اردو",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_israr-ahmad.json"
       },
       "ur_maududi": {
         "book": "تفہيم القرآن",
         "author": "سید ابو الاعلیٰ مودودی",
-        "displayName": "ابو الاعلیٰ مودودی",
+        "displayName": "تفہيم القرآن",
         "langCode": "ur",
-        "langName": "Urdu",
+        "langName": "اردو",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_maududi.json"
       }
     },
     "bn": {
       "bn_mujibur-rahman": {
-        "book": "Sheikh Mujibur Rahman",
-        "author": "Sheikh Mujibur Rahman",
-        "displayName": "Mujibur Rahman",
+        "book": "বাংলা তাফসীর কুরআনুল কারীম",
+        "author": "শেখ মুজিবুর রহমান",
+        "displayName": "বাংলা তাফসীর কুরআনুল কারীম",
         "langCode": "bn",
-        "langName": "Bengali",
+        "langName": "বাংলা",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/bn/bn_mujibur-rahman.json"
       }
@@ -120,40 +120,40 @@
         "author": "Maulana Azizul Haque al-Umari",
         "displayName": "अजीजूल हक़",
         "langCode": "hi",
-        "langName": "Hindi",
+        "langName": "हिंदी",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
       }
     },
     "in": {
       "in_quran-complex": {
-        "book": "King Fahad Quran Complex",
-        "author": "King Fahad Quran Complex",
-        "displayName": "King Fahad Quran Complex",
+        "book": "Kompleks Al Quran Raja Fahd",
+        "author": "Kompleks Al Quran Raja Fahd",
+        "displayName": "Kompleks Al Quran",
         "langCode": "in",
-        "langName": "Indonesian",
+        "langName": "Bahasa Indonesia",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/in/in_quran-complex.json"
       }
     },
     "fa": {
       "fa_islamhouse": {
-        "book": " Islamhouse.com",
-        "author": " Islamhouse.com",
-        "displayName": " Islamhouse",
+        "book": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
+        "author": "محمدگل گمشادزهی",
+        "displayName": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
         "langCode": "fa",
-        "langName": "Persian",
+        "langName": "فارسی",
         "lastUpdated": 1678915800000,
         "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
       }
     },
     "ku": {
       "ku_bamoki": {
-        "book": "تەفسیری کوردی",
+        "book": "پوختەی قورئان",
         "author": "محمد ساڵح بامۆکی",
-        "displayName": "محمد ساڵح بامۆکی",
+        "displayName": "پوختەی قورئان",
         "langCode": "ku",
-        "langName": "Kurdish",
+        "langName": "کوردی",
         "lastUpdated": 1679333216943,
         "downloadPath": "inventory/translations/ku/ku_bamoki.json"
       }
