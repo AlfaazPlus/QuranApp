@@ -8,7 +8,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.components.storageCleanup.RecitationCleanupItemModel
 import com.quranapp.android.databinding.LytStorageCleanupItemBinding
-import com.quranapp.android.utils.extensions.getLayoutInflater
+import com.quranapp.android.utils.extensions.layoutInflater
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
 
@@ -25,7 +25,7 @@ class ADPRecitationCleanup(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHRecitationCleanupItem {
         return VHRecitationCleanupItem(
             LytStorageCleanupItemBinding.inflate(
-                parent.getLayoutInflater(),
+                parent.layoutInflater,
                 parent,
                 false
             )

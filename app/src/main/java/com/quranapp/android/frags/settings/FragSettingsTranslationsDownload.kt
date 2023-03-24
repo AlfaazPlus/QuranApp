@@ -5,20 +5,21 @@ import android.content.*
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.IBinder
-import android.text.TextUtils
 import android.view.View
-import android.widget.EditText
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.adapters.transl.ADPDownloadTransls
+import com.quranapp.android.adapters.transl.ADPDownloadTranslations
+import com.quranapp.android.adapters.transl.ADPDownloadTranslationsGroup
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
-import com.quranapp.android.components.transls.TranslBaseModel
 import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslTitleModel
+import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
 import com.quranapp.android.utils.reader.TranslUtils
@@ -31,18 +32,16 @@ import com.quranapp.android.utils.services.TranslationDownloadService.Translatio
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.MessageUtils
-import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 import com.quranapp.android.widgets.PageAlert
-import java.io.File
-import java.io.IOException
-import java.util.*
-import java.util.regex.Pattern
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.*
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 class FragSettingsTranslationsDownload :
     FragSettingsBase(),
@@ -50,14 +49,16 @@ class FragSettingsTranslationsDownload :
     ServiceConnection,
     TranslDownloadExplorerImpl {
 
-    private lateinit var mBinding: FragSettingsTranslBinding
-    private lateinit var mFileUtils: FileUtils
-    private var mTranslFactory: QuranTranslationFactory? = null
-    private var mAdapter: ADPDownloadTransls? = null
-    private var mTranslDownloadReceiver: TranslDownloadReceiver? = null
-    private var mTranslDownloadService: TranslationDownloadService? = null
-    private var mNewTranslations: Array<String>? = null
-    private var mPageAlert: PageAlert? = null
+    private lateinit var binding: FragSettingsTranslBinding
+    private lateinit var fileUtils: FileUtils
+    private lateinit var itemDecoration: RecyclerView.ItemDecoration
+    private var translFactory: QuranTranslationFactory? = null
+    private var adapter: ADPDownloadTranslationsGroup? = null
+    private var translDownloadReceiver: TranslDownloadReceiver? = null
+    private var translDownloadService: TranslationDownloadService? = null
+    private var newTranslations: Array<String>? = null
+    private var pageAlert: PageAlert? = null
+    private var isRefreshInProgres = false
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleDownloadTranslations)
 
@@ -67,7 +68,7 @@ class FragSettingsTranslationsDownload :
         super.onStart()
         if (activity == null) return
 
-        mTranslDownloadReceiver = TranslDownloadReceiver().apply {
+        translDownloadReceiver = TranslDownloadReceiver().apply {
             setDownloadStateListener(this@FragSettingsTranslationsDownload)
             requireActivity().registerReceiver(
                 this,
@@ -90,7 +91,7 @@ class FragSettingsTranslationsDownload :
     private fun unbindTranslationService(actvt: Activity) {
         // if mTranslDownloadService is null, it means the service is already unbound
         // or it was not bound in the first place.
-        if (mTranslDownloadService == null) {
+        if (translDownloadService == null) {
             return
         }
         try {
@@ -102,30 +103,27 @@ class FragSettingsTranslationsDownload :
     override fun onStop() {
         super.onStop()
 
-        if (mTranslDownloadReceiver != null && activity != null) {
-            mTranslDownloadReceiver!!.removeListener()
-            requireActivity().unregisterReceiver(mTranslDownloadReceiver)
+        if (translDownloadReceiver != null && activity != null) {
+            translDownloadReceiver!!.removeListener()
+            requireActivity().unregisterReceiver(translDownloadReceiver)
             unbindTranslationService(requireActivity())
         }
 
-        mTranslFactory?.close()
+        translFactory?.close()
     }
 
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.setCallback(object : BoldHeaderCallback {
             override fun onBackIconClick() {
-                activity.onBackPressed()
+                activity.onBackPressedDispatcher.onBackPressed()
             }
 
             override fun onRightIconClick() {
                 refreshTranslations(header.context, true)
             }
-
-            override fun onSearchRequest(searchBox: EditText, newText: CharSequence) {
-                search(newText)
-            }
         })
+
         header.setShowSearchIcon(false)
         header.setShowRightIcon(false)
         header.setSearchHint(R.string.strHintSearchTranslation)
@@ -136,11 +134,12 @@ class FragSettingsTranslationsDownload :
     }
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        mFileUtils = FileUtils.newInstance(ctx)
-        mTranslFactory = QuranTranslationFactory(ctx)
-        mBinding = FragSettingsTranslBinding.bind(view)
+        fileUtils = FileUtils.newInstance(ctx)
+        translFactory = QuranTranslationFactory(ctx)
+        itemDecoration = DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL)
+        binding = FragSettingsTranslBinding.bind(view)
 
-        mNewTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
+        newTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
 
         view.post { init(ctx) }
     }
@@ -150,13 +149,14 @@ class FragSettingsTranslationsDownload :
     }
 
     private fun initPageAlert(ctx: Context) {
-        mPageAlert = PageAlert(ctx)
+        pageAlert = PageAlert(ctx)
     }
 
     private fun refreshTranslations(ctx: Context, force: Boolean) {
+        isRefreshInProgres = true
         showLoader()
 
-        val storedAvailableDownloads = mFileUtils.translsManifestFile
+        val storedAvailableDownloads = fileUtils.translsManifestFile
 
         if (force) {
             loadAvailableTranslations(ctx, storedAvailableDownloads)
@@ -166,7 +166,7 @@ class FragSettingsTranslationsDownload :
                 return
             }
             try {
-                val data = mFileUtils.readFile(storedAvailableDownloads)
+                val data = fileUtils.readFile(storedAvailableDownloads)
                 if (data.isEmpty()) {
                     refreshTranslations(ctx, true)
                     return
@@ -191,8 +191,8 @@ class FragSettingsTranslationsDownload :
             try {
                 val responseBody = RetrofitInstance.github.getAvailableTranslations()
                 responseBody.string().let { data ->
-                    mFileUtils.createFile(storedAvailableDownloadsFile)
-                    mFileUtils.writeToFile(storedAvailableDownloadsFile, data)
+                    fileUtils.createFile(storedAvailableDownloadsFile)
+                    fileUtils.writeToFile(storedAvailableDownloadsFile, data)
 
                     runOnUIThread {
                         parseAvailableTranslationsData(ctx, data)
@@ -215,51 +215,54 @@ class FragSettingsTranslationsDownload :
     private fun parseAvailableTranslationsData(ctx: Context, data: String) {
         val obj = JsonHelper.json.parseToJsonElement(data).jsonObject
         obj["translations"]?.jsonObject?.let { translations ->
-            val translItems = LinkedList<TranslBaseModel>()
+            val translationGroups = LinkedList<TranslationGroupModel>()
+
+            var isAnyDownloadInProgress = translDownloadService?.isAnyDownloading() ?: false
 
             for (langCode in translations.keys) {
                 val translationsForLanguageCode = translations[langCode]?.jsonObject
                 val slugs = translationsForLanguageCode?.keys ?: continue
 
-                val translTitleModel = TranslTitleModel(langCode, null)
-                translItems.add(translTitleModel)
-
-                var traceAddedTranslCount = 0
+                val groupModel = TranslationGroupModel(langCode)
+                val translationItems = ArrayList<TranslModel>()
 
                 for (slug in slugs) {
-                    val model = readTranslInfo(
-                        langCode,
-                        slug,
-                        translationsForLanguageCode[slug]!!.jsonObject
-                    )
+                    if (isTranslationDownloaded(slug)) continue
 
-                    if (mNewTranslations?.contains(slug) == true) {
+                    val model = readTranslInfo(langCode, slug, translationsForLanguageCode[slug]!!.jsonObject)
+
+                    if (newTranslations?.contains(slug) == true) {
                         model.addMiniInfo(ctx.getString(R.string.strLabelNew))
                     }
 
-                    if (!isTranslationDownloaded(slug)) {
-                        model.isDownloading = isTranslationDownloading(slug)
-                        translTitleModel.langName = model.bookInfo.langName
-
-                        translItems.add(model)
-                        traceAddedTranslCount++
+                    if (isAnyDownloadInProgress) {
+                        model.isDownloadingDisabled = true
                     }
+
+                    model.isDownloading = isTranslationDownloading(slug)
+
+                    groupModel.langName = model.bookInfo.langName
+                    groupModel.isExpanded = groupModel.isExpanded || model.isDownloading
+
+                    translationItems.add(model)
                 }
 
-                // If no translation was added in this language category, then remove the language title item
-                if (traceAddedTranslCount == 0) {
-                    translItems.removeLast()
-                }
+                // If no translation was added in this language category, skip
+                if (translationItems.isEmpty()) continue
+
+                groupModel.translations = translationItems
+                translationGroups.add(groupModel)
             }
 
-            if (translItems.isNotEmpty()) {
-                populateTranslations(ctx, translItems)
+            if (translationGroups.isNotEmpty()) {
+                populateTranslations(ctx, translationGroups)
             } else {
                 noDownloadsAvailable(ctx)
             }
             SPAppActions.setFetchTranslationsForce(ctx, false)
         }
 
+        isRefreshInProgres = false
         hideLoader()
     }
 
@@ -275,55 +278,18 @@ class FragSettingsTranslationsDownload :
         return TranslModel(bookInfo)
     }
 
-    private fun search(query: CharSequence) {
-        val adapter = mAdapter ?: return
+    private fun populateTranslations(ctx: Context, models: List<TranslationGroupModel>) {
+        adapter = ADPDownloadTranslationsGroup(models, this)
 
-        val storedModels = adapter.storedModels
-        if (TextUtils.isEmpty(query)) {
-            if (adapter.itemCount != adapter.storedItemCount) {
-                adapter.setModels(storedModels)
-                mBinding.list.adapter = adapter
-            }
-            return
+        binding.list.let {
+            it.removeItemDecoration(itemDecoration)
+            it.addItemDecoration(itemDecoration)
+            it.layoutManager = LinearLayoutManager(ctx)
+            (it.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+            binding.list.adapter = adapter
         }
-        val pattern = Pattern.compile(
-            StringUtils.escapeRegex(query.toString()),
-            Pattern.CASE_INSENSITIVE or Pattern.DOTALL
-        )
-        val found = ArrayList<TranslBaseModel>()
-        for (model in storedModels) {
-            if (model is TranslTitleModel) {
-                found.add(model)
-            }
 
-            if (model !is TranslModel) continue
-
-            val bookInfo = model.bookInfo
-            val bookName = bookInfo.bookName
-            val authorName = bookInfo.authorName
-            val langName = bookInfo.langName
-
-            if (bookName.isEmpty() && authorName.isEmpty() && langName.isEmpty()) {
-                continue
-            }
-
-            if (pattern.matcher(bookName + authorName + langName).find()) {
-                found.add(model)
-            }
-        }
-        adapter.setModels(found)
-        mBinding.list.adapter = adapter
-    }
-
-    private fun populateTranslations(ctx: Context, models: List<TranslBaseModel>) {
-        mBinding.list.layoutManager = LinearLayoutManager(ctx)
-
-        (mBinding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-
-        mAdapter = ADPDownloadTransls(ctx, this, models)
-        mBinding.list.adapter = mAdapter
         (activity as? ActivitySettings)?.header?.apply {
-            setShowSearchIcon(true)
             setShowRightIcon(true)
         }
     }
@@ -339,28 +305,29 @@ class FragSettingsTranslationsDownload :
     }
 
     private fun isTranslationDownloaded(slug: String): Boolean {
-        return mTranslFactory?.isTranslationDownloaded(slug) == true
+        return translFactory?.isTranslationDownloaded(slug) == true
     }
 
     private fun isTranslationDownloading(slug: String): Boolean {
-        return mTranslDownloadService?.isDownloading(slug) ?: false
+        return translDownloadService?.isDownloading(slug) ?: false
     }
 
     override fun onDownloadAttempt(
-        vhTransl: ADPDownloadTransls.VHDownloadTransl,
+        adapter: ADPDownloadTranslations,
+        vhTransl: ADPDownloadTranslations.VHDownloadTransl,
         referencedView: View,
         model: TranslModel
     ) {
         if (model.isDownloading) return
-
-        val ctx = referencedView.context
         val bookInfo = model.bookInfo
 
         if (isTranslationDownloading(bookInfo.slug)) {
             model.isDownloading = true
-            mAdapter?.notifyItemChanged(vhTransl.adapterPosition)
+            adapter.notifyItemChanged(vhTransl.adapterPosition)
             return
         }
+
+        val ctx = referencedView.context
 
         if (isTranslationDownloaded(bookInfo.slug)) {
             onTranslDownloadStatus(bookInfo, TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED)
@@ -371,18 +338,23 @@ class FragSettingsTranslationsDownload :
             return
         }
 
-        mAdapter?.onDownloadStatus(bookInfo.slug, true)
+        PeaceDialog.newBuilder(ctx)
+            .setTitle(R.string.strTitleDownloadTranslations)
+            .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
+            .setPositiveButton(R.string.labelDownload) { _, _ ->
+                this.adapter?.onDownloadStatus(bookInfo.slug, true)
 
-        TranslationDownloadService.startDownloadService(ctx as ContextWrapper, bookInfo)
-        if (activity != null) {
-            bindTranslService(requireActivity())
-        }
+                TranslationDownloadService.startDownloadService(ctx as ContextWrapper, bookInfo)
+                activity?.let { bindTranslService(requireActivity()) }
+            }
+            .setNegativeButton(R.string.strLabelCancel, null)
+            .show()
     }
 
     override fun onTranslDownloadStatus(bookInfo: QuranTranslBookInfo, status: String) {
-        mAdapter?.onDownloadStatus(bookInfo.slug, false)
+        adapter?.onDownloadStatus(bookInfo.slug, false)
 
-        val ctx = mBinding.root.context
+        val ctx = binding.root.context
         var title: String? = null
         var msg: String? = null
         when (status) {
@@ -390,15 +362,15 @@ class FragSettingsTranslationsDownload :
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED -> {
                 title = ctx.getString(R.string.strTitleFailed)
                 msg = (
-                    ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
-                        " " + ctx.getString(R.string.strMsgTryLater)
-                    )
+                        ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
+                                " " + ctx.getString(R.string.strMsgTryLater)
+                        )
             }
 
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED -> {
                 title = ctx.getString(R.string.strTitleSuccess)
                 msg = ctx.getString(R.string.strMsgTranslDownloaded, bookInfo.bookName)
-                mAdapter!!.remove(bookInfo.slug)
+                adapter!!.remove(bookInfo.slug)
             }
         }
 
@@ -420,71 +392,69 @@ class FragSettingsTranslationsDownload :
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-        mTranslDownloadService = (service as TranslationDownloadServiceBinder).service
+        translDownloadService = (service as TranslationDownloadServiceBinder).service
+        if (!isRefreshInProgres) {
+            refreshTranslations(binding.root.context, false)
+        }
     }
 
     override fun onServiceDisconnected(name: ComponentName) {
-        mTranslDownloadService = null
+        translDownloadService = null
     }
 
     private fun showLoader() {
         hideAlert()
-        mBinding.loader.visibility = View.VISIBLE
+        binding.loader.visibility = View.VISIBLE
         if (activity is ActivitySettings) {
             val header = (activity as ActivitySettings?)!!.header
-            header.setShowSearchIcon(false)
             header.setShowRightIcon(false)
         }
     }
 
     private fun hideLoader() {
-        mBinding.loader.visibility = View.GONE
+        binding.loader.visibility = View.GONE
         if (activity is ActivitySettings) {
             val header = (activity as ActivitySettings?)!!.header
-            header.setShowSearchIcon(true)
             header.setShowRightIcon(true)
         }
     }
 
     private fun showAlert(titleRes: Int, msgRes: Int, btnRes: Int, action: Runnable) {
         hideLoader()
-        val ctx = mBinding.root.context
-        if (mPageAlert == null) {
+        val ctx = binding.root.context
+        if (pageAlert == null) {
             initPageAlert(ctx)
         }
-        mPageAlert!!.let {
+        pageAlert!!.let {
             it.setIcon(null as Drawable?)
             it.setMessage(if (titleRes > 0) ctx.getString(titleRes) else "", ctx.getString(msgRes))
             it.setActionButton(btnRes, action)
-            it.show(mBinding.container)
+            it.show(binding.container)
             if (activity is ActivitySettings) {
                 val header = (activity as ActivitySettings?)!!.header
-                header.setShowSearchIcon(false)
                 header.setShowRightIcon(true)
             }
 
             (activity as? ActivitySettings)?.header?.apply {
-                setShowSearchIcon(false)
                 setShowRightIcon(true)
             }
         }
     }
 
     private fun hideAlert() {
-        mPageAlert?.remove()
+        pageAlert?.remove()
     }
 
     private fun noInternet(ctx: Context) {
-        if (mPageAlert == null) {
+        if (pageAlert == null) {
             initPageAlert(ctx)
         }
 
-        mPageAlert!!.let {
+        pageAlert!!.let {
             it.setupForNoInternet { refreshTranslations(ctx, true) }
-            it.show(mBinding.container)
+            it.show(binding.container)
 
             (activity as? ActivitySettings)?.header?.apply {
-                setShowSearchIcon(false)
                 setShowRightIcon(true)
             }
         }

@@ -3,12 +3,10 @@
  */
 package com.quranapp.android.components.transls
 
-import android.view.ViewGroup
-
 class TranslationGroupModel(
     val langCode: String,
-    val langName: String,
-    val transls: List<TranslModel>
 ) {
-    var view: ViewGroup? = null
+    var langName = ""
+    var translations: ArrayList<TranslModel> = ArrayList()
+    var isExpanded = false
 }
