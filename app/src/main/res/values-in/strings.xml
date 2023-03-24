@@ -311,4 +311,21 @@
 \nAnda harus mendownload lagi.</string>
     <string name="labelFreeUpSpace">Kosongkan ruang</string>
     <string name="titleChapterInfo">Info surah</string>
+    <string name="titleDownloadScriptResources">Unduh sumber daya untuk skrip ini\?</string>
+    <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan skrip ini:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Skrip: %s (~1MB)</string>
+    <string name="msgScriptFontsDownloaded">Skrip dan font berhasil di unduh.</string>
+    <string name="textDownloading">Mengunduh…</string>
+    <string name="lastCrashLog">Log error terakhir</string>
+    <string name="msgDownloadingFonts">Mengunduh font</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Font: %1$d diunduh dari total %2$d (~%3$dMB tersisa)</string>
+    <string name="msgDownloadFailed">Gagal Mengunduh</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">Mengunduh dari latar belakang</string>
+    <string name="strTitleScripts">Skrip</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d dari %2$d font di unduh</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d dari %2$d</string>
+    <string name="msgDownloadingResource" formatted="false">Mengunduh %s</string>
+    <string name="msgAnotherDownloadInProgress">Unduhan lain sedang berlangsung.</string>
+    <string name="msgDownloadingScript">Mengunduh skrip</string>
 </resources>
