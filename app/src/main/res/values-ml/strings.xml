@@ -299,4 +299,7 @@
     <string name="strLabelShareImage">ചിത്രം പങ്കിടുക</string>
     <string name="strTitleImageSavedWithName" formatted="false">പേരിനൊപ്പം ചിത്രം സംരക്ഷിച്ചു: %s</string>
     <string name="strTitleAlphaBG">ആൽഫ പശ്ചാത്തലം</string>
+    <string name="labelDownload">ഡൗൺലോഡ് ചെയ്യുക</string>
+    <string name="strTitleRecitations">പാരായണങ്ങൾ</string>
+    <string name="strTitleScripts">സ്ക്രിപ്റ്റുകൾ</string>
 </resources>
