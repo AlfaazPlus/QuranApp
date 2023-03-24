@@ -216,6 +216,10 @@ class TranslationDownloadService : Service() {
         return mCurrentDownloads.contains(slug)
     }
 
+    fun isAnyDownloading(): Boolean {
+        return mCurrentDownloads.isNotEmpty()
+    }
+
     private fun removeDownload(slug: String?) {
         mCurrentDownloads.remove(slug)
         if (mCurrentDownloads.size == 0) {

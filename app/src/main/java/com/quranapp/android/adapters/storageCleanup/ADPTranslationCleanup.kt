@@ -44,7 +44,7 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
         } else {
             VHTranslationCleanupItem(
                 LytStorageCleanupItemBinding.inflate(
-                    parent.getLayoutInflater(),
+                    parent.layoutInflater,
                     parent,
                     false
                 )

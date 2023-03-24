@@ -107,4 +107,5 @@ fun getRelativeTopRecursive(view: View?, until: Class<*>, inclusive: Boolean = f
     }
 }
 
-fun View.getLayoutInflater(): LayoutInflater = LayoutInflater.from(context)
+val View.layoutInflater: LayoutInflater
+    get() = LayoutInflater.from(context)
