@@ -8,7 +8,10 @@
       "reciter": "Abdul Basit 'Abd us-Samad",
       "style": "Mujawwad",
       "url-host": null,
-      "url-path": "/AbdulBaset/Mujawwad/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/AbdulBaset/Mujawwad/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+          "ur": "عبد الباسط بن عبد الصمد"
+      }
     },
     {
       "slug": "as-sudais",
