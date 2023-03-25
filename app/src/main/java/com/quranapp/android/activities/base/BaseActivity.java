@@ -46,15 +46,12 @@ import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateRec
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener,
     ActivityResultStarter {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     protected final AsyncLayoutInflater mAsyncInflater = new AsyncLayoutInflater(this);
     private NetworkStateReceiver mNetworkReceiver;
-    private String mCurrentLocale;
-    private boolean shouldRecreateDueToLocaleChange;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -68,7 +65,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
 
     private Context updateBaseContextLocale(Context context) {
         String language = SPAppConfigs.getLocale(context);
-        mCurrentLocale = language;
 
         if (LOCALE_DEFAULT.equals(language)) {
             return context;
@@ -156,15 +152,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
         if (mNetworkReceiver != null) {
             mNetworkReceiver.removeListener(this);
             unregisterReceiver(mNetworkReceiver);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (shouldRecreateDueToLocaleChange && !Objects.equals(SPAppConfigs.getLocale(this), mCurrentLocale)) {
-            shouldRecreateDueToLocaleChange = false;
-            recreate();
         }
     }
 
