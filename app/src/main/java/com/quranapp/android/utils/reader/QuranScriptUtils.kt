@@ -92,30 +92,16 @@ fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     else -> 0
 }
 
-@DimenRes
-fun String.getQuranScriptSerialTextSizeSmallRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_INDO_PAK, QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArIndoPakSmall
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCSmall
-    else -> 0
-}
-
-@DimenRes
-fun String.getQuranScriptSerialTextSizeMediumRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_INDO_PAK, QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArIndoPakMedium
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCMedium
-    else -> 0
-}
-
 fun String.getQuranScriptFontRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_INDO_PAK -> R.font.pdms
-    QuranScriptUtils.SCRIPT_UTHMANI -> R.font.me_quran_4_uthmani_text
+    QuranScriptUtils.SCRIPT_INDO_PAK -> R.font.indopak
+    QuranScriptUtils.SCRIPT_UTHMANI -> R.font.uthmanic_hafs
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_page_1
     else -> 0
 }
 
 fun String.getQuranScriptResPath(): String = when (this) {
     QuranScriptUtils.SCRIPT_INDO_PAK -> "scripts/script_indopak.json"
-    QuranScriptUtils.SCRIPT_UTHMANI -> "scripts/script_uthmani.json"
+    QuranScriptUtils.SCRIPT_UTHMANI -> "scripts/script_uthmani_hafs.json"
     else -> ""
 }
 

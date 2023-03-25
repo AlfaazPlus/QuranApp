@@ -38,11 +38,11 @@
 
     <dimen name="dmnReaderTextSizeTransl">16sp</dimen>
 
-    <dimen name="dmnReaderTextSizeArIndoPakMedium">30sp</dimen>
-    <dimen name="dmnReaderTextSizeArIndoPakSmall">25sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakMedium">28sp</dimen>
+    <dimen name="dmnReaderTextSizeArIndoPakSmall">23sp</dimen>
 
-    <dimen name="dmnReaderTextSizeArUthmaniMedium">22sp</dimen>
-    <dimen name="dmnReaderTextSizeArUthmaniSmall">17sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniMedium">28sp</dimen>
+    <dimen name="dmnReaderTextSizeArUthmaniSmall">23sp</dimen>
 
     <dimen name="dmnReaderTextSizeArKFQPCMedium">30sp</dimen>
     <dimen name="dmnReaderTextSizeArKFQPCSmall">25sp</dimen>
