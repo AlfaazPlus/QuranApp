@@ -42,7 +42,7 @@ class ADPRecitationCleanup(
 
         fun bind(model: RecitationCleanupItemModel) {
             binding.let {
-                it.title.text = model.recitationModel.reciter
+                it.title.text = model.recitationModel.getReciterName()
                 it.subtitle.text = it.root.context.getString(R.string.nFiles, model.downloadsCount)
 
                 it.iconDelete.setImageResource(
@@ -68,7 +68,7 @@ class ADPRecitationCleanup(
                 setMessage(
                     itemView.context.getString(
                         R.string.msgRecitationCleanup,
-                        model.recitationModel.reciter
+                        model.recitationModel.getReciterName()
                     )
                 )
                 setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)

@@ -347,8 +347,8 @@
     <string name="nItem">%d item</string>
     <string name="nItems">%d items</string>
 
-    <string name="strScriptPreviewIndopak" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
-    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ</string>
+    <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ۟ِ</string>
+    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>
     <string name="strPreviewTextTransl" translatable="false">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="strNotifChannelRecitation" translatable="false">Recitation Player</string>

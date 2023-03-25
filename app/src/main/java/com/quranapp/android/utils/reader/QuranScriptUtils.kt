@@ -7,6 +7,7 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
+import java.util.*
 
 object QuranScriptUtils {
     val FONTS_DIR_NAME: String = FileUtils.createPath(
@@ -25,6 +26,60 @@ object QuranScriptUtils {
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
 
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
+
+    val INDO_PAK_SCRIPT_NAMES = mapOf(
+        "en" to "IndoPak",
+        "ar" to "نستعليق",
+        "bn" to "ইন্দোপাক",
+        "ckb" to "ئیندۆپۆک",
+        "de" to "IndoPak",
+        "es" to "IndoPak",
+        "fa" to "هند پاک",
+        "fr" to "IndoPak",
+        "hi" to "इंडो पाक",
+        "in" to "IndoPak",
+        "it" to "IndoPak",
+        "ml" to "ഇൻഡോപാക്",
+        "pt" to "IndoPak",
+        "tr" to "Hint Paketi",
+        "ur" to "انڈو پاک",
+    )
+
+    val UTHMANI_SCRIPT_NAMES = mapOf(
+        "en" to "Uthmani Hafs",
+        "ar" to "العثماني حفص",
+        "bn" to "উসমানী হাফস",
+        "ckb" to "ئۆتتۆمانی هافس",
+        "de" to "Uthmani Hafs",
+        "es" to "Uthmani Hafs",
+        "fa" to "عثمانی حفص",
+        "fr" to "Uthmani Hafs",
+        "hi" to "उशमनी हफ्स",
+        "in" to "Utsmani Hafs",
+        "it" to "Uthmani Hafs",
+        "ml" to "ഓട്ടോമൻ ഹാഫുകൾ",
+        "pt" to "Uthmani Hafs",
+        "tr" to "Osmanca Hafs",
+        "ur" to "عثمانی حفص",
+    )
+
+    val KFQPC_SCRIPT_NAMES = mapOf(
+        "en" to "King Fahd Complex V1",
+        "ar" to "مجمع الملك فهد الإصدار 1",
+        "bn" to "কিং ফাহাদ কমপ্লেক্স V1",
+        "ckb" to "کۆمپلێکسی شا فەهد v1",
+        "de" to "König Fahd Komplex V1",
+        "es" to "Rey Fahd Complex V1",
+        "fa" to "مجتمع شاه فهد V1",
+        "fr" to "Complexe Roi Fahad V1",
+        "hi" to "राजा फहद कॉम्प्लेक्स v1",
+        "in" to "Kompleks Raja Fahad V1",
+        "it" to "Complesso di Re Fahad V1",
+        "ml" to "കിംഗ് ഫഹദ് സമുച്ചയം v1",
+        "pt" to "Complexo King Fahad V1",
+        "tr" to "Kral Fehd Kompleksi V1",
+        "ur" to "کنگ فہد کمپلیکس V1",
+    )
 
     fun availableScriptSlugs(): Array<String> = arrayOf(
         SCRIPT_INDO_PAK,
@@ -62,11 +117,15 @@ fun String.isKFQPCScript(): Boolean = when (this) {
     else -> false
 }
 
-fun String.getQuranScriptName(): String = when (this) {
-    QuranScriptUtils.SCRIPT_INDO_PAK -> "IndoPak"
-    QuranScriptUtils.SCRIPT_UTHMANI -> "Uthmani"
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> "King Fahd Complex V1"
-    else -> ""
+fun String.getQuranScriptName(): String {
+    val mapToQuery: Map<String, String> = when (this) {
+        QuranScriptUtils.SCRIPT_INDO_PAK -> QuranScriptUtils.INDO_PAK_SCRIPT_NAMES
+        QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.UTHMANI_SCRIPT_NAMES
+        QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.KFQPC_SCRIPT_NAMES
+        else -> emptyMap()
+    }
+
+    return mapToQuery[Locale.getDefault().toLanguageTag()] ?: mapToQuery["en"]!!
 }
 
 fun String.getScriptPreviewRes(): Int = when (this) {
