@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.reader.quranPage;
+package com.quranapp.android.utils.span;
 
 import android.os.Parcel;
 import android.text.TextPaint;

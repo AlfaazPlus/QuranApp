@@ -2,11 +2,11 @@ package com.quranapp.android.reader_managers
 
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Build
 import android.text.SpannableString
 import android.util.TypedValue
 import android.widget.TextView
 import com.quranapp.android.R
+import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
@@ -40,8 +40,6 @@ class ReaderVerseDecorator(private val ctx: Context) {
      */
     private var fontsArabicKFQPC = mutableMapOf<Int, Typeface>()
 
-    private val fontVerseSerial by lazy { ctx.getFont(R.font.uthmanic_hafs1) }
-    private val fontVerseSerialFallback by lazy { ctx.getFont(R.font.traditional_arabic) }
     private val fontTranslationUrduAlike by lazy { ctx.getFont(R.font.font_urdu) }
 
     private var savedTextSizeArabicMultiplier = 0f
@@ -94,49 +92,26 @@ class ReaderVerseDecorator(private val ctx: Context) {
         }
     }
 
-    private fun getFontSerial(): Typeface? {
-        val isKFQPC = isKFQPCScript()
-
-        return when {
-            !isKFQPC && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> fontVerseSerial
-            !isKFQPC -> fontVerseSerialFallback
-            else -> null
-        }
-    }
-
     @JvmOverloads
-    fun setupArabicText(
-        arabicText: String,
-        verseNo: Int,
-        pageNo: Int,
-        verseTextSize: Int = -1,
-        serialTextSize: Int = -1
-    ): CharSequence {
+    fun setupArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(
-            arabicText,
-            if (!isKFQPC) verseNo else null,
-            if (isKFQPC) fontsArabicKFQPC[pageNo] ?: Typeface.DEFAULT else fontQuranText,
-            getFontSerial(),
-            verseTextSize,
-            serialTextSize
+            verse,
+            if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
+            verseTextSize
         )
     }
 
     fun setupArabicTextQuranPage(
         txtColor: Int,
-        arabicText: String,
-        verseNo: Int,
-        pageNo: Int,
+        verse: Verse,
         onClick: Runnable
     ): CharSequence =
         VerseUtils.decorateQuranPageVerse(
             txtColor,
-            arabicText,
-            verseNo,
-            if (isKFQPCScript()) fontsArabicKFQPC[pageNo] else fontQuranText,
-            getFontSerial(),
+            verse,
+            if (isKFQPCScript()) fontsArabicKFQPC[verse.pageNo] else fontQuranText,
             onClick
         )
 

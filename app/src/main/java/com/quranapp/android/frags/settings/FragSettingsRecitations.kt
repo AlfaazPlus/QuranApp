@@ -14,6 +14,7 @@ import com.quranapp.android.adapters.recitation.ADPRecitations
 import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.utils.app.RecitationManager
+import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
@@ -88,7 +89,12 @@ class FragSettingsRecitations : FragSettingsBase() {
     }
 
     private fun refresh(ctx: Context, force: Boolean) {
+        if (force && !NetworkStateReceiver.isNetworkConnected(ctx)) {
+            noInternet(ctx)
+        }
+
         showLoader()
+
         RecitationManager.prepare(ctx, force) {
             val models = RecitationManager.getModels()
 
@@ -118,11 +124,7 @@ class FragSettingsRecitations : FragSettingsBase() {
 
         val found = ArrayList<RecitationModel>()
         for (model in models) {
-            val reciter = model.reciter
-
-            if (reciter.isEmpty()) continue
-
-            if (pattern.matcher(reciter).find()) {
+            if (pattern.matcher(model.reciter).find() || pattern.matcher(model.getReciterName()).find()) {
                 found.add(model)
             }
         }

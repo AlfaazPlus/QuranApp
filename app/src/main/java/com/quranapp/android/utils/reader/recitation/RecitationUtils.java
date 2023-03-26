@@ -52,7 +52,7 @@ public class RecitationUtils {
             return null;
         }
 
-        return model.getReciter();
+        return model.getReciterName();
     }
 
     @Nullable

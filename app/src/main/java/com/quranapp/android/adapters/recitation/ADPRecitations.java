@@ -67,13 +67,13 @@ public class ADPRecitations extends RecyclerView.Adapter<ADPRecitations.VHRecita
                 return;
             }
 
-            mBinding.reciter.setText(model.getReciter());
+            mBinding.reciter.setText(model.getReciterName());
 
-            if (TextUtils.isEmpty(model.getStyle())) {
+            if (TextUtils.isEmpty(model.getStyleName())) {
                 mBinding.style.setVisibility(View.GONE);
             } else {
                 mBinding.style.setVisibility(View.VISIBLE);
-                mBinding.style.setText(model.getStyle());
+                mBinding.style.setText(model.getStyleName());
             }
 
             mBinding.radio.setChecked(model.isChecked());

@@ -71,9 +71,9 @@ public class TafsirWebViewClient extends WebViewClient {
                 break;
             case "assets-font": {
                 if (uriStr.contains("me_quran")) {
-                    data = ctx.getResources().openRawResource(+R.font.me_quran_4_uthmani_text);
+                    data = ctx.getResources().openRawResource(+R.font.uthmanic_hafs);
                 } else if (uriStr.contains("verse-preview")) {
-                    data = ctx.getResources().openRawResource(+R.font.pdms);
+                    data = ctx.getResources().openRawResource(+R.font.uthmanic_hafs);
                 } else if (TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR.equals(
                     mActivityTafsir.mTafsirSlug) && uriStr.contains(
                     "content")) {

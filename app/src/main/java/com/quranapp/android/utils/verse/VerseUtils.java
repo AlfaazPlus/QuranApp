@@ -3,14 +3,10 @@ package com.quranapp.android.utils.verse;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
-import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import androidx.annotation.NonNull;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
@@ -19,14 +15,14 @@ import static android.text.Spanned.SPAN_POINT_MARK;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
+import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.interfaceUtils.VOTDCallback;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.others.ShortcutUtils;
-import com.quranapp.android.utils.reader.ArabicUtils;
-import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.simplified.SimpleClickableSpan;
+import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 
@@ -43,35 +39,26 @@ public abstract class VerseUtils {
      * verseSerial and verseSerialFont will be null if isKFQPCFont() is true
      */
     public static CharSequence decorateVerse(
-        String arabicText,
-        Integer verseSerial,
+        Verse verse,
         Typeface verseFont,
-        Typeface verseSerialFont,
-        int verseTextSize,
-        int serialTextSize
+        int verseTextSize
     ) {
-        if (TextUtils.isEmpty(arabicText)) {
+        if (TextUtils.isEmpty(verse.arabicText)) {
             return "";
         }
 
-        SpannableString arabicSS = new SpannableString(arabicText);
+        SpannableString arabicSS = new SpannableString(verse.arabicText);
         // Set the typeface to span over arabic text
         arabicSS.setSpan(new TypefaceSpan2(verseFont), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         if (verseTextSize > 0) {
             arabicSS.setSpan(new AbsoluteSizeSpan(verseTextSize), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        if (verseSerial == null) {
+        if (verse.endText.isEmpty()) {
             return arabicSS;
         }
 
-        SpannableString verseSerialSS = prepareVerseSerial(verseSerial, verseSerialFont);
-        if (serialTextSize > 0) {
-            verseSerialSS.setSpan(new AbsoluteSizeSpan(serialTextSize), 0, verseSerialSS.length(),
-                SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-
-        return TextUtils.concat(arabicSS, " ", verseSerialSS);
+        return TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont));
     }
 
     /**
@@ -79,47 +66,38 @@ public abstract class VerseUtils {
      */
     public static CharSequence decorateQuranPageVerse(
         int txtColor,
-        String arabicText,
-        int verseNo,
+        Verse verse,
         Typeface verseFont,
-        Typeface verseSerialFont,
         Runnable onClick
     ) {
-        if (TextUtils.isEmpty(arabicText)) {
+        if (TextUtils.isEmpty(verse.arabicText)) {
             return "";
         }
 
-        SpannableString arabicSS = new SpannableString(arabicText);
+        SpannableString arabicSS = new SpannableString(verse.arabicText);
         // Set the typeface to span over arabic text
         arabicSS.setSpan(new TypefaceSpan2(verseFont), 0, arabicSS.length(), SPAN_POINT_MARK);
 
         final CharSequence concat;
-
-        if (verseSerialFont != null) {
-            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verseNo, verseSerialFont));
+        if (!verse.endText.isEmpty()) {
+            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont));
         } else {
             concat = arabicSS;
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder(concat);
-        builder.setSpan(new VerseArabicHighlightSpan(verseNo), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new VerseArabicHighlightSpan(verse.verseNo), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new SimpleClickableSpan(txtColor, onClick), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        //
+        //        // single line span
+        //        builder.setSpan(new SingleLineSpan(), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }
 
-    private static SpannableString prepareVerseSerial(int verseNo, Typeface verseSerialFont) {
-        StringBuilder verseNumberSB = new StringBuilder(ArabicUtils.convertToArabicDecimal(verseNo));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            verseNumberSB = verseNumberSB.reverse();
-        } else {
-            verseNumberSB.insert(0, "﴿");
-            verseNumberSB.append("﴾");
-        }
-        String verseNumber = verseNumberSB.toString();
-
-        SpannableString verseNoSpannable = new SpannableString(verseNumber);
+    private static CharSequence prepareVerseSerial(String serialText, Typeface serialFont) {
+        SpannableString verseNoSpannable = new SpannableString(new StringBuilder(serialText).reverse().toString());
         // Set the typeface to span over verse number text
-        verseNoSpannable.setSpan(new TypefaceSpan2(verseSerialFont), 0, verseNumber.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        verseNoSpannable.setSpan(new TypefaceSpan2(serialFont), 0, verseNoSpannable.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return verseNoSpannable;
     }

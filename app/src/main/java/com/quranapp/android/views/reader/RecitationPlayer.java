@@ -284,7 +284,8 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         SPReader.setRecitationVerseSync(getContext(), P.verseSync);
 
         if (fromUser) {
-            popMiniMsg(P.verseSync ? "Verse sync : ON" : "Verse sync : OFF", Toast.LENGTH_SHORT);
+            popMiniMsg(getContext().getString(P.verseSync ? R.string.verseSyncOn : R.string.verseSyncOff),
+                Toast.LENGTH_SHORT);
         }
     }
 

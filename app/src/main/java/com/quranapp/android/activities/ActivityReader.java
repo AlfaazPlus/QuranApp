@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
@@ -903,9 +901,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                     verseContentSB.append(" ").append(
                         mVerseDecorator.setupArabicTextQuranPage(
                             txtColor,
-                            verse.arabicText,
-                            verse.verseNo,
-                            verse.pageNo,
+                            verse,
                             () -> mBinding.verseQuickActions.show(section, verse)
                         )
                     );
@@ -1017,9 +1013,13 @@ public class ActivityReader extends ReaderPossessingActivity {
                 continue;
             }
 
+            if (!pageModel.hasChapter(chapterNo)) {
+                continue;
+            }
+
             adapter.notifyItemChanged(pos);
 
-            /*for (QuranPageSectionModel section : pageModel.getSections()) {
+            for (QuranPageSectionModel section : pageModel.getSections()) {
                 if (section.getChapterNo() != chapterNo) {
                     continue;
                 }
@@ -1032,7 +1032,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                         section, false);
                     break outer;
                 }
-            }*/
+            }
         }
     }
 

@@ -12,16 +12,17 @@ import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
-import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
+import java.util.concurrent.atomic.AtomicReference
 
 private const val KEY_CHAPTER_LIST = "suras"
 private const val KEY_VERSE_LIST = "ayas"
 private const val KEY_ARABIC_TEXT = "text"
+private const val KEY_END_TEXT = "end"
 private const val KEY_ID = "id"
 private const val KEY_NUMBER = "index"
 private const val KEY_PAGE_NUMBER = "page"
@@ -108,7 +109,8 @@ class QuranParser(private val ctx: Context) {
                     chapterNo,
                     verseObj[KEY_NUMBER]!!.jsonPrimitive.int,
                     verseObj[KEY_PAGE_NUMBER]?.jsonPrimitive?.int ?: -1,
-                    verseObj[KEY_ARABIC_TEXT]!!.jsonPrimitive.content
+                    verseObj[KEY_ARABIC_TEXT]!!.jsonPrimitive.content,
+                    verseObj[KEY_END_TEXT]?.jsonPrimitive?.content ?: ""
                 )
             )
         }

@@ -33,7 +33,7 @@ import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.databinding.LytQuranPageBinding;
 import com.quranapp.android.databinding.LytQuranPageSectionBinding;
 import com.quranapp.android.utils.extensions.ViewKt;
-import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
+import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 import com.quranapp.android.utils.univ.SpannableFactory;
 
