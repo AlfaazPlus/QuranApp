@@ -4,6 +4,8 @@ Die <i>QuranApp</i> erleichtert das tägliche Lesen des Quran zu jeder Zeit und 
 
 <h3>Features:</h3>
 
+Die folgenden Funktionen sind der Grund, warum Sie die QuranApp verwenden sollten.
+
 <b>🛡️ Pure</b>
 
 - Open source
