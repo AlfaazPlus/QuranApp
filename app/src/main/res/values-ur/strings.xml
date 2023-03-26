@@ -342,4 +342,12 @@
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d محفوظ شدہ باب کی معلومات کو صاف کیا جا سکتا ہے۔</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
     <string name="titleChapterInfo">باب کی معلومات</string>
+
+    <string name="nothingToCleanup">صاف کرنے کے لیے کچھ نہیں ہے۔</string>
+    <string name="nItem">%d آئٹم</string>
+    <string name="nItems">%d آئٹم</string>
+    <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
+    <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
+    <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔</string>
+
 </resources>
