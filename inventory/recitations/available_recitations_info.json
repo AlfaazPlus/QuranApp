@@ -10,7 +10,8 @@
       "url-host": null,
       "url-path": "/AbdulBaset/Mujawwad/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
-          "ur": "عبد الباسط بن عبد الصمد"
+        "ckb": "عەبدولباست عەبدولسەمەد",
+        "ur": "عبد الباسط بن عبد الصمد"
       }
     },
     {
@@ -18,98 +19,154 @@
       "reciter": "Abdur-Rahman as-Sudais",
       "style": null,
       "url-host": null,
-      "url-path": "/Sudais/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/Sudais/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "عەبدولڕەحمان سودەیسی",
+        "ur": "عبدالرحمٰن السدیس"
+      }
     },
     {
       "slug": "al-shatri",
       "reciter": "Abu Bakr al-Shatri",
       "style": null,
       "url-host": null,
-      "url-path": "/Shatri/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/Shatri/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "ئەبوبەکر شاتری",
+        "ur": "ابوبکر الشطری"
+      }
     },
     {
       "slug": "al-ajmi",
       "reciter": "Ahmad bin Ali Al-Ajmi",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/ahmed_ibn_ali_al_ajamy_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/ahmed_ibn_ali_al_ajamy_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "ئەحمەد عەلی عەجەمی",
+        "ur": "احمد بن علی العجمی"
+      }
     },
     {
       "slug": "al-hudhaify",
       "reciter": "Ali ibn Abdur-Rahman al Hudhaify",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Hudhaify_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Hudhaify_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "عەلی عەبدولڕەحمان حوزەیفی",
+        "ur": "علی بن عبدالرحمٰن الحذیفی"
+      }
     },
     {
       "slug": "fares-abbad",
       "reciter": "Fares Abbad",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Fares_Abbad_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Fares_Abbad_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "فارس عەباد",
+        "ur": "فارس آباد"
+      }
     },
     {
       "slug": "ar-rifai",
       "reciter": "Hani ar-Rifai",
       "style": null,
       "url-host": null,
-      "url-path": "/Rifai/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/Rifai/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "هانی ڕەفاعی",
+        "ur": "ہانی الرفاعی"
+      }
     },
     {
       "slug": "al-tunaiji",
       "reciter": "Khalifa Al Tunaiji",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/khalefa_al_tunaiji_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/khalefa_al_tunaiji_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "خەلیفە تونەیجی",
+        "ur": "خلیفہ التونیجی"
+      }
     },
     {
       "slug": "mishary-rashid",
       "reciter": "Mishari Rashid al-Afasy",
       "style": null,
       "url-host": null,
-      "url-path": "/Alafasy/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/Alafasy/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "مەشاری ڕاشید عەفاسی",
+        "ur": "مشاری راشد العفاسی"
+      }
     },
     {
       "slug": "muhammad-ayyoub",
       "reciter": "Muhammad Ayyoub",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Muhammad_Ayyoub_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Muhammad_Ayyoub_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "محمد ئەیوب",
+        "ur": "محمد ایوب"
+      }
     },
     {
       "slug": "al-qatami",
       "reciter": "Nasser Al Qatami",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Nasser_Alqatami_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Nasser_Alqatami_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "ناسڕ قەتامی",
+        "ur": "ناصر القطامی"
+      }
     },
     {
       "slug": "al-ghamdi",
       "reciter": "Saad Al-Ghamdi",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Ghamadi_40kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Ghamadi_40kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "سەعد غامدی",
+        "ur": "سعد الغامدی"
+      }
     },
     {
       "slug": "as-shuraym",
       "reciter": "Saud Al-Shuraim",
       "style": null,
       "url-host": null,
-      "url-path": "/Shuraym/mp3/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/Shuraym/mp3/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "سعود شورەیم",
+        "ur": "سعود الشریم"
+      }
     },
     {
       "slug": "ad-dussary",
       "reciter": "Yasser ad-Dussary",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/Yasser_Ad-Dussary_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/Yasser_Ad-Dussary_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "یاسر دۆسەری",
+        "ur": "یاسر الدوسری"
+      }
     },
     {
       "slug": "al-jazaery",
       "reciter": "Yassin al-Jazaery",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/warsh_yassin_al_jazaery_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3"
+      "url-path": "/data/warsh_yassin_al_jazaery_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ckb": "یاسین جەزائیری",
+        "ur": "یاسین الجزائری"
+      }
     }
   ]
 }
