@@ -41,7 +41,8 @@ public abstract class VerseUtils {
     public static CharSequence decorateVerse(
         Verse verse,
         Typeface verseFont,
-        int verseTextSize
+        int verseTextSize,
+        boolean shouldReverseSerial
     ) {
         if (TextUtils.isEmpty(verse.arabicText)) {
             return "";
@@ -58,7 +59,7 @@ public abstract class VerseUtils {
             return arabicSS;
         }
 
-        return TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont));
+        return TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial));
     }
 
     /**
@@ -68,6 +69,7 @@ public abstract class VerseUtils {
         int txtColor,
         Verse verse,
         Typeface verseFont,
+        boolean shouldReverseSerial,
         Runnable onClick
     ) {
         if (TextUtils.isEmpty(verse.arabicText)) {
@@ -80,7 +82,7 @@ public abstract class VerseUtils {
 
         final CharSequence concat;
         if (!verse.endText.isEmpty()) {
-            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont));
+            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial));
         } else {
             concat = arabicSS;
         }
@@ -88,14 +90,13 @@ public abstract class VerseUtils {
         SpannableStringBuilder builder = new SpannableStringBuilder(concat);
         builder.setSpan(new VerseArabicHighlightSpan(verse.verseNo), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new SimpleClickableSpan(txtColor, onClick), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-        //
-        //        // single line span
-        //        builder.setSpan(new SingleLineSpan(), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }
 
-    private static CharSequence prepareVerseSerial(String serialText, Typeface serialFont) {
-        SpannableString verseNoSpannable = new SpannableString(new StringBuilder(serialText).reverse().toString());
+    private static CharSequence prepareVerseSerial(String serialText, Typeface serialFont, boolean shouldReverse) {
+        CharSequence text = shouldReverse ? new StringBuilder(serialText).reverse().toString() : serialText;
+
+        SpannableString verseNoSpannable = new SpannableString(text);
         // Set the typeface to span over verse number text
         verseNoSpannable.setSpan(new TypefaceSpan2(serialFont), 0, verseNoSpannable.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
