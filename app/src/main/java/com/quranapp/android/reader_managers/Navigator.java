@@ -20,7 +20,7 @@ import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.components.reader.ReaderRecyclerItemModel;
 import com.quranapp.android.databinding.ActivityReaderBinding;
 import com.quranapp.android.utils.quran.QuranUtils;
-import com.quranapp.android.utils.reader.quranPage.VerseArabicHighlightSpan;
+import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
 import com.quranapp.android.views.reader.QuranPageView;
 import com.quranapp.android.views.reader.QuranPageView.QuranPageSectionView;
 import com.quranapp.android.views.reader.ReaderFooter;

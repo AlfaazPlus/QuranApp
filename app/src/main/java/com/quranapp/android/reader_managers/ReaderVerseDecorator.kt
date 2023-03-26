@@ -6,6 +6,7 @@ import android.text.SpannableString
 import android.util.TypedValue
 import android.widget.TextView
 import com.quranapp.android.R
+import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
@@ -92,28 +93,25 @@ class ReaderVerseDecorator(private val ctx: Context) {
     }
 
     @JvmOverloads
-    fun setupArabicText(arabicText: String, pageNo: Int, verseTextSize: Int = -1): CharSequence {
+    fun setupArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(
-            arabicText,
-            if (isKFQPC) fontsArabicKFQPC[pageNo] ?: Typeface.DEFAULT else fontQuranText,
+            verse,
+            if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
             verseTextSize
         )
     }
 
     fun setupArabicTextQuranPage(
         txtColor: Int,
-        arabicText: String,
-        verseNo: Int,
-        pageNo: Int,
+        verse: Verse,
         onClick: Runnable
     ): CharSequence =
         VerseUtils.decorateQuranPageVerse(
             txtColor,
-            arabicText,
-            verseNo,
-            if (isKFQPCScript()) fontsArabicKFQPC[pageNo] else fontQuranText,
+            verse,
+            if (isKFQPCScript()) fontsArabicKFQPC[verse.pageNo] else fontQuranText,
             onClick
         )
 

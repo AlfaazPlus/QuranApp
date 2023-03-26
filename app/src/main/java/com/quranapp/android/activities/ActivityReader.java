@@ -901,9 +901,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                     verseContentSB.append(" ").append(
                         mVerseDecorator.setupArabicTextQuranPage(
                             txtColor,
-                            verse.arabicText,
-                            verse.verseNo,
-                            verse.pageNo,
+                            verse,
                             () -> mBinding.verseQuickActions.show(section, verse)
                         )
                     );
