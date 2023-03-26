@@ -330,7 +330,7 @@
       "reciter": "Yassin al-Jazaery",
       "style": null,
       "url-host": "everyayah.com",
-      "url-path": "/data/warsh_yassin_al_jazaery_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "url-path": "/data/warsh/warsh_yassin_al_jazaery_64kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
         "ar": "",
         "bn": "",
