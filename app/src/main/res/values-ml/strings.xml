@@ -302,4 +302,7 @@
     <string name="labelDownload">ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="strTitleRecitations">പാരായണങ്ങൾ</string>
     <string name="strTitleScripts">സ്ക്രിപ്റ്റുകൾ</string>
+    <string name="msgDownloadKFQPCResources">നിങ്ങൾക്ക് ഈ സ്ക്രിപ്റ്റ് ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഈപ്പറയുന്ന റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്:</string>
+    <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ\?</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">സ്ക്രിപ്റ്റ്: %s (~1MB)</string>
 </resources>

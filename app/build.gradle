@@ -55,7 +55,6 @@ android {
             resValue "string", "app_name", "QuranApp Debug"
 
             /* ---------------------------------------------------------------- */
-            resValue("bool", "FIREBASE_ANALYTICS_DEACTIVATED", "true")
             resValue "string", "cleartextTrafficPermitted", "true"
         }
 
@@ -66,7 +65,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             /* ---------------------------------------------------------------- */
-            resValue("bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false")
             resValue "string", "cleartextTrafficPermitted", "false"
         }
     }
