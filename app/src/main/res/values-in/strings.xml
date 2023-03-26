@@ -337,4 +337,9 @@
     <string name="translationCanBeFreedUp" formatted="false">%d terjemahan yang terunduh bisa dibersihkan.</string>
     <string name="msgVerseReminderAlarmPermission">Izin alarm diperlukan untuk aktifkan pengingat ayat.</string>
     <string name="msgVerseReminderNotifPermission">Izin notifikasi diperlukan untuk mengaktifkan pengingat ayat.</string>
+    <string name="pasteCrashLogGithubIssue">Log kerusakan telah disalin ke clipboard. Silakan tempelkan di permasalahan GitHub.</string>
+    <string name="createIssue">Membuat permasalahan</string>
+    <string name="copiedToClipboard">Disalin ke papan klip.</string>
+    <string name="msgAlarmManagerNotAvailable">Pengelola alarm tidak tersedia pada perangkat ini.</string>
+    <string name="github">GitHub</string>
 </resources>
