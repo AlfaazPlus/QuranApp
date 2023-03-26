@@ -81,7 +81,7 @@
     <string name="strTitleReaderJuz">Juz (Abschnitt)</string>
     <string name="strTitleReaderJuz2">Abschnitt</string>
     <string name="strTitleVerseOptions">Vers Einstellungen</string>
-    <string name="strTitleVerseRecitation">Vers Lesung</string>
+    <string name="strTitleVerseRecitation">Vers Rezitation</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Sure %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Gehe zu Vers %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Lies Verse %1$d - %2$d</string>
@@ -103,8 +103,8 @@
     <string name="strTitleAboutSurah">über Sure</string>
     <string name="strTitleTranslations">Übersetzungen</string>
     <string name="strTitleDownloadTranslations">Download</string>
-    <string name="strTitleRecitations">Lesungen</string>
-    <string name="strTitleSelectReciter">Vorleser auswählen</string>
+    <string name="strTitleRecitations">Rezitationen</string>
+    <string name="strTitleSelectReciter">Rezitator auswählen</string>
     <string name="strTitleScripts">Skripte</string>
     <string name="strTitleSelectScripts">Skript auswählen</string>
     <string name="strTitleBookmarkDeleteThis">Lesezeichen entfernen\?</string>
@@ -174,7 +174,7 @@
     <string name="strHintSearchChapter">Sure suchen</string>
     <string name="strHintSearchVerse">Vers suchen</string>
     <string name="strHintSearchTranslation">Übersetzung suchen</string>
-    <string name="strHintSearchReciter">Vorleser suchen</string>
+    <string name="strHintSearchReciter">Rezitator suchen</string>
     <string name="strHintSearchScript">Skript suchen</string>
     <string name="strHintSearchLanguage">Sprache suchen</string>
     <string name="strHintFromVerse">Aus Vers</string>
