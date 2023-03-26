@@ -120,4 +120,39 @@
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s Suresi : %2$d. Ayet</string>
     <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">Ayet: %d</string>
+    <string name="strTitleSelectScripts">Hat seç</string>
+    <string name="strTitleBookmarkDeleteThis">Bu yer imi kaldırılsın mı\?</string>
+    <string name="strTitleBookmarkDeleteAll">Tüm yer imleri kaldırılsın mı\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d yer imi kaldırılsın mı\?</string>
+    <string name="strTitleTranslDelete">Meal silinsin mi\?</string>
+    <string name="strTitleResetReaderSettings">Okuyucu ayarları sıfırlansın mı\?</string>
+    <string name="strTitleHideAd">Reklamı Gizle</string>
+    <string name="strTitleRecitationOptions">Seçenekler</string>
+    <string name="strTitleAutoPlayNext">Otomatik ilerle</string>
+    <string name="strTitleQuickEdit">Hızlı Düzenle</string>
+    <string name="strTitleShareVerse">Ayeti Paylaş</string>
+    <string name="strTitleExplainIssue">Sorunu açıkla</string>
+    <string name="strTitleFeaturedQuran">Öne Çıkan Okuma</string>
+    <string name="strTitleVOTD">Günün Ayeti</string>
+    <string name="strTitleTopics">Konular</string>
+    <string name="strTitleDuas">Kur\'an Duaları</string>
+    <string name="strTitleProphets">Peygamberler</string>
+    <string name="strTitleFeaturedTopics">Kur\'an\'daki Konular</string>
+    <string name="strTitleFeaturedDuas">Kur\'an\'daki Dualar</string>
+    <string name="strTitleFeaturedProphets">Kur\'an\'daki Peygamberler</string>
+    <string name="strTitleFailed">Başarısız</string>
+    <string name="strTitleThresholdReached">Eşiğe Ulaşıldı</string>
+    <string name="strTitleChapInfoJuzNo">Cüz No.</string>
+    <string name="strTitleChapInfoRukus">Bölümler</string>
+    <string name="strTitleChapInfoPages">Sayfalar</string>
+    <string name="strTitleRepeatVerse">Ayeti tekrarla</string>
+    <string name="strTitleReportVerse">Ayeti Bildir</string>
+    <string name="strTitleSelectReason">Sebep Seç</string>
+    <string name="strTitlePrivacyPolicy">Gizlilik Politikası</string>
+    <string name="strTitleSuccess">Başarılı</string>
+    <string name="strChapInfoSeeMore">Daha fazla bilgi gör ›</string>
+    <string name="strTitleChapInfoChapterNo">Bölüm Numarası</string>
+    <string name="strTitleChapInfoVerses">Ayetler</string>
+    <string name="strTitleChapInfoRevOrder">Vahiy Sırası</string>
+    <string name="strTitleChapInfoRevType">Vahiy Türü</string>
 </resources>
