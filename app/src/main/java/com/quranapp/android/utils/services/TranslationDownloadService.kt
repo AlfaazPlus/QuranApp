@@ -200,7 +200,7 @@ class TranslationDownloadService : Service() {
         val activityIntent = Intent(this, ActivitySettings::class.java)
         activityIntent.putExtra(
             ActivitySettings.KEY_SETTINGS_DESTINATION,
-            ActivitySettings.SETTINGS_TRANSL_DOWNLOAD
+            ActivitySettings.SETTINGS_TRANSLATION_DOWNLOAD
         )
         val pendingIntent = PendingIntent.getActivity(
             this,

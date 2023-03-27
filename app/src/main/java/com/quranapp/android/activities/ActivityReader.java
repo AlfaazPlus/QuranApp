@@ -105,6 +105,7 @@ import kotlin.Pair;
 public class ActivityReader extends ReaderPossessingActivity {
     public static final String KEY_RECITER_CHANGED = "reciter.changed";
     public static final String KEY_SCRIPT_CHANGED = "script.changed";
+    public static final String KEY_TAFSIR_CHANGED = "tafsir.changed";
 
     public final CallableTaskRunner<ArrayList<QuranPageModel>> mPagesTaskRunner = new CallableTaskRunner<>();
     public ReaderParams mReaderParams;

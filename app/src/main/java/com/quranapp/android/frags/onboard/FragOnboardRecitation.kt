@@ -11,8 +11,8 @@ import com.quranapp.android.R
 import com.quranapp.android.adapters.recitation.ADPRecitations
 import com.quranapp.android.components.recitation.RecitationModel
 import com.quranapp.android.databinding.LytOnboardRecitationsBinding
-import com.quranapp.android.utils.app.RecitationManager.getModels
-import com.quranapp.android.utils.app.RecitationManager.prepare
+import com.quranapp.android.utils.reader.recitation.RecitationManager.getModels
+import com.quranapp.android.utils.reader.recitation.RecitationManager.prepare
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner
 import com.quranapp.android.widgets.PageAlert

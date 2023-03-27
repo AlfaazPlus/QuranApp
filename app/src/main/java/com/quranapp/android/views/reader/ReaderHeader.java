@@ -76,7 +76,7 @@ public class ReaderHeader extends AppBarLayout implements Destroyable {
             }
         });
         mBinding.readerSetting.setOnClickListener(v -> openReaderSetting(-1));
-        mBinding.btnTranslLauncher.setOnClickListener(v -> openReaderSetting(ActivitySettings.SETTINGS_TRANSL));
+        mBinding.btnTranslLauncher.setOnClickListener(v -> openReaderSetting(ActivitySettings.SETTINGS_TRANSLATION));
 
         ViewCompat.setTooltipText(mBinding.readerSetting, getContext().getString(R.string.strTitleReaderSettings));
         ViewCompat.setTooltipText(mBinding.btnTranslLauncher,

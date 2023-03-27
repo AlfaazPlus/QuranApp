@@ -24,7 +24,7 @@ import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.tafsir.TafsirJSInterface;
 import com.quranapp.android.utils.tafsir.TafsirUtils;
-import com.quranapp.android.utils.tafsir.TafsirWebViewClient;
+import com.quranapp.android.utils.tafsir.TafsirWebViewClient2;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.FileUtils;
@@ -45,7 +45,7 @@ import java.net.URL;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class ActivityTafsir extends ReaderPossessingActivity {
+public class ActivityTafsir2 extends ReaderPossessingActivity {
     private final CallableTaskRunner<String> mTaskRunner = new CallableTaskRunner<>();
     private ActivityChapterInfoBinding mBinding;
     private FileUtils fileUtils;
@@ -90,7 +90,7 @@ public class ActivityTafsir extends ReaderPossessingActivity {
     }
 
     public void initContent(Intent intent) {
-        String slug = intent.getStringExtra(TafsirUtils.KEY_TAFSIR_SLUG);
+        String slug = intent.getStringExtra(TafsirUtils.KEY_TAFSIR);
 
         int chapterNo = -1;
         int verseNo = -2;
@@ -116,7 +116,7 @@ public class ActivityTafsir extends ReaderPossessingActivity {
         }
 
         if (slug == null) {
-            slug = TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN;
+            //slug = TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN;
         }
 
         mTafsirSlug = slug;
@@ -162,7 +162,7 @@ public class ActivityTafsir extends ReaderPossessingActivity {
                 return true;
             }
         });
-        webView.setWebViewClient(new TafsirWebViewClient(this) {
+        webView.setWebViewClient(new TafsirWebViewClient2(this) {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -242,11 +242,11 @@ public class ActivityTafsir extends ReaderPossessingActivity {
 
         final File tafsirFile;
         if (mLoadFullChapter) {
-            tafsirFile = fileUtils.getTafsirFileFullChapter(mTafsirSlug, mChapterNo);
+            //tafsirFile = fileUtils.getTafsirFileFullChapter(mTafsirSlug, mChapterNo);
         } else {
             tafsirFile = fileUtils.getTafsirFileSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
         }
-        tafsirFile.delete();
+        //tafsirFile.delete();
     }
 
 
@@ -256,12 +256,12 @@ public class ActivityTafsir extends ReaderPossessingActivity {
 
         public LoadTafsirTask() {
             if (mLoadFullChapter) {
-                tafsirFile = fileUtils.getTafsirFileFullChapter(mTafsirSlug, mChapterNo);
-                urlStr = TafsirUtils.prepareTafsirUrlFullChapter(mTafsirSlug, mChapterNo);
+                //tafsirFile = fileUtils.getTafsirFileFullChapter(mTafsirSlug, mChapterNo);
+                //urlStr = TafsirUtils.prepareTafsirUrlFullChapter(mTafsirSlug, mChapterNo);
             } else {
+            }
                 tafsirFile = fileUtils.getTafsirFileSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
                 urlStr = TafsirUtils.prepareTafsirUrlSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
-            }
         }
 
         @Override
@@ -283,7 +283,7 @@ public class ActivityTafsir extends ReaderPossessingActivity {
                 fileUtils.createFile(tafsirFile);
             }
 
-            if (!NetworkStateReceiver.isNetworkConnected(ActivityTafsir.this)) {
+            if (!NetworkStateReceiver.isNetworkConnected(ActivityTafsir2.this)) {
                 throw new NoInternetException();
             }
 

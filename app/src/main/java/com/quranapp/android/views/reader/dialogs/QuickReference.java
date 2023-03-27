@@ -416,7 +416,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                             msgView.setActionText(actvt.str(R.string.strTitleSettings), () -> {
                                 // --
                                 ((ActivityReader) actvt).mBinding.readerHeader.openReaderSetting(
-                                    ActivitySettings.SETTINGS_TRANSL);
+                                    ActivitySettings.SETTINGS_TRANSLATION);
                             });
                         }
 

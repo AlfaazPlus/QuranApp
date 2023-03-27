@@ -101,6 +101,7 @@
     <string name="strTitleFilters">ফিল্টার</string>
     <string name="strTitleMenu">মেনু</string>
     <string name="strTitleTafsir">তাফসির</string>
+    <string name="strTitleSelectTafsir">তাফসির নির্বাচন করুন</string>
     <string name="strTitleAboutSurah">সূরা সম্পর্কে</string>
     <string name="strTitleTranslations">অনুবাদসমূহ</string>
     <string name="strTitleSelectReciter">ক্বারী নির্বাচন করুন</string>

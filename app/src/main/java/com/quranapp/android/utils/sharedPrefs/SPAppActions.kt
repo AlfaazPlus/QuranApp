@@ -14,6 +14,7 @@ object SPAppActions {
     // Fetch translations forced in ActivityTranslationDownload.
     private const val KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE = "app.action.translations.fetch_force"
     private const val KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
+    private const val KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE = "app.action.tafsirs.fetch_force"
     private const val KEY_APP_ACTION_SP_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
     private const val KEY_APP_ACTION_SP_PENDING = "app.action.pending"
     private const val KEY_APP_ACTION_ONBOARDING_REQUIRED = "app.action.onboarding_required"
@@ -45,6 +46,20 @@ object SPAppActions {
     @JvmStatic
     fun getFetchRecitationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
         KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE,
+        false
+    )
+
+    @JvmStatic
+    fun setFetchTafsirsForce(ctx: Context, fetchForce: Boolean) {
+        sp(ctx).edit().apply {
+            putBoolean(KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE, fetchForce)
+            apply()
+        }
+    }
+
+    @JvmStatic
+    fun getFetchTafsirsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
+        KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE,
         false
     )
 

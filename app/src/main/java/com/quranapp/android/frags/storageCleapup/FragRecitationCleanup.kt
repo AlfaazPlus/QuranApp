@@ -10,7 +10,7 @@ import com.quranapp.android.R
 import com.quranapp.android.adapters.storageCleanup.ADPRecitationCleanup
 import com.quranapp.android.components.storageCleanup.RecitationCleanupItemModel
 import com.quranapp.android.databinding.FragStorageCleanupBinding
-import com.quranapp.android.utils.app.RecitationManager
+import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

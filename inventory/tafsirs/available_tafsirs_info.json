@@ -1,0 +1,62 @@
+{
+  "tafsirs": {
+    "ar": [
+      {
+        "key": "ar_tafsir-ibn-kathir",
+        "name": "تفسير ابن کثير",
+        "author": "حافظ ابن كثير",
+        "langCode": "ar",
+        "langName": "العربية",
+        "slug": "ar-tafsir-ibn-kathir"
+      }
+    ],
+    "en": [
+      {
+        "key": "en_tafsir-ibn-kathir",
+        "name": "Tafsir Ibn Kathir",
+        "author": "Hafiz Ibn Kathir",
+        "langCode": "en",
+        "langName": "English",
+        "slug": "en-tafisr-ibn-kathir"
+      }
+    ],
+    "ur": [
+      {
+        "key": "ur_tafsir-ibn-kathir",
+        "name": "تفسیر ابن کثیر",
+        "author": "حافظ ابن کثیر",
+        "langCode": "ur",
+        "langName": "اردو",
+        "slug": "tafseer-ibn-e-kaseer-urdu"
+      },
+      {
+        "key": "ur_tafsir-bayan-ul-quran",
+        "name": "بیان القرآن",
+        "author": "اسرار احمد",
+        "langCode": "ur",
+        "langName": "اردو",
+        "slug": "tafsir-bayan-ul-quran"
+      }
+    ],
+    "bn": [
+      {
+        "key": "bn_tafsir-ibn-kathir",
+        "name": "তাফসীর ইবনে কাসীর",
+        "author": "হাফিজ ইবনে কাসীর",
+        "langCode": "bn",
+        "langName": "বাংলা",
+        "slug": "bn-tafseer-ibn-e-kaseer"
+      }
+    ],
+    "ku": [
+      {
+        "key": "ku-tafsir-rebar",
+        "name": "Rebar Kurdish Tafsir",
+        "author": "Rebar Kurdish Tafsir",
+        "langCode": "ku",
+        "langName": "کوردی",
+        "slug": "kurd-tafsir-rebar"
+      }
+    ]
+  }
+}

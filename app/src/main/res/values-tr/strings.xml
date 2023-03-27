@@ -81,6 +81,7 @@
     <string name="strTitleAddNote">Not ekle</string>
     <string name="strTitleSubscription">Abonelik</string>
     <string name="strTitleTafsir">Tefsir</string>
+    <string name="strTitleSelectTafsir">Tefsir Seç</string>
     <string name="strTitleAboutSurah">Sure Hakkında</string>
     <string name="strTitleTranslations">Meal</string>
     <string name="strTitleRecitations">Tilavet</string>

@@ -12,10 +12,12 @@ import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_R
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
 
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.reader.QuranScriptUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.reader.recitation.RecitationManager;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.reader.tafsir.TafsirManager;
+import com.quranapp.android.utils.tafsir.TafsirUtils;
 import com.quranapp.android.utils.univ.Keys;
 
 import java.util.HashSet;
@@ -28,6 +30,7 @@ public abstract class SPReader {
     public static final String SP_TEXT_STYLE = "sp_reader_text";
     public static final String SP_TRANSL = "sp_reader_translations";
     public static final String SP_RECITATION_OPTIONS = "sp_reader_recitation_options";
+    public static final String SP_TAFSIR = "sp_reader_tafsir";
     public static final String SP_SCRIPT = "sp_reader_script";
     public static final String SP_READER_STYLE = "sp_reader_style";
 
@@ -213,5 +216,19 @@ public abstract class SPReader {
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(Keys.READER_KEY_READER_STYLE, readerStyle);
         editor.apply();
+    }
+
+    public static String getSavedTafsirKey(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE);
+        return sp.getString(TafsirUtils.KEY_TAFSIR, "");
+    }
+
+    public static void setSavedTafsirKey(Context context, String tafsirKey) {
+        SharedPreferences sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(TafsirUtils.KEY_TAFSIR, tafsirKey);
+        editor.apply();
+
+        TafsirManager.setSavedTafsirKey(tafsirKey);
     }
 }

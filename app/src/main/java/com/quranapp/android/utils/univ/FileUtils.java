@@ -112,22 +112,19 @@ public final class FileUtils {
         return new File(chapterInfoDir, chapterInfoSubPath);
     }
 
+
+    public File getTafsirsManifestFile() {
+        return new File(getTafsirDir(), TafsirUtils.AVAILABLE_TAFSIRS_FILENAME);
+    }
+
     public File getTafsirDir() {
         return makeAndGetAppResourceDir(TafsirUtils.DIR_NAME);
     }
-
     public File getTafsirFileSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
         File tafsirDir = getTafsirDir();
         String tafsirSubPath = TafsirUtils.prepareTafsirFilePathSingleVerse(tafsirSlug, chapterNo, verseNo);
         return new File(tafsirDir, tafsirSubPath);
     }
-
-    public File getTafsirFileFullChapter(String tafsirSlug, int chapterNo) {
-        File tafsirDir = getTafsirDir();
-        String tafsirSubPath = TafsirUtils.prepareTafsirFilePathFullChapter(tafsirSlug, chapterNo);
-        return new File(tafsirDir, tafsirSubPath);
-    }
-
     public File getScriptDir() {
         return makeAndGetAppResourceDir(QuranScriptUtils.INSTANCE.getSCRIPT_DIR_NAME());
     }

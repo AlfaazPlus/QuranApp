@@ -24,9 +24,9 @@ import com.quranapp.android.frags.settings.FragSettingsLanguage;
 import com.quranapp.android.frags.settings.FragSettingsMain;
 import com.quranapp.android.frags.settings.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.FragSettingsScripts;
+import com.quranapp.android.frags.settings.FragSettingsTafsirs;
 import com.quranapp.android.frags.settings.FragSettingsTransl;
 import com.quranapp.android.frags.settings.FragSettingsTranslationsDownload;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.views.BoldHeader;
 
 import java.util.Objects;
@@ -36,10 +36,11 @@ public class ActivitySettings extends BaseActivity {
     public static final int SETTINGS_LANG = 0x1;
     public static final int SETTINGS_THEME = 0x2;
     public static final int SETTINGS_VOTD = 0x3;
-    public static final int SETTINGS_TRANSL = 0x4;
-    public static final int SETTINGS_TRANSL_DOWNLOAD = 0x5;
-    public static final int SETTINGS_RECITER = 0x6;
-    public static final int SETTINGS_SCRIPT = 0x7;
+    public static final int SETTINGS_TRANSLATION = 0x4;
+    public static final int SETTINGS_TRANSLATION_DOWNLOAD = 0x5;
+    public static final int SETTINGS_TAFSIR = 0x6;
+    public static final int SETTINGS_RECITER = 0x7;
+    public static final int SETTINGS_SCRIPT = 0x8;
 
     private ActivitySettingsBinding mBinding;
 
@@ -133,11 +134,14 @@ public class ActivitySettings extends BaseActivity {
             case SETTINGS_LANG:
                 destFrag = FragSettingsLanguage.class;
                 break;
-            case SETTINGS_TRANSL:
+            case SETTINGS_TRANSLATION:
                 destFrag = FragSettingsTransl.class;
                 break;
-            case SETTINGS_TRANSL_DOWNLOAD:
+            case SETTINGS_TRANSLATION_DOWNLOAD:
                 destFrag = FragSettingsTranslationsDownload.class;
+                break;
+            case SETTINGS_TAFSIR:
+                destFrag = FragSettingsTafsirs.class;
                 break;
             case SETTINGS_RECITER:
                 destFrag = FragSettingsRecitations.class;

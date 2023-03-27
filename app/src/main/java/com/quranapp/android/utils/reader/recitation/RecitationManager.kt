@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.app
+package com.quranapp.android.utils.reader.recitation
 
 import android.content.Context
 import com.quranapp.android.api.JsonHelper
