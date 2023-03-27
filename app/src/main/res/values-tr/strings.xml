@@ -155,4 +155,192 @@
     <string name="strTitleChapInfoVerses">Ayetler</string>
     <string name="strTitleChapInfoRevOrder">Vahiy Sırası</string>
     <string name="strTitleChapInfoRevType">Vahiy Türü</string>
+    <string name="strTitleAppSettings">Uygulama Ayarları</string>
+    <string name="strTitleAppLanguage">Uygulama Dili</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strTitleNoInternet">İnternet Yok</string>
+    <string name="strLabelPause">Duraklat</string>
+    <string name="strLabelBookmark">Yer imi</string>
+    <string name="strLabelRemoveBookmark">Yer imini Kaldır</string>
+    <string name="strLabelBookmarked">Yer imi eklendi</string>
+    <string name="strLabelReport">Bildir</string>
+    <string name="strLabelContinueReading">Okumaya Devam Et »</string>
+    <string name="strLabelReading">Okunuyor</string>
+    <string name="strLabelMostPlaces">Sık Bahsedilenler</string>
+    <string name="strLabelSelectedCount" formatted="false">%d tane seçildi</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d daha fazla meal</string>
+    <string name="strLabelSelectVerse">Ayetleri Seç</string>
+    <string name="strLabelCurrentVerse">Geçerli ayet</string>
+    <string name="strLabelVerseRange">Ayet aralığı</string>
+    <string name="strLabelSelectTranslations">Meal seç</string>
+    <string name="strLabelSelectTranslation">Meal seç</string>
+    <string name="strLabelIncludeArabic">Arapça dahil</string>
+    <string name="strLabelIncludeFootnotes">Dipnotlar dahil</string>
+    <string name="strLabelIncludeReference">Referans dahil</string>
+    <string name="strLabelLater">Daha sonra</string>
+    <string name="strHintSearch">Ara</string>
+    <string name="strHintSearchQuran">Bir terim yaz, örn. \"Hayat\"</string>
+    <string name="strLabelQuickLinks">Hızlı bağlantılar</string>
+    <string name="strHintSearchProphet">Peygamber ara</string>
+    <string name="strHintSearchVerse">Ayet ara</string>
+    <string name="strHintSearchReciter">Hafız ara</string>
+    <string name="strHintSearchScript">Hat ara</string>
+    <string name="strHintFromVerse">Ayetten</string>
+    <string name="strHintToVerse">Ayete</string>
+    <string name="strHintBookmarkViewerNote">Bu yer imi hakkında buraya ek bir not yaz…</string>
+    <string name="strNotFound">Bulunamadı</string>
+    <string name="strMsgThemeDark">Karanlık tema güç tüketimini azaltır.</string>
+    <string name="strMsgThemeDefault">Sistem ayarlarına göre ayarla.</string>
+    <string name="strMsgVOTDOn">Sabahları günlük bildirim alın.</string>
+    <string name="strMsgYouAreReadingVerses">Şu ayetleri okuyorsunuz:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d geçerli bir Sure numarası değil</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d numaralı Ayet, %2$d numaralı Sure için geçersiz</string>
+    <string name="strMsgInvalidVersesRange">Geçersiz ayet aralığı.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d geçerli bir Cüz numarası değil</string>
+    <string name="strMsgBookmarkRemoveFailed">Ayet, yer imlerinden kaldırılamadı</string>
+    <string name="strMsgBookmarkRemovedAlready">Ayet, yer imlerinde değil</string>
+    <string name="strMsgBookmarkDeleteAll">Tüm yer imleri kaldırılacak.</string>
+    <string name="strMsgReadHistoryRemoved">Okuma geçmişi başarıyla temizlendi.</string>
+    <string name="strMsgReadHistoryDeleteAll">Tüm okuma geçmişi kaldırılacak.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s ,%2$s\'de</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Bugün %s\'de</string>
+    <string name="strMsgHistoryRemove">Bu geçmişi kaldır\?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" geçmişten kaldırıldı</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s\'de sadece 1 sonuç bulundu</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin.</string>
+    <string name="strMsgSearchWordPart">Kelime içinde ara</string>
+    <string name="strMsgSearchWordPartExample">Örneğin: \'insanlık\'taki \'insan\'</string>
+    <string name="strMsgSearchArabic">Arapça metinde ara</string>
+    <string name="strMsgChangeLanguage">Dilin değişmesi için uygulama yeniden başlatılacak.</string>
+    <string name="strMsgProphetsOrder">Peygamberler kronolojik sırayla gösteriliyor</string>
+    <string name="strMsgEnterValidRange">Lütfen geçerli bir aralık gir</string>
+    <string name="strMsgTranslLoadFailed">Mealler sunucudan yüklenemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strMsgTranslNoDownloads">İndirilmiş çeviri yok</string>
+    <string name="strMsgTranslNoDownloadsAvailable">İndirilenler yok</string>
+    <string name="strMsgTranslDownloaded" formatted="false">İndirme başarılı: \"%s\".</string>
+    <string name="strMsgRecitationsNoAvailable">Kullanılabilir tilavet yok</string>
+    <string name="strDescAddToBookmarks">Yer imlerine ekle</string>
+    <string name="strDescGoBack">Geri git</string>
+    <string name="strDescVerseNo" formatted="false">%d. Ayet.</string>
+    <string name="strMsgNoInternet">Lütfen internet bağlantısını kontrol edin.</string>
+    <string name="strMsgSomethingWrong">Bir şeyler ters gitti!</string>
+    <string name="strMsgSomethingWrongFixing">Bir şeyler ters gitti! Bunu düzeltmek için çalışıyoruz.</string>
+    <string name="strMsgTryLater">Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strMsgVerseCredsInvalid">Ayete ait bilgiler geçersiz.</string>
+    <string name="strMsgCouldNotOpenPage">Sayfa açılamadı.</string>
+    <string name="strLabelNavHome">Ana ekran</string>
+    <string name="strLabelNavSearch">Ara</string>
+    <string name="strTextPreparing">Hazırlanıyor…</string>
+    <string name="strTextPleaseWait">Lütfen bekleyin…</string>
+    <string name="strTextSending">Gönderiliyor…</string>
+    <string name="strAyatulKursi">Ayet-el Kürsi</string>
+    <string name="strTitleOops">Eyvah!</string>
+    <string name="strLabelProceed">İLERLE</string>
+    <string name="strTextUpdating">Güncelleniyor…</string>
+    <string name="strTextInstalling">Kuruluyor…</string>
+    <string name="strTextLoading">Yükleniyor…</string>
+    <string name="strMsgUpdateAvailable">GÜNCELLEME MEVCUT! Lütfen en son özellikleri görmek için uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable4Dialog">GÜNCELLEME MEVCUT!
+\nLütfen uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable2Continue">GÜNCELLEME GEREKLİ!
+\nDevam etmek için lütfen uygulamayı güncelleyin.</string>
+    <string name="strLabelAllChapters">Tüm Bölümler</string>
+    <string name="strLabelDownloadImage">Resmi indir</string>
+    <string name="strLabelShareImage">Resmi paylaş</string>
+    <string name="strTitleAlphaBG">Alfa arka plan</string>
+    <string name="strMsgEditShareTransl">Ayarlardan seçilen mealler yalnızca burada gösterilir.</string>
+    <string name="strMsgEditShareLongTransl">Meal çok uzun, ekrana sığmayabilir.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s ile ilgili ayetler toplamda %2$d yerde bulundu.</string>
+    <string name="strSalam">Selamün Aleyküm</string>
+    <string name="strSalamShort">Selam</string>
+    <string name="titleDownloadScriptResources">Bu hat için gerekli kaynaklar indirilsin mi\?</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Hat: %s (~1MB)</string>
+    <string name="msgDownloadingScript">Hat indiriliyor</string>
+    <string name="msgDownloadingFonts">Yazı tipleri indiriliyor</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d/%2$d yazı tipi indirildi</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d/%2$d</string>
+    <string name="msgDownloadingResource" formatted="false">%s indiriliyor</string>
+    <string name="msgScriptFontsDownloaded">Hatlar ve yazı tipleri başarıyla indirildi.</string>
+    <string name="textDownloading">İndiriliyor…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">Arka planda indir</string>
+    <string name="msgAnotherDownloadInProgress">Başka bir indirme işlemi devam ediyor.</string>
+    <string name="lastCrashLog">Son çökme günlüğü</string>
+    <string name="createIssue">Sorun oluştur</string>
+    <string name="copiedToClipboard">Panoya kopyalandı.</string>
+    <string name="pasteCrashLogGithubIssue">Çökme günlüğü panoya kopyalandı. Lütfen kopyalanan metni GitHub\'daki ilgili alana yapıştırın.</string>
+    <string name="titleStorageCleanup">Depolama temizleme</string>
+    <string name="storageCleanupMessage">İndirilmiş ama kullanılmayan kaynaklar silinerek yer açılabilir. Bu işlem yer imlerinizi veya ayarlarınızı etkilemez.
+\n
+\nAşağıdaki kaynaklar silinebilir:</string>
+    <string name="translationCanBeFreedUp" formatted="false">İndirilen %d meal silinebilir.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d hafızdan depolanan %1$d tilavet dosyası silinebilir.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">İndirilen %d hat ve hatta ait yazı tipleri silinebilir.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">Kaydedilen %d tefsir temizlenebilir.</string>
+    <string name="titleChapterInfo">Bölüm bilgisi</string>
+    <string name="labelFreeUpSpace">Yer aç</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nBunları tekrar indirmeniz gerekiyor.</string>
+    <string name="strPreviewTextTransl">Rahmân ve Rahîm olan Allah\'ın adıyla</string>
+    <string name="strMsgChapInfoFailedLoad">Sure bilgisi yüklenemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strTitleReaderSettings">Okuyucu Ayarları</string>
+    <string name="strLabelRemoveAds">Reklamları Kaldır</string>
+    <string name="strTitleChangeLanguage">Dili değiştir\?</string>
+    <string name="strLabelPlay">Oynat</string>
+    <string name="strLabelShare">Paylaş</string>
+    <string name="strLabelOrder">Sıra</string>
+    <string name="strLabelAdvanceSharing">Gelişmiş Paylaşım</string>
+    <string name="strLabelWhatsappStyling">Whatsapp biçimi</string>
+    <string name="strLabelIncludeTranslation">Meal dahil</string>
+    <string name="strHintFeedback">Geri bildirimini buraya yaz…</string>
+    <string name="strHintSearchTopic">Konu ara</string>
+    <string name="strHintSearchJuz">Cüz ara</string>
+    <string name="strHintSearchTranslation">Meal ara</string>
+    <string name="strHintSearchLanguage">Dil ara</string>
+    <string name="strHintFeedbackEmail">e-posta</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" içinde konu ara</string>
+    <string name="strHintSearchChapter">Sure ara</string>
+    <string name="strHintFeedbackMessage">Mesaj</string>
+    <string name="strMsgBookmarkNoItems">Yer imi yok</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d Ayet aralığı, %3$d numaralı Sure için geçersiz</string>
+    <string name="strMsgBookmarkAdded">Ayet, yer imlerine başarıyla eklendi</string>
+    <string name="strMsgBookmarkAddFailed">Ayet, yer imlerine eklenemedi</string>
+    <string name="strMsgBookmarkAddedAlready">Ayet, yer imlerine zaten eklenmiş</string>
+    <string name="strMsgBookmarkRemoved">Ayet, yer imlerinden başarıyla kaldırıldı</string>
+    <string name="strMsgBookmarkDeleteSelected">Seçili yer imleri kaldırılacak.</string>
+    <string name="strTitleReadHistory">Okuma Geçmişi</string>
+    <string name="strMsgReadShowupHere">Okuma geçmişin burada gözükür.</string>
+    <string name="strMsgReadHistoryDeleteSelected">Seçili okuma geçmişi kaldırılacak.</string>
+    <string name="strMsgReadHistoryNoItems">Okuma geçmişi yok</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s\'de bulunan toplam sonuç: %2$d</string>
+    <string name="strMsgSearchNoResultsFound">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s\'de sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
+    <string name="strMsgResetReaderSettings">Tüm ayarları varsayılana sıfırla.</string>
+    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d arasında bir aralık gir</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" indirilemedi.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Tek seferde en fazla %d adet meal seçilebilir. Lütfen yeni bir tane seçmeden önce diğer seçimi kaldırın. Bu, performans kaybını önlemek içindir.</string>
+    <string name="strMsgTranslNoneSelected">Hiçbir meal seçilmedi. Ayarlardan meal kısmını bulun ve birini seçin.</string>
+    <string name="strMsgRecitationsLoadFailed">Tilavetler sunucudan yüklenemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strDescClose">Kapat</string>
+    <string name="strTitleError">Hata!</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">%1$s Suresi, %2$d. Ayet.</string>
+    <string name="strTitleInfo">Bilgi!</string>
+    <string name="strMsgNoInternetLong">İnternet bağlantısı yok. Wi-Fi veya mobil verinin açık olduğundan emin olun ve tekrar deneyin.</string>
+    <string name="strMsgReportUs">Lütfen bize bildirin.</string>
+    <string name="strMsgUpdateDownloaded">GÜNCELLEME İNDİRİLDİ! Lütfen güncellemeyi tamamlamak için kurulumu bitirin.</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Resim şu isimle kaydedildi: %s</string>
+    <string name="strMsgReferenceInQuran" formatted="false">Kur\'an\'da %s</string>
+    <string name="strMsgReferenceDuas">Kur\'an\'dan bazı dualar bir araya getirildi.</string>
+    <string name="msgDownloadKFQPCResources">Bu hattı kullanabilmek için öncelikle gerekli olan şu kaynaklar indirilmeli:</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Yazı tipleri: %1$d/%2$d indirildi (~%3$dMB kaldı)</string>
+    <string name="msgDownloadFailed">İndirme başarısız</string>
+    <string name="msgVerseReminderAlarmPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için alarm izni gerekiyor.</string>
+    <string name="github">GitHub</string>
+    <string name="msgVerseReminderNotifPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için bildirim izni gerekiyor.</string>
+    <string name="msgAlarmManagerNotAvailable">Alarm yöneticisi bu cihazda mevcut değil.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">Kaydedilen %d bölüm bilgisi temizlenebilir.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Okuma geçmişi temizlenemedi.</string>
+    <string name="strMsgReadHistoryRemovedAlready">Okuma geçmişi zaten temizlenmiş.</string>
 </resources>
