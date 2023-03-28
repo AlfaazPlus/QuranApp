@@ -301,4 +301,28 @@
     <string name="strMsgVerseCredsInvalid">Les informations d\'identification du verset ne sont pas valides.</string>
     <string name="strTitleOops">Oops !</string>
     <string name="strMsgUpdateDownloaded">MISE À JOUR TÉLÉCHARGÉE ! Veuillez installer pour terminer la mise à jour.</string>
+    <string name="strTitleScripts">Types d\'écriture</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Type d\'écriture : %s (~1Mo)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Polices d\'écritures : %1$d téléchargées, sur un total de %2$d (~%3$dMo restants)</string>
+    <string name="msgDownloadFailed">Téléchargement échoué</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d sur %2$d</string>
+    <string name="msgDownloadingResource" formatted="false">Télechargement de %s</string>
+    <string name="copiedToClipboard">Copié dans le presse-pappiers.</string>
+    <string name="msgDownloadingScript">Téléchargement du type d\'écriture</string>
+    <string name="labelDownload">Téléchargement</string>
+    <string name="strTitleRecitations">Récitations</string>
+    <string name="msgDownloadingFonts">Téléchargement des polices d\'écriture</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d sur %2$d polices d\'écriture téléchargées</string>
+    <string name="msgScriptFontsDownloaded">Types d\'écriture et polices d\'écriture téléchargées avec succès.</string>
+    <string name="textDownloading">Téléchargement…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">Téléchargement en arrière-plan</string>
+    <string name="lastCrashLog">Dernier rapport de crash</string>
+    <string name="createIssue">Créer un problème</string>
+    <string name="pasteCrashLogGithubIssue">Rapport de crash copié dans le presse-papiers. Veuillez svp le coller dans le problème github.</string>
+    <string name="github">GitHub</string>
+    <string name="msgAlarmManagerNotAvailable">Le gestionnaire d\'alarmes n\'est pas accessible sur cet appareil.</string>
+    <string name="titleDownloadScriptResources">Télécharger les ressources pour ce type d\'écriture \?</string>
+    <string name="msgDownloadKFQPCResources">Les ressources suivantes doivent être téléchargées avant que vous puissiez utiliser ce type d\'écriture :</string>
+    <string name="msgAnotherDownloadInProgress">Un autre téléchargement est en cours.</string>
 </resources>
