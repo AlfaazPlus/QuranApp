@@ -26,4 +26,6 @@ Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
 
+🇹🇷 Turkish (tr) - [croxz900](https://github.com/croxz900)
+
 🇵🇰 Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
