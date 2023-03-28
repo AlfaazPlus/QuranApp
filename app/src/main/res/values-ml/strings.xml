@@ -243,7 +243,7 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">ആകെ ഫലങ്ങൾ %1$s: %2$dൽ കണ്ടെത്തി</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">ഫലങ്ങളൊന്നും %sൽ കണ്ടെത്തിയില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക അല്ലെങ്കിൽ മറ്റൊരു വിവർത്തനത്തിൽ തിരയുക.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">ഒരു ഫലവും കണ്ടെത്താനായില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക.</string>
-    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d ഇടയിലുള്ള ശ്രേണി നൽകുക</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d ഇടയിലുള്ള ശ്രേണി നൽകുക</string>
     <string name="strMsgTranslLoadFailed">സെർവറിൽ നിന്ന് വിവർത്തനങ്ങൾ ലോഡ് ചെയ്യാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="strMsgTranslNoDownloads">ഡൗൺലോഡ് ചെയ്‌ത വിവർത്തനങ്ങളൊന്നും ലഭ്യമല്ല</string>
     <string name="strMsgTranslNoneSelected">വിവർത്തനമൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല. വിവർത്തനങ്ങൾ കണ്ടെത്താൻ ക്രമീകരണങ്ങളിലേക്ക് പോകുക.</string>

@@ -232,7 +232,7 @@
     <string name="strMsgChangeLanguage">भाषा बदलने के लिए एप्प को दुबारा शुरू करना होगा।</string>
     <string name="strMsgResetReaderSettings">सभी रीडर सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें।</string>
     <string name="strMsgProphetsOrder">कालानुक्रमिक क्रम में अम्बिया को दिखा रहा है</string>
-    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d के बीच का रेंज लिखे</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d के बीच का रेंज लिखे</string>
     <string name="strMsgEnterValidRange">कृपया एक मान्य रेंज दर्ज करें</string>
     <string name="strMsgTranslLoadFailed">सर्वर से अनुवाद लोड नहीं किए जा सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgTranslNoDownloads">कोई डाउनलोड किया गया अनुवाद उपलब्ध नहीं है</string>

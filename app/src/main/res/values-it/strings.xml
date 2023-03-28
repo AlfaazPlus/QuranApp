@@ -294,7 +294,7 @@
     <string name="strMsgUpdateAvailable4Dialog">AGGIORNAMENTO DISPONIBILE
 \nSi prega di aggiornare l\'app.</string>
     <string name="strTitleImageSavedWithName" formatted="false">Immagine salvata con nome: %s</string>
-    <string name="strMsgShareRange" formatted="false">Inserisci un intervallo compreso tra %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Inserisci un intervallo compreso tra %1$d–%2$d</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Sura %1$s, versetto numero %2$d.</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Sono stati trovati versi relativi a %1$s in %2$d posizioni totali.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s a %2$s</string>

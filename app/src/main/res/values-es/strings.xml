@@ -161,7 +161,7 @@
     <string name="strTitleHolyQuran">El sagrado Corán</string>
     <string name="strMsgSearchArabic">Buscar en texto árabe</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" eliminado del historial</string>
-    <string name="strMsgShareRange" formatted="false">Ingrese el rango entre %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Ingrese el rango entre %1$d–%2$d</string>
     <string name="strTitleReaderChapters2">Suras</string>
     <string name="strTitleReaderJumpToVerse">Saltar al verso</string>
     <string name="strTitleAboutSurah">Acerca de Surah</string>

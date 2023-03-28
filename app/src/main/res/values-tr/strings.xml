@@ -319,7 +319,7 @@
     <string name="strMsgSearchNoResultsFound">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s\'de sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
     <string name="strMsgResetReaderSettings">Tüm ayarları varsayılana sıfırla.</string>
-    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d arasında bir aralık gir</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d arasında bir aralık gir</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" indirilemedi.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Tek seferde en fazla %d adet meal seçilebilir. Lütfen yeni bir tane seçmeden önce diğer seçimi kaldırın. Bu, performans kaybını önlemek içindir.</string>
     <string name="strMsgTranslNoneSelected">Hiçbir meal seçilmedi. Ayarlardan meal kısmını bulun ve birini seçin.</string>

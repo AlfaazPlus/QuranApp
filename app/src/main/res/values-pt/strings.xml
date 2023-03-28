@@ -251,7 +251,7 @@
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" removido do histórico</string>
     <string name="strMsgSearchNoResultsFound">Nenhum resultado encontrado. Por favor, verifique os filtros de busca ou pesquise em outra tradução.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Sem resultados. Por favor, cheque o filtro de pesquisa.</string>
-    <string name="strMsgShareRange" formatted="false">Insira um intervalo entre %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Insira um intervalo entre %1$d–%2$d</string>
     <string name="strDescVerseNo" formatted="false">Número de versículo %d.</string>
     <string name="strLabelSurah" formatted="false">Capítulo %s</string>
     <string name="strLabelNoNextJuz">Sem próximo juz</string>

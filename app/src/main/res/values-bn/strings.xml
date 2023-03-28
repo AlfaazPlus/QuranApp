@@ -272,7 +272,7 @@
     <string name="strMsgSearchWordPartExample">উদাহরণস্বরূপ: \'মানবজাতি\' এর মধ্যে \'মানব\'</string>
     <string name="strMsgSearchArabic">আরবি টেক্সটে অনুসন্ধান করুন</string>
     <string name="strMsgResetReaderSettings">সমস্ত সেটিংস ডিফল্টে রিসেট করুন।</string>
-    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d এর মাঝে পরিসীমা উল্লেখ বরুন</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d এর মাঝে পরিসীমা উল্লেখ বরুন</string>
     <string name="strMsgEnterValidRange">অনুগ্রহ করে একটি সঠিক পরিসীমা লিখুন</string>
     <string name="strMsgTranslNoDownloads">কোনো ডাউনলোডকৃত অনুবাদ উপলব্ধ নেই</string>
     <string name="strMsgTranslNoDownloadsAvailable">কোনো ডাউনলোড উপলব্ধ নেই</string>

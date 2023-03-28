@@ -253,7 +253,7 @@
     <string name="strMsgChangeLanguage">The app will be restarted to affect language change.</string>
     <string name="strMsgResetReaderSettings">Reset all settings to the default.</string>
     <string name="strMsgProphetsOrder">Showing prophets in chronological order</string>
-    <string name="strMsgShareRange" formatted="false">Enter range between %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Enter range between %1$d–%2$d</string>
     <string name="strMsgEnterValidRange">Please enter a valid range</string>
     <string name="strMsgTranslLoadFailed">Could not load translations from the server. Please try again later.</string>
     <string name="strMsgTranslNoDownloads">No downloaded translations available</string>
@@ -349,8 +349,8 @@
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>
-    <string name="nItem">%d item</string>
-    <string name="nItems">%d items</string>
+    <string name="nItem" formatted="false">%d item</string>
+    <string name="nItems" formatted="false">%d items</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
 

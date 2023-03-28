@@ -6,6 +6,7 @@ package com.quranapp.android.views.reader.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -37,6 +38,7 @@ import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.views.reader.RecitationPlayer;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
@@ -259,10 +261,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
                 Toast.makeText(actvt, R.string.noFootnotesForThisVerse, Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.btnTafsir) {
-            /*
             Intent intent = ReaderFactory.prepareTafsirIntent(actvt, mVerse.chapterNo, mVerse.verseNo);
             actvt.startActivity4Result(intent, null);
-            */
         } else if (id == R.id.btnBookmark) {
             final int chapterNo = mVerse.chapterNo;
             final int verseNo = mVerse.verseNo;

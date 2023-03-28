@@ -325,7 +325,7 @@
     <string name="strMsgSearchNoResultsFoundAbsolute">Keine Ergebnisse gefunden. Bitte überprüfen Sie die Suchfilter.</string>
     <string name="strMsgEnterValidRange">Bitte geben Sie einen gültigen Bereich ein</string>
     <string name="strMsgTranslLoadFailed">Die Übersetzungen konnten nicht vom Server geladen werden. Bitte versuchen Sie es später noch einmal.</string>
-    <string name="strMsgShareRange" formatted="false">Bereich eingeben zwischen %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Bereich eingeben zwischen %1$d–%2$d</string>
     <string name="strTitleError">Fehler!</string>
     <string name="strMsgTranslNoDownloads">Keine heruntergeladenen Übersetzungen verfügbar</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Maximal %d Übersetzungen können auf einmal ausgewählt werden. Bitte heben Sie eine Auswahl auf, bevor Sie eine andere auswählen. Dies vermeidet Leistungsverluste.</string>
