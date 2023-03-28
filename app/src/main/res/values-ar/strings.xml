@@ -62,7 +62,7 @@
     <string name="strLabelThemeLight">فاتح</string>
     <string name="strLabelNextJuz">الجزء التالي</string>
     <string name="strLabelPreviousVerse">الآية السابقة</string>
-    <string name="strTitleFootnotes">الهوامش</string>
+    <string name="strTitleFootnotes">هوامش</string>
     <string name="strTitleReaderChapters">السور</string>
     <string name="strTitleFootnote">هامش</string>
     <string name="strTitleReaderJuz">الجزء</string>
@@ -92,7 +92,7 @@
     <string name="strLabelNextVerse">الآية التالية</string>
     <string name="strTitleReaderJumpToVerse">إذهب إلى الآية</string>
     <string name="strTitleVerseOptions">خيارات الآية</string>
-    <string name="strLabelNoNextChapter">لا يوجد سور تالية</string>
+    <string name="strLabelNoNextChapter">لا توجد سور تالية</string>
     <string name="strLabelPreviousJuz">الجزء السابق</string>
     <string name="strTitleVerseRecitation">تلاوة الآية</string>
     <string name="strTitleGotoVerseNo" formatted="false">الذهاب إلى الآية %d</string>
@@ -103,7 +103,7 @@
     <string name="strLabelInstall">تثبيت</string>
     <string name="strLabelNew">الجديد</string>
     <string name="strLabelOn">مفعل</string>
-    <string name="strLabelNoPreviousChapter">لا يوجد سور سابقة</string>
+    <string name="strLabelNoPreviousChapter">لا توجد سور سابقة</string>
     <string name="strLabelContinueChapter">أكمل السورة</string>
     <string name="strTitleReaderLayoutStyle">أسلوب عرض القرآن</string>
     <string name="strTitleReaderLayoutStylePageView">عرض الصفحات</string>
@@ -114,7 +114,7 @@
     <string name="strTitleNote">ملاحظة</string>
     <string name="strTitleSubscription">الاشتراك</string>
     <string name="strTitleTafsir">التفسير</string>
-    <string name="strLabelPreviousChapter">السورة السابق</string>
+    <string name="strLabelPreviousChapter">السورة السابقة</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورة %1$s | الآية %2$d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورة %1$s : آية %2$d</string>
     <string name="strTitleHelpSupport">المساعدة</string>
