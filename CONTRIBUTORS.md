@@ -8,13 +8,13 @@ Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 🇮🇶 Kurdish (ckb) - [Goran Gharib](https://github.com/GoRan909)
 
-🇫🇷 French (fr) - [Sanya Gautam](https://instagram.com/_sanyagautam)
+🇫🇷 French (fr) - Sanya Gautam
 
 🇩🇪 German (de) - Mario Herrmann
 
 🇮🇳 Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
 
-🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv)
+🇮🇩 Indonesian (id) - [rraven](https://instagram.com/r4ravv) and [friczky](https://github.com/friczky)
 
 🇮🇹 Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 
@@ -24,6 +24,8 @@ Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 🇵🇹 Portuguese (pt) - [fnogcps](https://github.com/fnogcps)
 
-🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites)
+🇪🇸 Spanish (es) - [JnBenites](https://github.com/JnBenites) and [gallegonovato](https://github.com/gallegonovato)
+
+🇹🇷 Turkish (tr) - [croxz900](https://github.com/croxz900)
 
 🇵🇰 Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
