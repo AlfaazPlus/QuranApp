@@ -220,7 +220,7 @@
     <string name="strTitleChapInfoRevType">Jenis Wahyu</string>
     <string name="strLabelPause">Pause</string>
     <string name="strLabelCurrentVerse">Ayat saat ini</string>
-    <string name="strHintSearchScript">Cari potongan ayat</string>
+    <string name="strHintSearchScript">Cari jenis penulisan</string>
     <string name="strMsgBookmarkDeleteSelected">Bookmark yang dipilih akan dihapus.</string>
     <string name="strMsgBookmarkNoItems">Tidak ada bookmark</string>
     <string name="strTitleReadHistory">Histori Bacaan</string>
@@ -257,7 +257,7 @@
     <string name="strDescAddToBookmarks">Tambahkan ke bookmark</string>
     <string name="strDescClose">Tutup</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, ayat %2$d.</string>
-    <string name="strDescVerseNo" formatted="false">ayat %d.</string>
+    <string name="strDescVerseNo" formatted="false">Ayat nomor %d.</string>
     <string name="strMsgSomethingWrongFixing">Terjadi kesalahan! Kami sedang memperbaikinya.</string>
     <string name="strMsgSomethingWrong">Terjadi kesalahan!</string>
     <string name="strMsgNoInternetLong">Tidak ada koneksi internet. Pastikan Wi-Fi dan data seluler anda hidup, dan coba kembali.</string>
@@ -342,4 +342,18 @@
     <string name="copiedToClipboard">Disalin ke papan klip.</string>
     <string name="msgAlarmManagerNotAvailable">Pengelola alarm tidak tersedia pada perangkat ini.</string>
     <string name="github">GitHub</string>
+    <string name="nItem">%d item</string>
+    <string name="nItems">%d item</string>
+    <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
+    <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
+    <string name="titleScriptCleanup">Hapus jenis penulisan\?</string>
+    <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus.</string>
+    <string name="titleRecitationCleanup">Hapus Murattal\?</string>
+    <string name="strPreviewTextTransl">Dengan menyebut nama Allah, Yang Maha Pengasih lagi Maha Penyayang</string>
+    <string name="msgScriptCleanup" formatted="false">%s jenis penulisan dan semua font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya.</string>
+    <string name="titleChapterInfoCleanup">Kosongkan info ayat\?</string>
+    <string name="msgChapterInfoCleanup">Semua info ayat yang tersimpan akan dihapus.</string>
+    <string name="nFiles" formatted="false">%d file</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d font</string>
+    <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
 </resources>
