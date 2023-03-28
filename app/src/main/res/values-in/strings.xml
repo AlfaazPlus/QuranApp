@@ -214,7 +214,7 @@
     <string name="strLabelView">Lihat</string>
     <string name="strLabelOn">Hidup</string>
     <string name="strTitleReaderChapters">Surah</string>
-    <string name="strTitleSelectScripts">Pilih potongan ayat</string>
+    <string name="strTitleSelectScripts">Pilih jenis penulisan Arabic</string>
     <string name="strTitleChapInfoChapterNo">Nomor Surah</string>
     <string name="strTitleChapInfoRukus">Tanda ruku\'</string>
     <string name="strTitleChapInfoRevType">Jenis Wahyu</string>
@@ -314,7 +314,7 @@
     <string name="titleDownloadScriptResources">Unduh sumber daya untuk skrip ini\?</string>
     <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan skrip ini:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Skrip: %s (~1MB)</string>
-    <string name="msgScriptFontsDownloaded">Skrip dan font berhasil di unduh.</string>
+    <string name="msgScriptFontsDownloaded">Jenis penulisan dan font berhasil diunduh.</string>
     <string name="textDownloading">Mengunduh…</string>
     <string name="lastCrashLog">Log error terakhir</string>
     <string name="msgDownloadingFonts">Mengunduh font</string>
@@ -323,13 +323,13 @@
     <string name="textPercentage" formatted="false">%d%%</string>
     <string name="labelBackgroundDownload">Mengunduh dari latar belakang</string>
     <string name="strTitleScripts">Skrip</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d dari %2$d font di unduh</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d dari %2$d font diunduh</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d dari %2$d</string>
     <string name="msgDownloadingResource" formatted="false">Mengunduh %s</string>
     <string name="msgAnotherDownloadInProgress">Unduhan lain sedang berlangsung.</string>
     <string name="msgDownloadingScript">Mengunduh skrip</string>
     <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
-    <string name="scriptCanBeFreedUp" formatted="false">%d script dan font nya yang terunduh bisa dibersihkan.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d Jenis penulisan dan font nya yang terunduh bisa dibersihkan.</string>
     <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan.
 \n
 \nSumber daya yang bisa dibersihkan:</string>
@@ -338,7 +338,7 @@
     <string name="msgVerseReminderAlarmPermission">Izin alarm diperlukan untuk aktifkan pengingat ayat.</string>
     <string name="msgVerseReminderNotifPermission">Izin notifikasi diperlukan untuk mengaktifkan pengingat ayat.</string>
     <string name="pasteCrashLogGithubIssue">Log kerusakan telah disalin ke clipboard. Silakan tempelkan di permasalahan GitHub.</string>
-    <string name="createIssue">Membuat permasalahan</string>
+    <string name="createIssue">Buat permasalahan</string>
     <string name="copiedToClipboard">Disalin ke papan klip.</string>
     <string name="msgAlarmManagerNotAvailable">Pengelola alarm tidak tersedia pada perangkat ini.</string>
     <string name="github">GitHub</string>
