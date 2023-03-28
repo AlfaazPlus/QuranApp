@@ -165,7 +165,7 @@
     <string name="strLabelBookmarked">Yer imi eklendi</string>
     <string name="strLabelReport">Bildir</string>
     <string name="strLabelContinueReading">Okumaya Devam Et »</string>
-    <string name="strLabelReading">Okunuyor</string>
+    <string name="strLabelReading">Okuma</string>
     <string name="strLabelMostPlaces">Sık Bahsedilenler</string>
     <string name="strLabelSelectedCount" formatted="false">%d tane seçildi</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d daha fazla meal</string>
