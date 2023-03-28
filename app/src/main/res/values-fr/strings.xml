@@ -325,4 +325,13 @@
     <string name="titleDownloadScriptResources">Télécharger les ressources pour ce type d\'écriture \?</string>
     <string name="msgDownloadKFQPCResources">Les ressources suivantes doivent être téléchargées avant que vous puissiez utiliser ce type d\'écriture :</string>
     <string name="msgAnotherDownloadInProgress">Un autre téléchargement est en cours.</string>
+    <string name="msgVerseReminderNotifPermission">La permission de notification est nécessaire pour activer le rappel de verset.</string>
+    <string name="msgVerseReminderAlarmPermission">La permission d\'alarme est nécessaire pour activer le rappel de verset.</string>
+    <string name="titleStorageCleanup">Nettoyage du stockage</string>
+    <string name="storageCleanupMessage">Libérez de l\'espace en supprimant des ressources téléchargées non utilisées. Ceci ne supprimera pas de marque-pages ou paramètres.
+\n
+\nLes ressources suivantes peuvent être libérées :</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d traductions téléchargées peuvent être libérées.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d fichiers de récitations sauvegardées de %2$d récitateurs peuvent être libérés.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d types d\'écritures et leurs polices d\'écriture peuvent être libérés.</string>
 </resources>
