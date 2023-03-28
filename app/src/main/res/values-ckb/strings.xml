@@ -342,11 +342,18 @@
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d بەشی پارێزراو ئەتوانرێ بسڕێتەوە.</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$dMB ماوە)</string>
-
     <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە</string>
     <string name="nItem">%d فایل</string>
     <string name="nItems">%d فایل</string>
     <string name="verseSyncOn">هاوکاتکردنی ئایەت : چالاک</string>
     <string name="verseSyncOff">هاوکاتکردنی ئایەت : نا چالاک</string>
     <string name="strPreviewTextTransl">بەناوی خوای بەخشندەی میهرەبان</string>
+    <string name="titleScriptCleanup">سڕینەوەی فۆنت؟</string>
+    <string name="msgRecitationCleanup" formatted="false">سەرجەم فایلە دەنگییەکانی %s دەسڕێتەوە.</string>
+    <string name="titleRecitationCleanup">سڕینەوەی قورئانخوێن؟</string>
+    <string name="nFiles" formatted="false">%d فایل</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d شێواز و %2$d فۆنت</string>
+    <string name="msgChapterInfoCleanup">سەرجەم زانیارییەکانی ئایەتەکان دەسرێتەوە.</string>
+    <string name="titleChapterInfoCleanup">سڕینەوەی زانیاری ئایەت؟</string>
+    <string name="msgScriptCleanup" formatted="false">%s فۆنتی دابەزێنراو دەسڕێتەوە، کە پێویستە دووبارە دایبەزێنیتەوە بۆ بەکارهێنان.</string>
 </resources>
