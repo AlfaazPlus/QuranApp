@@ -45,10 +45,10 @@
     <string name="strLabelReset">Zurücksetzen</string>
     <string name="strLabelDismiss">Zurückweisen</string>
     <string name="strLabelDiscard">Verwerfen</string>
-    <string name="strLabelDownloadNow">Jetzt herunterladen</string>
+    <string name="strLabelDownloadNow">JETZT HERUNTERLADEN</string>
     <string name="strLabelNextChapter">Nächstes Kapitel</string>
     <string name="strLabelDone">Fertig</string>
-    <string name="strLabelNoPreviousJuz">kein vorheriger Abschnitt</string>
+    <string name="strLabelNoPreviousJuz">Kein vorheriger Abschnitt</string>
     <string name="strLabelNoNextJuz">Kein nächster Abschnitt</string>
     <string name="strLabelContinueChapter">Kapitel fortsetzen</string>
     <string name="strLabelNextVerse">Nächster Vers</string>
@@ -105,8 +105,8 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Rezitationen</string>
     <string name="strTitleSelectReciter">Rezitator auswählen</string>
-    <string name="strTitleScripts">Skripte</string>
-    <string name="strTitleSelectScripts">Skript auswählen</string>
+    <string name="strTitleScripts">Schriftsysteme</string>
+    <string name="strTitleSelectScripts">Schriftsystem auswählen</string>
     <string name="strTitleBookmarkDeleteThis">Lesezeichen entfernen\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Lesezeichen %d entfernen\?</string>
     <string name="strTitleTranslDelete">Übersetzung löschen\?</string>
@@ -120,7 +120,7 @@
     <string name="strTitleVOTD">Vers des Tages</string>
     <string name="strTitleTopics">Themen</string>
     <string name="strTitleResetReaderSettings">Reader Einstellungen zurücksetzen\?</string>
-    <string name="strTitleFeaturedQuran">Ausgewählte Lesungen</string>
+    <string name="strTitleFeaturedQuran">Ausgewählte Lesung</string>
     <string name="strTitleProphets">Propheten</string>
     <string name="strTitleFeaturedProphets">Propheten im Koran</string>
     <string name="strTitlePrivacyPolicy">Datenschutzbestimmungen</string>
@@ -175,7 +175,7 @@
     <string name="strHintSearchVerse">Vers suchen</string>
     <string name="strHintSearchTranslation">Übersetzung suchen</string>
     <string name="strHintSearchReciter">Rezitator suchen</string>
-    <string name="strHintSearchScript">Skript suchen</string>
+    <string name="strHintSearchScript">Schriftsystem suchen</string>
     <string name="strHintSearchLanguage">Sprache suchen</string>
     <string name="strHintFromVerse">Aus Vers</string>
     <string name="strHintToVerse">Zu Vers</string>
@@ -213,7 +213,7 @@
     <string name="strMsgSearchNoResultsFound">Keine Ergebnisse gefunden. Bitte überprüfen Sie die Suchfilter oder suchen Sie in einer anderen Übersetzung.</string>
     <string name="strMsgSearchWordPart">Suche nach Wortteil</string>
     <string name="strMsgSearchWordPartExample">Zum Beispiel: \"Mensch\" in \"Menschheit\"</string>
-    <string name="strMsgSearchArabic">Suche in arabischem Text</string>
+    <string name="strMsgSearchArabic">Suche im arabischen Text</string>
     <string name="strMsgChangeLanguage">Die App wird neu gestartet, um die Sprachänderung durchzuführen.</string>
     <string name="strMsgProphetsOrder">Anzeige der Propheten in chronologischer Reihenfolge</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s um %2$s</string>
@@ -258,17 +258,17 @@
     <string name="strMsgEditShareLongTransl">Die Übersetzung ist sehr lang, sie passt vielleicht nicht richtig.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s im Koran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Gefundene Verse mit Bezug zu %1$s an insgesamt %2$d Stellen.</string>
-    <string name="strSalamShort">Salam</string>
-    <string name="titleDownloadScriptResources">Ressourcen für dieses Skript herunterladen\?</string>
-    <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Skript verwenden können:</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Skript: %s (~1MB)</string>
+    <string name="strSalamShort">Salaam</string>
+    <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
+    <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Schriftsystem: %s (~1MB)</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: %1$d heruntergeladen von insgesamt %2$d (~%3$dMB verbleibend)</string>
     <string name="msgDownloadFailed">Download fehlgeschlagen</string>
-    <string name="msgDownloadingScript">Skript herunterladen</string>
+    <string name="msgDownloadingScript">Schriftsystem herunterladen</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d von %2$d Schriftarten heruntergeladen</string>
     <string name="strMsgReferenceDuas">Einige gesammlte Gebete aus dem Koran.</string>
-    <string name="strSalam">Möge Gott dir Schutz und Sicherheit gewähren</string>
+    <string name="strSalam">AsSalaamu Alaikum</string>
     <string name="msgDownloadingResource" formatted="false">Herunterladen %s</string>
     <string name="textDownloading">Wird heruntergeladen…</string>
     <string name="textPercentage" formatted="false">%d%%</string>
@@ -287,7 +287,7 @@
 \nFolgende Ressourcen können freigesetzt werden:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d heruntergeladene Übersetzungen können freigegeben werden.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d gespeicherte Rezitationsdateien von %2$d Rezitatoren können freigegeben werden.</string>
-    <string name="scriptCanBeFreedUp" formatted="false">%d heruntergeladene Skripte und ihre Schriftarten können freigegeben werden.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d heruntergeladene Schriftsysteme und ihre Schriftarten können freigegeben werden.</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d gespeicherte Kapitelinformationen können bereinigt werden.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d gespeicherte Tafsirs können bereinigt werden.</string>
     <string name="titleChapterInfo">Kapitelinfo</string>
@@ -336,11 +336,24 @@
     <string name="strTextPleaseWait">Bitte warten…</string>
     <string name="strLabelAllChapters">Alle Kapitel</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d von %2$d</string>
-    <string name="msgScriptFontsDownloaded">Skripte und Schriftarten erfolgreich heruntergeladen.</string>
+    <string name="msgScriptFontsDownloaded">Schriftsysteme und Schriftarten erfolgreich heruntergeladen.</string>
     <string name="github">GitHub</string>
     <string name="strMsgChapInfoFailedLoad">Informationen zur Sure konnten nicht geladen werden. Bitte versuchen Sie es später noch einmal.</string>
     <string name="strLabelPreviousJuz">Vorheriger Abschnitt</string>
     <string name="strLabelNextJuz">Nächster Abschnitt</string>
     <string name="strLabelSkip">Überspringen</string>
     <string name="strPreviewTextTransl">Im Namen Allâhs, des Gnädigen, des Barmherzigen</string>
+    <string name="titleRecitationCleanup">Rezitation löschen\?</string>
+    <string name="msgChapterInfoCleanup">Die ganze gespeicherte Kapitelinfo wird gelöscht.</string>
+    <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
+    <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie werden neu herunterladen müssen um sie wieder zu benutzen.</string>
+    <string name="msgRecitationCleanup" formatted="false">Die ganze gespeicherte Rezitation von %s wird gelöscht.</string>
+    <string name="titleChapterInfoCleanup">Kapitelinfo löschen\?</string>
+    <string name="nothingToCleanup">Es gibt nichts zum löschen.</string>
+    <string name="nItems">%d Objekte</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d Schriftsysteme und %2$d Schriftarten</string>
+    <string name="nFiles" formatted="false">%d Dateien</string>
+    <string name="nItem">%d Objekt</string>
+    <string name="verseSyncOn">Verssynchronisation : AN</string>
+    <string name="verseSyncOff">Verssynchronisation : AUS</string>
 </resources>
