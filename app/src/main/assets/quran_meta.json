@@ -21,8 +21,10 @@
       "name": {
         "ar": "الفاتحة",
         "en": "Al-Fatihah",
-        "ur": "الفاتحة",
-        "hi": "अल फातेहा"
+        "hi": "अल फातेहा",
+        "ml":"സൂറത്തുൽ ഫാത്തിഹ",
+        "tr": "Fâtiha",
+        "ur": "الفاتحة"
       },
       "tags": "alfatiha,alfaatihah,alfaatiha,alfaatiya,alfatiya,opener,opening,starter,starting"
     }, {
@@ -46,8 +48,10 @@
       "name": {
         "ar": "البقرة",
         "en": "Al-Baqarah",
-        "ur": "البقرة",
-        "hi": "अल बकराह"
+        "hi": "अल बकराह",
+        "ml": "സൂറത്തുൽ ബഖറഃ",
+        "tr": "Bakara",
+        "ur": "البقرة"
       },
       "tags": "thecows,the cows,thegoats,the goats,the goats,albaqra,albaqrah,albaqraa,albaqraah,albaqara,albaqaraa,albakara,albakra,albakaraa,albakraa,albakrah,albkra,albqra,albkrah,albqrah,albkraa,albqraa,albkraah,albqraah"
     }, {
@@ -71,8 +75,10 @@
       "name": {
         "ar": "آل عمران",
         "en": "Aal-i-Imraan",
-        "ur": "آل عمران",
-        "hi": "आले इमरान"
+        "hi": "आले इमरान",
+        "ml": "സൂറത്ത് ആലുഇംറാൻ",
+        "tr": "Âl-i İmrân",
+        "ur": "آل عمران"
       },
       "tags": "alimran,alimraan,aleemran,aleemraan,aleimraan,aleimran,alemran,alemraan"
     }, {
@@ -96,8 +102,10 @@
       "name": {
         "ar": "النساء",
         "en": "An-Nisaa",
-        "ur": "النساء",
-        "hi": "अन-निसा"
+        "hi": "अन-निसा",
+        "ml": "സൂറത്തുന്നിസാഅ്",
+        "tr": "Nisâ",
+        "ur": "النساء"
       },
       "tags": "woman,womn,wmn,wemon,wemen,annisa,annisaa,anneesa,anneesa,anneesah,annisah,annisaah,annesa,annesaa,annesah,annsa,annsaa"
     }, {
@@ -121,8 +129,10 @@
       "name": {
         "ar": "المائدة",
         "en": "Al-Maaida",
-        "ur": "المائدة",
-        "hi": "अल-माइदा"
+        "hi": "अल-माइदा",
+        "ml": "സൂറത്തുൽ മാഇദ",
+        "tr": "Mâide",
+        "ur": "المائدة"
       },
       "tags": "almaedaa,almaaedaa,almaedah,almaaedah,almaedaah,almaaedaah,almaeeda,almaaeeda,almaeedaa,almaaeedaa,almaeedah,almaaeedah,almaeedaah,almaaeedaah,almaida,almaaeda,almaidaa,almaaidaa,almaidah,almaaidah,almaidaah,almaaidaah,almda,almada,almdah,almadah,almadae"
     }, {
@@ -146,8 +156,10 @@
       "name": {
         "ar": "الأنعام",
         "en": "Al-An'aam",
-        "ur": "الأنعام",
-        "hi": "अल-अनाम"
+        "hi": "अल-अनाम",
+        "ml": "സൂറത്തുൽ അൻആം",
+        "tr": "En'âm",
+        "ur": "الأنعام"
       },
       "tags": "alanam,alaanam,alaanaam,alanaam,alan'am,ala'naam,ala'nam,al'anam,al'aanaam,catl,catlle,ctll,catle"
     }, {
@@ -171,8 +183,10 @@
       "name": {
         "ar": "الأعراف",
         "en": "Al-A'raaf",
-        "ur": "الأعراف",
-        "hi": "अल-आराफ़"
+        "hi": "अल-आराफ़",
+        "ml": "സൂറത്തുൽ അഅ്റാഫ്",
+        "tr": "A'râf",
+        "ur": "الأعراف"
       },
       "tags": " aaraaf,aaraf,araaf,araf,aaraaph,aaraph,araaph,araph,alaaraaf,alaaraf,alaraaf,alaraf,alaaraaph,alaaraph,alaraaph,alaraph,size,height"
     }, {
@@ -196,8 +210,10 @@
       "name": {
         "ar": "الأنفال",
         "en": "Al-Anfaal",
-        "ur": "الأنفال",
-        "hi": "अल-अन्फाल"
+        "hi": "अल-अन्फाल",
+        "ml": "സൂറത്തുൽ അൻഫാൽ",
+        "tr": "Enfâl",
+        "ur": "الأنفال"
       },
       "tags": "alanfal,alaanfal,alanphal,alaanphal,alalanfal,alalaanfal,alalanphal,alalaanphal,fights,spoil,wars,wrs,fytes"
     }, {
@@ -221,8 +237,10 @@
       "name": {
         "ar": "التوبة",
         "en": "At-Tawba",
-        "ur": "التوبة",
-        "hi": "अत-तौबा"
+        "hi": "अत-तौबा",
+        "ml": "സൂറത്തുത്തൗബഃ",
+        "tr": "Tevbe",
+        "ur": "التوبة"
       },
       "tags": "repent,repentence,repntnc,attauba,attoba,attaubaa,attobaa,attawbaa,attwba,attwbaa,attoaba,attoabaa,attbaa"
     }, {
@@ -246,8 +264,10 @@
       "name": {
         "ar": "يونس",
         "en": "Yunus",
-        "ur": "يونس",
-        "hi": "युनुस"
+        "hi": "युनुस",
+        "ml": "സൂറത്ത് യൂനുസ്",
+        "tr": "Yûnus",
+        "ur": "يونس"
       },
       "tags": "yunus,unus,younus,yunas,unas,younas,ynus,ynas,yuns,youns,yns,ysn,yusun,usun,yousun,yusan,usan,jns,jons,jnas,janas,jona,jna,jonah,jonh,jnah,jnh,janoh,janh"
     }, {
@@ -271,8 +291,10 @@
       "name": {
         "ar": "هود",
         "en": "Hud",
-        "ur": "هود",
-        "hi": "हूद"
+        "hi": "हूद",
+        "ml": "സൂറത്ത് ഹൂദ്",
+        "tr": "Hûd",
+        "ur": "هود"
       },
       "tags": "hood,hd,hdoo,hdu,duh,dooh,dh"
     }, {
@@ -296,8 +318,10 @@
       "name": {
         "ar": "يوسف",
         "en": "Yusuf",
-        "ur": "يوسف",
-        "hi": "युसूफ"
+        "hi": "युसूफ",
+        "ml": "സൂറത്ത് യൂസുഫ്",
+        "tr": "Yûsuf",
+        "ur": "يوسف"
       },
       "tags": "yusuf,yousuf,yusouf,ysf,yusf,ysuf,yasaf,yasf,ysaf,josph,josh,jsph"
     }, {
@@ -321,8 +345,10 @@
       "name": {
         "ar": "الرعد",
         "en": "Ar-Ra'd",
-        "ur": "الرعد",
-        "hi": "अर र’आद"
+        "hi": "अर र’आद",
+        "ml": "സൂറത്തു റഅ്ദ്",
+        "tr": "Ra'd",
+        "ur": "الرعد"
       },
       "tags": "arraad,arrad,araad,arad,arrd,ard,thundar,thundr,thndr,tdr,electricity,lightening"
     }, {
@@ -346,8 +372,10 @@
       "name": {
         "ar": "ابراهيم",
         "en": "Ibrahim",
-        "ur": "ابراهيم",
-        "hi": "इब्राहीम"
+        "hi": "इब्राहीम",
+        "ml": "സൂറത്ത് ഇബ്റാഹീം",
+        "tr": "İbrâhîm",
+        "ur": "ابراهيم"
       },
       "tags": "ibraahim,ibraheem,ibraaheem,ibrhm,abrhm"
     }, {
@@ -365,13 +393,15 @@
         "hi": "पत्थर",
         "in": "Bukit",
         "it": "Al-Hijr",
-        "ru": "Хиджр ",
-        "ur": "پتھر"
+        "ur": "پتھر",
+        "ru": "Хиджр "
       },
       "name": {
         "ar": "الحجر",
         "en": "Al-Hijr",
         "ur": "الحجر",
+        "ml": "സൂറത്തുൽ ഹിജ്ർ",
+        "tr": "Hicr",
         "hi": "अल हिज्र"
       },
       "tags": "alhijr,alhjr,alhizr,alheejr,alheezr,alhzr,stone"
@@ -396,8 +426,10 @@
       "name": {
         "ar": "النحل",
         "en": "An-Nahl",
-        "ur": "النحل",
-        "hi": "अन नहल"
+        "hi": "अन नहल",
+        "ml": "സൂറത്തുന്നഹ്ൽ",
+        "tr": "Nahl",
+        "ur": "النحل"
       },
       "tags": "annahl,annhl,annahal,annehel,annehl"
     }, {
@@ -421,8 +453,10 @@
       "name": {
         "ar": "الإسراء",
         "en": "Al-Israa",
-        "ur": "الإسراء",
-        "hi": "अल इस्रा"
+        "hi": "अल इस्रा",
+        "ml": "സൂറത്തുൽ ഇസ്റാഅ്",
+        "tr": "İsrâ",
+        "ur": "الإسراء"
       },
       "tags": "alisraa,alisr,alesraa,alishraa,aleshraa,travel,jrney,jorney"
     }, {
@@ -446,8 +480,10 @@
       "name": {
         "ar": "الكهف",
         "en": "Al-Kahf",
-        "ur": "الكهف",
-        "hi": "अल कहफ़"
+        "hi": "अल कहफ़",
+        "ml": "സൂറത്തുൽ കഹ്ഫ്",
+        "tr": "Kehf",
+        "ur": "الكهف"
       },
       "tags": "alkhaf,alkahaf,alkhaph,alkahaph,alkahph,thecave"
     }, {
@@ -471,8 +507,10 @@
       "name": {
         "ar": "مريم",
         "en": "Maryam",
-        "ur": "مريم",
-        "hi": "मरियम"
+        "hi": "मरियम",
+        "ml": "സൂറത്ത് മർയം",
+        "tr": "Meryem",
+        "ur": "مريم"
       },
       "tags": "marym,mryam,mrym,marry,mry,mrry"
     }, {
@@ -496,8 +534,10 @@
       "name": {
         "ar": "طه",
         "en": "Taa-Haa",
-        "ur": "طه",
-        "hi": "अत-तहा"
+        "hi": "अत-तहा",
+        "ml": "സൂറത്ത് ത്വാഹാ",
+        "tr": "Tâhâ",
+        "ur": "طه"
       },
       "tags": "tahaa,taaha,thaa"
     }, {
@@ -521,8 +561,10 @@
       "name": {
         "ar": "الأنبياء",
         "en": "Al-Anbiyaa",
-        "ur": "الأنبياء",
-        "hi": "अल-अम्बिया"
+        "hi": "अल-अम्बिया",
+        "ml": "സൂറത്തുൽ അൻബിയാഅ്",
+        "tr": "Enbiyâ",
+        "ur": "الأنبياء"
       },
       "tags": "alanbiyaa,alambiyaa,alambyaa,alanbyaa,nabi,nabee,theprophets"
     }, {
@@ -546,8 +588,10 @@
       "name": {
         "ar": "الحج",
         "en": "Al-Hajj",
-        "ur": "الحج",
-        "hi": "अल-हज"
+        "hi": "अल-हज",
+        "ml": "സൂറത്തുൽ ഹജ്ജ്",
+        "tr": "Hac",
+        "ur": "الحج"
       },
       "tags": "alhajj,alhazz,alhjj,alhzz,thepilgrimage"
     }, {
@@ -571,8 +615,10 @@
       "name": {
         "ar": "المؤمنون",
         "en": "Al-Muminoon",
-        "ur": "المؤمنون",
-        "hi": "अल-मुमिनून"
+        "hi": "अल-मुमिनून",
+        "ml": "സൂറത്തുൽ മുഅ്മിനൂൻ",
+        "tr": "Mü'minûn",
+        "ur": "المؤمنون"
       },
       "tags": "almuminoon,almominoon,almuminun,almominun,thebelievers,thebeliefs"
     }, {
@@ -596,8 +642,10 @@
       "name": {
         "ar": "النور",
         "en": "An-Noor",
-        "ur": "النور",
-        "hi": "अन-नूर"
+        "hi": "अन-नूर",
+        "ml": "സൂറത്തുന്നൂർ",
+        "tr": "Nûr",
+        "ur": "النور"
       },
       "tags": "annoor,annur,thelights"
     }, {
@@ -621,8 +669,10 @@
       "name": {
         "ar": "الفرقان",
         "en": "Al-Furqaan",
-        "ur": "الفرقان",
-        "hi": "अल-फुरकान"
+        "hi": "अल-फुरकान",
+        "ml": "സൂറത്തുൽ ഫുർഖാൻ",
+        "tr": "Furkân",
+        "ur": "الفرقان"
       },
       "tags": ""
     }, {
@@ -646,8 +696,10 @@
       "name": {
         "ar": "الشعراء",
         "en": "Ash-Shu'araa",
-        "ur": "الشعراء",
-        "hi": "अस-शुआरा"
+        "hi": "अस-शुआरा",
+        "ml": "സൂറത്തുശ്ശുഅറാഅ്",
+        "tr": "Şuarâ",
+        "ur": "الشعراء"
       },
       "tags": "ashshuaraa,ashshuraa,ashsuraa,asshuraa,assuraa,ashsuaraa,asshuaraa,assuaraa,thepoets,thepoetry"
     }, {
@@ -671,8 +723,10 @@
       "name": {
         "ar": "النمل",
         "en": "An-Naml",
-        "ur": "النمل",
-        "hi": "अन-नम्ल"
+        "hi": "अन-नम्ल",
+        "ml": "സൂറത്തുന്നംല്",
+        "tr": "Neml",
+        "ur": "النمل"
       },
       "tags": "annaml,annamal,annmal,annml,theants"
     }, {
@@ -696,8 +750,10 @@
       "name": {
         "ar": "القصص",
         "en": "Al-Qasas",
-        "ur": "القصص",
-        "hi": "अल-क़सस"
+        "hi": "अल-क़सस",
+        "ml": "സൂറത്തുൽ ഖസസ്",
+        "tr": "Kasas",
+        "ur": "القصص"
       },
       "tags": "alqasas,alkasas,alqsas,alksas,alqass,alkass,alqss,alkss"
     }, {
@@ -721,8 +777,10 @@
       "name": {
         "ar": "العنكبوت",
         "en": "Al-Ankaboot",
-        "ur": "العنكبوت",
-        "hi": "अल-अनकबूत"
+        "hi": "अल-अनकबूत",
+        "ml": "സൂറത്തുൽ അൻകബൂത്ത്",
+        "tr": "Ankebût",
+        "ur": "العنكبوت"
       },
       "tags": "alankaboot,alankabut,alankboot,alankbut,alankabt,alankbt,thespider,spider"
     }, {
@@ -746,8 +804,10 @@
       "name": {
         "ar": "الروم",
         "en": "Ar-Room",
-        "ur": "الروم",
-        "hi": "अर-रूम"
+        "hi": "अर-रूम",
+        "ml": "സൂറത്തു റൂം",
+        "tr": "Rûm",
+        "ur": "الروم"
       },
       "tags": "arroom,arrome,arroam,theromans,arrume"
     }, {
@@ -771,8 +831,10 @@
       "name": {
         "ar": "لقمان",
         "en": "Luqman",
-        "ur": "لقمان",
-        "hi": "लुकमान"
+        "hi": "लुकमान",
+        "ml": "സൂറത്ത് ലുഖ്മാൻ",
+        "tr": "Lokmân",
+        "ur": "لقمان"
       },
       "tags": "luqmaan,lukmaan,lqmaan,lqman,lkmaan,lkman,lqmn,lkmn,luqaman,lukaman"
     }, {
@@ -796,8 +858,10 @@
       "name": {
         "ar": "السجدة",
         "en": "As-Sajda",
-        "ur": "السجدة",
-        "hi": "अस-सजदा"
+        "hi": "अस-सजदा",
+        "ml": "സൂറത്തുസ്സജദഃ",
+        "tr": "Secde",
+        "ur": "السجدة"
       },
       "tags": "assajdah,assajadah,assejdah,assejadah,assjdah,assjdh,assazdah,assazadah,assezdah,asszdah,asszdh,assajdaah,assajadaah,assejdaah,assejadaah,assjdaah,assazdaah,assazadaah,assezdaah,asszdaah,prostrate,bow down,bowdown,prstrte"
     }, {
@@ -821,8 +885,10 @@
       "name": {
         "ar": "الأحزاب",
         "en": "Al-Ahzaab",
-        "ur": "الأحزاب",
-        "hi": "अल-अह्जाब"
+        "hi": "अल-अह्जाब",
+        "ml": "സൂറത്തുൽ അഹ്സാബ്",
+        "tr": "Ahzâb",
+        "ur": "الأحزاب"
       },
       "tags": "alahzaab,alahzab,alahzb,alaahzaab,alaahzab,alaahzb,alahjaab,alahjab,alahjb,alaahjaab,alaahjab,alaahjb,alehzaab,alehzab,alehzb,alhijaab,alhijab,alhizaab,alhizab,alhejaab,alhejab,alhezaab,alhezab,theclans"
     }, {
@@ -846,8 +912,10 @@
       "name": {
         "ar": "سبإ",
         "en": "Saba",
-        "ur": "سبإ",
-        "hi": "सबा"
+        "hi": "सबा",
+        "ml": "സൂറത്തുസ്സബഅ്",
+        "tr": "Sebe'",
+        "ur": "سبإ"
       },
       "tags": "sabaa,shabaa,sbaa,shbaa,saabaa,shaabaa,sebaa"
     }, {
@@ -871,8 +939,10 @@
       "name": {
         "ar": "فاطر",
         "en": "Faatir",
-        "ur": "فاطر",
-        "hi": "फातिर"
+        "hi": "फातिर",
+        "ml": "സൂറത്ത് ഫാത്വിർ",
+        "tr": "Fâtır",
+        "ur": "فاطر"
       },
       "tags": "fatir,phaatir,phatir,fatr,phatr,ftr,phtr,theoriginator"
     }, {
@@ -896,8 +966,10 @@
       "name": {
         "ar": "يس",
         "en": "Yaseen",
-        "ur": "يس",
-        "hi": "यासीन"
+        "hi": "यासीन",
+        "ml": "സൂറത്ത് യാസീൻ",
+        "tr": "Yâsîn",
+        "ur": "يس"
       },
       "tags": "yaaseen,yaasin,yasin,yseen,ysin,yaasen,yasen,ysen,ysn"
     }, {
@@ -921,8 +993,10 @@
       "name": {
         "ar": "الصافات",
         "en": "As-Saaffaat",
-        "ur": "الصافات",
-        "hi": "अस-सफ्फात"
+        "hi": "अस-सफ्फात",
+        "ml": "സൂറത്തുസ്സ്വാഫ്ഫാത്ത്",
+        "tr": "Sâffât",
+        "ur": "الصافات"
       },
       "tags": "assaaffaat,assaffaat,assaaffat,assaffat,asshaaffaat,asshaffaat,asshaaffat,asshaffat,assafat,asshafat"
     }, {
@@ -946,8 +1020,10 @@
       "name": {
         "ar": "ص",
         "en": "Saad",
-        "ur": "ص",
-        "hi": "स’आद"
+        "hi": "स’आद",
+        "ml": "സൂറത്ത് സ്വാദ്",
+        "tr": "Sâd",
+        "ur": "ص"
       },
       "tags": "shaad,shad,sad,shd,sd"
     }, {
@@ -971,8 +1047,10 @@
       "name": {
         "ar": "الزمر",
         "en": "Az-Zumar",
-        "ur": "الزمر",
-        "hi": "अज-ज़ुमर"
+        "hi": "अज-ज़ुमर",
+        "ml": "സൂറത്തുസ്സുമർ",
+        "tr": "Zümer",
+        "ur": "الزمر"
       },
       "tags": "azzumar,azzumaar,ajjumaar,ajjumar,groves,group"
     }, {
@@ -996,8 +1074,10 @@
       "name": {
         "ar": "غافر",
         "en": "Al-Ghaafir",
-        "ur": "غافر",
-        "hi": "अल-गाफिर"
+        "hi": "अल-गाफिर",
+        "ml": "സൂറത്ത് ഗാഫിർ",
+        "tr": "Mü'min",
+        "ur": "غافر"
       },
       "tags": "alghaafir,alghafir,algafir,algaafir,algfr,alghfr,almumin,almomin"
     }, {
@@ -1021,8 +1101,10 @@
       "name": {
         "ar": "فصلت",
         "en": "Fussilat",
-        "ur": "فصلت",
-        "hi": "फुसिलत"
+        "hi": "फुसिलत",
+        "ml": "സൂറത്ത് ഫുസ്സ്വിലത്ത്",
+        "tr": "Fussilet",
+        "ur": "فصلت"
       },
       "tags": "fusilat,fussillat,fusillat,fusilaat,fusillaat,ha mim assajdah,hamimassajdah,ha meem assajdah,hameemassajdah, ha mim sajdah,hamimsajdah,ha meem sajdah,hameemsajdah"
     }, {
@@ -1046,8 +1128,10 @@
       "name": {
         "ar": "الشورى",
         "en": "Ash-Shura",
-        "ur": "الشورى",
-        "hi": "अश-शूरा"
+        "hi": "अश-शूरा",
+        "ml": "സൂറത്തുശ്ശൂറാ",
+        "tr": "Şûrâ",
+        "ur": "الشورى"
       },
       "tags": "ashshuraa,assuraa,ashsuraa,asshuraa,assraa,asshraa,ashshraa,asraa,ashraa,consulting"
     }, {
@@ -1071,8 +1155,10 @@
       "name": {
         "ar": "الزخرف",
         "en": "Az-Zukhruf",
-        "ur": "الزخرف",
-        "hi": "अज-जुखरूफ"
+        "hi": "अज-जुखरूफ",
+        "ml": "സൂറത്തുസ്സുഖ്റുഫ്",
+        "tr": "Zuhruf",
+        "ur": "الزخرف"
       },
       "tags": "azzukhruf,azukhruf,azzukruf,azukruf,azzakhruf,azakhruf,azzakruf,azakruf,azzukhraf,azukhraf,azzukraf,azukraf,azzakhraf,azakhraf,azzakraf,azakraf,jewellary,metal"
     }, {
@@ -1096,8 +1182,10 @@
       "name": {
         "ar": "الدخان",
         "en": "Ad-Dukhaan",
-        "ur": "الدخان",
-        "hi": "अद-दुखान"
+        "hi": "अद-दुखान",
+        "ml": "സൂറത്തുദ്ദുഖാൻ",
+        "tr": "Duhân",
+        "ur": "الدخان"
       },
       "tags": "addukhaan,addhukhaan,adukhaan,adhukhaan,addukhan,addhukhan,adukhan,adhukhan,addukaan,addhukaan,adukaan,adhukaan,addukan,addhukan,adukan,adhukan,azzukhaan,azzhukhaan,azukhaan,azhukhaan,azzukhan,azzhukhan,azukhan,azhukhan,azzukaan,azzhukaan,azukaan,azhukaan,azzukan,azzhukan,azukan,azhukan,ajjukhaan,ajjhukhaan,ajukhaan,ajhukhaan,ajjukhan,ajjhukhan,ajukhan,ajhukhan,ajjukaan,ajjhukaan,ajukaan,ajhukaan,ajjukan,ajjhukan,ajukan,ajhukan,smog,fog"
     }, {
@@ -1121,8 +1209,10 @@
       "name": {
         "ar": "الجاثية",
         "en": "Al-Jaathiya",
-        "ur": "الجاثية",
-        "hi": "अल-जाथीया"
+        "hi": "अल-जाथीया",
+        "ml": "സൂറത്തുൽ ജാഥിയഃ",
+        "tr": "Câsiye",
+        "ur": "الجاثية"
       },
       "tags": "aljaathiyaa,aljathiyaa,aljaatiyaa,aljatiyaa,aljaashiyaa,aljashiyaa,aljaasiyaa,aljasiyaa"
     }, {
@@ -1146,8 +1236,10 @@
       "name": {
         "ar": "الأحقاف",
         "en": "Al-Ahqaf",
-        "ur": "الأحقاف",
-        "hi": "सूरह अल-अह्काफ़"
+        "hi": "सूरह अल-अह्काफ़",
+        "ml": "സൂറത്തുൽ അഹ്ഖാഫ്",
+        "tr": "Ahkâf",
+        "ur": "الأحقاف"
       },
       "tags": "alahqaf,alahqaaf,alaahqaf,alaahqaaf,alahkaf,alahkaaf,alaahkaf,alaahkaaf,alahaqaf,alahaqaaf,alaahaqaf,alaahaqaaf,alahakaf,alahakaaf,alaahakaf,alaahakaaf,dune,desert"
     }, {
@@ -1171,8 +1263,10 @@
       "name": {
         "ar": "محمد",
         "en": "Muhammad",
-        "ur": "محمد",
-        "hi": "मुहम्मद"
+        "hi": "मुहम्मद",
+        "ml": "സൂറത്ത് മുഹമ്മദ്",
+        "tr": "Muhammed",
+        "ur": "محمد"
       },
       "tags": "mohmad,mohmod,mohmed,mehmad,mohammad,mohammed,mohamad,muhamad,muhammed,mhmd,mehmed,md,mohd,mohmd,prophet,saw,pbuh"
     }, {
@@ -1196,8 +1290,10 @@
       "name": {
         "ar": "الفتح",
         "en": "Al-Fath",
-        "ur": "الفتح",
-        "hi": "अल-फतह"
+        "hi": "अल-फतह",
+        "ml": "സൂറത്തുൽ ഫത്ഹ്",
+        "tr": "Fetih",
+        "ur": "الفتح"
       },
       "tags": "alfatah,alfath,alfateh,alfeteh,alftah,alfeth,alfth,winning,conquer,winner"
     }, {
@@ -1221,8 +1317,10 @@
       "name": {
         "ar": "الحجرات",
         "en": "Al-Hujuraat",
-        "ur": "الحجرات",
-        "hi": "अल-हुजरात"
+        "hi": "अल-हुजरात",
+        "ml": "സൂറത്തുൽ ഹുജുറാത്ത്",
+        "tr": "Hucurât",
+        "ur": "الحجرات"
       },
       "tags": "alhujuraat,alhujurat,alhujraat,alhajraat,alhujrat,alhajrat,alhijraat,alhijraat,room,house"
     }, {
@@ -1246,8 +1344,10 @@
       "name": {
         "ar": "ق",
         "en": "Qaaf",
-        "ur": "ق",
-        "hi": "क़ाफ़"
+        "hi": "क़ाफ़",
+        "ml": "സൂറത്ത് ഖാഫ്",
+        "tr": "Kâf",
+        "ur": "ق"
       },
       "tags": "qaf,kaaf,kaf,qaap,qap"
     }, {
@@ -1271,8 +1371,10 @@
       "name": {
         "ar": "الذاريات",
         "en": "Adh-Dhaariyat",
-        "ur": "الذاريات",
-        "hi": "अज़-ज़ारियात"
+        "hi": "अज़-ज़ारियात",
+        "ml": "സൂറത്തുദ്ദാരിയാത്ത്",
+        "tr": "Zâriyât",
+        "ur": "الذاريات"
       },
       "tags": "adhdhaariyat,adhdhaariyaat,addaariyat,addaariyaat,ajjaariyat,ajjariyat,ajjariyaat,azzaariyat,azzariyat,azzariyaat,adhdhaariat,adhdhaariaat,addaariat,addaariaat,ajjaariat,ajjariat,ajjariaat,azzaariat,azzariat,azzariaat,air"
     }, {
@@ -1296,8 +1398,10 @@
       "name": {
         "ar": "الطور",
         "en": "At-Tur",
-        "ur": "الطور",
-        "hi": "अत-तूर"
+        "hi": "अत-तूर",
+        "ml": "സൂറത്തുത്തൂർ",
+        "tr": "Tûr",
+        "ur": "الطور"
       },
       "tags": "attur,atur,attuur,mountain,valley"
     }, {
@@ -1321,8 +1425,10 @@
       "name": {
         "ar": "النجم",
         "en": "An-Najm",
-        "ur": "النجم",
-        "hi": "अन-नज्म"
+        "hi": "अन-नज्म",
+        "ml": "സൂറത്തുന്നജ്മ്",
+        "tr": "Necm",
+        "ur": "النجم"
       },
       "tags": "annajm,annjm,annajam,annjam"
     }, {
@@ -1346,8 +1452,10 @@
       "name": {
         "ar": "القمر",
         "en": "Al-Qamar",
-        "ur": "القمر",
-        "hi": "अल-कमर"
+        "hi": "अल-कमर",
+        "ml": "സൂറത്തുൽ ഖമർ",
+        "tr": "Kamer",
+        "ur": "القمر"
       },
       "tags": "alqamar,alqamr,alqmar,alqmr,alkmr,alkamar,alkamr,alkmar"
     }, {
@@ -1371,8 +1479,10 @@
       "name": {
         "ar": "الرحمن",
         "en": "Ar-Rahmaan",
-        "ur": "الرحمن",
-        "hi": "अर-रहमान"
+        "hi": "अर-रहमान",
+        "ml": "സൂറത്തു റഹ്മാൻ",
+        "tr": "Rahmân",
+        "ur": "الرحمن"
       },
       "tags": "arrahmaan,arrahman,arrahaman,arrahamaan,arrehmaan,arrehman,mercy,merciful,allah,god"
     }, {
@@ -1396,8 +1506,10 @@
       "name": {
         "ar": "الواقعة",
         "en": "Al-Waaqia",
-        "ur": "الواقعة",
-        "hi": "अल-वाकिया"
+        "hi": "अल-वाकिया",
+        "ml": "സൂറത്തുൽ വാഖിഅഃ",
+        "tr": "Vâkıa",
+        "ur": "الواقعة"
       },
       "tags": "alwaaqiaa,alwaqiaa,alwaakiaa,alwakiaa,alwqyaa,alwkyaa,alwqiyaa,alwkiyaa,mandatory,compulsory,obligatory"
     }, {
@@ -1421,8 +1533,10 @@
       "name": {
         "ar": "الحديد",
         "en": "Al-Hadid",
-        "ur": "الحديد",
-        "hi": "अल-हदीद"
+        "hi": "अल-हदीद",
+        "ml": "സൂറത്തുൽ ഹദീദ്",
+        "tr": "Hadîd",
+        "ur": "الحديد"
       },
       "tags": "alhadid,alhadeed,alhdid,alhdeed,alhdd,alhadd"
     }, {
@@ -1446,8 +1560,10 @@
       "name": {
         "ar": "المجادلة",
         "en": "Al-Mujaadila",
-        "ur": "المجادلة",
-        "hi": "अल-मुजादिला"
+        "hi": "अल-मुजादिला",
+        "ml": "സൂറത്തുൽ മുജാദിലഃ",
+        "tr": "Mücâdele",
+        "ur": "المجادلة"
       },
       "tags": "almujaadilaa,almujadilaa,almuzaadilaa,almuzadilaa,almujaadalaa,almujadalaa,almuzaadalaa,almuzadalaa,almajaadilaa,almajadilaa,almazaadilaa,almazadilaa,almajaadalaa,almajadalaa,almazaadalaa,almazadalaa"
     }, {
@@ -1471,8 +1587,10 @@
       "name": {
         "ar": "الحشر",
         "en": "Al-Hashr",
-        "ur": "الحشر",
-        "hi": "अल-हष्र"
+        "hi": "अल-हष्र",
+        "ml": "സൂറത്തുൽ ഹശ്ർ",
+        "tr": "Haşr",
+        "ur": "الحشر"
       },
       "tags": "alhashr,alhasr,alhshr,alhsr,alhashar,alhasar,alhshar,alhsar"
     }, {
@@ -1496,8 +1614,10 @@
       "name": {
         "ar": "الممتحنة",
         "en": "Al-Mumtahana",
-        "ur": "الممتحنة",
-        "hi": "अल-मुमताहिना"
+        "hi": "अल-मुमताहिना",
+        "ml": "സൂറത്തുൽ മുംതഹനഃ",
+        "tr": "Mümtehine",
+        "ur": "الممتحنة"
       },
       "tags": "almumtahanaa,almumtihanaa,almumthnaa,almumtanahaa,almumtahnaa,almamtahanaa,almamtihanaa,almamthnaa,almamtanahaa,almamtahnaa"
     }, {
@@ -1521,8 +1641,10 @@
       "name": {
         "ar": "الصف",
         "en": "As-Saff",
-        "ur": "الصف",
-        "hi": "अस-सफ्फ"
+        "hi": "अस-सफ्फ",
+        "ml": "സൂറത്തുസ്സ്വഫ്ഫ്",
+        "tr": "Saf",
+        "ur": "الصف"
       },
       "tags": "assaff,ashshaff,assaaff,asshaaff"
     }, {
@@ -1546,8 +1668,10 @@
       "name": {
         "ar": "الجمعة",
         "en": "Al-Jumu'a",
-        "ur": "الجمعة",
-        "hi": "अल-जुमाअ"
+        "hi": "अल-जुमाअ",
+        "ml": "സൂറത്തുൽ ജുമുഅഃ",
+        "tr": "Cuma",
+        "ur": "الجمعة"
       },
       "tags": "aljummaah,aljummah,aljummuaah,aljummuah,aljmma"
     }, {
@@ -1571,8 +1695,10 @@
       "name": {
         "ar": "المنافقون",
         "en": "Al-Munaafiqoon",
-        "ur": "المنافقون",
-        "hi": "अल-मुनाफिकुन"
+        "hi": "अल-मुनाफिकुन",
+        "ml": "സൂറത്തുൽ മുനാഫിഖൂൻ",
+        "tr": "Münâfikûn",
+        "ur": "المنافقون"
       },
       "tags": "almunaafiqoon,almunaafikoon,almonaafiqoon,almonaafikoon,almunafiqoon,almunafikoon,almonafiqoon,almonafikoon"
     }, {
@@ -1596,8 +1722,10 @@
       "name": {
         "ar": "التغابن",
         "en": "At-Taghaabun",
-        "ur": "التغابن",
-        "hi": "अत-तग़ाबुन"
+        "hi": "अत-तग़ाबुन",
+        "ml": "സൂറത്തുത്തഗാബുൻ",
+        "tr": "Tegâbün",
+        "ur": "التغابن"
       },
       "tags": "attaghaabun,attagabbun,attaghabbun,attagabun,attaggabbun"
     }, {
@@ -1621,8 +1749,10 @@
       "name": {
         "ar": "الطلاق",
         "en": "At-Talaaq",
-        "ur": "الطلاق",
-        "hi": "अत-तलाक"
+        "hi": "अत-तलाक",
+        "ml": "സൂറത്തുത്ത്വലാഖ്",
+        "tr": "Talâk",
+        "ur": "الطلاق"
       },
       "tags": "attalaaq,attalaq,attalaak,attalak,attlaq,attlaaq,attlak,attlaak,attlq,attlk"
     }, {
@@ -1646,8 +1776,10 @@
       "name": {
         "ar": "التحريم",
         "en": "At-Tahrim",
-        "ur": "التحريم",
-        "hi": "अत-तहरिम"
+        "hi": "अत-तहरिम",
+        "ml": "സൂറത്തുത്തഹ്രീം",
+        "tr": "Tahrîm",
+        "ur": "التحريم"
       },
       "tags": "attahrim,attahreem,attarim,attareem,atthrim,atthreem,attrim,attreem,atthrm"
     }, {
@@ -1671,8 +1803,10 @@
       "name": {
         "ar": "الملك",
         "en": "Al-Mulk",
-        "ur": "الملك",
-        "hi": "अल-मुल्क"
+        "hi": "अल-मुल्क",
+        "ml": "സൂറത്തുൽ മുൽക്",
+        "tr": "Mülk",
+        "ur": "الملك"
       },
       "tags": "almulk,country,nation,almlk"
     }, {
@@ -1696,8 +1830,10 @@
       "name": {
         "ar": "القلم",
         "en": "Al-Qalam",
-        "ur": "القلم",
-        "hi": "अल-कलाम"
+        "hi": "अल-कलाम",
+        "ml": "സൂറത്തുൽ ഖലം",
+        "tr": "Kalem",
+        "ur": "القلم"
       },
       "tags": "alqalam,alkalam,alqalm,alkalm,alqlam,alklam,alqlm,aklm"
     }, {
@@ -1721,8 +1857,10 @@
       "name": {
         "ar": "الحاقة",
         "en": "Al-Haaqqa",
-        "ur": "الحاقة",
-        "hi": "अल-हाक्का"
+        "hi": "अल-हाक्का",
+        "ml": "സൂറത്തുൽ ഹാഖ്ഖഃ",
+        "tr": "Hâkka",
+        "ur": "الحاقة"
       },
       "tags": "alhaaqqaah,alhaqqaah,alhaqqah,alhaqah,alhaqaah,alhaaqaah,alhaaqah,alhaakkaah,alhakkaah,alhakkah,alhakah,alhakaah,alhaakaah,alhaakah,alhqh,alhkh"
     }, {
@@ -1746,8 +1884,10 @@
       "name": {
         "ar": "المعارج",
         "en": "Al-Ma'aarij",
-        "ur": "المعارج",
-        "hi": "अल-मारिज"
+        "hi": "अल-मारिज",
+        "ml": "സൂറത്തുൽ മആരിജ്",
+        "tr": "Meâric",
+        "ur": "المعارج"
       },
       "tags": "almaarij,almarij,almaariz,almariz,urooz,urooj,uruz,uruj"
     }, {
@@ -1771,8 +1911,10 @@
       "name": {
         "ar": "نوح",
         "en": "Nooh",
-        "ur": "نوح",
-        "hi": "नूह"
+        "hi": "नूह",
+        "ml": "സൂറത്ത് നൂഹ്",
+        "tr": "Nûh",
+        "ur": "نوح"
       },
       "tags": "nuh,noah"
     }, {
@@ -1796,8 +1938,10 @@
       "name": {
         "ar": "الجن",
         "en": "Al-Jinn",
-        "ur": "الجن",
-        "hi": "अल-जिन्न"
+        "hi": "अल-जिन्न",
+        "ml": "സൂറത്തുൽ ജിന്ന്",
+        "tr": "Cin",
+        "ur": "الجن"
       },
       "tags": "aljinn,aljinnat,aljinaat,aljinat,aljenn,aljennat,aljenaat,aljenat,alzinn,alzinnat,alzinaat,alzinat,alzenn,alzennat,alzenaat,alzenat"
     }, {
@@ -1821,8 +1965,10 @@
       "name": {
         "ar": "المزمل",
         "en": "Al-Muzzammil",
-        "ur": "المزمل",
-        "hi": "अल-मुज़म्मिल"
+        "hi": "अल-मुज़म्मिल",
+        "ml": "സൂറത്തുൽ മുസ്സമ്മിൽ",
+        "tr": "Müzzemmil",
+        "ur": "المزمل"
       },
       "tags": "almuzzammil,almuzammil,almuzamil,almuzmil,almazzammil,almazammil,almazamil,almazmil,almujjammil,almujammil,almujamil,almujmil,almajjammil,almajammil,almajamil,almajmil"
     }, {
@@ -1846,8 +1992,10 @@
       "name": {
         "ar": "المدثر",
         "en": "Al-Muddaththir",
-        "ur": "المدثر",
-        "hi": "अल्-मुद्दस्सिर"
+        "hi": "अल्-मुद्दस्सिर",
+        "ml": "സൂറത്തുൽ മുദ്ദഥ്ഥിർ",
+        "tr": "Müddessir",
+        "ur": "المدثر"
       },
       "tags": "almuddaththir,almudaththir,almuddatthir,almudatthir,almuddathtir,almudathtir,almuddattir,almudattir,almuddashshir,almudashshir,almuddasshir,almudasshir,almuddashsir,almudashsir,almuddassir,almudassir,almudshir,almudsir"
     }, {
@@ -1871,8 +2019,10 @@
       "name": {
         "ar": "القيامة",
         "en": "Al-Qiyaama",
-        "ur": "القيامة",
-        "hi": "अल-कियामा"
+        "hi": "अल-कियामा",
+        "ml": "സൂറത്തുൽ ഖിയാമഃ",
+        "tr": "Kıyâmet",
+        "ur": "القيامة"
       },
       "tags": "alqiyaamat,alqiyamat,alqayaamat,alqayamat,alqiyaamah,alqiyamah,alqayaamah,alqayamah,alkiyaamat,alkiyamat,alkayaamat,alkayamat,alkiyaamah,alkiyamah,alkayaamah,alkayamah"
     }, {
@@ -1896,8 +2046,10 @@
       "name": {
         "ar": "الانسان",
         "en": "Al-Insaan",
-        "ur": "الانسان",
-        "hi": "अल-इन्सान"
+        "hi": "अल-इन्सान",
+        "ml": "സൂറത്തുൽ ഇൻസാൻ",
+        "tr": "İnsân",
+        "ur": "الانسان"
       },
       "tags": "alinsaan,alinsan,alinsn"
     }, {
@@ -1921,8 +2073,10 @@
       "name": {
         "ar": "المرسلات",
         "en": "Al-Mursalaat",
-        "ur": "المرسلات",
-        "hi": "अल-मुर्सलत"
+        "hi": "अल-मुर्सलत",
+        "ml": "സൂറത്തുൽ മുർസലാത്ത്",
+        "tr": "Mürselât",
+        "ur": "المرسلات"
       },
       "tags": "almursalaat,almursilaat,almursalat,almursilat,almurselaat,almurselat,almurslat,almurslt"
     }, {
@@ -1946,8 +2100,10 @@
       "name": {
         "ar": "النبإ",
         "en": "An-Naba",
-        "ur": "النبإ",
-        "hi": "अल-नबा"
+        "hi": "अल-नबा",
+        "ml": "സൂറത്തുന്നബഅ്",
+        "tr": "Nebe",
+        "ur": "النبإ"
       },
       "tags": "annabaa,annbaa,annebaa,annibaa,news,alert,information"
     }, {
@@ -1971,8 +2127,10 @@
       "name": {
         "ar": "النازعات",
         "en": "An-Naazi'aat",
-        "ur": "النازعات",
-        "hi": "अन-नाज़िआ़त"
+        "hi": "अन-नाज़िआ़त",
+        "ml": "സൂറത്തുന്നാസിആത്ത്",
+        "tr": "Naziât",
+        "ur": "النازعات"
       },
       "tags": "annaaziaat,annaaziyaat,annaaziat,annaaziyat,annaziaat,annaziyaat,annaziat,annaziyat,annaajiaat,annaajiyaat,annaajiat,annaajiyat,annajiaat,annajiyaat,annajiat,annajiyat,nazyaat,nazyat,najyaat,najyat,nazaat,najaat,nazat,najat,nzt,njt"
     }, {
@@ -1996,8 +2154,10 @@
       "name": {
         "ar": "عبس",
         "en": "Abasa",
-        "ur": "عبس",
-        "hi": "सूरह अबसा"
+        "hi": "सूरह अबसा",
+        "ml": "സൂറത്ത് അബസ",
+        "tr": "Abese",
+        "ur": "عبس"
       },
       "tags": "aabasaa,aabaasaa,aabsaa,aabashaa,aabaashaa,aabshaa"
     }, {
@@ -2021,8 +2181,10 @@
       "name": {
         "ar": "التكوير",
         "en": "At-Takwir",
-        "ur": "التكوير",
-        "hi": "अत-तक्वीर"
+        "hi": "अत-तक्वीर",
+        "ml": "സൂറത്തുത്തക്വീർ",
+        "tr": "Tekvîr",
+        "ur": "التكوير"
       },
       "tags": "attakwir,attakweer,attaqwir,attaqweer,attkwir,attkweer,attqwir,attqweer"
     }, {
@@ -2046,8 +2208,10 @@
       "name": {
         "ar": "الإنفطار",
         "en": "Al-Infitaar",
-        "ur": "الإنفطار",
-        "hi": "अल-इन्फितार,"
+        "hi": "अल-इन्फितार,",
+        "ml": "സൂറത്തുൽ ഇൻഫിത്വാർ",
+        "tr": "İnfitâr",
+        "ur": "الإنفطار"
       },
       "tags": "alinfitaar,alinfitar,alinfetaar,alinfetar,alinftaar,alinftar,alinftr, alintifaar,alintifar,alintefaar,alintefar,alintfaar,alintfar,alintfr"
     }, {
@@ -2071,8 +2235,10 @@
       "name": {
         "ar": "المطففين",
         "en": "Al-Mutaffifin",
-        "ur": "المطففين",
-        "hi": "अल-मुताफ्फिन"
+        "hi": "अल-मुताफ्फिन",
+        "ml": "സൂറത്തുൽ മുത്വഫ്ഫിഫീൻ",
+        "tr": "Mutaffifîn",
+        "ur": "المطففين"
       },
       "tags": "almutaffifin,almutaffifeen,almutaffin,almutaffeen,almutafin,almutafeen,almutfin,almutfeen"
     }, {
@@ -2096,8 +2262,10 @@
       "name": {
         "ar": "الإنشقاق",
         "en": "Al-Inshiqaaq",
-        "ur": "الإنشقاق",
-        "hi": "अल-इन्शिकाक"
+        "hi": "अल-इन्शिकाक",
+        "ml": "സൂറത്തുൽ ഇൻശിഖാഖ്",
+        "tr": "İnşikâk",
+        "ur": "الإنشقاق"
       },
       "tags": "alinshiqaaq,alinshiqaq,alinsiqaaq,alinsiqaq,alinsqaaq,alinsqaq,alinqaaq,alinqaq,alinshikaak,alinshikak,alinsikaak,alinsikak,alinskaak,alinskak,alinkaak,alinkak"
     }, {
@@ -2121,8 +2289,10 @@
       "name": {
         "ar": "البروج",
         "en": "Al-Burooj",
-        "ur": "البروج",
-        "hi": "अल-बुरूज"
+        "hi": "अल-बुरूज",
+        "ml": "സൂറത്തുൽ ബുറൂജ്",
+        "tr": "Burûc",
+        "ur": "البروج"
       },
       "tags": "alburooj,alburuj,alburj,alburj,albarooj,albaruj,alburooz,alburuz,alburz,alburz,albarooz,albaruz,stars,albrj,albrz"
     }, {
@@ -2146,8 +2316,10 @@
       "name": {
         "ar": "الطارق",
         "en": "At-Taariq",
-        "ur": "الطارق",
-        "hi": "अत-तारिक"
+        "hi": "अत-तारिक",
+        "ml": "സൂറത്തുത്ത്വാരിഖ്",
+        "tr": "Târık",
+        "ur": "الطارق"
       },
       "tags": "attaarique,attarique,ataarique,atarique,attaarik,attarik,ataarik,atarik,attrk,atrk"
     }, {
@@ -2171,8 +2343,10 @@
       "name": {
         "ar": "الأعلى",
         "en": "Al-A'laa",
-        "ur": "الأعلى",
-        "hi": "अल-अला"
+        "hi": "अल-अला",
+        "ml": "സൂറത്തുൽ അഅ്ലാ",
+        "tr": "A'lâ",
+        "ur": "الأعلى"
       },
       "tags": "alalaa,alaalaa,allaa,aallaa,height"
     }, {
@@ -2196,8 +2370,10 @@
       "name": {
         "ar": "الغاشية",
         "en": "Al-Ghaashiya",
-        "ur": "الغاشية",
-        "hi": "अल-घाशिया"
+        "hi": "अल-घाशिया",
+        "ml": "സൂറത്തുൽ ഗാശിയഃ",
+        "tr": "Gâşiye",
+        "ur": "الغاشية"
       },
       "tags": "alghaashiyaa,alghashiyaa,alghaasiyaa,alghasiyaa,algaashiyaa,algashiyaa,algaasiyaa,algasiyaa"
     }, {
@@ -2221,8 +2397,10 @@
       "name": {
         "ar": "الفجر",
         "en": "Al-Fajr",
-        "ur": "الفجر",
-        "hi": "अल-फज्र"
+        "hi": "अल-फज्र",
+        "ml": "സൂറത്തുൽ ഫജ്ർ",
+        "tr": "Fecr",
+        "ur": "الفجر"
       },
       "tags": "alfajr,alfazr,alfjr,alfzr"
     }, {
@@ -2246,8 +2424,10 @@
       "name": {
         "ar": "البلد",
         "en": "Al-Balad",
-        "ur": "البلد",
-        "hi": "अल-बलद"
+        "hi": "अल-बलद",
+        "ml": "സൂറത്തുൽ ബലദ്",
+        "tr": "Beled",
+        "ur": "البلد"
       },
       "tags": "albalad,albalaad,albaalaad,albaalad,albld"
     }, {
@@ -2271,8 +2451,10 @@
       "name": {
         "ar": "الشمس",
         "en": "Ash-Shams",
-        "ur": "الشمس",
-        "hi": "अस-शम्स"
+        "hi": "अस-शम्स",
+        "ml": "സൂറത്തുശ്ശംസ്",
+        "tr": "Şems",
+        "ur": "الشمس"
       },
       "tags": "ashshams,asshams,assams,ashsams,ashams,asams,ashshms,ashsms,asshms,assms"
     }, {
@@ -2296,8 +2478,10 @@
       "name": {
         "ar": "الليل",
         "en": "Al-Lail",
-        "ur": "الليل",
-        "hi": "अल-लैल"
+        "hi": "अल-लैल",
+        "ml": "സൂറത്തുല്ലൈൽ",
+        "tr": "Leyl",
+        "ur": "الليل"
       },
       "tags": "allail,alleil,allal,allel,alel,alal,alein,alail,allil,alil,ll"
     }, {
@@ -2321,8 +2505,10 @@
       "name": {
         "ar": "الضحى",
         "en": "Ad-Dhuhaa",
-        "ur": "الضحى",
-        "hi": "अद-दुहा"
+        "hi": "अद-दुहा",
+        "ml": "സൂറത്തുള്ളുഹാ",
+        "tr": "Duhâ",
+        "ur": "الضحى"
       },
       "tags": "addhuhaa,addhuaa,adduhaa,adduaa,azzhuhaa,azzhuaa,azzuhaa,azzuaa,ajjhuhaa,ajjhuaa,ajjuhaa,ajjuaa"
     }, {
@@ -2346,8 +2532,10 @@
       "name": {
         "ar": "الشرح",
         "en": "Ash-Sharh",
-        "ur": "الشرح",
-        "hi": "अल-इन्शिराह"
+        "hi": "अल-इन्शिराह",
+        "ml": "സൂറത്തുശ്ശർഹ്",
+        "tr": "İnşirâh",
+        "ur": "الشرح"
       },
       "tags": "ashsharh,assarh,ashsarh,assharh,ashsharah,assarah,ashsarah,assharah,ashshrh,ashsrh,asshrh,assrh"
     }, {
@@ -2371,8 +2559,10 @@
       "name": {
         "ar": "التين",
         "en": "At-Tin",
-        "ur": "التين",
-        "hi": "अत-तिन"
+        "hi": "अत-तिन",
+        "ml": "സൂറത്തുത്തീൻ",
+        "tr": "Tîn",
+        "ur": "التين"
       },
       "tags": "attin,atteen,atin,ateen"
     }, {
@@ -2396,8 +2586,10 @@
       "name": {
         "ar": "العلق",
         "en": "Al-Alaq",
-        "ur": "العلق",
-        "hi": "अल-अलक"
+        "hi": "अल-अलक",
+        "ml": "സൂറത്തുൽ അലഖ്",
+        "tr": "Alak",
+        "ur": "العلق"
       },
       "tags": "alalaq,alalak,allaq,allak,alalq,alalk"
     }, {
@@ -2421,8 +2613,10 @@
       "name": {
         "ar": "القدر",
         "en": "Al-Qadr",
-        "ur": "القدر",
-        "hi": "अल-कद्र"
+        "hi": "अल-कद्र",
+        "ml": "സൂറത്തുൽ ഖദ്ർ",
+        "tr": "Kadir",
+        "ur": "القدر"
       },
       "tags": "alqadr,alqadar,alqdar,alkadr,alkadar,alkdar"
     }, {
@@ -2446,8 +2640,10 @@
       "name": {
         "ar": "البينة",
         "en": "Al-Bayyina",
-        "ur": "البينة",
-        "hi": "अल-बय्यिना"
+        "hi": "अल-बय्यिना",
+        "ml": "സൂറത്തുൽ ബയ്യിനഃ",
+        "tr": "Beyyine",
+        "ur": "البينة"
       },
       "tags": "albayyinaah,albayyinah,albayinaah,albayinah,albayyeenaah,albayyeenah,albayeenaah,albayeenah,albainaah,albaeenaah,albayynaah,albayynah,albaynah,albaynaah"
     }, {
@@ -2471,8 +2667,10 @@
       "name": {
         "ar": "الزلزلة",
         "en": "Az-Zalzala",
-        "ur": "الزلزلة",
-        "hi": "अज़-ज़ल्ज़ला"
+        "hi": "अज़-ज़ल्ज़ला",
+        "ml": "സൂറത്തുസ്സൽസലഃ",
+        "tr": "Zilzâl",
+        "ur": "الزلزلة"
       },
       "tags": "azzalzalaa,azzlzalaa,azzlzlaa,azzalzlaa,ajjaljalaa,ajjljalaa,ajjljlaa,ajjaljlaa"
     }, {
@@ -2496,8 +2694,10 @@
       "name": {
         "ar": "العاديات",
         "en": "Al-Aadiyaat",
-        "ur": "العاديات",
-        "hi": "अल-आदियात"
+        "hi": "अल-आदियात",
+        "ml": "സൂറത്തുൽ ആദിയാത്ത്",
+        "tr": "Âdiyât",
+        "ur": "العاديات"
       },
       "tags": "alaadiyaat,aladiyaat,aladiyat,alaadiyat,alaadiaat,aladiaat,aladiat,alaadiat,alaadyaat,aladyaat,aladyat,alaadyat"
     }, {
@@ -2521,8 +2721,10 @@
       "name": {
         "ar": "القارعة",
         "en": "Al-Qaari'a",
-        "ur": "القارعة",
-        "hi": "अल-क़ारिअह"
+        "hi": "अल-क़ारिअह",
+        "ml": "സൂറത്തുൽ ഖാരിഅഃ",
+        "tr": "Kâria",
+        "ur": "القارعة"
       },
       "tags": "alqaariaah,alqariaah,alqaariah,alqariah,alkaariaah,alkariaah,alkaariah,alkariah,alqriaah,alqriah,alkriaah,alkriah"
     }, {
@@ -2546,8 +2748,10 @@
       "name": {
         "ar": "التكاثر",
         "en": "At-Takaathur",
-        "ur": "التكاثر",
-        "hi": "अत-तकासुर"
+        "hi": "अत-तकासुर",
+        "ml": "സൂറത്തുത്തകാഥുർ",
+        "tr": "Tekâsür",
+        "ur": "التكاثر"
       },
       "tags": "attakaathur,attakathur,atakathur,attaqaathur,attaqathur,ataqathur,attakaashur,attakashur,atakashur,attaqaashur,attaqashur,ataqashur,attakaasur,attakasur,atakasur,attaqaasur,attaqasur,ataqasur"
     }, {
@@ -2571,8 +2775,10 @@
       "name": {
         "ar": "العصر",
         "en": "Al-Asr",
-        "ur": "العصر",
-        "hi": "अल-अस्र"
+        "hi": "अल-अस्र",
+        "ml": "സൂറത്തുൽ അസ്ർ",
+        "tr": "Asr",
+        "ur": "العصر"
       },
       "tags": "alasr,alaasr,alashr,alaashr,alasar,alaasar,alashar,alaashar"
     }, {
@@ -2596,8 +2802,10 @@
       "name": {
         "ar": "الهمزة",
         "en": "Al-Humaza",
-        "ur": "الهمزة",
-        "hi": "अल-हुमज़ह"
+        "hi": "अल-हुमज़ह",
+        "ml": "സൂറത്തുൽ ഹുമസഃ",
+        "tr": "Hümeze",
+        "ur": "الهمزة"
       },
       "tags": "alhumazaa,alhamazaa,alhmazaa,alhumzaa,alhamzaa,alhmzaa,alhumajaa,alhamajaa,alhmajaa,alhumjaa,alhamjaa,alhmjaa"
     }, {
@@ -2621,8 +2829,10 @@
       "name": {
         "ar": "الفيل",
         "en": "Al-Fil",
-        "ur": "الفيل",
-        "hi": "अल-फ़ील"
+        "hi": "अल-फ़ील",
+        "ml": "സൂറത്തുൽ ഫീൽ",
+        "tr": "Fîl",
+        "ur": "الفيل"
       },
       "tags": "alfill,alfeell,alfell,alphill,alpheell,alphell"
     }, {
@@ -2646,8 +2856,10 @@
       "name": {
         "ar": "قريش",
         "en": "Quraish",
-        "ur": "قريش",
-        "hi": "क़ुरइश"
+        "hi": "क़ुरइश",
+        "ml": "സൂറത്ത് ഖുറൈശ്",
+        "tr": "Kureyş",
+        "ur": "قريش"
       },
       "tags": "quraysh,kuraysh,quraeesh,kuraeesh,qaraeesh,karaeesh,kuraish,qaraysh,karaysh,karaish,qrsh,krsh"
     }, {
@@ -2671,8 +2883,10 @@
       "name": {
         "ar": "الماعون",
         "en": "Al-Maa'un",
-        "ur": "الماعون",
-        "hi": "अल-माऊन"
+        "hi": "अल-माऊन",
+        "ml": "സൂറത്തുൽ മാഊൻ",
+        "tr": "Maûn",
+        "ur": "الماعون"
       },
       "tags": "almaaun,almaaoon,almaun,almaoon,almaaon,almaon,almaun,almoon,almun"
     }, {
@@ -2696,8 +2910,10 @@
       "name": {
         "ar": "الكوثر",
         "en": "Al-Kawthar",
-        "ur": "الكوثر",
-        "hi": "अल-कौसर"
+        "hi": "अल-कौसर",
+        "ml": "സൂറത്തുൽ കൗഥർ",
+        "tr": "Kevser",
+        "ur": "الكوثر"
       },
       "tags": "alkawthar,alkauthar,alkaothar,alkowthar,alkoathar,alkoauthar,alkauothar,alkawshar,alkaushar,alkaoshar,alkowshar,alkoashar,alkoaushar,alkauoshar,alkawsar,alkausar,alkaosar,alkowsar,alkoasar,alkoausar,alkauosar,alkothar,alkoshar,alkosar"
     }, {
@@ -2721,8 +2937,10 @@
       "name": {
         "ar": "الكافرون",
         "en": "Al-Kaafiroon",
-        "ur": "الكافرون",
-        "hi": "अल-काफिरून"
+        "hi": "अल-काफिरून",
+        "ml": "സൂറത്തുൽ കാഫിറൂൻ",
+        "tr": "Kâfirûn",
+        "ur": "الكافرون"
       },
       "tags": "alkaafiroon,alkaafirun,alkafiroon,alkafirun,alqaafiroon,alqaafirun,alqafiroon,alqafirun,alkaaphiroon,alkaaphirun,alkaphiroon,alkaphirun,alqaaphiroon,alqaaphirun,alqaphiroon,alqaphirun"
     }, {
@@ -2746,8 +2964,10 @@
       "name": {
         "ar": "النصر",
         "en": "An-Nasr",
-        "ur": "النصر",
-        "hi": "अन-नस्र"
+        "hi": "अन-नस्र",
+        "ml": "സൂറത്തുന്നസ്ർ",
+        "tr": "Nasr",
+        "ur": "النصر"
       },
       "tags": "annasr,annashr,annsr,anshr,annasar,annashar,annsar,annshar,annsher,annser,annasher,annaser"
     }, {
@@ -2771,8 +2991,10 @@
       "name": {
         "ar": "المسد",
         "en": "Al-Masad",
-        "ur": "المسد",
-        "hi": "अल-मसद"
+        "hi": "अल-मसद",
+        "ml": "സൂറത്തുൽ മസദ്",
+        "tr": "Tebbet",
+        "ur": "المسد"
       },
       "tags": "almasad,almashad,almasd,almashd,almsd,almsad,almshad"
     }, {
@@ -2796,8 +3018,10 @@
       "name": {
         "ar": "الإخلاص",
         "en": "Al-Ikhlaas",
-        "ur": "الإخلاص",
-        "hi": "अल-इख़लास"
+        "hi": "अल-इख़लास",
+        "ml": "സൂറത്തുൽ ഇഖ്ലാസ്",
+        "tr": "İhlâs",
+        "ur": "الإخلاص"
       },
       "tags": "alikhlaash,alikhlash,aliklaash,aliklash,aleekhlaash,aleekhlash,aleeklaash,aleeklash,aliqlaash,aliqlash,alqlaash,alqlash,alkhalsh,alkhals,alklsh"
     }, {
@@ -2821,8 +3045,10 @@
       "name": {
         "ar": "الفلق",
         "en": "Al-Falaq",
-        "ur": "الفلق",
-        "hi": "अल-फलक़"
+        "hi": "अल-फलक़",
+        "ml": "സൂറത്തുൽ ഫലഖ്",
+        "tr": "Felak",
+        "ur": "الفلق"
       },
       "tags": "alfalaq,alfalak,alfalq,alfalk,alflq,alflk,alflaq,alflak,alphalaq,alphalak,alphalq,alphalk,alphlq,alphlk,alphlaq,alphlak"
     }, {
@@ -2846,8 +3072,10 @@
       "name": {
         "ar": "الناس",
         "en": "An-Naas",
-        "ur": "الناس",
-        "hi": "अन-नास"
+        "hi": "अन-नास",
+        "ml": "സൂറത്തുന്നാസ്",
+        "tr": "Nâs",
+        "ur": "الناس"
       },
       "tags": "annaash,annash,insaan,insan"
     }
