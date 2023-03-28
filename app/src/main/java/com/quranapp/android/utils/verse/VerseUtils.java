@@ -59,7 +59,13 @@ public abstract class VerseUtils {
             return arabicSS;
         }
 
-        return TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial));
+        return TextUtils.concat(
+            arabicSS,
+            " ",
+            prepareVerseSerial(
+                verse.endText, verseFont, shouldReverseSerial, verseTextSize
+            )
+        );
     }
 
     /**
@@ -82,7 +88,11 @@ public abstract class VerseUtils {
 
         final CharSequence concat;
         if (!verse.endText.isEmpty()) {
-            concat = TextUtils.concat(arabicSS, " ", prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial));
+            concat = TextUtils.concat(
+                arabicSS,
+                " ",
+                prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial, -1)
+            );
         } else {
             concat = arabicSS;
         }
@@ -93,12 +103,22 @@ public abstract class VerseUtils {
         return builder;
     }
 
-    private static CharSequence prepareVerseSerial(String serialText, Typeface serialFont, boolean shouldReverse) {
+    private static CharSequence prepareVerseSerial(
+        String serialText,
+        Typeface serialFont,
+        boolean shouldReverse,
+        int verseTextSize
+    ) {
         CharSequence text = shouldReverse ? new StringBuilder(serialText).reverse().toString() : serialText;
 
         SpannableString verseNoSpannable = new SpannableString(text);
         // Set the typeface to span over verse number text
         verseNoSpannable.setSpan(new TypefaceSpan2(serialFont), 0, verseNoSpannable.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        if (verseTextSize > 0) {
+            verseNoSpannable.setSpan(new AbsoluteSizeSpan(verseTextSize), 0, verseNoSpannable.length(),
+                SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
 
         return verseNoSpannable;
     }
