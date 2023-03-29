@@ -343,4 +343,17 @@
 \n
 \nDeberá descargarlo de nuevo.</string>
     <string name="strPreviewTextTransl">En el Nombre de Allâh, el Más Compasivo, el Más Misericordioso</string>
+    <string name="nItems">%d artículos</string>
+    <string name="nItem">%d artículo</string>
+    <string name="verseSyncOn">Sincronización de los versos : ON</string>
+    <string name="verseSyncOff">Sincronización de los versos : OFF</string>
+    <string name="titleScriptCleanup">¿Borrar el script\?</string>
+    <string name="msgScriptCleanup" formatted="false">El script %s y todas sus fuentes almacenadas serán eliminadas. Deberá volver a descargarlo para poder utilizarlas.</string>
+    <string name="titleRecitationCleanup">¿Suprimir el recitado\?</string>
+    <string name="msgRecitationCleanup" formatted="false">Se borrarán todas las recitaciones almacenadas de %s.</string>
+    <string name="titleChapterInfoCleanup">¿Información clara del capítulo\?</string>
+    <string name="msgChapterInfoCleanup">Se borrará toda la información de los capítulos guardados.</string>
+    <string name="nFiles" formatted="false">%d archivos</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d scripts y %2$d fuentes</string>
+    <string name="nothingToCleanup">No hay nada que limpiar.</string>
 </resources>
