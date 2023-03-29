@@ -10,7 +10,7 @@ Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 🇫🇷 French (fr) - Sanya Gautam
 
-🇩🇪 German (de) - Mario Herrmann
+🇩🇪 German (de) - [Mylinde](https://github.com/Mylinde)
 
 🇮🇳 Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
 
