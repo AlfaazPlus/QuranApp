@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.components
+package com.quranapp.android.api.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

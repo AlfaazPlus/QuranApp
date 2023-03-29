@@ -3,6 +3,7 @@ package com.quranapp.android.components
 import android.content.Context
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.api.JsonHelper
+import com.quranapp.android.api.models.AppUpdate
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.serialization.decodeFromString
 
