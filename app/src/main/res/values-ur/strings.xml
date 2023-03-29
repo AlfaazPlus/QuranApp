@@ -342,12 +342,16 @@
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d محفوظ شدہ باب کی معلومات کو صاف کیا جا سکتا ہے۔</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
     <string name="titleChapterInfo">باب کی معلومات</string>
-
     <string name="nothingToCleanup">صاف کرنے کے لیے کچھ نہیں ہے۔</string>
     <string name="nItem">%d آئٹم</string>
     <string name="nItems">%d آئٹم</string>
     <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
     <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
     <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔</string>
-
+    <string name="titleRecitationCleanup">تلاوت حذف کریں؟</string>
+    <string name="titleScriptCleanup">اسکرپٹ حذف کریں؟</string>
+    <string name="titleChapterInfoCleanup">صاف کریں معلومات سوره؟</string>
+    <string name="msgChapterInfoCleanup">تمام معلومات سوره محفوظ شدہ حذف کردی جائیں گی۔</string>
+    <string name="nFiles" formatted="false">%d فائل</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
 </resources>
