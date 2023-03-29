@@ -343,4 +343,17 @@
     <string name="chapterInfoCanBeFreedUp" formatted="false">Kaydedilen %d bölüm bilgisi temizlenebilir.</string>
     <string name="strMsgReadHistoryRemoveFailed">Okuma geçmişi temizlenemedi.</string>
     <string name="strMsgReadHistoryRemovedAlready">Okuma geçmişi zaten temizlenmiş.</string>
+    <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
+    <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek.</string>
+    <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
+    <string name="nItem">%d öğe</string>
+    <string name="nItems">%d öğe</string>
+    <string name="verseSyncOn">Ayet takibi : AÇIK</string>
+    <string name="verseSyncOff">Ayet takibi : KAPALI</string>
+    <string name="nFiles" formatted="false">%d dosya</string>
+    <string name="msgChapterInfoCleanup">Kayıtlı olan tüm bölüm bilgileri silinecek.</string>
+    <string name="titleChapterInfoCleanup">Bölüm bilgisi temizlensin mi\?</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d hat ve %2$d yazı tipi</string>
+    <string name="titleScriptCleanup">Hat silinsin mi\?</string>
+    <string name="msgScriptCleanup" formatted="false">%s hattı ve beraberinde depolanmış bütün yazı tipleri silinecek. Bunları kullanmak isterseniz tekrar indirmeniz gerekecektir.</string>
 </resources>
