@@ -343,4 +343,17 @@
 \nआपको इसे फिर से डाउनलोड करना होगा।</string>
     <string name="github">GitHub</string>
     <string name="strPreviewTextTransl">अल्लाह के नाम से, जो अत्यन्त कृपाशील तथा दयावान् है</string>
+    <string name="nItem">%d आइटम</string>
+    <string name="nItems">%d आइटम</string>
+    <string name="verseSyncOn">आयत सिंक: चालू</string>
+    <string name="verseSyncOff">आयत सिंक: बंद</string>
+    <string name="msgScriptCleanup" formatted="false">%s स्क्रिप्ट और इसके सभी डाउनलोड किए गए फ़ॉन्ट हटा दिए जाएँगे। इनका उपयोग करने के लिए आपको पुनः डाउनलोड करना होगा।</string>
+    <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे।</string>
+    <string name="titleChapterInfoCleanup">अध्याय जानकारी साफ़ करें\?</string>
+    <string name="msgChapterInfoCleanup">सहेजी गई सभी अध्याय जानकारी हटा दी जाएगी।</string>
+    <string name="titleRecitationCleanup">तिलावत हटाना चाहते हैं\?</string>
+    <string name="titleScriptCleanup">स्क्रिप्ट मिटाना चाहते हैं\?</string>
+    <string name="nFiles" formatted="false">%d फ़ाइलें</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d स्क्रिप्ट और %2$d फ़ॉन्ट</string>
+    <string name="nothingToCleanup">साफ करने के लिए कुछ भी नहीं है।</string>
 </resources>
