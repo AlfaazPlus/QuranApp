@@ -23,7 +23,7 @@
     <string name="strLabelView">Ansicht</string>
     <string name="strLabelOpen">Öffnen</string>
     <string name="strLabelOpenInReader">Im Reader öffnen</string>
-    <string name="strLabelRead">Lesen</string>
+    <string name="strLabelRead">Lesen »</string>
     <string name="strLabelChangeNRestart">Ändern &amp; Neu starten</string>
     <string name="strLabelPrevious">Vorherige</string>
     <string name="strLabelNext">Nächste</string>
@@ -152,7 +152,7 @@
     <string name="strLabelAdvanceSharing">erweitertes Teilen</string>
     <string name="strLabelSelectVerse">Verse auswählen</string>
     <string name="strTitleChapInfoJuzNo">Abschnitt Nr.</string>
-    <string name="strTitleChapInfoRukus">Ruku</string>
+    <string name="strTitleChapInfoRukus">Gruppe</string>
     <string name="strTitleChapInfoRevOrder">Reihenfolge der Offenbarungen</string>
     <string name="strLabelOrder">Reihenfolge</string>
     <string name="strLabelCurrentVerse">Aktueller Vers</string>
@@ -194,7 +194,7 @@
     <string name="strHintSearchJuz">Abschnitt suchen</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ist keine gültige Juz (Abschnitt) Nr.</string>
     <string name="strMsgBookmarkRemoved">Vers erfolgreich aus Lesezeichen entfernt</string>
-    <string name="strMsgBookmarkRemovedAlready">Verse ist nicht in den Lesezeichen</string>
+    <string name="strMsgBookmarkRemovedAlready">Vers ist nicht in den Lesezeichen</string>
     <string name="strMsgBookmarkNoItems">Keine Lesezeichen</string>
     <string name="strMsgBookmarkDeleteSelected">Ausgewählte Lesezeichen werden entfernt.</string>
     <string name="strMsgBookmarkDeleteAll">Alle Lesezeichen werden entfernt.</string>
@@ -235,12 +235,12 @@
     <string name="strMsgVerseCredsInvalid">Vers-Referenzen sind nicht gültig.</string>
     <string name="strMsgTryLater">Bitte versuchen Sie es später noch einmal.</string>
     <string name="strMsgReportUs">Bitte melden Sie uns.</string>
-    <string name="strMsgCouldNotOpenPage">Könnte die Seite nicht öffnen.</string>
+    <string name="strMsgCouldNotOpenPage">Konnte die Seite nicht öffnen.</string>
     <string name="strLabelNavHome">Startseite</string>
     <string name="strLabelNavSearch">Suche</string>
     <string name="strTextPreparing">Vorbereitung…</string>
     <string name="strTextSending">Senden…</string>
-    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="strAyatulKursi">Ayatul Kurs</string>
     <string name="strTitleInfo">Info!</string>
     <string name="strTitleOops">Ups!</string>
     <string name="strLabelProceed">FORTFAHREN</string>
@@ -254,11 +254,11 @@
     <string name="strLabelShareImage">Bild teilen</string>
     <string name="strTitleImageSavedWithName" formatted="false">Bild gespeichert mit Name: %s</string>
     <string name="strTitleAlphaBG">Alpha Hintergrund</string>
-    <string name="strMsgEditShareTransl">Übersetzungen aus den Einstellungen werden hier nur angezeigt.</string>
+    <string name="strMsgEditShareTransl">Übersetzungen aus den Einstellungen werden nur hier angezeigt.</string>
     <string name="strMsgEditShareLongTransl">Die Übersetzung ist sehr lang, sie passt vielleicht nicht richtig.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s im Koran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Gefundene Verse mit Bezug zu %1$s an insgesamt %2$d Stellen.</string>
-    <string name="strSalamShort">Salaam</string>
+    <string name="strSalamShort">Salem</string>
     <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
     <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Schriftsystem: %s (~1MB)</string>
@@ -268,7 +268,7 @@
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d von %2$d Schriftarten heruntergeladen</string>
     <string name="strMsgReferenceDuas">Einige gesammlte Gebete aus dem Koran.</string>
-    <string name="strSalam">AsSalaamu Alaikum</string>
+    <string name="strSalam">Salem aleikum</string>
     <string name="msgDownloadingResource" formatted="false">Herunterladen %s</string>
     <string name="textDownloading">Wird heruntergeladen…</string>
     <string name="textPercentage" formatted="false">%d%%</string>
@@ -315,7 +315,7 @@
     <string name="strTitleFeaturedTopics">Themen im Koran</string>
     <string name="strChapInfoSeeMore">Weitere Informationen ›</string>
     <string name="strLabelMostPlaces">Meiste Erwähnungen</string>
-    <string name="strMsgBookmarkRemoveFailed">Verse konnte nicht aus Lesezeichen entfernt werden</string>
+    <string name="strMsgBookmarkRemoveFailed">Vers konnte nicht aus Lesezeichen entfernt werden</string>
     <string name="strMsgBookmarkAddedAlready">Vers ist bereits zu Lesezeichen hinzugefügt</string>
     <string name="strHintBookmarkViewerNote">Schreiben Sie hier eine zusätzliche Notiz zu diesem Lesezeichen…</string>
     <string name="strMsgBookmarkAddFailed">Vers konnte nicht zu Lesezeichen hinzugefügt werden</string>
@@ -344,12 +344,12 @@
     <string name="strLabelSkip">Überspringen</string>
     <string name="strPreviewTextTransl">Im Namen Allâhs, des Gnädigen, des Barmherzigen</string>
     <string name="titleRecitationCleanup">Rezitation löschen\?</string>
-    <string name="msgChapterInfoCleanup">Die ganze gespeicherte Kapitelinfo wird gelöscht.</string>
+    <string name="msgChapterInfoCleanup">Alle gespeicherten Kapitelinformationen werden gelöscht.</string>
     <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
-    <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie werden neu herunterladen müssen um sie wieder zu benutzen.</string>
+    <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie müssen sie erneut herunterladen, um sie wieder zu verwenden.</string>
     <string name="msgRecitationCleanup" formatted="false">Die ganze gespeicherte Rezitation von %s wird gelöscht.</string>
     <string name="titleChapterInfoCleanup">Kapitelinfo löschen\?</string>
-    <string name="nothingToCleanup">Es gibt nichts zum löschen.</string>
+    <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
     <string name="nItems">%d Objekte</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d Schriftsysteme und %2$d Schriftarten</string>
     <string name="nFiles" formatted="false">%d Dateien</string>
