@@ -347,11 +347,13 @@
     <string name="nItems">%d آئٹم</string>
     <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
     <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
-    <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔</string>
+    <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے</string>
     <string name="titleRecitationCleanup">تلاوت حذف کریں؟</string>
     <string name="titleScriptCleanup">اسکرپٹ حذف کریں؟</string>
     <string name="titleChapterInfoCleanup">صاف کریں معلومات سوره؟</string>
     <string name="msgChapterInfoCleanup">تمام معلومات سوره محفوظ شدہ حذف کردی جائیں گی۔</string>
     <string name="nFiles" formatted="false">%d فائل</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
+    <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔</string>
+    <string name="msgScriptCleanup" formatted="false">%s اسکرپٹ اور اس کے تمام ذخیرہ شدہ فونٹس کو حذف کر دیا جائے گا۔ انہیں استعمال کرنے کے لیے آپ کو دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
 </resources>
