@@ -50,4 +50,9 @@ class TafsirJsInterface(private val activity: ActivityTafsir) {
 
         activity.startActivity(intent)
     }
+
+    @JavascriptInterface
+    fun goToTop() {
+        activity.scrollToTop()
+    }
 }

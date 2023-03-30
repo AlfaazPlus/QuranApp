@@ -31,7 +31,7 @@ import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.components.recitation.RecitationModel;
+import com.quranapp.android.api.models.recitation.RecitationModel;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.interfaceUtils.PlayerVerseLoadCallback;
 import com.quranapp.android.suppliments.recitation.RecitationMenu;

@@ -14,8 +14,6 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.univ.ResUtils.getBitmapInputStream
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
@@ -50,18 +48,12 @@ open class TafsirWebViewClient(private val activity: ActivityTafsir) : WebViewCl
             "assets-font" -> {
                 if (uriStr.contains("uthmani")) {
                     data = ctx.resources.openRawResource(+R.font.uthmanic_hafs)
-                } else if (uriStr.contains("indopak")) {
-                    data = ctx.resources.openRawResource(+R.font.indopak)
-                } else if (uriStr.contains("urdu")) {
+                } else if (uriStr.contains("content") && TafsirUtils.isUrdu(activity.tafsirKey)) {
                     data = view.context.resources.openRawResource(+R.font.font_urdu)
                 }
             }
             "assets-image" -> {
-                if (uriStr.contains("left-arrow")) {
-                    data = createArrowDrawableStream(activity, 0f)
-                } else if (uriStr.contains("right-arrow")) {
-                    data = createArrowDrawableStream(activity, 180f)
-                } else if (uriStr.contains("top-arrow")) {
+                if (uriStr.contains("top-arrow")) {
                     data = createArrowDrawableStream(activity, 90f)
                 }
             }
@@ -103,43 +95,5 @@ open class TafsirWebViewClient(private val activity: ActivityTafsir) : WebViewCl
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return getBitmapInputStream(bitmap)
-    }
-
-
-    override fun onPageFinished(view: WebView, url: String) {
-        try {
-            installContents(view)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-    }
-
-    @Throws(JSONException::class)
-    private fun installContents(webView: WebView) {
-        val tafsirSlug = activity.tafsirKey!!
-        val chapterNo = activity.chapterNo
-        val verseNo = activity.verseNo
-        val chapter = activity.mQuranRef.get().getChapter(chapterNo)
-
-        val contentJson = JSONObject().apply {
-            put("tafsir-title", TafsirUtils.getTafsirName(tafsirSlug))
-            put(
-                "verse-info-title",
-                activity.str(R.string.strLabelVerseWithChapNameWithBar, chapter.name, verseNo)
-            )
-            put("verse-preview", chapter.getVerse(verseNo).arabicText)
-            put("previous-tafsir-title", preparePrevVerseTitle(verseNo))
-            put("next-tafsir-title", prepareNextVerseTitle(verseNo, chapter.verseCount))
-        }.toString()
-
-        webView.loadUrl("javascript:installContents('$contentJson')")
-    }
-
-    private fun preparePrevVerseTitle(verseNo: Int): String {
-        return if (verseNo == 1) "" else activity.str(R.string.strLabelVerseNo, verseNo - 1)
-    }
-
-    private fun prepareNextVerseTitle(verseNo: Int, totalVerseCount: Int): String {
-        return if (verseNo == totalVerseCount) "" else activity.str(R.string.strLabelVerseNo, verseNo + 1)
     }
 }

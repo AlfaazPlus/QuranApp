@@ -252,7 +252,7 @@ public class ActivityTafsir2 extends ReaderPossessingActivity {
 
     private class LoadTafsirTask extends BaseCallableTask<String> {
         private final File tafsirFile;
-        private final String urlStr;
+        private  String urlStr;
 
         public LoadTafsirTask() {
             if (mLoadFullChapter) {
@@ -261,7 +261,7 @@ public class ActivityTafsir2 extends ReaderPossessingActivity {
             } else {
             }
                 tafsirFile = fileUtils.getTafsirFileSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
-                urlStr = TafsirUtils.prepareTafsirUrlSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
+                // urlStr = TafsirUtils.prepareTafsirUrlSingleVerse(mTafsirSlug, mChapterNo, mVerseNo);
         }
 
         @Override

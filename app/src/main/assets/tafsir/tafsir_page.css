@@ -1,17 +1,8 @@
 @font-face {
-   font-family: me_quran;
-   src: url('https://assets-font/me_quran_4_uthmani_text');
-   /* src: url(https://cdn.qurancdn.com/assets/quran_fonts/me_quran/me_quran-40c3436c134c511aba4c25355f70915ee2a0b8a850080691742aabd5216dfdbe.ttf); */
+   font-family: uthmani;
+   src: url('https://assets-font/uthmani');
    font-display: swap;
 }
-
-@font-face {
-   font-family: verse-font;
-   src: url('https://assets-font/verse-preview');
-   /* src: local("_PDMS_Saleem_QuranFont Regular"), url(https://cdn.qurancdn.com/assets/quran_fonts/pdms/pdms-saleem-quranfont-19f5948c4a230b80ed02c1779e40cc7bd9fcd35ca7aec1e426d78b3c83c06f0f.ttf); */
-   font-display: swap;
-}
-
 
 @font-face {
    font-family: content-font;
@@ -46,6 +37,10 @@ p {
    font-size: 16px;
 }
 
+h1 {
+   font-size: 20px;
+}
+
 h2 {
    font-size: 18px;
 }
@@ -75,24 +70,7 @@ html.dark hr {
    border-color: #3d3d3d !important;
 }
 
-.big-title {
-   text-align: center;
-   margin: 20px 0;
-}
-
-.verse-info-title {
-   font-weight: bold;
-   font-size: 14px;
-}
-
-.tafsir-title {
-   font-weight: bold;
-   font-size: 25px;
-   color: #008B5B;
-}
-
-.arabic,
-.verse-preview {
+.arabic {
    direction: rtl;
    padding: 10px 15px;
    border-radius: 10px;
@@ -101,21 +79,14 @@ html.dark hr {
    text-align: right;
 }
 
-html.dark .arabic,
-html.dark .verse-preview {
+html.dark .arabic {
    background-color: #202020 !important;
 }
 
 .text_uthmani,
 .uthmani {
-   font-family: me_quran;
+   font-family: uthmani;
    font-size: 20px;
-}
-
-.verse-preview {
-   text-align: center;
-   font-family: verse-font;
-   font-size: 30px;
 }
 
 .navigator {
@@ -140,12 +111,8 @@ html.dark .navigator .btn-action {
    background-color: #252525 !important;
 }
 
-.navigator .btn-action:not(.go-to-top) {
-   flex-grow: 1;
-   flex-basis: 0%;
-}
-
 .navigator .btn-action.go-to-top {
+   flex-grow: 1;
    width: 50px;
 }
 
@@ -177,27 +144,6 @@ html.dark .navigator .btn-action:active {
    justify-content: center;
 }
 
-.go-to-verse {
-   font-weight: bold;
-   font-size: 15px;
-   white-space: nowrap;
-   padding: 8px 15px;
-   margin: 20px;
-   cursor: pointer;
-   background-color: #008B5B;
-   color: white;
-   border-radius: 10px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-}
-
-.go-to-verse:active {
-   background-color: #007444;
-}
-
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   text-align: justify;
 }

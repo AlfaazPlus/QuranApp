@@ -3,7 +3,7 @@
     "ar": [
       {
         "key": "ar_tafsir-ibn-kathir",
-        "name": "تفسير ابن کثير",
+        "name": "ابن كثير",
         "author": "حافظ ابن كثير",
         "langCode": "ar",
         "langName": "العربية",
@@ -31,7 +31,7 @@
       },
       {
         "key": "ur_tafsir-bayan-ul-quran",
-        "name": "بیان القرآن",
+        "name": "تفسیر بیان القرآن",
         "author": "اسرار احمد",
         "langCode": "ur",
         "langName": "اردو",
@@ -41,7 +41,7 @@
     "bn": [
       {
         "key": "bn_tafsir-ibn-kathir",
-        "name": "তাফসীর ইবনে কাসীর",
+        "name": "তাফসির ইবনে কাছের রহ",
         "author": "হাফিজ ইবনে কাসীর",
         "langCode": "bn",
         "langName": "বাংলা",

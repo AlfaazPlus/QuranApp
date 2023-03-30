@@ -117,7 +117,7 @@ public abstract class SPReader {
 
     public static String getSavedRecitationSlug(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        return sp.getString(KEY_RECITATION_RECITER, "");
+        return sp.getString(KEY_RECITATION_RECITER, null);
     }
 
     public static void setSavedRecitationSlug(Context context, String recitation) {
@@ -220,7 +220,7 @@ public abstract class SPReader {
 
     public static String getSavedTafsirKey(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE);
-        return sp.getString(TafsirUtils.KEY_TAFSIR, "");
+        return sp.getString(TafsirUtils.KEY_TAFSIR, null);
     }
 
     public static void setSavedTafsirKey(Context context, String tafsirKey) {

@@ -1,7 +1,7 @@
-package com.quranapp.android.components.tafsir
+package com.quranapp.android.api.models.tafsir
 
 @kotlinx.serialization.Serializable
-data class TafsirModel(
+data class TafsirInfoModel(
     val key: String,
     val name: String,
     val author: String,
@@ -13,7 +13,7 @@ data class TafsirModel(
 
 
     override fun equals(other: Any?): Boolean {
-        if (other !is TafsirModel) {
+        if (other !is TafsirInfoModel) {
             return false
         }
         return other.key == key

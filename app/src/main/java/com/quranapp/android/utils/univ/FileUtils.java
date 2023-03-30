@@ -120,11 +120,12 @@ public final class FileUtils {
     public File getTafsirDir() {
         return makeAndGetAppResourceDir(TafsirUtils.DIR_NAME);
     }
+
     public File getTafsirFileSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
         File tafsirDir = getTafsirDir();
-        String tafsirSubPath = TafsirUtils.prepareTafsirFilePathSingleVerse(tafsirSlug, chapterNo, verseNo);
-        return new File(tafsirDir, tafsirSubPath);
+        return new File(tafsirDir, createPath(tafsirSlug, String.format("%d_%d.json", chapterNo, verseNo)));
     }
+
     public File getScriptDir() {
         return makeAndGetAppResourceDir(QuranScriptUtils.INSTANCE.getSCRIPT_DIR_NAME());
     }

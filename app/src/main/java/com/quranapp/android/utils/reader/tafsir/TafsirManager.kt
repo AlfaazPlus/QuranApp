@@ -3,8 +3,8 @@ package com.quranapp.android.utils.reader.tafsir
 import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.api.models.AvailableTafsirsModel
-import com.quranapp.android.components.tafsir.TafsirModel
+import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
@@ -112,7 +112,7 @@ object TafsirManager {
     }
 
     @JvmStatic
-    fun getModel(key: String): TafsirModel? {
+    fun getModel(key: String): TafsirInfoModel? {
         val tafsirListForLangCodes = availableTafsirsModel?.tafsirs?.values ?: return null
 
         for (tafsirList in tafsirListForLangCodes) {
@@ -124,13 +124,13 @@ object TafsirManager {
     }
 
     @JvmStatic
-    fun getModels(): Map<String, List<TafsirModel>>? {
+    fun getModels(): Map<String, List<TafsirInfoModel>>? {
         return availableTafsirsModel?.tafsirs
     }
 
 
     @JvmStatic
-    fun getModels(lang: String?): List<TafsirModel>? {
+    fun getModels(lang: String?): List<TafsirInfoModel>? {
         return availableTafsirsModel?.tafsirs?.get(lang!!)
     }
 

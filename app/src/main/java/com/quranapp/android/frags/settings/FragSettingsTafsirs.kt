@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.components.tafsir.TafsirModel
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.databinding.FragSettingsTafsirBinding
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -61,7 +61,7 @@ class FragSettingsTafsirs : FragSettingsBase() {
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         fileUtils = FileUtils.newInstance(ctx)
-        initialTafsirKey = SPReader.getSavedRecitationSlug(ctx)
+        initialTafsirKey = SPReader.getSavedTafsirKey(ctx)
         pageAlert = PageAlert(ctx)
         binding = FragSettingsTafsirBinding.bind(view).apply {
             list.layoutManager = LinearLayoutManager(ctx)
@@ -90,11 +90,11 @@ class FragSettingsTafsirs : FragSettingsBase() {
         }
     }
 
-    private fun initChips(ctx: Context, models: Map<String, List<TafsirModel>>) {
+    private fun initChips(ctx: Context, models: Map<String, List<TafsirInfoModel>>) {
         //populateTafsirs(models)
     }
 
-    private fun populateTafsirs(models: List<TafsirModel>) {
+    private fun populateTafsirs(models: List<TafsirInfoModel>) {
         resetAdapter(models)
 
         activity()?.header?.apply {
@@ -102,7 +102,7 @@ class FragSettingsTafsirs : FragSettingsBase() {
         }
     }
 
-    private fun resetAdapter(models: List<TafsirModel>) {
+    private fun resetAdapter(models: List<TafsirInfoModel>) {
         // binding.list.adapter = ADPTafsir(models)
     }
 

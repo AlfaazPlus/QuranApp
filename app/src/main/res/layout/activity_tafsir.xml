@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBGPage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dmnAppBarHeight"
+            android:background="@color/colorBGPage"
+            android:gravity="center_vertical"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="@dimen/dmnActionButton"
+                android:layout_height="@dimen/dmnActionButton"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:contentDescription="@string/strDescClose"
+                android:padding="7dp"
+                android:rotation="@integer/intActionBtnRotation"
+                android:src="@drawable/dr_icon_arrow_left"
+                app:tint="@color/colorIcon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="@string/strTitleTafsir" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/settings"
+                android:layout_width="@dimen/dmnActionButton"
+                android:layout_height="@dimen/dmnActionButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/dr_bg_action_round"
+                android:contentDescription="@string/strTitleSelectTafsir"
+                android:padding="7dp"
+                android:rotation="@integer/intActionBtnRotation"
+                android:src="@drawable/dr_icon_settings"
+                android:tint="@color/colorIcon" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/tafsirHeader"
+            layout="@layout/lyt_tafsir_header" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false" />
+
+            <RelativeLayout
+                android:id="@+id/loader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorBGPage">
+
+                <ProgressBar
+                    android:layout_width="@dimen/dmnProgressBarSize"
+                    android:layout_height="@dimen/dmnProgressBarSize"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

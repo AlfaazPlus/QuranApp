@@ -128,7 +128,6 @@ public class ReaderFooter extends FrameLayout {
 
     private Drawable getStartPointingArrow(Context context, boolean isRTL) {
         Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
-        if (arrowLeft == null) return null;
 
         if (!isRTL) return arrowLeft;
         return DrawableUtils.rotate(context, arrowLeft, 180);
@@ -136,7 +135,7 @@ public class ReaderFooter extends FrameLayout {
 
     private Drawable getEndPointingArrow(Context context, boolean isRTL) {
         Drawable arrowLeft = ContextKt.drawable(context, R.drawable.dr_icon_arrow_left);
-        if (arrowLeft == null) return null;
+
         if (isRTL) {
             return arrowLeft;
         }
