@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/dr_bg_chapter_card_bordered"
     android:orientation="vertical">
 
     <com.quranapp.android.widgets.IconedTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/dr_bg_hover"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
+        android:paddingVertical="15dp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         tools:text="English" />

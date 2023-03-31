@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.reader.tafsir.TafsirManager;
 import com.quranapp.android.utils.univ.FileUtils;
@@ -64,7 +65,9 @@ public class TafsirUtils {
             return false;
         }
 
-        return model.getLangCode() == "ur";
+        Log.d(model.getLangCode().equals("ur"));
+
+        return model.getLangCode().equals("ur");
     }
 
     public static String prepareTafsirUrlSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {

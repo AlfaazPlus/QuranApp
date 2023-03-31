@@ -334,6 +334,10 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         txtView?.gravity = resolveTextGravity(gravity)
     }
 
+    override fun setTextAlignment(alignment: Int) {
+        txtView?.textAlignment = alignment
+    }
+
     fun setGroup(radioGroupPro: PeaceCompoundButtonGroup) {
         parent = radioGroupPro
     }

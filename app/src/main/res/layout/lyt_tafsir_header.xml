@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingHorizontal="15dp"
-    android:paddingTop="25dp"
-    android:paddingBottom="15dp"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+    android:padding="15dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tafsirTitle"
@@ -18,34 +16,15 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        tools:text="Tafsir Ibn Kathir" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/versePreview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/dr_bg_reader_verse_action"
-        android:gravity="center"
-        android:padding="10dp"
         android:textSize="22sp"
-        tools:fontFamily="@font/indopak"
-        tools:text="@string/strScriptPreviewIndopak" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/goToVerse"
-        style="@style/ButtonAction"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:text="Go to verse" />
+        tools:text="Tafsir Ibn Kathir" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/btnPrevVerse"
@@ -56,7 +35,8 @@
             android:background="@drawable/bg_rounded_action_selector"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="10dp"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/prevVerseName"
@@ -93,7 +73,8 @@
             android:background="@drawable/bg_rounded_action_selector"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="10dp"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nextVerseName"

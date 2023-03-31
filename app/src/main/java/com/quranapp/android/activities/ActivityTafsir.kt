@@ -1,7 +1,6 @@
 package com.quranapp.android.activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -36,6 +35,7 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.tafsir.TafsirJsInterface
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
+import com.quranapp.android.utils.univ.Codes
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.ResUtils
@@ -118,6 +118,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 override fun onPageFinished(view: WebView, url: String) {
                     super.onPageFinished(view, url)
                     binding.loader.visibility = View.GONE
+                    binding.tafsirHeader.btnPrevVerse.visibility = View.VISIBLE
+                    binding.tafsirHeader.btnNextVerse.visibility = View.VISIBLE
                 }
             }
         }
@@ -133,8 +135,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
 
     private fun initContent(intent: Intent) {
         var key = SPReader.getSavedTafsirKey(this)
-        val chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, 1 /*fixme*/)
-        val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, 1 /*fixme*/)
+        val chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, -1)
+        val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, -1)
 
         if (chapterNo < 1 || verseNo < 1) {
             fail("Invalid params", false)
@@ -162,14 +164,14 @@ class ActivityTafsir : ReaderPossessingActivity() {
         val chapter = mQuranRef.get().getChapter(chapterNo)
 
         setupTafsirTitle(header, chapter)
-        setupVersePreview(header)
-
-        header.goToVerse.setOnClickListener { jsInterface.goToVerse() }
 
         val isRTL = bool(R.bool.isRTL)
 
         header.textPrevTafsir.setDrawables(getStartPointingArrow(this, isRTL), null, null, null)
         header.textNextTafsir.setDrawables(null, null, getEndPointingArrow(this, isRTL), null)
+
+        header.btnPrevVerse.visibility = View.GONE
+        header.btnNextVerse.visibility = View.GONE
 
         val prevVerseName = if (verseNo == 1) "" else getString(R.string.strLabelVerseNo, verseNo - 1)
         val hasPrevVerseName = prevVerseName.isNotEmpty()
@@ -219,21 +221,6 @@ class ActivityTafsir : ReaderPossessingActivity() {
 
         header.tafsirTitle.text = TextUtils.concat(TafsirUtils.getTafsirName(tafsirKey), "\n", chapterInfo)
     }
-
-    private fun setupVersePreview(header: LytTafsirHeaderBinding) {
-        val verse = mQuranRef.get().getVerse(chapterNo, verseNo)
-
-        mVerseDecorator.refresh()
-        mVerseDecorator.refreshQuranTextFonts(
-            if (mVerseDecorator.isKFQPCScript()) Pair(
-                verse.pageNo,
-                verse.pageNo
-            ) else null
-        )
-
-        header.versePreview.text = mVerseDecorator.setupArabicText(verse)
-    }
-
 
     private fun loadContent() {
         pageAlert.remove()
@@ -301,14 +288,14 @@ class ActivityTafsir : ReaderPossessingActivity() {
     override fun onActivityResult2(result: ActivityResult?) {
         super.onActivityResult2(result)
 
-        if (result?.resultCode == Activity.RESULT_OK) {
+        if (result?.resultCode == Codes.SETTINGS_LAUNCHER_RESULT_CODE) {
             tafsirKey = SPReader.getSavedTafsirKey(this)
             loadContent()
         }
     }
 
     fun scrollToTop() {
-        binding.scrollView.scrollTo(0, 0)
+        binding.webView.scrollTo(0, 0)
         binding.appBar.setExpanded(true)
     }
 }
