@@ -1,0 +1,79 @@
+QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolaylaştıran, reklamsız ve gizlilik odaklı bir mobil uygulamadır. Gezinmesi kolay, sade ve zarif tasarımı ile kullanıcıların teknoloji çağında Kuran okumanın zorluklarını aşmasına yardımcı olur. Bu uygulama, farklı dillerden ve bölgelerden insanların Kuran'ın amacını anlayabilmesi için çeşitli dillerde 15'ten fazla meale sahiptir.
+
+ ~~~~~~~
+
+ <h3>Özellikler:</h3>
+
+ Aşağıdaki özellikler, QuranApp'i kullanmanız için birer nedendir.
+
+ <b>🛡️ Saf</b>
+
+ - Açık kaynak kodlu
+ - Reklam veya satın alma yok
+ - Hiçbir uygulama izni gerekmez
+ - Veri analizi veya takibi yok
+ - Veri toplama veya paylaşma yok
+
+ <b>📙 Mealler</b>
+
+ - 15'ten fazla meal
+ - Birden çok meali birlikte okuyabilme
+ - Dipnotların hızlı önizlemesi
+ - Ayet referanslarının hızlı önizlemesi
+
+ <b>🎙️ Okuma</b>
+
+ - 15'ten fazla tilavet
+ - Tek bir ayeti tekrarlama
+ - Ayet aralığını oynatma
+ - Devamlı oynatma
+ - Otomatik ayet takibi
+
+ <b>🎨 Yazı tipleri</b>
+
+ - Çoklu hat desteği (Uthmani, Indopak ve KFQPC)
+ - Arapça metin boyutunu özelleştirme
+ - Meal metin boyutunu özelleştirme
+
+ <b>⚙ Düzen</b>
+
+ - Meal görünümünde okuma
+ - Sayfa görünümünde okuma
+ - Farklı biçimlerde okuma (tek ayet, ayet aralığı, tam bölüm, tam cüz)
+
+ <b>➡️ Gezinme</b>
+
+ - Tek ayet görünümünde rahat gezinme
+ - İstenilen ayete hızlıca atlama
+ - Herhangi bir bölüme hızlıca atlama
+ - Herhangi bir cüze hızlıca atlama
+
+ <b>❤️ Kuran'dan İçerikler</b>
+
+ - Kuran'dan konular
+ - Kuran'dan dualar
+ - Kuran'da adı geçen peygamberler
+
+ <b>🔍 Arama</b>
+
+ - Gelişmiş Arama
+ - Sesli arama
+ - Arama geçmişi
+ - Arama sonuçlarından herhangi bir meale kolayca gitme
+ - Tam kelime veya kelime parçası arama
+
+ <b>📌 Yer İşaretleme</b>
+
+ - Daha sonrası için ayetleri yer imlerine ekleme
+ - Tek ayeti yer imlerine ekleme
+ - Ayet aralığını yer imlerine ekleme
+ - Yer imlerine özel notlar yazabilme
+
+ <b>🔥 Diğer Özellikler</b>
+
+ - Günlük ayet hatırlatma
+ - Gelişmiş paylaşım
+ - Karanlık ve aydınlık temalar
+ - Çoklu dil desteği
+
+ <i>🐞 Bir sorunu bildirmek veya yeni bir özellik talep etmek için lütfen <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a> adresindeki GitHub deposunu ziyaret edin.</i>
