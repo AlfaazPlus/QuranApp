@@ -6,9 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
@@ -51,7 +49,6 @@ class FragSettingsTranslationsDownload :
 
     private lateinit var binding: FragSettingsTranslBinding
     private lateinit var fileUtils: FileUtils
-    private lateinit var itemDecoration: RecyclerView.ItemDecoration
     private var translFactory: QuranTranslationFactory? = null
     private var adapter: ADPDownloadTranslationsGroup? = null
     private var translDownloadReceiver: TranslDownloadReceiver? = null
@@ -136,7 +133,6 @@ class FragSettingsTranslationsDownload :
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         fileUtils = FileUtils.newInstance(ctx)
         translFactory = QuranTranslationFactory(ctx)
-        itemDecoration = DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL)
         binding = FragSettingsTranslBinding.bind(view)
 
         newTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
@@ -217,7 +213,7 @@ class FragSettingsTranslationsDownload :
         obj["translations"]?.jsonObject?.let { translations ->
             val translationGroups = LinkedList<TranslationGroupModel>()
 
-            var isAnyDownloadInProgress = translDownloadService?.isAnyDownloading() ?: false
+            val isAnyDownloadInProgress = translDownloadService?.isAnyDownloading() ?: false
 
             for (langCode in translations.keys) {
                 val translationsForLanguageCode = translations[langCode]?.jsonObject
@@ -282,14 +278,12 @@ class FragSettingsTranslationsDownload :
         adapter = ADPDownloadTranslationsGroup(models, this)
 
         binding.list.let {
-            it.removeItemDecoration(itemDecoration)
-            it.addItemDecoration(itemDecoration)
             it.layoutManager = LinearLayoutManager(ctx)
             (it.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
             binding.list.adapter = adapter
         }
 
-        (activity as? ActivitySettings)?.header?.apply {
+        activity()?.header?.apply {
             setShowRightIcon(true)
         }
     }

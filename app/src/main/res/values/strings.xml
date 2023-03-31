@@ -84,6 +84,7 @@
     <string name="strTitleMadani">Madani</string>
     <string name="strTitleFootnote">Footnote</string>
     <string name="strTitleFootnotes">Footnotes</string>
+    <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
     <string name="strTitleReaderChapters">Surahs (Chapters)</string>
     <string name="strTitleReaderJuz">Juz (Para)</string>
     <string name="strTitleReaderChapters2">Surahs</string>
@@ -114,6 +115,7 @@
     <string name="strTitleFilters">Filters</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleSelectTafsir">Select Tafsir</string>
     <string name="strTitleAboutSurah">About Surah</string>
     <string name="strTitleTranslations">Translations</string>
     <string name="strTitleDownloadTranslations">Download</string>
@@ -242,7 +244,8 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
-    <string name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string
+        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
@@ -250,7 +253,7 @@
     <string name="strMsgChangeLanguage">The app will be restarted to affect language change.</string>
     <string name="strMsgResetReaderSettings">Reset all settings to the default.</string>
     <string name="strMsgProphetsOrder">Showing prophets in chronological order</string>
-    <string name="strMsgShareRange" formatted="false">Enter range between %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">Enter range between %1$d–%2$d</string>
     <string name="strMsgEnterValidRange">Please enter a valid range</string>
     <string name="strMsgTranslLoadFailed">Could not load translations from the server. Please try again later.</string>
     <string name="strMsgTranslNoDownloads">No downloaded translations available</string>
@@ -261,6 +264,7 @@
     <string name="strMsgTranslSelectionLimit" formatted="false">Maximum %d translations can be selected at once. Please unselect one before selecting another. This is to avoid performance loss.</string>
     <string name="strMsgRecitationsLoadFailed">Could not load recitations from the server. Please try again later.</string>
     <string name="strMsgRecitationsNoAvailable">No recitations available</string>
+    <string name="strMsgTafsirsNoAvailable">No tafsirs available</string>
     <string name="strDescAddToBookmarks">Add to bookmarks</string>
     <string name="strDescGoBack">Go back</string>
     <string name="strDescClose">Close</string>
@@ -345,8 +349,8 @@
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>
-    <string name="nItem">%d item</string>
-    <string name="nItems">%d items</string>
+    <string name="nItem" formatted="false">%d item</string>
+    <string name="nItems" formatted="false">%d items</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>

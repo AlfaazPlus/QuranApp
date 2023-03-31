@@ -5,10 +5,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import androidx.annotation.Nullable;
 
-import com.quranapp.android.components.recitation.RecitationModel;
+import com.quranapp.android.api.models.recitation.RecitationModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.app.RecitationManager;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.URLBuilder;

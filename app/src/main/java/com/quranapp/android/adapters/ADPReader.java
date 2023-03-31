@@ -123,7 +123,7 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
         msgView.setElevation(activity.dp2px(4));
         msgView.setMessageStyle(CardMessageParams.STYLE_WARNING);
         msgView.setActionText(activity.str(R.string.strTitleSettings),
-            () -> activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSL));
+            () -> activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_TRANSLATION));
         return msgView;
     }
 

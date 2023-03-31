@@ -11,10 +11,8 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
-import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
-import java.util.*
 
 object ReaderFactory {
     @JvmStatic
@@ -286,12 +284,6 @@ object ReaderFactory {
     @JvmStatic
     fun prepareTafsirIntent(context: Context, chapterNo: Int, verseNo: Int): Intent {
         val intent = Intent(context, ActivityTafsir::class.java)
-        val slug: String = if ("ur".equals(Locale.getDefault().language, ignoreCase = true)) {
-            TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR
-        } else {
-            TafsirUtils.TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN
-        }
-        intent.putExtra(TafsirUtils.KEY_TAFSIR_SLUG, slug)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         intent.putExtra(Keys.READER_KEY_VERSE_NO, verseNo)
         return intent

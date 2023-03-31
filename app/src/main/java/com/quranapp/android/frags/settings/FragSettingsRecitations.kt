@@ -11,9 +11,9 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.adapters.recitation.ADPRecitations
-import com.quranapp.android.components.recitation.RecitationModel
+import com.quranapp.android.api.models.recitation.RecitationModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
-import com.quranapp.android.utils.app.RecitationManager
+import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -40,7 +40,7 @@ class FragSettingsRecitations : FragSettingsBase() {
     override val layoutResource = R.layout.frag_settings_transl
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
+        if (mInitialRecitation != null && SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
             return bundleOf(ActivityReader.KEY_RECITER_CHANGED to true)
         }
         return null
@@ -99,7 +99,7 @@ class FragSettingsRecitations : FragSettingsBase() {
             val models = RecitationManager.getModels()
 
             if (!models.isNullOrEmpty()) {
-                populateTranslations(ctx, models)
+                populateRecitations(ctx, models)
             } else {
                 noRecitersAvailable(ctx)
             }
@@ -132,7 +132,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         resetAdapter(found)
     }
 
-    private fun populateTranslations(ctx: Context, models: List<RecitationModel>) {
+    private fun populateRecitations(ctx: Context, models: List<RecitationModel>) {
         mModels = models
 
         mBinding.list.layoutManager = LinearLayoutManager(ctx)

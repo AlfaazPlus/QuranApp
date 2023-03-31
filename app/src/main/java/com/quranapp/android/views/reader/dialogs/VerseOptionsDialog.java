@@ -6,6 +6,7 @@ package com.quranapp.android.views.reader.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
@@ -36,6 +38,7 @@ import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
+import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.views.reader.RecitationPlayer;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
@@ -49,6 +52,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     @Nullable
     private BookmarkCallbacks mVerseViewCallbacks;
     private VerseShareDialog mVSD;
+    private boolean mHasFootnotes;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -153,6 +157,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             }
         }
 
+        mHasFootnotes = hasFootnotes;
         disableButton(vodLayout.btnFootnotes, !hasFootnotes);
 
         final int chapterNo = verse.chapterNo;
@@ -211,7 +216,6 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     private void disableButton(View btn, boolean disable) {
-        btn.setEnabled(!disable);
         btn.setAlpha(disable ? 0.5f : 1f);
     }
 
@@ -251,12 +255,14 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
                 }
             }
         } else if (id == R.id.btnFootnotes) {
-            actvt.showFootnotes(mVerse);
+            if (mHasFootnotes) {
+                actvt.showFootnotes(mVerse);
+            } else {
+                Toast.makeText(actvt, R.string.noFootnotesForThisVerse, Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.btnTafsir) {
-            /*
             Intent intent = ReaderFactory.prepareTafsirIntent(actvt, mVerse.chapterNo, mVerse.verseNo);
             actvt.startActivity4Result(intent, null);
-            */
         } else if (id == R.id.btnBookmark) {
             final int chapterNo = mVerse.chapterNo;
             final int verseNo = mVerse.verseNo;
@@ -343,14 +349,17 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
                 int icon = icons.getResourceId(i, 0);
                 String label = labels[i];
 
-                if (id == R.id.btnTafsir || id == R.id.btnQuickEdit) {
+                if (id == R.id.btnQuickEdit) {
                     continue;
                 }
 
                 LytReaderVodItemBinding binding = LytReaderVodItemBinding.inflate(inflater);
                 binding.icon.setImageResource(icon);
                 binding.label.setText(label);
-                binding.icon.setColorFilter(tint);
+
+                if (id != R.id.btnTafsir) {
+                    binding.icon.setColorFilter(tint);
+                }
 
                 ViewGroup.MarginLayoutParams p = new ViewGroup.MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT);
                 LayoutParamsKt.updateMargins(p, marg);

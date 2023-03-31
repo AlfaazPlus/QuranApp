@@ -77,7 +77,7 @@
     <string name="strMsgBookmarkDeleteSelected">نیشانەکراوە دیاریکراوەکان لادەبرێن.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">تەنیا ١ ئەنجام دۆزرایەوە لە %s</string>
     <string name="strMsgResetReaderSettings">ڕێکخستنەوەی سەرجەم بەشەکان بۆ بنەڕەتی.</string>
-    <string name="strMsgShareRange" formatted="false">مەودا بنووسە لەنێوان %1$d%2$s%3$d</string>
+    <string name="strMsgShareRange" formatted="false">مەودا بنووسە لەنێوان %1$d–%2$d</string>
     <string name="strMsgReadHistoryRemoved">مێژووی خوێندنەوەکان بەسەرکەوتوویی لابرا.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s لە %2$s</string>
     <string name="strLabelCancel">پاشگەزبونەوە</string>
@@ -342,9 +342,9 @@
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d بەشی پارێزراو ئەتوانرێ بسڕێتەوە.</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$dMB ماوە)</string>
-    <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە.</string>
-    <string name="nItem">%d فایل</string>
-    <string name="nItems">%d فایل</string>
+    <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە</string>
+    <string name="nItem" formatted="false">%d فایل</string>
+    <string name="nItems" formatted="false">%d فایل</string>
     <string name="verseSyncOn">هاوکاتکردنی ئایەت : چالاک</string>
     <string name="verseSyncOff">هاوکاتکردنی ئایەت : نا چالاک</string>
     <string name="strPreviewTextTransl">بەناوی خوای بەخشندەی میهرەبان</string>

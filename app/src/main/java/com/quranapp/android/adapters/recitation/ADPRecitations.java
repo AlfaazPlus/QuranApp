@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.quranapp.android.components.recitation.RecitationModel;
+import com.quranapp.android.api.models.recitation.RecitationModel;
 import com.quranapp.android.databinding.LytSettingsRecitationItemBinding;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 

@@ -43,8 +43,6 @@
         <activity android:name=".activities.ActivityProphets" />
         <activity
             android:name=".activities.ActivityTafsir"
-            android:enabled="false"
-            android:exported="true"
             android:launchMode="singleTask" />
         <activity
             android:name=".activities.ActivityChapInfo"

@@ -82,6 +82,7 @@ class ADPDownloadTranslationsGroup(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.list.layoutManager = LinearLayoutManager(binding.root.context)
+            binding.root.clipToOutline = true
         }
 
         @SuppressLint("RtlHardcoded")
@@ -105,13 +106,7 @@ class ADPDownloadTranslationsGroup(
                 }
             }
 
-            if (group.isExpanded) {
-                binding.list.visibility = RecyclerView.VISIBLE
-//                binding.arrow.rotation = 180f
-            } else {
-                binding.list.visibility = RecyclerView.GONE
-//                binding.arrow.rotation = 0f
-            }
+            binding.list.visibility = (if (group.isExpanded) RecyclerView.VISIBLE else RecyclerView.GONE)
 
             binding.list.adapter = ADPDownloadTranslations(impl, group.translations)
         }

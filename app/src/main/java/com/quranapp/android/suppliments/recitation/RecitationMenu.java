@@ -22,7 +22,7 @@ import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.databinding.LytRecitationMenuBinding;
-import com.quranapp.android.utils.app.RecitationManager;
+import com.quranapp.android.utils.reader.recitation.RecitationManager;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;

@@ -201,8 +201,8 @@
     <string name="strMsgSearchArabic">Chercher dans le texte arabe</string>
     <string name="strMsgChangeLanguage">L\'application sera redémarrée pour effectuer le changement de langue.</string>
     <string name="strMsgProphetsOrder">Affichage des prophètes dans l\'ordre chronologique</string>
-    <string name="strMsgShareRange" formatted="false">Saisir une plage entre %1$d%2$s%3$d</string>
-    <string name="strMsgEnterValidRange">Veuillez entrer une plage valide svp</string>
+    <string name="strMsgShareRange" formatted="false">Saisissez une plage entre %1$d–%2$d</string>
+    <string name="strMsgEnterValidRange">Veuillez entrer une plage valide</string>
     <string name="strMsgTranslLoadFailed">Impossible de charger les traductions à partir du serveur. Veuillez réessayer plus tard.</string>
     <string name="strMsgTranslNoDownloads">Aucune traduction téléchargée disponible</string>
     <string name="strMsgTranslNoDownloadsAvailable">Aucun téléchargement disponible</string>

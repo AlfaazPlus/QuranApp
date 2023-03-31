@@ -229,7 +229,7 @@
     <string name="strMsgChangeLanguage">زبان تبدیل کرنے کے لیے ایپ کو دوبارہ شروع کیا جائے گا۔</string>
     <string name="strMsgResetReaderSettings">تمام ریڈر سیٹنگز کو ڈیفالٹ پر سیٹ کریں۔</string>
     <string name="strMsgProphetsOrder">تاریخ کے لحاظ سے پیغمبروں کو دکھایا جا رہا ہے</string>
-    <string name="strMsgShareRange" formatted="false">%1$d%2$s%3$d کے درمیان رینج درج کریں</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d کے درمیان رینج درج کریں</string>
     <string name="strMsgEnterValidRange">براہ کرم ایک درست رینج درج کریں</string>
     <string name="strMsgTranslLoadFailed">ترجمے لوڈ نہیں کیے جا سکے۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
     <string name="strMsgTranslNoDownloads">کوئی ترجمہ ڈاؤن لوڈ نہیں ہے</string>
@@ -343,8 +343,8 @@
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
     <string name="titleChapterInfo">باب کی معلومات</string>
     <string name="nothingToCleanup">صاف کرنے کے لیے کچھ نہیں ہے۔</string>
-    <string name="nItem">%d آئٹم</string>
-    <string name="nItems">%d آئٹم</string>
+    <string name="nItem" formatted="false">%d آئٹم</string>
+    <string name="nItems" formatted="false">%d آئٹم</string>
     <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
     <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
     <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے</string>

@@ -12,4 +12,6 @@ object ApiConfig {
     const val GITHUB_ISSUES_BUG_REPORT_URL = "https://github.com/AlfaazPlus/QuranApp/issues/new?template=bug_report.yml"
     const val GITHUB_ISSUES_VERSE_REPORT_URL =
         "https://github.com/AlfaazPlus/QuranApp/issues/new?template=verse_report.yml"
+
+    const val QURAN_API_ROOT_URL = "https://api.quran.com/"
 }

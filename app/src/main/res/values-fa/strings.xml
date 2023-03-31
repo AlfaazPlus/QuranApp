@@ -254,7 +254,7 @@
     <string name="strMsgSearchArabic">جستجو در متن عربی</string>
     <string name="strMsgResetReaderSettings">همه تنظیمات را به حالت پیش فرض بازنشانی کنید.</string>
     <string name="strMsgProphetsOrder">نمایش پیامبران به ترتیب زمانی</string>
-    <string name="strMsgShareRange" formatted="false">محدوده بین %1$d%2$s%3$d را وارد کنید</string>
+    <string name="strMsgShareRange" formatted="false">محدوده بین %1$d–%2$d را وارد کنید</string>
     <string name="strMsgEnterValidRange">لطفاً یک محدوده معتبر وارد کنید</string>
     <string name="strMsgTranslNoDownloads">هیچ ترجمه بارگیری شده ای موجود نیست</string>
     <string name="strMsgTranslNoDownloadsAvailable">دانلودی در دسترس نیست</string>

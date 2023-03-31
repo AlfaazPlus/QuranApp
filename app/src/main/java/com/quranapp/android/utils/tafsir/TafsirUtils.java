@@ -3,66 +3,80 @@ package com.quranapp.android.utils.tafsir;
 import android.annotation.SuppressLint;
 import androidx.annotation.Nullable;
 
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.app.AppUtils;
+import com.quranapp.android.utils.reader.tafsir.TafsirManager;
 import com.quranapp.android.utils.univ.FileUtils;
+
+import java.util.List;
+import java.util.Map;
 
 public class TafsirUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "tafsirs");
 
-    public static final String TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN = "en_tafsir_ibn_kathir";
-    public static final String TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR = "ur_tafsir_ibn_kathir";
-
-    public static final String TAFSIR_FULL_CHAPTER_FILE_NAME_FORMAT = "tafsir_full.txt";
+    public static final String AVAILABLE_TAFSIRS_FILENAME = "available_tafsirs.json";
     public static final String TAFSIR_SINGLE_FILE_NAME_FORMAT = "tafsir_verse_%d.txt";
-    public static final String KEY_TAFSIR_SLUG = "tafsir_slug";
+    public static final String KEY_TAFSIR = "key.tafsir";
 
-    public static int getTafsirId(String tafsirSlug) {
-        switch (tafsirSlug) {
-            case TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN:
-                return 169;
-            case TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR:
-                return 160;
-        }
-        return -1;
-    }
-
-
-    public static String getTafsirName(String tafsirSlug) {
-        switch (tafsirSlug) {
-            case TAFSIR_SLUG_TAFSIR_IBN_KATHIR_EN:
-                return "Tafsir Ibn Kathir";
-            case TAFSIR_SLUG_TAFSIR_IBN_KATHIR_UR:
-                return "تفسیر ابنِ کثیر";
-        }
-        return "";
-    }
+    public static final String URL_TAFSIR = "https://api.quran.com/api/qdc/tafsirs/%s/by_ayah/%s";
 
     @Nullable
+    public static String getTafsirName(String key) {
+        if (key == null) {
+            return null;
+        }
+
+        TafsirInfoModel model = TafsirManager.getModel(key);
+        if (model == null) {
+            return null;
+        }
+
+        return model.getName();
+    }
+
+    public static String getTafsirSlugFromKey(String key) {
+        TafsirInfoModel model = TafsirManager.getModel(key);
+        if (model == null) {
+            return null;
+        }
+
+        return model.getSlug();
+    }
+
+    public static String getDefaultTafsirKey() {
+        Map<String, List<TafsirInfoModel>> models = TafsirManager.getModels();
+        if (models == null) {
+            return null;
+        }
+
+        List<TafsirInfoModel> tafsirs = models.get("en");
+
+        if (tafsirs == null || tafsirs.isEmpty()) {
+            return null;
+        }
+
+        return tafsirs.get(0).getKey();
+    }
+
+    public static boolean isUrdu(String key) {
+        TafsirInfoModel model = TafsirManager.getModel(key);
+        if (model == null) {
+            return false;
+        }
+
+        Log.d(model.getLangCode().equals("ur"));
+
+        return model.getLangCode().equals("ur");
+    }
+
     public static String prepareTafsirUrlSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
-        int tafsirId = getTafsirId(tafsirSlug);
-        if (tafsirId == -1) {
-            return null;
-        }
-        String verseKey = chapterNo + ":" + verseNo;
-        return "https://api.quran.com/api/v4/quran/tafsirs/" + tafsirId + "?verse_key=" + verseKey;
-    }
-
-    @Nullable
-    public static String prepareTafsirUrlFullChapter(String tafsirSlug, int chapterNo) {
-        int tafsirId = getTafsirId(tafsirSlug);
-        if (tafsirId == -1) {
-            return null;
-        }
-        return "https://api.quran.com/api/v4/quran/tafsirs/" + tafsirId + "?chapter_number=" + chapterNo;
+        return String.format(URL_TAFSIR, tafsirSlug, chapterNo + ":" + verseNo);
     }
 
     @SuppressLint("DefaultLocale")
-    public static String prepareTafsirFilePathSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
+    public static String prepareTafsirFilePathSingleVerse(String tafsirKey, int chapterNo, int verseNo) {
         final String fileName = String.format(TAFSIR_SINGLE_FILE_NAME_FORMAT, verseNo);
-        return FileUtils.createPath(String.valueOf(chapterNo), tafsirSlug, fileName);
-    }
-
-    public static String prepareTafsirFilePathFullChapter(String tafsirSlug, int chapterNo) {
-        return FileUtils.createPath(String.valueOf(chapterNo), tafsirSlug, TAFSIR_FULL_CHAPTER_FILE_NAME_FORMAT);
+        return FileUtils.createPath(String.valueOf(chapterNo), tafsirKey, fileName);
     }
 }

@@ -3,7 +3,7 @@
  */
 package com.quranapp.android.components.storageCleanup
 
-import com.quranapp.android.components.recitation.RecitationModel
+import com.quranapp.android.api.models.recitation.RecitationModel
 
 data class RecitationCleanupItemModel(
     val recitationModel: RecitationModel,
