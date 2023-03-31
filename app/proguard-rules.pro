@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
--keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
--keep class com.quranapp.android.api.models.** { *; } # Keep all api models
+# Keep file names and line numbers.
+-keepattributes SourceFile,LineNumberTable
+# Keep custom exceptions.
+-keep public class * extends java.lang.Exception
+# Keep all api models
+-keep class com.quranapp.android.api.models.** { *; }

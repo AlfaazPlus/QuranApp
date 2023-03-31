@@ -157,6 +157,37 @@
         "lastUpdated": 1679333216943,
         "downloadPath": "inventory/translations/ku/ku_bamoki.json"
       }
+    },
+    "de": {
+      "de_bubenheim": {
+        "book": "Frank Bubenheim and Dr. Nadeem Elyas",
+        "author": "Frank Bubenheim and Dr. Nadeem Elyas",
+        "displayName": "Bubenheim and Nadeem",
+        "langCode": "de",
+        "langName": "Deutsch",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/de/de_bubenheim.json"
+      }
+    },
+    "fr": {
+      "fr_hamidullah": {
+        "book": "Muhammad Hamidullah",
+        "author": "Muhammad Hamidullah",
+        "displayName": "Hamidullah",
+        "langCode": "fr",
+        "langName": "Français",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/fr/fr_hamidullah.json"
+      },
+      "fr_rashid": {
+        "book": "Rashid Maash",
+        "author": "Rashid Maash",
+        "displayName": "Rashid Maash",
+        "langCode": "fr",
+        "langName": "Français",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/fr/fr_rashid.json"
+      }
     }
   }
 }

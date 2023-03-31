@@ -340,11 +340,11 @@
     <string name="titleChapterInfo">Chapter info</string>
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
-    <string name="titleRecitationCleanup">Delete recitation?</string>
+    <string name="titleRecitationCleanup">Delete recitation\?</string>
     <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
-    <string name="titleScriptCleanup">Delete script?</string>
+    <string name="titleScriptCleanup">Delete script\?</string>
     <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
-    <string name="titleChapterInfoCleanup">Clear chapter info?</string>
+    <string name="titleChapterInfoCleanup">Clear chapter info\?</string>
     <string name="msgChapterInfoCleanup">All the saved chapter info will be deleted.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
@@ -353,9 +353,8 @@
     <string name="nItems" formatted="false">%d items</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
-
-    <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ۟ِ</string>
-    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
+    <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
+    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="strNotifChannelRecitation" translatable="false">Recitation Player</string>

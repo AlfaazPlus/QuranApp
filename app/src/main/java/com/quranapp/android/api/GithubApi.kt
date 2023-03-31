@@ -1,8 +1,8 @@
 package com.quranapp.android.api
 
+import com.quranapp.android.api.models.AppUpdate
 import com.quranapp.android.api.models.AppUrls
 import com.quranapp.android.api.models.ResourcesVersions
-import com.quranapp.android.components.AppUpdate
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path

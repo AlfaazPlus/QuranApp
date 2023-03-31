@@ -4,17 +4,17 @@
     <string name="strTitleQuran">القرآن</string>
     <string name="strTitleMadani">مدنية</string>
     <string name="strTitleMakki">مكية</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d الى %2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d إلى %2$d</string>
     <string name="strLabelVerseNo" formatted="false">آية %d</string>
-    <string name="strLabelVersesWithColon" formatted="false">الآيات : من %1$d الى %2$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">الآيات : من %1$d إلى %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">آيات : %d</string>
-    <string name="strLabelVerses" formatted="false">آيات من %1$d الى %2$d</string>
+    <string name="strLabelVerses" formatted="false">الآيات من %1$d إلى %2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">آية %1$d : %2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strSalam">السلام عليكم</string>
     <string name="strSalamShort">سلام</string>
     <string name="strAyatulKursi">آية الكرسي</string>
-    <string name="strLabelVersesText">آيات</string>
+    <string name="strLabelVersesText">الآيات</string>
     <string name="strLabelSurah" formatted="false">سورة %s</string>
     <string name="strLabelPageNo" formatted="false">صفحة %d</string>
     <string name="strLabelJuzNo" formatted="false">جزء %d</string>
@@ -24,39 +24,149 @@
     <string name="strTitleLicenses">التراخيص</string>
     <string name="strTitleAppVersion">إصدار التطبيق</string>
     <string name="strVersion" formatted="false">الإصدار %s</string>
-    <string name="strLabelClose">غلق</string>
+    <string name="strLabelClose">إغلاق</string>
     <string name="strLabelOkay">حسنًا</string>
     <string name="strLabelGotIt">فهمتها</string>
-    <string name="strLabelCancel">ألغ</string>
+    <string name="strLabelCancel">إلغاء</string>
     <string name="strLabelApply">تطبيق</string>
     <string name="strLabelSend">أرسل</string>
-    <string name="strLabelRemove">أبعد</string>
+    <string name="strLabelRemove">إزالة</string>
     <string name="strLabelDelete">حذف</string>
-    <string name="strLabelRemoveAll">حذف الكل</string>
+    <string name="strLabelRemoveAll">إزالة الكل</string>
     <string name="strLabelCopy">نسخ</string>
     <string name="strLabelBack">العودة</string>
     <string name="strLabelTop">أعلى</string>
-    <string name="strLabelReset">إعادة ضبط</string>
-    <string name="strLabelRetry">أعد المحاولة</string>
+    <string name="strLabelReset">إعادة الضبط</string>
+    <string name="strLabelRetry">إعادة المحاولة</string>
     <string name="strLabelRefresh">تحديث</string>
     <string name="strLabelDismiss">رفض</string>
-    <string name="strLabelHide">أخفى</string>
-    <string name="strLabelRestart">إعادة تشغيل</string>
-    <string name="strLabelDiscard">إحذف</string>
+    <string name="strLabelHide">إخفاء</string>
+    <string name="strLabelRestart">إعادة التشغيل</string>
+    <string name="strLabelDiscard">تجاهل</string>
     <string name="strLabelEdit">تعديل</string>
     <string name="strLabelDone">تم</string>
-    <string name="strLabelView">أنظر</string>
-    <string name="strLabelOpen">إفتح</string>
+    <string name="strLabelView">عرض</string>
+    <string name="strLabelOpen">فتح</string>
     <string name="strLabelOpenInReader">إفتح بالقارء</string>
     <string name="strLabelRead">إقرأ »</string>
-    <string name="strLabelViewAll">مشاهدة الكل</string>
-    <string name="strLabelChangeNRestart">عدل و أعد التشغيل</string>
+    <string name="strLabelViewAll">عرض الكل</string>
+    <string name="strLabelChangeNRestart">تغير وإعادة التشغيل</string>
     <string name="strLabelAdvertisement">إعلان</string>
-    <string name="strLabelSkip">تخطى</string>
+    <string name="strLabelSkip">تخطي</string>
     <string name="strLabelDownloadNow">حمل الآن</string>
     <string name="strLabelUpdate">تحديث</string>
     <string name="strLabelNotNow">ليس الآن</string>
     <string name="strLabelPrevious">السابق</string>
-    <string name="strLabelNext">اللاحق</string>
+    <string name="strLabelNext">التالي</string>
     <string name="strLabelStart">إبتدأ</string>
+    <string name="strLabelThemeLight">فاتح</string>
+    <string name="strLabelNextJuz">الجزء التالي</string>
+    <string name="strLabelPreviousVerse">الآية السابقة</string>
+    <string name="strTitleFootnotes">هوامش</string>
+    <string name="strTitleReaderChapters">السور</string>
+    <string name="strTitleFootnote">هامش</string>
+    <string name="strTitleReaderJuz">الجزء</string>
+    <string name="strTitleReaderChapters2">السور</string>
+    <string name="strTitleTranslations">الترجمات</string>
+    <string name="strTitleDownloadTranslations">تنزيل</string>
+    <string name="strTitleScripts">الخطوط</string>
+    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات القارئ؟</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">إزالة عدد %d من الإشارات المرجعية؟</string>
+    <string name="strTitleTranslDelete">حذف الترجمة؟</string>
+    <string name="strLabelUpdateQuranApp">تحديث التطبيق</string>
+    <string name="strTitleAppUser">مستخدم تطبيق QuranApp</string>
+    <string name="strLabelNextChapter">السورة التالية</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">سورة رقم %1$d | الآية%2$d–%3$d</string>
+    <string name="strLabelOff">متوقف</string>
+    <string name="strTitleReaderVerses">الآيات</string>
+    <string name="strLabelFullChapter">قراءة السورة كاملة</string>
+    <string name="strTitleReaderTextSizeArabic">حجم خط القرآن</string>
+    <string name="labelDownload">تنزيل</string>
+    <string name="strLabelThemeDark">داكن</string>
+    <string name="strLabelSystemDefault">الوضع الافتراضي للنظام</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">عرض الترجمات</string>
+    <string name="strTitleMenu">القائمة</string>
+    <string name="strTitleHideAd">إخفاء الإعلان</string>
+    <string name="strLabelNoPreviousJuz">لا يوجد جزء سابق</string>
+    <string name="strLabelNoNextJuz">لا يوجد جزء تالي</string>
+    <string name="strLabelNextVerse">الآية التالية</string>
+    <string name="strTitleReaderJumpToVerse">إذهب إلى الآية</string>
+    <string name="strTitleVerseOptions">خيارات الآية</string>
+    <string name="strLabelNoNextChapter">لا توجد سور تالية</string>
+    <string name="strLabelPreviousJuz">الجزء السابق</string>
+    <string name="strTitleVerseRecitation">تلاوة الآية</string>
+    <string name="strTitleGotoVerseNo" formatted="false">الذهاب إلى الآية %d</string>
+    <string name="strTitleSendFeedback">شاركنا رأيك</string>
+    <string name="strTitleAboutUs">معلومات عنا</string>
+    <string name="strTitleRateApp">تقيم التطبيق</string>
+    <string name="strTitleReaderTextSizeTransl">حجم خط الترجمة</string>
+    <string name="strLabelInstall">تثبيت</string>
+    <string name="strLabelNew">الجديد</string>
+    <string name="strLabelOn">مفعل</string>
+    <string name="strLabelNoPreviousChapter">لا توجد سور سابقة</string>
+    <string name="strLabelContinueChapter">أكمل السورة</string>
+    <string name="strTitleReaderLayoutStyle">أسلوب عرض القرآن</string>
+    <string name="strTitleReaderLayoutStylePageView">عرض الصفحات</string>
+    <string name="strTitleSettings">الإعدادات</string>
+    <string name="strTitleBookmark">إشارة مرجعية</string>
+    <string name="strTitleShareApp">شارك تؤجر</string>
+    <string name="strTitleAddNote">إضافة ملاحظة</string>
+    <string name="strTitleNote">ملاحظة</string>
+    <string name="strTitleSubscription">الاشتراك</string>
+    <string name="strTitleTafsir">التفسير</string>
+    <string name="strLabelPreviousChapter">السورة السابقة</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورة %1$s | الآية %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورة %1$s : آية %2$d</string>
+    <string name="strTitleHelpSupport">المساعدة</string>
+    <string name="strTitleBookmarks">الإشارات المرجعية</string>
+    <string name="strTitleAboutSurah">عن السورة</string>
+    <string name="strTitleReaderJuz2">الجزء</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">ال‮‮‭‮سور %1$s:%2$d</string>
+    <string name="strTitleReadVerseRange" formatted="false">قراءة الآية %1$d ‐ %2$d</string>
+    <string name="strTitleRecitations">التلاوات</string>
+    <string name="strTitleSelectReciter">اختيار القارئ</string>
+    <string name="strTitleSelectScripts">اختيار الخط</string>
+    <string name="strTitleBookmarkDeleteThis">حذف الإشارة المرجعية؟</string>
+    <string name="strTitleBookmarkDeleteAll">إزالة جميع الإشارات المرجعية؟</string>
+    <string name="strTitleRecitationOptions">الخيارات</string>
+    <string name="strTitleRepeatVerse">تكرار الآية</string>
+    <string name="strTitleThresholdReached">الحد الأدنى</string>
+    <string name="strChapInfoSeeMore">رؤية المزيد من المعلومات</string>
+    <string name="strTitleChapInfoChapterNo">رقم السورة</string>
+    <string name="strTitleChapInfoRevOrder">ترتيب نزول السور</string>
+    <string name="strTitleTheme">السمة</string>
+    <string name="strTitleNoInternet">لا يوجد إتصال بالانترنت</string>
+    <string name="strLabelPlay">تشغيل</string>
+    <string name="strTitleAppLanguage">لغة التطبيق</string>
+    <string name="strTitleChangeLanguage">تغير اللغة؟</string>
+    <string name="strLabelPause">توقف</string>
+    <string name="strLabelRemoveAds">إزالة الإعلانات</string>
+    <string name="strLabelOrder">الترتيب</string>
+    <string name="strLabelReport">بلغ</string>
+    <string name="strLabelShare">شارك</string>
+    <string name="strLabelContinueReading">متابعة القراءة »</string>
+    <string name="strTitleFailed">فشل</string>
+    <string name="strLabelReading">قراءة</string>
+    <string name="strTitleAutoPlayNext">تشغيل التالية تلقائياً</string>
+    <string name="strTitleQuickEdit">تعديل سريع</string>
+    <string name="strTitleShareVerse">شارك الآية</string>
+    <string name="strTitleReportVerse">بلغ عن الآية</string>
+    <string name="strTitleSelectReason">إختار السبب</string>
+    <string name="strTitleExplainIssue">إشرح المشكلة</string>
+    <string name="strTitleVOTD">آية اليوم</string>
+    <string name="strTitleTopics">المواضيع</string>
+    <string name="strTitleDuas">أدعية قرآنية</string>
+    <string name="strTitleProphets">الأنبياء</string>
+    <string name="strTitleFeaturedTopics">مواضيع القرآن</string>
+    <string name="strTitleFeaturedDuas">الأدعية القرآنية</string>
+    <string name="strTitleFeaturedProphets">الأنبياء في القرآن</string>
+    <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
+    <string name="strTitleSuccess">نجح</string>
+    <string name="strTitleChapInfoVerses">الآيات</string>
+    <string name="strTitleChapInfoRukus">سجود التلاوة</string>
+    <string name="strTitleChapInfoPages">الصفحات</string>
+    <string name="strTitleChapInfoRevType">مكان النزول</string>
+    <string name="strMsgChapInfoFailedLoad">فشل في تحميل معلومات السورة. فضلاً حاول مرة اخرى لاحقاً.</string>
+    <string name="strTitleAppSettings">إعدادات التطبيق</string>
+    <string name="strTitleReaderSettings">إعدادات القارئ</string>
 </resources>

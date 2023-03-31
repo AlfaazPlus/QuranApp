@@ -12,6 +12,7 @@
         <item>English</item>
         <item>বাংলা</item>
         <item>کوردی</item>
+        <item>Deutsch</item>
         <item>Español</item>
         <item>فارسی</item>
         <item>Français</item>
@@ -19,6 +20,7 @@
         <item>Indonesian</item>
         <item>Italiano</item>
         <item>മലയാളം</item>
+        <item>Türkçe</item>
         <item>اردو</item>
     </string-array>
 
@@ -27,6 +29,7 @@
         <item>en</item>
         <item>bn</item>
         <item>ckb</item>
+        <item>de</item>
         <item>es</item>
         <item>fa</item>
         <item>fr</item>
@@ -34,6 +37,7 @@
         <item>id</item>
         <item>it</item>
         <item>ml</item>
+        <item>tr</item>
         <item>ur</item>
     </string-array>
 </resources>
