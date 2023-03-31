@@ -305,4 +305,53 @@
     <string name="msgDownloadKFQPCResources">നിങ്ങൾക്ക് ഈ സ്ക്രിപ്റ്റ് ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഈപ്പറയുന്ന റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്:</string>
     <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ\?</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">സ്ക്രിപ്റ്റ്: %s (~1MB)</string>
+    <string name="nItem">%d ഇനം</string>
+    <string name="nItems">%d ഇനങ്ങൾ</string>
+    <string name="verseSyncOff">വാക്യ സമന്വയം: ഓഫാണ്</string>
+    <string name="verseSyncOn">വാക്യ സമന്വയം: ഓൺ</string>
+    <string name="strPreviewTextTransl">പരമകാരുണികനും കരുണാമയനുമായ അല്ലാഹുവിന്റെ നാമത്തിൽ</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d ഡൗൺലോഡ് ചെയ്ത സ്ക്രിപ്റ്റുകളും അവയുടെ ഫോണ്ടുകളും ഇല്ലാതാക്കാം.</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d ന്റെ %2$d ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്തു</string>
+    <string name="msgDownloadFailed">ഡൗൺലോഡ് പരാജയപ്പെട്ടു</string>
+    <string name="msgDownloadingFonts">ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്യുന്നു</string>
+    <string name="msgDownloadingScript">സ്ക്രിപ്റ്റ് ഡൗൺലോഡ് ചെയ്യുന്നു</string>
+    <string name="msgDownloadingResource" formatted="false">%s ഡൗൺലോഡ് ചെയ്യുന്നു</string>
+    <string name="labelBackgroundDownload">ബാക്ക്ഗ്രൗണ്ട് ഡൗൺലോഡ്</string>
+    <string name="msgAnotherDownloadInProgress">മറ്റൊരു ഡൗൺലോഡ് പുരോഗമിക്കുകയാണ്.</string>
+    <string name="msgScriptFontsDownloaded">സ്ക്രിപ്റ്റുകളും ഫോണ്ടുകളും വിജയകരമായി ഡൗൺലോഡ് ചെയ്തു.</string>
+    <string name="textDownloading">ഡൗൺലോഡ് ചെയ്യുന്നു…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="storageCleanupMessage">ഡൗൺലോഡ് ചെയ്ത ഉപയോഗിക്കാത്ത റിസോഴ്സ്സുകൾ ഡിലീറ്റ് ചെയ്ത് സ്പേസ് ഉണ്ടാക്കുക. ഇത് ബുക്ക്‌മാർക്കുകളോ ക്രമീകരണങ്ങളോ ഇല്ലാതാക്കില്ല.
+\n
+\nഇനിപ്പറയുന്ന റിസോഴ്സ്സുകൾ ഇല്ലാതാക്കാം:</string>
+    <string name="translationCanBeFreedUp" formatted="false">ഡൗൺലോഡ് ചെയ്ത %d വിവർത്തനങ്ങൾ ഇല്ലാതാക്കാം.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d റിസൈറ്റേർസ് ഇല്ലാതാക്കാം %1$d സ്റ്റോർ ചെയ്ത പാരായണം ഫയലുകളിൽ നിന്നും.</string>
+    <string name="msgAlarmManagerNotAvailable">ഈ ഡിവൈസിൽ അലാറം മാനേജർ ലഭ്യമല്ല.</string>
+    <string name="msgVerseReminderNotifPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ നോട്ടിഫിക്കേഷൻ അനുമതി ആവശ്യമാണ്.</string>
+    <string name="msgVerseReminderAlarmPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ അലാറം അനുമതി ആവശ്യമാണ്.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത അധ്യായ വിവരങ്ങൾ ഇല്ലാതാക്കാം.</string>
+    <string name="createIssue">ഇഷ്യൂ സൃഷ്ടിക്കുക</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ഫോണ്ടുകൾ : %1$d ആകെ %2$d ഡൗൺലോഡ് ചെയ്തു... (~%3$dMB ബാക്കി)</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d ന്റെ %2$d</string>
+    <string name="pasteCrashLogGithubIssue">ക്രാഷ് ലോഗ് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി. ദയവായി ഇത് ഗിറ്റ്ഹബ് ഇഷ്യൂയിൽ പേസ്റ്റ് ചെയ്യുക.</string>
+    <string name="lastCrashLog">അവസാന ക്രാഷ് ലോഗ്</string>
+    <string name="titleStorageCleanup">സ്റ്റോറേജ് ക്ലീൻ ആക്കൽ</string>
+    <string name="copiedToClipboard">ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി.</string>
+    <string name="titleChapterInfoCleanup">അധ്യായ വിവരം മായ്‌ക്കണോ\?</string>
+    <string name="msgChapterInfoCleanup">സംരക്ഷിച്ച എല്ലാ അധ്യായ വിവരങ്ങളും ഇല്ലാതാക്കപ്പെടും.</string>
+    <string name="nFiles" formatted="false">%d ഫയലുകൾ</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d സ്ക്രിപ്റ്റുകളും %2$d ഫോണ്ടുകളും</string>
+    <string name="nothingToCleanup">ഇല്ലാതാക്കാൻ ഒന്നുമില്ല.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത തഫ്സീറുകൾ ഇല്ലാതാക്കാം.</string>
+    <string name="titleChapterInfo">അധ്യായ വിവരം</string>
+    <string name="labelFreeUpSpace">സ്പേസ് ഉണ്ടാക്കുക</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nനിങ്ങൾ അത് വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
+    <string name="titleRecitationCleanup">പാരായണം ഇല്ലാതാക്കണോ\?</string>
+    <string name="msgRecitationCleanup" formatted="false">%sൽ നിന്ന് സേവ് ചെയ്ത എല്ലാ പാരായണങ്ങളും ഇല്ലാതാക്കപ്പെടും.</string>
+    <string name="titleScriptCleanup">സ്ക്രിപ്റ്റ് ഇല്ലാതാക്കണോ\?</string>
+    <string name="msgScriptCleanup" formatted="false">%s സ്‌ക്രിപ്റ്റും അതിന്റെ സംഭരിച്ചിരിക്കുന്ന എല്ലാ ഫോണ്ടുകളും ഇല്ലാതാക്കപ്പെടും. അവ ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
+    <string name="github">ഗിറ്റ്ഹബ്</string>
 </resources>

@@ -47,18 +47,18 @@
     <string name="strLabelDone">تم</string>
     <string name="strLabelView">عرض</string>
     <string name="strLabelOpen">فتح</string>
-    <string name="strLabelOpenInReader">إفتح بالقارء</string>
+    <string name="strLabelOpenInReader">فتح المصحف</string>
     <string name="strLabelRead">إقرأ »</string>
     <string name="strLabelViewAll">عرض الكل</string>
     <string name="strLabelChangeNRestart">تغير وإعادة التشغيل</string>
     <string name="strLabelAdvertisement">إعلان</string>
     <string name="strLabelSkip">تخطي</string>
-    <string name="strLabelDownloadNow">حمل الآن</string>
+    <string name="strLabelDownloadNow">التحميل الآن</string>
     <string name="strLabelUpdate">تحديث</string>
     <string name="strLabelNotNow">ليس الآن</string>
     <string name="strLabelPrevious">السابق</string>
     <string name="strLabelNext">التالي</string>
-    <string name="strLabelStart">إبتدأ</string>
+    <string name="strLabelStart">البدء</string>
     <string name="strLabelThemeLight">فاتح</string>
     <string name="strLabelNextJuz">الجزء التالي</string>
     <string name="strLabelPreviousVerse">الآية السابقة</string>
@@ -70,7 +70,7 @@
     <string name="strTitleTranslations">الترجمات</string>
     <string name="strTitleDownloadTranslations">تنزيل</string>
     <string name="strTitleScripts">الخطوط</string>
-    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات القارئ؟</string>
+    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات القراءة؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">إزالة عدد %d من الإشارات المرجعية؟</string>
     <string name="strTitleTranslDelete">حذف الترجمة؟</string>
     <string name="strLabelUpdateQuranApp">تحديث التطبيق</string>
@@ -98,7 +98,7 @@
     <string name="strTitleGotoVerseNo" formatted="false">الذهاب إلى الآية %d</string>
     <string name="strTitleSendFeedback">شاركنا رأيك</string>
     <string name="strTitleAboutUs">معلومات عنا</string>
-    <string name="strTitleRateApp">تقيم التطبيق</string>
+    <string name="strTitleRateApp">قيم التطبيق</string>
     <string name="strTitleReaderTextSizeTransl">حجم خط الترجمة</string>
     <string name="strLabelInstall">تثبيت</string>
     <string name="strLabelNew">الجديد</string>
@@ -126,7 +126,7 @@
     <string name="strTitleRecitations">التلاوات</string>
     <string name="strTitleSelectReciter">اختيار القارئ</string>
     <string name="strTitleSelectScripts">اختيار الخط</string>
-    <string name="strTitleBookmarkDeleteThis">حذف الإشارة المرجعية؟</string>
+    <string name="strTitleBookmarkDeleteThis">إزالة هذه الإشارة المرجعية؟</string>
     <string name="strTitleBookmarkDeleteAll">إزالة جميع الإشارات المرجعية؟</string>
     <string name="strTitleRecitationOptions">الخيارات</string>
     <string name="strTitleRepeatVerse">تكرار الآية</string>
@@ -163,10 +163,11 @@
     <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
     <string name="strTitleSuccess">نجح</string>
     <string name="strTitleChapInfoVerses">الآيات</string>
-    <string name="strTitleChapInfoRukus">سجود التلاوة</string>
+    <string name="strTitleChapInfoRukus">ركوعات</string>
     <string name="strTitleChapInfoPages">الصفحات</string>
     <string name="strTitleChapInfoRevType">مكان النزول</string>
     <string name="strMsgChapInfoFailedLoad">فشل في تحميل معلومات السورة. فضلاً حاول مرة اخرى لاحقاً.</string>
     <string name="strTitleAppSettings">إعدادات التطبيق</string>
-    <string name="strTitleReaderSettings">إعدادات القارئ</string>
+    <string name="strTitleReaderSettings">إعدادات القراءة</string>
+    <string name="strMsgResetReaderSettings">إستعادة جميع الإعدادات الافتراضية.</string>
 </resources>
