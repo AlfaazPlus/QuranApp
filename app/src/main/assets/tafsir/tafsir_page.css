@@ -72,7 +72,7 @@ html.dark hr {
 
 .arabic {
    direction: rtl;
-   padding: 10px 15px;
+   padding: 5px 10px;
    border-radius: 10px;
    margin: 5px 0;
    background-color: #F0F0F0;
@@ -146,5 +146,4 @@ html.dark .navigator .btn-action:active {
 
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   text-align: left;
 }
