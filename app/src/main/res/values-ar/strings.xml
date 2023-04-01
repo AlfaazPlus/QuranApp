@@ -47,7 +47,7 @@
     <string name="strLabelDone">تم</string>
     <string name="strLabelView">عرض</string>
     <string name="strLabelOpen">فتح</string>
-    <string name="strLabelOpenInReader">فتح المصحف</string>
+    <string name="strLabelOpenInReader">فتح في المصحف</string>
     <string name="strLabelRead">إقرأ »</string>
     <string name="strLabelViewAll">عرض الكل</string>
     <string name="strLabelChangeNRestart">تغير وإعادة التشغيل</string>
@@ -70,7 +70,7 @@
     <string name="strTitleTranslations">الترجمات</string>
     <string name="strTitleDownloadTranslations">تنزيل</string>
     <string name="strTitleScripts">الخطوط</string>
-    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات القراءة؟</string>
+    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات المصحف؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">إزالة عدد %d من الإشارات المرجعية؟</string>
     <string name="strTitleTranslDelete">حذف الترجمة؟</string>
     <string name="strLabelUpdateQuranApp">تحديث التطبيق</string>
@@ -106,10 +106,10 @@
     <string name="strLabelNoPreviousChapter">لا توجد سور سابقة</string>
     <string name="strLabelContinueChapter">أكمل السورة</string>
     <string name="strTitleReaderLayoutStyle">أسلوب عرض القرآن</string>
-    <string name="strTitleReaderLayoutStylePageView">عرض الصفحات</string>
+    <string name="strTitleReaderLayoutStylePageView">عرض المصحف</string>
     <string name="strTitleSettings">الإعدادات</string>
     <string name="strTitleBookmark">إشارة مرجعية</string>
-    <string name="strTitleShareApp">شارك تؤجر</string>
+    <string name="strTitleShareApp">شارك التطبيق</string>
     <string name="strTitleAddNote">إضافة ملاحظة</string>
     <string name="strTitleNote">ملاحظة</string>
     <string name="strTitleSubscription">الاشتراك</string>
@@ -131,9 +131,9 @@
     <string name="strTitleRecitationOptions">الخيارات</string>
     <string name="strTitleRepeatVerse">تكرار الآية</string>
     <string name="strTitleThresholdReached">الحد الأدنى</string>
-    <string name="strChapInfoSeeMore">رؤية المزيد من المعلومات</string>
+    <string name="strChapInfoSeeMore">رؤية المزيد من المعلومات ›</string>
     <string name="strTitleChapInfoChapterNo">رقم السورة</string>
-    <string name="strTitleChapInfoRevOrder">ترتيب نزول السور</string>
+    <string name="strTitleChapInfoRevOrder">ترتيب نزول السورة</string>
     <string name="strTitleTheme">السمة</string>
     <string name="strTitleNoInternet">لا يوجد إتصال بالانترنت</string>
     <string name="strLabelPlay">تشغيل</string>
@@ -154,20 +154,65 @@
     <string name="strTitleSelectReason">إختار السبب</string>
     <string name="strTitleExplainIssue">إشرح المشكلة</string>
     <string name="strTitleVOTD">آية اليوم</string>
-    <string name="strTitleTopics">المواضيع</string>
+    <string name="strTitleTopics">الموضوعات</string>
     <string name="strTitleDuas">أدعية قرآنية</string>
     <string name="strTitleProphets">الأنبياء</string>
-    <string name="strTitleFeaturedTopics">مواضيع القرآن</string>
+    <string name="strTitleFeaturedTopics">موضوعات القرآن</string>
     <string name="strTitleFeaturedDuas">الأدعية القرآنية</string>
     <string name="strTitleFeaturedProphets">الأنبياء في القرآن</string>
     <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
     <string name="strTitleSuccess">نجح</string>
     <string name="strTitleChapInfoVerses">الآيات</string>
-    <string name="strTitleChapInfoRukus">ركوعات</string>
+    <string name="strTitleChapInfoRukus">الركوعات</string>
     <string name="strTitleChapInfoPages">الصفحات</string>
     <string name="strTitleChapInfoRevType">مكان النزول</string>
     <string name="strMsgChapInfoFailedLoad">فشل في تحميل معلومات السورة. فضلاً حاول مرة اخرى لاحقاً.</string>
     <string name="strTitleAppSettings">إعدادات التطبيق</string>
-    <string name="strTitleReaderSettings">إعدادات القراءة</string>
+    <string name="strTitleReaderSettings">إعدادات المصحف</string>
     <string name="strMsgResetReaderSettings">إستعادة جميع الإعدادات الافتراضية.</string>
+    <string name="strLabelIncludeFootnotes">تضمين الهواميش</string>
+    <string name="strLabelIncludeTranslation">تضمين الترجمة</string>
+    <string name="strLabelLater">لاحقًا</string>
+    <string name="strHintSearch">بحث</string>
+    <string name="strHintSearchTopic">البحث عن موضوعات</string>
+    <string name="strHintSearchChapter">البحث عن سورة</string>
+    <string name="strHintSearchVerse">البحث عن آية</string>
+    <string name="strHintSearchJuz">البحث عن جزء</string>
+    <string name="strHintSearchTranslation">البحث عن ترجمة</string>
+    <string name="strHintSearchReciter">البحث عن قارئ</string>
+    <string name="strHintSearchScript">البحث عن خط</string>
+    <string name="strHintSearchLanguage">البحث عن لغة</string>
+    <string name="strHintFromVerse">من الآية</string>
+    <string name="strHintFeedback">اكتب ملاحظاتك هنا…</string>
+    <string name="strHintFeedbackEmail">البريد الإلكتروني</string>
+    <string name="strMsgVOTDOn">إرسال إشعار يومياً في الصباح.</string>
+    <string name="strHintToVerse">إلى الآية</string>
+    <string name="strLabelIncludeReference">تضمين المراجع</string>
+    <string name="strHintSearchProphet">البحث عن الأنبياء</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">البحث عن موضوع بحرف الـ\"%s\"</string>
+    <string name="strHintFeedbackMessage">الرسالة</string>
+    <string name="strHintBookmarkViewerNote">اكتب ملاحظة إضافية على هذه الإشارة المرجعية هنا …</string>
+    <string name="strNotFound">لم يتم العثور عليه</string>
+    <string name="strMsgThemeDark">الوضع الداكن يقلل من استهلاك الطاقة.</string>
+    <string name="strMsgThemeDefault">الضبط وفقًا لإعدادات النظام.</string>
+    <string name="strLabelWhatsappStyling">تنسيق الواتساب</string>
+    <string name="strLabelQuickLinks">روابط سريعة</string>
+    <string name="strLabelPremium">بريميوم</string>
+    <string name="strTitleFilters">تصفية</string>
+    <string name="strTitleChapInfoJuzNo">جزء رقم</string>
+    <string name="strLabelRemoveBookmark">إزالة الإشارة المرجعية</string>
+    <string name="strLabelBookmarked">تمت الإشارة</string>
+    <string name="strLabelBookmark">الإشارات المرجعية</string>
+    <string name="strLabelMostPlaces">الأكثر ذكراً</string>
+    <string name="strLabelSelectedCount" formatted="false">%d تم تحديد</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d المزيد من الترجمات</string>
+    <string name="strLabelAdvanceSharing">مشاركة متقدمة</string>
+    <string name="strLabelCurrentVerse">الآية الحالية</string>
+    <string name="strLabelVerseRange">نطاق الآية</string>
+    <string name="strLabelSelectVerse">اختيار الآيات</string>
+    <string name="strLabelSelectTranslations">اختيار الترجمات</string>
+    <string name="strLabelSelectTranslation">اختيار الترجمة</string>
+    <string name="strLabelIncludeArabic">تضمين النص القرآني</string>
+    <string name="strMsgYouAreReadingVerses">الآية الحالية:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">لا يوجد سورة رقم %d</string>
 </resources>

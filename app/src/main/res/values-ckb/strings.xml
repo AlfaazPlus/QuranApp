@@ -326,7 +326,7 @@
     <string name="strMsgReadHistoryRemoveFailed">لابردنی مێژووی خوێندنەوە سەرکەوتوو نەبوو</string>
     <string name="strMsgReadHistoryDeleteSelected">مێژووی خوێندنەوە دیاریکراوەکان لادەبرێن</string>
     <string name="strMsgHistoryRemove">لابردنی مێژووی خوێندنەوە؟</string>
-    <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ ئەنجامێک نەدۆزرایەوە لە %s، دا تکایە دڵنیابەرەوە لەوەی بەدروستی نوسراوە یان لە شوێنێکیت ترا بگەڕێ.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ ئەنجامێک نەدۆزرایەوە لە %s، دا تکایە دڵنیابەرەوە لەوەی بەدروستی نوسیوتە یان لە شوێنێکی ترا بگەڕێ.</string>
     <string name="strMsgSearchNoResultsFound">هیچ ئەنجامێک نەدۆزرایەوە، تکایە دڵنیابەرەوە لەوەی ناوێکی دروستت نوسیوە یان لە وەرگێڕانەکانی ترا بگەڕێ.</string>
     <string name="titleDownloadScriptResources">دابەزاندنی سەرچاوەکانی ئەم فۆنتە؟</string>
     <string name="msgDownloadKFQPCResources">سەرەتا پێویستە ئەم فایلانە دابەزێنرێت پاشان ئەتوانی بەکاری بهێنیت:</string>
