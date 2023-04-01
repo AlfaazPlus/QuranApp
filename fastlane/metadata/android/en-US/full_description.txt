@@ -23,7 +23,7 @@ The following features are the reason why you should use the QuranApp.
 
 <b>🎙️ Recitations</b>
 
-- 20+ Recitations
+- 15+ Recitations
 - Repeat single verse
 - Play verse range
 - Play recitation continuously
