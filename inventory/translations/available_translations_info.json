@@ -74,6 +74,112 @@
         "downloadPath": "inventory/translations/en/en_maududi.json"
       }
     },
+    "bn": {
+      "bn_mujibur-rahman": {
+        "book": "বাংলা তাফসীর কুরআনুল কারীম",
+        "author": "শেখ মুজিবুর রহমান",
+        "displayName": "বাংলা তাফসীর কুরআনুল কারীম",
+        "langCode": "bn",
+        "langName": "বাংলা",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/bn/bn_mujibur-rahman.json"
+      }
+    },
+    "de": {
+      "de_bubenheim": {
+        "book": "Frank Bubenheim and Dr. Nadeem Elyas",
+        "author": "Frank Bubenheim and Dr. Nadeem Elyas",
+        "displayName": "Bubenheim and Nadeem",
+        "langCode": "de",
+        "langName": "Deutsch",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/de/de_bubenheim.json"
+      }
+    },
+    "fa": {
+      "fa_islamhouse": {
+        "book": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
+        "author": "محمدگل گمشادزهی",
+        "displayName": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
+        "langCode": "fa",
+        "langName": "فارسی",
+        "lastUpdated": 1678915800000,
+        "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
+      }
+    },
+    "fr": {
+      "fr_hamidullah": {
+        "book": "Muhammad Hamidullah",
+        "author": "Muhammad Hamidullah",
+        "displayName": "Hamidullah",
+        "langCode": "fr",
+        "langName": "Français",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/fr/fr_hamidullah.json"
+      },
+      "fr_rashid": {
+        "book": "Rashid Maash",
+        "author": "Rashid Maash",
+        "displayName": "Rashid Maash",
+        "langCode": "fr",
+        "langName": "Français",
+        "lastUpdated": 1680108109569,
+        "downloadPath": "inventory/translations/fr/fr_rashid.json"
+      }
+    },
+    "hi": {
+      "hi_azizul-haque": {
+        "book": "मौलाना अजीजूल हक़ अल-उमरी",
+        "author": "Maulana Azizul Haque al-Umari",
+        "displayName": "अजीजूल हक़",
+        "langCode": "hi",
+        "langName": "हिंदी",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
+      }
+    },
+    "in": {
+      "in_quran-complex": {
+        "book": "Kompleks Al Quran Raja Fahd",
+        "author": "Kompleks Al Quran Raja Fahd",
+        "displayName": "Kompleks Al Quran",
+        "langCode": "in",
+        "langName": "Bahasa Indonesia",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/in/in_quran-complex.json"
+      }
+    },
+    "ku": {
+      "ku_bamoki": {
+        "book": "پوختەی قورئان",
+        "author": "محمد ساڵح بامۆکی",
+        "displayName": "پوختەی قورئان",
+        "langCode": "ku",
+        "langName": "کوردی",
+        "lastUpdated": 1679333216943,
+        "downloadPath": "inventory/translations/ku/ku_bamoki.json"
+      }
+    },
+    "tr": {
+      "tr_diyanet": {
+        "book": "Turkish Translation (Diyanet)",
+        "author": "Diyanet Isleri",
+        "displayName": "Diyanet",
+        "langCode": "tr",
+        "langName": "Türkçe",
+        "lastUpdated": 1680342202171,
+        "downloadPath": "inventory/translations/tr/tr_diyanet.json"
+      },
+      "tr_elmalili": {
+        "book": "Elmalili Hamdi Yazir",
+        "author": "Elmalili Hamdi Yazir",
+        "displayName": "Elmalili Hamdi Yazir",
+        "langCode": "tr",
+        "langName": "Türkçe",
+        "lastUpdated": 1680342202171,
+        "downloadPath": "inventory/translations/tr/tr_elmalili.json"
+      }
+    },
     "ur": {
       "ur_jalandhari": {
         "book": "فتح محمد جالندھری",
@@ -101,92 +207,6 @@
         "langName": "اردو",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_maududi.json"
-      }
-    },
-    "bn": {
-      "bn_mujibur-rahman": {
-        "book": "বাংলা তাফসীর কুরআনুল কারীম",
-        "author": "শেখ মুজিবুর রহমান",
-        "displayName": "বাংলা তাফসীর কুরআনুল কারীম",
-        "langCode": "bn",
-        "langName": "বাংলা",
-        "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/bn/bn_mujibur-rahman.json"
-      }
-    },
-    "hi": {
-      "hi_azizul-haque": {
-        "book": "मौलाना अजीजूल हक़ अल-उमरी",
-        "author": "Maulana Azizul Haque al-Umari",
-        "displayName": "अजीजूल हक़",
-        "langCode": "hi",
-        "langName": "हिंदी",
-        "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/hi/hi_azizul-haque.json"
-      }
-    },
-    "in": {
-      "in_quran-complex": {
-        "book": "Kompleks Al Quran Raja Fahd",
-        "author": "Kompleks Al Quran Raja Fahd",
-        "displayName": "Kompleks Al Quran",
-        "langCode": "in",
-        "langName": "Bahasa Indonesia",
-        "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/in/in_quran-complex.json"
-      }
-    },
-    "fa": {
-      "fa_islamhouse": {
-        "book": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
-        "author": "محمدگل گمشادزهی",
-        "displayName": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
-        "langCode": "fa",
-        "langName": "فارسی",
-        "lastUpdated": 1678915800000,
-        "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
-      }
-    },
-    "ku": {
-      "ku_bamoki": {
-        "book": "پوختەی قورئان",
-        "author": "محمد ساڵح بامۆکی",
-        "displayName": "پوختەی قورئان",
-        "langCode": "ku",
-        "langName": "کوردی",
-        "lastUpdated": 1679333216943,
-        "downloadPath": "inventory/translations/ku/ku_bamoki.json"
-      }
-    },
-    "de": {
-      "de_bubenheim": {
-        "book": "Frank Bubenheim and Dr. Nadeem Elyas",
-        "author": "Frank Bubenheim and Dr. Nadeem Elyas",
-        "displayName": "Bubenheim and Nadeem",
-        "langCode": "de",
-        "langName": "Deutsch",
-        "lastUpdated": 1680108109569,
-        "downloadPath": "inventory/translations/de/de_bubenheim.json"
-      }
-    },
-    "fr": {
-      "fr_hamidullah": {
-        "book": "Muhammad Hamidullah",
-        "author": "Muhammad Hamidullah",
-        "displayName": "Hamidullah",
-        "langCode": "fr",
-        "langName": "Français",
-        "lastUpdated": 1680108109569,
-        "downloadPath": "inventory/translations/fr/fr_hamidullah.json"
-      },
-      "fr_rashid": {
-        "book": "Rashid Maash",
-        "author": "Rashid Maash",
-        "displayName": "Rashid Maash",
-        "langCode": "fr",
-        "langName": "Français",
-        "lastUpdated": 1680108109569,
-        "downloadPath": "inventory/translations/fr/fr_rashid.json"
       }
     }
   }
