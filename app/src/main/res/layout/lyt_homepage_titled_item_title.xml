@@ -18,6 +18,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleText"
         android:layout_width="0dp"
+        android:textAlignment="viewStart"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"

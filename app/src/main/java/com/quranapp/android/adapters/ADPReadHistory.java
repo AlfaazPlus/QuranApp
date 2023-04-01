@@ -30,6 +30,7 @@ import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHistory> {
     private final QuranMeta mQuranMeta;
@@ -136,7 +137,7 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
             mBinding.menu.setVisibility(View.GONE);
             mBinding.check.setVisibility(View.GONE);
 
-            mBinding.chapterNo.setText(String.valueOf(history.getChapterNo()));
+            mBinding.chapterNo.setText(String.format(Locale.getDefault(), "%d", history.getChapterNo()));
 
             String chapterName = mQuranMeta.getChapterName(itemView.getContext(), history.getChapterNo(), true);
             CharSequence txt = prepareTexts(chapterName,

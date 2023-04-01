@@ -35,6 +35,8 @@ import com.quranapp.android.utils.extensions.TextViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.views.reader.ChapterIcon;
 
+import java.util.Locale;
+
 public class ChapterCard extends ConstraintLayout {
     public ChapterCard(@NonNull Context context) {
         this(context, null);
@@ -106,6 +108,7 @@ public class ChapterCard extends ConstraintLayout {
 
     private View createNameView() {
         AppCompatTextView v = new AppCompatTextView(getContext());
+        v.setTextAlignment(TEXT_ALIGNMENT_VIEW_START);
         v.setId(R.id.chapterCardName);
         LayoutParams p = new LayoutParams(0, WRAP_CONTENT);
         LayoutParamsKt.updateMarginHorizontal(p, Dimen.dp2px(getContext(), 10));
@@ -129,7 +132,7 @@ public class ChapterCard extends ConstraintLayout {
     public void setChapterNumber(int chapterNo) {
         View serial = findViewById(R.id.chapterCardSerial);
         if (serial instanceof TextView) {
-            ((TextView) serial).setText(String.valueOf(chapterNo));
+            ((TextView) serial).setText(String.format(Locale.getDefault(), "%d", chapterNo));
         }
 
         View icon = findViewById(R.id.chapterCardIcon);
