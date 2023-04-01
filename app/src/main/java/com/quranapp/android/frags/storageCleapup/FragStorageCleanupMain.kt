@@ -52,7 +52,7 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
         checkRecitations(binding)
         checkScripts(binding)
         checkChapterInfo(binding)
-        // checkTafsir(binding)
+        checkTafsir(binding)
 
         if (!isThereAnythingToCleanup) {
             binding.cleanupMessage.setText(R.string.nothingToCleanup)
@@ -178,15 +178,25 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
         }.show()
     }
 
-    /*private fun checkTafsir(parentBinding: FragStorageCleanupMainBinding) {
-        val tafsirCount = 0
+    private fun checkTafsir(parentBinding: FragStorageCleanupMainBinding) {
+        var tafsirCount = 0
+
+        fileUtils.tafsirDir.listFiles()?.filter { it.isDirectory }?.forEach { tafsirDir ->
+            tafsirDir.listFiles()?.filter { it.isFile }?.forEach { tafsirFile ->
+                if (tafsirFile.length() > 0) {
+                    tafsirCount++
+                }
+            }
+        }
 
         if (tafsirCount == 0) return
 
-        populateTexts(parentBinding, R.string.strTitleTafsir, getString(R.string.tafseerCanBeFreedUp, tafsirCount)) {
+        isThereAnythingToCleanup = true
 
+        populateTexts(parentBinding, R.string.strTitleTafsir, getString(R.string.tafseerCanBeFreedUp, tafsirCount)) {
+            launchFrag(FragTafsirCleanup::class.java)
         }
-    }*/
+    }
 
     private fun populateTexts(
         parentBinding: FragStorageCleanupMainBinding,

@@ -1,16 +1,5 @@
 package com.quranapp.android.adapters.search;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,11 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.TAFSIR_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
@@ -41,6 +40,7 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.search.ChapterJumpModel;
 import com.quranapp.android.components.search.JuzJumpModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
+import com.quranapp.android.components.search.TafsirJumpModel;
 import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.components.search.VerseResultCountModel;
 import com.quranapp.android.components.search.VerseResultModel;
@@ -58,7 +58,9 @@ import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.vh.search.VHChapterJump;
 import com.quranapp.android.vh.search.VHJuzJump;
 import com.quranapp.android.vh.search.VHSearchResultBase;
+import com.quranapp.android.vh.search.VHTafsirJump;
 import com.quranapp.android.vh.search.VHVerseJump;
+import com.quranapp.android.widgets.IconedTextView;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
 import com.quranapp.android.widgets.list.base.BaseListItem;
@@ -116,6 +118,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             return CHAPTER_JUMPER;
         } else if (modelBase instanceof JuzJumpModel) {
             return JUZ_JUMPER;
+        } else if (modelBase instanceof TafsirJumpModel) {
+            return TAFSIR_JUMPER;
         } else if (modelBase instanceof VerseResultCountModel) {
             return RESULT_COUNT;
         } else if (modelBase instanceof VerseResultModel) {
@@ -141,6 +145,9 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                 break;
             case JUZ_JUMPER:
                 vh = new VHJuzJump(LytReaderJuzSpinnerItemBinding.inflate(mInflater, parent, false), false);
+                break;
+            case TAFSIR_JUMPER:
+                vh = new VHTafsirJump(new IconedTextView(parent.getContext()), false);
                 break;
             case RESULT_COUNT:
                 vh = new VHVerseResultCount(makeResultCountView(parent.getContext()));

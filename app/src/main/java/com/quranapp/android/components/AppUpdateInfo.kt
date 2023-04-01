@@ -19,8 +19,7 @@ class AppUpdateInfo(private val ctx: Context) {
 
     private val updates: List<AppUpdate> = try {
         val fileUtils = FileUtils.newInstance(ctx)
-        val updatesString = fileUtils.readFile(fileUtils.appUpdatesFile)
-        JsonHelper.json.decodeFromString(updatesString)
+        JsonHelper.json.decodeFromString(fileUtils.appUpdatesFile.readText())
     } catch (e: Exception) {
         ArrayList()
     }

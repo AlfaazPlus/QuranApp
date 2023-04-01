@@ -3,10 +3,10 @@
  */
 package com.quranapp.android.components.storageCleanup
 
-import com.quranapp.android.api.models.recitation.RecitationInfoModel
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 
-data class RecitationCleanupItemModel(
-    val recitationModel: RecitationInfoModel,
+data class TafsirCleanupItemModel(
+    val tafsirModel: TafsirInfoModel,
     val downloadsCount: Int,
     var isCleared: Boolean = false
 )

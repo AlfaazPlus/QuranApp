@@ -57,7 +57,7 @@ class QuranParser(private val ctx: Context) {
             val scriptFile = fileUtils.getScriptFile(scriptKey)
 
             if (scriptFile.length() > 0) {
-                fileUtils.readFile(scriptFile)
+                scriptFile.readText()
             } else {
                 SPReader.setSavedScript(ctx, QuranScriptUtils.SCRIPT_DEFAULT)
                 StringUtils.readInputStream(

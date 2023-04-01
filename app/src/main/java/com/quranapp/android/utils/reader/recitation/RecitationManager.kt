@@ -4,16 +4,16 @@ import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.recitation.AvailableRecitationsModel
-import com.quranapp.android.api.models.recitation.RecitationModel
+import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
-import java.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
+import java.io.IOException
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -49,7 +49,7 @@ object RecitationManager {
                     val stringData = RetrofitInstance.github.getAvailableRecitations().string()
 
                     fileUtils.createFile(recitationsFile)
-                    fileUtils.writeToFile(recitationsFile, stringData)
+                    recitationsFile.writeText(stringData)
 
                     withContext(Dispatchers.Main) {
                         postRecitationsLoad(ctx, stringData, callback)
@@ -68,7 +68,7 @@ object RecitationManager {
             }
 
             try {
-                val stringData = fileUtils.readFile(recitationsFile)
+                val stringData = recitationsFile.readText()
                 if (stringData.isEmpty()) {
                     loadRecitations(ctx, true, callback)
                     return
@@ -111,12 +111,12 @@ object RecitationManager {
     }
 
     @JvmStatic
-    fun getModel(slug: String): RecitationModel? {
+    fun getModel(slug: String): RecitationInfoModel? {
         return availableRecitationsModel?.reciters?.firstOrNull { it.slug == slug }
     }
 
     @JvmStatic
-    fun getModels(): List<RecitationModel>? {
+    fun getModels(): List<RecitationInfoModel>? {
         return availableRecitationsModel?.reciters
     }
 
@@ -133,8 +133,8 @@ object RecitationManager {
         style: String? = null,
         urlHost: String? = null,
         urlPath: String = ""
-    ): RecitationModel {
-        return RecitationModel(
+    ): RecitationInfoModel {
+        return RecitationInfoModel(
             slug = slug,
             reciter = reciter,
             style = style,

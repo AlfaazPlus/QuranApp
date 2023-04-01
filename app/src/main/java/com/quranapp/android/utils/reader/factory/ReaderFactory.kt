@@ -282,8 +282,15 @@ object ReaderFactory {
     }
 
     @JvmStatic
-    fun prepareTafsirIntent(context: Context, chapterNo: Int, verseNo: Int): Intent {
-        val intent = Intent(context, ActivityTafsir::class.java)
+    fun startTafsir(context: Context, chapterNo: Int, verseNo: Int) {
+        val intent = prepareTafsirIntent(chapterNo, verseNo)
+        intent.setClass(context, ActivityTafsir::class.java)
+        context.startActivity(intent)
+    }
+
+    @JvmStatic
+    fun prepareTafsirIntent(chapterNo: Int, verseNo: Int): Intent {
+        val intent = Intent()
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         intent.putExtra(Keys.READER_KEY_VERSE_NO, verseNo)
         return intent

@@ -42,6 +42,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import kotlin.io.FilesKt;
+import kotlin.text.Charsets;
+
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class ActivityChapInfo extends ReaderPossessingActivity {
     private final CallableTaskRunner<String> mTaskRunner = new CallableTaskRunner<>();
@@ -264,7 +267,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
         @Override
         public String call() throws Exception {
             if (chapterInfoFile.exists()) {
-                String read = FileUtils.readTextFromFile(chapterInfoFile);
+                String read = FilesKt.readText(chapterInfoFile, Charsets.UTF_8);
                 if (read.length() > 0) {
                     return read;
                 }
@@ -301,7 +304,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
             conn.disconnect();
 
             String data = sb.toString();
-            FileUtils.writeTextIntoFile(chapterInfoFile, data);
+            FilesKt.writeText(chapterInfoFile, data, Charsets.UTF_8);
             return data;
         }
 

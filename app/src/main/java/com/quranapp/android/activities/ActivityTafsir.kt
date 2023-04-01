@@ -237,7 +237,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
             val slug = TafsirUtils.getTafsirSlugFromKey(tafsirKey)
 
             if (tafsirFile.length() > 0) {
-                val read = fileUtils.readFile(tafsirFile)
+                val read = tafsirFile.readText()
                 val tafsir = JsonHelper.json.decodeFromString<TafsirModel>(read)
                 renderData(tafsir)
                 return@launch
@@ -252,7 +252,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 val tafsir = RetrofitInstance.quran.getTafsir(slug, "$chapterNo:$verseNo")["tafsir"]!!
 
                 fileUtils.createFile(tafsirFile)
-                fileUtils.writeToFile(tafsirFile, JsonHelper.json.encodeToString(tafsir))
+                tafsirFile.writeText(JsonHelper.json.encodeToString(tafsir))
                 renderData(tafsir)
             } catch (e: Exception) {
                 e.printStackTrace()
