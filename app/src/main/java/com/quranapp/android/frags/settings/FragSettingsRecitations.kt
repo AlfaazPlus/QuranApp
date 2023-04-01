@@ -11,7 +11,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.adapters.recitation.ADPRecitations
-import com.quranapp.android.api.models.recitation.RecitationModel
+import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -30,7 +30,7 @@ class FragSettingsRecitations : FragSettingsBase() {
     private lateinit var mFileUtils: FileUtils
 
     private val mAdapter = ADPRecitations()
-    private var mModels: List<RecitationModel>? = null
+    private var mModels: List<RecitationInfoModel>? = null
     private var mPageAlert: PageAlert? = null
 
     private var mInitialRecitation: String? = null
@@ -122,7 +122,7 @@ class FragSettingsRecitations : FragSettingsBase() {
             Pattern.CASE_INSENSITIVE or Pattern.DOTALL
         )
 
-        val found = ArrayList<RecitationModel>()
+        val found = ArrayList<RecitationInfoModel>()
         for (model in models) {
             if (pattern.matcher(model.reciter).find() || pattern.matcher(model.getReciterName()).find()) {
                 found.add(model)
@@ -132,7 +132,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         resetAdapter(found)
     }
 
-    private fun populateRecitations(ctx: Context, models: List<RecitationModel>) {
+    private fun populateRecitations(ctx: Context, models: List<RecitationInfoModel>) {
         mModels = models
 
         mBinding.list.layoutManager = LinearLayoutManager(ctx)
@@ -146,7 +146,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         }
     }
 
-    private fun resetAdapter(models: List<RecitationModel>) {
+    private fun resetAdapter(models: List<RecitationInfoModel>) {
         mAdapter.setModels(models)
         mBinding.list.adapter = mAdapter
     }

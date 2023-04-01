@@ -19,13 +19,16 @@ import com.quranapp.android.components.search.ChapterJumpModel;
 import com.quranapp.android.components.search.JuzJumpModel;
 import com.quranapp.android.components.search.SearchHistoryModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
+import com.quranapp.android.components.search.TafsirJumpModel;
 import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.databinding.LytReaderJuzSpinnerItemBinding;
 import com.quranapp.android.databinding.LytSearchHistoryItemBinding;
 import com.quranapp.android.vh.search.VHChapterJump;
 import com.quranapp.android.vh.search.VHJuzJump;
 import com.quranapp.android.vh.search.VHSearchResultBase;
+import com.quranapp.android.vh.search.VHTafsirJump;
 import com.quranapp.android.vh.search.VHVerseJump;
+import com.quranapp.android.widgets.IconedTextView;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
 
 import java.util.ArrayList;
@@ -76,6 +79,8 @@ public class ADPSearchSugg extends RecyclerView.Adapter<VHSearchResultBase> {
             vh = new VHChapterJump(new ChapterCard(parent.getContext()), true);
         } else if (modelBase instanceof JuzJumpModel) {
             vh = new VHJuzJump(LytReaderJuzSpinnerItemBinding.inflate(mInflater, parent, false), true);
+        } else if (modelBase instanceof TafsirJumpModel) {
+            vh = new VHTafsirJump(new IconedTextView(parent.getContext()), true);
         } else if (modelBase instanceof SearchHistoryModel) {
             vh = new VHSearchHistoryItem(LytSearchHistoryItemBinding.inflate(mInflater, parent, false));
         } else {
@@ -99,7 +104,7 @@ public class ADPSearchSugg extends RecyclerView.Adapter<VHSearchResultBase> {
         }
 
         @Override
-        public void bind(SearchResultModelBase parentModel, int pos) {
+        public void bind(@NonNull SearchResultModelBase parentModel, int pos) {
             if (mConfigs.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
                 mBinding.push.setRotation(90);
             }

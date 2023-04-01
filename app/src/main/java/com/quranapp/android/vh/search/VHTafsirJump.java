@@ -8,22 +8,23 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
 import com.quranapp.android.components.search.SearchResultModelBase;
+import com.quranapp.android.components.search.TafsirJumpModel;
 import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.widgets.IconedTextView;
 
-public class VHVerseJump extends VHSearchResultBase {
-    private final AppCompatTextView mTextView;
+public class VHTafsirJump extends VHSearchResultBase {
+    private final IconedTextView mTextView;
 
-    public VHVerseJump(AppCompatTextView textView, boolean applyMargins) {
+    public VHTafsirJump(IconedTextView textView, boolean applyMargins) {
         super(textView);
         mTextView = textView;
 
@@ -34,11 +35,11 @@ public class VHVerseJump extends VHSearchResultBase {
 
     @Override
     public void bind(@NonNull SearchResultModelBase parentModel, int pos) {
-        VerseJumpModel model = (VerseJumpModel) parentModel;
+        TafsirJumpModel model = (TafsirJumpModel) parentModel;
 
+        mTextView.setDrawables(ContextKt.drawable(mTextView.getContext(), R.drawable.dr_icon_tafsir), null, null, null);
         mTextView.setText(makeName(itemView.getContext(), model.titleText, model.chapterNameText));
-        mTextView.setOnClickListener(v -> ReaderFactory.startVerseRange(v.getContext(),
-            model.chapterNo, model.fromVerseNo, model.toVerseNo));
+        mTextView.setOnClickListener(v -> ReaderFactory.startTafsir(v.getContext(), model.chapterNo, model.verseNo));
     }
 
     private CharSequence makeName(Context ctx, String text, String subtext) {

@@ -88,7 +88,7 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         try {
             TranslUtils.getTranslInfosAndFilesForMigration(fileUtils, translDir)?.let {
                 for (pair in it) {
-                    storeTranslation(pair.first, fileUtils.readFile(pair.second), DB)
+                    storeTranslation(pair.first, pair.second.readText(), DB)
                 }
             }
         } catch (e: java.lang.Exception) {

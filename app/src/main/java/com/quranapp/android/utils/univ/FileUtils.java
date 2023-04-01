@@ -22,19 +22,15 @@ import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.tafsir.TafsirUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URI;
-import java.util.Scanner;
 import java.util.StringJoiner;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -187,18 +183,6 @@ public final class FileUtils {
         osw.close();
     }
 
-    @NonNull
-    public String readFile(@NonNull File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String str;
-        while ((str = br.readLine()) != null) sb.append(str);
-
-        br.close();
-
-        return sb.toString();
-    }
-
     public Context getContext() {
         return mContext;
     }
@@ -293,31 +277,5 @@ public final class FileUtils {
         String path = cursor.getString(column_index);
         cursor.close();
         return path;
-    }
-
-
-    public static String readTextFromFile(File textFile) throws FileNotFoundException {
-        Scanner in = new Scanner(new FileReader(textFile));
-        StringBuilder sb = new StringBuilder();
-        while (in.hasNextLine()) {
-            sb.append(in.nextLine());
-        }
-        in.close();
-
-        return sb.toString();
-    }
-
-
-    public static void writeTextIntoFile(File textFile, String stringData) throws Exception {
-        PrintWriter out = new PrintWriter(textFile);
-        out.println(stringData);
-        out.flush();
-        out.close();
-    }
-
-    public interface FileCallback {
-        void onSuccess();
-
-        void onFailed(@NonNull Exception e);
     }
 }

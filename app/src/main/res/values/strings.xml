@@ -96,6 +96,7 @@
     <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Read Verses %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Read tafsir of verse %d</string>
     <string name="strTitleReaderLayoutStyle">Quran view style</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Translations view</string>
     <string name="strTitleReaderLayoutStylePageView">Page view</string>
@@ -346,6 +347,8 @@
     <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
     <string name="titleChapterInfoCleanup">Clear chapter info\?</string>
     <string name="msgChapterInfoCleanup">All the saved chapter info will be deleted.</string>
+    <string name="titleTafsirCleanup">Delete tafsir\?</string>
+    <string name="msgTafsirCleanup" formatted="false">All the stored tafsir from %s will be deleted.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>

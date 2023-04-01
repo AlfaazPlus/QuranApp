@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
-data class RecitationModel(
+data class RecitationInfoModel(
     val slug: String,
     val reciter: String,
     val style: String?,
@@ -28,7 +28,7 @@ data class RecitationModel(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is RecitationModel) {
+        if (other !is RecitationInfoModel) {
             return false
         }
         return other.slug == slug

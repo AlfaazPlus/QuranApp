@@ -28,7 +28,13 @@ import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingActi
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlin.io.path.outputStream
+import kotlin.io.path.readText
 
 class TranslationDownloadService : Service() {
     companion object {
@@ -42,8 +48,9 @@ class TranslationDownloadService : Service() {
         }
     }
 
-    private val mBinder = TranslationDownloadServiceBinder()
-    private val mCurrentDownloads = HashSet<String>()
+    private val binder = LocalBinder()
+    private val currentDownloads = HashSet<String>()
+    private val jobs = HashMap<String, Job>()
 
     override fun onCreate() {
         super.onCreate()
@@ -64,7 +71,7 @@ class TranslationDownloadService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        return mBinder
+        return binder
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -83,7 +90,8 @@ class TranslationDownloadService : Service() {
         )
             ?: return START_NOT_STICKY
 
-        mCurrentDownloads.add(bookInfo.slug)
+        currentDownloads.add(bookInfo.slug)
+        jobs[bookInfo.slug] = Job()
 
         val notifBuilder = prepareNotification(bookInfo)
         val notifManager = NotificationManagerCompat.from(this)
@@ -109,31 +117,45 @@ class TranslationDownloadService : Service() {
         notifBuilder: NotificationCompat.Builder,
         notifManager: NotificationManagerCompat
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main + jobs[bookInfo.slug]!!).launch {
             val notifId = bookInfo.slug.hashCode()
 
-            try {
-                notify(notifId, notifManager, notifBuilder.build())
+            flow {
+                emit(TranslationDownloadFlow.Start)
+                emit(TranslationDownloadFlow.Progress(0))
 
                 val responseBody = RetrofitInstance.github.getTranslation(bookInfo.downloadPath)
 
-                val data = responseBody.string()
+                val byteStream = responseBody.byteStream()
+                val totalBytes = byteStream.available()
+                val tmpFile = kotlin.io.path.createTempFile(
+                    prefix = bookInfo.slug,
+                    suffix = ".json"
+                )
 
-                if (data.isEmpty()) {
-                    sendStatusBroadcast(
-                        TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED,
-                        bookInfo
-                    )
-                    return@launch
+                byteStream.use { inS ->
+                    tmpFile.outputStream().use { outS ->
+                        val buffer = ByteArray(8192)
+                        var progressBytes = 0L
+
+                        while (true) {
+                            val bytes = inS.read(buffer)
+
+                            if (bytes <= 0) break
+
+                            outS.write(buffer, 0, bytes)
+                            progressBytes += bytes
+
+                            emit(TranslationDownloadFlow.Progress(((progressBytes * 100) / totalBytes).toInt()))
+                        }
+                    }
                 }
 
                 val context = this@TranslationDownloadService
 
-                val factory = QuranTranslationFactory(context)
-                factory.dbHelper.storeTranslation(bookInfo, data)
-                factory.close()
-
-                sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
+                QuranTranslationFactory(context).use {
+                    it.dbHelper.storeTranslation(bookInfo, tmpFile.readText())
+                }
 
                 val slug = bookInfo.slug
 
@@ -145,11 +167,32 @@ class TranslationDownloadService : Service() {
 
                 removeDownload(bookInfo.slug)
                 notifManager.cancel(notifId)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
-                removeDownload(bookInfo.slug)
-                notifManager.cancel(notifId)
+
+                emit(TranslationDownloadFlow.Complete)
+            }.flowOn(Dispatchers.IO).catch {
+                it.printStackTrace()
+                emit(TranslationDownloadFlow.Failed)
+            }.collect {
+                when (it) {
+                    is TranslationDownloadFlow.Start -> {
+                        notify(notifId, notifManager, notifBuilder.build())
+                    }
+                    is TranslationDownloadFlow.Progress -> {
+                        notifBuilder.setProgress(100, it.progress, false)
+                        notifBuilder.setSubText("${it.progress}%")
+                        notify(notifId, notifManager, notifBuilder.build())
+                    }
+                    is TranslationDownloadFlow.Complete -> {
+                        sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
+                        finish()
+                    }
+                    is TranslationDownloadFlow.Failed -> {
+                        sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
+                        removeDownload(bookInfo.slug)
+                        notifManager.cancel(notifId)
+                        finish()
+                    }
+                }
             }
         }
     }
@@ -186,8 +229,8 @@ class TranslationDownloadService : Service() {
             setOngoing(true)
             setShowWhen(false)
             setSmallIcon(R.drawable.dr_logo)
-            setContentTitle(bookInfo.bookName)
-            setSubText(getString(R.string.textDownloading))
+            setContentTitle(getString(R.string.textDownloading))
+            setContentText(bookInfo.bookName)
             setCategory(NotificationCompat.CATEGORY_PROGRESS)
             setProgress(0, 0, true)
         }
@@ -197,11 +240,12 @@ class TranslationDownloadService : Service() {
             flag = flag or PendingIntent.FLAG_IMMUTABLE
         }
 
-        val activityIntent = Intent(this, ActivitySettings::class.java)
-        activityIntent.putExtra(
-            ActivitySettings.KEY_SETTINGS_DESTINATION,
-            ActivitySettings.SETTINGS_TRANSLATION_DOWNLOAD
-        )
+        val activityIntent = Intent(this, ActivitySettings::class.java).apply {
+            putExtra(
+                ActivitySettings.KEY_SETTINGS_DESTINATION,
+                ActivitySettings.SETTINGS_TRANSLATION_DOWNLOAD
+            )
+        }
         val pendingIntent = PendingIntent.getActivity(
             this,
             bookInfo.slug.hashCode(),
@@ -209,20 +253,50 @@ class TranslationDownloadService : Service() {
             flag
         )
         builder.setContentIntent(pendingIntent)
+
+        val cancelIntent = PendingIntent.getBroadcast(
+            this@TranslationDownloadService,
+            bookInfo.slug.hashCode(),
+            Intent(TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS).apply {
+                putExtra(
+                    TranslDownloadReceiver.KEY_TRANSL_DOWNLOAD_STATUS,
+                    TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED
+                )
+                putExtra(TranslDownloadReceiver.KEY_TRANSL_BOOK_INFO, bookInfo)
+            },
+            flag
+        )
+
+        builder.addAction(
+            R.drawable.dr_icon_close,
+            getString(R.string.strLabelCancel),
+            cancelIntent
+        )
+
         return builder
     }
 
     fun isDownloading(slug: String): Boolean {
-        return mCurrentDownloads.contains(slug)
+        return currentDownloads.contains(slug) && jobs[slug]?.isActive == true
     }
 
     fun isAnyDownloading(): Boolean {
-        return mCurrentDownloads.isNotEmpty()
+        return currentDownloads.isNotEmpty() && jobs.values.any { it.isActive }
+    }
+
+    fun cancelDownload(slug: String) {
+        currentDownloads.remove(slug)
+        jobs[slug]?.cancel()
+        checkIfFinished()
     }
 
     private fun removeDownload(slug: String?) {
-        mCurrentDownloads.remove(slug)
-        if (mCurrentDownloads.size == 0) {
+        currentDownloads.remove(slug)
+        checkIfFinished()
+    }
+
+    private fun checkIfFinished() {
+        if (currentDownloads.size == 0) {
             sendBroadcast(Intent(TranslDownloadReceiver.ACTION_NO_MORE_DOWNLOADS))
             finish()
         }
@@ -233,7 +307,14 @@ class TranslationDownloadService : Service() {
         stopSelf()
     }
 
-    inner class TranslationDownloadServiceBinder : Binder() {
+    inner class LocalBinder : Binder() {
         val service: TranslationDownloadService get() = this@TranslationDownloadService
     }
+}
+
+sealed class TranslationDownloadFlow : java.io.Serializable {
+    object Start : TranslationDownloadFlow()
+    data class Progress(val progress: Int) : TranslationDownloadFlow()
+    object Complete : TranslationDownloadFlow()
+    object Failed : TranslationDownloadFlow()
 }

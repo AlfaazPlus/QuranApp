@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import kotlin.io.FilesKt;
+import kotlin.text.Charsets;
 
 public class TranslUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
@@ -258,7 +259,7 @@ public class TranslUtils {
             return null;
         }
 
-        String json = fileUtils.readFile(infoJSONFile);
+        String json = FilesKt.readText(infoJSONFile, Charsets.UTF_8);
         JSONObject jsonObject = new JSONObject(json);
 
         String slug = jsonObject.optString("slug", "");

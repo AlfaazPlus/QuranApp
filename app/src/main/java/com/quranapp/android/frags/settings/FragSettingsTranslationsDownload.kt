@@ -26,7 +26,7 @@ import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver.TranslDownloadStateListener
 import com.quranapp.android.utils.services.TranslationDownloadService
-import com.quranapp.android.utils.services.TranslationDownloadService.TranslationDownloadServiceBinder
+import com.quranapp.android.utils.services.TranslationDownloadService.LocalBinder
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.MessageUtils
@@ -162,7 +162,7 @@ class FragSettingsTranslationsDownload :
                 return
             }
             try {
-                val data = fileUtils.readFile(storedAvailableDownloads)
+                val data = storedAvailableDownloads.readText()
                 if (data.isEmpty()) {
                     refreshTranslations(ctx, true)
                     return
@@ -188,7 +188,7 @@ class FragSettingsTranslationsDownload :
                 val responseBody = RetrofitInstance.github.getAvailableTranslations()
                 responseBody.string().let { data ->
                     fileUtils.createFile(storedAvailableDownloadsFile)
-                    fileUtils.writeToFile(storedAvailableDownloadsFile, data)
+                    storedAvailableDownloadsFile.writeText(data)
 
                     runOnUIThread {
                         parseAvailableTranslationsData(ctx, data)
@@ -352,7 +352,9 @@ class FragSettingsTranslationsDownload :
         var title: String? = null
         var msg: String? = null
         when (status) {
-            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED -> {}
+            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED -> {
+                translDownloadService?.cancelDownload(bookInfo.slug)
+            }
             TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED -> {
                 title = ctx.getString(R.string.strTitleFailed)
                 msg = (
@@ -386,7 +388,7 @@ class FragSettingsTranslationsDownload :
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-        translDownloadService = (service as TranslationDownloadServiceBinder).service
+        translDownloadService = (service as LocalBinder).service
         if (!isRefreshInProgres) {
             refreshTranslations(binding.root.context, false)
         }
