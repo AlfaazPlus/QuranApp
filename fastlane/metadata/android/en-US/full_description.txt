@@ -16,7 +16,7 @@ The following features are the reason why you should use the QuranApp.
 
 <b>📙 Translations</b>
 
-- 15+ Translations
+- 20+ Translations
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
