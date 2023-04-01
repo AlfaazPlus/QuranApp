@@ -17,6 +17,7 @@ import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.LytSettingsTranslItemBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
+import com.quranapp.android.widgets.compound.PeaceCompoundButton;
 
 import java.util.List;
 
@@ -70,6 +71,8 @@ public class ADPTransls extends ADPTranslBase<ADPTransls.VHTransl> {
             if (mBinding == null) {
                 return;
             }
+
+            mBinding.checkbox.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
             mBinding.checkbox.setTexts(translModel.getBookInfo().getBookName(),
                 translModel.getBookInfo().getAuthorName());
