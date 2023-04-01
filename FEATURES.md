@@ -11,7 +11,7 @@ The following features are the reason why you should use the QuranApp.
 - No data collection or sharing
 
 ### 📙 Translations
-- 15+ Translations
+- 20+ Translations
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
