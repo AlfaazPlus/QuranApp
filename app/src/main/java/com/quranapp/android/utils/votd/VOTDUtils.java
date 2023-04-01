@@ -9,14 +9,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.provider.Settings;
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.receivers.BootReceiver;
 import com.quranapp.android.utils.receivers.ReceiverUtils;
-import com.quranapp.android.utils.receivers.VOTDReceiver;
+import com.quranapp.android.utils.receivers.VotdReceiver;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.univ.Codes;
 
@@ -45,6 +45,8 @@ public final class VOTDUtils {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
 
+        Log.d("VOTD Reminder set for: " + cal.getTime());
+
         AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), votdReminder);
         alarmManager.setAlarmClock(info, votdReminder);
     }
@@ -64,7 +66,7 @@ public final class VOTDUtils {
     }
 
     private static PendingIntent createVOTDReminder(Context context) {
-        Intent receiver = new Intent(context, VOTDReceiver.class);
+        Intent receiver = new Intent(context, VotdReceiver.class);
         int flag = PendingIntent.FLAG_CANCEL_CURRENT;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             flag |= PendingIntent.FLAG_IMMUTABLE;
@@ -82,11 +84,11 @@ public final class VOTDUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return alarmManager.canScheduleExactAlarms()
-                    && NotificationManagerCompat.from(context).areNotificationsEnabled()
-                    && SPVerses.getVOTDReminderEnabled(context);
+                && NotificationManagerCompat.from(context).areNotificationsEnabled()
+                && SPVerses.getVOTDReminderEnabled(context);
         }
 
         return NotificationManagerCompat.from(context).areNotificationsEnabled()
-                && SPVerses.getVOTDReminderEnabled(context);
+            && SPVerses.getVOTDReminderEnabled(context);
     }
 }
