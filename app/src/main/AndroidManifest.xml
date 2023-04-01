@@ -106,7 +106,7 @@
         </provider>
 
         <receiver
-            android:name=".utils.receivers.VOTDReceiver"
+            android:name=".utils.receivers.VotdReceiver"
             android:enabled="true"
             android:process=":remote" />
 
