@@ -356,7 +356,10 @@
     <string name="nItem">%d Objekt</string>
     <string name="verseSyncOn">Verssynchronisation : AN</string>
     <string name="verseSyncOff">Verssynchronisation : AUS</string>
-
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s und %2$d mehr</string>
+    <string name="onboardDescLanguage">Personalisieren Sie die App in Ihrer Sprache. Sie können dies später jederzeit ändern.</string>
+    <string name="onboardDescTheme">Sie können dies später jederzeit ändern.</string>
+    <string name="onboardDescTranslations">Sie können dies später jederzeit ändern. Sie können weitere Übersetzungen in den Einstellungen herunterladen.</string>
+    <string name="onboardDescReciter">Sie können dies später jederzeit ändern. Weitere Rezitatoren finden Sie in den Einstellungen.</string>
 </resources>
