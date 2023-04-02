@@ -9,6 +9,7 @@ package com.quranapp.android.views.homepage;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -18,6 +19,8 @@ import com.quranapp.android.activities.ActivityProphets;
 import com.quranapp.android.adapters.ADPProphets;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.QuranProphet;
+
+import kotlin.Unit;
 
 public class FeatureProphetsLayout extends HomepageCollectionLayoutBase {
     public FeatureProphetsLayout(@NonNull Context context) {
@@ -54,11 +57,13 @@ public class FeatureProphetsLayout extends HomepageCollectionLayoutBase {
 
     private void refreshFeatured(Context ctx, QuranMeta quranMeta) {
         showLoader();
-        QuranProphet.prepareInstance(getContext(), quranMeta, quranProphet -> {
+        QuranProphet.Companion.prepareInstance(getContext(), quranMeta, quranProphet -> {
             hideLoader();
             ADPProphets prophetsAdapter = new ADPProphets(ctx, Dimen.dp2px(ctx, 300), 10);
             prophetsAdapter.setProphets(quranProphet.getProphets());
             resolveListView().setAdapter(prophetsAdapter);
+
+            return Unit.INSTANCE;
         });
     }
 

@@ -301,4 +301,7 @@
     <string name="strDescVerseNoWithChapter" formatted="false">سوره %1$s، شماره آیه %2$d.</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">نمای صفحه</string>
     <string name="strTitleReaderLayoutStylePageView">نمای صفحه</string>
+
+    <string name="inPlaces">در %s</string>
+    <string name="inPlacesMore">در %1$s و %2$d دیگر</string>
 </resources>

@@ -273,4 +273,7 @@
     <string name="strMsgUpdateAvailable2Continue">ATUALIZAÇÃO NECESSÁRIA!
 \nPor favor, atualize o aplicativo para continuar.</string>
     <string name="strTitleSelectReciter">Selecionar recitador</string>
+
+    <string name="inPlaces">em %s</string>
+    <string name="inPlacesMore">em %1$s e %2$d mais</string>
 </resources>

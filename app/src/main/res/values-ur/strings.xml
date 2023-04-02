@@ -356,4 +356,6 @@
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
     <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔</string>
     <string name="msgScriptCleanup" formatted="false">%s اسکرپٹ اور اس کے تمام ذخیرہ شدہ فونٹس کو حذف کر دیا جائے گا۔ انہیں استعمال کرنے کے لیے آپ کو دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
+    <string name="inPlaces">%s میں</string>
+    <string name="inPlacesMore">%1$s اور %2$d مزید میں</string>
 </resources>

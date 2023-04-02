@@ -4,6 +4,7 @@
 package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
+import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta
 
 object ParserUtils {
@@ -41,8 +42,7 @@ object ParserUtils {
     fun prepareChaptersList(verses: List<String>): List<Int> {
         val chapters = ArrayList<Int>()
         for (verseStr in verses) {
-            val split = verseStr.split(":")
-            val chapterNo = split[0].trim().toInt()
+            val chapterNo = verseStr.split(":")[0].trim().toInt()
             if (!chapters.contains(chapterNo)) {
                 chapters.add(chapterNo)
             }
@@ -53,28 +53,15 @@ object ParserUtils {
     @JvmStatic
     fun prepareChapterText(ctx: Context, quranMeta: QuranMeta, chapters: List<Int>, limit: Int): String {
         val count = chapters.size
-        if (count <= 0) {
-            return ""
-        }
+        if (count == 0) return ""
 
-        val builder = StringBuilder("in ")
-        var i = 0
-        var lastChapterNo = -1
-        for (chapterNo in chapters) {
-            if (lastChapterNo == chapterNo) {
-                continue
-            }
-            lastChapterNo = chapterNo
-            if (i == limit) {
-                builder.append(" & ").append(count - limit).append(" more")
-                break
-            }
-            if (i in 1 until limit && i < count) {
-                builder.append(", ")
-            }
-            builder.append(quranMeta.getChapterName(ctx, chapterNo, "en"))
-            i++
+        val firstNChapters = chapters.subList(0, minOf(count, limit))
+        val inChapters = firstNChapters.joinToString(", ") { quranMeta.getChapterName(ctx, it) }
+
+        return if (count > 2) {
+            ctx.getString(R.string.inPlacesMore, inChapters, count - limit)
+        } else {
+            ctx.getString(R.string.inPlaces, inChapters)
         }
-        return builder.toString()
     }
 }

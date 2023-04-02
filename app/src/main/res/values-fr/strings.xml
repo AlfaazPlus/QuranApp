@@ -356,4 +356,6 @@
     <string name="nothingToCleanup">Il n\'y a rien à effacer.</string>
     <string name="titleChapterInfoCleanup">Effacer l\'info de chapitre \?</string>
     <string name="strPreviewTextTransl">Au Nom d\'Allah, L\'Extremement Miséricordieux, Le Très Miséricordieux</string>
+    <string name="inPlaces">en %s</string>
+    <string name="inPlacesMore">dans %1$s et %2$d de plus</string>
 </resources>

@@ -4,6 +4,13 @@
 
 package com.quranapp.android.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import static java.util.regex.Pattern.DOTALL;
+import static java.util.regex.Pattern.LITERAL;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,16 +23,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.DOTALL;
-import static java.util.regex.Pattern.LITERAL;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -47,6 +49,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import kotlin.Unit;
 
 public class ActivityProphets extends BaseActivity {
     private final Handler mSearchHandler = new Handler(Looper.getMainLooper());
@@ -95,9 +99,11 @@ public class ActivityProphets extends BaseActivity {
     protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
         mBinding = ActivityTopicsBinding.bind(activityView);
 
-        QuranMeta.prepareInstance(this, quranMeta -> QuranProphet.prepareInstance(this, quranMeta, quranProphet -> {
+        QuranMeta.prepareInstance(this, quranMeta -> QuranProphet.Companion.prepareInstance(this, quranMeta, quranProphet -> {
             mQuranProphet = quranProphet;
             initContent(this);
+
+            return Unit.INSTANCE;
         }));
     }
 
@@ -156,7 +162,7 @@ public class ActivityProphets extends BaseActivity {
                     resetAdapter(mQuranProphet.getProphets());
                 } else if (position == 1) {
                     List<QuranProphet.Prophet> sortedByOrder = new ArrayList<>(mQuranProphet.getProphets());
-                    Collections.sort(sortedByOrder, Comparator.comparingInt(o -> o.order));
+                    Collections.sort(sortedByOrder, Comparator.comparingInt(QuranProphet.Prophet::getOrder));
                     resetAdapter(sortedByOrder);
                     Toast.makeText(ActivityProphets.this, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show();
                 }
@@ -176,7 +182,7 @@ public class ActivityProphets extends BaseActivity {
         Pattern pattern = Pattern.compile(query, CASE_INSENSITIVE | LITERAL | DOTALL);
         List<QuranProphet.Prophet> queryProphets = new ArrayList<>();
         for (QuranProphet.Prophet prophet : mQuranProphet.getProphets()) {
-            Matcher matcher = pattern.matcher(prophet.nameTrans + prophet.nameEn + prophet.nameAr);
+            Matcher matcher = pattern.matcher(prophet.getName() + prophet.getNameEn() + prophet.getNameAr());
             if (matcher.find()) {
                 queryProphets.add(prophet);
             }

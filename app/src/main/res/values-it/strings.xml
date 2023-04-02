@@ -301,4 +301,7 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Risultati totali trovati in %1$s: %2$d</string>
     <string name="strMsgUpdateAvailable2Continue">Aggiornamento richiesto!
 \nAggiorna l\'app per continuare.</string>
+
+    <string name="inPlaces">in %s</string>
+    <string name="inPlacesMore">in %1$s e %2$d in più</string>
 </resources>

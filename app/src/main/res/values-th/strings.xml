@@ -32,4 +32,7 @@
     <string name="strLabelChangeNRestart">เปลี่ยนและรีสตาร์ท</string>
     <string name="strLabelSkip">ข้าม</string>
     <string name="strLabelViewAll">ดูทั้งหมด</string>
+
+    <string name="inPlaces">ใน %s</string>
+    <string name="inPlacesMore">ใน %1$s และอีก %2$d</string>
 </resources>

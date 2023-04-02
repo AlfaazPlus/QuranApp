@@ -356,4 +356,7 @@
     <string name="nFiles" formatted="false">%d file</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d font</string>
     <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
+
+    <string name="inPlaces">dalam %s</string>
+    <string name="inPlacesMore">di %1$s dan %2$d lainnya</string>
 </resources>
