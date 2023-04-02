@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="arrOnboardingTitles">
-        <item>Select Language</item>
-        <item>Select Theme</item>
-        <item>Select Translations</item>
-        <item>Select Reciter</item>
+        <item>@string/strTitleAppLanguage</item>
+        <item>@string/strTitleTheme</item>
+        <item>@string/strLabelSelectTranslations</item>
+        <item>@string/strTitleSelectReciter</item>
     </string-array>
 
     <string-array name="arrOnboardingDescs">
-        <item>Personalize the app in your language. You can always change this later.</item>
-        <item>You can always change this later.</item>
-        <item>You can always change this later. You can download more translations from the settings.</item>
-        <item>You can always change this later. You can find more reciters in the settings.</item>
+        <item>@string/onboardDescLanguage</item>
+        <item>@string/onboardDescTheme</item>
+        <item>@string/onboardDescTranslations</item>
+        <item>@string/onboardDescReciter</item>
     </string-array>
 </resources>

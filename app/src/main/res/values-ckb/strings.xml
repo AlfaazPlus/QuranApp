@@ -361,4 +361,9 @@
     <string name="msgChapterInfoCleanup">سەرجەم زانیارییەکانی ئایەتەکان دەسرێتەوە.</string>
     <string name="titleChapterInfoCleanup">سڕینەوەی زانیاری ئایەت؟</string>
     <string name="msgScriptCleanup" formatted="false">%s فۆنتی دابەزێنراو دەسڕێتەوە، کە پێویستە دووبارە دایبەزێنیتەوە بۆ بەکارهێنان.</string>
+    <string name="onboardDescLanguage">بەرنامەکە بەکاربهێنە بەزمانی دڵخوازی خۆت، ئەتوانی دواتر لە رێکخستنەکاندا ئەمە بگۆڕیت</string>
+    <string name="onboardDescTheme">ئەتوانی دواتر ڕووکار بگۆڕیت</string>
+    <string name="onboardDescTranslations">ئەتوانی دواتر ئەمە بگۆڕیت، لەبەشی ڕێکخستن وەرگێڕانی زیاتر بەردەستە بۆ دابەزاندن</string>
+    <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا</string>
+
 </resources>
