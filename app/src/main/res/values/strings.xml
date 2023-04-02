@@ -245,8 +245,7 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
-    <string
-        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
@@ -362,7 +361,6 @@
     <string name="onboardDescTheme">You can always change this later.</string>
     <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
-
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>

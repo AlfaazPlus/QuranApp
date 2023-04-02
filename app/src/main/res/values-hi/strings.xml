@@ -328,7 +328,7 @@
     <string name="msgAlarmManagerNotAvailable">इस डिवाइस पर अलार्म मैनेजर उपलब्ध नहीं है।</string>
     <string name="msgVerseReminderNotifPermission">आयात रिमाइंडर को इनैबल करने के लिए अधिसूचना अनुमति की आवश्यकता है।</string>
     <string name="translationCanBeFreedUp" formatted="false">%d डाउनलोड किए गए अनुवादों को मुक्त किया जा सकता है।</string>
-    <string name="recitationCanBeFreedUp" formatted="false">%2$d रिकिटर्स के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d क़ारी के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
     <string name="storageCleanupMessage">अप्रयुक्त डाउनलोड किए गए संसाधनों को हटाकर जगह खाली करे। यह किसी भी बुकमार्क या सेटिंग्स को नहीं हटाएगा।
 \n
 \nनिम्नलिखित संसाधनों को मुक्त किया जा सकता है:</string>
