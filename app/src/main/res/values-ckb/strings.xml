@@ -23,7 +23,7 @@
     <string name="strTitleFilters">جیاکردنەوە</string>
     <string name="strTitleResetReaderSettings">ڕێکخستنەوەی قورئانخوێنەکان؟</string>
     <string name="strTitleTafsir">تەفسیر</string>
-  <string name="strTitleSelectTafsir">تەفسیرەکان</string>
+    <string name="strTitleSelectTafsir">تەفسیرەکان</string>
     <string name="strTitleRecitations">قورئانخوێنەکان</string>
     <string name="strTitleBookmarkDeleteThis">لابردنی ئەم نیشانەکراوە؟</string>
     <string name="strTitleBookmarkDeleteAll">لابردنی سەرجەم نیشانەکراوەکان؟</string>
@@ -258,10 +258,10 @@
     <string name="strMsgSearchWordPart">گەڕان بۆ بەشێکی ووشەکە</string>
     <string name="strMsgSearchArabic">گەڕان لە دەقی عەرەبیدا</string>
     <string name="strMsgProphetsOrder">پیشاندانی ناوی پێغەمبەران بە ڕێکوپێکی</string>
-    <string name="strMsgTranslLoadFailed">ناتوانرێ لیستی وەرگێڕانەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە</string>
+    <string name="strMsgTranslLoadFailed">ناتوانرێ لیستی وەرگێڕانەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە.</string>
     <string name="strMsgTranslNoDownloadsAvailable">هیچ داگرتنێک بەردەست نییە</string>
-    <string name="strMsgTranslSelectionLimit" formatted="false">زۆرترین رێژەی وەرگێڕان %d دانە لەیەک کاتدا ئەتوانرێ چالاک بکرێت، تکایە دانەیەک ناچالاک بکە لەکاتی کاراکردنی دانەیەکی نوێدا</string>
-    <string name="strMsgRecitationsLoadFailed">ناتوانرێت لیستی قورئانخوێنەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">زۆرترین رێژەی وەرگێڕان %d دانە لەیەک کاتدا ئەتوانرێ چالاک بکرێت، تکایە دانەیەک ناچالاک بکە لەکاتی کاراکردنی دانەیەکی نوێدا.</string>
+    <string name="strMsgRecitationsLoadFailed">ناتوانرێت لیستی قورئانخوێنەکان بکرێتەوە لەڕێی سێرڤەرەوە، تکایە دواتر دووبارە هەوڵبدەرەوە.</string>
     <string name="strMsgRecitationsNoAvailable">هیچ قورئانخوێنێک بەردەست نییە</string>
     <string name="strMsgTafsirsNoAvailable">هیچ تەفسیرێک بەردەست نییە</string>
     <string name="strDescVerseNoWithChapter" formatted="false">سورەتی %1$s، ئایەتی ژمارە %2$d.</string>
@@ -307,8 +307,8 @@
     <string name="translationCanBeFreedUp" formatted="false">%d وەرگێڕانی داگیراو ئەتوانرێ بسڕێتەوە.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d فایلی دەنگی پاشەکەوتکراو لە %2$d ئەتوانرێ بسڕێتەوە.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d فایلە دابەزێنراوەکان و فۆنتەکانیان ئەتوانرێ بسڕێتەوە.</string>
-    <string name="tafseerCanBeFreedUp" formatted="false">%d تەفسیری هەڵگیراو ئەتوانرێ بسڕێتەوە</string>
-    <string name="msgTafsirCleanup" formatted="false">سەرجەم بەشەکانی تەفسیری %s ئەسڕێنەوە</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d تەفسیری هەڵگیراو ئەتوانرێ بسڕێتەوە.</string>
+    <string name="msgTafsirCleanup" formatted="false">سەرجەم بەشەکانی تەفسیری %s ئەسڕێنەوە.</string>
     <string name="titleTafsirCleanup">سڕینەوەی تەفسیر؟</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">خوێندنەوەی تەفسیری ئایەتی %d</string>
     <string name="titleChapterInfo">زانیاری بەش</string>
@@ -361,11 +361,10 @@
     <string name="msgChapterInfoCleanup">سەرجەم زانیارییەکانی ئایەتەکان دەسرێتەوە.</string>
     <string name="titleChapterInfoCleanup">سڕینەوەی زانیاری ئایەت؟</string>
     <string name="msgScriptCleanup" formatted="false">%s فۆنتی دابەزێنراو دەسڕێتەوە، کە پێویستە دووبارە دایبەزێنیتەوە بۆ بەکارهێنان.</string>
-    <string name="onboardDescLanguage">بەرنامەکە بەکاربهێنە بەزمانی دڵخوازی خۆت، ئەتوانی دواتر لە رێکخستنەکاندا ئەمە بگۆڕیت</string>
-    <string name="onboardDescTheme">ئەتوانی دواتر ڕووکار بگۆڕیت</string>
-    <string name="onboardDescTranslations">ئەتوانی دواتر ئەمە بگۆڕیت، لەبەشی ڕێکخستن وەرگێڕانی زیاتر بەردەستە بۆ دابەزاندن</string>
-    <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا</string>
-
+    <string name="onboardDescLanguage">بەرنامەکە بەکاربهێنە بەزمانی دڵخوازی خۆت، ئەتوانی دواتر لە رێکخستنەکاندا ئەمە بگۆڕیت.</string>
+    <string name="onboardDescTheme">ئەتوانی دواتر ڕووکار بگۆڕیت.</string>
+    <string name="onboardDescTranslations">ئەتوانی دواتر ئەمە بگۆڕیت، لەبەشی ڕێکخستن وەرگێڕانی زیاتر بەردەستە بۆ دابەزاندن.</string>
+    <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا.</string>
     <string name="inPlaces">بە %s</string>
     <string name="inPlacesMore">لە %1$s و %2$d زیاتر</string>
 </resources>

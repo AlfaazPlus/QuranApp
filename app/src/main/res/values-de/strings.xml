@@ -362,4 +362,10 @@
     <string name="onboardDescTheme">Sie können dies später jederzeit ändern.</string>
     <string name="onboardDescTranslations">Sie können dies später jederzeit ändern. Sie können weitere Übersetzungen in den Einstellungen herunterladen.</string>
     <string name="onboardDescReciter">Sie können dies später jederzeit ändern. Weitere Rezitatoren finden Sie in den Einstellungen.</string>
+    <string name="noFootnotesForThisVerse">Für diesen Vers gibt es keine Fußnoten.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Lesen Sie den Tafsir des Verses %d</string>
+    <string name="strTitleSelectTafsir">Tafsir auswählen</string>
+    <string name="strMsgTafsirsNoAvailable">Keine Tafsirs verfügbar</string>
+    <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Tafsir von %s werden gelöscht.</string>
+    <string name="titleTafsirCleanup">Tafsir löschen\?</string>
 </resources>

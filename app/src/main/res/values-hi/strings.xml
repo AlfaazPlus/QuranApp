@@ -328,7 +328,7 @@
     <string name="msgAlarmManagerNotAvailable">इस डिवाइस पर अलार्म मैनेजर उपलब्ध नहीं है।</string>
     <string name="msgVerseReminderNotifPermission">आयात रिमाइंडर को इनैबल करने के लिए अधिसूचना अनुमति की आवश्यकता है।</string>
     <string name="translationCanBeFreedUp" formatted="false">%d डाउनलोड किए गए अनुवादों को मुक्त किया जा सकता है।</string>
-    <string name="recitationCanBeFreedUp" formatted="false">%2$d रिकिटर्स के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d क़ारी के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
     <string name="storageCleanupMessage">अप्रयुक्त डाउनलोड किए गए संसाधनों को हटाकर जगह खाली करे। यह किसी भी बुकमार्क या सेटिंग्स को नहीं हटाएगा।
 \n
 \nनिम्नलिखित संसाधनों को मुक्त किया जा सकता है:</string>
@@ -356,7 +356,12 @@
     <string name="nFiles" formatted="false">%d फ़ाइलें</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d स्क्रिप्ट और %2$d फ़ॉन्ट</string>
     <string name="nothingToCleanup">साफ करने के लिए कुछ भी नहीं है।</string>
-
     <string name="inPlaces">%s में</string>
     <string name="inPlacesMore">%1$s और %2$d अधिक में</string>
+    <string name="noFootnotesForThisVerse">इस आयत के लिए कोई पादटिप्पणी नहीं है।</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">आयत %d की तफ़सीर पढ़ें</string>
+    <string name="strTitleSelectTafsir">तफ़सीर का चयन करें</string>
+    <string name="strMsgTafsirsNoAvailable">कोई तफ़सीर उपलब्ध नहीं है</string>
+    <string name="msgTafsirCleanup" formatted="false">%s के सभी संगृहीत तफ़सीर मिटा दिए जाएँगे।</string>
+    <string name="titleTafsirCleanup">तफ़सीर मिटाएं\?</string>
 </resources>
