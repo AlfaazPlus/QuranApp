@@ -41,8 +41,7 @@ object ParserUtils {
     fun prepareChaptersList(verses: List<String>): List<Int> {
         val chapters = ArrayList<Int>()
         for (verseStr in verses) {
-            val split = verseStr.split(":")
-            val chapterNo = split[0].trim().toInt()
+            val chapterNo = verseStr.split(":")[0].trim().toInt()
             if (!chapters.contains(chapterNo)) {
                 chapters.add(chapterNo)
             }
