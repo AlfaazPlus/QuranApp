@@ -356,4 +356,7 @@
     <string name="nFiles" formatted="false">%d archivos</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts y %2$d fuentes</string>
     <string name="nothingToCleanup">No hay nada que limpiar.</string>
+
+    <string name="inPlaces">En %s</string>
+    <string name="inPlacesMore">en %1$s y %2$d más</string>
 </resources>

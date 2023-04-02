@@ -25,7 +25,7 @@ object QuranProphetParser {
     private const val PROPHETS_ATTR_ORDER = "order"
     private const val PROPHETS_ATTR_NAME_AR = "name-ar"
     private const val PROPHETS_ATTR_NAME_EN = "name-en"
-    private const val PROPHETS_ATTR_NAME = "name-trans"
+    private const val PROPHETS_ATTR_NAME = "name"
     private const val PROPHETS_ATTR_HONORIFIC = "honorific"
     private const val PROPHETS_ATTR_ICON_RES = "drawable"
 

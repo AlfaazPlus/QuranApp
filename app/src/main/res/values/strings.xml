@@ -356,6 +356,8 @@
     <string name="nItems" formatted="false">%d items</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
+    <string name="inPlaces">in %s</string>
+    <string name="inPlacesMore">in %1$s &amp; %2$d more</string>
 
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
     <string name="onboardDescTheme">You can always change this later.</string>
