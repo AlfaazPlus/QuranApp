@@ -355,5 +355,4 @@
     <string name="msgScriptCleanup" formatted="false">%s സ്‌ക്രിപ്റ്റും അതിന്റെ സംഭരിച്ചിരിക്കുന്ന എല്ലാ ഫോണ്ടുകളും ഇല്ലാതാക്കപ്പെടും. അവ ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
     <string name="github">ഗിറ്റ്ഹബ്</string>
     <string name="inPlaces">%s-ൽ</string>
-    <string name="inPlacesMore"></string>
 </resources>
