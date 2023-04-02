@@ -10,6 +10,7 @@
     <string-array name="availableLocalesNames">
         <item>@string/strLabelSystemDefault</item>
         <item>English</item>
+        <item>العربية</item>
         <item>বাংলা</item>
         <item>کوردی</item>
         <item>Deutsch</item>
@@ -27,6 +28,7 @@
     <string-array name="availableLocalesValues">
         <item>default</item>
         <item>en</item>
+        <item>ar</item>
         <item>bn</item>
         <item>ckb</item>
         <item>de</item>

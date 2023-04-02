@@ -12,4 +12,5 @@
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp"
     android:textSize="@dimen/dmnCommonSize1_5"
+    android:textAlignment="viewStart"
     app:drawableStartDimen="20dp" />

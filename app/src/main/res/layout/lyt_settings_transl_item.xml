@@ -7,10 +7,9 @@
     android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="1dp"
     android:background="@drawable/dr_bg_hover_cornered"
-    android:gravity="center"
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp"
     android:textAppearance="@style/TextAppearanceCommonTitle"
+    app:peaceComp_direction="textStart"
     app:peaceComp_spaceBetween="15dp"
-    app:peaceComp_subTextAppearance="@style/SubTextAppearanceThin"
-    app:peaceComp_textGravity="left" />
+    app:peaceComp_subTextAppearance="@style/SubTextAppearanceThin" />

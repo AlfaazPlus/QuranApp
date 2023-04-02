@@ -32,6 +32,7 @@ import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -160,7 +161,7 @@ public class ADPBookmark extends RecyclerView.Adapter<ADPBookmark.VHBookmark> {
             mBinding.thumb.setSelected(isSelected);
 
             if (!isSelected) {
-                mBinding.chapterNo.setText(String.valueOf(model.getChapterNo()));
+                mBinding.chapterNo.setText(String.format(Locale.getDefault(), "%d", model.getChapterNo()));
             }
 
             String chapterName = mQuranMetaRef.get().getChapterName(itemView.getContext(), model.getChapterNo(), true);
