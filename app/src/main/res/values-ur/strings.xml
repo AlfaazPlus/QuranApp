@@ -358,4 +358,10 @@
     <string name="msgScriptCleanup" formatted="false">%s اسکرپٹ اور اس کے تمام ذخیرہ شدہ فونٹس کو حذف کر دیا جائے گا۔ انہیں استعمال کرنے کے لیے آپ کو دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
     <string name="inPlaces">%s میں</string>
     <string name="inPlacesMore">%1$s اور %2$d مزید میں</string>
+    <string name="noFootnotesForThisVerse">اس آیت کے لیے کوئی حاشیہ نہیں ہے۔</string>
+    <string name="strTitleSelectTafsir">تفسیر منتخب کریں</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">آیت %d کی تفسیر پڑھیں</string>
+    <string name="titleTafsirCleanup">تفسیر کو حذف کریں؟</string>
+    <string name="msgTafsirCleanup" formatted="false">%s کے تمام ذخیرہ شدہ تفسیر کو حذف کر دیا جائے گا۔</string>
+    <string name="strMsgTafsirsNoAvailable">کوئی تفسیر دستیاب نہیں</string>
 </resources>
