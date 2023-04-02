@@ -1,57 +1,57 @@
-Die QuranApp erleichtert das tägliche Lesen des Quran zu jeder Zeit und an jedem Ort. Ihr einfach zu navigierendes und übersichtliches Design hilft Benutzern, die Schwierigkeiten beim Lesen des Korans in der Zeit der Technologie zu überwinden. Diese App verfügt über mehr als 15 Übersetzungen in mehrere Sprachen, damit Menschen verschiedener Sprachen und Regionen den Zweck des Korans verstehen können.
+Die QuranApp ist eine werbefreie und datenschutzorientierte mobile Anwendung, die das tägliche Lesen und Erkunden des Heiligen Korans zu jeder Zeit und an jedem Ort erleichtert. Das einfach zu navigierende und übersichtliche Design hilft Benutzern die Schwierigkeiten beim Lesen des Korans in der Zeit der Technologie zu überwinden. Diese App hat mehr als 20 Übersetzungen in mehrere Sprachen, so dass Menschen verschiedener Sprachen und Regionen den Zweck des Korans verstehen können.
 
 ~~~~~~~
 
-<h3>Features:</h3>
+<h3>Eigenschaften:</h3>
 
 Die folgenden Funktionen sind der Grund, warum Sie die QuranApp verwenden sollten.
 
-<b>🛡️ Pure</b>
+<b>🛡️ Rein</b>
 
-- Open source
-- Keine Werbung oder Käufe
-- Keine Zugriffsberechtigung auf die Telefoniefunktion
-- Keine Analytics oder Tracking
-- Keine Datenerfassung oder -weitergabe
+- Open Source
+- Keine Anzeigen oder Käufe
+- Es ist keine Telefonerlaubnis erforderlich
+- Keine Analyse oder Nachverfolgung
+- Keine Datenerfassung oder Weitergabe
 
 <b>📙 Übersetzungen</b>
 
-- 15+ Übersetzungen
-- Mehrere Übersetzungen gemeinsam lesen
-- Schnelle Vorschau der Fußnoten
-- Schnelle Vorschau der Versverweise
+- 20+ Übersetzungen
+- Lesen Sie mehrere Übersetzungen zusammen
+- Schnelle Vorschau von Fußnoten
+- Schnelle Vorschau von Versreferenzen
 
 <b>🎙️ Rezitationen</b>
 
 - 15+ Rezitationen
 - Einzelne Strophe wiederholen
-- Strophenbereich abspielen
-- Kontinuierliche Wiedergabe der Rezitation
-- Automatisches Blättern zur aktuellen Strophe
+- Versbereich spielen
+- Rezitation kontinuierlich abspielen
+- Automatisches Scrollen, um dem aktuellen Vers zu entsprechen
 
-<b>🎨 Fonts</b>
+<b>🎨 Schriftarten</b>
 
 - Mehrere Schriftarten (Uthmani, Indopak und KFQPC)
-- Anpassen der arabischen Textgröße
-- Anpassen der Textgröße der Übersetzung
+- Passen Sie die arabische Textgröße an
+- Passen Sie die Größe des Übersetzungstextes an
 
 <b>⚙ Layout</b>
 
 - Lesen im Übersetzungsmodus
 - Lesen im Seitenmodus
-- Lesen des Korans in verschiedenen Übersetzungsmodi (einzelner Vers, Versbereich, ganzes Kapitel, ganzes Juz)
+- Lesen Sie den Koran in verschiedenen Übersetzungsmodi (einzelner Vers, Versbereich, ganzes Kapitel, ganzen Bereich)
 
 <b>➡️ Navigation</b>
 
-- Bequeme Navigation im Einzelversmodus
-- Schnelles Springen zu einem beliebigen Vers
-- Schnelles Springen zu einem beliebigen Kapitel
-- Schnelles Springen zu einem beliebigen Juz
+- Bequeme Navigation im Einzelvers-Modus
+- Springen Sie schnell zu einem beliebigen Vers
+- Springen Sie schnell zu einem beliebigen Kapitel
+- Springe schnell zu einem beliebigen Bereich
 
-<b>❤️ Inhalte aus dem Qur'an</b>
+<b>❤️ Inhalte aus dem Koran</b>
 
-- Themen aus dem Qur'an
-- Duas aus dem Qur'an
+- Themen aus dem Koran
+- Gebete aus dem Koran
 - Im Koran erwähnte Propheten
 
 <b>🔍 Suche</b>
@@ -59,21 +59,21 @@ Die folgenden Funktionen sind der Grund, warum Sie die QuranApp verwenden sollte
 - Erweiterte Suche
 - Sprachsuche
 - Suchverlauf
-- Einfaches Navigieren zu jeder Übersetzung in den Suchergebnissen
+- Navigieren Sie einfach zu jeder Übersetzung in den Suchergebnissen
 - Suche nach ganzen Wörtern oder Wortteilen
 
 <b>📌 Lesezeichen</b>
 
-- Lesezeichen für Verse für später
-- Einzelne Strophe als Lesezeichen speichern
-- Lesezeichen für einen Versbereich
-- Benutzerdefinierte Notizen zu Lesezeichen hinzufügen
+- Vers-Lesezeichen für später
+- Lesezeichen für einzelne Verse
+- Setzen Sie ein Lesezeichen für einen Versbereich
+- Fügen Sie benutzerdefinierte Notizen zu Lesezeichen hinzu
 
-<b>🔥 Weitere Features</b>
+<b>🔥 Weitere Funktionen</b>
 
-- Vers des Tages - Erinnerung
-- Erweiterte Freigabe
+- Vers der Tages
+- Erweitertes Teilen
 - Dunkle und helle Themen
 - Unterstützung mehrerer Sprachen
 
-<i>🐞 Um einen Fehler zu melden oder eine neue Funktion anzufordern, besuchen Sie bitte das <a href='https://github.com/AlfaazPlus/QuranApp'>Github-Repository</a>.</i>
+<i>🐞 Um ein Problem zu melden oder eine neue Funktion anzufordern, besuchen Sie bitte das GitHub-Repository unter <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
