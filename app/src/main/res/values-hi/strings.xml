@@ -362,4 +362,10 @@
     <string name="onboardDescTheme">आप इसे बाद में कभी भी बदल सकते हैं।</string>
     <string name="onboardDescTranslations">आप इसे बाद में कभी भी बदल सकते हैं। आप सेटिंग से और अनुवाद डाउनलोड कर सकते हैं।</string>
     <string name="onboardDescReciter">आप इसे बाद में कभी भी बदल सकते हैं। आप सेटिंग में और अधिक क़ारी पा सकते हैं।</string>
+    <string name="noFootnotesForThisVerse">इस आयत के लिए कोई पादटिप्पणी नहीं है।</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">आयत %d की तफ़सीर पढ़ें</string>
+    <string name="strTitleSelectTafsir">तफ़सीर का चयन करें</string>
+    <string name="strMsgTafsirsNoAvailable">कोई तफ़सीर उपलब्ध नहीं है</string>
+    <string name="msgTafsirCleanup" formatted="false">%s के सभी संगृहीत तफ़सीर मिटा दिए जाएँगे।</string>
+    <string name="titleTafsirCleanup">तफ़सीर मिटाएं\?</string>
 </resources>
