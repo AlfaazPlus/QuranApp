@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="arrOnboardingTitles">
-        <item>Select Language</item>
-        <item>Select Theme</item>
-        <item>Select Translations</item>
-        <item>Select Reciter</item>
+        <item>Sprache auswählen</item>
+        <item>Thema auswählen</item>
+        <item>Übersetzungen auswählen</item>
+        <item>Rezitator auswählen</item>
     </string-array>
 
     <string-array name="arrOnboardingDescs">
-        <item>Personalize the app in your language. You can always change this later.</item>
-        <item>You can always change this later.</item>
-        <item>You can always change this later. You can download more translations from the settings.</item>
-        <item>You can always change this later. You can find more reciters in the settings.</item>
+        <item>Personalisieren Sie die App in Ihrer Sprache. Sie können dies später jederzeit ändern.</item>
+        <item>Sie können dies später jederzeit ändern.</item>
+        <item>Sie können dies später jederzeit ändern. Sie können weitere Übersetzungen in den Einstellungen herunterladen.</item>
+        <item>Sie können dies später jederzeit ändern. Weitere Rezitatoren finden Sie in den Einstellungen.</item>
     </string-array>
 </resources>
