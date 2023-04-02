@@ -358,6 +358,10 @@
     <string name="nothingToCleanup">साफ करने के लिए कुछ भी नहीं है।</string>
     <string name="inPlaces">%s में</string>
     <string name="inPlacesMore">%1$s और %2$d अधिक में</string>
+    <string name="onboardDescLanguage">ऐप को अपनी भाषा में वैयक्तिकृत करें। आप इसे बाद में कभी भी बदल सकते हैं।</string>
+    <string name="onboardDescTheme">आप इसे बाद में कभी भी बदल सकते हैं।</string>
+    <string name="onboardDescTranslations">आप इसे बाद में कभी भी बदल सकते हैं। आप सेटिंग से और अनुवाद डाउनलोड कर सकते हैं।</string>
+    <string name="onboardDescReciter">आप इसे बाद में कभी भी बदल सकते हैं। आप सेटिंग में और अधिक क़ारी पा सकते हैं।</string>
     <string name="noFootnotesForThisVerse">इस आयत के लिए कोई पादटिप्पणी नहीं है।</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">आयत %d की तफ़सीर पढ़ें</string>
     <string name="strTitleSelectTafsir">तफ़सीर का चयन करें</string>
