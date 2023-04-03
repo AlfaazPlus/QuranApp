@@ -126,7 +126,7 @@ class TranslationDownloadService : Service() {
 
                 val responseBody = RetrofitInstance.github.getTranslation(bookInfo.downloadPath)
 
-                val byteStream = responseBody.byteStream()
+                val byteStream = responseBody.byteStream().buffered()
                 val totalBytes = byteStream.available()
                 val tmpFile = kotlin.io.path.createTempFile(
                     prefix = bookInfo.slug,
@@ -134,8 +134,8 @@ class TranslationDownloadService : Service() {
                 )
 
                 byteStream.use { inS ->
-                    tmpFile.outputStream().use { outS ->
-                        val buffer = ByteArray(8192)
+                    tmpFile.outputStream().buffered().use { outS ->
+                        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                         var progressBytes = 0L
 
                         while (true) {

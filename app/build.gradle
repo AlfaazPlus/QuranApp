@@ -104,6 +104,7 @@ dependencies {
     implementation libs.androidx.webkit
     implementation libs.androidx.media
     implementation libs.androidx.browser
+    implementation libs.androidx.exoplayer
 
     coreLibraryDesugaring libs.desugaring
     implementation libs.material
