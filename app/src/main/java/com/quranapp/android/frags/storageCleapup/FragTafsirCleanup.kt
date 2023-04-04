@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quranapp.android.R
-import com.quranapp.android.adapters.storageCleanup.ADPRecitationCleanup
 import com.quranapp.android.adapters.storageCleanup.ADPTafsirCleanup
-import com.quranapp.android.components.storageCleanup.RecitationCleanupItemModel
 import com.quranapp.android.components.storageCleanup.TafsirCleanupItemModel
 import com.quranapp.android.databinding.FragStorageCleanupBinding
-import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FragTafsirCleanup : FragStorageCleanupBase() {
     private lateinit var fileUtils: FileUtils
@@ -42,10 +40,10 @@ class FragTafsirCleanup : FragStorageCleanupBase() {
     private fun init(binding: FragStorageCleanupBinding) {
         binding.loader.visibility = View.VISIBLE
 
-        CoroutineScope(Dispatchers.IO).launch {
-            TafsirManager.prepare(binding.root.context, false) {
-                val tafsirItems = ArrayList<TafsirCleanupItemModel>()
+        TafsirManager.prepare(binding.root.context, false) {
+            val tafsirItems = ArrayList<TafsirCleanupItemModel>()
 
+            CoroutineScope(Dispatchers.IO).launch {
                 fileUtils.tafsirDir.listFiles()?.filter { it.isDirectory }
                     ?.forEach { tafsirDir ->
                         val downloadsCount = tafsirDir.listFiles()?.filter { it.isFile }?.size ?: 0
@@ -63,7 +61,7 @@ class FragTafsirCleanup : FragStorageCleanupBase() {
                         }
                     }
 
-                CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Main) {
                     populateReciters(binding, tafsirItems)
                 }
             }

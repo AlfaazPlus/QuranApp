@@ -22,6 +22,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.databinding.ActivityTafsirBinding
@@ -52,6 +53,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
     private lateinit var fileUtils: FileUtils
     private lateinit var pageAlert: PageAlert
     private lateinit var jsInterface: TafsirJsInterface
+
+    lateinit var tafsirInfoModel: TafsirInfoModel
 
     var tafsirKey: String? = null
     var chapterNo = 0
@@ -135,8 +138,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
     }
 
     private fun resolveTextDirection(): String {
-        val model = TafsirManager.getModel(tafsirKey!!)!!
-        return if (TextUtils.getLayoutDirectionFromLocale(Locale(model.langCode)) == View.LAYOUT_DIRECTION_RTL) "rtl" else "ltr"
+        val directionFromLocale = TextUtils.getLayoutDirectionFromLocale(Locale(tafsirInfoModel.langCode))
+        return if (directionFromLocale == View.LAYOUT_DIRECTION_RTL) "rtl" else "ltr"
     }
 
     private fun initContent(intent: Intent) {
@@ -158,6 +161,14 @@ class ActivityTafsir : ReaderPossessingActivity() {
             return
         }
 
+        val model = TafsirManager.getModel(key)
+
+        if (model == null) {
+            fail("Failed to load tafsir.", false)
+            return
+        }
+
+        this.tafsirInfoModel = model
         this.tafsirKey = key
         this.chapterNo = chapterNo
         this.verseNo = verseNo
@@ -225,7 +236,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        header.tafsirTitle.text = TextUtils.concat(TafsirUtils.getTafsirName(tafsirKey), "\n", chapterInfo)
+        header.tafsirTitle.text = TextUtils.concat(tafsirInfoModel.name, "\n", chapterInfo)
     }
 
     private fun loadContent() {

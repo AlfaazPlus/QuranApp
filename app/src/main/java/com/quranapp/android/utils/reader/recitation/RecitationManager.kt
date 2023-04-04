@@ -5,6 +5,7 @@ import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.recitation.AvailableRecitationsModel
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
@@ -24,7 +25,7 @@ object RecitationManager {
         force: Boolean,
         readyCallback: () -> Unit
     ) {
-        if (!force && availableRecitationsModel != null) {
+        if (!force && availableRecitationsModel != null && availableRecitationsModel!!.reciters.isNotEmpty()) {
             readyCallback()
             return
         }
@@ -55,14 +56,15 @@ object RecitationManager {
                         postRecitationsLoad(ctx, stringData, callback)
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.saveError(e)
+
                     withContext(Dispatchers.Main) {
                         callback(null)
                     }
                 }
             }
         } else {
-            if (!recitationsFile.exists()) {
+            if (recitationsFile.length() == 0L) {
                 loadRecitations(ctx, true, callback)
                 return
             }

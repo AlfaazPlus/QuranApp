@@ -107,8 +107,11 @@ public class RecitationUtils {
                     slug = models.get(0).getSlug();
                 }
             }
-
-            callback.onReady(RecitationManager.getModel(slug));
+            if (!TextUtils.isEmpty(slug)) {
+                callback.onReady(RecitationManager.getModel(slug));
+            } else {
+                callback.onReady(null);
+            }
 
             return Unit.INSTANCE;
         });

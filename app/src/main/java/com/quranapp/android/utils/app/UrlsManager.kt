@@ -47,7 +47,7 @@ class UrlsManager(private val ctx: Context) {
             return
         }
 
-        val urlsFile = File(mFileUtils.makeAndGetAppResourceDir(DIR_NAME_4_URLS), URLS_FILE_NAME)
+        val urlsFile = File(FileUtils.makeAndGetAppResourceDir(DIR_NAME_4_URLS), URLS_FILE_NAME)
         val forceUrlsDownload = SPAppActions.getFetchUrlsForce(ctx)
 
         if (!forceUrlsDownload && urlsFile.exists() && urlsFile.length() > 0) {
