@@ -8,7 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.quranapp.android.views.reader.RecitationPlayer;
+import com.quranapp.android.views.recitation.RecitationPlayer;
+
 
 public class RecitationPlayerReceiver extends BroadcastReceiver {
     public static final String ACTION_STOP = "RecitationPlayer.action.stop";

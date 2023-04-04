@@ -1,14 +1,13 @@
 package com.quranapp.android.views.recitation
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -18,6 +17,7 @@ import java.util.*
 class RecitationPlayerVerseLoader {
     private val callbacks = HashMap<String, RecitationPlayerVerseLoadCallback?>()
     private val jobs = HashMap<String, Job>()
+    private val handler = Handler(Looper.getMainLooper())
 
     fun addTask(
         verseFile: File,
@@ -87,16 +87,18 @@ class RecitationPlayerVerseLoader {
                 it.printStackTrace()
                 emit(VerseLoadFlow.Failed(it, verseFile))
             }.collect {
-                when (it) {
-                    is VerseLoadFlow.Progress -> {
-                        callback?.onProgress(String.format(Locale.getDefault(), "%d%%", it.progress))
-                    }
-                    is VerseLoadFlow.Failed -> {
-                        it.e.printStackTrace()
-                        publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, false, it.e)
-                    }
-                    is VerseLoadFlow.Loaded -> {
-                        publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, true, null)
+                handler.post {
+                    when (it) {
+                        is VerseLoadFlow.Progress -> {
+                            callback?.onProgress(String.format(Locale.getDefault(), "%d%%", it.progress))
+                        }
+                        is VerseLoadFlow.Failed -> {
+                            it.e.printStackTrace()
+                            publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, false, it.e)
+                        }
+                        is VerseLoadFlow.Loaded -> {
+                            publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, true, null)
+                        }
                     }
                 }
             }
@@ -137,7 +139,7 @@ class RecitationPlayerVerseLoader {
     }
 
     fun isPending(reciter: String, chapterNo: Int, verseNo: Int): Boolean {
-        return !jobs.containsKey(makeKey(reciter, chapterNo, verseNo))
+        return jobs.containsKey(makeKey(reciter, chapterNo, verseNo))
     }
 
     fun addCallback(reciter: String, chapterNo: Int, verseNo: Int, callback: RecitationPlayerVerseLoadCallback?) {

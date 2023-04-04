@@ -39,7 +39,7 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.views.reader.RecitationPlayer;
+import com.quranapp.android.views.recitation.RecitationPlayer;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
@@ -85,7 +85,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     @Override
-    protected void setupContentView(@NonNull LinearLayout dialogLayout, PeaceBottomSheetParams params) {
+    protected void setupContentView(@NonNull LinearLayout dialogLayout, @NonNull PeaceBottomSheetParams params) {
         if (mActivity == null || mVerse == null) {
             return;
         }
@@ -174,8 +174,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     private void onVerseRecite(RecitationPlayer player) {
-        final int chapterNo = player.P().getCurrChapterNo();
-        final int verseNo = player.P().getCurrVerseNo();
+        final int chapterNo = player.p().getCurrentChapterNo();
+        final int verseNo = player.p().getCurrentVerseNo();
         onVerseRecite(chapterNo, verseNo, player.isPlaying());
     }
 

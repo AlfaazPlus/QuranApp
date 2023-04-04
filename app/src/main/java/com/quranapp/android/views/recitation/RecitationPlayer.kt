@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.exoplayer.ExoPlayer
@@ -23,7 +24,6 @@ import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytRecitationPlayerBinding
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.suppliments.recitation.RecitationMenu
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
@@ -36,13 +36,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 @SuppressLint("ViewConstructor")
-class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activity) {
+class RecitationPlayer(internal val activity: ActivityReader) : FrameLayout(activity) {
     private val MILLIS_MULTIPLIER = 100
     private val SEEK_LEFT = -1
     private val SEEK_RIGHT = 1
 
     internal val binding = LytRecitationPlayerBinding.inflate(LayoutInflater.from(context), this, true)
-    private val menu = RecitationMenu(this)
+    private val menu = RecitationPlayerMenu(this)
 
     internal var params = RecitationPlayerParams()
     private val verseLoadCallback = RecitationPlayerVerseLoadCallback(this)
@@ -92,15 +92,15 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
         super.onRestoreInstanceState(state.superState)
         params = state.params
 
-        /*if (params.lastMediaURI != null) {
+        if (params.lastMediaURI != null && params.currentReciter != null) {
             prepareMediaPlayer(
-                params.lastMediaURI,
-                params.currentReciter,
+                params.lastMediaURI!!,
+                params.currentReciter!!,
                 params.currentChapterNo,
                 params.currentVerseNo,
                 params.previouslyPlaying
             )
-        }*/
+        }
     }
 
     fun destroy() {
@@ -110,6 +110,51 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
         // showNotification(RecitationPlayerReceiver.ACTION_STOP)
     }
 
+
+    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
+        readerChanging = true
+        params.currentVerse = Pair(chapterNo, fromVerse)
+        params.firstVerse = Pair(chapterNo, fromVerse)
+        params.lastVerse = Pair(chapterNo, toVerse)
+
+        onReaderChanged()
+
+        binding.verseSync.imageAlpha = if (activity.mReaderParams.isSingleVerse) 0 else 255
+        binding.verseSync.isEnabled = !activity.mReaderParams.isSingleVerse
+    }
+
+    fun onJuzChanged(juzNo: Int) {
+        readerChanging = true
+
+        val quranMeta = activity.mQuranMetaRef.get()
+        val (firstChapter, lastChapter) = quranMeta.getChaptersInJuz(juzNo)
+        val firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).first
+        val (_, lastVerse) = quranMeta.getVerseRangeOfChapterInJuz(juzNo, lastChapter)
+
+        params.firstVerse = Pair(firstChapter, firstVerse)
+        params.lastVerse = Pair(lastChapter, lastVerse)
+        params.currentVerse = params.firstVerse
+
+        onReaderChanged()
+
+        binding.verseSync.imageAlpha = 255
+        binding.verseSync.isEnabled = true
+    }
+
+    private fun onReaderChanged() {
+        params.currentRangeCompleted = true
+        params.currentVerseCompleted = true
+
+        // release()
+
+        menu.close()
+        verseLoader.cancelAll()
+        updatePlayControlBtn(false)
+
+        updateProgressBar()
+        updateTimelineText()
+        reveal()
+    }
 
     private fun initControls() {
         binding.apply {
@@ -164,15 +209,11 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
                 }
             }
 
-            menu.setOnClickListener({ anchorView: View ->
-                openPlayerMenu(
-                    anchorView
-                )
-            })
+            menu.setOnClickListener(::openPlayerMenu)
         }
     }
 
-    fun updateVerseSync(sync: Boolean, fromUser: Boolean) {
+    private fun updateVerseSync(sync: Boolean, fromUser: Boolean) {
         params.syncWithVerse = sync
 
         binding.verseSync.isSelected = params.syncWithVerse
@@ -194,7 +235,7 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
 
     private fun updateRepeatMode(repeat: Boolean) {
         params.repeatVerse = repeat
-        player.repeatMode = if (repeat) ExoPlayer.REPEAT_MODE_ONE else ExoPlayer.REPEAT_MODE_ALL
+        player.repeatMode = if (repeat) ExoPlayer.REPEAT_MODE_ONE else ExoPlayer.REPEAT_MODE_OFF
         SPReader.setRecitationRepeatVerse(context, repeat)
     }
 
@@ -228,6 +269,7 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
         // release()
 
         player.setMediaItem(MediaItem.Builder().setMediaMetadata(prepareMetadata()).setUri(audioURI).build())
+        player.prepare()
 
         updateRepeatMode(params.repeatVerse)
 
@@ -422,6 +464,7 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
 
     fun updateProgressBar() {
         val progress = (player.currentPosition / MILLIS_MULTIPLIER).toInt()
+        Log.d(progress)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.progress.setProgress(progress, true)
@@ -435,7 +478,7 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
             Locale.getDefault(),
             "%s / %s",
             formatTime(player.currentPosition),
-            formatTime(player.duration)
+            formatTime(if (player.duration == C.TIME_UNSET) 0 else player.duration)
         )
     }
 
@@ -452,7 +495,6 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
     private fun runAudioProgress() {
         if (player.playbackState == ExoPlayer.STATE_ENDED) return
 
-        // remove only progressRunner, not verse load runner
         mPlayerProgressRunner?.let { progressHandler.removeCallbacks(it) }
 
         mPlayerProgressRunner = object : Runnable {
@@ -465,7 +507,7 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
             }
         }
 
-        progressHandler.post(mPlayerProgressRunner!!)
+        mPlayerProgressRunner!!.run()
     }
 
     fun setupOnLoadingInProgress(inProgress: Boolean) {
@@ -527,9 +569,16 @@ class RecitationPlayer(private val activity: ActivityReader) : FrameLayout(activ
         updateRepeatMode(repeat)
     }
 
+    fun setContinueChapter(continueChapter: Boolean) {
+        setupContinuePlaying(continueChapter)
+    }
+
+
     fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
         return params.isCurrentVerse(chapterNo, verseNo) && isPlaying()
     }
+
+    fun p() = params
 
     fun reciteVerse(chapterNo: Int, verseNo: Int) {
         if (
