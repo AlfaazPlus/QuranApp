@@ -107,18 +107,7 @@ class FragSettingsLanguage : FragSettingsBase() {
 
         if (locale == null || locale == initialLocale) return
 
-        PeaceDialog.newBuilder(binding.root.context)
-            .setTitle(R.string.strTitleChangeLanguage)
-            .setMessage(R.string.strMsgChangeLanguage)
-            .setNegativeButton(R.string.strLabelCancel, null)
-            .setPositiveButton(R.string.strLabelChangeNRestart) { _, _ ->
-                restartApp(binding.list.context, locale)
-            }
-            .setButtonsDirection(PeaceDialog.STACKED)
-            .setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)
-            .setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER)
-            .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
-            .setFocusOnPositive(true).show()
+        restartApp(binding.list.context, locale)
     }
 
     private fun restartApp(ctx: Context, locale: String) {
