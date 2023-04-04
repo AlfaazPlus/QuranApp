@@ -64,7 +64,7 @@
     <string name="strHintFromVerse">لە ئایەتی</string>
     <string name="strHintToVerse">بۆ ئایەتی</string>
     <string name="strHintFeedbackMessage">پەیام</string>
-    <string name="strMsgThemeDark">ڕووکاری تاریک یارمەتیدەرە بۆ پاراستنی ووزە(شەحن)</string>
+    <string name="strMsgThemeDark">ڕووکاری تاریک یارمەتیدەرە لە پاراستنی ووزە</string>
     <string name="strMsgThemeDefault">ڕێکخستنی خۆکاری بەپێی دۆخی سیستەم</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d ژمارەیەکی دروست نیە، بۆ سورەتی ژمارە %2$d</string>
     <string name="strMsgInvalidVersesRange">مەودای نێوان ئایەتەکان نادروستە</string>
@@ -367,4 +367,5 @@
     <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا.</string>
     <string name="inPlaces">بە %s</string>
     <string name="inPlacesMore">لە %1$s و %2$d زیاتر</string>
+    <string name="noFootnotesForThisVerse">هیچ تێبینییەک نییە بۆ ئەم ئایەتە.</string>
 </resources>
