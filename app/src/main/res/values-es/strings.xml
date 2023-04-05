@@ -356,7 +356,16 @@
     <string name="nFiles" formatted="false">%d archivos</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts y %2$d fuentes</string>
     <string name="nothingToCleanup">No hay nada que limpiar.</string>
-
     <string name="inPlaces">En %s</string>
     <string name="inPlacesMore">en %1$s y %2$d más</string>
+    <string name="noFootnotesForThisVerse">No hay nota al pie de página para este versículo.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Lea la explicación del verso %d</string>
+    <string name="strTitleSelectTafsir">Elije Interpretación</string>
+    <string name="strMsgTafsirsNoAvailable">Sin Interpretación</string>
+    <string name="titleTafsirCleanup">¿Borrar la Interpretación\?</string>
+    <string name="msgTafsirCleanup" formatted="false">Se eliminarán todos las interpretaciones almacenados de %s.</string>
+    <string name="onboardDescLanguage">Personaliza la aplicación en tu idioma. Siempre puedes cambiar esto más tarde.</string>
+    <string name="onboardDescTheme">Siempre puedes cambiar esto más tarde.</string>
+    <string name="onboardDescTranslations">Siempre puedes cambiar esto más tarde. Puede descargar más traducciones desde las configuraciones.</string>
+    <string name="onboardDescReciter">Siempre puedes cambiar esto más tarde. Puedes encontrar más recitadores en las configuraciones.</string>
 </resources>
