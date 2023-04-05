@@ -39,6 +39,7 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.services.RecitationPlayerService;
 import com.quranapp.android.views.recitation.RecitationPlayer;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
@@ -142,8 +143,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private void installContents(ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout, Verse verse) {
         if (actvt instanceof ActivityReader) {
             ActivityReader reader = (ActivityReader) actvt;
-            if (reader.mPlayer != null) {
-                onVerseRecite(reader.mPlayer);
+            if (reader.mPlayerService != null) {
+                onVerseRecite(reader.mPlayerService);
             }
         }
 
@@ -173,10 +174,10 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         updateHeaderTitle();
     }
 
-    private void onVerseRecite(RecitationPlayer player) {
-        final int chapterNo = player.p().getCurrentChapterNo();
-        final int verseNo = player.p().getCurrentVerseNo();
-        onVerseRecite(chapterNo, verseNo, player.isPlaying());
+    private void onVerseRecite(RecitationPlayerService service) {
+        final int chapterNo = service.getRecParams().getCurrentChapterNo();
+        final int verseNo = service.getRecParams().getCurrentVerseNo();
+        onVerseRecite(chapterNo, verseNo, service.isPlaying());
     }
 
     public void onVerseRecite(int chapterNo, int verseNo, boolean isReciting) {

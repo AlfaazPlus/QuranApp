@@ -79,9 +79,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
         }
 
         binding.autoplayCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            player.setContinueChapter(
-                isChecked
-            )
+            player.setContinueChapter(isChecked)
         }
     }
 

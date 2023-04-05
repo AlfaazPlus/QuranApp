@@ -216,5 +216,5 @@
     <string name="strMsgYouAreReadingVerses">الآية الحالية:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">لا يوجد سورة رقم %d</string>
     <string name="inPlaces">في %s</string>
-    <string name="inPlacesMore">في٪ %2$s و %1$d أخرى</string>
+    <string name="inPlacesMore">في ٪%2$s و %1$d أخرى</string>
 </resources>

@@ -13,7 +13,6 @@ webkit = "1.6.0"
 media = "1.6.0"
 viewbinding = "7.4.1"
 browser = "1.4.0"
-exoplayer = "1.0.0"
 
 # SmoothRefreshLayout
 srlCore = "1.7.2.4"
@@ -38,7 +37,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 androidx-media = { group = "androidx.media", name = "media", version.ref = "media" }
-androidx-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 apache-commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommons" }

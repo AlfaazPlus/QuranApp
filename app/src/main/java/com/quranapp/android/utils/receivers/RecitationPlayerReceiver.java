@@ -28,13 +28,13 @@ public class RecitationPlayerReceiver extends BroadcastReceiver {
 
         switch (intent.getAction()) {
             case ACTION_PLAY_CONTROL:
-                mRecitationPlayer.playControl();
+                //                mRecitationPlayer.playControl();
                 break;
             case ACTION_PREVIOUS_VERSE:
-                mRecitationPlayer.recitePreviousVerse();
+                //                mRecitationPlayer.recitePreviousVerse();
                 break;
             case ACTION_NEXT_VERSE:
-                mRecitationPlayer.reciteNextVerse();
+                //                mRecitationPlayer.reciteNextVerse();
                 break;
         }
     }

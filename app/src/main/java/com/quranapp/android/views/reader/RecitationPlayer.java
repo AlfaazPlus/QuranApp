@@ -339,10 +339,6 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
                 playMedia();
             }
         });
-        mediaPlayer.setOnErrorListener((mp, what, extra) -> {
-            Log.d(what, extra);
-            return true;
-        });
         mediaPlayer.setOnInfoListener((mp, what, extra) -> {
             Log.d(what, extra);
             return true;

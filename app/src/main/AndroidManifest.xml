@@ -28,8 +28,7 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity android:name=".activities.ActivityDownloads" />
@@ -127,6 +126,21 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name="androidx.media.session.MediaButtonReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".utils.services.RecitationPlayerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </service>
 
         <service android:name=".utils.services.TranslationDownloadService" />
         <service android:name=".utils.services.KFQPCScriptFontsDownloadService" />
