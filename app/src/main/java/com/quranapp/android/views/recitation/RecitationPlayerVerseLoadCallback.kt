@@ -32,7 +32,7 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationPlay
         service?.recPlayer?.binding?.progressText?.text = progress
     }
 
-    fun onLoaded(file: File) {
+    open fun onLoaded(file: File) {
         if (reciter == null || chapterNo == -1 || verseNo == -1) {
             return
         }
@@ -40,7 +40,7 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationPlay
         Log.d("Verse loaded! - $chapterNo:$verseNo")
 
         val audioURI = service?.fileUtils?.getFileURI(file)
-        service?.prepareMediaPlayer(audioURI!!, reciter!!, chapterNo, verseNo, true)
+        service?.prepareMediaPlayer(audioURI!!, reciter!!, chapterNo, verseNo)
     }
 
     open fun onFailed(e: Throwable?, file: File?) {

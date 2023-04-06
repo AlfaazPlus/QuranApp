@@ -99,18 +99,24 @@ public class RecitationUtils {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
 
         RecitationManager.prepare(ctx, force, () -> {
-            String slug = savedSlug;
-
-            if (TextUtils.isEmpty(slug)) {
-                List<RecitationInfoModel> models = RecitationManager.getModels();
-                if (models != null && models.size() > 0) {
-                    slug = models.get(0).getSlug();
-                }
-            }
-
-            callback.onReady(RecitationManager.getModel(slug));
-
+            callback.onReady(obtainRecitationModel(ctx, savedSlug));
             return Unit.INSTANCE;
         });
+    }
+
+    public static RecitationInfoModel obtainRecitationModel(Context ctx, String savedSlug) {
+        String slug = savedSlug;
+
+        if (TextUtils.isEmpty(slug)) {
+            List<RecitationInfoModel> models = RecitationManager.getModels();
+            if (models != null && models.size() > 0) {
+                slug = models.get(0).getSlug();
+
+                if (!TextUtils.isEmpty(slug)) {
+                    SPReader.setSavedRecitationSlug(ctx, savedSlug);
+                }
+            }
+        }
+        return RecitationManager.getModel(slug);
     }
 }

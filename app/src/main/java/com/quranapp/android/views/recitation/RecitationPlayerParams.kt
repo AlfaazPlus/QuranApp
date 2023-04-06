@@ -12,6 +12,8 @@ class RecitationPlayerParams() : Parcelable {
      */
     var currentVerse = Pair(-1, -1)
 
+    var nextVerse: Pair<Int, Int>? = Pair(-1, -1)
+
     /**
      * Pair<surahNo, verseNo>
      */
@@ -146,18 +148,54 @@ class RecitationPlayerParams() : Parcelable {
      * @return Returns true if the player has previous verse within the current playable verse range.
      */
     fun hasNextVerse(quranMeta: QuranMeta): Boolean {
-        getNextVerse(quranMeta).let {
-            return it.first <= lastVerse.first && it.second <= lastVerse.second
+        val currentChapterNo = currentVerse.first
+        val currentVerseNo = currentVerse.second
+        val lastChapterNo = lastVerse.first
+        val lastVerseNo = lastVerse.second
+
+        if (
+            !QuranMeta.isChapterValid(currentChapterNo) ||
+            !quranMeta.isVerseValid4Chapter(currentChapterNo, currentVerseNo)
+        ) {
+            return false
         }
+
+        var nextChapterNo = currentChapterNo
+        var nextVerseNo = currentVerseNo + 1
+
+        if (nextVerseNo > quranMeta.getChapterVerseCount(currentChapterNo)) {
+            nextChapterNo += 1
+            nextVerseNo = 1
+        }
+
+        return nextChapterNo <= lastChapterNo && nextVerseNo <= lastVerseNo
     }
 
     /**
      * @return Returns true if the player has previous verse within the current playable verse range.
      */
     fun hasPreviousVerse(quranMeta: QuranMeta): Boolean {
-        getPreviousVerse(quranMeta).let {
-            return it.first >= firstVerse.first && it.second >= firstVerse.second
+        val currentChapterNo = currentVerse.first
+        val currentVerseNo = currentVerse.second
+        val firstChapterNo = firstVerse.first
+        val firstVerseNo = firstVerse.second
+
+        if (
+            !QuranMeta.isChapterValid(currentChapterNo) ||
+            !quranMeta.isVerseValid4Chapter(currentChapterNo, currentVerseNo)
+        ) {
+            return false
         }
+
+        var prevChapterNo = currentChapterNo
+        var prevVerseNo = currentVerseNo - 1
+
+        if (prevVerseNo < 1) {
+            prevChapterNo -= 1
+            prevVerseNo = quranMeta.getChapterVerseCount(prevChapterNo)
+        }
+
+        return prevChapterNo >= firstChapterNo && prevVerseNo >= firstVerseNo
     }
 
     fun isCurrentVerse(verse: Pair<Int, Int>): Boolean {

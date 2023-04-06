@@ -71,10 +71,10 @@ import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.reader_managers.Navigator;
 import com.quranapp.android.reader_managers.ReaderParams;
 import com.quranapp.android.suppliments.ReaderLayoutManager;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.receivers.RecitationPlayerReceiver;
 import com.quranapp.android.utils.services.RecitationPlayerService;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
@@ -115,14 +115,16 @@ public class ActivityReader extends ReaderPossessingActivity {
     public boolean persistProgressDialog4PendingTask;
     public ActivityReaderBinding mBinding;
     public ReaderLayoutManager mLayoutManager;
-    private boolean preventRecitationPlayerReset;
-    private RecitationPlayerReceiver mReceiver;
+    private boolean protectFromPlayerReset;
+    private boolean protectFromPlayerResetOnStartup = true;
     public RecitationPlayerService mPlayerService;
     private final ServiceConnection mPlayerServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             if (service instanceof RecitationPlayerService.LocalBinder) {
                 mPlayerService = ((RecitationPlayerService.LocalBinder) service).getService();
+                protectFromPlayerResetOnStartup = mPlayerService.isPlaying();
+                Log.d(protectFromPlayerResetOnStartup);
             }
         }
 
@@ -192,7 +194,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("preventRecitationPlayerReset", false);
+        outState.putBoolean("preventRecitationPlayerReset", mPlayerService.isPlaying());
 
         if (mLayoutManager != null) {
             outState.putParcelable("recyclerView", mLayoutManager.onSaveInstanceState());
@@ -279,7 +281,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         super.preActivityInflate(savedInstanceState);
         if (savedInstanceState != null) {
-            preventRecitationPlayerReset = savedInstanceState.getBoolean("preventRecitationPlayerReset", false);
+            protectFromPlayerReset = savedInstanceState.getBoolean("preventRecitationPlayerReset", false);
         }
 
         mReaderParams = new ReaderParams(this);
@@ -558,14 +560,15 @@ public class ActivityReader extends ReaderPossessingActivity {
         updateVerseNumber(chapter.getChapterNumber(), 1);
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset) {
-                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount());
+            if (!protectFromPlayerReset && !protectFromPlayerResetOnStartup) {
+                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount(), false);
             } else {
                 mPlayer.reveal();
             }
         }
 
-        preventRecitationPlayerReset = false;
+        protectFromPlayerResetOnStartup = false;
+        protectFromPlayerReset = false;
 
         if (mReaderParams.getReaderStyle() == READER_STYLE_PAGE) {
             initChapterReading(chapter);
@@ -598,14 +601,16 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.verseRange = verseRange;
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset && (!chapter.equals(mReaderParams.currChapter))) {
-                mPlayer.onChapterChanged(chapter.getChapterNumber(), verseRange.getFirst(), verseRange.getSecond());
+            if (!protectFromPlayerReset && !protectFromPlayerResetOnStartup &&
+                (!chapter.equals(mReaderParams.currChapter))) {
+                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount(), false);
             } else {
                 mPlayer.reveal();
             }
         }
 
-        preventRecitationPlayerReset = false;
+        protectFromPlayerResetOnStartup = false;
+        protectFromPlayerReset = false;
 
 
         if (!chapter.equals(mReaderParams.currChapter)) {
@@ -695,8 +700,8 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.setCurrChapter(null);
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset && mReaderParams.currJuzNo != juzNo) {
-                mPlayer.onJuzChanged(juzNo);
+            if (!protectFromPlayerReset && !protectFromPlayerResetOnStartup && mReaderParams.currJuzNo != juzNo) {
+                mPlayer.onJuzChanged(juzNo, false);
             } else {
                 mPlayer.reveal();
                 if (mPlayerService != null && mPlayerService.isPlaying()) {
@@ -708,6 +713,9 @@ public class ActivityReader extends ReaderPossessingActivity {
                 }
             }
         }
+
+        protectFromPlayerResetOnStartup = false;
+        protectFromPlayerReset = false;
 
         mBinding.readerHeader.initJuzSelector();
         mBinding.readerHeader.selectJuzIntoSpinner(juzNo);
@@ -1099,7 +1107,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                 if (mPlayerService.getRecParams().getPreviouslyPlaying()) {
                     mPlayerService.reciteVerse(chapterNo, verseNo);
                 } else {
-                    mPlayer.onChapterChanged(chapterNo, verseNo, verseNo);
+                    mPlayer.onChapterChanged(chapterNo, verseNo, verseNo, false);
                 }
             }
 

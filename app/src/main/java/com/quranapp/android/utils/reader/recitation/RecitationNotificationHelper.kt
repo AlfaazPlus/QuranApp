@@ -1,44 +1,119 @@
 package com.quranapp.android.utils.reader.recitation
 
 import android.app.Notification
-import android.content.Context
-import android.support.v4.media.session.MediaSessionCompat
+import android.media.MediaMetadata
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.media.session.MediaButtonReceiver
+import com.peacedesign.android.utils.DrawableUtils
 import com.quranapp.android.R
+import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.drawable
+import com.quranapp.android.utils.services.RecitationPlayerService
 
-object RecitationNotificationHelper {
-    fun createPreviousVerseAction(context: Context): NotificationCompat.Action {
+class RecitationNotificationHelper(private val service: RecitationPlayerService) {
+    private val notifManager by lazy { NotificationManagerCompat.from(service) }
+    private val notifActionPrev by lazy { createPreviousVerseAction() }
+    private val notifActionNext by lazy { createNextVerseAction() }
+    private val notifActionStop by lazy { createStopVerseAction() }
+    private var notifBuilder: NotificationCompat.Builder? = null
+    private var notifTitle: String? = null
+    private var notifDescription: String? = null
+    private val albumArt by lazy {
+        DrawableUtils.getBitmapFromDrawable(service.drawable(R.drawable.dr_quran_wallpaper), 256, 256)
+    }
+
+    fun prepareMetadata(quranMeta: QuranMeta?): MediaMetadataCompat {
+        val recParams = service.recParams
+        val chapterName = quranMeta?.getChapterName(service, recParams.currentChapterNo) ?: ""
+        notifTitle = service.getString(
+            R.string.strLabelVerseWithChapNameAndNo,
+            chapterName,
+            recParams.currentChapterNo,
+            recParams.currentVerseNo
+        )
+
+        notifDescription = RecitationUtils.getReciterName(recParams.currentReciter)
+
+        return MediaMetadataCompat.Builder()
+            .putString(MediaMetadata.METADATA_KEY_TITLE, notifTitle)
+            .putString(MediaMetadata.METADATA_KEY_ARTIST, notifDescription)
+            .putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, albumArt)
+            .putLong(MediaMetadata.METADATA_KEY_DURATION, service.duration.toLong())
+            .build()
+    }
+
+    private fun createPreviousVerseAction(): NotificationCompat.Action {
         return NotificationCompat.Action(
             R.drawable.dr_icon_player_seek_left, "Previous verse",
-            MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
+            MediaButtonReceiver.buildMediaButtonPendingIntent(service, PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
         )
     }
 
-    fun createNextVerseAction(context: Context): NotificationCompat.Action {
+    private fun createNextVerseAction(): NotificationCompat.Action {
         return NotificationCompat.Action(
             R.drawable.dr_icon_player_seek_right, "Next verse",
-            MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_SKIP_TO_NEXT)
+            MediaButtonReceiver.buildMediaButtonPendingIntent(service, PlaybackStateCompat.ACTION_SKIP_TO_NEXT)
         )
     }
 
-    fun createNotificationBuilder(context: Context, session: MediaSessionCompat): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context, context.getString(R.string.strNotifChannelIdRecitation))
+    private fun createStopVerseAction(): NotificationCompat.Action {
+        return NotificationCompat.Action(
+            R.drawable.icon_verse_stop, "Stop verse",
+            MediaButtonReceiver.buildMediaButtonPendingIntent(service, PlaybackStateCompat.ACTION_STOP)
+        )
+    }
+
+    private fun createNotificationBuilder(): NotificationCompat.Builder {
+        return NotificationCompat.Builder(service, service.getString(R.string.strNotifChannelIdRecitation))
             .setSmallIcon(R.drawable.dr_logo)
+            .setLargeIcon(albumArt)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setCategory(Notification.CATEGORY_SERVICE)
+            .setColorized(true)
+            .setColor(service.color(R.color.colorPrimary))
             .setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
-                    .setMediaSession(session.sessionToken)
+                    .setMediaSession(service.session!!.sessionToken)
                     .setShowActionsInCompactView(0, 1, 2)
-                    .setShowCancelButton(true)
-                    .setCancelButtonIntent(
-                        MediaButtonReceiver.buildMediaButtonPendingIntent(
-                            context,
-                            PlaybackStateCompat.ACTION_STOP
-                        )
-                    )
             )
+    }
+
+    fun showNotification(action: Long) {
+        if (action == PlaybackStateCompat.ACTION_STOP) {
+            notifManager.cancel(RecitationPlayerService.NOTIF_ID)
+            return
+        }
+
+        if (notifBuilder == null) {
+            notifBuilder = createNotificationBuilder()
+        }
+
+        val isPlay = action == PlaybackStateCompat.ACTION_PLAY
+
+        notifBuilder = notifBuilder!!.setContentTitle(notifTitle)
+            .setContentText(notifDescription)
+            .clearActions()
+            .addAction(notifActionPrev)
+            .addAction(
+                NotificationCompat.Action(
+                    if (isPlay) R.drawable.dr_icon_pause_verse
+                    else R.drawable.dr_icon_play_verse,
+                    if (isPlay) "Pause"
+                    else "Play",
+                    MediaButtonReceiver.buildMediaButtonPendingIntent(
+                        service,
+                        if (isPlay) PlaybackStateCompat.ACTION_PAUSE
+                        else PlaybackStateCompat.ACTION_PLAY
+                    )
+                )
+            )
+            .addAction(notifActionNext)
+            .addAction(notifActionStop)
+
+        notifManager.notify(RecitationPlayerService.NOTIF_ID, notifBuilder!!.build())
     }
 }

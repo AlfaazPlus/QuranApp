@@ -3,19 +3,15 @@ package com.quranapp.android.utils.services
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.MediaMetadata
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
 import com.quranapp.android.R
@@ -41,23 +37,26 @@ import java.io.File
 class RecitationPlayerService : Service() {
     companion object {
         const val MILLIS_MULTIPLIER = 100
-        const val SEEK_LEFT = -1
-        const val SEEK_RIGHT = 1
+        const val ACTION_SEEK_LEFT = -1
+        const val ACTION_SEEK_RIGHT = 1
         const val NOTIF_ID = 55
     }
 
     private val binder = LocalBinder()
     val recParams = RecitationPlayerParams()
-    private var player: MediaPlayer? = null
-    private var session: MediaSessionCompat? = null
+    var player: MediaPlayer? = null
+    var session: MediaSessionCompat? = null
+    private val playbackStateBuilder = PlaybackStateCompat.Builder().setActions(
+        PlaybackStateCompat.ACTION_PLAY
+                or PlaybackStateCompat.ACTION_PAUSE
+                or PlaybackStateCompat.ACTION_STOP
+                or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+                or PlaybackStateCompat.ACTION_SEEK_TO
+    )
     lateinit var fileUtils: FileUtils
 
-    private val notifManager by lazy { NotificationManagerCompat.from(this) }
-    private val notifActionPrev by lazy { RecitationNotificationHelper.createPreviousVerseAction(this) }
-    private val notifActionNext by lazy { RecitationNotificationHelper.createNextVerseAction(this) }
-    private var notifBuilder: NotificationCompat.Builder? = null
-    private var notifTitle: String? = null
-    private var notifDescription: String? = null
+    private val notifHelper = RecitationNotificationHelper(this)
 
     private val progressHandler = Handler(Looper.getMainLooper())
     private var activity: ActivityReader? = null
@@ -94,15 +93,19 @@ class RecitationPlayerService : Service() {
         session = MediaSessionCompat(this, "RecitationPlayer").apply {
             setCallback(object : MediaSessionCompat.Callback() {
                 override fun onPlay() {
-                    playMedia()
+                    playControl()
                 }
 
                 override fun onPause() {
-                    pauseMedia()
+                    playControl()
                 }
 
                 override fun onStop() {
-                    this@RecitationPlayerService.release()
+                    stopMedia()
+                }
+
+                override fun onSeekTo(pos: Long) {
+                    seek(pos.toInt())
                 }
 
                 override fun onSkipToPrevious() {
@@ -116,7 +119,7 @@ class RecitationPlayerService : Service() {
         }
 
         updateRepeatMode(SPReader.getRecitationRepeatVerse(this))
-        setupContinuePlaying(SPReader.getRecitationContinueChapter(this))
+        updateContinuePlaying(SPReader.getRecitationContinueChapter(this))
         updateVerseSync(SPReader.getRecitationScrollSync(this), false)
     }
 
@@ -131,7 +134,7 @@ class RecitationPlayerService : Service() {
 
         verseLoader.cancelAll()
         session?.release()
-        notifManager.cancel(NOTIF_ID)
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_STOP)
     }
 
     fun release() {
@@ -165,8 +168,7 @@ class RecitationPlayerService : Service() {
         audioURI: Uri,
         reciter: String,
         chapterNo: Int,
-        verseNo: Int,
-        play: Boolean
+        verseNo: Int
     ) {
         verseLoadCallback.postLoad()
         release()
@@ -183,7 +185,7 @@ class RecitationPlayerService : Service() {
         recParams.currentVerse = Pair(chapterNo, verseNo)
 
         session!!.isActive = true
-        session!!.setMetadata(prepareMetadata())
+        session!!.setMetadata(notifHelper.prepareMetadata(quranMeta))
 
         val p = player!!
 
@@ -204,19 +206,7 @@ class RecitationPlayerService : Service() {
                 it.updateTimelineText()
             }
 
-            if (play) {
-                session!!.setPlaybackState(
-                    PlaybackStateCompat.Builder()
-                        .setActions(
-                            PlaybackStateCompat.ACTION_PLAY or
-                                    PlaybackStateCompat.ACTION_PAUSE or
-                                    PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
-                                    PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-                        ).setState(PlaybackStateCompat.STATE_PLAYING, mp.currentPosition.toLong(), 1.0f)
-                        .build()
-                )
-                playMedia()
-            }
+            playMedia()
         }
 
         p.setOnErrorListener { _, what, extra ->
@@ -255,30 +245,13 @@ class RecitationPlayerService : Service() {
         }
     }
 
-    private fun prepareMetadata(): MediaMetadataCompat {
-        val chapterName = quranMeta?.getChapterName(this, recParams.currentChapterNo) ?: ""
-        notifTitle = this.getString(
-            R.string.strLabelVerseWithChapNameAndNo,
-            chapterName,
-            recParams.currentChapterNo,
-            recParams.currentVerseNo
-        )
-
-        notifDescription = RecitationUtils.getReciterName(recParams.currentReciter)
-
-        return MediaMetadataCompat.Builder()
-            .putString(MediaMetadata.METADATA_KEY_TITLE, notifTitle)
-            .putString(MediaMetadata.METADATA_KEY_ARTIST, notifDescription)
-            .build()
-    }
-
     private fun updateRepeatMode(repeat: Boolean) {
         recParams.repeatVerse = repeat
         player?.isLooping = repeat
         SPReader.setRecitationRepeatVerse(this, repeat)
     }
 
-    private fun setupContinuePlaying(continuePlaying: Boolean) {
+    private fun updateContinuePlaying(continuePlaying: Boolean) {
         recParams.continueRange = continuePlaying
         SPReader.setRecitationContinueChapter(this, continuePlaying)
     }
@@ -307,9 +280,11 @@ class RecitationPlayerService : Service() {
             recParams.currentVerseCompleted = false
         }
 
+        setSessionState(PlaybackStateCompat.STATE_PLAYING)
+
         recPlayer?.onPlayMedia(recParams)
 
-        showNotification(true)
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_PLAY)
         ContextCompat.startForegroundService(this, Intent(this, RecitationPlayerService::class.java))
 
         Log.d(
@@ -327,10 +302,24 @@ class RecitationPlayerService : Service() {
             progressHandler.removeCallbacksAndMessages(null)
         }
 
-        showNotification(false)
+        setSessionState(PlaybackStateCompat.STATE_PAUSED)
+
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_PAUSE)
         recParams.previouslyPlaying = false
 
         recPlayer?.onPauseMedia(recParams)
+    }
+
+    fun stopMedia() {
+        if (isPlaying) {
+            release()
+            progressHandler.removeCallbacksAndMessages(null)
+        }
+
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_STOP)
+        recParams.previouslyPlaying = false
+
+        recPlayer?.onStopMedia(recParams)
     }
 
     fun playControl() {
@@ -358,12 +347,12 @@ class RecitationPlayerService : Service() {
         recParams.currentVerseCompleted = false
 
         val seekAmount = when (amountOrDirection) {
-            SEEK_RIGHT -> 5000
-            SEEK_LEFT -> -5000
+            ACTION_SEEK_RIGHT -> 5000
+            ACTION_SEEK_LEFT -> -5000
             else -> amountOrDirection
         }
 
-        val fromBtnClick = amountOrDirection == SEEK_LEFT || amountOrDirection == SEEK_RIGHT
+        val fromBtnClick = amountOrDirection == ACTION_SEEK_LEFT || amountOrDirection == ACTION_SEEK_RIGHT
         var seekFinal = seekAmount
 
         if (fromBtnClick) {
@@ -373,6 +362,7 @@ class RecitationPlayerService : Service() {
         }
 
         p.seekTo(seekFinal)
+        setSessionState(PlaybackStateCompat.STATE_PLAYING)
 
         recPlayer?.let {
             it.updateTimelineText()
@@ -390,12 +380,10 @@ class RecitationPlayerService : Service() {
 
         playerProgressRunner = object : Runnable {
             override fun run() {
-//                recPlayer?.post {
                 recPlayer?.let {
                     it.updateProgressBar()
                     it.updateTimelineText()
                 }
-//                }
 
                 if (isPlaying) {
                     progressHandler.postDelayed(this, MILLIS_MULTIPLIER.toLong())
@@ -457,7 +445,7 @@ class RecitationPlayerService : Service() {
         reciteVerse(chapterNo, verseNo)
     }
 
-    fun restartRange() {
+    private fun restartRange() {
         if (isLoadingInProgress) return
 
         val firstVerse = recParams.firstVerse
@@ -533,7 +521,7 @@ class RecitationPlayerService : Service() {
                 verseLoader.addCallback(model.slug, chapterNo, verseNo, verseLoadCallback)
             } else {
                 val audioURI: Uri = fileUtils.getFileURI(audioFile)
-                prepareMediaPlayer(audioURI, model.slug, chapterNo, verseNo, true)
+                prepareMediaPlayer(audioURI, model.slug, chapterNo, verseNo)
             }
         } else {
             if (!NetworkStateReceiver.isNetworkConnected(this)) {
@@ -636,46 +624,21 @@ class RecitationPlayerService : Service() {
     }
 
     fun setContinueChapter(continueChapter: Boolean) {
-        setContinueChapter(continueChapter)
+        updateContinuePlaying(continueChapter)
     }
 
     fun cancelLoading() {
         verseLoader.cancelAll()
     }
 
-    private fun showNotification(isPlay: Boolean) {
-        if (notifBuilder == null) {
-            notifBuilder = RecitationNotificationHelper.createNotificationBuilder(this, session!!)
-        }
-
-        notifBuilder = notifBuilder!!.setContentTitle(notifTitle)
-            .setContentText(notifDescription)
-            .clearActions()
-            .addAction(notifActionPrev)
-            .setProgress(player?.duration ?: 0, player?.currentPosition ?: 0, false)
-            .addAction(
-                NotificationCompat.Action(
-                    if (isPlay) R.drawable.dr_icon_pause_verse
-                    else R.drawable.dr_icon_play_verse,
-                    if (isPlay) "Pause"
-                    else "Play",
-                    MediaButtonReceiver.buildMediaButtonPendingIntent(
-                        this,
-                        if (isPlay) PlaybackStateCompat.ACTION_PAUSE
-                        else PlaybackStateCompat.ACTION_PLAY
-                    )
-                )
-            )
-            .addAction(notifActionNext)
-
-        notifManager.notify(NOTIF_ID, notifBuilder!!.build())
-    }
-
-    private fun updateNotificationProgress() {
-        if (notifBuilder == null) return
-
-        notifBuilder!!.setProgress(player?.duration ?: 0, player?.currentPosition ?: 0, false)
-        notifManager.notify(NOTIF_ID, notifBuilder!!.build())
+    private fun setSessionState(state: Int) {
+        session!!.setPlaybackState(
+            playbackStateBuilder.setState(
+                state,
+                player?.currentPosition?.toLong() ?: 0,
+                1.0f
+            ).build()
+        )
     }
 
     fun popMiniMsg(msg: String, duration: Int) {

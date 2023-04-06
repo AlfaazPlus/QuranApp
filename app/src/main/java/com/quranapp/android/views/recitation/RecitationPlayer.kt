@@ -42,38 +42,40 @@ class RecitationPlayer(
         initControls()
     }
 
-    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
+    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, preventStop: Boolean) {
         readerChanging = true
 
         service?.onChapterChanged(chapterNo, fromVerse, toVerse)
 
-        onReaderChanged()
+        onReaderChanged(preventStop)
 
         binding.verseSync.imageAlpha = if (activity.mReaderParams.isSingleVerse) 0 else 255
         binding.verseSync.isEnabled = !activity.mReaderParams.isSingleVerse
     }
 
-    fun onJuzChanged(juzNo: Int) {
+    fun onJuzChanged(juzNo: Int, preventStop: Boolean) {
         readerChanging = true
 
         service?.onJuzChanged(juzNo, activity.mQuranMetaRef.get())
 
-        onReaderChanged()
+        onReaderChanged(preventStop)
 
         binding.verseSync.imageAlpha = 255
         binding.verseSync.isEnabled = true
     }
 
-    private fun onReaderChanged() {
-        service?.let {
-            it.recParams.currentRangeCompleted = true
-            it.recParams.currentVerseCompleted = true
-            it.release()
-        }
+    private fun onReaderChanged(preventStop: Boolean) {
+        if (!preventStop) {
+            service?.let {
+                it.recParams.currentRangeCompleted = true
+                it.recParams.currentVerseCompleted = true
+                it.release()
+            }
 
-        playerMenu.close()
-        service?.cancelLoading()
-        updatePlayControlBtn(false)
+            playerMenu.close()
+            service?.cancelLoading()
+            updatePlayControlBtn(false)
+        }
 
         updateProgressBar()
         updateTimelineText()
@@ -112,14 +114,14 @@ class RecitationPlayer(
             }
 
             seekLeft.setOnClickListener {
-                if (!(service?.isLoadingInProgress == true)) {
-                    service?.seek(RecitationPlayerService.SEEK_LEFT)
+                if (service?.isLoadingInProgress != true) {
+                    service?.seek(RecitationPlayerService.ACTION_SEEK_LEFT)
                 }
             }
 
             seekRight.setOnClickListener {
-                if (!(service?.isLoadingInProgress == true)) {
-                    service?.seek(RecitationPlayerService.SEEK_RIGHT)
+                if (service?.isLoadingInProgress != true) {
+                    service?.seek(RecitationPlayerService.ACTION_SEEK_RIGHT)
                 }
             }
 
@@ -164,6 +166,10 @@ class RecitationPlayer(
     fun onPauseMedia(params: RecitationPlayerParams) {
         activity.onVerseRecite(params.currentChapterNo, params.currentVerseNo, false)
         updatePlayControlBtn(false)
+    }
+
+    fun onStopMedia(params: RecitationPlayerParams) {
+        onPauseMedia(params)
     }
 
     fun onVerseReciteOrJump(chapterNo: Int, verseNo: Int) {
