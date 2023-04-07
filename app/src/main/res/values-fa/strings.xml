@@ -301,7 +301,67 @@
     <string name="strDescVerseNoWithChapter" formatted="false">سوره %1$s، شماره آیه %2$d.</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">نمای صفحه</string>
     <string name="strTitleReaderLayoutStylePageView">نمای صفحه</string>
-
     <string name="inPlaces">در %s</string>
     <string name="inPlacesMore">در %1$s و %2$d دیگر</string>
+    <string name="titleDownloadScriptResources">دانلود منابع برای این اسکریپت؟</string>
+    <string name="onboardDescReciter">همیشه می توانید بعداً این را تغییر دهید. می توانید قاریان بیشتری را در تنظیمات پیدا کنید.</string>
+    <string name="onboardDescLanguage">برنامه را به زبان خود شخصی سازی کنید. همیشه می توانید بعداً این را تغییر دهید.</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">قلم‌ها: %1$d دانلود از کل %2$d (~%3$dMB باقی مانده)</string>
+    <string name="copiedToClipboard">در کلیپ بورد کپی شد.</string>
+    <string name="textDownloading">در حال دانلود …</string>
+    <string name="createIssue">ایجاد موضوع</string>
+    <string name="titleChapterInfoCleanup">اطلاعات فصل پاک شود؟</string>
+    <string name="verseSyncOn">همگام سازی آیه: روشن</string>
+    <string name="strTitleSelectTafsir">انتخاب تفسیر</string>
+    <string name="msgScriptFontsDownloaded">اسکریپت ها و فونت ها با موفقیت دانلود شدند.</string>
+    <string name="strPreviewTextTransl">بسم الله الرحمن الرحیم</string>
+    <string name="onboardDescTranslations">همیشه می توانید بعداً این را تغییر دهید. می توانید ترجمه های بیشتری را از تنظیمات دانلود کنید.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">تفسیر آیه %d را بخوانید</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d از %2$d قلم دانلود شد</string>
+    <string name="msgDownloadingResource" formatted="false">در حال دانلود %s</string>
+    <string name="msgAnotherDownloadInProgress">دانلود دیگری در حال انجام است.</string>
+    <string name="lastCrashLog">آخرین گزارش خرابی</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s %2$s باید دوباره آن را دانلود کنید.</string>
+    <string name="onboardDescTheme">همیشه می توانید بعداً این را تغییر دهید.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d اسکریپت دانلود شده و فونت آنها را می توان آزاد کرد.</string>
+    <string name="titleTafsirCleanup">تفسیر حذف شود؟</string>
+    <string name="msgTafsirCleanup" formatted="false">تمام تفسیرهای ذخیره شده از %s حذف خواهد شد.</string>
+    <string name="verseSyncOff">همگام سازی آیه: خاموش</string>
+    <string name="labelDownload">دانلود</string>
+    <string name="strTitleRecitations">تلاوت ها</string>
+    <string name="strTitleScripts">اسکریپت ها</string>
+    <string name="msgDownloadKFQPCResources">قبل از اینکه بتوانید از این اسکریپت استفاده کنید، منابع زیر نیاز به دانلود دارند:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">اسکریپت: %s (~1 مگابایت)</string>
+    <string name="msgDownloadFailed">دانلود ناموفق بود</string>
+    <string name="textPercentage" formatted="false">‭%d%%</string>
+    <string name="pasteCrashLogGithubIssue">گزارش خرابی در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
+    <string name="strMsgTafsirsNoAvailable">تفسیری وجود ندارد</string>
+    <string name="msgDownloadingScript">دانلود اسکریپت</string>
+    <string name="labelBackgroundDownload">دانلود پس زمینه</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d ترجمه دانلود شده را می توان آزاد کرد.</string>
+    <string name="msgVerseReminderAlarmPermission">برای فعال کردن یادآوری آیه، مجوز زنگ هشدار لازم است.</string>
+    <string name="storageCleanupMessage">با حذف منابع دانلود شده استفاده نشده فضا را آزاد کنید. این هیچ نشانک یا تنظیماتی را حذف نمی کند.
+\n منابع زیر را می توان آزاد کرد:</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d فایل تلاوت ذخیره شده از %2$d تلاوت کننده را می توان آزاد کرد.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d تفسیر ذخیره شده قابل پاکسازی است.</string>
+    <string name="msgRecitationCleanup" formatted="false">تمام تلاوت ذخیره شده از %s حذف خواهد شد.</string>
+    <string name="nItems" formatted="false">%d موارد</string>
+    <string name="nItem" formatted="false">%d مورد</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d اسکریپت و %2$d قلم</string>
+    <string name="noFootnotesForThisVerse">هیچ پاورقی برای این آیه وجود ندارد.</string>
+    <string name="github">گیتهاب</string>
+    <string name="msgAlarmManagerNotAvailable">مدیر زنگ هشدار در این دستگاه در دسترس نیست.</string>
+    <string name="msgVerseReminderNotifPermission">برای فعال کردن یادآوری آیه، مجوز اعلان لازم است.</string>
+    <string name="msgDownloadingFonts">دانلود قلم ها</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d از %2$d</string>
+    <string name="titleStorageCleanup">پاکسازی ذخیره سازی</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d اطلاعات فصل ذخیره شده را می توان پاک کرد.</string>
+    <string name="titleChapterInfo">اطلاعات فصل</string>
+    <string name="labelFreeUpSpace">فضا را آزاد کنید</string>
+    <string name="titleRecitationCleanup">تلاوت حذف شود؟</string>
+    <string name="msgChapterInfoCleanup">تمام اطلاعات فصل ذخیره شده حذف خواهد شد.</string>
+    <string name="nFiles" formatted="false">%d فایل ها</string>
+    <string name="nothingToCleanup">چیزی برای تمیز کردن وجود ندارد.</string>
+    <string name="titleScriptCleanup">اسکریپت حذف شود؟</string>
+    <string name="msgScriptCleanup" formatted="false">اسکریپت %s و تمام فونت های ذخیره شده آن حذف خواهند شد. برای استفاده از آنها باید دوباره دانلود کنید.</string>
 </resources>
