@@ -4,10 +4,13 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -79,10 +82,12 @@ class RecitationPlayerVerseLoader {
                             totalConsumed += bytes
                             emit(VerseLoadFlow.Progress((totalConsumed / totalLength * 100).toInt()))
                         }
+
+                        output.flush()
+
+                        emit(VerseLoadFlow.Loaded(verseFile))
                     }
                 }
-
-                emit(VerseLoadFlow.Loaded(verseFile))
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
                 emit(VerseLoadFlow.Failed(it, verseFile))
@@ -139,7 +144,7 @@ class RecitationPlayerVerseLoader {
     }
 
     fun isPending(reciter: String, chapterNo: Int, verseNo: Int): Boolean {
-        return jobs.containsKey(makeKey(reciter, chapterNo, verseNo))
+        return jobs[makeKey(reciter, chapterNo, verseNo)]?.isActive == true
     }
 
     fun addCallback(reciter: String, chapterNo: Int, verseNo: Int, callback: RecitationPlayerVerseLoadCallback?) {

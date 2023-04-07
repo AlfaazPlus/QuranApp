@@ -4,10 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Binder
 import android.os.Handler
-import android.os.Looper
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -22,6 +22,7 @@ import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.NoInternetException
+import com.quranapp.android.utils.extensions.runOnInterval
 import com.quranapp.android.utils.reader.recitation.RecitationNotificationHelper
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -44,7 +45,8 @@ class RecitationPlayerService : Service() {
 
     private val binder = LocalBinder()
     val recParams = RecitationPlayerParams()
-    var player: MediaPlayer? = null
+    private var player: MediaPlayer? = null
+    private var nextPlayer: MediaPlayer? = null
     var session: MediaSessionCompat? = null
     private val playbackStateBuilder = PlaybackStateCompat.Builder().setActions(
         PlaybackStateCompat.ACTION_PLAY
@@ -58,7 +60,7 @@ class RecitationPlayerService : Service() {
 
     private val notifHelper = RecitationNotificationHelper(this)
 
-    private val progressHandler = Handler(Looper.getMainLooper())
+    private var progressHandler: Handler? = null
     private var activity: ActivityReader? = null
     private var quranMeta: QuranMeta? = null
     var recPlayer: RecitationPlayer? = null
@@ -80,6 +82,8 @@ class RecitationPlayerService : Service() {
         this.activity = activity
 
         quranMeta = activity?.mQuranMetaRef?.get()
+
+        sync()
     }
 
     override fun onCreate() {
@@ -143,6 +147,7 @@ class RecitationPlayerService : Service() {
             it.reset()
             it.release()
             player = null
+            nextPlayer = null
         }
 
         session?.isActive = false
@@ -164,6 +169,25 @@ class RecitationPlayerService : Service() {
         recParams.currentVerse = recParams.firstVerse
     }
 
+    private fun sync() {
+        runAudioProgress()
+
+        recPlayer?.let {
+            it.binding.progress.max = ((player?.duration ?: 1) / MILLIS_MULTIPLIER).coerceAtLeast(0)
+            it.updateProgressBar()
+            it.updateTimelineText()
+            it.onVerseReciteOrJump(recParams.currentVerse.first, recParams.currentVerse.second)
+            it.updateVerseSync(recParams, isPlaying)
+            it.setupOnLoadingInProgress(isLoadingInProgress)
+
+            if (player != null && isPlaying) {
+                it.onPlayMedia(recParams)
+            } else if (player != null) {
+                it.onPauseMedia(recParams)
+            }
+        }
+    }
+
     fun prepareMediaPlayer(
         audioURI: Uri,
         reciter: String,
@@ -180,6 +204,27 @@ class RecitationPlayerService : Service() {
             return
         }
 
+        Log.d("PREPARING HARD")
+
+        player!!.setOnInfoListener { _, what, extra ->
+            Log.d(what, extra)
+            true
+        }
+        player!!.setOnPreparedListener {
+            onPreparePlayer(player!!, audioURI, reciter, chapterNo, verseNo, true)
+        }
+    }
+
+    private fun onPreparePlayer(
+        player: MediaPlayer,
+        audioURI: Uri,
+        reciter: String,
+        chapterNo: Int,
+        verseNo: Int,
+        play: Boolean
+    ) {
+        Log.d("SETTING UP PLAYER ($chapterNo:$verseNo)")
+
         recParams.lastMediaURI = audioURI
         recParams.currentReciter = reciter
         recParams.currentVerse = Pair(chapterNo, verseNo)
@@ -187,62 +232,96 @@ class RecitationPlayerService : Service() {
         session!!.isActive = true
         session!!.setMetadata(notifHelper.prepareMetadata(quranMeta))
 
-        val p = player!!
+        prepareNextPlayer(player)
 
-        p.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
-        p.setAudioAttributes(
+        player.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
+        player.setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
         )
-        p.setNextMediaPlayer(null)
         updateRepeatMode(recParams.repeatVerse)
 
-        p.setOnPreparedListener { mp ->
-            recPlayer?.let {
-                it.binding.progress.max = mp.duration / MILLIS_MULTIPLIER
-                it.updateProgressBar()
-                it.updateTimelineText()
+        recPlayer?.let {
+            it.binding.progress.max = player.duration / MILLIS_MULTIPLIER
+            it.updateProgressBar()
+            it.updateTimelineText()
+        }
+
+        playMedia(play)
+    }
+
+    private fun onPlayingCompleted() {
+        if (nextPlayer != null) {
+            player?.release()
+            player = nextPlayer
+            nextPlayer = null
+            return
+        }
+
+        recParams.currentVerseCompleted = true
+
+        release()
+
+        if (quranMeta == null) {
+            stopMedia()
+            return
+        }
+
+        val (canContinue, isSingleVerseMode) = canContinuePlaying()
+        recParams.currentRangeCompleted = !canContinue
+
+        if (canContinue) {
+            reciteNextVerse(isSingleVerseMode)
+        } else {
+            pauseMedia()
+        }
+    }
+
+    private fun canContinuePlaying(): Pair<Boolean, Boolean> {
+        val continueNext = recParams.continueRange && recParams.hasNextVerse(quranMeta!!)
+
+        val verseValid = quranMeta!!.isVerseValid4Chapter(recParams.currentChapterNo, recParams.currentVerseNo + 1)
+        val isSingleVerseMode = activity?.mReaderParams?.isSingleVerse ?: false
+        val continueNextSingle = recParams.continueRange && isSingleVerseMode && verseValid
+
+        return Pair(continueNext || continueNextSingle, isSingleVerseMode)
+    }
+
+    private fun prepareNextPlayer(curPlayer: MediaPlayer) {
+        curPlayer.let {
+            it.setOnCompletionListener { onPlayingCompleted() }
+        }
+
+        val reciter = recParams.currentReciter
+
+        if (reciter == null || quranMeta == null || !canContinuePlaying().first) return
+
+        val (nextChapterNo, nextVerseNo) = recParams.getNextVerse(quranMeta!!)
+
+        val audioFile = fileUtils.getRecitationAudioFile(reciter, nextChapterNo, nextVerseNo)
+        if (audioFile.length() == 0L) return
+
+        val audioURI: Uri = fileUtils.getFileURI(audioFile)
+        nextPlayer = MediaPlayer.create(this, audioURI)
+
+        Log.d("NEXT VERSE: ($nextChapterNo, $nextVerseNo), URI: $audioURI)")
+
+        if (nextPlayer == null) {
+            return
+        }
+
+        curPlayer.setNextMediaPlayer(nextPlayer)
+        nextPlayer!!.setOnInfoListener { mp, what, _ ->
+            if (what == MediaPlayer.MEDIA_INFO_STARTED_AS_NEXT) {
+                onPreparePlayer(mp, audioURI, reciter, nextChapterNo, nextVerseNo, false)
+                recPlayer?.onVerseReciteOrJump(nextChapterNo, nextChapterNo)
             }
 
-            playMedia()
+            return@setOnInfoListener true
         }
 
-        p.setOnErrorListener { _, what, extra ->
-            Log.d(what, extra)
-            true
-        }
-
-        p.setOnInfoListener { _, what, extra ->
-            Log.d(what, extra)
-            true
-        }
-
-        p.setOnCompletionListener {
-            recParams.currentVerseCompleted = true
-
-            release()
-
-            if (quranMeta == null) {
-                pauseMedia()
-                return@setOnCompletionListener
-            }
-
-            val continueNext = recParams.continueRange && recParams.hasNextVerse(quranMeta!!)
-
-            val verseValid = quranMeta!!.isVerseValid4Chapter(recParams.currentChapterNo, recParams.currentVerseNo + 1)
-            val isSingleVerseMode = activity?.mReaderParams?.isSingleVerse ?: false
-            val continueNextSingle = recParams.continueRange && isSingleVerseMode && verseValid
-
-            recParams.currentRangeCompleted = !continueNext && !continueNextSingle
-
-            if (continueNext || continueNextSingle) {
-                reciteNextVerse(isSingleVerseMode)
-            } else {
-                pauseMedia()
-            }
-        }
     }
 
     private fun updateRepeatMode(repeat: Boolean) {
@@ -252,7 +331,20 @@ class RecitationPlayerService : Service() {
     }
 
     private fun updateContinuePlaying(continuePlaying: Boolean) {
+        nextPlayer = null
+
+        try {
+            player?.setNextMediaPlayer(null)
+        } catch (e: Exception) {
+            // Not initialized yet
+        }
+
         recParams.continueRange = continuePlaying
+
+        if (continuePlaying && player != null) {
+            prepareNextPlayer(player!!)
+        }
+
         SPReader.setRecitationContinueChapter(this, continuePlaying)
     }
 
@@ -271,9 +363,13 @@ class RecitationPlayerService : Service() {
         }
     }
 
-    fun playMedia() {
+    fun playMedia(play: Boolean = true) {
         player?.let {
-            it.start()
+            try {
+                if (play) it.start()
+            } catch (_: Exception) {
+                // Not initialized yet
+            }
             runAudioProgress()
 
             recParams.currentRangeCompleted = false
@@ -299,7 +395,7 @@ class RecitationPlayerService : Service() {
     fun pauseMedia() {
         if (isPlaying) {
             player?.pause()
-            progressHandler.removeCallbacksAndMessages(null)
+            progressHandler?.removeCallbacksAndMessages(null)
         }
 
         setSessionState(PlaybackStateCompat.STATE_PAUSED)
@@ -313,9 +409,10 @@ class RecitationPlayerService : Service() {
     fun stopMedia() {
         if (isPlaying) {
             release()
-            progressHandler.removeCallbacksAndMessages(null)
+            progressHandler?.removeCallbacksAndMessages(null)
         }
 
+        setSessionState(PlaybackStateCompat.STATE_STOPPED)
         notifHelper.showNotification(PlaybackStateCompat.ACTION_STOP)
         recParams.previouslyPlaying = false
 
@@ -374,24 +471,21 @@ class RecitationPlayerService : Service() {
     }
 
     private fun runAudioProgress() {
-        if (player == null) return
+        progressHandler?.removeCallbacksAndMessages(null)
 
-        playerProgressRunner?.let { progressHandler.removeCallbacks(it) }
+        if (player == null || recPlayer == null) return
 
-        playerProgressRunner = object : Runnable {
-            override fun run() {
-                recPlayer?.let {
-                    it.updateProgressBar()
-                    it.updateTimelineText()
-                }
-
-                if (isPlaying) {
-                    progressHandler.postDelayed(this, MILLIS_MULTIPLIER.toLong())
-                }
+        progressHandler = runOnInterval({
+            if (!isPlaying) {
+                progressHandler?.removeCallbacksAndMessages(null)
+                return@runOnInterval
             }
-        }
 
-        playerProgressRunner!!.run()
+            recPlayer?.let {
+                it.updateProgressBar()
+                it.updateTimelineText()
+            }
+        }, 100L, true)
     }
 
     val isPlaying get() = player?.isPlaying ?: false
@@ -514,7 +608,8 @@ class RecitationPlayerService : Service() {
         val audioFile = fileUtils.getRecitationAudioFile(model.slug, chapterNo, verseNo)
 
         // Check If the audio file exists.
-        if (audioFile.exists() && audioFile.length() > 0) {
+        if (audioFile.length() > 0) {
+            Log.d(verseLoader.isPending(model.slug, chapterNo, verseNo))
             if (verseLoader.isPending(model.slug, chapterNo, verseNo)) {
                 pauseMedia()
                 verseLoadCallback.preLoad()
@@ -576,7 +671,7 @@ class RecitationPlayerService : Service() {
             return
         }
 
-        val preLoadCount = 2
+        val preLoadCount = 20
         val length = (quranMeta.getChapterVerseCount(chapterNo) - firstVerseToLoad)
             .coerceAtMost(preLoadCount - 1)
 
@@ -632,10 +727,16 @@ class RecitationPlayerService : Service() {
     }
 
     private fun setSessionState(state: Int) {
+        var progress = player?.currentPosition?.toLong() ?: 0
+
+        if (state == PlaybackState.STATE_STOPPED) {
+            progress = 0
+        }
+
         session!!.setPlaybackState(
             playbackStateBuilder.setState(
                 state,
-                player?.currentPosition?.toLong() ?: 0,
+                progress,
                 1.0f
             ).build()
         )

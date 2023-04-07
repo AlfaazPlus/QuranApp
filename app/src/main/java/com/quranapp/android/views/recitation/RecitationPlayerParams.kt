@@ -12,8 +12,6 @@ class RecitationPlayerParams() : Parcelable {
      */
     var currentVerse = Pair(-1, -1)
 
-    var nextVerse: Pair<Int, Int>? = Pair(-1, -1)
-
     /**
      * Pair<surahNo, verseNo>
      */

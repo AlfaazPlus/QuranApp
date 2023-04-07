@@ -75,6 +75,7 @@ import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
@@ -774,7 +775,12 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void setProgressAndTextArabic(float multiplier) {
         if (mLytTextSizeArabic == null) return;
+        Log.d(SPReader.getSavedTextSizeMultArabic(mLytTextSizeArabic.getRoot().getContext()), multiplier);
+
+        Log.d(SPReader.getSavedTextSizeMultTransl(mLytTextSizeArabic.getRoot().getContext()));
+
         mLytTextSizeArabic.seekbar.setProgress(ReaderTextSizeUtils.calculateProgress(multiplier));
+        mLytTextSizeArabic.seekbar.invalidate();
         final String text = ReaderTextSizeUtils.calculateProgressText(multiplier) + "%";
         mLytTextSizeArabic.progressText.setText(text);
     }

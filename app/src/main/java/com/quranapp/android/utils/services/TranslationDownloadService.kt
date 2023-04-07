@@ -148,6 +148,8 @@ class TranslationDownloadService : Service() {
 
                             emit(TranslationDownloadFlow.Progress(((progressBytes * 100) / totalBytes).toInt()))
                         }
+
+                        outS.flush()
                     }
                 }
 

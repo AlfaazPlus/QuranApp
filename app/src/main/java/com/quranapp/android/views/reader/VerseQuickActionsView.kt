@@ -48,6 +48,13 @@ class VerseQuickActionsView @JvmOverloads constructor(
     fun show(section: QuranPageSectionModel, verse: Verse) {
         if (lastSection?.quickActionsOpenedVerseNo == verse.verseNo) return
 
+        lastSection?.let {
+            it.quickActionsOpenedVerseNo = -1
+            (reader.mBinding.readerVerses.adapter as? ADPQuranPages)?.notifyItemChanged(
+                it.parentIndexInAdapter
+            )
+        }
+
         removeCallbacks(closeRunnable)
         lastSection = section
 

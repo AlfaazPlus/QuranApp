@@ -1,6 +1,7 @@
 package com.quranapp.android.views.recitation
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.*
 import android.view.LayoutInflater
 import android.view.View
@@ -108,8 +109,10 @@ class RecitationPlayer(
             })
 
             playControl.setOnClickListener {
-                if (service?.isLoadingInProgress != true) {
-                    service?.playControl()
+                if (service == null) {
+                    startRecitationService()
+                } else if (!service!!.isLoadingInProgress) {
+                    service!!.playControl()
                 }
             }
 
@@ -146,9 +149,17 @@ class RecitationPlayer(
         }
     }
 
+    private fun startRecitationService() {
+        activity.startService(Intent(activity, RecitationPlayerService::class.java))
+        activity.bindPlayerService()
+    }
+
     fun updateVerseSync(params: RecitationPlayerParams, isPlaying: Boolean) {
-        binding.verseSync.isSelected = params.syncWithVerse
-        binding.verseSync.setImageResource(if (params.syncWithVerse) R.drawable.dr_icon_locked else R.drawable.dr_icon_unlocked)
+        binding.verseSync.let {
+            it.imageAlpha = if (activity.mReaderParams.isSingleVerse) 0 else 255
+            it.isSelected = params.syncWithVerse
+            it.setImageResource(if (params.syncWithVerse) R.drawable.dr_icon_locked else R.drawable.dr_icon_unlocked)
+        }
 
         if (params.syncWithVerse && isPlaying) {
             activity.onVerseRecite(params.currentChapterNo, params.currentVerseNo, true)
@@ -169,7 +180,10 @@ class RecitationPlayer(
     }
 
     fun onStopMedia(params: RecitationPlayerParams) {
-        onPauseMedia(params)
+        activity.onVerseRecite(params.currentChapterNo, params.currentVerseNo, false)
+        updatePlayControlBtn(false)
+        updateProgressBar()
+        updateTimelineText()
     }
 
     fun onVerseReciteOrJump(chapterNo: Int, verseNo: Int) {
@@ -241,6 +255,8 @@ class RecitationPlayer(
     }
 
     fun reveal() {
+        if (parent !is View) return
+
         val parent = parent as View
         val params = parent.layoutParams
 
