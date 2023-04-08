@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets>
+    <prophet name="Adem" honorific="Alaihi Selam" order="1" />
+    <prophet name="İdris" honorific="Alaihi Selam" order="2" />
+    <prophet name="Nuh" honorific="Alaihi Selam" order="3" />
+    <prophet name="Hûd" honorific="Alaihi Selam" order="4" />
+    <prophet name="Salih" honorific="Alaihi Selam" order="5" />
+    <prophet name="İbrahim" honorific="Alaihi Selam" order="6" />
+    <prophet name="Lut" honorific="Alaihi Selam" order="7" />
+    <prophet name="İsmail" honorific="Alaihi Selam" order="8" />
+    <prophet name="İshak" honorific="Alaihi Selam" order="9" />
+    <prophet name="Yakub" honorific="Alaihi Selam" order="10" />
+    <prophet name="Yusuf" honorific="Alaihi Selam" order="11" />
+    <prophet name="Eyyub" honorific="Alaihi Selam" order="12" />
+    <prophet name="Şuayb" honorific="Alaihi Selam" order="13" />
+    <prophet name="Musa" honorific="Alaihi Selam" order="14" />
+    <prophet name="Harun" honorific="Alaihi Selam" order="15" />
+    <prophet name="Zülkifl" honorific="Alaihi Selam" order="16" />
+    <prophet name="Davud" honorific="Alaihi Selam" order="17" />
+    <prophet name="Süleyman" honorific="Alaihi Selam" order="18" />
+    <prophet name="İlyas" honorific="Alaihi Selam" order="19" />
+    <prophet name="Elyesa" honorific="Alaihi Selam" order="20" />
+    <prophet name="Yunus" honorific="Alaihi Selam" order="21" />
+    <prophet name="Zekeriya" honorific="Alaihi Selam" order="22" />
+    <prophet name="Yahya" honorific="Alaihi Selam" order="23" />
+    <prophet name="İsa" honorific="Alaihi Selam" order="24" />
+    <prophet name="Muhammed" honorific="ﷺ" order="25" />
+</prophets>
