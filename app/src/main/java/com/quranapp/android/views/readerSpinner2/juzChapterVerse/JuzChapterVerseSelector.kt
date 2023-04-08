@@ -138,7 +138,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
                 tempJuzOrChapterItemSelectListener = null
 
                 val isAlternateTab = (tab.position == 0 && juzOrChapterAdapter !is ChapterSelectorAdapter2) ||
-                    (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
+                        (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
 
                 activity?.let {
                     if (isAlternateTab) {

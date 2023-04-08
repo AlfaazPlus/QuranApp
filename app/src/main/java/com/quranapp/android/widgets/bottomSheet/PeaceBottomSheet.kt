@@ -323,6 +323,8 @@ open class PeaceBottomSheet : BottomSheetDialogFragment() {
     }
 
     fun show(fragmentManager: FragmentManager) {
+        if (isShowing()) return
+
         show(fragmentManager, javaClass.simpleName)
     }
 
