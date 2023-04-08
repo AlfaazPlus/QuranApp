@@ -4,6 +4,8 @@ Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 ### App Translations
 
+🇸🇦 Arabic (ar) - Mar
+
 🇧🇩 Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Flag_of_Kurdistan.png" alt='Kurdistan Flag' width="20" height="15"/> Kurdish (ckb) - [Goran Gharib](https://github.com/GoRan909)
