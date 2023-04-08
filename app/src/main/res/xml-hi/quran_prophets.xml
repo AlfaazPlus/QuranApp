@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets>
-    <prophet name="'आदम" honorific="उसको शांति मिले" order="1" />
-    <prophet name="इदरीस" honorific="उसको शांति मिले" order="2" />
-    <prophet name="नूह" honorific="उसको शांति मिले" order="3" />
-    <prophet name="हूद" honorific="उसको शांति मिले" order="4" />
-    <prophet name="सालेह" honorific="उसको शांति मिले" order="5" />
-    <prophet name="इब्राहीम" honorific="उसको शांति मिले" order="6" />
-    <prophet name="लूत" honorific="उसको शांति मिले" order="7" />
-    <prophet name="इस्माइल" honorific="उसको शांति मिले" order="8" />
-    <prophet name="इसहाक" honorific="उसको शांति मिले" order="9" />
-    <prophet name="याकूब" honorific="उसको शांति मिले" order="10" />
-    <prophet name="यूसुफ़" honorific="उसको शांति मिले" order="11" />
-    <prophet name="अय्यूब" honorific="उसको शांति मिले" order="12" />
-    <prophet name="शोएब" honorific="उसको शांति मिले" order="13" />
-    <prophet name="मूसा" honorific="उसको शांति मिले" order="14" />
-    <prophet name="हारुन" honorific="उसको शांति मिले" order="15" />
-    <prophet name="जुल-किफ्ल" honorific="उसको शांति मिले" order="16" />
-    <prophet name="दाऊद" honorific="उसको शांति मिले" order="17" />
-    <prophet name="सुलेमान" honorific="उसको शांति मिले" order="18" />
-    <prophet name="इलियास" honorific="उसको शांति मिले" order="19" />
-    <prophet name="अल-यासा" honorific="उसको शांति मिले" order="20" />
-    <prophet name="यूनुस" honorific="उसको शांति मिले" order="21" />
-    <prophet name="ज़कारिया" honorific="उसको शांति मिले" order="22" />
-    <prophet name="यहया" honorific="उसको शांति मिले" order="23" />
-    <prophet name="ईसा" honorific="उसको शांति मिले" order="24" />
+    <prophet name="'आदम" honorific="ؑ" order="1" />
+    <prophet name="इदरीस" honorific="ؑ" order="2" />
+    <prophet name="नूह" honorific="ؑ" order="3" />
+    <prophet name="हूद" honorific="ؑ" order="4" />
+    <prophet name="सालेह" honorific="ؑ" order="5" />
+    <prophet name="इब्राहीम" honorific="ؑ" order="6" />
+    <prophet name="लूत" honorific="ؑ" order="7" />
+    <prophet name="इस्माइल" honorific="ؑ" order="8" />
+    <prophet name="इसहाक" honorific="ؑ" order="9" />
+    <prophet name="याकूब" honorific="ؑ" order="10" />
+    <prophet name="यूसुफ़" honorific="ؑ" order="11" />
+    <prophet name="अय्यूब" honorific="ؑ" order="12" />
+    <prophet name="शोएब" honorific="ؑ" order="13" />
+    <prophet name="मूसा" honorific="ؑ" order="14" />
+    <prophet name="हारुन" honorific="ؑ" order="15" />
+    <prophet name="जुल-किफ्ल" honorific="ؑ" order="16" />
+    <prophet name="दाऊद" honorific="ؑ" order="17" />
+    <prophet name="सुलेमान" honorific="ؑ" order="18" />
+    <prophet name="इलियास" honorific="ؑ" order="19" />
+    <prophet name="अल-यासा" honorific="ؑ" order="20" />
+    <prophet name="यूनुस" honorific="ؑ" order="21" />
+    <prophet name="ज़कारिया" honorific="ؑ" order="22" />
+    <prophet name="यहया" honorific="ؑ" order="23" />
+    <prophet name="ईसा" honorific="ؑ" order="24" />
     <prophet name="मुहम्मद" honorific="ﷺ" order="25" />
 </prophets>

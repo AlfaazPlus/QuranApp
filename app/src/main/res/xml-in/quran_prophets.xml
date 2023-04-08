@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets>
-    <prophet name="ʾĀdam" honorific="Damai sejahtera baginya" order="1" />
-    <prophet name="Idris" honorific="Damai sejahtera baginya" order="2" />
-    <prophet name="Nuh" honorific="Damai sejahtera baginya" order="3" />
-    <prophet name="Hud" honorific="Damai sejahtera baginya" order="4" />
-    <prophet name="Ṣāliḥ" honorific="Damai sejahtera baginya" order="5" />
-    <prophet name="Ibrāhīm‎" honorific="Damai sejahtera baginya" order="6" />
-    <prophet name="Lūṭ" honorific="Damai sejahtera baginya" order="7" />
-    <prophet name="Ismā‘īl" honorific="Damai sejahtera baginya" order="8" />
-    <prophet name="Isḥāq" honorific="Damai sejahtera baginya" order="9" />
-    <prophet name="Yaʿqūb" honorific="Damai sejahtera baginya" order="10" />
-    <prophet name="Yūsuf" honorific="Damai sejahtera baginya" order="11" />
-    <prophet name="Ayyūb" honorific="Damai sejahtera baginya" order="12" />
-    <prophet name="Syu'aib" honorific="Damai sejahtera baginya" order="13" />
-    <prophet name="Mūsā" honorific="Damai sejahtera baginya" order="14" />
-    <prophet name="Hārūn" honorific="Damai sejahtera baginya" order="15" />
-    <prophet name="Żulkifli" honorific="Damai sejahtera baginya" order="16" />
-    <prophet name="Dāwūd" honorific="Damai sejahtera baginya" order="17" />
-    <prophet name="Sulaimān" honorific="Damai sejahtera baginya" order="18" />
-    <prophet name="Ilyās" honorific="Damai sejahtera baginya" order="19" />
-    <prophet name="Ilyasa'" honorific="Damai sejahtera baginya" order="20" />
-    <prophet name="Yūnus" honorific="Damai sejahtera baginya" order="21" />
-    <prophet name="Zakariyya" honorific="Damai sejahtera baginya" order="22" />
-    <prophet name="Yaḥyā" honorific="Damai sejahtera baginya" order="23" />
-    <prophet name="Isa" honorific="Damai sejahtera baginya" order="24" />
+    <prophet name="ʾĀdam" honorific="ؑ" order="1" />
+    <prophet name="Idris" honorific="ؑ" order="2" />
+    <prophet name="Nuh" honorific="ؑ" order="3" />
+    <prophet name="Hud" honorific="ؑ" order="4" />
+    <prophet name="Ṣāliḥ" honorific="ؑ" order="5" />
+    <prophet name="Ibrāhīm‎" honorific="ؑ" order="6" />
+    <prophet name="Lūṭ" honorific="ؑ" order="7" />
+    <prophet name="Ismā‘īl" honorific="ؑ" order="8" />
+    <prophet name="Isḥāq" honorific="ؑ" order="9" />
+    <prophet name="Yaʿqūb" honorific="ؑ" order="10" />
+    <prophet name="Yūsuf" honorific="ؑ" order="11" />
+    <prophet name="Ayyūb" honorific="ؑ" order="12" />
+    <prophet name="Syu'aib" honorific="ؑ" order="13" />
+    <prophet name="Mūsā" honorific="ؑ" order="14" />
+    <prophet name="Hārūn" honorific="ؑ" order="15" />
+    <prophet name="Żulkifli" honorific="ؑ" order="16" />
+    <prophet name="Dāwūd" honorific="ؑ" order="17" />
+    <prophet name="Sulaimān" honorific="ؑ" order="18" />
+    <prophet name="Ilyās" honorific="ؑ" order="19" />
+    <prophet name="Ilyasa'" honorific="ؑ" order="20" />
+    <prophet name="Yūnus" honorific="ؑ" order="21" />
+    <prophet name="Zakariyya" honorific="ؑ" order="22" />
+    <prophet name="Yaḥyā" honorific="ؑ" order="23" />
+    <prophet name="Isa" honorific="ؑ" order="24" />
     <prophet name="Muhammad" honorific="ﷺ" order="25" />
 </prophets>

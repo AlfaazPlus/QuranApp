@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets>
-    <prophet name="آدَم" honorific="درود بر او" order="1" />
-    <prophet name="اِدْریس" honorific="درود بر او" order="2" />
-    <prophet name="نوح" honorific="درود بر او" order="3" />
-    <prophet name="هود" honorific="درود بر او" order="4" />
-    <prophet name="صالح" honorific="درود بر او" order="5" />
-    <prophet name="ابراهیم" honorific="درود بر او" order="6" />
-    <prophet name="لوط" honorific="درود بر او" order="7" />
-    <prophet name="اسمایل" honorific="درود بر او" order="8" />
-    <prophet name="اسحاق" honorific="درود بر او" order="9" />
-    <prophet name="یعقوب" honorific="درود بر او" order="10" />
-    <prophet name="یوسف" honorific="درود بر او" order="11" />
-    <prophet name="ایوب" honorific="درود بر او" order="12" />
-    <prophet name="شعیب" honorific="درود بر او" order="13" />
-    <prophet name="موسی" honorific="درود بر او" order="14" />
-    <prophet name="هارون" honorific="درود بر او" order="15" />
-    <prophet name="ذوالکِفل" honorific="درود بر او" order="16" />
-    <prophet name="داوود" honorific="درود بر او" order="17" />
-    <prophet name="سلیمان" honorific="درود بر او" order="18" />
-    <prophet name="الیاس" honorific="درود بر او" order="19" />
-    <prophet name="الیسع" honorific="درود بر او" order="20" />
-    <prophet name="یونس" honorific="درود بر او" order="21" />
-    <prophet name="زکریا" honorific="درود بر او" order="22" />
-    <prophet name="یحیی" honorific="درود بر او" order="23" />
-    <prophet name="عیسی" honorific="درود بر او" order="24" />
+    <prophet name="آدَم" honorific="علیه و آله السّلام" order="1" />
+    <prophet name="اِدْریس" honorific="علیه و آله السّلام" order="2" />
+    <prophet name="نوح" honorific="علیه و آله السّلام" order="3" />
+    <prophet name="هود" honorific="علیه و آله السّلام" order="4" />
+    <prophet name="صالح" honorific="علیه و آله السّلام" order="5" />
+    <prophet name="ابراهیم" honorific="علیه و آله السّلام" order="6" />
+    <prophet name="لوط" honorific="علیه و آله السّلام" order="7" />
+    <prophet name="اسمایل" honorific="علیه و آله السّلام" order="8" />
+    <prophet name="اسحاق" honorific="علیه و آله السّلام" order="9" />
+    <prophet name="یعقوب" honorific="علیه و آله السّلام" order="10" />
+    <prophet name="یوسف" honorific="علیه و آله السّلام" order="11" />
+    <prophet name="ایوب" honorific="علیه و آله السّلام" order="12" />
+    <prophet name="شعیب" honorific="علیه و آله السّلام" order="13" />
+    <prophet name="موسی" honorific="علیه و آله السّلام" order="14" />
+    <prophet name="هارون" honorific="علیه و آله السّلام" order="15" />
+    <prophet name="ذوالکِفل" honorific="علیه و آله السّلام" order="16" />
+    <prophet name="داوود" honorific="علیه و آله السّلام" order="17" />
+    <prophet name="سلیمان" honorific="علیه و آله السّلام" order="18" />
+    <prophet name="الیاس" honorific="علیه و آله السّلام" order="19" />
+    <prophet name="الیسع" honorific="علیه و آله السّلام" order="20" />
+    <prophet name="یونس" honorific="علیه و آله السّلام" order="21" />
+    <prophet name="زکریا" honorific="علیه و آله السّلام" order="22" />
+    <prophet name="یحیی" honorific="علیه و آله السّلام" order="23" />
+    <prophet name="عیسی" honorific="علیه و آله السّلام" order="24" />
     <prophet name="محمد" honorific="ﷺ" order="25" />
 </prophets>

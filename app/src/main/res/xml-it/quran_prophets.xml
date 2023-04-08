@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets>
-    <prophet name="Adam" honorific="Che la pace sia con lui" order="1" />
-    <prophet name="Idrees" honorific="Che la pace sia con lui" order="2" />
-    <prophet name="Nuh" honorific="Che la pace sia con lui" order="3" />
-    <prophet name="Hud" honorific="Che la pace sia con lui" order="4" />
-    <prophet name="Saleh" honorific="Che la pace sia con lui" order="5" />
-    <prophet name="Ibrahim" honorific="Che la pace sia con lui" order="6" />
-    <prophet name="Lut" honorific="Che la pace sia con lui" order="7" />
-    <prophet name="Ismail" honorific="Che la pace sia con lui" order="8" />
-    <prophet name="Ishaq" honorific="Che la pace sia con lui" order="9" />
-    <prophet name="Yaqub" honorific="Che la pace sia con lui" order="10" />
-    <prophet name="Yusuf" honorific="Che la pace sia con lui" order="11" />
-    <prophet name="Ayyub" honorific="Che la pace sia con lui" order="12" />
-    <prophet name="Shu’aib" honorific="Che la pace sia con lui" order="13" />
-    <prophet name="Musa" honorific="Che la pace sia con lui" order="14" />
-    <prophet name="Harun" honorific="Che la pace sia con lui" order="15" />
-    <prophet name="Dhul-Kifl" honorific="Che la pace sia con lui" order="16" />
-    <prophet name="Dawud" honorific="Che la pace sia con lui" order="17" />
-    <prophet name="Sulayman" honorific="Che la pace sia con lui" order="18" />
-    <prophet name="Iliyas" honorific="Che la pace sia con lui" order="19" />
-    <prophet name="Al-Yasaa" honorific="Che la pace sia con lui" order="20" />
-    <prophet name="Yunus" honorific="Che la pace sia con lui" order="21" />
-    <prophet name="Zakariyya" honorific="Che la pace sia con lui" order="22" />
-    <prophet name="Yahya" honorific="Che la pace sia con lui" order="23" />
-    <prophet name="Isa Ibn Maryam" honorific="Che la pace sia con lui" order="24" />
+    <prophet name="Adam" honorific="Pace sia con lui" order="1" />
+    <prophet name="Idrees" honorific="Pace sia con lui" order="2" />
+    <prophet name="Nuh" honorific="Pace sia con lui" order="3" />
+    <prophet name="Hud" honorific="Pace sia con lui" order="4" />
+    <prophet name="Saleh" honorific="Pace sia con lui" order="5" />
+    <prophet name="Ibrahim" honorific="Pace sia con lui" order="6" />
+    <prophet name="Lut" honorific="Pace sia con lui" order="7" />
+    <prophet name="Ismail" honorific="Pace sia con lui" order="8" />
+    <prophet name="Ishaq" honorific="Pace sia con lui" order="9" />
+    <prophet name="Yaqub" honorific="Pace sia con lui" order="10" />
+    <prophet name="Yusuf" honorific="Pace sia con lui" order="11" />
+    <prophet name="Ayyub" honorific="Pace sia con lui" order="12" />
+    <prophet name="Shu’aib" honorific="Pace sia con lui" order="13" />
+    <prophet name="Musa" honorific="Pace sia con lui" order="14" />
+    <prophet name="Harun" honorific="Pace sia con lui" order="15" />
+    <prophet name="Dhul-Kifl" honorific="Pace sia con lui" order="16" />
+    <prophet name="Dawud" honorific="Pace sia con lui" order="17" />
+    <prophet name="Sulayman" honorific="Pace sia con lui" order="18" />
+    <prophet name="Iliyas" honorific="Pace sia con lui" order="19" />
+    <prophet name="Al-Yasaa" honorific="Pace sia con lui" order="20" />
+    <prophet name="Yunus" honorific="Pace sia con lui" order="21" />
+    <prophet name="Zakariyya" honorific="Pace sia con lui" order="22" />
+    <prophet name="Yahya" honorific="Pace sia con lui" order="23" />
+    <prophet name="Isa Ibn Maryam" honorific="Pace sia con lui" order="24" />
     <prophet name="Muhammad" honorific="ﷺ" order="25" />
 </prophets>
