@@ -7,7 +7,7 @@
     <string name="strVersion" formatted="false">പതിപ്പ് %s</string>
     <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
     <string name="strLabelCancel">റദ്ദാക്കുക</string>
-    <string name="strLabelGotIt">പിടി കിട്ടി</string>
+    <string name="strLabelGotIt">കിട്ടി</string>
     <string name="strLabelApply">പ്രയോഗിക്കുക</string>
     <string name="strLabelSend">അയക്കുക</string>
     <string name="strLabelDelete">ഇല്ലാതാക്കുക</string>
@@ -36,7 +36,7 @@
     <string name="strLabelNext">അടുത്തത്</string>
     <string name="strLabelNotNow">ഇപ്പോള്‍ വേണ്ട</string>
     <string name="strLabelStart">ആരംഭിക്കുക</string>
-    <string name="strLabelPrevious">മുന്പിലേത്തത്</string>
+    <string name="strLabelPrevious">മുൻപത്തേത്</string>
     <string name="strLabelDownloadNow">ഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
     <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
