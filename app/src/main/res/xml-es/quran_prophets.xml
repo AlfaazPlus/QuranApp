@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets>
+    <prophet name="Adán" honorific="La paz sea con él" order="1" />
+    <prophet name="ʾIdrīs" honorific="La paz sea con él" order="2" />
+    <prophet name="Noé" honorific="La paz sea con él" order="3" />
+    <prophet name="Hud" honorific="La paz sea con él" order="4" />
+    <prophet name="Salé" honorific="La paz sea con él" order="5" />
+    <prophet name="Ibrahim" honorific="La paz sea con él" order="6" />
+    <prophet name="Lut" honorific="La paz sea con él" order="7" />
+    <prophet name="Ismael" honorific="La paz sea con él" order="8" />
+    <prophet name="Isaac" honorific="La paz sea con él" order="9" />
+    <prophet name="Jacob" honorific="La paz sea con él" order="10" />
+    <prophet name="Yusuf" honorific="La paz sea con él" order="11" />
+    <prophet name="Ayoub" honorific="La paz sea con él" order="12" />
+    <prophet name="Shoaib" honorific="La paz sea con él" order="13" />
+    <prophet name="Musa" honorific="La paz sea con él" order="14" />
+    <prophet name="Aarón" honorific="La paz sea con él" order="15" />
+    <prophet name="Zul-Kifl " honorific="La paz sea con él" order="16" />
+    <prophet name="Dawud" honorific="La paz sea con él" order="17" />
+    <prophet name="Solimán" honorific="La paz sea con él" order="18" />
+    <prophet name="Elias" honorific="La paz sea con él" order="19" />
+    <prophet name="Elíseo" honorific="La paz sea con él" order="20" />
+    <prophet name="Younes" honorific="La paz sea con él" order="21" />
+    <prophet name="Zakariyya" honorific="La paz sea con él" order="22" />
+    <prophet name="Yahya" honorific="La paz sea con él" order="23" />
+    <prophet name="Jesús" honorific="La paz sea con él" order="24" />
+    <prophet name="Muhammed" honorific="ﷺ" order="25" />
+</prophets>
