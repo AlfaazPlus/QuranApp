@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.quranapp.android.R;
@@ -20,6 +21,7 @@ import com.quranapp.android.frags.readerindex.FragReaderIndexChapters;
 import com.quranapp.android.frags.readerindex.FragReaderIndexFavChapters;
 import com.quranapp.android.frags.readerindex.FragReaderIndexJuz;
 import com.quranapp.android.interfaceUtils.readerIndex.FragReaderIndexCallback;
+import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
 
 import java.util.ArrayList;
@@ -61,6 +63,13 @@ public class ActivityReaderIndexPage extends BaseActivity {
         mBinding.viewPager.setAdapter(adapter);
         mBinding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
         mBinding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        mBinding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                ViewKt.disableView(mBinding.header.sort, position == 2);
+            }
+        });
     }
 
     private void initTabs() {
