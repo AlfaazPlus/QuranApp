@@ -154,6 +154,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         public void onServiceDisconnected(ComponentName name) {
             mPlayerService.setRecitationPlayer(null, null);
             mPlayerService = null;
+            Log.d(name);
         }
     };
     private ReadHistoryDBHelper mReadHistoryDBHelper;
@@ -210,10 +211,6 @@ public class ActivityReader extends ReaderPossessingActivity {
             mPlayerService.destroy();
         }
 
-        /*if (mReceiver != null) {
-            unregisterReceiver(mReceiver);
-        }*/
-
         if (mReadHistoryDBHelper != null) {
             mReadHistoryDBHelper.close();
         }
@@ -244,7 +241,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             Context.BIND_AUTO_CREATE);
     }
 
-    private void unbindPlayerService() {
+    public void unbindPlayerService() {
         if (mPlayerService == null) {
             return;
         }
@@ -731,8 +728,8 @@ public class ActivityReader extends ReaderPossessingActivity {
                 mPlayer.reveal();
                 if (mPlayerService != null && mPlayerService.isPlaying()) {
                     mNavigator.pendingScrollVerse = new int[]{
-                        mPlayerService.getRecParams().getCurrentChapterNo(),
-                        mPlayerService.getRecParams().getCurrentVerseNo()
+                        mPlayerService.p().getCurrentChapterNo(),
+                        mPlayerService.p().getCurrentVerseNo()
                     };
                     mNavigator.pendingScrollVerseHighlight = false;
                 }
@@ -1053,6 +1050,14 @@ public class ActivityReader extends ReaderPossessingActivity {
         mActionController.onVerseRecite(chapterNo, verseNo, reciting);
         updateVerseNumber(chapterNo, verseNo);
 
+        if (mReaderParams.isSingleVerse()) {
+            mNavigator.jumpToVerse(chapterNo, verseNo, false);
+        }
+
+        if (mPlayerService == null) {
+            return;
+        }
+
         final RecyclerView.Adapter<?> adp = mBinding.readerVerses.getAdapter();
         if (adp instanceof ADPReader) {
             onVerseReciteNonPage((ADPReader) adp, chapterNo, verseNo, reciting);
@@ -1062,10 +1067,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void onVerseReciteNonPage(ADPReader adapter, int chapterNo, int verseNo, boolean reciting) {
-        if (mPlayerService == null) {
-            return;
-        }
-
         for (int i = 0, l = adapter.getItemCount(); i < l; i++) {
             final ReaderRecyclerItemModel item = adapter.getItem(i);
 
@@ -1078,7 +1079,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             Verse verse = item.getVerse();
             final boolean isCurrVerse = verse.chapterNo == chapterNo && verse.verseNo == verseNo;
             final boolean bool = reciting && isCurrVerse;
-            if (bool && mPlayerService.getRecParams().getSyncWithVerse()) {
+            if (bool && mPlayerService.p().getSyncWithVerse()) {
                 mLayoutManager.scrollToPositionWithOffset(i, 0);
             }
         }
@@ -1110,7 +1111,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                 final boolean isCurrVerse = section.getChapterNo() == chapterNo && section.hasVerse(verseNo);
                 final boolean bool = reciting && isCurrVerse;
 
-                if (bool && mPlayerService.getRecParams().getSyncWithVerse()) {
+                if (bool && mPlayerService.p().getSyncWithVerse()) {
                     mNavigator.scrollToVerseOnPageValidate(pos, verseNo, mLayoutManager.findViewByPosition(pos),
                         section, false);
                     break outer;
@@ -1119,22 +1120,15 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
     }
 
-    public void onVerseReciteOrJump(int chapterNo, int verseNo, boolean fromPlayer) {
-        if (mPlayerService == null || mPlayer == null) {
+    public void onVerseJump(int chapterNo, int verseNo) {
+        if (mPlayerService == null || !mReaderParams.isSingleVerse()) {
             return;
         }
 
-        if (mReaderParams.isSingleVerse()) {
-            if (fromPlayer) {
-                mNavigator.jumpToVerse(chapterNo, verseNo, false);
-            } else {
-                if (mPlayerService.getRecParams().getPreviouslyPlaying()) {
-                    mPlayerService.reciteVerse(chapterNo, verseNo);
-                }
-            }
-
-            mPlayerService.getRecParams().setFirstVerse(new Pair<>(chapterNo, verseNo));
-            mPlayerService.getRecParams().setLastVerse(new Pair<>(chapterNo, verseNo));
+        RecitationPlayerParams recParams = mPlayerService.p();
+        Log.d(recParams);
+        if (recParams.getPreviouslyPlaying()) {
+            mPlayerService.reciteVerse(chapterNo, verseNo);
         }
     }
 
@@ -1194,11 +1188,11 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     private void tryReciterChange() {
         if (mPlayerService == null || Objects.equals(SPReader.getSavedRecitationSlug(this),
-            mPlayerService.getRecParams().getCurrentReciter())) {
+            mPlayerService.p().getCurrentReciter())) {
             return;
         }
 
-        boolean wasPlaying = mPlayerService.getRecParams().getPreviouslyPlaying();
+        boolean wasPlaying = mPlayerService.p().getPreviouslyPlaying();
         mPlayerService.release();
 
         if (wasPlaying) {
@@ -1223,8 +1217,8 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (translChanged) {
             mActionController.showLoader();
-            if (mPlayerService != null && mPlayerService.isPlaying() && mPlayerService.getRecParams().getSyncWithVerse()) {
-                RecitationPlayerParams P = mPlayerService.getRecParams();
+            if (mPlayerService != null && mPlayerService.isPlaying() && mPlayerService.p().getSyncWithVerse()) {
+                RecitationPlayerParams P = mPlayerService.p();
                 mNavigator.pendingScrollVerse = new int[]{P.getCurrentChapterNo(), P.getCurrentVerseNo()};
             } else {
                 final int firstPos = mLayoutManager.findFirstVisibleItemPosition();

@@ -622,7 +622,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         if (mActivity.mReaderParams.isSingleVerse()) {
             chapterNo = P.getCurrChapterNo();
             verseNo = P.getCurrVerseNo() - 1;
-            mActivity.onVerseReciteOrJump(chapterNo, verseNo, true);
+            // mActivity.onVerseReciteOrJump(chapterNo, verseNo, true);
         } else {
             final int[] previousVerseJUZ = P.getPreviousVerse(mActivity.mQuranMetaRef.get());
             chapterNo = previousVerseJUZ[0];
@@ -646,7 +646,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         if (mActivity.mReaderParams.isSingleVerse()) {
             chapterNo = P.getCurrChapterNo();
             verseNo = P.getCurrVerseNo() + 1;
-            mActivity.onVerseReciteOrJump(chapterNo, verseNo, true);
+            // mActivity.onVerseReciteOrJump(chapterNo, verseNo, true);
         } else {
             final int[] nextVerseJUZ = P.getNextVerse(mActivity.mQuranMetaRef.get());
             chapterNo = nextVerseJUZ[0];

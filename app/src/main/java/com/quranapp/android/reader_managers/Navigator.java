@@ -284,13 +284,15 @@ public class Navigator {
 
     public void jumpToVerse(int chapterNo, int verseNo, boolean invokePlayer) {
         QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
-        if (mReaderParams.readType != READER_READ_TYPE_JUZ && !quranMeta.isVerseValid4Chapter(getCurrChapterNo(),
-            verseNo)) {
+        if (
+            mReaderParams.readType != READER_READ_TYPE_JUZ
+                && !quranMeta.isVerseValid4Chapter(getCurrChapterNo(), verseNo)
+        ) {
             return;
         }
 
         if (invokePlayer) {
-            mActivity.onVerseReciteOrJump(chapterNo, verseNo, false);
+            mActivity.onVerseJump(chapterNo, verseNo);
         }
 
         switch (mReaderParams.readType) {

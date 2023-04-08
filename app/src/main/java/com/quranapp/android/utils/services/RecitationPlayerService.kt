@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Binder
 import android.os.Handler
@@ -12,6 +11,7 @@ import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
 import com.quranapp.android.R
@@ -51,7 +51,6 @@ class RecitationPlayerService : Service() {
     private val playbackStateBuilder = PlaybackStateCompat.Builder().setActions(
         PlaybackStateCompat.ACTION_PLAY
                 or PlaybackStateCompat.ACTION_PAUSE
-                or PlaybackStateCompat.ACTION_STOP
                 or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
                 or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
                 or PlaybackStateCompat.ACTION_SEEK_TO
@@ -64,7 +63,6 @@ class RecitationPlayerService : Service() {
     private var activity: ActivityReader? = null
     private var quranMeta: QuranMeta? = null
     var recPlayer: RecitationPlayer? = null
-    private var playerProgressRunner: Runnable? = null
     private val verseLoader = RecitationPlayerVerseLoader()
     private val verseLoadCallback = RecitationPlayerVerseLoadCallback(this)
 
@@ -104,20 +102,16 @@ class RecitationPlayerService : Service() {
                     playControl()
                 }
 
-                override fun onStop() {
-                    stopMedia()
-                }
-
                 override fun onSeekTo(pos: Long) {
                     seek(pos.toInt())
                 }
 
                 override fun onSkipToPrevious() {
-                    recitePreviousVerse(activity?.mReaderParams?.isSingleVerse ?: false)
+                    recitePreviousVerse()
                 }
 
                 override fun onSkipToNext() {
-                    reciteNextVerse(activity?.mReaderParams?.isSingleVerse ?: false)
+                    reciteNextVerse()
                 }
             })
         }
@@ -138,25 +132,40 @@ class RecitationPlayerService : Service() {
 
         verseLoader.cancelAll()
         session?.release()
-        notifHelper.showNotification(PlaybackStateCompat.ACTION_STOP)
+
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     fun release() {
-        player?.let {
-            it.stop()
-            it.reset()
-            it.release()
-            player = null
-            nextPlayer = null
-        }
-
+        setSessionState(PlaybackStateCompat.STATE_STOPPED)
         session?.isActive = false
+
+        try {
+            player?.let {
+                it.stop()
+                it.reset()
+                it.release()
+                player = null
+            }
+
+            nextPlayer?.let {
+                it.stop()
+                it.reset()
+                it.release()
+                nextPlayer = null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
         recParams.currentVerse = Pair(chapterNo, fromVerse)
         recParams.firstVerse = Pair(chapterNo, fromVerse)
         recParams.lastVerse = Pair(chapterNo, toVerse)
+
+        Log.d("onChapterChanged: ${recParams.firstVerse} to ${recParams.lastVerse}")
     }
 
     fun onJuzChanged(juzNo: Int, quranMeta: QuranMeta) {
@@ -167,6 +176,8 @@ class RecitationPlayerService : Service() {
         recParams.firstVerse = Pair(firstChapter, firstVerse)
         recParams.lastVerse = Pair(lastChapter, lastVerse)
         recParams.currentVerse = recParams.firstVerse
+
+        Log.d("onJuzChanged: ${recParams.firstVerse} to ${recParams.lastVerse}")
     }
 
     private fun sync() {
@@ -176,7 +187,6 @@ class RecitationPlayerService : Service() {
             it.binding.progress.max = ((player?.duration ?: 1) / MILLIS_MULTIPLIER).coerceAtLeast(0)
             it.updateProgressBar()
             it.updateTimelineText()
-            it.onVerseReciteOrJump(recParams.currentVerse.first, recParams.currentVerse.second)
             it.updateVerseSync(recParams, isPlaying)
             it.setupOnLoadingInProgress(isLoadingInProgress)
 
@@ -260,6 +270,8 @@ class RecitationPlayerService : Service() {
             return
         }
 
+        Log.d("PLAYING COMPLETED, but next player is null")
+
         recParams.currentVerseCompleted = true
 
         release()
@@ -269,34 +281,40 @@ class RecitationPlayerService : Service() {
             return
         }
 
-        val (canContinue, isSingleVerseMode) = canContinuePlaying()
+        val canContinue = canContinuePlaying()
         recParams.currentRangeCompleted = !canContinue
 
         if (canContinue) {
-            reciteNextVerse(isSingleVerseMode)
+            reciteNextVerse()
         } else {
             pauseMedia()
         }
     }
 
-    private fun canContinuePlaying(): Pair<Boolean, Boolean> {
+    private fun canContinuePlaying(): Boolean {
         val continueNext = recParams.continueRange && recParams.hasNextVerse(quranMeta!!)
 
         val verseValid = quranMeta!!.isVerseValid4Chapter(recParams.currentChapterNo, recParams.currentVerseNo + 1)
         val isSingleVerseMode = activity?.mReaderParams?.isSingleVerse ?: false
         val continueNextSingle = recParams.continueRange && isSingleVerseMode && verseValid
 
-        return Pair(continueNext || continueNextSingle, isSingleVerseMode)
+        return continueNext || continueNextSingle
     }
 
     private fun prepareNextPlayer(curPlayer: MediaPlayer) {
-        curPlayer.let {
-            it.setOnCompletionListener { onPlayingCompleted() }
+        curPlayer.setOnCompletionListener { onPlayingCompleted() }
+        curPlayer.setOnErrorListener { _, what, extra ->
+            Log.d("CURRENT PLAYER ERROR: $what, $extra")
+            return@setOnErrorListener true
+        }
+        curPlayer.setOnInfoListener { _, what, extra ->
+            Log.d("CURRENT PLAYER INFO: $what, $extra")
+            return@setOnInfoListener true
         }
 
         val reciter = recParams.currentReciter
 
-        if (reciter == null || quranMeta == null || !canContinuePlaying().first) return
+        if (reciter == null || quranMeta == null || !canContinuePlaying()) return
 
         val (nextChapterNo, nextVerseNo) = recParams.getNextVerse(quranMeta!!)
 
@@ -306,17 +324,21 @@ class RecitationPlayerService : Service() {
         val audioURI: Uri = fileUtils.getFileURI(audioFile)
         nextPlayer = MediaPlayer.create(this, audioURI)
 
-        Log.d("NEXT VERSE: ($nextChapterNo, $nextVerseNo), URI: $audioURI)")
+        Log.d("NEXT VERSE: ($nextChapterNo, $nextVerseNo), $nextPlayer, URI: $audioURI)")
 
         if (nextPlayer == null) {
             return
         }
 
         curPlayer.setNextMediaPlayer(nextPlayer)
+        nextPlayer!!.setOnErrorListener { _, what, extra ->
+            Log.d("NEXT PLAYER ERROR: $what, $extra")
+            return@setOnErrorListener true
+        }
         nextPlayer!!.setOnInfoListener { mp, what, _ ->
             if (what == MediaPlayer.MEDIA_INFO_STARTED_AS_NEXT) {
+                Log.d("NEXT PLAYER STARTED ($nextChapterNo, $nextVerseNo)")
                 onPreparePlayer(mp, audioURI, reciter, nextChapterNo, nextVerseNo, false)
-                recPlayer?.onVerseReciteOrJump(nextChapterNo, nextChapterNo)
             }
 
             return@setOnInfoListener true
@@ -363,10 +385,12 @@ class RecitationPlayerService : Service() {
         }
     }
 
-    fun playMedia(play: Boolean = true) {
+    fun playMedia(startPlayer: Boolean = true) {
+        Log.d("PLAYING MEDIA: $startPlayer")
+
         player?.let {
             try {
-                if (play) it.start()
+                if (startPlayer) it.start()
             } catch (_: Exception) {
                 // Not initialized yet
             }
@@ -383,11 +407,7 @@ class RecitationPlayerService : Service() {
         notifHelper.showNotification(PlaybackStateCompat.ACTION_PLAY)
         ContextCompat.startForegroundService(this, Intent(this, RecitationPlayerService::class.java))
 
-        Log.d(
-            "Curr - " + recParams.currentVerse.first + ":" + recParams.currentVerse.second,
-            recParams.firstVerse.first
-                .toString() + ":" + recParams.firstVerse.second + " - " + recParams.lastVerse.first + ":" + recParams.lastVerse.second
-        )
+        Log.d("CURRENT: ${recParams.currentVerse} RANGE: ${recParams.firstVerse} to ${recParams.lastVerse}")
 
         recParams.previouslyPlaying = true
     }
@@ -407,29 +427,21 @@ class RecitationPlayerService : Service() {
     }
 
     fun stopMedia() {
-        if (isPlaying) {
-            release()
-            progressHandler?.removeCallbacksAndMessages(null)
-        }
-
-        setSessionState(PlaybackStateCompat.STATE_STOPPED)
-        notifHelper.showNotification(PlaybackStateCompat.ACTION_STOP)
-        recParams.previouslyPlaying = false
-
+        destroy()
         recPlayer?.onStopMedia(recParams)
     }
 
     fun playControl() {
-        if (recParams.currentRangeCompleted && recParams.currentVerseCompleted) {
+        if (recParams.currentRangeCompleted) {
             restartRange()
+        } else if (recParams.currentVerseCompleted) {
+            restartVerse()
         } else if (player != null) {
             if (isPlaying) {
                 pauseMedia()
             } else {
                 playMedia()
             }
-        } else {
-            restartVerse()
         }
     }
 
@@ -459,7 +471,10 @@ class RecitationPlayerService : Service() {
         }
 
         p.seekTo(seekFinal)
-        setSessionState(PlaybackStateCompat.STATE_PLAYING)
+        setSessionState(
+            if (isPlaying) PlaybackStateCompat.STATE_PLAYING
+            else PlaybackStateCompat.STATE_PAUSED,
+        )
 
         recPlayer?.let {
             it.updateTimelineText()
@@ -497,42 +512,30 @@ class RecitationPlayerService : Service() {
     fun isReciting(chapterNo: Int, verseNo: Int) = recParams.isCurrentVerse(chapterNo, verseNo) && isPlaying
 
 
-    fun recitePreviousVerse(isSingleVerseMode: Boolean) {
+    fun recitePreviousVerse() {
         if (isLoadingInProgress || quranMeta == null) return
 
         val chapterNo: Int
         val verseNo: Int
 
-        if (isSingleVerseMode) {
-            chapterNo = recParams.currentChapterNo
-            verseNo = recParams.currentVerseNo - 1
-            recPlayer?.onVerseReciteOrJump(chapterNo, verseNo)
-        } else {
-            val previousVerse = recParams.getPreviousVerse(quranMeta!!)
-            chapterNo = previousVerse.first
-            verseNo = previousVerse.second
-        }
+        val previousVerse = recParams.getPreviousVerse(quranMeta!!)
+        chapterNo = previousVerse.first
+        verseNo = previousVerse.second
 
         Log.d("PREV VERSE - $chapterNo:$verseNo")
 
         reciteVerse(chapterNo, verseNo)
     }
 
-    fun reciteNextVerse(isSingleVerseMode: Boolean) {
+    fun reciteNextVerse() {
         if (isLoadingInProgress || quranMeta == null) return
 
         val chapterNo: Int
         val verseNo: Int
 
-        if (isSingleVerseMode) {
-            chapterNo = recParams.currentChapterNo
-            verseNo = recParams.currentVerseNo + 1
-            recPlayer?.onVerseReciteOrJump(chapterNo, verseNo)
-        } else {
-            val nextVerse = recParams.getNextVerse(quranMeta!!)
-            chapterNo = nextVerse.first
-            verseNo = nextVerse.second
-        }
+        val nextVerse = recParams.getNextVerse(quranMeta!!)
+        chapterNo = nextVerse.first
+        verseNo = nextVerse.second
 
         Log.d("NEXT VERSE - $chapterNo:$verseNo")
 
@@ -609,7 +612,6 @@ class RecitationPlayerService : Service() {
 
         // Check If the audio file exists.
         if (audioFile.length() > 0) {
-            Log.d(verseLoader.isPending(model.slug, chapterNo, verseNo))
             if (verseLoader.isPending(model.slug, chapterNo, verseNo)) {
                 pauseMedia()
                 verseLoadCallback.preLoad()
@@ -729,7 +731,7 @@ class RecitationPlayerService : Service() {
     private fun setSessionState(state: Int) {
         var progress = player?.currentPosition?.toLong() ?: 0
 
-        if (state == PlaybackState.STATE_STOPPED) {
+        if (state == PlaybackStateCompat.STATE_STOPPED) {
             progress = 0
         }
 

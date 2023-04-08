@@ -129,10 +129,10 @@ class RecitationPlayer(
             }
 
             prevVerse.setOnClickListener {
-                service?.recitePreviousVerse(activity.mReaderParams.isSingleVerse)
+                service?.recitePreviousVerse()
             }
             nextVerse.setOnClickListener {
-                service?.reciteNextVerse(activity.mReaderParams.isSingleVerse)
+                service?.reciteNextVerse()
             }
 
             verseSync.imageAlpha = 0
@@ -182,26 +182,22 @@ class RecitationPlayer(
     fun onStopMedia(params: RecitationPlayerParams) {
         activity.onVerseRecite(params.currentChapterNo, params.currentVerseNo, false)
         updatePlayControlBtn(false)
-        updateProgressBar()
-        updateTimelineText()
-    }
-
-    fun onVerseReciteOrJump(chapterNo: Int, verseNo: Int) {
-        activity.onVerseReciteOrJump(chapterNo, verseNo, true)
+        updateProgressBar(0)
+        updateTimelineText(0)
     }
 
     fun reciteControl(chapterNo: Int, verseNo: Int) {
         service?.reciteControl(chapterNo, verseNo)
     }
 
-
     private fun updatePlayControlBtn(playing: Boolean) {
         binding.playControl.setImageResource(if (playing) R.drawable.dr_icon_pause2 else R.drawable.dr_icon_play2)
     }
 
-    fun updateProgressBar() {
-        val progress = if (service != null) service!!.currentPosition / RecitationPlayerService.MILLIS_MULTIPLIER
-        else 0
+    fun updateProgressBar(forceProgress: Int = -1) {
+        val progress = if (forceProgress != -1) forceProgress
+        else if (service == null) 0
+        else service!!.currentPosition / RecitationPlayerService.MILLIS_MULTIPLIER
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.progress.setProgress(progress, true)
@@ -210,11 +206,15 @@ class RecitationPlayer(
         }
     }
 
-    fun updateTimelineText() {
+    fun updateTimelineText(forceProgress: Long = -1L) {
+        val progress = if (forceProgress != -1L) forceProgress
+        else if (service == null) 0
+        else service!!.currentPosition.toLong()
+
         binding.progressText.text = String.format(
             Locale.getDefault(),
             "%s / %s",
-            formatTime(service?.currentPosition?.toLong() ?: 0),
+            formatTime(progress),
             formatTime(service?.duration?.toLong() ?: 0)
         )
     }
