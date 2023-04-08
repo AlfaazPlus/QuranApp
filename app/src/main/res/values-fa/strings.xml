@@ -321,7 +321,10 @@
     <string name="msgDownloadingResource" formatted="false">در حال دانلود %s</string>
     <string name="msgAnotherDownloadInProgress">دانلود دیگری در حال انجام است.</string>
     <string name="lastCrashLog">آخرین گزارش خرابی</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s %2$s باید دوباره آن را دانلود کنید.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n %2$s
+\n
+\nباید دوباره آن را دانلود کنید.</string>
     <string name="onboardDescTheme">همیشه می توانید بعداً این را تغییر دهید.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d اسکریپت دانلود شده و فونت آنها را می توان آزاد کرد.</string>
     <string name="titleTafsirCleanup">تفسیر حذف شود؟</string>
@@ -341,7 +344,8 @@
     <string name="translationCanBeFreedUp" formatted="false">%d ترجمه دانلود شده را می توان آزاد کرد.</string>
     <string name="msgVerseReminderAlarmPermission">برای فعال کردن یادآوری آیه، مجوز زنگ هشدار لازم است.</string>
     <string name="storageCleanupMessage">با حذف منابع دانلود شده استفاده نشده فضا را آزاد کنید. این هیچ نشانک یا تنظیماتی را حذف نمی کند.
-\n منابع زیر را می توان آزاد کرد:</string>
+\n 
+\nمنابع زیر را می توان آزاد کرد:</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d فایل تلاوت ذخیره شده از %2$d تلاوت کننده را می توان آزاد کرد.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d تفسیر ذخیره شده قابل پاکسازی است.</string>
     <string name="msgRecitationCleanup" formatted="false">تمام تلاوت ذخیره شده از %s حذف خواهد شد.</string>
