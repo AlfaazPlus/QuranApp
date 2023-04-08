@@ -5,7 +5,7 @@ public class ReaderTextSizeUtils {
     public static final String KEY_TEXT_SIZE_MULT_TRANSL = "key.textsize.mult.translation";
 
     public static final int TEXT_SIZE_MIN_PROGRESS = 50;
-    public static final int TEXT_SIZE_MAX_PROGRESS = 150;
+    public static final int TEXT_SIZE_MAX_PROGRESS = 200;
     public static final int TEXT_SIZE_DEFAULT_PROGRESS = 100;
     public static final float TEXT_SIZE_MULT_AR_DEFAULT = 1.0f;
     public static final float TEXT_SIZE_MULT_TRANS_DEFAULT = 1.0f;

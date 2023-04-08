@@ -25,6 +25,17 @@
             android:textSize="@dimen/dmnCommonSize2"
             android:textStyle="bold" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBookmark"
+            android:layout_width="@dimen/dmnActionButtonSmall"
+            android:layout_height="@dimen/dmnActionButtonSmall"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/dr_bg_hover_round"
+            android:clickable="true"
+            android:contentDescription="@string/strLabelBookmark"
+            android:focusable="true"
+            android:padding="6dp"
+            android:src="@drawable/dr_icon_bookmark_outlined" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/openInReader"

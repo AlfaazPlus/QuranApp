@@ -14,12 +14,8 @@ import java.util.Map;
 
 public class TafsirUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "tafsirs");
-
     public static final String AVAILABLE_TAFSIRS_FILENAME = "available_tafsirs.json";
-    public static final String TAFSIR_SINGLE_FILE_NAME_FORMAT = "tafsir_verse_%d.txt";
     public static final String KEY_TAFSIR = "key.tafsir";
-
-    public static final String URL_TAFSIR = "https://api.quran.com/api/qdc/tafsirs/%s/by_ayah/%s";
 
     @Nullable
     public static String getTafsirName(String key) {
@@ -65,18 +61,6 @@ public class TafsirUtils {
             return false;
         }
 
-        Log.d(model.getLangCode().equals("ur"));
-
         return model.getLangCode().equals("ur");
-    }
-
-    public static String prepareTafsirUrlSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
-        return String.format(URL_TAFSIR, tafsirSlug, chapterNo + ":" + verseNo);
-    }
-
-    @SuppressLint("DefaultLocale")
-    public static String prepareTafsirFilePathSingleVerse(String tafsirKey, int chapterNo, int verseNo) {
-        final String fileName = String.format(TAFSIR_SINGLE_FILE_NAME_FORMAT, verseNo);
-        return FileUtils.createPath(String.valueOf(chapterNo), tafsirKey, fileName);
     }
 }
