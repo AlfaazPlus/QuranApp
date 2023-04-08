@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets>
+    <prophet name="آدم" honorific="عليه السلام" order="1" />
+    <prophet name="ادریس" honorific="عليه السلام" order="2" />
+    <prophet name="نوح" honorific="عليه السلام" order="3" />
+    <prophet name="ہود" honorific="عليه السلام" order="4" />
+    <prophet name="صالح" honorific="عليه السلام" order="5" />
+    <prophet name="ابراہیم" honorific="عليه السلام" order="6" />
+    <prophet name="لوط" honorific="عليه السلام" order="7" />
+    <prophet name="اسماعیل" honorific="عليه السلام" order="8" />
+    <prophet name="اسحاق" honorific="عليه السلام" order="9" />
+    <prophet name="یعقوب" honorific="عليه السلام" order="10" />
+    <prophet name="یوسف" honorific="عليه السلام" order="11" />
+    <prophet name="ایوب" honorific="عليه السلام" order="12" />
+    <prophet name="شعیب" honorific="عليه السلام" order="13" />
+    <prophet name="موسی" honorific="عليه السلام" order="14" />
+    <prophet name="ہارون" honorific="عليه السلام" order="15" />
+    <prophet name="ذو الکفل" honorific="عليه السلام" order="16" />
+    <prophet name="داؤد" honorific="عليه السلام" order="17" />
+    <prophet name="سلیمان" honorific="عليه السلام" order="18" />
+    <prophet name="الیاس" honorific="عليه السلام" order="19" />
+    <prophet name="الیسع" honorific="عليه السلام" order="20" />
+    <prophet name="یونس" honorific="عليه السلام" order="21" />
+    <prophet name="زکریا" honorific="عليه السلام" order="22" />
+    <prophet name="یحیی بن زکریا" honorific="عليه السلام" order="23" />
+    <prophet name="عیسی ابن مریم" honorific="عليه السلام" order="24" />
+    <prophet name="محمد" honorific="ﷺ" order="25" />
+</prophets>

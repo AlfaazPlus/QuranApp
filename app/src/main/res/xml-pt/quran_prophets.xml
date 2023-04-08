@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets>
+    <prophet name="Adam" honorific="Paz esteja com ele" order="1" />
+    <prophet name="Idrees" honorific="Paz esteja com ele" order="2" />
+    <prophet name="Nuh" honorific="Paz esteja com ele" order="3" />
+    <prophet name="Hud" honorific="Paz esteja com ele" order="4" />
+    <prophet name="Saleh" honorific="Paz esteja com ele" order="5" />
+    <prophet name="Ibrahim" honorific="Paz esteja com ele" order="6" />
+    <prophet name="Lut" honorific="Paz esteja com ele" order="7" />
+    <prophet name="Ismail" honorific="Paz esteja com ele" order="8" />
+    <prophet name="Ishaq" honorific="Paz esteja com ele" order="9" />
+    <prophet name="Yaqub" honorific="Paz esteja com ele" order="10" />
+    <prophet name="Yusuf" honorific="Paz esteja com ele" order="11" />
+    <prophet name="Ayyub" honorific="Paz esteja com ele" order="12" />
+    <prophet name="Shu’aib" honorific="Paz esteja com ele" order="13" />
+    <prophet name="Musa" honorific="Paz esteja com ele" order="14" />
+    <prophet name="Harun" honorific="Paz esteja com ele" order="15" />
+    <prophet name="Dhul-Kifl" honorific="Paz esteja com ele" order="16" />
+    <prophet name="Dawud" honorific="Paz esteja com ele" order="17" />
+    <prophet name="Sulayman" honorific="Paz esteja com ele" order="18" />
+    <prophet name="Iliyas" honorific="Paz esteja com ele" order="19" />
+    <prophet name="Al-Yasaa" honorific="Paz esteja com ele" order="20" />
+    <prophet name="Yunus" honorific="Paz esteja com ele" order="21" />
+    <prophet name="Zakariyya" honorific="Paz esteja com ele" order="22" />
+    <prophet name="Yahya" honorific="Paz esteja com ele" order="23" />
+    <prophet name="Isa Ibn Maryam" honorific="Paz esteja com ele" order="24" />
+    <prophet name="Muhammad" honorific="ﷺ" order="25" />
+</prophets>
