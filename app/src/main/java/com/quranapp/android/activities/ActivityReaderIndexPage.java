@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -12,9 +13,11 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
 import com.quranapp.android.databinding.ActivityReaderIndexPageBinding;
+import com.quranapp.android.databinding.LytFavChaptersTabBtnBinding;
 import com.quranapp.android.databinding.LytReaderIndexHeaderBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.frags.readerindex.FragReaderIndexChapters;
+import com.quranapp.android.frags.readerindex.FragReaderIndexFavChapters;
 import com.quranapp.android.frags.readerindex.FragReaderIndexJuz;
 import com.quranapp.android.interfaceUtils.readerIndex.FragReaderIndexCallback;
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener;
@@ -54,6 +57,7 @@ public class ActivityReaderIndexPage extends BaseActivity {
         ViewPagerAdapter2 adapter = new ViewPagerAdapter2(this);
         adapter.addFragment(FragReaderIndexChapters.newInstance(), getString(R.string.strTitleReaderChapters));
         adapter.addFragment(FragReaderIndexJuz.newInstance(), getString(R.string.strTitleReaderJuz));
+        adapter.addFragment(new FragReaderIndexFavChapters(), getString(R.string.strTitleReaderJuz));
         mBinding.viewPager.setAdapter(adapter);
         mBinding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
         mBinding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -61,18 +65,24 @@ public class ActivityReaderIndexPage extends BaseActivity {
 
     private void initTabs() {
         mBinding.header.readerTabLayout.setTabSetupCallback((viewPager, tab, position) -> {
-            LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(LayoutInflater.from(this));
-            tab.setCustomView(binding.getRoot());
-            ViewPagerAdapter2 adapter = (ViewPagerAdapter2) viewPager.getAdapter();
-            if (adapter != null) {
-                binding.tabTitle.setText((adapter).getPageTitle(position));
+            LayoutInflater inflater = LayoutInflater.from(this);
+
+            if (position == 2) {
+                tab.setCustomView(LytFavChaptersTabBtnBinding.inflate(inflater).getRoot());
+            } else {
+                LytReaderIndexTabBinding binding = LytReaderIndexTabBinding.inflate(inflater);
+                tab.setCustomView(binding.getRoot());
+                ViewPagerAdapter2 adapter = (ViewPagerAdapter2) viewPager.getAdapter();
+                if (adapter != null) {
+                    binding.tabTitle.setText((adapter).getPageTitle(position));
+                }
             }
         });
         mBinding.header.readerTabLayout.populateFromViewPager(mBinding.viewPager);
 
         mBinding.header.readerTabLayout.addOnTabSelectedListener(new SimpleTabSelectorListener() {
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onTabReselected(@NonNull TabLayout.Tab tab) {
                 scrollToTop();
             }
         });
