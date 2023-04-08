@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.reader.recitation
 
 import android.Manifest
+import android.app.Notification
 import android.content.pm.PackageManager
 import android.media.MediaMetadata
 import android.support.v4.media.MediaMetadataCompat
@@ -12,6 +13,7 @@ import androidx.media.session.MediaButtonReceiver
 import com.peacedesign.android.utils.DrawableUtils
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.services.RecitationPlayerService
 
@@ -72,6 +74,24 @@ class RecitationNotificationHelper(private val service: RecitationPlayerService)
             )
     }
 
+    fun getInitialNotification(): Notification {
+        val builder = createNotificationBuilder()
+            .addAction(notifActionPrev)
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.dr_icon_play_verse,
+                    "Play",
+                    MediaButtonReceiver.buildMediaButtonPendingIntent(
+                        service,
+                        PlaybackStateCompat.ACTION_PLAY
+                    )
+                )
+            )
+            .addAction(notifActionNext)
+
+        return builder.build()
+    }
+
     fun showNotification(action: Long) {
         if (notifBuilder == null) {
             notifBuilder = createNotificationBuilder()
@@ -98,7 +118,11 @@ class RecitationNotificationHelper(private val service: RecitationPlayerService)
             )
             .addAction(notifActionNext)
 
-        if (ActivityCompat.checkSelfPermission(service, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                service,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
         notifManager.notify(RecitationPlayerService.NOTIF_ID, notifBuilder!!.build())

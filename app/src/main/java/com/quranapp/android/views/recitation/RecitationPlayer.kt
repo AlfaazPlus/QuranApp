@@ -150,7 +150,7 @@ class RecitationPlayer(
     }
 
     private fun startRecitationService() {
-        activity.startService(Intent(activity, RecitationPlayerService::class.java))
+        RecitationPlayerService.startPlayerService(activity)
         activity.bindPlayerService()
     }
 

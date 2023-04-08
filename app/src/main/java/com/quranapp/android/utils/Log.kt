@@ -1,10 +1,14 @@
 package com.quranapp.android.utils
 
+import com.quranapp.android.BuildConfig
+
 object Log {
     const val TAG = "QuranAppLogs"
 
     @JvmStatic
     fun d(vararg messages: Any?) {
+        if(!BuildConfig.DEBUG) return
+
         val sb = StringBuilder()
 
         val trc = Thread.currentThread().stackTrace[3]

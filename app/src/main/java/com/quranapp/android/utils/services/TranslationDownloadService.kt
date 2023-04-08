@@ -38,6 +38,9 @@ import kotlin.io.path.readText
 
 class TranslationDownloadService : Service() {
     companion object {
+        private const val NOTIF_ID = 44
+
+        // To prevent notification when using BIND_AUTO_CREATE
         private var STARTED_BY_USER = false
 
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
@@ -56,11 +59,8 @@ class TranslationDownloadService : Service() {
         super.onCreate()
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
-                1,
-                NotificationUtils.createEmptyNotif(
-                    this,
-                    getString(R.string.strNotifChannelIdDownloads)
-                )
+                NOTIF_ID,
+                NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
             )
         }
     }
@@ -80,7 +80,7 @@ class TranslationDownloadService : Service() {
                 this,
                 getString(R.string.strNotifChannelIdDownloads)
             )
-            startForeground(1, notification)
+            startForeground(NOTIF_ID, notification)
             finish()
             return START_NOT_STICKY
         }
@@ -107,7 +107,7 @@ class TranslationDownloadService : Service() {
         notification: Notification,
         notifManager: NotificationManagerCompat
     ) {
-        notifManager.cancel(1)
+        notifManager.cancel(NOTIF_ID)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
         startForeground(notifId, notification)
     }

@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.services
 
 import android.app.Service
+import android.content.ContextWrapper
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -23,6 +24,7 @@ import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.extensions.runOnInterval
+import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.reader.recitation.RecitationNotificationHelper
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -41,6 +43,10 @@ class RecitationPlayerService : Service() {
         const val ACTION_SEEK_LEFT = -1
         const val ACTION_SEEK_RIGHT = 1
         const val NOTIF_ID = 55
+
+        fun startPlayerService(wrapper: ContextWrapper) {
+            ContextCompat.startForegroundService(wrapper, Intent(wrapper, RecitationPlayerService::class.java))
+        }
     }
 
     private val binder = LocalBinder()
@@ -86,10 +92,6 @@ class RecitationPlayerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        startForeground(
-            NOTIF_ID,
-            NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdRecitation))
-        )
 
         fileUtils = FileUtils.newInstance(this)
         session = MediaSessionCompat(this, "RecitationPlayer").apply {
@@ -116,9 +118,16 @@ class RecitationPlayerService : Service() {
             })
         }
 
+        startForeground(
+            NOTIF_ID,
+            NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdRecitation))
+        )
+
         updateRepeatMode(SPReader.getRecitationRepeatVerse(this))
         updateContinuePlaying(SPReader.getRecitationContinueChapter(this))
         updateVerseSync(SPReader.getRecitationScrollSync(this), false)
+
+        RecitationManager.prepare(this, false) {}
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -133,8 +142,7 @@ class RecitationPlayerService : Service() {
         verseLoader.cancelAll()
         session?.release()
 
-        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
-        stopSelf()
+        finish()
     }
 
     fun release() {
@@ -160,24 +168,35 @@ class RecitationPlayerService : Service() {
         }
     }
 
+    private fun finish() {
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
+
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
         recParams.currentVerse = Pair(chapterNo, fromVerse)
         recParams.firstVerse = Pair(chapterNo, fromVerse)
         recParams.lastVerse = Pair(chapterNo, toVerse)
+        recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
 
         Log.d("onChapterChanged: ${recParams.firstVerse} to ${recParams.lastVerse}")
+        session!!.setMetadata(notifHelper.prepareMetadata(quranMeta))
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_PAUSE)
     }
 
     fun onJuzChanged(juzNo: Int, quranMeta: QuranMeta) {
         val (firstChapter, lastChapter) = quranMeta.getChaptersInJuz(juzNo)
         val firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).first
         val (_, lastVerse) = quranMeta.getVerseRangeOfChapterInJuz(juzNo, lastChapter)
+        recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
 
         recParams.firstVerse = Pair(firstChapter, firstVerse)
         recParams.lastVerse = Pair(lastChapter, lastVerse)
         recParams.currentVerse = recParams.firstVerse
 
         Log.d("onJuzChanged: ${recParams.firstVerse} to ${recParams.lastVerse}")
+        session!!.setMetadata(notifHelper.prepareMetadata(quranMeta))
+        notifHelper.showNotification(PlaybackStateCompat.ACTION_PAUSE)
     }
 
     private fun sync() {
@@ -216,12 +235,21 @@ class RecitationPlayerService : Service() {
 
         Log.d("PREPARING HARD")
 
-        player!!.setOnInfoListener { _, what, extra ->
-            Log.d(what, extra)
-            true
-        }
-        player!!.setOnPreparedListener {
-            onPreparePlayer(player!!, audioURI, reciter, chapterNo, verseNo, true)
+        player!!.let {
+            it.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
+            it.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            it.setOnInfoListener { _, what, extra ->
+                Log.d(what, extra)
+                true
+            }
+            it.setOnPreparedListener {
+                onPreparePlayer(it, audioURI, reciter, chapterNo, verseNo, true)
+            }
         }
     }
 
@@ -244,13 +272,6 @@ class RecitationPlayerService : Service() {
 
         prepareNextPlayer(player)
 
-        player.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
-        player.setAudioAttributes(
-            AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build()
-        )
         updateRepeatMode(recParams.repeatVerse)
 
         recPlayer?.let {
@@ -331,17 +352,27 @@ class RecitationPlayerService : Service() {
         }
 
         curPlayer.setNextMediaPlayer(nextPlayer)
-        nextPlayer!!.setOnErrorListener { _, what, extra ->
-            Log.d("NEXT PLAYER ERROR: $what, $extra")
-            return@setOnErrorListener true
-        }
-        nextPlayer!!.setOnInfoListener { mp, what, _ ->
-            if (what == MediaPlayer.MEDIA_INFO_STARTED_AS_NEXT) {
-                Log.d("NEXT PLAYER STARTED ($nextChapterNo, $nextVerseNo)")
-                onPreparePlayer(mp, audioURI, reciter, nextChapterNo, nextVerseNo, false)
-            }
 
-            return@setOnInfoListener true
+        nextPlayer!!.let {
+            it.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
+            it.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            it.setOnErrorListener { _, what, extra ->
+                Log.d("NEXT PLAYER ERROR: $what, $extra")
+                return@setOnErrorListener true
+            }
+            it.setOnInfoListener { mp, what, _ ->
+                if (what == MediaPlayer.MEDIA_INFO_STARTED_AS_NEXT) {
+                    Log.d("NEXT PLAYER STARTED ($nextChapterNo, $nextVerseNo)")
+                    onPreparePlayer(mp, audioURI, reciter, nextChapterNo, nextVerseNo, false)
+                }
+
+                return@setOnInfoListener true
+            }
         }
 
     }
@@ -426,7 +457,7 @@ class RecitationPlayerService : Service() {
         recPlayer?.onPauseMedia(recParams)
     }
 
-    fun stopMedia() {
+    private fun stopMedia() {
         destroy()
         recPlayer?.onStopMedia(recParams)
     }
