@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prophets>
+    <prophet name="Adam" honorific="Friede sei mit ihm" order="1" />
+    <prophet name="Idris" honorific="Friede sei mit ihm" order="2" />
+    <prophet name="Noah" honorific="Friede sei mit ihm" order="3" />
+    <prophet name="Hud" honorific="Friede sei mit ihm" order="4" />
+    <prophet name="Saleh" honorific="Friede sei mit ihm" order="5" />
+    <prophet name="Ibrahim" honorific="Friede sei mit ihm" order="6" />
+    <prophet name="Lut" honorific="Friede sei mit ihm" order="7" />
+    <prophet name="Ismail" honorific="Friede sei mit ihm" order="8" />
+    <prophet name="Ishaq" honorific="Friede sei mit ihm" order="9" />
+    <prophet name="Yaqub" honorific="Friede sei mit ihm" order="10" />
+    <prophet name="Yusuf" honorific="Friede sei mit ihm" order="11" />
+    <prophet name="Ayyub" honorific="Friede sei mit ihm" order="12" />
+    <prophet name="Shu’aib" honorific="Friede sei mit ihm" order="13" />
+    <prophet name="Musa" honorific="Friede sei mit ihm" order="14" />
+    <prophet name="Harun" honorific="Friede sei mit ihm" order="15" />
+    <prophet name="Dhul-Kifl" honorific="Friede sei mit ihm" order="16" />
+    <prophet name="Dawud" honorific="Friede sei mit ihm" order="17" />
+    <prophet name="Sulayman" honorific="Friede sei mit ihm" order="18" />
+    <prophet name="Iliyas" honorific="Friede sei mit ihm" order="19" />
+    <prophet name="Al-Yasaa" honorific="Friede sei mit ihm" order="20" />
+    <prophet name="Yunus" honorific="Friede sei mit ihm" order="21" />
+    <prophet name="Zakariyya" honorific="Friede sei mit ihm" order="22" />
+    <prophet name="Yahya" honorific="Friede sei mit ihm" order="23" />
+    <prophet name="Isa Ibn Maryam" honorific="Friede sei mit ihm" order="24" />
+    <prophet name="Muhammad" honorific="ﷺ" order="25" />
+</prophets>

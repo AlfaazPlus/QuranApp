@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets>
-    <prophet name="ئادەم" honorific="عليه السلام" order="1" />
-    <prophet name="ئیدریس" honorific="عليه السلام" order="2" />
-    <prophet name="نوح" honorific="عليه السلام" order="3" />
-    <prophet name="هود" honorific="عليه السلام" order="4" />
-    <prophet name="ساڵح" honorific="عليه السلام" order="5" />
-    <prophet name="ئیبراهیم" honorific="عليه السلام" order="6" />
-    <prophet name="لووت" honorific="عليه السلام" order="7" />
-    <prophet name="ئیسماعیل" honorific="عليه السلام" order="8" />
-    <prophet name="ئیسحاق" honorific="عليه السلام" order="9" />
-    <prophet name="یەعقوب" honorific="عليه السلام" order="10" />
-    <prophet name="یوسف" honorific="عليه السلام" order="11" />
-    <prophet name="ئەیوب" honorific="عليه السلام" order="12" />
-    <prophet name="شوعەیب" honorific="عليه السلام" order="13" />
-    <prophet name="موسا" honorific="عليه السلام" order="14" />
-    <prophet name="هارون" honorific="عليه السلام" order="15" />
-    <prophet name="دوشانە" honorific="عليه السلام" order="16" />
-    <prophet name="داود" honorific="عليه السلام" order="17" />
-    <prophet name="سولەیمان" honorific="عليه السلام" order="18" />
-    <prophet name="ئەلیاس" honorific="عليه السلام" order="19" />
-    <prophet name="یەسع" honorific="عليه السلام" order="20" />
-    <prophet name="یونس" honorific="عليه السلام" order="21" />
-    <prophet name="زەکەریا" honorific="عليه السلام" order="22" />
-    <prophet name="یەحیا" honorific="عليه السلام" order="23" />
-    <prophet name="عیسا" honorific="عليه السلام" order="24" />
-    <prophet name="موحەمەد" honorific="ﷺ" order="25" />
+    <prophet name="ئادەم" honorific="درودی خوای لێ بێت" order="1" />
+    <prophet name="ئیدریس" honorific="درودی خوای لێ بێت" order="2" />
+    <prophet name="نوح" honorific="درودی خوای لێ بێت" order="3" />
+    <prophet name="ھوود" honorific="درودی خوای لێ بێت" order="4" />
+    <prophet name="ساڵح" honorific="درودی خوای لێ بێت" order="5" />
+    <prophet name="ئیبراھیم" honorific="درودی خوای لێ بێت" order="6" />
+    <prophet name="لووت" honorific="درودی خوای لێ بێت" order="7" />
+    <prophet name="ئیسماعیل" honorific="درودی خوای لێ بێت" order="8" />
+    <prophet name="ئیسحاق" honorific="درودی خوای لێ بێت" order="9" />
+    <prophet name="یەعقوب" honorific="درودی خوای لێ بێت" order="10" />
+    <prophet name="یوسف" honorific="درودی خوای لێ بێت" order="11" />
+    <prophet name="ئەیوب" honorific="درودی خوای لێ بێت" order="12" />
+    <prophet name="شوعەیب" honorific="درودی خوای لێ بێت" order="13" />
+    <prophet name="مووسا" honorific="درودی خوای لێ بێت" order="14" />
+    <prophet name="ھارون" honorific="درودی خوای لێ بێت" order="15" />
+    <prophet name="زولکیفل" honorific="درودی خوای لێ بێت" order="16" />
+    <prophet name="داود" honorific="درودی خوای لێ بێت" order="17" />
+    <prophet name="سولەیمان" honorific="درودی خوای لێ بێت" order="18" />
+    <prophet name="ئیلیاس" honorific="درودی خوای لێ بێت" order="19" />
+    <prophet name="یەسەع" honorific="درودی خوای لێ بێت" order="20" />
+    <prophet name="یونس" honorific="درودی خوای لێ بێت" order="21" />
+    <prophet name="زەکەریا" honorific="درودی خوای لێ بێت" order="22" />
+    <prophet name="یەحیا" honorific="درودی خوای لێ بێت" order="23" />
+    <prophet name="عیسا" honorific="درودی خوای لێ بێت" order="24" />
+    <prophet name="موحەممەد" honorific="ﷺ" order="25" />
 </prophets>
