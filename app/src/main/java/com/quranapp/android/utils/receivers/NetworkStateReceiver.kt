@@ -1,95 +1,100 @@
-package com.quranapp.android.utils.receivers;
+package com.quranapp.android.utils.receivers
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import androidx.annotation.NonNull;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.net.NetworkRequest
+import android.os.Build
+import com.quranapp.android.utils.univ.MessageUtils
 
-import com.quranapp.android.utils.univ.MessageUtils;
+class NetworkStateReceiver : BroadcastReceiver() {
+    private var prevNetworkStatus: String? = null
+    private val listeners = HashSet<NetworkStateReceiverListener>()
+    private var connected = false
 
-import java.util.HashSet;
-import java.util.Set;
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.extras == null) return
 
-public class NetworkStateReceiver extends BroadcastReceiver {
-    private String prevNetworkStatus;
-    private final Set<NetworkStateReceiverListener> listeners;
-    private boolean connected;
-
-    public NetworkStateReceiver() {
-        listeners = new HashSet<>();
-        connected = false;
-    }
-
-    public static boolean isNetworkConnected(@NonNull Context context) {
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = manager.getActiveNetworkInfo();
-        return ni != null && ni.getState() == NetworkInfo.State.CONNECTED;
-    }
-
-    public static IntentFilter getIntentFilter() {
-        return new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-    }
-
-    public static boolean canProceed(@NonNull Context context) {
-        return canProceed(context, true, null);
-    }
-
-    public static boolean canProceed(@NonNull Context context, boolean cancelable, Runnable runOnDismissIfCantProceed) {
-        if (!isNetworkConnected(context)) {
-            MessageUtils.popNoInternetMessage(context, cancelable, runOnDismissIfCantProceed);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        if (intent.getExtras() == null) return;
         if (isNetworkConnected(context)) {
-            connected = true;
+            connected = true
         } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)) {
-            connected = false;
+            connected = false
         }
 
-        notifyStateToAll();
+        notifyStateToAll()
     }
 
-    private void notifyStateToAll() {
-        for (NetworkStateReceiverListener listener : listeners) notifyState(listener);
+    private fun notifyStateToAll() {
+        for (listener in listeners) notifyState(listener)
     }
 
-    private void notifyState(NetworkStateReceiverListener listener) {
-        if (listener == null) return;
+    private fun notifyState(listener: NetworkStateReceiverListener?) {
+        if (listener == null) return
 
         if (connected) {
-            String available = "AVAILABLE";
-            if (available.equals(prevNetworkStatus)) return;
-            prevNetworkStatus = available;
+            val available = "AVAILABLE"
+            if (available == prevNetworkStatus) return
 
-            listener.networkAvailable();
+            prevNetworkStatus = available
+            listener.networkAvailable()
         } else {
-            String unavailable = "UNAVAILABLE";
-            if (unavailable.equals(prevNetworkStatus)) return;
-            prevNetworkStatus = unavailable;
+            val unavailable = "UNAVAILABLE"
+            if (unavailable == prevNetworkStatus) return
 
-            listener.networkUnavailable();
+            prevNetworkStatus = unavailable
+            listener.networkUnavailable()
         }
     }
 
-    public void addListener(@NonNull NetworkStateReceiverListener listener) {
-        listeners.add(listener);
+    fun addListener(listener: NetworkStateReceiverListener) {
+        listeners.add(listener)
     }
 
-    public void removeListener(@NonNull NetworkStateReceiverListener listener) {
-        listeners.remove(listener);
+    fun removeListener(listener: NetworkStateReceiverListener) {
+        listeners.remove(listener)
     }
 
-    public interface NetworkStateReceiverListener {
-        void networkAvailable();
+    interface NetworkStateReceiverListener {
+        fun networkAvailable()
+        fun networkUnavailable()
+    }
 
-        void networkUnavailable();
+    companion object {
+        @Suppress("DEPRECATION")
+        @JvmStatic
+        fun isNetworkConnected(context: Context): Boolean {
+            val mgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val nw = mgr.activeNetwork ?: return false
+                val actNw = mgr.getNetworkCapabilities(nw) ?: return false
+                return when {
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    //for other device how are able to connect with Ethernet
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                    //for check internet over Bluetooth
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+                    else -> false
+                }
+            } else {
+                return mgr.activeNetworkInfo?.state == NetworkInfo.State.CONNECTED
+            }
+        }
+
+        @JvmStatic
+        val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+
+        @JvmOverloads
+        fun canProceed(context: Context, cancelable: Boolean = true, runOnDismissIfCantProceed: Runnable? = null): Boolean {
+            if (!isNetworkConnected(context)) {
+                MessageUtils.popNoInternetMessage(context, cancelable, runOnDismissIfCantProceed)
+                return false
+            }
+            return true
+        }
     }
 }

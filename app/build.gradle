@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
     id 'kotlinx-serialization'
+    id "kotlin-kapt"
 }
 
 android {
@@ -33,6 +34,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 
     applicationVariants.all { variant ->

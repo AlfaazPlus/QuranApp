@@ -3,12 +3,11 @@
  * Created on 5/4/2022.
  * All rights reserved.
  */
+package com.quranapp.android.interfaceUtils
 
-package com.quranapp.android.interfaceUtils;
+import android.content.Intent
+import androidx.core.app.ActivityOptionsCompat
 
-import android.content.Intent;
-import androidx.core.app.ActivityOptionsCompat;
-
-public interface ActivityResultStarter {
-    void startActivity4Result(Intent intent, ActivityOptionsCompat options);
+interface ActivityResultStarter {
+    fun startActivity4Result(intent: Intent, options: ActivityOptionsCompat?)
 }

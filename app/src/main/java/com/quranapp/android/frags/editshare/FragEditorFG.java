@@ -18,6 +18,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import com.quranapp.android.adapters.editor.ADPEditorFG;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.utils.extended.GapedItemDecoration;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 
 public class FragEditorFG extends FragEditorBase {
@@ -33,8 +34,8 @@ public class FragEditorFG extends FragEditorBase {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Context ctx = inflater.getContext();
         RecyclerView view = new RecyclerView(ctx);
-        ViewPaddingKt.updatePaddingHorizontal(view, dp2px(ctx, 8));
-        ViewPaddingKt.updatePaddingVertical(view, dp2px(ctx, 10));
+        ViewPaddingKt.updatePaddingHorizontal(view, ContextKt.dp2px(ctx, 8));
+        ViewPaddingKt.updatePaddingVertical(view, ContextKt.dp2px(ctx, 10));
         view.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         view.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         return view;
@@ -54,7 +55,7 @@ public class FragEditorFG extends FragEditorBase {
 
         GridLayoutManager lm = new GridLayoutManager(getContext(), 5);
         mRecyclerView.setLayoutManager(lm);
-        mRecyclerView.addItemDecoration(new GapedItemDecoration(dp2px(mRecyclerView.getContext(), 3)));
+        mRecyclerView.addItemDecoration(new GapedItemDecoration(ContextKt.dp2px(mRecyclerView.getContext(), 3)));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(null);
     }

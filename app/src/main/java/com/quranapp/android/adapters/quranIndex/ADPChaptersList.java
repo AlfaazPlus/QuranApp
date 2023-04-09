@@ -4,20 +4,26 @@
 
 package com.quranapp.android.adapters.quranIndex;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import static android.view.ViewGroup.LayoutParams;
 import static android.view.ViewGroup.MarginLayoutParams;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.peacedesign.android.utils.Dimen;
+import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
 
 import java.util.ArrayList;
@@ -111,6 +117,42 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
             mChapterCard.setName(chapterName, nameTranslation);
 
             mChapterCard.setOnClickListener(v -> ReaderFactory.startChapter(v.getContext(), chapterNo));
+            mChapterCard.setOnLongClickListener(v -> {
+                promptAddToFavourites(chapterNo, chapterName, nameTranslation);
+                return true;
+            });
+        }
+
+        private void promptAddToFavourites(int chapterNo, String chapterName, String nameTranslation) {
+            Context context = itemView.getContext();
+
+            boolean isAdded = SPFavouriteChapters.INSTANCE.isAddedToFavorites(context, chapterNo);
+
+            ChapterCard chapterCard = new ChapterCard(context);
+            chapterCard.setChapterNumber(chapterNo);
+            chapterCard.setName(chapterName, nameTranslation);
+
+            chapterCard.setBackgroundResource(R.drawable.dr_bg_chapter_card_bordered);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            LayoutParamsKt.updateMargins(params, ContextKt.dp2px(itemView.getContext(), 10));
+            chapterCard.setLayoutParams(params);
+
+            PeaceDialog.newBuilder(context)
+                .setTitle(isAdded ? R.string.titleRemoveFromFavourites : R.string.titleAddToFavourites)
+                .setView(chapterCard)
+                .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
+                .setNegativeButton(R.string.strLabelCancel, null)
+                .setPositiveButton(isAdded ? R.string.strLabelRemove : R.string.labelAdd, (dialog, which) -> {
+                    if (isAdded) {
+                        SPFavouriteChapters.INSTANCE.removeFromFavorites(context, chapterNo);
+                    } else {
+                        SPFavouriteChapters.INSTANCE.addToFavorites(context, chapterNo);
+                    }
+                }).show();
         }
     }
 }

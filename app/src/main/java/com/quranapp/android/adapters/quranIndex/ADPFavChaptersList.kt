@@ -2,16 +2,19 @@ package com.quranapp.android.adapters.quranIndex
 
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
-import com.quranapp.android.frags.readerindex.BaseFragReaderIndex
+import com.quranapp.android.frags.readerindex.FragReaderIndexFavChapters
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.updateMargins
 import com.quranapp.android.utils.reader.factory.ReaderFactory.startChapter
+import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.widgets.chapterCard.ChapterCard
 
 class ADPFavChaptersList(
-    private val fragment: BaseFragReaderIndex,
+    private val fragment: FragReaderIndexFavChapters,
     private val chapterNos: ArrayList<Int>
 ) : RecyclerView.Adapter<ADPFavChaptersList.VHChapter>() {
     init {
@@ -41,14 +44,43 @@ class ADPFavChaptersList(
 
     inner class VHChapter(private val chapterCard: ChapterCard) : RecyclerView.ViewHolder(chapterCard) {
         fun bind(chapterNo: Int) {
+            val chapterName = fragment.quranMeta.getChapterName(itemView.context, chapterNo)
+            val chapterNameTrans = fragment.quranMeta.getChapterNameTranslation(chapterNo)
+
             chapterCard.let {
                 it.setChapterNumber(chapterNo)
-                it.setName(
-                    fragment.quranMeta.getChapterName(itemView.context, chapterNo),
-                    fragment.quranMeta.getChapterNameTranslation(chapterNo)
-                )
+                it.setName(chapterName, chapterNameTrans)
                 it.setOnClickListener { v -> startChapter(v.context, chapterNo) }
+                it.setOnFavoriteUpdateListener {
+                    if (!SPFavouriteChapters.isAddedToFavorites(itemView.context, chapterNo)) {
+                        fragment.removeFromFavorites(itemView.context, chapterNo, adapterPosition)
+                    }
+                }
             }
+        }
+
+        private fun promptAddToFavourites(chapterNo: Int, chapterName: String, nameTranslation: String) {
+            val context = itemView.context
+            val chapterCard = ChapterCard(context).apply {
+                setChapterNumber(chapterNo)
+                setName(chapterName, nameTranslation)
+                setBackgroundResource(R.drawable.dr_bg_chapter_card_bordered)
+                layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    updateMargins(itemView.context.dp2px(10f))
+                }
+            }
+
+            PeaceDialog.newBuilder(context)
+                .setTitle(R.string.titleRemoveFromFavourites)
+                .setView(chapterCard)
+                .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
+                .setNegativeButton(R.string.strLabelCancel, null)
+                .setPositiveButton(R.string.strLabelRemove) { _, _ ->
+                    fragment.removeFromFavorites(context, chapterNo, adapterPosition)
+                }.show()
         }
     }
 }

@@ -8,6 +8,7 @@ package com.quranapp.android.widgets.chapterCard;
 
 import android.content.Context;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -19,6 +20,12 @@ public class ChapterCardWithoutIcon extends ChapterCard {
     @Nullable
     @Override
     protected View createRightView() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    protected View createFavIcon() {
         return null;
     }
 }

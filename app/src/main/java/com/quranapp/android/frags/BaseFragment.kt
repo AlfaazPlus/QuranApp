@@ -1,104 +1,87 @@
-package com.quranapp.android.frags;
+package com.quranapp.android.frags
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.os.Process
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.CallSuper
+import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
+import com.quranapp.android.interfaceUtils.ActivityResultStarter
+import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.utils.receivers.NetworkStateReceiver.Companion.intentFilter
+import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener
 
-import com.quranapp.android.interfaceUtils.ActivityResultStarter;
-import com.quranapp.android.utils.receivers.NetworkStateReceiver;
-import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
+abstract class BaseFragment : Fragment(), NetworkStateReceiverListener, ActivityResultStarter {
+    private val mActivityResultLauncher = activityResultHandler()
+    private var mNetworkReceiver: NetworkStateReceiver? = null
 
-public abstract class BaseFragment extends ResHelperFragment implements NetworkStateReceiverListener,
-    ActivityResultStarter {
-    private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
-    private NetworkStateReceiver mNetworkReceiver;
-
-    @Override
-    public void onDestroy() {
-        Context context = getContext();
+    override fun onDestroy() {
         if (context != null && mNetworkReceiver != null) {
-            mNetworkReceiver.removeListener(this);
-            context.unregisterReceiver(mNetworkReceiver);
+            mNetworkReceiver!!.removeListener(this)
+            requireContext().unregisterReceiver(mNetworkReceiver)
         }
-
-        super.onDestroy();
+        super.onDestroy()
     }
 
     @CallSuper
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        if (networkReceiverRegistrable() && getContext() != null) {
-            mNetworkReceiver = new NetworkStateReceiver();
-            mNetworkReceiver.addListener(this);
-            getContext().registerReceiver(mNetworkReceiver, NetworkStateReceiver.getIntentFilter());
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (networkReceiverRegistrable() && context != null) {
+            mNetworkReceiver = NetworkStateReceiver().apply {
+                addListener(this@BaseFragment)
+            }
+            requireContext().registerReceiver(mNetworkReceiver, intentFilter)
         }
     }
 
-    public void restartMainActivity(Context ctx) {
+    fun restartMainActivity(ctx: Context) {
         // start a new Intent of the app
-        Intent intent = ctx.getPackageManager().getLaunchIntentForPackage(ctx.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        })
 
         // kill the current process
-        android.os.Process.killProcess(android.os.Process.myPid());
+        Process.killProcess(Process.myPid())
     }
 
-    protected boolean networkReceiverRegistrable() {
-        return false;
+    protected open fun networkReceiverRegistrable(): Boolean {
+        return false
     }
 
-    public void hideSoftKeyboard(Activity actvt) {
-        InputMethodManager imm = (InputMethodManager) actvt.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isAcceptingText()) {
-            View currentFocus = actvt.getCurrentFocus();
-            if (currentFocus != null) {
-                imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+    fun hideSoftKeyboard(activity: Activity) {
+        (activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).let {
+            if (it.isAcceptingText) {
+                activity.currentFocus?.let { focus ->
+                    it.hideSoftInputFromWindow(focus.windowToken, 0)
+                }
             }
         }
     }
 
-    public void launchActivity(Context ctx, Class<?> cls) {
-        Intent intent = new Intent(ctx, cls);
-        startActivity(intent);
+    fun launchActivity(ctx: Context?, cls: Class<*>?) {
+        startActivity(Intent(ctx, cls))
     }
 
-    public void runOnUIThread(Runnable runnable) {
-        if (getActivity() != null) {
-            getActivity().runOnUiThread(runnable);
-        }
+    fun runOnUIThread(runnable: Runnable?) {
+        activity?.runOnUiThread(runnable)
     }
 
-    @Override
-    public void startActivity4Result(Intent intent, ActivityOptionsCompat options) {
-        mActivityResultLauncher.launch(intent, options);
+    override fun startActivity4Result(intent: Intent, options: ActivityOptionsCompat?) {
+        mActivityResultLauncher.launch(intent, options)
     }
 
-
-    private ActivityResultLauncher<Intent> activityResultHandler() {
-        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::onActivityResult2);
+    private fun activityResultHandler(): ActivityResultLauncher<Intent> {
+        return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult -> onActivityResult2(result) }
     }
 
-    protected void onActivityResult2(@NonNull ActivityResult result) {
-    }
-
-    @Override
-    public void networkAvailable() {
-    }
-
-    @Override
-    public void networkUnavailable() {
-    }
+    protected open fun onActivityResult2(result: ActivityResult) {}
+    override fun networkAvailable() {}
+    override fun networkUnavailable() {}
 }

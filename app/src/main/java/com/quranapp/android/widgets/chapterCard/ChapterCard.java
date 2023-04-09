@@ -6,6 +6,11 @@
 
 package com.quranapp.android.widgets.chapterCard;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -16,16 +21,15 @@ import android.text.style.TextAppearanceSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
@@ -33,11 +37,15 @@ import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.TextViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters;
 import com.quranapp.android.views.reader.ChapterIcon;
 
 import java.util.Locale;
 
 public class ChapterCard extends ConstraintLayout {
+    private int mChapterNo;
+    private Runnable mOnFavUpdateListener;
+
     public ChapterCard(@NonNull Context context) {
         this(context, null);
     }
@@ -59,6 +67,7 @@ public class ChapterCard extends ConstraintLayout {
         View serialView = createSerialView();
         View nameView = createNameView();
         View rightView = createRightView();
+        View favIcon = createFavIcon();
 
         LayoutParams p1 = (LayoutParams) serialView.getLayoutParams();
         p1.topToTop = PARENT_ID;
@@ -84,8 +93,25 @@ public class ChapterCard extends ConstraintLayout {
             p3.topToTop = PARENT_ID;
             p3.bottomToBottom = PARENT_ID;
             p3.startToEnd = nameView.getId();
-            p3.endToEnd = PARENT_ID;
+
+            if (favIcon != null) {
+                p3.endToStart = favIcon.getId();
+            } else {
+                p3.endToEnd = PARENT_ID;
+            }
+
             rightView.setLayoutParams(p3);
+        }
+
+        if (favIcon != null) {
+            LayoutParams p3 = (LayoutParams) favIcon.getLayoutParams();
+            p3.topToTop = PARENT_ID;
+            p3.bottomToBottom = PARENT_ID;
+
+            assert rightView != null;
+            p3.startToEnd = rightView.getId();
+            p3.endToEnd = PARENT_ID;
+            favIcon.setLayoutParams(p3);
         }
     }
 
@@ -129,7 +155,57 @@ public class ChapterCard extends ConstraintLayout {
         return v;
     }
 
+    @Nullable
+    protected View createFavIcon() {
+        ImageView v = new AppCompatImageView(getContext());
+        v.setId(R.id.chapterCardFavIcon);
+        v.setBackgroundResource(R.drawable.dr_bg_hover_round);
+
+        updateFavIcon();
+        ViewPaddingKt.updatePaddings(v, ContextKt.dp2px(getContext(), 5));
+
+        final int dimen = ContextKt.getDimenPx(getContext(), R.dimen.dmnActionButtonSmall);
+        LayoutParams params = new LayoutParams(dimen, dimen);
+        params.leftMargin = ContextKt.dp2px(getContext(), 5);
+        v.setLayoutParams(params);
+
+        v.setOnClickListener(v1 -> {
+            if (mChapterNo <= 0) return;
+
+            if (SPFavouriteChapters.INSTANCE.isAddedToFavorites(getContext(), mChapterNo)) {
+                SPFavouriteChapters.INSTANCE.removeFromFavorites(getContext(), mChapterNo);
+            } else {
+                SPFavouriteChapters.INSTANCE.addToFavorites(getContext(), mChapterNo);
+            }
+
+            if(mOnFavUpdateListener != null) mOnFavUpdateListener.run();
+
+            updateFavIcon();
+        });
+
+        addView(v);
+        return v;
+    }
+
+    private void updateFavIcon() {
+        View favIcon = findViewById(R.id.chapterCardFavIcon);
+
+        if (!(favIcon instanceof ImageView)) return;
+
+        ((ImageView) favIcon).setImageResource(
+            SPFavouriteChapters.INSTANCE.isAddedToFavorites(getContext(), mChapterNo)
+                ? R.drawable.icon_star_filled
+                : R.drawable.icon_star_outlined
+        );
+    }
+
+    public void setOnFavoriteUpdateListener(Runnable listener) {
+        mOnFavUpdateListener = listener;
+    }
+
     public void setChapterNumber(int chapterNo) {
+        mChapterNo = chapterNo;
+
         View serial = findViewById(R.id.chapterCardSerial);
         if (serial instanceof TextView) {
             ((TextView) serial).setText(String.format(Locale.getDefault(), "%d", chapterNo));
@@ -139,6 +215,8 @@ public class ChapterCard extends ConstraintLayout {
         if (icon instanceof ChapterIcon) {
             ((ChapterIcon) icon).setChapterNumber(chapterNo);
         }
+
+        updateFavIcon();
     }
 
     public void setName(String chapterName, String chapterTransl) {
