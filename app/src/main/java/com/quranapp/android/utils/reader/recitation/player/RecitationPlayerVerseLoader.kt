@@ -1,4 +1,4 @@
-package com.quranapp.android.views.recitation
+package com.quranapp.android.utils.reader.recitation.player
 
 import android.os.Build
 import android.os.Handler
@@ -139,7 +139,7 @@ class RecitationPlayerVerseLoader {
         }
     }
 
-    private fun makeKey(reciter: String, chapterNo: Int, verseNo: Int): String {
+    fun makeKey(reciter: String, chapterNo: Int, verseNo: Int): String {
         return "$reciter:$chapterNo:$verseNo"
     }
 

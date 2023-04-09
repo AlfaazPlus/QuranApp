@@ -39,8 +39,7 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.services.RecitationPlayerService;
-import com.quranapp.android.views.recitation.RecitationPlayer;
+import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
@@ -174,9 +173,9 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         updateHeaderTitle();
     }
 
-    private void onVerseRecite(RecitationPlayerService service) {
-        final int chapterNo = service.getRecParams().getCurrentChapterNo();
-        final int verseNo = service.getRecParams().getCurrentVerseNo();
+    private void onVerseRecite(RecitationService service) {
+        final int chapterNo = service.getP().getCurrentChapterNo();
+        final int verseNo = service.getP().getCurrentVerseNo();
         onVerseRecite(chapterNo, verseNo, service.isPlaying());
     }
 

@@ -9,6 +9,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.media.session.MediaButtonReceiver
 import com.peacedesign.android.utils.DrawableUtils
 import com.quranapp.android.R
@@ -18,14 +19,14 @@ import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.services.RecitationPlayerService
 
 class RecitationNotificationHelper(private val service: RecitationPlayerService) {
-    private val notifManager by lazy { NotificationManagerCompat.from(service) }
+    /*private val notifManager by lazy { NotificationManagerCompat.from(service) }
     private val notifActionPrev by lazy { createPreviousVerseAction() }
     private val notifActionNext by lazy { createNextVerseAction() }
     private var notifBuilder: NotificationCompat.Builder? = null
     private var notifTitle: String? = null
     private var notifDescription: String? = null
     private val albumArt by lazy {
-        DrawableUtils.getBitmapFromDrawable(service.drawable(R.drawable.dr_quran_wallpaper), 256, 256)
+        service.drawable(R.drawable.dr_quran_wallpaper).toBitmap(256, 256)
     }
 
     fun prepareMetadata(quranMeta: QuranMeta?): MediaMetadataCompat {
@@ -126,5 +127,5 @@ class RecitationNotificationHelper(private val service: RecitationPlayerService)
             return
         }
         notifManager.notify(RecitationPlayerService.NOTIF_ID, notifBuilder!!.build())
-    }
+    }*/
 }

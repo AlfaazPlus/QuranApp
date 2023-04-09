@@ -9,11 +9,14 @@ import android.widget.FrameLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.databinding.LytRecitationPlayerBinding
-import com.quranapp.android.utils.services.RecitationPlayerService
+import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams
+import com.quranapp.android.utils.services.RecitationService
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +24,7 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("ViewConstructor")
 class RecitationPlayer(
     internal val activity: ActivityReader,
-    var service: RecitationPlayerService?
+    var service: RecitationService?
 ) : FrameLayout(activity) {
 
     internal val binding = LytRecitationPlayerBinding.inflate(LayoutInflater.from(context), this, true)
@@ -37,8 +40,8 @@ class RecitationPlayer(
         // intercept touch events
         setOnTouchListener { _, _ -> true }
 
-        updateProgressBar()
-        updateTimelineText()
+        updateProgressBar(0)
+        updateTimelineText(0, 0)
 
         initControls()
     }
@@ -68,9 +71,9 @@ class RecitationPlayer(
     private fun onReaderChanged(preventStop: Boolean) {
         if (!preventStop) {
             service?.let {
-                it.recParams.currentRangeCompleted = true
-                it.recParams.currentVerseCompleted = true
-                it.release()
+                it.p.currentRangeCompleted = true
+                it.p.currentVerseCompleted = true
+                it.stopMedia()
             }
 
             playerMenu.close()
@@ -78,8 +81,8 @@ class RecitationPlayer(
             updatePlayControlBtn(false)
         }
 
-        updateProgressBar()
-        updateTimelineText()
+        updateProgressBar(0)
+        updateTimelineText(0, 0)
         reveal()
     }
 
@@ -89,19 +92,23 @@ class RecitationPlayer(
             progress.isSaveFromParentEnabled = false
             progress.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
                 private var previouslyPlaying = false
+                private var lastProgress = 0
+
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
-                        service?.seek(progress * RecitationPlayerService.MILLIS_MULTIPLIER)
+                        lastProgress = progress
                     }
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    previouslyPlaying = service?.recParams?.previouslyPlaying ?: false
+                    previouslyPlaying = service?.p?.previouslyPlaying ?: false
 
                     service?.pauseMedia()
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    service?.seek(lastProgress * RecitationService.MILLIS_MULTIPLIER)
+
                     if (previouslyPlaying) {
                         service?.playMedia()
                     }
@@ -118,13 +125,13 @@ class RecitationPlayer(
 
             seekLeft.setOnClickListener {
                 if (service?.isLoadingInProgress != true) {
-                    service?.seek(RecitationPlayerService.ACTION_SEEK_LEFT)
+                    service?.seek(RecitationService.ACTION_SEEK_LEFT)
                 }
             }
 
             seekRight.setOnClickListener {
                 if (service?.isLoadingInProgress != true) {
-                    service?.seek(RecitationPlayerService.ACTION_SEEK_RIGHT)
+                    service?.seek(RecitationService.ACTION_SEEK_RIGHT)
                 }
             }
 
@@ -139,7 +146,7 @@ class RecitationPlayer(
             verseSync.isEnabled = false
             verseSync.setOnClickListener {
                 if (!activity.mReaderParams.isSingleVerse) {
-                    service?.updateVerseSync(!(service?.recParams?.syncWithVerse ?: false), true)
+                    service?.updateVerseSync(!(service?.p?.syncWithVerse ?: false), true)
                 }
             }
 
@@ -150,7 +157,7 @@ class RecitationPlayer(
     }
 
     private fun startRecitationService() {
-        RecitationPlayerService.startPlayerService(activity)
+        ContextCompat.startForegroundService(activity, Intent(activity, RecitationService::class.java))
         activity.bindPlayerService()
     }
 
@@ -167,6 +174,7 @@ class RecitationPlayer(
     }
 
     fun onPlayMedia(params: RecitationPlayerParams) {
+        Log.d("onPlayMedia: ${params.currentChapterNo}:${params.currentVerseNo}")
         if (params.syncWithVerse && !activity.mReaderParams.isSingleVerse) {
             reveal()
         }
@@ -183,7 +191,7 @@ class RecitationPlayer(
         activity.onVerseRecite(params.currentChapterNo, params.currentVerseNo, false)
         updatePlayControlBtn(false)
         updateProgressBar(0)
-        updateTimelineText(0)
+        updateTimelineText(0, 0)
     }
 
     fun reciteControl(chapterNo: Int, verseNo: Int) {
@@ -194,11 +202,11 @@ class RecitationPlayer(
         binding.playControl.setImageResource(if (playing) R.drawable.dr_icon_pause2 else R.drawable.dr_icon_play2)
     }
 
-    fun updateProgressBar(forceProgress: Int = -1) {
-        val progress = if (forceProgress != -1) forceProgress
-        else if (service == null) 0
-        else service!!.currentPosition / RecitationPlayerService.MILLIS_MULTIPLIER
+    fun updateMaxProgress(max: Int) {
+        binding.progress.max = max
+    }
 
+    fun updateProgressBar(progress: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.progress.setProgress(progress, true)
         } else {
@@ -206,16 +214,12 @@ class RecitationPlayer(
         }
     }
 
-    fun updateTimelineText(forceProgress: Long = -1L) {
-        val progress = if (forceProgress != -1L) forceProgress
-        else if (service == null) 0
-        else service!!.currentPosition.toLong()
-
+    fun updateTimelineText(progress: Long, duration: Long) {
         binding.progressText.text = String.format(
             Locale.getDefault(),
             "%s / %s",
             formatTime(progress),
-            formatTime(service?.duration?.toLong() ?: 0)
+            formatTime(duration)
         )
     }
 
@@ -285,11 +289,11 @@ class RecitationPlayer(
     }
 
     fun setRepeat(repeat: Boolean) {
-        service?.setRepeat(repeat)
+        service?.updateRepeatMode(repeat)
     }
 
     fun setContinueChapter(continueChapter: Boolean) {
-        service?.setContinueChapter(continueChapter)
+        service?.updateContinuePlaying(continueChapter)
     }
 
     fun isReciting(chapterNo: Int, verseNo: Int): Boolean {

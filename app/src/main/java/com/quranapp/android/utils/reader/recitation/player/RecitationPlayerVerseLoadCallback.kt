@@ -1,12 +1,12 @@
-package com.quranapp.android.views.recitation
+package com.quranapp.android.utils.reader.recitation.player
 
 import android.widget.Toast
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
-import com.quranapp.android.utils.services.RecitationPlayerService
+import com.quranapp.android.utils.services.RecitationService
 import java.io.File
 
-open class RecitationPlayerVerseLoadCallback(private val service: RecitationPlayerService?) {
+open class RecitationPlayerVerseLoadCallback(private val service: RecitationService?) {
     private var reciter: String? = null
     private var chapterNo = 0
     private var verseNo = 0
@@ -52,10 +52,9 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationPlay
             service?.forceManifestFetch = true
         }
 
+        service?.updatePlayerProgress()
+
         service?.recPlayer?.let {
-//            it.release()
-            it.updateProgressBar()
-            it.updateTimelineText()
 
             if (!it.readerChanging) {
                 service.popMiniMsg("Something happened wrong while loading the verse.", Toast.LENGTH_LONG)

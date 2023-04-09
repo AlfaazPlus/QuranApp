@@ -1,4 +1,4 @@
-package com.quranapp.android.views.recitation
+package com.quranapp.android.utils.reader.recitation.player
 
 import android.net.Uri
 import android.os.Parcel
@@ -68,7 +68,9 @@ class RecitationPlayerParams() : Parcelable {
         }
     }
 
-    fun getNextVerse(quranMeta: QuranMeta): Pair<Int, Int> {
+    fun getNextVerse(quranMeta: QuranMeta, curVerse: Pair<Int, Int>? = null): Pair<Int, Int>? {
+        val currentVerse = curVerse ?: this.currentVerse
+
         val currentChapterNo = currentVerse.first
         val currentVerseNo = currentVerse.second
         val lastChapterNo = lastVerse.first
@@ -79,7 +81,7 @@ class RecitationPlayerParams() : Parcelable {
                 currentVerseNo
             )
         ) {
-            return Pair(-1, -1)
+            return null
         }
 
         var nextChapterNo = currentChapterNo
@@ -101,11 +103,15 @@ class RecitationPlayerParams() : Parcelable {
             nextVerseNo = -1
         }
 
+        if (nextChapterNo == -1 && nextVerseNo == -1) {
+            return null
+        }
+
         return Pair(nextChapterNo, nextVerseNo)
     }
 
 
-    fun getPreviousVerse(quranMeta: QuranMeta): Pair<Int, Int> {
+    fun getPreviousVerse(quranMeta: QuranMeta): Pair<Int, Int>? {
         val currentChapterNo = currentVerse.first
         val currentVerseNo = currentVerse.second
         val firstChapterNo = firstVerse.first
@@ -116,7 +122,7 @@ class RecitationPlayerParams() : Parcelable {
                 currentVerseNo
             )
         ) {
-            return Pair(-1, -1)
+            return null
         }
 
         var previousChapterNo = currentChapterNo
@@ -137,6 +143,10 @@ class RecitationPlayerParams() : Parcelable {
         if (previousChapterNo < firstChapterNo || previousVerseNo < firstVerseNo) {
             previousChapterNo = -1
             previousVerseNo = -1
+        }
+
+        if (previousChapterNo == -1 && previousVerseNo == -1) {
+            return null
         }
 
         return Pair(previousChapterNo, previousVerseNo)

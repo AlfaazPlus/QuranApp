@@ -1,43 +1,9 @@
 package com.quranapp.android.utils.services
 
 import android.app.Service
-import android.content.ContextWrapper
-import android.content.Intent
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.net.Uri
-import android.os.Binder
-import android.os.Handler
-import android.os.PowerManager
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
-import android.widget.Toast
-import androidx.core.app.ServiceCompat
-import androidx.core.content.ContextCompat
-import androidx.media.session.MediaButtonReceiver
-import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.api.models.recitation.RecitationInfoModel
-import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.exceptions.NoInternetException
-import com.quranapp.android.utils.extensions.runOnInterval
-import com.quranapp.android.utils.reader.recitation.RecitationManager
-import com.quranapp.android.utils.reader.recitation.RecitationNotificationHelper
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.utils.univ.FileUtils
-import com.quranapp.android.utils.univ.MessageUtils
-import com.quranapp.android.views.recitation.RecitationPlayer
-import com.quranapp.android.views.recitation.RecitationPlayerParams
-import com.quranapp.android.views.recitation.RecitationPlayerVerseLoadCallback
-import com.quranapp.android.views.recitation.RecitationPlayerVerseLoader
-import java.io.File
 
-class RecitationPlayerService : Service() {
+class RecitationPlayerService/* : Service()*/ {
+    /*
     companion object {
         const val MILLIS_MULTIPLIER = 100
         const val ACTION_SEEK_LEFT = -1
@@ -247,8 +213,8 @@ class RecitationPlayerService : Service() {
                 Log.d(what, extra)
                 true
             }
-            it.setOnPreparedListener {
-                onPreparePlayer(it, audioURI, reciter, chapterNo, verseNo, true)
+            it.setOnPreparedListener { mp ->
+                onPreparePlayer(mp, audioURI, reciter, chapterNo, verseNo, true)
             }
         }
     }
@@ -419,17 +385,16 @@ class RecitationPlayerService : Service() {
     fun playMedia(startPlayer: Boolean = true) {
         Log.d("PLAYING MEDIA: $startPlayer")
 
-        player?.let {
-            try {
-                if (startPlayer) it.start()
-            } catch (_: Exception) {
-                // Not initialized yet
-            }
-            runAudioProgress()
-
-            recParams.currentRangeCompleted = false
-            recParams.currentVerseCompleted = false
+        try {
+            if (startPlayer) player?.start()
+        } catch (_: Exception) {
+            // Not initialized yet
         }
+
+        runAudioProgress()
+
+        recParams.currentRangeCompleted = false
+        recParams.currentVerseCompleted = false
 
         setSessionState(PlaybackStateCompat.STATE_PLAYING)
 
@@ -519,7 +484,11 @@ class RecitationPlayerService : Service() {
     private fun runAudioProgress() {
         progressHandler?.removeCallbacksAndMessages(null)
 
-        if (player == null || recPlayer == null) return
+        Log.d("TRYING AUDIO PROGRESS", player, recPlayer, isPlaying)
+
+        if (player == null || recPlayer == null || !isPlaying) return
+
+        Log.d("RUNNING AUDIO PROGRESS")
 
         progressHandler = runOnInterval({
             if (!isPlaying) {
@@ -777,5 +746,5 @@ class RecitationPlayerService : Service() {
 
     fun popMiniMsg(msg: String, duration: Int) {
         MessageUtils.showRemovableToast(this, msg, duration)
-    }
+    }*/
 }

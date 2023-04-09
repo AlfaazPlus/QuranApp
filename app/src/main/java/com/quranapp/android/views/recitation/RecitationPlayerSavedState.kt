@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.view.View.BaseSavedState
 import androidx.core.os.ParcelCompat
+import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams
 
 
 class RecitationPlayerSavedState : BaseSavedState {

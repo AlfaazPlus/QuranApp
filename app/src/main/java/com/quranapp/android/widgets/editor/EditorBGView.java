@@ -19,12 +19,11 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableKt;
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.components.editor.VerseEditor;
 import com.quranapp.android.utils.extensions.ContextKt;
@@ -61,7 +60,7 @@ public class EditorBGView extends View {
             canvas.drawRect(0, 0, getWidth(), getHeight(), mBGPaint);
         } else if (bgType == VerseEditor.BG_TYPE_IMAGE) {
             if (mImage == null) {
-                mImage = DrawableUtils.getBitmapFromDrawable(mImageDrawable, getWidth(), getHeight());
+                mImage = DrawableKt.toBitmap(mImageDrawable, getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             }
             canvas.getClipBounds(mImageRect);
             canvas.drawBitmap(mImage, null, mImageRect, mBGPaint);
@@ -129,8 +128,8 @@ public class EditorBGView extends View {
     }
 
     private void generateIconPaint(@DrawableRes int iconRes) {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), iconRes);
-        mIconBitmap = DrawableUtils.getBitmapFromDrawable(drawable, mIconSize, mIconSize);
+        Drawable drawable = ContextKt.drawable(getContext(), iconRes);
+        mIconBitmap = DrawableKt.toBitmap(drawable, mIconSize, mIconSize, Bitmap.Config.ARGB_8888);
 
         mIconPaint = new Paint(ANTI_ALIAS_FLAG);
         mIconPaint.setColorFilter(new PorterDuffColorFilter(mPrimaryColor, PorterDuff.Mode.SRC_ATOP));
