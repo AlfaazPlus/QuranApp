@@ -15,17 +15,19 @@ import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 
 class FragSettingsRecitations : FragSettingsBase() {
-
     private lateinit var binding: FragSettingsRecitationsBinding
+    private var pageAdapter: ViewPagerAdapter2? = null
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectReciter)
 
     override val layoutResource = R.layout.frag_settings_recitations
 
     override fun getFinishingResult(ctx: Context): Bundle? {
+        if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty() ) return null
+
         val bundle = Bundle()
 
-        childFragmentManager.fragments.forEach {
+        pageAdapter!!.fragments.forEach {
             if (it is FragSettingsBase) {
                 it.getFinishingResult(ctx)?.let { result ->
                     bundle.putAll(result)
@@ -45,8 +47,9 @@ class FragSettingsRecitations : FragSettingsBase() {
                 }
 
                 override fun onRightIconClick() {
+                    if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
                     // refresh child fragments
-                    childFragmentManager.fragments.forEach {
+                    pageAdapter!!.fragments.forEach {
                         if (it is FragSettingsRecitationsBase) {
                             it.refresh(activity, true)
                         }
@@ -54,7 +57,9 @@ class FragSettingsRecitations : FragSettingsBase() {
                 }
 
                 override fun onSearchRequest(searchBox: EditText, newText: CharSequence) {
-                    val currentFragment = childFragmentManager.fragments[binding.viewPager.currentItem]
+                    if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
+
+                    val currentFragment = pageAdapter!!.fragments[binding.viewPager.currentItem]
                     if (currentFragment !is FragSettingsRecitationsBase) return
 
                     currentFragment.search(newText)
@@ -78,11 +83,12 @@ class FragSettingsRecitations : FragSettingsBase() {
 
     private fun init(ctx: Context) {
         binding.let {
-            it.viewPager.adapter = ViewPagerAdapter2(requireActivity()).apply {
+            pageAdapter = ViewPagerAdapter2(requireActivity())
+            it.viewPager.adapter = pageAdapter!!.apply {
                 addFragment(FragSettingsRecitationsArabic(), "Arabic")
                 addFragment(FragSettingsRecitationsTranslation(), "Translation")
             }
-            it.viewPager.offscreenPageLimit = it.viewPager.adapter!!.itemCount
+            it.viewPager.offscreenPageLimit = pageAdapter!!.itemCount
             it.viewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
         }
 
