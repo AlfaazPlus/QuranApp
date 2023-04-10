@@ -22,7 +22,7 @@ import com.quranapp.android.databinding.ActivitySettingsBinding;
 import com.quranapp.android.frags.settings.FragSettingsBase;
 import com.quranapp.android.frags.settings.FragSettingsLanguage;
 import com.quranapp.android.frags.settings.FragSettingsMain;
-import com.quranapp.android.frags.settings.FragSettingsRecitations;
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.FragSettingsScripts;
 import com.quranapp.android.frags.settings.FragSettingsTafsirs;
 import com.quranapp.android.frags.settings.FragSettingsTransl;

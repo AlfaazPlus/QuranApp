@@ -74,6 +74,7 @@ import com.quranapp.android.databinding.LytReaderSettingsTextSizeBinding;
 import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.app.ThemeUtils;
