@@ -10,10 +10,9 @@ import java.util.*
 @Serializable
 data class RecitationTranslationInfoModel(
     val slug: String,
-    val langCode: String,
-    val langName: String,
+    @SerialName("lang-code") val langCode: String,
+    @SerialName("lang-name") val langName: String,
     val reciter: String,
-    val style: String?,
     @SerialName("url-host") var urlHost: String?,
     @SerialName("url-path") val urlPath: String,
     val translations: Map<String, String> = mapOf(),
@@ -32,7 +31,7 @@ data class RecitationTranslationInfoModel(
     }
 
     override fun toString(): String {
-        return "slug:$slug, reciter:$reciter, translated:${getReciterName()}, style:$style"
+        return "slug:$slug, reciter:$reciter, translated:${getReciterName()}"
     }
 
     override fun hashCode(): Int {

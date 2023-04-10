@@ -85,8 +85,8 @@ class FragSettingsRecitations : FragSettingsBase() {
         binding.let {
             pageAdapter = ViewPagerAdapter2(requireActivity())
             it.viewPager.adapter = pageAdapter!!.apply {
-                addFragment(FragSettingsRecitationsArabic(), "Arabic")
-                addFragment(FragSettingsRecitationsTranslation(), "Translation")
+                addFragment(FragSettingsRecitationsArabic(), ctx.getString(R.string.labelArabic))
+                addFragment(FragSettingsRecitationsTranslation(), ctx.getString(R.string.labelTranslation))
             }
             it.viewPager.offscreenPageLimit = pageAdapter!!.itemCount
             it.viewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
