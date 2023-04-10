@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.databinding.LytRecitationPlayerBinding
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams
@@ -70,11 +71,7 @@ class RecitationPlayer(
 
     private fun onReaderChanged(preventStop: Boolean) {
         if (!preventStop) {
-            service?.let {
-                it.p.currentRangeCompleted = true
-                it.p.currentVerseCompleted = true
-                it.stopMedia()
-            }
+            service?.stopMedia()
 
             playerMenu.close()
             service?.cancelLoading()
@@ -116,6 +113,7 @@ class RecitationPlayer(
             })
 
             playControl.setOnClickListener {
+                Log.d(service)
                 if (service == null) {
                     startRecitationService()
                 } else if (!service!!.isLoadingInProgress) {
@@ -194,8 +192,8 @@ class RecitationPlayer(
         updateTimelineText(0, 0)
     }
 
-    fun reciteControl(chapterNo: Int, verseNo: Int) {
-        service?.reciteControl(chapterNo, verseNo)
+    fun reciteControl(pair: ChapterVersePair) {
+        service?.reciteControl(pair)
     }
 
     private fun updatePlayControlBtn(playing: Boolean) {

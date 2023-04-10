@@ -75,6 +75,7 @@ import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams;
 import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
@@ -86,7 +87,6 @@ import com.quranapp.android.views.reader.VerseView;
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
 import com.quranapp.android.views.recitation.RecitationPlayer;
-import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -105,6 +105,7 @@ import kotlin.Pair;
 
 public class ActivityReader extends ReaderPossessingActivity {
     public static final String KEY_RECITER_CHANGED = "reciter.changed";
+    public static final String KEY_TRANSLATION_RECITER_CHANGED = "translation_reciter.changed";
     public static final String KEY_SCRIPT_CHANGED = "script.changed";
     public static final String KEY_TAFSIR_CHANGED = "tafsir.changed";
 
@@ -180,12 +181,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     @Override
-    protected void onStop() {
-        unbindPlayerService();
-        super.onStop();
-    }
-
-    @Override
     protected void onStart() {
         bindPlayerService();
         super.onStart();
@@ -206,6 +201,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     @Override
     protected void onDestroy() {
+        unbindPlayerService();
         mBinding.readerHeader.destroy();
         if (mPlayerService != null) {
             mPlayerService.destroy();
@@ -1197,7 +1193,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         mPlayerService.onReciterChanged();
 
         if (wasPlaying) {
-            mPlayerService.restartVerse();
+            mPlayerService.restartVerse(true);
         }
     }
 

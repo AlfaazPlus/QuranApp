@@ -122,6 +122,7 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
+    <string name="titleSelectReciter">Manage Audio</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>

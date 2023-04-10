@@ -22,6 +22,7 @@ import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.databinding.LytReaderVerseBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
@@ -146,7 +147,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             if (mActivity instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) mActivity;
                 if (reader.mPlayer != null) {
-                    reader.mPlayer.reciteControl(chapterNo, verseNo);
+                    reader.mPlayer.reciteControl(new ChapterVersePair(chapterNo, verseNo));
                 }
             }
         });

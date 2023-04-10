@@ -5,28 +5,27 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.ParcelCompat
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.components.reader.ChapterVersePair
 
 class RecitationPlayerParams() : Parcelable {
     /**
      * Pair<surahNo, verseNo>
      */
-    var currentVerse = Pair(-1, -1)
+    var currentVerse = ChapterVersePair(-1, -1)
 
     /**
      * Pair<surahNo, verseNo>
      */
-    var firstVerse = Pair(-1, -1)
+    var firstVerse = ChapterVersePair(-1, -1)
 
     /**s
      * Pair<surahNo, verseNo>
      */
-    var lastVerse = Pair(-1, -1)
+    var lastVerse = ChapterVersePair(-1, -1)
 
     var currentReciter: String? = null
     var previouslyPlaying = false
     var continueRange = true
-    var currentRangeCompleted = true
-    var currentVerseCompleted = true
     var repeatVerse = false
     var syncWithVerse = true
 
@@ -36,8 +35,6 @@ class RecitationPlayerParams() : Parcelable {
         currentReciter = parcel.readString()
         previouslyPlaying = parcel.readByte() != 0.toByte()
         continueRange = parcel.readByte() != 0.toByte()
-        currentRangeCompleted = parcel.readByte() != 0.toByte()
-        currentVerseCompleted = parcel.readByte() != 0.toByte()
         repeatVerse = parcel.readByte() != 0.toByte()
         syncWithVerse = parcel.readByte() != 0.toByte()
         lastMediaURI = ParcelCompat.readParcelable(parcel, Uri::class.java.classLoader, Uri::class.java)
@@ -47,8 +44,6 @@ class RecitationPlayerParams() : Parcelable {
         parcel.writeString(currentReciter)
         parcel.writeByte(if (previouslyPlaying) 1 else 0)
         parcel.writeByte(if (continueRange) 1 else 0)
-        parcel.writeByte(if (currentRangeCompleted) 1 else 0)
-        parcel.writeByte(if (currentVerseCompleted) 1 else 0)
         parcel.writeByte(if (repeatVerse) 1 else 0)
         parcel.writeByte(if (syncWithVerse) 1 else 0)
         parcel.writeParcelable(lastMediaURI, flags)
@@ -68,13 +63,13 @@ class RecitationPlayerParams() : Parcelable {
         }
     }
 
-    fun getNextVerse(quranMeta: QuranMeta, curVerse: Pair<Int, Int>? = null): Pair<Int, Int>? {
+    fun getNextVerse(quranMeta: QuranMeta, curVerse: ChapterVersePair? = null): ChapterVersePair? {
         val currentVerse = curVerse ?: this.currentVerse
 
-        val currentChapterNo = currentVerse.first
-        val currentVerseNo = currentVerse.second
-        val lastChapterNo = lastVerse.first
-        val lastVerseNo = lastVerse.second
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+        val lastChapterNo = lastVerse.chapterNo
+        val lastVerseNo = lastVerse.verseNo
 
         if (!QuranMeta.isChapterValid(currentChapterNo) || !quranMeta.isVerseValid4Chapter(
                 currentChapterNo,
@@ -107,15 +102,15 @@ class RecitationPlayerParams() : Parcelable {
             return null
         }
 
-        return Pair(nextChapterNo, nextVerseNo)
+        return ChapterVersePair(nextChapterNo, nextVerseNo)
     }
 
 
     fun getPreviousVerse(quranMeta: QuranMeta): Pair<Int, Int>? {
-        val currentChapterNo = currentVerse.first
-        val currentVerseNo = currentVerse.second
-        val firstChapterNo = firstVerse.first
-        val firstVerseNo = firstVerse.second
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+        val firstChapterNo = firstVerse.chapterNo
+        val firstVerseNo = firstVerse.verseNo
 
         if (!QuranMeta.isChapterValid(currentChapterNo) || !quranMeta.isVerseValid4Chapter(
                 currentChapterNo,
@@ -156,10 +151,10 @@ class RecitationPlayerParams() : Parcelable {
      * @return Returns true if the player has previous verse within the current playable verse range.
      */
     fun hasNextVerse(quranMeta: QuranMeta): Boolean {
-        val currentChapterNo = currentVerse.first
-        val currentVerseNo = currentVerse.second
-        val lastChapterNo = lastVerse.first
-        val lastVerseNo = lastVerse.second
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+        val lastChapterNo = lastVerse.chapterNo
+        val lastVerseNo = lastVerse.verseNo
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
@@ -183,10 +178,10 @@ class RecitationPlayerParams() : Parcelable {
      * @return Returns true if the player has previous verse within the current playable verse range.
      */
     fun hasPreviousVerse(quranMeta: QuranMeta): Boolean {
-        val currentChapterNo = currentVerse.first
-        val currentVerseNo = currentVerse.second
-        val firstChapterNo = firstVerse.first
-        val firstVerseNo = firstVerse.second
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+        val firstChapterNo = firstVerse.chapterNo
+        val firstVerseNo = firstVerse.verseNo
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
@@ -211,9 +206,9 @@ class RecitationPlayerParams() : Parcelable {
     }
 
     fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {
-        return currentVerse.first == chapterNo && currentVerse.second == verseNo
+        return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
     }
 
-    val currentChapterNo get() = currentVerse.first
-    val currentVerseNo get() = currentVerse.second
+    val currentChapterNo get() = currentVerse.chapterNo
+    val currentVerseNo get() = currentVerse.verseNo
 }

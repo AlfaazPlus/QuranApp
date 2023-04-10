@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_AVAILABLE_DOWNLOADS_FILE_NAME;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATIONS_FILENAME;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATION_TRANSLATIONS_FILENAME;
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 import com.quranapp.android.utils.app.AppUtils;
@@ -29,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.util.StringJoiner;
 
@@ -73,6 +73,11 @@ public final class FileUtils {
     public File getRecitationsManifestFile() {
         File recitationDir = getRecitationDir();
         return new File(recitationDir, AVAILABLE_RECITATIONS_FILENAME);
+    }
+
+    public File getRecitationTranslationsManifestFile() {
+        File recitationDir = getRecitationDir();
+        return new File(recitationDir, AVAILABLE_RECITATION_TRANSLATIONS_FILENAME);
     }
 
     public File getTranslationDir() {

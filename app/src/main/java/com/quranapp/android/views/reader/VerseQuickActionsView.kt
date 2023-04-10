@@ -12,6 +12,7 @@ import com.quranapp.android.adapters.ADPQuranPages
 import com.quranapp.android.components.bookmark.BookmarkModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.components.reader.QuranPageSectionModel
 import com.quranapp.android.databinding.LytReaderVerseQuickActionsBinding
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks
@@ -79,7 +80,7 @@ class VerseQuickActionsView @JvmOverloads constructor(
 
         binding.btnVerseRecitation.setOnClickListener {
             close()
-            reader.mPlayer.reciteControl(verse.chapterNo, verse.verseNo)
+            reader.mPlayer.reciteControl(ChapterVersePair(verse.chapterNo, verse.verseNo))
         }
 
         onBookmarkChanged(reader.isBookmarked(chapterNo, verseNo, verseNo))

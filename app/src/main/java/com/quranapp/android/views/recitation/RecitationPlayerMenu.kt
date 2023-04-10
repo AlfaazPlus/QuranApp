@@ -63,13 +63,27 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             player.activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_RECITER)
         }
 
-        val resId = if (WindowUtils.isRTL(context)) R.drawable.dr_icon_chevron_left
-        else R.drawable.dr_icon_chevron_right
+        val drawable = context.drawable(
+            if (WindowUtils.isRTL(context)) R.drawable.dr_icon_chevron_left
+            else R.drawable.dr_icon_chevron_right
+        )
 
         binding.selectReciter.setDrawables(
-            player.activity.drawable(R.drawable.dr_icon_recitation),
+            context.drawable(R.drawable.dr_icon_recitation),
             null,
-            context.drawable(resId),
+            drawable,
+            null
+        )
+
+        binding.manageAudio.setOnClickListener {
+            close()
+            player.activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_RECITER)
+        }
+
+        binding.manageAudio.setDrawables(
+            context.drawable(R.drawable.dr_icon_download),
+            null,
+            drawable,
             null
         )
 

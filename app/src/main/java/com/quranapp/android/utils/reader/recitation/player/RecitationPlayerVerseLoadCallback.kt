@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.reader.recitation.player
 
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.services.RecitationService
@@ -39,8 +40,7 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationServ
 
         Log.d("Verse loaded! - $chapterNo:$verseNo")
 
-        val audioURI = service?.fileUtils?.getFileURI(file)
-        service?.prepareMediaPlayer(audioURI!!, reciter!!, chapterNo, verseNo)
+        service?.prepareMediaPlayer(file.toUri(), reciter!!, chapterNo, verseNo)
     }
 
     open fun onFailed(e: Throwable?, file: File?) {

@@ -32,6 +32,7 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
@@ -250,7 +251,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             if (actvt instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) actvt;
                 if (reader.mPlayer != null) {
-                    reader.mPlayer.reciteControl(mVerse.chapterNo, mVerse.verseNo);
+                    reader.mPlayer.reciteControl(new ChapterVersePair(mVerse.chapterNo, mVerse.verseNo));
                 }
             }
         } else if (id == R.id.btnFootnotes) {

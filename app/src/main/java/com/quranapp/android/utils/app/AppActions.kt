@@ -57,12 +57,13 @@ object AppActions {
     fun checkForResourcesVersions(ctx: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val (urlsVersion, translationsVersion, recitationsVersion, tafsirsVersion)
+                val (urlsVersion, translationsVersion, recitationsVersion, recitationsTranslationVersion, tafsirsVersion)
                         = RetrofitInstance.github.getResourcesVersions()
 
                 val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
                 val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
                 val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
+                val localRecitationTranslationsVersion = SPAppConfigs.getRecitationTranslationsVersion(ctx)
                 val localTafsirsVersion = SPAppConfigs.getTafsirsVersion(ctx)
 
                 if (urlsVersion > localUrlsVersion) {
@@ -78,6 +79,11 @@ object AppActions {
                 if (recitationsVersion > localRecitationsVersion) {
                     SPAppActions.setFetchRecitationsForce(ctx, true)
                     SPAppConfigs.setRecitationsVersion(ctx, recitationsVersion)
+                }
+
+                if (recitationsTranslationVersion > localRecitationTranslationsVersion) {
+                    SPAppActions.setFetchRecitationTranslationsForce(ctx, true)
+                    SPAppConfigs.setRecitationTranslationsVersion(ctx, recitationsVersion)
                 }
 
                 if (tafsirsVersion > localTafsirsVersion) {

@@ -12,10 +12,11 @@ object SPAppActions {
     private const val SP_APP_ACTION = "sp_app_action"
 
     // Fetch translations forced in ActivityTranslationDownload.
-    private const val KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE = "app.action.translations.fetch_force"
-    private const val KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
-    private const val KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE = "app.action.tafsirs.fetch_force"
-    private const val KEY_APP_ACTION_SP_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
+    private const val KEY_TRANSLATIONS_FETCH_FORCE = "app.action.translations.fetch_force"
+    private const val KEY_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
+    private const val KEY_RECITATION_TRANSLATIONS_FETCH_FORCE = "app.action.recitation_translations.fetch_force"
+    private const val KEY_TAFSIRS_FETCH_FORCE = "app.action.tafsirs.fetch_force"
+    private const val KEY_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
     private const val KEY_APP_ACTION_SP_PENDING = "app.action.pending"
     private const val KEY_APP_ACTION_ONBOARDING_REQUIRED = "app.action.onboarding_required"
 
@@ -24,56 +25,70 @@ object SPAppActions {
     @JvmStatic
     fun setFetchTranslationsForce(ctx: Context, fetchForce: Boolean) {
         sp(ctx).edit().apply {
-            putBoolean(KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE, fetchForce)
+            putBoolean(KEY_TRANSLATIONS_FETCH_FORCE, fetchForce)
             apply()
         }
     }
 
     @JvmStatic
     fun getFetchTranslationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
-        KEY_APP_ACTION_SP_TRANSLS_FETCH_FORCE,
+        KEY_TRANSLATIONS_FETCH_FORCE,
         false
     )
 
     @JvmStatic
     fun setFetchRecitationsForce(ctx: Context, fetchForce: Boolean) {
         sp(ctx).edit().apply {
-            putBoolean(KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE, fetchForce)
+            putBoolean(KEY_RECITATIONS_FETCH_FORCE, fetchForce)
             apply()
         }
     }
 
     @JvmStatic
     fun getFetchRecitationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
-        KEY_APP_ACTION_SP_RECITATIONS_FETCH_FORCE,
+        KEY_RECITATIONS_FETCH_FORCE,
+        false
+    )
+
+    @JvmStatic
+    fun setFetchRecitationTranslationsForce(ctx: Context, fetchForce: Boolean) {
+        sp(ctx).edit().apply {
+            putBoolean(KEY_RECITATION_TRANSLATIONS_FETCH_FORCE, fetchForce)
+            apply()
+        }
+    }
+
+    @JvmStatic
+    fun getFetchRecitationTranslationsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
+        KEY_RECITATION_TRANSLATIONS_FETCH_FORCE,
         false
     )
 
     @JvmStatic
     fun setFetchTafsirsForce(ctx: Context, fetchForce: Boolean) {
         sp(ctx).edit().apply {
-            putBoolean(KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE, fetchForce)
+            putBoolean(KEY_TAFSIRS_FETCH_FORCE, fetchForce)
             apply()
         }
     }
 
     @JvmStatic
     fun getFetchTafsirsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
-        KEY_APP_ACTION_SP_TAFSIRS_FETCH_FORCE,
+        KEY_TAFSIRS_FETCH_FORCE,
         false
     )
 
     @JvmStatic
     fun setFetchUrlsForce(ctx: Context, fetchForce: Boolean) {
         sp(ctx).edit().apply {
-            putBoolean(KEY_APP_ACTION_SP_URLS_FETCH_FORCE, fetchForce)
+            putBoolean(KEY_URLS_FETCH_FORCE, fetchForce)
             apply()
         }
     }
 
     @JvmStatic
     fun getFetchUrlsForce(ctx: Context): Boolean = sp(ctx).getBoolean(
-        KEY_APP_ACTION_SP_URLS_FETCH_FORCE,
+        KEY_URLS_FETCH_FORCE,
         false
     )
 

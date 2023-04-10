@@ -10,6 +10,7 @@ import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MU
 import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
 
 import com.quranapp.android.utils.reader.QuranScriptUtils;
@@ -127,6 +128,20 @@ public abstract class SPReader {
         editor.apply();
 
         RecitationManager.setSavedRecitationSlug(recitation);
+    }
+
+    public static String getSavedRecitationTranslationSlug(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+        return sp.getString(KEY_RECITATION_TRANSLATION_RECITER, null);
+    }
+
+    public static void setSavedRecitationTranslationSlug(Context context, String slug) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(KEY_RECITATION_TRANSLATION_RECITER, slug);
+        editor.apply();
+
+        RecitationManager.setSavedRecitationTranslationSlug(slug);
     }
 
     public static boolean getRecitationRepeatVerse(Context context) {

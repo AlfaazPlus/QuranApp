@@ -26,6 +26,7 @@ public class RecitationUtils {
     public static final Pattern URL_VERSE_PATTERN = Pattern.compile("\\{verseNo:(.*?)\\}", Pattern.CASE_INSENSITIVE);
 
     public static final String KEY_RECITATION_RECITER = "key.recitation.reciter";
+    public static final String KEY_RECITATION_TRANSLATION_RECITER = "key.recitation_translation.reciter";
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
     public static final String KEY_RECITATION_CONTINUE_CHAPTER = "key.recitation.continue_chapter";
     public static final String KEY_RECITATION_VERSE_SYNC = "key.recitation.verse_sync";
@@ -34,6 +35,7 @@ public class RecitationUtils {
     public static final boolean RECITATION_DEFAULT_VERSE_SYNC = true;
 
     public static final String AVAILABLE_RECITATIONS_FILENAME = "available_recitations.json";
+    public static final String AVAILABLE_RECITATION_TRANSLATIONS_FILENAME = "available_recitation_translations.json";
     public static final String RECITATION_AUDIO_NAME_FORMAT_LOCAL = "%03d-%03d.mp3";
 
     public static boolean isRecitationSupported() {
