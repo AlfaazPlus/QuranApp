@@ -11,7 +11,7 @@ import java.util.*
 data class RecitationTranslationInfoModel(
     val slug: String,
     @SerialName("lang-code") val langCode: String,
-    @SerialName("lang-name") val langName: String,
+    @SerialName("lang-name") var langName: String,
     val reciter: String,
     @SerialName("url-host") var urlHost: String?,
     @SerialName("url-path") val urlPath: String,

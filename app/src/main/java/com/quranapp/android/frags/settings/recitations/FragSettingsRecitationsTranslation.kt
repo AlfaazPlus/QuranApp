@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.adapters.recitation.ADPRecitationTranslations
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -69,6 +70,7 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
             }
             return
         }
+        
         val pattern = Pattern.compile(
             StringUtils.escapeRegex(query.toString()),
             Pattern.CASE_INSENSITIVE or Pattern.DOTALL

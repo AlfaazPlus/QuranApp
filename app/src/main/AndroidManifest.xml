@@ -58,7 +58,13 @@
         </activity>
         <activity
             android:name=".activities.readerSettings.ActivitySettings"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.ActivitySearch"
             android:exported="true">
@@ -75,11 +81,6 @@
             android:name=".activities.ActivityReader"
             android:exported="true"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
 

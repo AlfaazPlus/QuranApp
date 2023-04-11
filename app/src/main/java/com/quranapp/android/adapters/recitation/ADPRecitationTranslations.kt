@@ -3,11 +3,18 @@
  */
 package com.quranapp.android.adapters.recitation
 
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
+import com.quranapp.android.R
 import com.quranapp.android.adapters.recitation.ADPRecitationTranslations.VHRecitationTranslation
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.updatePaddingHorizontal
+import com.quranapp.android.utils.extensions.updatePaddingVertical
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 
@@ -24,8 +31,18 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHRecitationTranslation {
-        return VHRecitationTranslation(PeaceRadioButton(parent.context).apply {
+        val context = parent.context
 
+        return VHRecitationTranslation(PeaceRadioButton(context).apply {
+            setBackgroundResource(R.drawable.dr_bg_hover)
+            updatePaddingHorizontal(context.dp2px(20F))
+            updatePaddingVertical(context.dp2px(10F))
+            textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+            setTextAppearance(R.style.TextAppearanceCommonTitle)
+            setSpaceBetween(context.dp2px(15F))
+            gravity = Gravity.CENTER_VERTICAL
+
+            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         })
     }
 
@@ -49,7 +66,7 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
         }
 
         fun bind(model: RecitationTranslationInfoModel) {
-            radio.setTexts(model.langName, model.getReciterName())
+            radio.setTexts(model.getReciterName(), model.langName)
             radio.isChecked = model.isChecked
 
             if (model.isChecked) {
@@ -57,9 +74,9 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
             }
 
             radio.visibility = View.VISIBLE
-            radio.onCheckChangedListener = { button, _ ->
+            radio.setOnClickListener { v ->
                 select(bindingAdapterPosition)
-                SPReader.setSavedRecitationSlug(button.context, model.slug)
+                SPReader.setSavedRecitationTranslationSlug(v.context, model.slug)
             }
         }
 

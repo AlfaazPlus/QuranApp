@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
+import java.util.*
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -119,7 +120,7 @@ object RecitationManager {
         force: Boolean,
         readyCallback: () -> Unit
     ) {
-        if (!force && availableRecitationsModel != null) {
+        if (!force && availableRecitationTranslationsModel != null) {
             readyCallback()
             return
         }
@@ -194,7 +195,7 @@ object RecitationManager {
                 if (reciterModel.urlHost.isNullOrEmpty()) {
                     reciterModel.urlHost = model.urlInfo.commonHost
                 }
-
+                reciterModel.langName = Locale(reciterModel.langCode).getDisplayName(Locale.getDefault())
                 reciterModel.isChecked = reciterModel.slug == savedSlug
             }
 
