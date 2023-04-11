@@ -1,0 +1,27 @@
+{
+  "url-info": {
+    "common-host": "everyayah.com"
+  },
+  "reciters": [
+    {
+      "slug": "shamshad-ali-khan",
+      "lang-code": "ur",
+      "lang-name": "اردو",
+      "reciter": "شمشاد علی خان",
+      "url-host": null,
+      "url-path": "/data/translations/urdu_shamshad_ali_khan_46kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+      }
+    },
+    {
+      "slug": "fooladvand-hedayatfar",
+      "lang-code": "fa",
+      "lang-name": "فارسی",
+      "reciter": "فولادوند - هدایتفر",
+      "url-host": null,
+      "url-path": "/data/translations/Fooladvand_Hedayatfar_40Kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+      }
+    }
+  ]
+}
