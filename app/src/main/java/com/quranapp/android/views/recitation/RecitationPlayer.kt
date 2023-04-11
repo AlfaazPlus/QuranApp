@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 
 @SuppressLint("ViewConstructor")
 class RecitationPlayer(
-    internal val activity: ActivityReader,
+    val activity: ActivityReader,
     var service: RecitationService?
 ) : FrameLayout(activity) {
 
@@ -298,4 +298,7 @@ class RecitationPlayer(
         return service?.isReciting(chapterNo, verseNo) ?: false
     }
 
+    fun onAudioOptionChanged(newOption: String) {
+        service?.onAudioOptionChanged(newOption)
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import androidx.annotation.Nullable;
 
+import com.quranapp.android.R;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.app.AppUtils;
@@ -30,6 +31,7 @@ public class RecitationUtils {
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
     public static final String KEY_RECITATION_CONTINUE_CHAPTER = "key.recitation.continue_chapter";
     public static final String KEY_RECITATION_VERSE_SYNC = "key.recitation.verse_sync";
+    public static final String KEY_RECITATION_AUDIO_OPTION = "key.recitation.audio_option";
     public static final boolean RECITATION_DEFAULT_REPEAT = false;
     public static final boolean RECITATION_DEFAULT_CONTINUE_CHAPTER = true;
     public static final boolean RECITATION_DEFAULT_VERSE_SYNC = true;
@@ -38,8 +40,45 @@ public class RecitationUtils {
     public static final String AVAILABLE_RECITATION_TRANSLATIONS_FILENAME = "available_recitation_translations.json";
     public static final String RECITATION_AUDIO_NAME_FORMAT_LOCAL = "%03d-%03d.mp3";
 
+    public static final String AUDIO_OPTION_ONLY_ARABIC = "audio.arabic_only";
+    public static final String AUDIO_OPTION_ONLY_TRANSLATION = "audio.translation_only";
+    public static final String AUDIO_OPTION_BOTH = "audio.both";
+    public static final String AUDIO_OPTION_DEFAULT = AUDIO_OPTION_ONLY_ARABIC;
+
     public static boolean isRecitationSupported() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
+    }
+
+    public static String resolveAudioOptionFromId(int id) {
+        if (id == R.id.audioOnlyTranslation) {
+            return AUDIO_OPTION_ONLY_TRANSLATION;
+        } else if (id == R.id.audioBoth) {
+            return AUDIO_OPTION_BOTH;
+        }
+
+        return AUDIO_OPTION_DEFAULT;
+    }
+
+    public static int resolveAudioOptionId(Context context) {
+        switch (SPReader.getRecitationAudioOption(context)) {
+            case AUDIO_OPTION_ONLY_TRANSLATION:
+                return R.id.audioOnlyTranslation;
+            case AUDIO_OPTION_BOTH:
+                return R.id.audioBoth;
+            default:
+                return R.id.audioOnlyArabic;
+        }
+    }
+
+    public static String resolveAudioOptionText(Context context) {
+        switch (SPReader.getRecitationAudioOption(context)) {
+            case AUDIO_OPTION_ONLY_TRANSLATION:
+                return context.getString(R.string.audioOnlyTranslation);
+            case AUDIO_OPTION_BOTH:
+                return context.getString(R.string.audioBothArabicTranslation);
+            default:
+                return context.getString(R.string.audioOnlyArabic);
+        }
     }
 
     @Nullable

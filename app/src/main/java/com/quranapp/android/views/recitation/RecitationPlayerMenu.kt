@@ -15,6 +15,7 @@ import com.peacedesign.android.utils.DrawableUtils
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.databinding.LytAudioOptionExplorerBinding
 import com.quranapp.android.databinding.LytRecitationMenuBinding
 import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.extensions.dp2px
@@ -25,6 +26,7 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.PopupWindow2
 import com.quranapp.android.utils.univ.RelativePopupWindow.HorizontalPosition
 import com.quranapp.android.utils.univ.RelativePopupWindow.VerticalPosition
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 
 class RecitationPlayerMenu(private val player: RecitationPlayer) {
     private val popup = createPopup()
@@ -87,6 +89,18 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             null
         )
 
+        binding.audioOption.setOnClickListener {
+            close()
+            openAudioOptionSheet()
+        }
+
+        binding.audioOption.setDrawables(
+            context.drawable(R.drawable.dr_icon_settings),
+            null,
+            drawable,
+            null
+        )
+
         binding.repeatCheckbox.setOnCheckedChangeListener { _, isChecked ->
             player.setRepeat(isChecked)
             binding.autoplay.disableView(isChecked)
@@ -99,19 +113,26 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
 
     private fun setup(binding: LytRecitationMenuBinding) {
         val repeatEnabled = SPReader.getRecitationRepeatVerse(context)
+
         binding.repeatCheckbox.isChecked = repeatEnabled
         binding.autoplayCheckbox.isChecked = SPReader.getRecitationContinueChapter(context)
         binding.autoplay.disableView(repeatEnabled)
-        binding.selectReciter.text = prepareRecitationTitle(null)
+        binding.audioOption.text = prepareTitle(
+            context.getString(R.string.audioOption),
+            RecitationUtils.resolveAudioOptionText(context)
+        )
+        binding.selectReciter.text = prepareTitle(context.getString(R.string.strTitleSelectReciter), null)
 
         RecitationManager.prepare(context, false) {
-            val subtitle = RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(context))
-            binding.selectReciter.text = prepareRecitationTitle(subtitle)
+            binding.selectReciter.text = prepareTitle(
+                context.getString(R.string.strTitleSelectReciter),
+                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(context))
+            )
         }
     }
 
-    private fun prepareRecitationTitle(subtitle: String?): CharSequence {
-        val ssb = SpannableStringBuilder(context.getString(R.string.strTitleSelectReciter))
+    private fun prepareTitle(title: String, subtitle: String?): CharSequence {
+        val ssb = SpannableStringBuilder(title)
 
         if (subtitle.isNullOrEmpty()) return ssb
 
@@ -122,6 +143,24 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             setSpan(RelativeSizeSpan(0.93f), 0, subtitle.length, flag)
             setSpan(TypefaceSpan("sans-serif"), 0, subtitle.length, flag)
         })
+    }
+
+    private fun openAudioOptionSheet() {
+        val sheetDialog = PeaceBottomSheet()
+        sheetDialog.params.apply {
+            headerTitle = context.getString(R.string.audioOption)
+            contentView = LytAudioOptionExplorerBinding.inflate(player.activity.layoutInflater).apply {
+                audioOption.check(RecitationUtils.resolveAudioOptionId(context))
+                audioOption.onCheckChangedListener = { _, checkedId ->
+                    val audioOption = RecitationUtils.resolveAudioOptionFromId(checkedId)
+                    SPReader.setRecitationAudioOption(context, audioOption)
+                    player.onAudioOptionChanged(audioOption)
+                    sheetDialog.dismiss()
+                }
+            }.root
+        }
+
+        sheetDialog.show(player.activity.supportFragmentManager)
     }
 
     fun open(anchorView: View) {

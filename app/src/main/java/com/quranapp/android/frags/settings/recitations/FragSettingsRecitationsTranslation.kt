@@ -25,14 +25,14 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
 
     override fun getFinishingResult(ctx: Context): Bundle? {
         if (initialRecitation != null && SPReader.getSavedRecitationSlug(ctx) != initialRecitation) {
-            return bundleOf(ActivityReader.KEY_RECITER_CHANGED to true)
+            return bundleOf(ActivityReader.KEY_TRANSLATION_RECITER_CHANGED to true)
         }
         return null
     }
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
         super.onViewReady(ctx, view, savedInstanceState)
-        initialRecitation = SPReader.getSavedRecitationSlug(ctx)
+        initialRecitation = SPReader.getSavedRecitationTranslationSlug(ctx)
 
         init(ctx)
     }

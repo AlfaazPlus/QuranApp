@@ -123,7 +123,7 @@ class RecitationService : Service() {
                             val nextVerse = recParams.getNextVerse(quranMeta!!)
 
                             if (nextVerse != null) {
-                                reciteVerse(nextVerse.chapterNo, nextVerse.verseNo)
+                                reciteVerse(nextVerse)
                             } else {
                                 stopMedia()
                             }
@@ -403,8 +403,6 @@ class RecitationService : Service() {
     }
 
     fun playMedia() {
-        if (player == null) return
-
         runAudioProgress()
         player.play()
     }
@@ -440,7 +438,7 @@ class RecitationService : Service() {
     }
 
     fun seek(amountOrDirection: Long) {
-        if (player == null || isLoadingInProgress) {
+        if (isLoadingInProgress) {
             return
         }
 
@@ -469,7 +467,7 @@ class RecitationService : Service() {
             player.seekToPreviousMediaItem()
         } else {
             val previousVerse = recParams.getPreviousVerse(quranMeta!!) ?: return
-            reciteVerse(previousVerse.first, previousVerse.second)
+            reciteVerse(previousVerse)
         }
     }
 
@@ -478,7 +476,7 @@ class RecitationService : Service() {
             player.seekToNextMediaItem()
         } else {
             val nextVerse = recParams.getNextVerse(quranMeta!!) ?: return
-            reciteVerse(nextVerse.chapterNo, nextVerse.verseNo)
+            reciteVerse(nextVerse)
         }
     }
 
@@ -486,7 +484,7 @@ class RecitationService : Service() {
         if (isLoadingInProgress) return
 
         if (playlist.size == 0) {
-            reciteVerse(recParams.firstVerse.chapterNo, recParams.firstVerse.verseNo)
+            reciteVerse(recParams.firstVerse)
             return
         }
 
@@ -499,7 +497,7 @@ class RecitationService : Service() {
         }
 
         if (playlist.size == 0 || force) {
-            reciteVerse(recParams.currentVerse.chapterNo, recParams.currentVerse.verseNo)
+            reciteVerse(recParams.currentVerse)
             return
         }
 
@@ -510,6 +508,14 @@ class RecitationService : Service() {
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
     }
 
+    fun onTranslationReciterChanged() {
+        recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
+    }
+
+    fun onAudioOptionChanged(newOption: String) {
+        recParams.currentAudioOption = newOption
+    }
+
     fun reciteControl(pair: ChapterVersePair) {
         if (isLoadingInProgress) return
 
@@ -517,19 +523,19 @@ class RecitationService : Service() {
             || player.duration <= 0
             || player.currentPosition >= player.duration
         ) {
-            reciteVerse(pair.chapterNo, pair.verseNo)
+            reciteVerse(pair)
         }
 
         if (isPlaying) pauseMedia()
         else playMedia()
     }
 
-    fun reciteVerse(chapterNo: Int, verseNo: Int) {
+    fun reciteVerse(pair: ChapterVersePair) {
         if (
             isLoadingInProgress ||
-            !QuranMeta.isChapterValid(chapterNo) ||
+            !QuranMeta.isChapterValid(pair.chapterNo) ||
             quranMeta == null ||
-            !quranMeta!!.isVerseValid4Chapter(chapterNo, verseNo)
+            !quranMeta!!.isVerseValid4Chapter(pair.chapterNo, pair.verseNo)
         ) {
             return
         }
@@ -545,7 +551,7 @@ class RecitationService : Service() {
                     forceManifestFetch = false
 
                     if (r != null) {
-                        reciteVerseOnSlugAvailable(quranMeta!!, r, chapterNo, verseNo)
+                        reciteVerseOnSlugAvailable(quranMeta!!, r, pair.chapterNo, pair.verseNo)
                     } else {
                         verseLoadCallback.onFailed(null, null)
                         verseLoadCallback.postLoad()

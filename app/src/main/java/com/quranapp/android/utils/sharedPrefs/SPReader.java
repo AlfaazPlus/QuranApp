@@ -8,6 +8,7 @@ import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZ
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT;
 import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AUDIO_OPTION_DEFAULT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER;
@@ -195,6 +196,23 @@ public abstract class SPReader {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, sync);
+        editor.apply();
+    }
+
+    public static String getRecitationAudioOption(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)) {
+            setRecitationAudioOption(context, AUDIO_OPTION_DEFAULT);
+        }
+
+        return sp.getString(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, AUDIO_OPTION_DEFAULT);
+    }
+
+    public static void setRecitationAudioOption(Context context, String option) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option);
         editor.apply();
     }
 

@@ -63,6 +63,7 @@ import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.components.reader.QuranPageModel;
 import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.components.reader.ReaderRecyclerItemModel;
@@ -1125,7 +1126,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         RecitationPlayerParams recParams = mPlayerService.getP();
         Log.d(recParams);
         if (recParams.getPreviouslyPlaying()) {
-            mPlayerService.reciteVerse(chapterNo, verseNo);
+            mPlayerService.reciteVerse(new ChapterVersePair(chapterNo, verseNo));
         }
     }
 
@@ -1184,16 +1185,24 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void tryReciterChange() {
-        if (mPlayerService == null || Objects.equals(SPReader.getSavedRecitationSlug(this),
-            mPlayerService.getP().getCurrentReciter())) {
-            return;
-        }
+        if (mPlayerService == null) return;
 
-        boolean wasPlaying = mPlayerService.getP().getPreviouslyPlaying();
-        mPlayerService.onReciterChanged();
+        RecitationPlayerParams params = mPlayerService.getP();
 
-        if (wasPlaying) {
-            mPlayerService.restartVerse(true);
+        String savedReciter = SPReader.getSavedRecitationSlug(this);
+        String savedTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this);
+
+        String currentReciter = params.getCurrentReciter();
+        String currentTranslationReciter = params.getCurrentTranslationReciter();
+
+        if (!Objects.equals(savedReciter, currentReciter) ||
+            !Objects.equals(savedTranslationReciter, currentTranslationReciter)) {
+            mPlayerService.onReciterChanged();
+            mPlayerService.onTranslationReciterChanged();
+
+            if (params.getPreviouslyPlaying() || params.getPreviouslyTranslationPlaying()) {
+                mPlayerService.restartVerse(true);
+            }
         }
     }
 

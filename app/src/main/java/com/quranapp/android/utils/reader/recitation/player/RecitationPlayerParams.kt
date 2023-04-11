@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.core.os.ParcelCompat
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
 class RecitationPlayerParams() : Parcelable {
     /**
@@ -24,7 +25,10 @@ class RecitationPlayerParams() : Parcelable {
     var lastVerse = ChapterVersePair(-1, -1)
 
     var currentReciter: String? = null
+    var currentTranslationReciter: String? = null
+    var currentAudioOption = RecitationUtils.AUDIO_OPTION_DEFAULT
     var previouslyPlaying = false
+    var previouslyTranslationPlaying = false
     var continueRange = true
     var repeatVerse = false
     var syncWithVerse = true
@@ -106,7 +110,7 @@ class RecitationPlayerParams() : Parcelable {
     }
 
 
-    fun getPreviousVerse(quranMeta: QuranMeta): Pair<Int, Int>? {
+    fun getPreviousVerse(quranMeta: QuranMeta): ChapterVersePair? {
         val currentChapterNo = currentVerse.chapterNo
         val currentVerseNo = currentVerse.verseNo
         val firstChapterNo = firstVerse.chapterNo
@@ -144,7 +148,7 @@ class RecitationPlayerParams() : Parcelable {
             return null
         }
 
-        return Pair(previousChapterNo, previousVerseNo)
+        return ChapterVersePair(previousChapterNo, previousVerseNo)
     }
 
     /**
