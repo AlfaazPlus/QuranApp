@@ -216,7 +216,7 @@
     <string name="strDescClose">Fermer</string>
     <string name="strDescVerseNo" formatted="false">Verset numéro %d.</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Sourate %1$s, verset numéro %2$d.</string>
-    <string name="strMsgNoInternet">Vérifiez votre connexion internet svp.</string>
+    <string name="strMsgNoInternet">Veuillez vérifier votre connexion internet.</string>
     <string name="strMsgSomethingWrong">Quelque chose s\'est mal passé !</string>
     <string name="strMsgSomethingWrongFixing">Quelque chose s\'est mal passé ! Nous essayons de résoudre ce problème.</string>
     <string name="strLabelNavSearch">Recherche</string>
@@ -238,7 +238,7 @@
     <string name="strTitleAlphaBG">Arrière-plan alpha</string>
     <string name="strMsgEditShareLongTransl">La traduction est très longue, elle peut ne pas correspondre correctement.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s dans Le Coran</string>
-    <string name="strMsgReferenceDuas">Quelques du\'as pris du Coran.</string>
+    <string name="strMsgReferenceDuas">Quelques du\'as provenant du Coran.</string>
     <string name="strSalam">As-Salâmu \'Alaykum</string>
     <string name="strSalamShort">Salâm</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Supprimer %d marques-pages \?</string>
@@ -297,9 +297,9 @@
     <string name="strTitleImageSavedWithName" formatted="false">Image enregistrée avec le nom : %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Versets liés à %1$s trouvés à %2$d endroits au total.</string>
     <string name="strMsgTryLater">Veuillez réessayer plus tard.</string>
-    <string name="strTextPleaseWait">Veuillez attendre svp…</string>
+    <string name="strTextPleaseWait">Veuillez patienter…</string>
     <string name="strMsgVerseCredsInvalid">Les informations d\'identification du verset ne sont pas valides.</string>
-    <string name="strTitleOops">Oops !</string>
+    <string name="strTitleOops">Oups !</string>
     <string name="strMsgUpdateDownloaded">MISE A JOUR TELECHARGEE ! Veuillez l\'installer pour compléter la mise à jour.</string>
     <string name="strTitleScripts">Types d\'écriture</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Type d\'écriture : %s (~1Mo)</string>
@@ -319,7 +319,7 @@
     <string name="labelBackgroundDownload">Téléchargement en arrière-plan</string>
     <string name="lastCrashLog">Dernier rapport de crash</string>
     <string name="createIssue">Créer un problème</string>
-    <string name="pasteCrashLogGithubIssue">Rapport de crash copié dans le presse-papiers. Veuillez svp le coller dans le problème github.</string>
+    <string name="pasteCrashLogGithubIssue">Rapport de plantage copié dans le presse-papiers. Veuillez le coller dans l\'onglet issue du GitHub.</string>
     <string name="github">GitHub</string>
     <string name="msgAlarmManagerNotAvailable">Le gestionnaire d\'alarmes n\'est pas accessible sur cet appareil.</string>
     <string name="titleDownloadScriptResources">Télécharger les ressources pour ce type d\'écriture \?</string>
@@ -355,7 +355,7 @@
     <string name="nScriptsAndFonts" formatted="false">%1$d types d\'écriture et %2$d polices d\'écriture</string>
     <string name="nothingToCleanup">Il n\'y a rien à effacer.</string>
     <string name="titleChapterInfoCleanup">Effacer l\'info de chapitre \?</string>
-    <string name="strPreviewTextTransl">Au Nom d\'Allah, L\'Extremement Miséricordieux, Le Très Miséricordieux</string>
+    <string name="strPreviewTextTransl">Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux</string>
     <string name="inPlaces">en %s</string>
     <string name="inPlacesMore">dans %1$s et %2$d de plus</string>
     <string name="onboardDescLanguage">Configure l\'application dans ta langue. Tu peux modifier ça plus tard.</string>
