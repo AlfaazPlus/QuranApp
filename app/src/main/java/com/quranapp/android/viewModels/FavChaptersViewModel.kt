@@ -1,9 +1,11 @@
 package com.quranapp.android.viewModels
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.quranapp.android.R
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 
 class FavChaptersViewModel : ViewModel() {
@@ -21,10 +23,14 @@ class FavChaptersViewModel : ViewModel() {
     fun addToFavourites(ctx: Context, chapterNo: Int) {
         SPFavouriteChapters.addToFavorites(ctx, chapterNo)
         refreshFavChapters(ctx)
+
+        Toast.makeText(ctx, R.string.msgChapterAddedToFavourites, Toast.LENGTH_SHORT).show()
     }
 
     fun removeFromFavourites(ctx: Context, chapterNo: Int) {
         SPFavouriteChapters.removeFromFavorites(ctx, chapterNo)
         refreshFavChapters(ctx)
+
+        Toast.makeText(ctx, R.string.msgChapterRemovedFromFavourites, Toast.LENGTH_SHORT).show()
     }
 }

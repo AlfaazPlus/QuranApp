@@ -25,16 +25,14 @@ import java.util.concurrent.atomic.AtomicReference
 
 abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
     lateinit var favChaptersModel: FavChaptersViewModel
-    private val mQuranMetaRef = AtomicReference<QuranMeta>()
+    private val quranMetaRef = AtomicReference<QuranMeta>()
     protected lateinit var binding: FragReaderIndexBinding
-    private var mIsReversed = false
+    private var isReversed = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context is ActivityReaderIndexPage) {
-            context.addToCallbacks(this)
-        }
+        (context as? ActivityReaderIndexPage)?.addToCallbacks(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -51,9 +49,9 @@ abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
         binding.loader.visibility = View.VISIBLE
         QuranMeta.prepareInstance(view.context, object : OnResultReadyCallback<QuranMeta> {
             override fun onReady(r: QuranMeta) {
-                mQuranMetaRef.set(r)
+                quranMetaRef.set(r)
 
-                binding.loader.visibility = View.GONE
+                binding.loader.visibility = View.VISIBLE
 
                 lifecycleScope.launch(Dispatchers.Main) {
                     initList(binding.list, view.context)
@@ -82,7 +80,7 @@ abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
     override fun sort(ctx: Context) {
         binding.loader.visibility = View.VISIBLE
         lifecycleScope.launch {
-            resetAdapter(binding.list, ctx, !mIsReversed)
+            resetAdapter(binding.list, ctx, !isReversed)
 
             withContext(Dispatchers.Main) {
                 binding.loader.visibility = View.GONE
@@ -92,8 +90,8 @@ abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
 
     @CallSuper
     protected open fun resetAdapter(list: RecyclerView2, ctx: Context, reverse: Boolean) {
-        mIsReversed = reverse
+        isReversed = reverse
     }
 
-    val quranMeta: QuranMeta get() = mQuranMetaRef.get()
+    val quranMeta: QuranMeta get() = quranMetaRef.get()
 }

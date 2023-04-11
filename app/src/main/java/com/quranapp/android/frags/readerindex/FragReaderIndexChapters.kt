@@ -23,7 +23,9 @@ class FragReaderIndexChapters : BaseFragReaderIndex() {
         val adapter = ADPChaptersList(this, ctx, reverse)
         activity?.runOnUiThread {
             list.adapter = adapter
-            favChaptersModel.favChapters.observe(viewLifecycleOwner, adapter::setFavChapters)
+            favChaptersModel.favChapters.observe(viewLifecycleOwner) {
+                adapter.onFavChaptersChanged()
+            }
         }
     }
 

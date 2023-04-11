@@ -15,7 +15,8 @@ import com.quranapp.android.widgets.chapterCard.ChapterCard
 class ADPFavChaptersList(
     private val fragment: FragReaderIndexFavChapters,
 ) : RecyclerView.Adapter<ADPFavChaptersList.VHChapter>() {
-    var chapterNos: ArrayList<Int> = ArrayList()
+    var chapterNos: List<Int> = ArrayList()
+
     init {
         setHasStableIds(true)
     }
@@ -23,7 +24,7 @@ class ADPFavChaptersList(
     override fun getItemCount() = chapterNos.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHChapter {
-        val chapterCard = ChapterCard(parent.context).apply {
+        val chapterCard = ChapterCard(parent.context, true).apply {
             setBackgroundResource(R.drawable.dr_bg_chapter_card)
             elevation = parent.context.dp2px(2f).toFloat()
         }
@@ -47,10 +48,10 @@ class ADPFavChaptersList(
             val chapterNameTrans = fragment.quranMeta.getChapterNameTranslation(chapterNo)
 
             chapterCard.let {
-                it.setChapterNumber(chapterNo)
+                it.chapterNumber = chapterNo
                 it.setName(chapterName, chapterNameTrans)
                 it.setOnClickListener { v -> startChapter(v.context, chapterNo) }
-                it.setOnFavoriteButtonClickListener {
+                it.onFavoriteButtonClickListener = Runnable {
                     promptAddToFavourites(chapterNo, chapterName, chapterNameTrans)
                 }
             }
@@ -59,7 +60,7 @@ class ADPFavChaptersList(
         private fun promptAddToFavourites(chapterNo: Int, chapterName: String, nameTranslation: String) {
             val context = itemView.context
             val chapterCard = ChapterCard(context).apply {
-                setChapterNumber(chapterNo)
+                chapterNumber = chapterNo
                 setName(chapterName, nameTranslation)
                 setBackgroundResource(R.drawable.dr_bg_chapter_card_bordered)
                 layoutParams = LinearLayout.LayoutParams(
@@ -77,8 +78,6 @@ class ADPFavChaptersList(
                 .setNegativeButton(R.string.strLabelCancel, null)
                 .setPositiveButton(R.string.strLabelRemove) { _, _ ->
                     fragment.favChaptersModel.removeFromFavourites(context, chapterNo)
-                    chapterNos.remove(chapterNo)
-                    notifyItemRemoved(adapterPosition)
                 }.show()
         }
     }

@@ -4,15 +4,13 @@
 
 package com.quranapp.android.adapters.quranIndex;
 
-import static android.view.ViewGroup.LayoutParams;
-import static android.view.ViewGroup.MarginLayoutParams;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import static android.view.ViewGroup.LayoutParams;
+import static android.view.ViewGroup.MarginLayoutParams;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
@@ -56,12 +54,8 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
         }
     }
 
-    public void setFavChapters(List<Integer> favChapters) {
-        for (Integer chapterNo : mChapterNos) {
-            if (favChapters.contains(chapterNo)) {
-                notifyItemChanged(mChapterNos.indexOf(chapterNo));
-            }
-        }
+    public void onFavChaptersChanged() {
+        notifyDataSetChanged();
     }
 
     @Override
@@ -77,7 +71,7 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
     @NonNull
     @Override
     public VHChapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ChapterCard chapterCard = new ChapterCard(parent.getContext());
+        ChapterCard chapterCard = new ChapterCard(parent.getContext(), true);
 
         chapterCard.setBackgroundResource(R.drawable.dr_bg_chapter_card);
         chapterCard.setElevation(Dimen.dp2px(parent.getContext(), 2));

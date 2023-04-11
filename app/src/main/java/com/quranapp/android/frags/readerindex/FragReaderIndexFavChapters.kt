@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
 import com.quranapp.android.adapters.quranIndex.ADPFavChaptersList
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.views.helper.RecyclerView2
 import com.quranapp.android.widgets.PageAlert
@@ -31,19 +32,18 @@ class FragReaderIndexFavChapters : BaseFragReaderIndex() {
         list.adapter = adapter
         list.visibility = View.GONE
 
-        updateAdapter(ctx, list, adapter)
+        updateAdapter(ctx, list, adapter, SPFavouriteChapters.getFavouriteChapters(ctx))
 
         favChaptersModel.favChapters.observe(viewLifecycleOwner) {
-            updateAdapter(ctx, list, adapter)
+            updateAdapter(ctx, list, adapter, it)
         }
     }
 
-    private fun updateAdapter(ctx: Context, list: RecyclerView2, adapter: ADPFavChaptersList) {
-        val items = ArrayList(SPFavouriteChapters.getFavouriteChapters(ctx))
-
+    private fun updateAdapter(ctx: Context, list: RecyclerView2, adapter: ADPFavChaptersList, items: List<Int>) {
         if (items.isEmpty()) {
             noItems(ctx, list)
         } else {
+            pageAlert?.remove()
             adapter.chapterNos = items
             list.visibility = View.VISIBLE
             adapter.notifyDataSetChanged()
