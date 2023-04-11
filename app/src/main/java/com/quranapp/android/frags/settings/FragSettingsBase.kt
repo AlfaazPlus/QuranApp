@@ -18,6 +18,7 @@ import androidx.core.widget.NestedScrollView
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.frags.BaseFragment
+import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.views.BoldHeader
 
 abstract class FragSettingsBase : BaseFragment() {
@@ -35,7 +36,7 @@ abstract class FragSettingsBase : BaseFragment() {
     abstract val layoutResource: Int
 
     @ColorInt
-    open fun getPageBackgroundColor(ctx: Context): Int = color(ctx, R.color.colorBGPage)
+    open fun getPageBackgroundColor(ctx: Context): Int = ctx.color(R.color.colorBGPage)
 
     open fun getFinishingResult(ctx: Context): Bundle? = null
 

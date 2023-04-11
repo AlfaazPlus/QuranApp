@@ -29,6 +29,7 @@
         android:layout_marginStart="10dp"
         android:background="@drawable/dr_bg_reader_tab_layout"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/sort"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="center"
@@ -37,16 +38,43 @@
         app:tabMode="fixed"
         app:tabRippleColor="@android:color/transparent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sort"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/dr_bg_hover_round"
+        android:padding="7dp"
+        android:src="@drawable/dr_icon_sort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/dr_bg_hover_round"
+        android:contentDescription="@string/strHintSearch"
+        android:padding="7dp"
+        android:src="@drawable/dr_icon_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/quranTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorIcon" />
+
     <LinearLayout
         android:id="@+id/quranTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseCompoundDrawables">
 
@@ -69,30 +97,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sort"
-        android:layout_width="@dimen/dmnActionButton"
-        android:layout_height="@dimen/dmnActionButton"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/dr_bg_hover_round"
-        android:padding="7dp"
-        android:src="@drawable/dr_icon_sort"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/search"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorIcon" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/search"
-        android:layout_width="@dimen/dmnActionButton"
-        android:layout_height="@dimen/dmnActionButton"
-        android:background="@drawable/dr_bg_hover_round"
-        android:contentDescription="@string/strHintSearch"
-        android:padding="7dp"
-        android:src="@drawable/dr_icon_search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorIcon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
