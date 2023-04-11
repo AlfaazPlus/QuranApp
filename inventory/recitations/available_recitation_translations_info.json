@@ -7,20 +7,22 @@
       "slug": "shamshad-ali-khan",
       "lang-code": "ur",
       "lang-name": "اردو",
-      "reciter": "شمشاد علی خان",
+      "reciter": "Shamshad Ali Khan",
       "url-host": null,
       "url-path": "/data/translations/urdu_shamshad_ali_khan_46kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
+        "ur": "شمشاد علی خان"
       }
     },
     {
       "slug": "fooladvand-hedayatfar",
       "lang-code": "fa",
       "lang-name": "فارسی",
-      "reciter": "فولادوند - هدایتفر",
+      "reciter": "Fooladvand Hedayatfar",
       "url-host": null,
       "url-path": "/data/translations/Fooladvand_Hedayatfar_40Kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
+        "fa": "فولادوند - هدایتفر"
       }
     }
   ]
