@@ -25,6 +25,7 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
+import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.visible
@@ -65,8 +66,8 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
             orientation = LinearLayout.VERTICAL
 
             updatePaddingRelative(
-                top = dp2px(ctx, 10f),
-                bottom = dimen(ctx, R.dimen.dmnPadHuge)
+                top = ctx.dp2px(10f),
+                bottom = ctx.getDimenPx(R.dimen.dmnPadHuge)
             )
         }
     }

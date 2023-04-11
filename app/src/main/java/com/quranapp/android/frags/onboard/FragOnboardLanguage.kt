@@ -8,6 +8,8 @@ import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.NestedScrollView
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.widgets.compound.PeaceCompoundButton
 import com.quranapp.android.widgets.radio.PeaceRadioButton
@@ -33,8 +35,8 @@ class FragOnboardLanguage : FragOnboardBase() {
     private fun initLanguages(group: PeaceRadioGroup) {
         val ctx = group.context
 
-        val availableLocalesValues = strArray(ctx, R.array.availableLocalesValues)
-        val availableLocaleNames = strArray(ctx, R.array.availableLocalesNames)
+        val availableLocalesValues = ctx.getStringArray(R.array.availableLocalesValues)
+        val availableLocaleNames = ctx.getStringArray(R.array.availableLocalesNames)
 
         val forcedTextGravity = if (WindowUtils.isRTL(ctx)) {
             PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
@@ -51,12 +53,12 @@ class FragOnboardLanguage : FragOnboardBase() {
 
                 setCompoundDirection(PeaceCompoundButton.COMPOUND_TEXT_LEFT)
                 setBackgroundResource(R.drawable.dr_bg_hover)
-                setSpaceBetween(dp2px(ctx, 20f))
+                setSpaceBetween(ctx.dp2px(20f))
                 setTextAppearance(R.style.TextAppearanceCommonTitle)
                 setForceTextGravity(forcedTextGravity)
 
-                val padH = dp2px(ctx, 20f)
-                val padV = dp2px(ctx, 12f)
+                val padH = ctx.dp2px(20f)
+                val padV = ctx.dp2px(12f)
 
                 updatePaddingRelative(start = padH, end = padH, top = padV, bottom = padV)
 
