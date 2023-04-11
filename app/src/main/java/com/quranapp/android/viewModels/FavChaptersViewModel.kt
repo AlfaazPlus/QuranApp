@@ -10,17 +10,21 @@ class FavChaptersViewModel : ViewModel() {
     private val _favChapters = MutableLiveData<List<Int>>()
     val favChapters: LiveData<List<Int>> = _favChapters
 
-    private fun getFavChapters(ctx: Context) {
+    fun refreshFavChapters(ctx: Context) {
         _favChapters.value = SPFavouriteChapters.getFavouriteChapters(ctx)
+    }
+
+    fun isAddedToFavorites(ctx: Context, chapterNo: Int): Boolean {
+        return SPFavouriteChapters.isAddedToFavorites(ctx, chapterNo)
     }
 
     fun addToFavourites(ctx: Context, chapterNo: Int) {
         SPFavouriteChapters.addToFavorites(ctx, chapterNo)
-        getFavChapters(ctx)
+        refreshFavChapters(ctx)
     }
 
     fun removeFromFavourites(ctx: Context, chapterNo: Int) {
         SPFavouriteChapters.removeFromFavorites(ctx, chapterNo)
-        getFavChapters(ctx)
+        refreshFavChapters(ctx)
     }
 }

@@ -10,13 +10,12 @@ import com.quranapp.android.frags.readerindex.FragReaderIndexFavChapters
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.updateMargins
 import com.quranapp.android.utils.reader.factory.ReaderFactory.startChapter
-import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.widgets.chapterCard.ChapterCard
 
 class ADPFavChaptersList(
     private val fragment: FragReaderIndexFavChapters,
-    private val chapterNos: ArrayList<Int>
 ) : RecyclerView.Adapter<ADPFavChaptersList.VHChapter>() {
+    var chapterNos: ArrayList<Int> = ArrayList()
     init {
         setHasStableIds(true)
     }
@@ -51,10 +50,8 @@ class ADPFavChaptersList(
                 it.setChapterNumber(chapterNo)
                 it.setName(chapterName, chapterNameTrans)
                 it.setOnClickListener { v -> startChapter(v.context, chapterNo) }
-                it.setOnFavoriteUpdateListener {
-                    if (!SPFavouriteChapters.isAddedToFavorites(itemView.context, chapterNo)) {
-                        fragment.removeFromFavorites(itemView.context, chapterNo, adapterPosition)
-                    }
+                it.setOnFavoriteButtonClickListener {
+                    promptAddToFavourites(chapterNo, chapterName, chapterNameTrans)
                 }
             }
         }
@@ -79,7 +76,9 @@ class ADPFavChaptersList(
                 .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
                 .setNegativeButton(R.string.strLabelCancel, null)
                 .setPositiveButton(R.string.strLabelRemove) { _, _ ->
-                    fragment.removeFromFavorites(context, chapterNo, adapterPosition)
+                    fragment.favChaptersModel.removeFromFavourites(context, chapterNo)
+                    chapterNos.remove(chapterNo)
+                    notifyItemRemoved(adapterPosition)
                 }.show()
         }
     }

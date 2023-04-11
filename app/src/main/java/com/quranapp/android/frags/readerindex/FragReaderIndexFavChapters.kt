@@ -14,15 +14,6 @@ import com.quranapp.android.widgets.PageAlert
 
 class FragReaderIndexFavChapters : BaseFragReaderIndex() {
     private var pageAlert: PageAlert? = null
-    private var items = arrayListOf<Int>()
-
-    override fun onResume() {
-        super.onResume()
-
-        if (job?.isCompleted != false) {
-            resetAdapter(binding.list, binding.list.context, false)
-        }
-    }
 
     override fun initList(list: RecyclerView2, ctx: Context) {
         super.initList(list, ctx)
@@ -36,26 +27,26 @@ class FragReaderIndexFavChapters : BaseFragReaderIndex() {
             )
         }
 
-        resetAdapter(list, ctx, false)
+        val adapter = ADPFavChaptersList(this)
+        list.adapter = adapter
+        list.visibility = View.GONE
+
+        updateAdapter(ctx, list, adapter)
+
+        favChaptersModel.favChapters.observe(viewLifecycleOwner) {
+            updateAdapter(ctx, list, adapter)
+        }
     }
 
-    override fun resetAdapter(list: RecyclerView2, ctx: Context, reverse: Boolean) {
-        super.resetAdapter(list, ctx, reverse)
-        val newList = ArrayList(SPFavouriteChapters.getFavouriteChapters(ctx))
+    private fun updateAdapter(ctx: Context, list: RecyclerView2, adapter: ADPFavChaptersList) {
+        val items = ArrayList(SPFavouriteChapters.getFavouriteChapters(ctx))
 
-        if (items.isNotEmpty() && newList == items) return
-
-        items = newList
-
-        activity?.runOnUiThread {
-            if (items.isEmpty()) {
-                noItems(ctx, list)
-            } else {
-                val adapter = ADPFavChaptersList(this, items)
-                list.adapter = adapter
-                list.visibility = View.VISIBLE
-                pageAlert?.remove()
-            }
+        if (items.isEmpty()) {
+            noItems(ctx, list)
+        } else {
+            adapter.chapterNos = items
+            list.visibility = View.VISIBLE
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -64,16 +55,6 @@ class FragReaderIndexFavChapters : BaseFragReaderIndex() {
             setMessage(R.string.noItems, R.string.msgNoFavouriteChapters)
             show(list.parent as ViewGroup)
             list.visibility = View.GONE
-        }
-    }
-
-    fun removeFromFavorites(context: Context, chapterNo: Int, adapterPosition: Int) {
-        SPFavouriteChapters.removeFromFavorites(context, chapterNo)
-        items.removeAt(adapterPosition)
-        binding.list.adapter?.notifyItemRemoved(adapterPosition)
-
-        if (items.isEmpty()) {
-            noItems(context, binding.list)
         }
     }
 }

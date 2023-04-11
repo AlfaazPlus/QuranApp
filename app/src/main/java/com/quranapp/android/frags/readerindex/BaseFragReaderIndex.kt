@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.R
@@ -15,15 +16,15 @@ import com.quranapp.android.databinding.FragReaderIndexBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.interfaceUtils.readerIndex.FragReaderIndexCallback
+import com.quranapp.android.viewModels.FavChaptersViewModel
 import com.quranapp.android.views.helper.RecyclerView2
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicReference
 
 abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
-    var job: Job? = null
+    lateinit var favChaptersModel: FavChaptersViewModel
     private val mQuranMetaRef = AtomicReference<QuranMeta>()
     protected lateinit var binding: FragReaderIndexBinding
     private var mIsReversed = false
@@ -42,6 +43,8 @@ abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        favChaptersModel = ViewModelProvider(requireActivity())[FavChaptersViewModel::class.java]
+        favChaptersModel.refreshFavChapters(view.context)
         binding = FragReaderIndexBinding.bind(view)
 
         // ViewUtils.setBounceOverScrollRV(mBinding.list);
@@ -52,7 +55,7 @@ abstract class BaseFragReaderIndex : BaseFragment(), FragReaderIndexCallback {
 
                 binding.loader.visibility = View.GONE
 
-                job = lifecycleScope.launch(Dispatchers.Main) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     initList(binding.list, view.context)
 
                     binding.loader.visibility = View.GONE

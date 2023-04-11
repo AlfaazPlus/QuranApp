@@ -44,7 +44,7 @@ import java.util.Locale;
 
 public class ChapterCard extends ConstraintLayout {
     private int mChapterNo;
-    private Runnable mOnFavUpdateListener;
+    private Runnable mOnFavBtnClickListener;
 
     public ChapterCard(@NonNull Context context) {
         this(context, null);
@@ -171,16 +171,7 @@ public class ChapterCard extends ConstraintLayout {
 
         v.setOnClickListener(v1 -> {
             if (mChapterNo <= 0) return;
-
-            if (SPFavouriteChapters.INSTANCE.isAddedToFavorites(getContext(), mChapterNo)) {
-                SPFavouriteChapters.INSTANCE.removeFromFavorites(getContext(), mChapterNo);
-            } else {
-                SPFavouriteChapters.INSTANCE.addToFavorites(getContext(), mChapterNo);
-            }
-
-            if(mOnFavUpdateListener != null) mOnFavUpdateListener.run();
-
-            updateFavIcon();
+            if (mOnFavBtnClickListener != null) mOnFavBtnClickListener.run();
         });
 
         addView(v);
@@ -199,8 +190,8 @@ public class ChapterCard extends ConstraintLayout {
         );
     }
 
-    public void setOnFavoriteUpdateListener(Runnable listener) {
-        mOnFavUpdateListener = listener;
+    public void setOnFavoriteButtonClickListener(Runnable listener) {
+        mOnFavBtnClickListener = listener;
     }
 
     public void setChapterNumber(int chapterNo) {
