@@ -18,6 +18,7 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.viewModels.FavChaptersViewModel;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
 
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
         }
     }
 
+    public void onFavChaptersChanged() {
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mChapterNos.size();
@@ -66,7 +71,7 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
     @NonNull
     @Override
     public VHChapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ChapterCard chapterCard = new ChapterCard(parent.getContext());
+        ChapterCard chapterCard = new ChapterCard(parent.getContext(), true);
 
         chapterCard.setBackgroundResource(R.drawable.dr_bg_chapter_card);
         chapterCard.setElevation(Dimen.dp2px(parent.getContext(), 2));
@@ -111,6 +116,13 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
             mChapterCard.setName(chapterName, nameTranslation);
 
             mChapterCard.setOnClickListener(v -> ReaderFactory.startChapter(v.getContext(), chapterNo));
+            mChapterCard.setOnFavoriteButtonClickListener(() -> {
+                Context ctx = itemView.getContext();
+
+                FavChaptersViewModel model = mFragment.getFavChaptersModel();
+                if (model.isAddedToFavorites(ctx, chapterNo)) model.removeFromFavourites(ctx, chapterNo);
+                else model.addToFavourites(ctx, chapterNo);
+            });
         }
     }
 }

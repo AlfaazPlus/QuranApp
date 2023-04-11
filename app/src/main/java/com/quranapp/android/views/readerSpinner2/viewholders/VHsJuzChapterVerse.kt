@@ -36,7 +36,7 @@ class VHChapterSpinner(adapter: ChapterSelectorAdapter2, private val chapterCard
     override fun bind(item: ChapterSpinnerItem) {
         super.bind(item)
         val chapter = item.chapter
-        chapterCard.setChapterNumber(chapter.chapterNumber)
+        chapterCard.chapterNumber = chapter.chapterNumber
         chapterCard.setName(chapter.name, chapter.nameTranslation)
     }
 }

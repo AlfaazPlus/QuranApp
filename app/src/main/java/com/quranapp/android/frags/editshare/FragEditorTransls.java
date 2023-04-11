@@ -22,6 +22,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.subcomponents.TranslationBook;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.widgets.radio.PeaceRadioButton;
@@ -67,13 +68,13 @@ public class FragEditorTransls extends FragEditorBase {
     private void initMsgView(LinearLayout parent) {
         Context ctx = parent.getContext();
         AppCompatTextView msgView = new AppCompatTextView(ctx);
-        ViewPaddingKt.updatePaddingHorizontal(msgView, dp2px(ctx, 15));
-        ViewPaddingKt.updatePaddingVertical(msgView, dp2px(ctx, 10));
+        ViewPaddingKt.updatePaddingHorizontal(msgView, ContextKt.dp2px(ctx, 15));
+        ViewPaddingKt.updatePaddingVertical(msgView, ContextKt.dp2px(ctx, 10));
 
         msgView.setText(R.string.strMsgEditShareTransl);
         msgView.setTypeface(Typeface.SANS_SERIF, Typeface.ITALIC);
-        msgView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen(ctx, R.dimen.dmnCommonSize2_5));
-        msgView.setTextColor(color(ctx, R.color.colorText2));
+        msgView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2_5));
+        msgView.setTextColor(ContextKt.color(ctx, R.color.colorText2));
 
         parent.addView(msgView, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
     }
