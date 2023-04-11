@@ -59,45 +59,46 @@
         android:text="@string/strTitleHolyQuran"
         android:textSize="@dimen/dmnCommonSize"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/readerTabLayout"
+        app:layout_constraintBottom_toTopOf="@id/tabContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAr" />
 
-    <com.quranapp.android.views.helper.TabLayout2
-        android:id="@+id/readerTabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/dr_bg_reader_tab_layout"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sort"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTransl"
-        app:tabGravity="center"
-        app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
-        app:tabIndicatorGravity="stretch"
-        app:tabMode="auto"
-        app:tabRippleColor="@android:color/transparent" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTransl">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sort"
-        android:layout_width="@dimen/dmnActionButton"
-        android:layout_height="@dimen/dmnActionButton"
-        android:layout_marginEnd="20dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/dr_bg_hover_round"
-        android:padding="7dp"
-        android:src="@drawable/dr_icon_sort"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/readerTabLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/readerTabLayout"
-        app:layout_constraintTop_toTopOf="@id/readerTabLayout" />
+        <com.quranapp.android.views.helper.TabLayout2
+            android:id="@+id/readerTabLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/dr_bg_reader_tab_layout"
+            app:tabGravity="fill"
+            app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
+            app:tabIndicatorGravity="stretch"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/sort"
+            android:layout_width="@dimen/dmnActionButton"
+            android:layout_height="@dimen/dmnActionButton"
+            android:adjustViewBounds="true"
+            android:background="@drawable/dr_bg_hover_round"
+            android:padding="7dp"
+            android:src="@drawable/dr_icon_sort"
+            android:visibility="gone" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
