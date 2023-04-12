@@ -142,9 +142,8 @@ class KFQPCScriptFontsDownloadService : Service() {
                 }
 
                 val fontsDir = fileUtils.getKFQPCScriptFontDir(scriptKey)
-                val parts = arrayOf(1, 2, 3)
 
-                for (partNo in parts) {
+                for (partNo in  arrayOf(1, 2, 3)) {
                     try {
                         val partFilename = "$scriptKey-$partNo.zip"
                         val partFile = File.createTempFile("tmp", partFilename, filesDir)
