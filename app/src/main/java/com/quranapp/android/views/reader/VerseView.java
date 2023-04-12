@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,8 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
@@ -24,8 +25,10 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.databinding.LytReaderVerseBinding;
+import com.quranapp.android.databinding.LytReaderVerseQuickActionsBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 
@@ -124,17 +127,21 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
     }
 
     private void initActionsButtons() {
+        LytReaderVerseQuickActionsBinding verseHeader = mBinding.verseHeader;
+
         if (mIsShowingAsReference) {
-            mBinding.verseHeader.verseActionContainer.setVisibility(GONE);
+            verseHeader.verseActionContainer.setVisibility(GONE);
             return;
-        } else {
-            mBinding.verseHeader.verseActionContainer.setVisibility(VISIBLE);
         }
 
-        boolean recitationSupported = RecitationUtils.isRecitationSupported() && mActivity instanceof ActivityReader;
-        mBinding.verseHeader.btnVerseRecitation.setVisibility(!recitationSupported ? GONE : VISIBLE);
+        Context ctx = getContext();
 
-        mBinding.verseHeader.btnVerseOptions.setOnClickListener(v -> {
+        verseHeader.verseActionContainer.setVisibility(VISIBLE);
+
+        boolean recitationSupported = RecitationUtils.isRecitationSupported() && mActivity instanceof ActivityReader;
+        verseHeader.btnVerseRecitation.setVisibility(!recitationSupported ? GONE : VISIBLE);
+
+        verseHeader.btnVerseOptions.setOnClickListener(v -> {
             if (mActivity != null) {
                 mActivity.openVerseOptionDialog(mVerse, this);
             }
@@ -143,7 +150,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         int chapterNo = mVerse.chapterNo;
         int verseNo = mVerse.verseNo;
 
-        mBinding.verseHeader.btnVerseRecitation.setOnClickListener(v -> {
+        verseHeader.btnVerseRecitation.setOnClickListener(v -> {
             if (mActivity instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) mActivity;
                 if (reader.mPlayer != null) {
@@ -152,14 +159,18 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             }
         });
 
+        verseHeader.btnTafsir.setOnClickListener(v -> ReaderFactory.startTafsir(ctx, chapterNo, verseNo));
+        ViewCompat.setTooltipText(verseHeader.btnTafsir, ctx.getString(R.string.strTitleTafsir));
+
         onBookmarkChanged(mActivity.isBookmarked(chapterNo, verseNo, verseNo));
-        mBinding.verseHeader.btnBookmark.setOnClickListener(v -> {
+        verseHeader.btnBookmark.setOnClickListener(v -> {
             if (mActivity.isBookmarked(chapterNo, verseNo, verseNo)) {
                 mActivity.onBookmarkView(chapterNo, verseNo, verseNo, this);
             } else {
                 mActivity.addVerseToBookmark(chapterNo, verseNo, verseNo, this);
             }
         });
+        ViewCompat.setTooltipText(verseHeader.btnBookmark, ctx.getString(R.string.strLabelBookmark));
     }
 
     private void onBookmarkChanged(boolean isBookmarked) {

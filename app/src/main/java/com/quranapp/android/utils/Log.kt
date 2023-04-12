@@ -1,9 +1,48 @@
 package com.quranapp.android.utils
 
 import com.quranapp.android.BuildConfig
+import com.quranapp.android.utils.app.AppUtils
+import com.quranapp.android.utils.univ.DateUtils
+import com.quranapp.android.utils.univ.FileUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 
 object Log {
-    const val TAG = "QuranAppLogs"
+    private const val TAG = "QuranAppLogs"
+    private val SUPPRESSED_ERROR_DIR = FileUtils.makeAndGetAppResourceDir(
+        FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "suppressed_errors")
+    )
+
+    fun saveError(e: Throwable?) {
+        e?.printStackTrace()
+
+        try {
+            suspend {
+                withContext(Dispatchers.IO) {
+                    val trc = e?.stackTraceToString() ?: return@withContext
+                    val filename = DateUtils.getDateTimeNow("yyyyMMddhhmmssSSS")
+                    val logFile = File(SUPPRESSED_ERROR_DIR, "$filename.txt")
+
+                    logFile.createNewFile()
+                    logFile.writeText(trc)
+
+                    // keep last 30 files
+                    val files = SUPPRESSED_ERROR_DIR.listFiles()
+                    if (files != null && files.size > 30) {
+                        val sortedFiles = files.sortedBy { it.lastModified() }
+                        val len = sortedFiles.size - 30
+                        for (i in 0 until len) {
+                            sortedFiles[i].delete()
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 
     @JvmStatic
     fun d(vararg messages: Any?) {

@@ -160,6 +160,26 @@
         "downloadPath": "inventory/translations/ku/ku_bamoki.json"
       }
     },
+    "ru": {
+      "ru_elmir-kuliev": {
+        "book": "Russian Translation (Elmir Kuliev)",
+        "author": "Elmir Kuliev",
+        "displayName": "Elmir Kuliev",
+        "langCode": "ru",
+        "langName": "русский",
+        "lastUpdated": 1680596959732,
+        "downloadPath": "inventory/translations/ru/ru_elmir-kuliev.json"
+      },
+      "ru_ministry-of-awqaf": {
+        "book": "Ministry of Awqaf, Egypt",
+        "author": "Ministry of Awqaf, Egypt",
+        "displayName": "Ministry of Awqaf",
+        "langCode": "ru",
+        "langName": "русский",
+        "lastUpdated": 1680596959732,
+        "downloadPath": "inventory/translations/ru/ru_ministry-of-awqaf.json"
+      }
+    },
     "tr": {
       "tr_diyanet": {
         "book": "Turkish Translation (Diyanet)",

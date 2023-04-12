@@ -64,7 +64,7 @@
     <string name="strLabelPreviousVerse">الآية السابقة</string>
     <string name="strTitleFootnotes">هوامش</string>
     <string name="strTitleReaderChapters">السور</string>
-    <string name="strTitleFootnote">هامش</string>
+    <string name="strTitleFootnote">الهامش</string>
     <string name="strTitleReaderJuz">الجزء</string>
     <string name="strTitleReaderChapters2">السور</string>
     <string name="strTitleTranslations">الترجمات</string>
@@ -216,5 +216,27 @@
     <string name="strMsgYouAreReadingVerses">الآية الحالية:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">لا يوجد سورة رقم %d</string>
     <string name="inPlaces">في %s</string>
-    <string name="inPlacesMore">في ٪%2$s و %1$d أخرى</string>
+    <string name="inPlacesMore">في %1$s و %2$d أخرى</string>
+    <string name="strMsgTafsirsNoAvailable">لا يوجد تفاسير متاحة</string>
+    <string name="strDescAddToBookmarks">إضافة إلى الإشارات المرجعية</string>
+    <string name="strDescClose">إغلاق</string>
+    <string name="strMsgProphetsOrder">عرض الأنبياء بترتيب زمني</string>
+    <string name="strMsgShareRange" formatted="false">أدخل النطاق بين %1$d - %2$d</string>
+    <string name="strMsgTranslDownloaded" formatted="false">تم التنزيل: \"%s\".</string>
+    <string name="strMsgTranslNoneSelected">لم يتم تحديد أي ترجمة. انتقل إلى الإعدادات للعثور على الترجمات.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">يمكن تحديد الحد الأقصى للترجمات %d مرة واحدة. الرجاء إلغاء اختيار واحد قبل اختيار أخرى. هذا لتجنب فقدان الأداء.</string>
+    <string name="strMsgRecitationsLoadFailed">تعذر تحميل التلاوات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
+    <string name="strDescGoBack">الرجوع</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">سورة %1$s, الآية رقم %2$d.</string>
+    <string name="strMsgRecitationsNoAvailable">لا توجد تلاوات متاحة</string>
+    <string name="strMsgTranslLoadFailed">تعذر تحميل الترجمات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
+    <string name="strMsgTranslNoDownloads">لا توجد ترجمات تم تنزيلها متاحة</string>
+    <string name="strMsgTranslNoDownloadsAvailable">لا توجد تنزيلات متاحة</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">فشل تنزيل \"%s\".</string>
+    <string name="strMsgEnterValidRange">الرجاء إدخال نطاق صحيح</string>
+    <string name="strDescVerseNo" formatted="false">رقم الآية %d.</string>
+    <string name="strMsgTryLater">يرجى إعادة المحاولة لاحقًا.</string>
+    <string name="strTitleSelectTafsir">اختيار تفسير</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">قراءة تفسير الآية %d</string>
+    <string name="noFootnotesForThisVerse">لا يوجد هواميش لهذه الآية.</string>
 </resources>

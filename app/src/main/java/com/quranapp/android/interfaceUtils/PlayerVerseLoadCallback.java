@@ -67,7 +67,7 @@ public class PlayerVerseLoadCallback {
             return;
         }
 
-        if (e instanceof HttpNotFoundException || e.getCause() instanceof HttpNotFoundException) {
+        if (e instanceof HttpNotFoundException || (e != null && e.getCause() instanceof HttpNotFoundException)) {
             // Audio was unable to load from the url because url was not found,
             // may be recitation manifest has a new url. So force update the manifest file.
             mPlayer.mForceManifestFetch = true;

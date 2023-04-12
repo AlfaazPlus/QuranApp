@@ -29,6 +29,7 @@
     <item name="chapterCardName" type="id" />
     <item name="chapterCardIcon" type="id" />
     <item name="chapterCardVerseCount" type="id" />
+    <item name="chapterCardFavIcon" type="id" />
 
     <item name="appUpdateLayout" type="id" />
 

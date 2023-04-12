@@ -6,6 +6,26 @@
 
 package com.quranapp.android.frags.settings;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -28,6 +48,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -37,25 +58,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -155,7 +157,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     @Override
     public int getPageBackgroundColor(@NonNull Context ctx) {
-        return color(ctx, R.color.colorBGPageVariable);
+        return ContextKt.color(ctx, R.color.colorBGPageVariable);
     }
 
     @Override
@@ -202,7 +204,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void init(Context ctx) {
         initValues();
 
-        mBinding.getRoot().setBackgroundColor(color(ctx, R.color.colorBGPageVariable));
+        mBinding.getRoot().setBackgroundColor(ContextKt.color(ctx, R.color.colorBGPageVariable));
 
         initExplorers(ctx);
         initLayoutStyle(ctx);
@@ -259,8 +261,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void setupAppLangTitle(LytReaderSettingsItemBinding binding) {
         Context ctx = binding.getRoot().getContext();
-        final String[] availableLocalesValues = strArray(ctx, R.array.availableLocalesValues);
-        final String[] availableLocaleNames = strArray(ctx, R.array.availableLocalesNames);
+        final String[] availableLocalesValues = ContextKt.getStringArray(ctx, R.array.availableLocalesValues);
+        final String[] availableLocaleNames = ContextKt.getStringArray(ctx, R.array.availableLocalesNames);
 
         String selectedLanguage = SPAppConfigs.getLocale(ctx);
         String selectedLanguageName = "";
@@ -596,8 +598,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         if (!TextUtils.isEmpty(subtitle)) {
             SpannableString subtitleSS = new SpannableString(subtitle);
-            subtitleSS.setSpan(new AbsoluteSizeSpan(dimen(ctx, R.dimen.dmnCommonSize2)), 0, subtitleSS.length(), flag);
-            subtitleSS.setSpan(new ForegroundColorSpan(color(ctx, R.color.colorText3)), 0, subtitleSS.length(), flag);
+            subtitleSS.setSpan(new AbsoluteSizeSpan(ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2)), 0, subtitleSS.length(), flag);
+            subtitleSS.setSpan(new ForegroundColorSpan(ContextKt.color(ctx, R.color.colorText3)), 0, subtitleSS.length(), flag);
             ssb.append("\n").append(subtitleSS);
         }
 
@@ -608,8 +610,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupLauncherParams(int startIconRes, LytReaderSettingsItemBinding launcherBinding) {
         View launcherRoot = launcherBinding.getRoot();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        LayoutParamsKt.updateMarginHorizontal(params, dp2px(launcherRoot.getContext(), 10));
-        LayoutParamsKt.updateMarginVertical(params, dp2px(launcherRoot.getContext(), 5));
+        LayoutParamsKt.updateMarginHorizontal(params, ContextKt.dp2px(launcherRoot.getContext(), 10));
+        LayoutParamsKt.updateMarginVertical(params, ContextKt.dp2px(launcherRoot.getContext(), 5));
         launcherRoot.setLayoutParams(params);
 
         setupLauncherIcon(startIconRes, launcherBinding.launcher);
@@ -629,7 +631,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         LytSettingsLayoutStyleBinding bindingLayoutStyle = LytSettingsLayoutStyleBinding.inflate(mInflater);
         bindingLayoutStyle.title.setText(R.string.strTitleReaderLayoutStyle);
-        String[] labels = strArray(ctx, R.array.arrReaderStyle);
+        String[] labels = ContextKt.getStringArray(ctx, R.array.arrReaderStyle);
         int[] styles = {READER_STYLE_TRANSLATION, READER_STYLE_PAGE};
 
         for (int i = 0, l = labels.length; i < l; i++) {
@@ -870,7 +872,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         builder.setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         builder.setDialogGravity(PeaceDialog.GRAVITY_BOTTOM);
         builder.setNeutralButton(R.string.strLabelCancel, null);
-        builder.setPositiveButton(R.string.strLabelReset, color(ctx, R.color.colorSecondary),
+        builder.setPositiveButton(R.string.strLabelReset, ContextKt.color(ctx, R.color.colorSecondary),
             (dialog1, which) -> resetToDefault(ctx));
         builder.setFocusOnPositive(true);
         builder.show();

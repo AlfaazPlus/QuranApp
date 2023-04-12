@@ -36,6 +36,7 @@ import java.util.StringJoiner;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class FileUtils {
     private final Context mContext;
+    public static File appFilesDir;
 
     private FileUtils(@NonNull Context context) {
         mContext = context;
@@ -151,8 +152,8 @@ public final class FileUtils {
         return new File(getOtherDirectory(), "app_updates.json");
     }
 
-    public File makeAndGetAppResourceDir(String resourceDirName) {
-        File file = new File(getAppFilesDirectory(), resourceDirName);
+    public static File makeAndGetAppResourceDir(String resourceDirName) {
+        File file = new File(appFilesDir, resourceDirName);
         if (file.exists()) return file;
 
         if (!file.mkdirs()) return null;

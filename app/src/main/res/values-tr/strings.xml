@@ -112,9 +112,9 @@
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s Suresi│ %2$d. Ayet</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Bölüm No. %1$d │ Ayetler %2$d–%3$d</string>
-    <string name="strTitleReaderChapters">Sureler (Bölümler)</string>
+    <string name="strTitleReaderChapters">Sureler</string>
     <string name="strTitleFootnotes">Dipnotlar</string>
-    <string name="strTitleReaderJuz">Cüz (Paragraf)</string>
+    <string name="strTitleReaderJuz">Cüz</string>
     <string name="strTitleReaderChapters2">Sureler</string>
     <string name="strTitleReaderVerses">Ayetler</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">%1$s %2$d Suresi: %3$d Ayet</string>
@@ -357,7 +357,15 @@
     <string name="nScriptsAndFonts" formatted="false">%1$d hat ve %2$d yazı tipi</string>
     <string name="titleScriptCleanup">Hat silinsin mi\?</string>
     <string name="msgScriptCleanup" formatted="false">%s hattı ve beraberinde depolanmış bütün yazı tipleri silinecek. Bunları kullanmak isterseniz tekrar indirmeniz gerekecektir.</string>
-
     <string name="inPlaces">%s içinde</string>
     <string name="inPlacesMore">%1$s ve %2$d daha fazla</string>
+    <string name="msgTafsirCleanup" formatted="false">%s\'e ait olan depolanmış tüm tefsirler silinecek.</string>
+    <string name="onboardDescTheme">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%d ayetin tefsirini oku</string>
+    <string name="strMsgTafsirsNoAvailable">Hiçbir tefsir yok</string>
+    <string name="titleTafsirCleanup">Tefsir silinsin mi\?</string>
+    <string name="onboardDescLanguage">Uygulamayı kendi dilinize göre ayarlayın. Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
+    <string name="noFootnotesForThisVerse">Bu ayet için hiçbir dipnot yok.</string>
+    <string name="onboardDescTranslations">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz. Ayarlardan daha fazla meal indirebilirsiniz.</string>
+    <string name="onboardDescReciter">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz. Ayarlarda daha fazla hafız bulabilirsiniz.</string>
 </resources>

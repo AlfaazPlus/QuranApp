@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.utils.WindowUtils
-import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.FragSettingsLangBinding
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
@@ -56,8 +57,8 @@ class FragSettingsLanguage : FragSettingsBase() {
     private fun initLanguage(binding: FragSettingsLangBinding) {
         val ctx = binding.root.context
 
-        val availableLocalesValues = strArray(ctx, R.array.availableLocalesValues)
-        val availableLocaleNames = strArray(ctx, R.array.availableLocalesNames)
+        val availableLocalesValues = ctx.getStringArray(R.array.availableLocalesValues)
+        val availableLocaleNames = ctx.getStringArray(R.array.availableLocalesNames)
 
         val forcedTextGravity = if (WindowUtils.isRTL(ctx)) {
             PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
@@ -73,12 +74,12 @@ class FragSettingsLanguage : FragSettingsBase() {
 
                 setCompoundDirection(PeaceCompoundButton.COMPOUND_TEXT_LEFT)
                 setBackgroundResource(R.drawable.dr_bg_hover)
-                setSpaceBetween(dp2px(ctx, 20f))
+                setSpaceBetween(ctx.dp2px(20f))
                 setTextAppearance(R.style.TextAppearanceCommonTitle)
                 setForceTextGravity(forcedTextGravity)
 
-                val padH = dp2px(ctx, 20f)
-                val padV = dp2px(ctx, 12f)
+                val padH = ctx.dp2px(20f)
+                val padV = ctx.dp2px(12f)
 
                 updatePaddingRelative(start = padH, end = padH, top = padV, bottom = padV)
 
@@ -107,18 +108,7 @@ class FragSettingsLanguage : FragSettingsBase() {
 
         if (locale == null || locale == initialLocale) return
 
-        PeaceDialog.newBuilder(binding.root.context)
-            .setTitle(R.string.strTitleChangeLanguage)
-            .setMessage(R.string.strMsgChangeLanguage)
-            .setNegativeButton(R.string.strLabelCancel, null)
-            .setPositiveButton(R.string.strLabelChangeNRestart) { _, _ ->
-                restartApp(binding.list.context, locale)
-            }
-            .setButtonsDirection(PeaceDialog.STACKED)
-            .setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)
-            .setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER)
-            .setDialogGravity(PeaceDialog.GRAVITY_BOTTOM)
-            .setFocusOnPositive(true).show()
+        restartApp(binding.list.context, locale)
     }
 
     private fun restartApp(ctx: Context, locale: String) {

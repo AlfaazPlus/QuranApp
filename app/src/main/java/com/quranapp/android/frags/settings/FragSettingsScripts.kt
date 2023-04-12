@@ -22,16 +22,16 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
+import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.visible
 import com.quranapp.android.utils.reader.*
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
-import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService.Companion.PAGE_NO_ALL_DOWNLOADS_FINISHED
+import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService.Companion.ALL_PART_DOWNLOADS_FINISHED
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.views.BoldHeader
 import kotlin.math.ceil
@@ -65,8 +65,8 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
             orientation = LinearLayout.VERTICAL
 
             updatePaddingRelative(
-                top = dp2px(ctx, 10f),
-                bottom = dimen(ctx, R.dimen.dmnPadHuge)
+                top = ctx.dp2px(10f),
+                bottom = ctx.getDimenPx(R.dimen.dmnPadHuge)
             )
         }
     }
@@ -218,14 +218,14 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         val txtDownloadingScript = ctx.getString(R.string.msgDownloadingScript)
         val txtDownloadingFonts = ctx.getString(R.string.msgDownloadingFonts)
 
-        var lastPageNo: Int? = -1
+        var lastPartNo: Int? = -1
 
         mScriptDownloadReceiver = KFQPCScriptFontsDownloadReceiver().apply {
             setDownloadStateListener(object : KFQPCScriptFontsDownloadReceiver.KFQPCScriptFontsDownload {
-                override fun onStart(pageNo: Int?) {
+                override fun onStart(partNo: Int?) {
                     binding.progressIndicator.isIndeterminate = false
 
-                    if (pageNo == null) {
+                    if (partNo == null) {
                         binding.subtitle.text = txtDownloadingScript
                     } else {
                         binding.subtitle.text = txtDownloadingFonts
@@ -234,28 +234,28 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                     binding.subtitle.visible()
 
                     dialog.setupDimension()
-                    lastPageNo = pageNo
+                    lastPartNo = partNo
                 }
 
-                override fun onProgress(pageNo: Int?, progress: Int) {
+                override fun onProgress(partNo: Int?, progress: Int) {
                     binding.progressIndicator.progress = progress
 
-                    if (pageNo != null) {
+                    if (partNo != null) {
                         binding.countText.text = ctx.getString(
                             R.string.msgFontsDonwloadProgress,
-                            pageNo - 1,
-                            QuranMeta.totalPages()
+                            partNo,
+                            3
                         )
                         binding.countText.visible()
                     }
 
-                    if (lastPageNo != pageNo) {
+                    if (lastPartNo != partNo) {
                         dialog.setupDimension()
                     }
                 }
 
-                override fun onComplete(pageNo: Int?) {
-                    if (pageNo == PAGE_NO_ALL_DOWNLOADS_FINISHED) {
+                override fun onComplete(partNo: Int?) {
+                    if (partNo == ALL_PART_DOWNLOADS_FINISHED) {
                         dialog.dismiss()
                         showCompletedDialog(ctx, false)
                         scriptDownloadService?.finish()
@@ -263,8 +263,8 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                     }
                 }
 
-                override fun onFailed(pageNo: Int?) {
-                    if (pageNo == null) {
+                override fun onFailed(partNo: Int?) {
+                    if (partNo == null) {
                         dialog.dismiss()
                         showCompletedDialog(ctx, true)
                         scriptDownloadService?.finish()
