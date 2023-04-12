@@ -159,5 +159,5 @@ fun String.getQuranScriptResPath(): String = when (this) {
 }
 
 fun Int.toKFQPCFontFilename(): String {
-    return "qpc_page_$this.TTF"
+    return "qpc_page_%03d.TTF".format(Locale.ENGLISH, this)
 }
