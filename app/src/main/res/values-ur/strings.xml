@@ -83,8 +83,10 @@
     <string name="strTitleMadani">مکی</string>
     <string name="strTitleFootnote">حاشیہ</string>
     <string name="strTitleFootnotes">حاشیہ</string>
-    <string name="strTitleReaderChapters">سورتیں</string>
-    <string name="strTitleReaderJuz">پارہ</string>
+    <string name="strTitleReaderChapters">سورتیں
+\n(ابواب)</string>
+    <string name="strTitleReaderJuz">پارە
+\n(حصے)</string>
     <string name="strTitleReaderChapters2">سورتیں</string>
     <string name="strTitleReaderJuz2">پارہ</string>
     <string name="strTitleReaderVerses">آیات</string>
