@@ -703,7 +703,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
         }
 
         mVerseLoadCallback.preLoad();
-        RecitationUtils.obtainRecitationModel(getContext(), mForceManifestFetch, model -> {
+        /*RecitationUtils.obtainRecitationModels(getContext(), mForceManifestFetch, model -> {
             // Saved recitation slug successfully fetched, now proceed.
             mForceManifestFetch = false;
 
@@ -715,7 +715,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
                 destroy();
                 pauseMedia();
             }
-        });
+        });*/
     }
 
     private void reciteVerseOnSlugAvailable(RecitationInfoModel model, int chapterNo, int verseNo) {
@@ -812,7 +812,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
             return;
         }
 
-        String url = RecitationUtils.prepareAudioUrl(model, chapterNo, verseNo);
+        String url = RecitationUtils.prepareRecitationAudioUrl(model, chapterNo, verseNo);
         mTaskRunner.addTask(verseFile, url, model.getSlug(), chapterNo, verseNo, callback);
     }
 

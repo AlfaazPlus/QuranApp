@@ -3,14 +3,15 @@ package com.quranapp.android.utils.reader.recitation.player
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import com.quranapp.android.api.models.recitation.RecitationInfoModel
+import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.quranapp.android.utils.reader.recitation.RecitationUtils
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -23,74 +24,74 @@ class RecitationPlayerVerseLoader {
     private val handler = Handler(Looper.getMainLooper())
 
     fun addTask(
-        verseFile: File,
-        url: String,
-        reciter: String,
+        verseFile: File?,
+        verseTranslFile: File?,
+        model: RecitationInfoModel?,
+        translModel: RecitationTranslationInfoModel?,
         chapterNo: Int,
         verseNo: Int,
         callback: RecitationPlayerVerseLoadCallback?
     ) {
-        load(verseFile, url, reciter, chapterNo, verseNo, callback)
+        load(verseFile, verseTranslFile, model, translModel, chapterNo, verseNo, callback)
     }
 
     private fun load(
-        verseFile: File,
-        urlStr: String,
-        slug: String,
+        verseFile: File?,
+        verseTranslFile: File?,
+        model: RecitationInfoModel?,
+        translModel: RecitationTranslationInfoModel?,
         chapterNo: Int,
         verseNo: Int,
         callback: RecitationPlayerVerseLoadCallback?
     ) {
-        addCallback(slug, chapterNo, verseNo, callback)
+        addCallback(model?.slug, translModel?.slug, chapterNo, verseNo, callback)
 
         val job = Job()
-        jobs[makeKey(slug, chapterNo, verseNo)] = job
+        jobs[makeKey(makeRecitersKey(model?.slug, translModel?.slug), chapterNo, verseNo)] = job
+
+        var deleteVerseFile = false
+        var deleteTranslFile = false
 
         CoroutineScope(job).launch {
             flow {
-                val url = URL(urlStr)
-
-                val conn = url.openConnection() as HttpURLConnection
-                conn.setRequestProperty("Content-Length", "0")
-                conn.setRequestProperty("Connection", "close")
-                conn.connectTimeout = 180000
-                conn.readTimeout = 180000
-                conn.allowUserInteraction = false
-                conn.connect()
-
-                if (conn.responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-                    throw HttpNotFoundException()
-                }
-
-                emit(VerseLoadFlow.Progress(0))
-
-                val totalLength: Long = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) conn.contentLengthLong
-                else conn.contentLength.toLong()
-
-                conn.inputStream.buffered().use { input ->
-                    verseFile.outputStream().buffered().use { output ->
-                        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                        var totalConsumed = 0L
-
-                        while (true) {
-                            val bytes = input.read(buffer)
-
-                            if (bytes <= 0) break
-
-                            output.write(buffer, 0, bytes)
-
-                            totalConsumed += bytes
-                            emit(VerseLoadFlow.Progress((totalConsumed / totalLength * 100).toInt()))
-                        }
-
-                        output.flush()
-
-                        emit(VerseLoadFlow.Loaded(verseFile))
+                if (verseFile != null) {
+                    try {
+                        downloadAudio(
+                            this,
+                            verseFile,
+                            RecitationUtils.prepareRecitationAudioUrl(model, chapterNo, verseNo)!!
+                        )
+                    } catch (e: Exception) {
+                        deleteVerseFile = true
+                        throw e
                     }
                 }
+
+                if (verseTranslFile != null) {
+                    try {
+                        downloadAudio(
+                            this,
+                            verseTranslFile,
+                            RecitationUtils.prepareRecitationTranslationAudioUrl(translModel, chapterNo, verseNo)!!
+                        )
+                    } catch (e: Exception) {
+                        deleteTranslFile = true
+                        throw e
+                    }
+                }
+
+                emit(VerseLoadFlow.Loaded(verseFile, verseTranslFile))
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
-                emit(VerseLoadFlow.Failed(it, verseFile))
+                emit(
+                    VerseLoadFlow.Failed(
+                        it,
+                        verseFile,
+                        verseTranslFile,
+                        deleteVerseFile = deleteVerseFile,
+                        deleteTranslFile = deleteTranslFile
+                    )
+                )
             }.collect {
                 handler.post {
                     when (it) {
@@ -99,10 +100,32 @@ class RecitationPlayerVerseLoader {
                         }
                         is VerseLoadFlow.Failed -> {
                             it.e.printStackTrace()
-                            publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, false, it.e)
+                            publishVerseLoadStatus(
+                                verseFile,
+                                verseTranslFile,
+                                model?.slug,
+                                translModel?.slug,
+                                chapterNo,
+                                verseNo,
+                                false,
+                                it.e,
+                                it.deleteVerseFile,
+                                it.deleteTranslFile
+                            )
                         }
                         is VerseLoadFlow.Loaded -> {
-                            publishVerseLoadStatus(verseFile, slug, chapterNo, verseNo, true, null)
+                            publishVerseLoadStatus(
+                                verseFile,
+                                verseTranslFile,
+                                model?.slug,
+                                translModel?.slug,
+                                chapterNo,
+                                verseNo,
+                                true,
+                                null,
+                                deleteVerseFile = false,
+                                deleteTranslFile = false
+                            )
                         }
                     }
                 }
@@ -110,50 +133,112 @@ class RecitationPlayerVerseLoader {
         }
     }
 
+    private suspend fun downloadAudio(flow: FlowCollector<VerseLoadFlow>, verseFile: File, urlStr: String) {
+        val conn = withContext(Dispatchers.IO) {
+            URL(urlStr).openConnection()
+        } as HttpURLConnection
+
+        conn.setRequestProperty("Content-Length", "0")
+        conn.setRequestProperty("Connection", "close")
+        conn.connectTimeout = 180000
+        conn.readTimeout = 180000
+        conn.allowUserInteraction = false
+
+        withContext(Dispatchers.IO) {
+            conn.connect()
+        }
+
+        if (conn.responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+            throw HttpNotFoundException()
+        }
+
+        flow.emit(VerseLoadFlow.Progress(0))
+
+        val totalLength: Long = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) conn.contentLengthLong
+        else conn.contentLength.toLong()
+
+        conn.inputStream.buffered().use { input ->
+            verseFile.outputStream().buffered().use { output ->
+                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+                var totalConsumed = 0L
+
+                while (true) {
+                    val bytes = input.read(buffer)
+
+                    if (bytes <= 0) break
+
+                    output.write(buffer, 0, bytes)
+
+                    totalConsumed += bytes
+                    flow.emit(VerseLoadFlow.Progress((totalConsumed / totalLength * 100).toInt()))
+                }
+
+                output.flush()
+            }
+        }
+    }
+
     private fun publishVerseLoadStatus(
-        verseFile: File,
-        reciter: String,
+        verseFile: File?,
+        verseTranslFile: File?,
+        reciter: String?,
+        translReciter: String?,
         chapterNo: Int,
         verseNo: Int,
         loaded: Boolean,
-        e: Throwable?
+        e: Throwable?,
+        deleteVerseFile: Boolean,
+        deleteTranslFile: Boolean
     ) {
-        val key = makeKey(reciter, chapterNo, verseNo)
-        publishVerseLoadStatus(verseFile, callbacks[key], loaded, e)
+        val key = makeKey(makeRecitersKey(reciter, translReciter), chapterNo, verseNo)
+        publishVerseLoadStatus(verseFile, verseTranslFile, callbacks[key], loaded, e, deleteVerseFile, deleteTranslFile)
         removeCallback(key)
         jobs.remove(key)
     }
 
 
     fun publishVerseLoadStatus(
-        verseFile: File,
+        verseFile: File?,
+        verseTranslFile: File?,
         callback: RecitationPlayerVerseLoadCallback?,
         loaded: Boolean,
-        e: Throwable?
+        e: Throwable?,
+        deleteVerseFile: Boolean = false,
+        deleteTranslFile: Boolean = false
     ) {
         callback?.let {
-            if (loaded) it.onLoaded(verseFile)
-            else it.onFailed(e, verseFile)
+            if (loaded) it.onLoaded(verseFile, verseTranslFile)
+            else it.onFailed(e, verseFile, verseTranslFile, deleteVerseFile, deleteTranslFile)
 
             it.postLoad()
         }
     }
 
-    fun makeKey(reciter: String, chapterNo: Int, verseNo: Int): String {
+    private fun makeRecitersKey(reciterSlug: String?, translReciterSlug: String?): String {
+        return "${reciterSlug}-${translReciterSlug}"
+    }
+
+    private fun makeKey(reciter: String, chapterNo: Int, verseNo: Int): String {
         return "$reciter:$chapterNo:$verseNo"
     }
 
-    fun isPending(reciter: String, chapterNo: Int, verseNo: Int): Boolean {
-        return jobs[makeKey(reciter, chapterNo, verseNo)]?.isActive == true
+    fun isPending(reciterSlug: String?, translReciterSlug: String?, chapterNo: Int, verseNo: Int): Boolean {
+        return jobs[makeKey(makeRecitersKey(reciterSlug, translReciterSlug), chapterNo, verseNo)]?.isActive == true
     }
 
-    fun addCallback(reciter: String, chapterNo: Int, verseNo: Int, callback: RecitationPlayerVerseLoadCallback?) {
-        val key = makeKey(reciter, chapterNo, verseNo)
+    fun addCallback(
+        reciter: String?,
+        translReciter: String?,
+        chapterNo: Int,
+        verseNo: Int,
+        callback: RecitationPlayerVerseLoadCallback?
+    ) {
+        val key = makeKey(makeRecitersKey(reciter, translReciter), chapterNo, verseNo)
 
         if (callback == null) {
             callbacks.remove(key)
         } else {
-            callback.setCurrentVerse(reciter, chapterNo, verseNo)
+            callback.setCurrentVerse(reciter, translReciter, chapterNo, verseNo)
             callbacks[key] = callback
         }
     }
@@ -168,7 +253,13 @@ class RecitationPlayerVerseLoader {
 
     sealed class VerseLoadFlow {
         data class Progress(val progress: Int) : VerseLoadFlow()
-        data class Loaded(val file: File) : VerseLoadFlow()
-        data class Failed(val e: Throwable, val file: File) : VerseLoadFlow()
+        data class Loaded(val verseFile: File?, val verseTranslFile: File?) : VerseLoadFlow()
+        data class Failed(
+            val e: Throwable,
+            val verseFile: File?,
+            val verseTranslFile: File?,
+            val deleteVerseFile: Boolean,
+            val deleteTranslFile: Boolean
+        ) : VerseLoadFlow()
     }
 }

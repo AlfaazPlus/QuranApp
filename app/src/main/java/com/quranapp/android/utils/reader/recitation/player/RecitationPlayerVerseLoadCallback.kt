@@ -9,11 +9,13 @@ import java.io.File
 
 open class RecitationPlayerVerseLoadCallback(private val service: RecitationService?) {
     private var reciter: String? = null
+    private var translReciter: String? = null
     private var chapterNo = 0
     private var verseNo = 0
 
-    fun setCurrentVerse(slug: String, chapterNo: Int, verseNo: Int) {
+    fun setCurrentVerse(slug: String?, translSlug: String?, chapterNo: Int, verseNo: Int) {
         this.reciter = slug
+        this.translReciter = translSlug
         this.chapterNo = chapterNo
         this.verseNo = verseNo
     }
@@ -26,25 +28,39 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationServ
     }
 
     fun onProgress(progress: String) {
-        if (reciter == null || chapterNo == -1 || verseNo == -1) {
+        if ((reciter == null && translReciter == null) || chapterNo == -1 || verseNo == -1) {
             return
         }
 
         service?.recPlayer?.binding?.progressText?.text = progress
     }
 
-    open fun onLoaded(file: File) {
-        if (reciter == null || chapterNo == -1 || verseNo == -1) {
+    open fun onLoaded(verseFile: File?, verseTranslFile: File?) {
+        if ((reciter == null && translReciter == null) || chapterNo == -1 || verseNo == -1) {
             return
         }
 
         Log.d("Verse loaded! - $chapterNo:$verseNo")
 
-        service?.prepareMediaPlayer(file.toUri(), reciter!!, chapterNo, verseNo)
+        service?.prepareMediaPlayer(
+            verseFile?.toUri(),
+            verseTranslFile?.toUri(),
+            reciter,
+            translReciter,
+            chapterNo,
+            verseNo
+        )
     }
 
-    open fun onFailed(e: Throwable?, file: File?) {
-        file?.delete()
+    open fun onFailed(
+        e: Throwable?,
+        verseFile: File?,
+        verseTranslFile: File?,
+        deleteVerseFile: Boolean,
+        deleteTranslFile: Boolean
+    ) {
+        if (deleteVerseFile) verseFile?.delete()
+        if (deleteTranslFile) verseTranslFile?.delete()
 
         if (e is HttpNotFoundException || e?.cause is HttpNotFoundException) {
             // Audio was unable to load from the url because url was not found,

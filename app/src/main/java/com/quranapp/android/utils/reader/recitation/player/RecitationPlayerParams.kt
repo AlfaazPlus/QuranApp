@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.reader.recitation.player
 
+import android.content.Context
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
@@ -7,6 +8,7 @@ import androidx.core.os.ParcelCompat
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
+import com.quranapp.android.utils.sharedPrefs.SPReader
 
 class RecitationPlayerParams() : Parcelable {
     /**
@@ -28,12 +30,19 @@ class RecitationPlayerParams() : Parcelable {
     var currentTranslationReciter: String? = null
     var currentAudioOption = RecitationUtils.AUDIO_OPTION_DEFAULT
     var previouslyPlaying = false
-    var previouslyTranslationPlaying = false
     var continueRange = true
     var repeatVerse = false
     var syncWithVerse = true
 
     var lastMediaURI: Uri? = null
+    var lastTranslMediaURI: Uri? = null
+
+    fun init(context: Context) {
+        currentAudioOption = SPReader.getRecitationAudioOption(context)
+        continueRange = SPReader.getRecitationContinueChapter(context)
+        repeatVerse = SPReader.getRecitationRepeatVerse(context)
+        syncWithVerse = SPReader.getRecitationScrollSync(context)
+    }
 
     constructor(parcel: Parcel) : this() {
         currentReciter = parcel.readString()
@@ -42,6 +51,7 @@ class RecitationPlayerParams() : Parcelable {
         repeatVerse = parcel.readByte() != 0.toByte()
         syncWithVerse = parcel.readByte() != 0.toByte()
         lastMediaURI = ParcelCompat.readParcelable(parcel, Uri::class.java.classLoader, Uri::class.java)
+        lastTranslMediaURI = ParcelCompat.readParcelable(parcel, Uri::class.java.classLoader, Uri::class.java)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -51,6 +61,7 @@ class RecitationPlayerParams() : Parcelable {
         parcel.writeByte(if (repeatVerse) 1 else 0)
         parcel.writeByte(if (syncWithVerse) 1 else 0)
         parcel.writeParcelable(lastMediaURI, flags)
+        parcel.writeParcelable(lastTranslMediaURI, flags)
     }
 
     override fun describeContents(): Int {

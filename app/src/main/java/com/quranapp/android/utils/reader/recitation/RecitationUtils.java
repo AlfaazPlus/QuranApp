@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 
 import com.quranapp.android.R;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
+import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
@@ -15,6 +17,7 @@ import com.quranapp.android.utils.univ.URLBuilder;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,12 +99,21 @@ public class RecitationUtils {
     }
 
     @Nullable
-    public static String prepareAudioUrl(RecitationInfoModel model, int chapterNo, int verseNo) {
+    public static String prepareRecitationAudioUrl(RecitationInfoModel model, int chapterNo, int verseNo) {
+        return prepareAudioUrl(model.getUrlHost(), model.getUrlPath(), chapterNo, verseNo);
+    }
+
+    @Nullable
+    public static String prepareRecitationTranslationAudioUrl(RecitationTranslationInfoModel model, int chapterNo, int verseNo) {
+        return prepareAudioUrl(model.getUrlHost(), model.getUrlPath(), chapterNo, verseNo);
+    }
+
+    @Nullable
+    private static String prepareAudioUrl(String host, String path, int chapterNo, int verseNo) {
         try {
-            URLBuilder builder = new URLBuilder(model.getUrlHost());
+            URLBuilder builder = new URLBuilder(host);
             builder.setConnectionType(URLBuilder.CONNECTION_TYPE_HTTPS);
 
-            String path = model.getUrlPath();
             Matcher matcher = URL_CHAPTER_PATTERN.matcher(path);
             while (matcher.find()) {
                 String group = matcher.group(1);
@@ -132,20 +144,70 @@ public class RecitationUtils {
         return FileUtils.createPath(reciterSlug, audioName);
     }
 
-    public static synchronized void obtainRecitationModel(
+    public static synchronized void obtainRecitationModels(
         Context ctx,
         boolean force,
-        OnResultReadyCallback<RecitationInfoModel> callback
+        boolean forceTranslation,
+        OnResultReadyCallback<Pair<RecitationInfoModel, RecitationTranslationInfoModel>> callback
     ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
+        String savedTranslationSlug = SPReader.getSavedRecitationTranslationSlug(ctx);
+        String audioOption = SPReader.getRecitationAudioOption(ctx);
 
-        RecitationManager.prepare(ctx, force, () -> {
-            callback.onReady(obtainRecitationModel(ctx, savedSlug));
-            return Unit.INSTANCE;
-        });
+        boolean isBoth = Objects.equals(audioOption, AUDIO_OPTION_BOTH);
+        boolean isOnlyTransl = Objects.equals(audioOption, AUDIO_OPTION_ONLY_TRANSLATION);
+
+
+        if (isBoth) {
+            RecitationManager.prepare(ctx, force, () -> {
+                RecitationManager.prepareTranslations(ctx, forceTranslation, () -> {
+                    callback.onReady(obtainRecitationModels(ctx, savedSlug, savedTranslationSlug));
+                    return Unit.INSTANCE;
+                });
+                return Unit.INSTANCE;
+            });
+        } else if (isOnlyTransl) {
+            RecitationManager.prepareTranslations(ctx, forceTranslation, () -> {
+                callback.onReady(obtainRecitationModels(ctx, null, savedTranslationSlug));
+                return Unit.INSTANCE;
+            });
+        } else {
+            RecitationManager.prepare(ctx, force, () -> {
+                callback.onReady(obtainRecitationModels(ctx, savedSlug, null));
+                return Unit.INSTANCE;
+            });
+        }
     }
 
-    public static RecitationInfoModel obtainRecitationModel(Context ctx, String savedSlug) {
+    private static Pair<RecitationInfoModel, RecitationTranslationInfoModel> obtainRecitationModels(
+        Context ctx,
+        String savedSlug,
+        String savedTranslationSlug
+    ) {
+        // AUDIO_OPTION_BOTH
+        if (savedSlug != null && savedTranslationSlug != null) {
+            return new Pair<>(
+                RecitationManager.getModel(obtainArabicRecitationSlug(ctx, savedSlug)),
+                RecitationManager.getTranslationModel(obtainTranslationRecitationSlug(ctx, savedTranslationSlug))
+            );
+        }
+        // AUDIO_OPTION_ONLY_TRANSLATION
+        else if (savedTranslationSlug != null) {
+            return new Pair<>(
+                null,
+                RecitationManager.getTranslationModel(obtainTranslationRecitationSlug(ctx, savedTranslationSlug))
+            );
+        }
+        // AUDIO_OPTION_ONLY_ARABIC
+        else {
+            return new Pair<>(
+                RecitationManager.getModel(obtainArabicRecitationSlug(ctx, savedSlug)),
+                null
+            );
+        }
+    }
+
+    private static String obtainArabicRecitationSlug(Context ctx, String savedSlug) {
         String slug = savedSlug;
 
         if (TextUtils.isEmpty(slug)) {
@@ -154,10 +216,28 @@ public class RecitationUtils {
                 slug = models.get(0).getSlug();
 
                 if (!TextUtils.isEmpty(slug)) {
-                    SPReader.setSavedRecitationSlug(ctx, savedSlug);
+                    SPReader.setSavedRecitationSlug(ctx, slug);
                 }
             }
         }
-        return RecitationManager.getModel(slug);
+
+        return slug;
+    }
+
+    private static String obtainTranslationRecitationSlug(Context ctx, String savedSlug) {
+        String translationSlug = savedSlug;
+
+        if (TextUtils.isEmpty(translationSlug)) {
+            List<RecitationTranslationInfoModel> models = RecitationManager.getTranslationModels();
+            if (models != null && models.size() > 0) {
+                translationSlug = models.get(0).getSlug();
+
+                if (!TextUtils.isEmpty(translationSlug)) {
+                    SPReader.setSavedRecitationTranslationSlug(ctx, translationSlug);
+                }
+            }
+        }
+
+        return translationSlug;
     }
 }

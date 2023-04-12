@@ -28,11 +28,10 @@ class RecitationPlayer(
     var service: RecitationService?
 ) : FrameLayout(activity) {
 
-    internal val binding = LytRecitationPlayerBinding.inflate(LayoutInflater.from(context), this, true)
+    val binding = LytRecitationPlayerBinding.inflate(LayoutInflater.from(context), this, true)
     private val playerMenu = RecitationPlayerMenu(this)
 
-
-    internal var readerChanging = false
+    var readerChanging = false
 
     init {
         id = R.id.recitationPlayer

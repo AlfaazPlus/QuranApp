@@ -1189,19 +1189,32 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         RecitationPlayerParams params = mPlayerService.getP();
 
-        String savedReciter = SPReader.getSavedRecitationSlug(this);
-        String savedTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this);
+        final boolean reciterChanged = !Objects.equals(
+            SPReader.getSavedRecitationSlug(this),
+            params.getCurrentReciter()
+        );
+        final boolean translationReciterChanged = !Objects.equals(
+            SPReader.getSavedRecitationTranslationSlug(this),
+            params.getCurrentTranslationReciter()
+        );
 
-        String currentReciter = params.getCurrentReciter();
-        String currentTranslationReciter = params.getCurrentTranslationReciter();
+        final String audioOption = SPReader.getRecitationAudioOption(this);
+        final boolean changed;
 
-        if (!Objects.equals(savedReciter, currentReciter) ||
-            !Objects.equals(savedTranslationReciter, currentTranslationReciter)) {
+        if (Objects.equals(audioOption, RecitationUtils.AUDIO_OPTION_BOTH)) {
+            changed = reciterChanged || translationReciterChanged;
+        } else if (Objects.equals(audioOption, RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION)) {
+            changed = translationReciterChanged;
+        } else {
+            changed = reciterChanged;
+        }
+
+        if (changed) {
             mPlayerService.onReciterChanged();
             mPlayerService.onTranslationReciterChanged();
 
-            if (params.getPreviouslyPlaying() || params.getPreviouslyTranslationPlaying()) {
-                mPlayerService.restartVerse(true);
+            if (params.getPreviouslyPlaying()) {
+                mPlayerService.restartVerseOnConfigChange();
             }
         }
     }

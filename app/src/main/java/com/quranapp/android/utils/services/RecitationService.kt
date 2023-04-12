@@ -12,8 +12,10 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import androidx.core.util.Pair
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -25,6 +27,7 @@ import com.google.android.exoplayer2.upstream.FileDataSource
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
+import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
@@ -52,8 +55,6 @@ class RecitationService : Service() {
         const val MILLIS_MULTIPLIER = 100L
         const val ACTION_SEEK_LEFT = -1L
         const val ACTION_SEEK_RIGHT = 1L
-
-        const val COMMAND_RECITE_VERSE = 313
     }
 
     private val binder = LocalBinder()
@@ -74,6 +75,7 @@ class RecitationService : Service() {
     var recPlayer: RecitationPlayer? = null
     var isLoadingInProgress = false
     var forceManifestFetch = false
+    var forceTranslationManifestFetch = false
 
     inner class LocalBinder : Binder() {
         fun getService(): RecitationService = this@RecitationService
@@ -83,6 +85,8 @@ class RecitationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        recParams.init(this)
 
         fileUtils = FileUtils.newInstance(this)
 
@@ -101,6 +105,7 @@ class RecitationService : Service() {
 
                     recParams.currentVerse = ChapterVersePair(item.chapterNo, item.verseNo)
                     recParams.currentReciter = item.reciter
+                    recParams.currentTranslationReciter = item.translReciter
 
                     recPlayer?.onPlayMedia(recParams)
                 }
@@ -141,6 +146,11 @@ class RecitationService : Service() {
                     } else {
                         recPlayer?.onPauseMedia(recParams)
                     }
+                }
+
+                override fun onPlayerError(error: PlaybackException) {
+                    super.onPlayerError(error)
+                    error.printStackTrace()
                 }
             })
         }
@@ -283,18 +293,19 @@ class RecitationService : Service() {
         recParams.firstVerse = ChapterVersePair(chapterNo, fromVerse)
         recParams.lastVerse = ChapterVersePair(chapterNo, toVerse)
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
+        recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
 
     fun onJuzChanged(juzNo: Int, quranMeta: QuranMeta) {
         val (firstChapter, lastChapter) = quranMeta.getChaptersInJuz(juzNo)
         val firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).first
         val (_, lastVerse) = quranMeta.getVerseRangeOfChapterInJuz(juzNo, lastChapter)
-        recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
 
         recParams.firstVerse = ChapterVersePair(firstChapter, firstVerse)
         recParams.lastVerse = ChapterVersePair(lastChapter, lastVerse)
         recParams.currentVerse = recParams.firstVerse
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
+        recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
 
     private fun sync() {
@@ -345,25 +356,45 @@ class RecitationService : Service() {
 
     val p get() = recParams
 
-    fun prepareMediaPlayer(audioURI: Uri, reciter: String, chapterNo: Int, verseNo: Int) {
+    fun prepareMediaPlayer(
+        audioURI: Uri?,
+        translAudioURI: Uri?,
+        reciter: String?,
+        translReciter: String?,
+        chapterNo: Int,
+        verseNo: Int
+    ) {
         verseLoadCallback.postLoad()
 
         recParams.lastMediaURI = audioURI
+        recParams.lastTranslMediaURI = translAudioURI
         recParams.currentVerse = ChapterVersePair(chapterNo, verseNo)
         recParams.currentReciter = reciter
+        recParams.currentTranslationReciter = translReciter
 
         playlist.clear()
-        addToQueue(audioURI, reciter, chapterNo, verseNo)
+
+        if (audioURI != null) {
+            addToQueue(audioURI, reciter, translReciter, chapterNo, verseNo)
+        }
+
+        if (translAudioURI != null) {
+            addToQueue(translAudioURI, reciter, translReciter, chapterNo, verseNo)
+        }
 
         player.setMediaSource(playlist)
         player.prepare()
         playMedia()
 
-        prepareNextVerses(reciter)
+        prepareNextVerses()
     }
 
-    private fun prepareNextVerses(currentReciter: String) {
+    private fun prepareNextVerses() {
         if (!recParams.continueRange || quranMeta == null) return
+
+        val audioOption = recParams.currentAudioOption
+        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
+        val isOnlyTranslation = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
         var currentVerse = recParams.currentVerse
         val lastVerse = recParams.lastVerse
@@ -375,11 +406,50 @@ class RecitationService : Service() {
 
         while (i <= count) {
             val nextVerse = recParams.getNextVerse(quranMeta!!, currentVerse) ?: break
+            var wasArabicAddedToQueue = false
 
-            val audioFile =
-                fileUtils.getRecitationAudioFile(recParams.currentReciter, nextVerse.chapterNo, nextVerse.verseNo)
-            if (audioFile.length() > 0) {
-                addToQueue(audioFile.toUri(), currentReciter, nextVerse.chapterNo, nextVerse.verseNo)
+            if (!isOnlyTranslation) {
+                val audioFile = fileUtils.getRecitationAudioFile(
+                    recParams.currentReciter,
+                    nextVerse.chapterNo,
+                    nextVerse.verseNo
+                )
+
+                if (audioFile.length() > 0) {
+                    addToQueue(
+                        audioFile.toUri(),
+                        recParams.currentReciter,
+                        recParams.currentTranslationReciter,
+                        nextVerse.chapterNo,
+                        nextVerse.verseNo
+                    )
+                    wasArabicAddedToQueue = true
+                } else {
+                    break
+                }
+            }
+
+            if (isBoth || isOnlyTranslation) {
+                val translAudioFile = fileUtils.getRecitationAudioFile(
+                    recParams.currentTranslationReciter,
+                    nextVerse.chapterNo,
+                    nextVerse.verseNo
+                )
+
+                if (translAudioFile.length() > 0) {
+                    addToQueue(
+                        translAudioFile.toUri(),
+                        recParams.currentReciter,
+                        recParams.currentTranslationReciter,
+                        nextVerse.chapterNo,
+                        nextVerse.verseNo
+                    )
+                } else {
+                    if (wasArabicAddedToQueue) {
+                        playlist.removeMediaSource(playlist.size - 1)
+                    }
+                    break
+                }
             }
 
             currentVerse = nextVerse
@@ -387,18 +457,24 @@ class RecitationService : Service() {
         }
     }
 
-    private fun addToQueue(audioURI: Uri, reciter: String, chapterNo: Int, verseNo: Int) {
+    private fun addToQueue(audioURI: Uri, reciter: String?, translReciter: String?, chapterNo: Int, verseNo: Int) {
         playlist.addMediaSource(
             ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(
-                createMediaItem(audioURI, reciter, chapterNo, verseNo)
+                createMediaItem(audioURI, reciter, translReciter, chapterNo, verseNo)
             )
         )
     }
 
-    private fun createMediaItem(audioURI: Uri, reciter: String, chapterNo: Int, verseNo: Int): MediaItem {
+    private fun createMediaItem(
+        audioURI: Uri,
+        reciter: String?,
+        translReciter: String?,
+        chapterNo: Int,
+        verseNo: Int
+    ): MediaItem {
         return MediaItem.Builder()
             .setUri(audioURI)
-            .setTag(RecitationMediaItem(reciter, chapterNo, verseNo))
+            .setTag(RecitationMediaItem(reciter, translReciter, chapterNo, verseNo))
             .build()
     }
 
@@ -504,6 +580,18 @@ class RecitationService : Service() {
         player.seekTo(0)
     }
 
+    fun restartVerseOnConfigChange() {
+        val previouslyPlaying = recParams.previouslyPlaying
+
+        player.stop()
+        player.clearMediaItems()
+        playlist.clear()
+
+        if (previouslyPlaying) {
+            restartVerse(true)
+        }
+    }
+
     fun onReciterChanged() {
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
     }
@@ -514,6 +602,8 @@ class RecitationService : Service() {
 
     fun onAudioOptionChanged(newOption: String) {
         recParams.currentAudioOption = newOption
+
+        restartVerseOnConfigChange()
     }
 
     fun reciteControl(pair: ChapterVersePair) {
@@ -524,6 +614,7 @@ class RecitationService : Service() {
             || player.currentPosition >= player.duration
         ) {
             reciteVerse(pair)
+            return
         }
 
         if (isPlaying) pauseMedia()
@@ -542,18 +633,36 @@ class RecitationService : Service() {
 
         verseLoadCallback.preLoad()
 
-        RecitationUtils.obtainRecitationModel(
+        RecitationUtils.obtainRecitationModels(
             this,
             forceManifestFetch,
-            object : OnResultReadyCallback<RecitationInfoModel?> {
-                override fun onReady(r: RecitationInfoModel?) {
-                    // Saved recitation slug successfully fetched, now proceed.
-                    forceManifestFetch = false
+            forceTranslationManifestFetch,
+            object : OnResultReadyCallback<Pair<RecitationInfoModel?, RecitationTranslationInfoModel?>> {
+                override fun onReady(r: Pair<RecitationInfoModel?, RecitationTranslationInfoModel?>) {
+                    val isBoth = recParams.currentAudioOption == RecitationUtils.AUDIO_OPTION_BOTH
+                    val isOnlyTransl = recParams.currentAudioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
-                    if (r != null) {
-                        reciteVerseOnSlugAvailable(quranMeta!!, r, pair.chapterNo, pair.verseNo)
+                    forceManifestFetch = !isOnlyTransl && r.first == null
+                    forceTranslationManifestFetch = (isBoth || isOnlyTransl) && r.second == null
+
+                    val failed = if (isBoth) {
+                        r.first == null || r.second == null
+                    } else if (isOnlyTransl) {
+                        r.second == null
                     } else {
-                        verseLoadCallback.onFailed(null, null)
+                        r.first == null
+                    }
+
+
+                    if (!failed) {
+                        reciteVerseOnSlugAvailable(
+                            quranMeta!!,
+                            r,
+                            pair.chapterNo,
+                            pair.verseNo
+                        )
+                    } else {
+                        verseLoadCallback.onFailed(null, null, null, deleteVerseFile = false, deleteTranslFile = false)
                         verseLoadCallback.postLoad()
 
                         destroy()
@@ -565,67 +674,94 @@ class RecitationService : Service() {
 
     private fun reciteVerseOnSlugAvailable(
         quranMeta: QuranMeta,
-        model: RecitationInfoModel,
+        models: Pair<RecitationInfoModel?, RecitationTranslationInfoModel?>,
         chapterNo: Int,
         verseNo: Int
     ) {
-        val audioFile = fileUtils.getRecitationAudioFile(model.slug, chapterNo, verseNo)
+        val recModel = models.first
+        val recTranslModel = models.second
 
-        // Check If the audio file exists.
-        if (audioFile.length() > 0) {
-            if (verseLoader.isPending(model.slug, chapterNo, verseNo)) {
-                pauseMedia()
+        val verseFile = recModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
+        val verseTranslFile = recTranslModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
+
+        // verseFile is null when ONLY_TRANSLATION audio option is selected.
+        val verseFileExists = verseFile == null || verseFile.length() > 0
+        // verseTranslFile is null when ONLY_ARABIC audio option is selected.
+        val verseTranslFileExists = verseTranslFile == null || verseTranslFile.length() > 0
+
+        if (verseFileExists && verseTranslFileExists) {
+            if (verseLoader.isPending(recModel?.slug, recTranslModel?.slug, chapterNo, verseNo)) {
+                stopMedia()
                 verseLoadCallback.preLoad()
-                verseLoader.addCallback(model.slug, chapterNo, verseNo, verseLoadCallback)
+                verseLoader.addCallback(recModel?.slug, recTranslModel?.slug, chapterNo, verseNo, verseLoadCallback)
             } else {
-                prepareMediaPlayer(audioFile.toUri(), model.slug, chapterNo, verseNo)
+                prepareMediaPlayer(
+                    verseFile?.toUri(),
+                    verseTranslFile?.toUri(),
+                    recModel?.slug,
+                    recTranslModel?.slug,
+                    chapterNo,
+                    verseNo
+                )
             }
         } else {
+            stopMedia()
+
             if (!NetworkStateReceiver.isNetworkConnected(this)) {
                 popMiniMsg(getString(R.string.strMsgNoInternet), Toast.LENGTH_LONG)
-                destroy()
-                pauseMedia()
                 return
             }
-            pauseMedia()
-            loadVerse(model, chapterNo, verseNo, verseLoadCallback)
+
+            loadVerse(recModel, recTranslModel, chapterNo, verseNo, verseLoadCallback)
         }
 
-        preLoadVerses(quranMeta, model, chapterNo, verseNo)
+        preLoadVerses(quranMeta, recModel, recTranslModel, chapterNo, verseNo)
     }
 
     private fun loadVerse(
-        model: RecitationInfoModel,
+        model: RecitationInfoModel?,
+        translModel: RecitationTranslationInfoModel?,
         chapterNo: Int,
         verseNo: Int,
         callback: RecitationPlayerVerseLoadCallback?
     ) {
         callback?.preLoad()
 
-        val verseFile = fileUtils.getRecitationAudioFile(model.slug, chapterNo, verseNo)
+        val verseFile = model?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
+        val verseTranslFile = translModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
 
-        if (verseFile.exists() && verseFile.length() > 0) {
-            verseLoader.publishVerseLoadStatus(verseFile, callback, true, null)
+        // verseFile is null when ONLY_TRANSLATION audio option is selected.
+        val verseFileExists = verseFile == null || verseFile.length() > 0
+        // verseTranslFile is null when ONLY_ARABIC audio option is selected.
+        val verseTranslFileExists = verseTranslFile == null || verseTranslFile.length() > 0
+
+        if (verseFileExists && verseTranslFileExists) {
+            verseLoader.publishVerseLoadStatus(verseFile, verseTranslFile, callback, true, null)
             return
         }
 
         if (!NetworkStateReceiver.isNetworkConnected(this)) {
-            verseLoader.publishVerseLoadStatus(verseFile, callback, false, NoInternetException())
+            verseLoader.publishVerseLoadStatus(verseFile, verseTranslFile, callback, false, NoInternetException())
             return
         }
 
-        if (!fileUtils.createFile(verseFile)) {
-            verseLoader.publishVerseLoadStatus(verseFile, callback, false, null)
+        // verseFile is null when ONLY_TRANSLATION audio option is selected.
+        val verseFileCreated = verseFile == null || fileUtils.createFile(verseFile)
+        // verseTranslFile is null when ONLY_ARABIC audio option is selected.
+        val verseTranslFileCreated = verseTranslFile == null || fileUtils.createFile(verseTranslFile)
+
+        if (!verseFileCreated || !verseTranslFileCreated) {
+            verseLoader.publishVerseLoadStatus(verseFile, verseTranslFile, callback, false, null)
             return
         }
 
-        val url = RecitationUtils.prepareAudioUrl(model, chapterNo, verseNo) ?: return
-        verseLoader.addTask(verseFile, url, model.slug, chapterNo, verseNo, callback)
+        verseLoader.addTask(verseFile, verseTranslFile, model, translModel, chapterNo, verseNo, callback)
     }
 
     private fun preLoadVerses(
         quranMeta: QuranMeta,
-        model: RecitationInfoModel,
+        model: RecitationInfoModel?,
+        translModel: RecitationTranslationInfoModel?,
         chapterNo: Int,
         firstVerseToLoad: Int
     ) {
@@ -645,26 +781,41 @@ class RecitationService : Service() {
                 continue
             }
 
-            val verseFile = fileUtils.getRecitationAudioFile(model.slug, chapterNo, verseToLoad)
-
-            if (verseLoader.isPending(model.slug, chapterNo, verseToLoad)) {
+            if (verseLoader.isPending(model?.slug, translModel?.slug, chapterNo, verseToLoad)) {
                 continue
             }
+            val verseFile = model?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseToLoad) }
+            val verseTranslFile = translModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseToLoad) }
 
-            if (verseFile.exists() && verseFile.length() > 0) {
+            // verseFile is null when ONLY_TRANSLATION audio option is selected.
+            val verseFileExists = verseFile == null || verseFile.length() > 0
+            // verseTranslFile is null when ONLY_ARABIC audio option is selected.
+            val verseTranslFileExists = verseTranslFile == null || verseTranslFile.length() > 0
+
+            if (verseFileExists && verseTranslFileExists) {
                 continue
             }
 
             Log.d("Loading ahead verse - $chapterNo:$verseToLoad")
 
-            if (!fileUtils.createFile(verseFile)) {
+            if (
+                verseFile != null && !fileUtils.createFile(verseFile) &&
+                verseTranslFile != null && !fileUtils.createFile(verseTranslFile)
+            ) {
                 continue
             }
 
-            loadVerse(model, chapterNo, verseToLoad, object : RecitationPlayerVerseLoadCallback(null) {
-                override fun onFailed(e: Throwable?, file: File?) {
+            loadVerse(model, translModel, chapterNo, verseToLoad, object : RecitationPlayerVerseLoadCallback(null) {
+                override fun onFailed(
+                    e: Throwable?,
+                    verseFile: File?,
+                    verseTranslFile: File?,
+                    deleteVerseFile: Boolean,
+                    deleteTranslFile: Boolean
+                ) {
                     e?.printStackTrace()
-                    verseFile?.delete()
+                    if (deleteVerseFile) verseFile?.delete()
+                    if (deleteTranslFile) verseTranslFile?.delete()
                 }
             })
         }

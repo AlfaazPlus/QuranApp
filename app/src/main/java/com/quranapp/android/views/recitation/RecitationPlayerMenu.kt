@@ -9,6 +9,7 @@ import android.text.style.RelativeSizeSpan
 import android.text.style.TypefaceSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
 import com.peacedesign.android.utils.DrawableUtils
@@ -79,7 +80,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
 
         binding.manageAudio.setOnClickListener {
             close()
-            player.activity.mBinding.readerHeader.openReaderSetting(ActivitySettings.SETTINGS_RECITER)
+            Toast.makeText(context, "Coming soon, InshaAllah", Toast.LENGTH_SHORT).show()
         }
 
         binding.manageAudio.setDrawables(
