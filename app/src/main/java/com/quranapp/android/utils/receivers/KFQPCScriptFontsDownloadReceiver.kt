@@ -22,13 +22,9 @@ class KFQPCScriptFontsDownloadReceiver : BroadcastReceiver() {
 
         when (downloadFlow) {
             is DownloadFlow.Start -> l.onStart(downloadFlow.partNo)
-            is DownloadFlow.Progress -> {
-                l.onProgress(downloadFlow.partNo, downloadFlow.progress)
-            }
+            is DownloadFlow.Progress -> l.onProgress(downloadFlow.partNo, downloadFlow.progress)
             is DownloadFlow.Complete -> l.onComplete(downloadFlow.partNo)
-            is DownloadFlow.Failed -> {
-                l.onFailed(downloadFlow.partNo)
-            }
+            is DownloadFlow.Failed -> l.onFailed(downloadFlow.partNo)
             else -> {}
         }
     }

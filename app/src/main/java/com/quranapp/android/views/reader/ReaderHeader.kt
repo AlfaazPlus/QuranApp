@@ -1,258 +1,215 @@
-package com.quranapp.android.views.reader;
+package com.quranapp.android.views.reader
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS;
-import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
-import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import android.content.Context
+import android.content.Intent
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import com.google.android.material.appbar.AppBarLayout
+import com.peacedesign.android.utils.Dimen
+import com.peacedesign.android.utils.DrawableUtils
+import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.databinding.LytReaderHeaderBinding
+import com.quranapp.android.interfaceUtils.Destroyable
+import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
+import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
+import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
+import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
+import com.quranapp.android.views.reader.spinner.ReaderSpinnerItem
+import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem
+import com.quranapp.android.views.readerSpinner2.adapters.ChapterSelectorAdapter2
+import com.quranapp.android.views.readerSpinner2.adapters.JuzSelectorAdapter2
+import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.peacedesign.android.utils.Dimen;
-import com.peacedesign.android.utils.DrawableUtils;
-import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader;
-import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.databinding.LytReaderHeaderBinding;
-import com.quranapp.android.interfaceUtils.Destroyable;
-import com.quranapp.android.reader_managers.Navigator;
-import com.quranapp.android.reader_managers.ReaderParams;
-import com.quranapp.android.views.reader.chapterSpinner.ChapterSpinnerItem;
-import com.quranapp.android.views.reader.juzSpinner.JuzSpinnerItem;
-import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
-import com.quranapp.android.views.readerSpinner2.adapters.ChapterSelectorAdapter2;
-import com.quranapp.android.views.readerSpinner2.adapters.JuzSelectorAdapter2;
-import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
-import com.quranapp.android.views.readerSpinner2.juzChapterVerse.JuzChapterVerseSelector;
+class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    AppBarLayout(context, attrs, defStyleAttr), Destroyable {
+    val binding = LytReaderHeaderBinding.inflate(LayoutInflater.from(context), this, true)
+    private var activity: ActivityReader? = null
 
-import java.util.ArrayList;
+    private val jcvSelectorView = binding.readerTitle.juzChapterVerseSpinner
+    private var chapterAdapter: ChapterSelectorAdapter2? = null
+    private var verseAdapter: VerseSelectorAdapter2? = null
+    private var juzAdapter: JuzSelectorAdapter2? = null
+    private var readerParams: ReaderParams? = null
 
-public class ReaderHeader extends AppBarLayout implements Destroyable {
-    public final LytReaderHeaderBinding mBinding;
-    private ActivityReader mActivity;
-    // public final JuzSpinner mJuzSpinner;
-    // public final ChapterSpinner mChapterSpinner;
-    // public final VerseSpinner mVerseSpinner;
-    private final JuzChapterVerseSelector mJCVSelectorView;
-    private ChapterSelectorAdapter2 mChapterAdapter;
-    private VerseSelectorAdapter2 mVerseAdapter;
-    private JuzSelectorAdapter2 mJuzAdapter;
-    private ReaderParams mReaderParams;
-
-    public ReaderHeader(@NonNull Context context) {
-        this(context, null);
-    }
-
-    public ReaderHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ReaderHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        mBinding = LytReaderHeaderBinding.inflate(LayoutInflater.from(context), this, false);
-        mJCVSelectorView = mBinding.readerTitle.juzChapterVerseSpinner;
-        addView(mBinding.getRoot());
-        init();
-    }
-
-    private void init() {
-        initThis();
-
-        mBinding.back.setOnClickListener(v -> {
-            mActivity.finish();
-            if (mActivity.isTaskRoot()) {
-                mActivity.launchMainActivity();
-            }
-        });
-        mBinding.readerSetting.setOnClickListener(v -> openReaderSetting(-1));
-        mBinding.btnTranslLauncher.setOnClickListener(v -> openReaderSetting(ActivitySettings.SETTINGS_TRANSLATION));
-
-        ViewCompat.setTooltipText(mBinding.readerSetting, getContext().getString(R.string.strTitleReaderSettings));
-        ViewCompat.setTooltipText(mBinding.btnTranslLauncher,
-            getContext().getString(R.string.strLabelSelectTranslations));
-
-        mBinding.readerTitle.getRoot().setOnClickListener(v -> mJCVSelectorView.showPopup());
-        mJCVSelectorView.setJuzIconView(mBinding.readerTitle.juzIcon);
-        mJCVSelectorView.setChapterIconView(mBinding.readerTitle.chapterIcon);
-    }
-
-    public void openReaderSetting(int destination) {
-        Intent intent = new Intent(mActivity, ActivitySettings.class);
-        intent.putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, destination);
-        intent.putExtra(READER_KEY_SETTING_IS_FROM_READER, true);
-        intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, mReaderParams.saveTranslChanges);
-        if (mReaderParams.getVisibleTranslSlugs() != null) {
-            intent.putExtra(READER_KEY_TRANSL_SLUGS, mReaderParams.getVisibleTranslSlugs().toArray(new String[0]));
-        }
-        intent.putExtra(READER_KEY_READ_TYPE, mReaderParams.readType);
-        mActivity.startActivity4Result(intent, null);
-    }
-
-    private void initThis() {
-        setBackground(DrawableUtils.createBackgroundStroked(
-            ContextCompat.getColor(getContext(), R.color.colorBGReaderHeader),
-            ContextCompat.getColor(getContext(), R.color.colorDivider),
-            Dimen.createBorderWidthsForBG(0, 0, 0, Dimen.dp2px(getContext(), 1)),
+    init {
+        background = DrawableUtils.createBackgroundStroked(
+            ContextCompat.getColor(context, R.color.colorBGReaderHeader),
+            ContextCompat.getColor(context, R.color.colorDivider),
+            Dimen.createBorderWidthsForBG(0, 0, 0, Dimen.dp2px(context, 1f)),
             null
-        ));
+        )
 
-        ViewGroup.LayoutParams params = mBinding.getRoot().getLayoutParams();
-        if (params instanceof AppBarLayout.LayoutParams) {
-            ((LayoutParams) params).setScrollFlags(SCROLL_FLAG_SCROLL | SCROLL_FLAG_ENTER_ALWAYS | SCROLL_FLAG_SNAP);
-            mBinding.getRoot().setLayoutParams(params);
-        }
-    }
-
-
-    public void initJuzSelector() {
-        if (mActivity == null) {
-            return;
-        }
-        if (mReaderParams != null && mReaderParams.readType == READER_READ_TYPE_JUZ
-            && mJCVSelectorView.getJuzOrChapterAdapter() instanceof JuzSelectorAdapter2) {
-            return;
+        (binding.root.layoutParams as? LayoutParams)?.let {
+            it.scrollFlags = LayoutParams.SCROLL_FLAG_SCROLL or LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or LayoutParams.SCROLL_FLAG_SNAP
+            binding.root.layoutParams = it
         }
 
-        mJuzAdapter = mJCVSelectorView.prepareAndSetJuzAdapter(mActivity, false);
-    }
 
-    public void initChapterSelector() {
-        if (mActivity == null) {
-            return;
-        }
+        binding.back.setOnClickListener {
+            activity?.let {
+                it.finish()
 
-        if (mReaderParams != null && mReaderParams.readType != READER_READ_TYPE_JUZ
-            && mJCVSelectorView.getJuzOrChapterAdapter() instanceof ChapterSelectorAdapter2) {
-            return;
-        }
-
-        mChapterAdapter = mJCVSelectorView.prepareAndSetChapterAdapter(mActivity, false);
-    }
-
-    public void initVerseSelector(VerseSelectorAdapter2 adapter, int chapterNo) {
-        if (mActivity == null) {
-            return;
-        }
-
-        if (adapter == null) {
-            String verseNoText = getContext().getString(R.string.strLabelVerseNo);
-            ArrayList<VerseSpinnerItem> items = new ArrayList<>();
-            for (int verseNo = 1, l = mActivity.mQuranMetaRef.get().getChapterVerseCount(
-                chapterNo); verseNo <= l; verseNo++) {
-                VerseSpinnerItem item = new VerseSpinnerItem(chapterNo, verseNo);
-                item.setLabel(String.format(verseNoText, verseNo));
-                items.add(item);
+                if (it.isTaskRoot) {
+                    it.launchMainActivity()
+                }
             }
-            adapter = new VerseSelectorAdapter2(items);
         }
 
-        mVerseAdapter = adapter;
-        mJCVSelectorView.setVerseAdapter(adapter, item -> {
-            VerseSpinnerItem verseSpinnerItem = (VerseSpinnerItem) item;
-            mActivity.handleVerseSpinnerSelectedVerseNo(verseSpinnerItem.getChapterNo(), verseSpinnerItem.getVerseNo());
-        });
-    }
-
-    public void setupHeaderForReadType() {
-        if (mReaderParams.readType == READER_READ_TYPE_JUZ) {
-            mBinding.readerTitle.chapterIcon.setVisibility(GONE);
-            mBinding.readerTitle.juzIcon.setVisibility(VISIBLE);
-
-            // mBinding.readerTitle.chapterSpinner.setVisibility(GONE);
-            // mBinding.readerTitle.juzSpinner.setVisibility(VISIBLE);
-        } else {
-            mBinding.readerTitle.chapterIcon.setVisibility(VISIBLE);
-            mBinding.readerTitle.juzIcon.setVisibility(GONE);
-
-            // mBinding.readerTitle.chapterSpinner.setVisibility(VISIBLE);
-            // mBinding.readerTitle.juzSpinner.setVisibility(GONE);
+        binding.readerSetting.let {
+            it.setOnClickListener { openReaderSetting(-1) }
+            ViewCompat.setTooltipText(it, context.getString(R.string.strTitleReaderSettings))
         }
 
-        // mBinding.readerTitle.verseSpinner.setVisibility(VISIBLE);
-        mBinding.readerTitle.juzChapterVerseSpinner.setVisibility(VISIBLE);
+        binding.btnTranslLauncher.let {
+            it.setOnClickListener { openReaderSetting(ActivitySettings.SETTINGS_TRANSLATION) }
+            ViewCompat.setTooltipText(it, context.getString(R.string.strLabelSelectTranslations))
+        }
+
+        binding.readerTitle.let {
+            it.root.setOnClickListener { jcvSelectorView.showPopup() }
+            jcvSelectorView.juzIconView = it.juzIcon
+            jcvSelectorView.chapterIconView = it.chapterIcon
+        }
     }
 
-    public void setActivity(ActivityReader activity) {
-        mActivity = activity;
-        mReaderParams = activity.mReaderParams;
-        Navigator mNavigator = activity.mNavigator;
+    fun openReaderSetting(destination: Int) {
+        if (readerParams == null) return
 
-        mJCVSelectorView.setActivity(mActivity);
+        activity?.startActivity4Result(
+            Intent(activity, ActivitySettings::class.java).apply {
+                putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, destination)
+                putExtra(READER_KEY_SETTING_IS_FROM_READER, true)
+                putExtra(READER_KEY_SAVE_TRANSL_CHANGES, readerParams!!.saveTranslChanges)
+                if (readerParams!!.visibleTranslSlugs != null) {
+                    putExtra(READER_KEY_TRANSL_SLUGS, readerParams!!.visibleTranslSlugs!!.toTypedArray())
+                }
+                putExtra(READER_KEY_READ_TYPE, readerParams!!.readType)
+            },
+            null
+        )
     }
 
-    public void selectJuzIntoSpinner(int juzNo) {
-        mReaderParams.currJuzNo = juzNo;
+    fun initJuzSelector() {
+        if (activity == null || readerParams == null) return
 
-        if (mJuzAdapter != null) {
-            final JuzSpinnerItem selectedItem = mJuzAdapter.getSelectedItem();
-            if (selectedItem != null && selectedItem.getJuzNumber() == juzNo) {
-                return;
+        if (readerParams!!.readType != ReaderParams.READER_READ_TYPE_JUZ || jcvSelectorView.juzOrChapterAdapter !is JuzSelectorAdapter2) {
+            juzAdapter = jcvSelectorView.prepareAndSetJuzAdapter(activity!!, false)
+        }
+    }
+
+    fun initChapterSelector() {
+        if (activity == null || readerParams == null) {
+            return
+        }
+
+        if (readerParams!!.readType == ReaderParams.READER_READ_TYPE_JUZ || jcvSelectorView.juzOrChapterAdapter !is ChapterSelectorAdapter2) {
+            chapterAdapter = jcvSelectorView.prepareAndSetChapterAdapter(activity!!, false)
+        }
+    }
+
+    fun initVerseSelector(adapter: VerseSelectorAdapter2?, chapterNo: Int) {
+        if (activity == null) return
+
+        var adp = adapter
+
+        if (adp == null) {
+            val verseNoText = context.getString(R.string.strLabelVerseNo)
+            val items = ArrayList<VerseSpinnerItem>()
+            var verseNo = 1
+            val count = activity!!.mQuranMetaRef.get().getChapterVerseCount(chapterNo)
+
+            while (verseNo <= count) {
+                items.add(VerseSpinnerItem(chapterNo, verseNo).apply {
+                    label = String.format(verseNoText, verseNo)
+                })
+                verseNo++
             }
 
-            for (int i = 0, l = mJuzAdapter.getItemCount(); i < l; i++) {
-                final JuzSpinnerItem item = mJuzAdapter.getItem(i);
-                if (item.getJuzNumber() == juzNo) {
-                    mJuzAdapter.selectSansInvocation(i);
-                    break;
+            adp = VerseSelectorAdapter2(items)
+        }
+
+        verseAdapter = adp
+
+        jcvSelectorView.setVerseAdapter(adp) { item: ReaderSpinnerItem ->
+            val verseSpinnerItem = item as VerseSpinnerItem
+            activity?.handleVerseSpinnerSelectedVerseNo(verseSpinnerItem.chapterNo, verseSpinnerItem.verseNo)
+        }
+    }
+
+    fun setupHeaderForReadType() {
+        if (readerParams == null) return
+
+        binding.readerTitle.let {
+            val isJuz = readerParams!!.readType == ReaderParams.READER_READ_TYPE_JUZ
+            it.chapterIcon.visibility = if (isJuz) GONE else VISIBLE
+            it.juzIcon.visibility = if (isJuz) VISIBLE else GONE
+            it.juzChapterVerseSpinner.visibility = VISIBLE
+        }
+    }
+
+    fun setActivity(activity: ActivityReader) {
+        this.activity = activity
+        readerParams = activity.mReaderParams
+        jcvSelectorView.activity = activity
+    }
+
+    fun selectJuzIntoSpinner(juzNo: Int) {
+        if (readerParams == null) return
+
+        readerParams!!.currJuzNo = juzNo
+
+        juzAdapter?.let {
+            val selectedItem = it.selectedItem
+            if (it.selectedItem != null && selectedItem!!.juzNumber == juzNo) return
+
+            for (i in 0 until it.itemCount) {
+                if (it.getItem(i).juzNumber == juzNo) {
+                    it.selectSansInvocation(i)
+                    break
                 }
             }
         }
     }
 
-    public void selectChapterIntoSpinner(int chapterNo) {
-        if (mChapterAdapter != null) {
-            final ChapterSpinnerItem selectedItem = mChapterAdapter.getSelectedItem();
-            if (selectedItem != null && selectedItem.getChapter().getChapterNumber() == chapterNo) {
-                return;
-            }
+    fun selectChapterIntoSpinner(chapterNo: Int) {
+        chapterAdapter?.let {
+            val selectedItem = it.selectedItem
+            if (selectedItem != null && selectedItem.chapter.chapterNumber == chapterNo) return
 
-            for (int i = 0, l = mChapterAdapter.getItemCount(); i < l; i++) {
-                final ChapterSpinnerItem item = mChapterAdapter.getItem(i);
-                if (item.getChapter().getChapterNumber() == chapterNo) {
-                    mChapterAdapter.selectSansInvocation(i);
-                    break;
+            for (i in 0 until it.itemCount) {
+                if (it.getItem(i).chapter.chapterNumber == chapterNo) {
+                    it.selectSansInvocation(i)
+                    break
                 }
             }
         }
     }
 
-    public void selectVerseIntoSpinner(int chapterNo, int verseNo) {
-        if (mReaderParams.currChapter != null) {
-            mReaderParams.currChapter.setCurrentVerseNo(verseNo);
+    fun selectVerseIntoSpinner(chapterNo: Int, verseNo: Int) {
+        readerParams?.currChapter?.let {
+            it.currentVerseNo = verseNo
         }
 
-        if (mVerseAdapter != null) {
-            final VerseSpinnerItem selectedItem = mVerseAdapter.getSelectedItem();
-            if (selectedItem != null && selectedItem.getChapterNo() == chapterNo && selectedItem.getVerseNo() == verseNo) {
-                return;
-            }
+        verseAdapter?.let {
+            val selectedItem = it.selectedItem
+            if (selectedItem != null && selectedItem.chapterNo == chapterNo && selectedItem.verseNo == verseNo) return
 
-            for (int i = 0, l = mVerseAdapter.getItemCount(); i < l; i++) {
-                final VerseSpinnerItem item = mVerseAdapter.getItem(i);
-                if (item.getChapterNo() == chapterNo && item.getVerseNo() == verseNo) {
-                    mVerseAdapter.selectSansInvocation(i);
-                    break;
+            for (i in 0 until it.itemCount) {
+                val item = it.getItem(i)
+                if (item.chapterNo == chapterNo && item.verseNo == verseNo) {
+                    it.selectSansInvocation(i)
+                    break
                 }
             }
         }
     }
 
-    @Override
-    public void destroy() {
-        // mJuzSpinner.closePopup();
-        // mChapterSpinner.closePopup();
-        // mVerseSpinner.closePopup();
-        mJCVSelectorView.closePopup();
+    override fun destroy() {
+        jcvSelectorView.closePopup()
     }
 }

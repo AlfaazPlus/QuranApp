@@ -2,31 +2,35 @@ package com.quranapp.android.utils.services
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
+import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.zip.ZipFile
 
-class KFQPCScriptFontsDownloadService : Service() {
+class KFQPCScriptFontsDownloadService : LifecycleService() {
     companion object {
         private const val DOWNLOAD_NOTIF_GROUP = "download_script_group"
         private const val DOWNLOAD_SCRIPT_NOTIFICATION_ID = 417
@@ -36,12 +40,9 @@ class KFQPCScriptFontsDownloadService : Service() {
         var STARTED_BY_USER = false
     }
 
-    private val job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private var job: Job? = null
     private val binder = LocalBinder()
-    private val notifManager by lazy {
-        getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-    }
+    private val notifManager by lazy { getSystemService(NOTIFICATION_SERVICE) as NotificationManager }
     var isDownloadRunning = false
     var currentScriptKey: String? = null
 
@@ -52,6 +53,8 @@ class KFQPCScriptFontsDownloadService : Service() {
         }
         flag
     }
+
+    private val tmpFiles = ArrayList<File>()
 
     private val notifActivityIntent by lazy {
         PendingIntent.getActivity(
@@ -74,13 +77,17 @@ class KFQPCScriptFontsDownloadService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel(CancellationException("Cancelled on destroy"))
+        job?.cancel(CancellationException("Cancelled on destroy"))
+        tmpFiles.forEach { it.delete() }
+        tmpFiles.clear()
         isDownloadRunning = false
         STARTED_BY_USER = false
         currentScriptKey = null
     }
 
     override fun onBind(intent: Intent): IBinder {
+        super.onBind(intent)
+
         return binder
     }
 
@@ -103,102 +110,126 @@ class KFQPCScriptFontsDownloadService : Service() {
         val ctx = this
         isDownloadRunning = true
 
-        coroutineScope.launch {
+        job = lifecycleScope.launch(Dispatchers.IO) {
             flow {
                 val fileUtils = FileUtils.newInstance(ctx)
 
                 try {
-                    val scriptFile = fileUtils.getScriptFile(scriptKey)
-
-                    if (scriptFile.length() == 0L) {
-                        if (!fileUtils.createFile(scriptFile)) {
-                            emit(DownloadFlow.Failed(null))
-                            return@flow
-                        }
-
-                        emit(DownloadFlow.Start(null))
-                        emit(DownloadFlow.Progress(null, 0))
-
-                        val scriptResBody = RetrofitInstance.github.getQuranScript(
-                            "script_$scriptKey.json"
-                        )
-                        val byteStream = scriptResBody.byteStream()
-
-                        val totalBytes = byteStream.available()
-                        readStreams(
-                            this@flow,
-                            null,
-                            byteStream,
-                            scriptFile.outputStream(),
-                            totalBytes
-                        )
-
-                        emit(DownloadFlow.Complete(null))
-                    }
+                    downloadScript(this@flow, fileUtils, scriptKey)
                 } catch (e: Exception) {
                     emit(DownloadFlow.Failed(null))
                     e.printStackTrace()
-                    return@flow
                 }
 
                 val fontsDir = fileUtils.getKFQPCScriptFontDir(scriptKey)
+                val skipToPart = getSkipPartNumber(fontsDir)
 
-                for (partNo in  arrayOf(1, 2, 3)) {
-                    try {
-                        val partFilename = "$scriptKey-$partNo.zip"
-                        val partFile = File.createTempFile("tmp", partFilename, filesDir)
-
-                        emit(DownloadFlow.Start(partNo))
-                        emit(DownloadFlow.Progress(partNo, 0))
-
-                        val fontResBody = RetrofitInstance.github.getKFQPCFont(scriptKey, partFilename)
-                        val byteStream = fontResBody.byteStream()
-
-                        val totalBytes = byteStream.available()
-
-                        readStreams(
-                            this,
-                            partNo,
-                            byteStream,
-                            partFile.outputStream(),
-                            totalBytes
-                        )
-
-                        extractFonts(partFile, fontsDir)
-
-                        emit(DownloadFlow.Complete(partNo))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        emit(DownloadFlow.Failed(partNo))
-                    }
+                for (partNo in 1..QuranScriptUtils.TOTAL_DOWNLOAD_PARTS) {
+                    // if (partNo < skipToPart) continue
+                    downloadFontsPart(this, scriptKey, partNo, fontsDir)
                 }
 
                 emit(DownloadFlow.Complete(ALL_PART_DOWNLOADS_FINISHED))
-            }.flowOn(Dispatchers.IO).catch {
-                it.printStackTrace()
-                sendBroadcast(
-                    Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
-                        putExtra(
-                            KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW,
-                            DownloadFlow.Failed(null)
-                        )
-                    }
-                )
-                finish()
-            }.collect {
-                sendBroadcast(
-                    Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
-                        putExtra(KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW, it)
-                    }
-                )
-
-                if (it is DownloadFlow.Complete && it.partNo == ALL_PART_DOWNLOADS_FINISHED || it is DownloadFlow.Failed && it.partNo == null) {
-                    finish()
-                } else if (it is DownloadFlow.Progress) {
-                    showProgressNotification(it.partNo, it.progress, scriptKey)
-                }
             }
+                .flowWithLifecycle(lifecycle)
+                .catch {
+                    it.printStackTrace()
+                    sendBroadcast(
+                        Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
+                            putExtra(
+                                KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW,
+                                DownloadFlow.Failed(null)
+                            )
+                        }
+                    )
+                    finish()
+                }.collect {
+                    sendBroadcast(
+                        Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
+                            putExtra(KFQPCScriptFontsDownloadReceiver.KEY_DOWNLOAD_FLOW, it)
+                        }
+                    )
+
+                    if (it is DownloadFlow.Complete && it.partNo == ALL_PART_DOWNLOADS_FINISHED || it is DownloadFlow.Failed && it.partNo == null) {
+                        finish()
+                    } else if (it is DownloadFlow.Progress) {
+                        showProgressNotification(it.partNo, it.progress, scriptKey)
+                    }
+                }
         }
+    }
+
+    private suspend fun downloadScript(flow: FlowCollector<DownloadFlow>, fileUtils: FileUtils, scriptKey: String) {
+        val scriptFile = fileUtils.getScriptFile(scriptKey)
+
+        if (scriptFile.length() == 0L) {
+            if (!fileUtils.createFile(scriptFile)) {
+                flow.emit(DownloadFlow.Failed(null))
+                return
+            }
+
+            flow.emit(DownloadFlow.Start(null))
+            flow.emit(DownloadFlow.Progress(null, 0))
+
+            val scriptResBody = RetrofitInstance.github.getQuranScript(
+                "script_$scriptKey.json"
+            )
+            val byteStream = scriptResBody.byteStream()
+
+            val totalBytes = withContext(Dispatchers.IO) { byteStream.available() }
+
+            readStreams(
+                flow,
+                null,
+                byteStream,
+                scriptFile.outputStream(),
+                totalBytes
+            )
+
+            flow.emit(DownloadFlow.Complete(null))
+        }
+    }
+
+    private fun getSkipPartNumber(fontsDir: File): Int {
+        var totalDownloaded = 0
+        for (pageNo in 1..QuranMeta.totalPages()) {
+            if (File(fontsDir, pageNo.toKFQPCFontFilename()).length() == 0L) {
+                break
+            }
+
+            totalDownloaded++
+        }
+
+        val fontsInSingleZip = 200
+
+        return (totalDownloaded / fontsInSingleZip) + 1
+    }
+
+    private suspend fun downloadFontsPart(flow: FlowCollector<DownloadFlow>, scriptKey: String, partNo: Int, fontsDir: File) {
+        val partFilename = "$scriptKey-$partNo.zip"
+        val partFile = File.createTempFile("tmp", partFilename, filesDir)
+        tmpFiles.add(partFile)
+
+        flow.emit(DownloadFlow.Start(partNo))
+        flow.emit(DownloadFlow.Progress(partNo, 0))
+
+        val byteStream = RetrofitInstance.github.getKFQPCFont(scriptKey, partFilename).byteStream()
+
+        val totalBytes = withContext(Dispatchers.IO) {
+            byteStream.available()
+        }
+
+        readStreams(
+            flow,
+            partNo,
+            byteStream,
+            partFile.outputStream(),
+            totalBytes
+        )
+
+        extractFonts(partFile, fontsDir)
+
+        flow.emit(DownloadFlow.Complete(partNo))
     }
 
     private fun extractFonts(partFile: File, fontsDir: File) {
@@ -217,6 +248,9 @@ class KFQPCScriptFontsDownloadService : Service() {
                         input.copyTo(output)
 
                         output.flush()
+                        partFile.delete()
+
+                        tmpFiles.remove(partFile)
                     }
                 }
             }
@@ -243,8 +277,12 @@ class KFQPCScriptFontsDownloadService : Service() {
                     outS.write(buffer, 0, bytes)
                     progressBytes += bytes
 
+                    val progress = ((progressBytes * 100) / totalBytes).toInt()
+
+                    Logger.print("Part $partNo: Progress $progress%")
+
                     flowCollector.emit(
-                        DownloadFlow.Progress(partNo, ((progressBytes * 100) / totalBytes).toInt())
+                        DownloadFlow.Progress(partNo, progress)
                     )
                 }
             }
@@ -284,7 +322,7 @@ class KFQPCScriptFontsDownloadService : Service() {
                 if (partNo == null) {
                     null
                 } else {
-                    getString(R.string.msgFontsDonwloadProgressShort, partNo, 3)
+                    getString(R.string.msgFontsDonwloadProgressShort, partNo, QuranScriptUtils.TOTAL_DOWNLOAD_PARTS)
                 }
             )
             .setProgress(100, progress, false)
@@ -305,7 +343,7 @@ class KFQPCScriptFontsDownloadService : Service() {
     }
 
     fun cancel() {
-        job.cancel(CancellationException("Cancelled by user"))
+        job?.cancel(CancellationException("Cancelled by user"))
         finish()
     }
 
