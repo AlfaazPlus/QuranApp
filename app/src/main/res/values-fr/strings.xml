@@ -72,7 +72,8 @@
     <string name="strTitleMadani">Madani</string>
     <string name="strTitleFootnote">Note de bas de page</string>
     <string name="strTitleFootnotes">Notes de bas de page</string>
-    <string name="strTitleReaderChapters">Sourates (Chapitres)</string>
+    <string name="strTitleReaderChapters">Sourates
+\n(Chapitres)</string>
     <string name="strTitleReaderJuz">Juz</string>
     <string name="strTitleReaderChapters2">Sourates</string>
     <string name="strTitleReaderJuz2">Juz</string>
