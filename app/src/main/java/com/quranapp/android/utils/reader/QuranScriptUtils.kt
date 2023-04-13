@@ -26,6 +26,7 @@ object QuranScriptUtils {
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
 
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
+    const val TOTAL_DOWNLOAD_PARTS = 3
 
     val INDO_PAK_SCRIPT_NAMES = mapOf(
         "en" to "IndoPak",

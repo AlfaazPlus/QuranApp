@@ -156,7 +156,8 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
         }
 
         val averageFontKB = 161.23
-        val remainingMB = ceil(((kfqpcFontDownloadedCount.third * averageFontKB) / 1024).toFloat()).toInt()
+        val compressionFactor = 0.54
+        val remainingMB = ceil(((kfqpcFontDownloadedCount.third * averageFontKB) / 1024 * compressionFactor).toFloat()).toInt()
 
         if (kfqpcFontDownloadedCount.third > 0) {
             msg.append("\n").append(
@@ -242,9 +243,9 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
                     if (partNo != null) {
                         binding.countText.text = ctx.getString(
-                            R.string.msgFontsDonwloadProgress,
+                            R.string.msgFontsDonwloadProgressShort,
                             partNo,
-                            3
+                            QuranScriptUtils.TOTAL_DOWNLOAD_PARTS
                         )
                         binding.countText.visible()
                     }

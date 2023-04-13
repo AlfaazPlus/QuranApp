@@ -20,6 +20,7 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.sharedPrefs.SPVerses
 import com.quranapp.android.utils.univ.Codes
 import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
 
 class VotdReceiver : BroadcastReceiver() {
@@ -79,7 +80,7 @@ class VotdReceiver : BroadcastReceiver() {
 
                         builder.setContentTitle(TextUtils.concat(context.getString(R.string.strTitleVOTD), " - ", msg))
 
-                        val translationText = verseTranslation[0].text
+                        val translationText = StringUtils.removeHTML(verseTranslation[0].text, false)
 
                         builder.setContentText(translationText)
                         builder.setStyle(NotificationCompat.BigTextStyle().bigText(translationText))
