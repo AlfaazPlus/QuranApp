@@ -1,15 +1,19 @@
 package com.quranapp.android.utils.services
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Binder
+import android.os.Build
 import android.os.Handler
 import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
+import androidx.core.app.ServiceCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
@@ -44,12 +48,13 @@ import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerVerse
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.views.recitation.RecitationPlayer
 import java.io.File
 
 
-class RecitationService : Service() {
+class RecitationService : Service(), MediaDescriptionAdapter {
     companion object {
         const val NOTIF_ID = 55
         const val MILLIS_MULTIPLIER = 100L
@@ -92,22 +97,17 @@ class RecitationService : Service() {
 
         player = ExoPlayer.Builder(this).build().apply {
             addListener(object : Listener {
+                override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                    onMediaItemTransition(mediaItem)
+                }
+
                 override fun onPositionDiscontinuity(
                     oldPosition: PositionInfo,
                     newPosition: PositionInfo,
                     reason: Int
                 ) {
-                    if (reason != DISCONTINUITY_REASON_AUTO_TRANSITION) return
-
-                    runAudioProgress()
-
-                    val item = newPosition.mediaItem!!.localConfiguration?.tag as? RecitationMediaItem ?: return
-
-                    recParams.currentVerse = ChapterVersePair(item.chapterNo, item.verseNo)
-                    recParams.currentReciter = item.reciter
-                    recParams.currentTranslationReciter = item.translReciter
-
-                    recPlayer?.onPlayMedia(recParams)
+                    if (reason != DISCONTINUITY_REASON_AUTO_TRANSITION && reason != DISCONTINUITY_REASON_SEEK) return
+                    onMediaItemTransition(newPosition.mediaItem)
                 }
 
                 override fun onPlaybackStateChanged(playbackState: Int) {
@@ -160,34 +160,10 @@ class RecitationService : Service() {
             this,
             NOTIF_ID,
             getString(R.string.strNotifChannelIdRecitation)
-        ).setMediaDescriptionAdapter(object : MediaDescriptionAdapter {
-            override fun getCurrentContentTitle(player: Player): String {
-                val chapterName = quranMeta?.getChapterName(this@RecitationService, recParams.currentChapterNo) ?: ""
-
-                return getString(
-                    R.string.strLabelVerseWithChapNameAndNo,
-                    chapterName,
-                    recParams.currentChapterNo,
-                    recParams.currentVerseNo
-                )
-            }
-
-            override fun createCurrentContentIntent(player: Player): PendingIntent? {
-                return null
-            }
-
-            override fun getCurrentContentText(player: Player): String? {
-                return RecitationUtils.getReciterName(recParams.currentReciter)
-            }
-
-            override fun getCurrentLargeIcon(player: Player, callback: BitmapCallback): Bitmap {
-                return drawable(R.drawable.dr_quran_wallpaper).toBitmap()
-            }
-        })
+        ).setMediaDescriptionAdapter(this)
             .setNotificationListener(object : PlayerNotificationManager.NotificationListener {
                 override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
                     stopMedia()
-                    stopSelf()
                 }
 
                 override fun onNotificationPosted(notificationId: Int, notification: Notification, ongoing: Boolean) {
@@ -202,11 +178,11 @@ class RecitationService : Service() {
             .setNextActionIconResourceId(R.drawable.dr_icon_player_seek_right)
             .build()
 
-
         playerNotificationManager!!.let {
             it.setColor(color(R.color.colorPrimaryDark))
             it.setColorized(true)
 
+            it.setUsePlayPauseActions(true)
             it.setUseRewindAction(false)
             it.setUseFastForwardAction(false)
             it.setUseChronometer(true)
@@ -286,6 +262,18 @@ class RecitationService : Service() {
         isLoadingInProgress = inProgress
 
         recPlayer?.setupOnLoadingInProgress(inProgress)
+    }
+
+    private fun onMediaItemTransition(mediaItem: MediaItem?) {
+        runAudioProgress()
+
+        val item = mediaItem?.localConfiguration?.tag as? RecitationMediaItem ?: return
+
+        recParams.currentVerse = ChapterVersePair(item.chapterNo, item.verseNo)
+        recParams.currentReciter = item.reciter
+        recParams.currentTranslationReciter = item.translReciter
+
+        recPlayer?.onPlayMedia(recParams)
     }
 
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
@@ -491,7 +479,6 @@ class RecitationService : Service() {
     fun playControl() {
         if (quranMeta == null) return
 
-        Log.d(player.duration > 0, player.currentPosition < player.duration, recParams.hasNextVerse(quranMeta!!))
         if (player.duration > 0 && player.currentPosition < player.duration) {
             if (isPlaying) pauseMedia()
             else playMedia()
@@ -503,6 +490,9 @@ class RecitationService : Service() {
     }
 
     fun stopMedia() {
+        ContextCompat.getSystemService(this, NotificationManager::class.java)?.cancel(NOTIF_ID)
+
+        player.pause()
         player.stop()
         player.clearMediaItems()
         playlist.clear()
@@ -820,6 +810,38 @@ class RecitationService : Service() {
             })
         }
     }
+
+    override fun getCurrentContentTitle(player: Player): String {
+        val chapterName = quranMeta?.getChapterName(this, recParams.currentChapterNo) ?: ""
+
+        return getString(
+            R.string.strLabelVerseSerialWithChapter,
+            chapterName,
+            recParams.currentChapterNo,
+            recParams.currentVerseNo
+        )
+    }
+
+    override fun createCurrentContentIntent(player: Player): PendingIntent? {
+        var flag = PendingIntent.FLAG_UPDATE_CURRENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flag = flag or PendingIntent.FLAG_IMMUTABLE
+        }
+
+        Intent(this, ActivityReader::class.java).apply {
+            putExtra(Keys.KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION, true)
+            return PendingIntent.getActivity(this@RecitationService, 0, this, flag)
+        }
+    }
+
+    override fun getCurrentContentText(player: Player): String? {
+        return RecitationUtils.getReciterName(recParams.currentReciter)
+    }
+
+    override fun getCurrentLargeIcon(player: Player, callback: BitmapCallback): Bitmap {
+        return drawable(R.drawable.dr_quran_wallpaper).toBitmap()
+    }
+
 
     fun cancelLoading() {
         verseLoader.cancelAll()

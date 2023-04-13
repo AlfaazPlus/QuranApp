@@ -112,7 +112,6 @@ class RecitationPlayer(
             })
 
             playControl.setOnClickListener {
-                Log.d(service)
                 if (service == null) {
                     startRecitationService()
                 } else if (!service!!.isLoadingInProgress) {
