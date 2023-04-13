@@ -72,6 +72,15 @@
         "langName": "English",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/en/en_maududi.json"
+      },
+      "en_abdul-haleem": {
+        "book": "Abdul Haleem",
+        "author": "Abdul Haleem",
+        "displayName": "Abdul Haleem",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1681409892464,
+        "downloadPath": "inventory/translations/en/en_abdul-haleem.json"
       }
     },
     "bn": {
@@ -147,6 +156,15 @@
         "langName": "Bahasa Indonesia",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/in/in_quran-complex.json"
+      },
+      "in_ministry": {
+        "book": "Indonesian Islamic affairs ministry",
+        "author": "Indonesian Islamic affairs ministry",
+        "displayName": "Islamic affairs ministry",
+        "langCode": "in",
+        "langName": "Bahasa Indonesia",
+        "lastUpdated": 1681409892464,
+        "downloadPath": "inventory/translations/in/in_ministry.json"
       }
     },
     "ku": {
