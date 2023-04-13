@@ -356,4 +356,15 @@
     <string name="nFiles" formatted="false">%d file</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d font</string>
     <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
+    <string name="inPlaces">dalam %s</string>
+    <string name="inPlacesMore">di %1$s dan %2$d lainnya</string>
+    <string name="onboardDescTheme">Anda selalu dapat mengubahnya nanti.</string>
+    <string name="msgTafsirCleanup" formatted="false">Semua tafsir yang tersimpan dari %s akan dihapus.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Baca tafsir ayat ke%d</string>
+    <string name="strMsgTafsirsNoAvailable">Tafsiran tidak tersedia</string>
+    <string name="titleTafsirCleanup">Hapus tafsiran\?</string>
+    <string name="strTitleSelectTafsir">Pilih tafsir</string>
+    <string name="onboardDescTranslations">Anda selalu dapat mengubahnya nanti. Anda dapat mengunduh banyak terjemahan lainnya dari pengaturan.</string>
+    <string name="noFootnotesForThisVerse">Tidak ada catatan kaki untuk ayat ini.</string>
+    <string name="onboardDescReciter">Anda selalu dapat mengubahnya nanti. Anda dapat menemukan banyak qari lainnya di pengaturan.</string>
 </resources>

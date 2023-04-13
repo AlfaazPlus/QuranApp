@@ -250,7 +250,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     @Override
     protected void onReaderReady(@NonNull Intent intent, @Nullable Bundle savedInstanceState) {
         // TEST
-        //                intent.putExtras(ReaderFactory.prepareChapterIntent(105));
+        //        intent.putExtras(ReaderFactory.prepareChapterIntent(105));
         //        intent.putExtras(ReaderFactory.prepareSingleVerseIntent(105, 2));
         //        intent.putExtras(ReaderFactory.prepareVerseRangeIntent(2, 3, 21));
         //        intent.putExtras(ReaderFactory.prepareJuzIntent(30));
@@ -260,9 +260,9 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void init() {
+        mBinding.readerHeader.setActivity(this);
         initReadHistory();
         initFloatingFooter();
-        initReaderHeader(mBinding);
 
         final Intent intent = getIntent();
         final String[] requestedTranslSlugs = intent.getStringArrayExtra(READER_KEY_TRANSL_SLUGS);
@@ -350,15 +350,11 @@ public class ActivityReader extends ReaderPossessingActivity {
         saveToIntent();
     }
 
-    private void initReaderHeader(ActivityReaderBinding binding) {
-        binding.readerHeader.setActivity(this);
-    }
-
     private void initDummyBars() {
         adjustStatusAndNavigationBar();
 
         final View navDummy = mBinding.navigationBarDummy;
-        final View statusBarDummy = mBinding.readerHeader.mBinding.statusBarDummy;
+        final View statusBarDummy = mBinding.readerHeader.getBinding().statusBarDummy;
 
         ViewCompat.setOnApplyWindowInsetsListener(mBinding.getRoot(), (v, insets) -> {
             final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;

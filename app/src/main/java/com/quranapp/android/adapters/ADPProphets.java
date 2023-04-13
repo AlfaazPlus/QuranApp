@@ -1,5 +1,8 @@
 package com.quranapp.android.adapters;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -10,11 +13,10 @@ import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -111,32 +113,32 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
         public void bind(QuranProphet.Prophet prophet) {
             setupActions(prophet);
 
-           /* mBinding.name.setText(MessageFormat.format("{0} ({1})", prophet.nameTrans, prophet.honorific));
+           /* mBinding.name.setText(MessageFormat.format("{0} ({1})", prophet.getNameTrans(), prophet.getHonorific()));
             mBinding.nameEng.setText(nameEng);
             mBinding.chapters.setText(prophet.inChapters);*/
 
-            mBinding.icon.setImageDrawable(ContextKt.drawable(mBinding.getRoot().getContext(), prophet.iconRes));
+            mBinding.icon.setImageDrawable(ContextKt.drawable(mBinding.getRoot().getContext(), prophet.getIconRes()));
 
-            String name = MessageFormat.format("{0} ({1})", prophet.nameTrans, prophet.honorific);
-            String nameEng = "English : " + (prophet.nameEn == null ? prophet.nameTrans : prophet.nameEn);
-            mBinding.text.setText(prepareTexts(name, nameEng, prophet.inChapters));
+            String name = MessageFormat.format("{0} ({1})", prophet.getName(), prophet.getHonorific());
+            String nameEng = "English : " + prophet.getNameEn();
+            mBinding.text.setText(prepareTexts(name, nameEng, prophet.getInChapters()));
         }
 
         private void setupActions(QuranProphet.Prophet prophet) {
-            String title = prophet.nameTrans;
-            if (prophet.order == 25) {
+            String title = prophet.getName();
+            if (prophet.getOrder() == 25) {
                 title += " ﷺ";
             } else {
                 title += " ؑ ";
             }
 
             Context ctx = mBinding.getRoot().getContext();
-            String desc = ctx.getString(R.string.strMsgReferenceFoundPlaces, title, prophet.verses.size());
+            String desc = ctx.getString(R.string.strMsgReferenceFoundPlaces, title, prophet.getVerses().size());
 
             title = ctx.getString(R.string.strMsgReferenceInQuran, title);
 
             Intent intent = ReaderFactory.prepareReferenceVerseIntent(true, title, desc, new String[]{},
-                prophet.chapters, prophet.verses);
+                prophet.getChapters(), prophet.getVerses());
             intent.setClass(ctx, ActivityReference.class);
             mBinding.getRoot().setOnClickListener(v -> ctx.startActivity(intent));
         }

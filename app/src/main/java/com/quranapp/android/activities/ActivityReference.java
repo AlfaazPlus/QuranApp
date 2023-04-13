@@ -307,7 +307,7 @@ public class ActivityReference extends ReaderPossessingActivity {
 
     private List<ReferenceVerseItemModel> prepareVerses(int requestChapterNo, ReferenceVerseModel verseModel) {
         List<ReferenceVerseItemModel> models = new ArrayList<>();
-        models.add(new ReferenceVerseItemModel(VIEWTYPE_DESCRIPTION, null, -1, -1, -1, null));
+        models.add(new ReferenceVerseItemModel(VIEWTYPE_DESCRIPTION, null, -1, -1, -1, null, false));
 
         Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(
             mSelectedTranslSlugs);
@@ -345,7 +345,15 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private ReferenceVerseItemModel prepareTitleModel(Integer chapterNo, int fromVerse, int toVerse, String titleText) {
-        return new ReferenceVerseItemModel(VIEWTYPE_TITLE, null, chapterNo, fromVerse, toVerse, titleText);
+        return new ReferenceVerseItemModel(
+            VIEWTYPE_TITLE,
+            null,
+            chapterNo,
+            fromVerse,
+            toVerse,
+            titleText,
+            isBookmarked(chapterNo, fromVerse, toVerse)
+        );
     }
 
     private ReferenceVerseItemModel prepareVerseModel(int chapterNo, int verseNo, Map<String, QuranTranslBookInfo> booksInfo) {
@@ -361,6 +369,6 @@ public class ActivityReference extends ReaderPossessingActivity {
         CharSequence spannable = prepareTranslSpannable(verse, translations, booksInfo);
         verse.setTranslTextSpannable(spannable);
 
-        return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null);
+        return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);
     }
 }

@@ -26,6 +26,7 @@ object QuranScriptUtils {
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
 
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
+    const val TOTAL_DOWNLOAD_PARTS = 3
 
     val INDO_PAK_SCRIPT_NAMES = mapOf(
         "en" to "IndoPak",
@@ -159,5 +160,5 @@ fun String.getQuranScriptResPath(): String = when (this) {
 }
 
 fun Int.toKFQPCFontFilename(): String {
-    return "qpc_page_$this.TTF"
+    return "qpc_page_%03d.TTF".format(Locale.ENGLISH, this)
 }

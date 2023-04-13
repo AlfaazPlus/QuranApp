@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
+import com.quranapp.android.utils.univ.FileUtils
 
 class QuranApp : Application() {
     override fun attachBaseContext(base: Context) {
@@ -16,6 +17,7 @@ class QuranApp : Application() {
     }
 
     private fun initBeforeBaseAttach(base: Context) {
+        FileUtils.appFilesDir = base.filesDir
         updateTheme(base)
     }
 

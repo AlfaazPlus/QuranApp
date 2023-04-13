@@ -69,7 +69,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
     private var tempJuzOrChapterItemSelectListener: OnItemSelectedListener? = null
 
     var verseAdapter: VerseSelectorAdapter2? = null
-    var verseItemSelectListener: OnItemSelectedListener? = null
+    var verseItemSelectListener: ((ReaderSpinnerItem) -> Unit)? = null
 
     var juzIconView: TextView? = null
     var chapterIconView: ChapterIcon? = null
@@ -138,7 +138,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
                 tempJuzOrChapterItemSelectListener = null
 
                 val isAlternateTab = (tab.position == 0 && juzOrChapterAdapter !is ChapterSelectorAdapter2) ||
-                    (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
+                        (tab.position == 1 && juzOrChapterAdapter !is JuzSelectorAdapter2)
 
                 activity?.let {
                     if (isAlternateTab) {
@@ -360,7 +360,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
                     juzOrChapterItemSelectListener!!.onItemSelect(item)
                 }
             } else if (item is VerseSpinnerItem && verseItemSelectListener != null) {
-                verseItemSelectListener!!.onItemSelect(item)
+                verseItemSelectListener!!(item)
             }
             closePopup()
         } else {
@@ -405,7 +405,7 @@ class JuzChapterVerseSelector @JvmOverloads constructor(
         scrollToCurrentJuzOrChapter()
     }
 
-    fun setVerseAdapter(adapter: VerseSelectorAdapter2, listener: OnItemSelectedListener) {
+    fun setVerseAdapter(adapter: VerseSelectorAdapter2, listener: (ReaderSpinnerItem) -> Unit) {
         adapter.setSpinner(this)
 
         verseAdapter = adapter

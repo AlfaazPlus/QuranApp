@@ -17,6 +17,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.quranapp.android.R;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
 import com.quranapp.android.widgets.compound.PeaceCompoundButton;
@@ -71,11 +72,11 @@ public class FragEditorOptions extends FragEditorBase {
         PeaceCheckBox checkBox = new PeaceCheckBox(context);
         checkBox.setTextAppearance(R.style.TextAppearanceCommonTitle);
         checkBox.setBackgroundResource(R.drawable.dr_bg_action);
-        ViewPaddingKt.updatePaddings(checkBox, dp2px(context, 15), dp2px(context, 10));
+        ViewPaddingKt.updatePaddings(checkBox, ContextKt.dp2px(context, 15), ContextKt.dp2px(context, 10));
         checkBox.setText(txtRes);
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        p.bottomMargin = dp2px(context, 5);
+        p.bottomMargin = ContextKt.dp2px(context, 5);
         container.addView(checkBox, p);
 
         checkBox.setChecked(false);

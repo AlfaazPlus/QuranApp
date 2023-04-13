@@ -21,14 +21,10 @@ class KFQPCScriptFontsDownloadReceiver : BroadcastReceiver() {
         val l = listener!!
 
         when (downloadFlow) {
-            is DownloadFlow.Start -> l.onStart(downloadFlow.pageNo)
-            is DownloadFlow.Progress -> {
-                l.onProgress(downloadFlow.pageNo, downloadFlow.progress)
-            }
-            is DownloadFlow.Complete -> l.onComplete(downloadFlow.pageNo)
-            is DownloadFlow.Failed -> {
-                l.onFailed(downloadFlow.pageNo)
-            }
+            is DownloadFlow.Start -> l.onStart(downloadFlow.partNo)
+            is DownloadFlow.Progress -> l.onProgress(downloadFlow.partNo, downloadFlow.progress)
+            is DownloadFlow.Complete -> l.onComplete(downloadFlow.partNo)
+            is DownloadFlow.Failed -> l.onFailed(downloadFlow.partNo)
             else -> {}
         }
     }
@@ -42,10 +38,10 @@ class KFQPCScriptFontsDownloadReceiver : BroadcastReceiver() {
     }
 
     interface KFQPCScriptFontsDownload {
-        fun onStart(pageNo: Int?)
-        fun onProgress(pageNo: Int?, progress: Int)
-        fun onComplete(pageNo: Int?)
-        fun onFailed(pageNo: Int?)
+        fun onStart(partNo: Int?)
+        fun onProgress(partNo: Int?, progress: Int)
+        fun onComplete(partNo: Int?)
+        fun onFailed(partNo: Int?)
     }
 
     companion object {

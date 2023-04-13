@@ -39,17 +39,17 @@
             android:padding="6dp"
             android:src="@drawable/dr_icon_play2" />
 
-        <!--<androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnQuickEdit"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnTafsir"
             android:layout_width="@dimen/dmnActionButtonSmall"
             android:layout_height="@dimen/dmnActionButtonSmall"
             android:layout_marginEnd="10dp"
             android:background="@drawable/dr_bg_hover_round"
             android:clickable="true"
-            android:contentDescription="@string/strTitleQuickEdit"
+            android:contentDescription="@string/strTitleTafsir"
             android:focusable="true"
             android:padding="6dp"
-            android:src="@drawable/dr_icon_quick_edit" />-->
+            android:src="@drawable/dr_icon_tafsir" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@id/btnBookmark"

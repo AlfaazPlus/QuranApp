@@ -8,5 +8,6 @@ class ReferenceVerseItemModel(
     val chapterNo: Int,
     val fromVerse: Int,
     val toVerse: Int,
-    val titleText: String?
+    val titleText: String?,
+    var bookmarked: Boolean,
 )

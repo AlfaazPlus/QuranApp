@@ -30,8 +30,10 @@ import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivityReference;
 import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
+import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.databinding.LytActivityReferenceDescriptionBinding;
 import com.quranapp.android.databinding.LytReferenceVerseTitleBinding;
+import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
@@ -112,7 +114,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
         mRefModel = null;
     }
 
-    class VHReferenceVerse extends RecyclerView.ViewHolder {
+    class VHReferenceVerse extends RecyclerView.ViewHolder implements BookmarkCallbacks {
         private LytActivityReferenceDescriptionBinding mDescBinding;
         private LytReferenceVerseTitleBinding mTitleBinding;
         private VerseView mVerseView;
@@ -189,6 +191,19 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             }
 
             binding.titleText.setText(model.getTitleText());
+            binding.btnBookmark.setImageResource(
+                model.getBookmarked() ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_outlined
+            );
+            binding.btnBookmark.setColorFilter(
+                model.getBookmarked() ? mActivity.color(R.color.colorPrimary) : mActivity.color(R.color.colorIcon)
+            );
+            binding.btnBookmark.setOnClickListener(v -> {
+                if (model.getBookmarked()) {
+                    mActivity.onBookmarkView(model.getChapterNo(), model.getFromVerse(), model.getToVerse(), this);
+                } else {
+                    mActivity.addVerseToBookmark(model.getChapterNo(), model.getFromVerse(), model.getToVerse(), this);
+                }
+            });
             binding.openInReader.setOnTouchListener(new HoverPushOpacityEffect());
             binding.openInReader.setOnClickListener(v -> {
                 Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerse(),
@@ -198,6 +213,21 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
                 intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);
                 mActivity.startActivity(intent);
             });
+        }
+
+
+        @Override
+        public void onBookmarkRemoved(BookmarkModel model) {
+            int adapterPosition = getAdapterPosition();
+            mVerseModels.get(adapterPosition).setBookmarked(false);
+            notifyItemChanged(adapterPosition);
+        }
+
+        @Override
+        public void onBookmarkAdded(BookmarkModel model) {
+            int adapterPosition = getAdapterPosition();
+            mVerseModels.get(adapterPosition).setBookmarked(true);
+            notifyItemChanged(adapterPosition);
         }
     }
 

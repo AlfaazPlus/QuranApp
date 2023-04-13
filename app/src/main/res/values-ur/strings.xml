@@ -356,4 +356,16 @@
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
     <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔</string>
     <string name="msgScriptCleanup" formatted="false">%s اسکرپٹ اور اس کے تمام ذخیرہ شدہ فونٹس کو حذف کر دیا جائے گا۔ انہیں استعمال کرنے کے لیے آپ کو دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
+    <string name="inPlaces">%s میں</string>
+    <string name="inPlacesMore">%1$s اور %2$d مزید میں</string>
+    <string name="onboardDescLanguage">ایپ کو اپنی زبان میں ذاتی بنائیں۔ آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</string>
+    <string name="onboardDescTheme">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</string>
+    <string name="onboardDescTranslations">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات سے مزید ترجمے ڈاؤن لوڈ کر سکتے ہیں۔</string>
+    <string name="onboardDescReciter">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات میں مزید قاری تلاش کر سکتے ہیں۔</string>
+    <string name="noFootnotesForThisVerse">اس آیت کے لیے کوئی حاشیہ نہیں ہے۔</string>
+    <string name="strTitleSelectTafsir">تفسیر منتخب کریں</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">آیت %d کی تفسیر پڑھیں</string>
+    <string name="titleTafsirCleanup">تفسیر کو حذف کریں؟</string>
+    <string name="msgTafsirCleanup" formatted="false">%s کے تمام ذخیرہ شدہ تفسیر کو حذف کر دیا جائے گا۔</string>
+    <string name="strMsgTafsirsNoAvailable">کوئی تفسیر دستیاب نہیں</string>
 </resources>

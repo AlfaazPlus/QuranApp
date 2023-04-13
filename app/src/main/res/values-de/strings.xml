@@ -99,7 +99,7 @@
     <string name="strTitleRateApp">App bewerten</string>
     <string name="strTitleSubscription">Abonnement</string>
     <string name="strTitleMenu">Menü</string>
-    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleTafsir">Erläuterung</string>
     <string name="strTitleAboutSurah">über Sure</string>
     <string name="strTitleTranslations">Übersetzungen</string>
     <string name="strTitleDownloadTranslations">Download</string>
@@ -289,7 +289,7 @@
     <string name="recitationCanBeFreedUp" formatted="false">%1$d gespeicherte Rezitationsdateien von %2$d Rezitatoren können freigegeben werden.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d heruntergeladene Schriftsysteme und ihre Schriftarten können freigegeben werden.</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d gespeicherte Kapitelinformationen können bereinigt werden.</string>
-    <string name="tafseerCanBeFreedUp" formatted="false">%d gespeicherte Tafsirs können bereinigt werden.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d gespeicherte Erläuterungen können bereinigt werden.</string>
     <string name="titleChapterInfo">Kapitelinfo</string>
     <string name="labelFreeUpSpace">Speicherplatz freigeben</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
@@ -356,4 +356,16 @@
     <string name="nItem">%d Objekt</string>
     <string name="verseSyncOn">Verssynchronisation : AN</string>
     <string name="verseSyncOff">Verssynchronisation : AUS</string>
+    <string name="inPlaces">in %s</string>
+    <string name="inPlacesMore">in %1$s und %2$d mehr</string>
+    <string name="onboardDescLanguage">Personalisieren Sie die App in Ihrer Sprache. Sie können dies später jederzeit ändern.</string>
+    <string name="onboardDescTheme">Sie können dies später jederzeit ändern.</string>
+    <string name="onboardDescTranslations">Sie können dies später jederzeit ändern. Sie können weitere Übersetzungen in den Einstellungen herunterladen.</string>
+    <string name="onboardDescReciter">Sie können dies später jederzeit ändern. Weitere Rezitatoren finden Sie in den Einstellungen.</string>
+    <string name="noFootnotesForThisVerse">Für diesen Vers gibt es keine Fußnoten.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Lesen Sie die Erläuterung des Verses %d</string>
+    <string name="strTitleSelectTafsir">Erläuterung auswählen</string>
+    <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
+    <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
+    <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
 </resources>
