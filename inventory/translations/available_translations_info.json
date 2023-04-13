@@ -178,6 +178,26 @@
         "downloadPath": "inventory/translations/ku/ku_bamoki.json"
       }
     },
+    "ml": {
+      "ml_hamid-kanhi": {
+        "book": "അബ്ദുൽ ഹമീദ് ഹൈദർ, കൻഹി മുഹമ്മദ്",
+        "author": "അബ്ദുൽ ഹമീദും കാനിയും",
+        "displayName": "അബ്ദുൽ ഹമീദ് ഹൈദർ, കൻഹി മുഹമ്മദ്",
+        "langCode": "ml",
+        "langName": "മലയാളം",
+        "lastUpdated": 1681416922025,
+        "downloadPath": "inventory/translations/ml/ml_hamid-kanhi.json"
+      },
+      "ml_karakunnu": {
+        "book": "മുഹമ്മദ് കാരക്കുന്ന്, വാണിദാസ് എളയാവൂർ",
+        "author": "കാരക്കുന്ന്, എളയാവൂർ",
+        "displayName": "മുഹമ്മദ് കാരക്കുന്ന്, വാണിദാസ് എളയാവൂർ",
+        "langCode": "ml",
+        "langName": "മലയാളം",
+        "lastUpdated": 1681416922025,
+        "downloadPath": "inventory/translations/ml/ml_karakunnu.json"
+      }
+    },
     "ru": {
       "ru_elmir-kuliev": {
         "book": "Russian Translation (Elmir Kuliev)",
