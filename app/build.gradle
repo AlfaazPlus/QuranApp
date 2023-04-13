@@ -106,9 +106,10 @@ dependencies {
     implementation libs.androidx.webkit
     implementation libs.androidx.media
     implementation libs.androidx.browser
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.5'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.5'
-    implementation 'com.google.android.exoplayer:extension-mediasession:2.18.5'
+    
+    implementation libs.exoplayerCore
+    implementation libs.exoplayerUI
+    implementation libs.extensionMediasession
 
     coreLibraryDesugaring libs.desugaring
     implementation libs.material
