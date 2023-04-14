@@ -128,14 +128,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name="androidx.media.session.MediaButtonReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </receiver>
-
         <service android:name=".utils.services.RecitationService" />
         <service android:name=".utils.services.TranslationDownloadService" />
         <service android:name=".utils.services.KFQPCScriptFontsDownloadService" />

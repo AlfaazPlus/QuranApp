@@ -30,6 +30,7 @@ class RecitationPlayerParams() : Parcelable {
     var currentTranslationReciter: String? = null
     var currentAudioOption = RecitationUtils.AUDIO_OPTION_DEFAULT
     var previouslyPlaying = false
+    var pausedDueToHeadset = false
     var continueRange = true
     var repeatVerse = false
     var syncWithVerse = true

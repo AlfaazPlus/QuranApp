@@ -213,9 +213,36 @@ object RecitationManager {
         return availableRecitationsModel?.reciters?.firstOrNull { it.slug == slug }
     }
 
+    fun getReciterName(slug: String?): String? {
+        return getModel(slug)?.getReciterName()
+    }
+
+    fun getCurrentReciterName(ctx: Context): String? {
+        return getReciterName(SPReader.getSavedRecitationSlug(ctx))
+    }
+
     @JvmStatic
     fun getTranslationModel(slug: String?): RecitationTranslationInfoModel? {
         return availableRecitationTranslationsModel?.reciters?.firstOrNull { it.slug == slug }
+    }
+
+    fun getTranslationReciterName(slug: String?): String? {
+        return getTranslationModel(slug)?.getReciterName()
+    }
+
+    fun getCurrentTranslationReciterName(ctx: Context): String? {
+        return getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx))
+    }
+
+    @JvmStatic
+    fun getCurrentReciterNameForAudioOption(ctx: Context): String {
+        val currentReciter = SPReader.getSavedRecitationSlug(ctx)
+        val currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(ctx)
+
+        val reciterName = getReciterName(currentReciter)
+        val translReciterName = getTranslationReciterName(currentTranslationReciter)
+
+        return "${reciterName ?: ""} & ${translReciterName ?: ""}"
     }
 
     @JvmStatic

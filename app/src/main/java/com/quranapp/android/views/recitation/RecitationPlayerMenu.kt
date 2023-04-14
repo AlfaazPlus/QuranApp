@@ -127,7 +127,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
         RecitationManager.prepare(context, false) {
             binding.selectReciter.text = prepareTitle(
                 context.getString(R.string.strTitleSelectReciter),
-                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(context))
+                RecitationManager.getReciterName(SPReader.getSavedRecitationSlug(context))
             )
         }
     }

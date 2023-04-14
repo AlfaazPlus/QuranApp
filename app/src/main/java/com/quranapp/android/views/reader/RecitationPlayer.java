@@ -20,9 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
-import static com.quranapp.android.utils.reader.recitation.RecitationNotificationService.KEY_PLAYING;
-import static com.quranapp.android.utils.reader.recitation.RecitationNotificationService.KEY_RECITER;
-import static com.quranapp.android.utils.reader.recitation.RecitationNotificationService.KEY_TITLE;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PAUSE;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PLAY;
 import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_STOP;
@@ -30,11 +27,10 @@ import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTI
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
-import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
+import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.interfaceUtils.PlayerVerseLoadCallback;
-import com.quranapp.android.suppliments.recitation.RecitationMenu;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.exceptions.NoInternetException;
 import com.quranapp.android.utils.reader.recitation.RecitationLoadTaskRunner;
@@ -46,6 +42,7 @@ import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.MessageUtils;
+import com.quranapp.android.views.recitation.RecitationPlayerMenu;
 
 import java.io.File;
 import java.util.Locale;
@@ -72,7 +69,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
     private final RecitationLoadTaskRunner mTaskRunner = new RecitationLoadTaskRunner();
     private final PlayerVerseLoadCallback mVerseLoadCallback = new PlayerVerseLoadCallback(this);
     private final Handler mHandler = new Handler(Looper.getMainLooper());
-    private final RecitationMenu mMenu;
+    private  RecitationPlayerMenu mMenu;
     private RecitationParams P;
     public final ActivityReader mActivity;
     private MediaPlayer mediaPlayer;
@@ -87,7 +84,7 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
 
         fileUtils = FileUtils.newInstance(mActivity);
         P = new RecitationParams();
-        mMenu = new RecitationMenu(this);
+        //        mMenu = new RecitationPlayerMenu(this);
 
         View view = LayoutInflater.from(mActivity).inflate(R.layout.lyt_recitation_player, this, false);
         addView(view);
@@ -832,10 +829,10 @@ public class RecitationPlayer extends FrameLayout implements RecitationPlayerImp
             QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
             String title = quranMeta.getChapterName(getContext(),
                 P.getCurrChapterNo()) + " : Verse " + P.getCurrVerseNo();
-            String reciter = RecitationUtils.getReciterName(P.currentReciterSlug);
-            i.putExtra(KEY_TITLE, title);
-            i.putExtra(KEY_RECITER, reciter);
-            i.putExtra(KEY_PLAYING, isPlaying());
+            //            String reciter = RecitationUtils.getReciterName(P.currentReciterSlug);
+            //            i.putExtra(KEY_TITLE, title);
+            //            i.putExtra(KEY_RECITER, reciter);
+            //            i.putExtra(KEY_PLAYING, isPlaying());
             ContextCompat.startForegroundService(mActivity, i);
         } else {
             mActivity.startService(i);

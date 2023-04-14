@@ -551,7 +551,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             prepareTitle(
                 mRecitationExplorerBinding,
                 R.string.strTitleSelectReciter,
-                RecitationUtils.getReciterName(SPReader.getSavedRecitationSlug(ctx))
+                RecitationManager.getCurrentReciterNameForAudioOption(ctx)
             );
 
             return Unit.INSTANCE;

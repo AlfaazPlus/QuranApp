@@ -5,23 +5,28 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
+import android.media.AudioManager
+import android.media.AudioManager.OnAudioFocusChangeListener
 import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.Handler
 import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
-import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
+import androidx.media.AudioFocusRequestCompat
+import androidx.media.AudioManagerCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -40,12 +45,14 @@ import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.extensions.runOnInterval
+import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.reader.recitation.player.RecitationMediaItem
 import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams
 import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerVerseLoadCallback
 import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerVerseLoader
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.utils.receivers.RecitationHeadsetReceiver
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.Keys
@@ -54,7 +61,7 @@ import com.quranapp.android.views.recitation.RecitationPlayer
 import java.io.File
 
 
-class RecitationService : Service(), MediaDescriptionAdapter {
+class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChangeListener {
     companion object {
         const val NOTIF_ID = 55
         const val MILLIS_MULTIPLIER = 100L
@@ -65,8 +72,14 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     private val binder = LocalBinder()
     private lateinit var player: ExoPlayer
     private val playlist = ConcatenatingMediaSource()
+    private var audioManager: AudioManager? = null
+    private val audioFocusRequest = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
+        .setOnAudioFocusChangeListener(this)
+        .build()
     private val dataSourceFactory = FileDataSource.Factory()
+    private val headsetReceiver = RecitationHeadsetReceiver(this)
     private var mediaSession: MediaSessionCompat? = null
+    private var sessionConnector: MediaSessionConnector? = null
     private var playerNotificationManager: PlayerNotificationManager? = null
 
     private val verseLoader = RecitationPlayerVerseLoader()
@@ -140,6 +153,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     recParams.previouslyPlaying = isPlaying
+                    recParams.pausedDueToHeadset = false
 
                     if (isPlaying) {
                         recPlayer?.onPlayMedia(recParams)
@@ -199,6 +213,15 @@ class RecitationService : Service(), MediaDescriptionAdapter {
             isActive = true
             playerNotificationManager!!.setMediaSessionToken(sessionToken)
         }
+
+        sessionConnector = MediaSessionConnector(mediaSession!!).apply {
+            setPlayer(player)
+            setClearMediaItemsOnStop(true)
+        }
+
+        audioManager = ContextCompat.getSystemService(this, AudioManager::class.java)
+
+        registerReceiver(headsetReceiver, IntentFilter(AudioManager.ACTION_HEADSET_PLUG))
     }
 
     override fun onDestroy() {
@@ -206,11 +229,15 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
         playerNotificationManager?.setPlayer(null)
         destroy()
+        unregisterReceiver(headsetReceiver)
+        audioManager?.let {
+            AudioManagerCompat.abandonAudioFocusRequest(it, audioFocusRequest)
+        }
+
         super.onDestroy()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(intent, flags, startId)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -468,6 +495,11 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
     fun playMedia() {
         runAudioProgress()
+
+        audioManager?.let {
+            AudioManagerCompat.requestAudioFocus(it, audioFocusRequest)
+        }
+
         player.play()
     }
 
@@ -835,13 +867,32 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     }
 
     override fun getCurrentContentText(player: Player): String? {
-        return RecitationUtils.getReciterName(recParams.currentReciter)
+
+        return when (recParams.currentAudioOption) {
+            RecitationUtils.AUDIO_OPTION_BOTH -> {
+                val reciterName = RecitationManager.getReciterName(recParams.currentReciter)
+                val translReciterName = RecitationManager.getTranslationReciterName(recParams.currentTranslationReciter)
+                "${reciterName ?: ""} & ${translReciterName ?: ""}"
+            }
+            RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> {
+                RecitationManager.getTranslationReciterName(recParams.currentTranslationReciter)
+            }
+            else -> {
+                RecitationManager.getReciterName(recParams.currentReciter)
+            }
+        }
     }
 
     override fun getCurrentLargeIcon(player: Player, callback: BitmapCallback): Bitmap {
         return drawable(R.drawable.dr_quran_wallpaper).toBitmap()
     }
 
+    override fun onAudioFocusChange(focusChange: Int) {
+        when (focusChange) {
+            AudioManager.AUDIOFOCUS_LOSS -> pauseMedia()
+            AudioManager.AUDIOFOCUS_GAIN -> playMedia()
+        }
+    }
 
     fun cancelLoading() {
         verseLoader.cancelAll()
@@ -850,4 +901,5 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     fun popMiniMsg(msg: String, duration: Int) {
         MessageUtils.showRemovableToast(this, msg, duration)
     }
+
 }

@@ -85,20 +85,6 @@ public class RecitationUtils {
     }
 
     @Nullable
-    public static String getReciterName(String slug) {
-        if (slug == null) {
-            return null;
-        }
-
-        RecitationInfoModel model = RecitationManager.getModel(slug);
-        if (model == null) {
-            return null;
-        }
-
-        return model.getReciterName();
-    }
-
-    @Nullable
     public static String prepareRecitationAudioUrl(RecitationInfoModel model, int chapterNo, int verseNo) {
         return prepareAudioUrl(model.getUrlHost(), model.getUrlPath(), chapterNo, verseNo);
     }
