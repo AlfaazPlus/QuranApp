@@ -209,12 +209,12 @@ object RecitationManager {
     }
 
     @JvmStatic
-    fun getModel(slug: String): RecitationInfoModel? {
+    fun getModel(slug: String?): RecitationInfoModel? {
         return availableRecitationsModel?.reciters?.firstOrNull { it.slug == slug }
     }
 
     @JvmStatic
-    fun getTranslationModel(slug: String): RecitationTranslationInfoModel? {
+    fun getTranslationModel(slug: String?): RecitationTranslationInfoModel? {
         return availableRecitationTranslationsModel?.reciters?.firstOrNull { it.slug == slug }
     }
 

@@ -167,6 +167,7 @@
     <string name="strMsgChapInfoFailedLoad">Failed to load surah information. Please try again later.</string>
     <string name="strTitleAppSettings">App Settings</string>
     <string name="strTitleReaderSettings">Reader Settings</string>
+    <string name="titleOtherSettings">Other Settings</string>
     <string name="strTitleAppLanguage">App Language</string>
     <string name="strTitleChangeLanguage">Change language?</string>
     <string name="strTitleTheme">Theme</string>
@@ -330,6 +331,7 @@
     <string name="labelBackgroundDownload">Background download</string>
     <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
     <string name="lastCrashLog">Last crash log</string>
+    <string name="appLogs">App logs</string>
     <string name="createIssue">Create issue</string>
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>

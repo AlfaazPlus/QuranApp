@@ -69,11 +69,11 @@ import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
-import com.quranapp.android.databinding.LytReaderSettingsBinding;
 import com.quranapp.android.databinding.LytReaderSettingsItemBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextDecoratorBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextSizeBinding;
 import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
+import com.quranapp.android.databinding.LytSettingsReaderBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
@@ -233,12 +233,17 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initExplorers(Context ctx) {
         mBinding.appSettings.getRoot().setVisibility(!mIsFromReader ? VISIBLE : GONE);
+        mBinding.otherSettings.getRoot().setVisibility(!mIsFromReader ? VISIBLE : GONE);
 
         if (!mIsFromReader) {
             iniAppSettings();
         }
 
         initReaderSettings(ctx);
+
+        if (!mIsFromReader) {
+            iniOtherSettings();
+        }
     }
 
     private void iniAppSettings() {
@@ -435,7 +440,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initReaderSettings(Context ctx) {
-        LytReaderSettingsBinding readerSettings = mBinding.readerSettings;
+        LytSettingsReaderBinding readerSettings = mBinding.readerSettings;
 
         initTranslExplorer(readerSettings.explorerLauncherContainer);
         initTafsirExplorer(readerSettings.explorerLauncherContainer);
@@ -811,6 +816,21 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         final float size = mVerseDecorator.getTextSizeTransl() * ReaderTextSizeUtils.calculateMultiplier(progress);
         mLytTextSizeTransl.demoText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+    }
+
+    private void iniOtherSettings() {
+        initLogLauncher(mBinding.otherSettings.getRoot());
+    }
+
+    private void initLogLauncher(LinearLayout parent) {
+        LytReaderSettingsItemBinding logExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
+
+        setupLauncherParams(R.drawable.icon_log, logExplorerBinding);
+        prepareTitle(logExplorerBinding, R.string.appLogs, "");
+
+        logExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsAppLogs.class, null));
+
+        parent.addView(logExplorerBinding.getRoot());
     }
 
     private void resetToDefault(Context ctx) {
