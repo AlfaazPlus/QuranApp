@@ -111,6 +111,10 @@
             android:process=":remote" />
 
         <receiver
+            android:name=".utils.receivers.CrashReceiver"
+            android:enabled="true" />
+
+        <receiver
             android:name=".utils.receivers.AlarmPermissionReceiver"
             android:enabled="true"
             android:exported="true">
