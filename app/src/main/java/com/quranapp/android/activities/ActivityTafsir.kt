@@ -266,6 +266,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 tafsirFile.writeText(JsonHelper.json.encodeToString(tafsir))
                 renderData(tafsir)
             } catch (e: Exception) {
+                Log.saveError(e, "ActivityTafsir")
                 e.printStackTrace()
                 fail("Failed to load tafsir.", true)
             }

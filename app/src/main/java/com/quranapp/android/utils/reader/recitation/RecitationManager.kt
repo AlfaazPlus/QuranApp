@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -60,7 +60,7 @@ object RecitationManager {
                         postRecitationsLoad(ctx, stringData, callback)
                     }
                 } catch (e: Exception) {
-                    Log.saveError(e)
+                    Log.saveError(e, "loadRecitations")
 
                     withContext(Dispatchers.Main) {
                         callback(null)
@@ -82,6 +82,7 @@ object RecitationManager {
 
                 postRecitationsLoad(ctx, stringData, callback)
             } catch (e: IOException) {
+                Log.saveError(e, "loadRecitations")
                 e.printStackTrace()
                 loadRecitations(ctx, true, callback)
             }
@@ -111,6 +112,7 @@ object RecitationManager {
 
             callback(availableRecitationsModel)
         } catch (e: Exception) {
+            Log.saveError(e, "postRecitationsLoad")
             e.printStackTrace()
             callback(null)
         }
@@ -154,6 +156,7 @@ object RecitationManager {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    Log.saveError(e, "loadRecitationTranslations")
                     withContext(Dispatchers.Main) {
                         callback(null)
                     }
@@ -174,6 +177,8 @@ object RecitationManager {
 
                 postRecitationTranslationsLoad(ctx, stringData, callback)
             } catch (e: IOException) {
+                Log.saveError(e, "loadRecitationTranslations")
+
                 e.printStackTrace()
                 loadRecitationTranslations(ctx, true, callback)
             }
@@ -203,6 +208,7 @@ object RecitationManager {
 
             callback(model)
         } catch (e: Exception) {
+            Log.saveError(e, "postRecitationTranslationsLoad")
             e.printStackTrace()
             callback(null)
         }
@@ -236,13 +242,19 @@ object RecitationManager {
 
     @JvmStatic
     fun getCurrentReciterNameForAudioOption(ctx: Context): String {
-        val currentReciter = SPReader.getSavedRecitationSlug(ctx)
-        val currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(ctx)
+        val audioOption = SPReader.getRecitationAudioOption(ctx)
 
-        val reciterName = getReciterName(currentReciter)
-        val translReciterName = getTranslationReciterName(currentTranslationReciter)
+        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
+        val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
-        return "${reciterName ?: ""} & ${translReciterName ?: ""}"
+        val reciterName = if (!isOnlyTransl) getReciterName(SPReader.getSavedRecitationSlug(ctx)) else null
+        val translReciterName = if (isBoth || isOnlyTransl) getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx)) else null
+
+        return if (isBoth && !reciterName.isNullOrEmpty() && !translReciterName.isNullOrEmpty()) {
+            "$reciterName & $translReciterName"
+        } else {
+            reciterName ?: translReciterName ?: ""
+        }
     }
 
     @JvmStatic

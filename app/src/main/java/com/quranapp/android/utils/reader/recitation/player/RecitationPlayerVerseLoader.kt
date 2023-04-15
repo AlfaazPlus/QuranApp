@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import kotlinx.coroutines.*
@@ -82,6 +83,7 @@ class RecitationPlayerVerseLoader {
 
                 emit(VerseLoadFlow.Loaded(verseFile, verseTranslFile))
             }.flowOn(Dispatchers.IO).catch {
+                Log.saveError(it, "RecitationPlayerVerseLoader")
                 it.printStackTrace()
                 emit(
                     VerseLoadFlow.Failed(

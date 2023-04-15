@@ -199,20 +199,20 @@ public abstract class SPReader {
         editor.apply();
     }
 
-    public static String getRecitationAudioOption(Context context) {
+    public static int getRecitationAudioOption(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
 
         if (!sp.contains(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)) {
             setRecitationAudioOption(context, AUDIO_OPTION_DEFAULT);
         }
 
-        return sp.getString(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, AUDIO_OPTION_DEFAULT);
+        return sp.getInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, AUDIO_OPTION_DEFAULT);
     }
 
-    public static void setRecitationAudioOption(Context context, String option) {
+    public static void setRecitationAudioOption(Context context, int option) {
         SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option);
+        editor.putInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option);
         editor.apply();
     }
 

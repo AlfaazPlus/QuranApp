@@ -19,6 +19,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.extensions.serializableExtra
@@ -173,21 +174,25 @@ class TranslationDownloadService : Service() {
                 emit(TranslationDownloadFlow.Complete)
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
+                Log.saveError(it, "TranslationDownloadService")
                 emit(TranslationDownloadFlow.Failed)
             }.collect {
                 when (it) {
                     is TranslationDownloadFlow.Start -> {
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Progress -> {
                         notifBuilder.setProgress(100, it.progress, false)
                         notifBuilder.setSubText("${it.progress}%")
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Complete -> {
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
                         finish()
                     }
+
                     is TranslationDownloadFlow.Failed -> {
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
                         removeDownload(bookInfo.slug)

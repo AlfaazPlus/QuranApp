@@ -332,6 +332,9 @@
     <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
     <string name="lastCrashLog">Last crash log</string>
     <string name="appLogs">App logs</string>
+    <string name="crashLogs">Crash logs</string>
+    <string name="suppressedLogs">Suppressed logs</string>
+    <string name="logRemoved">Log removed</string>
     <string name="createIssue">Create issue</string>
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
@@ -381,6 +384,8 @@
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
     <string name="msgChapterAddedToFavourites">Surah added to favourites.</string>
     <string name="msgChapterRemovedFromFavourites">Surah removed from favourites.</string>
+
+    <string name="textTranslationReciterInfo">Language: %1$s\nBook: %2$s</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>

@@ -3,6 +3,7 @@ package com.quranapp.android.utils.reader.recitation;
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
@@ -17,7 +18,6 @@ import com.quranapp.android.utils.univ.URLBuilder;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,16 +43,16 @@ public class RecitationUtils {
     public static final String AVAILABLE_RECITATION_TRANSLATIONS_FILENAME = "available_recitation_translations.json";
     public static final String RECITATION_AUDIO_NAME_FORMAT_LOCAL = "%03d-%03d.mp3";
 
-    public static final String AUDIO_OPTION_ONLY_ARABIC = "audio.arabic_only";
-    public static final String AUDIO_OPTION_ONLY_TRANSLATION = "audio.translation_only";
-    public static final String AUDIO_OPTION_BOTH = "audio.both";
-    public static final String AUDIO_OPTION_DEFAULT = AUDIO_OPTION_ONLY_ARABIC;
+    public static final int AUDIO_OPTION_ONLY_ARABIC = 0;
+    public static final int AUDIO_OPTION_ONLY_TRANSLATION = 1;
+    public static final int AUDIO_OPTION_BOTH = 2;
+    public static final int AUDIO_OPTION_DEFAULT = AUDIO_OPTION_ONLY_ARABIC;
 
     public static boolean isRecitationSupported() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
 
-    public static String resolveAudioOptionFromId(int id) {
+    public static int resolveAudioOptionFromId(int id) {
         if (id == R.id.audioOnlyTranslation) {
             return AUDIO_OPTION_ONLY_TRANSLATION;
         } else if (id == R.id.audioBoth) {
@@ -138,56 +138,57 @@ public class RecitationUtils {
     ) {
         String savedSlug = SPReader.getSavedRecitationSlug(ctx);
         String savedTranslationSlug = SPReader.getSavedRecitationTranslationSlug(ctx);
-        String audioOption = SPReader.getRecitationAudioOption(ctx);
+        int audioOption = SPReader.getRecitationAudioOption(ctx);
 
-        boolean isBoth = Objects.equals(audioOption, AUDIO_OPTION_BOTH);
-        boolean isOnlyTransl = Objects.equals(audioOption, AUDIO_OPTION_ONLY_TRANSLATION);
-
+        boolean isBoth = audioOption == AUDIO_OPTION_BOTH;
+        boolean isOnlyTransl = audioOption == AUDIO_OPTION_ONLY_TRANSLATION;
 
         if (isBoth) {
             RecitationManager.prepare(ctx, force, () -> {
                 RecitationManager.prepareTranslations(ctx, forceTranslation, () -> {
-                    callback.onReady(obtainRecitationModels(ctx, savedSlug, savedTranslationSlug));
+                    callback.onReady(obtainRecitationModels(
+                        obtainArabicRecitationSlug(ctx, savedSlug),
+                        obtainTranslationRecitationSlug(ctx, savedTranslationSlug)
+                    ));
                     return Unit.INSTANCE;
                 });
                 return Unit.INSTANCE;
             });
         } else if (isOnlyTransl) {
             RecitationManager.prepareTranslations(ctx, forceTranslation, () -> {
-                callback.onReady(obtainRecitationModels(ctx, null, savedTranslationSlug));
+                callback.onReady(obtainRecitationModels(null, obtainTranslationRecitationSlug(ctx, savedTranslationSlug)));
                 return Unit.INSTANCE;
             });
         } else {
             RecitationManager.prepare(ctx, force, () -> {
-                callback.onReady(obtainRecitationModels(ctx, savedSlug, null));
+                callback.onReady(obtainRecitationModels(obtainArabicRecitationSlug(ctx, savedSlug), null));
                 return Unit.INSTANCE;
             });
         }
     }
 
     private static Pair<RecitationInfoModel, RecitationTranslationInfoModel> obtainRecitationModels(
-        Context ctx,
         String savedSlug,
         String savedTranslationSlug
     ) {
         // AUDIO_OPTION_BOTH
         if (savedSlug != null && savedTranslationSlug != null) {
             return new Pair<>(
-                RecitationManager.getModel(obtainArabicRecitationSlug(ctx, savedSlug)),
-                RecitationManager.getTranslationModel(obtainTranslationRecitationSlug(ctx, savedTranslationSlug))
+                RecitationManager.getModel(savedSlug),
+                RecitationManager.getTranslationModel(savedTranslationSlug)
             );
         }
         // AUDIO_OPTION_ONLY_TRANSLATION
         else if (savedTranslationSlug != null) {
             return new Pair<>(
                 null,
-                RecitationManager.getTranslationModel(obtainTranslationRecitationSlug(ctx, savedTranslationSlug))
+                RecitationManager.getTranslationModel(savedTranslationSlug)
             );
         }
         // AUDIO_OPTION_ONLY_ARABIC
         else {
             return new Pair<>(
-                RecitationManager.getModel(obtainArabicRecitationSlug(ctx, savedSlug)),
+                RecitationManager.getModel(savedSlug),
                 null
             );
         }

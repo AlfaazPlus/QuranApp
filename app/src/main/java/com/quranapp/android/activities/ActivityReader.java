@@ -1,30 +1,11 @@
 package com.quranapp.android.activities;
 
-import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.text.SpannableStringBuilder;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-import androidx.activity.result.ActivityResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
@@ -47,12 +28,33 @@ import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGE
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.text.SpannableStringBuilder;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPQuranPages;
@@ -1194,12 +1196,12 @@ public class ActivityReader extends ReaderPossessingActivity {
             params.getCurrentTranslationReciter()
         );
 
-        final String audioOption = SPReader.getRecitationAudioOption(this);
+        final int audioOption = SPReader.getRecitationAudioOption(this);
         final boolean changed;
 
-        if (Objects.equals(audioOption, RecitationUtils.AUDIO_OPTION_BOTH)) {
+        if (audioOption == RecitationUtils.AUDIO_OPTION_BOTH) {
             changed = reciterChanged || translationReciterChanged;
-        } else if (Objects.equals(audioOption, RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION)) {
+        } else if (audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION) {
             changed = translationReciterChanged;
         } else {
             changed = reciterChanged;

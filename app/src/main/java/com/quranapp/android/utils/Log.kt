@@ -10,19 +10,22 @@ import java.io.File
 
 object Log {
     private const val TAG = "QuranAppLogs"
-    private val SUPPRESSED_ERROR_DIR = FileUtils.makeAndGetAppResourceDir(
+    const val FILE_NAME_DATE_FORMAT = "yyyyMMddhhmmssSSS"
+    val SUPPRESSED_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
         FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "suppressed_errors")
     )
 
-    fun saveError(e: Throwable?) {
-        e?.printStackTrace()
+    fun saveError(e: Throwable?, place: String) {
+        if (e == null) return
+        
+        e.printStackTrace()
 
         try {
             suspend {
                 withContext(Dispatchers.IO) {
-                    val trc = e?.stackTraceToString() ?: return@withContext
-                    val filename = DateUtils.getDateTimeNow("yyyyMMddhhmmssSSS")
-                    val logFile = File(SUPPRESSED_ERROR_DIR, "$filename.txt")
+                    val trc = e.stackTraceToString()
+                    val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
+                    val logFile = File(SUPPRESSED_ERROR_DIR, "$filename@${place}.txt")
 
                     logFile.createNewFile()
                     logFile.writeText(trc)
@@ -46,7 +49,7 @@ object Log {
 
     @JvmStatic
     fun d(vararg messages: Any?) {
-        if(!BuildConfig.DEBUG) return
+        if (!BuildConfig.DEBUG) return
 
         val sb = StringBuilder()
 

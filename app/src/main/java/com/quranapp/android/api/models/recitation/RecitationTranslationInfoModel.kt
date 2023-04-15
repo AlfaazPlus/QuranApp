@@ -13,6 +13,7 @@ data class RecitationTranslationInfoModel(
     @SerialName("lang-code") val langCode: String,
     @SerialName("lang-name") var langName: String,
     val reciter: String,
+    val book: String?,
     @SerialName("url-host") var urlHost: String?,
     @SerialName("url-path") val urlPath: String,
     val translations: Map<String, String> = mapOf(),

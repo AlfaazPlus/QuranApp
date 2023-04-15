@@ -66,7 +66,7 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
         }
 
         fun bind(model: RecitationTranslationInfoModel) {
-            radio.setTexts(model.getReciterName(), model.langName)
+            radio.setTexts(model.getReciterName(), itemView.context.getString(R.string.textTranslationReciterInfo, model.langName, model.book ?: ""))
             radio.isChecked = model.isChecked
 
             if (model.isChecked) {

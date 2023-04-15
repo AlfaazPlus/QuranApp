@@ -25,7 +25,15 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_AUTO_TRANSITION
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_SEEK
+import com.google.android.exoplayer2.Player.Listener
+import com.google.android.exoplayer2.Player.PositionInfo
+import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
+import com.google.android.exoplayer2.Player.STATE_BUFFERING
+import com.google.android.exoplayer2.Player.STATE_ENDED
+import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -128,10 +136,12 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                         STATE_BUFFERING -> {
                             recPlayer?.setupOnLoadingInProgress(true)
                         }
+
                         STATE_READY -> {
                             recPlayer?.setupOnLoadingInProgress(false)
                             runAudioProgress()
                         }
+
                         STATE_ENDED -> {
                             if (quranMeta == null || !recParams.continueRange) {
                                 recPlayer?.onStopMedia(recParams)
@@ -146,6 +156,7 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                                 stopMedia()
                             }
                         }
+
                         else -> {
                         }
                     }
@@ -622,7 +633,7 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
         recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
 
-    fun onAudioOptionChanged(newOption: String) {
+    fun onAudioOptionChanged(newOption: Int) {
         recParams.currentAudioOption = newOption
 
         restartVerseOnConfigChange()
@@ -667,13 +678,9 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                     forceManifestFetch = !isOnlyTransl && r.first == null
                     forceTranslationManifestFetch = (isBoth || isOnlyTransl) && r.second == null
 
-                    val failed = if (isBoth) {
-                        r.first == null || r.second == null
-                    } else if (isOnlyTransl) {
-                        r.second == null
-                    } else {
-                        r.first == null
-                    }
+                    val failed = if (isBoth) r.first == null || r.second == null
+                    else if (isOnlyTransl) r.second == null
+                    else r.first == null
 
 
                     if (!failed) {
@@ -874,9 +881,11 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                 val translReciterName = RecitationManager.getTranslationReciterName(recParams.currentTranslationReciter)
                 "${reciterName ?: ""} & ${translReciterName ?: ""}"
             }
+
             RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> {
                 RecitationManager.getTranslationReciterName(recParams.currentTranslationReciter)
             }
+
             else -> {
                 RecitationManager.getReciterName(recParams.currentReciter)
             }

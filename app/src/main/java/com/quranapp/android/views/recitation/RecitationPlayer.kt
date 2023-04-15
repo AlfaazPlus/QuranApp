@@ -296,7 +296,7 @@ class RecitationPlayer(
         return service?.isReciting(chapterNo, verseNo) ?: false
     }
 
-    fun onAudioOptionChanged(newOption: String) {
+    fun onAudioOptionChanged(newOption: Int) {
         service?.onAudioOptionChanged(newOption)
     }
 }

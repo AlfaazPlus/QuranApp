@@ -66,6 +66,7 @@ open class RecitationPlayerVerseLoadCallback(private val service: RecitationServ
             // Audio was unable to load from the url because url was not found,
             // may be recitation manifest has a new url. So force update the manifest file.
             service?.forceManifestFetch = true
+            Log.saveError(e, "RecitationPlayerVerseLoadCallback.onFailed")
         }
 
         service?.updatePlayerProgress()

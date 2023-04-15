@@ -15,16 +15,21 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.univ.FileUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -125,7 +130,7 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
                 val skipToPart = getSkipPartNumber(fontsDir)
 
                 for (partNo in 1..QuranScriptUtils.TOTAL_DOWNLOAD_PARTS) {
-                    // if (partNo < skipToPart) continue
+                    if (partNo < skipToPart) continue
                     downloadFontsPart(this, scriptKey, partNo, fontsDir)
                 }
 
@@ -133,6 +138,7 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
             }
                 .flowWithLifecycle(lifecycle)
                 .catch {
+                    Log.saveError(it, "KFQPCScriptFontsDownloadService")
                     it.printStackTrace()
                     sendBroadcast(
                         Intent(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS).apply {
