@@ -6,16 +6,25 @@ package com.quranapp.android.utils.app
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.quranapp.android.R
+import com.quranapp.android.utils.receivers.CrashReceiver
 
 object NotificationUtils {
+    const val CHANNEL_ID_DEFAULT = "default"
+    const val CHANNEL_ID_VOTD = "votd"
+    const val CHANNEL_ID_RECITATION_PLAYER = "recitation_player"
+    const val CHANNEL_ID_DOWNLOADS = "downloads"
+
     fun createNotificationChannels(ctx: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ctx.getSystemService(NotificationManager::class.java).apply {
@@ -116,8 +125,36 @@ object NotificationUtils {
     fun createEmptyNotif(ctx: Context, channelId: String): Notification {
         return NotificationCompat.Builder(ctx, channelId).apply {
             setContentTitle("")
-            setSmallIcon(R.mipmap.icon_launcher)
+            setSmallIcon(R.drawable.dr_logo)
             setContentText("")
         }.build()
+    }
+
+    fun showCrashNotification(ctx: Context, stackTraceString: String) {
+        var flag = PendingIntent.FLAG_UPDATE_CURRENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flag = flag or PendingIntent.FLAG_IMMUTABLE
+        }
+
+        val copyIntent = Intent(ctx, CrashReceiver::class.java).apply {
+            action = CrashReceiver.CRASH_ACTION_COPY_LOG
+            putExtra(Intent.EXTRA_TEXT, stackTraceString)
+        }
+
+        val notification = NotificationCompat.Builder(ctx, CHANNEL_ID_DEFAULT).apply {
+            setContentTitle(ctx.getString(R.string.lastCrashLog))
+            setSmallIcon(R.drawable.dr_logo)
+            setContentText(stackTraceString)
+            setStyle(NotificationCompat.BigTextStyle().bigText(stackTraceString))
+            addAction(
+                NotificationCompat.Action.Builder(
+                    R.drawable.icon_copy,
+                    ctx.getString(R.string.strLabelCopy),
+                    PendingIntent.getBroadcast(ctx, 0, copyIntent, flag)
+                ).build()
+            )
+        }.build()
+
+        ContextCompat.getSystemService(ctx, NotificationManager::class.java)?.notify(CrashReceiver.NOTIFICATION_ID_CRASH, notification)
     }
 }
