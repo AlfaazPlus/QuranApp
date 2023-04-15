@@ -386,6 +386,7 @@
     <string name="msgChapterRemovedFromFavourites">Surah removed from favourites.</string>
 
     <string name="textTranslationReciterInfo">Language: %1$s\nBook: %2$s</string>
+    <string name="textNoLogsFound">No logs found</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>

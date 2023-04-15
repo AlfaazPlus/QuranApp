@@ -11,6 +11,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.services.TranslationDownloadService
@@ -98,7 +99,7 @@ object AppActions {
 
     @JvmStatic
     fun checkForCrashLogs(ctx: Context) {
-        val lastCrashLog = SPLog.getLastCrashLog(ctx)
+        val lastCrashLog = Log.getLastCrashLog(ctx)
 
         if (lastCrashLog.isNullOrEmpty()) return
 
@@ -108,11 +109,11 @@ object AppActions {
             .setNeutralButton(R.string.strLabelCopy) { _, _ ->
                 ctx.copyToClipboard(lastCrashLog)
                 Toast.makeText(ctx, R.string.copiedToClipboard, Toast.LENGTH_LONG).show()
-                SPLog.removeLastCrashLog(ctx)
+                SPLog.removeLastCrashLogFilename(ctx)
             }
             .setPositiveButton(R.string.createIssue) { _, _ ->
                 ctx.copyToClipboard(lastCrashLog)
-                SPLog.removeLastCrashLog(ctx)
+                SPLog.removeLastCrashLogFilename(ctx)
                 // redirect to github issues
                 AppBridge.newOpener(ctx).browseLink(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
                 Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()

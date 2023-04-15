@@ -155,7 +155,6 @@ object RecitationManager {
                         postRecitationTranslationsLoad(ctx, stringData, callback)
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
                     Log.saveError(e, "loadRecitationTranslations")
                     withContext(Dispatchers.Main) {
                         callback(null)

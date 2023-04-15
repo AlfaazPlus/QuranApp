@@ -2,13 +2,18 @@ package com.quranapp.android.frags.settings.appLogs
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.quranapp.android.adapters.appLogs.ADPSuppressedLogs
-import com.quranapp.android.components.appLogs.SuppressedLogModel
+import androidx.recyclerview.widget.RecyclerView
+import com.quranapp.android.R
+import com.quranapp.android.adapters.appLogs.ADPAppLogs
+import com.quranapp.android.components.appLogs.AppLogModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.extended.GapedItemDecoration
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.updatePaddingHorizontal
 import com.quranapp.android.utils.univ.DateUtils
@@ -18,6 +23,10 @@ import com.quranapp.android.widgets.PageAlert
 class FragAppLogsSuppressed : BaseFragment() {
     private lateinit var binding: FragSettingsTranslBinding
     private lateinit var fileUtils: FileUtils
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.frag_settings_transl, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,36 +38,41 @@ class FragAppLogsSuppressed : BaseFragment() {
     }
 
     private fun init(context: Context) {
-        val logs = ArrayList<SuppressedLogModel>()
+        val logs = ArrayList<AppLogModel>()
 
         val files = Log.SUPPRESSED_ERROR_DIR.listFiles()
-        if (files?.isNotEmpty() != true) {
+        if (files.isNullOrEmpty()) {
             PageAlert(context).apply {
                 setIcon(null)
-                setMessage("", context.getString(msgRes))
+                setMessage("", context.getString(R.string.textNoLogsFound))
                 show(binding.container)
             }
+            binding.loader.visibility = View.GONE
             return
         }
 
         files.forEach { logFile ->
-            val (datetimeStr, place) = logFile.name.split("@")
+            val (datetimeStr, place) = logFile.nameWithoutExtension.split("@")
             val log = logFile.readText()
             val formattedDateTime = DateUtils.format(DateUtils.toDate(datetimeStr, Log.FILE_NAME_DATE_FORMAT), DateUtils.DATETIME_FORMAT_USER)
 
             logs.add(
-                SuppressedLogModel(
+                AppLogModel(
                     formattedDateTime,
                     place,
                     logFile,
                     log,
-                    log.substring(0, 100) + if (log.length > 100) "..." else "",
+                    log.substring(0, 200) + if (log.length > 200) "..." else "",
                 )
             )
         }
 
-        binding.list.updatePaddingHorizontal(context.dp2px(15F))
-        binding.list.layoutManager = LinearLayoutManager(context)
-        binding.list.adapter = ADPSuppressedLogs(logs)
+        binding.list.let {
+            it.addItemDecoration(GapedItemDecoration(context.dp2px(10F)))
+            it.updatePaddingHorizontal(context.dp2px(15F))
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter = ADPAppLogs(logs)
+        }
+        binding.loader.visibility = View.GONE
     }
 }

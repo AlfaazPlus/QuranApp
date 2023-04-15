@@ -5,13 +5,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.R
-import com.quranapp.android.components.appLogs.SuppressedLogModel
+import com.quranapp.android.components.appLogs.AppLogModel
 import com.quranapp.android.databinding.LytLogItemBinding
 import com.quranapp.android.utils.extensions.copyToClipboard
 
-class ADPSuppressedLogs(private val logs: ArrayList<SuppressedLogModel>) : RecyclerView.Adapter<ADPSuppressedLogs.VHSuppressedLog>() {
-    inner class VHSuppressedLog(private val binding: LytLogItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(logModel: SuppressedLogModel) {
+class ADPAppLogs(private val logs: ArrayList<AppLogModel>) : RecyclerView.Adapter<ADPAppLogs.VHAppLog>() {
+    inner class VHAppLog(private val binding: LytLogItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.clipToOutline = true
+        }
+
+        fun bind(logModel: AppLogModel) {
             binding.datetime.text = logModel.datetime
             binding.logText.text = logModel.logShort
             binding.place.text = logModel.place
@@ -34,12 +38,12 @@ class ADPSuppressedLogs(private val logs: ArrayList<SuppressedLogModel>) : Recyc
         return logs.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHSuppressedLog {
-        return VHSuppressedLog(LytLogItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHAppLog {
+        return VHAppLog(LytLogItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
 
-    override fun onBindViewHolder(holder: VHSuppressedLog, position: Int) {
+    override fun onBindViewHolder(holder: VHAppLog, position: Int) {
         holder.bind(logs[position])
     }
 }

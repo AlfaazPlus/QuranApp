@@ -1,50 +1,84 @@
 package com.quranapp.android.utils
 
+import android.content.Context
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.utils.app.AppUtils
+import com.quranapp.android.utils.sharedPrefs.SPLog
 import com.quranapp.android.utils.univ.DateUtils
 import com.quranapp.android.utils.univ.FileUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
 
 object Log {
     private const val TAG = "QuranAppLogs"
     const val FILE_NAME_DATE_FORMAT = "yyyyMMddhhmmssSSS"
+    val CRASH_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
+        FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "crashes")
+    )
     val SUPPRESSED_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
         FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "suppressed_errors")
     )
 
-    fun saveError(e: Throwable?, place: String) {
+    fun getLastCrashLog(ctx: Context): String? {
+        val filename = SPLog.getLastCrashLogFilename(ctx) ?: return null
+        val file = File(CRASH_ERROR_DIR, filename)
+        if (file.length() == 0L) return null
+
+        return file.readText()
+    }
+
+    fun saveCrash(ctx: Context, e: Throwable?) {
         if (e == null) return
-        
+
         e.printStackTrace()
 
         try {
-            suspend {
-                withContext(Dispatchers.IO) {
-                    val trc = e.stackTraceToString()
-                    val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
-                    val logFile = File(SUPPRESSED_ERROR_DIR, "$filename@${place}.txt")
+            val trc = e.stackTraceToString()
+            val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
+            val logFile = File(CRASH_ERROR_DIR, "$filename.txt")
 
-                    logFile.createNewFile()
-                    logFile.writeText(trc)
+            logFile.createNewFile()
+            logFile.writeText(trc)
 
-                    // keep last 30 files
-                    val files = SUPPRESSED_ERROR_DIR.listFiles()
-                    if (files != null && files.size > 30) {
-                        val sortedFiles = files.sortedBy { it.lastModified() }
-                        val len = sortedFiles.size - 30
-                        for (i in 0 until len) {
-                            sortedFiles[i].delete()
-                        }
-                    }
-                }
-            }
+            // keep last 30 files
+            keepLastNFiles(CRASH_ERROR_DIR, 30)
+
+            SPLog.saveLastCrashLogFileName(ctx, logFile.name)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
+    }
+
+    fun saveError(e: Throwable?, place: String) {
+        if (e == null) return
+
+        e.printStackTrace()
+
+        try {
+            val trc = e.stackTraceToString()
+            val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
+            val logFile = File(SUPPRESSED_ERROR_DIR, "$filename@${place}.txt")
+
+            logFile.createNewFile()
+            logFile.writeText(trc)
+
+            // keep last 30 files
+            keepLastNFiles(SUPPRESSED_ERROR_DIR, 30)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun keepLastNFiles(dir: File, n: Int) {
+        val files = dir.listFiles()
+        if (files != null && files.size > n) {
+            val sortedFiles = files.sortedBy { it.lastModified() }
+            val len = sortedFiles.size - n
+            for (i in 0 until len) {
+                sortedFiles[i].delete()
+            }
+        }
     }
 
     @JvmStatic

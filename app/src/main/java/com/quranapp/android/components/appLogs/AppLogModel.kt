@@ -2,7 +2,7 @@ package com.quranapp.android.components.appLogs
 
 import java.io.File
 
-data class SuppressedLogModel(
+data class AppLogModel(
     val datetime: String,
     val place: String,
     val file: File,
