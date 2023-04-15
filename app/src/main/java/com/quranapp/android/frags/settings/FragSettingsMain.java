@@ -6,26 +6,6 @@
 
 package com.quranapp.android.frags.settings;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -48,7 +28,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -58,6 +37,25 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -604,8 +602,10 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         if (!TextUtils.isEmpty(subtitle)) {
             SpannableString subtitleSS = new SpannableString(subtitle);
-            subtitleSS.setSpan(new AbsoluteSizeSpan(ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2)), 0, subtitleSS.length(), flag);
-            subtitleSS.setSpan(new ForegroundColorSpan(ContextKt.color(ctx, R.color.colorText3)), 0, subtitleSS.length(), flag);
+            subtitleSS.setSpan(new AbsoluteSizeSpan(ContextKt.getDimenPx(ctx, R.dimen.dmnCommonSize2)), 0,
+                subtitleSS.length(), flag);
+            subtitleSS.setSpan(new ForegroundColorSpan(ContextKt.color(ctx, R.color.colorText3)), 0,
+                subtitleSS.length(), flag);
             ssb.append("\n").append(subtitleSS);
         }
 
@@ -824,10 +824,17 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initLogLauncher(LinearLayout parent) {
-        LytReaderSettingsItemBinding logExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
+        Context ctx = parent.getContext();
+
+        LytReaderSettingsItemBinding logExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
+            false);
 
         setupLauncherParams(R.drawable.icon_log, logExplorerBinding);
-        prepareTitle(logExplorerBinding, R.string.appLogs, "");
+        prepareTitle(
+            logExplorerBinding,
+            R.string.appLogs,
+            TextUtils.concat(ctx.getString(R.string.crashLogs), ",", ctx.getString(R.string.suppressedLogs)).toString()
+        );
 
         logExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsAppLogs.class, null));
 

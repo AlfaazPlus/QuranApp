@@ -125,6 +125,7 @@
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="titleSelectReciter">Manage Audio</string>
     <string name="audioOption">Audio option</string>
+    <string name="playbackSpeed">Playback speed</string>
     <string name="audioOnlyArabic">Play only Arabic</string>
     <string name="audioOnlyTranslation">Play only translation</string>
     <string name="audioBothArabicTranslation">Play both Arabic and translation</string>

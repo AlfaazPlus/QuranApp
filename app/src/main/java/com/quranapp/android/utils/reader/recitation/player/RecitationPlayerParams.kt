@@ -33,6 +33,7 @@ class RecitationPlayerParams() : Parcelable {
     var pausedDueToHeadset = false
     var continueRange = true
     var repeatVerse = false
+    var playbackSpeed = 1.0f
     var syncWithVerse = true
 
     var lastMediaURI: Uri? = null
@@ -42,6 +43,7 @@ class RecitationPlayerParams() : Parcelable {
         currentAudioOption = SPReader.getRecitationAudioOption(context)
         continueRange = SPReader.getRecitationContinueChapter(context)
         repeatVerse = SPReader.getRecitationRepeatVerse(context)
+        playbackSpeed = SPReader.getRecitationSpeed(context)
         syncWithVerse = SPReader.getRecitationScrollSync(context)
     }
 

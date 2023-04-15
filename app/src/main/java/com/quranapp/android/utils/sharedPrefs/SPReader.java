@@ -11,6 +11,7 @@ import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AUDIO_OPTION_DEFAULT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_SPEED;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
 
@@ -143,6 +144,23 @@ public abstract class SPReader {
         editor.apply();
 
         RecitationManager.setSavedRecitationTranslationSlug(slug);
+    }
+
+    public static float getRecitationSpeed(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+
+        if (!sp.contains(KEY_RECITATION_SPEED)) {
+            setRecitationSpeed(context, RecitationUtils.RECITATION_DEFAULT_SPEED);
+        }
+
+        return sp.getFloat(KEY_RECITATION_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED);
+    }
+
+    public static void setRecitationSpeed(Context context, float speed) {
+        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat(KEY_RECITATION_SPEED, speed);
+        editor.apply();
     }
 
     public static boolean getRecitationRepeatVerse(Context context) {

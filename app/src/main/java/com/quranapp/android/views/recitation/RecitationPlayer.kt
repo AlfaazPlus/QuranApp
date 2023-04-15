@@ -284,6 +284,10 @@ class RecitationPlayer(
         activity.mBinding.readerHeader.setExpanded(false)
     }
 
+    fun setPlaybackSpeed(speed: Float) {
+        service?.updatePlaybackSpeed(speed)
+    }
+
     fun setRepeat(repeat: Boolean) {
         service?.updateRepeatMode(repeat)
     }
@@ -296,7 +300,7 @@ class RecitationPlayer(
         return service?.isReciting(chapterNo, verseNo) ?: false
     }
 
-    fun onAudioOptionChanged(newOption: Int) {
+    fun setAudioOption(newOption: Int) {
         service?.onAudioOptionChanged(newOption)
     }
 }

@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.TypefaceSpan
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -17,10 +18,12 @@ import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.LytAudioOptionExplorerBinding
+import com.quranapp.android.databinding.LytPlaybackSpeedExplorerBinding
 import com.quranapp.android.databinding.LytRecitationMenuBinding
 import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.drawable
+import com.quranapp.android.utils.extensions.updatePaddings
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -28,6 +31,8 @@ import com.quranapp.android.utils.univ.PopupWindow2
 import com.quranapp.android.utils.univ.RelativePopupWindow.HorizontalPosition
 import com.quranapp.android.utils.univ.RelativePopupWindow.VerticalPosition
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
+import com.quranapp.android.widgets.radio.PeaceRadioButton
+import java.util.*
 
 class RecitationPlayerMenu(private val player: RecitationPlayer) {
     private val popup = createPopup()
@@ -95,6 +100,18 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             openAudioOptionSheet()
         }
 
+        binding.playbackSpeed.setDrawables(
+            context.drawable(R.drawable.icon_playback_speed),
+            null,
+            drawable,
+            null
+        )
+
+        binding.playbackSpeed.setOnClickListener {
+            close()
+            openPlaybackSpeedSheet()
+        }
+
         binding.audioOption.setDrawables(
             context.drawable(R.drawable.dr_icon_settings),
             null,
@@ -121,6 +138,10 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
         binding.audioOption.text = prepareTitle(
             context.getString(R.string.audioOption),
             RecitationUtils.resolveAudioOptionText(context)
+        )
+        binding.playbackSpeed.text = prepareTitle(
+            context.getString(R.string.playbackSpeed),
+            String.format(Locale.getDefault(), "%.1f", SPReader.getRecitationSpeed(context))
         )
         binding.selectReciter.text = prepareTitle(context.getString(R.string.strTitleSelectReciter), null)
 
@@ -155,7 +176,42 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
                 audioOption.onCheckChangedListener = { _, checkedId ->
                     val audioOption = RecitationUtils.resolveAudioOptionFromId(checkedId)
                     SPReader.setRecitationAudioOption(context, audioOption)
-                    player.onAudioOptionChanged(audioOption)
+                    player.setAudioOption(audioOption)
+                    sheetDialog.dismiss()
+                }
+            }.root
+        }
+
+        sheetDialog.show(player.activity.supportFragmentManager)
+    }
+
+    private fun openPlaybackSpeedSheet() {
+        val sheetDialog = PeaceBottomSheet()
+        sheetDialog.params.apply {
+            headerTitle = context.getString(R.string.playbackSpeed)
+            contentView = LytPlaybackSpeedExplorerBinding.inflate(player.activity.layoutInflater).apply {
+                val savedSpeed = SPReader.getRecitationSpeed(context)
+
+                arrayOf(0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5).forEach { speed ->
+                    val radio = PeaceRadioButton(context).apply {
+                        tag = speed
+                        setText(String.format(Locale.getDefault(), "%.1fx", speed))
+                        gravity = Gravity.CENTER
+                        updatePaddings(context.dp2px(10f))
+                        setSpaceBetween(context.dp2px(15f))
+                        setTextAppearance(R.style.TextAppearanceCommonTitle)
+                        setBackgroundResource(R.drawable.dr_bg_hover)
+                    }
+
+                    radio.isChecked = speed == savedSpeed
+                    playbackSpeed.addView(radio)
+                }
+
+                playbackSpeed.onCheckChangedListener = { button, _ ->
+                    val speed = button.tag.toString().toFloat()
+
+                    SPReader.setRecitationSpeed(context, speed)
+                    player.setPlaybackSpeed(speed)
                     sheetDialog.dismiss()
                 }
             }.root

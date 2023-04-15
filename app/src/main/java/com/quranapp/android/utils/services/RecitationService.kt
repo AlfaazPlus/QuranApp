@@ -1,39 +1,24 @@
 package com.quranapp.android.utils.services
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.media.AudioManager
-import android.media.AudioManager.OnAudioFocusChangeListener
 import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.Handler
 import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
-import androidx.media.AudioFocusRequestCompat
-import androidx.media.AudioManagerCompat
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_AUTO_TRANSITION
-import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_SEEK
-import com.google.android.exoplayer2.Player.Listener
-import com.google.android.exoplayer2.Player.PositionInfo
-import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
-import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
-import com.google.android.exoplayer2.Player.STATE_BUFFERING
-import com.google.android.exoplayer2.Player.STATE_ENDED
-import com.google.android.exoplayer2.Player.STATE_READY
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -69,7 +54,7 @@ import com.quranapp.android.views.recitation.RecitationPlayer
 import java.io.File
 
 
-class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChangeListener {
+class RecitationService : Service(), MediaDescriptionAdapter {
     companion object {
         const val NOTIF_ID = 55
         const val MILLIS_MULTIPLIER = 100L
@@ -80,10 +65,6 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
     private val binder = LocalBinder()
     private lateinit var player: ExoPlayer
     private val playlist = ConcatenatingMediaSource()
-    private var audioManager: AudioManager? = null
-    private val audioFocusRequest = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
-        .setOnAudioFocusChangeListener(this)
-        .build()
     private val dataSourceFactory = FileDataSource.Factory()
     private val headsetReceiver = RecitationHeadsetReceiver(this)
     private var mediaSession: MediaSessionCompat? = null
@@ -115,8 +96,15 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
         recParams.init(this)
 
         fileUtils = FileUtils.newInstance(this)
-
         player = ExoPlayer.Builder(this).build().apply {
+            setMediaSource(playlist)
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
+                    .build(),
+                true
+            )
             addListener(object : Listener {
                 override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                     onMediaItemTransition(mediaItem)
@@ -171,6 +159,7 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                     } else {
                         recPlayer?.onPauseMedia(recParams)
                     }
+
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
@@ -179,7 +168,6 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
                 }
             })
         }
-        player.setMediaSource(playlist)
 
         playerNotificationManager = PlayerNotificationManager.Builder(
             this,
@@ -199,19 +187,18 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
             .setPreviousActionIconResourceId(R.drawable.dr_icon_player_seek_left)
             .setPlayActionIconResourceId(R.drawable.dr_icon_play_verse)
             .setPauseActionIconResourceId(R.drawable.dr_icon_pause_verse)
-            .setStopActionIconResourceId(R.drawable.icon_verse_stop)
+//            .setStopActionIconResourceId(R.drawable.icon_verse_stop)
             .setNextActionIconResourceId(R.drawable.dr_icon_player_seek_right)
             .build()
 
         playerNotificationManager!!.let {
             it.setColor(color(R.color.colorPrimaryDark))
             it.setColorized(true)
-
             it.setUsePlayPauseActions(true)
             it.setUseRewindAction(false)
             it.setUseFastForwardAction(false)
             it.setUseChronometer(true)
-            it.setUseStopAction(true)
+//            it.setUseStopAction(true)
             it.setUseNextAction(true)
             it.setUseNextActionInCompactView(true)
             it.setUsePreviousAction(true)
@@ -230,20 +217,15 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
             setClearMediaItemsOnStop(true)
         }
 
-        audioManager = ContextCompat.getSystemService(this, AudioManager::class.java)
-
         registerReceiver(headsetReceiver, IntentFilter(AudioManager.ACTION_HEADSET_PLUG))
     }
 
     override fun onDestroy() {
-        Log.d("DESTROY")
+        Log.d("RecitationService", "onDestroy")
+        unregisterReceiver(headsetReceiver)
 
         playerNotificationManager?.setPlayer(null)
         destroy()
-        unregisterReceiver(headsetReceiver)
-        audioManager?.let {
-            AudioManagerCompat.abandonAudioFocusRequest(it, audioFocusRequest)
-        }
 
         super.onDestroy()
     }
@@ -268,6 +250,12 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
         quranMeta = activity?.mQuranMetaRef?.get()
 
         sync()
+    }
+
+    fun updatePlaybackSpeed(speed: Float) {
+        recParams.playbackSpeed = speed
+        player.setPlaybackSpeed(speed)
+        SPReader.setRecitationSpeed(this, speed)
     }
 
     fun updateRepeatMode(repeat: Boolean) {
@@ -507,10 +495,6 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
     fun playMedia() {
         runAudioProgress()
 
-        audioManager?.let {
-            AudioManagerCompat.requestAudioFocus(it, audioFocusRequest)
-        }
-
         player.play()
     }
 
@@ -533,8 +517,6 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
     }
 
     fun stopMedia() {
-        ContextCompat.getSystemService(this, NotificationManager::class.java)?.cancel(NOTIF_ID)
-
         player.pause()
         player.stop()
         player.clearMediaItems()
@@ -894,13 +876,6 @@ class RecitationService : Service(), MediaDescriptionAdapter, OnAudioFocusChange
 
     override fun getCurrentLargeIcon(player: Player, callback: BitmapCallback): Bitmap {
         return drawable(R.drawable.dr_quran_wallpaper).toBitmap()
-    }
-
-    override fun onAudioFocusChange(focusChange: Int) {
-        when (focusChange) {
-            AudioManager.AUDIOFOCUS_LOSS -> pauseMedia()
-            AudioManager.AUDIOFOCUS_GAIN -> playMedia()
-        }
     }
 
     fun cancelLoading() {

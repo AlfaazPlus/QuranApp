@@ -85,6 +85,22 @@
 
 
     <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/playbackSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/playbackSpeed"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:drawableEndDimen="20dp"
+        app:drawableStartDimen="20dp"
+        app:drawableTint="@color/colorIcon" />
+
+    <com.quranapp.android.widgets.IconedTextView
         android:id="@+id/audioOption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
