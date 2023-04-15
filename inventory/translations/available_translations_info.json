@@ -246,7 +246,8 @@
         "langCode": "ur",
         "langName": "اردو",
         "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/ur/ur_jalandhari.json"
+        "downloadPath": "inventory/translations/ur/ur_jalandhari.json",
+        "hasAudio": true
       },
       "ur_israr-ahmad": {
         "book": "بیان القرآن",
