@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:padding="15dp"
             android:textColor="@color/colorText2"
-            android:textSize="@dimen/dmnCommonSize2"
+            android:textSize="@dimen/dmnCommonSize2_5"
             tools:text="2020-01-01 00:00:00" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -60,10 +60,19 @@
             android:id="@+id/btnCopy"
             android:layout_width="@dimen/dmnActionButton"
             android:layout_height="@dimen/dmnActionButton"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/dr_bg_action_round"
             android:padding="7dp"
             android:src="@drawable/icon_copy" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnGitHub"
+            android:layout_width="@dimen/dmnActionButton"
+            android:layout_height="@dimen/dmnActionButton"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="7dp"
+            android:src="@drawable/icon_github" />
     </LinearLayout>
 
 </LinearLayout>

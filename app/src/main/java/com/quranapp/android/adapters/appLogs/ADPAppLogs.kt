@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
+import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.components.appLogs.AppLogModel
 import com.quranapp.android.databinding.LytLogItemBinding
 import com.quranapp.android.utils.extensions.copyToClipboard
@@ -30,6 +32,12 @@ class ADPAppLogs(private val logs: ArrayList<AppLogModel>) : RecyclerView.Adapte
             binding.btnCopy.setOnClickListener {
                 it.context.copyToClipboard(logModel.log)
                 Toast.makeText(it.context, R.string.copiedToClipboard, Toast.LENGTH_SHORT).show()
+            }
+
+            binding.btnGitHub.setOnClickListener {
+                it.context.copyToClipboard(logModel.log)
+                Toast.makeText(it.context, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
+                AppBridge.newOpener(it.context).browseLink(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
             }
         }
     }

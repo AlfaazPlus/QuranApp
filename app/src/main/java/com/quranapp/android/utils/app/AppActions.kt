@@ -115,7 +115,6 @@ object AppActions {
                 ctx.copyToClipboard(lastCrashLog)
                 SPLog.removeLastCrashLogFilename(ctx)
                 Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
-                // redirect to github issues
                 AppBridge.newOpener(ctx).browseLink(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
             }
             .show()

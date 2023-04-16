@@ -833,7 +833,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         prepareTitle(
             logExplorerBinding,
             R.string.appLogs,
-            TextUtils.concat(ctx.getString(R.string.crashLogs), ",", ctx.getString(R.string.suppressedLogs)).toString()
+            TextUtils.concat(ctx.getString(R.string.crashLogs), ", ", ctx.getString(R.string.suppressedLogs)).toString()
         );
 
         logExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsAppLogs.class, null));
