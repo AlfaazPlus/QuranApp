@@ -11,7 +11,7 @@ class CustomExceptionHandler(
     private val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
 
     override fun uncaughtException(thread: Thread, exc: Throwable) {
-        val stackTraceString = ExceptionUtils.getStackTrace(exc);
+        val stackTraceString = ExceptionUtils.getStackTrace(exc)
         SPLog.saveLastCrashLog(ctx, stackTraceString)
         NotificationUtils.showCrashNotification(ctx, stackTraceString)
         defaultExceptionHandler?.uncaughtException(thread, exc)

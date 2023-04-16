@@ -86,8 +86,8 @@
     <string name="strTitleFootnote">Footnote</string>
     <string name="strTitleFootnotes">Footnotes</string>
     <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
-    <string name="strTitleReaderChapters">Surahs\n(Chapters)</string>
-    <string name="strTitleReaderJuz">Juz\n(Para)</string>
+    <string name="strTitleReaderChapters">Surahs (Chapters)</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
     <string name="strTitleReaderChapters2">Surahs</string>
     <string name="strTitleReaderJuz2">Juz</string>
     <string name="strTitleReaderVerses">Verses</string>
