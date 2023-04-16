@@ -1,6 +1,7 @@
 package com.quranapp.android.frags.settings.appLogs
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,7 +64,7 @@ class FragAppLogsCrash : BaseFragment() {
                     "Fatal Crash",
                     logFile,
                     log,
-                    log.substring(0, 200) + if (log.length > 200) "..." else "",
+                    log.substring(0, 200) + if (log.length > 200) "... ${log.length - 200} more chars" else "",
                 )
             )
         }
@@ -72,7 +73,7 @@ class FragAppLogsCrash : BaseFragment() {
             it.addItemDecoration(GapedItemDecoration(context.dp2px(10F)))
             it.updatePaddingHorizontal(context.dp2px(15F))
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = ADPAppLogs(logs)
+            it.adapter = ADPAppLogs(logs, Color.parseColor("#B23F3F"))
         }
         binding.loader.visibility = View.GONE
     }

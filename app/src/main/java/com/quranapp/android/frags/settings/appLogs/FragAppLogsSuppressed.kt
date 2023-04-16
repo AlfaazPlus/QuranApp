@@ -1,12 +1,12 @@
 package com.quranapp.android.frags.settings.appLogs
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.R
 import com.quranapp.android.adapters.appLogs.ADPAppLogs
 import com.quranapp.android.components.appLogs.AppLogModel
@@ -62,7 +62,7 @@ class FragAppLogsSuppressed : BaseFragment() {
                     place,
                     logFile,
                     log,
-                    log.substring(0, 200) + if (log.length > 200) "..." else "",
+                    log.substring(0, 200) + if (log.length > 200) "... ${log.length - 200} more chars" else "",
                 )
             )
         }
@@ -71,7 +71,7 @@ class FragAppLogsSuppressed : BaseFragment() {
             it.addItemDecoration(GapedItemDecoration(context.dp2px(10F)))
             it.updatePaddingHorizontal(context.dp2px(15F))
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = ADPAppLogs(logs)
+            it.adapter = ADPAppLogs(logs, Color.parseColor("#A58A2A"))
         }
         binding.loader.visibility = View.GONE
     }

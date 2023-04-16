@@ -11,7 +11,10 @@ import com.quranapp.android.components.appLogs.AppLogModel
 import com.quranapp.android.databinding.LytLogItemBinding
 import com.quranapp.android.utils.extensions.copyToClipboard
 
-class ADPAppLogs(private val logs: ArrayList<AppLogModel>) : RecyclerView.Adapter<ADPAppLogs.VHAppLog>() {
+class ADPAppLogs(
+    private val logs: ArrayList<AppLogModel>,
+    private val logColor: Int
+) : RecyclerView.Adapter<ADPAppLogs.VHAppLog>() {
     inner class VHAppLog(private val binding: LytLogItemBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.clipToOutline = true
@@ -21,6 +24,7 @@ class ADPAppLogs(private val logs: ArrayList<AppLogModel>) : RecyclerView.Adapte
             binding.datetime.text = logModel.datetime
             binding.logText.text = logModel.logShort
             binding.place.text = logModel.place
+            binding.logText.setTextColor(logColor)
 
             binding.btnDelete.setOnClickListener {
                 if (logModel.file.delete()) {
