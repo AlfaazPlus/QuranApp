@@ -32,15 +32,14 @@ import com.quranapp.android.utils.univ.RelativePopupWindow.HorizontalPosition
 import com.quranapp.android.utils.univ.RelativePopupWindow.VerticalPosition
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 import com.quranapp.android.widgets.radio.PeaceRadioButton
-import java.util.*
+import java.util.Locale
 
 class RecitationPlayerMenu(private val player: RecitationPlayer) {
     private val popup = createPopup()
     private var mBinding: LytRecitationMenuBinding? = null
 
     init {
-        val inflater = AsyncLayoutInflater(player.context)
-        inflater.inflate(R.layout.lyt_recitation_menu, null) { view, _, _ ->
+        AsyncLayoutInflater(player.context).inflate(R.layout.lyt_recitation_menu, null) { view, _, _ ->
             mBinding = LytRecitationMenuBinding.bind(view)
             popup.contentView = mBinding!!.root
 
@@ -141,7 +140,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
         )
         binding.playbackSpeed.text = prepareTitle(
             context.getString(R.string.playbackSpeed),
-            String.format(Locale.getDefault(), "%.1f", SPReader.getRecitationSpeed(context))
+            String.format(Locale.getDefault(), "%.1fx", SPReader.getRecitationSpeed(context))
         )
         binding.selectReciter.text = prepareTitle(context.getString(R.string.strTitleSelectReciter), null)
 
@@ -192,7 +191,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             contentView = LytPlaybackSpeedExplorerBinding.inflate(player.activity.layoutInflater).apply {
                 val savedSpeed = SPReader.getRecitationSpeed(context)
 
-                arrayOf(0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5).forEach { speed ->
+                arrayOf(0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f).forEach { speed ->
                     val radio = PeaceRadioButton(context).apply {
                         tag = speed
                         setText(String.format(Locale.getDefault(), "%.1fx", speed))

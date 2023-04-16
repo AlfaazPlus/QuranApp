@@ -1210,10 +1210,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (changed) {
             mPlayerService.onReciterChanged();
             mPlayerService.onTranslationReciterChanged();
-
-            if (params.getPreviouslyPlaying()) {
-                mPlayerService.restartVerseOnConfigChange();
-            }
+            mPlayerService.restartVerseOnConfigChange();
         }
     }
 

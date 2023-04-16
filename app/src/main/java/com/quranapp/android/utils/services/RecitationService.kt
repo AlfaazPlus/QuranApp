@@ -16,8 +16,20 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_AUTO_TRANSITION
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_SEEK
+import com.google.android.exoplayer2.Player.Listener
+import com.google.android.exoplayer2.Player.PositionInfo
+import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
+import com.google.android.exoplayer2.Player.STATE_BUFFERING
+import com.google.android.exoplayer2.Player.STATE_ENDED
+import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -154,16 +166,14 @@ class RecitationService : Service(), MediaDescriptionAdapter {
                     recParams.previouslyPlaying = isPlaying
                     recParams.pausedDueToHeadset = false
 
-                    if (isPlaying) {
-                        recPlayer?.onPlayMedia(recParams)
-                    } else {
-                        recPlayer?.onPauseMedia(recParams)
-                    }
+                    if (isPlaying) recPlayer?.onPlayMedia(recParams)
+                    else recPlayer?.onPauseMedia(recParams)
 
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
                     super.onPlayerError(error)
+                    Log.saveError(error, "RecitationService.ExoPlayer")
                     error.printStackTrace()
                 }
             })
@@ -217,7 +227,11 @@ class RecitationService : Service(), MediaDescriptionAdapter {
             setClearMediaItemsOnStop(true)
         }
 
-        registerReceiver(headsetReceiver, IntentFilter(AudioManager.ACTION_HEADSET_PLUG))
+        registerReceiver(headsetReceiver, IntentFilter(AudioManager.ACTION_HEADSET_PLUG).apply {
+            addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        })
+
+        syncConfigurations()
     }
 
     override fun onDestroy() {
@@ -339,6 +353,13 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         }
     }
 
+    private fun syncConfigurations() {
+        updatePlaybackSpeed(recParams.playbackSpeed)
+        updateRepeatMode(recParams.repeatVerse)
+        updateContinuePlaying(recParams.continueRange)
+        updateVerseSync(recParams.syncWithVerse, false)
+    }
+
     private fun runAudioProgress() {
         progressHandler?.removeCallbacksAndMessages(null)
         recPlayer?.updateMaxProgress((player.duration / MILLIS_MULTIPLIER).coerceAtLeast(0).toInt())
@@ -388,13 +409,8 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
         playlist.clear()
 
-        if (audioURI != null) {
-            addToQueue(audioURI, reciter, translReciter, chapterNo, verseNo)
-        }
-
-        if (translAudioURI != null) {
-            addToQueue(translAudioURI, reciter, translReciter, chapterNo, verseNo)
-        }
+        if (audioURI != null) addToQueue(audioURI, reciter, translReciter, chapterNo, verseNo)
+        if (translAudioURI != null) addToQueue(translAudioURI, reciter, translReciter, chapterNo, verseNo)
 
         player.setMediaSource(playlist)
         player.prepare()
@@ -582,7 +598,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         player.seekTo(0, 0)
     }
 
-    fun restartVerse(force: Boolean = false) {
+    private fun restartVerse(force: Boolean = false) {
         if (isLoadingInProgress) {
             return
         }
