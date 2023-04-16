@@ -11,6 +11,10 @@ import java.lang.ref.WeakReference;
 public class MessageUtils {
     private static WeakReference<Toast> mToast;
 
+    public static void showRemovableToast(Context context, int msgRes, int duration) {
+        showRemovableToast(context, context.getString(msgRes), duration);
+    }
+
     public static void showRemovableToast(Context context, CharSequence msg, int duration) {
         try {
             mToast.get().cancel();

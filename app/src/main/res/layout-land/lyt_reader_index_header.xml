@@ -29,7 +29,7 @@
         android:layout_marginStart="10dp"
         android:background="@drawable/dr_bg_reader_tab_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sort"
+        app:layout_constraintEnd_toStartOf="@id/search"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="center"
@@ -37,19 +37,6 @@
         app:tabIndicatorGravity="stretch"
         app:tabMode="fixed"
         app:tabRippleColor="@android:color/transparent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sort"
-        android:layout_width="@dimen/dmnActionButton"
-        android:layout_height="@dimen/dmnActionButton"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/dr_bg_hover_round"
-        android:padding="7dp"
-        android:src="@drawable/dr_icon_sort"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/search"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorIcon" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/search"
