@@ -3,6 +3,7 @@
  */
 package com.quranapp.android.adapters.recitation
 
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +12,20 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.R
 import com.quranapp.android.adapters.recitation.ADPRecitationTranslations.VHRecitationTranslation
+import com.quranapp.android.api.models.recitation.RecitationManageAudioInfoModel
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.updatePaddingHorizontal
 import com.quranapp.android.utils.extensions.updatePaddingVertical
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 
-class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>() {
+class ADPRecitationTranslations(private val frag: FragSettingsRecitationsBase) : RecyclerView.Adapter<VHRecitationTranslation>() {
     private var models: List<RecitationTranslationInfoModel> = ArrayList()
     private var selectedPos = -1
+    var isManageAudio = false
 
     init {
         setHasStableIds(true)
@@ -63,6 +68,9 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
         init {
             radio.isClickable = false
             radio.isFocusable = false
+            radio.getCompoundButton().visibility = if (isManageAudio) View.GONE else View.VISIBLE
+
+            if (isManageAudio) radio.setSpaceBetween(0)
         }
 
         fun bind(model: RecitationTranslationInfoModel) {
@@ -75,21 +83,36 @@ class ADPRecitationTranslations : RecyclerView.Adapter<VHRecitationTranslation>(
 
             radio.visibility = View.VISIBLE
             radio.setOnClickListener { v ->
-                select(bindingAdapterPosition)
-                SPReader.setSavedRecitationTranslationSlug(v.context, model.slug)
+                if (isManageAudio) {
+                    frag.launchFrag(FragSettingsManageAudioReciter::class.java, Bundle().apply {
+                        putSerializable(
+                            FragSettingsManageAudioReciter.KEY_RECITER_MODEL, RecitationManageAudioInfoModel(
+                                slug = model.slug,
+                                reciter = model.getReciterName(),
+                                urlHost = model.urlHost ?: "",
+                                urlPath = model.urlPath,
+                                langCode = model.langCode,
+                                langName = model.langName,
+                                book = model.book,
+                                isTranslation = true,
+                            )
+                        )
+                    })
+                } else {
+                    select(bindingAdapterPosition)
+                    SPReader.setSavedRecitationTranslationSlug(v.context, model.slug)
+                }
             }
         }
 
         private fun select(position: Int) {
             try {
-                val oldModel = models[selectedPos]
-                oldModel.isChecked = false
+                models[selectedPos].isChecked = false
                 notifyItemChanged(selectedPos)
             } catch (ignored: Exception) {
             }
 
-            val newModel = models[position]
-            newModel.isChecked = true
+            models[position].isChecked = true
 
             notifyItemChanged(position)
             selectedPos = position

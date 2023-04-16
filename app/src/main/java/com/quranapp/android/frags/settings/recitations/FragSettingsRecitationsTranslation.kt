@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.adapters.recitation.ADPRecitationTranslations
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
-import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -18,7 +17,7 @@ import com.quranapp.android.utils.univ.StringUtils
 import java.util.regex.Pattern
 
 class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
-    private val adapter = ADPRecitationTranslations()
+    private val adapter = ADPRecitationTranslations(this)
     private var models: List<RecitationTranslationInfoModel>? = null
 
     private var initialRecitation: String? = null
@@ -38,6 +37,7 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
     }
 
     private fun init(ctx: Context) {
+        adapter.isManageAudio = isManageAudio
         refresh(ctx, SPAppActions.getFetchRecitationTranslationsForce(ctx))
     }
 

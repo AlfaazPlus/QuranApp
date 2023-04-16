@@ -6,6 +6,26 @@
 
 package com.quranapp.android.frags.settings;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
+import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -28,6 +48,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -37,25 +58,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -64,6 +66,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
+import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
@@ -75,6 +78,7 @@ import com.quranapp.android.databinding.LytSettingsReaderBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.frags.settings.appLogs.FragSettingsAppLogs;
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.Log;
@@ -121,6 +125,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private LytReaderSettingsItemBinding mTranslExplorerBinding;
     private LytReaderSettingsItemBinding mTafsirExplorerBinding;
     private LytReaderSettingsItemBinding mRecitationExplorerBinding;
+    private LytReaderSettingsItemBinding mManageAudioExplorerBinding;
     private LytReaderSettingsItemBinding mScriptExplorerBinding;
     private QuranTranslationFactory mTranslFactory;
     private ReaderVerseDecorator mVerseDecorator;
@@ -443,12 +448,11 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         initTranslExplorer(readerSettings.explorerLauncherContainer);
         initTafsirExplorer(readerSettings.explorerLauncherContainer);
+        initScriptExplorer(readerSettings.explorerLauncherContainer);
         if (RecitationUtils.isRecitationSupported()) {
             initRecitationExplorer(readerSettings.explorerLauncherContainer);
+            initManageAudioExplorer(readerSettings.explorerLauncherContainer);
         }
-        initScriptExplorer(readerSettings.explorerLauncherContainer);
-
-
         readerSettings.btnReset.setOnTouchListener(new HoverPushOpacityEffect());
         readerSettings.btnReset.setOnClickListener(v -> resetCheckpoint(ctx));
         readerSettings.getRoot().setVisibility(VISIBLE);
@@ -498,7 +502,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         }
 
         final int size = slugs.size();
-        String subtext = size <= 0 ? null : getString(R.string.strLabelSelectedCount, size);
+        String subtext = size == 0 ? null : getString(R.string.strLabelSelectedCount, size);
         prepareTitle(mTranslExplorerBinding, R.string.strTitleTranslations, subtext);
     }
 
@@ -511,6 +515,27 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         mTafsirExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsTafsirs.class, null));
 
         parent.addView(mTafsirExplorerBinding.getRoot());
+    }
+
+    private void initScriptExplorer(LinearLayout parent) {
+        mScriptExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
+
+        setupLauncherParams(R.drawable.dr_icon_quran_script, mScriptExplorerBinding);
+        setupScriptTitle();
+
+        mScriptExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsScripts.class, null));
+
+        parent.addView(mScriptExplorerBinding.getRoot());
+    }
+
+
+    private void setupScriptTitle() {
+        if (mScriptExplorerBinding == null) return;
+
+        String subtitle = QuranScriptUtilsKt.getQuranScriptName(
+            SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext())
+        );
+        prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
     }
 
     private void setupTafsirTitle() {
@@ -557,33 +582,23 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         });
     }
 
-    private void initScriptExplorer(LinearLayout parent) {
-        mScriptExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
+    private void initManageAudioExplorer(LinearLayout parent) {
+        mManageAudioExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_quran_script, mScriptExplorerBinding);
-        setupScriptTitle();
+        setupLauncherParams(R.drawable.dr_icon_download, mManageAudioExplorerBinding);
 
-        mScriptExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsScripts.class, null));
+        prepareTitle(mManageAudioExplorerBinding, R.string.titleManageAudio, getString(R.string.downloadRecitations));
 
-        parent.addView(mScriptExplorerBinding.getRoot());
-    }
+        mManageAudioExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsManageAudio.class, null));
 
-    private void setupScriptTitle() {
-        if (mScriptExplorerBinding == null) return;
-
-        String subtitle = QuranScriptUtilsKt.getQuranScriptName(
-            SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext())
-        );
-        prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
+        parent.addView(mManageAudioExplorerBinding.getRoot());
     }
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {
         Context context = textView.getContext();
         Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
 
-        if (chevronRight != null && WindowUtils.isRTL(context)) {
-            chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
-        }
+        if (WindowUtils.isRTL(context)) chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
 
         textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
@@ -871,6 +886,23 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
                 for (RecitationInfoModel model : models) {
                     if (model != null) {
                         SPReader.setSavedRecitationSlug(ctx, model.getSlug());
+                        break;
+                    }
+                }
+
+                setupRecitationTitle();
+            }
+
+            return Unit.INSTANCE;
+        });
+
+        RecitationManager.prepareTranslations(ctx, false, () -> {
+            List<RecitationTranslationInfoModel> models = RecitationManager.getTranslationModels();
+
+            if (models != null) {
+                for (RecitationTranslationInfoModel model : models) {
+                    if (model != null) {
+                        SPReader.setSavedRecitationTranslationSlug(ctx, model.getSlug());
                         break;
                     }
                 }

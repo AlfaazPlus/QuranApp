@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
+import com.quranapp.android.R
+import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.interfaceUtils.ActivityResultStarter
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.Companion.intentFilter

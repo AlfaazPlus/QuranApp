@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.RadioButton
 import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.colorStateList
@@ -39,9 +38,7 @@ class PeaceRadioButton @JvmOverloads constructor(
         }
     }
 
-    override fun getCompoundButton(): CompoundButton {
-        return radio
-    }
+    override fun getCompoundButton() = radio
 
     @SuppressLint("AppCompatCustomView")
     inner class RadioHelper(context: Context) : RadioButton(context) {

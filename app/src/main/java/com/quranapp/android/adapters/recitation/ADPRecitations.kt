@@ -1,111 +1,110 @@
 /*
  * Created by Faisal Khan on (c) 22/8/2021.
  */
+package com.quranapp.android.adapters.recitation
 
-package com.quranapp.android.adapters.recitation;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.quranapp.android.adapters.recitation.ADPRecitations.VHRecitation
+import com.quranapp.android.api.models.recitation.RecitationInfoModel
+import com.quranapp.android.api.models.recitation.RecitationManageAudioInfoModel
+import com.quranapp.android.databinding.LytSettingsRecitationItemBinding
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
+import com.quranapp.android.utils.sharedPrefs.SPReader
 
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerView.Adapter<VHRecitation>() {
+    private var models: List<RecitationInfoModel> = ArrayList()
+    private var selectedPos = -1
+    var isManageAudio = false
 
-import com.quranapp.android.api.models.recitation.RecitationInfoModel;
-import com.quranapp.android.databinding.LytSettingsRecitationItemBinding;
-import com.quranapp.android.utils.sharedPrefs.SPReader;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class ADPRecitations extends RecyclerView.Adapter<ADPRecitations.VHRecitation> {
-    private List<RecitationInfoModel> mModels;
-    private int mSelectedPos = -1;
-
-    public ADPRecitations() {
-        setHasStableIds(true);
+    init {
+        setHasStableIds(true)
     }
 
-    public void setModels(List<RecitationInfoModel> models) {
-        mModels = new ArrayList<>(models);
+    fun setModels(models: List<RecitationInfoModel>) {
+        this.models = ArrayList(models)
     }
 
-    @NonNull
-    @Override
-    public VHRecitation onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new VHRecitation(LytSettingsRecitationItemBinding.inflate(inflater, parent, false));
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHRecitation {
+        return VHRecitation(LytSettingsRecitationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull VHRecitation holder, int position) {
-        holder.bind(mModels.get(position));
+    override fun onBindViewHolder(holder: VHRecitation, position: Int) {
+        holder.bind(models[position])
     }
 
-    @Override
-    public int getItemCount() {
-        return mModels.size();
+    override fun getItemCount(): Int {
+        return models.size
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    public class VHRecitation extends RecyclerView.ViewHolder {
-        private final LytSettingsRecitationItemBinding mBinding;
+    inner class VHRecitation(private val binding: LytSettingsRecitationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.radio.isClickable = false
+            binding.radio.isFocusable = false
+            binding.radio.visibility = if (isManageAudio) View.GONE else View.VISIBLE
 
-        public VHRecitation(@NonNull LytSettingsRecitationItemBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
-            mBinding.radio.setClickable(false);
-            mBinding.radio.setFocusable(false);
+            if (isManageAudio) (binding.reciter.layoutParams as? ViewGroup.MarginLayoutParams)?.marginStart = 0
         }
 
-        public void bind(RecitationInfoModel model) {
-            if (mBinding == null) {
-                return;
-            }
+        fun bind(model: RecitationInfoModel) {
+            binding.reciter.text = model.getReciterName()
 
-            mBinding.reciter.setText(model.getReciterName());
-
-            if (TextUtils.isEmpty(model.getStyleName())) {
-                mBinding.style.setVisibility(View.GONE);
+            if (model.getStyleName().isNullOrEmpty()) {
+                binding.style.visibility = View.GONE
             } else {
-                mBinding.style.setVisibility(View.VISIBLE);
-                mBinding.style.setText(model.getStyleName());
+                binding.style.visibility = View.VISIBLE
+                binding.style.text = model.getStyleName()
             }
 
-            mBinding.radio.setChecked(model.isChecked());
-            if (model.isChecked()) {
-                mSelectedPos = getAdapterPosition();
+            binding.radio.isChecked = model.isChecked
+
+            if (model.isChecked) {
+                selectedPos = bindingAdapterPosition
             }
 
-            mBinding.radio.setVisibility(View.VISIBLE);
-
-            mBinding.getRoot().setOnClickListener(v -> {
-                select(getAdapterPosition());
-                mBinding.radio.setChecked(true);
-                SPReader.setSavedRecitationSlug(v.getContext(), model.getSlug());
-            });
+            binding.root.setOnClickListener { v: View ->
+                if (isManageAudio) {
+                    frag?.launchFrag(FragSettingsManageAudioReciter::class.java, Bundle().apply {
+                        putSerializable(
+                            FragSettingsManageAudioReciter.KEY_RECITER_MODEL, RecitationManageAudioInfoModel(
+                                slug = model.slug,
+                                urlHost = model.urlHost ?: "",
+                                urlPath = model.urlPath,
+                                reciter = model.getReciterName(),
+                                langCode = null,
+                                langName = null,
+                                book = null,
+                                isTranslation = false,
+                            )
+                        )
+                    })
+                } else {
+                    select(bindingAdapterPosition)
+                    binding.radio.isChecked = true
+                    SPReader.setSavedRecitationSlug(v.context, model.slug)
+                }
+            }
         }
 
-        private void select(int position) {
+        private fun select(position: Int) {
             try {
-                RecitationInfoModel oldModel = mModels.get(mSelectedPos);
-                if (oldModel != null) {
-                    oldModel.setChecked(false);
-                    notifyItemChanged(mSelectedPos);
-                }
-            } catch (Exception ignored) {}
-
-            RecitationInfoModel newModel = mModels.get(position);
-            if (newModel != null) {
-                newModel.setChecked(true);
-                notifyItemChanged(position);
+                models[selectedPos].isChecked = false
+                notifyItemChanged(selectedPos)
+            } catch (ignored: Exception) {
             }
 
-            mSelectedPos = position;
+            models[position].isChecked = true
+            notifyItemChanged(position)
+
+            selectedPos = position
         }
     }
 }

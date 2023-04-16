@@ -11,15 +11,25 @@ import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.widgets.PageAlert
 
 abstract class FragSettingsRecitationsBase : FragSettingsBase() {
+    companion object {
+        const val KEY_IS_MANAGE_AUDIO = "key.is_manage_audio"
+    }
+
     protected lateinit var binding: FragSettingsTranslBinding
     protected lateinit var fileUtils: FileUtils
     private var pageAlert: PageAlert? = null
+    protected var isManageAudio = false
 
     override fun getFragTitle(ctx: Context): String? {
         return null
     }
 
     override val layoutResource = R.layout.frag_settings_transl
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isManageAudio = getArgs().getBoolean(KEY_IS_MANAGE_AUDIO, false)
+    }
 
     @CallSuper
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
@@ -60,7 +70,7 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
         }
     }
 
-    protected fun showAlert(ctx: Context, msgRes: Int, btnRes: Int, action: Runnable) {
+    private fun showAlert(ctx: Context, msgRes: Int, btnRes: Int, action: Runnable) {
         hideLoader()
 
         if (pageAlert == null) {
@@ -80,7 +90,7 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
         }
     }
 
-    protected fun hideAlert() {
+    private fun hideAlert() {
         pageAlert?.remove()
     }
 

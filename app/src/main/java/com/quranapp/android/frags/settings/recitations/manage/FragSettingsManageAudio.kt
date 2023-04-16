@@ -1,4 +1,4 @@
-package com.quranapp.android.frags.settings.recitations
+package com.quranapp.android.frags.settings.recitations.manage
 
 import android.content.Context
 import android.os.Bundle
@@ -11,33 +11,20 @@ import com.quranapp.android.adapters.utility.ViewPagerAdapter2
 import com.quranapp.android.databinding.FragSettingsRecitationsBinding
 import com.quranapp.android.databinding.LytReaderIndexTabBinding
 import com.quranapp.android.frags.settings.FragSettingsBase
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsArabic
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsTranslation
 import com.quranapp.android.utils.Log
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 
-class FragSettingsRecitations : FragSettingsBase() {
+class FragSettingsManageAudio : FragSettingsBase() {
     private lateinit var binding: FragSettingsRecitationsBinding
     private var pageAdapter: ViewPagerAdapter2? = null
 
-    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectReciter)
+    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.titleManageAudio)
 
     override val layoutResource = R.layout.frag_settings_recitations
-
-    override fun getFinishingResult(ctx: Context): Bundle? {
-        if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty() ) return null
-
-        val bundle = Bundle()
-
-        pageAdapter!!.fragments.forEach {
-            if (it is FragSettingsBase) {
-                it.getFinishingResult(ctx)?.let { result ->
-                    bundle.putAll(result)
-                }
-            }
-        }
-
-        return if (bundle.isEmpty) null else bundle
-    }
 
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
@@ -45,16 +32,6 @@ class FragSettingsRecitations : FragSettingsBase() {
             setCallback(object : BoldHeaderCallback {
                 override fun onBackIconClick() {
                     activity.onBackPressedDispatcher.onBackPressed()
-                }
-
-                override fun onRightIconClick() {
-                    if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
-                    // refresh child fragments
-                    pageAdapter!!.fragments.forEach {
-                        if (it is FragSettingsRecitationsBase) {
-                            it.refresh(activity, true)
-                        }
-                    }
                 }
 
                 override fun onSearchRequest(searchBox: EditText, newText: CharSequence) {
@@ -86,8 +63,18 @@ class FragSettingsRecitations : FragSettingsBase() {
         binding.let {
             pageAdapter = ViewPagerAdapter2(requireActivity())
             it.viewPager.adapter = pageAdapter!!.apply {
-                addFragment(FragSettingsRecitationsArabic(), ctx.getString(R.string.labelArabic))
-                addFragment(FragSettingsRecitationsTranslation(), ctx.getString(R.string.labelTranslation))
+                addFragment(
+                    FragSettingsRecitationsArabic().apply {
+                        arguments = Bundle().apply { putBoolean(FragSettingsRecitationsBase.KEY_IS_MANAGE_AUDIO, true) }
+                    },
+                    ctx.getString(R.string.labelArabic)
+                )
+                addFragment(
+                    FragSettingsRecitationsTranslation().apply {
+                        arguments = Bundle().apply { putBoolean(FragSettingsRecitationsBase.KEY_IS_MANAGE_AUDIO, true) }
+                    },
+                    ctx.getString(R.string.labelTranslation)
+                )
             }
             it.viewPager.offscreenPageLimit = pageAdapter!!.itemCount
             it.viewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
@@ -98,6 +85,7 @@ class FragSettingsRecitations : FragSettingsBase() {
                 tabTitle.text = (viewPager.adapter as ViewPagerAdapter2).getPageTitle(position)
             }.root
         }
+
         binding.tabLayout.populateFromViewPager(binding.viewPager)
     }
 }

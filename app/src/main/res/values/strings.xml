@@ -123,7 +123,8 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
-    <string name="titleSelectReciter">Manage Audio</string>
+    <string name="titleManageAudio">Manage Audio</string>
+    <string name="downloadRecitations">Download Recitations</string>
     <string name="audioOption">Audio option</string>
     <string name="playbackSpeed">Playback speed</string>
     <string name="audioOnlyArabic">Play only Arabic</string>
