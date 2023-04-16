@@ -65,7 +65,7 @@
     <string name="strTitleFootnotes">هوامش</string>
     <string name="strTitleReaderChapters">السور</string>
     <string name="strTitleFootnote">الهامش</string>
-    <string name="strTitleReaderJuz">الجزء</string>
+    <string name="strTitleReaderJuz">الأجزاء</string>
     <string name="strTitleReaderChapters2">السور</string>
     <string name="strTitleTranslations">الترجمات</string>
     <string name="strTitleDownloadTranslations">تنزيل</string>
@@ -199,7 +199,7 @@
     <string name="strLabelQuickLinks">روابط سريعة</string>
     <string name="strLabelPremium">بريميوم</string>
     <string name="strTitleFilters">تصفية</string>
-    <string name="strTitleChapInfoJuzNo">جزء رقم</string>
+    <string name="strTitleChapInfoJuzNo">الجزء</string>
     <string name="strLabelRemoveBookmark">إزالة الإشارة المرجعية</string>
     <string name="strLabelBookmarked">تمت الإشارة</string>
     <string name="strLabelBookmark">الإشارات المرجعية</string>
@@ -220,16 +220,16 @@
     <string name="strMsgTafsirsNoAvailable">لا يوجد تفاسير متاحة</string>
     <string name="strDescAddToBookmarks">إضافة إلى الإشارات المرجعية</string>
     <string name="strDescClose">إغلاق</string>
-    <string name="strMsgProphetsOrder">عرض الأنبياء بترتيب زمني</string>
+    <string name="strMsgProphetsOrder">عرض الأنبياء بالترتيب الزمني</string>
     <string name="strMsgShareRange" formatted="false">أدخل النطاق بين %1$d - %2$d</string>
     <string name="strMsgTranslDownloaded" formatted="false">تم التنزيل: \"%s\".</string>
     <string name="strMsgTranslNoneSelected">لم يتم تحديد أي ترجمة. انتقل إلى الإعدادات للعثور على الترجمات.</string>
-    <string name="strMsgTranslSelectionLimit" formatted="false">يمكن تحديد الحد الأقصى للترجمات %d مرة واحدة. الرجاء إلغاء اختيار واحد قبل اختيار أخرى. هذا لتجنب فقدان الأداء.</string>
-    <string name="strMsgRecitationsLoadFailed">تعذر تحميل التلاوات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">يمكن تحديد الحد الأقصى للترجمات %d مرة واحدة. الرجاء إلغاء تحديد واحد قبل اختيار آخر. هذا لتجنب فقدان الأداء.</string>
+    <string name="strMsgRecitationsLoadFailed">تعذر تنزيل التلاوات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
     <string name="strDescGoBack">الرجوع</string>
     <string name="strDescVerseNoWithChapter" formatted="false">سورة %1$s, الآية رقم %2$d.</string>
     <string name="strMsgRecitationsNoAvailable">لا توجد تلاوات متاحة</string>
-    <string name="strMsgTranslLoadFailed">تعذر تحميل الترجمات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
+    <string name="strMsgTranslLoadFailed">تعذر تحميل الترجمات من الخادم. يرجى إعادة المحاولة لاحقاً.</string>
     <string name="strMsgTranslNoDownloads">لا توجد ترجمات تم تنزيلها متاحة</string>
     <string name="strMsgTranslNoDownloadsAvailable">لا توجد تنزيلات متاحة</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">فشل تنزيل \"%s\".</string>
@@ -239,4 +239,124 @@
     <string name="strTitleSelectTafsir">اختيار تفسير</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">قراءة تفسير الآية %d</string>
     <string name="noFootnotesForThisVerse">لا يوجد هواميش لهذه الآية.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">تم تنزيل %d من الخطوط التي يمكن حذفها.</string>
+    <string name="strLabelNavHome">الرئيسية</string>
+    <string name="strTitleOops">عفوا!</string>
+    <string name="strTitleInfo">معلومات!</string>
+    <string name="titleScriptCleanup">هل تريد حذف الخط؟</string>
+    <string name="strMsgNoInternet">الرجاء التحقق من اتصالك بالإنترنت.</string>
+    <string name="textPercentage" formatted="false">%d%</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s في القرآن</string>
+    <string name="strLabelProceed">يتم التنفيذ</string>
+    <string name="strTextUpdating">جارٍ التحديث …</string>
+    <string name="strTextSending">إرسال…</string>
+    <string name="strMsgVerseCredsInvalid">تفاصيل الآية غير صحيحة.</string>
+    <string name="strLabelNavSearch">البحث</string>
+    <string name="strMsgSomethingWrongFixing">حدث خطأ ما! نحن نعمل لإصلاحه.</string>
+    <string name="strTextPreparing">التحضير…</string>
+    <string name="strMsgBookmarkRemoved">تمت إزالة الآية من الإشارات المرجعية</string>
+    <string name="strMsgReadHistoryRemovedAlready">تمت إزالة سجل القراءة مسبقًا.</string>
+    <string name="strMsgReadHistoryRemoveFailed">فشل إزالة سجل القراءة.</string>
+    <string name="strMsgHistoryRemoved" formatted="false">تمت إزالة \"%s\" من السجل</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">إجمالي النتائج التي تم العثور عليها في %1$s:%2$d</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">لم يتم العثور على نتائج في %s. يرجى التحقق من عوامل تصفية البحث أو البحث في ترجمة أخرى.</string>
+    <string name="strMsgBookmarkAdded">تمت إضافة الآية إلى الإشارات المرجعية</string>
+    <string name="strMsgBookmarkRemoveFailed">فشل إزالة الآية من الإشارات المرجعية</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s في %2$s</string>
+    <string name="strLabelDownloadImage">تنزيل الصورة</string>
+    <string name="strLabelShareImage">مشاركة الصورة</string>
+    <string name="strMsgInvalidVersesRange">نطاق الآية غير موجود.</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d‐%2$d نطاق غير موجود للسورة رقم %3$d</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">الجزء %d غير موجود</string>
+    <string name="strMsgBookmarkNoItems">لا توجد إشارات مرجعية</string>
+    <string name="strMsgBookmarkDeleteSelected">ستتم إزالة الإشارات المرجعية المحددة.</string>
+    <string name="strMsgBookmarkDeleteAll">سيتم إزالة جميع الإشارات المرجعية.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">اليوم في %s</string>
+    <string name="strMsgSearchWordPart">البحث عن جزء الكلمة</string>
+    <string name="strMsgSearchWordPartExample">على سبيل المثال: \"الإنسان\" في \"الإنسانية\"</string>
+    <string name="strMsgSearchArabic">البحث في المصحف</string>
+    <string name="strMsgChangeLanguage">سيتم إعادة تشغيل التطبيق لتغير اللغة.</string>
+    <string name="strMsgNoInternetLong">لا يوجد اتصال بالإنترنت. تأكد من تشغيل Wi-Fi أو البيانات الخلوية، ثم حاول مرة أخرى.</string>
+    <string name="strMsgSomethingWrong">حدث خطأ ما!</string>
+    <string name="strMsgReportUs">الرجاء إبلاغنا.</string>
+    <string name="strTextPleaseWait">الرجاء الإنتظار…</string>
+    <string name="strTextInstalling">جارٍ التثبيت …</string>
+    <string name="strTextLoading">تحميل…</string>
+    <string name="strMsgUpdateAvailable4Dialog">تحديث متاح!
+\nيرجى تحديث التطبيق.</string>
+    <string name="strMsgUpdateAvailable2Continue">مطلوب التحديث!
+\nيرجى تحديث التطبيق للإستمرار.</string>
+    <string name="strLabelAllChapters">كل السور</string>
+    <string name="strTitleImageSavedWithName" formatted="false">تم حفظ الصورة بالاسم: %s</string>
+    <string name="strMsgEditShareLongTransl">الترجمة طويلة جداً، وقد لا تتناسب بشكل صحيح.</string>
+    <string name="strTitleReadHistory">عرض سجل القراءة</string>
+    <string name="strMsgReferenceDuas">بعض من الأدعية القرآنية.</string>
+    <string name="titleDownloadScriptResources">تنزيل المصادر لهذا الخط؟</string>
+    <string name="msgDownloadKFQPCResources">يجب تنزيل المصادر التالية قبل أن تتمكن من استخدام هذا الخط:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">رسم %s ( ~1مب)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">الخطوط: تم تنزيل %1$d من %2$d (المتبقي %3$d مب)</string>
+    <string name="msgDownloadingFonts">يتم تنزيل الخطوط</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d من %2$d الخطوط تم تنزيلها</string>
+    <string name="msgDownloadingResource" formatted="false">جار تنزيل %s</string>
+    <string name="msgScriptFontsDownloaded">تم تنزيل الخطوط.</string>
+    <string name="textDownloading">جار التنزيل…</string>
+    <string name="createIssue">إنشاء مشكلة</string>
+    <string name="msgAlarmManagerNotAvailable">مدير المنبهات غير متوفر في هذا الجهاز.</string>
+    <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تذكير الآية</string>
+    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تذكير الآية</string>
+    <string name="titleStorageCleanup">تنظيف مساحة التخزين</string>
+    <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات.
+\n
+\nيمكن تحرير المصادر التالية:</string>
+    <string name="recitationCanBeFreedUp" formatted="false">تم تخزين %1$d من التلاوات لعدد %2$d من القراء التي يمكن حذفها.</string>
+    <string name="titleChapterInfo">معلومات السور</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nتحتاج إلى تنزيله مرة آخرى.</string>
+    <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
+    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها.</string>
+    <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
+    <string name="titleChapterInfoCleanup">هل تريد حذف معلومات السور؟</string>
+    <string name="msgChapterInfoCleanup">سيتم حذف كل معلومات السور المخزنة.</string>
+    <string name="titleTafsirCleanup">هل تريد حذف التفسير؟</string>
+    <string name="msgTafsirCleanup" formatted="false">سيتم حذف كل التفاسير من%s.</string>
+    <string name="nothingToCleanup">لا يوجد شيء لتنظيف مساحة التخزين.</string>
+    <string name="onboardDescTheme">يمكنك تغيرها فيما بعد.</string>
+    <string name="onboardDescReciter">يمكنك تغيير القراء فيما بعد. يمكنك العثور على المزيد من القراء في الإعدادات.</string>
+    <string name="strMsgReadHistoryRemoved">تمت إزالة سجل القراءة.</string>
+    <string name="strTitleError">خطأ!</string>
+    <string name="strMsgEditShareTransl">الترجمات المحددة من الإعدادات يتم عرضها هنا.</string>
+    <string name="strMsgReadShowupHere">سجل قراءتك سيعرض هنا.</string>
+    <string name="strMsgSearchNoResultsFound">لم يتم العثور على نتائج. يرجى التحقق من عوامل تصفية البحث أو البحث في ترجمة أخرى.</string>
+    <string name="strMsgUpdateAvailable">تحديث متاح! يرجى تحديث التطبيق للحصول على أحدث الميزات.</string>
+    <string name="strMsgUpdateDownloaded">تم تنزيل التحديث! يرجى التثبيت لإكمال التحديث.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">لا توجد آية بالرقم %1$d في السورة رقم %2$d</string>
+    <string name="strMsgBookmarkRemovedAlready">الآية ليست موجودة في الإشارات المرجعية</string>
+    <string name="strMsgBookmarkAddFailed">فشلت إضافة الآية إلى الإشارات المرجعية</string>
+    <string name="strMsgBookmarkAddedAlready">الآية موجودة مسبقًا في الإشارات المرجعية</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">لم يتم العثور على نتائج. يرجى التحقق من عوامل تصفية البحث.</string>
+    <string name="strMsgReadHistoryNoItems">لا يوجد سجل قراءة</string>
+    <string name="strMsgReadHistoryDeleteSelected">ستتم إزالة سجلات القراءة المحددة.</string>
+    <string name="strMsgReadHistoryDeleteAll">ستتم إزالة جميع سجلات القراءة.</string>
+    <string name="strMsgHistoryRemove">هل تريد إزالة هذا السجل؟</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">تم العثور على نتيجة واحدة فقط في %s</string>
+    <string name="strMsgCouldNotOpenPage">تعذر فتح الصفحة.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">تم حفظ عدد %d من التفاسير التي يمكن حذفها.</string>
+    <string name="strPreviewTextTransl">بسم الله الرحمن الرحيم</string>
+    <string name="msgDownloadFailed">فشل التنزيل</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d من %2$d</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع اللتي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d</string>
+    <string name="labelBackgroundDownload">التنزيل في الخلفية</string>
+    <string name="msgDownloadingScript">يتم تنزيل الخط</string>
+    <string name="translationCanBeFreedUp" formatted="false">تم تنزيل %d من الترجمات التي يمكن حذفها.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">تم حفظ عدد %d من معلومات السور التي يمكن حذفها.</string>
+    <string name="nFiles" formatted="false">%d ملفات</string>
+    <string name="msgAnotherDownloadInProgress">تنزيل اخرى قيد التقدم</string>
+    <string name="lastCrashLog">تقرير الأعطال الأخيرة</string>
+    <string name="copiedToClipboard">تم النسخ.</string>
+    <string name="github">GitHub</string>
+    <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub</string>
+    <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
+    <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
 </resources>
