@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
@@ -248,7 +249,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
         QuranTranslBookInfo bookInfo = null;
         for (String savedSlug : savedTranslations) {
-            if (!TRANSL_TRANSLITERATION.equals(savedSlug)) {
+            if (!TranslUtils.isTransliteration(savedSlug)) {
                 bookInfo = factory.getTranslationBookInfo(savedSlug);
                 break;
             }
