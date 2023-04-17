@@ -371,13 +371,7 @@ class FragSettingsTranslationsDownload :
         }
 
         if (title != null && context != null) {
-            MessageUtils.popMessage(
-                context,
-                title,
-                msg,
-                ctx.getString(R.string.strLabelClose),
-                null
-            )
+            MessageUtils.popMessage(ctx, title, msg, ctx.getString(R.string.strLabelClose), null)
         }
     }
 

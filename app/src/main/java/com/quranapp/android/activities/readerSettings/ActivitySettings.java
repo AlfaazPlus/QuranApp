@@ -6,17 +6,15 @@
 
 package com.quranapp.android.activities.readerSettings;
 
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -28,8 +26,9 @@ import com.quranapp.android.frags.settings.FragSettingsScripts;
 import com.quranapp.android.frags.settings.FragSettingsTafsirs;
 import com.quranapp.android.frags.settings.FragSettingsTransl;
 import com.quranapp.android.frags.settings.FragSettingsTranslationsDownload;
-import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter;
 import com.quranapp.android.views.BoldHeader;
 
 import java.util.Objects;
@@ -45,6 +44,7 @@ public class ActivitySettings extends BaseActivity {
     public static final int SETTINGS_SCRIPT = 0x7;
     public static final int SETTINGS_RECITER = 0x8;
     public static final int SETTINGS_MANAGE_AUDIO = 0x9;
+    public static final int SETTINGS_MANAGE_AUDIO_RECITER = 0x10;
 
     private ActivitySettingsBinding mBinding;
 
@@ -98,7 +98,10 @@ public class ActivitySettings extends BaseActivity {
             if (!Objects.equals(f.getClass().getSimpleName(), resolveInitialFrag(intent).getSimpleName())) {
                 initIntent(intent, true);
             } else {
-                ((FragSettingsBase) f).onNewArguments(intent.getExtras());
+                Bundle args = intent.getExtras();
+                if (args != null) {
+                    ((FragSettingsBase) f).onNewArguments(args);
+                }
             }
         }
     }
@@ -155,6 +158,9 @@ public class ActivitySettings extends BaseActivity {
                 break;
             case SETTINGS_MANAGE_AUDIO:
                 destFrag = FragSettingsManageAudio.class;
+                break;
+            case SETTINGS_MANAGE_AUDIO_RECITER:
+                destFrag = FragSettingsManageAudioReciter.class;
                 break;
             case SETTINGS_THEME:
             case SETTINGS_VOTD:

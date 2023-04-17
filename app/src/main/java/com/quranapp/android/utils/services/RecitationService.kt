@@ -235,7 +235,6 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     }
 
     override fun onDestroy() {
-        Log.d("RecitationService", "onDestroy")
         unregisterReceiver(headsetReceiver)
 
         playerNotificationManager?.setPlayer(null)
@@ -822,8 +821,6 @@ class RecitationService : Service(), MediaDescriptionAdapter {
             if (verseFileExists && verseTranslFileExists) {
                 continue
             }
-
-            Log.d("Loading ahead verse - $chapterNo:$verseToLoad")
 
             if (
                 verseFile != null && !fileUtils.createFile(verseFile) &&

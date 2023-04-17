@@ -42,6 +42,7 @@ abstract class BaseFragment : Fragment(), NetworkStateReceiverListener, Activity
             requireContext().registerReceiver(mNetworkReceiver, intentFilter)
         }
     }
+    fun getArgs(): Bundle = arguments ?: Bundle()
 
     fun restartMainActivity(ctx: Context) {
         // start a new Intent of the app

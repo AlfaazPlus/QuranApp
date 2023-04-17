@@ -73,7 +73,7 @@ class RecitationPlayerVerseLoader {
                         downloadAudio(
                             this,
                             verseTranslFile,
-                            RecitationUtils.prepareRecitationTranslationAudioUrl(translModel, chapterNo, verseNo)!!
+                            RecitationUtils.prepareRecitationAudioUrl(translModel, chapterNo, verseNo)!!
                         )
                     } catch (e: Exception) {
                         deleteTranslFile = true

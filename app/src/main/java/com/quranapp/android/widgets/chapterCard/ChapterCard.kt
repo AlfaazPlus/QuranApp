@@ -49,7 +49,7 @@ open class ChapterCard @JvmOverloads constructor(
         )
 
         val pad = context.dp2px(10f)
-        setPadding(pad, pad, context.dp2px(5f), pad)
+        setPaddingRelative(pad, pad, context.dp2px(5f), pad)
 
         val serialView = createSerialView()
         val nameView = createNameView()

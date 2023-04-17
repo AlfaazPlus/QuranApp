@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
 import com.quranapp.android.R;
+import com.quranapp.android.api.models.recitation.RecitationInfoBaseModel;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
@@ -86,12 +87,7 @@ public class RecitationUtils {
     }
 
     @Nullable
-    public static String prepareRecitationAudioUrl(RecitationInfoModel model, int chapterNo, int verseNo) {
-        return prepareAudioUrl(model.getUrlHost(), model.getUrlPath(), chapterNo, verseNo);
-    }
-
-    @Nullable
-    public static String prepareRecitationTranslationAudioUrl(RecitationTranslationInfoModel model, int chapterNo, int verseNo) {
+    public static String prepareRecitationAudioUrl(RecitationInfoBaseModel model, int chapterNo, int verseNo) {
         return prepareAudioUrl(model.getUrlHost(), model.getUrlPath(), chapterNo, verseNo);
     }
 

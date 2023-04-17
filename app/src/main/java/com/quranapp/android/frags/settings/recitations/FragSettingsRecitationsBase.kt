@@ -2,15 +2,18 @@ package com.quranapp.android.frags.settings.recitations
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import com.quranapp.android.R
 import com.quranapp.android.databinding.FragSettingsTranslBinding
+import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.widgets.PageAlert
 
-abstract class FragSettingsRecitationsBase : FragSettingsBase() {
+abstract class FragSettingsRecitationsBase : BaseFragment() {
     companion object {
         const val KEY_IS_MANAGE_AUDIO = "key.is_manage_audio"
     }
@@ -19,21 +22,23 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
     protected lateinit var fileUtils: FileUtils
     private var pageAlert: PageAlert? = null
     protected var isManageAudio = false
+    var isRefreshing = false
 
-    override fun getFragTitle(ctx: Context): String? {
-        return null
-    }
-
-    override val layoutResource = R.layout.frag_settings_transl
+    abstract fun getFinishingResult(ctx: Context): Bundle?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isManageAudio = getArgs().getBoolean(KEY_IS_MANAGE_AUDIO, false)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.frag_settings_transl, container, false)
+    }
+
     @CallSuper
-    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        fileUtils = FileUtils.newInstance(ctx)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fileUtils = FileUtils.newInstance(view.context)
         binding = FragSettingsTranslBinding.bind(view)
     }
 
@@ -52,22 +57,14 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
     }
 
     protected fun showLoader() {
+        isRefreshing = true
         hideAlert()
         binding.loader.visibility = View.VISIBLE
-
-        activity()?.header?.apply {
-            setShowRightIcon(false)
-            setShowSearchIcon(false)
-        }
     }
 
     protected fun hideLoader() {
+        isRefreshing = false
         binding.loader.visibility = View.GONE
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
-            setShowSearchIcon(true)
-        }
     }
 
     private fun showAlert(ctx: Context, msgRes: Int, btnRes: Int, action: Runnable) {
@@ -82,11 +79,6 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
             setMessage("", ctx.getString(msgRes))
             setActionButton(btnRes, action)
             show(binding.container)
-        }
-
-        activity()?.header?.apply {
-            setShowSearchIcon(false)
-            setShowRightIcon(true)
         }
     }
 
@@ -103,10 +95,14 @@ abstract class FragSettingsRecitationsBase : FragSettingsBase() {
             setupForNoInternet { refresh(ctx, true) }
             show(binding.container)
         }
+    }
 
-        activity()?.header?.apply {
-            setShowSearchIcon(false)
-            setShowRightIcon(true)
+    fun launchFrag(cls: Class<out FragSettingsBase?>, args: Bundle?) {
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.frags_container, cls, args, cls.simpleName)
+            setReorderingAllowed(true)
+            addToBackStack(cls.simpleName)
+            commit()
         }
     }
 }

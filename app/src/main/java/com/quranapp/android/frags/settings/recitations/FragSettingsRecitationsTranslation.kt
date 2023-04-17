@@ -29,8 +29,10 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
         return null
     }
 
-    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        super.onViewReady(ctx, view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
+
         initialRecitation = SPReader.getSavedRecitationTranslationSlug(ctx)
 
         init(ctx)
@@ -44,6 +46,7 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
     override fun refresh(context: Context, force: Boolean) {
         if (force && !NetworkStateReceiver.isNetworkConnected(context)) {
             noInternet(context)
+            return
         }
 
         showLoader()
@@ -70,7 +73,7 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
             }
             return
         }
-        
+
         val pattern = Pattern.compile(
             StringUtils.escapeRegex(query.toString()),
             Pattern.CASE_INSENSITIVE or Pattern.DOTALL
@@ -93,11 +96,6 @@ class FragSettingsRecitationsTranslation : FragSettingsRecitationsBase() {
         (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         resetAdapter(models)
-
-        activity()?.header?.apply {
-            setShowSearchIcon(true)
-            setShowRightIcon(true)
-        }
     }
 
     private fun resetAdapter(models: List<RecitationTranslationInfoModel>) {

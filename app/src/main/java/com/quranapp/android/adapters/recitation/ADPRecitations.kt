@@ -9,12 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.adapters.recitation.ADPRecitations.VHRecitation
+import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
-import com.quranapp.android.api.models.recitation.RecitationManageAudioInfoModel
 import com.quranapp.android.databinding.LytSettingsRecitationItemBinding
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
 import com.quranapp.android.utils.sharedPrefs.SPReader
+import kotlinx.serialization.encodeToString
 
 class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerView.Adapter<VHRecitation>() {
     private var models: List<RecitationInfoModel> = ArrayList()
@@ -30,7 +31,13 @@ class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHRecitation {
-        return VHRecitation(LytSettingsRecitationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return VHRecitation(
+            LytSettingsRecitationItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VHRecitation, position: Int) {
@@ -45,7 +52,8 @@ class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerV
         return position.toLong()
     }
 
-    inner class VHRecitation(private val binding: LytSettingsRecitationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VHRecitation(private val binding: LytSettingsRecitationItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
             binding.radio.isClickable = false
             binding.radio.isFocusable = false
@@ -73,18 +81,7 @@ class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerV
             binding.root.setOnClickListener { v: View ->
                 if (isManageAudio) {
                     frag?.launchFrag(FragSettingsManageAudioReciter::class.java, Bundle().apply {
-                        putSerializable(
-                            FragSettingsManageAudioReciter.KEY_RECITER_MODEL, RecitationManageAudioInfoModel(
-                                slug = model.slug,
-                                urlHost = model.urlHost ?: "",
-                                urlPath = model.urlPath,
-                                reciter = model.getReciterName(),
-                                langCode = null,
-                                langName = null,
-                                book = null,
-                                isTranslation = false,
-                            )
-                        )
+                        putSerializable(FragSettingsManageAudioReciter.KEY_RECITATION_INFO_MODEL, model)
                     })
                 } else {
                     select(bindingAdapterPosition)

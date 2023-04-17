@@ -158,7 +158,6 @@ public class ActivityReader extends ReaderPossessingActivity {
         public void onServiceDisconnected(ComponentName name) {
             mPlayerService.setRecitationPlayer(null, null);
             mPlayerService = null;
-            Log.d(name);
         }
     };
     private ReadHistoryDBHelper mReadHistoryDBHelper;
@@ -463,8 +462,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void initQuran(Intent intent) {
-        Log.d(intent.getExtras());
-
         try {
             validateIntent(intent);
         } catch (Exception e) {
@@ -534,8 +531,6 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (initVerses == null) {
             initVerses = new Pair<>(1, initialChapter.getVerseCount());
         }
-
-        Log.d(intent.getExtras());
 
         switch (mReaderParams.readType) {
             case READER_READ_TYPE_VERSES: initVerseRange(initialChapter, initVerses);
@@ -1042,7 +1037,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     public void onVerseRecite(int chapterNo, int verseNo, boolean reciting) {
-        Log.d("ON_VERSE_RECITE", chapterNo + ":" + verseNo + " - " + reciting);
         mActionController.onVerseRecite(chapterNo, verseNo, reciting);
         updateVerseNumber(chapterNo, verseNo);
 
@@ -1122,7 +1116,6 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
 
         RecitationPlayerParams recParams = mPlayerService.getP();
-        Log.d(recParams);
         if (recParams.getPreviouslyPlaying()) {
             mPlayerService.reciteVerse(new ChapterVersePair(chapterNo, verseNo));
         }

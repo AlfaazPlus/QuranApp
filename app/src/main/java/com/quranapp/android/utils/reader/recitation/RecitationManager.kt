@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
-import java.util.Locale
+import java.util.*
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -247,7 +247,8 @@ object RecitationManager {
         val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
         val reciterName = if (!isOnlyTransl) getReciterName(SPReader.getSavedRecitationSlug(ctx)) else null
-        val translReciterName = if (isBoth || isOnlyTransl) getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx)) else null
+        val translReciterName =
+            if (isBoth || isOnlyTransl) getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx)) else null
 
         return if (isBoth && !reciterName.isNullOrEmpty() && !translReciterName.isNullOrEmpty()) {
             "$reciterName & $translReciterName"
@@ -288,11 +289,12 @@ object RecitationManager {
         urlPath: String = ""
     ): RecitationInfoModel {
         return RecitationInfoModel(
-            slug = slug,
-            reciter = reciter,
             style = style,
-            urlHost = urlHost,
-            urlPath = urlPath
-        )
+        ).apply {
+            this.slug = slug
+            this.reciter = reciter
+            this.urlHost = urlHost
+            this.urlPath = urlPath
+        }
     }
 }

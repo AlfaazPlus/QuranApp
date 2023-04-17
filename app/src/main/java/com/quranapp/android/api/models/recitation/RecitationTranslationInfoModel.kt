@@ -9,33 +9,7 @@ import java.util.*
 
 @Serializable
 data class RecitationTranslationInfoModel(
-    val slug: String,
     @SerialName("lang-code") val langCode: String,
     @SerialName("lang-name") var langName: String,
-    val reciter: String,
     val book: String?,
-    @SerialName("url-host") var urlHost: String?,
-    @SerialName("url-path") val urlPath: String,
-    val translations: Map<String, String> = mapOf(),
-    var isChecked: Boolean = false
-) {
-
-    fun getReciterName(): String {
-        return translations[Locale.getDefault().toLanguageTag()] ?: this.reciter
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is RecitationTranslationInfoModel) {
-            return false
-        }
-        return other.slug == slug
-    }
-
-    override fun toString(): String {
-        return "slug:$slug, reciter:$reciter, translated:${getReciterName()}"
-    }
-
-    override fun hashCode(): Int {
-        return slug.hashCode()
-    }
-}
+) : RecitationInfoBaseModel()

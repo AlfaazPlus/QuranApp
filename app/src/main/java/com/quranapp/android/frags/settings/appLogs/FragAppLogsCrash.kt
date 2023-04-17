@@ -51,8 +51,9 @@ class FragAppLogsCrash : BaseFragment() {
             return
         }
 
-        files.sortedBy { it.lastModified() }.forEach { logFile ->
+        files.sortedByDescending { it.lastModified() }.forEach { logFile ->
             val log = logFile.readText()
+            val logShort = if (log.length > 200) log.substring(0, 200) + "... ${log.length - 200} more chars" else log
             val formattedDateTime = DateUtils.format(
                 DateUtils.toDate(logFile.name, Log.FILE_NAME_DATE_FORMAT),
                 DateUtils.DATETIME_FORMAT_USER
@@ -64,7 +65,7 @@ class FragAppLogsCrash : BaseFragment() {
                     "Fatal Crash",
                     logFile,
                     log,
-                    log.substring(0, 200) + if (log.length > 200) "... ${log.length - 200} more chars" else "",
+                    logShort,
                 )
             )
         }

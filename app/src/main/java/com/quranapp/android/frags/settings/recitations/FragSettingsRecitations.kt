@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import androidx.viewpager2.widget.ViewPager2
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2
 import com.quranapp.android.databinding.FragSettingsRecitationsBinding
 import com.quranapp.android.databinding.LytReaderIndexTabBinding
 import com.quranapp.android.frags.settings.FragSettingsBase
-import com.quranapp.android.utils.Log
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 
@@ -24,12 +24,12 @@ class FragSettingsRecitations : FragSettingsBase() {
     override val layoutResource = R.layout.frag_settings_recitations
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty() ) return null
+        if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return null
 
         val bundle = Bundle()
 
         pageAdapter!!.fragments.forEach {
-            if (it is FragSettingsBase) {
+            if (it is FragSettingsRecitationsBase) {
                 it.getFinishingResult(ctx)?.let { result ->
                     bundle.putAll(result)
                 }
@@ -51,7 +51,7 @@ class FragSettingsRecitations : FragSettingsBase() {
                     if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
                     // refresh child fragments
                     pageAdapter!!.fragments.forEach {
-                        if (it is FragSettingsRecitationsBase) {
+                        if (it is FragSettingsRecitationsBase && !it.isRefreshing) {
                             it.refresh(activity, true)
                         }
                     }
@@ -67,6 +67,8 @@ class FragSettingsRecitations : FragSettingsBase() {
                 }
             })
 
+            setShowSearchIcon(true)
+            setShowRightIcon(true)
             disableRightBtn(false)
             setSearchHint(R.string.strHintSearchReciter)
             setRightIconRes(
@@ -93,11 +95,27 @@ class FragSettingsRecitations : FragSettingsBase() {
             it.viewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
         }
 
-        binding.tabLayout.setTabSetupCallback { viewPager, tab, position ->
-            tab.customView = LytReaderIndexTabBinding.inflate(LayoutInflater.from(ctx)).apply {
-                tabTitle.text = (viewPager.adapter as ViewPagerAdapter2).getPageTitle(position)
-            }.root
+        binding.tabLayout.let {
+            it.setTabSetupCallback { viewPager, tab, position ->
+                tab.customView = LytReaderIndexTabBinding.inflate(LayoutInflater.from(ctx)).apply {
+                    tabTitle.text = (viewPager.adapter as ViewPagerAdapter2).getPageTitle(position)
+                }.root
+            }
+            it.populateFromViewPager(binding.viewPager)
         }
-        binding.tabLayout.populateFromViewPager(binding.viewPager)
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                activity()?.header?.checkSearchShown()
+
+                if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
+
+                pageAdapter!!.fragments.forEachIndexed { index, fragment ->
+                    if (fragment is FragSettingsRecitationsBase && index != position) {
+                        fragment.search("")
+                    }
+                }
+            }
+        })
     }
 }

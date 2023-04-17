@@ -34,6 +34,16 @@ class FragSettingsManageAudio : FragSettingsBase() {
                     activity.onBackPressedDispatcher.onBackPressed()
                 }
 
+                override fun onRightIconClick() {
+                    if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
+                    // refresh child fragments
+                    pageAdapter!!.fragments.forEach {
+                        if (it is FragSettingsRecitationsBase && !it.isRefreshing) {
+                            it.refresh(activity, true)
+                        }
+                    }
+                }
+
                 override fun onSearchRequest(searchBox: EditText, newText: CharSequence) {
                     if (pageAdapter?.fragments == null || pageAdapter!!.fragments.isEmpty()) return
 
@@ -44,12 +54,8 @@ class FragSettingsManageAudio : FragSettingsBase() {
                 }
             })
 
-            disableRightBtn(false)
-            setSearchHint(R.string.strHintSearchReciter)
-            setRightIconRes(
-                R.drawable.dr_icon_refresh,
-                activity.getString(R.string.strLabelRefresh)
-            )
+            setShowSearchIcon(false)
+            setShowRightIcon(false)
         }
     }
 

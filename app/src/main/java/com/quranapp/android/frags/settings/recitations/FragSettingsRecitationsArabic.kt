@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.adapters.recitation.ADPRecitations
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -29,8 +28,10 @@ class FragSettingsRecitationsArabic : FragSettingsRecitationsBase() {
         return null
     }
 
-    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        super.onViewReady(ctx, view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
+
         mInitialRecitation = SPReader.getSavedRecitationSlug(ctx)
 
         init(ctx)
@@ -44,6 +45,7 @@ class FragSettingsRecitationsArabic : FragSettingsRecitationsBase() {
     override fun refresh(context: Context, force: Boolean) {
         if (force && !NetworkStateReceiver.isNetworkConnected(context)) {
             noInternet(context)
+            return
         }
 
         showLoader()
@@ -92,11 +94,6 @@ class FragSettingsRecitationsArabic : FragSettingsRecitationsBase() {
         (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         resetAdapter(models)
-
-        activity()?.header?.apply {
-            setShowSearchIcon(true)
-            setShowRightIcon(true)
-        }
     }
 
     private fun resetAdapter(models: List<RecitationInfoModel>) {
