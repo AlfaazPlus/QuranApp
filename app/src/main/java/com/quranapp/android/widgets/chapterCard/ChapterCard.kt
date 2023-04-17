@@ -20,12 +20,16 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
-import com.quranapp.android.utils.extensions.*
+import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.extensions.getDimenPx
+import com.quranapp.android.utils.extensions.setTextSizePx
+import com.quranapp.android.utils.extensions.updateMarginHorizontal
+import com.quranapp.android.utils.extensions.updatePaddings
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.views.reader.ChapterIcon
-import java.util.*
+import java.util.Locale
 
 open class ChapterCard @JvmOverloads constructor(
     context: Context,
@@ -44,7 +48,8 @@ open class ChapterCard @JvmOverloads constructor(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        updatePaddings(Dimen.dp2px(context, 10f))
+        val pad = context.dp2px(10f)
+        setPadding(pad, pad, context.dp2px(5f), pad)
 
         val serialView = createSerialView()
         val nameView = createNameView()
@@ -74,6 +79,8 @@ open class ChapterCard @JvmOverloads constructor(
 
         if (rightView != null) {
             (rightView.layoutParams as LayoutParams).apply {
+                if (favIcon == null) marginEnd = context.dp2px(5f)
+
                 topToTop = LayoutParams.PARENT_ID
                 bottomToBottom = LayoutParams.PARENT_ID
                 startToEnd = nameView.id

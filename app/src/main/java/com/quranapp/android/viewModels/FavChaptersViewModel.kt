@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quranapp.android.R
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
+import com.quranapp.android.utils.univ.MessageUtils
 
 class FavChaptersViewModel : ViewModel() {
     private val _favChapters = MutableLiveData<List<Int>>()
@@ -24,13 +25,13 @@ class FavChaptersViewModel : ViewModel() {
         SPFavouriteChapters.addToFavorites(ctx, chapterNo)
         refreshFavChapters(ctx)
 
-        Toast.makeText(ctx, R.string.msgChapterAddedToFavourites, Toast.LENGTH_SHORT).show()
+        MessageUtils.showRemovableToast(ctx, R.string.msgChapterAddedToFavourites, Toast.LENGTH_SHORT)
     }
 
     fun removeFromFavourites(ctx: Context, chapterNo: Int) {
         SPFavouriteChapters.removeFromFavorites(ctx, chapterNo)
         refreshFavChapters(ctx)
 
-        Toast.makeText(ctx, R.string.msgChapterRemovedFromFavourites, Toast.LENGTH_SHORT).show()
+        MessageUtils.showRemovableToast(ctx, R.string.msgChapterRemovedFromFavourites, Toast.LENGTH_SHORT)
     }
 }

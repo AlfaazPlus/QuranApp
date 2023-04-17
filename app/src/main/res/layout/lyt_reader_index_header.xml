@@ -59,46 +59,27 @@
         android:text="@string/strTitleHolyQuran"
         android:textSize="@dimen/dmnCommonSize"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tabContainer"
+        app:layout_constraintBottom_toTopOf="@id/readerTabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAr" />
 
-    <LinearLayout
-        android:id="@+id/tabContainer"
-        android:layout_width="match_parent"
+    <com.quranapp.android.views.helper.TabLayout2
+        android:id="@+id/readerTabLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:background="@drawable/dr_bg_reader_tab_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTransl">
-
-        <com.quranapp.android.views.helper.TabLayout2
-            android:id="@+id/readerTabLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/dr_bg_reader_tab_layout"
-            app:tabGravity="fill"
-            app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
-            app:tabIndicatorGravity="stretch"
-            app:tabMaxWidth="0dp"
-            app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/sort"
-            android:layout_width="@dimen/dmnActionButton"
-            android:layout_height="@dimen/dmnActionButton"
-            android:adjustViewBounds="true"
-            android:background="@drawable/dr_bg_hover_round"
-            android:padding="7dp"
-            android:src="@drawable/dr_icon_sort"
-            android:visibility="gone" />
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTransl"
+        app:tabGravity="fill"
+        app:tabIndicator="@drawable/dr_bg_reader_index_tab_indicator"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="auto"
+        app:tabRippleColor="@android:color/transparent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
