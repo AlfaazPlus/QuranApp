@@ -103,6 +103,7 @@
     <string name="strTitleReaderLayoutStylePageView">Page view</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
+    <string name="titleReaderTextSizeTafsir">Tafsir text Size</string>
     <string name="strTitleSettings">Settings</string>
     <string name="strTitleBookmark">Bookmark</string>
     <string name="strTitleSendFeedback">Send Feedback</string>

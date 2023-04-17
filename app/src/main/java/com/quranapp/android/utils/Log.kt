@@ -10,7 +10,7 @@ import java.io.File
 
 object Log {
     private const val TAG = "QuranAppLogs"
-    const val FILE_NAME_DATE_FORMAT = "yyyyMMddhhmmssSSS"
+    const val FILE_NAME_DATE_FORMAT = "yyyyMMddHHmmssSSS"
     val CRASH_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
         FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "crashes")
     )

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
 import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANS_DEFAULT;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT;
 import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AUDIO_OPTION_DEFAULT;
 import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
@@ -58,16 +60,34 @@ public abstract class SPReader {
         SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
 
         if (!sp.contains(KEY_TEXT_SIZE_MULT_TRANSL)) {
-            setSavedTextSizeMultTransl(context, TEXT_SIZE_MULT_TRANS_DEFAULT);
+            setSavedTextSizeMultTransl(context, TEXT_SIZE_MULT_TRANSL_DEFAULT);
         }
 
-        return sp.getFloat(KEY_TEXT_SIZE_MULT_TRANSL, TEXT_SIZE_MULT_TRANS_DEFAULT);
+        return sp.getFloat(KEY_TEXT_SIZE_MULT_TRANSL, TEXT_SIZE_MULT_TRANSL_DEFAULT);
     }
 
     public static void setSavedTextSizeMultTransl(Context context, float sizeMult) {
         SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putFloat(KEY_TEXT_SIZE_MULT_TRANSL, sizeMult);
+        editor.apply();
+    }
+
+
+    public static float getSavedTextSizeMultTafsir(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
+
+        if (!sp.contains(KEY_TEXT_SIZE_MULT_TAFSIR)) {
+            setSavedTextSizeMultTafsir(context, TEXT_SIZE_MULT_TAFSIR_DEFAULT);
+        }
+
+        return sp.getFloat(KEY_TEXT_SIZE_MULT_TAFSIR, TEXT_SIZE_MULT_TAFSIR_DEFAULT);
+    }
+
+    public static void setSavedTextSizeMultTafsir(Context context, float sizeMult) {
+        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat(KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult);
         editor.apply();
     }
 

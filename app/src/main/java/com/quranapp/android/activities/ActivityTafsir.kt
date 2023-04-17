@@ -15,6 +15,8 @@ import android.view.View
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import com.peacedesign.android.utils.DrawableUtils
 import com.peacedesign.android.utils.WindowUtils
@@ -27,12 +29,15 @@ import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.databinding.ActivityTafsirBinding
 import com.quranapp.android.databinding.LytTafsirHeaderBinding
+import com.quranapp.android.databinding.LytTafsirTextSizeBinding
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.extensions.drawable
+import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener
 import com.quranapp.android.utils.tafsir.TafsirJsInterface
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
@@ -41,6 +46,7 @@ import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.widgets.PageAlert
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,8 +59,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
     private lateinit var fileUtils: FileUtils
     private lateinit var pageAlert: PageAlert
     private lateinit var jsInterface: TafsirJsInterface
-
-    lateinit var tafsirInfoModel: TafsirInfoModel
+    private lateinit var tafsirInfoModel: TafsirInfoModel
 
     var tafsirKey: String? = null
     var chapterNo = 0
@@ -78,6 +83,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
 
     private fun initThis() {
         binding.let {
+            it.loader.visibility = View.VISIBLE
             it.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
             it.settings.setOnClickListener {
                 val intent = Intent(this, ActivitySettings::class.java).apply {
@@ -85,9 +91,54 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 }
                 startActivity4Result(intent, null)
             }
-            it.loader.visibility = View.VISIBLE
-
+            it.fontSize.setOnClickListener { showFontSizeDialog() }
         }
+    }
+
+    private fun showFontSizeDialog() {
+        val binding = LytTafsirTextSizeBinding.inflate(layoutInflater)
+
+        PeaceBottomSheet().apply {
+            params.apply {
+                headerTitleResource = R.string.titleReaderTextSizeTafsir
+                contentView = binding.root
+            }
+        }.show(supportFragmentManager, "TafsirFontSize")
+
+        binding.seekBar.max = ReaderTextSizeUtils.getMaxProgress()
+
+        setProgressAndTextTransl(
+            SPReader.getSavedTextSizeMultTafsir(this),
+            binding.seekBar,
+            binding.progressText
+        )
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                val nProgress = ReaderTextSizeUtils.normalizeProgress(progress)
+                val text = "$nProgress%"
+                binding.progressText.text = text
+                demonstrateTextSize(nProgress.toFloat())
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                SPReader.setSavedTextSizeMultTafsir(
+                    seekBar.context,
+                    ReaderTextSizeUtils.calculateMultiplier(ReaderTextSizeUtils.normalizeProgress(seekBar.progress))
+                )
+            }
+        })
+    }
+
+    private fun demonstrateTextSize(progress: Float) {
+        binding.webView.loadUrl("javascript:changeFontSize($progress)")
+    }
+
+    private fun setProgressAndTextTransl(multiplier: Float, seekBar: SeekBar, progressText: TextView) {
+        seekBar.progress = ReaderTextSizeUtils.calculateProgress(multiplier)
+
+        val text = "${ReaderTextSizeUtils.calculateProgressText(multiplier)}%"
+        progressText.text = text
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -96,6 +147,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
     }
 
     override fun onReaderReady(intent: Intent, savedInstanceState: Bundle?) {
+        (supportFragmentManager.findFragmentByTag("TafsirFontSize") as? PeaceBottomSheet)?.dismiss()
+
         initWebView()
 
         TafsirManager.prepare(this, false) {
@@ -277,7 +330,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
         val map = mapOf(
             "{{THEME}}" to resolveDarkMode(),
             "{{CONTENT}}" to tafsir.text,
-            "{{DIR}}" to resolveTextDirection()
+            "{{DIR}}" to resolveTextDirection(),
+            "{{FONT_SIZE}}" to (SPReader.getSavedTextSizeMultTafsir(this) * 100).toString()
         )
 
         val pattern = Regex(pattern = map.keys.joinToString("|") { Regex.escape(it) })
