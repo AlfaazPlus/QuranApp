@@ -16,7 +16,6 @@ import com.quranapp.android.db.transl.QuranTranslDBHelper
 import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION
 import com.quranapp.android.utils.search.SearchFilters
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import org.json.JSONArray
@@ -308,7 +307,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     private fun sortTranslationSlugs(slugs: Set<String>): Set<String> {
         val nSlugs = ArrayList<String>()
         slugs.forEach { slug ->
-            if (TRANSL_TRANSLITERATION == slug) {
+            if (TranslUtils.isTransliteration(slug)) {
                 nSlugs.add(0, slug)
             } else {
                 nSlugs.add(slug)

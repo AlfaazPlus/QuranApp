@@ -51,7 +51,7 @@ public class TranslUtils {
     /**
      * This translation slug must be updated if it updates on the server.
      */
-    public static final String TRANSL_TRANSLITERATION = "en_transliteration";
+    private static final String TRANSL_TRANSLITERATION_SLUG_PART = "transliteration";
 
     public static final String TRANSL_SLUG_DEFAULT = TRANSL_SLUG_EN_SAHIH_INTERNATIONAL;
 
@@ -190,6 +190,10 @@ public class TranslUtils {
 
     public static boolean isUrdu(String slug) {
         return Objects.equals(slug.split("_")[0], "ur");
+    }
+
+    public static boolean isTransliteration(String slug) {
+        return slug.contains(TRANSL_TRANSLITERATION_SLUG_PART);
     }
 
     private static String prepareTranslDirPathForSpecificLangNSlug(String langCode, String translSlug) {
