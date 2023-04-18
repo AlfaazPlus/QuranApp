@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.widget.TextView
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont

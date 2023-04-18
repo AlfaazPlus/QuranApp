@@ -24,7 +24,7 @@ class CrashReceiver : BroadcastReceiver() {
 
         if (intent?.action == CRASH_ACTION_COPY_LOG || intent?.action == CRASH_ACTION_CREATE_ISSUE) {
             context.copyToClipboard(intent.getStringExtra(Intent.EXTRA_TEXT)!!)
-            SPLog.removeLastCrashLog(context)
+            SPLog.removeLastCrashLogFilename(context)
         }
 
         when (intent?.action) {

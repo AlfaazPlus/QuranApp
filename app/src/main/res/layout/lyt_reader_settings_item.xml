@@ -1,5 +1,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
@@ -21,6 +22,8 @@
         android:maxLines="4"
         android:paddingVertical="10dp"
         android:paddingStart="15dp"
-        android:paddingEnd="10dp" />
+        android:paddingEnd="10dp"
+        tools:drawableStartCompat="@drawable/dr_icon_theme"
+        tools:text="App Theme" />
 
 </androidx.cardview.widget.CardView>

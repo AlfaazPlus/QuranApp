@@ -19,6 +19,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.extensions.serializableExtra
@@ -38,6 +39,9 @@ import kotlin.io.path.readText
 
 class TranslationDownloadService : Service() {
     companion object {
+        private const val NOTIF_ID = 44
+
+        // To prevent notification when using BIND_AUTO_CREATE
         private var STARTED_BY_USER = false
 
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
@@ -56,11 +60,8 @@ class TranslationDownloadService : Service() {
         super.onCreate()
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
-                1,
-                NotificationUtils.createEmptyNotif(
-                    this,
-                    getString(R.string.strNotifChannelIdDownloads)
-                )
+                NOTIF_ID,
+                NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
             )
         }
     }
@@ -80,7 +81,7 @@ class TranslationDownloadService : Service() {
                 this,
                 getString(R.string.strNotifChannelIdDownloads)
             )
-            startForeground(1, notification)
+            startForeground(NOTIF_ID, notification)
             finish()
             return START_NOT_STICKY
         }
@@ -107,7 +108,7 @@ class TranslationDownloadService : Service() {
         notification: Notification,
         notifManager: NotificationManagerCompat
     ) {
-        notifManager.cancel(1)
+        notifManager.cancel(NOTIF_ID)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
         startForeground(notifId, notification)
     }
@@ -126,7 +127,7 @@ class TranslationDownloadService : Service() {
 
                 val responseBody = RetrofitInstance.github.getTranslation(bookInfo.downloadPath)
 
-                val byteStream = responseBody.byteStream()
+                val byteStream = responseBody.byteStream().buffered()
                 val totalBytes = byteStream.available()
                 val tmpFile = kotlin.io.path.createTempFile(
                     prefix = bookInfo.slug,
@@ -134,8 +135,8 @@ class TranslationDownloadService : Service() {
                 )
 
                 byteStream.use { inS ->
-                    tmpFile.outputStream().use { outS ->
-                        val buffer = ByteArray(8192)
+                    tmpFile.outputStream().buffered().use { outS ->
+                        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                         var progressBytes = 0L
 
                         while (true) {
@@ -148,6 +149,8 @@ class TranslationDownloadService : Service() {
 
                             emit(TranslationDownloadFlow.Progress(((progressBytes * 100) / totalBytes).toInt()))
                         }
+
+                        outS.flush()
                     }
                 }
 
@@ -171,21 +174,25 @@ class TranslationDownloadService : Service() {
                 emit(TranslationDownloadFlow.Complete)
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
+                Log.saveError(it, "TranslationDownloadService")
                 emit(TranslationDownloadFlow.Failed)
             }.collect {
                 when (it) {
                     is TranslationDownloadFlow.Start -> {
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Progress -> {
                         notifBuilder.setProgress(100, it.progress, false)
                         notifBuilder.setSubText("${it.progress}%")
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Complete -> {
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
                         finish()
                     }
+
                     is TranslationDownloadFlow.Failed -> {
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
                         removeDownload(bookInfo.slug)

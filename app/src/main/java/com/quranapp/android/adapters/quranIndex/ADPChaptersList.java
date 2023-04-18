@@ -5,7 +5,6 @@
 package com.quranapp.android.adapters.quranIndex;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,25 +89,14 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
     }
 
     class VHChapter extends RecyclerView.ViewHolder {
-        private ChapterCard mChapterCard;
+        private final ChapterCard mChapterCard;
 
-        public VHChapter(@NonNull View itemView) {
-            super(itemView);
-
-            if (itemView instanceof ChapterCard) {
-                mChapterCard = (ChapterCard) itemView;
-            }
+        public VHChapter(@NonNull ChapterCard chapterCard) {
+            super(chapterCard);
+            mChapterCard = chapterCard;
         }
 
         public void bind(int chapterNo) {
-            setupChapter(chapterNo);
-        }
-
-        private void setupChapter(int chapterNo) {
-            if (mChapterCard == null) {
-                return;
-            }
-
             mChapterCard.setChapterNumber(chapterNo);
 
             String chapterName = mFragment.getQuranMeta().getChapterName(itemView.getContext(), chapterNo);

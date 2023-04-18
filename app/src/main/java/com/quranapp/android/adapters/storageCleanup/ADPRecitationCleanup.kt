@@ -78,7 +78,7 @@ class ADPRecitationCleanup(
                 setNegativeButton(R.string.strLabelDelete, ColorUtils.DANGER) { _, _ ->
                     File(fileUtils.recitationDir, model.recitationModel.slug).deleteRecursively()
                     model.isCleared = true
-                    notifyItemChanged(adapterPosition)
+                    notifyItemChanged(bindingAdapterPosition)
                 }
                 setFocusOnNegative(true)
             }.show()

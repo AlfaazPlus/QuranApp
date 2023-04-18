@@ -85,6 +85,10 @@ public class QuranMeta implements Serializable {
         this.pageMetaMap = pageMetaMap;
     }
 
+    public SparseArray<ChapterMeta> getChapterMetas() {
+        return chapterMetaMap;
+    }
+
     public ChapterMeta getChapterMeta(int chapterNo) {
         return chapterMetaMap.get(chapterNo);
     }

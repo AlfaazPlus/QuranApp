@@ -110,3 +110,19 @@ inline fun runOnTimeout(crossinline block: () -> Unit, timeoutMillis: Long) {
         block()
     }, timeoutMillis)
 }
+
+// interval
+
+fun runOnInterval(block: () -> Unit, intervalMillis: Long, runImmediately: Boolean = false): Handler {
+    val handler = Handler(Looper.getMainLooper())
+    handler.postDelayed({
+        block()
+        runOnInterval(block, intervalMillis)
+    }, intervalMillis)
+
+    if (runImmediately) {
+        block()
+    }
+
+    return handler
+}

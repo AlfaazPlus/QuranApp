@@ -103,6 +103,7 @@
     <string name="strTitleReaderLayoutStylePageView">Page view</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
+    <string name="titleReaderTextSizeTafsir">Tafsir text Size</string>
     <string name="strTitleSettings">Settings</string>
     <string name="strTitleBookmark">Bookmark</string>
     <string name="strTitleSendFeedback">Send Feedback</string>
@@ -113,7 +114,6 @@
     <string name="strTitleAddNote">Add note</string>
     <string name="strTitleNote">Note</string>
     <string name="strTitleRateApp">Rate App</string>
-    <string name="strTitleSubscription">Subscription</string>
     <string name="strTitleFilters">Filters</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleTafsir">Tafsir</string>
@@ -123,6 +123,13 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
+    <string name="titleManageAudio">Manage Audio</string>
+    <string name="downloadRecitations">Download Recitations</string>
+    <string name="audioOption">Audio option</string>
+    <string name="playbackSpeed">Playback speed</string>
+    <string name="audioOnlyArabic">Play only Arabic</string>
+    <string name="audioOnlyTranslation">Play only translation</string>
+    <string name="audioBothArabicTranslation">Play both Arabic and translation</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
@@ -162,6 +169,7 @@
     <string name="strMsgChapInfoFailedLoad">Failed to load surah information. Please try again later.</string>
     <string name="strTitleAppSettings">App Settings</string>
     <string name="strTitleReaderSettings">Reader Settings</string>
+    <string name="titleOtherSettings">Other Settings</string>
     <string name="strTitleAppLanguage">App Language</string>
     <string name="strTitleChangeLanguage">Change language?</string>
     <string name="strTitleTheme">Theme</string>
@@ -321,13 +329,18 @@
     <string name="msgDownloadingResource" formatted="false">Downloading %s</string>
     <string name="msgScriptFontsDownloaded">Scripts and fonts downloaded successfully.</string>
     <string name="textDownloading">Downloading…</string>
+    <string name="textDownloaded">Downloaded</string>
     <string name="textPercentage" formatted="false">%d%%</string>
     <string name="labelBackgroundDownload">Background download</string>
     <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
     <string name="lastCrashLog">Last crash log</string>
+    <string name="appLogs">App logs</string>
+    <string name="crashLogs">Crash logs</string>
+    <string name="suppressedLogs">Suppressed logs</string>
+    <string name="logRemoved">Log removed</string>
     <string name="createIssue">Create issue</string>
     <string name="copiedToClipboard">Copied to clipboard.</string>
-    <string name="pasteCrashLogGithubIssue">Crash log has been copied to clipboard. Please paste it in the GitHub issue.</string>
+    <string name="pasteCrashLogGithubIssue">Log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
     <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
@@ -343,7 +356,7 @@
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
     <string name="titleRecitationCleanup">Delete recitation\?</string>
-    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
+    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted. To individually delete recitations by Surah, go to the manage audio settings.</string>
     <string name="titleScriptCleanup">Delete script\?</string>
     <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
     <string name="titleChapterInfoCleanup">Clear chapter info\?</string>
@@ -365,6 +378,8 @@
     <string
         name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
+    <string name="labelArabic">Arabic</string>
+    <string name="labelTranslation">Translation</string>
     <string name="titleAddToFavourites">Add to favourites</string>
     <string name="msgAddedToFavourites">Added to favourites</string>
     <string name="titleRemoveFromFavourites">Remove from favourites</string>
@@ -372,6 +387,14 @@
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
     <string name="msgChapterAddedToFavourites">Surah added to favourites.</string>
     <string name="msgChapterRemovedFromFavourites">Surah removed from favourites.</string>
+
+    <string name="textTranslationReciterInfo">Language: %1$s\nBook: %2$s</string>
+    <string name="textNoLogsFound">No logs found</string>
+
+    <string name="msgRecitaionFailedToDownload" formatted="false">Failed to download \"%1$s\" for reciter \"%2$s\".</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Downloaded \"%1$s\" for reciter \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">All recitations of \"%1$s\" for reciter \"%2$s\" will be deleted.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Deleted recitations of \"%1$s\" for reciter \"%2$s\".</string>
 
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>

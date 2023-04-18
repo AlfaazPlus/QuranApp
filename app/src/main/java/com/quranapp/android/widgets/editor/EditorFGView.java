@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableKt;
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 import com.peacedesign.android.utils.ColorUtils;
@@ -111,7 +112,7 @@ public class EditorFGView extends View {
 
     private void generateIconPaint(@DrawableRes int iconRes) {
         Drawable drawable = ContextCompat.getDrawable(getContext(), iconRes);
-        mIconBitmap = DrawableUtils.getBitmapFromDrawable(drawable, mIconSize, mIconSize);
+        mIconBitmap = DrawableKt.toBitmap(drawable, mIconSize, mIconSize, null);
 
         mIconPaint = new Paint(ANTI_ALIAS_FLAG);
         mIconPaint.setColorFilter(new PorterDuffColorFilter(mPrimaryColor, PorterDuff.Mode.SRC_ATOP));

@@ -15,7 +15,12 @@
 
     <include
         android:id="@+id/readerSettings"
-        layout="@layout/lyt_reader_settings"
+        layout="@layout/lyt_settings_reader"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/otherSettings"
+        layout="@layout/lyt_settings_misc"
         android:visibility="gone" />
 
 </LinearLayout>

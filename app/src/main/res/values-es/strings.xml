@@ -217,7 +217,6 @@
     <string name="strMsgTranslDownloaded" formatted="false">Descargado: \"%s\".</string>
     <string name="strLabelVersesText">Versos</string>
     <string name="strDescGoBack">Regresar</string>
-    <string name="strTitleSubscription">Suscripcion</string>
     <string name="strLabelDownloadImage">Descargar imagen</string>
     <string name="strLabelAllChapters">Todos los capítulos</string>
     <string name="strTitleFootnote">Nota</string>

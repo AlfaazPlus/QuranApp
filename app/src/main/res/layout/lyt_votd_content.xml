@@ -36,8 +36,8 @@
         <ProgressBar
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:indeterminateTint="@color/white"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white" />
     </RelativeLayout>
 
     <View
@@ -71,19 +71,22 @@
             android:textSize="@dimen/dmnCommonSize3" />
 
 
-        <!--<androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnQuickEdit"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnTafsir"
             android:layout_width="@dimen/dmnActionButtonSmall"
             android:layout_height="@dimen/dmnActionButtonSmall"
             android:layout_marginStart="7dp"
-            android:background="@drawable/dr_bg_action_round" />-->
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="5dp"
+            android:src="@drawable/dr_icon_tafsir" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/votdBookmark"
             android:layout_width="@dimen/dmnActionButtonSmall"
             android:layout_height="@dimen/dmnActionButtonSmall"
             android:layout_marginStart="7dp"
-            android:background="@drawable/dr_bg_action_round" />
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="5dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
