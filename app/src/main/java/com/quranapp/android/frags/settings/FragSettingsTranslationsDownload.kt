@@ -55,7 +55,7 @@ class FragSettingsTranslationsDownload :
     private var translDownloadService: TranslationDownloadService? = null
     private var newTranslations: Array<String>? = null
     private var pageAlert: PageAlert? = null
-    private var isRefreshInProgres = false
+    private var isRefreshInProgress = false
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleDownloadTranslations)
 
@@ -149,7 +149,7 @@ class FragSettingsTranslationsDownload :
     }
 
     private fun refreshTranslations(ctx: Context, force: Boolean) {
-        isRefreshInProgres = true
+        isRefreshInProgress = true
         showLoader()
 
         val storedAvailableDownloads = fileUtils.translsManifestFile
@@ -258,7 +258,7 @@ class FragSettingsTranslationsDownload :
             SPAppActions.setFetchTranslationsForce(ctx, false)
         }
 
-        isRefreshInProgres = false
+        isRefreshInProgress = false
         hideLoader()
     }
 
@@ -371,13 +371,7 @@ class FragSettingsTranslationsDownload :
         }
 
         if (title != null && context != null) {
-            MessageUtils.popMessage(
-                context,
-                title,
-                msg,
-                ctx.getString(R.string.strLabelClose),
-                null
-            )
+            MessageUtils.popMessage(ctx, title, msg, ctx.getString(R.string.strLabelClose), null)
         }
     }
 
@@ -389,7 +383,7 @@ class FragSettingsTranslationsDownload :
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
         translDownloadService = (service as LocalBinder).service
-        if (!isRefreshInProgres) {
+        if (!isRefreshInProgress) {
             refreshTranslations(binding.root.context, false)
         }
     }

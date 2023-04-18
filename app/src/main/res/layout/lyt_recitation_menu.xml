@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/header"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:gravity="start"
@@ -18,22 +18,16 @@
         android:text="@string/strTitleRecitationOptions"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/dmnCommonSize1_5"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/repeat"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/dr_bg_hover"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header">
+        android:paddingHorizontal="15dp">
 
         <com.quranapp.android.widgets.IconedTextView
             android:layout_width="0dp"
@@ -59,15 +53,12 @@
 
     <LinearLayout
         android:id="@+id/autoplay"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/dr_bg_hover"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/repeat">
+        android:paddingHorizontal="15dp">
 
         <com.quranapp.android.widgets.IconedTextView
             android:layout_width="0dp"
@@ -92,9 +83,42 @@
             android:scaleY="0.8" />
     </LinearLayout>
 
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/playbackSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/playbackSpeed"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:drawableEndDimen="20dp"
+        app:drawableStartDimen="20dp"
+        app:drawableTint="@color/colorIcon" />
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/audioOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/audioOption"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:drawableEndDimen="20dp"
+        app:drawableStartDimen="20dp"
+        app:drawableTint="@color/colorIcon" />
+
     <com.quranapp.android.widgets.IconedTextView
         android:id="@+id/selectReciter"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/dr_bg_hover"
         android:ellipsize="end"
@@ -106,9 +130,21 @@
         android:textSize="@dimen/dmnCommonSize2"
         app:drawableEndDimen="20dp"
         app:drawableStartDimen="20dp"
-        app:drawableTint="@color/colorIcon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/autoplay" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:drawableTint="@color/colorIcon" />
+
+    <com.quranapp.android.widgets.IconedTextView
+        android:id="@+id/manageAudio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_hover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/titleManageAudio"
+        android:textSize="@dimen/dmnCommonSize2"
+        app:drawableEndDimen="20dp"
+        app:drawableStartDimen="20dp"
+        app:drawableTint="@color/colorIcon" />
+</LinearLayout>

@@ -1,27 +1,11 @@
 package com.quranapp.android.activities;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.SpannableStringBuilder;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-import androidx.activity.result.ActivityResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
@@ -35,9 +19,6 @@ import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemView
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
 import static com.quranapp.android.utils.quran.QuranUtils.doesVerseRangeEqualWhole;
-import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_NEXT_VERSE;
-import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PLAY_CONTROL;
-import static com.quranapp.android.utils.receivers.RecitationPlayerReceiver.ACTION_PREVIOUS_VERSE;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_PENDING_SCROLL;
@@ -47,12 +28,33 @@ import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGE
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_PATTERN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.text.SpannableStringBuilder;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPQuranPages;
@@ -63,6 +65,7 @@ import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.components.reader.QuranPageModel;
 import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.components.reader.ReaderRecyclerItemModel;
@@ -71,21 +74,22 @@ import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.reader_managers.Navigator;
 import com.quranapp.android.reader_managers.ReaderParams;
 import com.quranapp.android.suppliments.ReaderLayoutManager;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.quranapp.android.utils.reader.recitation.RecitationParams;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.receivers.RecitationPlayerReceiver;
+import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams;
+import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.verse.VerseUtils;
-import com.quranapp.android.views.reader.RecitationPlayer;
 import com.quranapp.android.views.reader.VerseView;
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
+import com.quranapp.android.views.recitation.RecitationPlayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -104,6 +108,7 @@ import kotlin.Pair;
 
 public class ActivityReader extends ReaderPossessingActivity {
     public static final String KEY_RECITER_CHANGED = "reciter.changed";
+    public static final String KEY_TRANSLATION_RECITER_CHANGED = "translation_reciter.changed";
     public static final String KEY_SCRIPT_CHANGED = "script.changed";
     public static final String KEY_TAFSIR_CHANGED = "tafsir.changed";
 
@@ -114,9 +119,49 @@ public class ActivityReader extends ReaderPossessingActivity {
     public boolean persistProgressDialog4PendingTask;
     public ActivityReaderBinding mBinding;
     public ReaderLayoutManager mLayoutManager;
-    private boolean preventRecitationPlayerReset;
-    private RecitationPlayerReceiver mReceiver;
+    private boolean mProtectFromPlayerReset;
+    public RecitationService mPlayerService;
+    private final ServiceConnection mPlayerServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            if (service instanceof RecitationService.LocalBinder) {
+                mPlayerService = ((RecitationService.LocalBinder) service).getService();
+
+                if (mPlayer != null) {
+                    mPlayer.setService(mPlayerService);
+                }
+
+                mPlayerService.setRecitationPlayer(mPlayer, ActivityReader.this);
+
+                if (!mPlayerService.isPlaying()) {
+                    Chapter currChapter = mReaderParams.currChapter;
+                    int currJuzNo = mReaderParams.currJuzNo;
+                    QuranMeta quranMeta = mQuranMetaRef.get();
+
+                    if (mReaderParams.readType == READER_READ_TYPE_JUZ && currJuzNo > 0 && quranMeta != null) {
+                        mPlayerService.onJuzChanged(
+                            currJuzNo,
+                            quranMeta
+                        );
+                    } else if (currChapter != null) {
+                        mPlayerService.onChapterChanged(
+                            currChapter.getChapterNumber(),
+                            1,
+                            currChapter.getVerseCount()
+                        );
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mPlayerService.setRecitationPlayer(null, null);
+            mPlayerService = null;
+        }
+    };
     private ReadHistoryDBHelper mReadHistoryDBHelper;
+
 
     @Override
     protected int getStatusBarBG() {
@@ -130,8 +175,17 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     @Override
     protected void onPause() {
-        saveLastVerses();
+        saveReaderState();
+        if (mPlayerService != null) {
+            mPlayerService.setRecitationPlayer(null, this);
+        }
         super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        bindPlayerService();
+        super.onStart();
     }
 
     @Override
@@ -141,17 +195,18 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (mPlayer != null) {
             new Handler().postDelayed(() -> mPlayer.reveal(), 500);
         }
+
+        if (mPlayerService != null) {
+            mPlayerService.setRecitationPlayer(mPlayer, this);
+        }
     }
 
     @Override
     protected void onDestroy() {
+        unbindPlayerService();
         mBinding.readerHeader.destroy();
-        if (mPlayer != null) {
-            mPlayer.destroy();
-        }
-
-        if (mReceiver != null) {
-            unregisterReceiver(mReceiver);
+        if (mPlayerService != null) {
+            mPlayerService.destroy();
         }
 
         if (mReadHistoryDBHelper != null) {
@@ -163,7 +218,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("preventRecitationPlayerReset", false);
+        outState.putBoolean("preventRecitationPlayerReset", mPlayerService.isPlaying());
 
         if (mLayoutManager != null) {
             outState.putParcelable("recyclerView", mLayoutManager.onSaveInstanceState());
@@ -176,6 +231,23 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (mLayoutManager != null) {
             mLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("recyclerView"));
+        }
+    }
+
+    public void bindPlayerService() {
+        bindService(new Intent(this, RecitationService.class), mPlayerServiceConnection,
+            Context.BIND_AUTO_CREATE);
+    }
+
+    public void unbindPlayerService() {
+        if (mPlayerService == null) {
+            return;
+        }
+
+        try {
+            unbindService(mPlayerServiceConnection);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -233,7 +305,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         super.preActivityInflate(savedInstanceState);
         if (savedInstanceState != null) {
-            preventRecitationPlayerReset = savedInstanceState.getBoolean("preventRecitationPlayerReset", false);
+            mProtectFromPlayerReset = savedInstanceState.getBoolean("preventRecitationPlayerReset", false);
         }
 
         mReaderParams = new ReaderParams(this);
@@ -380,15 +452,11 @@ public class ActivityReader extends ReaderPossessingActivity {
             return;
         }
 
-        mPlayer = new RecitationPlayer(this);
+        mPlayer = new RecitationPlayer(this, mPlayerService);
 
-        mReceiver = new RecitationPlayerReceiver();
-        mReceiver.setPlayer(mPlayer);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_PLAY_CONTROL);
-        filter.addAction(ACTION_PREVIOUS_VERSE);
-        filter.addAction(ACTION_NEXT_VERSE);
-        registerReceiver(mReceiver, filter);
+        if (mPlayerService != null) {
+            mPlayerService.setRecitationPlayer(mPlayer, this);
+        }
 
         mBinding.floatingFooter.addView(mPlayer, 1);
     }
@@ -507,16 +575,16 @@ public class ActivityReader extends ReaderPossessingActivity {
         updateVerseNumber(chapter.getChapterNumber(), 1);
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset) {
-                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount());
+            if (!mProtectFromPlayerReset) {
+                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount(), false);
             } else {
                 mPlayer.reveal();
             }
         }
 
-        preventRecitationPlayerReset = false;
+        mProtectFromPlayerReset = false;
 
-        if (mReaderParams.getReaderStyle() == READER_STYLE_PAGE) {
+        if (mReaderParams.isPageReaderStyle()) {
             initChapterReading(chapter);
         } else {
             initChapterTranslation(chapter);
@@ -547,15 +615,15 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.verseRange = verseRange;
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset && (!chapter.equals(mReaderParams.currChapter))) {
-                mPlayer.onChapterChanged(chapter.getChapterNumber(), verseRange.getFirst(), verseRange.getSecond());
+            if (!mProtectFromPlayerReset &&
+                (!chapter.equals(mReaderParams.currChapter))) {
+                mPlayer.onChapterChanged(chapter.getChapterNumber(), 1, chapter.getVerseCount(), false);
             } else {
                 mPlayer.reveal();
             }
         }
 
-        preventRecitationPlayerReset = false;
-
+        mProtectFromPlayerReset = false;
 
         if (!chapter.equals(mReaderParams.currChapter)) {
             mReaderParams.setCurrChapter(chapter);
@@ -644,16 +712,21 @@ public class ActivityReader extends ReaderPossessingActivity {
         mReaderParams.setCurrChapter(null);
 
         if (mPlayer != null) {
-            if (!preventRecitationPlayerReset && mReaderParams.currJuzNo != juzNo) {
-                mPlayer.onJuzChanged(juzNo);
+            if (!mProtectFromPlayerReset && mReaderParams.currJuzNo != juzNo) {
+                mPlayer.onJuzChanged(juzNo, false);
             } else {
                 mPlayer.reveal();
-                if (mPlayer.isPlaying()) {
-                    mNavigator.pendingScrollVerse = new int[]{mPlayer.P().getCurrChapterNo(), mPlayer.P().getCurrVerseNo()};
+                if (mPlayerService != null && mPlayerService.isPlaying()) {
+                    mNavigator.pendingScrollVerse = new int[]{
+                        mPlayerService.getP().getCurrentChapterNo(),
+                        mPlayerService.getP().getCurrentVerseNo()
+                    };
                     mNavigator.pendingScrollVerseHighlight = false;
                 }
             }
         }
+
+        mProtectFromPlayerReset = false;
 
         mBinding.readerHeader.initJuzSelector();
         mBinding.readerHeader.selectJuzIntoSpinner(juzNo);
@@ -663,7 +736,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         final QuranMeta quranMeta = mQuranMetaRef.get();
         Pair<Integer, Integer> chaptersInJuz = quranMeta.getChaptersInJuz(juzNo);
 
-        if (mReaderParams.getReaderStyle() == READER_STYLE_PAGE) {
+        if (mReaderParams.isPageReaderStyle()) {
             initJuzReading(juzNo, quranMeta);
         } else {
             initJuzTranslation(juzNo, chaptersInJuz, quranMeta);
@@ -967,6 +1040,14 @@ public class ActivityReader extends ReaderPossessingActivity {
         mActionController.onVerseRecite(chapterNo, verseNo, reciting);
         updateVerseNumber(chapterNo, verseNo);
 
+        if (mReaderParams.isSingleVerse()) {
+            mNavigator.jumpToVerse(chapterNo, verseNo, false);
+        }
+
+        if (mPlayerService == null) {
+            return;
+        }
+
         final RecyclerView.Adapter<?> adp = mBinding.readerVerses.getAdapter();
         if (adp instanceof ADPReader) {
             onVerseReciteNonPage((ADPReader) adp, chapterNo, verseNo, reciting);
@@ -976,10 +1057,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void onVerseReciteNonPage(ADPReader adapter, int chapterNo, int verseNo, boolean reciting) {
-        if (mPlayer == null) {
-            return;
-        }
-
         for (int i = 0, l = adapter.getItemCount(); i < l; i++) {
             final ReaderRecyclerItemModel item = adapter.getItem(i);
 
@@ -992,14 +1069,14 @@ public class ActivityReader extends ReaderPossessingActivity {
             Verse verse = item.getVerse();
             final boolean isCurrVerse = verse.chapterNo == chapterNo && verse.verseNo == verseNo;
             final boolean bool = reciting && isCurrVerse;
-            if (bool && mPlayer.P().verseSync) {
+            if (bool && mPlayerService.getP().getSyncWithVerse()) {
                 mLayoutManager.scrollToPositionWithOffset(i, 0);
             }
         }
     }
 
     private void onVerseRecitePage(ADPQuranPages adapter, int chapterNo, int verseNo, boolean reciting) {
-        if (mPlayer == null) {
+        if (mPlayerService == null) {
             return;
         }
         outer:
@@ -1024,7 +1101,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                 final boolean isCurrVerse = section.getChapterNo() == chapterNo && section.hasVerse(verseNo);
                 final boolean bool = reciting && isCurrVerse;
 
-                if (bool && mPlayer.P().verseSync) {
+                if (bool && mPlayerService.getP().getSyncWithVerse()) {
                     mNavigator.scrollToVerseOnPageValidate(pos, verseNo, mLayoutManager.findViewByPosition(pos),
                         section, false);
                     break outer;
@@ -1033,23 +1110,14 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
     }
 
-    public void onVerseReciteOrJump(int chapterNo, int verseNo, boolean fromPlayer) {
-        if (mPlayer == null) {
+    public void onVerseJump(int chapterNo, int verseNo) {
+        if (mPlayerService == null || !mReaderParams.isSingleVerse()) {
             return;
         }
-        if (mReaderParams.isSingleVerse()) {
-            if (fromPlayer) {
-                mNavigator.jumpToVerse(chapterNo, verseNo, false);
-            } else {
-                if (mPlayer.P().previouslyPlaying) {
-                    mPlayer.reciteVerse(chapterNo, verseNo);
-                } else {
-                    mPlayer.onChapterChanged(chapterNo, verseNo, verseNo);
-                }
-            }
 
-            mPlayer.P().fromVerse = new int[]{chapterNo, verseNo};
-            mPlayer.P().toVerse = new int[]{chapterNo, verseNo};
+        RecitationPlayerParams recParams = mPlayerService.getP();
+        if (recParams.getPreviouslyPlaying()) {
+            mPlayerService.reciteVerse(new ChapterVersePair(chapterNo, verseNo));
         }
     }
 
@@ -1061,6 +1129,8 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void setupOnSettingsChanged(Intent data) {
+        mProtectFromPlayerReset = true;
+
         boolean arTextSizeChanged = SPReader.getSavedTextSizeMultArabic(this) != mReaderParams.arTextSizeMult;
         boolean translTextSizeChanged = SPReader.getSavedTextSizeMultTransl(this) != mReaderParams.translTextSizeMult;
         boolean readerStyleChanged = mReaderParams.getReaderStyle() != SPReader.getSavedReaderStyle(this);
@@ -1106,15 +1176,34 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void tryReciterChange() {
-        if (mPlayer == null || Objects.equals(SPReader.getSavedRecitationSlug(this), mPlayer.P().currentReciterSlug)) {
-            return;
+        if (mPlayerService == null) return;
+
+        RecitationPlayerParams params = mPlayerService.getP();
+
+        final boolean reciterChanged = !Objects.equals(
+            SPReader.getSavedRecitationSlug(this),
+            params.getCurrentReciter()
+        );
+        final boolean translationReciterChanged = !Objects.equals(
+            SPReader.getSavedRecitationTranslationSlug(this),
+            params.getCurrentTranslationReciter()
+        );
+
+        final int audioOption = SPReader.getRecitationAudioOption(this);
+        final boolean changed;
+
+        if (audioOption == RecitationUtils.AUDIO_OPTION_BOTH) {
+            changed = reciterChanged || translationReciterChanged;
+        } else if (audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION) {
+            changed = translationReciterChanged;
+        } else {
+            changed = reciterChanged;
         }
 
-        boolean wasPlaying = mPlayer.P().previouslyPlaying;
-        mPlayer.release();
-
-        if (wasPlaying) {
-            mPlayer.restartVerse();
+        if (changed) {
+            mPlayerService.onReciterChanged();
+            mPlayerService.onTranslationReciterChanged();
+            mPlayerService.restartVerseOnConfigChange();
         }
     }
 
@@ -1135,9 +1224,9 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (translChanged) {
             mActionController.showLoader();
-            if (mPlayer != null && mPlayer.isPlaying() && mPlayer.P().verseSync) {
-                RecitationParams P = mPlayer.P();
-                mNavigator.pendingScrollVerse = new int[]{P.getCurrChapterNo(), P.getCurrVerseNo()};
+            if (mPlayerService != null && mPlayerService.isPlaying() && mPlayerService.getP().getSyncWithVerse()) {
+                RecitationPlayerParams P = mPlayerService.getP();
+                mNavigator.pendingScrollVerse = new int[]{P.getCurrentChapterNo(), P.getCurrentVerseNo()};
             } else {
                 final int firstPos = mLayoutManager.findFirstVisibleItemPosition();
                 final int lastPos = mLayoutManager.findLastVisibleItemPosition();
@@ -1179,13 +1268,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         setIntent(intent);
     }
 
-    private void saveLastVerses() {
-        RecyclerView.Adapter<?> adapter = mBinding.readerVerses.getAdapter();
-        if (!(adapter instanceof ADPReader)) {
-            return;
-        }
-
-        // Get first & last visible item positions (both could be same)
+    private void saveReaderState() {// Get first & last visible item positions (both could be same)
         int firstPos = mLayoutManager.findFirstVisibleItemPosition();
         int lastPos = mLayoutManager.findLastVisibleItemPosition();
 
@@ -1193,20 +1276,27 @@ public class ActivityReader extends ReaderPossessingActivity {
             return;
         }
 
-        ADPReader adp = (ADPReader) adapter;
+        RecyclerView.Adapter<?> adapter = mBinding.readerVerses.getAdapter();
+        if (adapter instanceof ADPReader) {
+            saveTranslationViewState((ADPReader) adapter, firstPos, lastPos);
+        } else if (adapter instanceof ADPQuranPages) {
+            savePageViewState((ADPQuranPages) adapter, firstPos, lastPos);
+        }
+    }
 
+    private void saveTranslationViewState(ADPReader adapter, int firstPos, int lastPos) {
         // If the first item is not a verse item (could be chapterTitle, Bismillah etc), then loop until we get the verse item.
-        ReaderRecyclerItemModel firstItem = adp.getItem(firstPos);
+        ReaderRecyclerItemModel firstItem = adapter.getItem(firstPos);
         while (firstItem.getViewType() != VERSE && firstPos <= lastPos && firstPos >= 0) {
-            firstItem = adp.getItem(++firstPos);
+            firstItem = adapter.getItem(++firstPos);
         }
 
         ReaderRecyclerItemModel lastItem = null;
         if (lastPos >= 0) {
             // If the last item is not a verse item (could be chapterTitle, Bismillah, footer etc), then loop until we get the verse item.
-            lastItem = adp.getItem(lastPos);
+            lastItem = adapter.getItem(lastPos);
             while (lastItem.getViewType() != VERSE && lastPos >= firstPos && lastPos >= 0) {
-                lastItem = adp.getItem(--lastPos);
+                lastItem = adapter.getItem(--lastPos);
             }
         }
 
@@ -1229,17 +1319,47 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (mReadHistoryDBHelper == null) {
             return;
         }
+
         // Finally save it.
         VerseUtils.saveLastVerses(
             this,
             mReadHistoryDBHelper,
             mQuranMetaRef.get(),
             mReaderParams.readType,
-            mReaderParams.getReaderStyle(),
+            READER_STYLE_TRANSLATION,
             mReaderParams.currJuzNo,
             firstVerse.chapterNo,
             firstVerse.verseNo,
             lastVerseNo
+        );
+    }
+
+    private void savePageViewState(ADPQuranPages adapter, int firstPos, int lastPos) {
+        // If the first item is not a verse item (could be chapterTitle, Bismillah etc), then loop until we get the verse item.
+        QuranPageModel item = adapter.getPageModel(firstPos);
+        while (item.getViewType() != READER_PAGE && firstPos <= lastPos && firstPos >= 0) {
+            item = adapter.getPageModel(++firstPos);
+        }
+
+        // Each page have many verses, so we don't need to find the last visible item.
+
+        List<QuranPageSectionModel> sections = item.getSections();
+        QuranPageSectionModel firstSection = sections.get(0);
+
+        int[] verses = firstSection.getFromToVerses();
+
+
+        // Finally save it.
+        VerseUtils.saveLastVerses(
+            this,
+            mReadHistoryDBHelper,
+            mQuranMetaRef.get(),
+            mReaderParams.readType,
+            READER_STYLE_PAGE,
+            mReaderParams.currJuzNo,
+            firstSection.getChapterNo(),
+            verses[0],
+            verses[1]
         );
     }
 

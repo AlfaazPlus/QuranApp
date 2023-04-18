@@ -35,6 +35,9 @@ interface GithubApi {
     @GET("inventory/recitations/available_recitations_info.json")
     suspend fun getAvailableRecitations(): ResponseBody
 
+    @GET("inventory/recitations/available_recitation_translations_info.json")
+    suspend fun getAvailableRecitationTranslations(): ResponseBody
+
     @GET("inventory/tafsirs/available_tafsirs_info.json")
     suspend fun getAvailableTafsirs(): ResponseBody
 }

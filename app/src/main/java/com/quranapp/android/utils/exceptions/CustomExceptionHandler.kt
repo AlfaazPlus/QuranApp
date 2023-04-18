@@ -1,8 +1,8 @@
 package com.quranapp.android.utils.exceptions
 
 import android.content.Context
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.sharedPrefs.SPLog
 import org.apache.commons.lang3.exception.ExceptionUtils
 
 class CustomExceptionHandler(
@@ -11,9 +11,8 @@ class CustomExceptionHandler(
     private val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
 
     override fun uncaughtException(thread: Thread, exc: Throwable) {
-        val stackTraceString = ExceptionUtils.getStackTrace(exc)
-        SPLog.saveLastCrashLog(ctx, stackTraceString)
-        NotificationUtils.showCrashNotification(ctx, stackTraceString)
+        Log.saveCrash(ctx, exc)
+        NotificationUtils.showCrashNotification(ctx, ExceptionUtils.getStackTrace(exc))
         defaultExceptionHandler?.uncaughtException(thread, exc)
     }
 }

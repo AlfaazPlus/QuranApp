@@ -11,6 +11,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.services.TranslationDownloadService
@@ -57,12 +58,13 @@ object AppActions {
     fun checkForResourcesVersions(ctx: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val (urlsVersion, translationsVersion, recitationsVersion, tafsirsVersion)
+                val (urlsVersion, translationsVersion, recitationsVersion, recitationsTranslationVersion, tafsirsVersion)
                         = RetrofitInstance.github.getResourcesVersions()
 
                 val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
                 val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
                 val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
+                val localRecitationTranslationsVersion = SPAppConfigs.getRecitationTranslationsVersion(ctx)
                 val localTafsirsVersion = SPAppConfigs.getTafsirsVersion(ctx)
 
                 if (urlsVersion > localUrlsVersion) {
@@ -80,6 +82,11 @@ object AppActions {
                     SPAppConfigs.setRecitationsVersion(ctx, recitationsVersion)
                 }
 
+                if (recitationsTranslationVersion > localRecitationTranslationsVersion) {
+                    SPAppActions.setFetchRecitationTranslationsForce(ctx, true)
+                    SPAppConfigs.setRecitationTranslationsVersion(ctx, recitationsVersion)
+                }
+
                 if (tafsirsVersion > localTafsirsVersion) {
                     SPAppActions.setFetchTafsirsForce(ctx, true)
                     SPAppConfigs.setTafsirsVersion(ctx, tafsirsVersion)
@@ -92,7 +99,7 @@ object AppActions {
 
     @JvmStatic
     fun checkForCrashLogs(ctx: Context) {
-        val lastCrashLog = SPLog.getLastCrashLog(ctx)
+        val lastCrashLog = Log.getLastCrashLog(ctx)
 
         if (lastCrashLog.isNullOrEmpty()) return
 
@@ -102,13 +109,12 @@ object AppActions {
             .setNeutralButton(R.string.strLabelCopy) { _, _ ->
                 ctx.copyToClipboard(lastCrashLog)
                 Toast.makeText(ctx, R.string.copiedToClipboard, Toast.LENGTH_LONG).show()
-                SPLog.removeLastCrashLog(ctx)
+                SPLog.removeLastCrashLogFilename(ctx)
             }
             .setPositiveButton(R.string.createIssue) { _, _ ->
                 ctx.copyToClipboard(lastCrashLog)
-                SPLog.removeLastCrashLog(ctx)
+                SPLog.removeLastCrashLogFilename(ctx)
                 Toast.makeText(ctx, R.string.pasteCrashLogGithubIssue, Toast.LENGTH_LONG).show()
-                // redirect to github issues
                 AppBridge.newOpener(ctx).browseLink(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
             }
             .show()

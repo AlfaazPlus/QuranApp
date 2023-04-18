@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:overScrollMode="ifContentScrolls">
+
+    <com.quranapp.android.widgets.radio.PeaceRadioGroup
+        android:id="@+id/audioOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.quranapp.android.widgets.radio.PeaceRadioButton
+            android:id="@id/audioOnlyArabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/audioOnlyArabic"
+            android:textAppearance="@style/TextAppearanceCommonTitle"
+            app:peaceComp_spaceBetween="15dp" />
+
+        <com.quranapp.android.widgets.radio.PeaceRadioButton
+            android:id="@id/audioOnlyTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/audioOnlyTranslation"
+            android:textAppearance="@style/TextAppearanceCommonTitle"
+            app:peaceComp_spaceBetween="15dp" />
+
+        <com.quranapp.android.widgets.radio.PeaceRadioButton
+            android:id="@id/audioBoth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/dr_bg_hover_cornered"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/audioBothArabicTranslation"
+            android:textAppearance="@style/TextAppearanceCommonTitle"
+            app:peaceComp_spaceBetween="15dp" />
+
+    </com.quranapp.android.widgets.radio.PeaceRadioGroup>
+</androidx.core.widget.NestedScrollView>

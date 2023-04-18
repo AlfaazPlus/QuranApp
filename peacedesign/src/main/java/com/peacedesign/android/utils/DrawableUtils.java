@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RippleDrawable;
-import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Dimension;
@@ -22,20 +21,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import java.util.Arrays;
 
 public abstract class DrawableUtils {
-    public static Bitmap getBitmapFromDrawable(Drawable drawable, int width, int height) {
-        if (drawable == null) {
-            return null;
-        }
-
-        drawable = (DrawableCompat.wrap(drawable)).mutate();
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
 
     @ColorInt
     public static int getColorFromDrawable(@NonNull Drawable drawable) {
@@ -43,21 +28,6 @@ public abstract class DrawableUtils {
             return ((ColorDrawable) drawable).getColor();
         }
         return -1;
-    }
-
-    @Nullable
-    public static Drawable setColorToDrawable(@NonNull View view, @ColorInt int color) {
-        Drawable drawable = view.getBackground();
-        if (drawable == null) return null;
-
-        return setColorToDrawable(drawable, color);
-    }
-
-    @NonNull
-    public static Drawable setColorToDrawable(@NonNull Drawable drawable, @ColorInt int color) {
-        Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(wrappedDrawable, color);
-        return wrappedDrawable;
     }
 
     private static float[] makeRadii(float radius) {

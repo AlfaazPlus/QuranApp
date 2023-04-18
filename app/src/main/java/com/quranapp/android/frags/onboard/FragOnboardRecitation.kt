@@ -72,7 +72,7 @@ class FragOnboardRecitation : FragOnboardBase() {
     }
 
     private fun populateRecitation(list: RecyclerView, items: List<RecitationInfoModel>) {
-        list.adapter = ADPRecitations().apply {
+        list.adapter = ADPRecitations(null).apply {
             setModels(items)
         }
     }

@@ -32,6 +32,7 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
@@ -39,7 +40,7 @@ import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.views.reader.RecitationPlayer;
+import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
@@ -85,7 +86,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     @Override
-    protected void setupContentView(@NonNull LinearLayout dialogLayout, PeaceBottomSheetParams params) {
+    protected void setupContentView(@NonNull LinearLayout dialogLayout, @NonNull PeaceBottomSheetParams params) {
         if (mActivity == null || mVerse == null) {
             return;
         }
@@ -142,8 +143,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private void installContents(ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout, Verse verse) {
         if (actvt instanceof ActivityReader) {
             ActivityReader reader = (ActivityReader) actvt;
-            if (reader.mPlayer != null) {
-                onVerseRecite(reader.mPlayer);
+            if (reader.mPlayerService != null) {
+                onVerseRecite(reader.mPlayerService);
             }
         }
 
@@ -173,10 +174,10 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         updateHeaderTitle();
     }
 
-    private void onVerseRecite(RecitationPlayer player) {
-        final int chapterNo = player.P().getCurrChapterNo();
-        final int verseNo = player.P().getCurrVerseNo();
-        onVerseRecite(chapterNo, verseNo, player.isPlaying());
+    private void onVerseRecite(RecitationService service) {
+        final int chapterNo = service.getP().getCurrentChapterNo();
+        final int verseNo = service.getP().getCurrentVerseNo();
+        onVerseRecite(chapterNo, verseNo, service.isPlaying());
     }
 
     public void onVerseRecite(int chapterNo, int verseNo, boolean isReciting) {
@@ -250,7 +251,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             if (actvt instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) actvt;
                 if (reader.mPlayer != null) {
-                    reader.mPlayer.reciteControl(mVerse.chapterNo, mVerse.verseNo);
+                    reader.mPlayer.reciteControl(new ChapterVersePair(mVerse.chapterNo, mVerse.verseNo));
                 }
             }
         } else if (id == R.id.btnFootnotes) {

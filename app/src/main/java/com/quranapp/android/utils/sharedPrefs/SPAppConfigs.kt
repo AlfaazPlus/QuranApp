@@ -10,6 +10,7 @@ object SPAppConfigs {
     private const val KEY_URLS_VERSION = "key.versions.urls"
     private const val KEY_TRANSLATIONS_VERSION = "key.versions.translations"
     private const val KEY_RECITATIONS_VERSION = "key.versions.recitations"
+    private const val KEY_RECITATION_TRANSLATIONS_VERSION = "key.versions.recitation_translations"
     private const val KEY_TAFSIRS_VERSION = "key.versions.tafsirs"
 
     const val LOCALE_DEFAULT = "default"
@@ -65,6 +66,15 @@ object SPAppConfigs {
     fun getRecitationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_RECITATIONS_VERSION, 0)
 
     fun setRecitationsVersion(ctx: Context, version: Long) {
+        sp(ctx).edit().apply {
+            putLong(KEY_RECITATIONS_VERSION, version)
+            apply()
+        }
+    }
+
+    fun getRecitationTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_RECITATION_TRANSLATIONS_VERSION, 0)
+
+    fun setRecitationTranslationsVersion(ctx: Context, version: Long) {
         sp(ctx).edit().apply {
             putLong(KEY_RECITATIONS_VERSION, version)
             apply()

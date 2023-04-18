@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.univ;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,20 @@ public abstract class DateUtils {
         }
 
         return null;
+    }
+
+    public static Date toDate(String dateStr, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.ENGLISH);
+        try {
+            return formatter.parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public static String format(Date date, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.ENGLISH);
+        return formatter.format(date);
     }
 
     public static String getDateTimeNow(String format) {

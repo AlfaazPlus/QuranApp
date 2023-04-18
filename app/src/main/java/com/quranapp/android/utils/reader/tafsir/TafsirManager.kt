@@ -5,6 +5,7 @@ import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
@@ -17,7 +18,6 @@ import java.io.IOException
 
 object TafsirManager {
     private var availableTafsirsModel: AvailableTafsirsModel? = null
-
 
     @JvmStatic
     fun prepare(
@@ -54,9 +54,10 @@ object TafsirManager {
                     tafsirsFile.writeText(stringData)
 
                     withContext(Dispatchers.Main) {
-                        postRecitationsLoad(ctx, stringData, callback)
+                        postTafsirsLoad(ctx, stringData, callback)
                     }
                 } catch (e: Exception) {
+                    Log.saveError(e, "loadTafsirs")
                     e.printStackTrace()
                     withContext(Dispatchers.Main) {
                         callback(null)
@@ -76,15 +77,16 @@ object TafsirManager {
                     return
                 }
 
-                postRecitationsLoad(ctx, stringData, callback)
+                postTafsirsLoad(ctx, stringData, callback)
             } catch (e: IOException) {
+                Log.saveError(e, "loadTafsirs")
                 e.printStackTrace()
                 loadTafsirs(ctx, true, callback)
             }
         }
     }
 
-    private fun postRecitationsLoad(
+    private fun postTafsirsLoad(
         ctx: Context,
         stringData: String,
         callback: (AvailableTafsirsModel?) -> Unit
@@ -106,6 +108,7 @@ object TafsirManager {
 
             callback(availableTafsirsModel)
         } catch (e: Exception) {
+            Log.saveError(e, "postTafsirsLoad")
             e.printStackTrace()
             callback(null)
         }

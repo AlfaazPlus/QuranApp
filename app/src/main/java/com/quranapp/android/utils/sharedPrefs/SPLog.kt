@@ -10,16 +10,16 @@ object SPLog {
     private fun sp(ctx: Context) = ctx.getSharedPreferences(SP_CRASH_LOG, Context.MODE_PRIVATE)
 
     @SuppressLint("ApplySharedPref")
-    fun saveLastCrashLog(ctx: Context, stackTraceString: String) {
+    fun saveLastCrashLogFileName(ctx: Context, filename: String) {
         sp(ctx).edit().apply {
-            putString(KEY_SP_LAST_CRASH_LOG, stackTraceString)
+            putString(KEY_SP_LAST_CRASH_LOG, filename)
             commit() // We want to save it immediately
         }
     }
 
-    fun getLastCrashLog(ctx: Context): String? = sp(ctx).getString(KEY_SP_LAST_CRASH_LOG, null)
+    fun getLastCrashLogFilename(ctx: Context): String? = sp(ctx).getString(KEY_SP_LAST_CRASH_LOG, null)
 
-    fun removeLastCrashLog(ctx: Context) {
+    fun removeLastCrashLogFilename(ctx: Context) {
         sp(ctx).edit().apply {
             remove(KEY_SP_LAST_CRASH_LOG)
             apply()

@@ -112,7 +112,6 @@
     <string name="strTitleShareApp">شارك التطبيق</string>
     <string name="strTitleAddNote">إضافة ملاحظة</string>
     <string name="strTitleNote">ملاحظة</string>
-    <string name="strTitleSubscription">الاشتراك</string>
     <string name="strTitleTafsir">التفسير</string>
     <string name="strLabelPreviousChapter">السورة السابقة</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورة %1$s | الآية %2$d</string>
