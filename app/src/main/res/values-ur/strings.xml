@@ -201,7 +201,7 @@
     <string name="strMsgYouAreReadingVerses">آپ پڑھ رہے ہیں آیات:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d درست سورہ نمبر نہیں ہے</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d سورہ نمبر %2$d کے لیے صحیح آیت نمبر نہیں ہے</string>
-    <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں۔</string>
+    <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d سورہ نمبر %3$d کے لیے صحیح آیت کی حد نہیں ہے</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ایک درست پارہ نمبر نہیں ہے</string>
     <string name="strMsgBookmarkAdded">آیت بک مارک کی گئی</string>

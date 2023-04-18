@@ -175,7 +175,7 @@
     <string name="strMsgVOTDOn">Recevoir une notification tous les jours le matin.</string>
     <string name="strMsgYouAreReadingVerses">Vous lisez les versets :</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d n\'est pas un numéro de verset valide pour la sourate n° %2$d</string>
-    <string name="strMsgInvalidVersesRange">Pas une plage de versets valide.</string>
+    <string name="strMsgInvalidVersesRange">Pas une plage de versets valide</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d n\'est pas un numéro de Juz (Para) valide.</string>
     <string name="strMsgBookmarkAddedAlready">Le verset est déjà ajouté aux marques-pages</string>
     <string name="strMsgBookmarkRemoved">Verset enlevé avec succès des marques-pages</string>

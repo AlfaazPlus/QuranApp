@@ -204,7 +204,7 @@
     <string name="strMsgYouAreReadingVerses">आप पढ़ रहे है आयत:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d एक अमान्य सूरह संख्या है</string>
     <string name="strMsgInvalidVerseNo" formatted="false">आयत संख्या %1$d, सूरह संख्या %2$d के लिए अमान्य है</string>
-    <string name="strMsgInvalidVersesRange">अमान्य रेंज।</string>
+    <string name="strMsgInvalidVersesRange">अमान्य रेंज</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d, सूरह संख्या %3$d के लिए एक अमान्य रेंज है</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d एक अमान्य पारा संख्या है</string>
     <string name="strMsgBookmarkAdded">आयत बुकमार्क किया गया</string>
@@ -314,7 +314,7 @@
     <string name="msgAnotherDownloadInProgress">एक और डाउनलोड प्रगति पर है।</string>
     <string name="lastCrashLog">अंतिम क्रैश लॉग</string>
     <string name="createIssue">समस्या बनाएँ</string>
-    <string name="pasteCrashLogGithubIssue">क्रैश लॉग को क्लिपबोर्ड में कॉपी किया गया है। कृपया इसे GitHub इशू में पेस्ट करें।</string>
+    <string name="pasteCrashLogGithubIssue">लॉग को क्लिपबोर्ड पर कॉपी कर दिया गया है। कृपया इसे GitHub अंक में पेस्ट करें।</string>
     <string name="strTitleScripts">स्क्रिप्ट</string>
     <string name="copiedToClipboard">क्लिपबोर्ड में कॉपी किया गया।</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%2$d में से %1$d फोंट डाउनलोड किए गए</string>
@@ -347,7 +347,7 @@
     <string name="verseSyncOn">आयत सिंक: चालू</string>
     <string name="verseSyncOff">आयत सिंक: बंद</string>
     <string name="msgScriptCleanup" formatted="false">%s स्क्रिप्ट और इसके सभी डाउनलोड किए गए फ़ॉन्ट हटा दिए जाएँगे। इनका उपयोग करने के लिए आपको पुनः डाउनलोड करना होगा।</string>
-    <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे।</string>
+    <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे। सूरा के तिलावत को व्यक्तिगत रूप से हटाने के लिए, \"ऑडियो मैनेज करें\" सेटिंग पर जाएं।</string>
     <string name="titleChapterInfoCleanup">अध्याय जानकारी साफ़ करें\?</string>
     <string name="msgChapterInfoCleanup">सहेजी गई सभी अध्याय जानकारी हटा दी जाएगी।</string>
     <string name="titleRecitationCleanup">तिलावत हटाना चाहते हैं\?</string>
@@ -367,4 +367,22 @@
     <string name="strMsgTafsirsNoAvailable">कोई तफ़सीर उपलब्ध नहीं है</string>
     <string name="msgTafsirCleanup" formatted="false">%s के सभी संगृहीत तफ़सीर मिटा दिए जाएँगे।</string>
     <string name="titleTafsirCleanup">तफ़सीर मिटाएं\?</string>
+    <string name="labelAdd">जोड़ें</string>
+    <string name="titleReaderTextSizeTafsir">तफ़सीर टेक्स्ट साइज</string>
+    <string name="labelArabic">अरबी</string>
+    <string name="labelTranslation">अनुवाद</string>
+    <string name="titleManageAudio">ऑडियो मैनेज करें</string>
+    <string name="playbackSpeed">प्लेबैक गति</string>
+    <string name="audioOnlyTranslation">केवल अनुवाद चलायें</string>
+    <string name="noItems">कोई आइटम नहीं</string>
+    <string name="titleOtherSettings">अन्य सेटिंग</string>
+    <string name="appLogs">ऐप लॉग</string>
+    <string name="suppressedLogs">दबा हुआ लॉग</string>
+    <string name="audioBothArabicTranslation">अरबी और अनुवाद दोनों चलायें</string>
+    <string name="textDownloaded">डाउनलोड की गई</string>
+    <string name="crashLogs">क्रैश लॉग</string>
+    <string name="logRemoved">लॉग हटा दिया गया</string>
+    <string name="downloadRecitations">तिलावत डाउनलोड करें</string>
+    <string name="audioOption">ऑडियो का विकल्प</string>
+    <string name="audioOnlyArabic">केवल अरबी चलायें</string>
 </resources>
