@@ -272,7 +272,7 @@
     <string name="strHintFeedback">നിങ്ങളുടെ അഭിപ്രായം ഇവിടെ എഴുതുക…</string>
     <string name="strNotFound">കണ്ടെത്തിയില്ല</string>
     <string name="strMsgInvalidVerseNo" formatted="false">സൂറത്ത് നമ്പർ. %2$dന് സാധുവായ വാക്യ നമ്പർ അല്ല %1$d</string>
-    <string name="strMsgInvalidVersesRange">സാധുവായ വാക്യ ശ്രേണിയല്ല.</string>
+    <string name="strMsgInvalidVersesRange">സാധുവായ വാക്യ ശ്രേണിയല്ല</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">സൂറത്ത് നമ്പർ %3$dന് സാധുവായ വാക്യ ശ്രേണി അല്ല %1$d-%2$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ഒരു സാധുവായ ജുസുഅ് (പാര) നമ്പർ അല്ല.</string>
     <string name="strMsgBookmarkAddFailed">വാക്യം ബുക്ക്‌മാർക്കുകളിലേക്ക് ചേർക്കാൻ കഴിഞ്ഞില്ല</string>
