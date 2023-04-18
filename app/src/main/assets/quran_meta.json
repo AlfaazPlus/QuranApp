@@ -10,6 +10,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সূচনা",
+        "ckb": "کرانەوە",
         "en": "The Opening",
         "fr": "L'ouverture",
         "hi": "शुरू करने वाली",
@@ -20,6 +21,7 @@
       },
       "name": {
         "ar": "الفاتحة",
+        "ckb": "الفاتحة",
         "en": "Al-Fatihah",
         "hi": "अल फातेहा",
         "ml":"സൂറത്തുൽ ഫാത്തിഹ",
@@ -37,6 +39,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "বকনা-বাছুর",
+        "ckb": "مانگا",
         "en": "The Cow",
         "fr": "La vache",
         "hi": "गाय",
@@ -47,6 +50,7 @@
       },
       "name": {
         "ar": "البقرة",
+        "ckb": "البقرة",
         "en": "Al-Baqarah",
         "hi": "अल बकराह",
         "ml": "സൂറത്തുൽ ബഖറഃ",
@@ -64,6 +68,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "ইমরানের পরিবার",
+        "ckb": "خانەوادەی عیمران",
         "en": "The Family of Imraan",
         "fr": "La famille de 'imran",
         "hi": "इमरान की औलाद",
@@ -74,6 +79,7 @@
       },
       "name": {
         "ar": "آل عمران",
+        "ckb": "آل عمران",
         "en": "Aal-i-Imraan",
         "hi": "आले इमरान",
         "ml": "സൂറത്ത് ആലുഇംറാൻ",
@@ -91,6 +97,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "নারী",
+        "ckb": "ئافرەتان",
         "en": "The Women",
         "fr": "Les femmes",
         "hi": "औरतें",
@@ -101,6 +108,7 @@
       },
       "name": {
         "ar": "النساء",
+        "ckb": "النساء",
         "en": "An-Nisaa",
         "hi": "अन-निसा",
         "ml": "സൂറത്തുന്നിസാഅ്",
@@ -118,6 +126,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "খাদ্য পরিবেশিত টেবিল",
+        "ckb": "سفرەو خوان",
         "en": "The Table",
         "fr": "La table servie",
         "hi": "दस्तरख्वान",
@@ -128,6 +137,7 @@
       },
       "name": {
         "ar": "المائدة",
+        "ckb": "المائدة",
         "en": "Al-Maaida",
         "hi": "अल-माइदा",
         "ml": "സൂറത്തുൽ മാഇദ",
@@ -145,6 +155,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "গৃহপালিত পশু",
+        "ckb": "ئاژەڵان",
         "en": "The Cattle",
         "fr": "Les bestiaux",
         "hi": "मवेशी",
@@ -155,6 +166,7 @@
       },
       "name": {
         "ar": "الأنعام",
+        "ckb": "الأنعام",
         "en": "Al-An'aam",
         "hi": "अल-अनाम",
         "ml": "സൂറത്തുൽ അൻആം",
@@ -172,6 +184,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "উচু স্থান",
+        "ckb": "بەرزایی",
         "en": "The Heights",
         "fr": "Al-A'raf",
         "hi": "बुलंदीयाँ",
@@ -182,6 +195,7 @@
       },
       "name": {
         "ar": "الأعراف",
+        "ckb": "الأعراف",
         "en": "Al-A'raaf",
         "hi": "अल-आराफ़",
         "ml": "സൂറത്തുൽ അഅ്റാഫ്",
@@ -199,6 +213,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "যুদ্ধ-লব্ধ ধনসম্পদ",
+        "ckb": "دەستکەوت",
         "en": "The Spoils of War",
         "fr": "Le butin",
         "hi": "माले गनीमत",
@@ -209,6 +224,7 @@
       },
       "name": {
         "ar": "الأنفال",
+        "ckb": "الأنفال",
         "en": "Al-Anfaal",
         "hi": "अल-अन्फाल",
         "ml": "സൂറത്തുൽ അൻഫാൽ",
@@ -226,6 +242,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "অনুশোচনা",
+        "ckb": "تۆبە",
         "en": "The Repentance",
         "fr": "Le repentir",
         "hi": "तौबा",
@@ -236,6 +253,7 @@
       },
       "name": {
         "ar": "التوبة",
+        "ckb": "التوبة",
         "en": "At-Tawba",
         "hi": "अत-तौबा",
         "ml": "സൂറത്തുത്തൗബഃ",
@@ -253,6 +271,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবী ইউনুস",
+        "ckb": "یونس",
         "en": "Jonas",
         "fr": "Jonas",
         "hi": "यूनुस",
@@ -263,6 +282,7 @@
       },
       "name": {
         "ar": "يونس",
+        "ckb": "یونس",
         "en": "Yunus",
         "hi": "युनुस",
         "ml": "സൂറത്ത് യൂനുസ്",
@@ -280,6 +300,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবী হুদ",
+        "ckb": "هوود",
         "en": "Hud",
         "fr": "Houd",
         "hi": "एक नबी का नाम",
@@ -290,6 +311,7 @@
       },
       "name": {
         "ar": "هود",
+        "ckb": "هود",
         "en": "Hud",
         "hi": "हूद",
         "ml": "സൂറത്ത് ഹൂദ്",
@@ -307,6 +329,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবী ইউসুফ",
+        "ckb": "یوسف",
         "en": "Joseph",
         "fr": "Joseph",
         "hi": "यूसुफ",
@@ -317,6 +340,7 @@
       },
       "name": {
         "ar": "يوسف",
+        "ckb": "یوسف",
         "en": "Yusuf",
         "hi": "युसूफ",
         "ml": "സൂറത്ത് യൂസുഫ്",
@@ -334,6 +358,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "বজ্রপাত",
+        "ckb": "هەورە بروسکە",
         "en": "The Thunder",
         "fr": "Le tonnerre",
         "hi": "गरज",
@@ -344,6 +369,7 @@
       },
       "name": {
         "ar": "الرعد",
+        "ckb": "الرعد",
         "en": "Ar-Ra'd",
         "hi": "अर र’आद",
         "ml": "സൂറത്തു റഅ്ദ്",
@@ -361,6 +387,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবী ইবরাহীম",
+        "ckb": "ئیبراهیم",
         "en": "Abraham",
         "fr": "Abraham",
         "hi": "इब्राहीम",
@@ -371,6 +398,7 @@
       },
       "name": {
         "ar": "ابراهيم",
+        "ckb": "ابراهیم",
         "en": "Ibrahim",
         "hi": "इब्राहीम",
         "ml": "സൂറത്ത് ഇബ്റാഹീം",
@@ -388,6 +416,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পাথুরে পাহাড়",
+        "ckb": "بەردەڵان",
         "en": "The Rock",
         "fr": "Al-Hijr",
         "hi": "पत्थर",
@@ -398,6 +427,7 @@
       },
       "name": {
         "ar": "الحجر",
+        "ckb": "الحجر",
         "en": "Al-Hijr",
         "ur": "الحجر",
         "ml": "സൂറത്തുൽ ഹിജ്ർ",
@@ -415,6 +445,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মৌমাছি",
+        "ckb": "هەنگ",
         "en": "The Bee",
         "fr": "Les abeilles",
         "hi": "मधुमक्खी",
@@ -425,6 +456,7 @@
       },
       "name": {
         "ar": "النحل",
+        "ckb": "النحل",
         "en": "An-Nahl",
         "hi": "अन नहल",
         "ml": "സൂറത്തുന്നഹ്ൽ",
@@ -442,6 +474,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ইহুদি জাতি",
+        "ckb": "شەوڕەوی",
         "en": "The Night Journey",
         "fr": "Le voyage nocturne",
         "hi": "रात का सफ़र",
@@ -452,6 +485,7 @@
       },
       "name": {
         "ar": "الإسراء",
+        "ckb": "الإسراء",
         "en": "Al-Israa",
         "hi": "अल इस्रा",
         "ml": "സൂറത്തുൽ ഇസ്റാഅ്",
@@ -469,6 +503,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "গুহা",
+        "ckb": "ئەشکەوت",
         "en": "The Cave",
         "fr": "La caverne",
         "hi": "गार, गुफा",
@@ -479,6 +514,7 @@
       },
       "name": {
         "ar": "الكهف",
+        "ckb": "الکهف",
         "en": "Al-Kahf",
         "hi": "अल कहफ़",
         "ml": "സൂറത്തുൽ കഹ്ഫ്",
@@ -496,6 +532,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মারইয়াম (ঈসা নবীর মা)",
+        "ckb": "مەریەم",
         "en": "Mary",
         "fr": "Marie",
         "hi": "मरियम",
@@ -506,6 +543,7 @@
       },
       "name": {
         "ar": "مريم",
+        "ckb": "مریم",
         "en": "Maryam",
         "hi": "मरियम",
         "ml": "സൂറത്ത് മർയം",
@@ -523,6 +561,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ত়া হা",
+        "ckb": "تەها",
         "en": "Taa-Haa",
         "fr": "Ta-Ha",
         "hi": "ताहा",
@@ -533,6 +572,7 @@
       },
       "name": {
         "ar": "طه",
+        "ckb": "طه",
         "en": "Taa-Haa",
         "hi": "अत-तहा",
         "ml": "സൂറത്ത് ത്വാഹാ",
@@ -550,6 +590,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবীগণ",
+        "ckb": "پێغەمبەران",
         "en": "The Prophets",
         "fr": "Les prophètes",
         "hi": "पैग़ंबर",
@@ -560,6 +601,7 @@
       },
       "name": {
         "ar": "الأنبياء",
+        "ckb": "الأنبیاء",
         "en": "Al-Anbiyaa",
         "hi": "अल-अम्बिया",
         "ml": "സൂറത്തുൽ അൻബിയാഅ്",
@@ -577,6 +619,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "হ়াজ্জ",
+        "ckb": "حەج",
         "en": "The Pilgrimage",
         "fr": "Le pèlerinage",
         "hi": "हज",
@@ -587,6 +630,7 @@
       },
       "name": {
         "ar": "الحج",
+        "ckb": "الحج",
         "en": "Al-Hajj",
         "hi": "अल-हज",
         "ml": "സൂറത്തുൽ ഹജ്ജ്",
@@ -604,6 +648,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বিশ্বাসী",
+        "ckb": "باوەڕداران",
         "en": "The Believers",
         "fr": "Les croyants",
         "hi": "ईमान वाले लोग",
@@ -614,6 +659,7 @@
       },
       "name": {
         "ar": "المؤمنون",
+        "ckb": "المؤمنون",
         "en": "Al-Muminoon",
         "hi": "अल-मुमिनून",
         "ml": "സൂറത്തുൽ മുഅ്മിനൂൻ",
@@ -631,6 +677,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "আলো",
+        "ckb": "ڕووناکی",
         "en": "The Light",
         "fr": "La lumière",
         "hi": "रौशनी",
@@ -641,6 +688,7 @@
       },
       "name": {
         "ar": "النور",
+        "ckb": "النور",
         "en": "An-Noor",
         "hi": "अन-नूर",
         "ml": "സൂറത്തുന്നൂർ",
@@ -658,6 +706,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মানদণ্ড",
+        "ckb": "جیاکاری",
         "en": "The Criterion",
         "fr": "Le discernement",
         "hi": "सही और गलत में फर्क करने वाली किताब",
@@ -668,6 +717,7 @@
       },
       "name": {
         "ar": "الفرقان",
+        "ckb": "الفرقان",
         "en": "Al-Furqaan",
         "hi": "अल-फुरकान",
         "ml": "സൂറത്തുൽ ഫുർഖാൻ",
@@ -685,6 +735,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কবি",
+        "ckb": "شاعیران",
         "en": "The Poets",
         "fr": "Les poètes",
         "hi": "शायर",
@@ -695,6 +746,7 @@
       },
       "name": {
         "ar": "الشعراء",
+        "ckb": "الشعراء",
         "en": "Ash-Shu'araa",
         "hi": "अस-शुआरा",
         "ml": "സൂറത്തുശ്ശുഅറാഅ്",
@@ -712,6 +764,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পিঁপড়া",
+        "ckb": "مێروولە",
         "en": "The Ant",
         "fr": "Les fourmis",
         "hi": "च्यूँटी",
@@ -722,6 +775,7 @@
       },
       "name": {
         "ar": "النمل",
+        "ckb": "النمل",
         "en": "An-Naml",
         "hi": "अन-नम्ल",
         "ml": "സൂറത്തുന്നംല്",
@@ -739,6 +793,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কাহিনি",
+        "ckb": "چیرۆکەکان",
         "en": "The Stories",
         "fr": "Le récit",
         "hi": "किस्से",
@@ -749,6 +804,7 @@
       },
       "name": {
         "ar": "القصص",
+        "ckb": "القصص",
         "en": "Al-Qasas",
         "hi": "अल-क़सस",
         "ml": "സൂറത്തുൽ ഖസസ്",
@@ -766,6 +822,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মাকড়শা",
+        "ckb": "جاڵجاڵۆکە",
         "en": "The Spider",
         "fr": "L'araignée",
         "hi": "मकड़ी",
@@ -776,6 +833,7 @@
       },
       "name": {
         "ar": "العنكبوت",
+        "ckb": "العنکبوت",
         "en": "Al-Ankaboot",
         "hi": "अल-अनकबूत",
         "ml": "സൂറത്തുൽ അൻകബൂത്ത്",
@@ -793,6 +851,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "রোমান জাতি",
+        "ckb": "ڕۆم",
         "en": "The Romans",
         "fr": "Les romains",
         "hi": "रोम",
@@ -803,6 +862,7 @@
       },
       "name": {
         "ar": "الروم",
+        "ckb": "الروم",
         "en": "Ar-Room",
         "hi": "अर-रूम",
         "ml": "സൂറത്തു റൂം",
@@ -820,6 +880,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "এক জ্ঞানী ব্যাক্তি",
+        "ckb": "لوقمان",
         "en": "Luqman",
         "fr": "Louqman",
         "hi": "लुक़मान",
@@ -830,6 +891,7 @@
       },
       "name": {
         "ar": "لقمان",
+        "ckb": "لقمان",
         "en": "Luqman",
         "hi": "लुकमान",
         "ml": "സൂറത്ത് ലുഖ്മാൻ",
@@ -847,6 +909,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সিজদা",
+        "ckb": "سوژدە",
         "en": "The Prostration",
         "fr": "La prosternation",
         "hi": "सजदा",
@@ -857,6 +920,7 @@
       },
       "name": {
         "ar": "السجدة",
+        "ckb": "السجدة",
         "en": "As-Sajda",
         "hi": "अस-सजदा",
         "ml": "സൂറത്തുസ്സജദഃ",
@@ -874,6 +938,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "জোট",
+        "ckb": "تیرە",
         "en": "The Clans",
         "fr": "Les coalisés",
         "hi": "लश्कर, गिरोह",
@@ -884,6 +949,7 @@
       },
       "name": {
         "ar": "الأحزاب",
+        "ckb": "الأحزاب",
         "en": "Al-Ahzaab",
         "hi": "अल-अह्जाब",
         "ml": "സൂറത്തുൽ അഹ്സാബ്",
@@ -901,6 +967,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "রানী সাবা/শেবা",
+        "ckb": "سەبائـ",
         "en": "Sheba",
         "fr": "Saba'",
         "hi": "सबा",
@@ -911,6 +978,7 @@
       },
       "name": {
         "ar": "سبإ",
+        "ckb": "سبإ",
         "en": "Saba",
         "hi": "सबा",
         "ml": "സൂറത്തുസ്സബഅ്",
@@ -928,6 +996,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "আদি স্রষ্টা",
+        "ckb": "دروستکار",
         "en": "The Originator",
         "fr": "Le Créateur",
         "hi": "पैदा करने वाला",
@@ -938,6 +1007,7 @@
       },
       "name": {
         "ar": "فاطر",
+        "ckb": "فاطر",
         "en": "Faatir",
         "hi": "फातिर",
         "ml": "സൂറത്ത് ഫാത്വിർ",
@@ -955,6 +1025,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ইয়াসীন",
+        "ckb": "یاسین",
         "en": "Yaseen",
         "fr": "Ya-Sin",
         "hi": "यासीन",
@@ -965,6 +1036,7 @@
       },
       "name": {
         "ar": "يس",
+        "ckb": "یس",
         "en": "Yaseen",
         "hi": "यासीन",
         "ml": "സൂറത്ത് യാസീൻ",
@@ -982,6 +1054,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সারিবদ্ধভাবে দাঁড়ানো",
+        "ckb": "پۆلە ڕێکەکان",
         "en": "Those drawn up in Ranks",
         "fr": "Les rangés",
         "hi": "सफ बंदी करने वाले",
@@ -992,6 +1065,7 @@
       },
       "name": {
         "ar": "الصافات",
+        "ckb": "الصافات",
         "en": "As-Saaffaat",
         "hi": "अस-सफ्फात",
         "ml": "സൂറത്തുസ്സ്വാഫ്ഫാത്ത്",
@@ -1009,6 +1083,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "আরবি বর্ণ সাদ",
+        "ckb": "ساد",
         "en": "The letter Saad",
         "fr": "Sad",
         "hi": "साद",
@@ -1019,6 +1094,7 @@
       },
       "name": {
         "ar": "ص",
+        "ckb": "ص",
         "en": "Saad",
         "hi": "स’आद",
         "ml": "സൂറത്ത് സ്വാദ്",
@@ -1036,6 +1112,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "দলবদ্ধ জনতা",
+        "ckb": "پۆل پۆل",
         "en": "The Groups",
         "fr": "Les groupes",
         "hi": "गिरोह दर गिरोह",
@@ -1046,6 +1123,7 @@
       },
       "name": {
         "ar": "الزمر",
+        "ckb": "الزمر",
         "en": "Az-Zumar",
         "hi": "अज-ज़ुमर",
         "ml": "സൂറത്തുസ്സുമർ",
@@ -1063,6 +1141,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ক্ষমাকারী",
+        "ckb": "لێخۆشبوو",
         "en": "The Forgiver",
         "fr": "Le Pardonneur",
         "hi": "माफ़ करने वाला",
@@ -1073,6 +1152,7 @@
       },
       "name": {
         "ar": "غافر",
+        "ckb": "غافر",
         "en": "Al-Ghaafir",
         "hi": "अल-गाफिर",
         "ml": "സൂറത്ത് ഗാഫിർ",
@@ -1090,6 +1170,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সুস্পষ্ট বিবরণ",
+        "ckb": "ڕوونکراوە",
         "en": "Explained in detail",
         "fr": "Les versets explicites",
         "hi": "विस्तृत",
@@ -1100,6 +1181,7 @@
       },
       "name": {
         "ar": "فصلت",
+        "ckb": "فصلت",
         "en": "Fussilat",
         "hi": "फुसिलत",
         "ml": "സൂറത്ത് ഫുസ്സ്വിലത്ത്",
@@ -1117,6 +1199,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পরামর্শ",
+        "ckb": "ڕاوێژکردن",
         "en": "Consultation",
         "fr": "La concertation",
         "hi": "मशविरा",
@@ -1127,6 +1210,7 @@
       },
       "name": {
         "ar": "الشورى",
+        "ckb": "الشوری",
         "en": "Ash-Shura",
         "hi": "अश-शूरा",
         "ml": "സൂറത്തുശ്ശൂറാ",
@@ -1144,6 +1228,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সোনাদানা",
+        "ckb": "نەخش و نیگار",
         "en": "Ornaments of gold",
         "fr": "L'ornement",
         "hi": "सोने की चमक",
@@ -1154,6 +1239,7 @@
       },
       "name": {
         "ar": "الزخرف",
+        "ckb": "الزخرف",
         "en": "Az-Zukhruf",
         "hi": "अज-जुखरूफ",
         "ml": "സൂറത്തുസ്സുഖ്റുഫ്",
@@ -1171,6 +1257,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ধোঁয়া",
+        "ckb": "دووکەڵ",
         "en": "The Smoke",
         "fr": "La fumée",
         "hi": "धुआँ",
@@ -1181,6 +1268,7 @@
       },
       "name": {
         "ar": "الدخان",
+        "ckb": "الدخان",
         "en": "Ad-Dukhaan",
         "hi": "अद-दुखान",
         "ml": "സൂറത്തുദ്ദുഖാൻ",
@@ -1198,6 +1286,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নতজানু",
+        "ckb": "لەسەر چۆک کەوتوو",
         "en": "Crouching",
         "fr": "L'agenouillée",
         "hi": "घुटनों के बल गिरे हुए",
@@ -1208,6 +1297,7 @@
       },
       "name": {
         "ar": "الجاثية",
+        "ckb": "الجاثیة",
         "en": "Al-Jaathiya",
         "hi": "अल-जाथीया",
         "ml": "സൂറത്തുൽ ജാഥിയഃ",
@@ -1225,6 +1315,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বালুর পাহাড়",
+        "ckb": "شاخی لم",
         "en": "The Dunes",
         "fr": "Al-Ahqaf",
         "hi": "रेगिस्तान",
@@ -1235,6 +1326,7 @@
       },
       "name": {
         "ar": "الأحقاف",
+        "ckb": "الأحقاف",
         "en": "Al-Ahqaf",
         "hi": "सूरह अल-अह्काफ़",
         "ml": "സൂറത്തുൽ അഹ്ഖാഫ്",
@@ -1252,6 +1344,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "নবী মুহাম্মদ",
+        "ckb": "موحەمەد ﷺ",
         "en": "Muhammad",
         "fr": "Mouhammad",
         "hi": "मुहम्मद ﷺ",
@@ -1262,6 +1355,7 @@
       },
       "name": {
         "ar": "محمد",
+        "ckb": "محمد",
         "en": "Muhammad",
         "hi": "मुहम्मद",
         "ml": "സൂറത്ത് മുഹമ്മദ്",
@@ -1279,6 +1373,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "বিজয়",
+        "ckb": "ڕزگارکردن",
         "en": "The Victory",
         "fr": "La victoire éclatante",
         "hi": "जीत, कामयाबी",
@@ -1289,6 +1384,7 @@
       },
       "name": {
         "ar": "الفتح",
+        "ckb": "الفتح",
         "en": "Al-Fath",
         "hi": "अल-फतह",
         "ml": "സൂറത്തുൽ ഫത്ഹ്",
@@ -1306,6 +1402,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "আবাস",
+        "ckb": "ژوورەکان",
         "en": "The Inner Apartments",
         "fr": "Les appartements",
         "hi": "हुजरें कमरें",
@@ -1316,6 +1413,7 @@
       },
       "name": {
         "ar": "الحجرات",
+        "ckb": "الحجرات",
         "en": "Al-Hujuraat",
         "hi": "अल-हुजरात",
         "ml": "സൂറത്തുൽ ഹുജുറാത്ത്",
@@ -1333,6 +1431,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কাফ",
+        "ckb": "قاف",
         "en": "The letter Qaaf",
         "fr": "Qaf",
         "hi": "क़ाफ़",
@@ -1343,6 +1442,7 @@
       },
       "name": {
         "ar": "ق",
+        "ckb": "ق",
         "en": "Qaaf",
         "hi": "क़ाफ़",
         "ml": "സൂറത്ത് ഖാഫ്",
@@ -1360,6 +1460,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বিক্ষেপকারী বাতাস",
+        "ckb": "بڵاوکەرەوەکان",
         "en": "The Winnowing Winds",
         "fr": "Qui éparpillent",
         "hi": "धूल उड़ाने वाली हवा",
@@ -1370,6 +1471,7 @@
       },
       "name": {
         "ar": "الذاريات",
+        "ckb": "الذاریات",
         "en": "Adh-Dhaariyat",
         "hi": "अज़-ज़ारियात",
         "ml": "സൂറത്തുദ്ദാരിയാത്ത്",
@@ -1387,6 +1489,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পাহাড়",
+        "ckb": "کێوی تووڕ",
         "en": "The Mount",
         "fr": "Le mont At-Tour",
         "hi": "तूर, एक पहाड़ का नाम",
@@ -1397,6 +1500,7 @@
       },
       "name": {
         "ar": "الطور",
+        "ckb": "الطور",
         "en": "At-Tur",
         "hi": "अत-तूर",
         "ml": "സൂറത്തുത്തൂർ",
@@ -1414,6 +1518,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "তারা",
+        "ckb": "ئەستێرە",
         "en": "The Star",
         "fr": "L'étoile",
         "hi": "सितारे",
@@ -1424,6 +1529,7 @@
       },
       "name": {
         "ar": "النجم",
+        "ckb": "النجم",
         "en": "An-Najm",
         "hi": "अन-नज्म",
         "ml": "സൂറത്തുന്നജ്മ്",
@@ -1441,6 +1547,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "চাঁদ",
+        "ckb": "مانگ",
         "en": "The Moon",
         "fr": "La lune",
         "hi": "चाँद",
@@ -1451,6 +1558,7 @@
       },
       "name": {
         "ar": "القمر",
+        "ckb": "القمر",
         "en": "Al-Qamar",
         "hi": "अल-कमर",
         "ml": "സൂറത്തുൽ ഖമർ",
@@ -1468,6 +1576,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "পরম করুণাময়",
+        "ckb": "بەخشندە",
         "en": "The Beneficent",
         "fr": "Le Tout Miséricordieux",
         "hi": "मेहरबान",
@@ -1478,6 +1587,7 @@
       },
       "name": {
         "ar": "الرحمن",
+        "ckb": "الرحمن",
         "en": "Ar-Rahmaan",
         "hi": "अर-रहमान",
         "ml": "സൂറത്തു റഹ്മാൻ",
@@ -1495,6 +1605,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নিশ্চিত ঘটনা",
+        "ckb": "ڕووداوی ڕاستی(قیامەت)",
         "en": "The Inevitable",
         "fr": "L'inévitable",
         "hi": "वाके होने वाली, कयामत",
@@ -1505,6 +1616,7 @@
       },
       "name": {
         "ar": "الواقعة",
+        "ckb": "الواقعة",
         "en": "Al-Waaqia",
         "hi": "अल-वाकिया",
         "ml": "സൂറത്തുൽ വാഖിഅഃ",
@@ -1522,6 +1634,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "লোহা",
+        "ckb": "ئاسن",
         "en": "The Iron",
         "fr": "Le fer",
         "hi": "फौलाद, लोहा",
@@ -1532,6 +1645,7 @@
       },
       "name": {
         "ar": "الحديد",
+        "ckb": "الحدید",
         "en": "Al-Hadid",
         "hi": "अल-हदीद",
         "ml": "സൂറത്തുൽ ഹദീദ്",
@@ -1549,6 +1663,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "অনুযোগকারিণী",
+        "ckb": "گفتۆگۆکارەکە",
         "en": "The Pleading Woman",
         "fr": "La discussion",
         "hi": "झगरने वाली",
@@ -1559,6 +1674,7 @@
       },
       "name": {
         "ar": "المجادلة",
+        "ckb": "المجادلة",
         "en": "Al-Mujaadila",
         "hi": "अल-मुजादिला",
         "ml": "സൂറത്തുൽ മുജാദിലഃ",
@@ -1576,6 +1692,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "সমাবেশ",
+        "ckb": "کۆکردنەوە",
         "en": "The Exile",
         "fr": "L'exode",
         "hi": "हष्र",
@@ -1586,6 +1703,7 @@
       },
       "name": {
         "ar": "الحشر",
+        "ckb": "الحشر",
         "en": "Al-Hashr",
         "hi": "अल-हष्र",
         "ml": "സൂറത്തുൽ ഹശ്ർ",
@@ -1603,6 +1721,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "নারী, যাকে পরীক্ষা করা হবে",
+        "ckb": "تاقیکراوە",
         "en": "She that is to be examined",
         "fr": "L'éprouvée",
         "hi": "इम्तेहान ली जाने वाली",
@@ -1613,6 +1732,7 @@
       },
       "name": {
         "ar": "الممتحنة",
+        "ckb": "الممتحنة",
         "en": "Al-Mumtahana",
         "hi": "अल-मुमताहिना",
         "ml": "സൂറത്തുൽ മുംതഹനഃ",
@@ -1630,6 +1750,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "সারিবদ্ধ সৈন্যদল",
+        "ckb": "ڕیز",
         "en": "The Ranks",
         "fr": "Le rang",
         "hi": "सफ बंदी",
@@ -1640,6 +1761,7 @@
       },
       "name": {
         "ar": "الصف",
+        "ckb": "الصف",
         "en": "As-Saff",
         "hi": "अस-सफ्फ",
         "ml": "സൂറത്തുസ്സ്വഫ്ഫ്",
@@ -1657,6 +1779,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "সম্মেলন/শুক্রবার",
+        "ckb": "هەینی",
         "en": "Friday",
         "fr": "Le vendredi",
         "hi": "जुम्मा",
@@ -1667,6 +1790,7 @@
       },
       "name": {
         "ar": "الجمعة",
+        "ckb": "الجمعة",
         "en": "Al-Jumu'a",
         "hi": "अल-जुमाअ",
         "ml": "സൂറത്തുൽ ജുമുഅഃ",
@@ -1684,6 +1808,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "ভণ্ড বিশ্বাসী",
+        "ckb": "دوو ڕووەکان",
         "en": "The Hypocrites",
         "fr": "Les hypocrites",
         "hi": "मुनाफिक लोग",
@@ -1694,6 +1819,7 @@
       },
       "name": {
         "ar": "المنافقون",
+        "ckb": "المنافقون",
         "en": "Al-Munaafiqoon",
         "hi": "अल-मुनाफिकुन",
         "ml": "സൂറത്തുൽ മുനാഫിഖൂൻ",
@@ -1711,6 +1837,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "মোহ অপসারণ",
+        "ckb": "بەکەمدانان",
         "en": "Mutual Disillusion",
         "fr": "La grande perte",
         "hi": "हार-जीत",
@@ -1721,6 +1848,7 @@
       },
       "name": {
         "ar": "التغابن",
+        "ckb": "التغابن",
         "en": "At-Taghaabun",
         "hi": "अत-तग़ाबुन",
         "ml": "സൂറത്തുത്തഗാബുൻ",
@@ -1738,6 +1866,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "তালাক",
+        "ckb": "جیابونەوە",
         "en": "Divorce",
         "fr": "Le divorce",
         "hi": "तलाक़",
@@ -1748,6 +1877,7 @@
       },
       "name": {
         "ar": "الطلاق",
+        "ckb": "الطلاق",
         "en": "At-Talaaq",
         "hi": "अत-तलाक",
         "ml": "സൂറത്തുത്ത്വലാഖ്",
@@ -1765,6 +1895,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "নিষিদ্ধকরণ",
+        "ckb": "حەرامکردن",
         "en": "The Prohibition",
         "fr": "L'interdiction",
         "hi": "हराम",
@@ -1775,6 +1906,7 @@
       },
       "name": {
         "ar": "التحريم",
+        "ckb": "التحریم",
         "en": "At-Tahrim",
         "hi": "अत-तहरिम",
         "ml": "സൂറത്തുത്തഹ്രീം",
@@ -1792,6 +1924,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সার্বভৌম কর্তৃত্ব",
+        "ckb": "دەسەڵات",
         "en": "The Sovereignty",
         "fr": "La royauté",
         "hi": "बादशाही",
@@ -1802,6 +1935,7 @@
       },
       "name": {
         "ar": "الملك",
+        "ckb": "الملك",
         "en": "Al-Mulk",
         "hi": "अल-मुल्क",
         "ml": "സൂറത്തുൽ മുൽക്",
@@ -1819,6 +1953,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কলম",
+        "ckb": "پێنووس",
         "en": "The Pen",
         "fr": "La plume",
         "hi": "कलम",
@@ -1829,6 +1964,7 @@
       },
       "name": {
         "ar": "القلم",
+        "ckb": "القلم",
         "en": "Al-Qalam",
         "hi": "अल-कलाम",
         "ml": "സൂറത്തുൽ ഖലം",
@@ -1846,6 +1982,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নিশ্চিত সত্য",
+        "ckb": "ڕاستی",
         "en": "The Reality",
         "fr": "L'inéluctable",
         "hi": "हक़ीक़त",
@@ -1856,6 +1993,7 @@
       },
       "name": {
         "ar": "الحاقة",
+        "ckb": "الحاقة",
         "en": "Al-Haaqqa",
         "hi": "अल-हाक्का",
         "ml": "സൂറത്തുൽ ഹാഖ്ഖഃ",
@@ -1873,6 +2011,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "উন্নয়নের সোপান",
+        "ckb": "شوێنی بەرزبونەوە",
         "en": "The Ascending Stairways",
         "fr": "Les voies d'ascension",
         "hi": "बुलंदिया",
@@ -1883,6 +2022,7 @@
       },
       "name": {
         "ar": "المعارج",
+        "ckb": "المعارج",
         "en": "Al-Ma'aarij",
         "hi": "अल-मारिज",
         "ml": "സൂറത്തുൽ മആരിജ്",
@@ -1900,6 +2040,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নবী নূহ",
+        "ckb": "نوح",
         "en": "Noah",
         "fr": "Noé",
         "hi": "नूह",
@@ -1910,6 +2051,7 @@
       },
       "name": {
         "ar": "نوح",
+        "ckb": "نوح",
         "en": "Nooh",
         "hi": "नूह",
         "ml": "സൂറത്ത് നൂഹ്",
@@ -1927,6 +2069,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "জিন সম্প্রদায়",
+        "ckb": "جنۆکە",
         "en": "The Jinn",
         "fr": "Les djinns",
         "hi": "जिन्नात",
@@ -1937,6 +2080,7 @@
       },
       "name": {
         "ar": "الجن",
+        "ckb": "الجن",
         "en": "Al-Jinn",
         "hi": "अल-जिन्न",
         "ml": "സൂറത്തുൽ ജിന്ന്",
@@ -1954,6 +2098,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বস্ত্রাচ্ছাদনকারী",
+        "ckb": "خۆداپۆشەر",
         "en": "The Enshrouded One",
         "fr": "L'enveloppé",
         "hi": "चादर लपेटने वाला",
@@ -1964,6 +2109,7 @@
       },
       "name": {
         "ar": "المزمل",
+        "ckb": "المزمل",
         "en": "Al-Muzzammil",
         "hi": "अल-मुज़म्मिल",
         "ml": "സൂറത്തുൽ മുസ്സമ്മിൽ",
@@ -1981,6 +2127,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পোশাক পরিহিত",
+        "ckb": "خۆپێچاوە",
         "en": "The Cloaked One",
         "fr": "Celui qui se couvre",
         "hi": "चादर ओढने वाला",
@@ -1991,6 +2138,7 @@
       },
       "name": {
         "ar": "المدثر",
+        "ckb": "المدثر",
         "en": "Al-Muddaththir",
         "hi": "अल्-मुद्दस्सिर",
         "ml": "സൂറത്തുൽ മുദ്ദഥ്ഥിർ",
@@ -2008,6 +2156,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পুনরুত্থান",
+        "ckb": "ڕۆژی دوایی",
         "en": "The Resurrection",
         "fr": "La résurrection",
         "hi": "कियामत",
@@ -2018,6 +2167,7 @@
       },
       "name": {
         "ar": "القيامة",
+        "ckb": "القیامة",
         "en": "Al-Qiyaama",
         "hi": "अल-कियामा",
         "ml": "സൂറത്തുൽ ഖിയാമഃ",
@@ -2035,6 +2185,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "মানবজাতি",
+        "ckb": "مرۆڤ",
         "en": "Man",
         "fr": "L'homme",
         "hi": "जमाना,अरसा,वक्त",
@@ -2044,12 +2195,13 @@
         "ru": "Человек"
       },
       "name": {
-        "ar": "الانسان",
+        "ar": "الإنسان",
+        "ckb": "الإنسان",
         "en": "Al-Insaan",
         "hi": "अल-इन्सान",
         "ml": "സൂറത്തുൽ ഇൻസാൻ",
         "tr": "İnsân",
-        "ur": "الانسان"
+        "ur": "الإنسان"
       },
       "tags": "alinsaan,alinsan,alinsn"
     }, {
@@ -2062,6 +2214,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "প্রেরিত পুরুষ",
+        "ckb": "نێردراوان",
         "en": "The Emissaries",
         "fr": "Les envoyés",
         "hi": "हवाएँ",
@@ -2072,6 +2225,7 @@
       },
       "name": {
         "ar": "المرسلات",
+        "ckb": "المرسلات",
         "en": "Al-Mursalaat",
         "hi": "अल-मुर्सलत",
         "ml": "സൂറത്തുൽ മുർസലാത്ത്",
@@ -2089,6 +2243,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মহাসংবাদ",
+        "ckb": "هەواڵ",
         "en": "The Announcement",
         "fr": "La nouvelle",
         "hi": "ख़बर",
@@ -2099,6 +2254,7 @@
       },
       "name": {
         "ar": "النبإ",
+        "ckb": "النبإ",
         "en": "An-Naba",
         "hi": "अल-नबा",
         "ml": "സൂറത്തുന്നബഅ്",
@@ -2116,6 +2272,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "প্রচেষ্টাকারী",
+        "ckb": "دەرکێشەران",
         "en": "Those who drag forth",
         "fr": "Ceux qui arrachent",
         "hi": "सख्ती से खिंचने वाले",
@@ -2126,6 +2283,7 @@
       },
       "name": {
         "ar": "النازعات",
+        "ckb": "النازعات",
         "en": "An-Naazi'aat",
         "hi": "अन-नाज़िआ़त",
         "ml": "സൂറത്തുന്നാസിആത്ത്",
@@ -2143,6 +2301,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সে ভ্রু কুঁচকালো",
+        "ckb": "ڕووگرژی",
         "en": "He frowned",
         "fr": "Il s'est renfrogné",
         "hi": "त्यौरी चढ़ाना",
@@ -2153,6 +2312,7 @@
       },
       "name": {
         "ar": "عبس",
+        "ckb": "عبس",
         "en": "Abasa",
         "hi": "सूरह अबसा",
         "ml": "സൂറത്ത് അബസ",
@@ -2170,6 +2330,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "অন্ধকারাচ্ছন্ন",
+        "ckb": "لوولکردن",
         "en": "The Overthrowing",
         "fr": "L'obscurcissement",
         "hi": "लपेटना",
@@ -2180,6 +2341,7 @@
       },
       "name": {
         "ar": "التكوير",
+        "ckb": "التکویر",
         "en": "At-Takwir",
         "hi": "अत-तक्वीर",
         "ml": "സൂറത്തുത്തക്വീർ",
@@ -2197,6 +2359,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বিদীর্ণ করা",
+        "ckb": "شەقبوون",
         "en": "The Cleaving",
         "fr": "La rupture",
         "hi": "टुकड़े होना",
@@ -2207,6 +2370,7 @@
       },
       "name": {
         "ar": "الإنفطار",
+        "ckb": "الإنفطار",
         "en": "Al-Infitaar",
         "hi": "अल-इन्फितार,",
         "ml": "സൂറത്തുൽ ഇൻഫിത്വാർ",
@@ -2224,6 +2388,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "প্রতারণা করা",
+        "ckb": "حیلەکاران",
         "en": "Defrauding",
         "fr": "Les fraudeurs",
         "hi": "नाप तौल में कमी करने वाले",
@@ -2234,6 +2399,7 @@
       },
       "name": {
         "ar": "المطففين",
+        "ckb": "المطففین",
         "en": "Al-Mutaffifin",
         "hi": "अल-मुताफ्फिन",
         "ml": "സൂറത്തുൽ മുത്വഫ്ഫിഫീൻ",
@@ -2251,6 +2417,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "খণ্ড-বিখণ্ডকরণ",
+        "ckb": "لەتبوون",
         "en": "The Splitting Open",
         "fr": "La déchirure",
         "hi": "फट जाना",
@@ -2261,6 +2428,7 @@
       },
       "name": {
         "ar": "الإنشقاق",
+        "ckb": "الإنشقاق",
         "en": "Al-Inshiqaaq",
         "hi": "अल-इन्शिकाक",
         "ml": "സൂറത്തുൽ ഇൻശിഖാഖ്",
@@ -2278,6 +2446,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নক্ষত্রপুঞ্জ",
+        "ckb": "ئەستێرەکان",
         "en": "The Constellations",
         "fr": "Les constellations",
         "hi": "सितारों वाला आसमान",
@@ -2288,6 +2457,7 @@
       },
       "name": {
         "ar": "البروج",
+        "ckb": "البروج",
         "en": "Al-Burooj",
         "hi": "अल-बुरूज",
         "ml": "സൂറത്തുൽ ബുറൂജ്",
@@ -2305,6 +2475,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "রাতের আগন্তুক",
+        "ckb": "لێدەر",
         "en": "The Morning Star",
         "fr": "L'astre nocturne",
         "hi": "चमकता तारा",
@@ -2315,6 +2486,7 @@
       },
       "name": {
         "ar": "الطارق",
+        "ckb": "الطارق",
         "en": "At-Taariq",
         "hi": "अत-तारिक",
         "ml": "സൂറത്തുത്ത്വാരിഖ്",
@@ -2332,6 +2504,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সর্বোন্নত",
+        "ckb": "بڵندترین",
         "en": "The Most High",
         "fr": "Le Très-Haut",
         "hi": "सबसे ऊँचा",
@@ -2342,6 +2515,7 @@
       },
       "name": {
         "ar": "الأعلى",
+        "ckb": "الأعلی",
         "en": "Al-A'laa",
         "hi": "अल-अला",
         "ml": "സൂറത്തുൽ അഅ്ലാ",
@@ -2359,6 +2533,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বিহ্বলকর ঘটনা",
+        "ckb": "داپۆشەر",
         "en": "The Overwhelming",
         "fr": "L'enveloppante",
         "hi": "छा जाने वाली",
@@ -2369,6 +2544,7 @@
       },
       "name": {
         "ar": "الغاشية",
+        "ckb": "الغاشیة",
         "en": "Al-Ghaashiya",
         "hi": "अल-घाशिया",
         "ml": "സൂറത്തുൽ ഗാശിയഃ",
@@ -2386,6 +2562,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ভোরবেলা",
+        "ckb": "سپێدە",
         "en": "The Dawn",
         "fr": "L'aube",
         "hi": "फज्र",
@@ -2396,6 +2573,7 @@
       },
       "name": {
         "ar": "الفجر",
+        "ckb": "الفجر",
         "en": "Al-Fajr",
         "hi": "अल-फज्र",
         "ml": "സൂറത്തുൽ ഫജ്ർ",
@@ -2413,6 +2591,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নগর",
+        "ckb": "شار",
         "en": "The City",
         "fr": "La cité",
         "hi": "शहर",
@@ -2423,6 +2602,7 @@
       },
       "name": {
         "ar": "البلد",
+        "ckb": "البلد",
         "en": "Al-Balad",
         "hi": "अल-बलद",
         "ml": "സൂറത്തുൽ ബലദ്",
@@ -2440,6 +2620,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সূর্য",
+        "ckb": "خۆر",
         "en": "The Sun",
         "fr": "Le soleil",
         "hi": "सूरज",
@@ -2450,6 +2631,7 @@
       },
       "name": {
         "ar": "الشمس",
+        "ckb": "الشمس",
         "en": "Ash-Shams",
         "hi": "अस-शम्स",
         "ml": "സൂറത്തുശ്ശംസ്",
@@ -2467,6 +2649,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "রাত",
+        "ckb": "شەو",
         "en": "The Night",
         "fr": "La nuit",
         "hi": "रात",
@@ -2477,6 +2660,7 @@
       },
       "name": {
         "ar": "الليل",
+        "ckb": "الیل",
         "en": "Al-Lail",
         "hi": "अल-लैल",
         "ml": "സൂറത്തുല്ലൈൽ",
@@ -2494,6 +2678,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পূর্বাহ্নের সুর্যকিরণ",
+        "ckb": "چێشتەنگاو",
         "en": "The Morning Hours",
         "fr": "Le jour montant",
         "hi": "दिन का चढ़ना",
@@ -2504,6 +2689,7 @@
       },
       "name": {
         "ar": "الضحى",
+        "ckb": "الضحی",
         "en": "Ad-Dhuhaa",
         "hi": "अद-दुहा",
         "ml": "സൂറത്തുള്ളുഹാ",
@@ -2521,6 +2707,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "বক্ষ প্রশস্তকরণ",
+        "ckb": "ڕوونکردنەوەو گوشاد",
         "en": "The Consolation",
         "fr": "L'ouverture",
         "hi": "संतुष्टि",
@@ -2531,6 +2718,7 @@
       },
       "name": {
         "ar": "الشرح",
+        "ckb": "الشرح",
         "en": "Ash-Sharh",
         "hi": "अल-इन्शिराह",
         "ml": "സൂറത്തുശ്ശർഹ്",
@@ -2548,6 +2736,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "ডুমুর",
+        "ckb": "هەنجیر",
         "en": "The Fig",
         "fr": "Les figues",
         "hi": "अंजीर",
@@ -2558,6 +2747,7 @@
       },
       "name": {
         "ar": "التين",
+        "ckb": "التین",
         "en": "At-Tin",
         "hi": "अत-तिन",
         "ml": "സൂറത്തുത്തീൻ",
@@ -2575,6 +2765,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "রক্তপিণ্ড",
+        "ckb": "دڵۆپە خوێنێکی مەییو",
         "en": "The Clot",
         "fr": "L'adhérence",
         "hi": "जमा हुआ खून",
@@ -2585,6 +2776,7 @@
       },
       "name": {
         "ar": "العلق",
+        "ckb": "العلق",
         "en": "Al-Alaq",
         "hi": "अल-अलक",
         "ml": "സൂറത്തുൽ അലഖ്",
@@ -2602,6 +2794,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মহিমান্বিত",
+        "ckb": "شەوی بەفەڕ (قەدر)",
         "en": "The Power, Fate",
         "fr": "La destinée",
         "hi": "शबे कदर",
@@ -2612,6 +2805,7 @@
       },
       "name": {
         "ar": "القدر",
+        "ckb": "القدر",
         "en": "Al-Qadr",
         "hi": "अल-कद्र",
         "ml": "സൂറത്തുൽ ഖദ്ർ",
@@ -2629,6 +2823,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "প্রমাণ",
+        "ckb": "بەڵگە",
         "en": "The Evidence",
         "fr": "La preuve",
         "hi": "वाजेह दलील",
@@ -2639,6 +2834,7 @@
       },
       "name": {
         "ar": "البينة",
+        "ckb": "البينة",
         "en": "Al-Bayyina",
         "hi": "अल-बय्यिना",
         "ml": "സൂറത്തുൽ ബയ്യിനഃ",
@@ -2656,6 +2852,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "ভূমিকম্প",
+        "ckb": "بومەلەرزە",
         "en": "The Earthquake",
         "fr": "Le séisme",
         "hi": "जलजला, भूकंप",
@@ -2666,6 +2863,7 @@
       },
       "name": {
         "ar": "الزلزلة",
+        "ckb": "الزلزلة",
         "en": "Az-Zalzala",
         "hi": "अज़-ज़ल्ज़ला",
         "ml": "സൂറത്തുസ്സൽസലഃ",
@@ -2683,6 +2881,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "অভিযানকারী",
+        "ckb": "تاودەر",
         "en": "The Chargers",
         "fr": "Les coursiers",
         "hi": "घुड़दौड़ का घोड़ा",
@@ -2693,6 +2892,7 @@
       },
       "name": {
         "ar": "العاديات",
+        "ckb": "العادیات",
         "en": "Al-Aadiyaat",
         "hi": "अल-आदियात",
         "ml": "സൂറത്തുൽ ആദിയാത്ത്",
@@ -2710,6 +2910,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মহাসংকট",
+        "ckb": "لێدانی سەخت",
         "en": "The Calamity",
         "fr": "Le fracas",
         "hi": "खड़खड़ाहट",
@@ -2720,6 +2921,7 @@
       },
       "name": {
         "ar": "القارعة",
+        "ckb": "القارعة",
         "en": "Al-Qaari'a",
         "hi": "अल-क़ारिअह",
         "ml": "സൂറത്തുൽ ഖാരിഅഃ",
@@ -2737,6 +2939,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "প্রাচুর্যের প্রতিযোগিতা",
+        "ckb": "هەڵپەکردن (زۆر پەیداکردن)",
         "en": "Competition",
         "fr": "La course aux richesses",
         "hi": "ज्यादती की ख्वाहिश",
@@ -2747,6 +2950,7 @@
       },
       "name": {
         "ar": "التكاثر",
+        "ckb": "التکاثر",
         "en": "At-Takaathur",
         "hi": "अत-तकासुर",
         "ml": "സൂറത്തുത്തകാഥുർ",
@@ -2764,6 +2968,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সময়",
+        "ckb": "سەردەم و زەمانە",
         "en": "The Declining Day, Epoch",
         "fr": "Le temps",
         "hi": "जमाना",
@@ -2774,6 +2979,7 @@
       },
       "name": {
         "ar": "العصر",
+        "ckb": "العصر",
         "en": "Al-Asr",
         "hi": "अल-अस्र",
         "ml": "സൂറത്തുൽ അസ്ർ",
@@ -2791,6 +2997,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "পরনিন্দাকারী",
+        "ckb": "توانجدان",
         "en": "The Traducer",
         "fr": "Les calomniateurs",
         "hi": "ऐब निकालने वाला",
@@ -2801,6 +3008,7 @@
       },
       "name": {
         "ar": "الهمزة",
+        "ckb": "الهمزة",
         "en": "Al-Humaza",
         "hi": "अल-हुमज़ह",
         "ml": "സൂറത്തുൽ ഹുമസഃ",
@@ -2818,6 +3026,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "হাতি",
+        "ckb": "فیل",
         "en": "The Elephant",
         "fr": "L'éléphant",
         "hi": "हाथी",
@@ -2828,6 +3037,7 @@
       },
       "name": {
         "ar": "الفيل",
+        "ckb": "الفیل",
         "en": "Al-Fil",
         "hi": "अल-फ़ील",
         "ml": "സൂറത്തുൽ ഫീൽ",
@@ -2845,6 +3055,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কুরাইশ গোত্র",
+        "ckb": "قوڕەیش",
         "en": "Quraysh",
         "fr": "Les Quraysh",
         "hi": "कुरैश",
@@ -2855,6 +3066,7 @@
       },
       "name": {
         "ar": "قريش",
+        "ckb": "قریش",
         "en": "Quraish",
         "hi": "क़ुरइश",
         "ml": "സൂറത്ത് ഖുറൈശ്",
@@ -2872,6 +3084,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "সাহায্য সহায়তা",
+        "ckb": "ڕێگریکەری بەخشین",
         "en": "Almsgiving",
         "fr": "L'entraide",
         "hi": "थोड़ी सी चीज",
@@ -2882,6 +3095,7 @@
       },
       "name": {
         "ar": "الماعون",
+        "ckb": "الماعون",
         "en": "Al-Maa'un",
         "hi": "अल-माऊन",
         "ml": "സൂറത്തുൽ മാഊൻ",
@@ -2899,6 +3113,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "কাউসার/প্রাচুর্য",
+        "ckb": "بەپیت (ئاوی کەوسەر)",
         "en": "Abundance",
         "fr": "L'abondance",
         "hi": "होजे कौसर",
@@ -2909,6 +3124,7 @@
       },
       "name": {
         "ar": "الكوثر",
+        "ckb": "الکوثر",
         "en": "Al-Kawthar",
         "hi": "अल-कौसर",
         "ml": "സൂറത്തുൽ കൗഥർ",
@@ -2926,6 +3142,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "অবিশ্বাসী",
+        "ckb": "بێ باوەڕان",
         "en": "The Disbelievers",
         "fr": "Les mécréants",
         "hi": "काफिर लोग",
@@ -2936,6 +3153,7 @@
       },
       "name": {
         "ar": "الكافرون",
+        "ckb": "الکافرون",
         "en": "Al-Kaafiroon",
         "hi": "अल-काफिरून",
         "ml": "സൂറത്തുൽ കാഫിറൂൻ",
@@ -2953,6 +3171,7 @@
       "type": "Medinan (Madani)",
       "translation": {
         "bn": "সাহায্য",
+        "ckb": "سەرکەوتن",
         "en": "Divine Support",
         "fr": "Le secours",
         "hi": "मदद",
@@ -2963,6 +3182,7 @@
       },
       "name": {
         "ar": "النصر",
+        "ckb": "النصر",
         "en": "An-Nasr",
         "hi": "अन-नस्र",
         "ml": "സൂറത്തുന്നസ്ർ",
@@ -2980,6 +3200,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "খেজুরের পাকানো (রশি)",
+        "ckb": "گوریسی بەستراو",
         "en": "The Palm Fibre",
         "fr": "Les fibres",
         "hi": "आग के शोले",
@@ -2990,6 +3211,7 @@
       },
       "name": {
         "ar": "المسد",
+        "ckb": "المسد",
         "en": "Al-Masad",
         "hi": "अल-मसद",
         "ml": "സൂറത്തുൽ മസദ്",
@@ -3007,6 +3229,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "আন্তরিকতা",
+        "ckb": "دڵسۆزی",
         "en": "Sincerity",
         "fr": "La sincérité",
         "hi": "खालिस, वहदानियत",
@@ -3017,6 +3240,7 @@
       },
       "name": {
         "ar": "الإخلاص",
+        "ckb": "الإخلاص",
         "en": "Al-Ikhlaas",
         "hi": "अल-इख़लास",
         "ml": "സൂറത്തുൽ ഇഖ്ലാസ്",
@@ -3034,6 +3258,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "নিশিভোর",
+        "ckb": "بەرەبەیان",
         "en": "The Dawn",
         "fr": "L'aube naissante",
         "hi": "सुबह",
@@ -3044,6 +3269,7 @@
       },
       "name": {
         "ar": "الفلق",
+        "ckb": "الفلق",
         "en": "Al-Falaq",
         "hi": "अल-फलक़",
         "ml": "സൂറത്തുൽ ഫലഖ്",
@@ -3061,6 +3287,7 @@
       "type": "Meccan (Makki)",
       "translation": {
         "bn": "মানুষ জাতি",
+        "ckb": "خەڵکی",
         "en": "Mankind",
         "fr": "Les humains",
         "hi": "इंसान",
@@ -3071,6 +3298,7 @@
       },
       "name": {
         "ar": "الناس",
+        "ckb": "الناس",
         "en": "An-Naas",
         "hi": "अन-नास",
         "ml": "സൂറത്തുന്നാസ്",
