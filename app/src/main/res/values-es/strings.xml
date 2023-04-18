@@ -60,7 +60,7 @@
     <string name="strLabelNoNextChapter">sin proximo capitulo</string>
     <string name="strLabelFullChapter">Leer capítulo completo</string>
     <string name="strLabelContinueChapter">Continuar capítulo</string>
-    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMakki">Mecana</string>
     <string name="strLabelPause">Pausa</string>
     <string name="strLabelBookmark">Marcador</string>
     <string name="strLabelBookmarked">Marcado</string>
@@ -204,7 +204,7 @@
     <string name="strLabelIncludeTranslation">Incluir traducción</string>
     <string name="strHintSearchProphet">Buscar profeta</string>
     <string name="strHintFromVerse">Del verso</string>
-    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMadani">Medinesa</string>
     <string name="strTitleReaderChapters">Suras (Capítulos)</string>
     <string name="strTitleReaderJuz">Parte/Juz\' (Para)</string>
     <string name="strHintSearchJuz">Buscar juz</string>

@@ -81,8 +81,8 @@
     <string name="strTitleAppUser">QuranApp user</string>
     <string name="strTitleHolyQuran">The Holy Quran</string>
     <string name="strTitleQuran">Quran</string>
-    <string name="strTitleMakki">Makki</string>
-    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMakki">Meccan</string>
+    <string name="strTitleMadani">Medinan</string>
     <string name="strTitleFootnote">Footnote</string>
     <string name="strTitleFootnotes">Footnotes</string>
     <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
