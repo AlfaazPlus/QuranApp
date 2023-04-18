@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -27,11 +25,11 @@ import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytChapterInfocardBinding;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.univ.Keys;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class ChapterInfoCardView extends CardView {
     private final LytChapterInfocardBinding mBinding;
@@ -105,11 +103,12 @@ public class ChapterInfoCardView extends CardView {
             setVisibility(VISIBLE);
         }
 
+        boolean isMeccan = Objects.equals(chapterInfoMeta.revelationType, "meccan");
+
         String nameTrans = getContext().getString(R.string.strLabelSurah, chapterInfoMeta.getName());
         mBinding.title.setText(nameTrans);
-        mBinding.revlType.setText(chapterInfoMeta.revelationType);
+        mBinding.revlType.setText(isMeccan ? R.string.strTitleMakki : R.string.strTitleMadani);
 
-        boolean isMeccan = chapterInfoMeta.revelationType.toLowerCase().contains("meccan");
         mBinding.image.setImageResource(isMeccan ? R.drawable.dr_makkah_old : R.drawable.dr_madina_old);
 
         String verses = mActivityReader.str(R.string.strTitleChapInfoVerses) + ": " + chapterInfoMeta.verseCount;
