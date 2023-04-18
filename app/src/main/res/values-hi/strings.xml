@@ -385,4 +385,18 @@
     <string name="downloadRecitations">तिलावत डाउनलोड करें</string>
     <string name="audioOption">ऑडियो का विकल्प</string>
     <string name="audioOnlyArabic">केवल अरबी चलायें</string>
+    <string name="titleAddToFavourites">पसंदीदा में जोड़ें</string>
+    <string name="msgRemovedFromFavourites">पसंदीदा से हटा दिया गया</string>
+    <string name="msgChapterRemovedFromFavourites">सूरत को पसंदीदा से हटा दिया गया।</string>
+    <string name="msgAddedToFavourites">पसंदीदा में जोड़ा गया</string>
+    <string name="titleRemoveFromFavourites">पसंदीदा से हटाएं</string>
+    <string name="msgNoFavouriteChapters">यहां देखने के लिए पसंदीदा में कोई सूरत जोड़ें।</string>
+    <string name="textTranslationReciterInfo">भाषा: %1$s
+\nकिताब: %2$s</string>
+    <string name="textNoLogsFound">कोई लॉग नहीं मिला</string>
+    <string name="msgRecitaionDownloaded" formatted="false">क़ारी \"%2$s\" की \"%1$s\" तिलावत डाउनलोड किया गया।</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">क़ारी \"%2$s\" की \"%1$s\" तिलावत डाउनलोड करने में विफल।</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">क़ारी \"%2$s\" के लिए \"%1$s\" के सभी तिलावत हटा दिए जाएंगे।</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">क़ारी \"%2$s\" के लिए \"%1$s\" के सभी तिलावत हटाए गए।</string>
+    <string name="msgChapterAddedToFavourites">सूरत को पसंदीदा में जोड़ा गया।</string>
 </resources>
