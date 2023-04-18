@@ -1,7 +1,7 @@
-<p>Thanks to these amazing people for their useful contributions:</p>
+### ❤️ Thanks to these amazing people for their useful contributions:
 
-Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
-Localization works: [Goran Gharib](https://facebook.com/goran90909)
+- Localization works: [Goran Gharib](https://facebook.com/goran90909)
+- Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 
 ### App Translations
 
