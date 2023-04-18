@@ -62,7 +62,7 @@
     <string name="strLabelThemeLight">فاتح</string>
     <string name="strLabelNextJuz">الجزء التالي</string>
     <string name="strLabelPreviousVerse">الآية السابقة</string>
-    <string name="strTitleFootnotes">هوامش</string>
+    <string name="strTitleFootnotes">الهوامش</string>
     <string name="strTitleReaderChapters">السور</string>
     <string name="strTitleFootnote">الهامش</string>
     <string name="strTitleReaderJuz">الأجزاء</string>
@@ -146,7 +146,7 @@
     <string name="strLabelContinueReading">متابعة القراءة »</string>
     <string name="strTitleFailed">فشل</string>
     <string name="strLabelReading">قراءة</string>
-    <string name="strTitleAutoPlayNext">تشغيل التالية تلقائياً</string>
+    <string name="strTitleAutoPlayNext">تشغيل الآيات التالية تلقائياً</string>
     <string name="strTitleQuickEdit">تعديل سريع</string>
     <string name="strTitleShareVerse">شارك الآية</string>
     <string name="strTitleReportVerse">بلغ عن الآية</string>
@@ -301,8 +301,8 @@
     <string name="textDownloading">جار التنزيل…</string>
     <string name="createIssue">إنشاء مشكلة</string>
     <string name="msgAlarmManagerNotAvailable">مدير المنبهات غير متوفر في هذا الجهاز.</string>
-    <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تذكير الآية</string>
-    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تذكير الآية</string>
+    <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تنبيه الآيات.</string>
+    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تنبيه الآيات.</string>
     <string name="titleStorageCleanup">تنظيف مساحة التخزين</string>
     <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات.
 \n
@@ -314,7 +314,7 @@
 \n
 \nتحتاج إلى تنزيله مرة آخرى.</string>
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
-    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها.</string>
+    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها. لحذفها بشكل فردي اذهب إلى إدارة إعدادات الصوتيات.</string>
     <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
     <string name="titleChapterInfoCleanup">هل تريد حذف معلومات السور؟</string>
     <string name="msgChapterInfoCleanup">سيتم حذف كل معلومات السور المخزنة.</string>
@@ -345,7 +345,7 @@
     <string name="strPreviewTextTransl">بسم الله الرحمن الرحيم</string>
     <string name="msgDownloadFailed">فشل التنزيل</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d من %2$d</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع اللتي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع اللتي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d.</string>
     <string name="labelBackgroundDownload">التنزيل في الخلفية</string>
     <string name="msgDownloadingScript">يتم تنزيل الخط</string>
     <string name="translationCanBeFreedUp" formatted="false">تم تنزيل %d من الترجمات التي يمكن حذفها.</string>
@@ -355,7 +355,7 @@
     <string name="lastCrashLog">تقرير الأعطال الأخيرة</string>
     <string name="copiedToClipboard">تم النسخ.</string>
     <string name="github">GitHub</string>
-    <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub</string>
+    <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub.</string>
     <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
     <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
 </resources>
