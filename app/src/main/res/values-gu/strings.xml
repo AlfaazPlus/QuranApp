@@ -1,2 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strTitleAppVersion">એપ્લિકેશન સંસ્કરણ</string>
+    <string name="strVersion" formatted="false">સંસ્કરણ %s</string>
+    <string name="strTitleLicenses">લાઇસન્સ</string>
+    <string name="strLabelClose">બંધ</string>
+    <string name="strLabelOkay">બરાબર</string>
+    <string name="strLabelGotIt">જાણ્યું</string>
+    <string name="strLabelCancel">રદ કરો</string>
+    <string name="strLabelApply">અરજી કરો</string>
+    <string name="strLabelSend">મોકલો</string>
+    <string name="labelAdd">ઉમેરો</string>
+    <string name="strLabelRemove">દૂર કરો</string>
+    <string name="strLabelDelete">કાઢી નાખો</string>
+    <string name="strLabelCopy">નકલ કરો</string>
+    <string name="strLabelBack">પાછળ</string>
+    <string name="strLabelTop">ઉપર</string>
+    <string name="strLabelReset">રીસેટ કરો</string>
+    <string name="strLabelRetry">ફરી પ્રયાસ કરો</string>
+    <string name="strLabelRefresh">તાજું કરો</string>
+    <string name="strLabelDismiss">કાઢી નાખો</string>
+    <string name="strLabelDiscard">કાઢી નાખો</string>
+    <string name="strLabelHide">છુપાવો</string>
+    <string name="strLabelEdit">સંપાદિત કરો</string>
+    <string name="strLabelDone">થઈ ગયું</string>
+    <string name="strLabelView">જુઓ</string>
+    <string name="strLabelOpen">ખુલ્લા</string>
+    <string name="strLabelViewAll">બધુજ જુઓ</string>
+    <string name="strLabelChangeNRestart">બદલો અને પુનઃપ્રારંભ કરો</string>
+    <string name="strLabelAdvertisement">જાહેરાત</string>
+    <string name="strLabelSkip">છોડો</string>
+    <string name="strLabelNotNow">અત્યારે નહિ</string>
+    <string name="strLabelUpdateQuranApp">કુરાન એપ અપડેટ કરો</string>
+    <string name="labelDownload">ડાઉનલોડ કરો</string>
+    <string name="strLabelStart">શરૂઆત</string>
+    <string name="strLabelDownloadNow">હવે ડાઉનલોડ કરો</string>
+    <string name="strLabelUpdate">અપડેટ કરો</string>
+    <string name="strLabelInstall">ઇન્સ્ટોલ કરો</string>
+    <string name="strLabelNew">નવી</string>
+    <string name="strLabelOn">ચાલુ</string>
+    <string name="strLabelOff">બંધ</string>
+    <string name="strLabelThemeDark">અંધારું</string>
+    <string name="strLabelThemeLight">પ્રકાશ</string>
+    <string name="strLabelSystemDefault">સિસ્ટમ ડિફોલ્ટ</string>
+    <string name="strLabelPreviousChapter">અગાઉનો પ્રકરણ</string>
+    <string name="strLabelNextChapter">આગામી પ્રકરણ</string>
+    <string name="strLabelNoNextChapter">આગળનો કોઈ પ્રકરણ નથી</string>
+    <string name="strLabelNextJuz">આગામી જુઝ</string>
+    <string name="strLabelNoPreviousJuz">અગાઉના જુઝ નથી</string>
+    <string name="strLabelFullChapter">સંપૂર્ણ પ્રકરણ વાંચો</string>
+    <string name="strLabelContinueChapter">પ્રકરણ ચાલુ રાખો</string>
+    <string name="strLabelPreviousVerse">અગાઉનો શ્લોક</string>
+    <string name="strLabelNextVerse">આગામી શ્લોક</string>
+    <string name="strLabelVerses" formatted="false">શ્લોક %1$d–%2$d</string>
+    <string name="strLabelSurah" formatted="false">સુરા %s</string>
+    <string name="strLabelJuzNo" formatted="false">જુઝ %d</string>
+    <string name="strLabelVerseNo" formatted="false">શ્લોક %d</string>
+    <string name="strLabelVersesText">છંદો</string>
+    <string name="strLabelVersesWithColon" formatted="false">છંદો : %1$d–%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">શ્લોક %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strTitleAppUser">કુરાન એપ યુઝર</string>
+    <string name="strTitleHolyQuran">પવિત્ર કુરાન</string>
+    <string name="strTitleQuran">કુરાન</string>
+    <string name="strTitleMakki">મક્કન</string>
+    <string name="strTitleMadani">મેદનન</string>
+    <string name="strTitleFootnote">ફૂટનોટ</string>
+    <string name="strTitleFootnotes">ફૂટનોટ્સ</string>
+    <string name="strTitleReaderChapters">સુરાઓ (અધ્યાય)</string>
+    <string name="strTitleReaderJuz">જુઝ (પારા)</string>
+    <string name="strTitleReaderChapters2">સુરાઓ</string>
+    <string name="strTitleReaderJuz2">જુઝ</string>
+    <string name="strTitleReaderVerses">છંદો</string>
+    <string name="strTitleReaderJumpToVerse">શ્લોક પર જાઓ</string>
+    <string name="strTitleVerseOptions">શ્લોક વિકલ્પો</string>
+    <string name="strTitleVerseRecitation">શ્લોક પઠન</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">સૂરા %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">શ્લોક %d પર જાઓ</string>
+    <string name="strTitleReadVerseRange" formatted="false">શ્લોકો %1$d - %2$d વાંચો</string>
+    <string name="strTitleReaderLayoutStyle">કુરાન દૃશ્ય શૈલી</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">અનુવાદ દૃશ્ય</string>
+    <string name="strLabelMostPlaces">સૌથી વધુ ઉલ્લેખ</string>
+    <string name="strLabelSelectedCount" formatted="false">%d પસંદ કર્યું</string>
+    <string name="strLabelAdvanceSharing">એડવાન્સ શેરિંગ</string>
+    <string name="strLabelSelectVerse">કલમો પસંદ કરો</string>
+    <string name="strLabelRemoveAll">બધા દૂર કરો</string>
+    <string name="strLabelRestart">પુનઃપ્રારંભ</string>
+    <string name="strLabelPrevious">અગાઉના</string>
+    <string name="strLabelOpenInReader">રીડરમાં ખોલો</string>
+    <string name="strLabelRead">વાંચવું</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">શ્લોક: %d</string>
+    <string name="strLabelNext">આગળ</string>
+    <string name="strLabelPageNo" formatted="false">પૃષ્ઠ %d</string>
+    <string name="strLabelPremium">પ્રીમિયમ</string>
+    <string name="strLabelNoPreviousChapter">અગાઉનું કોઈ પ્રકરણ નથી</string>
+    <string name="strLabelPreviousJuz">ગત જુઝ</string>
+    <string name="strLabelNoNextJuz">આગામી જુઝ નથી</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">છંદો: %d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">સૂરા %1$s %2$d: શ્લોક %3$d</string>
+    <string name="noFootnotesForThisVerse">આ શ્લોક માટે કોઈ ફૂટનોટ્સ નથી.</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">સૂરા %1$s : શ્લોક %2$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">સૂરા %1$s │ શ્લોક %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">પ્રકરણ નંબર %1$d │ શ્લોક %2$d–%3$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">શ્લોક %d ની તફસીર વાંચો</string>
+    <string name="strLabelContinueReading">વાંચન ચાલુ રાખો »</string>
+    <string name="strLabelReading">વાંચન</string>
+    <string name="strLabelOrder">ઓર્ડર</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d વધુ અનુવાદો</string>
+</resources>
