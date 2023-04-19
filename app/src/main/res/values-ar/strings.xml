@@ -358,4 +358,45 @@
     <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub.</string>
     <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
     <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
+    <string name="labelAdd">إضافة</string>
+    <string name="labelFreeUpSpace">إخلاء مساحة تخزنية</string>
+    <string name="noItems">لا توجد عناصر</string>
+    <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
+    <string name="msgChapterAddedToFavourites">تم إضافة السورة إلى المفضلة.</string>
+    <string name="nItem" formatted="false">%d عنصر</string>
+    <string name="nItems" formatted="false">%d عناصر</string>
+    <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
+    <string name="titleManageAudio">إدارة الصوتيات</string>
+    <string name="downloadRecitations">تنزيل التلاوات</string>
+    <string name="audioOption">خيارات الصوت</string>
+    <string name="playbackSpeed">سرعة التشغيل</string>
+    <string name="audioOnlyArabic">تشغيل القرآن فقط</string>
+    <string name="logRemoved">تم إزالة السجل</string>
+    <string name="labelTranslation">الترجمة</string>
+    <string name="titleAddToFavourites">إضافة إلى المفضلة</string>
+    <string name="msgAddedToFavourites">تم الإضافة إلى المفضلة</string>
+    <string name="titleRemoveFromFavourites">إزالة من المفضلة</string>
+    <string name="msgRemovedFromFavourites">تم الإزالة من المفضلة</string>
+    <string name="msgNoFavouriteChapters">أضف السورة إلى المفضلة لرؤيتها هنا.</string>
+    <string name="textTranslationReciterInfo">اللغة : %1$s
+\nالكتاب: %2$s</string>
+    <string name="textNoLogsFound">لا توجد سجلات</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">فشل تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDownloaded" formatted="false">تم تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">سيتم حذف كل التلاوات من \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">تم حذف تلاوات \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="suppressedLogs">سجلات التوقف</string>
+    <string name="appLogs">سجلات التطبيق</string>
+    <string name="crashLogs">سجلات الأعطال</string>
+    <string name="labelArabic">العربية</string>
+    <string name="audioOnlyTranslation">تشغيل الترجمات فقط</string>
+    <string name="titleOtherSettings">إعدادات اخرى</string>
+    <string name="audioBothArabicTranslation">تشغيل القرآن والترجمات</string>
+    <string name="textDownloaded">تم التنزيل</string>
+    <string name="strHintSearchQuran">ابحث باسم السورة</string>
+    <string name="strTitleAlphaBG">خلفية الفا</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d من الرسم و%2$d من الخطوط</string>
+    <string name="verseSyncOn">متابعة الآية: مفعل</string>
+    <string name="strTitleFeaturedQuran">قراءة مختارة</string>
+    <string name="verseSyncOff">متابعة الآية: متوقف</string>
 </resources>
