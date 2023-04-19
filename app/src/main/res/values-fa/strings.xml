@@ -336,7 +336,7 @@
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">اسکریپت: %s (~1 مگابایت)</string>
     <string name="msgDownloadFailed">دانلود ناموفق بود</string>
     <string name="textPercentage" formatted="false">‭%d%%</string>
-    <string name="pasteCrashLogGithubIssue">گزارش خرابی در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
+    <string name="pasteCrashLogGithubIssue">گزارش در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
     <string name="strMsgTafsirsNoAvailable">تفسیری وجود ندارد</string>
     <string name="msgDownloadingScript">دانلود اسکریپت</string>
     <string name="labelBackgroundDownload">دانلود پس زمینه</string>
