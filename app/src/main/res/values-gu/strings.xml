@@ -207,4 +207,194 @@
     <string name="labelArabic">અરબી</string>
     <string name="labelTranslation">અનુવાદ</string>
     <string name="msgNoFavouriteChapters">અહીં જોવા માટે મનપસંદમાં એક પ્રકરણ ઉમેરો.</string>
+    <string name="strTitleSelectScripts">સ્ક્રિપ્ટ પસંદ કરો</string>
+    <string name="strTitleBookmarkDeleteAll">બધા બુકમાર્ક્સ દૂર કરીએ\?</string>
+    <string name="strTitleScripts">સ્ક્રિપ્ટો</string>
+    <string name="audioOnlyArabic">ફક્ત અરબી રમો</string>
+    <string name="audioOnlyTranslation">ફક્ત અનુવાદ ચલાવો</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d બુકમાર્ક્સ દૂર કરીએ\?</string>
+    <string name="strTitleDuas">કુરાની દુઆસ</string>
+    <string name="strMsgChapInfoFailedLoad">સુરાહ માહિતી લોડ કરવામાં નિષ્ફળ. પછીથી ફરી પ્રયત્ન કરો.</string>
+    <string name="strTitleFeaturedDuas">કુરાનમાં દુઆઓ</string>
+    <string name="strTitlePrivacyPolicy">ગોપનીયતા નીતિ</string>
+    <string name="strTitleChapInfoJuzNo">પારા નં.</string>
+    <string name="strTitleFailed">નિષ્ફળ</string>
+    <string name="strTitleChapInfoRukus">રુકૂઅ</string>
+    <string name="strTitleAppLanguage">એપ્લિકેશન ભાષા</string>
+    <string name="strTitleChangeLanguage">ભાષા બદલો\?</string>
+    <string name="strTitleNoInternet">ઇન્ટરનેટ નથી</string>
+    <string name="strMsgTranslNoDownloads">કોઈ ડાઉનલોડ કરેલ અનુવાદ ઉપલબ્ધ નથી</string>
+    <string name="strMsgTranslDownloaded" formatted="false">ડાઉનલોડ કરેલ: \"%s\".</string>
+    <string name="strMsgTranslNoneSelected">કોઈ અનુવાદ પસંદ કરેલ નથી. અનુવાદો શોધવા માટે સેટિંગ્સ પર જાઓ.</string>
+    <string name="strMsgRecitationsNoAvailable">કોઈ પાઠ ઉપલબ્ધ નથી</string>
+    <string name="strLabelShare">શેર કરો</string>
+    <string name="strLabelBookmark">બુકમાર્ક</string>
+    <string name="strLabelRemoveBookmark">બુકમાર્ક દૂર કરો</string>
+    <string name="strLabelBookmarked">બુકમાર્ક કરેલ</string>
+    <string name="strMsgTranslNoDownloadsAvailable">કોઈ ડાઉનલોડ્સ ઉપલબ્ધ નથી</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ડાઉનલોડ કરવામાં નિષ્ફળ.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">મહત્તમ %d અનુવાદો એકવારમાં પસંદ કરી શકાય છે. કૃપા કરીને બીજું પસંદ કરતા પહેલા એકને નાપસંદ કરો. આ કામગીરીના નુકસાનને ટાળવા માટે છે.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">સૂરહ %1$s, આયત નંબર %2$d.</string>
+    <string name="strMsgNoInternetLong">ઇન્ટરનેટ કનેક્શન નથી. ખાતરી કરો કે Wi-Fi અથવા સેલ્યુલર ડેટા ચાલુ છે, પછી ફરી પ્રયાસ કરો</string>
+    <string name="strMsgSomethingWrong">કંઈક ખોટું થયું!</string>
+    <string name="strMsgSomethingWrongFixing">કંઈક ખોટું થયું! અમે આને ઠીક કરવા માટે કામ કરી રહ્યા છીએ</string>
+    <string name="strMsgVerseCredsInvalid">આયત ઓળખપત્રો માન્ય નથી.</string>
+    <string name="strLabelNavHome">ઘર</string>
+    <string name="strLabelAllChapters">બધા સૂરહ</string>
+    <string name="strLabelDownloadImage">છબી ડાઉનલોડ કરો</string>
+    <string name="strLabelShareImage">છબી શેર કરો</string>
+    <string name="strMsgEditShareTransl">સેટિંગ્સમાંથી પસંદ કરેલા અનુવાદો, ફક્ત અહીં જ બતાવવામાં આવ્યા છે.</string>
+    <string name="strMsgEditShareLongTransl">અનુવાદ ઘણો લાંબો છે, તે યોગ્ય રીતે ફિટ ન પણ હોઈ શકે.</string>
+    <string name="strMsgReferenceDuas">કુરાનમાંથી કેટલીક દુઆઓ એકઠી કરી.</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ફોન્ટ્સ: કુલ %2$dમાંથી %1$d ડાઉનલોડ થયા (~%3$dMB બાકી)</string>
+    <string name="msgDownloadKFQPCResources">તમે આ સ્ક્રિપ્ટનો ઉપયોગ કરી શકો તે પહેલાં નીચેના સંસાધનોને ડાઉનલોડ કરવાની જરૂર છે:</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d માંથી %1$d</string>
+    <string name="textDownloaded">ડાઉનલોડ કરેલ</string>
+    <string name="msgAnotherDownloadInProgress">બીજું ડાઉનલોડ ચાલુ છે.</string>
+    <string name="appLogs">એપ્લિકેશન લૉગ્સ</string>
+    <string name="suppressedLogs">દબાયેલ લોગ</string>
+    <string name="msgDownloadingResource" formatted="false">%s ડાઉનલોડ કરી રહ્યું છે</string>
+    <string name="pasteCrashLogGithubIssue">લૉગ ક્લિપબોર્ડ પર કૉપિ કરવામાં આવ્યો છે. કૃપા કરીને તેને ગીટહબ અંકમાં પેસ્ટ કરો.</string>
+    <string name="createIssue">મુદ્દો બનાવો</string>
+    <string name="copiedToClipboard">ક્લિપબોર્ડ પર કૉપિ કરી.</string>
+    <string name="msgAlarmManagerNotAvailable">આ ઉપકરણ પર અલાર્મ મેનેજર ઉપલબ્ધ નથી.</string>
+    <string name="msgVerseReminderNotifPermission">આયત રીમાઇન્ડર સક્ષમ કરવા માટે સૂચના પરવાનગી જરૂરી છે.</string>
+    <string name="storageCleanupMessage">ન વપરાયેલ ડાઉનલોડ કરેલ સંસાધનો કાઢી નાખીને જગ્યા ખાલી કરો. આ કોઈપણ બુકમાર્ક્સ અથવા સેટિંગ્સને કાઢી નાખશે નહીં.
+\n
+\nનીચેના સંસાધનો મુક્ત કરી શકાય છે:</string>
+    <string name="titleStorageCleanup">સંગ્રહ સફાઈ</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d વાચકોની %1$d સંગ્રહિત પઠન ફાઇલો ખાલી કરી શકાય છે.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d ડાઉનલોડ કરેલ સ્ક્રિપ્ટો અને તેમના ફોન્ટ્સ મુક્ત કરી શકાય છે.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d સાચવેલ પ્રકરણ માહિતી સાફ કરી શકાય છે.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d સાચવેલી તફસીરો સાફ કરી શકાય છે.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s ના બધા સંગ્રહિત પઠન કાઢી નાખવામાં આવશે. સૂરા દ્વારા પઠનને વ્યક્તિગત રીતે ડિલીટ કરવા માટે, ઓડિયો સેટિંગ્સ મેનેજ કરો.</string>
+    <string name="strTitleReaderLayoutStylePageView">પૃષ્ઠ દૃશ્ય</string>
+    <string name="strTitleReaderTextSizeArabic">અરબી ટેક્સ્ટનું કદ</string>
+    <string name="strTitleReaderTextSizeTransl">અનુવાદ ટેક્સ્ટનું કદ</string>
+    <string name="titleReaderTextSizeTafsir">તફસીર ટેક્સ્ટનું કદ</string>
+    <string name="strTitleSettings">સેટિંગ્સ</string>
+    <string name="strTitleBookmark">બુકમાર્ક</string>
+    <string name="strTitleSendFeedback">પ્રતિસાદ મોકલ</string>
+    <string name="strTitleHelpSupport">મદદ અને આધાર</string>
+    <string name="strTitleAboutUs">અમારા વિશે</string>
+    <string name="strTitleBookmarks">બુકમાર્ક્સ</string>
+    <string name="strTitleShareApp">એપ શેર કરો</string>
+    <string name="strTitleAddNote">નોંધ ઉમેરો</string>
+    <string name="strTitleNote">નૉૅધ</string>
+    <string name="strTitleRateApp">એપ્લિકેશનને રેટ કરો</string>
+    <string name="strTitleFilters">ફિલ્ટર્સ</string>
+    <string name="strTitleMenu">મેનુ</string>
+    <string name="strTitleTafsir">તફસીર</string>
+    <string name="strTitleSelectTafsir">તફસીર પસંદ કરો</string>
+    <string name="strTitleAboutSurah">સુરા વિશે</string>
+    <string name="strTitleTranslations">અનુવાદો</string>
+    <string name="strTitleDownloadTranslations">ડાઉનલોડ કરો</string>
+    <string name="strTitleRecitations">પઠન</string>
+    <string name="strTitleSelectReciter">રીસીટર પસંદ કરો</string>
+    <string name="titleManageAudio">ઑડિયો મેનેજ કરો</string>
+    <string name="downloadRecitations">પઠન ડાઉનલોડ કરો</string>
+    <string name="audioOption">ઓડિયો વિકલ્પ</string>
+    <string name="playbackSpeed">પ્લેબેક ઝડપ</string>
+    <string name="audioBothArabicTranslation">અરબી અને અનુવાદ બંને ચલાવો</string>
+    <string name="strTitleBookmarkDeleteThis">આ બુકમાર્ક દૂર કરીએ\?</string>
+    <string name="strTitleTranslDelete">અનુવાદ કાઢી નાખીએ\?</string>
+    <string name="strTitleResetReaderSettings">રીડર સેટિંગ્સ રીસેટ કરીએ\?</string>
+    <string name="strTitleHideAd">જાહેરાત છુપાવો</string>
+    <string name="strTitleRecitationOptions">વિકલ્પો</string>
+    <string name="strTitleRepeatVerse">શ્લોકનું પુનરાવર્તન કરો</string>
+    <string name="strTitleQuickEdit">ઝડપી સંપાદન</string>
+    <string name="strTitleShareVerse">શ્લોક શેર કરો</string>
+    <string name="strTitleReportVerse">અહેવાલ શ્લોક</string>
+    <string name="strTitleSelectReason">કારણ પસંદ કરો</string>
+    <string name="strTitleExplainIssue">મુદ્દો સમજાવો</string>
+    <string name="strTitleFeaturedQuran">ફીચર્ડ વાંચન</string>
+    <string name="strTitleVOTD">દિવસનો આયત</string>
+    <string name="strTitleTopics">વિષયો</string>
+    <string name="strTitleFeaturedTopics">કુરાનમાં વિષય</string>
+    <string name="strTitleProphets">પયગંબર</string>
+    <string name="strTitleFeaturedProphets">કુરાનમાં પયગંબર</string>
+    <string name="strTitleSuccess">સફળતા</string>
+    <string name="strTitleThresholdReached">થ્રેશોલ્ડ પહોંચી</string>
+    <string name="strChapInfoSeeMore">વધુ માહિતી જુઓ ›</string>
+    <string name="strTitleChapInfoChapterNo">પ્રકરણ નંબર</string>
+    <string name="strTitleChapInfoVerses">આયત</string>
+    <string name="strTitleChapInfoPages">પન્ના</string>
+    <string name="strTitleChapInfoRevType">સાક્ષાત્કાર પ્રકાર</string>
+    <string name="strTitleChapInfoRevOrder">સાક્ષાત્કાર ઓર્ડર</string>
+    <string name="strTitleAppSettings">એપ્લિકેશન સેટિંગ્સ</string>
+    <string name="strTitleReaderSettings">રીડર સેટિંગ્સ</string>
+    <string name="titleOtherSettings">અન્ય સેટિંગ્સ</string>
+    <string name="strTitleTheme">થીમ</string>
+    <string name="strLabelPlay">રમ</string>
+    <string name="strLabelPause">વિરામ</string>
+    <string name="strLabelRemoveAds">જાહેરાતો દૂર કરો</string>
+    <string name="strLabelReport">જાણ કરો</string>
+    <string name="strMsgEnterValidRange">કૃપા કરીને માન્ય શ્રેણી દાખલ કરો</string>
+    <string name="strMsgTranslLoadFailed">સર્વરમાંથી અનુવાદો લોડ કરી શકાયા નથી. પછીથી ફરી પ્રયત્ન કરો.</string>
+    <string name="strMsgRecitationsLoadFailed">સર્વરમાંથી પઠન લોડ કરી શકાયા નથી. પછીથી ફરી પ્રયત્ન કરો.</string>
+    <string name="strMsgTafsirsNoAvailable">કોઈ તફસીર ઉપલબ્ધ નથી</string>
+    <string name="strDescAddToBookmarks">બુકમાર્ક્સમાં ઉમેરો</string>
+    <string name="strDescGoBack">પાછા જાવ</string>
+    <string name="strDescClose">બંધ</string>
+    <string name="strDescVerseNo" formatted="false">આયત નંબર %d.</string>
+    <string name="strMsgNoInternet">કૃપા કરીને તમારું ઇન્ટરનેટ કનેક્શન તપાસો.</string>
+    <string name="strMsgTryLater">પછીથી ફરી પ્રયત્ન કરો.</string>
+    <string name="strMsgReportUs">કૃપા કરીને અમને જાણ કરો.</string>
+    <string name="strMsgCouldNotOpenPage">પેજ ખોલી શકાયું નથી.</string>
+    <string name="strLabelNavSearch">શોધો</string>
+    <string name="strTextPreparing">તૈયારી કરી રહ્યું છે…</string>
+    <string name="strTextPleaseWait">મહેરબાની કરી રાહ જુવો…</string>
+    <string name="strTextSending">મોકલી રહ્યું છે…</string>
+    <string name="strAyatulKursi">આયતુલ કુર્સી</string>
+    <string name="strTitleError">ભૂલ!</string>
+    <string name="strTitleInfo">માહિતી!</string>
+    <string name="strTitleOops">અરે!</string>
+    <string name="strLabelProceed">આગળ વધો</string>
+    <string name="strTextUpdating">અપડેટ કરી રહ્યું છે…</string>
+    <string name="strTextInstalling">ઇન્સ્ટોલ કરી રહ્યું છે…</string>
+    <string name="strTextLoading">લોડ કરી રહ્યું છે…</string>
+    <string name="strMsgUpdateAvailable">અપડેટ ઉપલબ્ધ! નવીનતમ સુવિધાઓ મેળવવા માટે કૃપા કરીને એપ્લિકેશનને અપડેટ કરો.</string>
+    <string name="strMsgUpdateAvailable4Dialog">અપડેટ ઉપલબ્ધ!
+\nકૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
+    <string name="strMsgUpdateAvailable2Continue">અપડેટ જરૂરી!
+\nચાલુ રાખવા માટે કૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
+    <string name="strMsgUpdateDownloaded">અપડેટ ડાઉનલોડ કર્યું! અપડેટ પૂર્ણ કરવા માટે કૃપા કરીને ઇન્સ્ટોલ કરો.</string>
+    <string name="strTitleImageSavedWithName" formatted="false">નામ સાથે છબી સાચવેલ: %s</string>
+    <string name="strTitleAlphaBG">આલ્ફા પૃષ્ઠભૂમિ</string>
+    <string name="strMsgReferenceInQuran" formatted="false">કુરાનમાં %s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">કુલ %2$d સ્થાનો પર %1$s થી સંબંધિત આયત મળ્યા.</string>
+    <string name="strSalam">અસલામુઅલૈકુમ</string>
+    <string name="strSalamShort">સલામ</string>
+    <string name="titleDownloadScriptResources">આ સ્ક્રિપ્ટ માટે સંસાધનો ડાઉનલોડ કરીએ\?</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">સ્ક્રિપ્ટ: %s (~1MB)</string>
+    <string name="msgDownloadFailed">ડાઉનલોડ નિષ્ફળ થયું</string>
+    <string name="msgDownloadingScript">સ્ક્રિપ્ટ ડાઉનલોડ કરી રહ્યું છે</string>
+    <string name="msgDownloadingFonts">ફોન્ટ ડાઉનલોડ કરી રહ્યું છે</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%2$d માંથી %1$d ફોન્ટ ડાઉનલોડ થયા</string>
+    <string name="msgScriptFontsDownloaded">સ્ક્રિપ્ટો અને ફોન્ટ્સ સફળતાપૂર્વક ડાઉનલોડ થયા.</string>
+    <string name="textDownloading">ડાઉનલોડ કરી રહ્યું છે…</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">પૃષ્ઠભૂમિ ડાઉનલોડ</string>
+    <string name="lastCrashLog">છેલ્લો ક્રેશ લોગ</string>
+    <string name="crashLogs">ક્રેશ લોગ્સ</string>
+    <string name="logRemoved">લોગ દૂર કર્યો</string>
+    <string name="github">ગીટહબ</string>
+    <string name="msgVerseReminderAlarmPermission">આયત રીમાઇન્ડરને સક્ષમ કરવા માટે એલાર્મની પરવાનગી જરૂરી છે.</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d ડાઉનલોડ કરેલ અનુવાદો મુક્ત કરી શકાય છે.</string>
+    <string name="titleChapterInfo">પ્રકરણ માહિતી</string>
+    <string name="labelFreeUpSpace">જગ્યા ખાલી કરો</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s</string>
+    <string name="titleRecitationCleanup">પઠન ડિલીટ કરીએ\?</string>
+    <string name="msgChapterAddedToFavourites">મનપસંદમાં સૂરા ઉમેરાઈ.</string>
+    <string name="msgChapterRemovedFromFavourites">મનપસંદમાંથી સૂરા દૂર કરી.</string>
+    <string name="textTranslationReciterInfo">ભાષા: %1$s
+\nપુસ્તક: %2$s</string>
+    <string name="textNoLogsFound">કોઈ લોગ મળ્યા નથી</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ડાઉનલોડ કરવામાં નિષ્ફળ.</string>
+    <string name="msgRecitaionDownloaded" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ડાઉનલોડ કર્યું.</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના બધા પાઠો કાઢી નાખવામાં આવશે.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના પાઠો કાઢી નાખ્યા.</string>
+    <string name="strPreviewTextTransl">અલ્લાહના નામે, પરમ કૃપાળુ, પરમ દયાળુ</string>
+    <string name="strTitleAutoPlayNext">આગળ ઑટોપ્લે</string>
 </resources>
