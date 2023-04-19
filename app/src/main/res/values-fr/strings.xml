@@ -398,4 +398,5 @@
     <string name="audioBothArabicTranslation">Lire l\'arabe et la traduction</string>
     <string name="crashLogs">Journaux de plantage</string>
     <string name="logRemoved">Journal supprimé</string>
+    <string name="msgRecitaionDownloaded" formatted="false">« %1$s » téléchargée du récitateur « %2$s ».</string>
 </resources>
