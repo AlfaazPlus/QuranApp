@@ -393,4 +393,10 @@
     <string name="titleOtherSettings">إعدادات اخرى</string>
     <string name="audioBothArabicTranslation">تشغيل القرآن والترجمات</string>
     <string name="textDownloaded">تم التنزيل</string>
+    <string name="strHintSearchQuran">ابحث باسم السورة</string>
+    <string name="strTitleAlphaBG">خلفية الفا</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d من الرسم و%2$d من الخطوط</string>
+    <string name="verseSyncOn">متابعة الآية: مفعل</string>
+    <string name="strTitleFeaturedQuran">قراءة مختارة</string>
+    <string name="verseSyncOff">متابعة الآية: متوقف</string>
 </resources>
