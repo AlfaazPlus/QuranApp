@@ -62,7 +62,7 @@
     <string name="strLabelThemeLight">فاتح</string>
     <string name="strLabelNextJuz">الجزء التالي</string>
     <string name="strLabelPreviousVerse">الآية السابقة</string>
-    <string name="strTitleFootnotes">هوامش</string>
+    <string name="strTitleFootnotes">الهوامش</string>
     <string name="strTitleReaderChapters">السور</string>
     <string name="strTitleFootnote">الهامش</string>
     <string name="strTitleReaderJuz">الأجزاء</string>
@@ -146,7 +146,7 @@
     <string name="strLabelContinueReading">متابعة القراءة »</string>
     <string name="strTitleFailed">فشل</string>
     <string name="strLabelReading">قراءة</string>
-    <string name="strTitleAutoPlayNext">تشغيل التالية تلقائياً</string>
+    <string name="strTitleAutoPlayNext">تشغيل الآيات التالية تلقائياً</string>
     <string name="strTitleQuickEdit">تعديل سريع</string>
     <string name="strTitleShareVerse">شارك الآية</string>
     <string name="strTitleReportVerse">بلغ عن الآية</string>
@@ -301,8 +301,8 @@
     <string name="textDownloading">جار التنزيل…</string>
     <string name="createIssue">إنشاء مشكلة</string>
     <string name="msgAlarmManagerNotAvailable">مدير المنبهات غير متوفر في هذا الجهاز.</string>
-    <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تذكير الآية</string>
-    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تذكير الآية</string>
+    <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تنبيه الآيات.</string>
+    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تنبيه الآيات.</string>
     <string name="titleStorageCleanup">تنظيف مساحة التخزين</string>
     <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات.
 \n
@@ -314,7 +314,7 @@
 \n
 \nتحتاج إلى تنزيله مرة آخرى.</string>
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
-    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها.</string>
+    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها. لحذفها بشكل فردي اذهب إلى إدارة إعدادات الصوتيات.</string>
     <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
     <string name="titleChapterInfoCleanup">هل تريد حذف معلومات السور؟</string>
     <string name="msgChapterInfoCleanup">سيتم حذف كل معلومات السور المخزنة.</string>
@@ -345,7 +345,7 @@
     <string name="strPreviewTextTransl">بسم الله الرحمن الرحيم</string>
     <string name="msgDownloadFailed">فشل التنزيل</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d من %2$d</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع اللتي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع اللتي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d.</string>
     <string name="labelBackgroundDownload">التنزيل في الخلفية</string>
     <string name="msgDownloadingScript">يتم تنزيل الخط</string>
     <string name="translationCanBeFreedUp" formatted="false">تم تنزيل %d من الترجمات التي يمكن حذفها.</string>
@@ -355,7 +355,48 @@
     <string name="lastCrashLog">تقرير الأعطال الأخيرة</string>
     <string name="copiedToClipboard">تم النسخ.</string>
     <string name="github">GitHub</string>
-    <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub</string>
+    <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub.</string>
     <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
     <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
+    <string name="labelAdd">إضافة</string>
+    <string name="labelFreeUpSpace">إخلاء مساحة تخزنية</string>
+    <string name="noItems">لا توجد عناصر</string>
+    <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
+    <string name="msgChapterAddedToFavourites">تم إضافة السورة إلى المفضلة.</string>
+    <string name="nItem" formatted="false">%d عنصر</string>
+    <string name="nItems" formatted="false">%d عناصر</string>
+    <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
+    <string name="titleManageAudio">إدارة الصوتيات</string>
+    <string name="downloadRecitations">تنزيل التلاوات</string>
+    <string name="audioOption">خيارات الصوت</string>
+    <string name="playbackSpeed">سرعة التشغيل</string>
+    <string name="audioOnlyArabic">تشغيل القرآن فقط</string>
+    <string name="logRemoved">تم إزالة السجل</string>
+    <string name="labelTranslation">الترجمة</string>
+    <string name="titleAddToFavourites">إضافة إلى المفضلة</string>
+    <string name="msgAddedToFavourites">تم الإضافة إلى المفضلة</string>
+    <string name="titleRemoveFromFavourites">إزالة من المفضلة</string>
+    <string name="msgRemovedFromFavourites">تم الإزالة من المفضلة</string>
+    <string name="msgNoFavouriteChapters">أضف السورة إلى المفضلة لرؤيتها هنا.</string>
+    <string name="textTranslationReciterInfo">اللغة : %1$s
+\nالكتاب: %2$s</string>
+    <string name="textNoLogsFound">لا توجد سجلات</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">فشل تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDownloaded" formatted="false">تم تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">سيتم حذف كل التلاوات من \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">تم حذف تلاوات \"%1$s\" للقارئ \"%2$s\".</string>
+    <string name="suppressedLogs">سجلات التوقف</string>
+    <string name="appLogs">سجلات التطبيق</string>
+    <string name="crashLogs">سجلات الأعطال</string>
+    <string name="labelArabic">العربية</string>
+    <string name="audioOnlyTranslation">تشغيل الترجمات فقط</string>
+    <string name="titleOtherSettings">إعدادات اخرى</string>
+    <string name="audioBothArabicTranslation">تشغيل القرآن والترجمات</string>
+    <string name="textDownloaded">تم التنزيل</string>
+    <string name="strHintSearchQuran">ابحث باسم السورة</string>
+    <string name="strTitleAlphaBG">خلفية الفا</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d من الرسم و%2$d من الخطوط</string>
+    <string name="verseSyncOn">متابعة الآية: مفعل</string>
+    <string name="strTitleFeaturedQuran">قراءة مختارة</string>
+    <string name="verseSyncOff">متابعة الآية: متوقف</string>
 </resources>

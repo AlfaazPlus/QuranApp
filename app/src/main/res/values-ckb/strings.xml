@@ -367,4 +367,36 @@
     <string name="inPlaces">بە %s</string>
     <string name="inPlacesMore">لە %1$s و %2$d زیاتر</string>
     <string name="noFootnotesForThisVerse">هیچ تێبینییەک نییە بۆ ئەم ئایەتە.</string>
+    <string name="labelAdd">زیادکردن</string>
+    <string name="msgNoFavouriteChapters">سورەتێک زیادبکە بۆ دڵخوازەکان بۆ ئەوەی لێرەدا دەرکەوێت</string>
+    <string name="titleOtherSettings">ڕێکخستنی زیاتر</string>
+    <string name="appLogs">تۆماری بەرنامەکە</string>
+    <string name="crashLogs">تۆماری لەکارکەوتن</string>
+    <string name="textDownloaded">داگیراوە</string>
+    <string name="titleAddToFavourites">زیادکردن بۆ دڵخوازەکان</string>
+    <string name="msgAddedToFavourites">زیادکرا بۆ دڵخوازەکان</string>
+    <string name="titleRemoveFromFavourites">لابردن لە دڵخوازەکان</string>
+    <string name="msgRemovedFromFavourites">لابرا لە دڵخوازەکاندا</string>
+    <string name="msgChapterAddedToFavourites">سورەتەکە زیادکرا بۆ دڵخوازەکانت</string>
+    <string name="msgChapterRemovedFromFavourites">سورەتەکە لابرا لە دڵخوازەکاندا</string>
+    <string name="textTranslationReciterInfo">زمان: %1$s
+\nوەرگێڕان: %2$s</string>
+    <string name="textNoLogsFound">هیچ تۆمارێک نەدۆزرایەوە</string>
+    <string name="msgRecitaionDownloaded" formatted="false">داگرتنی \"%1$s\" سەرکەوتو بوو بۆ قورئانخوێن \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">سەرجەم فایلەکانی \"%1$s\" بۆ قورئانخوێن \"%2$s\" دەسڕێنەوە.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">فایلی دەنگی \"%1$s\" بۆ قورئانخوێن \"%2$s\" سڕایەوە.</string>
+    <string name="labelArabic">قورئانخوێنەکان</string>
+    <string name="labelTranslation">وەرگێڕان</string>
+    <string name="titleManageAudio">ڕێکخستنی دەنگەکان</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">داگرتنی \"%1$s\" سەرکەوتو نەبوو بۆ قورئانخوێن \"%2$s\".</string>
+    <string name="playbackSpeed">خێرایی لێدان</string>
+    <string name="audioOnlyTranslation">تەنیا وەرگێڕان</string>
+    <string name="noItems">هیچ شتێک نییە</string>
+    <string name="titleReaderTextSizeTafsir">قەبارەی نووسینی تەفسیر</string>
+    <string name="downloadRecitations">داگرتنی دەنگی قورئانخوێن</string>
+    <string name="suppressedLogs">تۆماری گشتی</string>
+    <string name="audioOption">ڕێکخستنی لێدان</string>
+    <string name="audioOnlyArabic">تەنیا قورئانی پیرۆز</string>
+    <string name="audioBothArabicTranslation">لێدانی هەردووکیان پێکەوە</string>
+    <string name="logRemoved">تۆمار سڕایەوە</string>
 </resources>

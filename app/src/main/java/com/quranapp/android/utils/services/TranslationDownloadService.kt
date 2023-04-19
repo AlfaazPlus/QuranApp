@@ -43,7 +43,6 @@ class TranslationDownloadService : Service() {
 
         // To prevent notification when using BIND_AUTO_CREATE
         private var STARTED_BY_USER = false
-
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
             STARTED_BY_USER = true
             val service = Intent(wrapper, TranslationDownloadService::class.java)

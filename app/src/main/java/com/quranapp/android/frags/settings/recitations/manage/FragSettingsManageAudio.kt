@@ -73,7 +73,7 @@ class FragSettingsManageAudio : FragSettingsBase() {
                     FragSettingsRecitationsArabic().apply {
                         arguments = Bundle().apply { putBoolean(FragSettingsRecitationsBase.KEY_IS_MANAGE_AUDIO, true) }
                     },
-                    ctx.getString(R.string.labelArabic)
+                    ctx.getString(R.string.strTitleQuran)
                 )
                 addFragment(
                     FragSettingsRecitationsTranslation().apply {

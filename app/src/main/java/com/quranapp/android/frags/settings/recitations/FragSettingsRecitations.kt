@@ -88,7 +88,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         binding.let {
             pageAdapter = ViewPagerAdapter2(requireActivity())
             it.viewPager.adapter = pageAdapter!!.apply {
-                addFragment(FragSettingsRecitationsArabic(), ctx.getString(R.string.labelArabic))
+                addFragment(FragSettingsRecitationsArabic(), ctx.getString(R.string.strTitleQuran))
                 addFragment(FragSettingsRecitationsTranslation(), ctx.getString(R.string.labelTranslation))
             }
             it.viewPager.offscreenPageLimit = pageAdapter!!.itemCount
