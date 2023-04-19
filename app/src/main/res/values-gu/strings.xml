@@ -63,15 +63,15 @@
     <string name="strTitleAppUser">કુરાન એપ યુઝર</string>
     <string name="strTitleHolyQuran">પવિત્ર કુરાન</string>
     <string name="strTitleQuran">કુરાન</string>
-    <string name="strTitleMakki">મક્કન</string>
-    <string name="strTitleMadani">મેદનન</string>
-    <string name="strTitleFootnote">ફૂટનોટ</string>
-    <string name="strTitleFootnotes">ફૂટનોટ્સ</string>
+    <string name="strTitleMakki">મક્કા</string>
+    <string name="strTitleMadani">મદીના</string>
+    <string name="strTitleFootnote">પાદટીપ</string>
+    <string name="strTitleFootnotes">પાદટીપ</string>
     <string name="strTitleReaderChapters">સુરાઓ (અધ્યાય)</string>
-    <string name="strTitleReaderJuz">જુઝ (પારા)</string>
+    <string name="strTitleReaderJuz">પારા (પારા)</string>
     <string name="strTitleReaderChapters2">સુરાઓ</string>
-    <string name="strTitleReaderJuz2">જુઝ</string>
-    <string name="strTitleReaderVerses">છંદ</string>
+    <string name="strTitleReaderJuz2">પારા</string>
+    <string name="strTitleReaderVerses">આયત</string>
     <string name="strTitleReaderJumpToVerse">શ્લોક પર જાઓ</string>
     <string name="strTitleVerseOptions">શ્લોક વિકલ્પો</string>
     <string name="strTitleVerseRecitation">શ્લોક પઠન</string>
@@ -88,7 +88,7 @@
     <string name="strLabelRestart">પુનઃપ્રારંભ</string>
     <string name="strLabelPrevious">અગાઉના</string>
     <string name="strLabelOpenInReader">રીડરમાં ખોલો</string>
-    <string name="strLabelRead">વાંચવું</string>
+    <string name="strLabelRead">વાંચવું \"</string>
     <string name="strLabelVerseNoWithColon" formatted="false">શ્લોક: %d</string>
     <string name="strLabelNext">આગળ</string>
     <string name="strLabelPageNo" formatted="false">પૃષ્ઠ %d</string>
@@ -99,7 +99,7 @@
     <string name="strLabelVerseCountWithColon" formatted="false">છંદો: %d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">સૂરા %1$s %2$d: શ્લોક %3$d</string>
-    <string name="noFootnotesForThisVerse">આ શ્લોક માટે કોઈ ફૂટનોટ્સ નથી.</string>
+    <string name="noFootnotesForThisVerse">આ શ્લોક માટે કોઈ પાદટીપ નથી.</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">સૂરા %1$s : શ્લોક %2$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">સૂરા %1$s │ શ્લોક %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">પ્રકરણ નંબર %1$d │ શ્લોક %2$d–%3$d</string>
@@ -118,7 +118,7 @@
     <string name="strHintSearchTopic">વિષય શોધો</string>
     <string name="strHintSearchChapter">સૂરા શોધો</string>
     <string name="strHintSearchVerse">શ્લોક શોધો</string>
-    <string name="strHintSearchJuz">જુઝ શોધો</string>
+    <string name="strHintSearchJuz">પારા શોધો</string>
     <string name="strHintSearchReciter">વાંચનાર શોધો</string>
     <string name="strHintSearchScript">સ્ક્રિપ્ટ શોધો</string>
     <string name="strHintSearchLanguage">ભાષા શોધો</string>
@@ -172,7 +172,7 @@
     <string name="msgRemovedFromFavourites">મનપસંદમાંથી દૂર કર્યું</string>
     <string name="strMsgBookmarkDate" formatted="false">%2$s પર %1$s</string>
     <string name="strLabelVerseRange">શ્લોક શ્રેણી</string>
-    <string name="strLabelIncludeFootnotes">ફૂટનોટ્સ શામેલ કરો</string>
+    <string name="strLabelIncludeFootnotes">પાદટીપ શામેલ કરો</string>
     <string name="strLabelSelectTranslations">અનુવાદો પસંદ કરો</string>
     <string name="strLabelIncludeTranslation">અનુવાદ શામેલ કરો</string>
     <string name="strLabelQuickLinks">ઝડપી સંપર્ક</string>
@@ -235,9 +235,9 @@
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ડાઉનલોડ કરવામાં નિષ્ફળ.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">મહત્તમ %d અનુવાદો એકવારમાં પસંદ કરી શકાય છે. કૃપા કરીને બીજું પસંદ કરતા પહેલા એકને નાપસંદ કરો. આ કામગીરીના નુકસાનને ટાળવા માટે છે.</string>
     <string name="strDescVerseNoWithChapter" formatted="false">સૂરહ %1$s, આયત નંબર %2$d.</string>
-    <string name="strMsgNoInternetLong">ઇન્ટરનેટ કનેક્શન નથી. ખાતરી કરો કે Wi-Fi અથવા સેલ્યુલર ડેટા ચાલુ છે, પછી ફરી પ્રયાસ કરો</string>
+    <string name="strMsgNoInternetLong">ઇન્ટરનેટ કનેક્શન નથી. ખાતરી કરો કે વાઇ-ફાઇ અથવા સેલ્યુલર ડેટા ચાલુ છે, પછી ફરી પ્રયાસ કરો.</string>
     <string name="strMsgSomethingWrong">કંઈક ખોટું થયું!</string>
-    <string name="strMsgSomethingWrongFixing">કંઈક ખોટું થયું! અમે આને ઠીક કરવા માટે કામ કરી રહ્યા છીએ</string>
+    <string name="strMsgSomethingWrongFixing">કંઈક ખોટું થયું! અમે આને ઠીક કરવા માટે કામ કરી રહ્યા છીએ.</string>
     <string name="strMsgVerseCredsInvalid">આયત ઓળખપત્રો માન્ય નથી.</string>
     <string name="strLabelNavHome">ઘર</string>
     <string name="strLabelAllChapters">બધા સૂરહ</string>
@@ -384,7 +384,9 @@
     <string name="titleChapterInfo">પ્રકરણ માહિતી</string>
     <string name="labelFreeUpSpace">જગ્યા ખાલી કરો</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s</string>
+\n%2$s
+\n
+\nતમારે તેને ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
     <string name="titleRecitationCleanup">પઠન ડિલીટ કરીએ\?</string>
     <string name="msgChapterAddedToFavourites">મનપસંદમાં સૂરા ઉમેરાઈ.</string>
     <string name="msgChapterRemovedFromFavourites">મનપસંદમાંથી સૂરા દૂર કરી.</string>
