@@ -318,7 +318,7 @@
     <string name="strMsgBookmarkAddedAlready">Vers ist bereits zu Lesezeichen hinzugefügt</string>
     <string name="strHintBookmarkViewerNote">Schreiben Sie hier eine zusätzliche Notiz zu diesem Lesezeichen…</string>
     <string name="strMsgBookmarkAddFailed">Vers konnte nicht zu Lesezeichen hinzugefügt werden</string>
-    <string name="strMsgInvalidVersesRange">Kein gültiger Versbereich.</string>
+    <string name="strMsgInvalidVersesRange">Kein gültiger Versbereich</string>
     <string name="strMsgReadHistoryNoItems">Kein Leseverlauf</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Nur 1 Ergebnis gefunden in %s</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Keine Ergebnisse gefunden. Bitte überprüfen Sie die Suchfilter.</string>

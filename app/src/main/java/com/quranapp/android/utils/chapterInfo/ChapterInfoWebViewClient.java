@@ -74,7 +74,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
             }
             case "assets-image": {
                 if (uriStr.contains("revelation")) {
-                    boolean isMeccan = mChapterInfoMeta.revelationType.toLowerCase().contains("meccan");
+                    boolean isMeccan = Objects.equals(mChapterInfoMeta.revelationType, "meccan");
                     int resId = isMeccan ? R.drawable.dr_makkah_old : R.drawable.dr_madina_old;
                     data = view.getContext().getResources().openRawResource(+resId);
                 }
@@ -121,7 +121,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
     }
 
     private String text(@StringRes int strResId, Object obj) {
-        return mActivityChapInfo.str(strResId) + ":" + obj;
+        return mActivityChapInfo.getString(strResId) + ":" + obj;
     }
 
     private void installContents(WebView webView) throws JSONException {
@@ -135,7 +135,12 @@ public class ChapterInfoWebViewClient extends WebViewClient {
         contentJson.put("ruku-count", text(R.string.strTitleChapInfoRukus, mChapterInfoMeta.rukuCount));
         contentJson.put("pages", text(R.string.strTitleChapInfoPages, preparePages(mChapterInfoMeta.pageRange)));
         contentJson.put("revelation-order", text(R.string.strTitleChapInfoRevOrder, mChapterInfoMeta.revelationOrder));
-        contentJson.put("revelation-type", text(R.string.strTitleChapInfoRevType, mChapterInfoMeta.revelationType));
+
+        boolean isMeccan = Objects.equals(mChapterInfoMeta.revelationType, "meccan");
+        contentJson.put("revelation-type", text(
+            R.string.strTitleChapInfoRevType,
+            mActivityChapInfo.getString(isMeccan ? R.string.strTitleMakki : R.string.strTitleMadani)
+        ));
 
         String contentJsonStr = contentJson.toString().replaceAll("'", "\\\\'");
         Log.d(contentJsonStr);

@@ -80,7 +80,7 @@
     <string name="strTitleHolyQuran">قرآن کریم</string>
     <string name="strTitleQuran">قرآن</string>
     <string name="strTitleMakki">مکی</string>
-    <string name="strTitleMadani">مکی</string>
+    <string name="strTitleMadani">مدنی</string>
     <string name="strTitleFootnote">حاشیہ</string>
     <string name="strTitleFootnotes">حاشیہ</string>
     <string name="strTitleReaderChapters">سورتیں (ابواب)</string>
@@ -201,7 +201,7 @@
     <string name="strMsgYouAreReadingVerses">آپ پڑھ رہے ہیں آیات:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d درست سورہ نمبر نہیں ہے</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d سورہ نمبر %2$d کے لیے صحیح آیت نمبر نہیں ہے</string>
-    <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں۔</string>
+    <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d سورہ نمبر %3$d کے لیے صحیح آیت کی حد نہیں ہے</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ایک درست پارہ نمبر نہیں ہے</string>
     <string name="strMsgBookmarkAdded">آیت بک مارک کی گئی</string>
@@ -322,7 +322,7 @@
     <string name="lastCrashLog">آخری کریش لاگ</string>
     <string name="translationCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کیے گئے ترجمے خالی کیے جا سکتے ہیں۔</string>
     <string name="createIssue">مسئلہ بنائیں</string>
-    <string name="pasteCrashLogGithubIssue">کریش لاگ کو کلپ بورڈ پر کاپی کر دیا گیا ہے۔ براہ کرم اسے گٹ ہب کے مسئلے میں چسپاں کریں۔</string>
+    <string name="pasteCrashLogGithubIssue">لاگ کو کلپ بورڈ پر کاپی کر دیا گیا ہے۔ براہ کرم اسے گٹ ہب کے مسئلے میں چسپاں کریں۔</string>
     <string name="titleStorageCleanup">اسٹوریج کی صفائی</string>
     <string name="storageCleanupMessage">غیر استعمال شدہ ڈاؤن لوڈ کردہ وسائل کو حذف کرکے جگہ خالی کریں۔ اس سے کوئی بک مارکس یا سیٹنگز حذف نہیں ہوں گی۔
 \n
@@ -353,7 +353,7 @@
     <string name="msgChapterInfoCleanup">تمام معلومات سوره محفوظ شدہ حذف کردی جائیں گی۔</string>
     <string name="nFiles" formatted="false">%d فائل</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
-    <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔</string>
+    <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔انفرادی طور پر سورہ کی تلاوت کو حذف کرنے کے لیے، \"آڈیو کا انتظام\" کی ترتیبات پر جائیں۔</string>
     <string name="msgScriptCleanup" formatted="false">%s اسکرپٹ اور اس کے تمام ذخیرہ شدہ فونٹس کو حذف کر دیا جائے گا۔ انہیں استعمال کرنے کے لیے آپ کو دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
     <string name="inPlaces">%s میں</string>
     <string name="inPlacesMore">%1$s اور %2$d مزید میں</string>
@@ -367,4 +367,36 @@
     <string name="titleTafsirCleanup">تفسیر کو حذف کریں؟</string>
     <string name="msgTafsirCleanup" formatted="false">%s کے تمام ذخیرہ شدہ تفسیر کو حذف کر دیا جائے گا۔</string>
     <string name="strMsgTafsirsNoAvailable">کوئی تفسیر دستیاب نہیں</string>
+    <string name="labelAdd">شامل کریں</string>
+    <string name="msgAddedToFavourites">پسندیدہ میں شامل کیا گیا</string>
+    <string name="msgChapterAddedToFavourites">سورہ کو پسندیدہ میں شامل کیا گیا۔</string>
+    <string name="msgChapterRemovedFromFavourites">سورہ کو پسندیدہ سے ہٹا دیا گیا۔</string>
+    <string name="titleReaderTextSizeTafsir">تفسیر متن کا سائز</string>
+    <string name="titleManageAudio">آڈیو کا انتظام کریں</string>
+    <string name="downloadRecitations">تلاوت ڈاؤن لوڈ کریں</string>
+    <string name="titleOtherSettings">دیگر ترتیبات</string>
+    <string name="textDownloaded">ڈاؤن لوڈ کیا گیا</string>
+    <string name="crashLogs">کریش لاگز</string>
+    <string name="appLogs">ایپ لاگز</string>
+    <string name="suppressedLogs">دبائے گئے لاگز</string>
+    <string name="msgNoFavouriteChapters">یہاں دیکھنے کے لیے پسندیدہ میں ایک سورہ شامل کریں۔</string>
+    <string name="textTranslationReciterInfo">زبان: %1$s
+\nکتاب: %2$s</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" ڈاؤن لوڈ کرنے میں ناکام۔</string>
+    <string name="msgRecitaionDownloaded" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" ڈاؤن لوڈ کیا گیا۔</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" کی تمام تلاوتیں حذف کر دی جائیں گی۔</string>
+    <string name="textNoLogsFound">کوئی لاگ نہیں ملے</string>
+    <string name="noItems">کوئی آئٹمز نہیں</string>
+    <string name="labelArabic">عربی</string>
+    <string name="labelTranslation">ترجمہ</string>
+    <string name="titleAddToFavourites">پسندیدہ میں شامل کریں</string>
+    <string name="titleRemoveFromFavourites">پسندیدہ سے ہٹا دیں</string>
+    <string name="msgRemovedFromFavourites">پسندیدہ سے ہٹا دیا گیا</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" کی تلاوت حذف کر دی گئی۔</string>
+    <string name="playbackSpeed">پلے بیک کی رفتار</string>
+    <string name="audioOnlyTranslation">صرف ترجمہ کی تلاوت کریں</string>
+    <string name="audioOption">آڈیو آپشن</string>
+    <string name="audioOnlyArabic">صرف عربی کی تلاوت کریں</string>
+    <string name="audioBothArabicTranslation">عربی اور ترجمہ دونوں کی تلاوت کریں</string>
+    <string name="logRemoved">لاگ ہٹا دیا گیا</string>
 </resources>
