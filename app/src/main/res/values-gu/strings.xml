@@ -108,4 +108,103 @@
     <string name="strLabelReading">વાંચન</string>
     <string name="strLabelOrder">ઓર્ડર</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d વધુ અનુવાદો</string>
+    <string name="strLabelCurrentVerse">વર્તમાન શ્લોક</string>
+    <string name="strLabelSelectTranslation">અનુવાદ પસંદ કરો</string>
+    <string name="strLabelWhatsappStyling">વોટ્સેપ સ્ટાઇલ</string>
+    <string name="strLabelIncludeArabic">અરબી શામેલ કરો</string>
+    <string name="strLabelLater">બાદમાં</string>
+    <string name="strHintSearch">શોધો</string>
+    <string name="strHintSearchQuran">એક શબ્દ લખો દા.ત., \"જીવન\"</string>
+    <string name="strHintSearchTopic">વિષય શોધો</string>
+    <string name="strHintSearchChapter">સૂરા શોધો</string>
+    <string name="strHintSearchVerse">શ્લોક શોધો</string>
+    <string name="strHintSearchJuz">જુઝ શોધો</string>
+    <string name="strHintSearchReciter">વાંચનાર શોધો</string>
+    <string name="strHintSearchScript">સ્ક્રિપ્ટ શોધો</string>
+    <string name="strHintSearchLanguage">ભાષા શોધો</string>
+    <string name="strHintToVerse">શ્લોક માટે</string>
+    <string name="strHintFeedback">તમારો પ્રતિભાવ અહીં લખો…</string>
+    <string name="strHintFeedbackEmail">ઈમેલ</string>
+    <string name="strHintFeedbackMessage">સંદેશ</string>
+    <string name="strMsgThemeDark">ડાર્ક મોડ પાવર વપરાશ ઘટાડે છે.</string>
+    <string name="strMsgThemeDefault">સિસ્ટમ સેટિંગ્સ અનુસાર ગોઠવો.</string>
+    <string name="strMsgVOTDOn">દરરોજ સવારે એક સૂચના મેળવો.</string>
+    <string name="strMsgYouAreReadingVerses">તમે પંક્તિઓ વાંચી રહ્યા છો:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d એ માન્ય સૂરા નંબર નથી.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d એ સુરા નંબર %2$d માટે માન્ય શ્લોક નંબર નથી</string>
+    <string name="strMsgInvalidVersesRange">માન્ય શ્લોક શ્રેણી નથી</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d એ સુરા નંબર %3$d માટે માન્ય શ્લોક શ્રેણી નથી</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d માન્ય જુઝ (પેરા) નંબર નથી.</string>
+    <string name="strMsgBookmarkAdded">શ્લોક સફળતાપૂર્વક બુકમાર્ક્સમાં ઉમેરવામાં આવ્યો</string>
+    <string name="strMsgBookmarkAddFailed">શ્લોક બુકમાર્ક્સમાં ઉમેરવામાં નિષ્ફળ ગયો</string>
+    <string name="strMsgBookmarkAddedAlready">શ્લોક પહેલેથી બુકમાર્ક્સમાં ઉમેરવામાં આવ્યો છે</string>
+    <string name="strMsgBookmarkRemoved">બુકમાર્ક્સમાંથી શ્લોક સફળતાપૂર્વક દૂર કરવામાં આવ્યો</string>
+    <string name="strMsgBookmarkRemoveFailed">શ્લોક બુકમાર્ક્સમાંથી દૂર કરવામાં નિષ્ફળ ગયો</string>
+    <string name="strMsgBookmarkRemovedAlready">શ્લોક બુકમાર્ક્સમાં નથી</string>
+    <string name="strMsgBookmarkNoItems">કોઈ બુકમાર્ક્સ નથી</string>
+    <string name="strMsgBookmarkDeleteSelected">પસંદ કરેલા બુકમાર્ક્સ કાઢી નાખવામાં આવશે.</string>
+    <string name="strMsgBookmarkDeleteAll">બધા બુકમાર્ક્સ દૂર કરવામાં આવશે.</string>
+    <string name="strMsgReadShowupHere">તમારો વાંચવાનો ઇતિહાસ અહીં દેખાશે.</string>
+    <string name="strMsgReadHistoryRemovedAlready">વાંચવાનો ઇતિહાસ પહેલેથી જ કાઢી નાખવામાં આવ્યો છે.</string>
+    <string name="strMsgReadHistoryNoItems">વાંચનનો ઇતિહાસ નથી</string>
+    <string name="strMsgReadHistoryDeleteSelected">પસંદ કરેલ વાંચન ઇતિહાસ કાઢી નાખવામાં આવશે.</string>
+    <string name="strMsgReadHistoryDeleteAll">બધા વાંચેલા ઇતિહાસ દૂર કરવામાં આવશે.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">આજે %s વાગ્યે</string>
+    <string name="strMsgHistoryRemove">આ ઇતિહાસ કાઢી નાખીએ\?</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s માં કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો અથવા અન્ય અનુવાદમાં શોધો.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો.</string>
+    <string name="strMsgSearchWordPart">શબ્દ ભાગ માટે શોધો</string>
+    <string name="strMsgSearchArabic">અરબી લખાણમાં શોધો</string>
+    <string name="strMsgProphetsOrder">કાલક્રમિક ક્રમમાં પ્રબોધકો બતાવી રહ્યા છે</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d ની વચ્ચેની શ્રેણી દાખલ કરો</string>
+    <string name="titleTafsirCleanup">તફસીર કાઢી નાખીએ\?</string>
+    <string name="nFiles" formatted="false">%d ફાઇલો</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d સ્ક્રિપ્ટ અને %2$d ફોન્ટ</string>
+    <string name="nothingToCleanup">સાફ કરવા માટે કંઈ નથી.</string>
+    <string name="verseSyncOn">શ્લોક સમન્વય: ચાલુ</string>
+    <string name="verseSyncOff">શ્લોક સમન્વયન: બંધ</string>
+    <string name="onboardDescLanguage">તમારી ભાષામાં એપ્લિકેશનને વ્યક્તિગત કરો. તમે આને પછીથી હંમેશા બદલી શકો છો.</string>
+    <string name="onboardDescTheme">તમે આને પછીથી હંમેશા બદલી શકો છો.</string>
+    <string name="onboardDescReciter">તમે આને પછીથી હંમેશા બદલી શકો છો. તમે સેટિંગ્સમાં વધુ વાંચકો શોધી શકો છો.</string>
+    <string name="titleAddToFavourites">મનપસંદમાં ઉમેરો</string>
+    <string name="msgAddedToFavourites">મનપસંદમાં ઉમેર્યું</string>
+    <string name="titleRemoveFromFavourites">મનપસંદમાંથી દૂર કરો</string>
+    <string name="msgRemovedFromFavourites">મનપસંદમાંથી દૂર કર્યું</string>
+    <string name="strMsgBookmarkDate" formatted="false">%2$s પર %1$s</string>
+    <string name="strLabelVerseRange">શ્લોક શ્રેણી</string>
+    <string name="strLabelIncludeFootnotes">ફૂટનોટ્સ શામેલ કરો</string>
+    <string name="strLabelSelectTranslations">અનુવાદો પસંદ કરો</string>
+    <string name="strLabelIncludeTranslation">અનુવાદ શામેલ કરો</string>
+    <string name="strLabelQuickLinks">ઝડપી સંપર્ક</string>
+    <string name="strLabelIncludeReference">સંદર્ભ શામેલ કરો</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" માં વિષય શોધો</string>
+    <string name="strHintSearchProphet">પ્રોફેટ શોધો</string>
+    <string name="strHintSearchTranslation">અનુવાદ શોધો</string>
+    <string name="strHintBookmarkViewerNote">આ બુકમાર્ક પર વધારાની નોંધ અહીં લખો…</string>
+    <string name="strHintFromVerse">શ્લોકમાંથી</string>
+    <string name="strNotFound">મળી નથી</string>
+    <string name="strMsgReadHistoryRemoved">વાંચો ઇતિહાસ સફળતાપૂર્વક દૂર કર્યો.</string>
+    <string name="strTitleReadHistory">ઇતિહાસ વાંચો</string>
+    <string name="strMsgReadHistoryRemoveFailed">વાંચો ઇતિહાસ દૂર કરવામાં નિષ્ફળ.</string>
+    <string name="strMsgHistoryRemoved" formatted="false">ઇતિહાસમાંથી \"%s\" દૂર કર્યું</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s માં કુલ પરિણામો મળ્યા: %2$d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s માં માત્ર 1 પરિણામ મળ્યું</string>
+    <string name="strMsgSearchNoResultsFound">કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો અથવા અન્ય અનુવાદમાં શોધો.</string>
+    <string name="strMsgSearchWordPartExample">ઉદાહરણ માટે: \'માણસ\' માં \'માનવજાત\'</string>
+    <string name="strMsgResetReaderSettings">બધી સેટિંગ્સને ડિફોલ્ટ પર રીસેટ કરો.</string>
+    <string name="strMsgChangeLanguage">ભાષા પરિવર્તનને અસર કરવા માટે એપ્લિકેશનને ફરીથી શરૂ કરવામાં આવશે.</string>
+    <string name="titleScriptCleanup">સ્ક્રિપ્ટ કાઢી નાખીએ\?</string>
+    <string name="msgScriptCleanup" formatted="false">%s સ્ક્રિપ્ટ અને તેના બધા સંગ્રહિત ફોન્ટ્સ કાઢી નાખવામાં આવશે. તેનો ઉપયોગ કરવા માટે તમારે ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
+    <string name="titleChapterInfoCleanup">પ્રકરણની માહિતી સાફ કરીએ\?</string>
+    <string name="msgChapterInfoCleanup">સાચવેલ પ્રકરણની બધી માહિતી કાઢી નાખવામાં આવશે.</string>
+    <string name="msgTafsirCleanup" formatted="false">%s માંથી તમામ સંગ્રહિત તફસીર કાઢી નાખવામાં આવશે.</string>
+    <string name="onboardDescTranslations">તમે આને પછીથી હંમેશા બદલી શકો છો. તમે સેટિંગ્સમાંથી વધુ અનુવાદો ડાઉનલોડ કરી શકો છો.</string>
+    <string name="nItem" formatted="false">%d આઇટમ</string>
+    <string name="inPlacesMore">%1$s અને %2$d વધુ માં</string>
+    <string name="nItems" formatted="false">%d આઇટમ</string>
+    <string name="noItems">કોઈ આઇટમ નથી</string>
+    <string name="inPlaces">%s માં</string>
+    <string name="labelArabic">અરબી</string>
+    <string name="labelTranslation">અનુવાદ</string>
+    <string name="msgNoFavouriteChapters">અહીં જોવા માટે મનપસંદમાં એક પ્રકરણ ઉમેરો.</string>
 </resources>
