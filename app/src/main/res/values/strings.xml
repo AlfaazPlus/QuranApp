@@ -81,8 +81,8 @@
     <string name="strTitleAppUser">QuranApp user</string>
     <string name="strTitleHolyQuran">The Holy Quran</string>
     <string name="strTitleQuran">Quran</string>
-    <string name="strTitleMakki">Makki</string>
-    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMakki">Meccan</string>
+    <string name="strTitleMadani">Medinan</string>
     <string name="strTitleFootnote">Footnote</string>
     <string name="strTitleFootnotes">Footnotes</string>
     <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
@@ -227,7 +227,7 @@
     <string name="strMsgYouAreReadingVerses">You are reading verses:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d is not a valid Surah No.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d is not a valid Verse No. for Surah No. %2$d</string>
-    <string name="strMsgInvalidVersesRange">Not a valid verse range.</string>
+    <string name="strMsgInvalidVersesRange">Not a valid verse range</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d is not a valid verse range for Surah No. %3$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d is not a valid Juz (Para) No.</string>
     <string name="strMsgBookmarkAdded">Verse successfully added to bookmarks</string>
@@ -254,8 +254,7 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
-    <string
-        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
@@ -375,8 +374,7 @@
     <string name="inPlacesMore">in %1$s &amp; %2$d more</string>
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
     <string name="onboardDescTheme">You can always change this later.</string>
-    <string
-        name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
+    <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
@@ -387,15 +385,13 @@
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
     <string name="msgChapterAddedToFavourites">Surah added to favourites.</string>
     <string name="msgChapterRemovedFromFavourites">Surah removed from favourites.</string>
-
-    <string name="textTranslationReciterInfo">Language: %1$s\nBook: %2$s</string>
+    <string name="textTranslationReciterInfo">Language: %1$s
+\nBook: %2$s</string>
     <string name="textNoLogsFound">No logs found</string>
-
     <string name="msgRecitaionFailedToDownload" formatted="false">Failed to download \"%1$s\" for reciter \"%2$s\".</string>
     <string name="msgRecitaionDownloaded" formatted="false">Downloaded \"%1$s\" for reciter \"%2$s\".</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">All recitations of \"%1$s\" for reciter \"%2$s\" will be deleted.</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">Deleted recitations of \"%1$s\" for reciter \"%2$s\".</string>
-
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>

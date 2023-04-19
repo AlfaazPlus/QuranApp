@@ -190,7 +190,7 @@
     <string name="strMsgYouAreReadingVerses">Kamu sedang membaca ayat:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d tidak valid Surah No.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d tidak valid Ayat No. untuk Surah No. %2$d</string>
-    <string name="strMsgInvalidVersesRange">Rentang Ayat tidak valid.</string>
+    <string name="strMsgInvalidVersesRange">Rentang Ayat tidak valid</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d tidak valid Juz No.</string>
     <string name="strMsgBookmarkAdded">Ayat berhasil ditambahkan ke Bookmark</string>
     <string name="strMsgBookmarkAddFailed">Ayat gagal ditambahkan ke Bookmark</string>

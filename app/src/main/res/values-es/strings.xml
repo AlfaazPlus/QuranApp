@@ -60,7 +60,7 @@
     <string name="strLabelNoNextChapter">sin proximo capitulo</string>
     <string name="strLabelFullChapter">Leer capítulo completo</string>
     <string name="strLabelContinueChapter">Continuar capítulo</string>
-    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMakki">Mecana</string>
     <string name="strLabelPause">Pausa</string>
     <string name="strLabelBookmark">Marcador</string>
     <string name="strLabelBookmarked">Marcado</string>
@@ -142,7 +142,7 @@
     <string name="strHintBookmarkViewerNote">Escriba una nota adicional enel marcador de aquí…</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d es un Nro. de capitulo no valido.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d no es un numero de verso valido. Para el Capitulo Nro. %2$d</string>
-    <string name="strMsgInvalidVersesRange">No es un rango de verso válido.</string>
+    <string name="strMsgInvalidVersesRange">No es un rango de verso válido</string>
     <string name="strMsgReadShowupHere">Su historial de lectura aparecerá aquí.</string>
     <string name="strMsgReadHistoryRemoveFailed">No se pudo eliminar el historial de lectura.</string>
     <string name="strMsgEditShareLongTransl">La traducción es muy larga, puede no encajar correctamente.</string>
@@ -204,11 +204,9 @@
     <string name="strLabelIncludeTranslation">Incluir traducción</string>
     <string name="strHintSearchProphet">Buscar profeta</string>
     <string name="strHintFromVerse">Del verso</string>
-    <string name="strTitleMadani">Madani</string>
-    <string name="strTitleReaderChapters">Suras
-\n(Capítulos)</string>
-    <string name="strTitleReaderJuz">Parte/Juz\'
-\n(Para)</string>
+    <string name="strTitleMadani">Medinesa</string>
+    <string name="strTitleReaderChapters">Suras (Capítulos)</string>
+    <string name="strTitleReaderJuz">Parte/Juz\' (Para)</string>
     <string name="strHintSearchJuz">Buscar juz</string>
     <string name="strHintToVerse">Al verso</string>
     <string name="strNotFound">No encontrado</string>

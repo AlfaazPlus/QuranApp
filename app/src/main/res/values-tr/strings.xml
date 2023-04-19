@@ -195,7 +195,7 @@
     <string name="strMsgYouAreReadingVerses">Şu ayetleri okuyorsunuz:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d geçerli bir Sure numarası değil.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d numaralı Ayet, %2$d numaralı Sure için geçersiz</string>
-    <string name="strMsgInvalidVersesRange">Geçersiz ayet aralığı.</string>
+    <string name="strMsgInvalidVersesRange">Geçersiz ayet aralığı</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d geçerli bir Cüz numarası değil.</string>
     <string name="strMsgBookmarkRemoveFailed">Ayet, yer imlerinden kaldırılamadı</string>
     <string name="strMsgBookmarkRemovedAlready">Ayet, yer imlerinde değil</string>
