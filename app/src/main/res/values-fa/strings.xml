@@ -336,7 +336,7 @@
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">اسکریپت: %s (~1 مگابایت)</string>
     <string name="msgDownloadFailed">دانلود ناموفق بود</string>
     <string name="textPercentage" formatted="false">‭%d%%</string>
-    <string name="pasteCrashLogGithubIssue">گزارش خرابی در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
+    <string name="pasteCrashLogGithubIssue">گزارش در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
     <string name="strMsgTafsirsNoAvailable">تفسیری وجود ندارد</string>
     <string name="msgDownloadingScript">دانلود اسکریپت</string>
     <string name="labelBackgroundDownload">دانلود پس زمینه</string>
@@ -347,7 +347,7 @@
 \nمنابع زیر را می توان آزاد کرد:</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d فایل تلاوت ذخیره شده از %2$d تلاوت کننده را می توان آزاد کرد.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d تفسیر ذخیره شده قابل پاکسازی است.</string>
-    <string name="msgRecitationCleanup" formatted="false">تمام تلاوت ذخیره شده از %s حذف خواهد شد.</string>
+    <string name="msgRecitationCleanup" formatted="false">تمام تلاوت ذخیره شده از %s حذف خواهد شد. برای حذف تک تک تلاوت های سوره به قسمت مدیریت تنظیمات صدا بروید.</string>
     <string name="nItems" formatted="false">%d موارد</string>
     <string name="nItem" formatted="false">%d مورد</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکریپت و %2$d قلم</string>
@@ -367,4 +367,36 @@
     <string name="nothingToCleanup">چیزی برای تمیز کردن وجود ندارد.</string>
     <string name="titleScriptCleanup">اسکریپت حذف شود؟</string>
     <string name="msgScriptCleanup" formatted="false">اسکریپت %s و تمام فونت های ذخیره شده آن حذف خواهند شد. برای استفاده از آنها باید دوباره دانلود کنید.</string>
+    <string name="labelAdd">افزودن</string>
+    <string name="msgAddedToFavourites">به علاقه مندی ها افزوده شد</string>
+    <string name="titleAddToFavourites">افزودن به علاقه مندی ها</string>
+    <string name="msgRemovedFromFavourites">از علاقه مندی ها حذف شد</string>
+    <string name="msgChapterAddedToFavourites">سوره به علاقه مندی ها افزوده شد.</string>
+    <string name="msgChapterRemovedFromFavourites">سوره از علاقه مندی ها حذف شد.</string>
+    <string name="textTranslationReciterInfo">زبان: %1$s
+\nکتاب: %2$s</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">تلاوت‌های «%1$s» برای قاری «%2$s» حذف شد.</string>
+    <string name="labelTranslation">ترجمه</string>
+    <string name="msgNoFavouriteChapters">یک فصل را به موارد دلخواه اضافه کنید تا اینجا ببینید.</string>
+    <string name="titleRemoveFromFavourites">حذف از علاقه مندی ها</string>
+    <string name="textNoLogsFound">گزارشی یافت نشد</string>
+    <string name="titleManageAudio">مدیریت صدا</string>
+    <string name="playbackSpeed">سرعت بازپخش</string>
+    <string name="audioOnlyTranslation">فقط پخش ترجمه</string>
+    <string name="noItems">موردی نیست</string>
+    <string name="titleReaderTextSizeTafsir">اندازه متن تفسیر</string>
+    <string name="downloadRecitations">دانلود تلاوت ها</string>
+    <string name="titleOtherSettings">تنظیمات دیگر</string>
+    <string name="appLogs">گزارش های برنامه</string>
+    <string name="suppressedLogs">لاگ های سرکوب شده</string>
+    <string name="audioOption">گزینه صوتی</string>
+    <string name="audioOnlyArabic">فقط پخش عربی</string>
+    <string name="audioBothArabicTranslation">پخش هم عربی و هم ترجمه</string>
+    <string name="textDownloaded">دانلود شد</string>
+    <string name="crashLogs">گزارش های خرابی</string>
+    <string name="logRemoved">گزارش حذف شد</string>
+    <string name="labelArabic">عربی</string>
+    <string name="msgRecitaionDownloaded" formatted="false">\"%1$s\" برای تلاوت \"%2$s\" بارگیری شد.</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">همه تلاوت‌های \"%1$s\" برای قاری \"%2$s\" حذف خواهد شد.</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">دانلود \"%1$s\" برای تلاوت کننده \"%2$s\" انجام نشد.</string>
 </resources>
