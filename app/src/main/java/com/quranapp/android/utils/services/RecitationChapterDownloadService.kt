@@ -9,13 +9,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.Build
-import android.util.SparseArray
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import androidx.core.util.forEach
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.components.recitation.ManageAudioChapterModel
@@ -33,7 +31,13 @@ import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver.Co
 import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver.Companion.RECITATION_DOWNLOAD_STATUS_PROGRESS
 import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver.Companion.RECITATION_DOWNLOAD_STATUS_SUCCEED
 import com.quranapp.android.utils.univ.FileUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URL
 
@@ -116,7 +120,7 @@ class RecitationChapterDownloadService : Service() {
         val verseCount = chapterModel.chapterMeta.verseCount
 
         CoroutineScope(Dispatchers.Main + job).launch {
-            val filesInProgress = SparseArray<File>()
+            val filesInProgress = HashMap<String, File>()
 
             try {
                 var downloadedCount = 0
@@ -124,28 +128,31 @@ class RecitationChapterDownloadService : Service() {
 
                 for (verseNo in 1..verseCount) {
                     subJobs.add(launch {
-                        download(chapterModel, verseNo, filesInProgress)
-                        downloadedCount++
+                        try {
+                            download(chapterModel, verseNo, filesInProgress)
+                            downloadedCount++
 
-                        val progress = downloadedCount * 100 / verseCount
+                            val progress = downloadedCount * 100 / verseCount
 
-                        downloadProgress[key] = progress
+                            downloadProgress[key] = progress
 
-                        notifBuilder.setProgress(100, progress, false)
-                        notifBuilder.setSubText("$progress%")
+                            notifBuilder.setProgress(100, progress, false)
+                            notifBuilder.setSubText("$progress%")
 
-                        notify(notifId, notifBuilder.build())
-                        sendStatusBroadcast(chapterModel, RECITATION_DOWNLOAD_STATUS_PROGRESS, progress)
+                            notify(notifId, notifBuilder.build())
+                            sendStatusBroadcast(chapterModel, RECITATION_DOWNLOAD_STATUS_PROGRESS, progress)
+                        } catch (e: Exception) {
+                            job.cancel(CancellationException("failure", e))
+                        }
                     })
                 }
-
 
                 subJobs.joinAll()
                 sendStatusBroadcast(chapterModel, RECITATION_DOWNLOAD_STATUS_SUCCEED, -1)
             } catch (e: Exception) {
-                filesInProgress.forEach { _, file -> file.delete() }
+                filesInProgress.values.forEach { file -> file.delete() }
 
-                if (e !is CancellationException) {
+                if (e !is CancellationException || e.message == "failure") {
                     Log.saveError(e, "RecitationChapterDownload")
                     sendStatusBroadcast(chapterModel, RECITATION_DOWNLOAD_STATUS_FAILED, -1)
                 }
@@ -159,23 +166,17 @@ class RecitationChapterDownloadService : Service() {
     private suspend fun download(
         chapterModel: ManageAudioChapterModel,
         verseNo: Int,
-        filesInProgress: SparseArray<File>
+        filesInProgress: HashMap<String, File>
     ) {
         val chapterNo = chapterModel.chapterMeta.chapterNo
 
-        val verseFile = fileUtils?.getRecitationAudioFile(
-            chapterModel.reciterModel.slug,
-            chapterNo,
-            verseNo
-        ) ?: return
+        val verseFile = fileUtils?.getRecitationAudioFile(chapterModel.reciterModel.slug, chapterNo, verseNo) ?: return
 
         if (verseFile.length() > 0 || fileUtils?.createFile(verseFile) != true) return
 
-        filesInProgress.put(verseNo, verseFile)
+        filesInProgress["$chapterNo:$verseNo"] = verseFile
 
-        val audioUrl = RecitationUtils.prepareRecitationAudioUrl(
-            chapterModel.reciterModel, chapterNo, verseNo
-        ) ?: return
+        val audioUrl = RecitationUtils.prepareRecitationAudioUrl(chapterModel.reciterModel, chapterNo, verseNo) ?: return
 
         withContext(Dispatchers.IO) {
             val inputStream = URL(audioUrl).openStream()
@@ -187,6 +188,9 @@ class RecitationChapterDownloadService : Service() {
                     while (input.read(buffer).also { read = it } != -1) {
                         output.write(buffer, 0, read)
                     }
+                    output.flush()
+
+                    filesInProgress.remove("$chapterNo:$verseNo")
                 }
             }
         }
@@ -298,7 +302,7 @@ class RecitationChapterDownloadService : Service() {
         removeJob(key, key.hashCode())
     }
 
-    private fun removeJob(key: String, notifId: Int){
+    private fun removeJob(key: String, notifId: Int) {
         jobs.remove(key)
         notifManager?.cancel(notifId)
         downloadProgress.remove(key)

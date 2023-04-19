@@ -571,12 +571,15 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
-            prepareTitle(
-                mRecitationExplorerBinding,
-                R.string.strTitleSelectReciter,
-                RecitationManager.getCurrentReciterNameForAudioOption(ctx)
-            );
+            RecitationManager.prepareTranslations(ctx, false, () -> {
+                prepareTitle(
+                    mRecitationExplorerBinding,
+                    R.string.strTitleSelectReciter,
+                    RecitationManager.getCurrentReciterNameForAudioOption(ctx)
+                );
 
+                return Unit.INSTANCE;
+            });
             return Unit.INSTANCE;
         });
     }
