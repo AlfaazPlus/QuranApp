@@ -26,6 +26,7 @@ object Log {
         return file.readText()
     }
 
+    @JvmStatic
     fun saveCrash(ctx: Context, e: Throwable?) {
         if (e == null) return
 
@@ -49,6 +50,7 @@ object Log {
 
     }
 
+    @JvmStatic
     fun saveError(e: Throwable?, place: String) {
         if (e == null) return
 

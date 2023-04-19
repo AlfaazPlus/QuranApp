@@ -93,20 +93,13 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
 
     private void initContent(Intent intent) {
         int DEFAULT_CHAPTER_INFO = -1;
-        int chapterNo = -1;
+        final int chapterNo;
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             try {
-                Uri data = intent.getData();
-                List<String> pathSegments = data.getPathSegments();
-                chapterNo = Integer.parseInt(pathSegments.get(1));
-
-                String lang = data.getQueryParameter("language");
-                if (lang == null) {
-                    lang = data.getQueryParameter("lang");
-                }
-                mLanguage = lang;
+                chapterNo = validateIntent(intent);
             } catch (Exception ignored) {
                 invalidParams();
+                return;
             }
         } else {
             chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, DEFAULT_CHAPTER_INFO);
@@ -126,6 +119,27 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
 
         initWebView();
         loadContent();
+    }
+
+    private int validateIntent(Intent intent) {
+        Uri url = intent.getData();
+        if (url.getHost().equalsIgnoreCase("quran.com")) {
+            List<String> pathSegments = url.getPathSegments();
+            String lang = url.getQueryParameter("language");
+
+            if (lang == null) {
+                lang = url.getQueryParameter("lang");
+            }
+
+            mLanguage = lang;
+
+            return Integer.parseInt(pathSegments.get(1));
+        } else if (url.getHost().equalsIgnoreCase("quranapp:chapter_info")) {
+            mLanguage = intent.getStringExtra("language");
+            return intent.getIntExtra("chapterNo", -1);
+        } else {
+            throw new IllegalArgumentException("Invalid params");
+        }
     }
 
     private void initThis() {

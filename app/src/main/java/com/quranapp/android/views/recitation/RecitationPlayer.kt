@@ -46,10 +46,16 @@ class RecitationPlayer(
         initControls()
     }
 
-    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, preventStop: Boolean) {
+    fun onChapterChanged(
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int,
+        currentVerse: Int,
+        preventStop: Boolean
+    ) {
         readerChanging = true
 
-        service?.onChapterChanged(chapterNo, fromVerse, toVerse)
+        service?.onChapterChanged(chapterNo, fromVerse, toVerse, currentVerse)
 
         onReaderChanged(preventStop)
 

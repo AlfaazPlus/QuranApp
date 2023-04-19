@@ -196,7 +196,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
     }
 
     private fun initContent(intent: Intent) {
-        var key = SPReader.getSavedTafsirKey(this)
+        var key = intent.getStringExtra("tafsirKey") ?: SPReader.getSavedTafsirKey(this)
         val chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, -1)
         val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, -1)
 

@@ -31,7 +31,10 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
+import com.quranapp.android.utils.Log;
+import com.quranapp.android.utils.quran.parser.ParserUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
@@ -147,8 +150,19 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void init(Intent intent) {
-        ReferenceVerseModel refModel = (ReferenceVerseModel) intent.getSerializableExtra(
-            Keys.KEY_REFERENCE_VERSE_MODEL);
+        ReferenceVerseModel refModel;
+
+        try {
+            refModel = validateIntent(intent);
+        } catch (Exception e) {
+            Log.saveError(e, "ActivityReference");
+            return;
+        }
+
+        if (refModel == null) {
+            refModel = (ReferenceVerseModel) intent.getSerializableExtra(Keys.KEY_REFERENCE_VERSE_MODEL);
+        }
+
         if (refModel == null) {
             return;
         }
@@ -171,14 +185,22 @@ public class ActivityReference extends ReaderPossessingActivity {
             mSelectedTranslSlugs = TranslUtils.defaultTranslationSlugs();
         }
 
-        /*QuranTransl.prepareInstance(this, mSelectedTranslSlugs, quranTransl -> {
-            setVisibleTranslSlugs(mSelectedTranslSlugs);
-            setQuranTransl(quranTransl, true);
-
-            initContent(refModel);
-        });*/
-
         initContent(refModel);
+    }
+
+    private ReferenceVerseModel validateIntent(Intent intent) {
+        if (!intent.getData().getHost().equalsIgnoreCase("quranapp:reference")) {
+            return null;
+        }
+
+        final String title = intent.getStringExtra("title");
+        final String desc = intent.getStringExtra("description");
+        final String[] translSlugs = intent.getStringArrayExtra("translations");
+        final boolean showChapterSugg = intent.getBooleanExtra("showChapterSuggestions", true);
+        final List<String> verses = ParserUtils.prepareVersesList(intent.getStringExtra("verses"), true);
+        final List<Integer> chapters = ParserUtils.prepareChaptersList(verses);
+
+        return new ReferenceVerseModel(showChapterSugg, title, desc, translSlugs, chapters, verses);
     }
 
     private void initContent(ReferenceVerseModel refModel) {
