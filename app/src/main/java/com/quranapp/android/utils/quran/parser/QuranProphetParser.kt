@@ -8,6 +8,7 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranProphet
 import com.quranapp.android.components.quran.QuranProphet.Prophet
 import com.quranapp.android.components.quran.QuranProphet.ProphetReference
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareVersesList
@@ -40,7 +41,7 @@ object QuranProphetParser {
 
                 instanceRef.set(parsedQuranProphets)
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.saveError(e, "QuranProphetParser.parseProphet")
             }
 
             withContext(Dispatchers.Main) { callback() }
