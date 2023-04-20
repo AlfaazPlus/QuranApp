@@ -127,9 +127,11 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
     }
 
     private int validateIntent(Intent intent) {
-        Logger.d(intent.getAction(), intent.getExtras());
         Uri url = intent.getData();
-        if (url.getHost().equalsIgnoreCase("quran.com")) {
+        if ("com.quranapp.android.action.OPEN_CHAPTER_INFO".equalsIgnoreCase(intent.getAction())) {
+            mLanguage = intent.getStringExtra("language");
+            return intent.getIntExtra("chapterNo", -1);
+        } else if (url.getHost().equalsIgnoreCase("quran.com")) {
             List<String> pathSegments = url.getPathSegments();
             String lang = url.getQueryParameter("language");
 
@@ -140,11 +142,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
             mLanguage = lang;
 
             return Integer.parseInt(pathSegments.get(1));
-        } else if ("com.quranapp.android.action.OPEN_CHAPTER_INFO".equalsIgnoreCase(intent.getAction())) {
-            mLanguage = intent.getStringExtra("language");
-            return intent.getIntExtra("chapterNo", -1);
         } else {
-            Logger.d("Invalid");
             throw new IllegalArgumentException("Invalid params");
         }
     }
