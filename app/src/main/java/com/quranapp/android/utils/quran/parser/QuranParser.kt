@@ -6,6 +6,7 @@ import com.quranapp.android.components.quran.Quran
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptResPath
 import com.quranapp.android.utils.reader.isKFQPCScript
@@ -38,7 +39,7 @@ class QuranParser(private val ctx: Context) {
             try {
                 initQuranParse(scriptKey, quranMeta, quranRef)
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.saveError(e, "QuranParser.parse")
             }
 
             withContext(Dispatchers.Main) {
