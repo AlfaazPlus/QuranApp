@@ -150,13 +150,12 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void init(Intent intent) {
-        ReferenceVerseModel refModel;
+        ReferenceVerseModel refModel = null;
 
         try {
             refModel = validateIntent(intent);
         } catch (Exception e) {
-            Log.saveError(e, "ActivityReference");
-            return;
+            e.printStackTrace();
         }
 
         if (refModel == null) {
