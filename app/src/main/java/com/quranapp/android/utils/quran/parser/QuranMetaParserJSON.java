@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.SparseArray;
 
 import com.quranapp.android.components.quran.QuranMeta;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.univ.RegexPattern;
 import com.quranapp.android.utils.univ.StringUtils;
 
@@ -48,7 +49,7 @@ public final class QuranMetaParserJSON {
             try {
                 initMetaParse(ctx, quranMetaRef);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.saveError(e, "QuranMetaParserJSON.parseMeta");
             }
 
             new Handler(Looper.getMainLooper()).post(postRunnable);
