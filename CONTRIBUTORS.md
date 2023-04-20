@@ -10,6 +10,7 @@
 - Kurdish (ckb) - [Goran Gharib](https://facebook.com/goran90909)
 - French (fr) - Sanya Gautam
 - German (de) - [Mylinde](https://github.com/Mylinde)
+- Gujarati (gu) - [Faiz Anwer](https://github.com/TheAnwerFaiz)
 - Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
 - Indonesian (id) - [rraven](https://instagram.com/r4ravv) and [friczky](https://github.com/friczky)
 - Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)

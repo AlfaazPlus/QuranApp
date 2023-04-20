@@ -348,7 +348,7 @@
 \nVous devrez le retélécharger.</string>
     <string name="titleScriptCleanup">Supprimer le type d\'écriture \?</string>
     <string name="msgScriptCleanup" formatted="false">Le type d\'écriture %s et toutes ses polices d\'écriture sauvegardées seront supprimées. Vous devrez les retéléchargez pour les utiliser à nouveau.</string>
-    <string name="msgRecitationCleanup" formatted="false">Toute la récitation sauvegardée de %s sera supprimée.</string>
+    <string name="msgRecitationCleanup" formatted="false">Toutes les récitations sauvegardées de %s seront supprimées. Pour les supprimer individuellement par sourate, accédez aux options de gestion audio.</string>
     <string name="titleRecitationCleanup">Supprimer la récitation \?</string>
     <string name="msgChapterInfoCleanup">Toute l\'info de chapitre sera effacée.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d types d\'écriture et %2$d polices d\'écriture</string>
@@ -367,4 +367,36 @@
     <string name="noFootnotesForThisVerse">Il n\'y a pas de notes de bas de page pour ce verset.</string>
     <string name="onboardDescTranslations">Tu pourras changer ça plus tard. Tu peux télécharger plus de traductions dans les paramètres.</string>
     <string name="onboardDescReciter">Tu pourras changer ça plus tard. Tu peux trouver plus de récitateurs dans les paramètres.</string>
+    <string name="labelAdd">Ajouter</string>
+    <string name="titleReaderTextSizeTafsir">Taille de la police du tafsir</string>
+    <string name="textDownloaded">Téléchargé</string>
+    <string name="msgAddedToFavourites">Ajouté aux favoris</string>
+    <string name="titleRemoveFromFavourites">Supprimer des favoris</string>
+    <string name="msgRemovedFromFavourites">Supprimé des favoris</string>
+    <string name="msgNoFavouriteChapters">Ajouter un chapitre aux favoris pour le voir ici.</string>
+    <string name="msgChapterAddedToFavourites">Sourate ajoutée aux favoris.</string>
+    <string name="msgChapterRemovedFromFavourites">Sourate supprimée des favoris.</string>
+    <string name="textTranslationReciterInfo">Langue : %1$s
+\nLivre : %2$s</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Toutes les récitations de « %1$s » du récitateur « %2$s » seront supprimées.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Récitations de « %1$s » du récitateur « %2$s » supprimées.</string>
+    <string name="labelArabic">Arabe</string>
+    <string name="noItems">Aucun élément</string>
+    <string name="labelTranslation">Traduction</string>
+    <string name="titleAddToFavourites">Ajouter aux favoris</string>
+    <string name="titleManageAudio">Gérer l\'audio</string>
+    <string name="textNoLogsFound">Aucun journal trouvé</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Échec du téléchargement de \"%1$s\" pour le récitateur \"%2$s\".</string>
+    <string name="playbackSpeed">Vitesse de lecture</string>
+    <string name="audioOnlyTranslation">Lire la traduction uniquement</string>
+    <string name="downloadRecitations">Télécharger des récitations</string>
+    <string name="titleOtherSettings">Autres paramètres</string>
+    <string name="appLogs">Journaux de l\'application</string>
+    <string name="suppressedLogs">Journaux supprimés</string>
+    <string name="audioOption">Options du son</string>
+    <string name="audioOnlyArabic">Lire en arabe uniquement</string>
+    <string name="audioBothArabicTranslation">Lire l\'arabe et la traduction</string>
+    <string name="crashLogs">Journaux de plantage</string>
+    <string name="logRemoved">Journal supprimé</string>
+    <string name="msgRecitaionDownloaded" formatted="false">« %1$s » téléchargée du récitateur « %2$s ».</string>
 </resources>

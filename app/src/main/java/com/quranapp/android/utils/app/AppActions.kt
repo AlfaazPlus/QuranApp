@@ -99,9 +99,14 @@ object AppActions {
 
     @JvmStatic
     fun checkForCrashLogs(ctx: Context) {
-        val lastCrashLog = Log.getLastCrashLog(ctx)
+        var lastCrashLog = Log.getLastCrashLog(ctx)
 
         if (lastCrashLog.isNullOrEmpty()) return
+
+        val length = lastCrashLog.length
+        if (length > 300) {
+            lastCrashLog = lastCrashLog.substring(0, 300) + "... ${length - 300} more chars"
+        }
 
         PeaceDialog.newBuilder(ctx)
             .setTitle(R.string.lastCrashLog)

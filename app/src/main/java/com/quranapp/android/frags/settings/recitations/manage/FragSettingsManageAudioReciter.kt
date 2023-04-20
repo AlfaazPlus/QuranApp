@@ -1,7 +1,11 @@
 package com.quranapp.android.frags.settings.recitations.manage
 
 import android.app.Activity
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
@@ -21,9 +25,9 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.recitation.ManageAudioChapterModel
 import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.serializableExtra
+import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver
 import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver.Companion.RECITATION_DOWNLOAD_STATUS_CANCELED
 import com.quranapp.android.utils.receivers.RecitationChapterDownloadReceiver.Companion.RECITATION_DOWNLOAD_STATUS_FAILED
@@ -163,7 +167,7 @@ class FragSettingsManageAudioReciter :
                         prepareTitle(ctx)
                     }
                 }.toList())
-                Log.d("HERE")
+
                 resetAdapter(models)
                 progressDialog.dismiss()
             }
@@ -223,6 +227,7 @@ class FragSettingsManageAudioReciter :
                     chapterModel.chapterMeta.chapterNo
                 )
             }
+
             RECITATION_DOWNLOAD_STATUS_FAILED -> {
                 title = ctx.getString(R.string.strTitleFailed)
                 msg = "${
@@ -233,6 +238,7 @@ class FragSettingsManageAudioReciter :
                     )
                 } ${ctx.getString(R.string.strMsgTryLater)}"
             }
+
             RECITATION_DOWNLOAD_STATUS_SUCCEED -> {
                 title = ctx.getString(R.string.strTitleSuccess)
                 msg = ctx.getString(
@@ -281,6 +287,8 @@ class FragSettingsManageAudioReciter :
 
     fun initDownload(model: ManageAudioChapterModel, position: Int) {
         if (adapter == null || activity == null) return
+
+        if (NetworkStateReceiver.canProceed(requireActivity()).not()) return
 
         model.downloading = true
         model.prepareTitle(recyclerView.context)
