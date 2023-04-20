@@ -22,14 +22,10 @@ import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.univ.FileUtils
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -197,8 +193,9 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
     }
 
     private fun getSkipPartNumber(fontsDir: File): Int {
+        val totalPages = QuranMeta.totalPages()
         var totalDownloaded = 0
-        for (pageNo in 1..QuranMeta.totalPages()) {
+        for (pageNo in 1..totalPages) {
             if (File(fontsDir, pageNo.toKFQPCFontFilename()).length() == 0L) {
                 break
             }
@@ -206,36 +203,39 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
             totalDownloaded++
         }
 
-        val fontsInSingleZip = 200
-
+        val fontsInSingleZip = totalPages / QuranScriptUtils.TOTAL_DOWNLOAD_PARTS
         return (totalDownloaded / fontsInSingleZip) + 1
     }
 
-    private suspend fun downloadFontsPart(flow: FlowCollector<DownloadFlow>, scriptKey: String, partNo: Int, fontsDir: File) {
-        val partFilename = "$scriptKey-$partNo.zip"
-        val partFile = File.createTempFile("tmp", partFilename, filesDir)
-        tmpFiles.add(partFile)
+    private suspend fun downloadFontsPart(
+        flow: FlowCollector<DownloadFlow>,
+        scriptKey: String,
+        partNo: Int,
+        fontsDir: File
+    ) {
+        withContext(Dispatchers.IO) {
+            val partFilename = "$scriptKey-$partNo.zip"
+            val partFile = File.createTempFile("tmp", partFilename, filesDir)
+            tmpFiles.add(partFile)
 
-        flow.emit(DownloadFlow.Start(partNo))
-        flow.emit(DownloadFlow.Progress(partNo, 0))
+            flow.emit(DownloadFlow.Start(partNo))
+            flow.emit(DownloadFlow.Progress(partNo, 0))
 
-        val byteStream = RetrofitInstance.github.getKFQPCFont(scriptKey, partFilename).byteStream()
+            val byteStream = RetrofitInstance.github.getKFQPCFont(scriptKey, partFilename).byteStream()
 
-        val totalBytes = withContext(Dispatchers.IO) {
-            byteStream.available()
+            val totalBytes = byteStream.available()
+
+            readStreams(
+                flow,
+                partNo,
+                byteStream,
+                partFile.outputStream(),
+                totalBytes
+            )
+
+            extractFonts(partFile, fontsDir)
+            flow.emit(DownloadFlow.Complete(partNo))
         }
-
-        readStreams(
-            flow,
-            partNo,
-            byteStream,
-            partFile.outputStream(),
-            totalBytes
-        )
-
-        extractFonts(partFile, fontsDir)
-
-        flow.emit(DownloadFlow.Complete(partNo))
     }
 
     private fun extractFonts(partFile: File, fontsDir: File) {
