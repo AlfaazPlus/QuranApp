@@ -188,7 +188,7 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private ReferenceVerseModel validateIntent(Intent intent) {
-        if (!intent.getData().getHost().equalsIgnoreCase("quranapp:reference")) {
+        if (!"com.quranapp.android.action.OPEN_REFERENCE".equalsIgnoreCase(intent.getAction())) {
             return null;
         }
 

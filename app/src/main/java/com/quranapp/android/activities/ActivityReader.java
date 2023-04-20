@@ -373,9 +373,9 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             if (url.getHost().equalsIgnoreCase("quran.com")) {
                 validateQuranComIntent(intent, url);
-            } else if (url.getHost().equalsIgnoreCase("quranapp:reader")) {
-                validateQuranAppIntent(intent);
             }
+        } else if ("com.quranapp.android.action.OPEN_READER".equalsIgnoreCase(intent.getAction())) {
+            validateQuranAppIntent(intent);
         }
 
         intent.setAction(null);
