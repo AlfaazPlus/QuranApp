@@ -9,6 +9,7 @@ import android.os.Looper;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.QuranTopic;
+import com.quranapp.android.utils.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,8 +39,8 @@ public final class QuranTopicParser {
                 XmlResourceParser parser = context.getResources().getXml(R.xml.quran_topics);
                 QuranTopic parsedQuranTopics = parseTopicInternal(context, parser, quranMeta);
                 quranTopicRef.set(parsedQuranTopics);
-            } catch (Resources.NotFoundException | XmlPullParserException | IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.saveError(e, "QuranTopicParser.parseTopics");
             }
 
             new Handler(Looper.getMainLooper()).post(postRunnable);

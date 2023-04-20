@@ -8,6 +8,7 @@ import android.os.Looper
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.Log
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference
 import org.xmlpull.v1.XmlPullParser
@@ -28,12 +29,8 @@ object QuranDuaParser {
                 val parser = context.resources.getXml(R.xml.quran_duas)
                 val parsedQuranTopics = parseDuaInternal(context, parser, quranMeta)
                 quranDuaRef.set(parsedQuranTopics)
-            } catch (e: NotFoundException) {
-                e.printStackTrace()
-            } catch (e: XmlPullParserException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
+            } catch (e: Exception) {
+                Log.saveError(e, "QuranDuaParser.parseDua")
             }
             Handler(Looper.getMainLooper()).post(postRunnable)
         }.start()
