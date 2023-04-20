@@ -136,11 +136,22 @@
         "downloadPath": "inventory/translations/fr/fr_rashid.json"
       }
     },
+    "gu": {
+      "gu_omari": {
+        "book": "રબીલા અલ-ઉમરી",
+        "author": "રબીલા અલ-ઉમરી",
+        "displayName": "રબીલા અલ-ઉમરી",
+        "langCode": "gu",
+        "langName": "ગુજરાતી",
+        "lastUpdated": 1681979248037,
+        "downloadPath": "inventory/translations/gu/gu_omari.json"
+      }
+    },
     "hi": {
       "hi_azizul-haque": {
-        "book": "मौलाना अजीजूल हक़ अल-उमरी",
-        "author": "Maulana Azizul Haque al-Umari",
-        "displayName": "अजीजूल हक़",
+        "book": "मौलाना अज़ीज़ुल हक़ अल-उमरी",
+        "author": "मौलाना अज़ीज़ुल हक़ अल-उमरी",
+        "displayName": "अज़ीज़ुल हक़",
         "langCode": "hi",
         "langName": "हिंदी",
         "lastUpdated": 1658517131580,
