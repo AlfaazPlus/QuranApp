@@ -1,5 +1,7 @@
 package com.quranapp.android.activities;
 
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_CHAPTER_INFO;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -97,7 +99,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
         String action = intent.getAction();
         if (
             Intent.ACTION_VIEW.equals(action)
-                || "com.quranapp.android.action.OPEN_CHAPTER_INFO".equalsIgnoreCase(action)
+                || INTENT_ACTION_OPEN_CHAPTER_INFO.equalsIgnoreCase(action)
         ) {
             try {
                 chapterNo = validateIntent(intent);
@@ -128,7 +130,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
 
     private int validateIntent(Intent intent) {
         Uri url = intent.getData();
-        if ("com.quranapp.android.action.OPEN_CHAPTER_INFO".equalsIgnoreCase(intent.getAction())) {
+        if (INTENT_ACTION_OPEN_CHAPTER_INFO.equalsIgnoreCase(intent.getAction())) {
             mLanguage = intent.getStringExtra("language");
             return intent.getIntExtra("chapterNo", -1);
         } else if (url.getHost().equalsIgnoreCase("quran.com")) {

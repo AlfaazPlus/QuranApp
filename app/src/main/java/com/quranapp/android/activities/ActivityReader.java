@@ -37,6 +37,7 @@ import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemView
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER;
 import static com.quranapp.android.utils.quran.QuranUtils.doesVerseRangeEqualWhole;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO;
@@ -374,7 +375,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             if (url.getHost().equalsIgnoreCase("quran.com")) {
                 validateQuranComIntent(intent, url);
             }
-        } else if ("com.quranapp.android.action.OPEN_READER".equalsIgnoreCase(intent.getAction())) {
+        } else if (INTENT_ACTION_OPEN_READER.equalsIgnoreCase(intent.getAction())) {
             validateQuranAppIntent(intent);
         }
 
