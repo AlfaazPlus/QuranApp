@@ -18,8 +18,8 @@ android {
         targetSdkVersion 33
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
-        versionCode 23_04_02_001
-        versionName "2023.04.02.1"
+        versionCode 23_04_21_001
+        versionName "2023.04.21.1"
 
         resValue "string", "app_name", "QuranApp"
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_REFERENCE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -31,7 +32,10 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
+import com.quranapp.android.utils.Log;
+import com.quranapp.android.utils.quran.parser.ParserUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
@@ -147,8 +151,18 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void init(Intent intent) {
-        ReferenceVerseModel refModel = (ReferenceVerseModel) intent.getSerializableExtra(
-            Keys.KEY_REFERENCE_VERSE_MODEL);
+        ReferenceVerseModel refModel = null;
+
+        try {
+            refModel = validateIntent(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (refModel == null) {
+            refModel = (ReferenceVerseModel) intent.getSerializableExtra(Keys.KEY_REFERENCE_VERSE_MODEL);
+        }
+
         if (refModel == null) {
             return;
         }
@@ -171,14 +185,22 @@ public class ActivityReference extends ReaderPossessingActivity {
             mSelectedTranslSlugs = TranslUtils.defaultTranslationSlugs();
         }
 
-        /*QuranTransl.prepareInstance(this, mSelectedTranslSlugs, quranTransl -> {
-            setVisibleTranslSlugs(mSelectedTranslSlugs);
-            setQuranTransl(quranTransl, true);
-
-            initContent(refModel);
-        });*/
-
         initContent(refModel);
+    }
+
+    private ReferenceVerseModel validateIntent(Intent intent) {
+        if (!INTENT_ACTION_OPEN_REFERENCE.equalsIgnoreCase(intent.getAction())) {
+            return null;
+        }
+
+        final String title = intent.getStringExtra("title");
+        final String desc = intent.getStringExtra("description");
+        final String[] translSlugs = intent.getStringArrayExtra("translations");
+        final boolean showChapterSugg = intent.getBooleanExtra("showChapterSuggestions", true);
+        final List<String> verses = ParserUtils.prepareVersesList(intent.getStringExtra("verses"), true);
+        final List<Integer> chapters = ParserUtils.prepareChaptersList(verses);
+
+        return new ReferenceVerseModel(showChapterSugg, title, desc, translSlugs, chapters, verses);
     }
 
     private void initContent(ReferenceVerseModel refModel) {

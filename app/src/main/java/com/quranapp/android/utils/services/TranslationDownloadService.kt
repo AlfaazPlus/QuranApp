@@ -22,6 +22,7 @@ import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.extensions.getContentLengthAndStream
 import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlin.io.path.deleteIfExists
 import kotlin.io.path.outputStream
 import kotlin.io.path.readText
 
@@ -119,19 +121,20 @@ class TranslationDownloadService : Service() {
     ) {
         CoroutineScope(Dispatchers.Main + jobs[bookInfo.slug]!!).launch {
             val notifId = bookInfo.slug.hashCode()
+            val tmpFile = kotlin.io.path.createTempFile(
+                prefix = bookInfo.slug,
+                suffix = ".json"
+            )
 
             flow {
                 emit(TranslationDownloadFlow.Start)
                 emit(TranslationDownloadFlow.Progress(0))
 
-                val responseBody = RetrofitInstance.github.getTranslation(bookInfo.downloadPath)
 
-                val byteStream = responseBody.byteStream().buffered()
-                val totalBytes = byteStream.available()
-                val tmpFile = kotlin.io.path.createTempFile(
-                    prefix = bookInfo.slug,
-                    suffix = ".json"
-                )
+                val (totalBytes, byteStream) = RetrofitInstance.github.getTranslation(
+                    bookInfo.downloadPath
+                ).getContentLengthAndStream()
+
 
                 byteStream.use { inS ->
                     tmpFile.outputStream().buffered().use { outS ->
@@ -146,7 +149,11 @@ class TranslationDownloadService : Service() {
                             outS.write(buffer, 0, bytes)
                             progressBytes += bytes
 
-                            emit(TranslationDownloadFlow.Progress(((progressBytes * 100) / totalBytes).toInt()))
+                            emit(
+                                TranslationDownloadFlow.Progress(
+                                    if (totalBytes > 0) ((progressBytes * 100) / totalBytes).toInt() else 0
+                                )
+                            )
                         }
 
                         outS.flush()
@@ -159,11 +166,9 @@ class TranslationDownloadService : Service() {
                     it.dbHelper.storeTranslation(bookInfo, tmpFile.readText())
                 }
 
-                val slug = bookInfo.slug
-
-                removeFromPendingAction(context, AppActions.APP_ACTION_TRANSL_UPDATE, slug)
+                removeFromPendingAction(context, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
                 val savedTranslations = SPReader.getSavedTranslations(context)
-                if (savedTranslations.remove(slug)) {
+                if (savedTranslations.remove(bookInfo.slug)) {
                     SPReader.setSavedTranslations(context, savedTranslations)
                 }
 
@@ -188,11 +193,13 @@ class TranslationDownloadService : Service() {
                     }
 
                     is TranslationDownloadFlow.Complete -> {
+                        tmpFile.deleteIfExists()
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
                         finish()
                     }
 
                     is TranslationDownloadFlow.Failed -> {
+                        tmpFile.deleteIfExists()
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
                         removeDownload(bookInfo.slug)
                         notifManager.cancel(notifId)

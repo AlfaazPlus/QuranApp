@@ -16,20 +16,8 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_AUTO_TRANSITION
-import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_SEEK
-import com.google.android.exoplayer2.Player.Listener
-import com.google.android.exoplayer2.Player.PositionInfo
-import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
-import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
-import com.google.android.exoplayer2.Player.STATE_BUFFERING
-import com.google.android.exoplayer2.Player.STATE_ENDED
-import com.google.android.exoplayer2.Player.STATE_READY
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -315,8 +303,8 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         recPlayer?.onPlayMedia(recParams)
     }
 
-    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int) {
-        recParams.currentVerse = ChapterVersePair(chapterNo, fromVerse)
+    fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, currentVerse: Int) {
+        recParams.currentVerse = ChapterVersePair(chapterNo, currentVerse)
         recParams.firstVerse = ChapterVersePair(chapterNo, fromVerse)
         recParams.lastVerse = ChapterVersePair(chapterNo, toVerse)
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
