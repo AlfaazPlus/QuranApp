@@ -86,7 +86,7 @@
     <string name="strTitleRecitations">Tilavet</string>
     <string name="strTitleSelectReciter">Hafız Seç</string>
     <string name="strTitleGotoVerseNo" formatted="false">%d. Ayete Git</string>
-    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d Ayetlerini Oku</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d. Ayetleri Oku</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Meal görünümü</string>
     <string name="strTitleNote">Not</string>
     <string name="strTitleFilters">Filtreler</string>
@@ -116,7 +116,7 @@
     <string name="strTitleReaderJuz">Cüz</string>
     <string name="strTitleReaderChapters2">Sureler</string>
     <string name="strTitleReaderVerses">Ayetler</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">%1$s %2$d Suresi: %3$d Ayet</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s Suresi: %3$d. Ayet</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s Suresi : %2$d. Ayet</string>
     <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">Ayet: %d</string>
@@ -360,7 +360,7 @@
     <string name="inPlacesMore">%1$s ve %2$d daha fazla</string>
     <string name="msgTafsirCleanup" formatted="false">%s\'e ait olan depolanmış tüm tefsirler silinecek.</string>
     <string name="onboardDescTheme">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
-    <string name="strTitleReadTafsirOfVerse" formatted="false">%d ayetin tefsirini oku</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%d. ayetin tefsirini oku</string>
     <string name="strMsgTafsirsNoAvailable">Hiçbir tefsir yok</string>
     <string name="titleTafsirCleanup">Tefsir silinsin mi\?</string>
     <string name="onboardDescLanguage">Uygulamayı kendi dilinize göre ayarlayın. Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
@@ -389,7 +389,7 @@
     <string name="audioOnlyTranslation">Sadece Meali Oynat</string>
     <string name="noItems">Öğe Yok</string>
     <string name="titleAddToFavourites">Favorilere Ekle</string>
-    <string name="titleReaderTextSizeTafsir">Tefsir Yazı Boyutu</string>
+    <string name="titleReaderTextSizeTafsir">Tefsir metin boyutu</string>
     <string name="downloadRecitations">Tilavetleri İndir</string>
     <string name="titleOtherSettings">Diğer Ayarlar</string>
     <string name="suppressedLogs">Gizli Günlükler</string>
