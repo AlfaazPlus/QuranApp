@@ -704,10 +704,6 @@ public class ActivityReader extends ReaderPossessingActivity {
     }
 
     private void initTranslationVerses(Chapter chapter, int fromVerse, int toVerse) {
-        initTranslationVersesFinal(chapter, fromVerse, toVerse);
-    }
-
-    private void initTranslationVersesFinal(Chapter chapter, int fromVerse, int toVerse) {
         mNavigator.setupNavigator();
         if (!mReaderParams.isSingleVerse()) {
             mActionController.showLoader();
@@ -757,8 +753,8 @@ public class ActivityReader extends ReaderPossessingActivity {
             List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
 
-            CharSequence translSpannable = prepareTranslSpannable(verse, translations, booksInfo);
-            verse.setTranslTextSpannable(translSpannable);
+            verse.arabicTextSpannable = prepareVerseText(verse);
+            verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
             models.add(model.setViewType(VERSE).setVerse(verse));
         }
@@ -885,9 +881,8 @@ public class ActivityReader extends ReaderPossessingActivity {
 
             List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
-
-            CharSequence translSpannable = prepareTranslSpannable(verse, translations, booksInfo);
-            verse.setTranslTextSpannable(translSpannable);
+            verse.arabicTextSpannable = prepareVerseText(verse);
+            verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
             models.add(model.setViewType(VERSE).setVerse(verse));
         }

@@ -108,7 +108,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         });
 
         mBinding.read.setOnClickListener(v -> {
-            if (QuranMeta.isChapterValid(mChapterNo) && !quranMeta.isVerseValid4Chapter(mChapterNo, mVerseNo)) {
+            if (QuranMeta.isChapterValid(mChapterNo) && quranMeta.isVerseValid4Chapter(mChapterNo, mVerseNo)) {
                 ReaderFactory.startVerse(getContext(), mChapterNo, mVerseNo);
             }
         });
@@ -191,10 +191,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptVerseTextSizeSmallRes(quran.getScript());
         int verseTextSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
-        mArText = mVerseDecorator.setupArabicText(
-            verse,
-            verseTextSize
-        );
+        mArText = mVerseDecorator.prepareArabicText(verse, verseTextSize);
         prepareTransl(getContext(), quran.getScript());
 
         mLastScript = quran.getScript();

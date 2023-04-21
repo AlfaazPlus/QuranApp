@@ -31,10 +31,8 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.quran.parser.ParserUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
@@ -383,12 +381,14 @@ public class ActivityReference extends ReaderPossessingActivity {
 
         mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo, verseNo);
 
-        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo,
-            verseNo);
+        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(
+            mSelectedTranslSlugs,
+            chapterNo,
+            verseNo
+        );
         verse.setTranslations(translations);
-
-        CharSequence spannable = prepareTranslSpannable(verse, translations, booksInfo);
-        verse.setTranslTextSpannable(spannable);
+        verse.arabicTextSpannable = prepareVerseText(verse);
+        verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
         return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);
     }
