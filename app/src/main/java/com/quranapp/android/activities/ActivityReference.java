@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_REFERENCE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -186,7 +187,7 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private ReferenceVerseModel validateIntent(Intent intent) {
-        if (!"com.quranapp.android.action.OPEN_REFERENCE".equalsIgnoreCase(intent.getAction())) {
+        if (!INTENT_ACTION_OPEN_REFERENCE.equalsIgnoreCase(intent.getAction())) {
             return null;
         }
 

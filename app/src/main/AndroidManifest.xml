@@ -71,9 +71,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/chapter_info/.*" />
+                <data android:host="quran.com"/>
+                <data android:pathPattern="/chapter_info/.*"/>
             </intent-filter>
         </activity>
         <activity
@@ -105,30 +104,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/juz/.*"
-                    android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/\\d+"
-                    android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/\\d+/\\d+"
-                    android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/\\d+/\\d+-\\d+"
-                    android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/\\d+:\\d+"
-                    android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/\\d+:\\d+-\\d+"
-                    android:scheme="https" />
+                <data android:scheme="https"/>
+                <data android:host="quran.com"/>
+                <data android:pathPattern="/juz/.*"/>
+                <data android:pathPattern="/\\d+"/>
+                <data android:pathPattern="/\\d+/\\d+"/>
+                <data android:pathPattern="/\\d+/\\d+-\\d+"/>
+                <data android:pathPattern="/\\d+:\\d+"/>
+                <data android:pathPattern="/\\d+:\\d+-\\d+"/>
             </intent-filter>
         </activity>
         <activity
