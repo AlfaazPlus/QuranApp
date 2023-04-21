@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.verse;
 
+import android.os.Build;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -109,7 +110,11 @@ public abstract class VerseUtils {
         boolean shouldReverse,
         int verseTextSize
     ) {
-        CharSequence text = shouldReverse ? new StringBuilder(serialText).reverse().toString() : serialText;
+        CharSequence text;
+        if (Build.VERSION.SDK_INT >= 33)
+            text = serialText;
+        else
+            text = new StringBuilder(serialText).reverse().toString();
 
         SpannableString verseNoSpannable = new SpannableString(text);
         // Set the typeface to span over verse number text
