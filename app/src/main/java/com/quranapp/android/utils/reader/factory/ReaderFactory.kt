@@ -9,6 +9,7 @@ import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
 import com.quranapp.android.utils.univ.Keys
@@ -211,10 +212,10 @@ object ReaderFactory {
         var intent: Intent? = null
         if (readType == READER_READ_TYPE_CHAPTER && QuranMeta.isChapterValid(chapterNo)) {
             intent = prepareChapterIntent(chapterNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
         } else if (readType == READER_READ_TYPE_JUZ && QuranMeta.isJuzValid(juzNo)) {
             intent = prepareJuzIntent(juzNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
         } else if (quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
             intent = prepareVerseRangeIntent(chapterNo, fromVerse, toVerse)
         }
@@ -245,10 +246,10 @@ object ReaderFactory {
         var intent: Intent? = null
         if (readType == READER_READ_TYPE_CHAPTER && QuranMeta.isChapterValid(chapterNo)) {
             intent = prepareChapterIntent(chapterNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
         } else if (readType == READER_READ_TYPE_JUZ && QuranMeta.isJuzValid(juzNo)) {
             intent = prepareJuzIntent(juzNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, intArrayOf(chapterNo, fromVerse))
+            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
         } else if (quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
             intent = prepareVerseRangeIntentForShortcut(chapterNo, fromVerse, toVerse)
         }

@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
@@ -346,6 +347,7 @@ public class ActivitySearch extends BaseActivity {
 
     private void showTranslationSheet() {
         PeaceBottomSheet sheet = new PeaceBottomSheet();
+        NestedScrollView scrollView = new NestedScrollView(this);
         PeaceRadioGroup radioGroup = new PeaceRadioGroup(this);
         ViewPaddingKt.updatePaddingVertical(radioGroup, dp2px(15F), dp2px(25F));
         int padH = dp2px(25F);
@@ -373,10 +375,11 @@ public class ActivitySearch extends BaseActivity {
 
             return Unit.INSTANCE;
         });
+        scrollView.addView(radioGroup);
 
         PeaceBottomSheetParams params = sheet.getParams();
         params.setHeaderTitleResource(R.string.strLabelSelectTranslation);
-        params.setContentView(radioGroup);
+        params.setContentView(scrollView);
         sheet.show(getSupportFragmentManager());
     }
 
