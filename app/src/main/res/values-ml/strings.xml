@@ -84,7 +84,7 @@
     <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
     <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
     <string name="strTitleQuran">ഖുർആൻ</string>
-    <string name="strTitleMakki">മാക്കി</string>
+    <string name="strTitleMakki">മെക്കൻ</string>
     <string name="strTitleMadani">മദനി</string>
     <string name="strTitleFootnote">അടിക്കുറിപ്പ്</string>
     <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
@@ -355,4 +355,6 @@
     <string name="github">ഗിറ്റ്ഹബ്</string>
     <string name="inPlaces">%sൽ</string>
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
+    <string name="labelAdd">ചേർക്കുക</string>
+    <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
 </resources>
