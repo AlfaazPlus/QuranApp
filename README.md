@@ -41,6 +41,7 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 - Contribute
   - [Contributing](#contributing)
   - [Contributors](/CONTRIBUTORS.md)
+- [Wiki](https://github.com/AlfaazPlus/QuranApp/wiki)
 - [Roadmap](/Roadmap.md)
 - [License](/LICENSE)
 </details>
@@ -70,7 +71,9 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
       
 <sub>_* Permissions that affect your privacy such as storage, gps, camera etc. are not required._</sub>
       
-See all the features [here](/FEATURES.md).
+See an overview of all the features [here](/FEATURES.md).
+
+If you want help with using the QuranApp, please take a look at [WiKi](https://github.com/AlfaazPlus/QuranApp/wiki).
 
 ## Credits
 
