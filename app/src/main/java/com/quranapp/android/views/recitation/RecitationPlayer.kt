@@ -54,7 +54,7 @@ class RecitationPlayer(
         preventStop: Boolean
     ) {
         readerChanging = true
-
+        Log.d(currentVerse)
         service?.onChapterChanged(chapterNo, fromVerse, toVerse, currentVerse)
 
         onReaderChanged(preventStop)

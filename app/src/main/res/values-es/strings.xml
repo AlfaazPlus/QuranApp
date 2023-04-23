@@ -330,7 +330,7 @@
     <string name="msgDownloadKFQPCResources">Es necesario descargar los siguientes recursos antes de poder utilizar este script:</string>
     <string name="msgDownloadingScript">Descargar el script</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d de %2$d</string>
-    <string name="pasteCrashLogGithubIssue">El registro de fallos se ha copiado en el portapapeles. Pégalo en la incidencia de GitHub.</string>
+    <string name="pasteCrashLogGithubIssue">El registro se ha copiado en el portapapeles. Pégalo en la incidencia de GitHub.</string>
     <string name="lastCrashLog">Último registro de fallos</string>
     <string name="titleStorageCleanup">Limpieza del almacenamiento</string>
     <string name="titleChapterInfo">Información del capítulo</string>
@@ -349,7 +349,7 @@
     <string name="titleScriptCleanup">¿Borrar el script\?</string>
     <string name="msgScriptCleanup" formatted="false">El script %s y todas sus fuentes almacenadas serán eliminadas. Deberá volver a descargarlo para poder utilizarlas.</string>
     <string name="titleRecitationCleanup">¿Suprimir el recitado\?</string>
-    <string name="msgRecitationCleanup" formatted="false">Se borrarán todas las recitaciones almacenadas de %s.</string>
+    <string name="msgRecitationCleanup" formatted="false">Se borrarán todas las recitaciones almacenadas de %s. Para borrar las recitaciones individualmente por Surah, ve a la gestión de los ajustes de audio.</string>
     <string name="titleChapterInfoCleanup">¿Información clara del capítulo\?</string>
     <string name="msgChapterInfoCleanup">Se borrará toda la información de los capítulos guardados.</string>
     <string name="nFiles" formatted="false">%d archivos</string>
@@ -367,4 +367,36 @@
     <string name="onboardDescTheme">Siempre puedes cambiar esto más tarde.</string>
     <string name="onboardDescTranslations">Siempre puedes cambiar esto más tarde. Puede descargar más traducciones desde las configuraciones.</string>
     <string name="onboardDescReciter">Siempre puedes cambiar esto más tarde. Puedes encontrar más recitadores en las configuraciones.</string>
+    <string name="labelAdd">Añadir</string>
+    <string name="noItems">Sin elementos</string>
+    <string name="titleAddToFavourites">Añadir a favoritos</string>
+    <string name="textDownloaded">Descargado</string>
+    <string name="appLogs">Registros de la aplicación</string>
+    <string name="crashLogs">Registros de los fallos</string>
+    <string name="suppressedLogs">Registros eliminados</string>
+    <string name="logRemoved">Registro eliminado</string>
+    <string name="titleRemoveFromFavourites">Quitar de favoritos</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Recitaciones eliminadas de \"%1$s\" para el recitador \"%2$s\".</string>
+    <string name="msgRemovedFromFavourites">Eliminado de favoritos</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Descargado \"%1$s\" para el recitador \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Se eliminarán todas las recitaciones de \"%1$s\" para el recitador \"%2$s\".</string>
+    <string name="titleManageAudio">Gestionar el audio</string>
+    <string name="msgAddedToFavourites">Añadido a favoritos</string>
+    <string name="textNoLogsFound">No se encontraron registros</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Error al descargar \"%1$s\" para el recitador \"%2$s\".</string>
+    <string name="playbackSpeed">Velocidad de la reproducción</string>
+    <string name="audioOnlyTranslation">Reproducir sólo la traducción</string>
+    <string name="labelTranslation">Traducciones</string>
+    <string name="titleReaderTextSizeTafsir">Tamaño del texto Tafsir</string>
+    <string name="downloadRecitations">Descargar las Recitaciones</string>
+    <string name="titleOtherSettings">Otros Ajustes</string>
+    <string name="audioOption">Opciones del audio</string>
+    <string name="audioOnlyArabic">Reproducir sólo en árabe</string>
+    <string name="audioBothArabicTranslation">Reproducir tanto en árabe como la traducción</string>
+    <string name="msgNoFavouriteChapters">Añade un capítulo a favoritos para verlo aquí.</string>
+    <string name="msgChapterRemovedFromFavourites">Surah eliminado de favoritos.</string>
+    <string name="labelArabic">Árabe</string>
+    <string name="msgChapterAddedToFavourites">Surah añadido a favoritos.</string>
+    <string name="textTranslationReciterInfo">Idioma: %1$s
+\nLibro: %2$s</string>
 </resources>

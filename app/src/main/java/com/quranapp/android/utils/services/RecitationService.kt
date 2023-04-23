@@ -244,6 +244,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         playlist.clear()
     }
 
+    @Synchronized
     fun setRecitationPlayer(recPlayer: RecitationPlayer?, activity: ActivityReader?) {
         this.recPlayer = recPlayer
         this.activity = activity
@@ -303,6 +304,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         recPlayer?.onPlayMedia(recParams)
     }
 
+    @Synchronized
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, currentVerse: Int) {
         recParams.currentVerse = ChapterVersePair(chapterNo, currentVerse)
         recParams.firstVerse = ChapterVersePair(chapterNo, fromVerse)
@@ -311,6 +313,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
 
+    @Synchronized
     fun onJuzChanged(juzNo: Int, quranMeta: QuranMeta) {
         val (firstChapter, lastChapter) = quranMeta.getChaptersInJuz(juzNo)
         val firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).first
@@ -332,10 +335,12 @@ class RecitationService : Service(), MediaDescriptionAdapter {
             it.updateVerseSync(recParams, isPlaying)
             it.setupOnLoadingInProgress(isLoadingInProgress)
 
-            if (isPlaying) {
-                it.onPlayMedia(recParams)
-            } else {
-                it.onPauseMedia(recParams)
+            if (player.playbackState != STATE_IDLE) {
+                if (isPlaying) {
+                    it.onPlayMedia(recParams)
+                } else {
+                    it.onPauseMedia(recParams)
+                }
             }
         }
     }

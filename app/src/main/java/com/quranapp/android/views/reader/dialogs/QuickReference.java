@@ -391,7 +391,8 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
 
                 verse.setIncludeChapterNameInSerial(true);
                 verse.setTranslations(translations);
-                verse.setTranslTextSpannable(actvt.prepareTranslSpannable(verse, translations, booksInfo));
+                verse.arabicTextSpannable = actvt.prepareVerseText(verse);
+                verse.translTextSpannable = actvt.prepareTranslSpannable(verse, translations, booksInfo);
 
                 verses.add(verse);
             }

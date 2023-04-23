@@ -91,7 +91,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
     }
 
     @JvmOverloads
-    fun setupArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
+    fun prepareArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(

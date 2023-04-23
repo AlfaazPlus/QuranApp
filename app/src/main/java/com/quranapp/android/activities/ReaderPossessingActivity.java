@@ -164,6 +164,10 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         mPendingMetaRequesters.clear();
     }
 
+    public CharSequence prepareVerseText(Verse verse) {
+        return mVerseDecorator.prepareArabicText(verse);
+    }
+
     public CharSequence prepareTranslSpannable(Verse verse, List<Translation> translations, Map<String, QuranTranslBookInfo> bookInfos) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
 
