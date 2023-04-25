@@ -7,7 +7,6 @@ import android.util.TypedValue
 import android.widget.TextView
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.subcomponents.Verse
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
@@ -97,8 +96,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
         return VerseUtils.decorateVerse(
             verse,
             if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
-            verseTextSize,
-            savedScript == QuranScriptUtils.SCRIPT_UTHMANI
+            verseTextSize
         )
     }
 
@@ -111,7 +109,6 @@ class ReaderVerseDecorator(private val ctx: Context) {
             txtColor,
             verse,
             if (isKFQPCScript()) fontsArabicKFQPC[verse.pageNo] else fontQuranText,
-            savedScript == QuranScriptUtils.SCRIPT_UTHMANI,
             onClick
         )
 
