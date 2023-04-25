@@ -86,8 +86,8 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
 ## App Translations
-<a href="https://hosted.weblate.org/projects/QuranApp/#languages">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/horizontal-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/projects/QuranApp/#components">
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
 </a>
 
 ## License
