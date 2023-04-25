@@ -42,7 +42,7 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
   - [Contributing](#contributing)
   - [Contributors](/CONTRIBUTORS.md)
 - [Wiki](https://github.com/AlfaazPlus/QuranApp/wiki)
-- [Roadmap](/Roadmap.md)
+- [Roadmap](https://github.com/AlfaazPlus/QuranApp/wiki/Roadmap)
 - [License](/LICENSE)
 </details>
 
