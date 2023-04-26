@@ -35,7 +35,7 @@
     <string name="strLabelRemoveAll">إزالة الكل</string>
     <string name="strLabelCopy">نسخ</string>
     <string name="strLabelBack">العودة</string>
-    <string name="strLabelTop">أعلى</string>
+    <string name="strLabelTop">للأعلى</string>
     <string name="strLabelReset">إعادة الضبط</string>
     <string name="strLabelRetry">إعادة المحاولة</string>
     <string name="strLabelRefresh">تحديث</string>
@@ -131,8 +131,8 @@
     <string name="strTitleRepeatVerse">تكرار الآية</string>
     <string name="strTitleThresholdReached">الحد الأدنى</string>
     <string name="strChapInfoSeeMore">رؤية المزيد من المعلومات ›</string>
-    <string name="strTitleChapInfoChapterNo">رقم السورة</string>
-    <string name="strTitleChapInfoRevOrder">ترتيب نزول السورة</string>
+    <string name="strTitleChapInfoChapterNo">ترتيبها المصحفي</string>
+    <string name="strTitleChapInfoRevOrder">ترتيب نزولها</string>
     <string name="strTitleTheme">السمة</string>
     <string name="strTitleNoInternet">لا يوجد إتصال بالانترنت</string>
     <string name="strLabelPlay">تشغيل</string>
@@ -153,10 +153,10 @@
     <string name="strTitleSelectReason">إختار السبب</string>
     <string name="strTitleExplainIssue">إشرح المشكلة</string>
     <string name="strTitleVOTD">آية اليوم</string>
-    <string name="strTitleTopics">الموضوعات</string>
+    <string name="strTitleTopics">المواضيع</string>
     <string name="strTitleDuas">أدعية قرآنية</string>
     <string name="strTitleProphets">الأنبياء</string>
-    <string name="strTitleFeaturedTopics">موضوعات القرآن</string>
+    <string name="strTitleFeaturedTopics">مواضيع القرآن</string>
     <string name="strTitleFeaturedDuas">الأدعية القرآنية</string>
     <string name="strTitleFeaturedProphets">الأنبياء في القرآن</string>
     <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
@@ -164,7 +164,7 @@
     <string name="strTitleChapInfoVerses">الآيات</string>
     <string name="strTitleChapInfoRukus">الركوعات</string>
     <string name="strTitleChapInfoPages">الصفحات</string>
-    <string name="strTitleChapInfoRevType">مكان النزول</string>
+    <string name="strTitleChapInfoRevType">نوعها</string>
     <string name="strMsgChapInfoFailedLoad">فشل في تحميل معلومات السورة. فضلاً حاول مرة اخرى لاحقاً.</string>
     <string name="strTitleAppSettings">إعدادات التطبيق</string>
     <string name="strTitleReaderSettings">إعدادات المصحف</string>
@@ -173,7 +173,7 @@
     <string name="strLabelIncludeTranslation">تضمين الترجمة</string>
     <string name="strLabelLater">لاحقًا</string>
     <string name="strHintSearch">بحث</string>
-    <string name="strHintSearchTopic">البحث عن موضوعات</string>
+    <string name="strHintSearchTopic">البحث عن المواضيع</string>
     <string name="strHintSearchChapter">البحث عن سورة</string>
     <string name="strHintSearchVerse">البحث عن آية</string>
     <string name="strHintSearchJuz">البحث عن جزء</string>
@@ -288,7 +288,7 @@
     <string name="strLabelAllChapters">كل السور</string>
     <string name="strTitleImageSavedWithName" formatted="false">تم حفظ الصورة بالاسم: %s</string>
     <string name="strMsgEditShareLongTransl">الترجمة طويلة جداً، وقد لا تتناسب بشكل صحيح.</string>
-    <string name="strTitleReadHistory">عرض سجل القراءة</string>
+    <string name="strTitleReadHistory">سجل القراءة</string>
     <string name="strMsgReferenceDuas">بعض من الأدعية القرآنية.</string>
     <string name="titleDownloadScriptResources">تنزيل المصادر لهذا الخط؟</string>
     <string name="msgDownloadKFQPCResources">يجب تنزيل المصادر التالية قبل أن تتمكن من استخدام هذا الخط:</string>
@@ -326,7 +326,7 @@
     <string name="strMsgReadHistoryRemoved">تمت إزالة سجل القراءة.</string>
     <string name="strTitleError">خطأ!</string>
     <string name="strMsgEditShareTransl">الترجمات المحددة من الإعدادات يتم عرضها هنا.</string>
-    <string name="strMsgReadShowupHere">سجل قراءتك سيعرض هنا.</string>
+    <string name="strMsgReadShowupHere">هنا سيعرض سجل قراءتك.</string>
     <string name="strMsgSearchNoResultsFound">لم يتم العثور على نتائج. يرجى التحقق من عوامل تصفية البحث أو البحث في ترجمة أخرى.</string>
     <string name="strMsgUpdateAvailable">تحديث متاح! يرجى تحديث التطبيق للحصول على أحدث الميزات.</string>
     <string name="strMsgUpdateDownloaded">تم تنزيل التحديث! يرجى التثبيت لإكمال التحديث.</string>

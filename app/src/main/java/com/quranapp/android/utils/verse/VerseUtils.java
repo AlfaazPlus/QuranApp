@@ -1,9 +1,9 @@
 package com.quranapp.android.utils.verse;
 
+import android.os.Build;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -42,8 +42,7 @@ public abstract class VerseUtils {
     public static CharSequence decorateVerse(
         Verse verse,
         Typeface verseFont,
-        int verseTextSize,
-        boolean shouldReverseSerial
+        int verseTextSize
     ) {
         if (TextUtils.isEmpty(verse.arabicText)) {
             return "";
@@ -63,9 +62,7 @@ public abstract class VerseUtils {
         return TextUtils.concat(
             arabicSS,
             " ",
-            prepareVerseSerial(
-                verse.endText, verseFont, shouldReverseSerial, verseTextSize
-            )
+            prepareVerseSerial(verse.endText, verseFont, verseTextSize)
         );
     }
 
@@ -76,7 +73,6 @@ public abstract class VerseUtils {
         int txtColor,
         Verse verse,
         Typeface verseFont,
-        boolean shouldReverseSerial,
         Runnable onClick
     ) {
         if (TextUtils.isEmpty(verse.arabicText)) {
@@ -92,7 +88,7 @@ public abstract class VerseUtils {
             concat = TextUtils.concat(
                 arabicSS,
                 " ",
-                prepareVerseSerial(verse.endText, verseFont, shouldReverseSerial, -1)
+                prepareVerseSerial(verse.endText, verseFont, -1)
             );
         } else {
             concat = arabicSS;
@@ -107,10 +103,11 @@ public abstract class VerseUtils {
     private static CharSequence prepareVerseSerial(
         String serialText,
         Typeface serialFont,
-        boolean shouldReverse,
         int verseTextSize
     ) {
-        CharSequence text = shouldReverse ? new StringBuilder(serialText).reverse().toString() : serialText;
+        final CharSequence text;
+        if (Build.VERSION.SDK_INT >= 33) text = serialText;
+        else text = new StringBuilder(serialText).reverse().toString();
 
         SpannableString verseNoSpannable = new SpannableString(text);
         // Set the typeface to span over verse number text
