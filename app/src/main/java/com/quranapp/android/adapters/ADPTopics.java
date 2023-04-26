@@ -46,10 +46,6 @@ public class ADPTopics extends RecyclerView.Adapter<ADPTopics.VHTopic> {
         return mTopics.size();
     }
 
-    public List<QuranTopic.Topic> getTopics() {
-        return mTopics;
-    }
-
     public void setTopics(List<QuranTopic.Topic> topics) {
         mTopics = topics;
     }
