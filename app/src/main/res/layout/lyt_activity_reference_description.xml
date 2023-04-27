@@ -4,12 +4,11 @@
   ~ All rights reserved.
   -->
 
-
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
     android:paddingVertical="15dp"
-    android:text="Ramadan Important Verses Ramadan Important Verses"
+    android:textAlignment="viewStart"
     android:textSize="@dimen/dmnCommonSizeMedium" />
 

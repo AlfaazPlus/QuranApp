@@ -10,18 +10,15 @@ import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 
 import com.quranapp.android.R;
-import com.quranapp.android.components.quran.QuranDua;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.FragMainBinding;
-import com.quranapp.android.databinding.LytBtnDuaInQuranBinding;
 import com.quranapp.android.frags.BaseFragment;
 import com.quranapp.android.utils.app.UpdateManager;
-import com.quranapp.android.utils.gesture.HoverOpacityEffect;
-import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.views.VOTDView;
 import com.quranapp.android.views.homepage.FeatureProphetsLayout;
 import com.quranapp.android.views.homepage.FeatureReadingLayout;
 import com.quranapp.android.views.homepage.FeatureTopicsLayout;
+import com.quranapp.android.views.homepage.FeaturedDuaLayout;
 import com.quranapp.android.views.homepage.ReadHistoryLayout;
 
 public class FragMain extends BaseFragment {
@@ -139,23 +136,16 @@ public class FragMain extends BaseFragment {
         mBinding.container.addView(readingLayout, resolvePosFeaturedReading(root));
         readingLayout.post(() -> {
             readingLayout.refresh(quranMeta);
-            QuranDua.Companion.prepareInstance(root.getContext(), quranMeta,
-                quranDua -> initFeaturedDua(root, quranMeta, quranDua));
+            initFeaturedDua(root, quranMeta);
         });
     }
 
-    private void initFeaturedDua(View root, QuranMeta quranMeta, QuranDua quranDua) {
-        mAsyncInflater.inflate(R.layout.lyt_btn_dua_in_quran, mBinding.container, (view, resid, parent) -> {
-            LytBtnDuaInQuranBinding binding = LytBtnDuaInQuranBinding.bind(view);
-            binding.getRoot().setOnClickListener(v -> {
-                Context context = v.getContext();
-                String title = context.getString(R.string.strTitleDuas);
-                String desc = context.getString(R.string.strMsgReferenceDuas);
-                ReaderFactory.startReferenceVerse(context, true, title, desc, new String[]{}, quranDua.getChapters(),
-                    quranDua.getVerses());
-            });
-            binding.getRoot().setOnTouchListener(new HoverOpacityEffect());
-            mBinding.container.addView(binding.getRoot(), resolvePosFeaturedDua(root));
+    private void initFeaturedDua(View root, QuranMeta quranMeta) {
+        FeaturedDuaLayout duaLayout = new FeaturedDuaLayout(root.getContext());
+        duaLayout.setId(R.id.homepageDuaLayout);
+        mBinding.container.addView(duaLayout, resolvePosFeaturedDua(root));
+        duaLayout.post(() -> {
+            duaLayout.refresh(quranMeta);
             initFeaturedTopics(root, quranMeta);
         });
     }

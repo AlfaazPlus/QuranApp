@@ -311,6 +311,7 @@
     <string name="strTitleAlphaBG">Alpha background</string>
     <string name="strMsgEditShareTransl">Translations selected from the settings, are only shown here.</string>
     <string name="strMsgEditShareLongTransl">Translation is very long, it may not fit properly.</string>
+    <string name="strMsgDuaFor" formatted="false">Dua for %s</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s in Quran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Found verses related to %1$s at total %2$d places.</string>
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
@@ -370,8 +371,10 @@
     <string name="noItems">No items</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
-    <string name="inPlaces">in %s</string>
-    <string name="inPlacesMore">in %1$s &amp; %2$d more</string>
+    <string name="place" formatted="false">%d place</string>
+    <string name="places" formatted="false">%d places</string>
+    <string name="inPlaces" formatted="false">in %s</string>
+    <string name="inPlacesMore" formatted="false">in %1$s &amp; %2$d more</string>
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
     <string name="onboardDescTheme">You can always change this later.</string>
     <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>

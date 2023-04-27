@@ -57,7 +57,7 @@ object QuranScriptUtils {
         "fa" to "عثمانی حفص",
         "fr" to "Uthmani Hafs",
         "gu" to "ઉથમાની હાફ્સ",
-        "hi" to "उशमनी हफ्स",
+        "hi" to "उशमानी हफ्स",
         "in" to "Utsmani Hafs",
         "it" to "Uthmani Hafs",
         "ml" to "ഓട്ടോമൻ ഹാഫുകൾ",
