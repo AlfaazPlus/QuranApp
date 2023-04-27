@@ -15,14 +15,13 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 <hr />
 
-The discord server is the main communication channel for any kind of discussion.
-It has bridge to Matrix, IRC, XMPP, and Telegram Only two channels from Discord (App-Development and Off-topic.)
-      <p> [Discord](https://discord.com/invite/vtutnwzxRb) - Main Discord Server </p>
-      <p> [Matrix](https://matrix.to/#/#quranapp:matrix.org) - Bridge to Discord </p>
-      <p> [IRC](https://web.libera.chat/#qaranapp) - Bridge #quranapp on libera.chat </p>
-      <p> [XMPP](xmpp:quranapp@conference.projectsegfau.lt) - Bridge #quranapp on conference.projectsegfau.lt </p>
-      <p> [Telegram](https://t.me/thequranapp) - QuranApp Telegram
+The discord server is the primary communication channel for any kind of discussion.
 
+[![Discord](https://quran.alfaazplus.com/images/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
+[![Matrix](https://quran.alfaazplus.com/images/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
+[![Telegram](https://quran.alfaazplus.com/images/widgets/telegram.svg)](https://t.me/thequranapp)
+[![IRC](https://quran.alfaazplus.com/images/widgets/irc.svg)](https://web.libera.chat/#qaranapp)
+[![XMPP](https://quran.alfaazplus.com/images/widgets/xmpp.svg)](xmpp:quranapp@conference.projectsegfau.lt)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
