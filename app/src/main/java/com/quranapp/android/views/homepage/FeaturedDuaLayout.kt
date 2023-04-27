@@ -6,9 +6,11 @@
 package com.quranapp.android.views.homepage
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityDua
 import com.quranapp.android.adapters.ADPDua
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
@@ -38,7 +40,7 @@ class FeaturedDuaLayout @JvmOverloads constructor(
     }
 
     override fun onViewAllClick(context: Context) {
-//        context.startActivity(Intent(context, ActivityDua::class.java)) TODO
+        context.startActivity(Intent(context, ActivityDua::class.java))
     }
 
     private fun refreshFeatured(ctx: Context, duas: List<Dua>) {

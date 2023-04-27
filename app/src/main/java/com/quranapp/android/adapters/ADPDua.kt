@@ -1,6 +1,8 @@
 package com.quranapp.android.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
@@ -9,12 +11,13 @@ import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.recyclerview.widget.RecyclerView
 import com.peacedesign.android.utils.span.LineHeightSpan2
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.dua.Dua
 import com.quranapp.android.databinding.LytQuranDuaItemBinding
+import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.gesture.HoverPushEffect
@@ -28,7 +31,8 @@ class ADPDua(
 ) : RecyclerView.Adapter<ADPDua.VHDua>() {
     private val txtSize = ctx.getDimenPx(R.dimen.dmnCommonSize2)
     private val txtSizeName = ctx.getDimenPx(R.dimen.dmnCommonSizeLarge)
-    private val txtColor2 = ContextCompat.getColorStateList(ctx, R.color.colorText2)
+    private val titleColor = ColorStateList.valueOf(ctx.color(R.color.white))
+    private val infoColor = ColorStateList.valueOf(Color.parseColor("#D0D0D0"))
 
     override fun getItemCount(): Int {
         return duas.size
@@ -51,7 +55,7 @@ class ADPDua(
 
         val titleSS = SpannableString(title).apply {
             setSpan(
-                TextAppearanceSpan("sans-serif", Typeface.BOLD, txtSizeName, null, null),
+                TextAppearanceSpan("sans-serif", Typeface.BOLD, txtSizeName, titleColor, null),
                 0,
                 length,
                 flag
@@ -59,12 +63,12 @@ class ADPDua(
         }
 
         val subTitleSS = SpannableString(subTitle).apply {
-            setSpan(TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, null, null), 0, length, flag)
+            setSpan(TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, infoColor, null), 0, length, flag)
             setSpan(LineHeightSpan2(20, false, true), 0, length, flag)
         }
 
         val chaptersSS = SpannableString(inChapters).apply {
-            setSpan(TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, txtSize, txtColor2, null), 0, length, flag)
+            setSpan(TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, txtSize, infoColor, null), 0, length, flag)
         }
 
         return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", chaptersSS)
@@ -75,7 +79,8 @@ class ADPDua(
         init {
             binding.root.apply {
                 setOnTouchListener(HoverPushOpacityEffect(HoverPushEffect.Pressure.LOW))
-                layoutParams = ViewGroup.LayoutParams(itemWidth, itemView.context.dp2px(150F))
+                val height = if (itemWidth == MATCH_PARENT) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(150F)
+                layoutParams = ViewGroup.LayoutParams(itemWidth, height)
             }
         }
 
@@ -93,7 +98,7 @@ class ADPDua(
             binding.root.setOnClickListener { v: View ->
                 val ctx = v.context
 
-                val excluded = dua.id in arrayOf(1, 8)
+                val excluded = dua.id in arrayOf(1, 7)
 
                 val nameTitle = if (!excluded) ctx.getString(R.string.strMsgDuaFor, dua.name)
                 else ctx.getString(R.string.strMsgReferenceInQuran, "\"" + dua.name + "\"")

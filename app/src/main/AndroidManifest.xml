@@ -47,6 +47,7 @@
         </activity>
         <activity android:name=".activities.ActivityTopics" />
         <activity android:name=".activities.ActivityProphets" />
+        <activity android:name=".activities.ActivityDua" />
         <activity
             android:name=".activities.ActivityTafsir"
             android:exported="true"
