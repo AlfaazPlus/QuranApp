@@ -26,6 +26,28 @@
       }
     },
     {
+      "slug": "fooladvand-hedayatfar",
+      "lang-code": "fa",
+      "lang-name": "فارسی",
+      "reciter": "Fooladvand Hedayatfar",
+      "url-host": null,
+      "url-path": "/data/translations/Fooladvand_Hedayatfar_40Kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "fa": "فولادوند - هدایتفر"
+      }
+    },
+    {
+      "slug": "mohammed-ahmed",
+      "lang-code": "ks",
+      "lang-name": "كٲشُر",
+      "reciter": "Molvi Mohammed Ahmed",
+      "book": "Mirwaiz Mohammed Yusuf Shah",
+      "url-host": github.com,
+      "url-path": "/dabatase/ks_mohammed_ahmed/releases/download/v1/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+      }
+    },
+    {
       "slug": "shamshad-ali-khan",
       "lang-code": "ur",
       "lang-name": "اردو",
@@ -35,17 +57,6 @@
       "url-path": "/data/translations/urdu_shamshad_ali_khan_46kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
         "ur": "شمشاد علی خان"
-      }
-    },
-    {
-      "slug": "fooladvand-hedayatfar",
-      "lang-code": "fa",
-      "lang-name": "فارسی",
-      "reciter": "Fooladvand Hedayatfar",
-      "url-host": null,
-      "url-path": "/data/translations/Fooladvand_Hedayatfar_40Kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
-      "translations": {
-        "fa": "فولادوند - هدایتفر"
       }
     }
   ]
