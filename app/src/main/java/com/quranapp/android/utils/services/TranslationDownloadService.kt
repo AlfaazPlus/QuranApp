@@ -19,8 +19,10 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.extensions.getContentLengthAndStream
 import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.TranslDownloadReceiver
@@ -33,13 +35,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlin.io.path.deleteIfExists
 import kotlin.io.path.outputStream
 import kotlin.io.path.readText
 
 class TranslationDownloadService : Service() {
     companion object {
-        private var STARTED_BY_USER = false
+        private const val NOTIF_ID = 44
 
+        // To prevent notification when using BIND_AUTO_CREATE
+        private var STARTED_BY_USER = false
         fun startDownloadService(wrapper: ContextWrapper, bookInfo: QuranTranslBookInfo) {
             STARTED_BY_USER = true
             val service = Intent(wrapper, TranslationDownloadService::class.java)
@@ -56,11 +61,8 @@ class TranslationDownloadService : Service() {
         super.onCreate()
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
-                1,
-                NotificationUtils.createEmptyNotif(
-                    this,
-                    getString(R.string.strNotifChannelIdDownloads)
-                )
+                NOTIF_ID,
+                NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
             )
         }
     }
@@ -80,7 +82,7 @@ class TranslationDownloadService : Service() {
                 this,
                 getString(R.string.strNotifChannelIdDownloads)
             )
-            startForeground(1, notification)
+            startForeground(NOTIF_ID, notification)
             finish()
             return START_NOT_STICKY
         }
@@ -107,7 +109,7 @@ class TranslationDownloadService : Service() {
         notification: Notification,
         notifManager: NotificationManagerCompat
     ) {
-        notifManager.cancel(1)
+        notifManager.cancel(NOTIF_ID)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
         startForeground(notifId, notification)
     }
@@ -119,23 +121,24 @@ class TranslationDownloadService : Service() {
     ) {
         CoroutineScope(Dispatchers.Main + jobs[bookInfo.slug]!!).launch {
             val notifId = bookInfo.slug.hashCode()
+            val tmpFile = kotlin.io.path.createTempFile(
+                prefix = bookInfo.slug,
+                suffix = ".json"
+            )
 
             flow {
                 emit(TranslationDownloadFlow.Start)
                 emit(TranslationDownloadFlow.Progress(0))
 
-                val responseBody = RetrofitInstance.github.getTranslation(bookInfo.downloadPath)
 
-                val byteStream = responseBody.byteStream()
-                val totalBytes = byteStream.available()
-                val tmpFile = kotlin.io.path.createTempFile(
-                    prefix = bookInfo.slug,
-                    suffix = ".json"
-                )
+                val (totalBytes, byteStream) = RetrofitInstance.github.getTranslation(
+                    bookInfo.downloadPath
+                ).getContentLengthAndStream()
+
 
                 byteStream.use { inS ->
-                    tmpFile.outputStream().use { outS ->
-                        val buffer = ByteArray(8192)
+                    tmpFile.outputStream().buffered().use { outS ->
+                        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                         var progressBytes = 0L
 
                         while (true) {
@@ -146,8 +149,14 @@ class TranslationDownloadService : Service() {
                             outS.write(buffer, 0, bytes)
                             progressBytes += bytes
 
-                            emit(TranslationDownloadFlow.Progress(((progressBytes * 100) / totalBytes).toInt()))
+                            emit(
+                                TranslationDownloadFlow.Progress(
+                                    if (totalBytes > 0) ((progressBytes * 100) / totalBytes).toInt() else 0
+                                )
+                            )
                         }
+
+                        outS.flush()
                     }
                 }
 
@@ -157,11 +166,9 @@ class TranslationDownloadService : Service() {
                     it.dbHelper.storeTranslation(bookInfo, tmpFile.readText())
                 }
 
-                val slug = bookInfo.slug
-
-                removeFromPendingAction(context, AppActions.APP_ACTION_TRANSL_UPDATE, slug)
+                removeFromPendingAction(context, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
                 val savedTranslations = SPReader.getSavedTranslations(context)
-                if (savedTranslations.remove(slug)) {
+                if (savedTranslations.remove(bookInfo.slug)) {
                     SPReader.setSavedTranslations(context, savedTranslations)
                 }
 
@@ -171,22 +178,28 @@ class TranslationDownloadService : Service() {
                 emit(TranslationDownloadFlow.Complete)
             }.flowOn(Dispatchers.IO).catch {
                 it.printStackTrace()
+                Log.saveError(it, "TranslationDownloadService")
                 emit(TranslationDownloadFlow.Failed)
             }.collect {
                 when (it) {
                     is TranslationDownloadFlow.Start -> {
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Progress -> {
                         notifBuilder.setProgress(100, it.progress, false)
                         notifBuilder.setSubText("${it.progress}%")
                         notify(notifId, notifManager, notifBuilder.build())
                     }
+
                     is TranslationDownloadFlow.Complete -> {
+                        tmpFile.deleteIfExists()
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
                         finish()
                     }
+
                     is TranslationDownloadFlow.Failed -> {
+                        tmpFile.deleteIfExists()
                         sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
                         removeDownload(bookInfo.slug)
                         notifManager.cancel(notifId)

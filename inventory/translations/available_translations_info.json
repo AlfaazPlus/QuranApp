@@ -72,6 +72,15 @@
         "langName": "English",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/en/en_maududi.json"
+      },
+      "en_abdul-haleem": {
+        "book": "Abdul Haleem",
+        "author": "Abdul Haleem",
+        "displayName": "Abdul Haleem",
+        "langCode": "en",
+        "langName": "English",
+        "lastUpdated": 1681409892464,
+        "downloadPath": "inventory/translations/en/en_abdul-haleem.json"
       }
     },
     "bn": {
@@ -127,11 +136,22 @@
         "downloadPath": "inventory/translations/fr/fr_rashid.json"
       }
     },
+    "gu": {
+      "gu_omari": {
+        "book": "રબીલા અલ-ઉમરી",
+        "author": "રબીલા અલ-ઉમરી",
+        "displayName": "રબીલા અલ-ઉમરી",
+        "langCode": "gu",
+        "langName": "ગુજરાતી",
+        "lastUpdated": 1681979248037,
+        "downloadPath": "inventory/translations/gu/gu_omari.json"
+      }
+    },
     "hi": {
       "hi_azizul-haque": {
-        "book": "मौलाना अजीजूल हक़ अल-उमरी",
-        "author": "Maulana Azizul Haque al-Umari",
-        "displayName": "अजीजूल हक़",
+        "book": "मौलाना अज़ीज़ुल हक़ अल-उमरी",
+        "author": "मौलाना अज़ीज़ुल हक़ अल-उमरी",
+        "displayName": "अज़ीज़ुल हक़",
         "langCode": "hi",
         "langName": "हिंदी",
         "lastUpdated": 1658517131580,
@@ -147,6 +167,15 @@
         "langName": "Bahasa Indonesia",
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/in/in_quran-complex.json"
+      },
+      "in_ministry": {
+        "book": "Indonesian Islamic affairs ministry",
+        "author": "Indonesian Islamic affairs ministry",
+        "displayName": "Islamic affairs ministry",
+        "langCode": "in",
+        "langName": "Bahasa Indonesia",
+        "lastUpdated": 1681409892464,
+        "downloadPath": "inventory/translations/in/in_ministry.json"
       }
     },
     "ku": {
@@ -158,6 +187,26 @@
         "langName": "کوردی",
         "lastUpdated": 1679333216943,
         "downloadPath": "inventory/translations/ku/ku_bamoki.json"
+      }
+    },
+    "ml": {
+      "ml_hamid-kanhi": {
+        "book": "അബ്ദുൽ ഹമീദ് ഹൈദർ, കൻഹി മുഹമ്മദ്",
+        "author": "അബ്ദുൽ ഹമീദും കാനിയും",
+        "displayName": "അബ്ദുൽ ഹമീദ് ഹൈദർ, കൻഹി മുഹമ്മദ്",
+        "langCode": "ml",
+        "langName": "മലയാളം",
+        "lastUpdated": 1681416922025,
+        "downloadPath": "inventory/translations/ml/ml_hamid-kanhi.json"
+      },
+      "ml_karakunnu": {
+        "book": "മുഹമ്മദ് കാരക്കുന്ന്, വാണിദാസ് എളയാവൂർ",
+        "author": "കാരക്കുന്ന്, എളയാവൂർ",
+        "displayName": "മുഹമ്മദ് കാരക്കുന്ന്, വാണിദാസ് എളയാവൂർ",
+        "langCode": "ml",
+        "langName": "മലയാളം",
+        "lastUpdated": 1681416922025,
+        "downloadPath": "inventory/translations/ml/ml_karakunnu.json"
       }
     },
     "ru": {
@@ -208,7 +257,8 @@
         "langCode": "ur",
         "langName": "اردو",
         "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/ur/ur_jalandhari.json"
+        "downloadPath": "inventory/translations/ur/ur_jalandhari.json",
+        "hasAudio": true
       },
       "ur_israr-ahmad": {
         "book": "بیان القرآن",

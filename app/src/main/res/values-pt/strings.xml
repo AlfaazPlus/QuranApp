@@ -83,7 +83,6 @@
     <string name="strTitleSettings">Configurações</string>
     <string name="strTitleShareApp">Compartilhar app</string>
     <string name="strTitleNote">Nota</string>
-    <string name="strTitleSubscription">Inscrição</string>
     <string name="strTitleFilters">Filtros</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleBookmarkDeleteAll">Remover todos os favoritos\?</string>
@@ -155,7 +154,7 @@
     <string name="strLabelIncludeReference">Incluir referência</string>
     <string name="strLabelQuickLinks">Links rápidos</string>
     <string name="strHintSearchLanguage">Procurar idioma</string>
-    <string name="strMsgInvalidVersesRange">Não é um intervalo de versículo válido.</string>
+    <string name="strMsgInvalidVersesRange">Não é um intervalo de versículo válido</string>
     <string name="strMsgBookmarkAddedAlready">O versículo já foi adicionado aos favoritos</string>
     <string name="strMsgBookmarkRemoved">Versículo removido dos favoritos com sucesso</string>
     <string name="strMsgHistoryRemove">Remover este histórico\?</string>
@@ -273,7 +272,6 @@
     <string name="strMsgUpdateAvailable2Continue">ATUALIZAÇÃO NECESSÁRIA!
 \nPor favor, atualize o aplicativo para continuar.</string>
     <string name="strTitleSelectReciter">Selecionar recitador</string>
-
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
 </resources>

@@ -97,7 +97,6 @@
     <string name="strTitleAddNote">নোট যোগ করুন</string>
     <string name="strTitleNote">নোট</string>
     <string name="strTitleRateApp">অ্যাপ রেটিং দিন</string>
-    <string name="strTitleSubscription">সদস্যতা</string>
     <string name="strTitleFilters">ফিল্টার</string>
     <string name="strTitleMenu">মেনু</string>
     <string name="strTitleTafsir">তাফসির</string>
@@ -256,7 +255,7 @@
     <string name="strMsgThemeDefault">সিস্টেম সেটিংস অনুযায়ী সামঞ্জস্য করুন।</string>
     <string name="strMsgYouAreReadingVerses">আপনি যে আয়াতটি পড়ছেন:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d কোনো সঠিক সূরা নং নয়।</string>
-    <string name="strMsgInvalidVersesRange">একটি গ্রহণযোগ্য আয়াত পরিসীমা নয়।</string>
+    <string name="strMsgInvalidVersesRange">একটি গ্রহণযোগ্য আয়াত পরিসীমা নয়</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d কোনো সঠিক পারা নং নয়।</string>
     <string name="strMsgBookmarkAdded">আয়াত সফলভাবে বুকমার্কে যোগ করা হয়েছে</string>
     <string name="strMsgBookmarkAddFailed">আয়াত বুকমার্ক করতে ব্যর্থ হয়েছে</string>
@@ -302,7 +301,6 @@
     <string name="strMsgReadShowupHere">আপনার পাঠ ইতিহাস এখানে প্রদর্শিত হবে।</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s এ শুধুমাত্র ১টি ফলাফল পাওয়া গেছে</string>
     <string name="strMsgChangeLanguage">ভাষার পরিবর্তন প্রয়োগ করতে অ্যাপটি রিস্টার্ট করা হবে।</string>
-
     <string name="inPlaces">%s এ</string>
     <string name="inPlacesMore">%1$s এবং আরও %2$d এর মধ্যে</string>
 </resources>

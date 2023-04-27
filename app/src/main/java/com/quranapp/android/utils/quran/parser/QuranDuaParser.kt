@@ -1,88 +1,97 @@
 package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
-import android.content.res.Resources.NotFoundException
-import android.content.res.XmlResourceParser
 import android.os.Handler
 import android.os.Looper
-import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
-import java.io.IOException
-import java.util.concurrent.atomic.AtomicReference
-import org.xmlpull.v1.XmlPullParser
+import com.quranapp.android.components.quran.dua.Dua
+import com.quranapp.android.utils.Log
+import org.json.JSONObject
 import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
+import java.util.*
+import java.util.concurrent.atomic.AtomicReference
 
 object QuranDuaParser {
-    private const val DUAS_TAG_ROOT = "prophets"
-    private const val DUAS_TAG_RABBANA = "rabbana"
-    private const val DUAS_TAG_OTHER = "other"
     fun parseDua(
         context: Context,
         quranMeta: QuranMeta,
-        quranDuaRef: AtomicReference<QuranDua>,
+        quranDuaRef: AtomicReference<List<Dua>>,
         postRunnable: Runnable
     ) {
         Thread {
             try {
-                val parser = context.resources.getXml(R.xml.quran_duas)
-                val parsedQuranTopics = parseDuaInternal(context, parser, quranMeta)
-                quranDuaRef.set(parsedQuranTopics)
-            } catch (e: NotFoundException) {
-                e.printStackTrace()
-            } catch (e: XmlPullParserException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
+                val map = context.assets.open("verses/type1/map.json").bufferedReader().use {
+                    it.readText()
+                }
+                val names = try {
+                    context.assets.open("verses/type1/${Locale.getDefault().language}/type1.json").bufferedReader()
+                        .use {
+                            it.readText()
+                        }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    context.assets.open("verses/type1/en/type1.json").bufferedReader().use {
+                        it.readText()
+                    }
+                }
+                quranDuaRef.set(parseDuaInternal(context, map, names, quranMeta))
+            } catch (e: Exception) {
+                Log.saveError(e, "QuranDuaParser.parseDua")
             }
+
             Handler(Looper.getMainLooper()).post(postRunnable)
         }.start()
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun parseDuaInternal(context: Context, parser: XmlResourceParser, quranMeta: QuranMeta): QuranDua {
-        val verses = ArrayList<String>()
+    private fun parseDuaInternal(context: Context, mapStr: String, namesStr: String, quranMeta: QuranMeta): List<Dua> {
+        val map = JSONObject(mapStr)
+        val names = JSONObject(namesStr)
+        val duas = ArrayList<Dua>()
 
-        var isDuaTag = false
+        map.keys().forEachRemaining { key ->
+            val versesStr = map.getString(key)
+            val name = names.getString(key)
+            val verses = versesStr.split(",").map { verse ->
+                val split = verse.split(":")
+                val chapterNo = split[0].toInt()
+                val verseRange = split[1].split("-")
+                val fromVerse = verseRange[0].toInt()
+                val toVerse = if (verseRange.size == 2) verseRange[1].toInt()
+                else fromVerse
 
-        var eventType = parser.eventType
-        while (eventType != XmlPullParser.END_DOCUMENT) {
-            val tagName = parser.name
-            if (eventType == XmlPullParser.START_TAG) {
-                isDuaTag = tagName == DUAS_TAG_RABBANA || tagName == DUAS_TAG_OTHER
-            } else if (eventType == XmlPullParser.TEXT) {
-                if (isDuaTag) {
-                    verses.addAll(ParserUtils.prepareVersesList(parser.text, false))
+                return@map Triple(chapterNo, fromVerse, toVerse)
+            }.sortedWith { o1, o2 ->
+                var comp = o1.first - o2.first
+                if (comp == 0) {
+                    var comp2 = o1.second - o2.second
+
+                    if (comp2 == 0 && o1.second != o1.third && o2.second != o2.third) {
+                        comp2 = o1.third - o2.third
+                    }
+
+                    comp = comp2
                 }
+                comp
             }
-            eventType = parser.next()
+            val chapters = ArrayList<Int>()
+            verses.forEach { if (!chapters.contains(it.first)) chapters.add(it.first) }
+
+            val inChapters = ParserUtils.prepareChapterText(context, quranMeta, chapters, 2)
+
+            duas.add(
+                Dua(
+                    id = key.toInt(),
+                    name = name,
+                    versesRaw = ParserUtils.prepareVersesList(versesStr, true),
+                    verses = verses,
+                    chapters = chapters,
+                    inChapters = inChapters
+                )
+            )
         }
 
-        val sortedVerses = verses.sortedWith { o1, o2 ->
-            val split1 = o1.split(":")
-            val split2 = o2.split(":")
-
-            val chapterNoStr1 = split1[0]
-            val chapterNoStr2 = split2[0]
-
-            var comp = chapterNoStr1.trim().toInt() - chapterNoStr2.trim().toInt()
-
-            if (comp == 0) {
-                val verses1 = split1[1].split("-")
-                val verses2 = split2[1].split("-")
-
-                var comp2 = verses1[0].trim().toInt() - verses2[0].trim().toInt()
-                if (comp2 == 0 && verses1.size > 1 && verses2.size > 1) {
-                    comp2 = verses1[1].trim().toInt() - verses2[1].trim().toInt()
-                }
-                comp = comp2
-            }
-
-            comp
-        }
-
-        val chapters = ParserUtils.prepareChaptersList(sortedVerses)
-        val inChapters = ParserUtils.prepareChapterText(context, quranMeta, chapters, 2)
-        return QuranDua(inChapters, chapters, sortedVerses)
+        return duas
     }
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dr_bg_search_result_item"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/place"
+        style="@style/TextAppearanceCommonTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBGReaderChapterSerial"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        tools:text="Place: Load Reciters" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/logText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="@dimen/dmnCommonSize2"
+        tools:text="System.FormatException: Input string was not in a correct format.
+   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.Number.ParseInt32(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at A.D.E(String x)
+   at A.B.C(String[] args)" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/datetime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:textColor="@color/colorText2"
+            android:textSize="@dimen/dmnCommonSize2_5"
+            tools:text="2020-01-01 00:00:00" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="7dp"
+            android:src="@drawable/dr_icon_delete" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnCopy"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="7dp"
+            android:src="@drawable/icon_copy" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnGitHub"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/dr_bg_action_round"
+            android:padding="7dp"
+            android:src="@drawable/icon_github" />
+    </LinearLayout>
+
+</LinearLayout>

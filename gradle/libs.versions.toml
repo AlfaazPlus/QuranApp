@@ -13,16 +13,8 @@ webkit = "1.6.0"
 media = "1.6.0"
 viewbinding = "7.4.1"
 browser = "1.4.0"
-
-# SmoothRefreshLayout
-srlCore = "1.7.2.4"
-srlExtClassics = "1.7.2.4"
-srlExtMaterial = "1.7.2.4"
-srlExtDynamicRebound = "1.7.2.4"
-srlExtHorizontal = "1.7.2.4"
-srlExtTwoLevel = "1.7.2.4"
-srlExtUtil = "1.7.2.4"
-
+exoplayer = "2.18.5"
+swipeRefreshLayout = "1.7.2.4"
 retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
@@ -44,14 +36,19 @@ guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 viewbinding = { group = "com.android.databinding", name = "viewbinding", version.ref = "viewbinding" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
+# ExoPlayer
+exoplayerCore = { group = "com.google.android.exoplayer", name = "exoplayer-core", version.ref = "exoplayer" }
+exoplayerUI = { group = "com.google.android.exoplayer", name = "exoplayer-ui", version.ref = "exoplayer" }
+extensionMediasession = { group = "com.google.android.exoplayer", name = "extension-mediasession", version.ref = "exoplayer" }
+
 # SmoothRefreshLayout
-srlCore = { group = "com.github.dkzwm", name = 'srl-core', version.ref = "srlCore" }
-srlExtClassics = { group = "com.github.dkzwm", name = 'srl-ext-classics', version.ref = "srlExtClassics" }
-srlExtMaterial = { group = "com.github.dkzwm", name = 'srl-ext-material', version.ref = "srlExtMaterial" }
-srlExtDynamicRebound = { group = "com.github.dkzwm", name = 'srl-ext-dynamic-rebound', version.ref = "srlExtDynamicRebound" }
-srlExtHorizontal = { group = "com.github.dkzwm", name = 'srl-ext-horizontal', version.ref = "srlExtHorizontal" }
-srlExtTwoLevel = { group = "com.github.dkzwm", name = 'srl-ext-two-level', version.ref = "srlExtTwoLevel" }
-srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = "srlExtUtil" }
+srlCore = { group = "com.github.dkzwm", name = 'srl-core', version.ref = "swipeRefreshLayout" }
+srlExtClassics = { group = "com.github.dkzwm", name = 'srl-ext-classics', version.ref = "swipeRefreshLayout" }
+srlExtMaterial = { group = "com.github.dkzwm", name = 'srl-ext-material', version.ref = "swipeRefreshLayout" }
+srlExtDynamicRebound = { group = "com.github.dkzwm", name = 'srl-ext-dynamic-rebound', version.ref = "swipeRefreshLayout" }
+srlExtHorizontal = { group = "com.github.dkzwm", name = 'srl-ext-horizontal', version.ref = "swipeRefreshLayout" }
+srlExtTwoLevel = { group = "com.github.dkzwm", name = 'srl-ext-two-level', version.ref = "swipeRefreshLayout" }
+srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = "swipeRefreshLayout" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }

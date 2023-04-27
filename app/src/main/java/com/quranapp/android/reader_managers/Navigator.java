@@ -1,6 +1,7 @@
 package com.quranapp.android.reader_managers;
 
 import android.view.View;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
@@ -15,6 +16,7 @@ import com.quranapp.android.adapters.ADPQuranPages;
 import com.quranapp.android.adapters.ADPReader;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.components.reader.QuranPageModel;
 import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.components.reader.ReaderRecyclerItemModel;
@@ -33,7 +35,8 @@ import me.dkzwm.widget.srl.SmoothRefreshLayout;
 public class Navigator {
     private final ReaderParams mReaderParams;
     private final ActivityReader mActivity;
-    public int[] pendingScrollVerse = {-1, -1};
+    @Nullable
+    public ChapterVersePair pendingScrollVerse;
     public boolean pendingScrollVerseHighlight = true;
     public ReaderFooter readerFooter;
     private ViewSwipeToPrevious mViewSwipeToPrevious;
@@ -171,18 +174,10 @@ public class Navigator {
         mSwipeDisabled = disabled;
         mViewSwipeToPrevious.setSwipeDisabled(disabled);
         mViewSwipeToNext.setSwipeDisabled(disabled);
-
-        /*SmoothRefreshLayout swipeLayout = mActivity.mBinding.swipeLayout;
-        swipeLayout.setDisableRefresh(disabled);
-        swipeLayout.setDisableLoadMore(disabled);*/
     }
 
     public int getCurrJuzNo() {
         return mReaderParams.currJuzNo;
-    }
-
-    public int getCurrJuzIndex() {
-        return getCurrJuzNo() - 1;
     }
 
     public int getPrevJuzNo() {
@@ -197,10 +192,6 @@ public class Navigator {
         return mReaderParams.currChapter.getChapterNumber();
     }
 
-    public int getCurrChapterIndex() {
-        return getCurrChapterNo() - 1;
-    }
-
     public int getPrevChapterNo() {
         return getCurrChapterNo() - 1;
     }
@@ -211,10 +202,6 @@ public class Navigator {
 
     public int getCurrVerseNo() {
         return mReaderParams.currChapter.getCurrentVerseNo();
-    }
-
-    public int getCurrVerseIndexInSpinner() {
-        return getCurrVerseNo() - 1;
     }
 
     public int getPrevVerseNo() {
@@ -253,7 +240,7 @@ public class Navigator {
     }
 
     public void goToChapter(int chapterNumber) {
-        pendingScrollVerse = new int[]{-1, -1};
+        pendingScrollVerse = null;
 
         if (!QuranMeta.isChapterValid(chapterNumber)) {
             return;
@@ -270,7 +257,10 @@ public class Navigator {
     }
 
     public void continueChapter() {
-        pendingScrollVerse = new int[]{mReaderParams.currChapter.getChapterNumber(), mReaderParams.verseRange.getSecond()};
+        pendingScrollVerse = new ChapterVersePair(
+            mReaderParams.currChapter.getChapterNumber(),
+            mReaderParams.verseRange.getSecond()
+        );
         mActivity.initChapter(mReaderParams.currChapter);
     }
 
@@ -283,14 +273,17 @@ public class Navigator {
     }
 
     public void jumpToVerse(int chapterNo, int verseNo, boolean invokePlayer) {
+        if (mReaderParams.currChapter == null) return;
+
         QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
-        if (mReaderParams.readType != READER_READ_TYPE_JUZ && !quranMeta.isVerseValid4Chapter(getCurrChapterNo(),
-            verseNo)) {
+
+        if (mReaderParams.readType != READER_READ_TYPE_JUZ
+            && !quranMeta.isVerseValid4Chapter(getCurrChapterNo(), verseNo)) {
             return;
         }
 
         if (invokePlayer) {
-            mActivity.onVerseReciteOrJump(chapterNo, verseNo, false);
+            mActivity.onVerseJump(chapterNo, verseNo);
         }
 
         switch (mReaderParams.readType) {
@@ -304,7 +297,7 @@ public class Navigator {
                     if (QuranUtils.isVerseInRange(verseNo, range)) {
                         scrollToVerse(chapterNo, verseNo, true);
                     } else {
-                        pendingScrollVerse = new int[]{chapterNo, verseNo};
+                        pendingScrollVerse = new ChapterVersePair(chapterNo, verseNo);
                         mActivity.persistProgressDialog4PendingTask = true;
                         readFullChapter();
                     }

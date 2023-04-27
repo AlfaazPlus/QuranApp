@@ -22,11 +22,13 @@ import com.quranapp.android.databinding.ActivitySettingsBinding;
 import com.quranapp.android.frags.settings.FragSettingsBase;
 import com.quranapp.android.frags.settings.FragSettingsLanguage;
 import com.quranapp.android.frags.settings.FragSettingsMain;
-import com.quranapp.android.frags.settings.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.FragSettingsScripts;
 import com.quranapp.android.frags.settings.FragSettingsTafsirs;
 import com.quranapp.android.frags.settings.FragSettingsTransl;
 import com.quranapp.android.frags.settings.FragSettingsTranslationsDownload;
+import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter;
 import com.quranapp.android.views.BoldHeader;
 
 import java.util.Objects;
@@ -39,8 +41,10 @@ public class ActivitySettings extends BaseActivity {
     public static final int SETTINGS_TRANSLATION = 0x4;
     public static final int SETTINGS_TRANSLATION_DOWNLOAD = 0x5;
     public static final int SETTINGS_TAFSIR = 0x6;
-    public static final int SETTINGS_RECITER = 0x7;
-    public static final int SETTINGS_SCRIPT = 0x8;
+    public static final int SETTINGS_SCRIPT = 0x7;
+    public static final int SETTINGS_RECITER = 0x8;
+    public static final int SETTINGS_MANAGE_AUDIO = 0x9;
+    public static final int SETTINGS_MANAGE_AUDIO_RECITER = 0x10;
 
     private ActivitySettingsBinding mBinding;
 
@@ -94,7 +98,10 @@ public class ActivitySettings extends BaseActivity {
             if (!Objects.equals(f.getClass().getSimpleName(), resolveInitialFrag(intent).getSimpleName())) {
                 initIntent(intent, true);
             } else {
-                ((FragSettingsBase) f).onNewArguments(intent.getExtras());
+                Bundle args = intent.getExtras();
+                if (args != null) {
+                    ((FragSettingsBase) f).onNewArguments(args);
+                }
             }
         }
     }
@@ -143,11 +150,17 @@ public class ActivitySettings extends BaseActivity {
             case SETTINGS_TAFSIR:
                 destFrag = FragSettingsTafsirs.class;
                 break;
+            case SETTINGS_SCRIPT:
+                destFrag = FragSettingsScripts.class;
+                break;
             case SETTINGS_RECITER:
                 destFrag = FragSettingsRecitations.class;
                 break;
-            case SETTINGS_SCRIPT:
-                destFrag = FragSettingsScripts.class;
+            case SETTINGS_MANAGE_AUDIO:
+                destFrag = FragSettingsManageAudio.class;
+                break;
+            case SETTINGS_MANAGE_AUDIO_RECITER:
+                destFrag = FragSettingsManageAudioReciter.class;
                 break;
             case SETTINGS_THEME:
             case SETTINGS_VOTD:

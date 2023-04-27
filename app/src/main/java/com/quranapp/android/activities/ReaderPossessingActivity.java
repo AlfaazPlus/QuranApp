@@ -164,6 +164,10 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         mPendingMetaRequesters.clear();
     }
 
+    public CharSequence prepareVerseText(Verse verse) {
+        return mVerseDecorator.prepareArabicText(verse);
+    }
+
     public CharSequence prepareTranslSpannable(Verse verse, List<Translation> translations, Map<String, QuranTranslBookInfo> bookInfos) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
 
@@ -177,8 +181,13 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
             if (bookInfo != null) {
                 String author = bookInfo.getDisplayName(false);
                 Typeface authorFont = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;
-                sb.append(VerseUtils.prepareTranslAuthorText(author, mColorSecondary, mAuthorTextSize,
-                    authorFont, TranslUtils.TRANSL_TRANSLITERATION.equals(bookSlug)));
+                sb.append(VerseUtils.prepareTranslAuthorText(
+                    author,
+                    mColorSecondary,
+                    mAuthorTextSize,
+                    authorFont,
+                    TranslUtils.isTransliteration(bookSlug)
+                ));
             }
 
             sb.append(i < l2 ? "\n\n" : "\n");
@@ -209,7 +218,7 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         Typeface typeface = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;
         sb.setSpan(new TypefaceSpan2(typeface), 0, sb.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        if (TranslUtils.TRANSL_TRANSLITERATION.equals(translation.getBookSlug())) {
+        if (TranslUtils.isTransliteration(translation.getBookSlug())) {
             sb.setSpan(new StyleSpan(Typeface.ITALIC), 0, sb.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 

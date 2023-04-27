@@ -26,7 +26,7 @@ object QuranScriptUtils {
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
 
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
-    const val TOTAL_DOWNLOAD_PARTS = 3
+    const val TOTAL_DOWNLOAD_PARTS = 4
 
     val INDO_PAK_SCRIPT_NAMES = mapOf(
         "en" to "IndoPak",
@@ -37,6 +37,7 @@ object QuranScriptUtils {
         "es" to "IndoPak",
         "fa" to "هند پاک",
         "fr" to "IndoPak",
+        "gu" to "ઈન્ડોપાક",
         "hi" to "इंडो पाक",
         "in" to "IndoPak",
         "it" to "IndoPak",
@@ -55,7 +56,8 @@ object QuranScriptUtils {
         "es" to "Uthmani Hafs",
         "fa" to "عثمانی حفص",
         "fr" to "Uthmani Hafs",
-        "hi" to "उशमनी हफ्स",
+        "gu" to "ઉથમાની હાફ્સ",
+        "hi" to "उशमानी हफ्स",
         "in" to "Utsmani Hafs",
         "it" to "Uthmani Hafs",
         "ml" to "ഓട്ടോമൻ ഹാഫുകൾ",
@@ -73,6 +75,7 @@ object QuranScriptUtils {
         "es" to "Rey Fahd Complex V1",
         "fa" to "مجتمع شاه فهد V1",
         "fr" to "Complexe Roi Fahad V1",
+        "gu" to "કિંગ ફહદ કોમ્પ્લેક્સ V1",
         "hi" to "राजा फहद कॉम्प्लेक्स v1",
         "in" to "Kompleks Raja Fahad V1",
         "it" to "Complesso di Re Fahad V1",

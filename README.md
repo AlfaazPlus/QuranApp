@@ -48,7 +48,8 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
 - Contribute
   - [Contributing](#contributing)
   - [Contributors](/CONTRIBUTORS.md)
-- [Roadmap](/Roadmap.md)
+- [Wiki](https://github.com/AlfaazPlus/QuranApp/wiki)
+- [Roadmap](https://github.com/AlfaazPlus/QuranApp/wiki/Roadmap)
 - [License](/LICENSE)
 </details>
 
@@ -77,7 +78,9 @@ height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android
       
 <sub>_* Permissions that affect your privacy such as storage, gps, camera etc. are not required._</sub>
       
-See all the features [here](/FEATURES.md).
+See an overview of all the features [here](/FEATURES.md).
+
+If you want help with using the QuranApp, please take a look at [WiKi](https://github.com/AlfaazPlus/QuranApp/wiki).
 
 ## Credits
 
@@ -90,8 +93,8 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
 ## App Translations
-<a href="https://hosted.weblate.org/projects/QuranApp/#languages">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/horizontal-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/projects/QuranApp/#components">
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
 </a>
 
 ## License

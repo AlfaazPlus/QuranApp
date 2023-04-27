@@ -109,7 +109,7 @@ public class ReaderParams {
     }
 
     public void resetTextSizesStates() {
-        arTextSizeMult = SPReader.getSavedTextSizeMultTransl(mActivity);
+        arTextSizeMult = SPReader.getSavedTextSizeMultArabic(mActivity);
         translTextSizeMult = SPReader.getSavedTextSizeMultTransl(mActivity);
     }
 

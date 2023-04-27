@@ -21,7 +21,7 @@ class ADPTafsir(private val tafsirs: List<TafsirInfoModel>, private val selectCa
             checkBox.isChecked = info.isChecked
             checkBox.onCheckChangedListener = { _, _ ->
                 SPReader.setSavedTafsirKey(checkBox.context, info.key)
-                selectCallback(adapterPosition)
+                selectCallback(bindingAdapterPosition)
             }
         }
 

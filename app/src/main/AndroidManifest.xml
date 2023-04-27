@@ -38,27 +38,41 @@
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity android:name=".activities.ActivityDownloads" />
-        <activity android:name=".activities.ActivityReference" />
+        <activity android:name=".activities.ActivityReference"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.quranapp.android.action.OPEN_REFERENCE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.ActivityTopics" />
         <activity android:name=".activities.ActivityProphets" />
         <activity
             android:name=".activities.ActivityTafsir"
-            android:launchMode="singleTask" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.quranapp.android.action.OPEN_TAFSIR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.ActivityChapInfo"
             android:exported="true"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.quranapp.android.action.OPEN_CHAPTER_INFO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
             <intent-filter android:label="About Surah (QuranApp)">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data
-                    android:host="quran.com"
-                    android:pathPattern="/chapter_info/.*" />
-                <!-- note that the leading "/" is required for pathPrefix -->
+                <data android:host="quran.com"/>
+                <data android:pathPattern="/chapter_info/.*"/>
             </intent-filter>
         </activity>
         <activity
@@ -80,11 +94,24 @@
             android:name=".activities.ActivityReader"
             android:exported="true"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.quranapp.android.action.OPEN_READER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https"/>
+                <data android:host="quran.com"/>
+                <data android:pathPattern="/juz/.*"/>
+                <data android:pathPattern="/\\d+"/>
+                <data android:pathPattern="/\\d+/\\d+"/>
+                <data android:pathPattern="/\\d+/\\d+-\\d+"/>
+                <data android:pathPattern="/\\d+:\\d+"/>
+                <data android:pathPattern="/\\d+:\\d+-\\d+"/>
             </intent-filter>
         </activity>
         <activity
@@ -111,6 +138,10 @@
             android:process=":remote" />
 
         <receiver
+            android:name=".utils.receivers.CrashReceiver"
+            android:enabled="true" />
+
+        <receiver
             android:name=".utils.receivers.AlarmPermissionReceiver"
             android:enabled="true"
             android:exported="true">
@@ -128,9 +159,10 @@
             </intent-filter>
         </receiver>
 
+        <service android:name=".utils.services.RecitationService" />
+        <service android:name=".utils.services.RecitationChapterDownloadService" />
         <service android:name=".utils.services.TranslationDownloadService" />
         <service android:name=".utils.services.KFQPCScriptFontsDownloadService" />
-        <service android:name=".utils.reader.recitation.RecitationNotificationService" />
 
     </application>
 

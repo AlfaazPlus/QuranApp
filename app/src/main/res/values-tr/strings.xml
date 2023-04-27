@@ -79,7 +79,6 @@
     <string name="strTitleSendFeedback">Geri bildirim gönder</string>
     <string name="strTitleHelpSupport">Yardım &amp; Destek</string>
     <string name="strTitleAddNote">Not ekle</string>
-    <string name="strTitleSubscription">Abonelik</string>
     <string name="strTitleTafsir">Tefsir</string>
     <string name="strTitleSelectTafsir">Tefsir Seç</string>
     <string name="strTitleAboutSurah">Sure Hakkında</string>
@@ -87,7 +86,7 @@
     <string name="strTitleRecitations">Tilavet</string>
     <string name="strTitleSelectReciter">Hafız Seç</string>
     <string name="strTitleGotoVerseNo" formatted="false">%d. Ayete Git</string>
-    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d Ayetlerini Oku</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d. Ayetleri Oku</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Meal görünümü</string>
     <string name="strTitleNote">Not</string>
     <string name="strTitleFilters">Filtreler</string>
@@ -117,7 +116,7 @@
     <string name="strTitleReaderJuz">Cüz</string>
     <string name="strTitleReaderChapters2">Sureler</string>
     <string name="strTitleReaderVerses">Ayetler</string>
-    <string name="strLabelVerseWithChapNameAndNo" formatted="false">%1$s %2$d Suresi: %3$d Ayet</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s Suresi: %3$d. Ayet</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s Suresi : %2$d. Ayet</string>
     <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">Ayet: %d</string>
@@ -196,7 +195,7 @@
     <string name="strMsgYouAreReadingVerses">Şu ayetleri okuyorsunuz:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d geçerli bir Sure numarası değil.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d numaralı Ayet, %2$d numaralı Sure için geçersiz</string>
-    <string name="strMsgInvalidVersesRange">Geçersiz ayet aralığı.</string>
+    <string name="strMsgInvalidVersesRange">Geçersiz ayet aralığı</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d geçerli bir Cüz numarası değil.</string>
     <string name="strMsgBookmarkRemoveFailed">Ayet, yer imlerinden kaldırılamadı</string>
     <string name="strMsgBookmarkRemovedAlready">Ayet, yer imlerinde değil</string>
@@ -269,7 +268,7 @@
     <string name="lastCrashLog">Son çökme günlüğü</string>
     <string name="createIssue">Sorun oluştur</string>
     <string name="copiedToClipboard">Panoya kopyalandı.</string>
-    <string name="pasteCrashLogGithubIssue">Çökme günlüğü panoya kopyalandı. Lütfen kopyalanan metni GitHub\'daki ilgili alana yapıştırın.</string>
+    <string name="pasteCrashLogGithubIssue">Günlük panoya kopyalandı. Lütfen kopyalanan metni GitHub\'daki ilgili alana yapıştırın.</string>
     <string name="titleStorageCleanup">Depolama temizleme</string>
     <string name="storageCleanupMessage">İndirilmiş ama kullanılmayan kaynaklar silinerek yer açılabilir. Bu işlem yer imlerinizi veya ayarlarınızı etkilemez.
 \n
@@ -345,7 +344,7 @@
     <string name="strMsgReadHistoryRemoveFailed">Okuma geçmişi temizlenemedi.</string>
     <string name="strMsgReadHistoryRemovedAlready">Okuma geçmişi zaten temizlenmiş.</string>
     <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
-    <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek. Sure tilavet dosyalarını teker teker silmek isterseniz, ses ayarlarına gidin.</string>
     <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
     <string name="nItem">%d öğe</string>
     <string name="nItems">%d öğe</string>
@@ -361,11 +360,43 @@
     <string name="inPlacesMore">%1$s ve %2$d daha fazla</string>
     <string name="msgTafsirCleanup" formatted="false">%s\'e ait olan depolanmış tüm tefsirler silinecek.</string>
     <string name="onboardDescTheme">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
-    <string name="strTitleReadTafsirOfVerse" formatted="false">%d ayetin tefsirini oku</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%d. ayetin tefsirini oku</string>
     <string name="strMsgTafsirsNoAvailable">Hiçbir tefsir yok</string>
     <string name="titleTafsirCleanup">Tefsir silinsin mi\?</string>
     <string name="onboardDescLanguage">Uygulamayı kendi dilinize göre ayarlayın. Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
     <string name="noFootnotesForThisVerse">Bu ayet için hiçbir dipnot yok.</string>
     <string name="onboardDescTranslations">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz. Ayarlardan daha fazla meal indirebilirsiniz.</string>
     <string name="onboardDescReciter">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz. Ayarlarda daha fazla hafız bulabilirsiniz.</string>
+    <string name="labelAdd">Ekle</string>
+    <string name="msgChapterAddedToFavourites">Sure favorilere eklendi.</string>
+    <string name="msgAddedToFavourites">Favorilere Eklendi</string>
+    <string name="titleRemoveFromFavourites">Favorilerden Kaldır</string>
+    <string name="msgRemovedFromFavourites">Favorilerden Kaldırıldı</string>
+    <string name="msgNoFavouriteChapters">Burada gözükmesi için bir bölümü favorilere ekleyin.</string>
+    <string name="msgChapterRemovedFromFavourites">Sure favorilerden kaldırıldı.</string>
+    <string name="textTranslationReciterInfo">Dil: %1$s
+\nKitap: %2$s</string>
+    <string name="textDownloaded">İndirildi</string>
+    <string name="appLogs">Uygulama Günlükleri</string>
+    <string name="crashLogs">Çökme Günlükleri</string>
+    <string name="textNoLogsFound">Günlük Dosyası Bulunamadı</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Hafız \"%2$s\"e ait \"%1$s\"in tüm tilavet dosyaları silinecek.</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Hafız \"%2$s\" için \"%1$s\" indirilemedi.</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Hafız \"%2$s\" için \"%1$s\" indirildi.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Hafız \"%2$s\"e ait \"%1$s\"in tilavet dosyaları silindi.</string>
+    <string name="titleManageAudio">Sesi Yönet</string>
+    <string name="playbackSpeed">Oynatma hızı</string>
+    <string name="audioOnlyTranslation">Sadece Meali Oynat</string>
+    <string name="noItems">Öğe Yok</string>
+    <string name="titleAddToFavourites">Favorilere Ekle</string>
+    <string name="titleReaderTextSizeTafsir">Tefsir metin boyutu</string>
+    <string name="downloadRecitations">Tilavetleri İndir</string>
+    <string name="titleOtherSettings">Diğer Ayarlar</string>
+    <string name="suppressedLogs">Gizli Günlükler</string>
+    <string name="audioOption">Ses Ayarı</string>
+    <string name="audioOnlyArabic">Sadece Arapça Oynat</string>
+    <string name="audioBothArabicTranslation">Her ikisini oynat</string>
+    <string name="logRemoved">Günlük Kaldırıldı</string>
+    <string name="labelArabic">Arapça</string>
+    <string name="labelTranslation">Meal</string>
 </resources>

@@ -96,7 +96,6 @@
     <string name="strTitleAddNote">Tambahkan catatan</string>
     <string name="strTitleNote">Catatan</string>
     <string name="strTitleRateApp">Beri Rating</string>
-    <string name="strTitleSubscription">Berlangganan</string>
     <string name="strTitleFilters">Filter</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleTafsir">Tafsir</string>
@@ -191,7 +190,7 @@
     <string name="strMsgYouAreReadingVerses">Kamu sedang membaca ayat:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d tidak valid Surah No.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d tidak valid Ayat No. untuk Surah No. %2$d</string>
-    <string name="strMsgInvalidVersesRange">Rentang Ayat tidak valid.</string>
+    <string name="strMsgInvalidVersesRange">Rentang Ayat tidak valid</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d tidak valid Juz No.</string>
     <string name="strMsgBookmarkAdded">Ayat berhasil ditambahkan ke Bookmark</string>
     <string name="strMsgBookmarkAddFailed">Ayat gagal ditambahkan ke Bookmark</string>
@@ -367,4 +366,37 @@
     <string name="onboardDescTranslations">Anda selalu dapat mengubahnya nanti. Anda dapat mengunduh banyak terjemahan lainnya dari pengaturan.</string>
     <string name="noFootnotesForThisVerse">Tidak ada catatan kaki untuk ayat ini.</string>
     <string name="onboardDescReciter">Anda selalu dapat mengubahnya nanti. Anda dapat menemukan banyak qari lainnya di pengaturan.</string>
+    <string name="onboardDescLanguage">Atur aplikasi dalam bahasa anda. Anda selalu bisa mengubahnya nanti.</string>
+    <string name="labelAdd">Tambah</string>
+    <string name="noItems">Tidak ada item</string>
+    <string name="titleAddToFavourites">Tambahkan ke disukai</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Semua Murattal dari \"%1$s\" untuk Qori Murattal \"%2$s\" akan dihapus.</string>
+    <string name="titleRemoveFromFavourites">Hapus dari disukai</string>
+    <string name="textNoLogsFound">Log tidak ditemukan</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Terunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Murattal yang terhapus \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
+    <string name="titleManageAudio">Kelola Audio</string>
+    <string name="msgAddedToFavourites">Telah ditambah ke disukai</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Gagal mengunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
+    <string name="playbackSpeed">Kecepatan pemutaran</string>
+    <string name="audioOnlyTranslation">Hanya putar terjemahan</string>
+    <string name="titleReaderTextSizeTafsir">Ukuran teks tafsir</string>
+    <string name="downloadRecitations">Unduh Murattal</string>
+    <string name="titleOtherSettings">Pengaturan Lainnya</string>
+    <string name="appLogs">Log aplikasi</string>
+    <string name="suppressedLogs">Log yang ditekan</string>
+    <string name="audioOption">Pilihan audio</string>
+    <string name="audioOnlyArabic">Hanya putar Arabic</string>
+    <string name="audioBothArabicTranslation">Putar Arabic dan terjemahan</string>
+    <string name="textDownloaded">Terunduh</string>
+    <string name="crashLogs">Log error</string>
+    <string name="msgNoFavouriteChapters">Tambah sebuah surah ke disukai untuk melihat disini.</string>
+    <string name="msgChapterRemovedFromFavourites">Surah telah dihapus dari disukai.</string>
+    <string name="logRemoved">Log dihapus</string>
+    <string name="labelArabic">Arabic</string>
+    <string name="msgRemovedFromFavourites">Telah dihapus dari disukai</string>
+    <string name="labelTranslation">Terjemahan</string>
+    <string name="msgChapterAddedToFavourites">Surah telah ditambah ke disukai.</string>
+    <string name="textTranslationReciterInfo">Bahasa: %1$s
+\nBuku: %2$s</string>
 </resources>

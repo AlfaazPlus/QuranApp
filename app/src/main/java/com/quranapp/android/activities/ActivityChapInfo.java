@@ -1,5 +1,7 @@
 package com.quranapp.android.activities;
 
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_CHAPTER_INFO;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -93,20 +95,18 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
 
     private void initContent(Intent intent) {
         int DEFAULT_CHAPTER_INFO = -1;
-        int chapterNo = -1;
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+        final int chapterNo;
+        String action = intent.getAction();
+        if (
+            Intent.ACTION_VIEW.equals(action)
+                || INTENT_ACTION_OPEN_CHAPTER_INFO.equalsIgnoreCase(action)
+        ) {
             try {
-                Uri data = intent.getData();
-                List<String> pathSegments = data.getPathSegments();
-                chapterNo = Integer.parseInt(pathSegments.get(1));
-
-                String lang = data.getQueryParameter("language");
-                if (lang == null) {
-                    lang = data.getQueryParameter("lang");
-                }
-                mLanguage = lang;
-            } catch (Exception ignored) {
+                chapterNo = validateIntent(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
                 invalidParams();
+                return;
             }
         } else {
             chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, DEFAULT_CHAPTER_INFO);
@@ -126,6 +126,27 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
 
         initWebView();
         loadContent();
+    }
+
+    private int validateIntent(Intent intent) {
+        Uri url = intent.getData();
+        if (INTENT_ACTION_OPEN_CHAPTER_INFO.equalsIgnoreCase(intent.getAction())) {
+            mLanguage = intent.getStringExtra("language");
+            return intent.getIntExtra("chapterNo", -1);
+        } else if (url.getHost().equalsIgnoreCase("quran.com")) {
+            List<String> pathSegments = url.getPathSegments();
+            String lang = url.getQueryParameter("language");
+
+            if (lang == null) {
+                lang = url.getQueryParameter("lang");
+            }
+
+            mLanguage = lang;
+
+            return Integer.parseInt(pathSegments.get(1));
+        } else {
+            throw new IllegalArgumentException("Invalid params");
+        }
     }
 
     private void initThis() {

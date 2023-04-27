@@ -141,12 +141,14 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
                     addView(compoundButton, 1)
                 }
             }
+
             COMPOUND_TEXT_RIGHT, COMPOUND_TEXT_BOTTOM -> {
                 if (compoundButton != null) {
                     addView(compoundButton, 0)
                 }
                 addView(txtView, if (compoundButton != null) 1 else 0)
             }
+
             else -> {
                 if (compoundButton != null) {
                     addView(compoundButton, 0)
@@ -162,7 +164,7 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
         setSpaceBetweenInternal(spaceBetween)
     }
 
-    protected abstract fun getCompoundButton(): CompoundButton?
+    abstract fun getCompoundButton(): CompoundButton?
 
     @SuppressLint("RtlHardcoded")
     private fun resolveTextGravity(@TextGravity textGravity: Int): Int {

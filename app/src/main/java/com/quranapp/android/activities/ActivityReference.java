@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
 import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_REFERENCE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -31,6 +32,7 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
 import com.quranapp.android.databinding.LytChipgroupBinding;
+import com.quranapp.android.utils.quran.parser.ParserUtils;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
@@ -147,8 +149,18 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void init(Intent intent) {
-        ReferenceVerseModel refModel = (ReferenceVerseModel) intent.getSerializableExtra(
-            Keys.KEY_REFERENCE_VERSE_MODEL);
+        ReferenceVerseModel refModel = null;
+
+        try {
+            refModel = validateIntent(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (refModel == null) {
+            refModel = (ReferenceVerseModel) intent.getSerializableExtra(Keys.KEY_REFERENCE_VERSE_MODEL);
+        }
+
         if (refModel == null) {
             return;
         }
@@ -171,14 +183,22 @@ public class ActivityReference extends ReaderPossessingActivity {
             mSelectedTranslSlugs = TranslUtils.defaultTranslationSlugs();
         }
 
-        /*QuranTransl.prepareInstance(this, mSelectedTranslSlugs, quranTransl -> {
-            setVisibleTranslSlugs(mSelectedTranslSlugs);
-            setQuranTransl(quranTransl, true);
-
-            initContent(refModel);
-        });*/
-
         initContent(refModel);
+    }
+
+    private ReferenceVerseModel validateIntent(Intent intent) {
+        if (!INTENT_ACTION_OPEN_REFERENCE.equalsIgnoreCase(intent.getAction())) {
+            return null;
+        }
+
+        final String title = intent.getStringExtra("title");
+        final String desc = intent.getStringExtra("description");
+        final String[] translSlugs = intent.getStringArrayExtra("translations");
+        final boolean showChapterSugg = intent.getBooleanExtra("showChapterSuggestions", true);
+        final List<String> verses = ParserUtils.prepareVersesList(intent.getStringExtra("verses"), true);
+        final List<Integer> chapters = ParserUtils.prepareChaptersList(verses);
+
+        return new ReferenceVerseModel(showChapterSugg, title, desc, translSlugs, chapters, verses);
     }
 
     private void initContent(ReferenceVerseModel refModel) {
@@ -268,26 +288,11 @@ public class ActivityReference extends ReaderPossessingActivity {
 
             @Override
             public void runTask() throws NumberFormatException {
-                models = prepareVerses(requestedChapterNo, verseModel);
-
-                if (mVerseDecorator.isKFQPCScript()) {
-                    for (ReferenceVerseItemModel model : models) {
-                        if (model.getViewType() != VIEWTYPE_VERSE) {
-                            continue;
-                        }
-
-                        Verse verse = model.getVerse();
-                        if (verse == null) {
-                            continue;
-                        }
-
-                        mVerseDecorator.refreshQuranTextFonts(
-                            new Pair<>(verse.pageNo, verse.pageNo)
-                        );
-                    }
-                } else {
+                if (!mVerseDecorator.isKFQPCScript()) {
                     mVerseDecorator.refreshQuranTextFonts(null);
                 }
+
+                models = prepareVerses(requestedChapterNo, verseModel, mVerseDecorator.isKFQPCScript());
             }
 
             @Override
@@ -305,7 +310,7 @@ public class ActivityReference extends ReaderPossessingActivity {
         });
     }
 
-    private List<ReferenceVerseItemModel> prepareVerses(int requestChapterNo, ReferenceVerseModel verseModel) {
+    private List<ReferenceVerseItemModel> prepareVerses(int requestChapterNo, ReferenceVerseModel verseModel, boolean isKFQPCScript) {
         List<ReferenceVerseItemModel> models = new ArrayList<>();
         models.add(new ReferenceVerseItemModel(VIEWTYPE_DESCRIPTION, null, -1, -1, -1, null, false));
 
@@ -329,7 +334,7 @@ public class ActivityReference extends ReaderPossessingActivity {
                 String titleText = String.format("%s %d:%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo,
                     fromVerse);
                 models.add(prepareTitleModel(chapterNo, fromVerse, fromVerse, titleText));
-                models.add(prepareVerseModel(chapterNo, fromVerse, booksInfo));
+                models.add(prepareVerseModel(chapterNo, fromVerse, booksInfo, isKFQPCScript));
             } else {
                 final int toVerse = Integer.parseInt(split[1].trim());
                 String titleText = String.format("%s %d:%d-%d", mQuranMeta.getChapterName(this, chapterNo), chapterNo,
@@ -337,7 +342,7 @@ public class ActivityReference extends ReaderPossessingActivity {
                     toVerse);
                 models.add(prepareTitleModel(chapterNo, fromVerse, toVerse, titleText));
                 for (int verseNo = fromVerse; verseNo <= toVerse; verseNo++) {
-                    models.add(prepareVerseModel(chapterNo, verseNo, booksInfo));
+                    models.add(prepareVerseModel(chapterNo, verseNo, booksInfo, isKFQPCScript));
                 }
             }
         }
@@ -356,18 +361,31 @@ public class ActivityReference extends ReaderPossessingActivity {
         );
     }
 
-    private ReferenceVerseItemModel prepareVerseModel(int chapterNo, int verseNo, Map<String, QuranTranslBookInfo> booksInfo) {
+    private ReferenceVerseItemModel prepareVerseModel(
+        int chapterNo,
+        int verseNo,
+        Map<String, QuranTranslBookInfo> booksInfo,
+        boolean isKFQPCScript
+    ) {
         Verse verse = mQuran.getVerse(chapterNo, verseNo);
         verse.setIncludeChapterNameInSerial(true);
 
+        if (isKFQPCScript) {
+            mVerseDecorator.refreshQuranTextFonts(
+                new Pair<>(verse.pageNo, verse.pageNo)
+            );
+        }
+
         mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo, verseNo);
 
-        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo,
-            verseNo);
+        List<Translation> translations = mTranslFactory.getTranslationsSingleVerse(
+            mSelectedTranslSlugs,
+            chapterNo,
+            verseNo
+        );
         verse.setTranslations(translations);
-
-        CharSequence spannable = prepareTranslSpannable(verse, translations, booksInfo);
-        verse.setTranslTextSpannable(spannable);
+        verse.arabicTextSpannable = prepareVerseText(verse);
+        verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
         return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);
     }

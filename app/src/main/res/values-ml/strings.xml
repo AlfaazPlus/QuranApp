@@ -84,7 +84,7 @@
     <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
     <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
     <string name="strTitleQuran">ഖുർആൻ</string>
-    <string name="strTitleMakki">മാക്കി</string>
+    <string name="strTitleMakki">മെക്കൻ</string>
     <string name="strTitleMadani">മദനി</string>
     <string name="strTitleFootnote">അടിക്കുറിപ്പ്</string>
     <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
@@ -103,7 +103,6 @@
     <string name="strTitleAddNote">കുറിപ്പ് ചേർക്കുക</string>
     <string name="strTitleNote">കുറിപ്പ്</string>
     <string name="strTitleRateApp">ആപ്പ് റേറ്റ് ചെയ്യുക</string>
-    <string name="strTitleSubscription">സബ്സ്ക്രിപ്ഷൻ</string>
     <string name="strTitleFilters">ഫിൽട്ടറുകൾ</string>
     <string name="strTitleMenu">മെനു</string>
     <string name="strTitleTafsir">തഫ്സീർ</string>
@@ -273,7 +272,7 @@
     <string name="strHintFeedback">നിങ്ങളുടെ അഭിപ്രായം ഇവിടെ എഴുതുക…</string>
     <string name="strNotFound">കണ്ടെത്തിയില്ല</string>
     <string name="strMsgInvalidVerseNo" formatted="false">സൂറത്ത് നമ്പർ. %2$dന് സാധുവായ വാക്യ നമ്പർ അല്ല %1$d</string>
-    <string name="strMsgInvalidVersesRange">സാധുവായ വാക്യ ശ്രേണിയല്ല.</string>
+    <string name="strMsgInvalidVersesRange">സാധുവായ വാക്യ ശ്രേണിയല്ല</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">സൂറത്ത് നമ്പർ %3$dന് സാധുവായ വാക്യ ശ്രേണി അല്ല %1$d-%2$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ഒരു സാധുവായ ജുസുഅ് (പാര) നമ്പർ അല്ല.</string>
     <string name="strMsgBookmarkAddFailed">വാക്യം ബുക്ക്‌മാർക്കുകളിലേക്ക് ചേർക്കാൻ കഴിഞ്ഞില്ല</string>
@@ -356,4 +355,6 @@
     <string name="github">ഗിറ്റ്ഹബ്</string>
     <string name="inPlaces">%sൽ</string>
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
+    <string name="labelAdd">ചേർക്കുക</string>
+    <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
 </resources>

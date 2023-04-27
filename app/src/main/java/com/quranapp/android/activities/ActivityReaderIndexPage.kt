@@ -17,7 +17,6 @@ import com.quranapp.android.frags.readerindex.FragReaderIndexChapters
 import com.quranapp.android.frags.readerindex.FragReaderIndexFavChapters
 import com.quranapp.android.frags.readerindex.FragReaderIndexJuz
 import com.quranapp.android.interfaceUtils.readerIndex.FragReaderIndexCallback
-import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener
 
 class ActivityReaderIndexPage : BaseActivity() {
@@ -48,10 +47,11 @@ class ActivityReaderIndexPage : BaseActivity() {
     }
 
     private fun initViewPager() {
-        val adapter = ViewPagerAdapter2(this)
-        adapter.addFragment(FragReaderIndexChapters.newInstance(), getString(R.string.strTitleReaderChapters))
-        adapter.addFragment(FragReaderIndexJuz.newInstance(), getString(R.string.strTitleReaderJuz))
-        adapter.addFragment(FragReaderIndexFavChapters(), "")
+        val adapter = ViewPagerAdapter2(this).apply {
+            addFragment(FragReaderIndexChapters.newInstance(), getString(R.string.strTitleReaderChapters))
+            addFragment(FragReaderIndexJuz.newInstance(), getString(R.string.strTitleReaderJuz))
+            addFragment(FragReaderIndexFavChapters(), "")
+        }
 
         binding.viewPager.let {
             it.adapter = adapter
@@ -59,7 +59,7 @@ class ActivityReaderIndexPage : BaseActivity() {
             it.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
             it.registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    binding.header.sort.disableView(position == 2)
+                    binding.sort.visibility = if (position == 2) View.GONE else View.VISIBLE
                 }
             })
         }
@@ -87,7 +87,7 @@ class ActivityReaderIndexPage : BaseActivity() {
     }
 
     private fun initSort() {
-        binding.header.let {
+        binding.let {
             it.sort.visibility = View.VISIBLE
             it.sort.setOnClickListener { sort() }
         }

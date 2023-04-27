@@ -43,7 +43,7 @@
                 android:contentDescription="@string/strTitleSelectTafsir"
                 android:padding="7dp"
                 android:rotation="@integer/intActionBtnRotation"
-                android:src="@drawable/dr_icon_settings"
+                android:src="@drawable/dr_icon_translations"
                 android:tint="@color/colorIcon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <RelativeLayout
         android:id="@+id/container"
@@ -82,4 +81,19 @@
                 android:layout_centerInParent="true" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fontSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:contentDescription="@string/titleReaderTextSizeTafsir"
+        android:src="@drawable/icon_font_size"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="0dp"
+        app:rippleColor="@android:color/transparent"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

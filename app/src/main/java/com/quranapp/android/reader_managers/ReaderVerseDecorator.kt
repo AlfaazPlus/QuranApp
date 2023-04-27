@@ -90,14 +90,13 @@ class ReaderVerseDecorator(private val ctx: Context) {
     }
 
     @JvmOverloads
-    fun setupArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
+    fun prepareArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(
             verse,
             if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
-            verseTextSize,
-            savedScript == QuranScriptUtils.SCRIPT_UTHMANI
+            verseTextSize
         )
     }
 
@@ -110,7 +109,6 @@ class ReaderVerseDecorator(private val ctx: Context) {
             txtColor,
             verse,
             if (isKFQPCScript()) fontsArabicKFQPC[verse.pageNo] else fontQuranText,
-            savedScript == QuranScriptUtils.SCRIPT_UTHMANI,
             onClick
         )
 

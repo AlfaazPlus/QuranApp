@@ -28,8 +28,6 @@ abstract class FragSettingsBase : BaseFragment() {
 
     protected open fun getFragView(ctx: Context): View? = null
 
-    fun getArgs(): Bundle = arguments ?: Bundle()
-
     abstract fun getFragTitle(ctx: Context): String?
 
     @get:LayoutRes

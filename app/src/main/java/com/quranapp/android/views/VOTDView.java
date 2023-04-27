@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_TRANSLITERATION;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
@@ -36,7 +35,6 @@ import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
-import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
@@ -102,13 +100,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     private void initActions(QuranMeta quranMeta) {
         mBinding.read.setVisibility(VISIBLE);
 
-        int pad = Dimen.dp2px(getContext(), 5);
-
-        /*mContent.btnQuickEdit.setImageResource(R.drawable.dr_icon_quick_edit);
-        ViewUtils.setPaddings(mContent.btnQuickEdit, pad);*/
-        ViewPaddingKt.updatePaddings(mContent.votdBookmark, pad);
-
-        /*mContent.btnQuickEdit.setOnClickListener(v -> ReaderFactory.startQuickEditShare(getContext(), mChapterNo, mVerseNo));*/
+        mContent.btnTafsir.setOnClickListener(v -> ReaderFactory.startTafsir(getContext(), mChapterNo, mVerseNo));
         mContent.votdBookmark.setOnClickListener(v -> bookmark(mChapterNo, mVerseNo));
         mContent.votdBookmark.setOnLongClickListener(v -> {
             v.getContext().startActivity(new Intent(v.getContext(), ActivityBookmark.class));
@@ -116,11 +108,9 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         });
 
         mBinding.read.setOnClickListener(v -> {
-            if (!QuranMeta.isChapterValid(mChapterNo) || !quranMeta.isVerseValid4Chapter(mChapterNo, mVerseNo)) {
-                return;
+            if (QuranMeta.isChapterValid(mChapterNo) && quranMeta.isVerseValid4Chapter(mChapterNo, mVerseNo)) {
+                ReaderFactory.startVerse(getContext(), mChapterNo, mVerseNo);
             }
-
-            ReaderFactory.startVerse(getContext(), mChapterNo, mVerseNo);
         });
     }
 
@@ -201,10 +191,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         final int txtSizeRes = QuranScriptUtilsKt.getQuranScriptVerseTextSizeSmallRes(quran.getScript());
         int verseTextSize = ContextKt.getDimenPx(getContext(), txtSizeRes);
 
-        mArText = mVerseDecorator.setupArabicText(
-            verse,
-            verseTextSize
-        );
+        mArText = mVerseDecorator.prepareArabicText(verse, verseTextSize);
         prepareTransl(getContext(), quran.getScript());
 
         mLastScript = quran.getScript();
@@ -255,7 +242,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
         QuranTranslBookInfo bookInfo = null;
         for (String savedSlug : savedTranslations) {
-            if (!TRANSL_TRANSLITERATION.equals(savedSlug)) {
+            if (!TranslUtils.isTransliteration(savedSlug)) {
                 bookInfo = factory.getTranslationBookInfo(savedSlug);
                 break;
             }
