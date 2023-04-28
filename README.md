@@ -15,13 +15,13 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 <hr />
 
-The discord server is the primary communication channel for any kind of discussion.
+The discord server is the primary communication channel for any kind of discussion and it is supervised by the developers.
 
-[![Discord](https://quran.alfaazplus.com/images/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
-[![Matrix](https://quran.alfaazplus.com/images/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
-[![Telegram](https://quran.alfaazplus.com/images/widgets/telegram.svg)](https://t.me/thequranapp)
-[![IRC](https://quran.alfaazplus.com/images/widgets/irc.svg)](https://web.libera.chat/#qaranapp)
-[![XMPP](https://quran.alfaazplus.com/images/widgets/xmpp.svg)](xmpp:quranapp@conference.projectsegfau.lt)
+[![Discord](repo_assets/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
+[![Matrix](repo_assets/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
+[![Telegram](repo_assets/widgets/telegram.svg)](https://t.me/thequranapp)
+[![IRC](repo_assets/widgets/irc.svg)](https://web.libera.chat/#qaranapp)
+[![XMPP](repo_assets/widgets/xmpp.svg)](xmpp:quranapp@conference.projectsegfau.lt)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
