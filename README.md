@@ -15,7 +15,13 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 <hr />
 
-The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communication channel for any kind of discussion.
+The discord server is the primary communication channel for any kind of discussion and it is supervised by the developers.
+
+[![Discord](repo_assets/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
+[![Matrix](repo_assets/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
+[![Telegram](repo_assets/widgets/telegram.svg)](https://t.me/thequranapp)
+[![IRC](repo_assets/widgets/irc.svg)](https://web.libera.chat/#qaranapp)
+[![XMPP](repo_assets/widgets/xmpp.svg)](xmpp:quranapp@conference.projectsegfau.lt)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
