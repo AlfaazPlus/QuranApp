@@ -37,17 +37,6 @@
       }
     },
     {
-      "slug": "mohammed-ahmed",
-      "lang-code": "ks",
-      "lang-name": "كٲشُر",
-      "reciter": "Molvi Mohammed Ahmed",
-      "book": "Mirwaiz Mohammed Yusuf",
-      "url-host": "github.com",
-      "url-path": "/dabatase/ks_mohammed_ahmed/releases/download/v1/{chapNo:%03d}{verseNo:%03d}.mp3",
-      "translations": {
-      }
-    },
-    {
       "slug": "shamshad-ali-khan",
       "lang-code": "ur",
       "lang-name": "اردو",
