@@ -101,7 +101,7 @@ App translations are hosted at Weblate. If you want to translate the app in your
 <br>
 
 <a href="https://hosted.weblate.org/projects/QuranApp/#compoments">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/multi-green.svg" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
 </a>
 
 
