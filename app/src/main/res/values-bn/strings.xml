@@ -303,4 +303,21 @@
     <string name="strMsgChangeLanguage">ভাষার পরিবর্তন প্রয়োগ করতে অ্যাপটি রিস্টার্ট করা হবে।</string>
     <string name="inPlaces">%s এ</string>
     <string name="inPlacesMore">%1$s এবং আরও %2$d এর মধ্যে</string>
+    <string name="strTitleRecitations">তিলাওয়াত</string>
+    <string name="strTitleScripts">স্ক্রিপ্ট</string>
+    <string name="lastCrashLog">শেষ ক্রাসের লগ</string>
+    <string name="labelAdd">যুক্ত করুন</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াতের তাফসীর পড়ুন %d</string>
+    <string name="strMsgTafsirsNoAvailable">কোনও তাফসীর নেই</string>
+    <string name="msgDownloadingFonts">ফন্ট ডাউনলোড হচ্ছে</string>
+    <string name="labelDownload">ডাউনলোড করুন</string>
+    <string name="titleManageAudio">অডিও পরিচালনা</string>
+    <string name="audioOnlyTranslation">শুধু অনুবাদ শুনুন</string>
+    <string name="playbackSpeed">তিলাওয়াতের গতি</string>
+    <string name="titleOtherSettings">অন্যান্য সেটিংস</string>
+    <string name="titleReaderTextSizeTafsir">তাফসীর পাঠের আকার</string>
+    <string name="downloadRecitations">তিলাওয়াত ডাউনলোড করুন</string>
+    <string name="audioOption">অডিও অপশন</string>
+    <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
+    <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
 </resources>
