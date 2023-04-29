@@ -91,10 +91,19 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
-## App Translations
-<a href="https://hosted.weblate.org/projects/QuranApp/#components">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
+## Translations
+Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/projects/QuranApp)
+
+<a href="https://hosted.weblate.org/projects/QuranApp/">
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/287x66-black.png" alt="Translation status" />
 </a>
+
+<br>
+
+<a href="https://hosted.weblate.org/projects/QuranApp/#compoments">
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/multi-green.svg" alt="Translation status" />
+</a>
+
 
 ## License
 
