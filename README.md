@@ -91,8 +91,8 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
-## Translations
-Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/projects/QuranApp)
+## App Translations
+App translations are hosted at Weblate. If you want to translate the app in your language, you may visit [here](https://hosted.weblate.org/projects/QuranApp)
 
 <a href="https://hosted.weblate.org/projects/QuranApp/">
 <img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/287x66-black.png" alt="Translation status" />
