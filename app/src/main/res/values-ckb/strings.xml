@@ -399,4 +399,7 @@
     <string name="audioOnlyArabic">تەنیا قورئانی پیرۆز</string>
     <string name="audioBothArabicTranslation">لێدانی هەردووکیان پێکەوە</string>
     <string name="logRemoved">تۆمار سڕایەوە</string>
+    <string name="place" formatted="false">%d شوێن</string>
+    <string name="strMsgDuaFor" formatted="false">نزا بۆ %s</string>
+    <string name="places" formatted="false">%d شوێندا</string>
 </resources>

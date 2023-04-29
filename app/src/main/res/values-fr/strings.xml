@@ -32,7 +32,7 @@
     <string name="strLabelSkip">Sauter</string>
     <string name="strLabelNotNow">Pas maintenant</string>
     <string name="strLabelNext">Suivant</string>
-    <string name="strLabelStart">Commencer</string>
+    <string name="strLabelStart">Démarrer</string>
     <string name="strLabelDownloadNow">TELECHARGER MAINTENANT</string>
     <string name="strLabelUpdate">Mise à jour</string>
     <string name="strLabelInstall">Installer</string>
@@ -114,10 +114,10 @@
     <string name="strTitleExplainIssue">Expliquer le problème</string>
     <string name="strTitleFeaturedQuran">Lecture en vedette</string>
     <string name="strTitleTopics">Sujets</string>
-    <string name="strTitleDuas">Du\'as coraniques</string>
+    <string name="strTitleDuas">Invocations coraniques</string>
     <string name="strTitleProphets">Prophètes</string>
     <string name="strTitleFeaturedTopics">Sujets dans le Coran</string>
-    <string name="strTitleFeaturedDuas">Du\'as dans le Coran</string>
+    <string name="strTitleFeaturedDuas">Invocations dans le Coran</string>
     <string name="strTitleFeaturedProphets">Prophètes dans le Coran</string>
     <string name="strTitleFailed">Échoué</string>
     <string name="strTitleSuccess">Succès</string>
@@ -196,7 +196,7 @@
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Aucun résultat trouvé dans %s. Veuillez vérifier les filtres de recherche ou rechercher dans une autre traduction.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Aucun résultat trouvé. Veuillez vérifier les filtres de recherche.</string>
     <string name="strMsgSearchWordPart">Rechercher une partie de mot</string>
-    <string name="strMsgSearchWordPartExample">Par exemple : \'tard\' dans \'attarder\'</string>
+    <string name="strMsgSearchWordPartExample">Par exemple : \'juge\' dans \'jugement\'</string>
     <string name="strMsgSearchArabic">Chercher dans le texte arabe</string>
     <string name="strMsgChangeLanguage">L\'application sera redémarrée pour effectuer le changement de langue.</string>
     <string name="strMsgProphetsOrder">Affichage des prophètes dans l\'ordre chronologique</string>
@@ -237,7 +237,7 @@
     <string name="strTitleAlphaBG">Arrière-plan alpha</string>
     <string name="strMsgEditShareLongTransl">La traduction est très longue, elle peut ne pas correspondre correctement.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s dans Le Coran</string>
-    <string name="strMsgReferenceDuas">Quelques du\'as provenant du Coran.</string>
+    <string name="strMsgReferenceDuas">Quelques invocations provenant du Coran.</string>
     <string name="strSalam">As-Salâmu \'Alaykum</string>
     <string name="strSalamShort">Salâm</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Supprimer %d marques-pages \?</string>
@@ -266,7 +266,7 @@
     <string name="strLabelRemoveAll">Enlever tout</string>
     <string name="strLabelHide">Cacher</string>
     <string name="strTitleHolyQuran">Le Saint Coran</string>
-    <string name="strLabelPrevious">Précédente</string>
+    <string name="strLabelPrevious">Précédent</string>
     <string name="strLabelUpdateQuranApp">Mettre à jour QuranApp</string>
     <string name="strLabelPreviousChapter">Chapitre précédent</string>
     <string name="strLabelFullChapter">Lire le chapitre complet</string>
@@ -292,7 +292,7 @@
     <string name="strMsgTranslSelectionLimit" formatted="false">Un maximum de %d traductions peuvent être sélectionnés en même temps. Veuillez en désélectionner une avant d\'en sélectionner une autre. Ceci est fait afin d\'éviter une perte de performances.</string>
     <string name="strMsgCouldNotOpenPage">Impossible d\'ouvrir la page.</string>
     <string name="strMsgReportUs">Merci de nous signaler.</string>
-    <string name="strLabelNavHome">Page d\'accueil</string>
+    <string name="strLabelNavHome">Accueil</string>
     <string name="strTitleImageSavedWithName" formatted="false">Image enregistrée avec le nom : %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Versets liés à %1$s trouvés à %2$d endroits au total.</string>
     <string name="strMsgTryLater">Veuillez réessayer plus tard.</string>
@@ -357,16 +357,16 @@
     <string name="strPreviewTextTransl">Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux</string>
     <string name="inPlaces">en %s</string>
     <string name="inPlacesMore">dans %1$s et %2$d de plus</string>
-    <string name="onboardDescLanguage">Configure l\'application dans ta langue. Tu peux modifier ça plus tard.</string>
+    <string name="onboardDescLanguage">Configure l\'application dans ta langue. Tu peux modifier ça à tout moment.</string>
     <string name="strMsgTafsirsNoAvailable">Aucun tafsir disponible</string>
     <string name="strTitleSelectTafsir">Sélectionner le tafsir</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Lire le tafsir du verset %d</string>
     <string name="titleTafsirCleanup">Supprimer le tafsir \?</string>
     <string name="msgTafsirCleanup" formatted="false">Tous les tafsir enregistrés de %s vont être supprimés.</string>
-    <string name="onboardDescTheme">Tu pourras changer ça plus tard.</string>
+    <string name="onboardDescTheme">Tu peux modifier ça à tout moment.</string>
     <string name="noFootnotesForThisVerse">Il n\'y a pas de notes de bas de page pour ce verset.</string>
-    <string name="onboardDescTranslations">Tu pourras changer ça plus tard. Tu peux télécharger plus de traductions dans les paramètres.</string>
-    <string name="onboardDescReciter">Tu pourras changer ça plus tard. Tu peux trouver plus de récitateurs dans les paramètres.</string>
+    <string name="onboardDescTranslations">Tu peux télécharger plus de traductions depuis les paramètres et en sélectionner une autre à tout moment.</string>
+    <string name="onboardDescReciter">Tu peux télécharger plus de récitateurs depuis les paramètres et en sélectionner un autre à tout moment.</string>
     <string name="labelAdd">Ajouter</string>
     <string name="titleReaderTextSizeTafsir">Taille de la police du tafsir</string>
     <string name="textDownloaded">Téléchargé</string>
@@ -399,4 +399,5 @@
     <string name="crashLogs">Journaux de plantage</string>
     <string name="logRemoved">Journal supprimé</string>
     <string name="msgRecitaionDownloaded" formatted="false">« %1$s » téléchargée du récitateur « %2$s ».</string>
+    <string name="strMsgDuaFor" formatted="false">Invocation pour %s</string>
 </resources>
