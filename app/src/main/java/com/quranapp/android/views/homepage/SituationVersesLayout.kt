@@ -1,29 +1,27 @@
 package com.quranapp.android.views.homepage
 
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
 import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityDua
-import com.quranapp.android.adapters.ADPDua
-import com.quranapp.android.components.quran.QuranDua
+import com.quranapp.android.adapters.ADPSituationVerse
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.components.quran.SituationVerse
 import com.quranapp.android.components.quran.VerseReference
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding
 import com.quranapp.android.utils.extensions.color
 
-class FeaturedDuaLayout @JvmOverloads constructor(
+class SituationVersesLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : HomepageCollectionLayoutBase(context, attrs, defStyleAttr) {
     override fun getHeaderTitle(): Int {
-        return R.string.strTitleFeaturedDuas
+        return /*R.string.titleSituationVerses Verses for situation TODO*/ 0
     }
 
     override fun getHeaderIcon(): Int {
-        return R.drawable.dr_icon_rabbana
+        return R.drawable.dr_icon_hash
     }
 
     override fun showViewAllBtn(): Boolean {
@@ -31,25 +29,25 @@ class FeaturedDuaLayout @JvmOverloads constructor(
     }
 
     override fun setupHeader(context: Context, header: LytHomepageTitledItemTitleBinding) {
-        header.titleIcon.setColorFilter(context.color(R.color.colorPrimary))
+        header.titleIcon.setColorFilter(context.color(R.color.colorDanger))
     }
 
     override fun onViewAllClick(context: Context) {
-        context.startActivity(Intent(context, ActivityDua::class.java))
+//        context.startActivity(Intent(context, ActivitySituationVerses::class.java)) TODO
     }
 
-    private fun refreshFeatured(ctx: Context, duas: List<VerseReference>) {
+    private fun refreshVerses(ctx: Context, verses: List<VerseReference>) {
         hideLoader()
 
-        val featured = duas.subList(0, duas.size.coerceAtMost(6))
-        resolveListView().adapter = ADPDua(ctx, Dimen.dp2px(ctx, 200f), featured)
+        val featured = verses.subList(0, verses.size.coerceAtMost(10))
+        resolveListView().adapter = ADPSituationVerse(ctx, Dimen.dp2px(ctx, 200f), featured)
     }
 
     fun refresh(quranMeta: QuranMeta) {
         showLoader()
 
-        QuranDua.prepareInstance(context, quranMeta) { duas ->
-            refreshFeatured(context, duas)
+        SituationVerse.prepareInstance(context, quranMeta) { duas ->
+            refreshVerses(context, duas)
         }
     }
 }

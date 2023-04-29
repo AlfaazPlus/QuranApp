@@ -10,7 +10,7 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.adapters.ADPDua
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.dua.Dua
+import com.quranapp.android.components.quran.VerseReference
 import com.quranapp.android.databinding.ActivityDuaBinding
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.extended.GapedItemDecoration
@@ -40,7 +40,7 @@ class ActivityDua : BaseActivity() {
         })
     }
 
-    private fun initContent(binding: ActivityDuaBinding, duas: List<Dua>) {
+    private fun initContent(binding: ActivityDuaBinding, duas: List<VerseReference>) {
         binding.header.setBGColor(R.color.colorBGHomePageItem)
         binding.header.setTitleText(R.string.strTitleFeaturedDuas)
         binding.header.setCallback {
@@ -50,7 +50,7 @@ class ActivityDua : BaseActivity() {
         initDuas(binding, duas)
     }
 
-    private fun initDuas(binding: ActivityDuaBinding, duas: List<Dua>) {
+    private fun initDuas(binding: ActivityDuaBinding, duas: List<VerseReference>) {
         val spanCount = if (WindowUtils.isLandscapeMode(this)) 3 else 2
 
         binding.list.let {

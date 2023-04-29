@@ -9,23 +9,23 @@ import com.quranapp.android.utils.Log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
-object QuranDuaParser : ReferenceVersesParser() {
-    fun parseDua(
+object SituationVersesParser : ReferenceVersesParser() {
+    fun parseVerses(
         context: Context,
         quranMeta: QuranMeta,
-        quranDuaRef: AtomicReference<List<VerseReference>>,
+        situationVersesRef: AtomicReference<List<VerseReference>>,
         postRunnable: Runnable
     ) {
         Thread {
             try {
-                val map = context.assets.open("verses/type1/map.json").bufferedReader().use {
+                val map = context.assets.open("verses/type0/map.json").bufferedReader().use {
                     it.readText()
                 }
 
                 val fallbackLocale = "en"
                 val currentLocale = Locale.getDefault().language
-                val pathFormat = "verses/type1/%s"
-                val fileName = "type1.json"
+                val pathFormat = "verses/type0/%s"
+                val fileName = "type0.json"
 
                 val fallbackNames = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
                     .bufferedReader().use {
@@ -40,7 +40,7 @@ object QuranDuaParser : ReferenceVersesParser() {
                         it.readText()
                     }
 
-                quranDuaRef.set(
+                situationVersesRef.set(
                     parseVersesInternal(
                         context,
                         map,
@@ -50,7 +50,7 @@ object QuranDuaParser : ReferenceVersesParser() {
                     )
                 )
             } catch (e: Exception) {
-                Log.saveError(e, "QuranDuaParser.parseDua")
+                Log.saveError(e, "SituationVersesParser.parseVerses")
             }
 
             Handler(Looper.getMainLooper()).post(postRunnable)

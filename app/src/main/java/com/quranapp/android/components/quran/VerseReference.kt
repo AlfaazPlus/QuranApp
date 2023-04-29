@@ -1,6 +1,6 @@
-package com.quranapp.android.components.quran.dua
+package com.quranapp.android.components.quran
 
-data class Dua(
+data class VerseReference(
     val id: Int,
     var name: String,
     var versesRaw: List<String>,

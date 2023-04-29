@@ -1,20 +1,20 @@
 package com.quranapp.android.components.quran
 
 import android.content.Context
-import com.quranapp.android.utils.quran.parser.QuranDuaParser
+import com.quranapp.android.utils.quran.parser.SituationVersesParser
 import java.util.concurrent.atomic.AtomicReference
 
-object QuranDua {
-    private val sQuranDuaRef = AtomicReference<List<VerseReference>>()
+object SituationVerse {
+    private val sSituationVerseRef = AtomicReference<List<VerseReference>>()
     fun prepareInstance(
         context: Context,
         quranMeta: QuranMeta,
         callback: (List<VerseReference>) -> Unit
     ) {
-        if (sQuranDuaRef.get() == null) {
+        if (sSituationVerseRef.get() == null) {
             prepare(context, quranMeta, callback)
         } else {
-            callback(sQuranDuaRef.get())
+            callback(sSituationVerseRef.get())
         }
     }
 
@@ -23,10 +23,10 @@ object QuranDua {
         quranMeta: QuranMeta,
         callback: (List<VerseReference>) -> Unit
     ) {
-        QuranDuaParser.parseDua(
+        SituationVersesParser.parseVerses(
             context,
             quranMeta,
-            sQuranDuaRef
-        ) { callback(sQuranDuaRef.get()) }
+            sSituationVerseRef
+        ) { callback(sSituationVerseRef.get()) }
     }
 }

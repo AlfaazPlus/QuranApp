@@ -20,6 +20,7 @@ import com.quranapp.android.views.homepage.FeatureReadingLayout;
 import com.quranapp.android.views.homepage.FeatureTopicsLayout;
 import com.quranapp.android.views.homepage.FeaturedDuaLayout;
 import com.quranapp.android.views.homepage.ReadHistoryLayout;
+import com.quranapp.android.views.homepage.SituationVersesLayout;
 
 public class FragMain extends BaseFragment {
     private FragMainBinding mBinding;
@@ -146,6 +147,16 @@ public class FragMain extends BaseFragment {
         mBinding.container.addView(duaLayout, resolvePosFeaturedDua(root));
         duaLayout.post(() -> {
             duaLayout.refresh(quranMeta);
+            initSituationVerses(root, quranMeta);
+        });
+    }
+
+    private void initSituationVerses(View root, QuranMeta quranMeta) {
+        SituationVersesLayout layout = new SituationVersesLayout(root.getContext());
+        layout.setId(R.id.homepageSituationVersesLayout);
+        mBinding.container.addView(layout, resolvePosSituationVerses(root));
+        layout.post(() -> {
+            layout.refresh(quranMeta);
             initFeaturedTopics(root, quranMeta);
         });
     }
@@ -203,9 +214,17 @@ public class FragMain extends BaseFragment {
         return pos;
     }
 
-    private int resolvePosFeaturedTopics(View root) {
+    private int resolvePosSituationVerses(View root) {
         int pos = resolvePosFeaturedDua(root) + 1;
         if (root.findViewById(R.id.homepageDuaLayout) == null) {
+            pos--;
+        }
+        return pos;
+    }
+
+    private int resolvePosFeaturedTopics(View root) {
+        int pos = resolvePosSituationVerses(root) + 1;
+        if (root.findViewById(R.id.homepageSituationVersesLayout) == null) {
             pos--;
         }
         return pos;
