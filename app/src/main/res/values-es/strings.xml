@@ -399,4 +399,7 @@
     <string name="msgChapterAddedToFavourites">Surah añadido a favoritos.</string>
     <string name="textTranslationReciterInfo">Idioma: %1$s
 \nLibro: %2$s</string>
+    <string name="places" formatted="false">Lugares %d</string>
+    <string name="place" formatted="false">Lugar %d</string>
+    <string name="strMsgDuaFor" formatted="false">Súplica por %s</string>
 </resources>
