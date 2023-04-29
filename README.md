@@ -15,7 +15,13 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 <hr />
 
-The discord [server](https://discord.com/invite/vtutnwzxRb) is the only communication channel for any kind of discussion.
+The discord server is the primary communication channel for any kind of discussion and it is supervised by the developers.
+
+[![Discord](repo_assets/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
+[![Matrix](repo_assets/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
+[![Telegram](repo_assets/widgets/telegram.svg)](https://t.me/thequranapp)
+[![IRC](repo_assets/widgets/irc.svg)](https://web.libera.chat/#qaranapp)
+[![XMPP](repo_assets/widgets/xmpp.svg)](xmpp:quranapp@conference.projectsegfau.lt)
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
@@ -86,9 +92,18 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
 ## App Translations
-<a href="https://hosted.weblate.org/projects/QuranApp/#components">
+App translations are hosted at Weblate. If you want to translate the app in your language, you may visit [here](https://hosted.weblate.org/projects/QuranApp)
+
+<a href="https://hosted.weblate.org/projects/QuranApp/">
+<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/287x66-black.png" alt="Translation status" />
+</a>
+
+<br>
+
+<a href="https://hosted.weblate.org/projects/QuranApp/#compoments">
 <img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
 </a>
+
 
 ## License
 
