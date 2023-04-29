@@ -399,4 +399,7 @@
     <string name="logRemoved">Günlük Kaldırıldı</string>
     <string name="labelArabic">Arapça</string>
     <string name="labelTranslation">Meal</string>
+    <string name="strMsgDuaFor" formatted="false">%s için dua ediniz</string>
+    <string name="place" formatted="false">%d yeri</string>
+    <string name="places" formatted="false">%d yerleri</string>
 </resources>
