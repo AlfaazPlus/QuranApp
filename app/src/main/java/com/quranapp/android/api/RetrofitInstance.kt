@@ -14,6 +14,7 @@ object RetrofitInstance {
             Logger.print(chain.request().url())
             return@addInterceptor chain.proceed(chain.request())
         }
+        .cache(null)
         .build()
 
     val github: GithubApi by lazy {
@@ -33,7 +34,7 @@ object RetrofitInstance {
             .addConverterFactory(
                 JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
             )
-//            .client(client)
+            .client(client)
             .build()
             .create(QuranApi::class.java)
     }

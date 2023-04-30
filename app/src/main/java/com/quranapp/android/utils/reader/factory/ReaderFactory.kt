@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.quranapp.android.activities.ActivityEditShare
 import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.activities.ActivityReference
+import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.QuranMeta

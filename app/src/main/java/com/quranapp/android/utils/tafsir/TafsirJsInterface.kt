@@ -39,7 +39,7 @@ class TafsirJsInterface(private val activity: ActivityTafsir) {
 
     @JavascriptInterface
     fun nextTafsir() {
-        if (activity.verseNo == activity.mQuranMetaRef.get().getChapterVerseCount(activity.chapterNo)) {
+        if (activity.verseNo == activity.mQuranMetaRef.get()!!.getChapterVerseCount(activity.chapterNo)) {
             return
         }
 

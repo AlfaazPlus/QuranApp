@@ -37,15 +37,6 @@ android {
         dataBinding true
     }
 
-    applicationVariants.all { variant ->
-        // use the date as version for debug builds
-        if (variant.name == 'debug') {
-            variant.outputs.each { output ->
-                output.versionCodeOverride = Instant.now().getEpochSecond()
-            }
-        }
-    }
-
     buildTypes {
         debug {
             debuggable true

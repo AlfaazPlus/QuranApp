@@ -1,4 +1,4 @@
-package com.quranapp.android.activities;
+package com.quranapp.android.activities.reference;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_TITLE;
-import static com.quranapp.android.adapters.ADPReferenceVerses.VIEWTYPE_VERSE;
+import static com.quranapp.android.adapters.reference.ADPReferenceVerses.VIEWTYPE_DESCRIPTION;
+import static com.quranapp.android.adapters.reference.ADPReferenceVerses.VIEWTYPE_TITLE;
+import static com.quranapp.android.adapters.reference.ADPReferenceVerses.VIEWTYPE_VERSE;
 import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_REFERENCE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -22,7 +22,8 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
-import com.quranapp.android.adapters.ADPReferenceVerses;
+import com.quranapp.android.activities.ReaderPossessingActivity;
+import com.quranapp.android.adapters.reference.ADPReferenceVerses;
 import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
 import com.quranapp.android.components.quran.Quran;

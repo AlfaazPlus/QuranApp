@@ -18,7 +18,6 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
@@ -28,7 +27,6 @@ import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
-import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.reader_managers.ActionController;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
@@ -38,8 +36,9 @@ import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.verse.VerseUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,12 +46,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
 
-public abstract class ReaderPossessingActivity extends BaseActivity implements BookmarkCallbacks {
-    public final AtomicReference<QuranMeta> mQuranMetaRef = new AtomicReference<>(); //don't initialize QuranMeta as it is being null checked in getQuranMetaSafely.
+public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivity implements BookmarkCallbacks {
     public final AtomicReference<Quran> mQuranRef = new AtomicReference<>();
     public QuranTranslationFactory mTranslFactory;
-
-    private final Set<OnResultReadyCallback<QuranMeta>> mPendingMetaRequesters = new HashSet<>();
 
     public ReaderVerseDecorator mVerseDecorator;
     public ActionController mActionController;
@@ -113,17 +109,15 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
     }
 
     @Override
-    protected final void onActivityInflated(@NonNull View activityView, Bundle savedInstanceState) {
+    protected void preQuranMetaPrepare(@NonNull View activityView, @NonNull Intent intent, @Nullable Bundle savedInstanceState) {
         preReaderReady(activityView, getIntent(), savedInstanceState);
+    }
 
-        QuranMeta.prepareInstance(this, quranMeta -> {
-            mQuranMetaRef.set(quranMeta);
-            onQuranMetaAvailable(quranMeta);
-
-            Quran.prepareInstance(this, quranMeta, quran -> {
-                mQuranRef.set(quran);
-                onReaderReady(getIntent(), savedInstanceState);
-            });
+    @Override
+    protected final void onQuranMetaReady(@NotNull View activityView, @NotNull Intent intent, @org.jetbrains.annotations.Nullable Bundle savedInstanceState, @NotNull QuranMeta quranMeta) {
+        Quran.prepareInstance(this, quranMeta, quran -> {
+            mQuranRef.set(quran);
+            onReaderReady(getIntent(), savedInstanceState);
         });
     }
 
@@ -147,21 +141,6 @@ public abstract class ReaderPossessingActivity extends BaseActivity implements B
         if (result.getResultCode() == RESULT_OK) {
             mActionController.dismissShareDialog();
         }
-    }
-
-    public synchronized void getQuranMetaSafely(OnResultReadyCallback<QuranMeta> readyCallback) {
-        if (mQuranMetaRef.get() != null) {
-            readyCallback.onReady(mQuranMetaRef.get());
-        } else {
-            mPendingMetaRequesters.add(readyCallback);
-        }
-    }
-
-    private void onQuranMetaAvailable(QuranMeta quranMeta) {
-        for (OnResultReadyCallback<QuranMeta> requester : mPendingMetaRequesters) {
-            requester.onReady(quranMeta);
-        }
-        mPendingMetaRequesters.clear();
     }
 
     public CharSequence prepareVerseText(Verse verse) {

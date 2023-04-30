@@ -38,7 +38,7 @@
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity android:name=".activities.ActivityDownloads" />
-        <activity android:name=".activities.ActivityReference"
+        <activity android:name=".activities.reference.ActivityReference"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.quranapp.android.action.OPEN_REFERENCE" />
@@ -47,6 +47,8 @@
         </activity>
         <activity android:name=".activities.ActivityTopics" />
         <activity android:name=".activities.ActivityProphets" />
+        <activity android:name=".activities.reference.ActivityDua" />
+        <activity android:name=".activities.reference.ActivitySolutionVerses" />
         <activity
             android:name=".activities.ActivityTafsir"
             android:exported="true"
