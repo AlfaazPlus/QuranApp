@@ -5,11 +5,11 @@ import com.quranapp.android.utils.quran.parser.QuranDuaParser
 import java.util.concurrent.atomic.AtomicReference
 
 object QuranDua {
-    private val sQuranDuaRef = AtomicReference<List<VerseReference>>()
+    private val sQuranDuaRef = AtomicReference<List<ExclusiveVerse>>()
     fun prepareInstance(
         context: Context,
         quranMeta: QuranMeta,
-        callback: (List<VerseReference>) -> Unit
+        callback: (List<ExclusiveVerse>) -> Unit
     ) {
         if (sQuranDuaRef.get() == null) {
             prepare(context, quranMeta, callback)
@@ -21,7 +21,7 @@ object QuranDua {
     private fun prepare(
         context: Context,
         quranMeta: QuranMeta,
-        callback: (List<VerseReference>) -> Unit
+        callback: (List<ExclusiveVerse>) -> Unit
     ) {
         QuranDuaParser.parseDua(
             context,

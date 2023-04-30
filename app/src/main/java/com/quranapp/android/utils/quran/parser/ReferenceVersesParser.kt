@@ -2,7 +2,7 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.VerseReference
+import com.quranapp.android.components.quran.ExclusiveVerse
 import org.json.JSONObject
 
 open class ReferenceVersesParser {
@@ -12,11 +12,11 @@ open class ReferenceVersesParser {
         localeNamesStr: String,
         fallbackNamesStr: String,
         quranMeta: QuranMeta
-    ): List<VerseReference> {
+    ): List<ExclusiveVerse> {
         val map = JSONObject(mapStr)
         val localeNames = JSONObject(localeNamesStr)
         val fallbackNames = JSONObject(fallbackNamesStr)
-        val duas = ArrayList<VerseReference>()
+        val duas = ArrayList<ExclusiveVerse>()
 
         map.keys().forEachRemaining { key ->
             val versesStr = map.getString(key)
@@ -49,7 +49,7 @@ open class ReferenceVersesParser {
             val inChapters = ParserUtils.prepareChapterText(context, quranMeta, chapters, 2)
 
             duas.add(
-                VerseReference(
+                ExclusiveVerse(
                     id = key.toInt(),
                     name = name,
                     versesRaw = ParserUtils.prepareVersesList(versesStr, true),

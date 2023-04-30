@@ -153,6 +153,7 @@
     <string name="strTitleProphets">Prophets</string>
     <string name="strTitleFeaturedTopics">Topics in Quran</string>
     <string name="strTitleFeaturedDuas">Duas in Quran</string>
+    <string name="titleSolutionVerses">Solutions from Quran</string>
     <string name="strTitleFeaturedProphets">Prophets in Quran</string>
     <string name="strTitlePrivacyPolicy">Privacy Policy</string>
     <string name="strTitleFailed">Failed</string>
@@ -254,7 +255,8 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
-    <string name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
+    <string
+        name="strMsgSearchNoResultsFound">No results found. Please check the search filters or search in another translation.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
@@ -377,7 +379,8 @@
     <string name="inPlacesMore" formatted="false">in %1$s &amp; %2$d more</string>
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
     <string name="onboardDescTheme">You can always change this later.</string>
-    <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
+    <string
+        name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>

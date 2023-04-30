@@ -20,7 +20,7 @@ import com.quranapp.android.views.homepage.FeatureReadingLayout;
 import com.quranapp.android.views.homepage.FeatureTopicsLayout;
 import com.quranapp.android.views.homepage.FeaturedDuaLayout;
 import com.quranapp.android.views.homepage.ReadHistoryLayout;
-import com.quranapp.android.views.homepage.SituationVersesLayout;
+import com.quranapp.android.views.homepage.QuranSolutionVersesLayout;
 
 public class FragMain extends BaseFragment {
     private FragMainBinding mBinding;
@@ -152,7 +152,7 @@ public class FragMain extends BaseFragment {
     }
 
     private void initSituationVerses(View root, QuranMeta quranMeta) {
-        SituationVersesLayout layout = new SituationVersesLayout(root.getContext());
+        QuranSolutionVersesLayout layout = new QuranSolutionVersesLayout(root.getContext());
         layout.setId(R.id.homepageSituationVersesLayout);
         mBinding.container.addView(layout, resolvePosSituationVerses(root));
         layout.post(() -> {

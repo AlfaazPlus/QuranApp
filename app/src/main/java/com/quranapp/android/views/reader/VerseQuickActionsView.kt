@@ -66,7 +66,7 @@ class VerseQuickActionsView @JvmOverloads constructor(
 
         visibility = VISIBLE
 
-        setupWithVerse(reader, reader.mQuranMetaRef.get(), verse)
+        setupWithVerse(reader, reader.mQuranMetaRef.get()!!, verse)
     }
 
     private fun setupWithVerse(reader: ActivityReader, quranMeta: QuranMeta, verse: Verse) {

@@ -1,4 +1,4 @@
-package com.quranapp.android.adapters;
+package com.quranapp.android.adapters.reference;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
-import com.quranapp.android.activities.ActivityReference;
+import com.quranapp.android.activities.reference.ActivityReference;
 import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
 import com.quranapp.android.components.bookmark.BookmarkModel;

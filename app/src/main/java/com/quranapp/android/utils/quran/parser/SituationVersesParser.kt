@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.VerseReference
+import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.utils.Log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
@@ -13,7 +13,7 @@ object SituationVersesParser : ReferenceVersesParser() {
     fun parseVerses(
         context: Context,
         quranMeta: QuranMeta,
-        situationVersesRef: AtomicReference<List<VerseReference>>,
+        situationVersesRef: AtomicReference<List<ExclusiveVerse>>,
         postRunnable: Runnable
     ) {
         Thread {

@@ -1,6 +1,6 @@
 package com.quranapp.android.components.quran
 
-data class VerseReference(
+data class ExclusiveVerse(
     val id: Int,
     var name: String,
     var versesRaw: List<String>,

@@ -5,11 +5,11 @@ import com.quranapp.android.utils.quran.parser.SituationVersesParser
 import java.util.concurrent.atomic.AtomicReference
 
 object SituationVerse {
-    private val sSituationVerseRef = AtomicReference<List<VerseReference>>()
+    private val sSituationVerseRef = AtomicReference<List<ExclusiveVerse>>()
     fun prepareInstance(
         context: Context,
         quranMeta: QuranMeta,
-        callback: (List<VerseReference>) -> Unit
+        callback: (List<ExclusiveVerse>) -> Unit
     ) {
         if (sSituationVerseRef.get() == null) {
             prepare(context, quranMeta, callback)
@@ -21,7 +21,7 @@ object SituationVerse {
     private fun prepare(
         context: Context,
         quranMeta: QuranMeta,
-        callback: (List<VerseReference>) -> Unit
+        callback: (List<ExclusiveVerse>) -> Unit
     ) {
         SituationVersesParser.parseVerses(
             context,
