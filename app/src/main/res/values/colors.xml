@@ -93,4 +93,10 @@
 
     <color name="colorDanger">#FFDC3545</color>
     <color name="colorDangerDark">#AC2330</color>
+    <color name="success">#28A745</color>
+    <color name="successDark">#007E33</color>
+    <color name="warning">#D67200</color>
+    <color name="warningDark">#B86200</color>
+    <color name="info">#33E5B5</color>
+    <color name="infoDark">#1FAD87</color>
 </resources>

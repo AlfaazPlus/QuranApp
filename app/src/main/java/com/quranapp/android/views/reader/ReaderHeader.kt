@@ -121,7 +121,7 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
             val verseNoText = context.getString(R.string.strLabelVerseNo)
             val items = ArrayList<VerseSpinnerItem>()
             var verseNo = 1
-            val count = activity!!.mQuranMetaRef.get().getChapterVerseCount(chapterNo)
+            val count = activity!!.mQuranMetaRef.get()!!.getChapterVerseCount(chapterNo)
 
             while (verseNo <= count) {
                 items.add(VerseSpinnerItem(chapterNo, verseNo).apply {

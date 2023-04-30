@@ -66,7 +66,7 @@ class RecitationPlayer(
     fun onJuzChanged(juzNo: Int, preventStop: Boolean) {
         readerChanging = true
 
-        service?.onJuzChanged(juzNo, activity.mQuranMetaRef.get())
+        service?.onJuzChanged(juzNo, activity.mQuranMetaRef.get()!!)
 
         onReaderChanged(preventStop)
 
