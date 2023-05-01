@@ -19,7 +19,7 @@
       "lang-name": "کوردی",
       "reciter": "Handren Abdulla",
       "book": "Asan Translation",
-      "url-host": "github.com",       
+      "url-host": "github.com",
       "url-path": "/Hiwaselah/sounds010/releases/download/handren_tanha_tafser/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
         "ckb": "هەندرێن عەبدوڵا"
@@ -34,6 +34,17 @@
       "url-path": "/data/translations/Fooladvand_Hedayatfar_40Kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
       "translations": {
         "fa": "فولادوند - هدایتفر"
+      }
+    },
+    {
+      "slug": "mohammed-ahmed",
+      "lang-code": "ks",
+      "lang-name": "كٲشُر",
+      "reciter": "Molvi Mohammed Ahmed",
+      "book": "Mirwaiz Mohammed Yusuf",
+      "url-host": "github.com",
+      "url-path": "/dabatase/ks_mohammed_ahmed/releases/download/v1/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
       }
     },
     {
