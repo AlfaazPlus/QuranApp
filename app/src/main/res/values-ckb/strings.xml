@@ -29,7 +29,7 @@
     <string name="strTitleRepeatVerse">دووبارەکردنەوەی ئایەت</string>
     <string name="strTitleQuickEdit">دەستکاریکردن</string>
     <string name="strTitleReportVerse">ڕاستکردنەوە</string>
-    <string name="strTitleTopics">بەشەکان</string>
+    <string name="strTitleTopics">بابەتەکان</string>
     <string name="strTitleFeaturedProphets">پێغەمبەران لەناو قورئان</string>
     <string name="strChapInfoSeeMore">زانیاری زیاتر ›</string>
     <string name="strTitleFeaturedDuas">نزاکانی ناو قورئان</string>
@@ -280,7 +280,7 @@
     <string name="strTextInstalling">دادەبەزێت…</string>
     <string name="strTextLoading">چاوەڕوانبە…</string>
     <string name="strMsgUpdateDownloaded">نوێکردنەوە داگیرا! تکایە بەرنامەکە دابەزێنە بۆ تەواوکردنی نوێکردنەوەکە.</string>
-    <string name="strLabelAllChapters">هەموو بەشەکان</string>
+    <string name="strLabelAllChapters">هەموو سورەتەکان</string>
     <string name="strLabelShareImage">بڵاوکردنەوەی وێنە</string>
     <string name="strTitleImageSavedWithName" formatted="false">وێنەکە هەڵگیرا بەناوی: %s</string>
     <string name="strTitleAlphaBG">پشت شاشەی ڕوون</string>
