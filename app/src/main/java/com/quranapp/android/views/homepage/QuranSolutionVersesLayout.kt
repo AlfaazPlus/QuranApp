@@ -6,11 +6,10 @@ import android.util.AttributeSet
 import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivitySolutionVerses
-import com.quranapp.android.adapters.reference.ADPExclusiveVerses
 import com.quranapp.android.adapters.reference.ADPSolutionVerses
+import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.SituationVerse
-import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding
 import com.quranapp.android.utils.extensions.color
 

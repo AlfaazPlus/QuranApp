@@ -5,15 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
 import com.quranapp.android.adapters.reference.ADPDua
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
-import com.quranapp.android.databinding.LytQuranExclusiveVerseItemBinding
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 class ActivityDua : ActivityExclusiveVersesBase() {
     override fun onQuranMetaReady(

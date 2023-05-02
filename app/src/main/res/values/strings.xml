@@ -61,6 +61,8 @@
     <string name="strLabelContinueChapter">Continue chapter</string>
     <string name="strLabelPreviousVerse">Previous verse</string>
     <string name="strLabelNextVerse">Next verse</string>
+    <string name="labelPreviousTafsir">Previous tafsir</string>
+    <string name="labelNextTafsir">Next tafsir</string>
     <string name="strLabelVersesText">Verses</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
     <string name="strLabelPageNo" formatted="false">Page %d</string>
@@ -398,6 +400,10 @@
     <string name="msgRecitaionDownloaded" formatted="false">Downloaded \"%1$s\" for reciter \"%2$s\".</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">All recitations of \"%1$s\" for reciter \"%2$s\" will be deleted.</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">Deleted recitations of \"%1$s\" for reciter \"%2$s\".</string>
+    <string name="msgInvalidParams">Invalid params</string>
+    <string name="msgTafsirLoadFailed">Failed to load tafsir</string>
+
+
     <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
     <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
     <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>

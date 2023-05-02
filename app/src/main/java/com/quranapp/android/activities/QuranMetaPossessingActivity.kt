@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.interfaceUtils.BookmarkCallbacks
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import java.util.concurrent.atomic.AtomicReference
 

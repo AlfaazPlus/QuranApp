@@ -1,6 +1,5 @@
 package com.quranapp.android.api.models.tafsir
 
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -11,8 +11,6 @@ import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.SituationVerse
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
-import com.quranapp.android.databinding.LytQuranExclusiveVerseItemBinding
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 class ActivitySolutionVerses : ActivityExclusiveVersesBase() {
     override fun onQuranMetaReady(

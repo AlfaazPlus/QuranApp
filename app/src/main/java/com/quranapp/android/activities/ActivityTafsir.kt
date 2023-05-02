@@ -201,7 +201,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
         val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, -1)
 
         if (chapterNo < 1 || verseNo < 1) {
-            fail("Invalid params", false)
+            fail(R.string.msgInvalidParams, false)
             return
         }
 
@@ -210,14 +210,14 @@ class ActivityTafsir : ReaderPossessingActivity() {
         }
 
         if (key == null) {
-            fail("Failed to load tafsir.", false)
+            fail(R.string.msgTafsirLoadFailed, false)
             return
         }
 
         val model = TafsirManager.getModel(key)
 
         if (model == null) {
-            fail("Failed to load tafsir.", false)
+            fail(R.string.msgTafsirLoadFailed, false)
             return
         }
 
@@ -321,7 +321,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
             } catch (e: Exception) {
                 Log.saveError(e, "ActivityTafsir")
                 e.printStackTrace()
-                fail("Failed to load tafsir.", true)
+                fail(R.string.msgTafsirLoadFailed, true)
             }
         }
     }
@@ -342,11 +342,11 @@ class ActivityTafsir : ReaderPossessingActivity() {
         }
     }
 
-    private fun fail(msg: String, showRetry: Boolean) {
+    private fun fail(msgRes: Int, showRetry: Boolean) {
         binding.loader.visibility = View.GONE
 
         pageAlert.let {
-            it.setMessage(msg, null)
+            it.setMessage(getString(msgRes), null)
             if (showRetry) {
                 it.setActionButton(R.string.strLabelRetry) { loadContent() }
             } else {

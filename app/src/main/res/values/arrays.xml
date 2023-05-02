@@ -75,14 +75,6 @@
         <item>67</item>
     </string-array>
 
-    <string-array name="arrReportReasons">
-        <item>Select reason</item>
-        <item>Issue with Arabic text</item>
-        <item>Issue with translations</item>
-        <item>Issue with recitation</item>
-        <item>Issue with footnotes</item>
-    </string-array>
-
     <string-array name="arrEditShareTabs">
         <item>Background</item>
         <item>Colours</item>
