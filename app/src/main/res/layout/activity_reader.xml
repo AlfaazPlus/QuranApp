@@ -41,13 +41,6 @@
         android:orientation="vertical"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
 
-        <com.quranapp.android.views.reader.VerseQuickActionsView
-            android:id="@+id/verseQuickActions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
         <View
             android:id="@+id/navigationBarDummy"
             android:layout_width="match_parent"

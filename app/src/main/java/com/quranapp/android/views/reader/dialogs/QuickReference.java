@@ -379,9 +379,6 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                 List<Translation> translations, Map<String, QuranTranslBookInfo> booksInfo
             ) {
                 Verse verse = chapter.getVerse(verseNo).copy();
-                if (verse == null) {
-                    return;
-                }
 
                 if (actvt.mVerseDecorator.isKFQPCScript()) {
                     actvt.mVerseDecorator.refreshQuranTextFonts(new Pair<>(verse.pageNo, verse.pageNo));

@@ -125,7 +125,7 @@ public class ADPQuranPages extends RecyclerView.Adapter<ADPQuranPages.VHQuranPag
         }
 
         public void bind(QuranPageModel pageModel) {
-            final int position = getAdapterPosition();
+            final int position = getBindingAdapterPosition();
 
             int viewType = getViewType(position);
 
