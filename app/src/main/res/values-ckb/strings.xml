@@ -364,7 +364,7 @@
     <string name="onboardDescTheme">ئەتوانی دواتر ڕووکار بگۆڕیت.</string>
     <string name="onboardDescTranslations">ئەتوانی دواتر ئەمە بگۆڕیت، لەبەشی ڕێکخستن وەرگێڕانی زیاتر بەردەستە بۆ دابەزاندن.</string>
     <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا.</string>
-    <string name="inPlaces">بە %s</string>
+    <string name="inPlaces">لە %s</string>
     <string name="inPlacesMore">لە %1$s و %2$d زیاتر</string>
     <string name="noFootnotesForThisVerse">هیچ تێبینییەک نییە بۆ ئەم ئایەتە.</string>
     <string name="labelAdd">زیادکردن</string>

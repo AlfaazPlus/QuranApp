@@ -30,6 +30,7 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ActionController;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
@@ -222,8 +223,8 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
         });
     }
 
-    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
-        mActionController.openVerseOptionDialog(verse, verseViewCallbacks);
+    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks bookmarkCallbacks) {
+        mActionController.openVerseOptionDialog(verse, bookmarkCallbacks);
     }
 
     public void showFootnote(Verse verse, Footnote footnote, boolean isUrduSlug) {

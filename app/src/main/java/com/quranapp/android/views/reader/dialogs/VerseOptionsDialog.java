@@ -50,7 +50,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     private LytReaderVodBinding mVODBinding;
     private Verse mVerse;
     @Nullable
-    private BookmarkCallbacks mVerseViewCallbacks;
+    private BookmarkCallbacks mBookmarkCallbacks;
     private VerseShareDialog mVSD;
     private boolean mHasFootnotes;
 
@@ -123,10 +123,10 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         }
     }
 
-    public void open(ReaderPossessingActivity actvt, Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
+    public void open(ReaderPossessingActivity actvt, Verse verse, @Nullable BookmarkCallbacks bookmarkCallbacks) {
         mActivity = actvt;
         mVerse = verse;
-        mVerseViewCallbacks = verseViewCallbacks;
+        mBookmarkCallbacks = bookmarkCallbacks;
 
         show(actvt.getSupportFragmentManager());
     }
@@ -287,8 +287,8 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     public void onBookmarkRemoved(BookmarkModel model) {
         onBookmarkChanged(false);
 
-        if (mVerseViewCallbacks != null) {
-            mVerseViewCallbacks.onBookmarkRemoved(model);
+        if (mBookmarkCallbacks != null) {
+            mBookmarkCallbacks.onBookmarkRemoved(model);
         }
     }
 
@@ -296,15 +296,15 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     public void onBookmarkAdded(BookmarkModel model) {
         onBookmarkChanged(true);
 
-        if (mVerseViewCallbacks != null) {
-            mVerseViewCallbacks.onBookmarkAdded(model);
+        if (mBookmarkCallbacks != null) {
+            mBookmarkCallbacks.onBookmarkAdded(model);
         }
     }
 
     @Override
     public void onBookmarkUpdated(BookmarkModel model) {
-        if (mVerseViewCallbacks != null) {
-            mVerseViewCallbacks.onBookmarkUpdated(model);
+        if (mBookmarkCallbacks != null) {
+            mBookmarkCallbacks.onBookmarkUpdated(model);
         }
     }
 
