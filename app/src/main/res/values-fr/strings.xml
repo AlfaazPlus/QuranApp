@@ -400,4 +400,6 @@
     <string name="logRemoved">Journal supprimé</string>
     <string name="msgRecitaionDownloaded" formatted="false">« %1$s » téléchargée du récitateur « %2$s ».</string>
     <string name="strMsgDuaFor" formatted="false">Invocation pour %s</string>
+    <string name="places" formatted="false">%d endroits</string>
+    <string name="place" formatted="false">%d endroit</string>
 </resources>
