@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ (c) Faisal Khan. Created on 27/1/2022.
-  -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorBGHomePageItem" />
-    <corners android:topLeftRadius="10dp" android:topRightRadius="10dp" />
-</shape>

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
 import com.quranapp.android.adapters.quranIndex.ADPFavChaptersList
-import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.views.helper.RecyclerView2
 import com.quranapp.android.widgets.PageAlert

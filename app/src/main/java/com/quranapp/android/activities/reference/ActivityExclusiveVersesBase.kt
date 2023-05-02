@@ -3,26 +3,16 @@ package com.quranapp.android.activities.reference
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Typeface
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextUtils
-import android.text.style.TextAppearanceSpan
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.peacedesign.android.utils.WindowUtils
-import com.peacedesign.android.utils.span.LineHeightSpan2
 import com.quranapp.android.R
 import com.quranapp.android.activities.QuranMetaPossessingActivity
-import com.quranapp.android.adapters.reference.ADPExclusiveVerses
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
-import com.quranapp.android.databinding.LytQuranExclusiveVerseItemBinding
 import com.quranapp.android.utils.extended.GapedItemDecoration
-import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimenPx
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 abstract class ActivityExclusiveVersesBase : QuranMetaPossessingActivity() {
     private var txtSize: Int = 0

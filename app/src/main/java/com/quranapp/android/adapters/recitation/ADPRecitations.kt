@@ -9,13 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.adapters.recitation.ADPRecitations.VHRecitation
-import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.databinding.LytSettingsRecitationItemBinding
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
 import com.quranapp.android.utils.sharedPrefs.SPReader
-import kotlinx.serialization.encodeToString
 
 class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerView.Adapter<VHRecitation>() {
     private var models: List<RecitationInfoModel> = ArrayList()

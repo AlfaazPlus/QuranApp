@@ -1,5 +1,9 @@
 package com.quranapp.android.widgets.tablayout;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static androidx.core.content.ContextCompat.getColorStateList;
+import static com.peacedesign.android.utils.Dimen.dp2px;
+
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -8,15 +12,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import static com.peacedesign.android.utils.Dimen.dp2px;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static androidx.core.content.ContextCompat.getColorStateList;
 
-import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.utils.extensions.ContextKt;

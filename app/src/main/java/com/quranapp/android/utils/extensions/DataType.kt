@@ -58,7 +58,7 @@ fun SharedPreferences.Editor.putDouble(key: String, double: Double): SharedPrefe
 
 /**
  * Since traditional [SharedPreferences.Editor] does not have a getDouble method, therefore here is the extension function.
- * The double being retrieved by this method must have been stored using [putDouble], which stored the double as its long quivalent.
+ * The double being retrieved by this method must have been stored using [putDouble], which stored the double as its long equivalent.
  * It converts the [Long] into its original [Double] equivalent using [Double.longBitsToDouble][java.lang.Double.longBitsToDouble].
  * */
 fun SharedPreferences.getDouble(key: String, default: Double) =

@@ -1,7 +1,6 @@
 package com.quranapp.android.utils.quran.parser;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;

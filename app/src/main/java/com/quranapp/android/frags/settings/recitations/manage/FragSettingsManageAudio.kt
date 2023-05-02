@@ -14,7 +14,6 @@ import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsArabic
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsTranslation
-import com.quranapp.android.utils.Log
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 

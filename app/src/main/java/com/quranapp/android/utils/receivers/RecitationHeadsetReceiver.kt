@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.receivers
 
-import android.bluetooth.BluetoothHeadset
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent

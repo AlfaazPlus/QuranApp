@@ -7,10 +7,9 @@ import com.peacedesign.android.utils.Dimen
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityDua
 import com.quranapp.android.adapters.reference.ADPDua
-import com.quranapp.android.adapters.reference.ADPExclusiveVerses
+import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.QuranDua
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding
 import com.quranapp.android.utils.extensions.color
 

@@ -19,8 +19,6 @@ import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.gesture.HoverPushEffect
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
-import com.quranapp.android.utils.reader.factory.ReaderFactory
-import kotlin.reflect.KFunction1
 
 abstract class ADPExclusiveVerses(
     ctx: Context,

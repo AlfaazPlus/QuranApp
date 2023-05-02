@@ -1,7 +1,6 @@
 package com.quranapp.android.utils.extensions
 
 import com.google.common.net.HttpHeaders
-import com.quranapp.android.utils.Log
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.InputStream

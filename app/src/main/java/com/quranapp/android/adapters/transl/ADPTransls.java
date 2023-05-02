@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +18,6 @@ import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.LytSettingsTranslItemBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.widgets.checkbox.PeaceCheckBox;
-import com.quranapp.android.widgets.compound.PeaceCompoundButton;
 
 import java.util.List;
 
