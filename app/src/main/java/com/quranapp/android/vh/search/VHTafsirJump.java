@@ -1,5 +1,7 @@
 package com.quranapp.android.vh.search;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -7,15 +9,14 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
 import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.components.search.TafsirJumpModel;
-import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;

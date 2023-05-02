@@ -72,20 +72,6 @@
         <item name="android:textColor">@color/colorIcon</item>
     </style>
 
-    <style name="ButtonAuthTypeSelector">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/dr_bg_btn_auth_type_selector</item>
-        <item name="android:textColor">@color/color_btn_auth_type_selector</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginStart">5dp</item>
-        <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-
     <style name="ButtonAction">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

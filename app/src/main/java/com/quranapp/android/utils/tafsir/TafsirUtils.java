@@ -1,10 +1,8 @@
 package com.quranapp.android.utils.tafsir;
 
-import android.annotation.SuppressLint;
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.reader.tafsir.TafsirManager;
 import com.quranapp.android.utils.univ.FileUtils;
