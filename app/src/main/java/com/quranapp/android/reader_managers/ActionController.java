@@ -13,6 +13,7 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
 import com.quranapp.android.components.quran.subcomponents.Verse;
+import com.quranapp.android.components.reader.QuranPageSectionModel;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.Logger;
@@ -20,6 +21,7 @@ import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.views.reader.dialogs.FootnotePresenter;
+import com.quranapp.android.views.reader.dialogs.PageVerseDialog;
 import com.quranapp.android.views.reader.dialogs.QuickReference;
 import com.quranapp.android.views.reader.dialogs.VerseOptionsDialog;
 import com.quranapp.android.widgets.dialog.loader.PeaceProgressDialog;
@@ -35,6 +37,7 @@ public class ActionController implements Destroyable {
     private final VerseOptionsDialog mVOD = new VerseOptionsDialog();
     private final FootnotePresenter mFootnotePresenter = new FootnotePresenter();
     private final QuickReference mQuickReference = new QuickReference();
+    private final PageVerseDialog mPageVerseDialog = new PageVerseDialog();
     private final PeaceProgressDialog mProgressDialog;
 
     public ActionController(ReaderPossessingActivity readerPossessingActivity) {
@@ -53,8 +56,8 @@ public class ActionController implements Destroyable {
         mFootnotePresenter.present(mActivity, verse);
     }
 
-    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks verseViewCallbacks) {
-        mVOD.open(mActivity, verse, verseViewCallbacks);
+    public void openVerseOptionDialog(Verse verse, @Nullable BookmarkCallbacks bookmarkCallbacks) {
+        mVOD.open(mActivity, verse, bookmarkCallbacks);
     }
 
     public void openShareDialog(int chapterNo, int verseNo) {
@@ -125,8 +128,15 @@ public class ActionController implements Destroyable {
         }
     }
 
+    public void showPageVerseDialog(QuranPageSectionModel section, Verse verse) {
+        if (!(mActivity instanceof ActivityReader)) return;
+
+        mPageVerseDialog.show((ActivityReader) mActivity, verse);
+    }
+
     public void onVerseRecite(int chapterNo, int verseNo, boolean isReciting) {
         mVOD.onVerseRecite(chapterNo, verseNo, isReciting);
+        mPageVerseDialog.onVerseRecite(chapterNo, verseNo, isReciting);
     }
 
     public void showLoader() {
@@ -145,6 +155,7 @@ public class ActionController implements Destroyable {
             mVOD.dismiss();
             mVOD.dismissShareDialog();
             mFootnotePresenter.dismiss();
+            mPageVerseDialog.dismiss();
         }
     }
 

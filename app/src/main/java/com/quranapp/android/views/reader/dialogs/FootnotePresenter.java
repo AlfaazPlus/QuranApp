@@ -139,7 +139,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
     }
 
     @Override
-    protected void setupContentView(@NonNull LinearLayout dialogLayout, PeaceBottomSheetParams params) {
+    protected void setupContentView(@NonNull LinearLayout dialogLayout, @NonNull PeaceBottomSheetParams params) {
         if (mActivity == null || mVerse == null) {
             return;
         }
@@ -147,7 +147,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
         if (mBinding == null) {
             initColors(dialogLayout.getContext());
 
-            AsyncLayoutInflater inflater = new AsyncLayoutInflater(getContext());
+            AsyncLayoutInflater inflater = new AsyncLayoutInflater(dialogLayout.getContext());
             inflater.inflate(R.layout.lyt_reader_verse_footnote, dialogLayout, (view, resid, parent) -> {
                 mBinding = LytReaderVerseFootnoteBinding.bind(view);
                 setupContent(mActivity, mBinding, dialogLayout);
@@ -179,7 +179,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
             }
 
             List<Translation> translations = mVerse.getTranslations();
-            if (translations == null || translations.isEmpty()) {
+            if (translations.isEmpty()) {
                 binding.authors.getRoot().setVisibility(View.GONE);
                 return;
             }
@@ -196,10 +196,10 @@ public class FootnotePresenter extends PeaceBottomSheet {
             bookInfo = actvt.mTranslFactory.getTranslationBookInfo(footnote.bookSlug);
             String langCode = bookInfo.getLangCode();
             final Locale locale = new Locale(langCode);
-            title = ResUtils.getLocalizedString(getContext(), R.string.strTitleFootnote, locale);
+            title = ResUtils.getLocalizedString(actvt, R.string.strTitleFootnote, locale);
 
             if (title == null) {
-                title = getContext().getString(R.string.strTitleFootnote);
+                title = actvt.getString(R.string.strTitleFootnote);
             }
         } else {
             title = mBinding.getRoot().getContext().getString(R.string.strTitleFootnotes);
@@ -312,6 +312,8 @@ public class FootnotePresenter extends PeaceBottomSheet {
         binding.authors.getRoot().smoothScrollTo(0, 0);
 
         ChipGroup authorsGroup = binding.authors.chipGroup;
+        authorsGroup.setSingleSelection(true);
+        authorsGroup.setSelectionRequired(true);
 
         Set<String> slugs = translations.stream().map(Translation::getBookSlug).collect(Collectors.toSet());
         Map<String, QuranTranslBookInfo> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(slugs);

@@ -136,28 +136,28 @@ class ReaderVerseDecorator(private val ctx: Context) {
     )
 
     @JvmOverloads
-    fun TextView.setTextSizeArabic(multiplier: Float = savedTextSizeArabicMultiplier) {
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeArabic * multiplier)
+    fun setTextSizeArabic(txtView: TextView, multiplier: Float = savedTextSizeArabicMultiplier) {
+        txtView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeArabic * multiplier)
     }
 
     @JvmOverloads
-    fun TextView.setTextSizeTransl(multiplier: Float = savedTextSizeTranslMultiplier) {
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeTransl * multiplier)
+    fun setTextSizeTransl(txtView: TextView, multiplier: Float = savedTextSizeTranslMultiplier) {
+        txtView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeTransl * multiplier)
     }
 
-    fun TextView.setFontArabic(pageNo: Int) {
-        typeface = if (isKFQPCScript()) {
+    fun setFontArabic(txtView: TextView, pageNo: Int) {
+        txtView.typeface = if (isKFQPCScript()) {
             fontsArabicKFQPC[pageNo]
         } else {
             fontQuranText
         }
     }
 
-    fun TextView.setTextColorArabic() {
-        setTextColor(textColorArabic)
+    fun setTextColorArabic(txtView: TextView) {
+        txtView.setTextColor(textColorArabic)
     }
 
-    fun TextView.setTextColorNonArabic() {
-        setTextColor(textColorNonArabic)
+    fun setTextColorNonArabic(txtView: TextView) {
+        txtView.setTextColor(textColorNonArabic)
     }
 }

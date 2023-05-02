@@ -1037,7 +1037,7 @@ public class ActivityReader extends ReaderPossessingActivity {
                         mVerseDecorator.setupArabicTextQuranPage(
                             txtColor,
                             verse,
-                            () -> mBinding.verseQuickActions.show(section, verse)
+                            () -> mActionController.showPageVerseDialog(section, verse)
                         )
                     );
                 });
@@ -1450,22 +1450,5 @@ public class ActivityReader extends ReaderPossessingActivity {
                 mActionController.openVerseReference(chapterNo, verses);
             }
         });
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-
-        // Check if the user is touching outside the verseQuickActions view, if so, close it.
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            Rect rect = new Rect();
-            mBinding.verseQuickActions.getGlobalVisibleRect(rect);
-            if (!rect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                // Delay some time so that if VerseQuickActionsView is immediately opened again, it doesn't show weird animation.
-                mBinding.verseQuickActions.scheduleClose();
-            }
-        }
-
-
-        return super.dispatchTouchEvent(ev);
     }
 }

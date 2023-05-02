@@ -182,7 +182,7 @@ public class QuranPageView extends FrameLayout {
         }
 
         private void highlightOnScroll(QuranPageSectionModel sectionModel) {
-            if (recitingVerseNo != -1 || sectionModel.quickActionsOpenedVerseNo != -1) {
+            if (recitingVerseNo != -1) {
                 return;
             }
 
@@ -208,11 +208,7 @@ public class QuranPageView extends FrameLayout {
                     if (mActivity.mPlayer != null) {
                         anyReciting = mActivity.mPlayer.isReciting(sectionModel.getChapterNo(), span.verseNo);
                     }
-                    span.setBackgroundColor(
-                        anyReciting || span.verseNo == sectionModel.quickActionsOpenedVerseNo
-                            ? mBGHighlightBGColor
-                            : Color.TRANSPARENT
-                    );
+                    span.setBackgroundColor(anyReciting ? mBGHighlightBGColor : Color.TRANSPARENT);
 
                     if (anyReciting) {
                         recitingVerseNo = span.verseNo;
