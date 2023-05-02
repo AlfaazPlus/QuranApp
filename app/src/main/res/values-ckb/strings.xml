@@ -102,7 +102,7 @@
     <string name="strTitlePrivacyPolicy">تایبەتمەندێتی ڕامیاری</string>
     <string name="strTitleFailed">سەرکەوتوو نەبوو</string>
     <string name="strTitleThresholdReached">گەیشتە ئاستی دیاریکراو</string>
-    <string name="strTitleChapInfoChapterNo">ژمارەی بەش</string>
+    <string name="strTitleChapInfoChapterNo">ژمارەی سورەت</string>
     <string name="strTitleChapInfoPages">لاپەڕەکان</string>
     <string name="strTitleChapInfoRevOrder">شێوازی وەحی</string>
     <string name="strTitleChapInfoRevType">شوێنی وەحی</string>
@@ -181,7 +181,7 @@
     <string name="strLabelPrevious">پێشوو</string>
     <string name="strLabelInstall">دابەزاندن</string>
     <string name="strLabelThemeDark">تاریک</string>
-    <string name="strLabelNextChapter">بەشی دواتر</string>
+    <string name="strLabelNextChapter">سورەتی دواتر</string>
     <string name="strLabelStart">دەستپێکردن</string>
     <string name="strLabelNew">نوێ</string>
     <string name="strLabelPremium">پارەدان</string>
@@ -192,14 +192,14 @@
     <string name="strLabelUpdate">نوێکردنەوە</string>
     <string name="strLabelThemeLight">ڕووناک</string>
     <string name="strLabelContinueChapter">بەردەوامبون</string>
-    <string name="strLabelNoPreviousChapter">بەشی پێشوو نییە</string>
-    <string name="strLabelNoNextChapter">بەشی دواتر نییە</string>
+    <string name="strLabelNoPreviousChapter">سورەتی پێشوو نییە</string>
+    <string name="strLabelNoNextChapter">سورەتی دواتر نییە</string>
     <string name="strLabelNextJuz">جوزئی دواتر</string>
     <string name="strLabelVerseNo" formatted="false">ئایەتی %d</string>
-    <string name="strLabelPreviousChapter">بەشی پێشوو</string>
+    <string name="strLabelPreviousChapter">سورەتی پێشوو</string>
     <string name="strLabelPreviousJuz">جوزئی پێشوو</string>
     <string name="strLabelNoNextJuz">جوزئی دواتر نییە</string>
-    <string name="strLabelFullChapter">خوێندنەوە تەواوی بەشەکە</string>
+    <string name="strLabelFullChapter">خوێندنەوەی تەواوی سورەتەکە</string>
     <string name="strLabelPreviousVerse">ئایەتی پێشوو</string>
     <string name="strLabelNextVerse">ئایەتی دواتر</string>
     <string name="strLabelVersesText">ئایەتەکان</string>
@@ -244,7 +244,7 @@
 \n%2$s
 \n
 \nپێویستە دووبارە دایبەزێنیتەوە.</string>
-    <string name="strMsgTranslNoneSelected">هیچ وەرگێڕانێک دیارینەکراوە، بچۆ بۆ بەشی ڕێکخستن بۆ دۆزینەوەی وەرگێڕانەکان.</string>
+    <string name="strMsgTranslNoneSelected">هیچ وەرگێڕانێک دیارینەکراوە، بچۆ بۆ بەشی ڕێکخستن بۆ دانانی وەرگێڕان.</string>
     <string name="strMsgEnterValidRange">تکایە مەودایەکی دروست بنووسە</string>
     <string name="strMsgNoInternet">تکایە تۆڕی ئینتەرنێتەکەت بپشکنە.</string>
     <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگە</string>
@@ -319,7 +319,7 @@
     <string name="strTextSending">دەنێردرێت…</string>
     <string name="strTextPleaseWait">تکایە چاوەڕوانبە…</string>
     <string name="strTextUpdating">نوێدەکرێتەوە…</string>
-    <string name="strMsgUpdateAvailable">وەشانی نوێ بەردەستە! تکایە بەرنامەکە تازە بکەرەوە بۆ بەردەستبوونی تایبەتمەندیە نوێیەکان.</string>
+    <string name="strMsgUpdateAvailable">وەشانی نوێ بەردەستە! تکایە بەرنامەکە تازە بکەرەوە بۆ بینینی تایبەتمەندیە نوێیەکان.</string>
     <string name="strMsgUpdateAvailable4Dialog">نوێکردنەوە بەردەستە!
 \nتکایە بەرنامەکە تازە بکەرەوە.</string>
     <string name="strMsgUpdateAvailable2Continue">نوێکردنەوە پێویستە!
@@ -402,4 +402,9 @@
     <string name="place" formatted="false">%d شوێن</string>
     <string name="strMsgDuaFor" formatted="false">نزا بۆ %s</string>
     <string name="places" formatted="false">%d شوێندا</string>
+    <string name="titleSolutionVerses">چارەسەرەکانی ناو قورئان</string>
+    <string name="msgInvalidParams">زانیارییەکان نادروستن</string>
+    <string name="labelPreviousTafsir">تەفسیری پێشوو</string>
+    <string name="labelNextTafsir">تەفسیری دواتر</string>
+    <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتو نەبوو</string>
 </resources>

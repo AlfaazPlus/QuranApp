@@ -130,7 +130,7 @@
     <string name="strTitleVOTD">Ayat Hari Ini</string>
     <string name="strTitleDuas">Doa-doa</string>
     <string name="strTitleFeaturedDuas">Doa dalam Al Quran</string>
-    <string name="strTitlePrivacyPolicy">Kebijakan Pribadi</string>
+    <string name="strTitlePrivacyPolicy">Kebijakan Privasi</string>
     <string name="strTitleFailed">Gagal</string>
     <string name="strTitleSuccess">Berhasil</string>
     <string name="strTitleThresholdReached">Khatam</string>
@@ -399,4 +399,7 @@
     <string name="msgChapterAddedToFavourites">Surah telah ditambah ke disukai.</string>
     <string name="textTranslationReciterInfo">Bahasa: %1$s
 \nBuku: %2$s</string>
+    <string name="strMsgDuaFor" formatted="false">Doa untuk %s</string>
+    <string name="place" formatted="false">%d tempat</string>
+    <string name="places" formatted="false">%d tempat</string>
 </resources>
