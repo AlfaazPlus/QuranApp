@@ -34,6 +34,7 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.drawable
@@ -170,7 +171,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         playerNotificationManager = PlayerNotificationManager.Builder(
             this,
             NOTIF_ID,
-            getString(R.string.strNotifChannelIdRecitation)
+            NotificationUtils.CHANNEL_ID_RECITATION_PLAYER
         ).setMediaDescriptionAdapter(this)
             .setNotificationListener(object : PlayerNotificationManager.NotificationListener {
                 override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {

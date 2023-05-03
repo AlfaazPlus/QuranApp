@@ -397,6 +397,6 @@
     <string name="msgRecitaionDownloaded" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ડાઉનલોડ કર્યું.</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના બધા પાઠો કાઢી નાખવામાં આવશે.</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના પાઠો કાઢી નાખ્યા.</string>
-    <string name="strPreviewTextTransl">અલ્લાહના નામે, પરમ કૃપાળુ, પરમ દયાળુ</string>
+    <string name="strPreviewTextTransl">અલ્લાહના નામથી, (શરૂ કરું છું), જે અત્યંત કૃપાળુ અને દયાળુ છે</string>
     <string name="strTitleAutoPlayNext">આગળ ઑટોપ્લે</string>
 </resources>

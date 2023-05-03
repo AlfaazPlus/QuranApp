@@ -219,9 +219,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupItemsVisibility(int readerStyle) {
         int visibilityForReadingStyle = readerStyle == READER_STYLE_PAGE ? GONE : VISIBLE;
 
-        if (mTranslExplorerBinding != null) {
-            mTranslExplorerBinding.getRoot().setVisibility(visibilityForReadingStyle);
-        }
         if (mLytTextSizeTransl != null) {
             mLytTextSizeTransl.getRoot().setVisibility(visibilityForReadingStyle);
         }
@@ -746,8 +743,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         final String savedScript = SPReader.getSavedScript(ctx);
 
-        int scriptPreviewRes = QuranScriptUtilsKt.getScriptPreviewRes(savedScript);
-        mLytTextSizeArabic.demoText.setText(scriptPreviewRes);
+        mLytTextSizeArabic.demoText.setText(QuranScriptUtilsKt.getScriptPreviewText(savedScript));
         mVerseDecorator.setTextSizeArabic(mLytTextSizeArabic.demoText);
         if (QuranScriptUtilsKt.isKFQPCScript(savedScript)) {
             mLytTextSizeArabic.demoText.setTypeface(

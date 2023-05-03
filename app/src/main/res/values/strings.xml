@@ -2,6 +2,7 @@
 <resources>
     <string name="strTitleAppVersion">App version</string>
     <string name="strVersion" formatted="false">Version %s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
     <string name="strTitleLicenses">Licenses</string>
     <string name="strLabelClose">Close</string>
     <string name="strLabelOkay">Okay</string>
@@ -400,21 +401,5 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">Deleted recitations of \"%1$s\" for reciter \"%2$s\".</string>
     <string name="msgInvalidParams">Invalid params</string>
     <string name="msgTafsirLoadFailed">Failed to load tafsir</string>
-    <string name="strScriptPreviewIndopak" translatable="false">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ </string>
-    <string name="strScriptPreviewUthmani" translatable="false">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١</string>
-    <string name="strScriptPreviewKFQPC_V1" translatable="false">ﭑ ﭒ ﭓ ﭔ ﭕ</string>
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
-    <string name="strNotifChannelRecitation" translatable="false">Recitation Player</string>
-    <string name="strNotifChannelIdRecitation" translatable="false">recitation_player</string>
-    <string name="strNotifChannelDefault" translatable="false">Default Channel</string>
-    <string name="strNotifChannelIdDefault" translatable="false">default</string>
-    <string name="strNotifChannelVOTD" translatable="false">@string/strTitleVOTD</string>
-    <string name="strNotifChannelIdVOTD" translatable="false">votd</string>
-    <string name="strNotifChannelDownloads" translatable="false">Downloads</string>
-    <string name="strNotifChannelIdDownloads" translatable="false">downloads</string>
-    <string name="strShortcutIdVOTD" translatable="false">@string/strNotifChannelIdVOTD</string>
-    <string name="strShortcutIdLastVerses" translatable="false">last_verses</string>
-    <string name="strMsgShareApp" formatted="false" translatable="false">
-        QuranApp\n\nBest free app to read the Noble Qur\'an with translations. This app has nice and clean look and many other features. \n\nDOWNLOAD NOW:\n%s
-    </string>
 </resources>

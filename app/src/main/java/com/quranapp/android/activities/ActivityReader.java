@@ -1237,7 +1237,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (readerStyleChanged) {
             onReaderStyleChanged(arTextSizeChanged, translTextSizeChanged);
         } else {
-            if (translChanged) {
+            if (mReaderParams.getReaderStyle() != READER_STYLE_PAGE && translChanged) {
                 onTranslChanged(arTextSizeChanged, translTextSizeChanged);
             } else {
                 applySettingsChanges(arTextSizeChanged, translTextSizeChanged, false);

@@ -9,11 +9,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.receivers.BootReceiver;
 import com.quranapp.android.utils.receivers.ReceiverUtils;
 import com.quranapp.android.utils.receivers.VotdReceiver;
@@ -32,9 +30,6 @@ public final class VOTDUtils {
         ReceiverUtils.enableReceiver(context, BootReceiver.class);
 
         PendingIntent votdReminder = createVOTDReminder(context);
-        if (votdReminder != null) {
-            alarmManager.cancel(votdReminder);
-        }
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
@@ -45,10 +40,7 @@ public final class VOTDUtils {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
 
-        Log.d("VOTD Reminder set for: " + cal.getTime());
-
-        AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), votdReminder);
-        alarmManager.setAlarmClock(info, votdReminder);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), votdReminder);
     }
 
     public static void disableVOTDReminder(Context context) {
