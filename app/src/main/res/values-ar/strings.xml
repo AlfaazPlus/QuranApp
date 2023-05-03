@@ -322,7 +322,7 @@
     <string name="msgTafsirCleanup" formatted="false">سيتم حذف كل التفاسير من%s.</string>
     <string name="nothingToCleanup">لا يوجد شيء لتنظيف مساحة التخزين.</string>
     <string name="onboardDescTheme">يمكنك تغيرها فيما بعد.</string>
-    <string name="onboardDescReciter">يمكنك تغيير القراء فيما بعد. يمكنك العثور على المزيد من القراء في الإعدادات.</string>
+    <string name="onboardDescReciter">يمكنك تغيير القراء فيما بعد. وأيضاً يمكنك العثور على المزيد من القراء في الإعدادات.</string>
     <string name="strMsgReadHistoryRemoved">تمت إزالة سجل القراءة.</string>
     <string name="strTitleError">خطأ!</string>
     <string name="strMsgEditShareTransl">الترجمات المحددة من الإعدادات يتم عرضها هنا.</string>
@@ -357,14 +357,14 @@
     <string name="github">GitHub</string>
     <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub.</string>
     <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
-    <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
+    <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. وأيضاً يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
     <string name="labelAdd">إضافة</string>
     <string name="labelFreeUpSpace">إخلاء مساحة تخزنية</string>
-    <string name="noItems">لا توجد عناصر</string>
+    <string name="noItems">لا يوجد</string>
     <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
     <string name="msgChapterAddedToFavourites">تم إضافة السورة إلى المفضلة.</string>
-    <string name="nItem" formatted="false">%d عنصر</string>
-    <string name="nItems" formatted="false">%d عناصر</string>
+    <string name="nItem" formatted="false">عدد التفاسير:%d</string>
+    <string name="nItems" formatted="false">عدد التفاسير:%d</string>
     <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
     <string name="titleManageAudio">إدارة الصوتيات</string>
     <string name="downloadRecitations">تنزيل التلاوات</string>
@@ -393,10 +393,18 @@
     <string name="titleOtherSettings">إعدادات اخرى</string>
     <string name="audioBothArabicTranslation">تشغيل القرآن والترجمات</string>
     <string name="textDownloaded">تم التنزيل</string>
-    <string name="strHintSearchQuran">ابحث باسم السورة</string>
+    <string name="strHintSearchQuran">ابحث باسم السورة أو الرقم</string>
     <string name="strTitleAlphaBG">خلفية الفا</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d من الرسم و%2$d من الخطوط</string>
     <string name="verseSyncOn">متابعة الآية: مفعل</string>
     <string name="strTitleFeaturedQuran">قراءة مختارة</string>
     <string name="verseSyncOff">متابعة الآية: متوقف</string>
+    <string name="places" formatted="false">عدد المواضع:%d</string>
+    <string name="strMsgDuaFor" formatted="false">دعاء للـ%s</string>
+    <string name="labelNextTafsir">التفسير التالي</string>
+    <string name="labelPreviousTafsir">التفسير السابق</string>
+    <string name="titleSolutionVerses">حلول من القرآن</string>
+    <string name="msgTafsirLoadFailed">فشل تحميل التفسير</string>
+    <string name="msgInvalidParams">المعلومات غير دقيقة</string>
+    <string name="place" formatted="false">موضع %d</string>
 </resources>
