@@ -11,6 +11,7 @@ import androidx.core.graphics.drawable.IconCompat
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 object ShortcutUtils {
@@ -21,7 +22,7 @@ object ShortcutUtils {
             action = Intent.ACTION_VIEW
         }
 
-        val builder = ShortcutInfoCompat.Builder(ctx, ctx.getString(R.string.strNotifChannelIdVOTD))
+        val builder = ShortcutInfoCompat.Builder(ctx, NotificationUtils.CHANNEL_ID_VOTD)
             .setShortLabel(ctx.getString(R.string.strTitleVOTD))
             .setLongLabel(ctx.getString(R.string.strTitleVOTD))
             .setIntent(intent)
@@ -45,7 +46,7 @@ object ShortcutUtils {
         fromVerse: Int,
         toVerse: Int
     ) {
-        val id = ctx.getString(R.string.strShortcutIdLastVerses)
+        val id = "last_verses"
         val intent = ReaderFactory.prepareLastVersesIntentForShortcut(
             quranMeta,
             juzNo,

@@ -308,7 +308,7 @@
     <string name="nItems">%d ഇനങ്ങൾ</string>
     <string name="verseSyncOff">വാക്യ സമന്വയം: ഓഫാണ്</string>
     <string name="verseSyncOn">വാക്യ സമന്വയം: ഓൺ</string>
-    <string name="strPreviewTextTransl">പരമകാരുണികനും കരുണാമയനുമായ അല്ലാഹുവിന്റെ നാമത്തിൽ</string>
+    <string name="strPreviewTextTransl">പരമകാരുണികനും കരുണാനിധിയുമായ അല്ലാഹുവിന്റെ തിരുനാമത്തില്‍</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ഡൗൺലോഡ് ചെയ്ത സ്ക്രിപ്റ്റുകളും അവയുടെ ഫോണ്ടുകളും ഇല്ലാതാക്കാം.</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d ന്റെ %2$d ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്തു</string>
     <string name="msgDownloadFailed">ഡൗൺലോഡ് പരാജയപ്പെട്ടു</string>

@@ -13,6 +13,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
+import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory.prepareSingleVerseIntent
@@ -22,6 +23,7 @@ import com.quranapp.android.utils.univ.Codes
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
+import com.quranapp.android.utils.votd.VOTDUtils
 
 class VotdReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -60,7 +62,7 @@ class VotdReceiver : BroadcastReceiver() {
                         readerIntent.setClass(context, ActivityReader::class.java)
                         val readerPendingIntent = PendingIntent.getActivity(context, notificationId, readerIntent, flag)
 
-                        val channelId = context.getString(R.string.strNotifChannelIdVOTD)
+                        val channelId = NotificationUtils.CHANNEL_ID_VOTD
                         val builder = NotificationCompat.Builder(context, channelId)
                         builder.setAutoCancel(true)
                         builder.setCategory(NotificationCompat.CATEGORY_REMINDER)
@@ -85,10 +87,17 @@ class VotdReceiver : BroadcastReceiver() {
                         builder.setContentText(translationText)
                         builder.setStyle(NotificationCompat.BigTextStyle().bigText(translationText))
 
-                        (ContextCompat.getSystemService(context, NotificationManager::class.java))?.notify(notificationId, builder.build())
+                        (ContextCompat.getSystemService(context, NotificationManager::class.java))?.notify(
+                            notificationId,
+                            builder.build()
+                        )
                     }
                 }
             }
         })
+
+        if (VOTDUtils.isVOTDTrulyEnabled(context)) {
+            VOTDUtils.enableVOTDReminder(context)
+        }
     }
 }
