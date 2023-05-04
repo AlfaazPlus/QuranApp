@@ -402,4 +402,9 @@
     <string name="places" formatted="false">Lugares %d</string>
     <string name="place" formatted="false">Lugar %d</string>
     <string name="strMsgDuaFor" formatted="false">Súplica por %s</string>
+    <string name="titleSolutionVerses">Soluciones del Corán</string>
+    <string name="labelPreviousTafsir">interpretación (tafsir) anterior</string>
+    <string name="labelNextTafsir">Interpretación (tafsir) siguiente</string>
+    <string name="msgInvalidParams">Parámetros no válidos</string>
+    <string name="msgTafsirLoadFailed">Error al cargar el tafsir (interpretación)</string>
 </resources>
