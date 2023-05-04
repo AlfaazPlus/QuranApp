@@ -348,7 +348,7 @@
     <string name="titleScriptCleanup">Hapus jenis penulisan\?</string>
     <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus.</string>
     <string name="titleRecitationCleanup">Hapus Murattal\?</string>
-    <string name="strPreviewTextTransl">Dengan menyebut nama Allah, Yang Maha Pengasih lagi Maha Penyayang</string>
+    <string name="strPreviewTextTransl">Dengan nama Allah Yang Maha Pengasih, Maha Penyayang</string>
     <string name="msgScriptCleanup" formatted="false">%s jenis penulisan dan semua font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya.</string>
     <string name="titleChapterInfoCleanup">Kosongkan info ayat\?</string>
     <string name="msgChapterInfoCleanup">Semua info ayat yang tersimpan akan dihapus.</string>

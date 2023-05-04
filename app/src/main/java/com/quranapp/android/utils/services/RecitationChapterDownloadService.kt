@@ -71,7 +71,7 @@ class RecitationChapterDownloadService : Service() {
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
                 NOTIF_ID,
-                NotificationUtils.createEmptyNotif(this, getString(R.string.strNotifChannelIdDownloads))
+                NotificationUtils.createEmptyNotif(this, NotificationUtils.CHANNEL_ID_DOWNLOADS)
             )
         }
 
@@ -90,7 +90,7 @@ class RecitationChapterDownloadService : Service() {
         if (intent == null) {
             val notification = NotificationUtils.createEmptyNotif(
                 this,
-                getString(R.string.strNotifChannelIdDownloads)
+                NotificationUtils.CHANNEL_ID_DOWNLOADS
             )
             startForeground(NOTIF_ID, notification)
             finish()
@@ -238,7 +238,7 @@ class RecitationChapterDownloadService : Service() {
         key: String,
         chapterModel: ManageAudioChapterModel
     ): NotificationCompat.Builder {
-        val channelId = getString(R.string.strNotifChannelIdDownloads)
+        val channelId = NotificationUtils.CHANNEL_ID_DOWNLOADS
         val builder = NotificationCompat.Builder(this, channelId).apply {
             setAutoCancel(false)
             setOngoing(true)

@@ -505,7 +505,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             mPlayerService.setRecitationPlayer(mPlayer, this);
         }
 
-        mBinding.floatingFooter.addView(mPlayer, 1);
+        mBinding.floatingFooter.addView(mPlayer, 0);
     }
 
     private void initIntent(Intent intent) {
@@ -1237,7 +1237,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (readerStyleChanged) {
             onReaderStyleChanged(arTextSizeChanged, translTextSizeChanged);
         } else {
-            if (translChanged) {
+            if (mReaderParams.getReaderStyle() != READER_STYLE_PAGE && translChanged) {
                 onTranslChanged(arTextSizeChanged, translTextSizeChanged);
             } else {
                 applySettingsChanges(arTextSizeChanged, translTextSizeChanged, false);

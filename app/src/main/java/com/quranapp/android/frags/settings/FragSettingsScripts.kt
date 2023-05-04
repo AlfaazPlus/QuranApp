@@ -94,7 +94,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
             LytSettingsScriptItemBinding.inflate(LayoutInflater.from(ctx), list, false).apply {
                 radio.text = slug.getQuranScriptName()
                 radio.isChecked = slug == initialScript
-                preview.setText(slug.getScriptPreviewRes())
+                preview.setText(slug.getScriptPreviewText())
                 preview.typeface = ctx.getFont(slug.getQuranScriptFontRes())
                 preview.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,

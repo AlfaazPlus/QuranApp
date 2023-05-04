@@ -16,6 +16,7 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.extensions.getContentLengthAndStream
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
@@ -300,7 +301,7 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
 
     private fun startDownloadForeground() {
         val initialNotifBuilder = NotificationCompat
-            .Builder(this, getString(R.string.strNotifChannelIdDownloads))
+            .Builder(this, NotificationUtils.CHANNEL_ID_DOWNLOADS)
             .setSmallIcon(R.drawable.dr_logo)
             .setSubText(getString(R.string.textDownloading))
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
@@ -317,7 +318,7 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
 
     private fun showProgressNotification(partNo: Int?, progress: Int, scriptKey: String) {
         val builder = NotificationCompat
-            .Builder(this, getString(R.string.strNotifChannelIdDownloads))
+            .Builder(this, NotificationUtils.CHANNEL_ID_DOWNLOADS)
             .setSmallIcon(R.drawable.dr_logo)
             .setContentTitle(
                 if (partNo == null) {
