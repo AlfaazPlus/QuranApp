@@ -21,29 +21,41 @@ import com.quranapp.android.utils.receivers.CrashReceiver
 
 object NotificationUtils {
     const val CHANNEL_ID_DEFAULT = "default"
+    private const val CHANNEL_NAME_DEFAULT = "Default Channel"
+    private const val CHANNEL_DESC_DEFAULT = "Miscellaneous notifications"
+
     const val CHANNEL_ID_VOTD = "votd"
+    private const val CHANNEL_NAME_VOTD = "Verse of The Day"
+    private const val CHANNEL_DESC_VOTD = "Daily verse reminder notifications"
+
     const val CHANNEL_ID_RECITATION_PLAYER = "recitation_player"
+    private const val CHANNEL_NAME_RECITATION_PLAYER = "Recitation Player"
+    private const val CHANNEL_DESC_RECITATION_PLAYER = "Recitation Player notifications"
+
     const val CHANNEL_ID_DOWNLOADS = "downloads"
+    private const val CHANNEL_NAME_DOWNLOADS = "Downloads"
+    private const val CHANNEL_DESC_DOWNLOADS = "Notifications for downloads"
+
 
     fun createNotificationChannels(ctx: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ctx.getSystemService(NotificationManager::class.java).apply {
-                createNotificationChannel(createDefaultChannel(ctx))
-                createNotificationChannel(createVOTDChannel(ctx))
-                createNotificationChannel(createDownloadsChannel(ctx))
-                createNotificationChannel(createRecitationChannel(ctx))
+                createNotificationChannel(createDefaultChannel())
+                createNotificationChannel(createVOTDChannel())
+                createNotificationChannel(createDownloadsChannel())
+                createNotificationChannel(createRecitationChannel())
             }
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun createDefaultChannel(ctx: Context): NotificationChannel {
+    private fun createDefaultChannel(): NotificationChannel {
         return NotificationChannel(
-            ctx.getString(R.string.strNotifChannelIdDefault),
-            ctx.getString(R.string.strNotifChannelDefault),
+            CHANNEL_ID_DEFAULT,
+            CHANNEL_NAME_DEFAULT,
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = null
+            description = CHANNEL_DESC_DEFAULT
             lightColor = Color.GREEN
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             vibrationPattern = longArrayOf(500, 500)
@@ -63,13 +75,13 @@ object NotificationUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun createVOTDChannel(ctx: Context): NotificationChannel {
+    private fun createVOTDChannel(): NotificationChannel {
         return NotificationChannel(
-            ctx.getString(R.string.strNotifChannelIdVOTD),
-            ctx.getString(R.string.strNotifChannelVOTD),
-            NotificationManager.IMPORTANCE_DEFAULT
+            CHANNEL_ID_VOTD,
+            CHANNEL_NAME_VOTD,
+            NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = null
+            description = CHANNEL_DESC_VOTD
             lightColor = Color.GREEN
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             vibrationPattern = longArrayOf(500, 500)
@@ -89,29 +101,31 @@ object NotificationUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun createDownloadsChannel(ctx: Context): NotificationChannel {
+    private fun createDownloadsChannel(): NotificationChannel {
         return createChannel(
-            ctx.getString(R.string.strNotifChannelIdDownloads),
-            ctx.getString(R.string.strNotifChannelDownloads)
+            CHANNEL_ID_DOWNLOADS,
+            CHANNEL_NAME_DOWNLOADS,
+            CHANNEL_DESC_DOWNLOADS
         )
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun createRecitationChannel(ctx: Context): NotificationChannel {
+    private fun createRecitationChannel(): NotificationChannel {
         return createChannel(
-            ctx.getString(R.string.strNotifChannelIdRecitation),
-            "Recitation Player"
+            CHANNEL_ID_RECITATION_PLAYER,
+            CHANNEL_NAME_RECITATION_PLAYER,
+            CHANNEL_DESC_RECITATION_PLAYER
         )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createChannel(channelId: String, channelName: String): NotificationChannel {
+    private fun createChannel(channelId: String, channelName: String, desc: String): NotificationChannel {
         return NotificationChannel(
             channelId,
             channelName,
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = null
+            description = desc
             vibrationPattern = null
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
@@ -155,6 +169,7 @@ object NotificationUtils {
             )
         }.build()
 
-        ContextCompat.getSystemService(ctx, NotificationManager::class.java)?.notify(CrashReceiver.NOTIFICATION_ID_CRASH, notification)
+        ContextCompat.getSystemService(ctx, NotificationManager::class.java)
+            ?.notify(CrashReceiver.NOTIFICATION_ID_CRASH, notification)
     }
 }

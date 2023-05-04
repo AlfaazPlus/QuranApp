@@ -346,7 +346,7 @@
     <string name="nItems" formatted="false">%d آئٹم</string>
     <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
     <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
-    <string name="strPreviewTextTransl">اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے</string>
+    <string name="strPreviewTextTransl">شروع کرتا ہوں اللہ تعالیٰ کے نام سے جو بڑا مہربان نہایت رحم واﻻ ہے</string>
     <string name="titleRecitationCleanup">تلاوت حذف کریں؟</string>
     <string name="titleScriptCleanup">اسکرپٹ حذف کریں؟</string>
     <string name="titleChapterInfoCleanup">صاف کریں معلومات سوره؟</string>

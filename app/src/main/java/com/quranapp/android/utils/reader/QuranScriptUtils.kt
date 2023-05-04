@@ -25,6 +25,10 @@ object QuranScriptUtils {
     const val SCRIPT_UTHMANI = "uthmani"
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
 
+    const val PREVIEW_TEXT_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ "
+    const val PREVIEW_TEXT_UTHMANI = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١"
+    const val PREVIEW_TEXT_KFQPC_V1 = "ﭑ ﭒ ﭓ ﭔ ﭕ"
+
     const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
     const val TOTAL_DOWNLOAD_PARTS = 4
 
@@ -131,10 +135,10 @@ fun String.getQuranScriptName(): String {
     return mapToQuery[Locale.getDefault().toLanguageTag()] ?: mapToQuery["en"]!!
 }
 
-fun String.getScriptPreviewRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> R.string.strScriptPreviewUthmani
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.string.strScriptPreviewKFQPC_V1
-    else -> R.string.strScriptPreviewIndopak
+fun String.getScriptPreviewText(): String = when (this) {
+    QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
+    else -> QuranScriptUtils.PREVIEW_TEXT_INDOPAK
 }
 
 @DimenRes

@@ -313,7 +313,7 @@
     <string name="verseSyncOn">همگام سازی آیه: روشن</string>
     <string name="strTitleSelectTafsir">انتخاب تفسیر</string>
     <string name="msgScriptFontsDownloaded">اسکریپت ها و فونت ها با موفقیت دانلود شدند.</string>
-    <string name="strPreviewTextTransl">بسم الله الرحمن الرحیم</string>
+    <string name="strPreviewTextTransl">به نام الله بخشندۀ مهربان</string>
     <string name="onboardDescTranslations">همیشه می توانید بعداً این را تغییر دهید. می توانید ترجمه های بیشتری را از تنظیمات دانلود کنید.</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">تفسیر آیه %d را بخوانید</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d از %2$d قلم دانلود شد</string>
