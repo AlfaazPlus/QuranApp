@@ -505,7 +505,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             mPlayerService.setRecitationPlayer(mPlayer, this);
         }
 
-        mBinding.floatingFooter.addView(mPlayer, 1);
+        mBinding.floatingFooter.addView(mPlayer, 0);
     }
 
     private void initIntent(Intent intent) {
