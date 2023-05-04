@@ -402,4 +402,9 @@
     <string name="strMsgDuaFor" formatted="false">Doa untuk %s</string>
     <string name="place" formatted="false">%d tempat</string>
     <string name="places" formatted="false">%d tempat</string>
+    <string name="labelNextTafsir">Tafsir selanjutnya</string>
+    <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
+    <string name="msgTafsirLoadFailed">Gagal memuat tafsir</string>
+    <string name="msgInvalidParams">Param tidak valid</string>
+    <string name="titleSolutionVerses">Solusi dari Quran</string>
 </resources>
