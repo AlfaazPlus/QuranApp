@@ -1,0 +1,79 @@
+QuranApp es una aplicación móvil sin publicidad y centrada en la privacidad que facilita la lectura y exploración del Sagrado Corán a diario en cualquier momento y lugar. Su diseño limpio y fácil de navegar ayuda a los usuarios a superar las dificultades de leer el Corán en la era de la tecnología. Esta aplicación tiene más de 20 traducciones en varios idiomas para que las personas de diferentes idiomas y regiones puedan entender el propósito del Corán.
+
+~~~~~~~
+
+<h3>Características:</h3>
+
+Las siguientes características son la razón por la que debe usar QuranApp.
+
+<b>🛡️ Puro</b>
+
+- Fuente abierta
+- Sin anuncios ni compras.
+- No se requiere acceso al teléfono
+- Sin análisis ni seguimiento
+- Sin recopilación o intercambio de datos
+
+<b>📙 Traducciones</b>
+
+- 20+ Traducciones
+- Leer varias traducciones juntas
+- Vista previa rápida de las notas al pie
+- Vista previa rápida de las referencias de los versos
+
+<b>🎙️ Recitaciones</b>
+
+- Más de 15 recitaciones
+- Repetir un solo verso
+- Reproducir rango de verso
+- Reproducir recitación continuamente
+- Desplazamiento automático para coincidir con el verso actual
+
+<b>🎨 Fuentes</b>
+
+- Múltiples fuentes (Uthmani, Indopak y KFQPC)
+- Personaliza el tamaño del texto en árabe
+- Personalizar el tamaño del texto de traducción
+
+<b>⚙ Diseño</b>
+
+- Lectura en modo traducción
+- Lectura en modo página
+- Lea el Corán en diferentes modos de traducción (verso único, rango de versos, capítulo completo, juz completo)
+
+<b>➡️ Navegación</b>
+
+- Navegación conveniente en modo de verso único
+- Salta rápidamente a cualquier verso
+- Salta rápidamente a cualquier capítulo
+- Salta rápidamente a cualquier juz
+
+<b>❤️ Contenidos del Corán</b>
+
+- Temas del Corán
+- Duas del Corán
+- Profetas mencionados en el Corán
+
+<b>🔍 Buscar</b>
+
+- Búsqueda Avanzada
+- Búsqueda por voz
+- Buscar Historia
+- Navegue fácilmente a cualquier traducción en los resultados de búsqueda
+- Búsqueda de palabra completa o parte de la palabra
+
+<b>📌 Marcadores</b>
+
+- Marcar versos para más tarde
+- Marcador de un solo verso
+- Marcar un rango de verso
+- Agregar notas personalizadas a los marcadores
+
+<b>🔥 Otras funciones</b>
+
+- Recordatorio del Verso del Día
+- Reparto adelantado
+- Temas oscuros y claros.
+- Soporte de múltiples idiomas
+
+<i>🐞 Para informar un problema o solicitar una nueva función, visite el repositorio de GitHub en <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
