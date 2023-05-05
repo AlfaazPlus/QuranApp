@@ -407,4 +407,8 @@
     <string name="labelNextTafsir">Interpretación (tafsir) siguiente</string>
     <string name="msgInvalidParams">Parámetros no válidos</string>
     <string name="msgTafsirLoadFailed">Error al cargar el tafsir (interpretación)</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp es una aplicación gratuita y de código abierto para leer y explorar el Noble Corán con traducciones. Esta aplicación tiene una interfaz agradable y limpio con características como tafsir, recitación, recordatorio y muchos más.
+\n
+\nDESCARGAR AHORA:
+\n%s</string>
 </resources>
