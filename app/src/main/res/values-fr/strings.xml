@@ -402,4 +402,12 @@
     <string name="strMsgDuaFor" formatted="false">Invocation pour %s</string>
     <string name="places" formatted="false">%d endroits</string>
     <string name="place" formatted="false">%d endroit</string>
+    <string name="labelPreviousTafsir">Tafsir précédent</string>
+    <string name="labelNextTafsir">Tafsir suivant</string>
+    <string name="msgTafsirLoadFailed">Échec du chargement du tafsir</string>
+    <string name="msgInvalidParams">Paramètres invalides</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp est une application gratuite et open-source pour lire et explorer le Coran avec une interface pure et agréable et des fonctionnalités comme les traductions, le tafsir, les rappels et bien d\'autres.
+\n
+\nTélécharge dès maintenant :
+\n%s</string>
 </resources>
