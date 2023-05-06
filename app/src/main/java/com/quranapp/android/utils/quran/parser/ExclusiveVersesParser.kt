@@ -4,9 +4,42 @@ import android.content.Context
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.ExclusiveVerse
 import org.json.JSONObject
+import java.util.Locale
 
-open class ReferenceVersesParser {
-    protected fun parseVersesInternal(
+open class ExclusiveVersesParser {
+    protected fun parseFromAssets(context: Context, quranMeta: QuranMeta, filename: String): List<ExclusiveVerse> {
+        val map = context.assets.open("verses/$filename/map.json").bufferedReader().use {
+            it.readText()
+        }
+
+        val fallbackLocale = "en"
+        val currentLocale = Locale.getDefault().language
+        val pathFormat = "verses/$filename/%s"
+        val fileName = "$filename.json"
+
+        val fallbackNames = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
+            .bufferedReader().use {
+                it.readText()
+            }
+
+        val localeNames = context.assets.takeIf {
+            currentLocale != fallbackLocale && it.list(pathFormat.format(currentLocale))
+                ?.contains(fileName) == true
+        }?.open("${pathFormat.format(currentLocale)}/$fileName")
+            ?.bufferedReader()?.use {
+                it.readText()
+            }
+
+        return parseVersesInternal(
+            context,
+            map,
+            localeNames ?: fallbackNames,
+            fallbackNames,
+            quranMeta
+        )
+    }
+
+    private fun parseVersesInternal(
         context: Context,
         mapStr: String,
         localeNamesStr: String,

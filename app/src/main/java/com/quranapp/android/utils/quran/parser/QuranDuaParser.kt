@@ -9,7 +9,7 @@ import com.quranapp.android.utils.Log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
-object QuranDuaParser : ReferenceVersesParser() {
+object QuranDuaParser : ExclusiveVersesParser() {
     fun parseDua(
         context: Context,
         quranMeta: QuranMeta,
@@ -18,35 +18,11 @@ object QuranDuaParser : ReferenceVersesParser() {
     ) {
         Thread {
             try {
-                val map = context.assets.open("verses/type1/map.json").bufferedReader().use {
-                    it.readText()
-                }
-
-                val fallbackLocale = "en"
-                val currentLocale = Locale.getDefault().language
-                val pathFormat = "verses/type1/%s"
-                val fileName = "type1.json"
-
-                val fallbackNames = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-
-                val localeNames = context.assets.takeIf {
-                    currentLocale != fallbackLocale && it.list(pathFormat.format(currentLocale))
-                        ?.contains(fileName) == true
-                }?.open("${pathFormat.format(currentLocale)}/$fileName")
-                    ?.bufferedReader()?.use {
-                        it.readText()
-                    }
-
                 quranDuaRef.set(
-                    parseVersesInternal(
+                    parseFromAssets(
                         context,
-                        map,
-                        localeNames ?: fallbackNames,
-                        fallbackNames,
-                        quranMeta
+                        quranMeta,
+                        "type1"
                     )
                 )
             } catch (e: Exception) {

@@ -19,6 +19,7 @@ import com.quranapp.android.views.homepage.FeatureProphetsLayout;
 import com.quranapp.android.views.homepage.FeatureReadingLayout;
 import com.quranapp.android.views.homepage.FeatureTopicsLayout;
 import com.quranapp.android.views.homepage.FeaturedDuaLayout;
+import com.quranapp.android.views.homepage.QuranEtiquetteLayout;
 import com.quranapp.android.views.homepage.ReadHistoryLayout;
 import com.quranapp.android.views.homepage.QuranSolutionVersesLayout;
 
@@ -147,14 +148,24 @@ public class FragMain extends BaseFragment {
         mBinding.container.addView(duaLayout, resolvePosFeaturedDua(root));
         duaLayout.post(() -> {
             duaLayout.refresh(quranMeta);
-            initSituationVerses(root, quranMeta);
+            initSolutionVerses(root, quranMeta);
         });
     }
 
-    private void initSituationVerses(View root, QuranMeta quranMeta) {
+    private void initSolutionVerses(View root, QuranMeta quranMeta) {
         QuranSolutionVersesLayout layout = new QuranSolutionVersesLayout(root.getContext());
         layout.setId(R.id.homepageSituationVersesLayout);
         mBinding.container.addView(layout, resolvePosSituationVerses(root));
+        layout.post(() -> {
+            layout.refresh(quranMeta);
+            initEtiquetteVerses(root, quranMeta);
+        });
+    }
+
+    private void initEtiquetteVerses(View root, QuranMeta quranMeta) {
+        QuranEtiquetteLayout layout = new QuranEtiquetteLayout(root.getContext());
+        layout.setId(R.id.homepageEtiquetteVersesLayout);
+        mBinding.container.addView(layout, resolvePosEtiquetteVerses(root));
         layout.post(() -> {
             layout.refresh(quranMeta);
             initFeaturedTopics(root, quranMeta);
@@ -222,9 +233,17 @@ public class FragMain extends BaseFragment {
         return pos;
     }
 
-    private int resolvePosFeaturedTopics(View root) {
+    private int resolvePosEtiquetteVerses(View root) {
         int pos = resolvePosSituationVerses(root) + 1;
         if (root.findViewById(R.id.homepageSituationVersesLayout) == null) {
+            pos--;
+        }
+        return pos;
+    }
+
+    private int resolvePosFeaturedTopics(View root) {
+        int pos = resolvePosEtiquetteVerses(root) + 1;
+        if (root.findViewById(R.id.homepageEtiquetteVersesLayout) == null) {
             pos--;
         }
         return pos;
