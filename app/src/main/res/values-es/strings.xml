@@ -402,4 +402,13 @@
     <string name="places" formatted="false">Lugares %d</string>
     <string name="place" formatted="false">Lugar %d</string>
     <string name="strMsgDuaFor" formatted="false">Súplica por %s</string>
+    <string name="titleSolutionVerses">Soluciones del Corán</string>
+    <string name="labelPreviousTafsir">interpretación (tafsir) anterior</string>
+    <string name="labelNextTafsir">Interpretación (tafsir) siguiente</string>
+    <string name="msgInvalidParams">Parámetros no válidos</string>
+    <string name="msgTafsirLoadFailed">Error al cargar el tafsir (interpretación)</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp es una aplicación gratuita y de código abierto para leer y explorar el Noble Corán con traducciones. Esta aplicación tiene una interfaz agradable y limpio con características como tafsir, recitación, recordatorio y muchos más.
+\n
+\nDESCARGAR AHORA:
+\n%s</string>
 </resources>

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="/app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.png" alt='QuranApp logo' height="140"/>
+<img src="app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.png" alt='QuranApp logo' height="140"/>
 
 ### QuranApp: Read and Explore
 

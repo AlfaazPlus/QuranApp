@@ -402,4 +402,13 @@
     <string name="strMsgDuaFor" formatted="false">Doa untuk %s</string>
     <string name="place" formatted="false">%d tempat</string>
     <string name="places" formatted="false">%d tempat</string>
+    <string name="labelNextTafsir">Tafsir selanjutnya</string>
+    <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
+    <string name="msgTafsirLoadFailed">Gagal memuat tafsir</string>
+    <string name="msgInvalidParams">Param tidak valid</string>
+    <string name="titleSolutionVerses">Solusi dari Quran</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Alquran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, pengajian, pengingat, dan banyak lagi.
+\n
+\nUNDUH SEKARANG:
+\n%s</string>
 </resources>

@@ -1,0 +1,79 @@
+QuranApp adalah aplikasi seluler bebas iklan yang berfokus pada privasi. yang dapat memfasilitasi Anda membaca dan menjelajahi Al-Quran setiap hari kapan saja dan di mana saja. Desainnya yang rapi serta bersih membantu pengguna mengatasi kesulitan membaca Al-Quran di masa teknologi. Aplikasi ini memiliki 20+ terjemahan dalam beberapa bahasa sehingga orang-orang dari berbagai bahasa dan wilayah dapat memahami tujuan Al-Quran.
+
+~~~~~~~
+
+<h3>Fitur:</h3>
+
+Fitur-fitur berikut adalah alasan mengapa Anda harus menggunakan QuranApp.
+
+<b>🛡️ Murni</b>
+
+- Sumber terbuka
+- Tidak ada iklan atau pembelian
+- Tidak diperlukan izin telepon
+- Tidak ada analitik atau pelacakan
+- Tidak ada pengumpulan atau pembagian data
+
+<b>📙 Terjemahan</b>
+
+- 20+ Terjemahan
+- Baca banyak terjemahan bersama
+- Pratinjau cepat catatan kaki
+- Pratinjau cepat referensi ayat
+
+<b>🎙️ Bacaan</b>
+
+- 15+ Qori
+- Ulangi satu ayat
+- Mainkan rentang ayat
+- Mainkan bacaan terus menerus
+- Gulir otomatis untuk mencocokkan ayat yang diputar
+
+<b>🎨 Font</b>
+
+- Mendukung beberapa font (Uthmani, Indopak dan KFQPC)
+- Dapat mesuaikan ukuran teks Arab
+- Dapat menyesuaikan ukuran teks terjemahan
+
+<b>⚙ Tata Letak</b>
+
+- Membaca dalam mode terjemahan
+- Membaca dalam mode halaman
+- Baca Alquran dalam berbagai mode terjemahan (ayat tunggal, rentang ayat, bab lengkap, juz lengkap)
+
+<b>➡️ Navigasi</b>
+
+- Navigasi yang nyaman dalam mode ayat tunggal
+- Lompat ke ayat mana pun
+- Lompat ke bab mana pun
+- Lompat ke juz apa pun
+
+<b>❤️ Isi dari Al-Qur'an</b>
+
+- Topik dari Al-Qur'an
+- Doa dari Al-Qur'an
+- Nabi yang disebutkan dalam Al-Qur'an
+
+<b>🔍 Telusuri</b>
+
+- Pencarian lanjutan
+- Pencarian suara
+- Riwayat Pencarian
+- Mudah menavigasi ke terjemahan apa pun di hasil pencarian
+- Cari kata lengkap atau bagian kata
+
+<b>📌 Bookmark</b>
+
+- Tandai ayat untuk nanti
+- Tandai ayat tunggal
+- Tandai rentang ayat
+- Tambahkan catatan khusus ke bookmark
+
+<b>🔥 Fitur Lainnya</b>
+
+- Pengingat Ayat Hari Ini
+- Berbagi
+- Tema gelap dan terang
+- Dukungan beberapa bahasa
+
+<i>🐞 Untuk melaporkan masalah atau meminta fitur baru, silakan kunjungi repositori GitHub di <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

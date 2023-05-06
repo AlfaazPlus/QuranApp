@@ -8,11 +8,11 @@
 - Arabic (ar) - Mar
 - Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77)
 - Kurdish (ckb) - [Goran Gharib](https://facebook.com/goran90909)
-- French (fr) - Sanya Gautam
+- French (fr) - Sanya Gautam and [pindadu92](https://github.com/pindadu92)
 - German (de) - [Mylinde](https://github.com/Mylinde)
 - Gujarati (gu) - [Faiz Anwer](https://github.com/TheAnwerFaiz)
 - Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
-- Indonesian (id) - [rraven](https://instagram.com/r4ravv) and [friczky](https://github.com/friczky)
+- Indonesian (id) - [rraven](https://instagram.com/r4ravv), [friczky](https://github.com/friczky) and [Yogi Hermawan](https://github.com/yHpgi)
 - Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 - Malayalam (ml) - [Fayaz](https://github.com/Sharpentine)
 - Persian (fa) - [rchookan](https://github.com/rchookan)
