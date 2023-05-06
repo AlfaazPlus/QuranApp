@@ -9,7 +9,7 @@ import com.quranapp.android.utils.Log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
-object SituationVersesParser : ExclusiveVersesParser() {
+object QuranEtiquetteParser : ExclusiveVersesParser() {
     fun parseVerses(
         context: Context,
         quranMeta: QuranMeta,
@@ -22,11 +22,11 @@ object SituationVersesParser : ExclusiveVersesParser() {
                     parseFromAssets(
                         context,
                         quranMeta,
-                        "type0"
+                        "type2"
                     )
                 )
             } catch (e: Exception) {
-                Log.saveError(e, "SituationVersesParser.parseVerses")
+                Log.saveError(e, "QuranEtiquetteParser.parseVerses")
             }
 
             Handler(Looper.getMainLooper()).post(postRunnable)

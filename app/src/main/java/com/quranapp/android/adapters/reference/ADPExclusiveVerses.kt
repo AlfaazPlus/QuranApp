@@ -16,6 +16,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.databinding.LytQuranExclusiveVerseItemBinding
 import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.colorStateList
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.gesture.HoverPushEffect
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
@@ -32,10 +33,6 @@ abstract class ADPExclusiveVerses(
 
     override fun getItemCount(): Int {
         return references.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHExclusiveVerse {

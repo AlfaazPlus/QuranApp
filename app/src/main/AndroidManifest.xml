@@ -49,6 +49,7 @@
         <activity android:name=".activities.ActivityProphets" />
         <activity android:name=".activities.reference.ActivityDua" />
         <activity android:name=".activities.reference.ActivitySolutionVerses" />
+        <activity android:name=".activities.reference.ActivityEtiquette" />
         <activity
             android:name=".activities.ActivityTafsir"
             android:exported="true"
