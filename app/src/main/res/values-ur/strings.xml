@@ -399,4 +399,17 @@
     <string name="audioOnlyArabic">صرف عربی کی تلاوت کریں</string>
     <string name="audioBothArabicTranslation">عربی اور ترجمہ دونوں کی تلاوت کریں</string>
     <string name="logRemoved">لاگ ہٹا دیا گیا</string>
+    <string name="strMsgDuaFor" formatted="false">%s کے لیے دعا</string>
+    <string name="places" formatted="false">%d جگہ</string>
+    <string name="place" formatted="false">%d جگہ</string>
+    <string name="labelPreviousTafsir">پچھلی تفسیر</string>
+    <string name="labelNextTafsir">اگلی تفسیر</string>
+    <string name="titleSolutionVerses">قرآن سے حل</string>
+    <string name="msgInvalidParams">غلط پیرامیٹرز</string>
+    <string name="titleEtiquetteVerses">قرآن میں آداب</string>
+    <string name="msgTafsirLoadFailed">تفسیر لوڈ کرنے میں ناکام</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ترجمے کے ساتھ قرآن کریم کو پڑھنے اور دریافت کرنے کے لیے ایک مفت اور اوپن سورس ایپ ہے۔ اس ایپ میں تفسیر، تلاوت، یاد دہانی اور بہت ساری خصوصیات کے ساتھ ایک اچھا اور صاف انٹرفیس ہے۔
+\n
+\nابھی ڈاؤن لوڈ کریں:
+\n%s</string>
 </resources>
