@@ -96,7 +96,7 @@
     <string name="strTitleReaderVerseInformation" formatted="false">सूरह %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">आयत %d पर जाएं</string>
     <string name="strTitleReadVerseRange" formatted="false">%1$d से %2$d आयतें पढ़ें</string>
-    <string name="strTitleReaderLayoutStyle">कुरान दृश्य शैली</string>
+    <string name="strTitleReaderLayoutStyle">क़ुरआन दृश्य शैली</string>
     <string name="strTitleReaderTextSizeArabic">अरबी का आकार</string>
     <string name="strTitleReaderTextSizeTransl">अनुवाद का आकार</string>
     <string name="strTitleSettings">सेटिंग्स</string>
@@ -295,9 +295,9 @@
     <string name="strMsgReadHistoryNoItems">कोई इतिहास नहीं</string>
     <string name="strMsgReadHistoryDeleteSelected">चयनित इतिहास हटा दिया जाएगा।</string>
     <string name="strMsgReadHistoryDeleteAll">सभी पढ़े गए इतिहास को हटा दिया जाएगा।</string>
-    <string name="strMsgReferenceInQuran" formatted="false">कुरान में %s</string>
+    <string name="strMsgReferenceInQuran" formatted="false">क़ुरआन में %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s से सम्बंधित आयात कुल %2$d स्थानों पर मिले।</string>
-    <string name="strMsgReferenceDuas">कुरान से कुछ दुआएं इकट्ठी की हैं।</string>
+    <string name="strMsgReferenceDuas">क़ुरआन से कुछ दुआएं इकट्ठी की हैं।</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">अनुवाद दृश्य</string>
     <string name="strTitleReaderLayoutStylePageView">पृष्ठ दृश्य</string>
     <string name="strTitleRecitations">तिलावत</string>
@@ -399,4 +399,17 @@
     <string name="msgRecitaionDeleleSurah" formatted="false">क़ारी \"%2$s\" के लिए \"%1$s\" के सभी तिलावत हटा दिए जाएंगे।</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">क़ारी \"%2$s\" के लिए \"%1$s\" के सभी तिलावत हटाए गए।</string>
     <string name="msgChapterAddedToFavourites">सूरत को पसंदीदा में जोड़ा गया।</string>
+    <string name="places" formatted="false">%d जगह</string>
+    <string name="place" formatted="false">%d जगह</string>
+    <string name="labelPreviousTafsir">पिछली तफ़सीर</string>
+    <string name="labelNextTafsir">अगली तफ़सीर</string>
+    <string name="titleSolutionVerses">क़ुरआन से समाधान</string>
+    <string name="msgInvalidParams">अमान्य पैरामीटर</string>
+    <string name="strMsgDuaFor" formatted="false">%s के लिए दुआ</string>
+    <string name="titleEtiquetteVerses">क़ुरआन में शिष्टाचार</string>
+    <string name="msgTafsirLoadFailed">तफ़सीर लोड करने में विफल</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp अनुवाद के साथ क़ुरआन करीम को पढ़ने और एक्सप्लोर करने के लिए एक नि: शुल्क और ओपन-सोर्स ऐप है। इस ऐप में तफ़सीर, तिलावात, रिमाइंडर और कई अन्य सुविधाओं के साथ एक अच्छा और साफ इंटरफ़ेस है।
+\n
+\nअभी डाउनलोड करो:
+\n%s</string>
 </resources>
