@@ -105,6 +105,26 @@
         "downloadPath": "inventory/translations/de/de_bubenheim.json"
       }
     },
+    "es": {
+      "es_isa_garcia": {
+        "book": "Sheikh Isa Garcia",
+        "author": "Sheikh Isa Garcia",
+        "displayName": "Sheikh Isa Garcia",
+        "langCode": "es",
+        "langName": "Español",
+        "lastUpdated": 1683443732091,
+        "downloadPath": "inventory/translations/es/es_isa_garcia.json"
+      },
+      "es_noor_international": {
+        "book": "Noor International Center",
+        "author": "Noor International Center",
+        "displayName": "Noor International Center",
+        "langCode": "es",
+        "langName": "Español",
+        "lastUpdated": 1683443732091,
+        "downloadPath": "inventory/translations/es/es_noor_international.json"
+      }
+    },
     "fa": {
       "fa_islamhouse": {
         "book": "تفسیر راستین ترجمه تیسیر کریم الرحمن",
