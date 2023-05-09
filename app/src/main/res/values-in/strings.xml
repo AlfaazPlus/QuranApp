@@ -140,7 +140,7 @@
     <string name="strTitleChapInfoPages">Halaman</string>
     <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
     <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
-    <string name="strTitleReaderSettings">Qori Murattal</string>
+    <string name="strTitleReaderSettings">Pengaturan halaman baca</string>
     <string name="strTitleAppLanguage">Bahasa</string>
     <string name="strTitleChangeLanguage">Ubah bahasa\?</string>
     <string name="strTitleTheme">Tema</string>
@@ -411,4 +411,5 @@
 \n
 \nUNDUH SEKARANG:
 \n%s</string>
+    <string name="titleEtiquetteVerses">Etiket dalam Al Quran</string>
 </resources>
