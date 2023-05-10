@@ -320,6 +320,5 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="textDownloading"/>
     <string name="nScriptsAndFonts" formatted="false"/>
 </resources>
