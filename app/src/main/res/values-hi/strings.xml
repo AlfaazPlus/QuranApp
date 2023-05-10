@@ -118,8 +118,8 @@
     <string name="strTitleSelectReciter">क़ारी चुनें</string>
     <string name="strTitleSelectScripts">फॉन्ट चुनें</string>
     <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें?</string>
-    <string name="strTitleTranslDelete">अनुवाद डिलीट करें?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें\?</string>
+    <string name="strTitleTranslDelete">अनुवाद डिलीट करें\?</string>
     <string name="strTitleResetReaderSettings">रीडर सेटिंग्स रेसेट करें\?</string>
     <string name="strTitleHideAd">विज्ञापन छुपायें</string>
     <string name="strTitleRecitationOptions">विकल्प</string>
@@ -153,7 +153,7 @@
     <string name="strTitleAppSettings">एप्प सेटिंग्स</string>
     <string name="strTitleReaderSettings">रीडर सेटिंग्स</string>
     <string name="strTitleAppLanguage">एप्प भाषा</string>
-    <string name="strTitleChangeLanguage">भाषा बदले?</string>
+    <string name="strTitleChangeLanguage">भाषा बदले\?</string>
     <string name="strTitleTheme">थीम</string>
     <string name="strTitleNoInternet">इंटरनेट नहीं है</string>
     <string name="strLabelPlay">प्ले</string>
@@ -218,7 +218,7 @@
     <string name="strMsgBookmarkDeleteAll">सभी बुकमार्क्स हटायें जाएंगे।</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s %2$s बजे</string>
     <string name="strMsgBookmarkDateToday" formatted="false">आज %s बजे</string>
-    <string name="strMsgHistoryRemove">हिस्ट्री से हटायें?</string>
+    <string name="strMsgHistoryRemove">हिस्ट्री से हटायें\?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" को हिस्ट्री से हटाया गया</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">%1$s मे कुल परिणाम मिलें: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s मे सिर्फ एक परिणाम मिला</string>
@@ -266,8 +266,10 @@
     <string name="strTextInstalling">इंस्टॉल किया जा रहा है…</string>
     <string name="strTextLoading">लोड हो रहा है…</string>
     <string name="strMsgUpdateAvailable">अपडेट उपलब्ध! नवीनतम सुविधाओं को प्राप्त करने के लिए कृपया ऐप को अपडेट करें।</string>
-    <string name="strMsgUpdateAvailable4Dialog">अपडेट उपलब्ध!\nकृपया ऐप को अपडेट करें।</string>
-    <string name="strMsgUpdateAvailable2Continue">अपडेट आवश्यक है!\nजारी रखने के लिए कृपया ऐप को अपडेट करें।</string>
+    <string name="strMsgUpdateAvailable4Dialog">अपडेट उपलब्ध!
+\nकृपया ऐप को अपडेट करें।</string>
+    <string name="strMsgUpdateAvailable2Continue">अपडेट आवश्यक है!
+\nजारी रखने के लिए कृपया ऐप को अपडेट करें।</string>
     <string name="strMsgUpdateDownloaded">अपडेट डाउनलोड किया गया! कृपया अपडेट को पूरा करने के लिए स्थापित करें।</string>
     <string name="strSalam">अस्सलाम अलैकुम</string>
     <string name="strSalamShort">सलाम</string>
@@ -282,7 +284,7 @@
     <string name="strMsgRecitationsLoadFailed">सर्वर से तिलावत लोड नहीं कर सके। बाद में पुन: प्रयास करें।</string>
     <string name="strMsgRecitationsNoAvailable">कोई तिलावत उपलब्ध नहीं</string>
     <string name="strTitleQuickEdit">क्विक एडिट</string>
-    <string name="strTitleBookmarkDeleteThis">यह बुकमार्क हटाएं?</string>
+    <string name="strTitleBookmarkDeleteThis">यह बुकमार्क हटाएं\?</string>
     <string name="strMsgEditShareTransl">केवल सेटिंग से चयनित अनुवाद यहां दिखाए गए हैं।</string>
     <string name="strMsgEditShareLongTransl">अनुवाद बहुत लंबा है, हो सकता है कि यह ठीक से फिट न हो।</string>
     <string name="strLabelDownloadImage">फोटो डाउनलोड करें</string>
@@ -412,4 +414,5 @@
 \n
 \nअभी डाउनलोड करो:
 \n%s</string>
+    <string name="strBismillahEntity" translatable="false"></string>
 </resources>
