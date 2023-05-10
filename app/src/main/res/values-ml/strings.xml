@@ -357,4 +357,54 @@
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
     <string name="labelAdd">ചേർക്കുക</string>
     <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
+    <string name="titleTafsirCleanup"></string>
+    <string name="strMsgTafsirsNoAvailable"></string>
+    <string name="strTitleSelectTafsir"></string>
+    <string name="strMsgDuaFor" formatted="false"></string>
+    <string name="crashLogs"></string>
+    <string name="msgTafsirCleanup" formatted="false"></string>
+    <string name="noItems"></string>
+    <string name="places" formatted="false"></string>
+    <string name="onboardDescReciter"></string>
+    <string name="titleRemoveFromFavourites"></string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false"></string>
+    <string name="msgTafsirLoadFailed"></string>
+    <string name="playbackSpeed"></string>
+    <string name="msgRecitaionDownloaded" formatted="false"></string>
+    <string name="audioOption"></string>
+    <string name="audioOnlyTranslation"></string>
+    <string name="onboardDescTranslations"></string>
+    <string name="audioOnlyArabic"></string>
+    <string name="textNoLogsFound"></string>
+    <string name="msgRecitaionFailedToDownload" formatted="false"></string>
+    <string name="titleOtherSettings"></string>
+    <string name="titleManageAudio"></string>
+    <string name="labelArabic"></string>
+    <string name="labelTranslation"></string>
+    <string name="titleAddToFavourites"></string>
+    <string name="msgAddedToFavourites"></string>
+    <string name="msgRemovedFromFavourites"></string>
+    <string name="msgNoFavouriteChapters"></string>
+    <string name="msgChapterAddedToFavourites"></string>
+    <string name="strBismillahEntity" translatable="false"></string>
+    <string name="onboardDescTheme"></string>
+    <string name="labelPreviousTafsir"></string>
+    <string name="labelNextTafsir"></string>
+    <string name="place" formatted="false"></string>
+    <string name="strMsgShareApp" formatted="false"></string>
+    <string name="titleSolutionVerses"></string>
+    <string name="msgInvalidParams"></string>
+    <string name="appLogs"></string>
+    <string name="onboardDescLanguage"></string>
+    <string name="titleEtiquetteVerses"></string>
+    <string name="textDownloaded"></string>
+    <string name="suppressedLogs"></string>
+    <string name="logRemoved"></string>
+    <string name="msgChapterRemovedFromFavourites"></string>
+    <string name="textTranslationReciterInfo"></string>
+    <string name="msgRecitaionDeleleSurah" formatted="false"></string>
+    <string name="titleReaderTextSizeTafsir"></string>
+    <string name="downloadRecitations"></string>
+    <string name="audioBothArabicTranslation"></string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false"></string>
 </resources>
