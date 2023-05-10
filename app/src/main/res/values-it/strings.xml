@@ -302,16 +302,10 @@
 \nAggiorna l\'app per continuare.</string>
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s e %2$d in più</string>
-    <string name="github"/>
     <string name="onboardDescTheme"/>
-    <string name="labelArabic"/>
     <string name="audioBothArabicTranslation"/>
-    <string name="msgScriptFontsDownloaded"/>
     <string name="msgRemovedFromFavourites"/>
-    <string name="labelDownload"/>
     <string name="lastCrashLog"/>
-    <string name="msgDownloadingFonts"/>
     <string name="downloadRecitations"/>
-    <string name="onboardDescReciter"/>
     <string name="strMsgShareApp" formatted="false"/>
 </resources>

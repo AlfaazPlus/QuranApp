@@ -274,20 +274,12 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false"/>
     <string name="labelTranslation"/>
-    <string name="msgRecitationCleanup" formatted="false"/>
     <string name="strMsgTranslNoDownloads"/>
-    <string name="nFiles" formatted="false"/>
     <string name="msgAlarmManagerNotAvailable"/>
-    <string name="strMsgProphetsOrder"/>
     <string name="textDownloaded"/>
-    <string name="titleRemoveFromFavourites"/>
     <string name="strTitleFeaturedDuas"/>
-    <string name="onboardDescReciter"/>
     <string name="strTitleSelectTafsir"/>
-    <string name="noItems"/>
     <string name="msgVerseReminderAlarmPermission"/>
-    <string name="strMsgTafsirsNoAvailable"/>
     <string name="audioBothArabicTranslation"/>
 </resources>
