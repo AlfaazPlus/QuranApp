@@ -320,88 +320,46 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="titleDownloadScriptResources"></string>
-    <string name="strBismillahEntity" translatable="false"></string>
-    <string name="labelBackgroundDownload"></string>
-    <string name="msgTafsirCleanup" formatted="false"></string>
-    <string name="noItems"></string>
-    <string name="places" formatted="false"></string>
-    <string name="place" formatted="false"></string>
-    <string name="createIssue"></string>
-    <string name="msgRecitationCleanup" formatted="false"></string>
-    <string name="msgVerseReminderNotifPermission"></string>
-    <string name="titleAddToFavourites"></string>
-    <string name="msgAlarmManagerNotAvailable"></string>
-    <string name="msgDownloadKFQPCResources"></string>
-    <string name="copiedToClipboard"></string>
-    <string name="suppressedLogs"></string>
-    <string name="msgChapterAddedToFavourites"></string>
-    <string name="msgVerseReminderAlarmPermission"></string>
-    <string name="msgInvalidParams"></string>
-    <string name="appLogs"></string>
-    <string name="msgAddedToFavourites"></string>
-    <string name="msgAnotherDownloadInProgress"></string>
-    <string name="titleScriptCleanup"></string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false"></string>
-    <string name="tafseerCanBeFreedUp" formatted="false"></string>
-    <string name="textDownloaded"></string>
-    <string name="msgChapterRemovedFromFavourites"></string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false"></string>
-    <string name="labelPreviousTafsir"></string>
-    <string name="scriptCanBeFreedUp" formatted="false"></string>
-    <string name="onboardDescReciter"></string>
-    <string name="msgFontsDonwloadProgress" formatted="false"></string>
-    <string name="textDownloading"></string>
-    <string name="msgRecitaionDownloaded" formatted="false"></string>
-    <string name="msgDownloadingResource" formatted="false"></string>
-    <string name="msgScriptCleanup" formatted="false"></string>
-    <string name="titleChapterInfoCleanup"></string>
-    <string name="msgChapterInfoCleanup"></string>
-    <string name="msgRemovedFromFavourites"></string>
-    <string name="msgNoFavouriteChapters"></string>
-    <string name="titleSolutionVerses"></string>
-    <string name="strMsgDuaFor" formatted="false"></string>
-    <string name="titleStorageCleanup"></string>
-    <string name="storageCleanupMessage"></string>
-    <string name="translationCanBeFreedUp" formatted="false"></string>
-    <string name="recitationCanBeFreedUp" formatted="false"></string>
-    <string name="titleTafsirCleanup"></string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false"></string>
-    <string name="msgTafsirLoadFailed"></string>
-    <string name="labelNextTafsir"></string>
-    <string name="nItem" formatted="false"></string>
-    <string name="nItems" formatted="false"></string>
-    <string name="strMsgShareApp" formatted="false"></string>
-    <string name="strPreviewTextTransl"></string>
-    <string name="pasteCrashLogGithubIssue"></string>
-    <string name="nothingToCleanup"></string>
-    <string name="verseSyncOn"></string>
-    <string name="verseSyncOff"></string>
-    <string name="titleRemoveFromFavourites"></string>
-    <string name="noFootnotesForThisVerse"></string>
-    <string name="titleEtiquetteVerses"></string>
-    <string name="msgDownloadFailed"></string>
-    <string name="msgDownloadingScript"></string>
-    <string name="textPercentage" formatted="false"></string>
-    <string name="nScriptsAndFonts" formatted="false"></string>
-    <string name="labelArabic"></string>
-    <string name="labelTranslation"></string>
-    <string name="textTranslationReciterInfo"></string>
-    <string name="textNoLogsFound"></string>
-    <string name="msgRecitaionFailedToDownload" formatted="false"></string>
-    <string name="msgRecitaionDeleleSurah" formatted="false"></string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false"></string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false"></string>
-    <string name="msgScriptFontsDownloaded"></string>
-    <string name="github"></string>
-    <string name="nFiles" formatted="false"></string>
-    <string name="titleChapterInfo"></string>
-    <string name="labelFreeUpSpace"></string>
-    <string name="msgDeleteTranslation" formatted="false"></string>
-    <string name="titleRecitationCleanup"></string>
-    <string name="crashLogs"></string>
-    <string name="logRemoved"></string>
-    <string name="onboardDescLanguage"></string>
-    <string name="onboardDescTheme"></string>
-    <string name="onboardDescTranslations"></string>
+    <string name="strBismillahEntity" translatable="false"/>
+    <string name="msgTafsirCleanup" formatted="false"/>
+    <string name="places" formatted="false"/>
+    <string name="createIssue"/>
+    <string name="msgVerseReminderNotifPermission"/>
+    <string name="msgAlarmManagerNotAvailable"/>
+    <string name="copiedToClipboard"/>
+    <string name="msgChapterAddedToFavourites"/>
+    <string name="msgInvalidParams"/>
+    <string name="msgAddedToFavourites"/>
+    <string name="titleScriptCleanup"/>
+    <string name="tafseerCanBeFreedUp" formatted="false"/>
+    <string name="msgChapterRemovedFromFavourites"/>
+    <string name="labelPreviousTafsir"/>
+    <string name="onboardDescReciter"/>
+    <string name="textDownloading"/>
+    <string name="msgDownloadingResource" formatted="false"/>
+    <string name="titleChapterInfoCleanup"/>
+    <string name="msgRemovedFromFavourites"/>
+    <string name="titleSolutionVerses"/>
+    <string name="titleStorageCleanup"/>
+    <string name="translationCanBeFreedUp" formatted="false"/>
+    <string name="titleTafsirCleanup"/>
+    <string name="msgTafsirLoadFailed"/>
+    <string name="nItem" formatted="false"/>
+    <string name="strMsgShareApp" formatted="false"/>
+    <string name="pasteCrashLogGithubIssue"/>
+    <string name="verseSyncOn"/>
+    <string name="titleRemoveFromFavourites"/>
+    <string name="titleEtiquetteVerses"/>
+    <string name="msgDownloadingScript"/>
+    <string name="nScriptsAndFonts" formatted="false"/>
+    <string name="labelTranslation"/>
+    <string name="textNoLogsFound"/>
+    <string name="msgRecitaionDeleleSurah" formatted="false"/>
+    <string name="msgFontsDonwloadProgressShort" formatted="false"/>
+    <string name="github"/>
+    <string name="titleChapterInfo"/>
+    <string name="msgDeleteTranslation" formatted="false"/>
+    <string name="crashLogs"/>
+    <string name="onboardDescLanguage"/>
+    <string name="onboardDescTranslations"/>
 </resources>

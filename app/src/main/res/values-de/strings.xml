@@ -367,46 +367,25 @@
     <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
     <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
     <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
-    <string name="places" formatted="false"></string>
-    <string name="msgRecitaionFailedToDownload" formatted="false"></string>
-    <string name="audioOnlyArabic"></string>
-    <string name="audioBothArabicTranslation"></string>
-    <string name="audioOnlyTranslation"></string>
-    <string name="playbackSpeed"></string>
-    <string name="msgInvalidParams"></string>
-    <string name="msgAddedToFavourites"></string>
-    <string name="audioOption"></string>
-    <string name="msgRecitaionDownloaded" formatted="false"></string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false"></string>
-    <string name="msgChapterRemovedFromFavourites"></string>
-    <string name="labelAdd"></string>
-    <string name="strMsgDuaFor" formatted="false"></string>
-    <string name="titleAddToFavourites"></string>
-    <string name="msgTafsirLoadFailed"></string>
-    <string name="titleSolutionVerses"></string>
-    <string name="labelPreviousTafsir"></string>
-    <string name="labelNextTafsir"></string>
-    <string name="strBismillahEntity" translatable="false"></string>
-    <string name="titleManageAudio"></string>
-    <string name="titleEtiquetteVerses"></string>
-    <string name="place" formatted="false"></string>
-    <string name="titleReaderTextSizeTafsir"></string>
-    <string name="titleOtherSettings"></string>
-    <string name="titleRemoveFromFavourites"></string>
-    <string name="msgRemovedFromFavourites"></string>
-    <string name="strMsgShareApp" formatted="false"></string>
-    <string name="msgRecitaionDeleleSurah" formatted="false"></string>
-    <string name="textNoLogsFound"></string>
-    <string name="noItems"></string>
-    <string name="downloadRecitations"></string>
-    <string name="appLogs"></string>
-    <string name="suppressedLogs"></string>
-    <string name="labelTranslation"></string>
-    <string name="textDownloaded"></string>
-    <string name="crashLogs"></string>
-    <string name="msgNoFavouriteChapters"></string>
-    <string name="logRemoved"></string>
-    <string name="labelArabic"></string>
-    <string name="msgChapterAddedToFavourites"></string>
-    <string name="textTranslationReciterInfo"></string>
+    <string name="msgRecitaionFailedToDownload" formatted="false"/>
+    <string name="audioBothArabicTranslation"/>
+    <string name="playbackSpeed"/>
+    <string name="msgAddedToFavourites"/>
+    <string name="msgRecitaionDownloaded" formatted="false"/>
+    <string name="msgChapterRemovedFromFavourites"/>
+    <string name="strMsgDuaFor" formatted="false"/>
+    <string name="msgTafsirLoadFailed"/>
+    <string name="labelPreviousTafsir"/>
+    <string name="strBismillahEntity" translatable="false"/>
+    <string name="titleEtiquetteVerses"/>
+    <string name="titleReaderTextSizeTafsir"/>
+    <string name="titleRemoveFromFavourites"/>
+    <string name="strMsgShareApp" formatted="false"/>
+    <string name="textNoLogsFound"/>
+    <string name="downloadRecitations"/>
+    <string name="suppressedLogs"/>
+    <string name="textDownloaded"/>
+    <string name="msgNoFavouriteChapters"/>
+    <string name="labelArabic"/>
+    <string name="textTranslationReciterInfo"/>
 </resources>
