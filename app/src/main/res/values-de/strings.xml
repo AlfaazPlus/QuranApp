@@ -367,25 +367,14 @@
     <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
     <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
     <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
-    <string name="msgRecitaionFailedToDownload" formatted="false"/>
     <string name="audioBothArabicTranslation"/>
-    <string name="playbackSpeed"/>
     <string name="msgAddedToFavourites"/>
-    <string name="msgRecitaionDownloaded" formatted="false"/>
     <string name="msgChapterRemovedFromFavourites"/>
-    <string name="strMsgDuaFor" formatted="false"/>
     <string name="msgTafsirLoadFailed"/>
-    <string name="labelPreviousTafsir"/>
     <string name="strBismillahEntity" translatable="false"/>
-    <string name="titleEtiquetteVerses"/>
     <string name="titleReaderTextSizeTafsir"/>
-    <string name="titleRemoveFromFavourites"/>
     <string name="strMsgShareApp" formatted="false"/>
-    <string name="textNoLogsFound"/>
     <string name="downloadRecitations"/>
-    <string name="suppressedLogs"/>
     <string name="textDownloaded"/>
-    <string name="msgNoFavouriteChapters"/>
     <string name="labelArabic"/>
-    <string name="textTranslationReciterInfo"/>
 </resources>

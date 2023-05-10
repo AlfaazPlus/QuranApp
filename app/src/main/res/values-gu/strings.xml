@@ -399,9 +399,6 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના પાઠો કાઢી નાખ્યા.</string>
     <string name="strPreviewTextTransl">અલ્લાહના નામથી, (શરૂ કરું છું), જે અત્યંત કૃપાળુ અને દયાળુ છે</string>
     <string name="strTitleAutoPlayNext">આગળ ઑટોપ્લે</string>
-    <string name="places" formatted="false"/>
     <string name="labelPreviousTafsir"/>
-    <string name="titleSolutionVerses"/>
     <string name="msgInvalidParams"/>
-    <string name="strBismillahEntity" translatable="false"/>
 </resources>

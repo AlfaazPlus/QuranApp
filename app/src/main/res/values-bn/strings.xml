@@ -320,46 +320,25 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="strBismillahEntity" translatable="false"/>
     <string name="msgTafsirCleanup" formatted="false"/>
-    <string name="places" formatted="false"/>
     <string name="createIssue"/>
-    <string name="msgVerseReminderNotifPermission"/>
     <string name="msgAlarmManagerNotAvailable"/>
-    <string name="copiedToClipboard"/>
     <string name="msgChapterAddedToFavourites"/>
-    <string name="msgInvalidParams"/>
     <string name="msgAddedToFavourites"/>
-    <string name="titleScriptCleanup"/>
     <string name="tafseerCanBeFreedUp" formatted="false"/>
-    <string name="msgChapterRemovedFromFavourites"/>
     <string name="labelPreviousTafsir"/>
-    <string name="onboardDescReciter"/>
     <string name="textDownloading"/>
-    <string name="msgDownloadingResource" formatted="false"/>
     <string name="titleChapterInfoCleanup"/>
-    <string name="msgRemovedFromFavourites"/>
     <string name="titleSolutionVerses"/>
-    <string name="titleStorageCleanup"/>
     <string name="translationCanBeFreedUp" formatted="false"/>
-    <string name="titleTafsirCleanup"/>
     <string name="msgTafsirLoadFailed"/>
-    <string name="nItem" formatted="false"/>
     <string name="strMsgShareApp" formatted="false"/>
-    <string name="pasteCrashLogGithubIssue"/>
     <string name="verseSyncOn"/>
-    <string name="titleRemoveFromFavourites"/>
     <string name="titleEtiquetteVerses"/>
-    <string name="msgDownloadingScript"/>
     <string name="nScriptsAndFonts" formatted="false"/>
-    <string name="labelTranslation"/>
     <string name="textNoLogsFound"/>
-    <string name="msgRecitaionDeleleSurah" formatted="false"/>
     <string name="msgFontsDonwloadProgressShort" formatted="false"/>
-    <string name="github"/>
     <string name="titleChapterInfo"/>
-    <string name="msgDeleteTranslation" formatted="false"/>
     <string name="crashLogs"/>
-    <string name="onboardDescLanguage"/>
     <string name="onboardDescTranslations"/>
 </resources>

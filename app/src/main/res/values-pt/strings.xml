@@ -274,69 +274,36 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false"/>
     <string name="labelDownload"/>
-    <string name="strTitleAlphaBG"/>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false"/>
-    <string name="msgFontsDonwloadProgressShort" formatted="false"/>
     <string name="textPercentage" formatted="false"/>
-    <string name="msgChapterInfoCleanup"/>
     <string name="labelTranslation"/>
-    <string name="msgAddedToFavourites"/>
     <string name="msgNoFavouriteChapters"/>
-    <string name="strMsgDuaFor" formatted="false"/>
     <string name="msgRecitationCleanup" formatted="false"/>
-    <string name="strMsgTranslSelectionLimit" formatted="false"/>
     <string name="pasteCrashLogGithubIssue"/>
-    <string name="strTitleReadTafsirOfVerse" formatted="false"/>
     <string name="strMsgTranslNoDownloads"/>
-    <string name="msgRecitaionDeleleSurah" formatted="false"/>
     <string name="strTitleReaderTextSizeTransl"/>
-    <string name="titleReaderTextSizeTafsir"/>
     <string name="nFiles" formatted="false"/>
-    <string name="titleEtiquetteVerses"/>
     <string name="audioOption"/>
-    <string name="strMsgChapInfoFailedLoad"/>
     <string name="msgAlarmManagerNotAvailable"/>
-    <string name="msgDownloadingScript"/>
     <string name="titleManageAudio"/>
-    <string name="suppressedLogs"/>
     <string name="strMsgProphetsOrder"/>
-    <string name="strSalam"/>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false"/>
-    <string name="msgFontsDonwloadProgress" formatted="false"/>
     <string name="textDownloaded"/>
-    <string name="msgVerseReminderNotifPermission"/>
     <string name="msgDownloadingResource" formatted="false"/>
-    <string name="labelFreeUpSpace"/>
     <string name="titleRemoveFromFavourites"/>
-    <string name="labelAdd"/>
     <string name="strLabelWhatsappStyling"/>
-    <string name="labelNextTafsir"/>
     <string name="strTitleFeaturedDuas"/>
-    <string name="strChapInfoSeeMore"/>
     <string name="verseSyncOff"/>
-    <string name="onboardDescTheme"/>
     <string name="onboardDescReciter"/>
-    <string name="msgChapterRemovedFromFavourites"/>
     <string name="textNoLogsFound"/>
-    <string name="nItems" formatted="false"/>
     <string name="strTitleSelectTafsir"/>
-    <string name="strMsgRecitationsLoadFailed"/>
     <string name="lastCrashLog"/>
-    <string name="createIssue"/>
     <string name="noItems"/>
-    <string name="noFootnotesForThisVerse"/>
     <string name="strBismillahEntity" translatable="false"/>
-    <string name="msgRecitaionDownloaded" formatted="false"/>
     <string name="msgVerseReminderAlarmPermission"/>
-    <string name="tafseerCanBeFreedUp" formatted="false"/>
     <string name="strTitleChapInfoRevOrder"/>
-    <string name="strMsgSearchWordPart"/>
     <string name="strMsgTafsirsNoAvailable"/>
-    <string name="titleChapterInfo"/>
     <string name="titleRecitationCleanup"/>
-    <string name="msgScriptCleanup" formatted="false"/>
     <string name="audioBothArabicTranslation"/>
-    <string name="msgTafsirCleanup" formatted="false"/>
 </resources>

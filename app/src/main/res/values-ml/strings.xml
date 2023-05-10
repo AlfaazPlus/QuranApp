@@ -359,29 +359,16 @@
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
     <string name="labelAdd">ചേർക്കുക</string>
     <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
-    <string name="strMsgTafsirsNoAvailable"/>
     <string name="strMsgDuaFor" formatted="false"/>
-    <string name="msgTafsirCleanup" formatted="false"/>
     <string name="places" formatted="false"/>
-    <string name="titleRemoveFromFavourites"/>
     <string name="msgTafsirLoadFailed"/>
-    <string name="msgRecitaionDownloaded" formatted="false"/>
     <string name="audioOnlyTranslation"/>
-    <string name="audioOnlyArabic"/>
     <string name="msgRecitaionFailedToDownload" formatted="false"/>
-    <string name="titleManageAudio"/>
     <string name="labelTranslation"/>
-    <string name="msgAddedToFavourites"/>
     <string name="msgNoFavouriteChapters"/>
-    <string name="strBismillahEntity" translatable="false"/>
     <string name="labelPreviousTafsir"/>
-    <string name="place" formatted="false"/>
     <string name="titleSolutionVerses"/>
-    <string name="appLogs"/>
     <string name="titleEtiquetteVerses"/>
-    <string name="suppressedLogs"/>
     <string name="msgChapterRemovedFromFavourites"/>
-    <string name="msgRecitaionDeleleSurah" formatted="false"/>
     <string name="downloadRecitations"/>
-    <string name="strTitleReadTafsirOfVerse" formatted="false"/>
 </resources>

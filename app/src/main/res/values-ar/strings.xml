@@ -407,5 +407,4 @@
     <string name="msgTafsirLoadFailed">فشل تحميل التفسير</string>
     <string name="msgInvalidParams">المعلومات غير دقيقة</string>
     <string name="place" formatted="false">موضع %d</string>
-    <string name="titleEtiquetteVerses"/>
 </resources>
