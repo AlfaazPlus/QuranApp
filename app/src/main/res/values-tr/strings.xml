@@ -402,4 +402,12 @@
     <string name="strMsgDuaFor" formatted="false">%s için dua ediniz</string>
     <string name="place" formatted="false">%d yeri</string>
     <string name="places" formatted="false">%d yerleri</string>
+    <string name="labelPreviousTafsir"></string>
+    <string name="labelNextTafsir"></string>
+    <string name="titleSolutionVerses"></string>
+    <string name="msgInvalidParams"></string>
+    <string name="msgTafsirLoadFailed"></string>
+    <string name="strMsgShareApp" formatted="false"></string>
+    <string name="strBismillahEntity" translatable="false"></string>
+    <string name="titleEtiquetteVerses"></string>
 </resources>
