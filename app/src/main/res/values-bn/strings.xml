@@ -320,9 +320,6 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="msgChapterAddedToFavourites"/>
     <string name="textDownloading"/>
-    <string name="msgTafsirLoadFailed"/>
     <string name="nScriptsAndFonts" formatted="false"/>
-    <string name="crashLogs"/>
 </resources>

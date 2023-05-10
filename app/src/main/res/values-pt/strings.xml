@@ -274,12 +274,8 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
-    <string name="labelTranslation"/>
     <string name="strMsgTranslNoDownloads"/>
-    <string name="msgAlarmManagerNotAvailable"/>
     <string name="textDownloaded"/>
-    <string name="strTitleFeaturedDuas"/>
     <string name="strTitleSelectTafsir"/>
-    <string name="msgVerseReminderAlarmPermission"/>
     <string name="audioBothArabicTranslation"/>
 </resources>

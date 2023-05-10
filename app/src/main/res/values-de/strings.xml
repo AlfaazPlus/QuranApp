@@ -367,6 +367,5 @@
     <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
     <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
     <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
-    <string name="msgTafsirLoadFailed"/>
     <string name="downloadRecitations"/>
 </resources>

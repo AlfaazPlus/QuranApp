@@ -302,10 +302,7 @@
 \nAggiorna l\'app per continuare.</string>
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s e %2$d in più</string>
-    <string name="onboardDescTheme"/>
     <string name="audioBothArabicTranslation"/>
-    <string name="msgRemovedFromFavourites"/>
     <string name="lastCrashLog"/>
-    <string name="downloadRecitations"/>
     <string name="strMsgShareApp" formatted="false"/>
 </resources>
