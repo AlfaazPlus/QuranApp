@@ -412,4 +412,5 @@
 \nUNDUH SEKARANG:
 \n%s</string>
     <string name="titleEtiquetteVerses">Etiket dalam Al Quran</string>
+    <string name="strBismillahEntity" translatable="false"></string>
 </resources>
