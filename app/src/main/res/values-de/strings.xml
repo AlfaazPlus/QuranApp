@@ -367,14 +367,9 @@
     <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
     <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
     <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
-    <string name="audioBothArabicTranslation"/>
     <string name="msgAddedToFavourites"/>
-    <string name="msgChapterRemovedFromFavourites"/>
     <string name="msgTafsirLoadFailed"/>
-    <string name="strBismillahEntity" translatable="false"/>
     <string name="titleReaderTextSizeTafsir"/>
-    <string name="strMsgShareApp" formatted="false"/>
     <string name="downloadRecitations"/>
-    <string name="textDownloaded"/>
     <string name="labelArabic"/>
 </resources>

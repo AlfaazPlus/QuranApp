@@ -302,29 +302,16 @@
 \nAggiorna l\'app per continuare.</string>
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s e %2$d in più</string>
-    <string name="strBismillahEntity" translatable="false"/>
     <string name="github"/>
-    <string name="titleReaderTextSizeTafsir"/>
     <string name="onboardDescTheme"/>
-    <string name="onboardDescTranslations"/>
     <string name="labelArabic"/>
-    <string name="titleManageAudio"/>
     <string name="audioBothArabicTranslation"/>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false"/>
     <string name="msgScriptFontsDownloaded"/>
-    <string name="labelFreeUpSpace"/>
     <string name="msgRemovedFromFavourites"/>
-    <string name="msgInvalidParams"/>
     <string name="labelDownload"/>
-    <string name="translationCanBeFreedUp" formatted="false"/>
     <string name="lastCrashLog"/>
-    <string name="place" formatted="false"/>
     <string name="msgDownloadingFonts"/>
-    <string name="msgVerseReminderNotifPermission"/>
     <string name="downloadRecitations"/>
-    <string name="titleStorageCleanup"/>
     <string name="onboardDescReciter"/>
-    <string name="msgRecitaionDownloaded" formatted="false"/>
     <string name="strMsgShareApp" formatted="false"/>
-    <string name="labelTranslation"/>
 </resources>

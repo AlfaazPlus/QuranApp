@@ -320,25 +320,14 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="msgTafsirCleanup" formatted="false"/>
     <string name="createIssue"/>
-    <string name="msgAlarmManagerNotAvailable"/>
     <string name="msgChapterAddedToFavourites"/>
-    <string name="msgAddedToFavourites"/>
     <string name="tafseerCanBeFreedUp" formatted="false"/>
-    <string name="labelPreviousTafsir"/>
     <string name="textDownloading"/>
-    <string name="titleChapterInfoCleanup"/>
     <string name="titleSolutionVerses"/>
-    <string name="translationCanBeFreedUp" formatted="false"/>
     <string name="msgTafsirLoadFailed"/>
-    <string name="strMsgShareApp" formatted="false"/>
     <string name="verseSyncOn"/>
-    <string name="titleEtiquetteVerses"/>
     <string name="nScriptsAndFonts" formatted="false"/>
-    <string name="textNoLogsFound"/>
     <string name="msgFontsDonwloadProgressShort" formatted="false"/>
-    <string name="titleChapterInfo"/>
     <string name="crashLogs"/>
-    <string name="onboardDescTranslations"/>
 </resources>

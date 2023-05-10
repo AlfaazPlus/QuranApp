@@ -274,36 +274,20 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
-    <string name="labelDownload"/>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false"/>
-    <string name="textPercentage" formatted="false"/>
     <string name="labelTranslation"/>
-    <string name="msgNoFavouriteChapters"/>
     <string name="msgRecitationCleanup" formatted="false"/>
-    <string name="pasteCrashLogGithubIssue"/>
     <string name="strMsgTranslNoDownloads"/>
-    <string name="strTitleReaderTextSizeTransl"/>
     <string name="nFiles" formatted="false"/>
-    <string name="audioOption"/>
     <string name="msgAlarmManagerNotAvailable"/>
-    <string name="titleManageAudio"/>
     <string name="strMsgProphetsOrder"/>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false"/>
     <string name="textDownloaded"/>
-    <string name="msgDownloadingResource" formatted="false"/>
     <string name="titleRemoveFromFavourites"/>
-    <string name="strLabelWhatsappStyling"/>
     <string name="strTitleFeaturedDuas"/>
-    <string name="verseSyncOff"/>
     <string name="onboardDescReciter"/>
-    <string name="textNoLogsFound"/>
     <string name="strTitleSelectTafsir"/>
-    <string name="lastCrashLog"/>
     <string name="noItems"/>
-    <string name="strBismillahEntity" translatable="false"/>
     <string name="msgVerseReminderAlarmPermission"/>
-    <string name="strTitleChapInfoRevOrder"/>
     <string name="strMsgTafsirsNoAvailable"/>
-    <string name="titleRecitationCleanup"/>
     <string name="audioBothArabicTranslation"/>
 </resources>

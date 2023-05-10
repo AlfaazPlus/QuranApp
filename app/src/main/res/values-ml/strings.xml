@@ -359,16 +359,10 @@
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
     <string name="labelAdd">ചേർക്കുക</string>
     <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
-    <string name="strMsgDuaFor" formatted="false"/>
     <string name="places" formatted="false"/>
-    <string name="msgTafsirLoadFailed"/>
     <string name="audioOnlyTranslation"/>
-    <string name="msgRecitaionFailedToDownload" formatted="false"/>
     <string name="labelTranslation"/>
-    <string name="msgNoFavouriteChapters"/>
     <string name="labelPreviousTafsir"/>
-    <string name="titleSolutionVerses"/>
     <string name="titleEtiquetteVerses"/>
-    <string name="msgChapterRemovedFromFavourites"/>
     <string name="downloadRecitations"/>
 </resources>

@@ -402,6 +402,5 @@
     <string name="strMsgDuaFor" formatted="false">%s için dua ediniz</string>
     <string name="place" formatted="false">%d yeri</string>
     <string name="places" formatted="false">%d yerleri</string>
-    <string name="msgInvalidParams"/>
     <string name="titleEtiquetteVerses"/>
 </resources>

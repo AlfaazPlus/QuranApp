@@ -399,6 +399,5 @@
     <string name="msgRecitaionDownloaded" formatted="false">\"%1$s\" برای تلاوت \"%2$s\" بارگیری شد.</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">همه تلاوت‌های \"%1$s\" برای قاری \"%2$s\" حذف خواهد شد.</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">دانلود \"%1$s\" برای تلاوت کننده \"%2$s\" انجام نشد.</string>
-    <string name="titleSolutionVerses"/>
     <string name="msgTafsirLoadFailed"/>
 </resources>
