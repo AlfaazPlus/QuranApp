@@ -407,4 +407,7 @@
     <string name="labelPreviousTafsir">تەفسیری پێشوو</string>
     <string name="labelNextTafsir">تەفسیری دواتر</string>
     <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتو نەبوو</string>
+    <string name="strBismillahEntity" translatable="false"></string>
+    <string name="titleEtiquetteVerses"></string>
+    <string name="strMsgShareApp" formatted="false"></string>
 </resources>
