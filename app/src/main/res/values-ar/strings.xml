@@ -407,4 +407,9 @@
     <string name="msgTafsirLoadFailed">فشل تحميل التفسير</string>
     <string name="msgInvalidParams">المعلومات غير دقيقة</string>
     <string name="place" formatted="false">موضع %d</string>
+    <string name="titleEtiquetteVerses">الأخلاق في القرآن</string>
+    <string name="strMsgShareApp" formatted="false">تطبيق قرآن تطبيق مجاني ومفتوح المصدر لقراءة وتصفح القرآن الكريم مع ترجمات لمختلف اللغات. للتطبيق واجهة سهلة وسلسة مع مميزات مثل التفسير والتلاوة والتنبه واخرى.
+\n
+\nنزل الآن:
+\n%s</string>
 </resources>
