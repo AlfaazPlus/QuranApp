@@ -1,0 +1,81 @@
+@font-face {
+    font-family: quran-arabic;
+    src: url('https://assets-font/quran-arabic') format("truetype");
+}
+
+html,
+html.light {
+    background-color: transparent;
+    color: #000;
+}
+
+html.dark {
+    background-color: #151515 !important;
+    color: #BBBBBB;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.2;
+    margin: 0;
+    padding: 20px;
+    padding-bottom: 100px;
+    transition: font-size 0.3s;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+h1 {
+    font-size: 1.7em;
+    color: #008B5B;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+
+hr {
+    margin: 20px 0;
+}
+
+a {
+    color: #008B5B;
+    text-decoration: none;
+}
+
+.reference {
+    position: relative;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 8px 8px 0 8px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.reference p {
+    margin: 0;
+}
+
+.reference .arabic {
+    font-family: quran-arabic;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.reference a {
+    position: absolute;
+    background-color: #d1d1d1;
+    color: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 0 0 5px 5px;
+    border-top: 1px solid #c2c2c2;
+    text-decoration: none;
+    right: 0;
+    top: 100%;
+}
