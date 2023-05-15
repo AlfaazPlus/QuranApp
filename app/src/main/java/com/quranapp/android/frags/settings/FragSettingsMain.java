@@ -124,7 +124,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private LytReaderSettingsItemBinding mTranslExplorerBinding;
     private LytReaderSettingsItemBinding mTafsirExplorerBinding;
     private LytReaderSettingsItemBinding mRecitationExplorerBinding;
-    private LytReaderSettingsItemBinding mManageAudioExplorerBinding;
     private LytReaderSettingsItemBinding mScriptExplorerBinding;
     private QuranTranslationFactory mTranslFactory;
     private ReaderVerseDecorator mVerseDecorator;
@@ -217,11 +216,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void setupItemsVisibility(int readerStyle) {
-        int visibilityForReadingStyle = readerStyle == READER_STYLE_PAGE ? GONE : VISIBLE;
-
-        if (mLytTextSizeTransl != null) {
-            mLytTextSizeTransl.getRoot().setVisibility(visibilityForReadingStyle);
-        }
     }
 
     private void initValues() {
@@ -582,7 +576,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initManageAudioExplorer(LinearLayout parent) {
-        mManageAudioExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
+        com.quranapp.android.databinding.LytReaderSettingsItemBinding mManageAudioExplorerBinding = LytReaderSettingsItemBinding.inflate(
+            mInflater);
 
         setupLauncherParams(R.drawable.dr_icon_download, mManageAudioExplorerBinding);
 
