@@ -400,7 +400,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         recParams.currentReciter = reciter
         recParams.currentTranslationReciter = translReciter
 
-        playlist.clear()
+        stopMedia()
 
         if (audioURI != null) addToQueue(audioURI, reciter, translReciter, chapterNo, verseNo)
         if (translAudioURI != null) addToQueue(translAudioURI, reciter, translReciter, chapterNo, verseNo)

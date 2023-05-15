@@ -1,4 +1,4 @@
-package com.quranapp.android.views.homepage
+package com.quranapp.android.views.homepage2
 
 import android.content.Context
 import android.content.Intent
@@ -30,11 +30,11 @@ class QuranSolutionVersesLayout @JvmOverloads constructor(
         return true
     }
 
-    override fun setupHeader(context: Context, header: LytHomepageTitledItemTitleBinding) {
+    override fun setupHeader(header: LytHomepageTitledItemTitleBinding) {
         header.titleIcon.setColorFilter(context.color(R.color.warning))
     }
 
-    override fun onViewAllClick(context: Context) {
+    override fun onViewAllClick() {
         context.startActivity(Intent(context, ActivitySolutionVerses::class.java))
     }
 
@@ -45,7 +45,7 @@ class QuranSolutionVersesLayout @JvmOverloads constructor(
         resolveListView().adapter = ADPSolutionVerses(ctx, Dimen.dp2px(ctx, 200f), featured)
     }
 
-    fun refresh(quranMeta: QuranMeta) {
+    override fun refresh(quranMeta: QuranMeta) {
         showLoader()
 
         SituationVerse.prepareInstance(context, quranMeta) { references ->

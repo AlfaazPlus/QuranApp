@@ -1,18 +1,15 @@
-package com.quranapp.android.views.homepage
+package com.quranapp.android.views.homepage2
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityEtiquette
-import com.quranapp.android.activities.reference.ActivitySolutionVerses
 import com.quranapp.android.adapters.reference.ADPEtiquette
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.QuranEtiquette
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding
 
 class QuranEtiquetteLayout @JvmOverloads constructor(
     context: Context,
@@ -27,11 +24,7 @@ class QuranEtiquetteLayout @JvmOverloads constructor(
         return R.drawable.veiled_muslim
     }
 
-    override fun showViewAllBtn(): Boolean {
-        return true
-    }
-
-    override fun onViewAllClick(context: Context) {
+    override fun onViewAllClick() {
         context.startActivity(Intent(context, ActivityEtiquette::class.java))
     }
 
@@ -45,7 +38,7 @@ class QuranEtiquetteLayout @JvmOverloads constructor(
         }
     }
 
-    fun refresh(quranMeta: QuranMeta) {
+    override fun refresh(quranMeta: QuranMeta) {
         showLoader()
 
         QuranEtiquette.prepareInstance(context, quranMeta) { references ->
