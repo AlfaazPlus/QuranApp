@@ -14,11 +14,11 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
 import com.quranapp.android.databinding.ActivityMainBinding;
-import com.quranapp.android.frags.main.FragMain;
 import com.quranapp.android.suppliments.IndexMenu;
 import com.quranapp.android.utils.app.AppActions;
 import com.quranapp.android.utils.app.UpdateManager;
 import com.quranapp.android.utils.sharedPrefs.SPAppActions;
+import com.quranapp.android.frags.main.FragMain;
 import com.quranapp.android.widgets.tablayout.BottomTab;
 import com.quranapp.android.widgets.tablayout.BottomTabLayout;
 
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity {
     private void initViewPager() {
         ViewPager2 viewPager = mBinding.viewPager;
         ViewPagerAdapter2 mViewPagerAdapter = new ViewPagerAdapter2(this);
-        mViewPagerAdapter.addFragment(FragMain.newInstance(), str(R.string.strLabelNavHome));
+        mViewPagerAdapter.addFragment(new FragMain(), str(R.string.strLabelNavHome));
         viewPager.setAdapter(mViewPagerAdapter);
         viewPager.setOffscreenPageLimit(mViewPagerAdapter.getItemCount());
         viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);

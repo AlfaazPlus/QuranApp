@@ -2,7 +2,6 @@ package com.quranapp.android.utils.reader.factory
 
 import android.content.Context
 import android.content.Intent
-import com.quranapp.android.activities.ActivityEditShare
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.activities.ActivityTafsir
@@ -272,14 +271,6 @@ object ReaderFactory {
             lastVersesModel.readType,
             lastVersesModel.readerStyle
         )
-    }
-
-    @JvmStatic
-    fun startQuickEditShare(context: Context, chapterNo: Int, verseNo: Int) {
-        val intent = Intent(context, ActivityEditShare::class.java)
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        intent.putExtra(Keys.READER_KEY_VERSE_NO, verseNo)
-        context.startActivity(intent)
     }
 
     @JvmStatic
