@@ -206,6 +206,7 @@ class FragSettingsManageAudioReciter :
         resetAdapter(models.filter {
             val chapterMeta = it.chapterMeta
             chapterMeta.name.contains(newText, true) ||
+                    chapterMeta.tags.contains(newText, true) ||
                     chapterMeta.nameTranslation.contains(newText, true) ||
                     chapterMeta.chapterNo.toString().contains(newText, true)
         })

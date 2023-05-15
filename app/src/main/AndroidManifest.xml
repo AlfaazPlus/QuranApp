@@ -50,6 +50,7 @@
         <activity android:name=".activities.reference.ActivityDua" />
         <activity android:name=".activities.reference.ActivitySolutionVerses" />
         <activity android:name=".activities.reference.ActivityEtiquette" />
+        <activity android:name=".activities.reference.ActivityQuranScience" />
         <activity
             android:name=".activities.ActivityTafsir"
             android:exported="true"
@@ -117,13 +118,9 @@
                 <data android:pathPattern="/\\d+:\\d+-\\d+"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.ActivityEditShare"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.ActivityOnboarding" />
         <activity android:name=".activities.ActivityAbout" />
         <activity android:name=".activities.ActivityStorageCleanup" />
-        <activity android:name=".activities.test.ActivityExperiment" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

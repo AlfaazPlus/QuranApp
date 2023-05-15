@@ -1,4 +1,4 @@
-package com.quranapp.android.views.homepage
+package com.quranapp.android.views.homepage2
 
 import android.content.Context
 import android.content.Intent
@@ -26,15 +26,11 @@ class FeaturedDuaLayout @JvmOverloads constructor(
         return R.drawable.dr_icon_rabbana
     }
 
-    override fun showViewAllBtn(): Boolean {
-        return true
-    }
-
-    override fun setupHeader(context: Context, header: LytHomepageTitledItemTitleBinding) {
+    override fun setupHeader(header: LytHomepageTitledItemTitleBinding) {
         header.titleIcon.setColorFilter(context.color(R.color.colorPrimary))
     }
 
-    override fun onViewAllClick(context: Context) {
+    override fun onViewAllClick() {
         context.startActivity(Intent(context, ActivityDua::class.java))
     }
 
@@ -45,7 +41,7 @@ class FeaturedDuaLayout @JvmOverloads constructor(
         resolveListView().adapter = ADPDua(ctx, Dimen.dp2px(ctx, 200f), featured)
     }
 
-    fun refresh(quranMeta: QuranMeta) {
+    override  fun refresh(quranMeta: QuranMeta) {
         showLoader()
 
         QuranDua.prepareInstance(context, quranMeta) { duas ->
