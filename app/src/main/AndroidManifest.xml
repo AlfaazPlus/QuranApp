@@ -51,6 +51,7 @@
         <activity android:name=".activities.reference.ActivitySolutionVerses" />
         <activity android:name=".activities.reference.ActivityEtiquette" />
         <activity android:name=".activities.reference.ActivityQuranScience" />
+        <activity android:name=".activities.reference.ActivityQuranScienceContent" />
         <activity
             android:name=".activities.ActivityTafsir"
             android:exported="true"

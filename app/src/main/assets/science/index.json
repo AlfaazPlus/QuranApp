@@ -1,9 +1,8 @@
-{
-    "intro": "",
-    "subjects": [
-        {
-            "name": "astronomy",
-            "path": "astronomy.html"
-        }
-    ]
-}
+[
+  {
+    "title": "Astronomy",
+    "referencesCount": 0,
+    "path": "astronomy.html",
+    "image": "ic_science_astronomy"
+  }
+]
