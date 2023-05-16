@@ -407,4 +407,10 @@
     <string name="labelPreviousTafsir">تەفسیری پێشوو</string>
     <string name="labelNextTafsir">تەفسیری دواتر</string>
     <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتو نەبوو</string>
+    <string name="titleEtiquetteVerses">ئامۆژگارییەکانی ناو قورئان</string>
+    <string name="strMsgShareApp" formatted="false">بەرنامەی QuranApp بەرنامەیەکی خۆڕایی و نایابی تایبەت بە خوێندنەوە و گوێگرتنە لە قورئانی پیرۆز،
+\nکە چەندین تایبەتمەندی جیاواز و هەمەجۆر لەخۆ دەگرێت لەگەڵ ڕووکارێکی تایبەت بە پیشاندانی تەفسیر و وەرگێڕانەکان بۆ تێگەیشتن لە ووتەکانی الله.
+\n
+\nهەر ئێستا دایبەزێنە لە:
+\n%s</string>
 </resources>
