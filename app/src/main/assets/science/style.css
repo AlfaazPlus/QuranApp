@@ -99,10 +99,15 @@ html.dark .reference .footer {
 
 .reference .footer span {
     font-size: 13px;
+    color: #353535;
+}
+
+html.dark .reference .footer span {
+    font-size: 13px;
     color: #aaaaaa;
 }
 
-.reference .footer .separator {
+.reference .footer .sep {
     font-size: 14px;
     color: #555555;
     flex-grow: 1;

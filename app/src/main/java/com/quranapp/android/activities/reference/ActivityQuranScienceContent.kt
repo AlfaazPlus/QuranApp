@@ -30,7 +30,7 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
 
     override fun getLayoutResource() = R.layout.activity_chapter_info
 
-    override fun shouldInflateAsynchronously() = true
+    override fun shouldInflateAsynchronously() = false
 
     override fun onDestroy() {
         super.onDestroy()
@@ -39,9 +39,10 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
     }
 
     override fun initCreate(savedInstanceState: Bundle?) {
-        super.initCreate(savedInstanceState)
         translFactory = QuranTranslationFactory(this)
         slugs = resolveTranslationSlugs()
+
+        super.initCreate(savedInstanceState)
     }
 
     override fun preReaderReady(activityView: View, intent: Intent, savedInstanceState: Bundle?) {
@@ -166,7 +167,7 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         }
 
         if (slugs.isEmpty()) {
-            slugs.add(TranslUtils.TRANSL_SLUG_EN_SAHIH_INTERNATIONAL)
+            slugs.add(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN)
         }
 
         return slugs
