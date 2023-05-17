@@ -34,11 +34,11 @@ class ReadHistoryLayout @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : HomepageCollectionLayoutBase(context, attrs, defStyleAttr), Destroyable {
-    private lateinit var dbHelper: ReadHistoryDBHelper
+    private var dbHelper: ReadHistoryDBHelper? = null
     private var adapter: ADPReadHistory? = null
     private var firstTime = true
     override fun destroy() {
-        dbHelper.close()
+        dbHelper?.close()
     }
 
     override fun getHeaderTitle(): Int {
@@ -70,7 +70,7 @@ class ReadHistoryLayout @JvmOverloads constructor(
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val histories = dbHelper.getAllHistories(10)
+            val histories = dbHelper?.getAllHistories(10) ?: return@launch
 
             withContext(Dispatchers.Main) {
                 hideLoader()

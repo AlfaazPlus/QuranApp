@@ -1,9 +1,14 @@
-{
-    "intro": "",
-    "subjects": [
-        {
-            "name": "astronomy",
-            "path": "astronomy.html"
-        }
-    ]
-}
+[
+  {
+    "title": "Astronomy",
+    "referencesCount": 16,
+    "path": "astronomy.html",
+    "image": "ic_science_astronomy"
+  },
+  {
+    "title": "Physics and Hydrology",
+    "referencesCount": 19,
+    "path": "physics_n_hydrology.html",
+    "image": "ic_science_physics"
+  }
+]
