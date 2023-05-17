@@ -1,8 +1,3 @@
-@font-face {
-    font-family: quran-arabic;
-    src: url('https://assets-font/quran-arabic') format("truetype");
-}
-
 html,
 html.light {
     background-color: transparent;
@@ -37,7 +32,6 @@ h3 {
     font-size: 1.2em;
 }
 
-
 hr {
     margin: 20px 0;
 }
@@ -45,15 +39,30 @@ hr {
 a {
     color: #008B5B;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:active {
+    color: #005E3A;
+}
+
+li {
+    margin: 10px 0;
 }
 
 .reference {
     position: relative;
     background-color: #e0e0e0;
     padding: 10px;
-    border-radius: 8px 8px 0 8px;
+    border-radius: 8px;
+    overflow: hidden;
     margin-top: 30px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
+    padding-bottom: 0px;
+}
+
+html.dark .reference {
+    background-color: #252525;
 }
 
 .reference p {
@@ -62,20 +71,55 @@ a {
 
 .reference .arabic {
     font-family: quran-arabic;
-    text-align: right;
-    margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 25px;
+    padding: 5px;
+    line-height: 1.7;
+    direction: rtl;
+    --webkit-user-select: none;
 }
 
-.reference a {
-    position: absolute;
-    background-color: #d1d1d1;
+.reference .translation {
+    text-align: center;
+    padding: 10px;
+}
+
+.reference .footer {
+    border-top: 1px solid #c2c2c2;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html.dark .reference .footer {
+    border-top-color: #353535;
+}
+
+.reference .footer span {
+    font-size: 13px;
+    color: #aaaaaa;
+}
+
+.reference .footer .separator {
+    font-size: 14px;
+    color: #555555;
+    flex-grow: 1;
+}
+
+.reference .footer a {
+    background-color: rgba(0, 139, 21, .20);
     color: inherit;
     font-size: 14px;
     font-weight: bold;
     padding: 5px 10px;
-    border-radius: 0 0 5px 5px;
-    border-top: 1px solid #c2c2c2;
+    border-radius: 5px;
     text-decoration: none;
-    right: 0;
-    top: 100%;
+}
+
+
+.reference .footer a:active {
+    background-color: rgba(0, 139, 21, .30);
+    color: inherit;
 }

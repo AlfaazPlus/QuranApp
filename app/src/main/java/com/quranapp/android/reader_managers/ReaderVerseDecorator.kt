@@ -10,14 +10,17 @@ import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.extensions.getFont
-import com.quranapp.android.utils.reader.*
+import com.quranapp.android.utils.reader.getQuranScriptFontRes
+import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
+import com.quranapp.android.utils.reader.isKFQPCScript
+import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.verse.VerseUtils
 import java.io.File
 
 class ReaderVerseDecorator(private val ctx: Context) {
-    private val fileUtils by lazy { FileUtils.newInstance(ctx) }
+    val fileUtils by lazy { FileUtils.newInstance(ctx) }
 
     private var savedScript = SPReader.getSavedScript(ctx)
     private var savedFontScript = ""
@@ -103,7 +106,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
     fun setupArabicTextQuranPage(
         txtColor: Int,
         verse: Verse,
-        onClick: Runnable
+        onClick: Runnable,
     ): CharSequence =
         VerseUtils.decorateQuranPageVerse(
             txtColor,
@@ -126,7 +129,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
         author: String,
         authorClr: Int = textColorAuthor,
         txtSize: Int = textSizeAuthor,
-        isUrdu: Boolean
+        isUrdu: Boolean,
     ): SpannableString = VerseUtils.prepareTranslAuthorText(
         author,
         authorClr,

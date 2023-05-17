@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
-import com.quranapp.android.ADPQuranScience
+import com.quranapp.android.adapters.reference.ADPQuranScience
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem

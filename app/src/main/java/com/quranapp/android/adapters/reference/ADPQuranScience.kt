@@ -1,8 +1,10 @@
-package com.quranapp.android
+package com.quranapp.android.adapters.reference
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.databinding.LytQuranScienceItemBinding
 
@@ -16,7 +18,11 @@ class ADPQuranScience(private val items: List<QuranScienceItem>) :
             val subtitle = "${item.referencesCount} references"
             binding.subTitle.text = subtitle
 
-            binding.root.setOnClickListener { }
+            binding.root.setOnClickListener {
+                it.context.startActivity(Intent(it.context, ActivityQuranScienceContent::class.java).apply {
+                    putExtra("item", item)
+                })
+            }
         }
     }
 
