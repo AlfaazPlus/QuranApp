@@ -10,6 +10,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
+import com.quranapp.android.utils.extended.GapedItemDecoration
 import com.quranapp.android.views.BoldHeader
 import org.json.JSONArray
 
@@ -54,6 +55,7 @@ class ActivityQuranScience : BaseActivity() {
             }
         }
 
+        binding.list.addItemDecoration(GapedItemDecoration(dp2px(5F)))
         binding.list.layoutManager = LinearLayoutManager(this)
         binding.list.adapter = ADPQuranScience(items)
     }

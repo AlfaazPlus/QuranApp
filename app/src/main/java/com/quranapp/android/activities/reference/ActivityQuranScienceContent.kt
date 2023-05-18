@@ -1,5 +1,6 @@
 package com.quranapp.android.activities.reference
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -49,7 +50,9 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         binding = ActivityChapterInfoBinding.bind(activityView)
 
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.title.text = "Quran & Science"
+
+        val title = "Quran & Science"
+        binding.title.text = title
 
         showLoader()
 
@@ -62,11 +65,10 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView(webView: WebView) {
         val settings = webView.settings
-        settings.allowUniversalAccessFromFileURLs = true
-        settings.allowFileAccess = true
-        settings.domStorageEnabled = true
+        settings.javaScriptEnabled = true
         webView.overScrollMode = View.OVER_SCROLL_NEVER
         webView.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
@@ -85,19 +87,21 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
     }
 
     fun showLoader() {
-        binding.loader.setVisibility(View.VISIBLE)
+        binding.loader.visibility = View.VISIBLE
     }
 
     fun hideLoader() {
-        binding.loader.setVisibility(View.GONE)
+        binding.loader.visibility = View.GONE
     }
 
 
     private fun renderData(item: QuranScienceItem) {
-        var document = assets.open("science/${item.path}").bufferedReader().use { it.readText() }
-                .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
+        val base = assets.open("science/base.html").bufferedReader().use { it.readText() }
+            .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
 
-        // regex for {{REF_AR=39:5}} and {{REF_EN=39:5}}
+        var document = assets.open("science/topics/${item.path}").bufferedReader().use { it.readText() }
+        document = base.replace("{{CONTENT}}", document)
+
         val regexAr = Regex("\\{\\{REF_AR=(\\d+):(\\d+)\\}\\}")
         val regexTr = Regex("\\{\\{REF_TR=(\\d+):(\\d+)\\}\\}")
         val regexName = Regex("\\{\\{REF_NAME=(\\d+):(\\d+)\\}\\}")
@@ -140,7 +144,13 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            StringUtils.removeHTML(translFactory.getTranslationsSingleVerse(slugs, chapterNo.toInt(), verse.toInt())[0].text, false)
+            StringUtils.removeHTML(
+                translFactory.getTranslationsSingleVerse(
+                    slugs,
+                    chapterNo.toInt(),
+                    verse.toInt()
+                )[0].text, false
+            )
         }
 
         document = regexName.replace(document) { matchResult ->
