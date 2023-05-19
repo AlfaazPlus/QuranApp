@@ -22,5 +22,11 @@
     "referencesCount": 6,
     "path": "geology.html",
     "image": "ic_science_geology"
+  },
+  {
+    "title": "Oceanography",
+    "referencesCount": 0,
+    "path": "oceanography.html",
+    "image": "ic_science_geology"
   }
 ]

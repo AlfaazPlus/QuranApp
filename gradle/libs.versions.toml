@@ -1,19 +1,21 @@
 [versions]
-coreKtx = "1.9.0"
-lifecycle = "2.5.1"
+coreKtx = "1.10.1"
+gradle = "8.0.1"
+kotlinGradlePlugin = "1.8.0"
+lifecycle = "2.6.1"
 desugaring = "1.1.5"
-annotation = "1.5.0"
+annotation = "1.6.0"
 legacySupport = "1.0.0"
-appcompat = "1.6.0"
-material = "1.8.0"
+appcompat = "1.6.1"
+material = "1.9.0"
 constraintlayout = "2.1.4"
 apacheCommons = "3.12.0"
 guava = "31.0.1-jre"
-webkit = "1.6.0"
+webkit = "1.6.1"
 media = "1.6.0"
-viewbinding = "7.4.1"
-browser = "1.4.0"
-exoplayer = "2.18.5"
+viewbinding = "8.0.1"
+browser = "1.5.0"
+exoplayer = "2.18.7"
 swipeRefreshLayout = "1.7.2.4"
 retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
@@ -21,8 +23,14 @@ kotlinxRetrofit = "0.8.0"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinGradlePlugin" }
+
 lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-legacySupport = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupport" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -37,9 +45,9 @@ viewbinding = { group = "com.android.databinding", name = "viewbinding", version
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # ExoPlayer
-exoplayerCore = { group = "com.google.android.exoplayer", name = "exoplayer-core", version.ref = "exoplayer" }
-exoplayerUI = { group = "com.google.android.exoplayer", name = "exoplayer-ui", version.ref = "exoplayer" }
-extensionMediasession = { group = "com.google.android.exoplayer", name = "extension-mediasession", version.ref = "exoplayer" }
+exoplayerCore = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayer" }
+exoplayerUI = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayer" }
+extensionMediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoplayer" }
 
 # SmoothRefreshLayout
 srlCore = { group = "com.github.dkzwm", name = 'srl-core', version.ref = "swipeRefreshLayout" }

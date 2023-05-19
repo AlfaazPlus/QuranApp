@@ -7,8 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "33.0.1"
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.quranapp.android"
@@ -70,8 +69,12 @@ android {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
         // Sets Java compatibility to Java 8
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+
+        kotlinOptions {
+            jvmTarget = '17'
+        }
     }
     namespace 'com.quranapp.android'
 }
