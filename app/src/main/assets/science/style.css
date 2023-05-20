@@ -26,14 +26,24 @@ p {
 h1 {
     font-size: 1.7em;
     color: #008B5B;
+    margin-bottom: 0px;
 }
 
 h3 {
     font-size: 1.2em;
+    margin-top: 0px;
+    padding-top: 50px;
 }
 
 hr {
-    margin: 20px 0;
+    margin: 0;
+    margin-top: 40px;
+    border: 0;
+    border-top: 1px solid #c2c2c2;
+}
+
+html.dark hr {
+    border-color: #353535;
 }
 
 a {
@@ -43,7 +53,13 @@ a {
 }
 
 a:active {
-    color: #005E3A;
+    text-decoration: underline;
+}
+
+ul {
+    margin: 20px 20px 20px 30px;
+    padding: 0px;
+    transition: all 0.3s;
 }
 
 li {
@@ -123,8 +139,60 @@ html.dark .reference .footer span {
     text-decoration: none;
 }
 
-
 .reference .footer a:active {
     background-color: rgba(0, 139, 21, .30);
     color: inherit;
+}
+
+.toc,
+.note {
+    margin: 30px 0 20px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    color: #777777;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+html.dark .toc,
+html.dark .note {
+    background-color: #252525;
+    color: #aaaaaa;
+    border-color: #353535;
+}
+
+.toc {
+    padding: 0;
+}
+
+.note ul {
+    margin-left : 20px;
+}
+
+sup {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 13px;
+    font-family: serif;
+}
+
+/* Style for the table of contents */
+.toc .title {
+    font-weight: bold;
+    padding: 10px;
+}
+
+.toc a {
+    color: #777777;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.toc a:active {
+  color: #555555;
+}
+
+html.dark .toc a {
+    color: #aaaaaa;
 }

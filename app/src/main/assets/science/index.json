@@ -6,9 +6,27 @@
     "image": "ic_science_astronomy"
   },
   {
-    "title": "Physics and Hydrology",
-    "referencesCount": 19,
-    "path": "physics_n_hydrology.html",
+    "title": "Physics",
+    "referencesCount": 2,
+    "path": "physics.html",
     "image": "ic_science_physics"
+  },
+  {
+    "title": "Geography",
+    "referencesCount": 17,
+    "path": "geography.html",
+    "image": "ic_science_geography"
+  },
+  {
+    "title": "Geology",
+    "referencesCount": 6,
+    "path": "geology.html",
+    "image": "ic_science_geology"
+  },
+  {
+    "title": "Oceanography",
+    "referencesCount": 0,
+    "path": "oceanography.html",
+    "image": "ic_science_geology"
   }
 ]
