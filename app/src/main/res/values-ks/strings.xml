@@ -3,6 +3,6 @@
     <string name="strTitleAppVersion">اؠپ وٕرجَن</string>
     <string name="strLabelRemove">مِٹاوُن</string>
     <string name="strLabelSend">سوزُن</string>
-    <string name="strVersion" formatted="false">وٕرجَن</string>
+    <string name="strVersion" formatted="false">وٕرجَن %s</string>
     <string name="strLabelClose">بَنٛد کَرُن</string>
 </resources>
