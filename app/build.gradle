@@ -15,18 +15,14 @@ android {
         targetSdkVersion 33
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
-        versionCode 23_04_21_001
-        versionName "2023.04.21.1"
+        versionCode 23_05_22_001
+        versionName "2023.05.22.1"
 
         resValue "string", "app_name", "QuranApp"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         /* ---------------------------------------------------------------- */
-
-        // Set BuildConfig.DEVELOPER_MACHINE_IP to the IP address of any interface.
-        def ipList = getLocalIPv4()
-        buildConfigField("String", "DEVELOPER_MACHINE_IP", ipList.empty ? '""' : '"' + ipList.get(0) + '"')
     }
 
     buildFeatures {
@@ -122,18 +118,4 @@ dependencies {
     implementation libs.srlExtHorizontal
     implementation libs.srlExtTwoLevel
     implementation libs.srlExtUtil
-}
-
-
-//return all v4 addresses
-static def getLocalIPv4() {
-    def ip4s = []
-    NetworkInterface.getNetworkInterfaces()
-            .findAll { it.isUp() && !it.isLoopback() && !it.isVirtual() }
-            .each {
-                it.getInetAddresses()
-                        .findAll { !it.isLoopbackAddress() && it instanceof Inet4Address }
-                        .each { ip4s << it.getHostAddress() }
-            }
-    return ip4s
 }
