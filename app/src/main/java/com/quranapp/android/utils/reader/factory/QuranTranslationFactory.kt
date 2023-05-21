@@ -265,12 +265,12 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     * The returned verses will be sorted by verse number regardless of order of the passed verse numbers..
     * */
     fun getTranslationsDistinctVerses(slugs: Set<String>, chapNo: Int, vararg verses: Int): List<List<Translation>> {
-        val transls = List(verses.size) {
+        val translationGroups = List(verses.size) {
             ArrayList<Translation>()
         }.toMutableList()
 
-        if (slugs.isNullOrEmpty()) {
-            return transls
+        if (slugs.isEmpty()) {
+            return translationGroups
         }
 
         val nSlugs = sortTranslationSlugs(validatePremierShip(slugs))
@@ -296,25 +296,27 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
             val translations = getTranslationsFromQuery(slug, selection.toString(), selectionArgs)
             if (!translations.isNullOrEmpty()) {
                 for ((translIndex, transl) in translations.withIndex()) {
-                    transls[translIndex].add(slugIndex, transl)
+                    translationGroups[translIndex].add(slugIndex, transl)
                 }
             }
         }
 
-        return transls
+        return translationGroups
     }
 
     private fun sortTranslationSlugs(slugs: Set<String>): Set<String> {
-        val nSlugs = ArrayList<String>()
+        val transliterations = ArrayList<String>()
+        val nonTransliterations = ArrayList<String>()
+
         slugs.forEach { slug ->
             if (TranslUtils.isTransliteration(slug)) {
-                nSlugs.add(0, slug)
+                transliterations.add(slug)
             } else {
-                nSlugs.add(slug)
+                nonTransliterations.add(slug)
             }
         }
 
-        return nSlugs.toSet()
+        return (transliterations + nonTransliterations).toSet()
     }
 
     private fun validatePremierShip(translSlugs: Set<String>): Set<String> {
