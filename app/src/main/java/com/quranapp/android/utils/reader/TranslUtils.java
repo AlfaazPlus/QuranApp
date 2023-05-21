@@ -49,7 +49,7 @@ public class TranslUtils {
 
 
     /**
-     * This translation slug must be updated if it updates on the server.
+     * Every transliteration must contain this keyword
      */
     private static final String TRANSL_TRANSLITERATION_SLUG_PART = "transliteration";
 
