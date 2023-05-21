@@ -25,8 +25,50 @@
   },
   {
     "title": "Oceanography",
-    "referencesCount": 0,
+    "referencesCount": 3,
     "path": "oceanography.html",
-    "image": "ic_science_geology"
+    "image": "ic_science_oceanography"
+  },
+  {
+    "title": "Biology",
+    "referencesCount": 3,
+    "path": "biology.html",
+    "image": "ic_science_biology"
+  },
+  {
+    "title": "Botany",
+    "referencesCount": 2,
+    "path": "botany.html",
+    "image": "ic_science_botany"
+  },
+  {
+    "title": "Zoology",
+    "referencesCount": 7,
+    "path": "zoology.html",
+    "image": "ic_science_zoology"
+  },
+  {
+    "title": "Medicine",
+    "referencesCount": 2,
+    "path": "medicine.html",
+    "image": "ic_science_medicine"
+  },
+  {
+    "title": "Physiology",
+    "referencesCount": 1,
+    "path": "physiology.html",
+    "image": "ic_science_physiology"
+  },
+  {
+    "title": "Embryology",
+    "referencesCount": 28,
+    "path": "embryology.html",
+    "image": "ic_science_embryology"
+  },
+  {
+    "title": "General Science",
+    "referencesCount": 3,
+    "path": "general.html",
+    "image": "ic_science_general"
   }
 ]
