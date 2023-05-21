@@ -40,7 +40,7 @@ public final class VOTDUtils {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), votdReminder);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, votdReminder);
     }
 
     public static void disableVOTDReminder(Context context) {
