@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strTitleAppVersion">اؠپ وٕرجَن</string>
+    <string name="strLabelRemove">مِٹاوُن</string>
+    <string name="strLabelSend">سوزُن</string>
+    <string name="strVersion" formatted="false">وٕرجَن</string>
+</resources>
