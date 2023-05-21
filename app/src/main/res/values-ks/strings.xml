@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="strTitleAppVersion">ایپ ورژن</string>
-    <string name="strVersion" formatted="false">ورژن %s</string>
-</resources>
