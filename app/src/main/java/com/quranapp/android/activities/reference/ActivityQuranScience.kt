@@ -18,6 +18,7 @@ class ActivityQuranScience : BaseActivity() {
     override fun getLayoutResource() = R.layout.activity_exclusive_verses
 
     override fun shouldInflateAsynchronously() = true
+
     @SuppressLint("DiscouragedApi")
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         val binding = ActivityExclusiveVersesBinding.bind(activityView)
@@ -46,18 +47,38 @@ class ActivityQuranScience : BaseActivity() {
 
             for (i in 0 until jsonArray.length()) {
                 val obj = jsonArray.getJSONObject(i)
-                items.add(QuranScienceItem(
-                    obj.getString("title"),
-                    obj.getInt("referencesCount"),
-                    obj.getString("path"),
-                    resources.getIdentifier(obj.getString("image"), "drawable", packageName)
-                ))
+                items.add(
+                    QuranScienceItem(
+                        obj.getString("title"),
+                        obj.getInt("referencesCount"),
+                        obj.getString("path"),
+                        getDrawableRes(obj.getInt("id"))
+                    )
+                )
             }
         }
 
         binding.list.addItemDecoration(GapedItemDecoration(dp2px(5F)))
         binding.list.layoutManager = LinearLayoutManager(this)
         binding.list.adapter = ADPQuranScience(items)
+    }
+
+    private fun getDrawableRes(id: Int): Int {
+        return when (id) {
+            1 -> R.drawable.ic_science_astronomy
+            2 -> R.drawable.ic_science_physics
+            3 -> R.drawable.ic_science_geography
+            4 -> R.drawable.ic_science_geology
+            5 -> R.drawable.ic_science_oceanography
+            6 -> R.drawable.ic_science_biology
+            7 -> R.drawable.ic_science_botany
+            8 -> R.drawable.ic_science_zoology
+            9 -> R.drawable.ic_science_medicine
+            10 -> R.drawable.ic_science_physiology
+            11 -> R.drawable.ic_science_embryology
+            12 -> R.drawable.ic_science_general
+            else -> 0
+        }
     }
 
     private fun showInfoDialog() {
