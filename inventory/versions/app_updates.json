@@ -18,5 +18,9 @@
   {
     "version": 230421001,
     "updatePriority": 4
+  },
+  {
+    "version": 230522001,
+    "updatePriority": 3
   }
 ]
