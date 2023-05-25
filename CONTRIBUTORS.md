@@ -6,7 +6,7 @@
 ### App Translations
 
 - Arabic (ar) - Mar
-- Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77) and [Prince](https://github.com/MAHMUDflmrkh)
+- Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77) and [Mahmud Khan](https://github.com/MAHMUDflmrkh)
 - Kurdish (ckb) - [Goran Gharib](https://facebook.com/goran90909)
 - French (fr) - Sanya Gautam and [pindadu92](https://github.com/pindadu92)
 - German (de) - [Mylinde](https://github.com/Mylinde)
