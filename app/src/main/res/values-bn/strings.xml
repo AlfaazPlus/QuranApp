@@ -73,7 +73,7 @@
     <string name="strTitleAppUser">কুরআন অ্যাপ ব্যবহারকারী</string>
     <string name="strTitleHolyQuran">পবিত্র কুরআন</string>
     <string name="strTitleQuran">কুরআন</string>
-    <string name="strTitleMakki">মক্কী</string>
+    <string name="strTitleMakki">মাক্কি</string>
     <string name="strTitleMadani">মাদানী</string>
     <string name="strTitleFootnote">পাদটীকা</string>
     <string name="strTitleFootnotes">পাদটীকা</string>
@@ -301,15 +301,15 @@
     <string name="strMsgReadShowupHere">আপনার পাঠ ইতিহাস এখানে প্রদর্শিত হবে।</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s এ শুধুমাত্র ১টি ফলাফল পাওয়া গেছে</string>
     <string name="strMsgChangeLanguage">ভাষার পরিবর্তন প্রয়োগ করতে অ্যাপটি রিস্টার্ট করা হবে।</string>
-    <string name="inPlaces">%s এ</string>
+    <string name="inPlaces">%s এর মধ্যে</string>
     <string name="inPlacesMore">%1$s এবং আরও %2$d এর মধ্যে</string>
     <string name="strTitleRecitations">তিলাওয়াত</string>
     <string name="strTitleScripts">স্ক্রিপ্ট</string>
-    <string name="lastCrashLog">শেষ ক্রাসের লগ</string>
+    <string name="lastCrashLog">সর্বশেষ ক্র্যাশ লগ</string>
     <string name="labelAdd">যুক্ত করুন</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াতের তাফসীর পড়ুন %d</string>
     <string name="strMsgTafsirsNoAvailable">কোনও তাফসীর নেই</string>
-    <string name="msgDownloadingFonts">ফন্ট ডাউনলোড হচ্ছে</string>
+    <string name="msgDownloadingFonts">ফন্ট ডাউনলোড করা হচ্ছে</string>
     <string name="labelDownload">ডাউনলোড করুন</string>
     <string name="titleManageAudio">অডিও পরিচালনা</string>
     <string name="audioOnlyTranslation">শুধু অনুবাদ শুনুন</string>
@@ -320,4 +320,96 @@
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
     <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
+    <string name="titleDownloadScriptResources">এই স্ক্রিপ্টের জন্য সংস্থানগুলি ডাউনলোড করবেন\?</string>
+    <string name="labelBackgroundDownload">ব্যাকগ্রাউন্ড ডাউনলোড</string>
+    <string name="msgTafsirCleanup" formatted="false">%s থেকে সমস্ত সংরক্ষিত তাফসির মুছে ফেলা হবে।</string>
+    <string name="noItems">কোনো আইটেম নেই</string>
+    <string name="places" formatted="false">%dটি স্থান</string>
+    <string name="msgDownloadFailed">ডাউনলোড ব্যর্থ হয়েছে</string>
+    <string name="msgDownloadingScript">স্ক্রিপ্ট ডাউনলোড করা হচ্ছে</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="msgAnotherDownloadInProgress">অন্য একটি ডাউনলোড প্রক্রিয়াধীন আছে।</string>
+    <string name="createIssue">ইস্যু তৈরি করুন</string>
+    <string name="msgAlarmManagerNotAvailable">এই ডিভাইসে অ্যালার্ম ম্যানেজার পাওয়া যায়নি।</string>
+    <string name="msgVerseReminderAlarmPermission">আয়াতের অনুস্মারক সক্রিয় করতে অ্যালার্ম অনুমতি প্রয়োজন।</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d সংরক্ষিত তাফসির পরিষ্কার করা যেতে পারে।</string>
+    <string name="labelFreeUpSpace">জায়গা খালি করুন</string>
+    <string name="titleRecitationCleanup">তেলাওয়াত মুছে ফেলবেন\?</string>
+    <string name="appLogs">অ্যাপ লগসমূহ</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$dটি স্ক্রিপ্ট এবং %2$dটি ফন্ট</string>
+    <string name="nothingToCleanup">পরিষ্কার করার মতো কিছু নেই।</string>
+    <string name="verseSyncOn">আয়াত সুসংগত: চালু</string>
+    <string name="verseSyncOff">আয়াত সুসংগত: বন্ধ</string>
+    <string name="titleAddToFavourites">পছন্দের তালিকায় যোগ করুন</string>
+    <string name="msgAddedToFavourites">পছন্দের তালিকায় যোগ করা হয়েছে</string>
+    <string name="msgChapterRemovedFromFavourites">সূরা পছন্দের তালিকা থেকে মুছে ফেলা হয়েছে।</string>
+    <string name="labelPreviousTafsir">পূর্ববর্তী তাফসীর</string>
+    <string name="titleSolutionVerses">কুরআন থেকে সমাধান</string>
+    <string name="crashLogs">ক্র্যাশ লগসমূহ</string>
+    <string name="suppressedLogs">গোপন লগসমূহ</string>
+    <string name="logRemoved">লগ মুছে ফেলা হয়েছে</string>
+    <string name="place" formatted="false">%d স্থান</string>
+    <string name="labelArabic">আরবি</string>
+    <string name="msgInvalidParams">অকার্যকর প্যারামিটার</string>
+    <string name="titleEtiquetteVerses">কুরআনে শিষ্টাচার</string>
+    <string name="msgChapterAddedToFavourites">সূরা পছন্দের তালিকায় যোগ করা হয়েছে।</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">স্ক্রিপ্ট: %s (~1MB)</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d সংরক্ষিত অধ্যায় তথ্য পরিষ্কার করা যেতে পারে।</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%2$dটির মধ্যে %1$dটি ফন্ট ডাউনলোড হয়েছে</string>
+    <string name="textDownloading">ডাউনলোড হচ্ছে…</string>
+    <string name="msgRecitaionDownloaded" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" ডাউনলোড করা হয়েছে।</string>
+    <string name="msgDownloadingResource" formatted="false">%s ডাউনলোড হচ্ছে</string>
+    <string name="msgScriptCleanup" formatted="false">%s স্ক্রিপ্ট এবং এর সমস্ত সঞ্চিত ফন্ট মুছে ফেলা হবে৷ সেগুলি ব্যবহার করার জন্য আপনাকে পুনরায় ডাউনলোড করতে হবে।</string>
+    <string name="titleChapterInfoCleanup">অধ্যায় তথ্য পরিষ্কার করবেন\?</string>
+    <string name="msgChapterInfoCleanup">সমস্ত সংরক্ষিত অধ্যায়ের তথ্য মুছে ফেলা হবে।</string>
+    <string name="msgRemovedFromFavourites">পছন্দের তালিকা থেকে বাদ দেওয়া হয়েছে</string>
+    <string name="msgNoFavouriteChapters">এখানে দেখতে পছন্দের তালিকায় একটি অধ্যায় যোগ করুন।</string>
+    <string name="titleStorageCleanup">স্টোরেজ পরিষ্করণ</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d ডাউনলোড করা অনুবাদ খালি করা যেতে পারে।</string>
+    <string name="titleTafsirCleanup">তাফসীর মুছে ফেলবেন\?</string>
+    <string name="labelNextTafsir">পরবর্তী তাফসীর</string>
+    <string name="nItem" formatted="false">%d আইটেম</string>
+    <string name="nItems" formatted="false">%dটি আইটেম</string>
+    <string name="strPreviewTextTransl">পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে</string>
+    <string name="pasteCrashLogGithubIssue">লগটি ক্লিপবোর্ডে কপি করা হয়েছে৷ GitHub ইস্যুতে এটি যুক্ত করুন।</string>
+    <string name="titleRemoveFromFavourites">পছন্দের তালিকা থেকে বাদ দিন</string>
+    <string name="textTranslationReciterInfo">ভাষা: %1$s
+\nবই: %2$s</string>
+    <string name="textNoLogsFound">কোন লগ খুঁজে পাওয়া যায়নি</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" ডাউনলোড করতে ব্যর্থ হয়েছে।</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" এর সমস্ত তেলাওয়াত মুছে ফেলা হবে।</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: মোট %2$d এর মধ্যে %1$d ডাউনলোড হয়েছে (~%3$dMB অবশিষ্ট)</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d এর মধ্যে %1$d</string>
+    <string name="msgScriptFontsDownloaded">স্ক্রিপ্ট এবং ফন্ট সফলভাবে ডাউনলোড করা হয়েছে।</string>
+    <string name="github">GitHub</string>
+    <string name="nFiles" formatted="false">%dটি ফাইল</string>
+    <string name="onboardDescTheme">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
+    <string name="onboardDescLanguage">অ্যাপটিকে আপনার ভাষায় ব্যক্তিগত মুদ্রণ করুন। আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
+    <string name="onboardDescTranslations">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন। আপনি সেটিংস থেকে আরও অনুবাদ ডাউনলোড করতে পারেন।</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp অনুবাদ সহ মহান আল-কোরআন পড়ার এবং অন্বেষণ করার জন্য একটি বিনামূল্যের এবং ওপেন সোর্স অ্যাপ। এই অ্যাপটিতে তাফসির, তেলাওয়াত, অনুস্মারক এবং আরও অনেক বৈশিষ্ট্য সহ একটি সুন্দর এবং পরিষ্কার ইন্টারফেস রয়েছে।
+\n
+\nএখনই ডাউনলোড করুন:
+\n%s</string>
+    <string name="noFootnotesForThisVerse">এই আয়াতের জন্য কোন পাদটীকা নেই।</string>
+    <string name="strMsgDuaFor" formatted="false">%s এর জন্য দুআ</string>
+    <string name="msgDownloadKFQPCResources">এই স্ক্রিপ্টটি ব্যবহার করার আগে আপনাকে নিম্নলিখিত সংস্থানগুলি ডাউনলোড করতে হবে:</string>
+    <string name="textDownloaded">ডাউনলোড সম্পন্ন হয়েছে</string>
+    <string name="copiedToClipboard">ক্লিপবোর্ডে কপি করা হয়েছে।</string>
+    <string name="storageCleanupMessage">অব্যবহৃত ডাউনলোড করা সংস্থানগুলি মুছে স্থান খালি করুন৷ এটি কোনো বুকমার্ক বা সেটিংস মুছে ফেলবে না।
+\n
+\nনিম্নলিখিত সংস্থানগুলি খালি করা যেতে পারে:</string>
+    <string name="msgVerseReminderNotifPermission">আয়াতের অনুস্মারক সক্রিয় করতে বিজ্ঞপ্তি অনুমতি প্রয়োজন।</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%dটি ডাউনলোড করা স্ক্রিপ্ট এবং তাদের ফন্টগুলি খালি করা যেতে পারে।</string>
+    <string name="titleChapterInfo">অধ্যায়ের তথ্য</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nআপনাকে এটি আবার ডাউনলোড করতে হবে।</string>
+    <string name="msgRecitationCleanup" formatted="false">%s থেকে সমস্ত সঞ্চিত তেলাওয়াত মুছে ফেলা হবে। পৃথকভাবে সূরা দ্বারা তেলাওয়াত মুছে ফেলার জন্য, অডিও পরিচালনা সেটিংসে যান।</string>
+    <string name="titleScriptCleanup">স্ক্রিপ্ট মুছে ফেলতে চান\?</string>
+    <string name="onboardDescReciter">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন। আপনি সেটিংসে আরও তেলাওয়াতকারী খুঁজে পেতে পারেন।</string>
+    <string name="labelTranslation">অনুবাদ</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" এর তেলাওয়াত মুছে ফেলা হয়েছে।</string>
+    <string name="msgTafsirLoadFailed">তাফসির লোড করতে ব্যর্থ হয়েছে</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল খালি করা যেতে পারে।</string>
 </resources>
