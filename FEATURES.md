@@ -11,20 +11,34 @@ The following features are the reason why you should use the QuranApp.
 - No data collection or sharing
 
 ### 📙 Translations
-- 20+ Translations
+- 30+ Translations
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
+- Fully offline once downloaded
 
 ### 🎙️ Recitations
 - 15+ Recitations
+- 5+ Translation Recitations
+  - Play only Quran
+  - Play only translation
+  - Play both Quran and translation
 - Repeat single verse
 - Play verse range
 - Play recitation continuously
 - Automatic scroll to match current verse
+- Playback speed control
+- Download recitations for offline use
+
+### 📖️ Tafsir
+- 5+ Tafsirs
+- Tafsirs cached for offline use
 
 ### 🎨 Fonts
-- Multiple fonts (Uthmani, Indopak and KFQPC)
+- Multiple fonts
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC
 - Customize Arabic text size
 - Customise translation text size
 
@@ -40,9 +54,11 @@ The following features are the reason why you should use the QuranApp.
 - Quickly jump to any juz
 
 ### ❤️ Contents from the Qur'an
-- Topics from the Qur'an
 - Duas from the Qur'an
+- Solutions from the Qur'an
 - Prophets mentioned in the Qur'an
+- Etiquette from the Qur'an
+- Quran and Science
 
 ### 🔍 Search
 - Advanced search
@@ -51,7 +67,7 @@ The following features are the reason why you should use the QuranApp.
 - Easily navigate to any translation in search results
 - Search for full word or word part
 
-### 📌 Bookmarking
+### 📝 Bookmarking
 - Bookmark verses for later
 - Bookmark single verse
 - Bookmark a verse range
@@ -61,4 +77,4 @@ The following features are the reason why you should use the QuranApp.
 - Verse of the Day Reminder
 - Advanced sharing
 - Dark and light themes
-- Multiple language support
+- App is available in 15+ languages
