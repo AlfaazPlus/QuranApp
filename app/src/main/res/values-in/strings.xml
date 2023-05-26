@@ -328,7 +328,7 @@
     <string name="msgAnotherDownloadInProgress">Unduhan lain sedang berlangsung.</string>
     <string name="msgDownloadingScript">Mengunduh skrip</string>
     <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
-    <string name="scriptCanBeFreedUp" formatted="false">%d Jenis penulisan dan font nya yang terunduh bisa dibersihkan.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d Jenis penulisan dan jenis font nya yang terunduh bisa dibersihkan.</string>
     <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan.
 \n
 \nSumber daya yang bisa dibersihkan:</string>
@@ -353,7 +353,7 @@
     <string name="titleChapterInfoCleanup">Kosongkan info ayat\?</string>
     <string name="msgChapterInfoCleanup">Semua info ayat yang tersimpan akan dihapus.</string>
     <string name="nFiles" formatted="false">%d file</string>
-    <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d font</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d jenis font</string>
     <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
     <string name="inPlaces">dalam %s</string>
     <string name="inPlacesMore">di %1$s dan %2$d lainnya</string>
@@ -369,14 +369,14 @@
     <string name="onboardDescLanguage">Atur aplikasi dalam bahasa anda. Anda selalu bisa mengubahnya nanti.</string>
     <string name="labelAdd">Tambah</string>
     <string name="noItems">Tidak ada item</string>
-    <string name="titleAddToFavourites">Tambahkan ke disukai</string>
+    <string name="titleAddToFavourites">Tambahkan ke favorit</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">Semua Murattal dari \"%1$s\" untuk Qori Murattal \"%2$s\" akan dihapus.</string>
-    <string name="titleRemoveFromFavourites">Hapus dari disukai</string>
+    <string name="titleRemoveFromFavourites">Hapus dari favorit</string>
     <string name="textNoLogsFound">Log tidak ditemukan</string>
     <string name="msgRecitaionDownloaded" formatted="false">Terunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">Murattal yang terhapus \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
     <string name="titleManageAudio">Kelola Audio</string>
-    <string name="msgAddedToFavourites">Telah ditambah ke disukai</string>
+    <string name="msgAddedToFavourites">Telah ditambah ke favorit</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">Gagal mengunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
     <string name="playbackSpeed">Kecepatan pemutaran</string>
     <string name="audioOnlyTranslation">Hanya putar terjemahan</string>
@@ -390,13 +390,13 @@
     <string name="audioBothArabicTranslation">Putar Arabic dan terjemahan</string>
     <string name="textDownloaded">Terunduh</string>
     <string name="crashLogs">Log error</string>
-    <string name="msgNoFavouriteChapters">Tambah sebuah surah ke disukai untuk melihat disini.</string>
-    <string name="msgChapterRemovedFromFavourites">Surah telah dihapus dari disukai.</string>
+    <string name="msgNoFavouriteChapters">Tambah sebuah surah ke favorit untuk melihat disini.</string>
+    <string name="msgChapterRemovedFromFavourites">Surah telah dihapus dari favorit.</string>
     <string name="logRemoved">Log dihapus</string>
-    <string name="labelArabic">Arabic</string>
-    <string name="msgRemovedFromFavourites">Telah dihapus dari disukai</string>
+    <string name="labelArabic">Bahasa Arab</string>
+    <string name="msgRemovedFromFavourites">Telah dihapus dari favorit</string>
     <string name="labelTranslation">Terjemahan</string>
-    <string name="msgChapterAddedToFavourites">Surah telah ditambah ke disukai.</string>
+    <string name="msgChapterAddedToFavourites">Surah telah ditambah ke favorit.</string>
     <string name="textTranslationReciterInfo">Bahasa: %1$s
 \nBuku: %2$s</string>
     <string name="strMsgDuaFor" formatted="false">Doa untuk %s</string>
