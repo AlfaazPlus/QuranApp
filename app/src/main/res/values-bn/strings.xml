@@ -88,7 +88,7 @@
     <string name="strTitleReadVerseRange" formatted="false">%1$d থেকে %2$d নং আয়াতগুলো পড়ুন</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদ প্রদর্শনী</string>
     <string name="strTitleReaderLayoutStylePageView">পৃষ্ঠা প্রদর্শনী</string>
-    <string name="strTitleReaderTextSizeArabic">আরবি হরফের আকার</string>
+    <string name="strTitleReaderTextSizeArabic">আরবি লেখার আকার</string>
     <string name="strTitleSettings">সেটিংস</string>
     <string name="strTitleBookmark">বুকমার্ক</string>
     <string name="strTitleSendFeedback">মতামত পাঠান</string>
@@ -128,7 +128,7 @@
     <string name="strTitleReaderVerses">আয়াতসমূহ</string>
     <string name="strTitleVerseRecitation">আয়াত তিলাওয়াত</string>
     <string name="strTitleReaderLayoutStyle">কুরআন প্রদর্শনী</string>
-    <string name="strTitleReaderTextSizeTransl">অনুবাদ হরফের আকার</string>
+    <string name="strTitleReaderTextSizeTransl">অনুবাদ লেখার আকার</string>
     <string name="strTitleShareApp">অ্যাপ শেয়ার করুন</string>
     <string name="strTitleReportVerse">আয়াত রিপোর্ট করুন</string>
     <string name="strLabelIncludeFootnotes">পাদটীকা অন্তর্ভুক্ত করুন</string>
@@ -198,7 +198,7 @@
     <string name="strMsgReferenceDuas">কুরআন থেকে কিছু দোয়া সংগ্রহ করা হলো।</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">অধ্যায় নং %1$d │ আয়াত %2$d–%3$d</string>
     <string name="strTitleFeaturedQuran">ফিচারড রিডিং</string>
-    <string name="strTitleVOTD">প্রতিদিন একটি আয়াত</string>
+    <string name="strTitleVOTD">আজকের আয়াত</string>
     <string name="strTitleTopics">বিষয়শ্রেণী</string>
     <string name="strTitleDuas">কুরআনের দোয়াসমূহ</string>
     <string name="strTitleProphets">নবীগণ</string>
@@ -271,7 +271,7 @@
     <string name="strMsgSearchWordPartExample">উদাহরণস্বরূপ: \'মানবজাতি\' এর মধ্যে \'মানব\'</string>
     <string name="strMsgSearchArabic">আরবি টেক্সটে অনুসন্ধান করুন</string>
     <string name="strMsgResetReaderSettings">সমস্ত সেটিংস ডিফল্টে রিসেট করুন।</string>
-    <string name="strMsgShareRange" formatted="false">%1$d–%2$d এর মাঝে পরিসীমা উল্লেখ বরুন</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d এর মাঝে পরিসীমা উল্লেখ করুন</string>
     <string name="strMsgEnterValidRange">অনুগ্রহ করে একটি সঠিক পরিসীমা লিখুন</string>
     <string name="strMsgTranslNoDownloads">কোনো ডাউনলোডকৃত অনুবাদ উপলব্ধ নেই</string>
     <string name="strMsgTranslNoDownloadsAvailable">কোনো ডাউনলোড উপলব্ধ নেই</string>
@@ -315,7 +315,7 @@
     <string name="audioOnlyTranslation">শুধু অনুবাদ শুনুন</string>
     <string name="playbackSpeed">তিলাওয়াতের গতি</string>
     <string name="titleOtherSettings">অন্যান্য সেটিংস</string>
-    <string name="titleReaderTextSizeTafsir">তাফসীর পাঠের আকার</string>
+    <string name="titleReaderTextSizeTafsir">তাফসীর লেখার আকার</string>
     <string name="downloadRecitations">তিলাওয়াত ডাউনলোড করুন</string>
     <string name="audioOption">অডিও অপশন</string>
     <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
