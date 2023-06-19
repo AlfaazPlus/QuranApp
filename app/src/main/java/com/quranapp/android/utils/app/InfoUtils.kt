@@ -6,6 +6,7 @@ package com.quranapp.android.utils.app
 import android.content.Context
 import android.content.DialogInterface
 import android.net.Uri
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.quranapp.android.R
@@ -53,15 +54,15 @@ object InfoUtils {
             if (e !is CancellationException) {
                 Logger.reportError(e)
                 MessageUtils.popMessage(
-                    context,
-                    context.getString(R.string.strMsgSomethingWrong),
-                    "${context.getString(R.string.strMsgCouldNotOpenPage)} ${
-                        context.getString(
-                            R.string.strMsgTryLater
-                        )
-                    }",
-                    context.getString(R.string.strLabelClose),
-                    null
+                        context,
+                        context.getString(R.string.strMsgSomethingWrong),
+                        "${context.getString(R.string.strMsgCouldNotOpenPage)} ${
+                            context.getString(
+                                    R.string.strMsgTryLater
+                            )
+                        }",
+                        context.getString(R.string.strLabelClose),
+                        null
                 )
             }
         }
@@ -85,10 +86,15 @@ object InfoUtils {
     }
 
     private fun prepareCustomTab(context: Context): CustomTabsIntent {
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.colorBGPage))
+                .setNavigationBarColor(ContextCompat.getColor(context, R.color.colorBGPage))
+                .build()
+
         return CustomTabsIntent.Builder()
-            .setToolbarColor(ContextCompat.getColor(context, R.color.colorBGPage))
-            .setShowTitle(true)
-            .setUrlBarHidingEnabled(true)
-            .build()
+                .setDefaultColorSchemeParams(colorSchemeParams)
+                .setShowTitle(true)
+                .setUrlBarHidingEnabled(true)
+                .build()
     }
 }

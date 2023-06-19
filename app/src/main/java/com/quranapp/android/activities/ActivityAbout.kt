@@ -40,7 +40,7 @@ class ActivityAbout : BaseActivity() {
 
     private fun initHeader(header: BoldHeader) {
         header.let {
-            it.setCallback { onBackPressed() }
+            it.setCallback { onBackPressedDispatcher.onBackPressed() }
             it.setTitleText(R.string.strTitleAboutUs)
             it.setShowRightIcon(false)
             it.setShowSearchIcon(false)

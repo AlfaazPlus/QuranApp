@@ -95,7 +95,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         header.setCallback(new BoldHeader.BoldHeaderCallback() {
             @Override
             public void onBackIconClick() {
-                activity.onBackPressed();
+                activity.getOnBackPressedDispatcher().onBackPressed();
             }
 
             @Override

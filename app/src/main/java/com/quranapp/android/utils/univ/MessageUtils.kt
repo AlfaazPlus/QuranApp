@@ -36,10 +36,10 @@ object MessageUtils {
     }
 
     @JvmStatic
-    fun popMessage(context: Context, title: String, msg: String, btn: String, action: Runnable?) {
+    fun popMessage(context: Context, title: String, msg: String?, btn: String, action: Runnable?) {
         val builder = PeaceDialog.newBuilder(context)
         builder.setTitle(title)
-        builder.setMessage(msg)
+        if (msg != null) builder.setMessage(msg)
         builder.setNeutralButton(btn) { _, _ -> action?.run() }
         builder.setFocusOnNeutral(true)
         builder.show()
