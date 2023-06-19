@@ -3,15 +3,6 @@
  * Created on 1/4/2022.
  * All rights reserved.
  */
+package com.quranapp.android.utils.exceptions
 
-package com.quranapp.android.utils.exceptions;
-
-public class NoInternetException extends RuntimeException {
-    public NoInternetException() {
-        this("No internet");
-    }
-
-    public NoInternetException(String msg) {
-        super(msg);
-    }
-}
+class NoInternetException @JvmOverloads constructor(msg: String? = "No internet") : RuntimeException(msg)

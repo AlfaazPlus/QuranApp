@@ -3,15 +3,6 @@
  * Created on 1/4/2022.
  * All rights reserved.
  */
+package com.quranapp.android.utils.exceptions
 
-package com.quranapp.android.utils.exceptions;
-
-public class HttpNotFoundException extends RuntimeException {
-    public HttpNotFoundException() {
-        this("Not found");
-    }
-
-    public HttpNotFoundException(String msg) {
-        super(msg);
-    }
-}
+class HttpNotFoundException @JvmOverloads constructor(msg: String? = "Not found") : RuntimeException(msg)

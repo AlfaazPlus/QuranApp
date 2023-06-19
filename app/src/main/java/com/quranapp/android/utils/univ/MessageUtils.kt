@@ -1,52 +1,47 @@
-package com.quranapp.android.utils.univ;
+package com.quranapp.android.utils.univ
 
-import android.content.Context;
-import android.widget.Toast;
+import android.content.Context
+import android.widget.Toast
+import com.peacedesign.android.widget.dialog.base.PeaceDialog
+import com.quranapp.android.R
+import java.lang.ref.WeakReference
 
-import com.peacedesign.android.widget.dialog.base.PeaceDialog;
-import com.quranapp.android.R;
-
-import java.lang.ref.WeakReference;
-
-public class MessageUtils {
-    private static WeakReference<Toast> mToast;
-
-    public static void showRemovableToast(Context context, int msgRes, int duration) {
-        showRemovableToast(context, context.getString(msgRes), duration);
+object MessageUtils {
+    private var toast: WeakReference<Toast>? = null
+    fun showRemovableToast(context: Context, msgRes: Int, duration: Int) {
+        showRemovableToast(context, context.getString(msgRes), duration)
     }
 
-    public static void showRemovableToast(Context context, CharSequence msg, int duration) {
+    fun showRemovableToast(context: Context?, msg: CharSequence?, duration: Int) {
         try {
-            mToast.get().cancel();
-        } catch (Exception ignored) {}
-
-        mToast = new WeakReference<>(Toast.makeText(context, msg, duration));
-        mToast.get().show();
-    }
-
-    public static void popNoInternetMessage(Context ctx, boolean cancelable, Runnable runOnDismiss) {
-        PeaceDialog.Builder builder = PeaceDialog.newBuilder(ctx);
-        builder.setTitle(R.string.strTitleNoInternet);
-        builder.setMessage(R.string.strMsgNoInternetLong);
-        builder.setNeutralButton(R.string.strLabelClose, null);
-        if (runOnDismiss != null) {
-            builder.setOnDismissListener(dialog -> runOnDismiss.run());
+            toast?.get()?.cancel()
+        } catch (ignored: Exception) {
         }
-        builder.setCancelable(cancelable);
-        builder.setFocusOnNeutral(true);
-        builder.show();
+        toast = WeakReference(Toast.makeText(context, msg, duration))
+        toast!!.get()!!.show()
     }
 
-    public static void popMessage(Context context, String title, String msg, String btn, Runnable action) {
-        PeaceDialog.Builder builder = PeaceDialog.newBuilder(context);
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setNeutralButton(btn, (dialog, which) -> {
-            if (action != null) {
-                action.run();
+    fun popNoInternetMessage(ctx: Context, cancelable: Boolean, runOnDismiss: Runnable?) {
+        PeaceDialog.newBuilder(ctx).apply {
+            setTitle(R.string.strTitleNoInternet)
+            setMessage(R.string.strMsgNoInternetLong)
+            setNeutralButton(R.string.strLabelClose, null)
+            if (runOnDismiss != null) {
+                setOnDismissListener { runOnDismiss.run() }
             }
-        });
-        builder.setFocusOnNeutral(true);
-        builder.show();
+            setCancelable(cancelable)
+            setFocusOnNeutral(true)
+            show()
+        }
+    }
+
+    @JvmStatic
+    fun popMessage(context: Context, title: String, msg: String, btn: String, action: Runnable?) {
+        val builder = PeaceDialog.newBuilder(context)
+        builder.setTitle(title)
+        builder.setMessage(msg)
+        builder.setNeutralButton(btn) { _, _ -> action?.run() }
+        builder.setFocusOnNeutral(true)
+        builder.show()
     }
 }
