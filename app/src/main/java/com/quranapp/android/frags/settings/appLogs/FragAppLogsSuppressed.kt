@@ -55,19 +55,17 @@ class FragAppLogsSuppressed : BaseFragment() {
             val (datetimeStr, place) = logFile.nameWithoutExtension.split("@")
             val log = logFile.readText()
             val logShort = if (log.length > 200) log.substring(0, 200) + "... ${log.length - 200} more chars" else log
-            val formattedDateTime = DateUtils.format(
-                DateUtils.toDate(datetimeStr, Log.FILE_NAME_DATE_FORMAT),
-                DateUtils.DATETIME_FORMAT_USER
-            )
+            val parsedDate = DateUtils.toDate(datetimeStr, Log.FILE_NAME_DATE_FORMAT)
+            val formattedDateTime = if (parsedDate != null) DateUtils.format(parsedDate, DateUtils.DATETIME_FORMAT_USER) else datetimeStr
 
             logs.add(
-                AppLogModel(
-                    formattedDateTime,
-                    place,
-                    logFile,
-                    log,
-                    logShort,
-                )
+                    AppLogModel(
+                            formattedDateTime,
+                            place,
+                            logFile,
+                            log,
+                            logShort,
+                    )
             )
         }
 

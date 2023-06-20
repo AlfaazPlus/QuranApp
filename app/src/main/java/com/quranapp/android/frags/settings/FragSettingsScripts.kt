@@ -74,7 +74,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.apply {
-            setCallback { activity.onBackPressed() }
+            setCallback { activity.onBackPressedDispatcher.onBackPressed() }
             disableRightBtn(true)
             setShowSearchIcon(false)
             setShowRightIcon(false)

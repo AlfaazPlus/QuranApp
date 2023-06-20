@@ -90,7 +90,7 @@ class ADPScriptCleanup(
                     fileUtils.getKFQPCScriptFontDir(model.scriptKey).deleteRecursively()
 
                     model.isCleared = true
-                    notifyItemChanged(adapterPosition)
+                    notifyItemChanged(bindingAdapterPosition)
                 }
                 setFocusOnNegative(true)
             }.show()

@@ -23,15 +23,15 @@ public class ChapterInfoJSInterface {
         QuranMeta quranMeta = mActivity.mQuranMeta;
 
         if (!QuranMeta.isChapterValid(chapterNo) || !quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse,
-            toVerse)) {
+                toVerse)) {
             Log.d(chapterNo, fromVerse, toVerse);
-            MessageUtils.showRemovableToast(mActivity, "Could not open references", Toast.LENGTH_LONG);
+            MessageUtils.INSTANCE.showRemovableToast(mActivity, "Could not open references", Toast.LENGTH_LONG);
             return;
         }
 
         mActivity.showReferenceSingleVerseOrRange(
-            TranslUtils.defaultTranslationSlugs(),
-            chapterNo, new Pair<>(fromVerse, toVerse)
+                TranslUtils.defaultTranslationSlugs(),
+                chapterNo, new Pair<>(fromVerse, toVerse)
         );
     }
 }
