@@ -218,14 +218,14 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
 
         @Override
         public void onBookmarkRemoved(BookmarkModel model) {
-            int adapterPosition = getAdapterPosition();
+            int adapterPosition = getBindingAdapterPosition();
             mVerseModels.get(adapterPosition).setBookmarked(false);
             notifyItemChanged(adapterPosition);
         }
 
         @Override
         public void onBookmarkAdded(BookmarkModel model) {
-            int adapterPosition = getAdapterPosition();
+            int adapterPosition = getBindingAdapterPosition();
             mVerseModels.get(adapterPosition).setBookmarked(true);
             notifyItemChanged(adapterPosition);
         }

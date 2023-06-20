@@ -128,7 +128,7 @@ class ADPTranslationCleanup(ctx: Context, private val items: List<TranslBaseMode
                     QuranTranslationFactory(itemView.context).use {
                         it.deleteTranslation(bookInfo.slug)
                         model.isDeleted = true
-                        notifyItemChanged(adapterPosition)
+                        notifyItemChanged(bindingAdapterPosition)
                     }
                 }
                 setFocusOnNegative(true)

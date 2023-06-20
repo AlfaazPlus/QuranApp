@@ -43,7 +43,7 @@ class ADPTafsirGroup(private val models: List<TafsirGroupModel>) :
 
                 it.setOnClickListener {
                     group.isExpanded = !group.isExpanded
-                    notifyItemChanged(adapterPosition)
+                    notifyItemChanged(bindingAdapterPosition)
                 }
             }
 
@@ -56,7 +56,7 @@ class ADPTafsirGroup(private val models: List<TafsirGroupModel>) :
                     }
                 }
 
-                models[adapterPosition].tafsirs[changedIndex].isChecked = true
+                models[bindingAdapterPosition].tafsirs[changedIndex].isChecked = true
                 notifyDataSetChanged()
             }
         }

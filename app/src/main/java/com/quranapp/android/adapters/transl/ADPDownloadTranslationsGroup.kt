@@ -102,7 +102,7 @@ class ADPDownloadTranslationsGroup(
 
                 it.setOnClickListener {
                     group.isExpanded = !group.isExpanded
-                    notifyItemChanged(adapterPosition)
+                    notifyItemChanged(bindingAdapterPosition)
                 }
             }
 
