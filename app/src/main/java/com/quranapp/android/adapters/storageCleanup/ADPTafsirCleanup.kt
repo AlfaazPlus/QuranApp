@@ -77,7 +77,7 @@ class ADPTafsirCleanup(
                 setNegativeButton(R.string.strLabelDelete, ColorUtils.DANGER) { _, _ ->
                     File(fileUtils.tafsirDir, model.tafsirModel.key).deleteRecursively()
                     model.isCleared = true
-                    notifyItemChanged(adapterPosition)
+                    notifyItemChanged(bindingAdapterPosition)
                 }
                 setFocusOnNegative(true)
             }.show()

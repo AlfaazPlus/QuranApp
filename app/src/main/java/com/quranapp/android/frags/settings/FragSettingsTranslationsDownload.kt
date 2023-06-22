@@ -317,7 +317,7 @@ class FragSettingsTranslationsDownload :
 
         if (isTranslationDownloading(bookInfo.slug)) {
             model.isDownloading = true
-            adapter.notifyItemChanged(vhTransl.adapterPosition)
+            adapter.notifyItemChanged(vhTransl.bindingAdapterPosition)
             return
         }
 

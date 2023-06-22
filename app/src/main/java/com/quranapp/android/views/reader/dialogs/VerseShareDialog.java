@@ -241,7 +241,7 @@ public class VerseShareDialog extends PeaceDialog {
             boolean incFootnotes = binding.includeFootnotes.isChecked();
 
             if (!quranMeta.isVerseRangeValid4Chapter(mChapterNo, fromVerse, toVerse)) {
-                MessageUtils.showRemovableToast(mActivity, getContext().getString(R.string.strMsgEnterValidRange),
+                MessageUtils.INSTANCE.showRemovableToast(mActivity, getContext().getString(R.string.strMsgEnterValidRange),
                     Toast.LENGTH_LONG);
                 return;
             }

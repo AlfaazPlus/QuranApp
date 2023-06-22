@@ -1,8 +1,8 @@
-The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 20+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.
+The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 30+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.
 
 ~~~~~~~
 
-<h3>Features:</h3>
+<h3>Features of the QuranApp</h3>
 
 The following features are the reason why you should use the QuranApp.
 
@@ -16,22 +16,37 @@ The following features are the reason why you should use the QuranApp.
 
 <b>📙 Translations</b>
 
-- 20+ Translations
+- 30+ Translations
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
+- Fully offline once downloaded
 
 <b>🎙️ Recitations</b>
 
 - 15+ Recitations
+- 5+ Translation Recitations
+  - Play only Quran
+  - Play only translation
+  - Play both Quran and translation
 - Repeat single verse
 - Play verse range
 - Play recitation continuously
 - Automatic scroll to match current verse
+- Playback speed control
+- Download recitations for offline use
+
+<b>📖️ Tafsir</b>
+
+- 5+ Tafsirs
+- Tafsirs are stored for offline use
 
 <b>🎨 Fonts</b>
 
-- Multiple fonts (Uthmani, Indopak and KFQPC)
+- Multiple fonts
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC
 - Customize Arabic text size
 - Customise translation text size
 
@@ -50,9 +65,11 @@ The following features are the reason why you should use the QuranApp.
 
 <b>❤️ Contents from the Qur'an</b>
 
-- Topics from the Qur'an
 - Duas from the Qur'an
+- Solutions from the Qur'an
 - Prophets mentioned in the Qur'an
+- Etiquette from the Qur'an
+- Quran and Science
 
 <b>🔍 Search</b>
 
@@ -62,7 +79,7 @@ The following features are the reason why you should use the QuranApp.
 - Easily navigate to any translation in search results
 - Search for full word or word part
 
-<b>📌 Bookmarking</b>
+<b>📝 Bookmarking</b>
 
 - Bookmark verses for later
 - Bookmark single verse
@@ -74,6 +91,6 @@ The following features are the reason why you should use the QuranApp.
 - Verse of the Day Reminder
 - Advanced sharing
 - Dark and light themes
-- Multiple language support
+- App is available in 15+ languages
 
 <i>🐞 To report an issue or request a new feature, kindly visit the GitHub repository at <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

@@ -18,6 +18,8 @@ android {
         versionCode 23_05_23_003
         versionName "2023.05.23.3"
 
+        setProperty("archivesBaseName", versionName)
+
         resValue "string", "app_name", "QuranApp"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
