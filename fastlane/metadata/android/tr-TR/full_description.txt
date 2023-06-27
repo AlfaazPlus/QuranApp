@@ -1,14 +1,14 @@
-QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolaylaştıran, reklamsız ve gizlilik odaklı bir mobil uygulamadır. Gezinmesi kolay, sade ve zarif tasarımı ile kullanıcıların teknoloji çağında Kuran okumanın zorluklarını aşmasına yardımcı olur. Bu uygulama, farklı dillerden ve bölgelerden insanların Kuran'ın amacını anlayabilmesi için çeşitli dillerde 15'ten fazla meale sahiptir.
+QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolaylaştıran, reklamsız ve mahremiyet odaklı bir mobil uygulamadır. Gezinmesi kolay, sade ve zarif tasarımı ile kullanıcıların teknoloji çağında Kuran okumanın zorluklarını aşmasına yardımcı olur. Bu uygulama, farklı dillerden ve bölgelerden insanların Kuran'ın amacını anlayabilmesi için çeşitli dillerde 15'ten fazla meale sahiptir.
 
  ~~~~~~~
 
- <h3>Özellikler:</h3>
+ <h3>QuranApp Uygulamasının Özellikleri;</h3>
 
  Aşağıdaki özellikler, QuranApp'i kullanmanız için birer nedendir.
 
  <b>🛡️ Saf</b>
 
- - Açık kaynak kodlu
+ - Özgür yazılım
  - Reklam veya satın alma yok
  - Hiçbir uygulama izni gerekmez
  - Veri analizi veya takibi yok
@@ -16,22 +16,37 @@ QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolayla�
 
  <b>📙 Mealler</b>
 
- - 15'ten fazla meal
+ - 30'ten fazla meal
  - Birden çok meali birlikte okuyabilme
- - Dipnotların hızlı önizlemesi
- - Ayet referanslarının hızlı önizlemesi
+ - Dipnotları hızlı ön izleme
+ - Ayet referanslarının hızlı ön izleme
+ - İndirildikten sonra tamamen çevrimdışı
 
  <b>🎙️ Okuma</b>
 
  - 15'ten fazla tilavet
+ - 5+ Farklı dilde tilavet
+  - Sadece Kur'an
+  - Sadece meal
+  - Hem Kuran hem de meal
  - Tek bir ayeti tekrarlama
  - Ayet aralığını oynatma
- - Devamlı oynatma
+ - Sürekli ezberleneni çalma
  - Otomatik ayet takibi
+ - Oynatma hızı kontrolü
+ - Çevrimdışı kullanım için tilavet indirebilme
+
+<b>📖️ Tefsir</b>
+
+- 5+ Tefsir
+- Tefsirler çevrimdışı kullanım için indirilir
 
  <b>🎨 Yazı tipleri</b>
 
- - Çoklu hat desteği (Uthmani, Indopak ve KFQPC)
+ - Çoklu hat desteği
+  - Uthmani
+  - Indopak
+  - KFQPC
  - Arapça metin boyutunu özelleştirme
  - Meal metin boyutunu özelleştirme
 
@@ -50,9 +65,11 @@ QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolayla�
 
  <b>❤️ Kuran'dan İçerikler</b>
 
- - Kuran'dan konular
  - Kuran'dan dualar
+ - Kuran'dan Çözümler
  - Kuran'da adı geçen peygamberler
+ - Kur'an'dan Ahlak
+ - Kuran ve Bilim
 
  <b>🔍 Arama</b>
 
@@ -62,10 +79,10 @@ QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolayla�
  - Arama sonuçlarından herhangi bir meale kolayca gitme
  - Tam kelime veya kelime parçası arama
 
- <b>📌 Yer İşaretleme</b>
+ <b>📝 Yer İmleme</b>
 
  - Daha sonrası için ayetleri yer imlerine ekleme
- - Tek ayeti yer imlerine ekleme
+ - Ayet imleme
  - Ayet aralığını yer imlerine ekleme
  - Yer imlerine özel notlar yazabilme
 
