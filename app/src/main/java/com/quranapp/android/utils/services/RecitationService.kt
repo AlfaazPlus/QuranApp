@@ -394,13 +394,13 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     ) {
         verseLoadCallback.postLoad()
 
+        stopMedia()
+
         recParams.lastMediaURI = audioURI
         recParams.lastTranslMediaURI = translAudioURI
         recParams.currentVerse = ChapterVersePair(chapterNo, verseNo)
         recParams.currentReciter = reciter
         recParams.currentTranslationReciter = translReciter
-
-        stopMedia()
 
         if (audioURI != null) addToQueue(audioURI, reciter, translReciter, chapterNo, verseNo)
         if (translAudioURI != null) addToQueue(translAudioURI, reciter, translReciter, chapterNo, verseNo)
@@ -427,6 +427,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         val count = 10
         var i = 1
 
+        // prepare next verses
         while (i <= count) {
             val nextVerse = recParams.getNextVerse(quranMeta!!, currentVerse) ?: break
             var wasArabicAddedToQueue = false
@@ -468,6 +469,9 @@ class RecitationService : Service(), MediaDescriptionAdapter {
                         nextVerse.verseNo
                     )
                 } else {
+                    // remove arabic audio if translation audio could not be added
+                    // we'll add both arabic and translation audio together
+                    // wasArabicAddedToQueue is true if audio option is BOTH
                     if (wasArabicAddedToQueue) {
                         playlist.removeMediaSource(playlist.size - 1)
                     }
