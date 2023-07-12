@@ -198,10 +198,10 @@
     <string name="strLabelQuickLinks">روابط سريعة</string>
     <string name="strLabelPremium">بريميوم</string>
     <string name="strTitleFilters">تصفية</string>
-    <string name="strTitleChapInfoJuzNo">الجزء</string>
+    <string name="strTitleChapInfoJuzNo">جزء رقم.</string>
     <string name="strLabelRemoveBookmark">إزالة الإشارة المرجعية</string>
     <string name="strLabelBookmarked">تمت الإشارة</string>
-    <string name="strLabelBookmark">الإشارات المرجعية</string>
+    <string name="strLabelBookmark">الإشارة المرجعية</string>
     <string name="strLabelMostPlaces">الأكثر ذكراً</string>
     <string name="strLabelSelectedCount" formatted="false">%d تم تحديد</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d المزيد من الترجمات</string>
