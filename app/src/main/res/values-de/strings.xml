@@ -71,7 +71,7 @@
     <string name="strTitleAppUser">QuranApp Benutzer</string>
     <string name="strTitleHolyQuran">Der heilige Koran</string>
     <string name="strTitleQuran">Koran</string>
-    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMakki">Mekka</string>
     <string name="strTitleFootnote">Fußnote</string>
     <string name="strTitleFootnotes">Fußnoten</string>
     <string name="strTitleReaderChapters">Suren (Kapitel)</string>
@@ -276,7 +276,7 @@
     <string name="lastCrashLog">Letztes Absturzprotokoll</string>
     <string name="createIssue">Problem erstellen</string>
     <string name="copiedToClipboard">In die Zwischenablage kopiert.</string>
-    <string name="pasteCrashLogGithubIssue">Das Absturzprotokoll wurde in die Zwischenablage kopiert. Bitte fügen Sie es in das GitHub-Problem ein.</string>
+    <string name="pasteCrashLogGithubIssue">Das Protokoll wurde in die Zwischenablage kopiert. Bitte fügen Sie es in die GitHub-Ausgabe ein.</string>
     <string name="msgAlarmManagerNotAvailable">Alarmmanager ist auf diesem Gerät nicht verfügbar.</string>
     <string name="msgVerseReminderNotifPermission">Die Benachrichtigungsberechtigung ist erforderlich, um die Verserinnerung zu aktivieren.</string>
     <string name="msgVerseReminderAlarmPermission">Die Alarmberechtigung ist erforderlich, um die Verserinnerung zu aktivieren.</string>
@@ -301,7 +301,7 @@
     <string name="strLabelFullChapter">Ganzes Kapitel lesen</string>
     <string name="strLabelPreviousVerse">Vorheriger Vers</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">Sure %1$s : Vers %2$d</string>
-    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMadani">Medina</string>
     <string name="strTitleReaderTextSizeArabic">Textgröße Arabisch</string>
     <string name="strTitleShareApp">App teilen</string>
     <string name="strTitleBookmark">Lesezeichen</string>
@@ -346,7 +346,7 @@
     <string name="msgChapterInfoCleanup">Alle gespeicherten Kapitelinformationen werden gelöscht.</string>
     <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
     <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie müssen sie erneut herunterladen, um sie wieder zu verwenden.</string>
-    <string name="msgRecitationCleanup" formatted="false">Die ganze gespeicherte Rezitation von %s wird gelöscht.</string>
+    <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht. Um einzelne Rezitationen nach Suren zu löschen, gehen Sie zu den Audioeinstellungen.</string>
     <string name="titleChapterInfoCleanup">Kapitelinfo löschen\?</string>
     <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
     <string name="nItems">%d Objekte</string>
@@ -367,4 +367,49 @@
     <string name="strMsgTafsirsNoAvailable">Keine Erläuterungen verfügbar</string>
     <string name="msgTafsirCleanup" formatted="false">Alle gespeicherten Erläuterungen von %s werden gelöscht.</string>
     <string name="titleTafsirCleanup">Erläuterung löschen\?</string>
+    <string name="places" formatted="false">%d Orte</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ist eine kostenlose Open-Source-App zum Lesen und Erkunden des edlen Korans mit Übersetzungen. Diese App hat eine schöne und übersichtliche Benutzeroberfläche mit Funktionen wie Tafsir, Rezitation, Erinnerung und vielem mehr.
+\n
+\nJETZT HERUNTERLADEN:
+\n%s</string>
+    <string name="msgAddedToFavourites">Zu Favoriten hinzugefügt</string>
+    <string name="noItems">keine Einträge</string>
+    <string name="titleRemoveFromFavourites">Aus Favoriten entfernen</string>
+    <string name="audioOnlyArabic">Nur Arabisch abspielen</string>
+    <string name="audioOnlyTranslation">Nur Übersetzung abspielen</string>
+    <string name="audioBothArabicTranslation">Arabisch und Übersetzung abspielen</string>
+    <string name="titleOtherSettings">Weitere Einstellungen</string>
+    <string name="textDownloaded">Heruntergeladen</string>
+    <string name="appLogs">App-Protokolle</string>
+    <string name="logRemoved">Log entfernt</string>
+    <string name="labelArabic">Arabisch</string>
+    <string name="labelTranslation">Übersetzung</string>
+    <string name="msgRemovedFromFavourites">Aus Favoriten entfernt</string>
+    <string name="labelPreviousTafsir">Vorheriger Tafsir</string>
+    <string name="labelNextTafsir">Nächster Tafsir</string>
+    <string name="titleSolutionVerses">Lösungen aus dem Koran</string>
+    <string name="place" formatted="false">%d Ort</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Heruntergeladen \"%1$s\" für den Rezitator \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Alle Rezitationen von \"%1$s\" für den Rezitator \"%2$s\" werden gelöscht.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Gelöschte Rezitationen von „%1$s“ für Rezitator „%2$s“.</string>
+    <string name="msgInvalidParams">Ungültige Parameter</string>
+    <string name="titleEtiquetteVerses">Etikette im Koran</string>
+    <string name="titleManageAudio">Audio verwalten</string>
+    <string name="audioOption">Audio-Option</string>
+    <string name="suppressedLogs">Unterdrückte Protokolle</string>
+    <string name="downloadRecitations">Rezitationen herunterladen</string>
+    <string name="playbackSpeed">Wiedergabegeschwindigkeit</string>
+    <string name="crashLogs">Absturzprotokolle</string>
+    <string name="msgChapterAddedToFavourites">Surah zu Favoriten hinzugefügt.</string>
+    <string name="msgChapterRemovedFromFavourites">Sura aus den Favoriten entfernt.</string>
+    <string name="textNoLogsFound">Keine Protokolle gefunden</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Fehler beim Herunterladen von \"%1$s\" für den Rezitator \"%2$s\".</string>
+    <string name="msgNoFavouriteChapters">Füge ein Kapitel zu den Favoriten hinzu, um es hier zu sehen.</string>
+    <string name="textTranslationReciterInfo">Sprache: %1$s
+\nBuch: %2$s</string>
+    <string name="labelAdd">Hinzufügen</string>
+    <string name="strMsgDuaFor" formatted="false">Dua für %s</string>
+    <string name="titleAddToFavourites">Zu Favoriten hinzufügen</string>
+    <string name="msgTafsirLoadFailed">Tafsir konnte nicht geladen werden</string>
+    <string name="titleReaderTextSizeTafsir">Tafsir Text Größe</string>
 </resources>
