@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="strTitleAppVersion">Bersyon ng App</string>
+    <string name="strVersion" formatted="false">Bersyon%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ay isang libre at open-source na app para basahin at tuklasin ang Noble Qur\'an na may mga pagsasalin. Ang app na ito ay may maganda at malinis na interface na may mga tampok tulad ng tafsir, pagbigkas, paalala at marami pa.
+\n
+\nI-DOWNLOAD NA NGAYON:
+\n%s</string>
+    <string name="strTitleLicenses">Mga Lisensya</string>
+    <string name="strLabelClose">Isarado</string>
+    <string name="strLabelGotIt">Naintidihan ko</string>
+    <string name="strLabelOkay">Sige</string>
+</resources>
