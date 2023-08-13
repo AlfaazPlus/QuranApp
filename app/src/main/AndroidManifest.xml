@@ -47,6 +47,7 @@
         </activity>
         <activity android:name=".activities.reference.ActivityProphets" />
         <activity android:name=".activities.reference.ActivityDua" />
+        <activity android:name=".activities.reference.ActivityPropheticDuas" />
         <activity android:name=".activities.reference.ActivitySolutionVerses" />
         <activity android:name=".activities.reference.ActivityEtiquette" />
         <activity android:name=".activities.reference.ActivityQuranScience" />

@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextUtils
 import android.text.style.TextAppearanceSpan
@@ -49,7 +50,8 @@ abstract class ADPExclusiveVerses(
         holder.bind(references[position])
     }
 
-    protected fun prepareTexts(title: String, subTitle: CharSequence, inChapters: String): CharSequence {
+    protected fun prepareTexts(title: String, subTitle: CharSequence?, inChapters: String?): CharSequence {
+        val ssb = SpannableStringBuilder()
         val flag = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 
         val titleSS = SpannableString(title).apply {
@@ -60,17 +62,29 @@ abstract class ADPExclusiveVerses(
                 flag
             )
         }
+        ssb.append(titleSS)
 
-        val subTitleSS = SpannableString(subTitle).apply {
-            setSpan(TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, infoColor, null), 0, length, flag)
-            setSpan(LineHeightSpan2(20, false, true), 0, length, flag)
+        if (subTitle != null) {
+            val subTitleSS = SpannableString(subTitle).apply {
+                setSpan(TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, infoColor, null), 0, length, flag)
+                setSpan(LineHeightSpan2(20, false, true), 0, length, flag)
+            }
+            ssb.append("\n").append(subTitleSS)
         }
 
-        val chaptersSS = SpannableString(inChapters).apply {
-            setSpan(TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, txtSize, infoColor, null), 0, length, flag)
+        if (inChapters != null) {
+            val chaptersSS = SpannableString(inChapters).apply {
+                setSpan(
+                    TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, txtSize, infoColor, null),
+                    0,
+                    length,
+                    flag
+                )
+            }
+            ssb.append("\n").append(chaptersSS)
         }
 
-        return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", chaptersSS)
+        return ssb
     }
 
     abstract fun onBind(binding: LytQuranExclusiveVerseItemBinding, verse: ExclusiveVerse)

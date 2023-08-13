@@ -1,10 +1,13 @@
 package com.quranapp.android.adapters.reference
 
 import android.content.Context
+import android.content.Intent
 import com.quranapp.android.R
+import com.quranapp.android.activities.reference.ActivityPropheticDuas
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.databinding.LytQuranExclusiveVerseItemBinding
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.univ.Keys
 
 class ADPDua(
     ctx: Context,
@@ -14,7 +17,7 @@ class ADPDua(
 
     override fun onBind(binding: LytQuranExclusiveVerseItemBinding, verse: ExclusiveVerse) {
         val ctx = binding.root.context
-        val excluded = verse.id in arrayOf(1, 7)
+        val excluded = verse.id in arrayOf(1, 2)
 
         val duaName = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.name)
         else verse.name
@@ -23,12 +26,20 @@ class ADPDua(
 
         binding.text.text = prepareTexts(
             duaName,
-            if (count > 1) ctx.getString(R.string.places, count)
+            if (verse.id == 1) null
+            else if (count > 1) ctx.getString(R.string.places, count)
             else ctx.getString(R.string.place, count),
-            verse.inChapters
+            if (verse.id == 1) null else verse.inChapters
         )
 
         binding.root.setOnClickListener {
+            if (verse.id == 1) {
+                it.context.startActivity(Intent(it.context, ActivityPropheticDuas::class.java).apply {
+                    putExtra(Keys.KEY_EXTRA_TITLE, verse.name)
+                })
+                return@setOnClickListener
+            }
+
             val nameTitle = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.name)
             else ctx.getString(R.string.strMsgReferenceInQuran, "\"" + verse.name + "\"")
 

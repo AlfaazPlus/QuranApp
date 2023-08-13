@@ -56,7 +56,9 @@ object ParserUtils {
         if (count == 0) return ""
 
         val firstNChapters = chapters.subList(0, minOf(count, limit))
-        val inChapters = firstNChapters.joinToString(", ") { quranMeta.getChapterName(ctx, it) }
+        val inChapters = firstNChapters.joinToString(", ") {
+            quranMeta.getChapterName(ctx, it) ?: ""
+        }
 
         return if (count > 2) {
             ctx.getString(R.string.inPlacesMore, inChapters, count - limit)
