@@ -11,6 +11,7 @@
       "translation": {
         "bn": "সূচনা",
         "ckb": "کرانەوە",
+        "de": "Die Eröffnung",
         "en": "The Opening",
         "es": "La Apertura",
         "fr": "L'ouverture",
@@ -47,6 +48,7 @@
       "translation": {
         "bn": "বকনা-বাছুর",
         "ckb": "مانگا",
+        "de": "Die Kuh",
         "en": "The Cow",
         "es": "La Vaca",
         "fr": "La vache",
@@ -83,6 +85,7 @@
       "translation": {
         "bn": "ইমরানের পরিবার",
         "ckb": "خانەوادەی عیمران",
+        "de": "Die Sippe Imrans",
         "en": "The Family of Imraan",
         "es": "La Familia de ‘Imrân",
         "fr": "La famille de 'imran",
@@ -119,6 +122,7 @@
       "translation": {
         "bn": "নারী",
         "ckb": "ئافرەتان",
+        "de": "Die Frauen",
         "en": "The Women",
         "es": "Las Mujeres",
         "fr": "Les femmes",
@@ -155,6 +159,7 @@
       "translation": {
         "bn": "খাদ্য পরিবেশিত টেবিল",
         "ckb": "سفرەو خوان",
+        "de": "Der Tisch",
         "en": "The Table",
         "es": "La Mesa Servida",
         "fr": "La table servie",
@@ -191,6 +196,7 @@
       "translation": {
         "bn": "গৃহপালিত পশু",
         "ckb": "ئاژەڵان",
+        "de": "Das Vieh",
         "en": "The Cattle",
         "es": "Los Ganados",
         "fr": "Les bestiaux",
@@ -227,6 +233,7 @@
       "translation": {
         "bn": "উচু স্থান",
         "ckb": "بەرزایی",
+        "de": "Die Höhen",
         "en": "The Heights",
         "es": "El Muro Divisorio",
         "fr": "Al-A'raf",
@@ -263,6 +270,7 @@
       "translation": {
         "bn": "যুদ্ধ-লব্ধ ধনসম্পদ",
         "ckb": "دەستکەوت",
+        "de": "Die Beute",
         "en": "The Spoils of War",
         "es": "Los Botines",
         "fr": "Le butin",
@@ -299,6 +307,7 @@
       "translation": {
         "bn": "অনুশোচনা",
         "ckb": "تۆبە",
+        "de": "Die Buße",
         "en": "The Repentance",
         "es": "El Arrepentimiento",
         "fr": "Le repentir",
@@ -335,6 +344,7 @@
       "translation": {
         "bn": "নবী ইউনুস",
         "ckb": "یونس",
+        "de": "Jonas",
         "en": "Jonas",
         "es": "Jonás",
         "fr": "Jonas",
@@ -371,6 +381,7 @@
       "translation": {
         "bn": "নবী হুদ",
         "ckb": "هوود",
+        "de": "Hud",
         "en": "Hud",
         "es": "Hûd",
         "fr": "Houd",
@@ -407,6 +418,7 @@
       "translation": {
         "bn": "নবী ইউসুফ",
         "ckb": "یوسف",
+        "de": "Joseph",
         "en": "Joseph",
         "es": "José",
         "fr": "Joseph",
@@ -443,6 +455,7 @@
       "translation": {
         "bn": "বজ্রপাত",
         "ckb": "هەورە بروسکە",
+        "de": "Der Donner",
         "en": "The Thunder",
         "es": "El Trueno",
         "fr": "Le tonnerre",
@@ -479,6 +492,7 @@
       "translation": {
         "bn": "নবী ইবরাহীম",
         "ckb": "ئیبراهیم",
+        "de": "Abraham",
         "en": "Abraham",
         "es": "Abraham",
         "fr": "Abraham",
@@ -515,6 +529,7 @@
       "translation": {
         "bn": "পাথুরে পাহাড়",
         "ckb": "بەردەڵان",
+        "de": "Das steinige Land",
         "en": "The Rock",
         "es": "Al Hiyr",
         "fr": "Al-Hijr",
@@ -551,6 +566,7 @@
       "translation": {
         "bn": "মৌমাছি",
         "ckb": "هەنگ",
+        "de": "Die Biene",
         "en": "The Bee",
         "es": "Las Abejas",
         "fr": "Les abeilles",
@@ -587,6 +603,7 @@
       "translation": {
         "bn": "ইহুদি জাতি",
         "ckb": "شەوڕەوی",
+        "de": "Die Nachtreise",
         "en": "The Night Journey",
         "es": "El Viaje Nocturno",
         "fr": "Le voyage nocturne",
@@ -623,6 +640,7 @@
       "translation": {
         "bn": "গুহা",
         "ckb": "ئەشکەوت",
+        "de": "Die Höhle",
         "en": "The Cave",
         "es": "La Caverna",
         "fr": "La caverne",
@@ -659,6 +677,7 @@
       "translation": {
         "bn": "মারইয়াম (ঈসা নবীর মা)",
         "ckb": "مەریەم",
+        "de": "Maria",
         "en": "Mary",
         "es": "María",
         "fr": "Marie",
@@ -695,6 +714,7 @@
       "translation": {
         "bn": "ত়া হা",
         "ckb": "تەها",
+        "de": "Ta Ha",
         "en": "Taa-Haa",
         "es": "Tâ' Hâ'",
         "fr": "Ta-Ha",
@@ -731,6 +751,7 @@
       "translation": {
         "bn": "নবীগণ",
         "ckb": "پێغەمبەران",
+        "de": "Die Propheten",
         "en": "The Prophets",
         "es": "Los Profeta",
         "fr": "Les prophètes",
@@ -767,6 +788,7 @@
       "translation": {
         "bn": "হ়াজ্জ",
         "ckb": "حەج",
+        "de": "Die Wallfahrt",
         "en": "The Pilgrimage",
         "es": "La Peregrinación",
         "fr": "Le pèlerinage",
@@ -803,6 +825,7 @@
       "translation": {
         "bn": "বিশ্বাসী",
         "ckb": "باوەڕداران",
+        "de": "Die Gläubigen",
         "en": "The Believers",
         "es": "Los Creyentes",
         "fr": "Les croyants",
@@ -839,6 +862,7 @@
       "translation": {
         "bn": "আলো",
         "ckb": "ڕووناکی",
+        "de": "Das Licht",
         "en": "The Light",
         "es": "La Luz",
         "fr": "La lumière",
@@ -875,6 +899,7 @@
       "translation": {
         "bn": "মানদণ্ড",
         "ckb": "جیاکاری",
+        "de": "Die Rettung",
         "en": "The Criterion",
         "es": "El Criterio",
         "fr": "Le discernement",
@@ -911,6 +936,7 @@
       "translation": {
         "bn": "কবি",
         "ckb": "شاعیران",
+        "de": "Die Dichter",
         "en": "The Poets",
         "es": "Los Poetas",
         "fr": "Les poètes",
@@ -947,6 +973,7 @@
       "translation": {
         "bn": "পিঁপড়া",
         "ckb": "مێروولە",
+        "de": "Die Ameisen",
         "en": "The Ant",
         "es": "Las Hormigas",
         "fr": "Les fourmis",
@@ -983,6 +1010,7 @@
       "translation": {
         "bn": "কাহিনি",
         "ckb": "چیرۆکەکان",
+        "de": "Die Geschichten",
         "en": "The Stories",
         "es": "El Relato",
         "fr": "Le récit",
@@ -1019,6 +1047,7 @@
       "translation": {
         "bn": "মাকড়শা",
         "ckb": "جاڵجاڵۆکە",
+        "de": "Die Spinne",
         "en": "The Spider",
         "es": "La Araña",
         "fr": "L'araignée",
@@ -1055,6 +1084,7 @@
       "translation": {
         "bn": "রোমান জাতি",
         "ckb": "ڕۆم",
+        "de": "Die Römer",
         "en": "The Romans",
         "es": "Los Bizantinos",
         "fr": "Les romains",
@@ -1091,6 +1121,7 @@
       "translation": {
         "bn": "এক জ্ঞানী ব্যাক্তি",
         "ckb": "لوقمان",
+        "de": "Luqman",
         "en": "Luqman",
         "es": "Luqmân",
         "fr": "Louqman",
@@ -1127,6 +1158,7 @@
       "translation": {
         "bn": "সিজদা",
         "ckb": "سوژدە",
+        "de": "Die Niederwerfung",
         "en": "The Prostration",
         "es": "La Prosternación",
         "fr": "La prosternation",
@@ -1163,6 +1195,7 @@
       "translation": {
         "bn": "জোট",
         "ckb": "تیرە",
+        "de": "Die Gruppierungen",
         "en": "The Clans",
         "es": "Los Aliados",
         "fr": "Les coalisés",
@@ -1199,6 +1232,7 @@
       "translation": {
         "bn": "রানী সাবা/শেবা",
         "ckb": "سەبائـ",
+        "de": "Die Sabäer",
         "en": "Sheba",
         "es": "Saba",
         "fr": "Saba'",
@@ -1235,6 +1269,7 @@
       "translation": {
         "bn": "আদি স্রষ্টা",
         "ckb": "دروستکار",
+        "de": "Der Schöpfer",
         "en": "The Originator",
         "es": "Originador",
         "fr": "Le Créateur",
@@ -1271,6 +1306,7 @@
       "translation": {
         "bn": "ইয়াসীন",
         "ckb": "یاسین",
+        "de": "Ya-Sin",
         "en": "Yaseen",
         "es": "Iâ' Sîn",
         "fr": "Ya-Sin",
@@ -1307,6 +1343,7 @@
       "translation": {
         "bn": "সারিবদ্ধভাবে দাঁড়ানো",
         "ckb": "پۆلە ڕێکەکان",
+        "de": "Die in Reih und Glied stehen",
         "en": "Those drawn up in Ranks",
         "es": "Los Ordenados en Filas",
         "fr": "Les rangés",
@@ -1343,6 +1380,7 @@
       "translation": {
         "bn": "আরবি বর্ণ সাদ",
         "ckb": "ساد",
+        "de": "Sad",
         "en": "The letter Saad",
         "es": "Sâd",
         "fr": "Sad",
@@ -1379,6 +1417,7 @@
       "translation": {
         "bn": "দলবদ্ধ জনতা",
         "ckb": "پۆل پۆل",
+        "de": "Die Scharen",
         "en": "The Groups",
         "es": "Los Tropeles",
         "fr": "Les groupes",
@@ -1415,6 +1454,7 @@
       "translation": {
         "bn": "ক্ষমাকারী",
         "ckb": "لێخۆشبوو",
+        "de": "Der Vergebende",
         "en": "The Forgiver",
         "es": "El Remisorio",
         "fr": "Le Pardonneur",
@@ -1451,6 +1491,7 @@
       "translation": {
         "bn": "সুস্পষ্ট বিবরণ",
         "ckb": "ڕوونکراوە",
+        "de": "Ausführlich dargelegt",
         "en": "Explained in detail",
         "es": "Los Preceptos Detallados",
         "fr": "Les versets explicites",
@@ -1487,6 +1528,7 @@
       "translation": {
         "bn": "পরামর্শ",
         "ckb": "ڕاوێژکردن",
+        "de": "Die Beratung",
         "en": "Consultation",
         "es": "El Consejo",
         "fr": "La concertation",
@@ -1523,6 +1565,7 @@
       "translation": {
         "bn": "সোনাদানা",
         "ckb": "نەخش و نیگار",
+        "de": "Der Prunk",
         "en": "Ornaments of gold",
         "es": "Los Ornamentos de Oro",
         "fr": "L'ornement",
@@ -1559,6 +1602,7 @@
       "translation": {
         "bn": "ধোঁয়া",
         "ckb": "دووکەڵ",
+        "de": "Der Rauch",
         "en": "The Smoke",
         "es": "El Humo",
         "fr": "La fumée",
@@ -1595,6 +1639,7 @@
       "translation": {
         "bn": "নতজানু",
         "ckb": "لەسەر چۆک کەوتوو",
+        "de": "Das Knien",
         "en": "Crouching",
         "es": "La Arrodillada",
         "fr": "L'agenouillée",
@@ -1631,6 +1676,7 @@
       "translation": {
         "bn": "বালুর পাহাড়",
         "ckb": "شاخی لم",
+        "de": "Die Dünen",
         "en": "The Dunes",
         "es": "Las Dunas",
         "fr": "Al-Ahqaf",
@@ -1667,6 +1713,7 @@
       "translation": {
         "bn": "নবী মুহাম্মদ",
         "ckb": "موحەمەد ﷺ",
+        "de": "Mohammed",
         "en": "Muhammad",
         "es": "Muhammad",
         "fr": "Mouhammad",
@@ -1703,6 +1750,7 @@
       "translation": {
         "bn": "বিজয়",
         "ckb": "ڕزگارکردن",
+        "de": "Der Erfolg",
         "en": "The Victory",
         "es": "La Victoria",
         "fr": "La victoire éclatante",
@@ -1739,6 +1787,7 @@
       "translation": {
         "bn": "আবাস",
         "ckb": "ژوورەکان",
+        "de": "Die Gemächer",
         "en": "The Inner Apartments",
         "es": "Los Aposentos",
         "fr": "Les appartements",
@@ -1775,6 +1824,7 @@
       "translation": {
         "bn": "কাফ",
         "ckb": "قاف",
+        "de": "Qaf",
         "en": "The letter Qaaf",
         "es": "Qâf",
         "fr": "Qaf",
@@ -1811,6 +1861,7 @@
       "translation": {
         "bn": "বিক্ষেপকারী বাতাস",
         "ckb": "بڵاوکەرەوەکان",
+        "de": "Das Aufwirbeln",
         "en": "The Winnowing Winds",
         "es": "Los Vientos",
         "fr": "Qui éparpillent",
@@ -1847,6 +1898,7 @@
       "translation": {
         "bn": "পাহাড়",
         "ckb": "کێوی تووڕ",
+        "de": "Der Berg",
         "en": "The Mount",
         "es": "El Monte",
         "fr": "Le mont At-Tour",
@@ -1883,6 +1935,7 @@
       "translation": {
         "bn": "তারা",
         "ckb": "ئەستێرە",
+        "de": "Der Stern",
         "en": "The Star",
         "es": "La Estrella",
         "fr": "L'étoile",
@@ -1919,6 +1972,7 @@
       "translation": {
         "bn": "চাঁদ",
         "ckb": "مانگ",
+        "de": "Der Mond",
         "en": "The Moon",
         "es": "La Luna",
         "fr": "La lune",
@@ -1955,6 +2009,7 @@
       "translation": {
         "bn": "পরম করুণাময়",
         "ckb": "بەخشندە",
+        "de": "Der Barmherzige",
         "en": "The Beneficent",
         "es": "El Clemente",
         "fr": "Le Tout Miséricordieux",
@@ -1991,6 +2046,7 @@
       "translation": {
         "bn": "নিশ্চিত ঘটনা",
         "ckb": "ڕووداوی ڕاستی(قیامەت)",
+        "de": "Das Unvermeidliche",
         "en": "The Inevitable",
         "es": "El Suceso",
         "fr": "L'inévitable",
@@ -2027,6 +2083,7 @@
       "translation": {
         "bn": "লোহা",
         "ckb": "ئاسن",
+        "de": "Das Eisen",
         "en": "The Iron",
         "es": "El Hierro",
         "fr": "Le fer",
@@ -2063,6 +2120,7 @@
       "translation": {
         "bn": "অনুযোগকারিণী",
         "ckb": "گفتۆگۆکارەکە",
+        "de": "Der Streit",
         "en": "The Pleading Woman",
         "es": "La Discusión",
         "fr": "La discussion",
@@ -2099,6 +2157,7 @@
       "translation": {
         "bn": "সমাবেশ",
         "ckb": "کۆکردنەوە",
+        "de": "Die Versammlung",
         "en": "The Exile",
         "es": "El Destierro",
         "fr": "L'exode",
@@ -2135,6 +2194,7 @@
       "translation": {
         "bn": "নারী, যাকে পরীক্ষা করা হবে",
         "ckb": "تاقیکراوە",
+        "de": "Die Prüfung",
         "en": "She that is to be examined",
         "es": "La Examinada",
         "fr": "L'éprouvée",
@@ -2171,6 +2231,7 @@
       "translation": {
         "bn": "সারিবদ্ধ সৈন্যদল",
         "ckb": "ڕیز",
+        "de": "Die Ränge",
         "en": "The Ranks",
         "es": "La Fila",
         "fr": "Le rang",
@@ -2207,6 +2268,7 @@
       "translation": {
         "bn": "সম্মেলন/শুক্রবার",
         "ckb": "هەینی",
+        "de": "Der Freitag",
         "en": "Friday",
         "es": "El Viernes",
         "fr": "Le vendredi",
@@ -2243,6 +2305,7 @@
       "translation": {
         "bn": "ভণ্ড বিশ্বাসী",
         "ckb": "دوو ڕووەکان",
+        "de": "Die Heuchler",
         "en": "The Hypocrites",
         "es": "Los Hipócritas",
         "fr": "Les hypocrites",
@@ -2279,6 +2342,7 @@
       "translation": {
         "bn": "মোহ অপসারণ",
         "ckb": "بەکەمدانان",
+        "de": "Die Übervorteilung",
         "en": "Mutual Disillusion",
         "es": "El Desengaño",
         "fr": "La grande perte",
@@ -2315,6 +2379,7 @@
       "translation": {
         "bn": "তালাক",
         "ckb": "جیابونەوە",
+        "de": "Die Scheidung",
         "en": "Divorce",
         "es": "El Divorcio",
         "fr": "Le divorce",
@@ -2351,6 +2416,7 @@
       "translation": {
         "bn": "নিষিদ্ধকরণ",
         "ckb": "حەرامکردن",
+        "de": "Das Verbot",
         "en": "The Prohibition",
         "es": "La Prohibición",
         "fr": "L'interdiction",
@@ -2387,6 +2453,7 @@
       "translation": {
         "bn": "সার্বভৌম কর্তৃত্ব",
         "ckb": "دەسەڵات",
+        "de": "Die Herrschaft",
         "en": "The Sovereignty",
         "es": "El Reino",
         "fr": "La royauté",
@@ -2423,6 +2490,7 @@
       "translation": {
         "bn": "কলম",
         "ckb": "پێنووس",
+        "de": "Die Schreibfeder",
         "en": "The Pen",
         "es": "El Cálamo",
         "fr": "La plume",
@@ -2459,6 +2527,7 @@
       "translation": {
         "bn": "নিশ্চিত সত্য",
         "ckb": "ڕاستی",
+        "de": "Die Wahrheit",
         "en": "The Reality",
         "es": "La Verdad Inevitable",
         "fr": "L'inéluctable",
@@ -2495,6 +2564,7 @@
       "translation": {
         "bn": "উন্নয়নের সোপান",
         "ckb": "شوێنی بەرزبونەوە",
+        "de": "Die Himmelsleiter",
         "en": "The Ascending Stairways",
         "es": "Las Vías de Ascensión",
         "fr": "Les voies d'ascension",
@@ -2531,6 +2601,7 @@
       "translation": {
         "bn": "নবী নূহ",
         "ckb": "نوح",
+        "de": "Noah",
         "en": "Noah",
         "es": "Noé",
         "fr": "Noé",
@@ -2567,6 +2638,7 @@
       "translation": {
         "bn": "জিন সম্প্রদায়",
         "ckb": "جنۆکە",
+        "de": "Die Dschinn",
         "en": "The Jinn",
         "es": "Los Genios",
         "fr": "Les djinns",
@@ -2603,6 +2675,7 @@
       "translation": {
         "bn": "বস্ত্রাচ্ছাদনকারী",
         "ckb": "خۆداپۆشەر",
+        "de": "Der Eingehüllte",
         "en": "The Enshrouded One",
         "es": "El Cobijado",
         "fr": "L'enveloppé",
@@ -2639,6 +2712,7 @@
       "translation": {
         "bn": "পোশাক পরিহিত",
         "ckb": "خۆپێچاوە",
+        "de": "Der Zugedeckte",
         "en": "The Cloaked One",
         "es": "El Envuelto en el Manto",
         "fr": "Celui qui se couvre",
@@ -2675,6 +2749,7 @@
       "translation": {
         "bn": "পুনরুত্থান",
         "ckb": "ڕۆژی دوایی",
+        "de": "Die Auferstehung",
         "en": "The Resurrection",
         "es": "La Resurrección",
         "fr": "La résurrection",
@@ -2711,6 +2786,7 @@
       "translation": {
         "bn": "মানবজাতি",
         "ckb": "مرۆڤ",
+        "de": "Der Mensch",
         "en": "Man",
         "es": "El Hombre",
         "fr": "L'homme",
@@ -2747,6 +2823,7 @@
       "translation": {
         "bn": "প্রেরিত পুরুষ",
         "ckb": "نێردراوان",
+        "de": "Die Gesandten",
         "en": "The Emissaries",
         "es": "Los Ángeles Enviados",
         "fr": "Les envoyés",
@@ -2783,6 +2860,7 @@
       "translation": {
         "bn": "মহাসংবাদ",
         "ckb": "هەواڵ",
+        "de": "Die Ankündigung",
         "en": "The Announcement",
         "es": "La Noticia",
         "fr": "La nouvelle",
@@ -2819,6 +2897,7 @@
       "translation": {
         "bn": "প্রচেষ্টাকারী",
         "ckb": "دەرکێشەران",
+        "de": "Die Entreißenden",
         "en": "Those who drag forth",
         "es": "Los Ángeles Arrancadores",
         "fr": "Ceux qui arrachent",
@@ -2855,6 +2934,7 @@
       "translation": {
         "bn": "সে ভ্রু কুঁচকালো",
         "ckb": "ڕووگرژی",
+        "de": "Er runzelte die Stirn",
         "en": "He frowned",
         "es": "El Ceño",
         "fr": "Il s'est renfrogné",
@@ -2891,6 +2971,7 @@
       "translation": {
         "bn": "অন্ধকারাচ্ছন্ন",
         "ckb": "لوولکردن",
+        "de": "Das Einhüllen",
         "en": "The Overthrowing",
         "es": "El Arrollamiento",
         "fr": "L'obscurcissement",
@@ -2927,6 +3008,7 @@
       "translation": {
         "bn": "বিদীর্ণ করা",
         "ckb": "شەقبوون",
+        "de": "Die Spaltung",
         "en": "The Cleaving",
         "es": "La Hendidura",
         "fr": "La rupture",
@@ -2963,6 +3045,7 @@
       "translation": {
         "bn": "প্রতারণা করা",
         "ckb": "حیلەکاران",
+        "de": "Die Betrüger",
         "en": "Defrauding",
         "es": "Los Defraudadores",
         "fr": "Les fraudeurs",
@@ -2999,6 +3082,7 @@
       "translation": {
         "bn": "খণ্ড-বিখণ্ডকরণ",
         "ckb": "لەتبوون",
+        "de": "Das Zerbrechen",
         "en": "The Splitting Open",
         "es": "La Rasgadura",
         "fr": "La déchirure",
@@ -3035,6 +3119,7 @@
       "translation": {
         "bn": "নক্ষত্রপুঞ্জ",
         "ckb": "ئەستێرەکان",
+        "de": "Die Sternbilder",
         "en": "The Constellations",
         "es": "Las Constelaciones",
         "fr": "Les constellations",
@@ -3071,6 +3156,7 @@
       "translation": {
         "bn": "রাতের আগন্তুক",
         "ckb": "لێدەر",
+        "de": "Der Nachtstern",
         "en": "The Morning Star",
         "es": "Los Astros Nocturnos",
         "fr": "L'astre nocturne",
@@ -3107,6 +3193,7 @@
       "translation": {
         "bn": "সর্বোন্নত",
         "ckb": "بڵندترین",
+        "de": "Der Höchste",
         "en": "The Most High",
         "es": "El Altísimo",
         "fr": "Le Très-Haut",
@@ -3143,6 +3230,7 @@
       "translation": {
         "bn": "বিহ্বলকর ঘটনা",
         "ckb": "داپۆشەر",
+        "de": "Die Umhüllende",
         "en": "The Overwhelming",
         "es": "El Día Angustiante",
         "fr": "L'enveloppante",
@@ -3179,6 +3267,7 @@
       "translation": {
         "bn": "ভোরবেলা",
         "ckb": "سپێدە",
+        "de": "Die Morgendämmerung",
         "en": "The Dawn",
         "es": "La Aurora",
         "fr": "L'aube",
@@ -3215,6 +3304,7 @@
       "translation": {
         "bn": "নগর",
         "ckb": "شار",
+        "de": "Die Stadt",
         "en": "The City",
         "es": "La Ciudad",
         "fr": "La cité",
@@ -3251,6 +3341,7 @@
       "translation": {
         "bn": "সূর্য",
         "ckb": "خۆر",
+        "de": "Die Sonne",
         "en": "The Sun",
         "es": "El Sol",
         "fr": "Le soleil",
@@ -3287,6 +3378,7 @@
       "translation": {
         "bn": "রাত",
         "ckb": "شەو",
+        "de": "Die Nacht",
         "en": "The Night",
         "es": "La Noche",
         "fr": "La nuit",
@@ -3323,6 +3415,7 @@
       "translation": {
         "bn": "পূর্বাহ্নের সুর্যকিরণ",
         "ckb": "چێشتەنگاو",
+        "de": "Der anbrechende Tag",
         "en": "The Morning Hours",
         "es": "La Mañana",
         "fr": "Le jour montant",
@@ -3359,6 +3452,7 @@
       "translation": {
         "bn": "বক্ষ প্রশস্তকরণ",
         "ckb": "ڕوونکردنەوەو گوشاد",
+        "de": "Die Erweiterung",
         "en": "The Consolation",
         "es": "La Abertura del Pecho",
         "fr": "L'ouverture",
@@ -3395,6 +3489,7 @@
       "translation": {
         "bn": "ডুমুর",
         "ckb": "هەنجیر",
+        "de": "Der Feigenbaum",
         "en": "The Fig",
         "es": "La Higuera",
         "fr": "Les figues",
@@ -3431,6 +3526,7 @@
       "translation": {
         "bn": "রক্তপিণ্ড",
         "ckb": "دڵۆپە خوێنێکی مەییو",
+        "de": "Das Gerinnsel",
         "en": "The Clot",
         "es": "El Cigoto",
         "fr": "L'adhérence",
@@ -3467,6 +3563,7 @@
       "translation": {
         "bn": "মহিমান্বিত",
         "ckb": "شەوی بەفەڕ (قەدر)",
+        "de": "Die Bestimmung",
         "en": "The Power, Fate",
         "es": "El Decreto",
         "fr": "La destinée",
@@ -3503,6 +3600,7 @@
       "translation": {
         "bn": "প্রমাণ",
         "ckb": "بەڵگە",
+        "de": "Der klare Beweis",
         "en": "The Evidence",
         "es": "La Evidencia",
         "fr": "La preuve",
@@ -3539,6 +3637,7 @@
       "translation": {
         "bn": "ভূমিকম্প",
         "ckb": "بومەلەرزە",
+        "de": "Das Beben",
         "en": "The Earthquake",
         "es": "El Gran Terremoto",
         "fr": "Le séisme",
@@ -3575,6 +3674,7 @@
       "translation": {
         "bn": "অভিযানকারী",
         "ckb": "تاودەر",
+        "de": "Die Rennenden",
         "en": "The Chargers",
         "es": "Los Corceles",
         "fr": "Les coursiers",
@@ -3611,6 +3711,7 @@
       "translation": {
         "bn": "মহাসংকট",
         "ckb": "لێدانی سەخت",
+        "de": "Das Unglück",
         "en": "The Calamity",
         "es": "El Día Aterrador",
         "fr": "Le fracas",
@@ -3647,6 +3748,7 @@
       "translation": {
         "bn": "প্রাচুর্যের প্রতিযোগিতা",
         "ckb": "هەڵپەکردن (زۆر پەیداکردن)",
+        "de": "Der Wetteifer",
         "en": "Competition",
         "es": "La Codicia",
         "fr": "La course aux richesses",
@@ -3683,6 +3785,7 @@
       "translation": {
         "bn": "সময়",
         "ckb": "سەردەم و زەمانە",
+        "de": "Das Zeitalter",
         "en": "The Declining Day, Epoch",
         "es": "El Transcurso del Tiempo",
         "fr": "Le temps",
@@ -3719,6 +3822,7 @@
       "translation": {
         "bn": "পরনিন্দাকারী",
         "ckb": "توانجدان",
+        "de": "Der Lästerer",
         "en": "The Traducer",
         "es": "Los que se Burlan del Prójimo",
         "fr": "Les calomniateurs",
@@ -3755,6 +3859,7 @@
       "translation": {
         "bn": "হাতি",
         "ckb": "فیل",
+        "de": "Der Elefant",
         "en": "The Elephant",
         "es": "El Elefante",
         "fr": "L'éléphant",
@@ -3791,6 +3896,7 @@
       "translation": {
         "bn": "কুরাইশ গোত্র",
         "ckb": "قوڕەیش",
+        "de": "Die Quarisch",
         "en": "Quraysh",
         "es": "Quraysh",
         "fr": "Les Quraysh",
@@ -3827,6 +3933,7 @@
       "translation": {
         "bn": "সাহায্য সহায়তা",
         "ckb": "ڕێگریکەری بەخشین",
+        "de": "Die Hilfeleistung",
         "en": "Almsgiving",
         "es": "La Ayuda Mínima",
         "fr": "L'entraide",
@@ -3863,6 +3970,7 @@
       "translation": {
         "bn": "কাউসার/প্রাচুর্য",
         "ckb": "بەپیت (ئاوی کەوسەر)",
+        "de": "Die Fülle",
         "en": "Abundance",
         "es": "Al Kauzar",
         "fr": "L'abondance",
@@ -3899,6 +4007,7 @@
       "translation": {
         "bn": "অবিশ্বাসী",
         "ckb": "بێ باوەڕان",
+        "de": "Die Ungläubigen",
         "en": "The Disbelievers",
         "es": "Los incrédulos",
         "fr": "Les mécréants",
@@ -3935,6 +4044,7 @@
       "translation": {
         "bn": "সাহায্য",
         "ckb": "سەرکەوتن",
+        "de": "Die Hilfe",
         "en": "Divine Support",
         "es": "El Socorro",
         "fr": "Le secours",
@@ -3971,6 +4081,7 @@
       "translation": {
         "bn": "খেজুরের পাকানো (রশি)",
         "ckb": "گوریسی بەستراو",
+        "de": "Die Fasern",
         "en": "The Palm Fibre",
         "es": "Las Fibras de Palmeras",
         "fr": "Les fibres",
@@ -4007,6 +4118,7 @@
       "translation": {
         "bn": "আন্তরিকতা",
         "ckb": "دڵسۆزی",
+        "de": "Die Aufrichtigkeit",
         "en": "Sincerity",
         "es": "El Monoteísmo",
         "fr": "La sincérité",
@@ -4043,6 +4155,7 @@
       "translation": {
         "bn": "নিশিভোর",
         "ckb": "بەرەبەیان",
+        "de": "Das Morgenrot",
         "en": "The Dawn",
         "es": "La Alborada",
         "fr": "L'aube naissante",
@@ -4079,6 +4192,7 @@
       "translation": {
         "bn": "মানুষ জাতি",
         "ckb": "خەڵکی",
+        "de": "Die Menschheit",
         "en": "Mankind",
         "es": "Los Humanos",
         "fr": "Les humains",
