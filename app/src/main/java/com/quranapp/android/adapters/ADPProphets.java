@@ -125,12 +125,7 @@ public class ADPProphets extends RecyclerView.Adapter<ADPProphets.VHProphet> {
         }
 
         private void setupActions(QuranProphet.Prophet prophet) {
-            String title = prophet.getName();
-            if (prophet.getOrder() == 25) {
-                title += " ﷺ";
-            } else {
-                title += " ؑ ";
-            }
+            String title = MessageFormat.format("{0} ({1})", prophet.getName(), prophet.getHonorific());
 
             Context ctx = mBinding.getRoot().getContext();
             String desc = ctx.getString(R.string.strMsgReferenceFoundPlaces, title, prophet.getVerses().size());

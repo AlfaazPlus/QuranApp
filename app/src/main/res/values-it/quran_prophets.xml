@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">Pace sia con lui</string>
+
+    <string name="prophetAdam">Adam</string>
+    <string name="prophetAlyasaa">Al-Yasaa</string>
+    <string name="prophetAyyub">Ayyub</string>
+    <string name="prophetDawud">Dawud</string>
+    <string name="prophetDhulkifl">Dhul-Kifl</string>
+    <string name="prophetHarun">Harun</string>
+    <string name="prophetHud">Hud</string>
+    <string name="prophetIbrahim">Ibrahim</string>
+    <string name="prophetIdrees">Idrees</string>
+    <string name="prophetIliyas">Iliyas</string>
+    <string name="prophetIsa">Isa Ibn Maryam</string>
+    <string name="prophetIshaq">Ishaq</string>
+    <string name="prophetIsmail">Ismail</string>
+    <string name="prophetLut">Lut</string>
+    <string name="prophetMuhammad">Muhammad</string>
+    <string name="prophetMusa">Musa</string>
+    <string name="prophetNuh">Nuh</string>
+    <string name="prophetSaleh">Saleh</string>
+    <string name="prophetShuaib">Shu’aib</string>
+    <string name="prophetSulayman">Sulayman</string>
+    <string name="prophetYahya">Yahya</string>
+    <string name="prophetYaqub">Yaqub</string>
+    <string name="prophetYunus">Yunus</string>
+    <string name="prophetYusuf">Yusuf</string>
+    <string name="prophetZakariyya">Zakariyya</string>
+</resources>

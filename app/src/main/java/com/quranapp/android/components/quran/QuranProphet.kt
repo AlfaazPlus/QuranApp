@@ -25,15 +25,6 @@ class QuranProphet(val prophets: List<Prophet>) {
         }
     }
 
-    data class ProphetReference(
-        val order: Int,
-        val nameAr: String,
-        val nameEn: String,
-        @DrawableRes val iconRes: Int,
-    ) : Serializable {
-        var references: String? = null
-    }
-
     data class Prophet(
         val order: Int = 0,
         val nameAr: String,
@@ -42,6 +33,8 @@ class QuranProphet(val prophets: List<Prophet>) {
         val honorific: String,
         @DrawableRes val iconRes: Int = 0
     ) : Serializable {
+        var references: String? = null
+
         /**
          * To display in recycler view
          */
