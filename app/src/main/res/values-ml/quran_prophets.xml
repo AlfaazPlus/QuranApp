@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">അദ്ദേഹത്തിന് സമാധാനം</string>
+
+
+    <string name="prophetAdam">ആദം</string>
+    <string name="prophetAlyasaa">എലീഷാ</string>
+    <string name="prophetAyyub">അയൂബ്</string>
+    <string name="prophetDawud">ദാവൂദ്</string>
+    <string name="prophetDhulkifl">ദുൽ കിഫ്‌ൽ</string>
+    <string name="prophetHarun">ആരോൺ</string>
+    <string name="prophetHud">ഹുദ്</string>
+    <string name="prophetIbrahim">ഇബ്രാഹിം</string>
+    <string name="prophetIdrees">ഇദ്‌രീസ്</string>
+    <string name="prophetIliyas">നിരാശ</string>
+    <string name="prophetIsa">ഈസാ</string>
+    <string name="prophetIshaq">ഐസക്ക്</string>
+    <string name="prophetIsmail">ഇസ്മാഈൽ</string>
+    <string name="prophetLut">ലൂത്ത്</string>
+    <string name="prophetMuhammad">മുഹമ്മദ്</string>
+    <string name="prophetMusa">മൂസ</string>
+    <string name="prophetNuh">നുഹ്</string>
+    <string name="prophetSaleh">നീതിമാൻ</string>
+    <string name="prophetShuaib">ഷോയിബ്</string>
+    <string name="prophetSulayman">സുലൈമാൻ</string>
+    <string name="prophetYahya">യഹ്യ</string>
+    <string name="prophetYaqub">യാക്കൂബ്</string>
+    <string name="prophetYunus">യൂനസ്</string>
+    <string name="prophetYusuf">യൂസഫ്</string>
+    <string name="prophetZakariyya">സക്കറിയ</string>
+</resources>
