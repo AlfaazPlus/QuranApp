@@ -56,13 +56,18 @@ open class ExclusiveVersesParser {
             val name = localeNames.optString(key).ifEmpty { fallbackNames.getString(key) }
             val verses = versesStr.split(",").map { verse ->
                 val split = verse.split(":")
-                val chapterNo = split[0].toInt()
-                val verseRange = split[1].split("-")
-                val fromVerse = verseRange[0].toInt()
-                val toVerse = if (verseRange.size == 2) verseRange[1].toInt()
-                else fromVerse
 
-                return@map Triple(chapterNo, fromVerse, toVerse)
+                return@map try {
+                    val chapterNo = split[0].toInt()
+                    val verseRange = split[1].split("-")
+                    val fromVerse = verseRange[0].toInt()
+                    val toVerse = if (verseRange.size == 2) verseRange[1].toInt()
+                    else fromVerse
+
+                    Triple(chapterNo, fromVerse, toVerse)
+                } catch (e: Exception) {
+                    Triple(-1, -1, -1)
+                }
             }.sortedWith { o1, o2 ->
                 var comp = o1.first - o2.first
                 if (comp == 0) {

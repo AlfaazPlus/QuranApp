@@ -17,4 +17,6 @@ object Keys {
     const val KEY_REFERENCE_VERSE_MODEL = "verse_model"
     const val KEY_LANGUAGE = "language"
     const val KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION = "key.resumeFromPlayerNotification"
+
+    const val KEY_EXTRA_TITLE = "title"
 }

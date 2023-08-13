@@ -317,6 +317,7 @@
     <string name="strMsgEditShareTransl">Translations selected from the settings, are only shown here.</string>
     <string name="strMsgEditShareLongTransl">Translation is very long, it may not fit properly.</string>
     <string name="strMsgDuaFor" formatted="false">Dua for %s</string>
+    <string name="strMsgDuaOf" formatted="false">Dua of %s</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s in Quran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Found verses related to %1$s at total %2$d places.</string>
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>

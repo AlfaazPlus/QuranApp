@@ -32,7 +32,7 @@ class FeatureProphetsLayout @JvmOverloads constructor(
         prepareInstance(context, quranMeta) { quranProphet ->
             hideLoader()
             resolveListView().adapter = ADPProphets(context, context.dp2px(300f), 10).apply {
-                setProphets(quranProphet.prophets)
+                prophets = quranProphet.prophets
             }
         }
     }

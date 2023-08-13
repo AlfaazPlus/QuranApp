@@ -1,6 +1,3 @@
-/*
- * Created by Faisal Khan on (c) 13/8/2021.
- */
 package com.quranapp.android.activities.reference
 
 import android.content.Intent
@@ -22,23 +19,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.R
 import com.quranapp.android.activities.QuranMetaPossessingActivity
-import com.quranapp.android.adapters.ADPProphets
+import com.quranapp.android.adapters.ADPPropheticDuas
 import com.quranapp.android.adapters.utility.TopicFilterSpinnerAdapter
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.QuranProphet
+import com.quranapp.android.components.quran.QuranPropheticDua
 import com.quranapp.android.components.utility.SpinnerItem
 import com.quranapp.android.databinding.ActivityTopicsBinding
 import com.quranapp.android.databinding.LytTopicsActivityHeaderBinding
 import com.quranapp.android.utils.extended.GapedItemDecoration
 import com.quranapp.android.utils.simplified.SimpleTextWatcher
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.views.helper.Spinner2
 import com.quranapp.android.views.helper.Spinner2.SimplerSpinnerItemSelectListener
 import java.util.regex.Pattern
 
-class ActivityProphets : QuranMetaPossessingActivity() {
+class ActivityPropheticDuas : QuranMetaPossessingActivity() {
     private lateinit var binding: ActivityTopicsBinding
     private val searchHandler = Handler(Looper.getMainLooper())
-    private var prophetsAdapter: ADPProphets? = null
+    private var prophetsAdapter: ADPPropheticDuas? = null
 
     override fun getStatusBarBG() = color(R.color.colorBGHomePageItem)
 
@@ -67,18 +65,18 @@ class ActivityProphets : QuranMetaPossessingActivity() {
         savedInstanceState: Bundle?,
         quranMeta: QuranMeta
     ) {
-        QuranProphet.prepareInstance(this, quranMeta, this::initContent)
+        QuranPropheticDua.prepareInstance(this, quranMeta, this::initContent)
     }
 
-    private fun initContent(quranProphet: QuranProphet) {
+    private fun initContent(propheticDua: QuranPropheticDua) {
         initTopics()
-        initHeader(binding.header, quranProphet)
+        initHeader(binding.header, propheticDua)
     }
 
-    private fun initHeader(header: LytTopicsActivityHeaderBinding, quranProphet: QuranProphet) {
+    private fun initHeader(header: LytTopicsActivityHeaderBinding, propheticDua: QuranPropheticDua) {
         header.searchContainer.root.setBackgroundColor(statusBarBG)
-        header.topicTitle.text = getString(R.string.strTitleProphets)
-        initProphetFilters(header.filter, quranProphet)
+        header.topicTitle.text = intent.getStringExtra(Keys.KEY_EXTRA_TITLE)
+        initProphetFilters(header.filter, propheticDua)
 
         header.search.setOnClickListener { toggleSearchBox(header, true) }
         header.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
@@ -96,13 +94,13 @@ class ActivityProphets : QuranMetaPossessingActivity() {
                 override fun afterTextChanged(s: Editable) {
                     binding.header.searchContainer.btnClear.visibility = if (s.isEmpty()) View.GONE else View.VISIBLE
                     searchHandler.removeCallbacksAndMessages(null)
-                    searchHandler.postDelayed({ searchProphets(s.toString(), quranProphet) }, 150)
+                    searchHandler.postDelayed({ searchProphets(s.toString(), propheticDua) }, 150)
                 }
             })
         }
     }
 
-    private fun initProphetFilters(spinner: Spinner2, quranProphet: QuranProphet) {
+    private fun initProphetFilters(spinner: Spinner2, propheticDua: QuranPropheticDua) {
         val filters: MutableList<SpinnerItem> = ArrayList()
         val items = strArray(R.array.arrProphetFilterItems)
         for (item in items) {
@@ -120,10 +118,10 @@ class ActivityProphets : QuranMetaPossessingActivity() {
         spinner.onItemSelectedListener = object : SimplerSpinnerItemSelectListener() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 if (position == 0) {
-                    resetAdapter(quranProphet.prophets)
+                    resetAdapter(propheticDua.prophets)
                 } else if (position == 1) {
-                    resetAdapter(quranProphet.prophets.sortedBy { it.order })
-                    Toast.makeText(this@ActivityProphets, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show()
+                    resetAdapter(propheticDua.prophets.sortedBy { it.order })
+                    Toast.makeText(this@ActivityPropheticDuas, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -132,23 +130,23 @@ class ActivityProphets : QuranMetaPossessingActivity() {
         spinner.setSelection(0)
     }
 
-    private fun searchProphets(query: String, quranProphet: QuranProphet) {
+    private fun searchProphets(query: String, propheticDua: QuranPropheticDua) {
         if (TextUtils.isEmpty(query)) {
-            resetAdapter(quranProphet.prophets)
+            resetAdapter(propheticDua.prophets)
             return
         }
 
         val pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE or Pattern.LITERAL or Pattern.DOTALL)
-        val queryProphets: MutableList<QuranProphet.Prophet> = ArrayList()
+        val prophets = ArrayList<QuranPropheticDua.Prophet>()
 
-        for (prophet in quranProphet.prophets) {
-            val matcher = pattern.matcher(prophet.name + prophet.nameEn + prophet.nameAr)
+        for (prophet in propheticDua.prophets) {
+            val matcher = pattern.matcher(prophet.name + prophet.order)
             if (matcher.find()) {
-                queryProphets.add(prophet)
+                prophets.add(prophet)
             }
         }
 
-        resetAdapter(queryProphets)
+        resetAdapter(prophets)
     }
 
     private fun toggleSearchBox(header: LytTopicsActivityHeaderBinding, showSearch: Boolean) {
@@ -167,7 +165,7 @@ class ActivityProphets : QuranMetaPossessingActivity() {
     }
 
     private fun initTopics() {
-        prophetsAdapter = ADPProphets(this, ViewGroup.LayoutParams.MATCH_PARENT, -1)
+        prophetsAdapter = ADPPropheticDuas(this)
         binding.topics.let {
             it.addItemDecoration(GapedItemDecoration(dp2px(2.5f)))
             (it.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
@@ -176,7 +174,7 @@ class ActivityProphets : QuranMetaPossessingActivity() {
         }
     }
 
-    private fun resetAdapter(prophets: List<QuranProphet.Prophet>) {
+    private fun resetAdapter(prophets: List<QuranPropheticDua.Prophet>) {
         prophetsAdapter?.let {
             it.prophets = prophets
             it.notifyDataSetChanged()
