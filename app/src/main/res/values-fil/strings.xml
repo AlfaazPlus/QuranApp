@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="strTitleAppVersion">Bersyon ng App</string>
+    <string name="strVersion" formatted="false">Bersyon%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ay isang libre at open-source na app para basahin at tuklasin ang Noble Qur\'an na may mga pagsasalin. Ang app na ito ay may maganda at malinis na interface na may mga tampok tulad ng tafsir, pagbigkas, paalala at marami pa.
+\n
+\nI-DOWNLOAD NA NGAYON:
+\n%s</string>
+    <string name="strTitleLicenses">Mga Lisensya</string>
+    <string name="strLabelClose">Isarado</string>
+    <string name="strLabelGotIt">Naintidihan ko</string>
+    <string name="strLabelOkay">Sige</string>
+    <string name="strLabelCancel">I-kansel</string>
+    <string name="strLabelSend">Ipadala</string>
+    <string name="labelAdd">I-dagdag</string>
+    <string name="strLabelRemove">Alisin</string>
+    <string name="strLabelDelete">Tanggalin</string>
+    <string name="strLabelRemoveAll">Alisin lahat</string>
+    <string name="strLabelCopy">Kopyahin</string>
+    <string name="strLabelBack">Bumalik</string>
+    <string name="strLabelTop">I-taas</string>
+    <string name="strLabelReset">I-reset</string>
+    <string name="strLabelRetry">Ulitin</string>
+    <string name="strLabelDismiss">I-dismiss</string>
+    <string name="strLabelDiscard">Tanggihan</string>
+    <string name="strLabelUpdate">Update</string>
+    <string name="strLabelInstall">I-install</string>
+    <string name="strLabelNew">Bago</string>
+    <string name="strLabelPremium">Premium</string>
+    <string name="strLabelOn">Naka-On</string>
+    <string name="strLabelOff">Naka-Off</string>
+    <string name="strLabelThemeDark">Madilim</string>
+    <string name="strLabelSystemDefault">System Default</string>
+    <string name="strLabelPreviousChapter">Nakaraang Kabanata</string>
+    <string name="strLabelNextChapter">Susunod na kabanata</string>
+    <string name="strLabelNoPreviousChapter">Walang nakaraang chapter</string>
+    <string name="strLabelNoNextChapter">Walang susunod na chapter</string>
+    <string name="strLabelPreviousJuz">Nakaraang juz</string>
+    <string name="strLabelNextJuz">Susunod na juz</string>
+    <string name="strLabelNoNextJuz">Walang susunod na juz</string>
+    <string name="strLabelContinueChapter">Ipagpatuloy ang kabanata</string>
+    <string name="strLabelPreviousVerse">Nakaraang taludtod</string>
+    <string name="strLabelNextVerse">Susunod na taludtod</string>
+    <string name="labelPreviousTafsir">Nakaraang tafsir</string>
+    <string name="strLabelVersesText">Mga Taludtod</string>
+    <string name="strLabelPageNo" formatted="false">Pahina %d</string>
+    <string name="strLabelSurah" formatted="false">Surat %s</string>
+    <string name="strLabelVerseNo" formatted="false">Taludtod %d</string>
+    <string name="strLabelVerses" formatted="false">Mga taludtod %1$d-%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Taludtod : %d</string>
+    <string name="strLabelJuzNo" formatted="false">Juz%d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Taludtod %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surat %1$s %2$d: Taludtod %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surat %1$s │ Taludtod %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Kabanata No. %1$d │ Taludtod %2$d–%3$d</string>
+    <string name="strTitleAppUser">Gumagamit ng QuranApp</string>
+    <string name="strTitleQuran">Koran</string>
+    <string name="strTitleHolyQuran">Ang Banal na Koran</string>
+    <string name="strTitleMakki">Meccan</string>
+    <string name="strTitleMadani">Medinan</string>
+    <string name="strTitleFootnote">Talababa</string>
+    <string name="strTitleFootnotes">Mga Talababa</string>
+    <string name="strTitleReaderChapters">Mga Surat (Mga Kabanata)</string>
+    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleReaderChapters2">Mga Surat</string>
+    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleReaderTextSizeArabic">Laki ng tekstong Arabic</string>
+    <string name="strTitleReaderTextSizeTransl">Laki ng tekstong Translation</string>
+    <string name="strTitleHelpSupport">Tulong at suporta</string>
+    <string name="strTitleAboutUs">Tungkol Samin</string>
+    <string name="strTitleBookmarks">Mga bookmarks</string>
+    <string name="strTitleShareApp">I-share ang App</string>
+    <string name="strTitleNote">Note</string>
+    <string name="strTitleSelectTafsir">Piliin ang tafsir</string>
+    <string name="strTitleAboutSurah">Tungkol sa Surat</string>
+    <string name="strTitleTranslations">Mga Translation</string>
+    <string name="strTitleDownloadTranslations">I-Download</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Aalisin ang %d na mga bookmarks\?</string>
+    <string name="strTitleTranslDelete">Tatanggalin ang translation\?</string>
+    <string name="strTitleResetReaderSettings">I-reset ang mga settings ng reader\?</string>
+    <string name="strTitleHideAd">Itago ang Patalastas</string>
+    <string name="strTitleRecitationOptions">Mga option</string>
+    <string name="strTitleAutoPlayNext">I-Autoplay ang susunod</string>
+    <string name="strTitleQuickEdit">Mabilis na Pag-edit</string>
+    <string name="strTitleShareVerse">I-share ang taludtod</string>
+    <string name="strTitleReportVerse">I-Report ang Taludtod</string>
+    <string name="strTitleSelectReason">Piliin ang dahilan</string>
+    <string name="strTitleExplainIssue">Ipaliwanag ang Issue</string>
+    <string name="strTitleVOTD">Taludtod ng Araw</string>
+    <string name="strTitleTopics">Mga paksa</string>
+    <string name="strTitleDuas">Mga Quranic Duas</string>
+    <string name="strTitleProphets">Mga Prophet</string>
+    <string name="strTitleFeaturedDuas">Mga Dua sa Quran</string>
+    <string name="titleSolutionVerses">Mga Solusyon na galing sa Quran</string>
+    <string name="titleEtiquetteVerses">Etiquette sa Quran</string>
+    <string name="strTitleFeaturedProphets">Mga Prophet sa Quran</string>
+    <string name="strTitlePrivacyPolicy">Patakaran sa Privacy</string>
+    <string name="strTitleFailed">Nabigo</string>
+    <string name="strTitleSuccess">Tagumpay</string>
+    <string name="strTitleChapInfoPages">Mga Pahina</string>
+    <string name="strTitleChapInfoRevOrder">Utos ng Pahayag</string>
+    <string name="strTitleAppSettings">Mga Settings ng App</string>
+    <string name="strTitleReaderSettings">Mga Settings ng Mambabasa</string>
+    <string name="titleOtherSettings">Iba pang mga settings</string>
+    <string name="strTitleAppLanguage">Wika ng App</string>
+    <string name="strTitleChangeLanguage">Baguhin ang wika\?</string>
+    <string name="strTitleNoInternet">Walang internet</string>
+    <string name="strLabelPlay">I-play</string>
+    <string name="strLabelPause">Itigil</string>
+    <string name="strLabelBookmark">I-bookmark</string>
+    <string name="strLabelRemoveBookmark">Alisin ang Bookmark</string>
+    <string name="strLabelBookmarked">Naka bookmark</string>
+    <string name="strLabelContinueReading">Ipagpatuloy ang pagbabasa »</string>
+    <string name="strLabelReading">Nagbabasa</string>
+    <string name="strLabelMostPlaces">Karamihan sa mga pagbanggit</string>
+    <string name="strLabelSelectedCount" formatted="false">%d ang napili</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d pang pagsasalin</string>
+    <string name="strLabelAdvanceSharing">Paunang Pagbabahagi</string>
+    <string name="strLabelSelectVerse">Piliin ang Mga Taludtod</string>
+    <string name="strLabelCurrentVerse">Kasalukuyang taludtod</string>
+    <string name="strLabelSelectTranslations">Piliin ang Translations</string>
+    <string name="strLabelSelectTranslation">Pumili ng translation</string>
+    <string name="strLabelWhatsappStyling">Pag-istilo ng Whatsapp</string>
+    <string name="strLabelIncludeArabic">Isama ang arabic</string>
+    <string name="strLabelIncludeFootnotes">Isama ang mga talababa</string>
+    <string name="strLabelIncludeTranslation">isama ang translation</string>
+    <string name="strLabelIncludeReference">Isama ang mga sanggunian</string>
+    <string name="strHintSearch">Hanapin</string>
+    <string name="strHintSearchQuran">Mag-type ng termino e.g., \"Buhay\"</string>
+    <string name="strHintSearchTopic">Hanapin Ang Paksa</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">Hanapin ang paksa sa \"%s\"</string>
+    <string name="strHintSearchProphet">Hanapin ang prophet</string>
+    <string name="strHintSearchChapter">Hanapin ang surat</string>
+    <string name="strHintSearchVerse">Hanapin ang taludtod</string>
+    <string name="strHintSearchJuz">Hanapin ang juz</string>
+    <string name="strHintSearchTranslation">Hanapin ang translation</string>
+    <string name="strHintSearchReciter">Hanapin ang reciter</string>
+    <string name="strHintSearchScript">Hanapin ang script</string>
+    <string name="strHintSearchLanguage">Hanapin ang wika/lengguwahe</string>
+    <string name="strHintFromVerse">Mula sa taludtod</string>
+    <string name="strHintToVerse">Sa taludtod</string>
+    <string name="strHintFeedbackEmail">Email</string>
+    <string name="strHintFeedbackMessage">Mensahe</string>
+    <string name="strNotFound">Hindi mahanap</string>
+    <string name="strLabelApply">I-apply</string>
+    <string name="strLabelRefresh">I-refresh</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Tignan ang mga translations</string>
+    <string name="strTitleReaderLayoutStylePageView">Tignan ang Pahina</string>
+    <string name="strTitleBookmark">Bookmark</string>
+    <string name="titleReaderTextSizeTafsir">Laki ng tekstong Tafsir</string>
+    <string name="strTitleSettings">Mga Setting</string>
+    <string name="strLabelHide">Itago</string>
+    <string name="strLabelEdit">I-edit</string>
+    <string name="strLabelDone">Tapos na</string>
+    <string name="strLabelRestart">I-restart</string>
+    <string name="strLabelView">Tignan</string>
+    <string name="strLabelOpen">Buksan</string>
+    <string name="strLabelOpenInReader">Buksan sa Mambabasa</string>
+    <string name="strLabelRead">Basahin »</string>
+    <string name="strLabelViewAll">Tignan lahat</string>
+    <string name="strLabelSkip">Laktawan</string>
+    <string name="strLabelNotNow">Wag ngayon</string>
+    <string name="strLabelChangeNRestart">Baguhin at I-restart</string>
+    <string name="strLabelAdvertisement">Patalastas</string>
+    <string name="strLabelPrevious">Nakaraan</string>
+    <string name="strLabelNext">Susunod</string>
+    <string name="strLabelStart">Magsimula</string>
+    <string name="strLabelUpdateQuranApp">I-update ang QuranApp</string>
+    <string name="labelDownload">I-Download</string>
+    <string name="strLabelDownloadNow">I-download Ngayon</string>
+    <string name="strLabelThemeLight">Maliwanag</string>
+    <string name="strLabelNoPreviousJuz">Walang nakaraang juz</string>
+    <string name="strLabelFullChapter">Basahin ang buong kabanata</string>
+    <string name="labelNextTafsir">Susunod na tafsir</string>
+    <string name="strLabelVersesWithColon" formatted="false">Mga taludtod : %1$d–%2$d</string>
+    <string name="strTitleReaderJumpToVerse">Tumalon sa taludtod</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Mga Taludtod: %d</string>
+    <string name="strTitleReaderVerses">Mga Taludtod</string>
+    <string name="strTitleVerseOptions">Mga pagpipilian sa taludtod</string>
+    <string name="strTitleVerseRecitation">Pagbigkas ng Taludtod</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Surat %1$s : Taludtod %2$d</string>
+    <string name="noFootnotesForThisVerse">Walang mga talababa para sa talatang ito.</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Surat %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Pumunta sa Taludtod %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Basahin ang mga Taludtod %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Basahin ang Tafsir ng Taludtod %d</string>
+    <string name="strTitleReaderLayoutStyle">Tignan ang style ng Quran</string>
+    <string name="strLabelRemoveAds">Alisin ang Ads</string>
+    <string name="strLabelShare">I-share</string>
+    <string name="strLabelReport">I-report</string>
+    <string name="strLabelVerseRange">Saklaw ng taludtod</string>
+    <string name="strLabelQuickLinks">Mabilis na mga link</string>
+    <string name="strLabelLater">Mamaya</string>
+    <string name="strHintFeedback">Isulat ang iyong feedback dito…</string>
+    <string name="strHintBookmarkViewerNote">Sumulat ng karagdagang tala sa bookmark na ito dito…</string>
+    <string name="strTitleSendFeedback">Magbigay ng feedback</string>
+    <string name="strTitleAddNote">Maglagay ng note</string>
+    <string name="strTitleRecitations">Mga Recitation</string>
+    <string name="strTitleRateApp">I-rate ang App</string>
+    <string name="strTitleFilters">Mga filter</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="audioOnlyArabic">I-play lamang sa Arabic</string>
+    <string name="strTitleSelectReciter">Pumili Ng Reciter</string>
+    <string name="audioOnlyTranslation">I-play lamang ang translation</string>
+    <string name="titleManageAudio">I-Manage ang Audio</string>
+    <string name="audioBothArabicTranslation">I-play ang Arabic At ang Translation</string>
+    <string name="downloadRecitations">I-download ang Recitations</string>
+    <string name="strTitleScripts">Mga script</string>
+    <string name="audioOption">Opsyon sa Audio</string>
+    <string name="playbackSpeed">Bilis ng Playback</string>
+    <string name="strTitleSelectScripts">I-select ang Script</string>
+    <string name="strTitleBookmarkDeleteAll">Aalisin lahat ng bookmarks\?</string>
+    <string name="strTitleBookmarkDeleteThis">Aalisin ang bookmark na to\?</string>
+    <string name="strTitleRepeatVerse">Ulitin ang taludtod</string>
+    <string name="strTitleFeaturedQuran">Itinatampok na Pagbasa</string>
+    <string name="strTitleFeaturedTopics">Paksa sa Quran</string>
+    <string name="strTitleThresholdReached">Naabot na ang Threshold</string>
+    <string name="strChapInfoSeeMore">Tingnan ang higit pang impormasyon ›</string>
+    <string name="strTitleChapInfoChapterNo">Numero ng Kabanata</string>
+    <string name="strTitleChapInfoJuzNo">Numero ng Juz.</string>
+    <string name="strTitleChapInfoVerses">Mga Taludtod</string>
+    <string name="strLabelOrder">Ang Order</string>
+    <string name="strTitleChapInfoRukus">Mga Ruku</string>
+    <string name="strTitleChapInfoRevType">Uri ng Pahayag</string>
+    <string name="strMsgChapInfoFailedLoad">Nabigong i-load ang impormasyon ng surat. Subukan muli mamaya.</string>
+    <string name="strTitleTheme">Tema</string>
+</resources>
