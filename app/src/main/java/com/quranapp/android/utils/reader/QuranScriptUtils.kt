@@ -93,24 +93,21 @@ object QuranScriptUtils {
 
     val NOOREHUDA_SCRIPT_NAMES = mapOf(
         "en"  to "Noorehuda",
-        // TODO: add translations
-        /*
-        "ar"  to "",
-        "bn"  to "",
-        "ckb" to "",
-        "de"  to "",
-        "es"  to "",
-        "fa"  to "",
-        "fr"  to "",
-        "gu"  to "",
-        "hi"  to "",
-        "in"  to "",
-        "it"  to "",
-        "ml"  to "",
-        "pt"  to "",
-        "tr"  to "",
-        "ur"  to "",
-        */
+        "ar"  to "نورلهدا",
+        "bn"  to "নূর উল হুদা",
+        "ckb" to "نورلهدا",
+        "de"  to "Noorehuda",
+        "es"  to "Noorehuda",
+        "fa"  to "نورلهدا",
+        "fr"  to "Noorehuda",
+        "gu"  to "નૂર એ હુદા",
+        "hi"  to "नूर ए हुदा",
+        "in"  to "Noorehuda",
+        "it"  to "Noorehuda",
+        "ml"  to "നൂർ ഇ ഹുദാ",
+        "pt"  to "Noorehuda",
+        "tr"  to "Noorehuda",
+        "ur"  to "نورلهدا",
     )
 
     fun availableScriptSlugs(): Array<String> = arrayOf(
