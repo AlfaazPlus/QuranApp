@@ -82,8 +82,19 @@ See an overview of all the features [here](/FEATURES.md).
 If you want help with using the QuranApp, please take a look at [WiKi](https://github.com/AlfaazPlus/QuranApp/wiki).
 
 ## Credits
+Data:
+- [QuranEnc](https://quranenc.com/en/home)
+- [Tanzil](https://tanzil.net/)
+- [quran.com](https://quran.com/)
+- [quran-data-noorehuda](https://codeberg.org/Luciogi/quran-data-noorehuda)
 
-Data sources for the development of this app include [QuranEnc](https://quranenc.com/en/home), [Tanzil](https://tanzil.net/), [quran.com](https://quran.com/) API and other online verified Quran projects. The KFQPC fonts are taken from [this repository](https://github.com/mustafa0x/qpc-fonts) which actually belong to [King Fahd Quran Complex](https://qurancomplex.gov.sa/). Quran recitation audios come from [everyayah.com](https://everyayah.com/) and [quran.com](https://quran.com/).
+Fonts:
+- [KFQPC font](https://github.com/mustafa0x/qpc-fonts) belongs to [King Fahd Quran Complex](https://qurancomplex.gov.sa/)
+- [Noorehuda](http://www.noorehidayat.org/)
+  
+Quran recitations:
+- [everyayah.com](https://everyayah.com/)
+- [quran.com](https://quran.com/)
 
 See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
