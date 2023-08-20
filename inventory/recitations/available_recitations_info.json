@@ -291,6 +291,30 @@
         "ur": "سعد الغامدی"
       }
     },
+        {
+      "slug": "sahl-yassin",
+      "reciter": "Sahl Yassin",
+      "style": null,
+      "url-host": "everyayah.com",
+      "url-path": "/data/Sahl_Yassin_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ar": "سهل ياسين",
+        "bn": "সাহল ইয়াসিন",
+        "ckb": "سەهل یاسین",
+        "de": "Sahl Yassin",
+        "es": "Sahl Yassin",
+        "fa": "سهل یاسین",
+        "fr": "Sahl Yassine",
+        "gu": "સાહલ યાસીન",
+        "hi": "साहल यासीन",
+        "in": "Sahl Yassin",
+        "it": "Sahl Yassin",
+        "ml": "സഹൽ യാസിൻ",
+        "pt": "Sahl Yassin",
+        "tr": "Sahl Yassin",
+        "ur": "سہل یاسین"
+      }
+    },
     {
       "slug": "as-shuraym",
       "reciter": "Saud Al-Shuraim",
@@ -337,6 +361,30 @@
         "pt": "Yasser ad-Dussary",
         "tr": "Yasser ad-Dussary",
         "ur": "یاسر الدوسری"
+      }
+    },
+        {
+      "slug": "yaser-salamah",
+      "reciter": "Yasser Salamah",
+      "style": null,
+      "url-host": "everyayah.com",
+      "url-path": "/data/Yaser_Salamah_128kbps/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "ar": "ياسر سلامة",
+        "bn": "ইয়াসের সালামাহ",
+        "ckb": "یاسر سەلامە",
+        "de": "Yasser Salamah",
+        "es": "Yasser Salamah",
+        "fa": "یاسر سلامه",
+        "fr": "Yasser Salamah",
+        "gu": "યાસર સલામાહ",
+        "hi": "यासेर सलामाह",
+        "in": "Yasser Salamah",
+        "it": "Yasser Salamah",
+        "ml": "യാസർ സലാമ",
+        "pt": "Yasser Salamah",
+        "tr": "Yasser Selamah",
+        "ur": "یاسر سلامہ"
       }
     },
     {
