@@ -6,22 +6,22 @@
     <prophet android:name="@string/prophetAlyasaa" name-ar="اليسع" name-en="Elisha" order="20" android:drawable="@drawable/prophet_al_yasaa">
         6:86,38:48
     </prophet>
-    <prophet android:name="@string/prophetAyyub" name-ar="أيوب" name-en="Job" order="12" android:drawable="@drawable/prophet_ayyub">
+    <prophet android:name="@string/prophetAyyub" name-ar="أيوب" name-en="Job" order="13" android:drawable="@drawable/prophet_ayyub">
         4:163,6:84,21:83,38:41
     </prophet>
     <prophet android:name="@string/prophetDawud" name-ar="داوود" name-en="David" order="17" android:drawable="@drawable/prophet_dawud">
         2:251,4:163,5:78,6:84,17:55,21:78-79,27:15,27:16,34:10-13,38:17,38:24-30
     </prophet>
-    <prophet android:name="@string/prophetDhulkifl" name-ar="ذو الكفل" name-en="Dhul-Kifl" order="16" android:drawable="@drawable/prophet_dhul_kifl">
+    <prophet android:name="@string/prophetDhulkifl" name-ar="ذو الكفل" name-en="Dhul-Kifl" order="14" android:drawable="@drawable/prophet_dhul_kifl">
         21:85,38:48
     </prophet>
-    <prophet android:name="@string/prophetHarun" name-ar="هارون" name-en="Aaron" order="15" android:drawable="@drawable/prophet_harun">
+    <prophet android:name="@string/prophetHarun" name-ar="هارون" name-en="Aaron" order="16" android:drawable="@drawable/prophet_harun">
         2:248,4:163,6:84,7:122,7:142,7:150,10:75,10:89,19:28,19:53,20:30,20:70,20:90-94,21:48,23:45,25:35,26:13,26:48,28:34,37:114,37:120
     </prophet>
     <prophet android:name="@string/prophetHud" name-ar="هود" name-en="Hud" order="4" android:drawable="@drawable/prophet_hud">
         7:65-71,11:50-60,11:89,26:124
     </prophet>
-    <prophet android:name="@string/prophetIbrahim" name-ar="ابراهيم" name-en="Abraham" order="6" android:drawable="@drawable/prophet_ibrahim">
+    <prophet android:name="@string/prophetIbrahim" name-ar="ابراهيم" name-en="Abraham" order="7" android:drawable="@drawable/prophet_ibrahim">
         2:124-140,2:258,2:260,3:33,3:65,3:67-68,3:84,3:95,3:97,4:54,4:125,4:163,6:74-75,6:83-84,6:161,9:70,9:114,11:69,11:74-76,12:6,12:38,14:35,15:51-52,15:57,16:120,16:123,19:41,19:46-47,19:58,21:51,21:60,21:62,21:69,22:26,22:43,22:78,26:69,29:16,29:24-26,29:31-32,33:7,37:83,37:104,37:109,38:45,42:13,43:26,51:24,51:31,53:37,57:26,60:4,87:19
     </prophet>
     <prophet android:name="@string/prophetIdrees" name-ar="إدريس" name-en="Enoch" order="2" android:drawable="@drawable/prophet_idrees">
@@ -39,13 +39,13 @@
     <prophet android:name="@string/prophetIsmail" name-ar="إسماعيل" name-en="Ishmael" order="8" android:drawable="@drawable/prophet_ismail">
         2:125,2:127,2:133,2:136,2:140,3:84,4:163,6:86,14:39,19:54,21:85,38:48
     </prophet>
-    <prophet android:name="@string/prophetLut" name-ar="لوط" name-en="Lot" order="7" android:drawable="@drawable/prophet_lut">
+    <prophet android:name="@string/prophetLut" name-ar="لوط" name-en="Lot" order="6" android:drawable="@drawable/prophet_lut">
         6:86,7:80,9:70,11:70-71,11:74,11:77,11:81,11:89,15:59,15:61,15:68,15:71,21:71,21:74,22:43,25:40,26:160-161,26:167,27:54-56,29:26,29:28-33,29:40,37:133,38:13,50:13,51:36,53:53,54:33-34,54:36,54:43,66:10,69:9
     </prophet>
     <prophet android:name="@string/prophetMuhammad" name-ar="محمد" name-en="Muhammad" order="25" android:drawable="@drawable/prophet_muhammad">
         3:144,5:41,11:2,13:43,16:101,17:1,25:1,33:9,33:40,47:2,48:29,61:6,73:1,74:1,88:21
     </prophet>
-    <prophet android:name="@string/prophetMusa" name-ar="موسی" name-en="Moses" order="14" android:drawable="@drawable/prophet_musa">
+    <prophet android:name="@string/prophetMusa" name-ar="موسی" name-en="Moses" order="15" android:drawable="@drawable/prophet_musa">
         2:51,2:53-55,2:60-61,2:67-71,2:87,2:92,2:108,2:136,2:246,2:248,3:84,4:153,4:164,5:20-25,6:84,6:91,6:154,7:103-160,10:75-88,11:17,11:96,11:110,14:5-6,14:8,17:2,17:101-102,18:60-78,19:51,20:9-11,20:17-40,20:49-52,20:57-77,20:83-97,21:48,22:44,23:45,23:49,25:35,26:10-52,26:61-67,27:7-10,28:3,28:7,28:10,28:15-20,28:28-38,28:43-46,28:48,28:76,29:39,32:23,33:7,33:69,37:114,37:120,40:23,40:26-27,40:37,40:53,41:45,42:13,43:46,43:49,43:52,44:17,46:12,46:30,51:38,53:36,61:5,79:15,87:19
     </prophet>
     <prophet android:name="@string/prophetNuh" name-ar="نوح" name-en="Noah" order="3" android:drawable="@drawable/prophet_nuh">
@@ -54,7 +54,7 @@
     <prophet android:name="@string/prophetSaleh" name-ar="صالح" name-en="Saleh" order="5" android:drawable="@drawable/prophet_saleh">
         7:73-79,11:61-66,11:89,26:142,27:45,91:13
     </prophet>
-    <prophet android:name="@string/prophetShuaib" name-ar="شعيب" name-en="Shu’aib" order="13" android:drawable="@drawable/prophet_shuaib">
+    <prophet android:name="@string/prophetShuaib" name-ar="شعيب" name-en="Shu’aib" order="12" android:drawable="@drawable/prophet_shuaib">
         7:85-93,11:84-95,26:177,29:36
     </prophet>
     <prophet android:name="@string/prophetSulayman" name-ar="سليمان" name-en="Solomon" order="18" android:drawable="@drawable/prophet_sulayman">

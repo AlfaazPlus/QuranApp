@@ -320,6 +320,7 @@
     <string name="strMsgDuaOf" formatted="false">Dua of %s</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s in Quran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Found verses related to %1$s at total %2$d places.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua of %s in Quran</string>
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
     <string name="strSalam">Assalam Alaikum</string>
     <string name="strSalamShort">Salam</string>
