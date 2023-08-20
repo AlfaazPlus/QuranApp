@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prophets xmlns:android="http://schemas.android.com/apk/res/android">
-    <prophet android:name="@string/prophetAdam" order="1" android:drawable="@drawable/prophet_adam"></prophet>
-    <prophet android:name="@string/prophetAlyasaa" order="20" android:drawable="@drawable/prophet_al_yasaa"></prophet>
-    <prophet android:name="@string/prophetAyyub" order="12" android:drawable="@drawable/prophet_ayyub"></prophet>
-    <prophet android:name="@string/prophetDawud" order="17" android:drawable="@drawable/prophet_dawud"></prophet>
-    <prophet android:name="@string/prophetDhulkifl" order="16" android:drawable="@drawable/prophet_dhul_kifl"></prophet>
-    <prophet android:name="@string/prophetHarun" order="15" android:drawable="@drawable/prophet_harun"></prophet>
-    <prophet android:name="@string/prophetHud" order="4" android:drawable="@drawable/prophet_hud"></prophet>
-    <prophet android:name="@string/prophetIbrahim" order="6" android:drawable="@drawable/prophet_ibrahim"></prophet>
-    <prophet android:name="@string/prophetIdrees" order="2" android:drawable="@drawable/prophet_idrees"></prophet>
-    <prophet android:name="@string/prophetIliyas" order="19" android:drawable="@drawable/prophet_iliyas"></prophet>
-    <prophet android:name="@string/prophetIsa" order="24" android:drawable="@drawable/prophet_isa"></prophet>
-    <prophet android:name="@string/prophetIshaq" order="9" android:drawable="@drawable/prophet_ishaq"></prophet>
-    <prophet android:name="@string/prophetIsmail" order="8" android:drawable="@drawable/prophet_ismail"></prophet>
-    <prophet android:name="@string/prophetLut" order="7" android:drawable="@drawable/prophet_lut"></prophet>
-    <prophet android:name="@string/prophetMuhammad" order="25" android:drawable="@drawable/prophet_muhammad"></prophet>
-    <prophet android:name="@string/prophetMusa" order="14" android:drawable="@drawable/prophet_musa"></prophet>
-    <prophet android:name="@string/prophetNuh" order="3" android:drawable="@drawable/prophet_nuh"></prophet>
-    <prophet android:name="@string/prophetSaleh" order="5" android:drawable="@drawable/prophet_saleh"></prophet>
-    <prophet android:name="@string/prophetShuaib" order="13" android:drawable="@drawable/prophet_shuaib"></prophet>
-    <prophet android:name="@string/prophetSulayman" order="18" android:drawable="@drawable/prophet_sulayman"></prophet>
-    <prophet android:name="@string/prophetYahya" order="23" android:drawable="@drawable/prophet_yahya"></prophet>
-    <prophet android:name="@string/prophetYaqub" order="10" android:drawable="@drawable/prophet_yaqub"></prophet>
-    <prophet android:name="@string/prophetYunus" order="21" android:drawable="@drawable/prophet_yunus"></prophet>
-    <prophet android:name="@string/prophetYusuf" order="11" android:drawable="@drawable/prophet_yusuf"></prophet>
-    <prophet android:name="@string/prophetZakariyya" order="22" android:drawable="@drawable/prophet_zakariyya"></prophet>
+    <prophet android:name="@string/prophetAdam" order="1" android:drawable="@drawable/prophet_adam">7:23</prophet>
+    <prophet android:name="@string/prophetAyyub" order="13" android:drawable="@drawable/prophet_ayyub">21:83,38:41</prophet>
+    <prophet android:name="@string/prophetDawud" order="17" android:drawable="@drawable/prophet_dawud">2:250</prophet>
+    <prophet android:name="@string/prophetIbrahim" order="7" android:drawable="@drawable/prophet_ibrahim">2:126-129,14:35-41,26:83-89,37:99-100,60:4-5</prophet>
+    <prophet android:name="@string/prophetIsa" order="24" android:drawable="@drawable/prophet_isa">5:114</prophet>
+    <prophet android:name="@string/prophetLut" order="6" android:drawable="@drawable/prophet_lut">29:30,26:169</prophet>
+    <prophet android:name="@string/prophetMuhammad" order="25" android:drawable="@drawable/prophet_muhammad">3:26-27,4:75,6:162-163,9:59,17:24,17:80,20:114,21:112,23:93-94,23:97-98,23:109,23:118,39:46,46:15</prophet>
+    <prophet android:name="@string/prophetMusa" order="15" android:drawable="@drawable/prophet_musa">7:126,7:143,7:151,7:155-156,2:67,5:25,10:85-86,20:25-35,28:16-17,28:21,28:24</prophet>
+    <prophet android:name="@string/prophetNuh" order="3" android:drawable="@drawable/prophet_nuh">11:45,11:47,23:26,23:29,26:117-118,54:10,71:26-28</prophet>
+    <prophet android:name="@string/prophetSaleh" order="5" android:drawable="@drawable/prophet_saleh">23:39</prophet>
+    <prophet android:name="@string/prophetShuaib" order="12" android:drawable="@drawable/prophet_shuaib">7:89</prophet>
+    <prophet android:name="@string/prophetSulayman" order="18" android:drawable="@drawable/prophet_sulayman">27:19,38:35</prophet>
+    <prophet android:name="@string/prophetYunus" order="21" android:drawable="@drawable/prophet_yunus">21:87</prophet>
+    <prophet android:name="@string/prophetYusuf" order="11" android:drawable="@drawable/prophet_yusuf">12:33,12:101</prophet>
+    <prophet android:name="@string/prophetZakariyya" order="22" android:drawable="@drawable/prophet_zakariyya">3:38,19:4-6,21:89</prophet>
 </prophets>

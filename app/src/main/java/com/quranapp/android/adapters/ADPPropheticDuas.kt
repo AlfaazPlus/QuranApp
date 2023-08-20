@@ -98,15 +98,14 @@ class ADPPropheticDuas(ctx: Context) :
             val ctx = binding.root.context
 
             val title = ctx.getString(
-                R.string.strMsgReferenceInQuran,
+                R.string.strMsgPropheticDuaInQuran,
                 MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific)
             )
 
-            val desc = ctx.getString(R.string.strMsgReferenceFoundPlaces, title, prophet.verses.size)
             val intent = prepareReferenceVerseIntent(
                 true,
                 title,
-                desc,
+                ctx.getString(R.string.strMsgReferenceDuas),
                 arrayOf(),
                 prophet.chapters,
                 prophet.verses

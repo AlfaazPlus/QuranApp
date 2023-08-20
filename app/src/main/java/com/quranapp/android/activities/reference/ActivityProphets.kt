@@ -120,7 +120,7 @@ class ActivityProphets : QuranMetaPossessingActivity() {
         spinner.onItemSelectedListener = object : SimplerSpinnerItemSelectListener() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 if (position == 0) {
-                    resetAdapter(quranProphet.prophets)
+                    resetAdapter(quranProphet.prophets.sortedBy { it.name })
                 } else if (position == 1) {
                     resetAdapter(quranProphet.prophets.sortedBy { it.order })
                     Toast.makeText(this@ActivityProphets, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show()

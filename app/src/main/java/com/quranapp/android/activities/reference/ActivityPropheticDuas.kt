@@ -118,7 +118,7 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
         spinner.onItemSelectedListener = object : SimplerSpinnerItemSelectListener() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 if (position == 0) {
-                    resetAdapter(propheticDua.prophets)
+                    resetAdapter(propheticDua.prophets.sortedBy { it.name })
                 } else if (position == 1) {
                     resetAdapter(propheticDua.prophets.sortedBy { it.order })
                     Toast.makeText(this@ActivityPropheticDuas, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show()
