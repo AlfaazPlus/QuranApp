@@ -3,6 +3,7 @@ package com.quranapp.android.utils.quran.parser
 import android.content.Context
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.ExclusiveVerse
+import com.quranapp.android.utils.Log
 import org.json.JSONObject
 import java.util.Locale
 
@@ -13,7 +14,9 @@ open class ExclusiveVersesParser {
         }
 
         val fallbackLocale = "en"
-        val currentLocale = Locale.getDefault().language
+        val currentLocale = with(Locale.getDefault().language) {
+            if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
+        }
         val pathFormat = "verses/$filename/%s"
         val fileName = "$filename.json"
 
@@ -29,6 +32,11 @@ open class ExclusiveVersesParser {
             ?.bufferedReader()?.use {
                 it.readText()
             }
+
+        Log.d(
+            "currentLocale: $currentLocale, fallbackLocale: $fallbackLocale",
+            "localeNames: $localeNames, fallbackNames: $fallbackNames"
+        )
 
         return parseVersesInternal(
             context,
