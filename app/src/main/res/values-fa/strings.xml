@@ -399,4 +399,9 @@
     <string name="msgRecitaionDownloaded" formatted="false">\"%1$s\" برای تلاوت \"%2$s\" بارگیری شد.</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">همه تلاوت‌های \"%1$s\" برای قاری \"%2$s\" حذف خواهد شد.</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">دانلود \"%1$s\" برای تلاوت کننده \"%2$s\" انجام نشد.</string>
+    <string name="msgTafsirLoadFailed">ناموفق در بارگذاری تفسیر</string>
+    <string name="labelNextTafsir">تفسیر بعدی</string>
+    <string name="labelPreviousTafsir">تفسیر قبلی</string>
+    <string name="strMsgDuaFor" formatted="false">دعا برای %s</string>
+    <string name="titleEtiquetteVerses">اخلاق در قرآن</string>
 </resources>
