@@ -6,14 +6,17 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tipText"
-        android:layout_width="match_parent"
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:padding="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/dr_bg_reader_verse_action"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="@string/msgClearSearchHistory"
         android:textColor="@color/colorText2"
-        android:textSize="@dimen/dmnCommonSize2"
-        android:visibility="gone" />
+        android:textSize="@dimen/dmnCommonSize2" />
 
     <com.quranapp.android.views.helper.RecyclerView2
         android:id="@+id/suggs"

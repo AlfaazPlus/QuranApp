@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <com.quranapp.android.views.homepage2.ReadHistoryLayout
+        <com.quranapp.android.views.homepage.ReadHistoryLayout
             android:id="@+id/readHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

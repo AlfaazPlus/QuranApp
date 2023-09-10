@@ -1,4 +1,4 @@
-package com.quranapp.android.views.homepage2
+package com.quranapp.android.views.homepage
 
 import android.content.Context
 import android.content.Intent
@@ -18,12 +18,14 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.LytHomepageTitledItemTitleBinding
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper
 import com.quranapp.android.interfaceUtils.Destroyable
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.extensions.setTextColorResource
 import com.quranapp.android.utils.extensions.setTextSizePx
 import com.quranapp.android.utils.extensions.updatePaddings
+import com.quranapp.android.views.homepage2.HomepageCollectionLayoutBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -90,6 +92,7 @@ class ReadHistoryLayout @JvmOverloads constructor(
 
     private fun makeNoHistoryAlert() {
         findViewById<View>(R.id.list).removeView()
+        adapter = null
 
         if (findViewById<View?>(R.id.text) != null) {
             return
