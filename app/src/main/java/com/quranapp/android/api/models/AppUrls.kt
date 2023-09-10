@@ -8,5 +8,6 @@ data class AppUrls(
     @SerialName("privacy-policy") val privacyPolicy: String,
     val about: String,
     val help: String,
-    val feedback: String
+    val feedback: String,
+    val discord: String,
 )

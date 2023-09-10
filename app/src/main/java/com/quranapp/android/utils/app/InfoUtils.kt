@@ -37,6 +37,11 @@ object InfoUtils {
         openTab(context, UrlsManager.URL_KEY_HELP)
     }
 
+    @JvmStatic
+    fun openDiscord(context: Context) {
+        openTab(context, UrlsManager.URL_KEY_DISCORD)
+    }
+
     private fun openTab(context: Context, urlKey: String) {
         val urlsManager = UrlsManager(context)
         val dialog = PeaceProgressDialog(context).apply {
@@ -67,12 +72,13 @@ object InfoUtils {
             }
         }
 
-        urlsManager.getUrlsJson({ (privacyPolicy, about, help, feedback): AppUrls ->
+        urlsManager.getUrlsJson({ (privacyPolicy, about, help, feedback, discord): AppUrls ->
             val url: String? = when (urlKey) {
                 UrlsManager.URL_KEY_FEEDBACK -> feedback
                 UrlsManager.URL_KEY_PRIVACY_POLICY -> privacyPolicy
                 UrlsManager.URL_KEY_ABOUT -> about
                 UrlsManager.URL_KEY_HELP -> help
+                UrlsManager.URL_KEY_DISCORD -> discord
                 else -> null
             }
 

@@ -21,6 +21,7 @@ import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.databinding.ActivityAboutBinding
 import com.quranapp.android.databinding.LytReaderSettingsItemBinding
 import com.quranapp.android.utils.app.InfoUtils.openAbout
+import com.quranapp.android.utils.app.InfoUtils.openDiscord
 import com.quranapp.android.utils.extensions.isRTL
 import com.quranapp.android.utils.extensions.updateMarginHorizontal
 import com.quranapp.android.utils.extensions.updateMarginVertical
@@ -74,6 +75,14 @@ class ActivityAbout : BaseActivity() {
             },
             R.drawable.icon_github,
             R.string.github
+        )
+        setup(
+            binding,
+            LytReaderSettingsItemBinding.inflate(layoutInflater).apply {
+                root.setOnClickListener { openDiscord(this@ActivityAbout) }
+            },
+            R.drawable.icon_discord,
+            R.string.discord
         )
     }
 
