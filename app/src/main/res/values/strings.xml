@@ -349,6 +349,7 @@
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
+    <string name="discord" translatable="false">Discord</string>
     <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
     <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>

@@ -26,6 +26,7 @@ class UrlsManager(private val ctx: Context) {
         const val URL_KEY_PRIVACY_POLICY = "privacy-policy"
         const val URL_KEY_ABOUT = "about"
         const val URL_KEY_HELP = "help"
+        const val URL_KEY_DISCORD = "discord"
 
         private val DIR_NAME_4_URLS = FileUtils.createPath(
             BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
