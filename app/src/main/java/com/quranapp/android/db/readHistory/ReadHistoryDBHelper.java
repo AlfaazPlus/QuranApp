@@ -106,6 +106,19 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, where, whereArgs);
     }
 
+
+    public void deleteHistory(@NonNull ReadHistoryModel model) {
+        deleteHistory(
+            null,
+            model.getReadType(),
+            model.getReaderStyle(),
+            model.getJuzNo(),
+            model.getChapterNo(),
+            model.getFromVerseNo(),
+            model.getToVerseNo()
+        );
+    }
+
     public void addToHistory(
         int readType, int readStyle, int juzNo, int chapterNo, int fromVerse, int toVerse,
         OnResultReadyCallback<ReadHistoryModel> callback

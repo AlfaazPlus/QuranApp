@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
+import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
@@ -27,6 +29,7 @@ class QuranApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        DownloadSourceUtils.resetDownloadSourceBaseUrl(this)
         NotificationUtils.createNotificationChannels(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

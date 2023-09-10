@@ -12,6 +12,9 @@
     <item name="on" type="id" />
     <item name="off" type="id" />
 
+    <item name="srcGithub" type="id" />
+    <item name="srcJsDelivr" type="id" />
+
     <item name="btnPlayControl" type="id" />
     <item name="btnFootnotes" type="id" />
     <item name="btnTafsir" type="id" />
