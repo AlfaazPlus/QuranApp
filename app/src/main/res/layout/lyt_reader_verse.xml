@@ -19,14 +19,16 @@
         android:gravity="start"
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
-        android:textDirection="rtl" />
+        android:textDirection="rtl"
+        android:textIsSelectable="true" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/translTextSpannable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="15dp"
-        android:paddingVertical="5dp" />
+        android:paddingVertical="5dp"
+        android:textIsSelectable="true" />
 
     <View
         android:id="@+id/bottomBorder"
