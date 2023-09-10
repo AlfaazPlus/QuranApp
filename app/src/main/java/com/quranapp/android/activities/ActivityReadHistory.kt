@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
@@ -21,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class ActivityReadHistory : QuranMetaPossessingActivity(), ReadHistoryCallbacks {
     private lateinit var binding: ActivityBookmarkBinding
@@ -106,14 +110,14 @@ class ActivityReadHistory : QuranMetaPossessingActivity(), ReadHistoryCallbacks 
             val models = readHistoryDBHelper?.getAllHistories(-1) ?: ArrayList()
 
             withContext(Dispatchers.Main) {
-                setupAdapter(models)
+                setupAdapter(ArrayList(models))
 
                 binding.loader.visibility = View.GONE
             }
         }
     }
 
-    private fun setupAdapter(models: List<ReadHistoryModel>) {
+    private fun setupAdapter(models: ArrayList<ReadHistoryModel>) {
         if (adapter == null && models.isNotEmpty()) {
             val spanCount = if (WindowUtils.isLandscapeMode(this)) 2 else 1
             binding.list.layoutManager = GridLayoutManager(this, spanCount)
@@ -127,6 +131,32 @@ class ActivityReadHistory : QuranMetaPossessingActivity(), ReadHistoryCallbacks 
 
         binding.header.setShowRightIcon(models.isNotEmpty())
         binding.noItems.visibility = if (models.isEmpty()) View.VISIBLE else View.GONE
+
+        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                val position = viewHolder.bindingAdapterPosition
+
+                if (position < 0 || position >= models.size) {
+                    return
+                }
+
+                val model = models[position]
+                readHistoryDBHelper?.deleteHistory(model)
+                models.removeAt(position)
+                adapter?.notifyItemRemoved(position)
+
+                if (models.isEmpty()) {
+                    refreshHistories()
+                }
+            }
+        })
+        touchHelper.attachToRecyclerView(binding.list)
     }
 
     override fun onReadHistoryRemoved(model: ReadHistoryModel) {}
