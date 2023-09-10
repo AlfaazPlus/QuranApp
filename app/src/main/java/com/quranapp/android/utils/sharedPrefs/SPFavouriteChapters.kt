@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 object SPFavouriteChapters {
@@ -13,12 +14,13 @@ object SPFavouriteChapters {
         return favChapters?.map { it.toInt() }?.toList() ?: listOf()
     }
 
+    @SuppressLint("ApplySharedPref")
     fun addToFavorites(ctx: Context, chapterNo: Int) {
         val favChapters = HashSet(sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!)
         favChapters.add(chapterNo.toString())
         sp(ctx).edit().apply {
             putStringSet(KEY_FAVOURITE_CHAPTERS, favChapters)
-            apply()
+            commit()
         }
     }
 
@@ -26,12 +28,13 @@ object SPFavouriteChapters {
         return sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!.contains(chapterNo.toString())
     }
 
+    @SuppressLint("ApplySharedPref")
     fun removeFromFavorites(ctx: Context, chapterNo: Int) {
         val favChapters = HashSet(sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!)
         favChapters.remove(chapterNo.toString())
         sp(ctx).edit().apply {
             putStringSet(KEY_FAVOURITE_CHAPTERS, favChapters)
-            apply()
+            commit()
         }
     }
 }
