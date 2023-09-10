@@ -413,4 +413,6 @@
 \n
 \nهەر ئێستا دایبەزێنە لە:
 \n%s</string>
+    <string name="strMsgDuaOf" formatted="false">نزای %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">نزای %s لە قورئاندا</string>
 </resources>

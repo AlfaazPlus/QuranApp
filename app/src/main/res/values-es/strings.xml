@@ -412,4 +412,6 @@
 \nDESCARGAR AHORA:
 \n%s</string>
     <string name="titleEtiquetteVerses">Etiqueta en el Corán</string>
+    <string name="strMsgDuaOf" formatted="false">Dua de %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s en el Corán</string>
 </resources>
