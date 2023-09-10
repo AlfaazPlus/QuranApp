@@ -130,7 +130,7 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
 
         header.setLeftIconRes(R.drawable.dr_icon_arrow_left);
         header.setRightIconRes(R.drawable.dr_icon_delete);
-        header.setShowRightIcon(false);
+        header.setShowRightIcon(true);
 
         header.setBGColor(R.color.colorBGPage);
     }
@@ -205,14 +205,12 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
         if (size > 0) {
             header.setLeftIconRes(R.drawable.dr_icon_close);
             header.setTitleText(getString(R.string.strLabelSelectedCount, size));
-            header.setShowRightIcon(true);
             if (animator instanceof SimpleItemAnimator) {
                 ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
             }
         } else {
             header.setLeftIconRes(R.drawable.dr_icon_arrow_left);
             header.setTitleText(R.string.strTitleBookmarks);
-            header.setShowRightIcon(false);
             if (animator instanceof SimpleItemAnimator) {
                 ((SimpleItemAnimator) animator).setSupportsChangeAnimations(true);
             }

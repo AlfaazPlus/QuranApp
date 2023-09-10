@@ -1,9 +1,14 @@
 package com.quranapp.android.utils.univ
 
 import android.content.Context
+import android.content.DialogInterface
+import android.view.View
 import android.widget.Toast
+import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
+import com.peacedesign.android.widget.dialog.base.PeaceDialog.DialogGravity
 import com.quranapp.android.R
+import com.quranapp.android.components.bookmark.BookmarkModel
 import java.lang.ref.WeakReference
 
 object MessageUtils {
@@ -43,5 +48,48 @@ object MessageUtils {
         builder.setNeutralButton(btn) { _, _ -> action?.run() }
         builder.setFocusOnNeutral(true)
         builder.show()
+    }
+
+    @JvmStatic
+    @JvmOverloads
+    fun showConfirmationDialog(
+        context: Context,
+        title: Int,
+        msg: Int? = null,
+        btn: Int,
+        btnColor: Int? = null,
+        @DialogGravity gravity: Int = PeaceDialog.GRAVITY_CENTER,
+        action: Runnable?
+    ) {
+        showConfirmationDialog(
+            context,
+            context.getString(title),
+            msg?.let { context.getString(it) },
+            context.getString(btn),
+            btnColor,
+            gravity,
+            action
+        )
+    }
+
+    @JvmStatic
+    fun showConfirmationDialog(
+        context: Context,
+        title: CharSequence,
+        msg: CharSequence? = null,
+        btn: String,
+        btnColor: Int? = null,
+        @DialogGravity gravity: Int = PeaceDialog.GRAVITY_CENTER,
+        action: Runnable?
+    ) {
+        PeaceDialog.newBuilder(context).apply {
+            setTitle(title)
+            setTitleTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            setMessage(msg ?: "\n")
+            setMessageTextAlignment(View.TEXT_ALIGNMENT_CENTER)
+            setDialogGravity(gravity)
+            setNeutralButton(R.string.strLabelCancel, null)
+            setNegativeButton(btn, btnColor ?: 0) { _, _ -> action?.run() }
+        }.show()
     }
 }

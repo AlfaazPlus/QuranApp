@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadHistoryDBHelper extends SQLiteOpenHelper {
-    private static final int HISTORY_LIMIT = 20;
+    private static final int HISTORY_LIMIT = 40;
     private static final String DB_NAME = "ReadHistory.db";
     public static final int DB_VERSION = 1;
 
@@ -165,5 +165,10 @@ public class ReadHistoryDBHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return verses;
+    }
+
+    public void deleteAllHistories() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
     }
 }

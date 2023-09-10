@@ -405,4 +405,6 @@
     <string name="msgInvalidParams">Invalid params</string>
     <string name="msgTafsirLoadFailed">Failed to load tafsir</string>
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
+    <string name="msgClearReadHistory">Clear read history</string>
+    <string name="msgClearSearchHistory">Clear search history</string>
 </resources>

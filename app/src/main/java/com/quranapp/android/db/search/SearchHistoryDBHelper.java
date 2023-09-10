@@ -145,4 +145,13 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return histories;
     }
+
+    public long getHistoriesCount() {
+        return DatabaseUtils.queryNumEntries(getReadableDatabase(), TABLE_NAME);
+    }
+
+    public void clearHistories() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
 }
