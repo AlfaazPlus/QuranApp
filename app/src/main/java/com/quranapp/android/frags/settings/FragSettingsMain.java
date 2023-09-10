@@ -6,26 +6,6 @@
 
 package com.quranapp.android.frags.settings;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.KEY_SETTINGS_DESTINATION;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_THEME;
-import static com.quranapp.android.activities.readerSettings.ActivitySettings.SETTINGS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.getMaxProgress;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -48,7 +28,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -58,6 +37,25 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_GITHUB;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_JSDELIVR;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.getMaxProgress;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -65,6 +63,7 @@ import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
+import com.quranapp.android.api.RetrofitInstance;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
@@ -73,6 +72,7 @@ import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.databinding.LytReaderSettingsItemBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextDecoratorBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextSizeBinding;
+import com.quranapp.android.databinding.LytResDownloadSourceSheetBinding;
 import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsReaderBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
@@ -81,6 +81,7 @@ import com.quranapp.android.frags.settings.appLogs.FragSettingsAppLogs;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.app.DownloadSourceUtils;
 import com.quranapp.android.utils.app.ThemeUtils;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
@@ -119,8 +120,6 @@ import kotlin.Unit;
 
 public class FragSettingsMain extends FragSettingsBase implements FragmentResultListener {
     private FragSettingsMainBinding mBinding;
-    private LytReaderSettingsItemBinding mThemeExplorerBinding;
-    private LytReaderSettingsItemBinding mVOTDToggleBinding;
     private LytReaderSettingsItemBinding mTranslExplorerBinding;
     private LytReaderSettingsItemBinding mTafsirExplorerBinding;
     private LytReaderSettingsItemBinding mRecitationExplorerBinding;
@@ -168,9 +167,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (getContext() == null) {
             return;
         }
-
-        tryLaunchThemeExplorerFromIntent(getContext(), args);
-        tryLaunchVOTDToggleExplorer(getContext(), args);
     }
 
     @Override
@@ -277,31 +273,21 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void initThemes(LinearLayout parent) {
-        mThemeExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
-        setupLauncherParams(R.drawable.dr_icon_theme, mThemeExplorerBinding);
+        LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater);
+        setupLauncherParams(R.drawable.dr_icon_theme, binding);
 
-        setupThemeTitle();
-        mThemeExplorerBinding.launcher.setOnClickListener(v -> launchThemeExplorer(v.getContext()));
+        setupThemeTitle(binding);
+        binding.launcher.setOnClickListener(v -> launchThemeExplorer(v.getContext(), binding));
 
-        parent.addView(mThemeExplorerBinding.getRoot());
-
-        tryLaunchThemeExplorerFromIntent(parent.getContext(), getArgs());
+        parent.addView(binding.getRoot());
     }
 
-    private void setupThemeTitle() {
-        if (mThemeExplorerBinding == null) return;
-
-        String selectedTheme = ThemeUtils.resolveThemeTextFromMode(mThemeExplorerBinding.getRoot().getContext());
-        prepareTitle(mThemeExplorerBinding, R.string.strTitleTheme, selectedTheme);
+    private void setupThemeTitle(LytReaderSettingsItemBinding binding) {
+        String selectedTheme = ThemeUtils.resolveThemeTextFromMode(binding.getRoot().getContext());
+        prepareTitle(binding, R.string.strTitleTheme, selectedTheme);
     }
 
-    private void tryLaunchThemeExplorerFromIntent(Context ctx, Bundle args) {
-        if (args.getInt(KEY_SETTINGS_DESTINATION) == SETTINGS_THEME) {
-            launchThemeExplorer(ctx);
-        }
-    }
-
-    private void launchThemeExplorer(Context ctx) {
+    private void launchThemeExplorer(Context ctx, LytReaderSettingsItemBinding parentBinding) {
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
         PeaceBottomSheetParams params = sheetDialog.getParams();
         params.setHeaderTitle(getString(R.string.strTitleTheme));
@@ -332,45 +318,33 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return Unit.INSTANCE;
         });
 
-        sheetDialog.setOnDismissListener(this::setupThemeTitle);
+        sheetDialog.setOnDismissListener(() -> setupThemeTitle(parentBinding));
         sheetDialog.show(getParentFragmentManager());
     }
 
     private void initVOTDToggleLauncher(LinearLayout parent) {
-        mVOTDToggleBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
+        LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
 
-        setupLauncherParams(R.drawable.dr_icon_heart_filled, mVOTDToggleBinding);
-        setupVOTDToggleTitle();
+        setupLauncherParams(R.drawable.dr_icon_heart_filled, binding);
+        setupVOTDToggleTitle(binding);
 
-        mVOTDToggleBinding.launcher.setOnClickListener(v -> launchVOTDToggleExplorer(v.getContext()));
+        binding.launcher.setOnClickListener(v -> launchVOTDToggleExplorer(v.getContext(), binding));
 
-        parent.addView(mVOTDToggleBinding.getRoot());
-
-        tryLaunchVOTDToggleExplorer(parent.getContext(), getArgs());
+        parent.addView(binding.getRoot());
     }
 
-    private void setupVOTDToggleTitle() {
-        if (mVOTDToggleBinding == null) {
-            return;
-        }
-
-        Context context = mVOTDToggleBinding.getRoot().getContext();
+    private void setupVOTDToggleTitle(LytReaderSettingsItemBinding binding) {
+        Context context = binding.getRoot().getContext();
 
         String status = context.getString(
             VOTDUtils.isVOTDTrulyEnabled(context)
                 ? R.string.strLabelOn
                 : R.string.strLabelOff
         );
-        prepareTitle(mVOTDToggleBinding, R.string.strTitleVOTD, status);
+        prepareTitle(binding, R.string.strTitleVOTD, status);
     }
 
-    private void tryLaunchVOTDToggleExplorer(Context ctx, Bundle args) {
-        if (args.getInt(KEY_SETTINGS_DESTINATION) == SETTINGS_VOTD) {
-            launchVOTDToggleExplorer(ctx);
-        }
-    }
-
-    private void launchVOTDToggleExplorer(Context ctx) {
+    private void launchVOTDToggleExplorer(Context ctx, LytReaderSettingsItemBinding parentBinding) {
         AlarmManager alarmManager = ContextCompat.getSystemService(ctx, AlarmManager.class);
 
         PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
@@ -415,7 +389,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             return true;
         });
 
-        sheetDialog.setOnDismissListener(this::setupVOTDToggleTitle);
+        sheetDialog.setOnDismissListener(() -> setupVOTDToggleTitle(parentBinding));
         sheetDialog.show(getParentFragmentManager());
     }
 
@@ -721,7 +695,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 SPReader.setSavedTextSizeMultArabic(
                     seekBar.getContext(),
-                    ReaderTextSizeUtils.calculateMultiplier(ReaderTextSizeUtils.normalizeProgress(seekbar.getProgress()))
+                    ReaderTextSizeUtils.calculateMultiplier(
+                        ReaderTextSizeUtils.normalizeProgress(seekbar.getProgress()))
                 );
             }
         });
@@ -786,7 +761,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             public void onStopTrackingTouch(@NonNull SeekBar seekBar) {
                 SPReader.setSavedTextSizeMultTransl(
                     seekBar.getContext(),
-                    ReaderTextSizeUtils.calculateMultiplier(ReaderTextSizeUtils.normalizeProgress(seekbar.getProgress()))
+                    ReaderTextSizeUtils.calculateMultiplier(
+                        ReaderTextSizeUtils.normalizeProgress(seekbar.getProgress()))
                 );
             }
         });
@@ -827,7 +803,63 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     private void iniOtherSettings() {
+        initDownloadSource(mBinding.otherSettings.getRoot());
         initLogLauncher(mBinding.otherSettings.getRoot());
+    }
+
+    private void initDownloadSource(LinearLayout parent) {
+        LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater);
+        setupLauncherParams(R.drawable.dr_icon_download, binding);
+
+        setupDownloadSrcTitle(binding);
+        binding.launcher.setOnClickListener(v -> launchDownloadSourceSelector(v.getContext(), binding));
+
+        parent.addView(binding.getRoot());
+    }
+
+    private void launchDownloadSourceSelector(Context ctx, LytReaderSettingsItemBinding parentBinding) {
+        PeaceBottomSheet sheetDialog = new PeaceBottomSheet();
+        PeaceBottomSheetParams params = sheetDialog.getParams();
+        params.setHeaderTitle(getString(R.string.titleResourceDownloadSource));
+
+        LytResDownloadSourceSheetBinding binding = LytResDownloadSourceSheetBinding.inflate(mInflater);
+
+        binding.downloadSrcGroup.check(
+            (DOWNLOAD_SRC_GITHUB.equals(SPAppConfigs.getResourceDownloadSrc(ctx)))
+                ? R.id.srcGithub
+                : R.id.srcJsDelivr
+        );
+
+        params.setContentView(binding.getRoot());
+
+        binding.downloadSrcGroup.setOnCheckChangedListener((button, checkedId) -> {
+            final String downloadSrc;
+
+            if (checkedId == R.id.srcGithub) {
+                downloadSrc = DOWNLOAD_SRC_GITHUB;
+            } else if (checkedId == R.id.srcJsDelivr) {
+                downloadSrc = DOWNLOAD_SRC_JSDELIVR;
+            } else {
+                downloadSrc = DOWNLOAD_SRC_DEFAULT;
+            }
+
+            SPAppConfigs.setResourceDownloadSrc(ctx, downloadSrc);
+            DownloadSourceUtils.resetDownloadSourceBaseUrl(ctx);
+
+            sheetDialog.dismiss();
+
+            return Unit.INSTANCE;
+        });
+
+        sheetDialog.setOnDismissListener(() -> setupDownloadSrcTitle(parentBinding));
+        sheetDialog.show(getParentFragmentManager());
+    }
+
+    private void setupDownloadSrcTitle(LytReaderSettingsItemBinding binding) {
+        final String selectedSource = DownloadSourceUtils.getCurrentSourceName(
+            binding.getRoot().getContext()
+        );
+        prepareTitle(binding, R.string.titleResourceDownloadSource, selectedSource);
     }
 
     private void initLogLauncher(LinearLayout parent) {

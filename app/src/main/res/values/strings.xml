@@ -407,4 +407,6 @@
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="msgClearReadHistory">Clear read history</string>
     <string name="msgClearSearchHistory">Clear search history</string>
+    <string name="titleResourceDownloadSource">Resource download source</string>
+    <string name="msgResourceDownloadSource">Use this option to download Quran data from a different source if one is not working</string>
 </resources>
