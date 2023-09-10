@@ -84,6 +84,7 @@
             android:paddingHorizontal="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="@dimen/dmnPadBig"
+            android:textIsSelectable="true"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dmnFootnoteSize" />
     </androidx.core.widget.NestedScrollView>
