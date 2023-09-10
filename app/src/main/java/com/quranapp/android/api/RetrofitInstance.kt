@@ -17,16 +17,24 @@ object RetrofitInstance {
         .cache(null)
         .build()
 
-    val github: GithubApi by lazy {
-        Retrofit.Builder()
-            .baseUrl(ApiConfig.GITHUB_ROOT_URL)
-            .addConverterFactory(
-                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
-            )
-            .client(client)
-            .build()
-            .create(GithubApi::class.java)
-    }
+    private var githubApi: GithubApi? = null
+    var githubResDownloadUrl: String = ApiConfig.JS_DELIVR_ROOT_URL
+
+    val github: GithubApi
+        get() {
+            if (githubApi == null) {
+                githubApi = Retrofit.Builder()
+                    .baseUrl(githubResDownloadUrl)
+                    .addConverterFactory(
+                        JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                    )
+                    .client(client)
+                    .build()
+                    .create(GithubApi::class.java)
+            }
+
+            return githubApi!!
+        }
 
     val quran: QuranApi by lazy {
         Retrofit.Builder()
@@ -37,5 +45,9 @@ object RetrofitInstance {
             .client(client)
             .build()
             .create(QuranApi::class.java)
+    }
+
+    fun resetGithubApi() {
+        githubApi = null
     }
 }

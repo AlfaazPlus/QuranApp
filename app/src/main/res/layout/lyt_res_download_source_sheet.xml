@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:overScrollMode="ifContentScrolls">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/msgResourceDownloadSource"
+            android:textColor="@color/colorText2"
+            android:textSize="@dimen/dmnCommonSize2" />
+
+        <com.quranapp.android.widgets.radio.PeaceRadioGroup
+            android:id="@+id/downloadSrcGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.quranapp.android.widgets.radio.PeaceRadioButton
+                android:id="@id/srcGithub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/dr_bg_hover_cornered"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="GitHub"
+                android:textAppearance="@style/TextAppearanceCommonTitle"
+                app:peaceComp_spaceBetween="15dp"
+                app:peaceComp_subText="raw.githubusercontent.com"
+                tools:ignore="HardcodedText" />
+
+            <com.quranapp.android.widgets.radio.PeaceRadioButton
+                android:id="@id/srcJsDelivr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/dr_bg_hover_cornered"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="JSDelivr"
+                android:textAppearance="@style/TextAppearanceCommonTitle"
+                app:peaceComp_spaceBetween="15dp"
+                app:peaceComp_subText="cdn.jsdelivr.net"
+                tools:ignore="HardcodedText" />
+        </com.quranapp.android.widgets.radio.PeaceRadioGroup>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
