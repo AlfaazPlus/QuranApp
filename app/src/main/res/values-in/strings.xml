@@ -58,7 +58,7 @@
     <string name="strLabelPreviousVerse">Ayat sebelumnya</string>
     <string name="strLabelNextVerse">Ayat selanjutnya</string>
     <string name="strLabelVersesText">Ayat</string>
-    <string name="strLabelSurah" formatted="false">Surah %s</string>
+    <string name="strLabelSurah" formatted="false">Surat %s</string>
     <string name="strLabelVerseNo" formatted="false">Ayat %d</string>
     <string name="strLabelVerses" formatted="false">Ayat %1$d–%2$d</string>
     <string name="strLabelVersesWithColon" formatted="false">Ayat : %1$d–%2$d</string>
@@ -74,12 +74,12 @@
     <string name="strTitleMadani">Madaniyah</string>
     <string name="strTitleFootnote">Catatan Kaki</string>
     <string name="strTitleReaderChapters2">Surah</string>
-    <string name="strTitleReaderJuz2">Juz</string>
+    <string name="strTitleReaderJuz2">Bagian</string>
     <string name="strTitleReaderVerses">Ayat</string>
     <string name="strTitleReaderJumpToVerse">Pergi ke ayat</string>
     <string name="strTitleVerseOptions">Pilihan ayat</string>
     <string name="strTitleVerseRecitation">Pelafalan Ayat</string>
-    <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Surat %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Pergi ke ayat %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Baca Ayat %1$d - %2$d</string>
     <string name="strTitleReaderLayoutStyle">Tampilan Al Quran</string>
@@ -114,7 +114,7 @@
     <string name="strTitleFeaturedTopics">Topik dalam Al Quran</string>
     <string name="strTitleFeaturedProphets">Nabi dan Rasul dalam Al Quran</string>
     <string name="strLabelPageNo" formatted="false">Halaman %d</string>
-    <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="strLabelJuzNo" formatted="false">Bagian %d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Ayat : %d</string>
     <string name="strTitleFootnotes">Catatan Kaki</string>
     <string name="strTitleSendFeedback">Beri Umpan Balik</string>
@@ -135,7 +135,7 @@
     <string name="strTitleSuccess">Berhasil</string>
     <string name="strTitleThresholdReached">Khatam</string>
     <string name="strChapInfoSeeMore">Lihat info selengkapnya ›</string>
-    <string name="strTitleChapInfoJuzNo">Juz No.</string>
+    <string name="strTitleChapInfoJuzNo">Bagian No.</string>
     <string name="strTitleChapInfoVerses">Ayat</string>
     <string name="strTitleChapInfoPages">Halaman</string>
     <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
@@ -412,4 +412,6 @@
 \nUNDUH SEKARANG:
 \n%s</string>
     <string name="titleEtiquetteVerses">adab dalam alquran</string>
+    <string name="strMsgDuaOf" formatted="false">Dua dari %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %s di al-Quran</string>
 </resources>
