@@ -28,7 +28,7 @@
     <string name="strTitleBookmarkDeleteAll">لابردنی سەرجەم نیشانەکراوەکان؟</string>
     <string name="strTitleRepeatVerse">دووبارەکردنەوەی ئایەت</string>
     <string name="strTitleQuickEdit">دەستکاریکردن</string>
-    <string name="strTitleReportVerse">ڕاستکردنەوە</string>
+    <string name="strTitleReportVerse">ڕاگەیاندنی هەڵە</string>
     <string name="strTitleTopics">بابەتەکان</string>
     <string name="strTitleFeaturedProphets">پێغەمبەران لەناو قورئان</string>
     <string name="strChapInfoSeeMore">زانیاری زیاتر ›</string>
@@ -85,7 +85,7 @@
     <string name="strTitleAboutSurah">دەربارەی سورەت</string>
     <string name="strTitleTranslations">وەرگێڕانەکان</string>
     <string name="strTitleDownloadTranslations">داگرتن</string>
-    <string name="strTitleSelectReciter">قورئانخوێنەکان</string>
+    <string name="strTitleSelectReciter">قورئانخوێن هەڵبژێرە</string>
     <string name="strTitleScripts">فۆنت</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">لابردنی %d نیشانەکراو؟</string>
     <string name="strTitleTranslDelete">سڕینەوەی وەرگێڕان؟</string>
@@ -163,12 +163,12 @@
     <string name="strLabelDismiss">فەرامۆشکردن</string>
     <string name="strLabelDiscard">ڕەتکردنەوە</string>
     <string name="strLabelHide">شاردنەوە</string>
-    <string name="strLabelEdit">دەستکاریکردن</string>
+    <string name="strLabelEdit">دەستکاری</string>
     <string name="strLabelView">بینین</string>
     <string name="strLabelRead">خوێندنەوە »</string>
     <string name="strLabelViewAll">بینینی هەمووی</string>
     <string name="strLabelUpdateQuranApp">نوێکردنەوەی قورئانی پیرۆز</string>
-    <string name="strLabelDone">باشە</string>
+    <string name="strLabelDone">تەواو</string>
     <string name="strLabelChangeNRestart">گۆڕین و ئیشپێکردنەوە</string>
     <string name="strLabelNotNow">دواتر</string>
     <string name="strLabelNext">دواتر</string>
@@ -385,7 +385,7 @@
     <string name="msgRecitaionDownloaded" formatted="false">داگرتنی \"%1$s\" سەرکەوتو بوو بۆ قورئانخوێن \"%2$s\".</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">سەرجەم فایلەکانی \"%1$s\" بۆ قورئانخوێن \"%2$s\" دەسڕێنەوە.</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">فایلی دەنگی \"%1$s\" بۆ قورئانخوێن \"%2$s\" سڕایەوە.</string>
-    <string name="labelArabic">قورئانخوێنەکان</string>
+    <string name="labelArabic">قورئان</string>
     <string name="labelTranslation">وەرگێڕان</string>
     <string name="titleManageAudio">ڕێکخستنی دەنگەکان</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">داگرتنی \"%1$s\" سەرکەوتو نەبوو بۆ قورئانخوێن \"%2$s\".</string>
