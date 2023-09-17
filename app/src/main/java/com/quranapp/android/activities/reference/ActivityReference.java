@@ -385,7 +385,7 @@ public class ActivityReference extends ReaderPossessingActivity {
             verseNo
         );
         verse.setTranslations(translations);
-        verse.arabicTextSpannable = prepareVerseText(verse);
+        verse.arabicTextSpannable = SPReader.getArabicTextEnabled(this) ? prepareVerseText(verse) : null;
         verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
         return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);

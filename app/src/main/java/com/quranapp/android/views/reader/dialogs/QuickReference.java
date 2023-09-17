@@ -43,6 +43,7 @@ import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.views.CardMessage;
@@ -388,7 +389,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
 
                 verse.setIncludeChapterNameInSerial(true);
                 verse.setTranslations(translations);
-                verse.arabicTextSpannable = actvt.prepareVerseText(verse);
+                verse.arabicTextSpannable = SPReader.getArabicTextEnabled(actvt) ? actvt.prepareVerseText(verse) : null;
                 verse.translTextSpannable = actvt.prepareTranslSpannable(verse, translations, booksInfo);
 
                 verses.add(verse);

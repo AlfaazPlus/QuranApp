@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,13 +64,13 @@ import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
-import com.quranapp.android.api.RetrofitInstance;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel;
 import com.quranapp.android.databinding.FragSettingsMainBinding;
 import com.quranapp.android.databinding.LytReaderIndexTabBinding;
 import com.quranapp.android.databinding.LytReaderSettingsItemBinding;
+import com.quranapp.android.databinding.LytReaderSettingsItemSwitchBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextDecoratorBinding;
 import com.quranapp.android.databinding.LytReaderSettingsTextSizeBinding;
 import com.quranapp.android.databinding.LytResDownloadSourceSheetBinding;
@@ -240,13 +241,14 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         initAppLanguage(mBinding.appSettings.getRoot());
         initThemes(mBinding.appSettings.getRoot());
         initVOTDToggleLauncher(mBinding.appSettings.getRoot());
+        initArabicTextToggle(mBinding.appSettings.getRoot());
     }
 
     private void initAppLanguage(LinearLayout parent) {
         LytReaderSettingsItemBinding appLangExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
             false);
 
-        setupLauncherParams(R.drawable.dr_icon_language, appLangExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_language, appLangExplorerBinding);
         setupAppLangTitle(appLangExplorerBinding);
 
         appLangExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsLanguage.class, null));
@@ -269,12 +271,12 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             }
         }
 
-        prepareTitle(binding, R.string.strTitleAppLanguage, selectedLanguageName);
+        prepareTitle(binding.launcher, R.string.strTitleAppLanguage, selectedLanguageName);
     }
 
     private void initThemes(LinearLayout parent) {
         LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater);
-        setupLauncherParams(R.drawable.dr_icon_theme, binding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_theme, binding);
 
         setupThemeTitle(binding);
         binding.launcher.setOnClickListener(v -> launchThemeExplorer(v.getContext(), binding));
@@ -284,7 +286,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void setupThemeTitle(LytReaderSettingsItemBinding binding) {
         String selectedTheme = ThemeUtils.resolveThemeTextFromMode(binding.getRoot().getContext());
-        prepareTitle(binding, R.string.strTitleTheme, selectedTheme);
+        prepareTitle(binding.launcher, R.string.strTitleTheme, selectedTheme);
     }
 
     private void launchThemeExplorer(Context ctx, LytReaderSettingsItemBinding parentBinding) {
@@ -325,7 +327,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void initVOTDToggleLauncher(LinearLayout parent) {
         LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater, parent, false);
 
-        setupLauncherParams(R.drawable.dr_icon_heart_filled, binding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_heart_filled, binding);
         setupVOTDToggleTitle(binding);
 
         binding.launcher.setOnClickListener(v -> launchVOTDToggleExplorer(v.getContext(), binding));
@@ -341,7 +343,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
                 ? R.string.strLabelOn
                 : R.string.strLabelOff
         );
-        prepareTitle(binding, R.string.strTitleVOTD, status);
+        prepareTitle(binding.launcher, R.string.strTitleVOTD, status);
     }
 
     private void launchVOTDToggleExplorer(Context ctx, LytReaderSettingsItemBinding parentBinding) {
@@ -407,6 +409,23 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
     }
 
+    private void initArabicTextToggle(LinearLayout parent) {
+        Context context = parent.getContext();
+
+        LytReaderSettingsItemSwitchBinding binding = LytReaderSettingsItemSwitchBinding.inflate(
+            mInflater, parent, true
+        );
+        setupLauncherParams(binding.getRoot());
+
+        binding.container.setOnClickListener(v -> binding.switcher.toggle());
+        binding.switcher.setChecked(SPReader.getArabicTextEnabled(context));
+
+        binding.switcher.setOnCheckedChangeListener((buttonView, isChecked) ->
+            SPReader.setArabicTextEnabled(context, isChecked));
+
+        prepareTitle(binding.text, R.string.titleArabicTextToggle, context.getString(R.string.msgArabicTextToggle));
+    }
+
     private void initReaderSettings(Context ctx) {
         LytSettingsReaderBinding readerSettings = mBinding.readerSettings;
 
@@ -425,7 +444,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void initTranslExplorer(LinearLayout parent) {
         mTranslExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_translations, mTranslExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_translations, mTranslExplorerBinding);
         setupTranslTitle();
 
         mTranslExplorerBinding.launcher.setOnClickListener(v -> {
@@ -467,13 +486,13 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         final int size = slugs.size();
         String subtext = size == 0 ? null : getString(R.string.strLabelSelectedCount, size);
-        prepareTitle(mTranslExplorerBinding, R.string.strTitleTranslations, subtext);
+        prepareTitle(mTranslExplorerBinding.launcher, R.string.strTitleTranslations, subtext);
     }
 
     private void initTafsirExplorer(LinearLayout parent) {
         mTafsirExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_tafsir, mTafsirExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_tafsir, mTafsirExplorerBinding);
         setupTafsirTitle();
 
         mTafsirExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsTafsirs.class, null));
@@ -484,7 +503,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void initScriptExplorer(LinearLayout parent) {
         mScriptExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_quran_script, mScriptExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_quran_script, mScriptExplorerBinding);
         setupScriptTitle();
 
         mScriptExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsScripts.class, null));
@@ -499,18 +518,18 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         String subtitle = QuranScriptUtilsKt.getQuranScriptName(
             SPReader.getSavedScript(mScriptExplorerBinding.getRoot().getContext())
         );
-        prepareTitle(mScriptExplorerBinding, R.string.strTitleSelectScripts, subtitle);
+        prepareTitle(mScriptExplorerBinding.launcher, R.string.strTitleSelectScripts, subtitle);
     }
 
     private void setupTafsirTitle() {
         if (mTafsirExplorerBinding == null) return;
         Context ctx = mTafsirExplorerBinding.getRoot().getContext();
 
-        prepareTitle(mTafsirExplorerBinding, R.string.strTitleSelectTafsir, null);
+        prepareTitle(mTafsirExplorerBinding.launcher, R.string.strTitleSelectTafsir, null);
 
         TafsirManager.prepare(ctx, false, () -> {
             prepareTitle(
-                mTafsirExplorerBinding,
+                mTafsirExplorerBinding.launcher,
                 R.string.strTitleSelectTafsir,
                 TafsirUtils.getTafsirName(SPReader.getSavedTafsirKey(ctx))
             );
@@ -522,7 +541,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void initRecitationExplorer(LinearLayout parent) {
         mRecitationExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_recitation, mRecitationExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_recitation, mRecitationExplorerBinding);
         setupRecitationTitle();
 
         mRecitationExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsRecitations.class, null));
@@ -534,11 +553,11 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         if (mRecitationExplorerBinding == null) return;
         Context ctx = mRecitationExplorerBinding.getRoot().getContext();
 
-        prepareTitle(mRecitationExplorerBinding, R.string.strTitleSelectReciter, null);
+        prepareTitle(mRecitationExplorerBinding.launcher, R.string.strTitleSelectReciter, null);
         RecitationManager.prepare(ctx, false, () -> {
             RecitationManager.prepareTranslations(ctx, false, () -> {
                 prepareTitle(
-                    mRecitationExplorerBinding,
+                    mRecitationExplorerBinding.launcher,
                     R.string.strTitleSelectReciter,
                     RecitationManager.getCurrentReciterNameForAudioOption(ctx)
                 );
@@ -553,9 +572,10 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         com.quranapp.android.databinding.LytReaderSettingsItemBinding mManageAudioExplorerBinding = LytReaderSettingsItemBinding.inflate(
             mInflater);
 
-        setupLauncherParams(R.drawable.dr_icon_download, mManageAudioExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_download, mManageAudioExplorerBinding);
 
-        prepareTitle(mManageAudioExplorerBinding, R.string.titleManageAudio, getString(R.string.downloadRecitations));
+        prepareTitle(mManageAudioExplorerBinding.launcher, R.string.titleManageAudio,
+            getString(R.string.downloadRecitations));
 
         mManageAudioExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsManageAudio.class, null));
 
@@ -572,8 +592,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     }
 
     @SuppressLint("RtlHardcoded")
-    private void prepareTitle(LytReaderSettingsItemBinding binding, int titleRes, String subtitle) {
-        Context ctx = binding.getRoot().getContext();
+    private void prepareTitle(TextView txtView, int titleRes, String subtitle) {
+        Context ctx = txtView.getContext();
 
         SpannableStringBuilder ssb = new SpannableStringBuilder();
         int flag = SPAN_EXCLUSIVE_EXCLUSIVE;
@@ -592,18 +612,20 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             ssb.append("\n").append(subtitleSS);
         }
 
-        binding.launcher.setText(ssb);
-        binding.launcher.setGravity(WindowUtils.isRTL(ctx) ? Gravity.RIGHT : Gravity.LEFT);
+        txtView.setText(ssb);
+        txtView.setGravity(WindowUtils.isRTL(ctx) ? Gravity.RIGHT : Gravity.LEFT);
     }
 
-    private void setupLauncherParams(int startIconRes, LytReaderSettingsItemBinding launcherBinding) {
-        View launcherRoot = launcherBinding.getRoot();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        LayoutParamsKt.updateMarginHorizontal(params, ContextKt.dp2px(launcherRoot.getContext(), 10));
-        LayoutParamsKt.updateMarginVertical(params, ContextKt.dp2px(launcherRoot.getContext(), 5));
-        launcherRoot.setLayoutParams(params);
-
+    private void setupLauncherParamsAndIcon(int startIconRes, LytReaderSettingsItemBinding launcherBinding) {
+        setupLauncherParams(launcherBinding.getRoot());
         setupLauncherIcon(startIconRes, launcherBinding.launcher);
+    }
+
+    private void setupLauncherParams(View layout) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        LayoutParamsKt.updateMarginHorizontal(params, ContextKt.dp2px(layout.getContext(), 10));
+        LayoutParamsKt.updateMarginVertical(params, ContextKt.dp2px(layout.getContext(), 5));
+        layout.setLayoutParams(params);
     }
 
     private void initLayoutStyle(Context ctx) {
@@ -809,7 +831,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
     private void initDownloadSource(LinearLayout parent) {
         LytReaderSettingsItemBinding binding = LytReaderSettingsItemBinding.inflate(mInflater);
-        setupLauncherParams(R.drawable.dr_icon_download, binding);
+        setupLauncherParamsAndIcon(R.drawable.dr_icon_download, binding);
 
         setupDownloadSrcTitle(binding);
         binding.launcher.setOnClickListener(v -> launchDownloadSourceSelector(v.getContext(), binding));
@@ -859,7 +881,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         final String selectedSource = DownloadSourceUtils.getCurrentSourceName(
             binding.getRoot().getContext()
         );
-        prepareTitle(binding, R.string.titleResourceDownloadSource, selectedSource);
+        prepareTitle(binding.launcher, R.string.titleResourceDownloadSource, selectedSource);
     }
 
     private void initLogLauncher(LinearLayout parent) {
@@ -868,9 +890,9 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         LytReaderSettingsItemBinding logExplorerBinding = LytReaderSettingsItemBinding.inflate(mInflater, parent,
             false);
 
-        setupLauncherParams(R.drawable.icon_log, logExplorerBinding);
+        setupLauncherParamsAndIcon(R.drawable.icon_log, logExplorerBinding);
         prepareTitle(
-            logExplorerBinding,
+            logExplorerBinding.launcher,
             R.string.appLogs,
             TextUtils.concat(ctx.getString(R.string.crashLogs), ", ", ctx.getString(R.string.suppressedLogs)).toString()
         );

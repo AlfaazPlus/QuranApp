@@ -410,4 +410,6 @@
     <string name="msgClearSearchHistory">Clear search history</string>
     <string name="titleResourceDownloadSource">Resource download source</string>
     <string name="msgResourceDownloadSource">Use this option to download Quran data from a different source if one is not working</string>
+    <string name="titleArabicTextToggle">Show Arabic Verse Text</string>
+    <string name="msgArabicTextToggle">Disabling this feature will hide Arabic verse text from all over the app.</string>
 </resources>

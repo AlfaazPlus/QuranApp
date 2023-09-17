@@ -756,6 +756,8 @@ public class ActivityReader extends ReaderPossessingActivity {
             toVerse
         );
 
+        boolean arabicTextEnabled = SPReader.getArabicTextEnabled(this);
+
         for (int verseNo = fromVerse, pos = 0; verseNo <= toVerse; verseNo++, pos++) {
             ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
             final Verse verse = chapter.getVerse(verseNo);
@@ -763,7 +765,7 @@ public class ActivityReader extends ReaderPossessingActivity {
             List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
 
-            verse.arabicTextSpannable = prepareVerseText(verse);
+            verse.arabicTextSpannable = arabicTextEnabled ? prepareVerseText(verse) : null;
             verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
             models.add(model.setViewType(VERSE).setVerse(verse));
@@ -882,13 +884,16 @@ public class ActivityReader extends ReaderPossessingActivity {
             toVerse
         );
 
+        boolean arabicTextEnabled = SPReader.getArabicTextEnabled(this);
+
         for (int verseNo = fromVerse, pos = 0; verseNo <= toVerse; verseNo++, pos++) {
             Verse verse = chapter.getVerse(verseNo);
             ReaderRecyclerItemModel model = new ReaderRecyclerItemModel();
 
             List<Translation> translations = listOfTranslations.get(pos);
             verse.setTranslations(translations);
-            verse.arabicTextSpannable = prepareVerseText(verse);
+
+            verse.arabicTextSpannable = arabicTextEnabled ? prepareVerseText(verse) : null;
             verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
             models.add(model.setViewType(VERSE).setVerse(verse));

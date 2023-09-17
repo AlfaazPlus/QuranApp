@@ -51,6 +51,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
 
+/*
+ * A very ugly implementation of verse of the day view
+ */
 public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallbacks {
     private final CallableTaskRunner<Pair<QuranTranslBookInfo, Translation>> taskRunner = new CallableTaskRunner<>();
     private final BookmarkDBHelper mBookmarkDBHelper;
@@ -64,6 +67,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     private int mVerseNo = -1;
     private String mLastScript;
     private String mLastTranslationSlug;
+    private boolean mLastArabicTextEnabled;
     private SpannableString mLastTranslationText;
     private SpannableString mLastAuthorText;
     private CharSequence mArText;
@@ -198,7 +202,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
     }
 
     private void prepareTransl(Context context, String scriptKey) {
-        taskRunner.callAsync(new BaseCallableTask<Pair<QuranTranslBookInfo, Translation>>() {
+        taskRunner.callAsync(new BaseCallableTask<>() {
             QuranTranslationFactory factory;
 
             @Override
@@ -228,10 +232,17 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
             @Override
             public void onComplete(@Nullable Pair<QuranTranslBookInfo, Translation> result) {
+                // if translation has changed, update with new translation
                 if (result != null) {
                     setupTranslation(mArText, result.getFirst(), result.getSecond());
-                } else if (scriptKey != null && !Objects.equals(mLastTranslationSlug, scriptKey)) {
+                }
+                // Or if script has changed, update with old translation
+                else if (scriptKey != null && !Objects.equals(mLastScript, scriptKey)) {
                     setupTranslation(mArText, null, null);
+                }
+                // Or if arabic text enable status has changed, update with old script and old translation
+                else if (SPReader.getArabicTextEnabled(getContext()) != mLastArabicTextEnabled) {
+                    showText(mArText, mLastTranslationText, mLastAuthorText);
                 }
             }
         });
@@ -255,14 +266,16 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         return bookInfo;
     }
 
-    private void setupTranslation(CharSequence mArText, QuranTranslBookInfo bookInfo, Translation translation) {
+    private void setupTranslation(CharSequence arText, QuranTranslBookInfo bookInfo, Translation translation) {
+        // If translation is null, it means translation was not changed, update with old translation
         if (bookInfo == null || translation == null || TextUtils.isEmpty(translation.getText())) {
-            showText(mArText, mLastTranslationText, mLastAuthorText);
+            showText(arText, mLastTranslationText, mLastAuthorText);
             return;
         }
 
         mLastTranslationSlug = translation.getBookSlug();
 
+        // Remove footnote markers etc
         String transl = StringUtils.removeHTML(translation.getText(), false);
         int txtSize = ContextKt.getDimenPx(getContext(), R.dimen.dmnCommonSize1_5);
         SpannableString translText = mVerseDecorator.setupTranslText(transl, -1, txtSize, translation.isUrdu());
@@ -277,27 +290,31 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mLastTranslationText = translText;
         mLastAuthorText = authorText;
 
-        showText(mArText, translText, authorText);
+        showText(arText, translText, authorText);
     }
 
     private void showText(CharSequence arText, SpannableString transl, SpannableString author) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
 
-        if (!TextUtils.isEmpty(arText)) {
+        mLastArabicTextEnabled = SPReader.getArabicTextEnabled(getContext());
+
+        boolean showArabicText = mLastArabicTextEnabled && !TextUtils.isEmpty(arText);
+        boolean showTranslation = !TextUtils.isEmpty(transl);
+
+        // Show arabic text if enabled
+        if (showArabicText) {
             sb.append(arText);
         }
 
-        if (!TextUtils.isEmpty(transl)) {
-            if (!TextUtils.isEmpty(arText)) {
-                sb.append("\n\n");
-            }
+        // Show translation if exists
+        if (showTranslation) {
+            if (showArabicText) sb.append("\n\n");
             sb.append(transl);
         }
 
-        if (!TextUtils.isEmpty(author)) {
-            if (!TextUtils.isEmpty(transl) || !TextUtils.isEmpty(arText)) {
-                sb.append("\n");
-            }
+        // Show author if translation exists
+        if (showTranslation) {
+            sb.append("\n");
             author.setSpan(new LineHeightSpan2(15, true, false), 0, author.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
             sb.append(author);
         }
