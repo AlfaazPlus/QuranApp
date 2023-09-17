@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
@@ -32,12 +33,27 @@ import java.util.Set;
  * SharedPreferences utility class for Reader
  */
 public abstract class SPReader {
+    public static final String SP_READER = "sp_reader";
+
     public static final String SP_TEXT_STYLE = "sp_reader_text";
     public static final String SP_TRANSL = "sp_reader_translations";
     public static final String SP_RECITATION_OPTIONS = "sp_reader_recitation_options";
     public static final String SP_TAFSIR = "sp_reader_tafsir";
     public static final String SP_SCRIPT = "sp_reader_script";
     public static final String SP_READER_STYLE = "sp_reader_style";
+
+    public static boolean getArabicTextEnabled(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE);
+        return sp.getBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, true);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static void setArabicTextEnabled(Context context, boolean enabled) {
+        SharedPreferences sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled);
+        editor.commit();
+    }
 
     public static float getSavedTextSizeMultArabic(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);

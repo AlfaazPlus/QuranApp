@@ -26,6 +26,7 @@ import com.quranapp.android.utils.simplified.SimpleClickableSpan;
 import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
+import com.quranapp.android.utils.univ.Keys;
 
 import java.time.Duration;
 import java.util.Calendar;
@@ -201,8 +202,8 @@ public abstract class VerseUtils {
 
     private static int[] getVOTD(Context ctx, QuranMeta quranMeta, boolean forceNew) {
         SharedPreferences sp = ctx.getSharedPreferences(SPVerses.SP_VOTD, Context.MODE_PRIVATE);
-        int chapterNo = sp.getInt(SPVerses.KEY_VOTD_CHAPTER_NO, -1);
-        int verseNo = sp.getInt(SPVerses.KEY_VOTD_VERSE_NO, -1);
+        int chapterNo = sp.getInt(Keys.KEY_VOTD_CHAPTER_NO, -1);
+        int verseNo = sp.getInt(Keys.KEY_VOTD_VERSE_NO, -1);
 
         boolean isChapterValid = QuranMeta.isChapterValid(chapterNo);
         boolean isVerseValid = quranMeta.isVerseValid4Chapter(chapterNo, verseNo);
@@ -236,7 +237,7 @@ public abstract class VerseUtils {
 
     private static boolean doesVOTDNeedReset(Context ctx, SharedPreferences sp) {
         try {
-            long lastDateTimeMillis = sp.getLong(SPVerses.KEY_VOTD_DATE, -1);
+            long lastDateTimeMillis = sp.getLong(Keys.KEY_VOTD_DATE, -1);
             if (lastDateTimeMillis == -1) {
                 return true;
             }

@@ -224,7 +224,10 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         mBinding.verseHeader.verseSerial.setContentDescription(verseSerialDesc);
         mBinding.verseHeader.verseSerial.setText(verseSerial);
 
-        mBinding.textArabic.setText(verse.arabicTextSpannable);
+        mBinding.textArabic.setVisibility(verse.arabicTextSpannable != null ? VISIBLE : GONE);
+        if (verse.arabicTextSpannable != null) {
+            mBinding.textArabic.setText(verse.arabicTextSpannable);
+        }
         mBinding.translTextSpannable.setText(verse.translTextSpannable);
         mBinding.translTextSpannable.setMovementMethod(SelectableLinkMovementMethod.getInstance());
     }
