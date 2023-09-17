@@ -5,8 +5,8 @@
     <string name="strLabelNoPreviousJuz">بدون جزء قبلی</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">سوره %1$s │ آیه %2$d</string>
     <string name="strTitleFootnotes">پانویسها و منابع</string>
-    <string name="strTitleAppVersion">نسخه برنامه</string>
-    <string name="strVersion" formatted="false">نسخه %s</string>
+    <string name="strTitleAppVersion">نسخهٔ برنامه</string>
+    <string name="strVersion" formatted="false">نسخهٔ %s</string>
     <string name="strTitleLicenses">مجوزها</string>
     <string name="strLabelClose">بستن</string>
     <string name="strLabelOkay">باشه</string>
@@ -249,9 +249,9 @@
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ نتیجه ای در %s یافت نشد. لطفاً فیلترهای جستجو را بررسی کنید یا در ترجمه دیگری جستجو کنید.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">نتیجه ای پیدا نشد. لطفا فیلترهای جستجو را بررسی کنید.</string>
     <string name="strMsgSearchWordPart">قسمتی از کلمه را جستجو کنید</string>
-    <string name="strMsgSearchWordPartExample">به عنوان مثال: \"انسان\" در \"انسان\"</string>
+    <string name="strMsgSearchWordPartExample">به عنوان مثال: \"انسان\" در \"انسانیت\"</string>
     <string name="strMsgSearchArabic">جستجو در متن عربی</string>
-    <string name="strMsgResetReaderSettings">همه تنظیمات را به حالت پیش فرض بازنشانی کنید.</string>
+    <string name="strMsgResetReaderSettings">همه تنظیمات را به حالت پیش‌فرض بازنشانی کنید.</string>
     <string name="strMsgProphetsOrder">نمایش پیامبران به ترتیب زمانی</string>
     <string name="strMsgShareRange" formatted="false">محدوده بین %1$d–%2$d را وارد کنید</string>
     <string name="strMsgEnterValidRange">لطفاً یک محدوده معتبر وارد کنید</string>
@@ -307,7 +307,7 @@
     <string name="onboardDescLanguage">برنامه را به زبان خود شخصی سازی کنید. همیشه می توانید بعداً این را تغییر دهید.</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">قلم‌ها: %1$d دانلود از کل %2$d (~%3$dMB باقی مانده)</string>
     <string name="copiedToClipboard">در کلیپ بورد کپی شد.</string>
-    <string name="textDownloading">در حال دانلود …</string>
+    <string name="textDownloading">در حال بارگیری …</string>
     <string name="createIssue">ایجاد موضوع</string>
     <string name="titleChapterInfoCleanup">اطلاعات فصل پاک شود؟</string>
     <string name="verseSyncOn">همگام سازی آیه: روشن</string>
@@ -316,14 +316,14 @@
     <string name="strPreviewTextTransl">به نام الله بخشندۀ مهربان</string>
     <string name="onboardDescTranslations">همیشه می توانید بعداً این را تغییر دهید. می توانید ترجمه های بیشتری را از تنظیمات دانلود کنید.</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">تفسیر آیه %d را بخوانید</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d از %2$d قلم دانلود شد</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d از %2$d قلم دریافت شد</string>
     <string name="msgDownloadingResource" formatted="false">در حال دانلود %s</string>
     <string name="msgAnotherDownloadInProgress">دانلود دیگری در حال انجام است.</string>
     <string name="lastCrashLog">آخرین گزارش خرابی</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n %2$s
 \n
-\nباید دوباره آن را دانلود کنید.</string>
+\nباید دوباره آن‌را بارگیری کنید.</string>
     <string name="onboardDescTheme">همیشه می توانید بعداً این را تغییر دهید.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d اسکریپت دانلود شده و فونت آنها را می توان آزاد کرد.</string>
     <string name="titleTafsirCleanup">تفسیر حذف شود؟</string>
@@ -332,13 +332,13 @@
     <string name="labelDownload">دانلود</string>
     <string name="strTitleRecitations">تلاوت ها</string>
     <string name="strTitleScripts">اسکریپت ها</string>
-    <string name="msgDownloadKFQPCResources">قبل از اینکه بتوانید از این اسکریپت استفاده کنید، منابع زیر نیاز به دانلود دارند:</string>
+    <string name="msgDownloadKFQPCResources">قبل از اینکه بتوانید از این اسکریپت استفاده کنید، منابع زیر نیاز به بارگیری دارند:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">اسکریپت: %s (~1 مگابایت)</string>
     <string name="msgDownloadFailed">دانلود ناموفق بود</string>
     <string name="textPercentage" formatted="false">‭%d%%</string>
     <string name="pasteCrashLogGithubIssue">گزارش در کلیپ بورد کپی شده است. لطفاً آن را در شماره GitHub جای‌گذاری کنید.</string>
     <string name="strMsgTafsirsNoAvailable">تفسیری وجود ندارد</string>
-    <string name="msgDownloadingScript">دانلود اسکریپت</string>
+    <string name="msgDownloadingScript">بارگیری اسکریپت</string>
     <string name="labelBackgroundDownload">دانلود پس زمینه</string>
     <string name="translationCanBeFreedUp" formatted="false">%d ترجمه دانلود شده را می توان آزاد کرد.</string>
     <string name="msgVerseReminderAlarmPermission">برای فعال کردن یادآوری آیه، مجوز زنگ هشدار لازم است.</string>
@@ -355,7 +355,7 @@
     <string name="github">گیتهاب</string>
     <string name="msgAlarmManagerNotAvailable">مدیر زنگ هشدار در این دستگاه در دسترس نیست.</string>
     <string name="msgVerseReminderNotifPermission">برای فعال کردن یادآوری آیه، مجوز اعلان لازم است.</string>
-    <string name="msgDownloadingFonts">دانلود قلم ها</string>
+    <string name="msgDownloadingFonts">بارگیری قلم ها</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d از %2$d</string>
     <string name="titleStorageCleanup">پاکسازی ذخیره سازی</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d اطلاعات فصل ذخیره شده را می توان پاک کرد.</string>
@@ -392,7 +392,7 @@
     <string name="audioOption">گزینه صوتی</string>
     <string name="audioOnlyArabic">فقط پخش عربی</string>
     <string name="audioBothArabicTranslation">پخش هم عربی و هم ترجمه</string>
-    <string name="textDownloaded">دانلود شد</string>
+    <string name="textDownloaded">دریافت شد</string>
     <string name="crashLogs">گزارش های خرابی</string>
     <string name="logRemoved">گزارش حذف شد</string>
     <string name="labelArabic">عربی</string>
