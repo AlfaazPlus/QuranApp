@@ -88,7 +88,7 @@
     <string name="strLabelRestart">પુનઃપ્રારંભ</string>
     <string name="strLabelPrevious">અગાઉના</string>
     <string name="strLabelOpenInReader">રીડરમાં ખોલો</string>
-    <string name="strLabelRead">વાંચવું \"</string>
+    <string name="strLabelRead">વાંચવું »</string>
     <string name="strLabelVerseNoWithColon" formatted="false">આયત: %d</string>
     <string name="strLabelNext">આગળ</string>
     <string name="strLabelPageNo" formatted="false">પૃષ્ઠ %d</string>
@@ -399,4 +399,19 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">વાચક \"%2$s\" માટે \"%1$s\" ના પાઠો કાઢી નાખ્યા.</string>
     <string name="strPreviewTextTransl">અલ્લાહના નામથી, (શરૂ કરું છું), જે અત્યંત કૃપાળુ અને દયાળુ છે</string>
     <string name="strTitleAutoPlayNext">આગળ ઑટોપ્લે</string>
+    <string name="msgTafsirLoadFailed">તફસીર લોડ કરવામાં નિષ્ફળ</string>
+    <string name="labelNextTafsir">આગામી તફસીર</string>
+    <string name="labelPreviousTafsir">અગાઉની તફસીર</string>
+    <string name="place" formatted="false">%d સ્થાન</string>
+    <string name="strMsgDuaOf" formatted="false">%s ની દુઆ</string>
+    <string name="places" formatted="false">%d સ્થાનો</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">કુરાનમાં %s ની દુઆ</string>
+    <string name="strMsgDuaFor" formatted="false">%s માટે દુઆ</string>
+    <string name="titleSolutionVerses">કુરાનમાંથી ઉકેલો</string>
+    <string name="msgInvalidParams">અમાન્ય પરમ</string>
+    <string name="titleEtiquetteVerses">કુરાનમાં શિષ્ટાચાર</string>
+    <string name="strMsgShareApp" formatted="false">કુરાન એપ અનુવાદો સાથે નોબલ કુરાન વાંચવા અને અન્વેષણ કરવા માટે એક મફત અને ઓપન સોર્સ એપ્લિકેશન છે. આ એપમાં તફસીર, પઠન, રીમાઇન્ડર અને બીજી ઘણી સુવિધાઓ સાથે સરસ અને સ્વચ્છ ઈન્ટરફેસ છે.
+\n
+\nડાઉનલોડ કરો:
+\n%s</string>
 </resources>
