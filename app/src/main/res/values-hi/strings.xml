@@ -412,4 +412,6 @@
 \n
 \nअभी डाउनलोड करो:
 \n%s</string>
+    <string name="strMsgDuaOf" formatted="false">%s की दुआ</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">कुरान में %s की दुआ</string>
 </resources>
