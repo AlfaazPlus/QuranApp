@@ -412,4 +412,6 @@
 \n
 \nابھی ڈاؤن لوڈ کریں:
 \n%s</string>
+    <string name="strMsgDuaOf" formatted="false">%s کی دعا</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">قرآن میں %s کی دعا</string>
 </resources>
