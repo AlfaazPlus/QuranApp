@@ -23,7 +23,7 @@
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورة %1$s %2$d : آية %3$d</string>
     <string name="strTitleLicenses">التراخيص</string>
     <string name="strTitleAppVersion">إصدار التطبيق</string>
-    <string name="strVersion" formatted="false">الإصدار %s</string>
+    <string name="strVersion" formatted="false">النسخة %s</string>
     <string name="strLabelClose">إغلاق</string>
     <string name="strLabelOkay">حسنًا</string>
     <string name="strLabelGotIt">فهمتها</string>
