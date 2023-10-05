@@ -412,4 +412,6 @@
     <string name="titleAddToFavourites">Zu Favoriten hinzufügen</string>
     <string name="msgTafsirLoadFailed">Tafsir konnte nicht geladen werden</string>
     <string name="titleReaderTextSizeTafsir">Tafsir Text Größe</string>
+    <string name="strMsgDuaOf" formatted="false">Gebet von %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Gebet von %s im Koran</string>
 </resources>
