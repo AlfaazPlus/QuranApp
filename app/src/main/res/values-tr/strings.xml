@@ -111,9 +111,9 @@
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s suresi│ %2$d. ayet</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Bölüm nu. %1$d │ Ayet %2$d–%3$d</string>
-    <string name="strTitleReaderChapters">Sureler</string>
+    <string name="strTitleReaderChapters">Sureler (Bölümler)</string>
     <string name="strTitleFootnotes">Dipnotlar</string>
-    <string name="strTitleReaderJuz">Cüz</string>
+    <string name="strTitleReaderJuz">Cüz (Bölümler)</string>
     <string name="strTitleReaderChapters2">Sureler</string>
     <string name="strTitleReaderVerses">Ayet</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s suresi: %3$d. ayet</string>
@@ -172,7 +172,7 @@
     <string name="strLabelSelectVerse">Ayet seç</string>
     <string name="strLabelCurrentVerse">Geçerli ayet</string>
     <string name="strLabelVerseRange">Ayet aralığı</string>
-    <string name="strLabelSelectTranslations">Meal seç</string>
+    <string name="strLabelSelectTranslations">Mealleri seç</string>
     <string name="strLabelSelectTranslation">Meal seç</string>
     <string name="strLabelIncludeArabic">Arapça dahil</string>
     <string name="strLabelIncludeFootnotes">Dipnotlar dahil</string>
@@ -347,7 +347,7 @@
     <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek. Sure tilavet dosyalarını teker teker silmek isterseniz, ses ayarlarına gidin.</string>
     <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
     <string name="nItem">%d öğe</string>
-    <string name="nItems">%d öğe</string>
+    <string name="nItems">%d öğeler</string>
     <string name="verseSyncOn">Ayet takibi : AÇIK</string>
     <string name="verseSyncOff">Ayet takibi : KAPALI</string>
     <string name="nFiles" formatted="false">%d dosya</string>
@@ -412,4 +412,6 @@
     <string name="labelPreviousTafsir">Önceki tefsir</string>
     <string name="titleSolutionVerses">Kur\'an\'dan çözümler</string>
     <string name="titleEtiquetteVerses">Kur\'an\'daki görgü kuralları</string>
+    <string name="strMsgDuaOf" formatted="false">%s duası</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Kuran\'daki %s duası</string>
 </resources>
