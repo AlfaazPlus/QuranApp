@@ -18,16 +18,16 @@
     <string name="strTitleLicenses">Licencias</string>
     <string name="strLabelClose">Cerrar</string>
     <string name="strLabelOkay">Entendido</string>
-    <string name="strLabelGotIt">Entendido</string>
+    <string name="strLabelGotIt">Entiendo</string>
     <string name="strLabelCancel">Cancelar</string>
     <string name="strLabelRemove">Remover</string>
     <string name="strLabelDelete">Eliminar</string>
     <string name="strLabelRemoveAll">Remover todo</string>
-    <string name="strLabelBack">Regresar</string>
+    <string name="strLabelBack">Atrás</string>
     <string name="strLabelTop">Arriba</string>
     <string name="strLabelReset">Resetear</string>
     <string name="strLabelRefresh">Refrescar</string>
-    <string name="strLabelDismiss">Descartar</string>
+    <string name="strLabelDismiss">Desestimar</string>
     <string name="strLabelDiscard">Descartar</string>
     <string name="strLabelHide">Ocultar</string>
     <string name="strLabelEdit">Editar</string>
@@ -42,7 +42,7 @@
     <string name="strLabelSkip">Saltar</string>
     <string name="strLabelPrevious">Anterior</string>
     <string name="strLabelNext">Siguiente</string>
-    <string name="strLabelStart">Comenzar</string>
+    <string name="strLabelStart">Empezar</string>
     <string name="strLabelUpdateQuranApp">Actualizar QuranApp</string>
     <string name="strLabelDownloadNow">DESCARGAR AHORA</string>
     <string name="strLabelUpdate">Actualizar</string>
@@ -217,7 +217,7 @@
     <string name="strDescGoBack">Regresar</string>
     <string name="strLabelDownloadImage">Descargar imagen</string>
     <string name="strLabelAllChapters">Todos los capítulos</string>
-    <string name="strTitleFootnote">Nota</string>
+    <string name="strTitleFootnote">Notas al pie</string>
     <string name="strTitleFootnotes">Notas</string>
     <string name="strTitleReaderVerses">Versos</string>
     <string name="strTitleFilters">Filtros</string>
@@ -386,7 +386,7 @@
     <string name="msgRecitaionFailedToDownload" formatted="false">Error al descargar \"%1$s\" para el recitador \"%2$s\".</string>
     <string name="playbackSpeed">Velocidad de la reproducción</string>
     <string name="audioOnlyTranslation">Reproducir sólo la traducción</string>
-    <string name="labelTranslation">Traducciones</string>
+    <string name="labelTranslation">Traducción</string>
     <string name="titleReaderTextSizeTafsir">Tamaño del texto Tafsir</string>
     <string name="downloadRecitations">Descargar las Recitaciones</string>
     <string name="titleOtherSettings">Otros Ajustes</string>
