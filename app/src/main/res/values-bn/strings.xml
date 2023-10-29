@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strLabelReset">রিসেট</string>
+    <string name="strLabelReset">পুনঃবিন্যাস</string>
     <string name="strLabelPrevious">পূর্ববর্তী</string>
     <string name="strLabelView">দেখুন</string>
     <string name="strLabelNoPreviousChapter">পূর্বে কোনো সূরা নেই</string>
@@ -20,7 +20,7 @@
     <string name="strLabelVerseNo" formatted="false">আয়াত %d</string>
     <string name="strTitleAppVersion">অ্যাপ সংস্করণ</string>
     <string name="strVersion" formatted="false">সংস্করণ %s</string>
-    <string name="strTitleLicenses">লাইসেন্স</string>
+    <string name="strTitleLicenses">লাইসেন্সসমূহ</string>
     <string name="strLabelClose">বন্ধ করুন</string>
     <string name="strLabelOkay">ঠিক আছে</string>
     <string name="strLabelCancel">বাতিল করুন</string>
@@ -32,12 +32,12 @@
     <string name="strLabelBack">পেছনে</string>
     <string name="strLabelTop">শীর্ষ</string>
     <string name="strLabelRetry">পুনরায় চেষ্টা করুন</string>
-    <string name="strLabelRefresh">সতেজ করুন</string>
-    <string name="strLabelDismiss">খারিজ করুন</string>
+    <string name="strLabelRefresh">রিফ্রেস করুন</string>
+    <string name="strLabelDismiss">বাতিল করুন</string>
     <string name="strLabelDiscard">পরিত্যাগ করুন</string>
     <string name="strLabelHide">লুকান</string>
-    <string name="strLabelDone">সম্পন্ন</string>
-    <string name="strLabelRestart">রিস্টার্ট করুন</string>
+    <string name="strLabelDone">সম্পন্ন হয়েছে</string>
+    <string name="strLabelRestart">পুনরায় আরম্ভ করুন</string>
     <string name="strLabelOpen">খুলুন</string>
     <string name="strLabelOpenInReader">রিডারে খুলুন</string>
     <string name="strLabelRead">পড়ুন »</string>
@@ -76,7 +76,7 @@
     <string name="strTitleMakki">মাক্কি</string>
     <string name="strTitleMadani">মাদানী</string>
     <string name="strTitleFootnote">পাদটীকা</string>
-    <string name="strTitleFootnotes">পাদটীকা</string>
+    <string name="strTitleFootnotes">পাদটীকাগুলি</string>
     <string name="strTitleReaderChapters">সূরা (অধ্যায়)</string>
     <string name="strTitleReaderJuz">জুজ (পারা)</string>
     <string name="strTitleReaderChapters2">সূরাসমূহ</string>
@@ -137,7 +137,7 @@
     <string name="strTitleFeaturedDuas">কুরআনে বর্ণিত দোয়াসমূহ</string>
     <string name="strMsgChapInfoFailedLoad">সূরার তথ্য লোড করতে ব্যর্থ হয়েছে। দয়া করে পরে আবার চেষ্টা করুন।</string>
     <string name="strLabelBookmark">বুকমার্ক করুন</string>
-    <string name="strLabelSelectTranslations">অনুবাদ নির্বাচন করুন</string>
+    <string name="strLabelSelectTranslations">অনুবাদগুলি নির্বাচন করুন৷</string>
     <string name="strLabelRemoveAds">বিজ্ঞাপন গুলি অপসারণ করুন</string>
     <string name="strLabelOrder">ক্রম</string>
     <string name="strLabelAdvanceSharing">উন্নত শেয়ারিং</string>
@@ -176,7 +176,7 @@
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ডাউনলোড করতে ব্যর্থ হয়েছে।</string>
     <string name="strTitleError">ত্রুটি!</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">সর্বাধিক %d টি অনুবাদ একবারে নির্বাচন করা যেতে পারে। অন্য আরেকটি নির্বাচন করার আগে দয়া করে পূর্বের একটি নির্বাচন মুক্ত করুন। এটি কর্মক্ষমতা হ্রাস পাওয়া এড়ানোর জন্য জরুরি।</string>
-    <string name="strDescAddToBookmarks">বুকমার্ক করুন</string>
+    <string name="strDescAddToBookmarks">বুকমার্কগুলিতে যুক্ত করুন</string>
     <string name="strDescVerseNo" formatted="false">আয়াত সংখ্যা %d।</string>
     <string name="strMsgNoInternet">অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।</string>
     <string name="strDescClose">বন্ধ করুন</string>
@@ -412,4 +412,6 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" এর তেলাওয়াত মুছে ফেলা হয়েছে।</string>
     <string name="msgTafsirLoadFailed">তাফসির লোড করতে ব্যর্থ হয়েছে</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল খালি করা যেতে পারে।</string>
+    <string name="strMsgDuaOf" formatted="false">%s এর দোয়া</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">কুরআনে %s এর দোয়া</string>
 </resources>
