@@ -2,4 +2,59 @@
 <resources>
     <string name="strVersion" formatted="false">Версия %s</string>
     <string name="strTitleAppVersion">Версия приложения</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp — бесплатное и открытое приложение для чтения и изучения Ноблевого Корана с переводами. Приложение имеет удобный и чистый интерфейс с такими функциями, как тафсир, рецитация, напоминания и многое другое.
+\n
+\nСКАЧАТЬ СЕЙЧАС:
+\n%s</string>
+    <string name="labelAdd">Добавить</string>
+    <string name="strLabelRemove">Удалить</string>
+    <string name="strLabelDelete">Удалить</string>
+    <string name="strLabelRemoveAll">Удалить все</string>
+    <string name="strLabelCopy">Копировать</string>
+    <string name="strLabelBack">Назад</string>
+    <string name="strLabelTop">Вверх</string>
+    <string name="strLabelReset">Сбросить</string>
+    <string name="strLabelDone">Готово</string>
+    <string name="strLabelRestart">Перезапустить</string>
+    <string name="strLabelView">Просмотр</string>
+    <string name="strLabelOpen">Открыть</string>
+    <string name="strLabelRead">Читать »</string>
+    <string name="strLabelViewAll">Просмотреть все</string>
+    <string name="strLabelChangeNRestart">Изменить и перезапустить</string>
+    <string name="strLabelAdvertisement">Реклама</string>
+    <string name="strLabelSkip">Пропустить</string>
+    <string name="strLabelNotNow">Не сейчас</string>
+    <string name="strLabelPrevious">Предыдущий</string>
+    <string name="strLabelNext">Следующий</string>
+    <string name="strLabelStart">Начать</string>
+    <string name="strLabelUpdateQuranApp">Обновить QuranApp</string>
+    <string name="labelDownload">Скачать</string>
+    <string name="strLabelDownloadNow">СКАЧАТЬ СЕЙЧАС</string>
+    <string name="strLabelUpdate">Обновить</string>
+    <string name="strLabelInstall">Установить</string>
+    <string name="strLabelNew">Новое</string>
+    <string name="strLabelPremium">Премиум</string>
+    <string name="strLabelOn">Включено</string>
+    <string name="strLabelOff">Выключено</string>
+    <string name="strLabelThemeDark">Тёмная</string>
+    <string name="strLabelThemeLight">Светлая</string>
+    <string name="strTitleLicenses">Лицензии</string>
+    <string name="strLabelClose">Закрыть</string>
+    <string name="strLabelOkay">Хорошо</string>
+    <string name="strLabelGotIt">Понятно</string>
+    <string name="strLabelCancel">Отмена</string>
+    <string name="strLabelApply">Применить</string>
+    <string name="strLabelSend">Отправить</string>
+    <string name="strLabelRetry">Повторить</string>
+    <string name="strLabelRefresh">Обновить</string>
+    <string name="strLabelDismiss">Отклонить</string>
+    <string name="strLabelDiscard">Отбросить</string>
+    <string name="strLabelHide">Скрыть</string>
+    <string name="strLabelEdit">Редактировать</string>
+    <string name="strLabelOpenInReader">Открыть в ридере</string>
+    <string name="strLabelSystemDefault">Системная тема</string>
+    <string name="strLabelPreviousChapter">Предыдущая глава</string>
+    <string name="strLabelNextChapter">Следующая глава</string>
+    <string name="strLabelNoPreviousChapter">Нет предыдущей главы</string>
+    <string name="strLabelNoNextChapter">Нет следующей главы</string>
 </resources>
