@@ -235,7 +235,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
             return;
         }
 
-        mVSD.dismiss();
+        mVSD.hide();
     }
 
     @Override
