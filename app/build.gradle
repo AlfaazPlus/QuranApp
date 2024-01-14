@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.quranapp.android"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         versionCode 23_09_17_001
