@@ -140,7 +140,7 @@
     <string name="strLabelPause">Pause</string>
     <string name="strLabelBookmark">Marque-page</string>
     <string name="strLabelRemoveBookmark">Supprimer le marque-page</string>
-    <string name="strLabelBookmarked">Marques-pages</string>
+    <string name="strLabelBookmarked">Ajouté aux marques-pages</string>
     <string name="strLabelShare">Partager</string>
     <string name="strLabelReport">Signaler</string>
     <string name="strLabelContinueReading">Continuer la lecture »</string>
@@ -412,4 +412,6 @@
 \n%s</string>
     <string name="titleSolutionVerses">Solutions du Coran</string>
     <string name="titleEtiquetteVerses">Étiquette dans le Coran</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Invocation de %s dans le Coran</string>
+    <string name="strMsgDuaOf" formatted="false">Invocation de %s</string>
 </resources>
