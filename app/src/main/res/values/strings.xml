@@ -193,7 +193,7 @@
     <string name="strLabelOrder">Order</string>
     <string name="strLabelSelectedCount" formatted="false">%d selected</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d more translations</string>
-    <string name="strLabelAdvanceSharing">Advance Sharing</string>
+    <string name="strLabelAdvanceSharing">Advanced Sharing</string>
     <string name="strLabelSelectVerse">Select Verses</string>
     <string name="strLabelCurrentVerse">Current verse</string>
     <string name="strLabelVerseRange">Verse range</string>

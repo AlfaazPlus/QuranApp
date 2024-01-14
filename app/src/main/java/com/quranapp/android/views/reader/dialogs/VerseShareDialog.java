@@ -34,6 +34,7 @@ import com.quranapp.android.components.quran.subcomponents.Footnote;
 import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.LytVerseShareBinding;
+import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.univ.StringUtils;
@@ -269,6 +270,8 @@ public class VerseShareDialog extends PeaceDialog {
                     }
                 }
             }
+
+            Log.d(sb);
 
             if (sb.length() == 0) {
                 return;
