@@ -29,7 +29,7 @@
     <string name="strLabelGotIt">فهمتها</string>
     <string name="strLabelCancel">إلغاء</string>
     <string name="strLabelApply">تطبيق</string>
-    <string name="strLabelSend">أرسل</string>
+    <string name="strLabelSend">إرسال</string>
     <string name="strLabelRemove">إزالة</string>
     <string name="strLabelDelete">حذف</string>
     <string name="strLabelRemoveAll">إزالة الكل</string>
@@ -141,7 +141,7 @@
     <string name="strLabelPause">توقف</string>
     <string name="strLabelRemoveAds">إزالة الإعلانات</string>
     <string name="strLabelOrder">الترتيب</string>
-    <string name="strLabelReport">بلغ</string>
+    <string name="strLabelReport">إبلاغ</string>
     <string name="strLabelShare">شارك</string>
     <string name="strLabelContinueReading">متابعة القراءة »</string>
     <string name="strTitleFailed">فشل</string>
@@ -408,9 +408,9 @@
     <string name="msgInvalidParams">المعلومات غير دقيقة</string>
     <string name="place" formatted="false">موضع %d</string>
     <string name="titleEtiquetteVerses">الأخلاق في القرآن</string>
-    <string name="strMsgShareApp" formatted="false">تطبيق قرآن تطبيق مجاني ومفتوح المصدر لقراءة وتصفح القرآن الكريم مع ترجمات لمختلف اللغات. للتطبيق واجهة سهلة وسلسة مع مميزات مثل التفسير والتلاوة والتنبه واخرى.
+    <string name="strMsgShareApp" formatted="false">تطبيق قرآن، تطبيق مجاني ومفتوح المصدر لقراءة وتصفح القرآن الكريم مع الترجمات بمختلف اللغات. للتطبيق واجهة سهلة وسلسة مع مميزات مثل التفسير والتلاوة والتنبه والمزيد.
 \n
-\nنزل الآن:
+\nقم بتحميله الآن:
 \n%s</string>
     <string name="strMsgDuaOf" formatted="false">دعاء %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">دعاء %s في القرآن</string>
