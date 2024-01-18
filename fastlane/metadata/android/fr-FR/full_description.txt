@@ -1,0 +1,96 @@
+QuranApp est une application mobile sans publicité et axée sur la confidentialité qui facilite la lecture et l'exploration du Saint Coran au quotidien, à tout moment et en tout lieu. Sa conception facile à naviguer et soignée et épurée aide les utilisateurs à surmonter les difficultés liées à la lecture du Coran à l’ère de la technologie. Cette application propose plus de 30 traductions dans plusieurs langues afin que les personnes de différentes langues et régions puissent comprendre le but du Coran.
+
+~~~~~~~
+
+<h3>Caractéristiques de QuranApp</h3>
+
+Les fonctionnalités suivantes sont la raison pour laquelle vous devriez utiliser QuranApp.
+
+<b>🛡️ Pur</b>
+
+- Open source
+- Pas de publicité ni d'achats
+- Aucune autorisation téléphonique n'est requise
+- Aucune analyse ni suivi
+- Pas de collecte ni de partage de données
+
+<b>📙 Traductions</b>
+
+- 30+ traductions
+- Lire plusieurs traductions ensemble
+- Aperçu rapide des notes de bas de page
+- Aperçu rapide des références de versets
+- Entièrement hors ligne une fois téléchargé
+
+<b>🎙️ Récitations</b>
+
+- 15+ récitations
+- 5+ récitations de traduction
+  - Jouer uniquement le Coran
+  - Lire uniquement la traduction
+  - Jouez à la fois le Coran et la traduction
+- Répétez un seul verset
+- Jouer la gamme de vers
+- Jouer la récitation en continu
+- Défilement automatique pour correspondre au verset actuel
+- Contrôle de la vitesse de lecture
+- Téléchargez des récitations pour une utilisation hors ligne
+
+<b>📖️ Tafsir</b>
+
+- 5+ Tafsir
+- Les Tafsirs sont stockés pour une utilisation hors ligne
+
+<b>🎨 Polices</b>
+
+- Plusieurs polices
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC
+- Personnaliser la taille du texte arabe
+- Personnaliser la taille du texte de traduction
+
+<b>⚙Mise en page</b>
+
+- Lecture en mode traduction
+- Lecture en mode page
+- Lisez le Coran dans différents modes de traduction (verset unique, plage de versets, chapitre complet, juz complet)
+
+<b>➡️ Navigation</b>
+
+- Navigation pratique en mode verset unique
+- Passez rapidement à n'importe quel verset
+- Accédez rapidement à n'importe quel chapitre
+- Accédez rapidement à n'importe quel juz
+
+<b>❤️ Contenu du Coran</b>
+
+- Invocations du Coran
+- Solutions du Coran
+- Prophètes mentionnés dans le Coran
+- Étiquettes du Coran
+- Coran et Science
+
+<b>🔍 Recherche</b>
+
+- Recherche avancée
+- Recherche vocale
+- Historique de recherche
+- Accédez facilement à n'importe quelle traduction dans les résultats de recherche
+- Rechercher un mot complet ou une partie de mot
+
+<b>📝 Marques-pages</b>
+
+- Ajouter des versets à vos marques-pages pour plus tard
+- Ajouter un seul verset à vos marques-pages
+- Ajouter une plage de versets à vos marques-pages
+- Ajouter des notes personnalisées aux marques-pages
+
+<b>🔥 Autres fonctionnalités</b>
+
+- Rappel du verset du jour
+- Partage avancé
+- Thèmes sombres et clairs
+- L'application est disponible dans plus de 15 langues
+
+<i>🐞 Pour signaler un problème ou demander une nouvelle fonctionnalité, veuillez visiter le référentiel GitHub à l'adresse <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
