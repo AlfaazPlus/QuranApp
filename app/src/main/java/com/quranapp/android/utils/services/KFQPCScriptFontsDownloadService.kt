@@ -3,6 +3,7 @@ package com.quranapp.android.utils.services
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -313,7 +314,12 @@ class KFQPCScriptFontsDownloadService : LifecycleService() {
             .setOnlyAlertOnce(true)
             .setGroupSummary(true)
 
-        startForeground(DOWNLOAD_SCRIPT_NOTIFICATION_ID, initialNotifBuilder.build())
+        ServiceCompat.startForeground(
+            this,
+            DOWNLOAD_SCRIPT_NOTIFICATION_ID,
+            initialNotifBuilder.build(),
+            FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
     }
 
     private fun showProgressNotification(partNo: Int?, progress: Int, scriptKey: String) {

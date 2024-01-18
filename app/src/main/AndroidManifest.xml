@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:name=".QuranApp"
@@ -38,7 +40,8 @@
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity android:name=".activities.ActivityDownloads" />
-        <activity android:name=".activities.reference.ActivityReference"
+        <activity
+            android:name=".activities.reference.ActivityReference"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.quranapp.android.action.OPEN_REFERENCE" />
@@ -72,12 +75,13 @@
 
             <intent-filter android:label="About Surah (QuranApp)">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="quran.com"/>
-                <data android:pathPattern="/chapter_info/.*"/>
+                <data android:host="quran.com" />
+                <data android:pathPattern="/chapter_info/.*" />
             </intent-filter>
         </activity>
         <activity
@@ -106,17 +110,18 @@
 
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
-                <data android:host="quran.com"/>
-                <data android:pathPattern="/juz/.*"/>
-                <data android:pathPattern="/\\d+"/>
-                <data android:pathPattern="/\\d+/\\d+"/>
-                <data android:pathPattern="/\\d+/\\d+-\\d+"/>
-                <data android:pathPattern="/\\d+:\\d+"/>
-                <data android:pathPattern="/\\d+:\\d+-\\d+"/>
+                <data android:scheme="https" />
+                <data android:host="quran.com" />
+                <data android:pathPattern="/juz/.*" />
+                <data android:pathPattern="/\\d+" />
+                <data android:pathPattern="/\\d+/\\d+" />
+                <data android:pathPattern="/\\d+/\\d+-\\d+" />
+                <data android:pathPattern="/\\d+:\\d+" />
+                <data android:pathPattern="/\\d+:\\d+-\\d+" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivityOnboarding" />
@@ -160,10 +165,18 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".utils.services.RecitationService" />
-        <service android:name=".utils.services.RecitationChapterDownloadService" />
-        <service android:name=".utils.services.TranslationDownloadService" />
-        <service android:name=".utils.services.KFQPCScriptFontsDownloadService" />
+        <service
+            android:name=".utils.services.RecitationService"
+            android:foregroundServiceType="mediaPlayback" />
+        <service
+            android:name=".utils.services.RecitationChapterDownloadService"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".utils.services.TranslationDownloadService"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".utils.services.KFQPCScriptFontsDownloadService"
+            android:foregroundServiceType="dataSync" />
 
     </application>
 
