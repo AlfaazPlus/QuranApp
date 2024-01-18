@@ -7,6 +7,7 @@ import android.app.Service
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Binder
 import android.os.Build
 import androidx.core.app.ActivityCompat
@@ -69,9 +70,11 @@ class RecitationChapterDownloadService : Service() {
     override fun onCreate() {
         super.onCreate()
         if (STARTED_BY_USER && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForeground(
+            ServiceCompat.startForeground(
+                this,
                 NOTIF_ID,
-                NotificationUtils.createEmptyNotif(this, NotificationUtils.CHANNEL_ID_DOWNLOADS)
+                NotificationUtils.createEmptyNotif(this, NotificationUtils.CHANNEL_ID_DOWNLOADS),
+                FOREGROUND_SERVICE_TYPE_DATA_SYNC
             )
         }
 
@@ -92,7 +95,12 @@ class RecitationChapterDownloadService : Service() {
                 this,
                 NotificationUtils.CHANNEL_ID_DOWNLOADS
             )
-            startForeground(NOTIF_ID, notification)
+            ServiceCompat.startForeground(
+                this,
+                NOTIF_ID,
+                notification,
+                FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
             finish()
             return START_NOT_STICKY
         }
@@ -176,7 +184,8 @@ class RecitationChapterDownloadService : Service() {
 
         filesInProgress["$chapterNo:$verseNo"] = verseFile
 
-        val audioUrl = RecitationUtils.prepareRecitationAudioUrl(chapterModel.reciterModel, chapterNo, verseNo) ?: return
+        val audioUrl =
+            RecitationUtils.prepareRecitationAudioUrl(chapterModel.reciterModel, chapterNo, verseNo) ?: return
 
         withContext(Dispatchers.IO) {
             val inputStream = URL(audioUrl).openStream()
@@ -206,7 +215,12 @@ class RecitationChapterDownloadService : Service() {
     ) {
         notifManager?.cancel(NOTIF_ID)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
-        startForeground(notifId, notification)
+        ServiceCompat.startForeground(
+            this,
+            notifId,
+            notification,
+            FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
     }
 
     private fun notify(
