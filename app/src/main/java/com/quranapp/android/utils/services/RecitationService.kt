@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.services
 
-import android.Manifest.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
@@ -19,8 +18,21 @@ import androidx.core.app.ServiceCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_AUTO_TRANSITION
+import com.google.android.exoplayer2.Player.DISCONTINUITY_REASON_SEEK
+import com.google.android.exoplayer2.Player.Listener
+import com.google.android.exoplayer2.Player.PositionInfo
+import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
+import com.google.android.exoplayer2.Player.STATE_BUFFERING
+import com.google.android.exoplayer2.Player.STATE_ENDED
+import com.google.android.exoplayer2.Player.STATE_IDLE
+import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -315,6 +327,8 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
     @Synchronized
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, currentVerse: Int) {
+        Log.d(chapterNo, fromVerse, toVerse, currentVerse)
+
         recParams.currentVerse = ChapterVersePair(chapterNo, currentVerse)
         recParams.firstVerse = ChapterVersePair(chapterNo, fromVerse)
         recParams.lastVerse = ChapterVersePair(chapterNo, toVerse)
@@ -528,11 +542,14 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         if (quranMeta == null) return
 
         if (player.duration > 0 && player.currentPosition < player.duration) {
+            Log.d("This 1")
             if (isPlaying) pauseMedia()
             else playMedia()
         } else if (!recParams.hasNextVerse(quranMeta!!)) {
+            Log.d("This 2")
             restartRange()
         } else {
+            Log.d("This 3")
             restartVerse()
         }
     }

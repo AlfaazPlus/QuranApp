@@ -287,7 +287,7 @@ public class Navigator {
         }
 
         switch (mReaderParams.readType) {
-            case READER_READ_TYPE_VERSES: {
+            case READER_READ_TYPE_VERSES -> {
                 Pair<Integer, Integer> range = mReaderParams.verseRange;
                 if (QuranUtils.doesRangeDenoteSingle(range)) {
                     if (range.getFirst() != verseNo) {
@@ -303,12 +303,9 @@ public class Navigator {
                     }
                 }
             }
-            break;
-            case READER_READ_TYPE_JUZ:
-            case READER_READ_TYPE_CHAPTER: {
+            case READER_READ_TYPE_JUZ, READER_READ_TYPE_CHAPTER -> {
                 scrollToVerse(chapterNo, verseNo, true);
             }
-            break;
         }
 
         mActivity.updateVerseNumber(chapterNo, verseNo);
