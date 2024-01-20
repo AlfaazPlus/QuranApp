@@ -205,7 +205,7 @@
     <string name="strLabelMostPlaces">الأكثر ذكراً</string>
     <string name="strLabelSelectedCount" formatted="false">%d تم تحديد</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d المزيد من الترجمات</string>
-    <string name="strLabelAdvanceSharing">مشاركة متقدمة</string>
+    <string name="strLabelAdvanceSharing">المشاركة المتقدمة</string>
     <string name="strLabelCurrentVerse">الآية الحالية</string>
     <string name="strLabelVerseRange">نطاق الآية</string>
     <string name="strLabelSelectVerse">اختيار الآيات</string>
