@@ -136,8 +136,9 @@ public class ActivityReader extends ReaderPossessingActivity {
                         final int fromVerse;
                         final int toVerse;
                         Pair<Integer, Integer> verseRange = mReaderParams.verseRange;
+                        final var isSingleVerse = QuranUtils.doesRangeDenoteSingle(verseRange);
 
-                        if (QuranUtils.doesRangeDenoteSingle(verseRange)) {
+                        if (isSingleVerse) {
                             fromVerse = 1;
                             toVerse = currChapter.getVerseCount();
                         } else {
@@ -145,11 +146,18 @@ public class ActivityReader extends ReaderPossessingActivity {
                             toVerse = verseRange.getSecond();
                         }
 
+                        var playerCurrVerseNo = mPlayerService.getP().getCurrentVerseNo();
+
+                        if (playerCurrVerseNo == -1) {
+                            // get the first verse of the range (even if it's the single verse mode)
+                            playerCurrVerseNo = verseRange.getFirst();
+                        }
+
                         mPlayerService.onChapterChanged(
                             currChapter.getChapterNumber(),
                             fromVerse,
                             toVerse,
-                            mPlayerService.getP().getCurrentVerseNo()
+                            playerCurrVerseNo
                         );
                     }
                 }
