@@ -166,13 +166,11 @@ class RecitationPlayerParams() : Parcelable {
     }
 
     /**
-     * @return Returns true if the player has previous verse within the current playable verse range.
+     * @return Returns true if the player has next verse within the current playable verse range.
      */
     fun hasNextVerse(quranMeta: QuranMeta): Boolean {
-        val currentChapterNo = currentVerse.chapterNo
-        val currentVerseNo = currentVerse.verseNo
-        val lastChapterNo = lastVerse.chapterNo
-        val lastVerseNo = lastVerse.verseNo
+        val (currentChapterNo, currentVerseNo) = currentVerse
+        val (lastChapterNo, lastVerseNo) = lastVerse
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
@@ -196,10 +194,8 @@ class RecitationPlayerParams() : Parcelable {
      * @return Returns true if the player has previous verse within the current playable verse range.
      */
     fun hasPreviousVerse(quranMeta: QuranMeta): Boolean {
-        val currentChapterNo = currentVerse.chapterNo
-        val currentVerseNo = currentVerse.verseNo
-        val firstChapterNo = firstVerse.chapterNo
-        val firstVerseNo = firstVerse.verseNo
+        val (currentChapterNo, currentVerseNo) = currentVerse
+        val (firstChapterNo, firstVerseNo) = firstVerse
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||

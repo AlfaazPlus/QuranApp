@@ -1,10 +1,8 @@
 package com.quranapp.android.reader_managers;
 
 import android.content.Context;
-
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_INFO;
 import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
@@ -84,16 +82,12 @@ public class ReaderParams {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isVerseInValidRange(int chapterNo, int verseNo) {
         QuranMeta quranMeta = mActivity.mQuranMetaRef.get();
-        switch (readType) {
-            case READER_READ_TYPE_VERSES:
-            case READER_READ_TYPE_CHAPTER:
-                return currChapter.getChapterNumber() == chapterNo && quranMeta.isVerseValid4Chapter(chapterNo,
-                    verseNo);
-            case READER_READ_TYPE_JUZ:
-                return quranMeta.isVerseValid4Juz(currJuzNo, chapterNo, verseNo);
-        }
-
-        return false;
+        return switch (readType) {
+            case READER_READ_TYPE_VERSES, READER_READ_TYPE_CHAPTER ->
+                currChapter.getChapterNumber() == chapterNo && quranMeta.isVerseValid4Chapter(chapterNo, verseNo);
+            case READER_READ_TYPE_JUZ -> quranMeta.isVerseValid4Juz(currJuzNo, chapterNo, verseNo);
+            default -> false;
+        };
     }
 
     public boolean isPageReaderStyle() {
