@@ -414,4 +414,10 @@
 \n%s</string>
     <string name="strMsgDuaOf" formatted="false">%s की दुआ</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">कुरान में %s की दुआ</string>
+    <string name="titleArabicTextToggle">कुरान की आयत सक्षम करें</string>
+    <string name="msgClearReadHistory">पढ़ा हुआ हिस्ट्री हटाएं</string>
+    <string name="titleResourceDownloadSource">संसाधन डाउनलोड स्रोत</string>
+    <string name="msgResourceDownloadSource">यदि एक स्रोत काम नहीं कर रहा है तो किसी भिन्न स्रोत से कुरान डेटा डाउनलोड करने के लिए इस विकल्प का उपयोग करें</string>
+    <string name="msgClearSearchHistory">सर्च हिस्ट्री हटाएं</string>
+    <string name="msgArabicTextToggle">इस सुविधा को अक्षम करने से कुरान की आयतें पूरे ऐप से छिप जाएंगी।</string>
 </resources>
