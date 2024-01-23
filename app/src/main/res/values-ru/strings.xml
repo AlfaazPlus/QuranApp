@@ -57,4 +57,92 @@
     <string name="strLabelNextChapter">Следующая глава</string>
     <string name="strLabelNoPreviousChapter">Нет предыдущей главы</string>
     <string name="strLabelNoNextChapter">Нет следующей главы</string>
+    <string name="strTitleResetReaderSettings">Сбросить настройки ридера?</string>
+    <string name="strLabelContinueChapter">Продолжить чтение главы</string>
+    <string name="strLabelPreviousVerse">Предыдущий аят</string>
+    <string name="strLabelVerseNo" formatted="false">Аят %d</string>
+    <string name="strLabelVerses" formatted="false">Аяты %1$d–%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Аят : %d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Аяты: %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Аяты : %1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Аят %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Сура %1$s %2$d: Аят %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Сура %1$s │ Аят %2$d</string>
+    <string name="strTitleTranslations">Переводы</string>
+    <string name="downloadRecitations">Загрузить чтения</string>
+    <string name="strTitleScripts">Шрифты</string>
+    <string name="strTitleSelectScripts">Выбрать шрифт</string>
+    <string name="strLabelPreviousJuz">Предыдущий джуз</string>
+    <string name="strLabelNextJuz">Следующий джуз</string>
+    <string name="strLabelNoPreviousJuz">Нет предыдущего джуза</string>
+    <string name="strLabelNoNextJuz">Нет следующего джуза</string>
+    <string name="strLabelFullChapter">Читать главу целиком</string>
+    <string name="strLabelNextVerse">Следующий аят</string>
+    <string name="labelPreviousTafsir">Предыдущее толкование</string>
+    <string name="labelNextTafsir">Следующее толкование</string>
+    <string name="strLabelVersesText">Аяты</string>
+    <string name="strLabelSurah" formatted="false">Сура %s</string>
+    <string name="strLabelPageNo" formatted="false">Страница %d</string>
+    <string name="strLabelJuzNo" formatted="false">Джуз %d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Сура %1$s : Аят %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Глава No. %1$d │ Аяты %2$d–%3$d</string>
+    <string name="strTitleAppUser">Пользователь QuranApp</string>
+    <string name="strTitleHolyQuran">Священный Коран</string>
+    <string name="strTitleQuran">Коран</string>
+    <string name="strTitleMakki">Мекканская</string>
+    <string name="strTitleMadani">Мединская</string>
+    <string name="strTitleFootnote">Примечание</string>
+    <string name="strTitleFootnotes">Примечания</string>
+    <string name="noFootnotesForThisVerse">Нет примечаний для этого аята.</string>
+    <string name="strTitleReaderChapters">Суры (Главы)</string>
+    <string name="strTitleReaderJuz">Джуз (Раздел)</string>
+    <string name="strTitleReaderChapters2">Суры</string>
+    <string name="strTitleReaderJuz2">Джузы</string>
+    <string name="strTitleReaderVerses">Аяты</string>
+    <string name="strTitleReaderJumpToVerse">Перейти к аяту</string>
+    <string name="strTitleVerseOptions">Настройки аятов</string>
+    <string name="strTitleVerseRecitation">Чтение аята</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Сура %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Перейти к аяту %d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Читать аяты %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Читать толкование аята %d</string>
+    <string name="strTitleReaderLayoutStyle">Стиль отображения Корана</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Отображение переводов</string>
+    <string name="strTitleReaderLayoutStylePageView">Отображение страниц</string>
+    <string name="strTitleReaderTextSizeArabic">Размер арабского текста</string>
+    <string name="strTitleReaderTextSizeTransl">Размер текста перевода</string>
+    <string name="titleReaderTextSizeTafsir">Размер текста Тафсира</string>
+    <string name="strTitleSettings">Настройки</string>
+    <string name="strTitleBookmark">Закладка</string>
+    <string name="strTitleSendFeedback">Отправить отзыв</string>
+    <string name="strTitleHelpSupport">Помощь и Поддержка</string>
+    <string name="strTitleAboutUs">О нас</string>
+    <string name="strTitleBookmarks">Закладки</string>
+    <string name="strTitleShareApp">Поделиться приложением</string>
+    <string name="strTitleSelectTafsir">Выбрать Тафсир</string>
+    <string name="strTitleAddNote">Добавить заметку</string>
+    <string name="strTitleNote">Заметка</string>
+    <string name="strTitleRateApp">Оценить приложение</string>
+    <string name="strTitleFilters">Фильтры</string>
+    <string name="strTitleMenu">Меню</string>
+    <string name="strTitleTafsir">Тафсир</string>
+    <string name="strTitleAboutSurah">О Суре</string>
+    <string name="strTitleDownloadTranslations">Загрузить</string>
+    <string name="strTitleRecitations">Чтения</string>
+    <string name="strTitleSelectReciter">Выбрать чтеца</string>
+    <string name="titleManageAudio">Настроить аудио</string>
+    <string name="audioOption">Настройки аудио</string>
+    <string name="playbackSpeed">Скорость воспроизведения</string>
+    <string name="audioOnlyArabic">Проигрывать только арабский</string>
+    <string name="audioOnlyTranslation">Проигрывать только перевод</string>
+    <string name="audioBothArabicTranslation">Проигрывать и арабский текст и перевод</string>
+    <string name="strTitleBookmarkDeleteThis">Удалить эту закладку?</string>
+    <string name="strTitleBookmarkDeleteAll">Удалить все закладки?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Удалить%d закладок?</string>
+    <string name="strTitleTranslDelete">Удалить перевод?</string>
+    <string name="strTitleHideAd">Скрыть рекламу</string>
+    <string name="strTitleRecitationOptions">Настройки</string>
 </resources>
