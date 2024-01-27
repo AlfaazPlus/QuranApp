@@ -341,7 +341,7 @@
     <string name="strTitleImageSavedWithName" formatted="false">Изображение сохранено как: %s</string>
     <string name="strTitleAlphaBG">Альфа-фон</string>
     <string name="strMsgEditShareLongTransl">Перевод слишком длинный, может отображаться некорректно.</string>
-    <string name="strMsgDuaFor" formatted="false">Дуа для %s</string>
+    <string name="strMsgDuaFor" formatted="false">Дуа за %s</string>
     <string name="strMsgEditShareTransl">Показаны только переводы, выбранные в настройках.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s в Коране</string>
     <string name="strMsgReferenceDuas">Собрано несколько дуа из Корана.</string>
