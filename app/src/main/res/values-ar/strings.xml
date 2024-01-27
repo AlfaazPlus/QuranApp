@@ -414,4 +414,10 @@
 \n%s</string>
     <string name="strMsgDuaOf" formatted="false">دعاء %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">دعاء %s في القرآن</string>
+    <string name="msgClearReadHistory">مسح سجل القراءة</string>
+    <string name="titleResourceDownloadSource">مصدر تحميل الموارد</string>
+    <string name="msgClearSearchHistory">مسح سجل البحث</string>
+    <string name="msgResourceDownloadSource">استخدم هذا الخيار لتحميل القرآن من مصدر مختلف إذا كان أحد المصادر لا يعمل</string>
+    <string name="titleArabicTextToggle">إظهار نص الآية باللغة العربية</string>
+    <string name="msgArabicTextToggle">سيؤدي تعطيل هذه الميزة إلى إخفاء نص الآية باللغة العربية من التطبيق.</string>
 </resources>
