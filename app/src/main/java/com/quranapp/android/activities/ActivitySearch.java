@@ -554,12 +554,8 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void makeJuzSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int juzNo) {
-        JuzJumpModel juzJumpModel = new JuzJumpModel();
-        juzJumpModel.juzNo = juzNo;
-
-        juzJumpModel.juzSerial = "Juz " + juzNo;
-        juzJumpModel.juzNameTrans = quranMeta.getJuzNameTransliterated(juzNo);
-        juzJumpModel.juzNameAr = quranMeta.getJuzNameArabic(juzNo);
+        JuzJumpModel juzJumpModel = new JuzJumpModel(juzNo, "Juz " + juzNo,
+                quranMeta.getJuzNameTransliterated(juzNo), quranMeta.getJuzNameArabic(juzNo));
 
         collection.add(juzJumpModel);
     }
@@ -589,12 +585,8 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void makeTafsirSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int verseNo) {
-        TafsirJumpModel tafsirJumpModel = new TafsirJumpModel();
-        tafsirJumpModel.chapterNo = chapNo;
-        tafsirJumpModel.verseNo = verseNo;
-
-        tafsirJumpModel.titleText = getString(R.string.strTitleReadTafsirOfVerse, verseNo);
-        tafsirJumpModel.chapterNameText = quranMeta.getChapterName(this, chapNo, true);
+        TafsirJumpModel tafsirJumpModel = new TafsirJumpModel(chapNo, verseNo, getString(R.string.strTitleReadTafsirOfVerse, verseNo),
+                quranMeta.getChapterName(this, chapNo, true));
 
         collection.add(tafsirJumpModel);
     }
