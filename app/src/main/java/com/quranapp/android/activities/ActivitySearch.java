@@ -566,20 +566,11 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void makeVerseSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int fromVerse, int toVerse) {
-        VerseJumpModel verseJumpModel = new VerseJumpModel();
-        verseJumpModel.chapterNo = chapNo;
-        verseJumpModel.fromVerseNo = fromVerse;
-        verseJumpModel.toVerseNo = toVerse;
+        String formatted = getString(R.string.strTitleReadVerseRange, fromVerse, toVerse);
+        if (fromVerse == toVerse) formatted = getString(R.string.strTitleGotoVerseNo, fromVerse);
 
-        String formatted;
-        if (fromVerse == toVerse) {
-            formatted = getString(R.string.strTitleGotoVerseNo, fromVerse);
-        } else {
-            formatted = getString(R.string.strTitleReadVerseRange, fromVerse, toVerse);
-        }
-
-        verseJumpModel.titleText = formatted;
-        verseJumpModel.chapterNameText = quranMeta.getChapterName(this, chapNo, true);
+        VerseJumpModel verseJumpModel = new VerseJumpModel(chapNo, fromVerse, toVerse, formatted,
+                quranMeta.getChapterName(this, chapNo, true));
 
         collection.add(verseJumpModel);
     }
