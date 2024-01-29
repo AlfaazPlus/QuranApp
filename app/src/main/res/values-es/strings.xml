@@ -414,4 +414,10 @@
     <string name="titleEtiquetteVerses">Etiqueta en el Corán</string>
     <string name="strMsgDuaOf" formatted="false">Dua de %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s en el Corán</string>
+    <string name="titleResourceDownloadSource">Fuente de descarga del recurso</string>
+    <string name="msgResourceDownloadSource">Utilice esta opción para descargar los datos del Corán de otra fuente si alguna no funciona</string>
+    <string name="titleArabicTextToggle">Mostrar el texto en árabe</string>
+    <string name="msgClearReadHistory">Borrar el historial de lectura</string>
+    <string name="msgClearSearchHistory">Borrar historial de búsqueda</string>
+    <string name="msgArabicTextToggle">Al desactivar esta función, se ocultará el texto en verso árabe de toda la aplicación.</string>
 </resources>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strLabelReset">পুনঃবিন্যাস</string>
+    <string name="strLabelReset">আবার বা নতুন করে</string>
     <string name="strLabelPrevious">পূর্ববর্তী</string>
     <string name="strLabelView">দেখুন</string>
-    <string name="strLabelNoPreviousChapter">পূর্বে কোনো সূরা নেই</string>
-    <string name="strLabelContinueChapter">সূরাটি চালিয়ে যান</string>
+    <string name="strLabelNoPreviousChapter">এর আগে কোনো সূরা নেই</string>
+    <string name="strLabelContinueChapter">সূরাটি পড়া চালিয়ে যান</string>
     <string name="strLabelSurah" formatted="false">সূরা %s</string>
     <string name="strLabelGotIt">বুঝেছি</string>
     <string name="strLabelNotNow">এখন না</string>
@@ -14,8 +14,8 @@
     <string name="strLabelCopy">কপি করুন</string>
     <string name="strLabelPreviousVerse">পূর্ববর্তী আয়াত</string>
     <string name="strLabelVersesText">আয়াতসমূহ</string>
-    <string name="strLabelNoPreviousJuz">পূর্বে কোনো পারা নেই</string>
-    <string name="strLabelNoNextChapter">পরে আর কোনো সূরা নেই</string>
+    <string name="strLabelNoPreviousJuz">এর আগে কোনো পারা নেই</string>
+    <string name="strLabelNoNextChapter">এর পরে আর কোনো সূরা নেই</string>
     <string name="strLabelJuzNo" formatted="false">পারা %d</string>
     <string name="strLabelVerseNo" formatted="false">আয়াত %d</string>
     <string name="strTitleAppVersion">অ্যাপ সংস্করণ</string>
@@ -29,25 +29,25 @@
     <string name="strLabelRemove">অপসারণ করুন</string>
     <string name="strLabelDelete">মুছে ফেলুন</string>
     <string name="strLabelRemoveAll">সবগুলো অপসারণ করুন</string>
-    <string name="strLabelBack">পেছনে</string>
-    <string name="strLabelTop">শীর্ষ</string>
+    <string name="strLabelBack">পেছনে ফিরে যান</string>
+    <string name="strLabelTop">উপরে</string>
     <string name="strLabelRetry">পুনরায় চেষ্টা করুন</string>
     <string name="strLabelRefresh">রিফ্রেস করুন</string>
-    <string name="strLabelDismiss">বাতিল করুন</string>
+    <string name="strLabelDismiss">প্রত্যাখ্যান করুন</string>
     <string name="strLabelDiscard">পরিত্যাগ করুন</string>
-    <string name="strLabelHide">লুকান</string>
+    <string name="strLabelHide">গোপন করুন</string>
     <string name="strLabelDone">সম্পন্ন হয়েছে</string>
     <string name="strLabelRestart">পুনরায় আরম্ভ করুন</string>
     <string name="strLabelOpen">খুলুন</string>
     <string name="strLabelOpenInReader">রিডারে খুলুন</string>
     <string name="strLabelRead">পড়ুন »</string>
     <string name="strLabelViewAll">সবগুলো দেখুন</string>
-    <string name="strLabelChangeNRestart">পরিবর্তন করুন এবং রিস্টার্ট করুন</string>
+    <string name="strLabelChangeNRestart">পরিবর্তন ও পুনরায় চালু করুন</string>
     <string name="strLabelAdvertisement">বিজ্ঞাপন</string>
     <string name="strLabelSkip">এড়িয়ে যান</string>
     <string name="strLabelNext">পরবর্তী</string>
     <string name="strLabelStart">শুরু করুন</string>
-    <string name="strLabelUpdateQuranApp">কুরআন অ্যাপ আপডেট করুন</string>
+    <string name="strLabelUpdateQuranApp">QuranApp আপডেট করুন</string>
     <string name="strLabelUpdate">আপডেট করুন</string>
     <string name="strLabelInstall">ইনস্টল করুন</string>
     <string name="strLabelNew">নতুন</string>
@@ -59,8 +59,8 @@
     <string name="strLabelThemeLight">আলোকোজ্জ্বল</string>
     <string name="strLabelPreviousJuz">পূর্ববর্তী পারা</string>
     <string name="strLabelNextJuz">পরবর্তী পারা</string>
-    <string name="strLabelNoNextJuz">পরে আর কোনো পারা নেই</string>
-    <string name="strLabelFullChapter">পুরো সূরা পড়ুন</string>
+    <string name="strLabelNoNextJuz">এর পরে আর কোনো পারা নেই</string>
+    <string name="strLabelFullChapter">সম্পূর্ণ সূরাটি পড়ুন</string>
     <string name="strLabelNextVerse">পরবর্তী আয়াত</string>
     <string name="strLabelVerseCountWithColon" formatted="false">আয়াতসমূহ: %d</string>
     <string name="strLabelVerseNoRange" formatted="false">%1$d থেকে %2$d</string>
@@ -70,7 +70,7 @@
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">সূরা %1$s %2$d: আয়াত %3$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">সূরা %1$s │ আয়াত %2$d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">সূরা %1$s : আয়াত %2$d</string>
-    <string name="strTitleAppUser">কুরআন অ্যাপ ব্যবহারকারী</string>
+    <string name="strTitleAppUser">QuranApp ব্যবহারকারী</string>
     <string name="strTitleHolyQuran">পবিত্র কুরআন</string>
     <string name="strTitleQuran">কুরআন</string>
     <string name="strTitleMakki">মাক্কি</string>
@@ -81,22 +81,22 @@
     <string name="strTitleReaderJuz">জুজ (পারা)</string>
     <string name="strTitleReaderChapters2">সূরাসমূহ</string>
     <string name="strTitleReaderJuz2">পারা</string>
-    <string name="strTitleReaderJumpToVerse">আয়াতে যান</string>
+    <string name="strTitleReaderJumpToVerse">সরাসরি আয়াতে যান</string>
     <string name="strTitleVerseOptions">আয়াতের অপশনগুলো</string>
     <string name="strTitleReaderVerseInformation" formatted="false">সূরা %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">%d নং আয়াতে যান</string>
     <string name="strTitleReadVerseRange" formatted="false">%1$d থেকে %2$d নং আয়াতগুলো পড়ুন</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদ প্রদর্শনী</string>
-    <string name="strTitleReaderLayoutStylePageView">পৃষ্ঠা প্রদর্শনী</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদসহ দেখুন</string>
+    <string name="strTitleReaderLayoutStylePageView">শুধু আরবি দেখুন</string>
     <string name="strTitleReaderTextSizeArabic">আরবি লেখার আকার</string>
     <string name="strTitleSettings">সেটিংস</string>
     <string name="strTitleBookmark">বুকমার্ক</string>
-    <string name="strTitleSendFeedback">মতামত পাঠান</string>
-    <string name="strTitleHelpSupport">সাহায্য ও সহযোগিতা</string>
+    <string name="strTitleSendFeedback">আপনার মতামত দিন</string>
+    <string name="strTitleHelpSupport">সহযোগিতা দরকার ? এখানে দেখুন</string>
     <string name="strTitleAboutUs">আমাদের সম্পর্কে</string>
-    <string name="strTitleAddNote">নোট যোগ করুন</string>
+    <string name="strTitleAddNote">নোট যুক্ত করুন</string>
     <string name="strTitleNote">নোট</string>
-    <string name="strTitleRateApp">অ্যাপ রেটিং দিন</string>
+    <string name="strTitleRateApp">অ্যাপে রেটিং দিন</string>
     <string name="strTitleFilters">ফিল্টার</string>
     <string name="strTitleMenu">মেনু</string>
     <string name="strTitleTafsir">তাফসির</string>
@@ -107,128 +107,128 @@
     <string name="strTitleSelectScripts">স্ক্রিপ্ট (লেখার ধরণ) নির্বাচন করুন</string>
     <string name="strTitleBookmarkDeleteAll">সমস্ত বুকমার্ক মুছে ফেলবেন\?</string>
     <string name="strTitleTranslDelete">অনুবাদ মুছে ফেলবেন\?</string>
-    <string name="strTitleResetReaderSettings">রিডার সেটিংস রিসেট করবেন\?</string>
-    <string name="strTitleHideAd">বিজ্ঞাপন লুকান</string>
+    <string name="strTitleResetReaderSettings">রিডার সেটিংস পুনরায় সেট করবেন?</string>
+    <string name="strTitleHideAd">বিজ্ঞাপন সরিয়ে ফেলুন</string>
     <string name="strTitleRecitationOptions">অপশন</string>
     <string name="strTitleRepeatVerse">আয়াত পুনরাবৃত্তি করুন</string>
     <string name="strTitleQuickEdit">দ্রুত সম্পাদনা করুন</string>
-    <string name="strTitleShareVerse">আয়াত শেয়ার করুন</string>
+    <string name="strTitleShareVerse">আয়াতটি শেয়ার করুন</string>
     <string name="strTitleSelectReason">কারণ নির্বাচন করুন</string>
     <string name="strTitleExplainIssue">সমস্যাটি ব্যাখ্যা করুন</string>
     <string name="strLabelPreviousChapter">পূর্ববর্তী সূরা</string>
     <string name="strLabelPageNo" formatted="false">পৃষ্ঠা %d</string>
     <string name="strLabelVerses" formatted="false">আয়াত %1$d থেকে %2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">আয়াত : %d</string>
-    <string name="strTitleAutoPlayNext">তিলাওয়াত স্বয়ংক্রিয় জারি রাখুন</string>
+    <string name="strTitleAutoPlayNext">স্বয়ংক্রিয়ভাবে পরবর্তী আয়াত তেলাওয়াত চালু</string>
     <string name="strTitleBookmarks">বুকমার্কসমূহ</string>
     <string name="strTitleDownloadTranslations">ডাউনলোড করুন</string>
-    <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটি অপসারণ করবেন\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d বুকমার্কগুলি অপসারণ করবেন\?</string>
+    <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটি মুছে ফেলবেন?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d টি বুকমার্ক মুছে ফেলবেন?</string>
     <string name="strLabelVersesWithColon" formatted="false">আয়াতসমূহ : %1$d থেকে %2$d</string>
     <string name="strTitleReaderVerses">আয়াতসমূহ</string>
     <string name="strTitleVerseRecitation">আয়াত তিলাওয়াত</string>
-    <string name="strTitleReaderLayoutStyle">কুরআন প্রদর্শনী</string>
+    <string name="strTitleReaderLayoutStyle">কুরআন দেখার স্টাইল</string>
     <string name="strTitleReaderTextSizeTransl">অনুবাদ লেখার আকার</string>
-    <string name="strTitleShareApp">অ্যাপ শেয়ার করুন</string>
-    <string name="strTitleReportVerse">আয়াত রিপোর্ট করুন</string>
+    <string name="strTitleShareApp">অ্যাপটি শেয়ার করুন</string>
+    <string name="strTitleReportVerse">এই আয়াতে রিপোর্ট করুন</string>
     <string name="strLabelIncludeFootnotes">পাদটীকা অন্তর্ভুক্ত করুন</string>
     <string name="strTitlePrivacyPolicy">গোপনীয়তা নীতি</string>
     <string name="strTitleChapInfoJuzNo">পারা নং</string>
     <string name="strTitleFeaturedDuas">কুরআনে বর্ণিত দোয়াসমূহ</string>
     <string name="strMsgChapInfoFailedLoad">সূরার তথ্য লোড করতে ব্যর্থ হয়েছে। দয়া করে পরে আবার চেষ্টা করুন।</string>
     <string name="strLabelBookmark">বুকমার্ক করুন</string>
-    <string name="strLabelSelectTranslations">অনুবাদগুলি নির্বাচন করুন৷</string>
-    <string name="strLabelRemoveAds">বিজ্ঞাপন গুলি অপসারণ করুন</string>
+    <string name="strLabelSelectTranslations">অনুবাদগুলো নির্বাচন করুন</string>
+    <string name="strLabelRemoveAds">বিজ্ঞাপন অপসারণ করুন</string>
     <string name="strLabelOrder">ক্রম</string>
     <string name="strLabelAdvanceSharing">উন্নত শেয়ারিং</string>
     <string name="strLabelQuickLinks">দ্রুত লিঙ্ক</string>
     <string name="strHintSearchTopic">বিষয় অনুসন্ধান করুন</string>
     <string name="strHintSearchProphet">কোনো নবীর নাম অনুসন্ধান করুন</string>
     <string name="strHintSearchScript">স্ক্রিপ্ট (ফন্ট/লেখার স্টাইল) খুঁজুন</string>
-    <string name="strHintFeedback">আপনার মতামত এখানে লিখুন…</string>
+    <string name="strHintFeedback">এখানে আপনার মতামত লিখুন…</string>
     <string name="strHintSearchTranslation">অনুবাদ অনুসন্ধান করুন</string>
     <string name="strHintToVerse">আয়াত পর্যন্ত</string>
-    <string name="strHintBookmarkViewerNote">এখানে এই বুকমার্কে একটি অতিরিক্ত নোট লিখুন…</string>
-    <string name="strMsgVOTDOn">প্রতিদিন সকালে একটি নোটিফিকেশন পান।</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%2$d নং সূরার জন্য %1$d কোনো সঠিক আয়াত নম্বর নয়</string>
+    <string name="strHintBookmarkViewerNote">এখানে এই বুকমার্ক সম্পর্কে একটি অতিরিক্ত নোট লিখুন…</string>
+    <string name="strMsgVOTDOn">প্রতিদিন সকালে একটি বিজ্ঞপ্তি পান।</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%2$d নং সূরার জন্য %1$d একটি সঠিক আয়াত নম্বর নয়</string>
     <string name="strTextSending">পাঠানো হচ্ছে…</string>
-    <string name="strTextPleaseWait">অনুগ্রহপূর্বক অপেক্ষা করুন…</string>
+    <string name="strTextPleaseWait">অনুগ্রহ করে অপেক্ষা করুন…</string>
     <string name="strMsgUpdateAvailable">আপডেট উপলব্ধ! নতুন সব বৈশিষ্ট্য পেতে অ্যাপটি আপডেট করুন।</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d টি আরও অনুবাদ</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%3$d নং সূরার জন্য %1$d থেকে %2$d কোনো সঠিক আয়াত পরিসীমা নয়</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%3$d নং সূরার জন্য %1$d থেকে %2$d একটি সঠিক আয়াত পরিসীমা নয়</string>
     <string name="strLabelProceed">এগিয়ে যান</string>
-    <string name="strTextUpdating">আপডেট হচ্ছে…</string>
+    <string name="strTextUpdating">আপডেট করা হচ্ছে…</string>
     <string name="strTextInstalling">ইনস্টল করা হচ্ছে…</string>
-    <string name="strTextLoading">লোড হচ্ছে…</string>
+    <string name="strTextLoading">লোড করা হচ্ছে…</string>
     <string name="strMsgBookmarkRemoved">আয়াত সফলভাবে বুকমার্ক থেকে অপসারণ করা হয়েছে</string>
-    <string name="strMsgBookmarkAddedAlready">আয়াত ইতিমধ্যেই বুকমার্ক করা হয়েছে</string>
+    <string name="strMsgBookmarkAddedAlready">আয়াত ইতিমধ্যেই বুকমার্কে যুক্ত করা হয়েছে</string>
     <string name="strMsgBookmarkDeleteSelected">নির্বাচিত বুকমার্কগুলি অপসারণ করা হবে।</string>
     <string name="strMsgBookmarkNoItems">কোনো বুকমার্ক নেই</string>
     <string name="strMsgBookmarkRemoveFailed">আয়াত বুকমার্ক থেকে অপসারণ করতে ব্যর্থ হয়েছে</string>
     <string name="strMsgBookmarkDeleteAll">সমস্ত বুকমার্ক অপসারণ করা হবে।</string>
-    <string name="strTitleReadHistory">পাঠ ইতিহাস</string>
-    <string name="strMsgReadHistoryDeleteAll">সকল পাঠের ইতিহাসগুলো অপসারণ করা হবে।</string>
-    <string name="strMsgReadHistoryRemovedAlready">পাঠ ইতিহাস ইতিমধ্যেই অপসারণ করা হয়েছে।</string>
-    <string name="strMsgReadHistoryRemoveFailed">পাঠ ইতিহাস অপসারণে ব্যর্থ হয়েছে।</string>
-    <string name="strMsgReadHistoryDeleteSelected">নির্বাচিত পাঠের ইতিহাসগুলো অপসারণ করা হবে।</string>
-    <string name="strMsgReadHistoryNoItems">কোনো পাঠ ইতিহাস নেই</string>
-    <string name="strMsgTranslLoadFailed">সার্ভার থেকে অনুবাদগুলি লোড করা যায়নি। দয়া করে পরে আবার চেষ্টা করুন।</string>
+    <string name="strTitleReadHistory">পড়ার ইতিহাস</string>
+    <string name="strMsgReadHistoryDeleteAll">সকল পড়ার ইতিহাসগুলো অপসারণ করা হবে।</string>
+    <string name="strMsgReadHistoryRemovedAlready">পড়ার ইতিহাস ইতিমধ্যেই অপসারণ করা হয়েছে।</string>
+    <string name="strMsgReadHistoryRemoveFailed">পড়ার ইতিহাস অপসারণে ব্যর্থ হয়েছে।</string>
+    <string name="strMsgReadHistoryDeleteSelected">নির্বাচিত পড়ার ইতিহাসগুলো অপসারণ করা হবে।</string>
+    <string name="strMsgReadHistoryNoItems">কোনো পড়ার ইতিহাস নেই</string>
+    <string name="strMsgTranslLoadFailed">সার্ভার থেকে অনুবাদ লোড করা যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ডাউনলোড করতে ব্যর্থ হয়েছে।</string>
     <string name="strTitleError">ত্রুটি!</string>
-    <string name="strMsgTranslSelectionLimit" formatted="false">সর্বাধিক %d টি অনুবাদ একবারে নির্বাচন করা যেতে পারে। অন্য আরেকটি নির্বাচন করার আগে দয়া করে পূর্বের একটি নির্বাচন মুক্ত করুন। এটি কর্মক্ষমতা হ্রাস পাওয়া এড়ানোর জন্য জরুরি।</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">একবারে সর্বাধিক %dটি অনুবাদ নির্বাচন করা যেতে পারে। অন্যটি নির্বাচন করার আগে দয়া করে একটিকে আনসিলেক্ট করুন। পারফরম্যান্সের ক্ষতি এড়াতেই এই ব্যবস্থা।</string>
     <string name="strDescAddToBookmarks">বুকমার্কগুলিতে যুক্ত করুন</string>
-    <string name="strDescVerseNo" formatted="false">আয়াত সংখ্যা %d।</string>
+    <string name="strDescVerseNo" formatted="false">আয়াত নম্বর %d।</string>
     <string name="strMsgNoInternet">অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।</string>
     <string name="strDescClose">বন্ধ করুন</string>
-    <string name="strMsgNoInternetLong">ইন্টারনেট সংযোগ নেই। নিশ্চিত করুন যে ওয়াই-ফাই বা সেলুলার ডেটা চালু আছে, তারপর আবার চেষ্টা করুন।</string>
+    <string name="strMsgNoInternetLong">ইন্টারনেট সংযোগ নেই। ওয়াই-ফাই বা সেলুলার ডেটা চালু আছে কিনা তা নিশ্চিত করুন , তারপর আবার চেষ্টা করুন।</string>
     <string name="strMsgVerseCredsInvalid">আয়াতের প্রমাণপত্র সঠিক নয়।</string>
     <string name="strLabelNavSearch">অনুসন্ধান করুন</string>
     <string name="strTitleInfo">তথ্য!</string>
     <string name="strTitleOops">উফ!</string>
     <string name="strLabelDownloadImage">ছবি ডাউনলোড করুন</string>
-    <string name="strTitleImageSavedWithName" formatted="false">এই নামে ছবি সংরক্ষন করা হয়েছে: %s</string>
-    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s এ কোন ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন বা অন্য কোনো অনুবাদে অনুসন্ধান করুন।</string>
-    <string name="strMsgSearchNoResultsFoundAbsolute">কোনো ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন।</string>
+    <string name="strTitleImageSavedWithName" formatted="false">%s : নামে চিত্রটি সংরক্ষণ করা হয়েছে</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s-এ কোনও ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন বা অন্য অনুবাদে অনুসন্ধান করুন।</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">কোন ফলাফল পাওয়া যায়নি। দয়া করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন।</string>
     <string name="strMsgProphetsOrder">কালানুক্রমিক ভাবে নবীগণের নাম দেখানো হচ্ছে</string>
     <string name="strLabelNavHome">মূলপাতা</string>
     <string name="strTextPreparing">প্রস্তুত হচ্ছে…</string>
     <string name="strAyatulKursi">আয়াতুল কুরসি</string>
     <string name="strMsgCouldNotOpenPage">পৃষ্ঠাটি খোলা যায়নি।</string>
-    <string name="strMsgEditShareTransl">সেটিংস থেকে নির্বাচিত অনুবাদগুলি শুধুমাত্র এখানে প্রদর্শিত হয়।</string>
-    <string name="strMsgReferenceDuas">কুরআন থেকে কিছু দোয়া সংগ্রহ করা হলো।</string>
-    <string name="strLabelFeatureQuranMiniInfo" formatted="false">অধ্যায় নং %1$d │ আয়াত %2$d–%3$d</string>
+    <string name="strMsgEditShareTransl">এখানে শুধুমাত্র সেটিংস থেকে নির্বাচিত অনুবাদগুলি দেখানো হয়েছে।</string>
+    <string name="strMsgReferenceDuas">কুরআন থেকে কিছু দোয়া সংগ্রহ করা হয়েছে।</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">সূরা নং %1$d │ আয়াত %2$d–%3$d</string>
     <string name="strTitleFeaturedQuran">ফিচারড রিডিং</string>
     <string name="strTitleVOTD">আজকের আয়াত</string>
-    <string name="strTitleTopics">বিষয়শ্রেণী</string>
+    <string name="strTitleTopics">বিষয়</string>
     <string name="strTitleDuas">কুরআনের দোয়াসমূহ</string>
     <string name="strTitleProphets">নবীগণ</string>
-    <string name="strTitleFeaturedTopics">কুরআনের আলোচ্য বিষয়সমূহ</string>
+    <string name="strTitleFeaturedTopics">কুরআনের বিষয়সমূহ</string>
     <string name="strTitleFeaturedProphets">কুরআনে বর্ণিত নবীগণ</string>
     <string name="strTitleFailed">ব্যর্থ</string>
     <string name="strTitleSuccess">সফল</string>
     <string name="strTitleThresholdReached">শেষ সীমায় পৌঁছেছে</string>
     <string name="strChapInfoSeeMore">আরও তথ্য দেখুন ›</string>
     <string name="strTitleChapInfoChapterNo">সূরা নং</string>
-    <string name="strTitleChapInfoVerses">আয়াতসমূহ</string>
-    <string name="strTitleChapInfoRukus">রুকুসমূহ</string>
+    <string name="strTitleChapInfoVerses">আয়াত</string>
+    <string name="strTitleChapInfoRukus">রুকু</string>
     <string name="strTitleChapInfoPages">পৃষ্ঠা</string>
-    <string name="strTitleChapInfoRevOrder">অবতীর্ণ হওয়ার ধারাবাহিকতা</string>
-    <string name="strTitleChapInfoRevType">অবতীর্ণ হওয়ার প্রকার</string>
+    <string name="strTitleChapInfoRevOrder">ওহী ক্রম</string>
+    <string name="strTitleChapInfoRevType">ওহীর ধরণ</string>
     <string name="strTitleAppSettings">অ্যাপ সেটিংস</string>
-    <string name="strTitleReaderSettings">রিডার সেটিংস</string>
+    <string name="strTitleReaderSettings">পাঠক সেটিংস</string>
     <string name="strTitleAppLanguage">অ্যাপের ভাষা</string>
     <string name="strTitleChangeLanguage">ভাষা পরিবর্তন করবেন\?</string>
     <string name="strTitleTheme">থিম</string>
-    <string name="strTitleNoInternet">ইন্টারনেট নেই</string>
+    <string name="strTitleNoInternet">ইন্টারনেট সংযোগ নেই</string>
     <string name="strLabelPlay">চালু করুন</string>
-    <string name="strLabelPause">বিরতি দিন</string>
-    <string name="strLabelRemoveBookmark">বুকমার্ক সরান</string>
+    <string name="strLabelPause">থামান</string>
+    <string name="strLabelRemoveBookmark">বুকমার্ক অপসারণ করুন</string>
     <string name="strLabelBookmarked">বুকমার্ক করা হয়েছে</string>
     <string name="strLabelShare">শেয়ার করুন</string>
     <string name="strLabelReport">অভিযোগ জানান</string>
     <string name="strLabelContinueReading">পড়া চালিয়ে যান »</string>
     <string name="strLabelReading">পড়া</string>
-    <string name="strLabelMostPlaces">সর্বাধিক উল্লেখ</string>
+    <string name="strLabelMostPlaces">সবচেয়ে বেশি উল্লেখ করা হয়েছে</string>
     <string name="strLabelSelectedCount" formatted="false">%d নির্বাচন করা হয়েছে</string>
     <string name="strLabelSelectVerse">আয়াত নির্বাচন করুন</string>
     <string name="strLabelCurrentVerse">বর্তমান আয়াত</string>
@@ -237,11 +237,11 @@
     <string name="strLabelWhatsappStyling">হোয়াটসঅ্যাপ স্টাইলিং</string>
     <string name="strLabelIncludeArabic">আরবি অন্তর্ভুক্ত করুন</string>
     <string name="strLabelIncludeTranslation">অনুবাদ অন্তর্ভুক্ত করুন</string>
-    <string name="strLabelIncludeReference">রেফারেন্স অন্তর্ভুক্ত করুন</string>
+    <string name="strLabelIncludeReference">তথ্যনির্দেশ অন্তর্ভুক্ত করুন</string>
     <string name="strLabelLater">পরে</string>
     <string name="strHintSearch">অনুসন্ধান করুন</string>
-    <string name="strHintSearchQuran">একটি শব্দ টাইপ করুন যেমন, \"জীবন\"</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" এ বিষয় অনুসন্ধান করুন</string>
+    <string name="strHintSearchQuran">একটি শব্দ লিখুন। যেমন, \"জীবন\"</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\"-এ বিষয় অনুসন্ধান করুন</string>
     <string name="strHintSearchChapter">সূরা অনুসন্ধান করুন</string>
     <string name="strHintSearchVerse">আয়াত অনুসন্ধান করুন</string>
     <string name="strHintSearchJuz">পারা অনুসন্ধান করুন</string>
@@ -251,36 +251,36 @@
     <string name="strHintFeedbackEmail">ইমেইল</string>
     <string name="strHintFeedbackMessage">বার্তা</string>
     <string name="strNotFound">খুঁজে পাওয়া যায়নি</string>
-    <string name="strMsgThemeDark">ডার্ক মোড ব্যাটারি খরচ কমিয়ে দেয়।</string>
-    <string name="strMsgThemeDefault">সিস্টেম সেটিংস অনুযায়ী সামঞ্জস্য করুন।</string>
-    <string name="strMsgYouAreReadingVerses">আপনি যে আয়াতটি পড়ছেন:</string>
-    <string name="strMsgInvalidChapterNo" formatted="false">%d কোনো সঠিক সূরা নং নয়।</string>
-    <string name="strMsgInvalidVersesRange">একটি গ্রহণযোগ্য আয়াত পরিসীমা নয়</string>
-    <string name="strMsgInvalidJuzNo" formatted="false">%d কোনো সঠিক পারা নং নয়।</string>
-    <string name="strMsgBookmarkAdded">আয়াত সফলভাবে বুকমার্কে যোগ করা হয়েছে</string>
-    <string name="strMsgBookmarkAddFailed">আয়াত বুকমার্ক করতে ব্যর্থ হয়েছে</string>
+    <string name="strMsgThemeDark">কালো মোড ব্যাটারি খরচ কমিয়ে দেয়।</string>
+    <string name="strMsgThemeDefault">সিস্টেম সেটিংস অনুযায়ী সমন্বয় করুন।</string>
+    <string name="strMsgYouAreReadingVerses">আপনি আয়াতগুলো পড়ছেনঃ</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d একটি সঠিক সূরা নং নয়।</string>
+    <string name="strMsgInvalidVersesRange">একটি সঠিক আয়াত পরিসীমা নয়</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d একটি সঠিক পারা নং নয়।</string>
+    <string name="strMsgBookmarkAdded">আয়াত সফলভাবে বুকমার্কে যুক্ত হয়েছে</string>
+    <string name="strMsgBookmarkAddFailed">আয়াত বুকমার্কে যুক্ত করতে ব্যর্থ হয়েছে</string>
     <string name="strMsgBookmarkRemovedAlready">আয়াতটি বুকমার্কে নেই</string>
-    <string name="strMsgReadHistoryRemoved">পাঠ ইতিহাস সফলভাবে অপসারিত হয়েছে।</string>
-    <string name="strMsgBookmarkDate" formatted="false">%1$s %2$s টায়</string>
-    <string name="strMsgBookmarkDateToday" formatted="false">আজ %s টায়</string>
+    <string name="strMsgReadHistoryRemoved">পড়ার ইতিহাস সফলভাবে অপসারিত হয়েছে।</string>
+    <string name="strMsgBookmarkDate" formatted="false">%2$s-এ %1$s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">আজ %s-এ</string>
     <string name="strMsgHistoryRemove">এই ইতিহাস মুছে ফেলবেন\?</string>
-    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" ইতিহাস থেকে মুছে ফেলা হয়েছে</string>
-    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s-এ পাওয়া মোট ফলাফল: %2$d</string>
-    <string name="strMsgSearchNoResultsFound">কোন ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন বা অন্য কোনো অনুবাদে অনুসন্ধান করুন।</string>
-    <string name="strMsgSearchWordPart">শব্দাংশ অনুসন্ধান করুন</string>
+    <string name="strMsgHistoryRemoved" formatted="false">ইতিহাস থেকে \"%s\" অপসারিত হয়েছে</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s-এ খুঁজে পাওয়া মোট ফলাফল: %2$d</string>
+    <string name="strMsgSearchNoResultsFound">কোন ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন বা অন্য অনুবাদে অনুসন্ধান করুন।</string>
+    <string name="strMsgSearchWordPart">শব্দ অংশের জন্য অনুসন্ধান করুন</string>
     <string name="strMsgSearchWordPartExample">উদাহরণস্বরূপ: \'মানবজাতি\' এর মধ্যে \'মানব\'</string>
-    <string name="strMsgSearchArabic">আরবি টেক্সটে অনুসন্ধান করুন</string>
-    <string name="strMsgResetReaderSettings">সমস্ত সেটিংস ডিফল্টে রিসেট করুন।</string>
-    <string name="strMsgShareRange" formatted="false">%1$d–%2$d এর মাঝে পরিসীমা উল্লেখ করুন</string>
-    <string name="strMsgEnterValidRange">অনুগ্রহ করে একটি সঠিক পরিসীমা লিখুন</string>
-    <string name="strMsgTranslNoDownloads">কোনো ডাউনলোডকৃত অনুবাদ উপলব্ধ নেই</string>
-    <string name="strMsgTranslNoDownloadsAvailable">কোনো ডাউনলোড উপলব্ধ নেই</string>
+    <string name="strMsgSearchArabic">আরবি লেখায় অনুসন্ধান করুন</string>
+    <string name="strMsgResetReaderSettings">সমস্ত সেটিংস ডিফল্টে পুনরায় সেট করুন।</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d-এর মধ্যে পরিসর লিখুন</string>
+    <string name="strMsgEnterValidRange">অনুগ্রহ করে একটি সঠিক পরিসর লিখুন</string>
+    <string name="strMsgTranslNoDownloads">কোনো ডাউনলোড করা অনুবাদ বিদ্যমান নেই</string>
+    <string name="strMsgTranslNoDownloadsAvailable">কোনও ডাউনলোড উপলব্ধ নেই</string>
     <string name="strMsgTranslDownloaded" formatted="false">ডাউনলোড করা হয়েছে: \"%s\"।</string>
     <string name="strMsgTranslNoneSelected">কোনো অনুবাদ নির্বাচন করা হয়নি। অনুবাদগুলি খুঁজতে সেটিংসে যান।</string>
-    <string name="strMsgRecitationsLoadFailed">সার্ভার থেকে তিলাওয়াতগুলি লোড করা যায়নি। দয়া করে পরে আবার চেষ্টা করুন।</string>
+    <string name="strMsgRecitationsLoadFailed">সার্ভার থেকে তিলাওয়াতগুলি লোড করা যায়নি। অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।</string>
     <string name="strMsgRecitationsNoAvailable">কোনো তিলাওয়াত উপলব্ধ নেই</string>
     <string name="strDescGoBack">ফিরে যান</string>
-    <string name="strDescVerseNoWithChapter" formatted="false">সূরা %1$s, আয়াত সংখ্যা %2$d।</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">সূরা %1$s, আয়াত নম্বর %2$d।</string>
     <string name="strMsgSomethingWrong">কিছু একটা সমস্যা হয়েছে!</string>
     <string name="strMsgSomethingWrongFixing">কিছু সমস্যা হয়েছে! আমরা এটি সমাধান করার জন্য কাজ করছি।</string>
     <string name="strMsgTryLater">অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।</string>
@@ -288,39 +288,39 @@
     <string name="strMsgUpdateAvailable4Dialog">আপডেট উপলব্ধ!
 \nঅনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
     <string name="strMsgUpdateAvailable2Continue">আপডেট প্রয়োজন!
-\nঅবিরত রাখতে অনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
+\nচালিয়ে যেতে অনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
     <string name="strMsgUpdateDownloaded">আপডেট ডাউনলোড হয়েছে! আপডেটটি সম্পূর্ণ করতে দয়া করে ইনস্টল করুন।</string>
     <string name="strLabelAllChapters">সকল সূরা</string>
     <string name="strLabelShareImage">ছবি শেয়ার করুন</string>
     <string name="strTitleAlphaBG">আলফা ব্যাকগ্রাউন্ড</string>
     <string name="strMsgEditShareLongTransl">অনুবাদ অনেক দীর্ঘ, এটি সঠিকভাবে ফিট নাও হতে পারে।</string>
     <string name="strMsgReferenceInQuran" formatted="false">কুরআনে %s</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s সম্পর্কিত আয়াতগুলি মোট %2$d স্থানে পাওয়া গেছে।</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">মোট %2$dটি স্থানে %1$s সম্পর্কিত আয়াত খুঁজে পাওয়া গেছে।</string>
     <string name="strSalam">আসসালামু আলাইকুম</string>
     <string name="strSalamShort">সালাম</string>
-    <string name="strMsgReadShowupHere">আপনার পাঠ ইতিহাস এখানে প্রদর্শিত হবে।</string>
-    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s এ শুধুমাত্র ১টি ফলাফল পাওয়া গেছে</string>
-    <string name="strMsgChangeLanguage">ভাষার পরিবর্তন প্রয়োগ করতে অ্যাপটি রিস্টার্ট করা হবে।</string>
+    <string name="strMsgReadShowupHere">আপনার পড়ার ইতিহাস এখানে প্রদর্শিত হবে।</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s-এ কেবলমাত্র ১ টি ফলাফল খুঁজে পাওয়া গেছে</string>
+    <string name="strMsgChangeLanguage">ভাষা পরিবর্তনকে সক্রিয় করতে অ্যাপটি পুনরায় চালু করা হবে।</string>
     <string name="inPlaces">%s এর মধ্যে</string>
     <string name="inPlacesMore">%1$s এবং আরও %2$d এর মধ্যে</string>
     <string name="strTitleRecitations">তিলাওয়াত</string>
-    <string name="strTitleScripts">স্ক্রিপ্ট</string>
+    <string name="strTitleScripts">স্ক্রিপ্ট (লেখার ধরণ)</string>
     <string name="lastCrashLog">সর্বশেষ ক্র্যাশ লগ</string>
     <string name="labelAdd">যুক্ত করুন</string>
-    <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াতের তাফসীর পড়ুন %d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াত %d এর তাফসীর পড়ুন</string>
     <string name="strMsgTafsirsNoAvailable">কোনও তাফসীর নেই</string>
     <string name="msgDownloadingFonts">ফন্ট ডাউনলোড করা হচ্ছে</string>
     <string name="labelDownload">ডাউনলোড করুন</string>
-    <string name="titleManageAudio">অডিও পরিচালনা</string>
+    <string name="titleManageAudio">অডিও পরিচালনা করুন</string>
     <string name="audioOnlyTranslation">শুধু অনুবাদ শুনুন</string>
     <string name="playbackSpeed">তিলাওয়াতের গতি</string>
     <string name="titleOtherSettings">অন্যান্য সেটিংস</string>
     <string name="titleReaderTextSizeTafsir">তাফসীর লেখার আকার</string>
     <string name="downloadRecitations">তিলাওয়াত ডাউনলোড করুন</string>
     <string name="audioOption">অডিও অপশন</string>
-    <string name="audioOnlyArabic">শুধু আরবি শুনুন</string>
-    <string name="audioBothArabicTranslation">আরবি ও অনুবাদ শুনুন</string>
-    <string name="titleDownloadScriptResources">এই স্ক্রিপ্টের জন্য সংস্থানগুলি ডাউনলোড করবেন\?</string>
+    <string name="audioOnlyArabic">শুধু আরবি তেলাওয়াত শুনুন</string>
+    <string name="audioBothArabicTranslation">আরবি তেলাওয়াত ও অনুবাদ উভয়ই শুনুন</string>
+    <string name="titleDownloadScriptResources">এই স্ক্রিপ্টের জন্য সংস্থানগুলো ডাউনলোড করবেন?</string>
     <string name="labelBackgroundDownload">ব্যাকগ্রাউন্ড ডাউনলোড</string>
     <string name="msgTafsirCleanup" formatted="false">%s থেকে সমস্ত সংরক্ষিত তাফসির মুছে ফেলা হবে।</string>
     <string name="noItems">কোনো আইটেম নেই</string>
@@ -328,25 +328,25 @@
     <string name="msgDownloadFailed">ডাউনলোড ব্যর্থ হয়েছে</string>
     <string name="msgDownloadingScript">স্ক্রিপ্ট ডাউনলোড করা হচ্ছে</string>
     <string name="textPercentage" formatted="false">%d%%</string>
-    <string name="msgAnotherDownloadInProgress">অন্য একটি ডাউনলোড প্রক্রিয়াধীন আছে।</string>
+    <string name="msgAnotherDownloadInProgress">অন্য একটি ডাউনলোড চলছে।</string>
     <string name="createIssue">ইস্যু তৈরি করুন</string>
-    <string name="msgAlarmManagerNotAvailable">এই ডিভাইসে অ্যালার্ম ম্যানেজার পাওয়া যায়নি।</string>
+    <string name="msgAlarmManagerNotAvailable">এই ডিভাইসে অ্যালার্ম ম্যানেজার উপলব্ধ নেই।</string>
     <string name="msgVerseReminderAlarmPermission">আয়াতের অনুস্মারক সক্রিয় করতে অ্যালার্ম অনুমতি প্রয়োজন।</string>
-    <string name="tafseerCanBeFreedUp" formatted="false">%d সংরক্ষিত তাফসির পরিষ্কার করা যেতে পারে।</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%dটি সংরক্ষিত তাফসির পরিষ্কার করা যেতে পারে।</string>
     <string name="labelFreeUpSpace">জায়গা খালি করুন</string>
     <string name="titleRecitationCleanup">তেলাওয়াত মুছে ফেলবেন\?</string>
     <string name="appLogs">অ্যাপ লগসমূহ</string>
     <string name="nScriptsAndFonts" formatted="false">%1$dটি স্ক্রিপ্ট এবং %2$dটি ফন্ট</string>
     <string name="nothingToCleanup">পরিষ্কার করার মতো কিছু নেই।</string>
-    <string name="verseSyncOn">আয়াত সুসংগত: চালু</string>
-    <string name="verseSyncOff">আয়াত সুসংগত: বন্ধ</string>
-    <string name="titleAddToFavourites">পছন্দের তালিকায় যোগ করুন</string>
-    <string name="msgAddedToFavourites">পছন্দের তালিকায় যোগ করা হয়েছে</string>
+    <string name="verseSyncOn">আয়াত সিঙ্ক: চালু</string>
+    <string name="verseSyncOff">আয়াত সিঙ্ক: বন্ধ</string>
+    <string name="titleAddToFavourites">পছন্দের তালিকায় যুক্ত করুন</string>
+    <string name="msgAddedToFavourites">পছন্দের তালিকায় যুক্ত করা হয়েছে</string>
     <string name="msgChapterRemovedFromFavourites">সূরা পছন্দের তালিকা থেকে মুছে ফেলা হয়েছে।</string>
     <string name="labelPreviousTafsir">পূর্ববর্তী তাফসীর</string>
     <string name="titleSolutionVerses">কুরআন থেকে সমাধান</string>
     <string name="crashLogs">ক্র্যাশ লগসমূহ</string>
-    <string name="suppressedLogs">গোপন লগসমূহ</string>
+    <string name="suppressedLogs">নিরুদ্ধ লগসমূহ</string>
     <string name="logRemoved">লগ মুছে ফেলা হয়েছে</string>
     <string name="place" formatted="false">%d স্থান</string>
     <string name="labelArabic">আরবি</string>
@@ -354,37 +354,37 @@
     <string name="titleEtiquetteVerses">কুরআনে শিষ্টাচার</string>
     <string name="msgChapterAddedToFavourites">সূরা পছন্দের তালিকায় যোগ করা হয়েছে।</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">স্ক্রিপ্ট: %s (~1MB)</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">%d সংরক্ষিত অধ্যায় তথ্য পরিষ্কার করা যেতে পারে।</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d সংরক্ষিত সূরার তথ্য পরিষ্কার করা যেতে পারে।</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%2$dটির মধ্যে %1$dটি ফন্ট ডাউনলোড হয়েছে</string>
-    <string name="textDownloading">ডাউনলোড হচ্ছে…</string>
+    <string name="textDownloading">ডাউনলোড করা হচ্ছে…</string>
     <string name="msgRecitaionDownloaded" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" ডাউনলোড করা হয়েছে।</string>
     <string name="msgDownloadingResource" formatted="false">%s ডাউনলোড হচ্ছে</string>
     <string name="msgScriptCleanup" formatted="false">%s স্ক্রিপ্ট এবং এর সমস্ত সঞ্চিত ফন্ট মুছে ফেলা হবে৷ সেগুলি ব্যবহার করার জন্য আপনাকে পুনরায় ডাউনলোড করতে হবে।</string>
-    <string name="titleChapterInfoCleanup">অধ্যায় তথ্য পরিষ্কার করবেন\?</string>
-    <string name="msgChapterInfoCleanup">সমস্ত সংরক্ষিত অধ্যায়ের তথ্য মুছে ফেলা হবে।</string>
+    <string name="titleChapterInfoCleanup">সূরার তথ্য পরিষ্কার করবেন?</string>
+    <string name="msgChapterInfoCleanup">সমস্ত সংরক্ষিত সূরার তথ্য মুছে ফেলা হবে।</string>
     <string name="msgRemovedFromFavourites">পছন্দের তালিকা থেকে বাদ দেওয়া হয়েছে</string>
-    <string name="msgNoFavouriteChapters">এখানে দেখতে পছন্দের তালিকায় একটি অধ্যায় যোগ করুন।</string>
-    <string name="titleStorageCleanup">স্টোরেজ পরিষ্করণ</string>
-    <string name="translationCanBeFreedUp" formatted="false">%d ডাউনলোড করা অনুবাদ খালি করা যেতে পারে।</string>
+    <string name="msgNoFavouriteChapters">এখানে দেখতে পছন্দের তালিকায় একটি সূরা যুক্ত করুন।</string>
+    <string name="titleStorageCleanup">স্টোরেজ পরিষ্কার করুন</string>
+    <string name="translationCanBeFreedUp" formatted="false">%dটি ডাউনলোড করা অনুবাদ বাদ দেওয়া যেতে পারে।</string>
     <string name="titleTafsirCleanup">তাফসীর মুছে ফেলবেন\?</string>
     <string name="labelNextTafsir">পরবর্তী তাফসীর</string>
     <string name="nItem" formatted="false">%d আইটেম</string>
     <string name="nItems" formatted="false">%dটি আইটেম</string>
-    <string name="strPreviewTextTransl">পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে</string>
-    <string name="pasteCrashLogGithubIssue">লগটি ক্লিপবোর্ডে কপি করা হয়েছে৷ GitHub ইস্যুতে এটি যুক্ত করুন।</string>
+    <string name="strPreviewTextTransl">পরম করুণাময়, অসীম দয়ালু, আল্লাহর নামে</string>
+    <string name="pasteCrashLogGithubIssue">লগটি ক্লিপবোর্ডে অনুলিপি করা হয়েছে। দয়া করে GitHub ইস্যুতে এটি পেস্ট করুন।</string>
     <string name="titleRemoveFromFavourites">পছন্দের তালিকা থেকে বাদ দিন</string>
     <string name="textTranslationReciterInfo">ভাষা: %1$s
 \nবই: %2$s</string>
     <string name="textNoLogsFound">কোন লগ খুঁজে পাওয়া যায়নি</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" ডাউনলোড করতে ব্যর্থ হয়েছে।</string>
-    <string name="msgRecitaionDeleleSurah" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" এর সমস্ত তেলাওয়াত মুছে ফেলা হবে।</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: মোট %2$d এর মধ্যে %1$d ডাউনলোড হয়েছে (~%3$dMB অবশিষ্ট)</string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d এর মধ্যে %1$d</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">তেলাওয়াতকারী \"%2$s\"-এর জন্য \"%1$s\"-এর সমস্ত তেলাওয়াত মুছে ফেলা হবে।</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: মোট %2$dটির মধ্যে %1$dটি ডাউনলোড হয়েছে (~%3$dMB অবশিষ্ট আছে)</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$dটির মধ্যে %1$dটি</string>
     <string name="msgScriptFontsDownloaded">স্ক্রিপ্ট এবং ফন্ট সফলভাবে ডাউনলোড করা হয়েছে।</string>
     <string name="github">GitHub</string>
     <string name="nFiles" formatted="false">%dটি ফাইল</string>
     <string name="onboardDescTheme">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
-    <string name="onboardDescLanguage">অ্যাপটিকে আপনার ভাষায় ব্যক্তিগত মুদ্রণ করুন। আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
+    <string name="onboardDescLanguage">আপনার ভাষায় অ্যাপটি ব্যক্তিগতকৃত করুন। আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
     <string name="onboardDescTranslations">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন। আপনি সেটিংস থেকে আরও অনুবাদ ডাউনলোড করতে পারেন।</string>
     <string name="strMsgShareApp" formatted="false">QuranApp অনুবাদ সহ মহান আল-কোরআন পড়ার এবং অন্বেষণ করার জন্য একটি বিনামূল্যের এবং ওপেন সোর্স অ্যাপ। এই অ্যাপটিতে তাফসির, তেলাওয়াত, অনুস্মারক এবং আরও অনেক বৈশিষ্ট্য সহ একটি সুন্দর এবং পরিষ্কার ইন্টারফেস রয়েছে।
 \n
@@ -399,8 +399,8 @@
 \n
 \nনিম্নলিখিত সংস্থানগুলি খালি করা যেতে পারে:</string>
     <string name="msgVerseReminderNotifPermission">আয়াতের অনুস্মারক সক্রিয় করতে বিজ্ঞপ্তি অনুমতি প্রয়োজন।</string>
-    <string name="scriptCanBeFreedUp" formatted="false">%dটি ডাউনলোড করা স্ক্রিপ্ট এবং তাদের ফন্টগুলি খালি করা যেতে পারে।</string>
-    <string name="titleChapterInfo">অধ্যায়ের তথ্য</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%dটি ডাউনলোড করা স্ক্রিপ্ট এবং তাদের ফন্টগুলি বাদ দেওয়া যেতে পারে।</string>
+    <string name="titleChapterInfo">সূরার তথ্য</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n%2$s
 \n
@@ -409,9 +409,15 @@
     <string name="titleScriptCleanup">স্ক্রিপ্ট মুছে ফেলতে চান\?</string>
     <string name="onboardDescReciter">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন। আপনি সেটিংসে আরও তেলাওয়াতকারী খুঁজে পেতে পারেন।</string>
     <string name="labelTranslation">অনুবাদ</string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" এর তেলাওয়াত মুছে ফেলা হয়েছে।</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">তেলাওয়াতকারী \"%2$s\"-এর জন্য \"%1$s\"-এর তেলাওয়াত মুছে ফেলা হয়েছে।</string>
     <string name="msgTafsirLoadFailed">তাফসির লোড করতে ব্যর্থ হয়েছে</string>
-    <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল খালি করা যেতে পারে।</string>
-    <string name="strMsgDuaOf" formatted="false">%s এর দোয়া</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল বাদ দেওয়া যেতে পারে।</string>
+    <string name="strMsgDuaOf" formatted="false">%s-এর দুআ</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">কুরআনে %s এর দোয়া</string>
+    <string name="msgClearSearchHistory">অনুসন্ধানের ইতিহাস পরিষ্কার করুন</string>
+    <string name="titleResourceDownloadSource">রিসোর্স ডাউনলোড করার উৎস</string>
+    <string name="msgResourceDownloadSource">যদি একটি কাজ না করে তবে অন্য উৎস থেকে কুরআনের ডেটা ডাউনলোড করতে এই বিকল্পটি ব্যবহার করুন</string>
+    <string name="msgClearReadHistory">পড়ার ইতিহাস পরিষ্কার করুন</string>
+    <string name="titleArabicTextToggle">আরবি আয়াত লেখা দেখান</string>
+    <string name="msgArabicTextToggle">এই বৈশিষ্ট্যটি বন্ধ করলে অ্যাপের সব জায়গা থেকে আরবি আয়াতের লেখা সরে যাবে।</string>
 </resources>
