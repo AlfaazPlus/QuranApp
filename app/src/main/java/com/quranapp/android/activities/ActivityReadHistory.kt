@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -122,7 +121,7 @@ class ActivityReadHistory : QuranMetaPossessingActivity(), ReadHistoryCallbacks 
             val spanCount = if (WindowUtils.isLandscapeMode(this)) 2 else 1
             binding.list.layoutManager = GridLayoutManager(this, spanCount)
 
-            adapter = ADPReadHistory(this, mQuranMetaRef.get(), models, ViewGroup.LayoutParams.MATCH_PARENT)
+            adapter = mQuranMetaRef.get()?.let { ADPReadHistory(this, it, models, ViewGroup.LayoutParams.MATCH_PARENT) }
 
             binding.list.adapter = adapter
         } else {
