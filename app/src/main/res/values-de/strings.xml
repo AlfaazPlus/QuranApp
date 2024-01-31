@@ -414,4 +414,10 @@
     <string name="titleReaderTextSizeTafsir">Tafsir Text Größe</string>
     <string name="strMsgDuaOf" formatted="false">Gebet von %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Gebet von %s im Koran</string>
+    <string name="msgClearReadHistory">Leseverlauf löschen</string>
+    <string name="titleResourceDownloadSource">Ressourcen-Download-Quelle</string>
+    <string name="msgResourceDownloadSource">Verwende diese Option, um Koran-Daten aus einer anderen Quelle herunterzuladen, wenn eine nicht funktioniert</string>
+    <string name="msgClearSearchHistory">Suchverlauf löschen</string>
+    <string name="titleArabicTextToggle">Arabischen Verstext anzeigen</string>
+    <string name="msgArabicTextToggle">Deaktivieen dieser Funktion wird arabischen Verstext in der ganzen App ausblenden.</string>
 </resources>
