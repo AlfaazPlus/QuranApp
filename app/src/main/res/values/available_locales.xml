@@ -23,6 +23,7 @@
         <item>Italiano</item>
         <item>മലയാളം</item>
         <item>Português</item>
+        <item>Русский</item>
         <item>Türkçe</item>
         <item>اردو</item>
     </string-array>
@@ -43,6 +44,7 @@
         <item>it</item>
         <item>ml</item>
         <item>pt</item>
+        <item>ru</item>
         <item>tr</item>
         <item>ur</item>
     </string-array>
