@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
@@ -67,11 +68,13 @@ class FragSettingsTranslationsDownload :
 
         translDownloadReceiver = TranslDownloadReceiver().apply {
             setDownloadStateListener(this@FragSettingsTranslationsDownload)
-            requireActivity().registerReceiver(
+           ContextCompat.registerReceiver(
+               requireActivity(),
                 this,
                 IntentFilter(TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS).apply {
                     addAction(TranslDownloadReceiver.ACTION_NO_MORE_DOWNLOADS)
-                }
+                },
+               ContextCompat.RECEIVER_NOT_EXPORTED
             )
             bindTranslService(requireActivity())
         }

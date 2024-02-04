@@ -143,7 +143,12 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
 
         mNetworkReceiver = new NetworkStateReceiver();
         mNetworkReceiver.addListener(this);
-        registerReceiver(mNetworkReceiver, NetworkStateReceiver.getIntentFilter());
+        ContextCompat.registerReceiver(
+            this,
+            mNetworkReceiver,
+            NetworkStateReceiver.getIntentFilter(),
+            ContextCompat.RECEIVER_EXPORTED
+        );
     }
 
     @Override

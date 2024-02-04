@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.quranapp.android.interfaceUtils.ActivityResultStarter
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -37,9 +38,16 @@ abstract class BaseFragment : Fragment(), NetworkStateReceiverListener, Activity
             mNetworkReceiver = NetworkStateReceiver().apply {
                 addListener(this@BaseFragment)
             }
-            requireContext().registerReceiver(mNetworkReceiver, intentFilter)
+
+            ContextCompat.registerReceiver(
+                requireContext(),
+                mNetworkReceiver,
+                intentFilter,
+                ContextCompat.RECEIVER_EXPORTED
+            )
         }
     }
+
     fun getArgs(): Bundle = arguments ?: Bundle()
 
     fun restartMainActivity(ctx: Context) {
@@ -79,7 +87,11 @@ abstract class BaseFragment : Fragment(), NetworkStateReceiverListener, Activity
     }
 
     private fun activityResultHandler(): ActivityResultLauncher<Intent> {
-        return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult -> onActivityResult2(result) }
+        return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            onActivityResult2(
+                result
+            )
+        }
     }
 
     protected open fun onActivityResult2(result: ActivityResult) {}

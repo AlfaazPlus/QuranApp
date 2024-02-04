@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.util.valueIterator
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,9 +69,11 @@ class FragSettingsManageAudioReciter :
 
         downloadReceiver = RecitationChapterDownloadReceiver().apply {
             stateListener = this@FragSettingsManageAudioReciter
-            requireActivity().registerReceiver(
+           ContextCompat.registerReceiver(
+               requireActivity(),
                 this,
-                IntentFilter(RecitationChapterDownloadReceiver.ACTION_RECITATION_DOWNLOAD_STATUS)
+                IntentFilter(RecitationChapterDownloadReceiver.ACTION_RECITATION_DOWNLOAD_STATUS),
+               ContextCompat.RECEIVER_NOT_EXPORTED
             )
             bindService(requireActivity())
         }

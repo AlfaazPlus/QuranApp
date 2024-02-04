@@ -274,9 +274,11 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
                 }
             })
 
-            ctx.registerReceiver(
+            ContextCompat.registerReceiver(
+                ctx,
                 this,
-                IntentFilter(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS)
+                IntentFilter(KFQPCScriptFontsDownloadReceiver.ACTION_DOWNLOAD_STATUS),
+                ContextCompat.RECEIVER_NOT_EXPORTED
             )
         }
     }

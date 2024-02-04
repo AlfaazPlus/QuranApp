@@ -15,6 +15,7 @@ import android.os.Handler
 import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
 import androidx.core.app.ServiceCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.util.Pair
@@ -236,9 +237,14 @@ class RecitationService : Service(), MediaDescriptionAdapter {
             setClearMediaItemsOnStop(true)
         }
 
-        registerReceiver(headsetReceiver, IntentFilter(AudioManager.ACTION_HEADSET_PLUG).apply {
-            addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-        })
+        ContextCompat.registerReceiver(
+            this,
+            headsetReceiver,
+            IntentFilter(AudioManager.ACTION_HEADSET_PLUG).apply {
+                addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+            },
+            ContextCompat.RECEIVER_EXPORTED
+        )
 
         syncConfigurations()
     }
