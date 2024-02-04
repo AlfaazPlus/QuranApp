@@ -176,7 +176,6 @@ class RecitationPlayer(
     }
 
     fun onPlayMedia(params: RecitationPlayerParams) {
-        Log.d("onPlayMedia: ${params.currentChapterNo}:${params.currentVerseNo}")
         if (params.syncWithVerse && !activity.mReaderParams.isSingleVerse) {
             reveal()
         }

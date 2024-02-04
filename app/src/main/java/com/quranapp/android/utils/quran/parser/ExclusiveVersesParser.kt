@@ -33,11 +33,6 @@ open class ExclusiveVersesParser {
                 it.readText()
             }
 
-        Log.d(
-            "currentLocale: $currentLocale, fallbackLocale: $fallbackLocale",
-            "localeNames: $localeNames, fallbackNames: $fallbackNames"
-        )
-
         return parseVersesInternal(
             context,
             map,

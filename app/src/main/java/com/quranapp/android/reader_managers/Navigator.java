@@ -303,9 +303,7 @@ public class Navigator {
                     }
                 }
             }
-            case READER_READ_TYPE_JUZ, READER_READ_TYPE_CHAPTER -> {
-                scrollToVerse(chapterNo, verseNo, true);
-            }
+            case READER_READ_TYPE_JUZ, READER_READ_TYPE_CHAPTER -> scrollToVerse(chapterNo, verseNo, true);
         }
 
         mActivity.updateVerseNumber(chapterNo, verseNo);

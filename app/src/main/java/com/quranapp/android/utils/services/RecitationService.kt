@@ -155,6 +155,8 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
                             val nextVerse = recParams.getNextVerse(quranMeta!!)
 
+                            Log.d(nextVerse)
+
                             if (nextVerse != null) {
                                 reciteVerse(nextVerse)
                             } else {
@@ -296,6 +298,15 @@ class RecitationService : Service(), MediaDescriptionAdapter {
     fun updateContinuePlaying(continuePlaying: Boolean) {
         recParams.continueRange = continuePlaying
         SPReader.setRecitationContinueChapter(this, continuePlaying)
+
+        if (!recParams.previouslyPlaying) {
+            return
+        }
+
+        pauseMedia()
+        val currentPos = player.currentPosition
+        restartVerse(true)
+        player.seekTo(currentPos)
     }
 
     fun updateVerseSync(sync: Boolean, fromUser: Boolean) {
@@ -333,11 +344,9 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
     @Synchronized
     fun onChapterChanged(chapterNo: Int, fromVerse: Int, toVerse: Int, currentVerse: Int) {
-        Log.d(chapterNo, fromVerse, toVerse, currentVerse)
-
         recParams.currentVerse = ChapterVersePair(chapterNo, currentVerse)
-        recParams.firstVerse = ChapterVersePair(chapterNo, fromVerse)
-        recParams.lastVerse = ChapterVersePair(chapterNo, toVerse)
+        recParams.firstVerseOfRange = ChapterVersePair(chapterNo, fromVerse)
+        recParams.lastVerseOfRange = ChapterVersePair(chapterNo, toVerse)
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
         recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
@@ -348,9 +357,9 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         val firstVerse = quranMeta.getVerseRangeOfChapterInJuz(juzNo, firstChapter).first
         val (_, lastVerse) = quranMeta.getVerseRangeOfChapterInJuz(juzNo, lastChapter)
 
-        recParams.firstVerse = ChapterVersePair(firstChapter, firstVerse)
-        recParams.lastVerse = ChapterVersePair(lastChapter, lastVerse)
-        recParams.currentVerse = recParams.firstVerse
+        recParams.firstVerseOfRange = ChapterVersePair(firstChapter, firstVerse)
+        recParams.lastVerseOfRange = ChapterVersePair(lastChapter, lastVerse)
+        recParams.currentVerse = recParams.firstVerseOfRange
         recParams.currentReciter = SPReader.getSavedRecitationSlug(this)
         recParams.currentTranslationReciter = SPReader.getSavedRecitationTranslationSlug(this)
     }
@@ -448,7 +457,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         val isOnlyTranslation = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
         var currentVerse = recParams.currentVerse
-        val lastVerse = recParams.lastVerse
+        val lastVerse = recParams.lastVerseOfRange
 
         if (currentVerse == lastVerse) return
 
@@ -548,14 +557,11 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         if (quranMeta == null) return
 
         if (player.duration > 0 && player.currentPosition < player.duration) {
-            Log.d("This 1")
             if (isPlaying) pauseMedia()
             else playMedia()
         } else if (!recParams.hasNextVerse(quranMeta!!)) {
-            Log.d("This 2")
             restartRange()
         } else {
-            Log.d("This 3")
             restartVerse()
         }
     }
@@ -566,7 +572,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         player.clearMediaItems()
         playlist.clear()
 
-        recParams.currentVerse = recParams.firstVerse
+        recParams.currentVerse = recParams.firstVerseOfRange
         recPlayer?.onStopMedia(recParams)
 
         runAudioProgress()
@@ -619,7 +625,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
         if (isLoadingInProgress) return
 
         if (playlist.size == 0) {
-            reciteVerse(recParams.firstVerse)
+            reciteVerse(recParams.firstVerseOfRange)
             return
         }
 

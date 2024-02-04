@@ -7,6 +7,7 @@ import android.os.Parcelable
 import androidx.core.os.ParcelCompat
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
 
@@ -19,12 +20,12 @@ class RecitationPlayerParams() : Parcelable {
     /**
      * Pair<surahNo, verseNo>
      */
-    var firstVerse = ChapterVersePair(-1, -1)
+    var firstVerseOfRange = ChapterVersePair(-1, -1)
 
-    /**s
+    /**
      * Pair<surahNo, verseNo>
      */
-    var lastVerse = ChapterVersePair(-1, -1)
+    var lastVerseOfRange = ChapterVersePair(-1, -1)
 
     var currentReciter: String? = null
     var currentTranslationReciter: String? = null
@@ -84,10 +85,8 @@ class RecitationPlayerParams() : Parcelable {
     fun getNextVerse(quranMeta: QuranMeta, curVerse: ChapterVersePair? = null): ChapterVersePair? {
         val currentVerse = curVerse ?: this.currentVerse
 
-        val currentChapterNo = currentVerse.chapterNo
-        val currentVerseNo = currentVerse.verseNo
-        val lastChapterNo = lastVerse.chapterNo
-        val lastVerseNo = lastVerse.verseNo
+        val (currentChapterNo, currentVerseNo) = currentVerse
+        val (lastChapterNoOfRange, lastVerseNoOfRange) = lastVerseOfRange
 
         if (!QuranMeta.isChapterValid(currentChapterNo) || !quranMeta.isVerseValid4Chapter(
                 currentChapterNo,
@@ -102,21 +101,22 @@ class RecitationPlayerParams() : Parcelable {
 
         if (nextVerseNo > quranMeta.getChapterVerseCount(currentChapterNo)) {
             // If we are at the last verse of the chapter, go to the first verse of the next chapter if possible.
-            // Otherwise, stay at the current verse.
+            // Otherwise, change nothing.
             nextVerseNo = if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
                 nextChapterNo++
                 1
             } else {
-                quranMeta.getChapterVerseCount(currentChapterNo)
+                -1
             }
         }
 
-        if (nextChapterNo > lastChapterNo || nextVerseNo > lastVerseNo) {
+        // If the next verse or chapter goes beyond the current range, then change nothing.
+        if (nextChapterNo > lastChapterNoOfRange || nextVerseNo > lastVerseNoOfRange) {
             nextChapterNo = -1
             nextVerseNo = -1
         }
 
-        if (nextChapterNo == -1 && nextVerseNo == -1) {
+        if (nextChapterNo == -1 || nextVerseNo == -1) {
             return null
         }
 
@@ -125,10 +125,8 @@ class RecitationPlayerParams() : Parcelable {
 
 
     fun getPreviousVerse(quranMeta: QuranMeta): ChapterVersePair? {
-        val currentChapterNo = currentVerse.chapterNo
-        val currentVerseNo = currentVerse.verseNo
-        val firstChapterNo = firstVerse.chapterNo
-        val firstVerseNo = firstVerse.verseNo
+        val (currentChapterNo, currentVerseNo) = currentVerse
+        val (firstChapterNoOfRange, firstVerseNoOfRange) = firstVerseOfRange
 
         if (!QuranMeta.isChapterValid(currentChapterNo) || !quranMeta.isVerseValid4Chapter(
                 currentChapterNo,
@@ -142,23 +140,23 @@ class RecitationPlayerParams() : Parcelable {
         var previousVerseNo = currentVerseNo - 1
         if (previousVerseNo < 1) {
             // If we are at the first verse of the chapter, go to the last verse of the previous chapter if possible.
-            // Otherwise, stay at the current verse.
+            // Otherwise, change nothing.
             previousVerseNo = if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
                 previousChapterNo--
                 quranMeta.getChapterVerseCount(previousChapterNo)
             } else {
-                1
+                -1
             }
         }
 
         // If the previous verse or chapter goes beyond the current range,
         // then return -1 for both so that the player doesn't change anything.
-        if (previousChapterNo < firstChapterNo || previousVerseNo < firstVerseNo) {
+        if (previousChapterNo < firstChapterNoOfRange || previousVerseNo < firstVerseNoOfRange) {
             previousChapterNo = -1
             previousVerseNo = -1
         }
 
-        if (previousChapterNo == -1 && previousVerseNo == -1) {
+        if (previousChapterNo == -1 || previousVerseNo == -1) {
             return null
         }
 
@@ -170,7 +168,7 @@ class RecitationPlayerParams() : Parcelable {
      */
     fun hasNextVerse(quranMeta: QuranMeta): Boolean {
         val (currentChapterNo, currentVerseNo) = currentVerse
-        val (lastChapterNo, lastVerseNo) = lastVerse
+        val (lastChapterNoOfRange, lastVerseNoOfRange) = lastVerseOfRange
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
@@ -187,7 +185,7 @@ class RecitationPlayerParams() : Parcelable {
             nextVerseNo = 1
         }
 
-        return nextChapterNo <= lastChapterNo && nextVerseNo <= lastVerseNo
+        return nextChapterNo <= lastChapterNoOfRange && nextVerseNo <= lastVerseNoOfRange
     }
 
     /**
@@ -195,7 +193,7 @@ class RecitationPlayerParams() : Parcelable {
      */
     fun hasPreviousVerse(quranMeta: QuranMeta): Boolean {
         val (currentChapterNo, currentVerseNo) = currentVerse
-        val (firstChapterNo, firstVerseNo) = firstVerse
+        val (firstChapterNo, firstVerseNo) = firstVerseOfRange
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||

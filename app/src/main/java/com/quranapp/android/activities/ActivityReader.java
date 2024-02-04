@@ -588,16 +588,9 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
 
         switch (mReaderParams.readType) {
-            case READER_READ_TYPE_VERSES:
-                initVerseRange(initialChapter, initVerses);
-                break;
-            case READER_READ_TYPE_JUZ:
-                initJuz(initialJuzNo);
-                break;
-            case READER_READ_TYPE_CHAPTER:
-            default:
-                initChapter(initialChapter);
-                break;
+            case READER_READ_TYPE_VERSES -> initVerseRange(initialChapter, initVerses);
+            case READER_READ_TYPE_JUZ -> initJuz(initialJuzNo);
+            default -> initChapter(initialChapter);
         }
     }
 
@@ -608,8 +601,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
         if (serializable instanceof Pair) {
             return (Pair<Integer, Integer>) serializable;
-        } else if (serializable instanceof int[]) {
-            int[] verses = (int[]) serializable;
+        } else if (serializable instanceof int[] verses) {
             return new Pair<>(verses[0], verses[1]);
         }
 
