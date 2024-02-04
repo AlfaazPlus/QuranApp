@@ -18,6 +18,7 @@
 - Malayalam (ml) - [Fayaz](https://github.com/Sharpentine)
 - Persian (fa) - [rchookan](https://github.com/rchookan)
 - Portuguese (pt) - [fnogcps](https://github.com/fnogcps)
+- Russian (ru) - [ael1x](https://github.com/ael1x)
 - Spanish (es) - [JnBenites](https://github.com/JnBenites) and [gallegonovato](https://github.com/gallegonovato)
 - Turkish (tr) - [croxz900](https://github.com/croxz900)
 - Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
