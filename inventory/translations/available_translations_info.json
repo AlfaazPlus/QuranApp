@@ -298,6 +298,17 @@
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_maududi.json"
       }
+    },
+    "uk": {
+      "uk_mikhailo": {
+        "book": "Dr. Mikhailo Yaqubovic",
+        "author": "Dr. Mikhailo Yaqubovic",
+        "displayName": "Dr. Mikhailo Yaqubovic",
+        "langCode": "uk",
+        "langName": "українська",
+        "lastUpdated": 1707048963878,
+        "downloadPath": "inventory/translations/uk/uk_mikhailo.json"
+      }
     }
   }
 }
