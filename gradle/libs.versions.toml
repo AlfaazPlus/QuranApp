@@ -20,6 +20,9 @@ swipeRefreshLayout = "1.7.2.4"
 retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
+bom = "2024.01.00"
+activityCompose = "1.8.2"
+viewmodelCompose = "2.6.1"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,3 +64,13 @@ srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
+
+# Jetpack Compose
+composeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "bom" }
+composeUi = { group = "androidx.compose.ui", name = "ui" }
+composeUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+composeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+composeMaterial = { group = "androidx.compose.material", name = "material" }
+composeRuntime = { group = "androidx.compose.runtime", name = "runtime" }
+composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+composeViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }

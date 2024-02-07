@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScience
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
+import com.quranapp.android.ui.components.ReadHistorySection
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
 
@@ -37,20 +39,23 @@ class FragMain : BaseFragment() {
         QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
             override fun onReady(r: QuranMeta) {
                 votdView?.post { votdView?.refresh(r) }
-                binding.readHistory.post { binding.readHistory.refresh(r) }
+                //binding.readHistory.post { binding.readHistory.refresh(r) }
             }
         })
     }
 
     override fun onDestroy() {
         votdView?.destroy()
-        binding.readHistory.destroy()
+        //binding.readHistory.destroy()
         super.onDestroy()
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragMainBinding.inflate(inflater, container, false)
+        binding.readHistory.setContent {
+            ReadHistorySection()
+        }
         return binding.root
     }
 
@@ -76,7 +81,7 @@ class FragMain : BaseFragment() {
         initVOTD(quranMeta)
         binding.let {
             arrayOf(
-                it.readHistory,
+                //it.readHistory,
                 it.featuredReading,
                 it.featuredDua,
                 it.solutions,

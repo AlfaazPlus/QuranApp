@@ -30,6 +30,11 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.1'
     }
 
     buildTypes {
@@ -120,4 +125,16 @@ dependencies {
     implementation libs.srlExtHorizontal
     implementation libs.srlExtTwoLevel
     implementation libs.srlExtUtil
+
+    /* Jetpack Compose */
+    implementation platform(libs.composeBom)
+    implementation libs.composeUi
+    implementation libs.composeUiGraphics
+    implementation libs.composeUiToolingPreview
+    implementation libs.composeMaterial
+    implementation libs.composeRuntime
+    implementation libs.composeActivity
+    implementation libs.composeViewModel
+
+
 }

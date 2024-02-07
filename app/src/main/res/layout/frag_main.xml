@@ -20,10 +20,16 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <com.quranapp.android.views.homepage.ReadHistoryLayout
+        <!--<com.quranapp.android.views.homepage.ReadHistoryLayout
+            android:id="@+id/readHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />-->
+
+        <androidx.compose.ui.platform.ComposeView
             android:id="@+id/readHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
         <com.quranapp.android.views.homepage2.FeaturedReadingLayout
             android:id="@+id/featuredReading"
