@@ -136,5 +136,9 @@ dependencies {
     implementation libs.composeActivity
     implementation libs.composeViewModel
 
+    /* Room Database */
+    implementation libs.roomRuntime
+    implementation libs.roomKtx
+    kapt libs.roomCompiler
 
 }

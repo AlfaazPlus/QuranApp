@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScience
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.ui.components.ReadHistorySection
+import com.quranapp.android.ui.components.ReadHistory.ReadHistorySection
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
 

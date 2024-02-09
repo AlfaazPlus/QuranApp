@@ -23,6 +23,7 @@ kotlinxRetrofit = "0.8.0"
 bom = "2024.01.00"
 activityCompose = "1.8.2"
 viewmodelCompose = "2.6.1"
+room = "2.5.2"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,3 +75,8 @@ composeMaterial = { group = "androidx.compose.material", name = "material" }
 composeRuntime = { group = "androidx.compose.runtime", name = "runtime" }
 composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 composeViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
+
+#Room Database
+roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room"}
+roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room"}
+roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room"}
