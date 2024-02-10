@@ -1,6 +1,7 @@
 package com.quranapp.android.ui.components.common
 
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,6 +44,7 @@ fun BoldHeader(
             .height(dimensionResource(id = R.dimen.dmnAppBarHeight)),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
         Image(
             painter = painterResource(id = R.drawable.dr_icon_arrow_left),
             contentDescription = stringResource(id = R.string.strLabelBack),
@@ -53,12 +55,7 @@ fun BoldHeader(
                 .rotate(integerResource(id = R.integer.intActionBtnRotation).toFloat())
                 .clip(CircleShape)
                 .clickable {
-                    object : OnBackPressedCallback(true){
-                        override fun handleOnBackPressed() {
-
-                        }
-
-                    }
+                    onBackPressedDispatcher?.onBackPressed()
                 }
         )
         Text(
