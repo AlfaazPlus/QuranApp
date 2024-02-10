@@ -1,18 +1,27 @@
-package com.quranapp.android.ui.components.ReadHistory
+package com.quranapp.android.ui.components.readHistory
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
@@ -31,16 +41,41 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import kotlin.math.roundToInt
 
 @Composable
 fun ReadHistoryItem(
     modifier: Modifier = Modifier,
     historyItem: ReadHistoryModel,
-    quranMeta: QuranMeta
+    quranMeta: QuranMeta,
+    onSwipeDelete: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    var dragEnable by remember { mutableStateOf(onSwipeDelete != null) }
+
     Card(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .offset { IntOffset(offsetX.roundToInt(), 0) }
+            .draggable(
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    if (onSwipeDelete != null && delta < 0) offsetX += delta
+
+                },
+                enabled = dragEnable,
+                onDragStopped = {
+                    if (onSwipeDelete != null) {
+                        if (offsetX < -400) {
+                            dragEnable = false
+                            onSwipeDelete()
+                        }
+                        offsetX = 0f
+
+                    }
+                }
+            )
             .padding(start = 10.dp, bottom = 10.dp)
             .shadow(
                 elevation = 3.dp,

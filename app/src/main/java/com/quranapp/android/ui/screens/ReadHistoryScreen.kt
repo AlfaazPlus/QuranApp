@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -32,7 +31,7 @@ import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.db.entities.mapToUiModel
 import com.quranapp.android.ui.components.common.BoldHeader
 import com.quranapp.android.ui.components.common.DeleteButton
-import com.quranapp.android.ui.components.ReadHistory.ReadHistoryItem
+import com.quranapp.android.ui.components.readHistory.ReadHistoryItem
 import com.quranapp.android.viewModels.ReadHistoryViewModel
 
 @Composable
@@ -82,7 +81,11 @@ fun ReadHistoryScreen() {
                     )
                 }
             } else {
-                ReadHistoryList(history = history.map { it.mapToUiModel() }, quranMeta = quranMeta)
+                ReadHistoryList(
+                    history = history.map { it.mapToUiModel() },
+                    quranMeta = quranMeta,
+                    onSwipeDelete = { readHistoryViewModel.deleteHistoryItem(it) }
+                )
             }
 
         }
@@ -95,7 +98,8 @@ fun ReadHistoryScreen() {
 fun ReadHistoryList(
     modifier: Modifier = Modifier,
     history: List<ReadHistoryModel>,
-    quranMeta: QuranMeta
+    quranMeta: QuranMeta,
+    onSwipeDelete: (ReadHistoryModel) -> Unit
 ) {
     if (history.isEmpty()) {
         Column(
@@ -125,7 +129,11 @@ fun ReadHistoryList(
                 .padding(0.dp, 10.dp, 10.dp, 50.dp)
         ) {
             items(history) {
-                ReadHistoryItem(historyItem = it, quranMeta = quranMeta)
+                ReadHistoryItem(
+                    historyItem = it,
+                    quranMeta = quranMeta,
+                    onSwipeDelete = { onSwipeDelete(it) }
+                )
             }
         }
     }

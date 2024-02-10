@@ -36,6 +36,8 @@ fun BoldHeader(
     deleteButton: @Composable() (() -> Unit)? = null
 ) {
 
+    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
     Row(
         modifier = Modifier
             .background(colorResource(id = R.color.colorBGPage))
@@ -44,7 +46,7 @@ fun BoldHeader(
             .height(dimensionResource(id = R.dimen.dmnAppBarHeight)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
         Image(
             painter = painterResource(id = R.drawable.dr_icon_arrow_left),
             contentDescription = stringResource(id = R.string.strLabelBack),

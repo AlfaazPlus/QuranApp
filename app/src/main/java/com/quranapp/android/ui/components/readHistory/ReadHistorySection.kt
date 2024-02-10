@@ -1,4 +1,4 @@
-package com.quranapp.android.ui.components.ReadHistory
+package com.quranapp.android.ui.components.readHistory
 
 import android.content.Intent
 import androidx.compose.foundation.background

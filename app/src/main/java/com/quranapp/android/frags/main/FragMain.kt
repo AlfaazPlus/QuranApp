@@ -11,7 +11,7 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.ui.components.ReadHistory.ReadHistorySection
+import com.quranapp.android.ui.components.readHistory.ReadHistorySection
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
 
