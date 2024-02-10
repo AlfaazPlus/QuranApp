@@ -60,7 +60,7 @@ fun BoldHeader(
                 .clickable {
                     object : OnBackPressedCallback(true){
                         override fun handleOnBackPressed() {
-                            OnBackPressedDispatcher().onBackPressed()
+
                         }
 
                     }

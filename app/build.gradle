@@ -132,6 +132,7 @@ dependencies {
     implementation libs.composeUiGraphics
     implementation libs.composeUiToolingPreview
     implementation libs.composeMaterial
+    implementation libs.composeMaterial3
     implementation libs.composeRuntime
     implementation libs.composeActivity
     implementation libs.composeViewModel

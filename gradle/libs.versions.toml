@@ -72,6 +72,7 @@ composeUi = { group = "androidx.compose.ui", name = "ui" }
 composeUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 composeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 composeMaterial = { group = "androidx.compose.material", name = "material" }
+composeMaterial3 = { group = "androidx.compose.material3", name = "material3"}
 composeRuntime = { group = "androidx.compose.runtime", name = "runtime" }
 composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 composeViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
