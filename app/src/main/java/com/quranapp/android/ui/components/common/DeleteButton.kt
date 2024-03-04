@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -75,7 +76,7 @@ fun DeleteDialog(
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Card(
-            backgroundColor = Color.White,
+            backgroundColor = colorResource(id = R.color.colorBGHomePageItem),
             shape = RoundedCornerShape(6.dp)
         ) {
             Column(
@@ -86,9 +87,14 @@ fun DeleteDialog(
                     text = dialogTitle,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
+                    color = colorResource(id = R.color.colorText),
                     modifier = Modifier.padding(10.dp)
                 )
-                Text(text = dialogText, modifier = Modifier.padding(bottom = 18.dp))
+                Text(
+                    text = dialogText,
+                    color = colorResource(id = R.color.colorText),
+                    modifier = Modifier.padding(bottom = 18.dp)
+                )
                 Row(
                     modifier = Modifier.wrapContentSize(),
                     horizontalArrangement = Arrangement.Center,
@@ -100,7 +106,7 @@ fun DeleteDialog(
                     ) {
                         Text(
                             text = stringResource(id = R.string.strLabelCancel),
-                            color = Color.Black,
+                            color = colorResource(id = R.color.colorText),
                             fontFamily = FontFamily.SansSerif
                         )
                     }

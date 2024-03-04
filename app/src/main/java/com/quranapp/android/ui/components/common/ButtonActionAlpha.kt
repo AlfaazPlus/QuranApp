@@ -53,6 +53,7 @@ fun ButtonActionAlphaSmall(modifier: Modifier = Modifier, text: String, onClick:
                 fontSize = dimensionResource(id = R.dimen.dmnCommonSize3).value.sp,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
+                color = colorResource(id = R.color.colorText)
             )
         )
     }

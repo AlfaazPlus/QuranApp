@@ -118,7 +118,7 @@ fun ReadHistoryList(
             )
             Text(
                 text = stringResource(id = R.string.strMsgReadHistoryNoItems),
-                color = colorResource(id = R.color.colorText3),
+                color = colorResource(id = R.color.colorText),
                 modifier = Modifier.padding(top = 10.dp)
             )
         }

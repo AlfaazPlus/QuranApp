@@ -67,6 +67,7 @@ fun BoldHeader(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             ),
+            color = colorResource(R.color.colorText),
             maxLines = 1,
             modifier = Modifier
                 .weight(1f)

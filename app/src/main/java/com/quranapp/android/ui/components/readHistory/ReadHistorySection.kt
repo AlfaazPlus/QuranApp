@@ -51,15 +51,15 @@ fun ReadHistorySection() {
     val quranMeta by readHistoryViewModel.quranMeta.collectAsState()
 
     Column(
-        modifier = Modifier.background(Color.White)
+        modifier = Modifier.background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
         ReadHistoryHeader {
             context.startActivity(Intent(context, ActivityReadHistory::class.java))
         }
         if (readHistoryViewModel.isLoading){
             Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 18.dp), contentAlignment = Alignment.Center){
+                    .fillMaxWidth()
+                    .padding(bottom = 18.dp), contentAlignment = Alignment.Center){
                 CircularProgressIndicator(
                     modifier = Modifier.width(40.dp),
                     color = colorResource(id = R.color.colorPrimary)
@@ -93,7 +93,8 @@ fun ReadHistoryHeader(modifier: Modifier = Modifier, onClick: () -> Unit) {
             Text(
                 text = stringResource(id = R.string.strTitleReadHistory),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 10.dp),
+                color = colorResource(id = R.color.colorText)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -115,12 +116,12 @@ fun ReadHistoryList(
         Text(
             text = stringResource(id = R.string.strMsgReadShowupHere),
             fontSize = dimensionResource(id = R.dimen.dmnCommonSize1_5).value.sp,
-            color = colorResource(id = R.color.colorText2),
+            color = colorResource(id = R.color.colorText),
             fontFamily = FontFamily.SansSerif,
             fontStyle = FontStyle.Italic,
             modifier = modifier
-                .fillMaxWidth()
-                .padding(20.dp, 15.dp)
+                    .fillMaxWidth()
+                    .padding(20.dp, 15.dp)
         )
     } else {
         val itemsList = if(history.size > 10) history.subList(0, 10) else history

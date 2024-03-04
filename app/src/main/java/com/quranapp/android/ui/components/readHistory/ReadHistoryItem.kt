@@ -90,7 +90,8 @@ fun ReadHistoryItem(
             },
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, colorResource(id = R.color.colorBGLastVersesChapterNo)),
-        elevation = 3.dp
+        elevation = 3.dp,
+        backgroundColor = colorResource(id = R.color.colorBGHomePageItem)
     ) {
         Row(
             modifier = Modifier.padding(10.dp),
@@ -112,7 +113,8 @@ fun ReadHistoryItem(
                         text = historyItem.chapterNo.toString(),
                         fontSize = 22.sp,
                         fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
+                        color = colorResource(id = R.color.colorText)
                     )
                 }
             }
@@ -155,13 +157,15 @@ fun ReadHistoryText(
         Text(
             text = chapterName,
             fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.colorText)
         )
         //subTitle
         Text(
             text = subTitle,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Normal,
+            color = colorResource(id = R.color.colorText),
             modifier = Modifier.padding(top = 3.dp)
         )
         //continueReading
