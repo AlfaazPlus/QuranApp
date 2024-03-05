@@ -1,6 +1,10 @@
 package com.quranapp.android.ui.components.common
 
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -40,7 +44,9 @@ fun ButtonActionAlpha(modifier: Modifier = Modifier, text: String, onClick: () -
 @Composable
 fun ButtonActionAlphaSmall(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     TextButton(
-        modifier = modifier.padding(10.dp, 5.dp),
+        modifier = modifier
+            .padding(15.dp, 5.dp)
+            .defaultMinSize(minHeight = 1.dp),
         shape = RoundedCornerShape(7.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorResource(id = R.color.colorPrimaryAlpha20)
@@ -54,7 +60,8 @@ fun ButtonActionAlphaSmall(modifier: Modifier = Modifier, text: String, onClick:
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.colorText)
-            )
+            ),
+            modifier = Modifier.wrapContentSize().padding(0.dp, 0.dp)
         )
     }
 

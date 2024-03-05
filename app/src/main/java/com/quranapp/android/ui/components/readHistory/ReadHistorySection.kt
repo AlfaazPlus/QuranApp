@@ -87,7 +87,7 @@ fun ReadHistoryHeader(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 painter = painterResource(id = R.drawable.dr_icon_history),
                 contentDescription = stringResource(id = R.string.strTitleReadHistory),
                 tint = colorResource(id = R.color.colorPrimary),
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 15.dp)
             )
 
             Text(
@@ -125,7 +125,9 @@ fun ReadHistoryList(
         )
     } else {
         val itemsList = if(history.size > 10) history.subList(0, 10) else history
-        LazyRow {
+        LazyRow (
+            modifier = Modifier.padding(start = 5.dp)
+        ){
             items(itemsList) {
                 ReadHistoryItem(historyItem = it, quranMeta = quranMeta)
             }
