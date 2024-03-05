@@ -2,7 +2,9 @@ package com.quranapp.android.ui.components.readHistory
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -47,35 +50,13 @@ import kotlin.math.roundToInt
 fun ReadHistoryItem(
     modifier: Modifier = Modifier,
     historyItem: ReadHistoryModel,
-    quranMeta: QuranMeta,
-    onSwipeDelete: (() -> Unit)? = null
+    quranMeta: QuranMeta
 ) {
     val context = LocalContext.current
-    var offsetX by remember { mutableFloatStateOf(0f) }
-    var dragEnable by remember { mutableStateOf(onSwipeDelete != null) }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .offset { IntOffset(offsetX.roundToInt(), 0) }
-            .draggable(
-                orientation = Orientation.Horizontal,
-                state = rememberDraggableState { delta ->
-                    if (onSwipeDelete != null && delta < 0) offsetX += delta
-
-                },
-                enabled = dragEnable,
-                onDragStopped = {
-                    if (onSwipeDelete != null) {
-                        if (offsetX < -400) {
-                            dragEnable = false
-                            onSwipeDelete()
-                        }
-                        offsetX = 0f
-
-                    }
-                }
-            )
             .padding(start = 10.dp, bottom = 10.dp)
             .shadow(
                 elevation = 3.dp,
