@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,6 +47,7 @@ import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ReadHistoryItem(
     modifier: Modifier = Modifier,
@@ -61,14 +63,14 @@ fun ReadHistoryItem(
             .shadow(
                 elevation = 3.dp,
                 shape = RoundedCornerShape(12.dp)
-            )
-            .clickable {
-                val intent = ReaderFactory.prepareLastVersesIntent(quranMeta, historyItem)
-                if (intent != null) {
-                    intent.setClass(context, ActivityReader::class.java)
-                    context.startActivity(intent)
-                }
-            },
+            ),
+        onClick = {
+            val intent = ReaderFactory.prepareLastVersesIntent(quranMeta, historyItem)
+            if (intent != null) {
+                intent.setClass(context, ActivityReader::class.java)
+                context.startActivity(intent)
+            }
+        },
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, colorResource(id = R.color.colorBGLastVersesChapterNo)),
         elevation = 3.dp,
