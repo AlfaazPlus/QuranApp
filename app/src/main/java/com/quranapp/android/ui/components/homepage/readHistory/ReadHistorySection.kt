@@ -2,34 +2,26 @@ package com.quranapp.android.ui.components.readHistory
 
 import android.content.Intent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,7 +30,7 @@ import com.quranapp.android.activities.ActivityReadHistory
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.db.entities.mapToUiModel
-import com.quranapp.android.ui.components.common.ButtonActionAlphaSmall
+import com.quranapp.android.ui.components.common.SectionHeader
 import com.quranapp.android.viewModels.ReadHistoryViewModel
 
 @Composable
@@ -51,11 +43,18 @@ fun ReadHistorySection() {
     val quranMeta by readHistoryViewModel.quranMeta.collectAsState()
 
     Column(
-        modifier = Modifier.background(colorResource(id = R.color.colorBGHomePageItem))
+        modifier = Modifier
+            .padding(vertical = 3.dp)
+            .background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
-        ReadHistoryHeader {
+        SectionHeader(
+            icon = R.drawable.dr_icon_history,
+            iconColor = R.color.colorPrimary,
+            title =  R.string.strTitleReadHistory
+        ) {
             context.startActivity(Intent(context, ActivityReadHistory::class.java))
         }
+
         if (readHistoryViewModel.isLoading){
             Box(modifier = Modifier
                     .fillMaxWidth()
@@ -72,39 +71,6 @@ fun ReadHistorySection() {
     }
 }
 
-@Composable
-fun ReadHistoryHeader(modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            modifier = Modifier.fillMaxHeight(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.dr_icon_history),
-                contentDescription = stringResource(id = R.string.strTitleReadHistory),
-                tint = colorResource(id = R.color.colorPrimary),
-                modifier = Modifier.padding(start = 15.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.strTitleReadHistory),
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 10.dp),
-                color = colorResource(id = R.color.colorText)
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        ButtonActionAlphaSmall(
-            text = stringResource(id = R.string.strLabelViewAll),
-            onClick = onClick
-        )
-
-    }
-}
 
 @Composable
 fun ReadHistoryList(
