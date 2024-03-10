@@ -1,4 +1,4 @@
-package com.quranapp.android.ui.components.readHistory
+package com.quranapp.android.ui.components.homepage.readHistory
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

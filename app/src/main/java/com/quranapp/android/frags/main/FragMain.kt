@@ -11,7 +11,13 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
-import com.quranapp.android.ui.components.readHistory.ReadHistorySection
+import com.quranapp.android.ui.components.homepage.featureProphets.FeatureProphetsSection
+import com.quranapp.android.ui.components.homepage.featuredDua.FeaturedDuaSection
+import com.quranapp.android.ui.components.homepage.featuredReading.FeaturedReadingSection
+import com.quranapp.android.ui.components.homepage.quranEtiquette.QuranEtiquetteSection
+import com.quranapp.android.ui.components.homepage.quranScience.QuranScienceCard
+import com.quranapp.android.ui.components.homepage.quranSolution.QuranSolutionSection
+import com.quranapp.android.ui.components.homepage.readHistory.ReadHistorySection
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
 
@@ -52,9 +58,13 @@ class FragMain : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragMainBinding.inflate(inflater, container, false)
-        binding.readHistory.setContent {
-            ReadHistorySection()
-        }
+        binding.readHistory.setContent { ReadHistorySection() }
+        binding.featuredReading.setContent { FeaturedReadingSection() }
+        binding.featuredDua.setContent { FeaturedDuaSection() }
+        binding.solutions.setContent { QuranSolutionSection() }
+        binding.etiquette.setContent { QuranEtiquetteSection() }
+        binding.prophets.setContent { FeatureProphetsSection() }
+        binding.quranScience.setContent { QuranScienceCard() }
         return binding.root
     }
 
@@ -78,25 +88,25 @@ class FragMain : BaseFragment() {
 
     private fun initContent(quranMeta: QuranMeta) {
         initVOTD(quranMeta)
-        binding.let {
-            arrayOf(
+        /*binding.let {
+            /*arrayOf(
                 //it.readHistory,
-                it.featuredReading,
-                it.featuredDua,
-                it.solutions,
-                it.etiquette,
-                it.prophets
+                //it.featuredReading,
+                //it.featuredDua,
+                //it.solutions,
+                //it.etiquette,
+                //it.prophets
             ).forEach { layout ->
                 layout.initialize()
                 layout.refresh(quranMeta)
-            }
+            }*/
 
             it.quranScience.visibility = View.VISIBLE
             it.quranScience.clipToOutline = true
             it.quranScience.setOnClickListener {v->
                 v.context.startActivity(Intent(v.context, ActivityQuranScience::class.java))
             }
-        }
+        }*/
     }
 
 

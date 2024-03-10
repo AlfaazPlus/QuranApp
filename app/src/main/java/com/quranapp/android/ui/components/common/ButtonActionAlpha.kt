@@ -45,7 +45,7 @@ fun ButtonActionAlpha(modifier: Modifier = Modifier, text: String, onClick: () -
 fun ButtonActionAlphaSmall(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     TextButton(
         modifier = modifier
-            .padding(15.dp, 5.dp)
+            .padding(15.dp, 2.dp)
             .defaultMinSize(minHeight = 1.dp),
         shape = RoundedCornerShape(7.dp),
         colors = ButtonDefaults.buttonColors(

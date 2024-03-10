@@ -41,7 +41,7 @@ import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.db.entities.mapToUiModel
 import com.quranapp.android.ui.components.common.BoldHeader
 import com.quranapp.android.ui.components.common.DeleteButton
-import com.quranapp.android.ui.components.readHistory.ReadHistoryItem
+import com.quranapp.android.ui.components.homepage.readHistory.ReadHistoryItem
 import com.quranapp.android.viewModels.ReadHistoryViewModel
 
 @Composable
