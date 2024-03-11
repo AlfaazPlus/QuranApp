@@ -30,60 +30,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/featuredReading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <!--<com.quranapp.android.views.homepage2.FeaturedReadingLayout
             android:id="@+id/featuredReading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->
 
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/featuredDua"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <!--<com.quranapp.android.views.homepage2.FeaturedDuaLayout
             android:id="@+id/featuredDua"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->
-
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/solutions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <!--<com.quranapp.android.views.homepage2.QuranSolutionVersesLayout
             android:id="@+id/solutions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->
 
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/etiquette"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <!--<com.quranapp.android.views.homepage2.QuranEtiquetteLayout
             android:id="@+id/etiquette"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->
 
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/prophets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <!--<com.quranapp.android.views.homepage2.FeatureProphetsLayout
             android:id="@+id/prophets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->
-
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/quranScience"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <!-- <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/quranScience"

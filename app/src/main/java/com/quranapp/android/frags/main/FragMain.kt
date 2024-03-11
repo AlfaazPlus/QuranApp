@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScience
 import com.quranapp.android.components.quran.QuranMeta
@@ -58,13 +60,18 @@ class FragMain : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragMainBinding.inflate(inflater, container, false)
-        binding.readHistory.setContent { ReadHistorySection() }
-        binding.featuredReading.setContent { FeaturedReadingSection() }
-        binding.featuredDua.setContent { FeaturedDuaSection() }
-        binding.solutions.setContent { QuranSolutionSection() }
-        binding.etiquette.setContent { QuranEtiquetteSection() }
-        binding.prophets.setContent { FeatureProphetsSection() }
-        binding.quranScience.setContent { QuranScienceCard() }
+        binding.readHistory.setContent {
+            Column {
+                ReadHistorySection()
+                FeaturedReadingSection()
+                FeaturedDuaSection()
+                QuranSolutionSection()
+                QuranEtiquetteSection()
+                FeatureProphetsSection()
+                QuranScienceCard()
+            }
+
+        }
         return binding.root
     }
 
