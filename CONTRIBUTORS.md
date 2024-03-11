@@ -17,7 +17,7 @@
 - Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5)
 - Malayalam (ml) - [Fayaz](https://github.com/Sharpentine)
 - Persian (fa) - [rchookan](https://github.com/rchookan)
-- Portuguese (pt) - [fnogcps](https://github.com/fnogcps)
+- Portuguese (pt) - [fnogcps](https://github.com/fnogcps) and [MisterCosta96](https://github.com/MisterCosta96)
 - Russian (ru) - [ael1x](https://github.com/ael1x)
 - Spanish (es) - [JnBenites](https://github.com/JnBenites) and [gallegonovato](https://github.com/gallegonovato)
 - Turkish (tr) - [croxz900](https://github.com/croxz900)
