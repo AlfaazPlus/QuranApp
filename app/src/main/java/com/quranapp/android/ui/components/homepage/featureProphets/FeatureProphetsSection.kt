@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -70,7 +70,7 @@ fun FeatureProphetsList(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(15.dp)
     ) {
-        items(prophets) {
+        itemsIndexed(items = prophets, key = {_, item -> item.hashCode()}) {_, it ->
             FeatureProphetsCard(prophet = it)
         }
     }

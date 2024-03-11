@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -98,7 +98,7 @@ fun ReadHistoryList(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(15.dp)
         ){
-            items(itemsList) {
+            itemsIndexed(items = itemsList, key = {_, item -> item.hashCode()}) {_, it ->
                 ReadHistoryItem(historyItem = it, quranMeta = quranMeta)
             }
         }

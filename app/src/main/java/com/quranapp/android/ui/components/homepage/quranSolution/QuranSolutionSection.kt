@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,7 +73,7 @@ fun QuranSolutionList(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(15.dp)
     ) {
-        items(references) {
+        itemsIndexed(items = references, key = {_, item -> item.hashCode()}) {_, it ->
             QuranSolutionCard(
                 reference = it
             ) {
