@@ -20,7 +20,8 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = colorOnPrimary,
     secondary = colorSecondary,
     onSecondary = colorOnSecondary,
-    tertiary = colorTertiary
+    tertiary = colorTertiary,
+    background = colorBGPageVariableInverse
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -28,7 +29,8 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = colorOnPrimaryDark,
     secondary = colorSecondaryDark,
     onSecondary = colorOnSecondaryDark,
-    tertiary = colorTertiaryDark
+    tertiary = colorTertiaryDark,
+    background = colorBGPageVariableInverseNight
 )
 
 

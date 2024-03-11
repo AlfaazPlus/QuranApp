@@ -8,6 +8,11 @@ val colorWhiteNight = Color(0xFFD9D9D9)
 val colorBGPage = colorWhite
 val colorBGPageNight = Color(0xFF151515)
 
+val colorBGPage1_5Night = Color(0xFF202020)
+
+val colorBGPageVariableInverse = colorBGPage
+val colorBGPageVariableInverseNight = colorBGPage1_5Night
+
 val colorPrimary = Color(0xFF008B5B)
 val colorOnPrimary = colorWhite
 
