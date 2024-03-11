@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -36,7 +37,7 @@ fun FeaturedDuaSection() {
 
     Column(
         modifier = Modifier
-            .padding(vertical = 3.dp)
+            .padding(vertical = 4.dp)
             .background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
         SectionHeader(
@@ -66,13 +67,13 @@ fun FeaturedDuaSection() {
 
 @Composable
 fun FeaturedDuaList(
-    modifier: Modifier = Modifier,
     featuredList: List<ExclusiveVerse>
 ) {
     val context = LocalContext.current
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(15.dp)
     ) {
         items(featuredList) {
             FeaturedDuaCard(
@@ -103,8 +104,6 @@ fun FeaturedDuaList(
                         it.versesRaw
                     )
                 }
-
-
             }
         }
     }

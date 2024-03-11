@@ -3,18 +3,19 @@ package com.quranapp.android.ui.components.homepage.quranEtiquette
 
 import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.CircularProgressIndicator
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityEtiquette
@@ -31,7 +32,7 @@ fun QuranEtiquetteSection() {
 
     Column(
         modifier = Modifier
-            .padding(vertical = 3.dp)
+            .padding(vertical = 4.dp)
             .background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
         SectionHeader(
@@ -60,24 +61,27 @@ fun QuranEtiquetteSection() {
 
 @Composable
 fun QuranEtiquetteList(
-    modifier: Modifier = Modifier,
     references: List<ExclusiveVerse>
 ) {
     val context = LocalContext.current
-
-    for (i in references.indices) {
-        QuranEtiquetteItem(
-            modifier = if (i == references.indices.last) Modifier.padding(bottom = 20.dp) else Modifier,
-            referenceItem = references[i]
-        ) {
-            // Take the first reference as it has only one verse
-            val reference = references[i].verses.first()
-            ReaderFactory.startVerseRange(
-                context,
-                reference.first,
-                reference.second,
-                reference.third,
-            )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = Modifier.padding(15.dp)
+    ) {
+        for (reference in references) {
+            QuranEtiquetteItem(
+                referenceItem = reference
+            ) {
+                // Take the first reference as it has only one verse
+                val ref = reference.verses.first()
+                ReaderFactory.startVerseRange(
+                    context,
+                    ref.first,
+                    ref.second,
+                    ref.third,
+                )
+            }
         }
     }
 

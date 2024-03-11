@@ -59,7 +59,6 @@ fun ReadHistoryItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 10.dp, bottom = 10.dp)
             .shadow(
                 elevation = 3.dp,
                 shape = RoundedCornerShape(12.dp)

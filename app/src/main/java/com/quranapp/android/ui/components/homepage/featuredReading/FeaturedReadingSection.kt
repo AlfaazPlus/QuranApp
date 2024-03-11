@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.components.FeaturedQuranModel
@@ -32,13 +34,16 @@ import com.quranapp.android.viewModels.FeaturedReadingViewModel
 fun FeaturedReadingSection() {
     val context = LocalContext.current
     val featuredReadingViewModel: FeaturedReadingViewModel = viewModel()
-    featuredReadingViewModel.init(context)
+
+    LaunchedEffect(Unit) {
+        featuredReadingViewModel.init(context)
+    }
 
     val quranMeta by featuredReadingViewModel.quranMeta.collectAsState()
 
     Column(
         modifier = Modifier
-            .padding(vertical = 3.dp)
+            .padding(vertical = 4.dp)
             .background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
         SectionHeader(
@@ -68,14 +73,14 @@ fun FeaturedReadingSection() {
 
 @Composable
 fun FeaturedReadingList(
-    modifier: Modifier = Modifier,
     featuredList: List<FeaturedQuranModel>,
     quranMeta: QuranMeta
 ) {
     val context = LocalContext.current
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(15.dp)
     ) {
         items(featuredList) {
             FeaturedReadingCard(

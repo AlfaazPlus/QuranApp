@@ -60,6 +60,14 @@ class FragMain : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        updateManager = UpdateManager(view.context, binding.appUpdateContainer)
+
         binding.readHistory.setContent {
             Column {
                 ReadHistorySection()
@@ -72,13 +80,6 @@ class FragMain : BaseFragment() {
             }
 
         }
-        return binding.root
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        updateManager = UpdateManager(view.context, binding.appUpdateContainer)
 
         // If update is not critical, proceed to load the rest of the content
         if (!updateManager.check4Update()) {

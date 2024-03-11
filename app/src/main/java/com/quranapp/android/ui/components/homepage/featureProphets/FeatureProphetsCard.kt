@@ -43,9 +43,8 @@ fun FeatureProphetsCard(
     val nameEng = "English : " + prophet.nameEn
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .width(310.dp)
-            .padding(start = 10.dp, bottom = 20.dp)
             .shadow(
                 elevation = 3.dp,
                 shape = RoundedCornerShape(12.dp)

@@ -2,8 +2,10 @@ package com.quranapp.android.ui.components.homepage.readHistory
 
 import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -44,7 +46,7 @@ fun ReadHistorySection() {
 
     Column(
         modifier = Modifier
-            .padding(vertical = 3.dp)
+            .padding(vertical = 4.dp)
             .background(colorResource(id = R.color.colorBGHomePageItem))
     ) {
         SectionHeader(
@@ -92,7 +94,9 @@ fun ReadHistoryList(
     } else {
         val itemsList = if(history.size > 10) history.subList(0, 10) else history
         LazyRow (
-            modifier = Modifier.padding(start = 5.dp)
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(15.dp)
         ){
             items(itemsList) {
                 ReadHistoryItem(historyItem = it, quranMeta = quranMeta)

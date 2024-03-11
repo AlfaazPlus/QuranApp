@@ -24,15 +24,11 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.ui.components.common.ExclusiveVersesText
+import com.quranapp.android.ui.components.homepage.HomepageCard
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FeaturedDuaCard(featuredItem: ExclusiveVerse, onClick: () -> Unit) {
     val context = LocalContext.current
-
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val scale by animateDpAsState(targetValue = if (isPressed) 4.dp else 0.dp)
 
     val excluded = featuredItem.id in arrayOf(1, 2)
     val count = featuredItem.verses.size
@@ -46,39 +42,22 @@ fun FeaturedDuaCard(featuredItem: ExclusiveVerse, onClick: () -> Unit) {
 
     val inChapters = if (featuredItem.id == 1) null else featuredItem.inChapters
 
-    Box(
-        modifier = Modifier
-            .padding(start = 10.dp, top = 15.dp, end = 2.dp, bottom = 15.dp)
-            .height(150.dp)
-            .width(200.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
-            modifier = Modifier
-                .height(150.dp - scale)
-                .width(200.dp - scale),
-            shape = RoundedCornerShape(10.dp),
-            backgroundColor = colorResource(R.color.black),
-            onClick = { onClick() },
-            interactionSource = interactionSource
+    HomepageCard(onClick = onClick) {
+        Box(
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.quran_wallpaper2),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    alpha = 0.4f
-                )
+            Image(
+                painter = painterResource(id = R.drawable.quran_wallpaper2),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alpha = 0.4f
+            )
 
-                ExclusiveVersesText(
-                    title = title,
-                    subTitle = subTitle,
-                    inChapters = inChapters
-                )
-
-            }
+            ExclusiveVersesText(
+                title = title,
+                subTitle = subTitle,
+                inChapters = inChapters
+            )
 
         }
 

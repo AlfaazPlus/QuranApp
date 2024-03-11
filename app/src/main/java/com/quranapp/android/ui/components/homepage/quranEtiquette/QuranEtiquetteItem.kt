@@ -34,8 +34,7 @@ fun QuranEtiquetteItem(
 
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(10.dp, 2.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
         border = BorderStroke(1.dp, color = colorResource(id = R.color.colorDividerVariable)),
         onClick = { onClick() },
@@ -47,7 +46,7 @@ fun QuranEtiquetteItem(
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
             color = colorResource(id = R.color.colorText),
-            modifier = Modifier.padding(15.dp, 10.dp)
+            modifier = Modifier.padding(15.dp, 12.dp)
         )
     }
 

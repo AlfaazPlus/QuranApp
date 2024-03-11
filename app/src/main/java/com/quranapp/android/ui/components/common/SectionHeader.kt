@@ -20,8 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 
 @Composable
@@ -31,9 +35,11 @@ fun SectionHeader(
     @ColorRes iconColor: Int? = null,
     @StringRes title: Int,
     onClick: (() -> Unit)? = null
-){
+) {
     Row(
-        modifier = modifier.padding(top = 10.dp).fillMaxWidth(),
+        modifier = modifier
+            .padding(top = 10.dp, start = 15.dp, end = 15.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
@@ -41,41 +47,41 @@ fun SectionHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            if (iconColor != null){
+            if (iconColor != null) {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = null,
                     tint = colorResource(id = iconColor),
                     modifier = Modifier
-                        .height(36.dp)
-                        .width(36.dp)
-                        .padding(start = 10.dp)
+                        .height(24.dp)
+                        .width(24.dp)
                 )
-            }else{
+            } else {
                 Image(
                     painter = painterResource(id = icon),
                     contentDescription = null,
                     modifier = Modifier
-                        .height(36.dp)
-                        .width(36.dp)
-                        .padding(start = 10.dp)
+                        .height(24.dp)
+                        .width(24.dp)
                 )
             }
 
             Text(
                 text = stringResource(id = title),
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 10.dp),
-                color = colorResource(id = R.color.colorText)
+                color = colorResource(id = R.color.colorText),
+                style = TextStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                )
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        if (onClick != null){
+        if (onClick != null) {
             ButtonActionAlphaSmall(
                 text = stringResource(id = R.string.strLabelViewAll),
                 onClick = onClick
             )
         }
-
     }
 }
