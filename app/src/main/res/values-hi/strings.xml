@@ -239,7 +239,7 @@
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" डाउनलोड होने में विफल रहा।</string>
     <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: \"%s\"।</string>
     <string name="strMsgTranslNoneSelected">कोई अनुवाद नहीं चुना गया है। अनुवाद ढूंढने के लिए सेटिंग में जाएं।</string>
-    <string name="strDescAddToBookmarks">बुकमार्क करें</string>
+    <string name="strDescAddToBookmarks">बुकमार्क्स में जोड़ें</string>
     <string name="strDescGoBack">पीछे जाएं</string>
     <string name="strDescClose">बंद करें</string>
     <string name="strDescVerseNo" formatted="false">आयत संख्या %d।</string>

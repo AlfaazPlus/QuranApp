@@ -191,8 +191,8 @@
     <string name="strTitleQuran">Alcorão</string>
     <string name="strTitleReaderJuz2">Juz</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">Capítulo %1$s %2$d: Versículo %3$d</string>
-    <string name="strTitleMadani">Madani</string>
-    <string name="strTitleMakki">Makki</string>
+    <string name="strTitleMadani">Medina</string>
+    <string name="strTitleMakki">Mecano</string>
     <string name="strTitleGotoVerseNo" formatted="false">Ir para o versículo %d</string>
     <string name="strTitleReaderJumpToVerse">Pular para versículo</string>
     <string name="strTitleReaderLayoutStyle">Estilo de visualização do Alcorão</string>
@@ -228,7 +228,7 @@
     <string name="strMsgReferenceInQuran" formatted="false">%s no Alcorão</string>
     <string name="strSalamShort">Salam</string>
     <string name="strMsgReportUs">Por favor, informe-nos.</string>
-    <string name="strLabelOkay">Entendido</string>
+    <string name="strLabelOkay">Okay</string>
     <string name="strLabelGotIt">Entendido</string>
     <string name="strLabelPremium">Premium</string>
     <string name="strLabelPreviousJuz">Juz anterior</string>
@@ -254,7 +254,7 @@
     <string name="strDescVerseNo" formatted="false">Número de versículo %d.</string>
     <string name="strLabelSurah" formatted="false">Capítulo %s</string>
     <string name="strLabelNoNextJuz">Sem próximo juz</string>
-    <string name="strLabelAdvanceSharing">Compartilhamento Avançado</string>
+    <string name="strLabelAdvanceSharing">Partilha avançada</string>
     <string name="strTitleSelectReason">Selecionar motivo</string>
     <string name="strTitleReadVerseRange" formatted="false">Ler versículos %1$d - %2$d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">Capítulo %1$s : Versículo %2$d</string>
@@ -274,4 +274,150 @@
     <string name="strTitleSelectReciter">Selecionar recitador</string>
     <string name="inPlaces">em %s</string>
     <string name="inPlacesMore">em %1$s e %2$d mais</string>
+    <string name="labelDownload">Descarregar</string>
+    <string name="strMsgVerseCredsInvalid">As credenciais do verso não são válidas.</string>
+    <string name="strTitleAlphaBG">Fundo alfa</string>
+    <string name="msgDownloadKFQPCResources">Os seguintes recursos têm de ser descarregados antes de poder utilizar este script:</string>
+    <string name="msgDownloadFailed">A transferência falhou</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d de %2$d</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelAdd">Adicionar</string>
+    <string name="labelPreviousTafsir">Tafsir anterior</string>
+    <string name="labelNextTafsir">Próximo tafsir</string>
+    <string name="strTitleScripts">Scripts</string>
+    <string name="strTitleThresholdReached">Limiar atingido</string>
+    <string name="strHintSearchScript">Script de pesquisa</string>
+    <string name="strMsgTranslNoDownloads">Não há traduções descarregadas disponíveis</string>
+    <string name="msgChapterInfoCleanup">Todas as informações de capítulo guardadas serão eliminadas.</string>
+    <string name="msgAddedToFavourites">Adicionado aos favoritos</string>
+    <string name="strMsgShareApp" formatted="false">A QuranApp é uma aplicação gratuita e de código aberto para ler e explorar o Nobre Alcorão com traduções. Esta aplicação tem uma interface agradável e limpa com funcionalidades como tafsir, recitação, lembrete e muito mais.
+\n
+\nDESCARREGUE AGORA:
+\n%s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Encontrou versos relacionados com %1$s num total de %2$d locais.</string>
+    <string name="strTitleInfo">Informação!</string>
+    <string name="strMsgDuaOf" formatted="false">Dua de %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s no Alcorão</string>
+    <string name="strMsgReferenceDuas">Recolhi algumas duas do Alcorão.</string>
+    <string name="strSalam">Assalam Alaikum</string>
+    <string name="titleDownloadScriptResources">Descarregar recursos para este script?</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fontes: %1$d descarregadas de um total de %2$d (~%3$dMB restantes)</string>
+    <string name="textDownloading">Transferindo…</string>
+    <string name="titleStorageCleanup">Limpeza do armazenamento</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d ficheiros de recitação armazenados de %2$d recitadores podem ser libertados.</string>
+    <string name="github">GitHub</string>
+    <string name="titleRecitationCleanup">Eliminar a recitação?</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d scripts e %2$d fontes</string>
+    <string name="nothingToCleanup">Não há nada a limpar.</string>
+    <string name="onboardDescLanguage">Personalize a aplicação no seu idioma. Pode sempre alterar esta opção mais tarde.</string>
+    <string name="onboardDescTranslations">Pode sempre alterar esta opção mais tarde. Pode descarregar mais traduções a partir das definições.</string>
+    <string name="titleAddToFavourites">Adicionar aos favoritos</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Recitações eliminadas de \"%1$s\" para o recitador \"%2$s\".</string>
+    <string name="msgResourceDownloadSource">Utilize esta opção para descarregar dados do Alcorão a partir de uma fonte diferente, se esta não estiver a funcionar</string>
+    <string name="strMsgDuaFor" formatted="false">Dua para %s</string>
+    <string name="titleArabicTextToggle">Mostrar texto do verso árabe</string>
+    <string name="msgArabicTextToggle">Se desativar esta funcionalidade, o texto dos versos em árabe ficará oculto em toda a aplicação.</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d não é um intervalo de versículos válido para a Surah n.º %3$d</string>
+    <string name="strTitleReaderTextSizeTransl">Tamanho do texto da tradução</string>
+    <string name="strTitleDuas">Duas do Alcorão</string>
+    <string name="strTitleChapInfoRevType">Tipo de Revelação</string>
+    <string name="strMsgChapInfoFailedLoad">Falha ao carregar a informação da surah. Por favor, tente novamente mais tarde.</string>
+    <string name="strLabelWhatsappStyling">Estilo Whatsapp</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Não foram encontrados resultados em %s. Por favor, verifique os filtros de pesquisa ou pesquise noutra tradução.</string>
+    <string name="strMsgSearchWordPart">Procurar por parte da palavra</string>
+    <string name="strMsgSearchWordPartExample">Por exemplo: \"homem\" na \"humanidade\"</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Podem ser selecionadas no máximo %d traduções de uma só vez. Por favor, anule a seleção de uma antes de selecionar outra. Isto é para evitar perdas de desempenho.</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
+    <string name="msgDownloadingScript">A transferir o script</string>
+    <string name="msgDownloadingResource" formatted="false">A descarregar %s</string>
+    <string name="strPreviewTextTransl">Em nome de Alá, o Clemente, o Misericordioso</string>
+    <string name="msgAnotherDownloadInProgress">Está em curso outra transferência.</string>
+    <string name="pasteCrashLogGithubIssue">O registo foi copiado para a área de transferência. Por favor, cole-o na edição do GitHub.</string>
+    <string name="msgAlarmManagerNotAvailable">O gestor de alarmes não está disponível neste dispositivo.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d scripts descarregados e as suas fontes podem ser libertadas.</string>
+    <string name="titleChapterInfo">Informações do capítulo</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Ler o tafsir do versículo %d</string>
+    <string name="strTitleSelectTafsir">Selecionar Tafsir</string>
+    <string name="strMsgTafsirsNoAvailable">Não existem tafsirs disponíveis</string>
+    <string name="labelFreeUpSpace">Libertar espaço</string>
+    <string name="msgRecitationCleanup" formatted="false">Todas as recitações guardadas de %s serão apagadas. Para eliminar individualmente as recitações por Surah, vá para as definições de gestão de áudio.</string>
+    <string name="titleScriptCleanup">Eliminar o script?</string>
+    <string name="msgScriptCleanup" formatted="false">O script %s e todas as suas fontes armazenadas serão eliminados. Terá de voltar a descarregar para as utilizar.</string>
+    <string name="titleReaderTextSizeTafsir">Tamanho do texto do Tafsir</string>
+    <string name="titleManageAudio">Gerir áudio</string>
+    <string name="downloadRecitations">Transferir recitações</string>
+    <string name="audioOption">Opção de áudio</string>
+    <string name="msgNoFavouriteChapters">Adicionar um capítulo aos favoritos para ver aqui.</string>
+    <string name="msgChapterAddedToFavourites">Surah adicionada aos favoritos.</string>
+    <string name="playbackSpeed">Velocidade de reprodução</string>
+    <string name="audioOnlyArabic">Reproduzir apenas árabe</string>
+    <string name="audioOnlyTranslation">Reproduzir apenas a tradução</string>
+    <string name="audioBothArabicTranslation">Reproduzir tanto o árabe como a tradução</string>
+    <string name="titleOtherSettings">Outras definições</string>
+    <string name="appLogs">Registos de aplicações</string>
+    <string name="suppressedLogs">Registos suprimidos</string>
+    <string name="logRemoved">Registo removido</string>
+    <string name="labelTranslation">Tradução</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Falha ao transferir \"%1$s\" para o recitador \"%2$s\".</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Transferido \"%1$s\" para o recitador \"%2$s\".</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Todas as recitações de \"%1$s\" para o recitador \"%2$s\" serão eliminadas.</string>
+    <string name="titleEtiquetteVerses">Etiqueta no Alcorão</string>
+    <string name="place" formatted="false">Local %d</string>
+    <string name="places" formatted="false">Lugares %d</string>
+    <string name="msgTafsirLoadFailed">Falha ao carregar o tafsir</string>
+    <string name="copiedToClipboard">Copiado para a área de transferência.</string>
+    <string name="msgInvalidParams">Parâmetros inválidos</string>
+    <string name="strMsgProphetsOrder">Mostrar os profetas por ordem cronológica</string>
+    <string name="msgDownloadingFonts">A transferir fontes</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d de %2$d fontes transferidas</string>
+    <string name="msgScriptFontsDownloaded">Scripts e fontes descarregados com sucesso.</string>
+    <string name="textDownloaded">Transferido</string>
+    <string name="labelBackgroundDownload">Descarregamento em segundo plano</string>
+    <string name="msgVerseReminderNotifPermission">A permissão de notificação é necessária para ativar o lembrete de versos.</string>
+    <string name="storageCleanupMessage">Liberte espaço eliminando os recursos descarregados não utilizados. Isto não eliminará quaisquer marcadores ou definições.
+\n
+\nOs seguintes recursos podem ser libertados:</string>
+    <string name="strTitleFeaturedDuas">Duas em Alcorão</string>
+    <string name="titleSolutionVerses">Soluções do Alcorão</string>
+    <string name="strChapInfoSeeMore">Ver mais informações ›</string>
+    <string name="strLabelMostPlaces">Maioria das menções</string>
+    <string name="verseSyncOff">Sincronização de versos : OFF</string>
+    <string name="onboardDescTheme">Pode sempre alterar esta opção mais tarde.</string>
+    <string name="verseSyncOn">Sincronização de versos : LIGADO</string>
+    <string name="strMsgTranslLoadFailed">Não foi possível carregar as traduções do servidor. Por favor, tente novamente mais tarde.</string>
+    <string name="strMsgRecitationsLoadFailed">Não foi possível carregar as recitações do servidor. Por favor, tente novamente mais tarde.</string>
+    <string name="lastCrashLog">Último registo de falhas</string>
+    <string name="crashLogs">Registos de falhas</string>
+    <string name="createIssue">Criar problema</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d traduções descarregadas podem ser libertadas.</string>
+    <string name="noItems">Nenhum item</string>
+    <string name="noFootnotesForThisVerse">Não há notas de rodapé para este versículo.</string>
+    <string name="strLabelTop">Topo</string>
+    <string name="msgVerseReminderAlarmPermission">A permissão de alarme é necessária para ativar o lembrete de versos.</string>
+    <string name="strTitleChapInfoRevOrder">Ordem de Revelação</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d informações de capítulo guardadas podem ser limpas.</string>
+    <string name="strMsgChangeLanguage">A aplicação será reiniciada para afetar a alteração do idioma.</string>
+    <string name="msgClearReadHistory">Limpar histórico de leitura</string>
+    <string name="msgClearSearchHistory">Limpar o histórico de pesquisa</string>
+    <string name="msgChapterRemovedFromFavourites">Surah removida dos favoritos.</string>
+    <string name="textTranslationReciterInfo">Língua: %1$s
+\nLivro: %2$s</string>
+    <string name="textNoLogsFound">Nenhum registo encontrado</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d tafsirs guardados podem ser limpos.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+\n%2$s
+\n
+\nTerá de o transferir novamente.</string>
+    <string name="titleChapterInfoCleanup">Limpar a informação do capítulo?</string>
+    <string name="titleTafsirCleanup">Eliminar o tafsir?</string>
+    <string name="msgTafsirCleanup" formatted="false">Todos os tafsir armazenados de %s serão eliminados.</string>
+    <string name="nFiles" formatted="false">%d ficheiros</string>
+    <string name="nItem" formatted="false">%d item</string>
+    <string name="nItems" formatted="false">%d itens</string>
+    <string name="onboardDescReciter">Pode sempre alterar isto mais tarde. Pode encontrar mais recitadores nas definições.</string>
+    <string name="labelArabic">Árabe</string>
+    <string name="titleRemoveFromFavourites">Remover dos favoritos</string>
+    <string name="msgRemovedFromFavourites">Removido dos favoritos</string>
+    <string name="titleResourceDownloadSource">Fonte de descarregamento de recursos</string>
 </resources>
