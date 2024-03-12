@@ -49,6 +49,9 @@ fun DeleteButton(
         painter = painterResource(id = R.drawable.dr_icon_delete),
         contentDescription = imageDescription,
         modifier = Modifier
+            .padding(7.dp)
+            .height(26.dp)
+            .width(26.dp)
             .clip(CircleShape)
             .clickable {
                 showDialog = !showDialog
