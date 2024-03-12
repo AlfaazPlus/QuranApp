@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -135,9 +136,9 @@ fun ReadHistoryList(
         }
     } else {
         LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(0.dp, 10.dp, 10.dp, 50.dp)
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(10.dp)
         ) {
             itemsIndexed(items = history, key = {_, item -> item.hashCode()}) { index, item ->
                 val state = rememberDismissState(
