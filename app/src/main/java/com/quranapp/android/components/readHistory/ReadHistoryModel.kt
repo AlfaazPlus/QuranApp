@@ -1,5 +1,8 @@
 package com.quranapp.android.components.readHistory
 
+import com.quranapp.android.db.entities.ReadHistory
+import com.quranapp.android.utils.univ.DateUtils.dateTimeNow
+
 class ReadHistoryModel(
     val id: Long,
     val readType: Int,
@@ -51,4 +54,17 @@ class ReadHistoryModel(
         result = 31 * result + (date?.hashCode() ?: 0)
         return result
     }
+}
+
+fun ReadHistoryModel.mapToEntity(): ReadHistory{
+    return ReadHistory(
+        id = id,
+        readType = readType,
+        readStyle = readerStyle,
+        juzNo = juzNo,
+        chapterNo = chapterNo,
+        fromVerseNo = fromVerseNo,
+        toVerseNo = toVerseNo,
+        date = dateTimeNow
+    )
 }

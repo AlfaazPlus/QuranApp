@@ -27,6 +27,7 @@ import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
 import com.quranapp.android.utils.thread.runner.RunnableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseRunnableTask;
 import com.quranapp.android.utils.univ.Keys;
+import com.quranapp.android.viewModels.ReadHistoryViewModel;
 
 import java.time.Duration;
 import java.util.Calendar;
@@ -268,10 +269,11 @@ public abstract class VerseUtils {
     }
 
     public static void saveLastVerses(
-        Context ctx, ReadHistoryDBHelper dbHelper, QuranMeta quranMeta,
-        int readType, int readerStyle, int juzNo, int chapterNo, int fromVerse, int toVerse
+            Context ctx, ReadHistoryViewModel readHistoryViewModel, QuranMeta quranMeta,
+            int readType, int readerStyle, int juzNo, int chapterNo, int fromVerse, int toVerse
     ) {
-        dbHelper.addToHistory(readType, readerStyle, juzNo, chapterNo, fromVerse, toVerse, null);
+
+        readHistoryViewModel.addToHistoryItem(readType, readerStyle, juzNo, chapterNo, fromVerse, toVerse);
 
         try {
             ShortcutUtils.pushLastVersesShortcut(ctx, quranMeta, readType, readerStyle, juzNo, chapterNo, fromVerse,
