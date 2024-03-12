@@ -52,13 +52,37 @@ import kotlin.math.roundToInt
 fun ReadHistoryItem(
     modifier: Modifier = Modifier,
     historyItem: ReadHistoryModel,
-    quranMeta: QuranMeta
+    quranMeta: QuranMeta,
+    onSwipeDelete: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    val dragEnable = onSwipeDelete != null
 
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .offset { IntOffset(offsetX.roundToInt(), 0) }
+            .draggable(
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    if (dragEnable) {
+                        if (delta < 0 || (delta > 0 && offsetX <0)) {
+                            offsetX += delta
+                        }
+                    }
+
+                },
+                onDragStopped = {
+                    if (offsetX < -400) {
+                        if (onSwipeDelete != null) {
+                            onSwipeDelete()
+                        }
+                    }
+                    offsetX = 0f
+                },
+                enabled = dragEnable
+            )
             .shadow(
                 elevation = 3.dp,
                 shape = RoundedCornerShape(12.dp)

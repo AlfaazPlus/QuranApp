@@ -140,27 +140,12 @@ fun ReadHistoryList(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
-            itemsIndexed(items = history, key = {_, item -> item.hashCode()}) { index, item ->
-                val state = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToStart) {
-                            onSwipeDelete(item)
-                        }
-                        true
-                    }
+            itemsIndexed(items = history, key = {_, item -> item.hashCode()}) { _, it ->
+                ReadHistoryItem(
+                    historyItem = it,
+                    quranMeta = quranMeta,
+                    onSwipeDelete = { onSwipeDelete(it) }
                 )
-                SwipeToDismiss(
-                    state = state,
-                    background = {},
-                    dismissContent = {
-                        ReadHistoryItem(
-                            historyItem = item,
-                            quranMeta = quranMeta
-                        )
-                    },
-                    directions = setOf(DismissDirection.EndToStart)
-                )
-
             }
         }
     }
