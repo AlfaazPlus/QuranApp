@@ -414,4 +414,10 @@
     <string name="titleEtiquetteVerses">Kur\'an\'daki görgü kuralları</string>
     <string name="strMsgDuaOf" formatted="false">%s duası</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Kuran\'daki %s duası</string>
+    <string name="titleArabicTextToggle">Arapça Ayet Metnini Göster</string>
+    <string name="msgArabicTextToggle">Bu özelliğin devre dışı bırakılması, Arapça ayet metnini uygulamanın her yerinde gizleyecektir.</string>
+    <string name="msgClearSearchHistory">Arama geçmişini temizle</string>
+    <string name="msgClearReadHistory">Okuma geçmişini temizle</string>
+    <string name="titleResourceDownloadSource">Kaynak indirme kaynağı</string>
+    <string name="msgResourceDownloadSource">Çalışmıyorsa Kuran verilerini farklı bir kaynaktan indirmek için bu seçeneği kullanın</string>
 </resources>
