@@ -15,8 +15,8 @@ android {
         targetSdkVersion 34
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
-        versionCode 23_11_11_113
-        versionName "2024.02.04.1"
+        versionCode 23_11_11_114
+        versionName "2024.04.01.1"
 
         setProperty("archivesBaseName", versionName)
 
