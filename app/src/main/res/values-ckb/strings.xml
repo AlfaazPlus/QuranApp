@@ -11,7 +11,7 @@
     <string name="strTitleReaderTextSizeArabic">قەبارەی نووسینی قورئان</string>
     <string name="strTitleBookmark">نیشانەکردن</string>
     <string name="strTitleSendFeedback">سەرنج و تێبینی</string>
-    <string name="strTitleAboutUs">دەربارە</string>
+    <string name="strTitleAboutUs">دەربارەی ئێمە</string>
     <string name="strTitleHelpSupport">یارمەتیدان و فێرکاری</string>
     <string name="strTitleSelectScripts">فۆنتەکان</string>
     <string name="strTitleBookmarks">نیشانەکراوەکان</string>
@@ -25,7 +25,7 @@
     <string name="strTitleSelectTafsir">تەفسیرەکان</string>
     <string name="strTitleRecitations">قورئانخوێنەکان</string>
     <string name="strTitleBookmarkDeleteThis">لابردنی ئەم نیشانەکراوە؟</string>
-    <string name="strTitleBookmarkDeleteAll">لابردنی سەرجەم نیشانەکراوەکان؟</string>
+    <string name="strTitleBookmarkDeleteAll">لابردنی هەموو نیشانەکراوەکان؟</string>
     <string name="strTitleRepeatVerse">دووبارەکردنەوەی ئایەت</string>
     <string name="strTitleQuickEdit">دەستکاریکردن</string>
     <string name="strTitleReportVerse">ڕاگەیاندنی هەڵە</string>
@@ -47,14 +47,14 @@
     <string name="strLabelShare">بڵاوکردنەوە</string>
     <string name="strLabelSelectedCount" formatted="false">%d دیاریکراوە</string>
     <string name="strLabelReading">خوێندنەوە</string>
-    <string name="strLabelAdvanceSharing">ڕێکخستنی بڵاوکردنەوە</string>
+    <string name="strLabelAdvanceSharing">هاوبەشیکردنی پێشکەوتوو</string>
     <string name="strLabelVerseRange">مەودای ئایەت</string>
     <string name="strLabelLater">دواتر</string>
     <string name="strLabelIncludeFootnotes">زانیاری سورەت</string>
     <string name="strLabelIncludeTranslation">دەقی وەرگێڕان</string>
     <string name="strLabelIncludeReference">دانانی سەرچاوە</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d ژمارەیەکی دروستی سورەت نییە.</string>
-    <string name="strHintSearchQuran">دەستەواژەیەک بنووسە بۆ نمونە: \"انسان\"</string>
+    <string name="strHintSearchQuran">دەستەواژەیەک بنووسە بۆ نمونە.، \"ژیان\"</string>
     <string name="strHintSearchProphet">گەڕان بۆ پێغەمبەر</string>
     <string name="strHintSearchTranslation">گەڕان بۆ وەرگێڕان</string>
     <string name="strHintBookmarkViewerNote">زانیاریی زیاتر لەسەر ئەم نیشانەکراوە لێرەدا بنووسە…</string>
@@ -63,8 +63,8 @@
     <string name="strHintFromVerse">لە ئایەتی</string>
     <string name="strHintToVerse">بۆ ئایەتی</string>
     <string name="strHintFeedbackMessage">پەیام</string>
-    <string name="strMsgThemeDark">ڕووکاری تاریک یارمەتیدەرە لە پاراستنی ووزە</string>
-    <string name="strMsgThemeDefault">ڕێکخستنی خۆکاری بەپێی دۆخی سیستەم</string>
+    <string name="strMsgThemeDark">دۆخی تاریک بەکارهێنانی وزە کەمدەکاتەوە.</string>
+    <string name="strMsgThemeDefault">بەپێی ڕێکخستنەکانی سیستەم ڕێکبخە.</string>
     <string name="strMsgInvalidVerseNo" formatted="false">%1$d ژمارەیەکی دروست نیە، بۆ سورەتی ژمارە %2$d</string>
     <string name="strMsgInvalidVersesRange">مەودای نێوان ئایەتەکان نادروستە</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d مەودایەکی دروست نیە بۆ سورەتی ژمارە %3$d</string>
@@ -80,14 +80,14 @@
     <string name="strMsgShareRange" formatted="false">مەودا بنووسە لەنێوان %1$d–%2$d</string>
     <string name="strMsgReadHistoryRemoved">مێژووی خوێندنەوەکان بەسەرکەوتوویی لابرا.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s لە %2$s</string>
-    <string name="strLabelCancel">پاشگەزبونەوە</string>
+    <string name="strLabelCancel">ڕەتکردنەوە</string>
     <string name="strTitleNote">تێبینی</string>
     <string name="strTitleAboutSurah">دەربارەی سورەت</string>
     <string name="strTitleTranslations">وەرگێڕانەکان</string>
     <string name="strTitleDownloadTranslations">داگرتن</string>
     <string name="strTitleSelectReciter">قورئانخوێن هەڵبژێرە</string>
     <string name="strTitleScripts">فۆنت</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">لابردنی %d نیشانەکراو؟</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">لابردنی نیشانەکراوەکانی %d؟</string>
     <string name="strTitleTranslDelete">سڕینەوەی وەرگێڕان؟</string>
     <string name="strTitleHideAd">شاردنەوەی ڕیکلام</string>
     <string name="strTitleRecitationOptions">هەڵبژاردنەکان</string>
@@ -134,7 +134,7 @@
     <string name="strHintFeedback">پەیامەکەت لێرە بنووسە…</string>
     <string name="strHintFeedbackEmail">پۆستی ئەلکترۆنی</string>
     <string name="strNotFound">نەدۆزرایەوە</string>
-    <string name="strMsgVOTDOn">وەرگرتنی ئاگادارکردنەوەکانی ڕۆژانە لە بەیانیاندا</string>
+    <string name="strMsgVOTDOn">وەرگرتنی ئاگادارکردنەوەکانی ڕۆژانە لە بەیانیاندا.</string>
     <string name="strMsgYouAreReadingVerses">تۆ ئەم ئایەتانە ئەخوێنیتەوە:</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ژمارەیەکی دروستی جوزﺋ نییە</string>
     <string name="strMsgBookmarkAdded">ئایەتەکە بەسەرکەوتوویی زیادکرا بۆ نیشانەکراوەکان</string>
@@ -146,16 +146,16 @@
     <string name="strLabelReset">ڕێکخستنەوە</string>
     <string name="strTitleAppVersion">وەشانی بەرنامە</string>
     <string name="strVersion" formatted="false">وەشانی %s</string>
-    <string name="strTitleLicenses">مۆڵەت</string>
+    <string name="strTitleLicenses">مۆڵەتەکان</string>
     <string name="strLabelClose">داخستن</string>
     <string name="strLabelSend">ناردن</string>
     <string name="strLabelOpenInReader">کردنەوە بەشێوازی خوێندنەوە</string>
     <string name="strLabelGotIt">زانیم</string>
-    <string name="strLabelTop">سەرەتا</string>
+    <string name="strLabelTop">سەرەوە</string>
     <string name="strLabelApply">جێبەجێکردن</string>
     <string name="strLabelDelete">سڕینەوە</string>
     <string name="strLabelCopy">لەبەرگرتنەوە</string>
-    <string name="strLabelBack">گەڕانەوە</string>
+    <string name="strLabelBack">دواوە</string>
     <string name="strLabelRemove">لابردن</string>
     <string name="strLabelRemoveAll">لابردنی هەمووی</string>
     <string name="strLabelRetry">هەوڵدانەوە</string>
@@ -175,23 +175,23 @@
     <string name="strLabelRestart">ئیشپێکردنەوە</string>
     <string name="strLabelAdvertisement">ڕیکلام</string>
     <string name="strLabelSkip">تێپەڕاندن</string>
-    <string name="strLabelOn">چالاک</string>
+    <string name="strLabelOn">داگیرساوە</string>
     <string name="strLabelNoPreviousJuz">جوزئی پێشوو نییە</string>
     <string name="strLabelOpen">کردنەوە</string>
     <string name="strLabelPrevious">پێشوو</string>
-    <string name="strLabelInstall">دابەزاندن</string>
+    <string name="strLabelInstall">دامەزراندن</string>
     <string name="strLabelThemeDark">تاریک</string>
     <string name="strLabelNextChapter">سورەتی دواتر</string>
     <string name="strLabelStart">دەستپێکردن</string>
     <string name="strLabelNew">نوێ</string>
-    <string name="strLabelPremium">پارەدان</string>
-    <string name="strLabelOff">نا چالاک</string>
+    <string name="strLabelPremium">نایاب</string>
+    <string name="strLabelOff">کوژاوە</string>
     <string name="strLabelSystemDefault">بەپێی سیستەم</string>
     <string name="labelDownload">داگرتن</string>
-    <string name="strLabelDownloadNow">داگرتن ئێستا</string>
+    <string name="strLabelDownloadNow">ئێستا دایبگرە</string>
     <string name="strLabelUpdate">نوێکردنەوە</string>
     <string name="strLabelThemeLight">ڕووناک</string>
-    <string name="strLabelContinueChapter">بەردەوامبون</string>
+    <string name="strLabelContinueChapter">بەردەوامبوون</string>
     <string name="strLabelNoPreviousChapter">سورەتی پێشوو نییە</string>
     <string name="strLabelNoNextChapter">سورەتی دواتر نییە</string>
     <string name="strLabelNextJuz">جوزئی دواتر</string>
@@ -223,7 +223,7 @@
     <string name="strTitleMakki">مەککەیی</string>
     <string name="strTitleMadani">مەدینەیی</string>
     <string name="strTitleHolyQuran">قورئانی پیرۆز</string>
-    <string name="strTitleFootnotes">زانیاری</string>
+    <string name="strTitleFootnotes">زانیارییەکان</string>
     <string name="strTitleReaderChapters">سورەتەکان (بەشەکان)</string>
     <string name="strTitleSelectReason">هۆکارەکەی بنوسە</string>
     <string name="strTitleFootnote">زانیاری</string>
@@ -243,14 +243,14 @@
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n%2$s
 \n
-\nپێویستە دووبارە دایبەزێنیتەوە.</string>
+\nپێویستە دووبارە دایبگریتەوە.</string>
     <string name="strMsgTranslNoneSelected">هیچ وەرگێڕانێک دیارینەکراوە، بچۆ بۆ بەشی ڕێکخستن بۆ دانانی وەرگێڕان.</string>
     <string name="strMsgEnterValidRange">تکایە مەودایەکی دروست بنووسە</string>
     <string name="strMsgNoInternet">تکایە تۆڕی ئینتەرنێتەکەت بپشکنە.</string>
-    <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگە</string>
-    <string name="strMsgReadHistoryRemovedAlready">مێژووی خوێندنەوە پێشتر لابراوە</string>
+    <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگەی زیاتر</string>
+    <string name="strMsgReadHistoryRemovedAlready">مێژووی خوێندنەوە پێشتر لابراوە.</string>
     <string name="strMsgReadHistoryNoItems">مێژووی خوێندنەوە نییە</string>
-    <string name="strMsgReadHistoryDeleteAll">سەرجەم مێژووی خوێندنەوەکان لادەبرێت</string>
+    <string name="strMsgReadHistoryDeleteAll">سەرجەم مێژووی خوێندنەوەکان لادەبرێن.</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" لابرا لە مێژووی خوێندنەوە</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">سەرجەم ئەنجامە دۆزراوەکان لە %1$s: %2$d</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">هیچ ئەنجامێک نەدۆزرایەوە، دڵنیابەرەوە لە دروستی ناوەکە.</string>
@@ -277,7 +277,7 @@
     <string name="strTitleInfo">زانیاری!</string>
     <string name="strTitleOops">بەداخەوە!</string>
     <string name="strLabelProceed">ئەنجامدرا</string>
-    <string name="strTextInstalling">دادەبەزێت…</string>
+    <string name="strTextInstalling">دامەزراندن…</string>
     <string name="strTextLoading">چاوەڕوانبە…</string>
     <string name="strMsgUpdateDownloaded">نوێکردنەوە داگیرا! تکایە بەرنامەکە دابەزێنە بۆ تەواوکردنی نوێکردنەوەکە.</string>
     <string name="strLabelAllChapters">هەموو سورەتەکان</string>
@@ -291,18 +291,18 @@
     <string name="strSalamShort">سڵاو</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">فایلی: %s (~١ مێگابایت)</string>
     <string name="msgDownloadFailed">داگرتن سەرکەوتوو نەبوو</string>
-    <string name="msgDownloadingScript">دابەزاندنی فایل</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d لە %2$d فۆنت دابەزێنراوە</string>
+    <string name="msgDownloadingScript">داگرتنی سکریپت</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d لە %2$d فۆنتەکان داگیراوە</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d لە %2$d</string>
-    <string name="msgDownloadingResource" formatted="false">دابەزاندنی %s</string>
-    <string name="textDownloading">دابەزاندن…</string>
+    <string name="msgDownloadingResource" formatted="false">داگرتنی %s</string>
+    <string name="textDownloading">داگرتن…</string>
     <string name="textPercentage" formatted="false">%d%%</string>
-    <string name="labelBackgroundDownload">داگرتن لە پشت شاشە</string>
+    <string name="labelBackgroundDownload">داگرتن لە پاشبنەما</string>
     <string name="msgAnotherDownloadInProgress">داگرتنێکی تر لە جێبەجێکردندایە.</string>
     <string name="lastCrashLog">دواین تۆماری لەکارکەوتن</string>
     <string name="createIssue">ڕاگەیاندنی کێشە</string>
     <string name="github">گیتهەب</string>
-    <string name="msgVerseReminderNotifPermission">ڕێگەپێدانی ئاگادارکردنەوەکان پێویستە بۆ بیرخستنەوەی ئایەتەکان.</string>
+    <string name="msgVerseReminderNotifPermission">ڕێگەپێدانی ئاگادارکردنەوە پێویستە بۆ بیرخەرەوەی ئایەت.</string>
     <string name="translationCanBeFreedUp" formatted="false">%d وەرگێڕانی داگیراو ئەتوانرێ بسڕێتەوە.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d فایلی دەنگی پاشەکەوتکراو لە %2$d ئەتوانرێ بسڕێتەوە.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d فایلە دابەزێنراوەکان و فۆنتەکانیان ئەتوانرێ بسڕێتەوە.</string>
@@ -327,35 +327,35 @@
     <string name="strLabelDownloadImage">داگرتنی وێنە</string>
     <string name="strMsgEditShareTransl">ئەو وەرگێڕانەی لە بەشی ڕێکخستندا دیاریکراوە، بەتەنیا لێرەدا دەرەکەوێت.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s لە قورئاندا</string>
-    <string name="strMsgReadHistoryRemoveFailed">لابردنی مێژووی خوێندنەوە سەرکەوتوو نەبوو</string>
-    <string name="strMsgReadHistoryDeleteSelected">مێژووی خوێندنەوە دیاریکراوەکان لادەبرێن</string>
+    <string name="strMsgReadHistoryRemoveFailed">لابردنی مێژووی خوێندنەوە سەرکەوتوو نەبوو.</string>
+    <string name="strMsgReadHistoryDeleteSelected">مێژووی خوێندنەوە دیاریکراوەکان لادەبرێن.</string>
     <string name="strMsgHistoryRemove">لابردنی مێژووی خوێندنەوە؟</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ ئەنجامێک نەدۆزرایەوە لە %s، دا تکایە دڵنیابەرەوە لەوەی بەدروستی نوسیوتە یان لە شوێنێکی ترا بگەڕێ.</string>
     <string name="strMsgSearchNoResultsFound">هیچ ئەنجامێک نەدۆزرایەوە، تکایە دڵنیابەرەوە لەوەی ناوێکی دروستت نوسیوە یان لە وەرگێڕانەکانی ترا بگەڕێ.</string>
-    <string name="titleDownloadScriptResources">دابەزاندنی سەرچاوەکانی ئەم فۆنتە؟</string>
-    <string name="msgDownloadKFQPCResources">سەرەتا پێویستە ئەم فایلانە دابەزێنرێت پاشان ئەتوانی بەکاری بهێنیت:</string>
-    <string name="msgDownloadingFonts">دابەزاندنی فۆنتەکان</string>
-    <string name="msgScriptFontsDownloaded">فایل و فۆنتەکان بەسەرکەوتوویی داگیران.</string>
-    <string name="copiedToClipboard">هەڵگیرا لەبەشی لەبەرگیراوەکاندا.</string>
+    <string name="titleDownloadScriptResources">داگرتنی سەرچاوەکان بۆ ئەم سکریپتە؟</string>
+    <string name="msgDownloadKFQPCResources">ئەم سەرچاوانە پێویستیان بە داگرتنە پێش ئەوەی بتوانی ئەم سکریپتە بەکاربهێنیت:</string>
+    <string name="msgDownloadingFonts">داگرتنی فۆنتەکان</string>
+    <string name="msgScriptFontsDownloaded">سکریپت و فۆنتەکان بە سەرکەوتوویی داگیران.</string>
+    <string name="copiedToClipboard">هەڵگیرا بۆ بەشی لەبەرگیراوەکان.</string>
     <string name="pasteCrashLogGithubIssue">تۆماری لەکارکەوتن لەبەشی لەبەرگیراوەکاندا هەڵگیرا، تکایە لە گیتهەب دایبنێ وەک کێشە.</string>
-    <string name="msgAlarmManagerNotAvailable">ڕێکخستنی ووریاکەرەوە بەردەست نییە لەم ئامێرەدا.</string>
-    <string name="msgVerseReminderAlarmPermission">ڕێگەپێدانی ووریاکەرەوە پێویستە بۆ چالاکبونی بیرخستنەوەی ئایەتەکان.</string>
-    <string name="titleStorageCleanup">خاوێنکردنەوەی بیرگەی کاتی</string>
-    <string name="storageCleanupMessage">شوێنی زیاتری بیرگە بەتاڵبکە بە سڕینەوەی فایلە داگیراوە نا پێویستەکان، ئەمە نابێتە هۆی سڕینەوەی نیشانەکراوەکان و ڕێکخستنەکانی بەرنامەکە.
+    <string name="msgAlarmManagerNotAvailable">بەڕێوەبەری وریاکەرەوە بەردەست نییە لەسەر ئەم ئامێرە.</string>
+    <string name="msgVerseReminderAlarmPermission">ڕێگەپێدانی وریاکەرەوە پێویستە بۆ چالاککردنی بیرخەرەوەی ئایەت.</string>
+    <string name="titleStorageCleanup">خاوێنکردنەوەی بیرگە</string>
+    <string name="storageCleanupMessage">خاوێنکردنەوەی بیرگەی زیاتر بە سڕینەوەی فایلە داگیراوە نا پێویستەکان. ئەمە هیچ لە نیشانەکراوەکان یان ڕێکخستنەکان ناسڕێتەوە.
 \n
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d بەشی پارێزراو ئەتوانرێ بسڕێتەوە.</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: %1$d داگیراوە لە %2$d (~%3$dMB ماوە)</string>
-    <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە</string>
-    <string name="nItem" formatted="false">%d فایل</string>
-    <string name="nItems" formatted="false">%d فایل</string>
+    <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە.</string>
+    <string name="nItem" formatted="false">%d بابەت</string>
+    <string name="nItems" formatted="false">%d لە بابەتەکان</string>
     <string name="verseSyncOn">هاوکاتکردنی ئایەت : چالاک</string>
     <string name="verseSyncOff">هاوکاتکردنی ئایەت : نا چالاک</string>
     <string name="strPreviewTextTransl">بەناوی خوای بەخشندەی میهرەبان</string>
-    <string name="titleScriptCleanup">سڕینەوەی فۆنت؟</string>
+    <string name="titleScriptCleanup">سڕینەوەی سکریپت؟</string>
     <string name="msgRecitationCleanup" formatted="false">سەرجەم فایلە دەنگییەکانی %s دەسڕێتەوە، بۆ سڕینەوەی دەنگی قورئانخوێنەکان یەک بە یەک بۆ هەر سورەتێک، بچۆ بۆ بەڕێوەبردنی ڕێکخستنەکانی دەنگ.</string>
     <string name="titleRecitationCleanup">سڕینەوەی قورئانخوێن؟</string>
-    <string name="nFiles" formatted="false">%d فایل</string>
+    <string name="nFiles" formatted="false">%d لە فایلەکان</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d شێواز و %2$d فۆنت</string>
     <string name="msgChapterInfoCleanup">سەرجەم زانیارییەکانی ئایەتەکان دەسرێتەوە.</string>
     <string name="titleChapterInfoCleanup">سڕینەوەی زانیاری ئایەت؟</string>
@@ -366,9 +366,9 @@
     <string name="onboardDescReciter">ئەتوانی دواتر ئەمە بگۆڕیت، هەروەها ئەتوانی قورئانخوێنی زیاتر بەکاربێنی لە رێکخستنەکاندا.</string>
     <string name="inPlaces">لە %s</string>
     <string name="inPlacesMore">لە %1$s و %2$d زیاتر</string>
-    <string name="noFootnotesForThisVerse">هیچ تێبینییەک نییە بۆ ئەم ئایەتە.</string>
+    <string name="noFootnotesForThisVerse">هیچ زانیارییەک نییە بۆ ئەم ئایەتە.</string>
     <string name="labelAdd">زیادکردن</string>
-    <string name="msgNoFavouriteChapters">سورەتێک زیادبکە بۆ دڵخوازەکان بۆ ئەوەی لێرەدا دەرکەوێت</string>
+    <string name="msgNoFavouriteChapters">سورەتێک زیادبکە بۆ دڵخوازەکان بۆ ئەوەی لێرەدا بیبینیت.</string>
     <string name="titleOtherSettings">ڕێکخستنی زیاتر</string>
     <string name="appLogs">تۆماری بەرنامەکە</string>
     <string name="crashLogs">تۆماری لەکارکەوتن</string>
@@ -376,16 +376,16 @@
     <string name="titleAddToFavourites">زیادکردن بۆ دڵخوازەکان</string>
     <string name="msgAddedToFavourites">زیادکرا بۆ دڵخوازەکان</string>
     <string name="titleRemoveFromFavourites">لابردن لە دڵخوازەکان</string>
-    <string name="msgRemovedFromFavourites">لابرا لە دڵخوازەکاندا</string>
-    <string name="msgChapterAddedToFavourites">سورەتەکە زیادکرا بۆ دڵخوازەکانت</string>
-    <string name="msgChapterRemovedFromFavourites">سورەتەکە لابرا لە دڵخوازەکاندا</string>
+    <string name="msgRemovedFromFavourites">لە دڵخوازەکاندا لابرا</string>
+    <string name="msgChapterAddedToFavourites">سورەتەکە زیادکرا بۆ دڵخوازەکان.</string>
+    <string name="msgChapterRemovedFromFavourites">سورەتەکە لابرا لە دڵخوازەکاندا.</string>
     <string name="textTranslationReciterInfo">زمان: %1$s
 \nوەرگێڕان: %2$s</string>
     <string name="textNoLogsFound">هیچ تۆمارێک نەدۆزرایەوە</string>
-    <string name="msgRecitaionDownloaded" formatted="false">داگرتنی \"%1$s\" سەرکەوتو بوو بۆ قورئانخوێن \"%2$s\".</string>
+    <string name="msgRecitaionDownloaded" formatted="false">\"%1$s\" داگیرا بۆ قورئانخوێن \"%2$s\".</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">سەرجەم فایلەکانی \"%1$s\" بۆ قورئانخوێن \"%2$s\" دەسڕێنەوە.</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">فایلی دەنگی \"%1$s\" بۆ قورئانخوێن \"%2$s\" سڕایەوە.</string>
-    <string name="labelArabic">قورئان</string>
+    <string name="labelArabic">عەرەبی</string>
     <string name="labelTranslation">وەرگێڕان</string>
     <string name="titleManageAudio">ڕێکخستنی دەنگەکان</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">داگرتنی \"%1$s\" سەرکەوتو نەبوو بۆ قورئانخوێن \"%2$s\".</string>
@@ -398,21 +398,26 @@
     <string name="audioOption">ڕێکخستنی لێدان</string>
     <string name="audioOnlyArabic">تەنیا قورئانی پیرۆز</string>
     <string name="audioBothArabicTranslation">لێدانی هەردووکیان پێکەوە</string>
-    <string name="logRemoved">تۆمار سڕایەوە</string>
+    <string name="logRemoved">تۆمار لابرا</string>
     <string name="place" formatted="false">%d شوێن</string>
     <string name="strMsgDuaFor" formatted="false">نزا بۆ %s</string>
-    <string name="places" formatted="false">%d شوێندا</string>
+    <string name="places" formatted="false">%d لە شوێنەکان</string>
     <string name="titleSolutionVerses">چارەسەرەکانی ناو قورئان</string>
     <string name="msgInvalidParams">زانیارییەکان نادروستن</string>
     <string name="labelPreviousTafsir">تەفسیری پێشوو</string>
     <string name="labelNextTafsir">تەفسیری دواتر</string>
-    <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتو نەبوو</string>
+    <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتوو نەبوو</string>
     <string name="titleEtiquetteVerses">ئامۆژگارییەکانی ناو قورئان</string>
-    <string name="strMsgShareApp" formatted="false">بەرنامەی QuranApp بەرنامەیەکی خۆڕایی و نایابی تایبەت بە خوێندنەوە و گوێگرتنە لە قورئانی پیرۆز،
-\nکە چەندین تایبەتمەندی جیاواز و هەمەجۆر لەخۆ دەگرێت لەگەڵ ڕووکارێکی تایبەت بە پیشاندانی تەفسیر و وەرگێڕانەکان بۆ تێگەیشتن لە ووتەکانی الله.
+    <string name="strMsgShareApp" formatted="false">QuranApp بەرنامەیەکی خۆڕایی و سەرچاوەکراوەی تایبەت بە خوێندنەوە گەڕانە بە ناو قورئانی پیرۆزدا و بە وەرگێڕانەوە. ئەم بەرنامەیە ڕووکارێکی جوان و پاکی هەیە لەگەڵ تەیبەتمەندی وەک تەفسیر، خوێندنەوە، بیرخەرەوە و زیاتر.
 \n
-\nهەر ئێستا دایبەزێنە لە:
+\nئێستا دایبگرە:
 \n%s</string>
     <string name="strMsgDuaOf" formatted="false">نزای %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">نزای %s لە قورئاندا</string>
+    <string name="titleResourceDownloadSource">سەرچاوەی داگرتنی سەرچاوە</string>
+    <string name="msgResourceDownloadSource">ئەم بژاردەیە بەکاربهێنە بۆ داگرتنی داتای قورئان لە سەرچاوەی جیاوازەوە ئەگەر یەکێک کاری نەکرد</string>
+    <string name="msgClearSearchHistory">پاککردنەوەی مێژووی گەڕان</string>
+    <string name="msgClearReadHistory">پاککردنەوەی مێژووی خوێندنەوە</string>
+    <string name="msgArabicTextToggle">ناچالاککردنی ئەم تایبەتمەندییە نووسینی ئایەتی عەرەبی لە گشت بەرنامەکە دەشارێتەوە.</string>
+    <string name="titleArabicTextToggle">نووسینی ئایەتی عەرەبی نیشان بدە</string>
 </resources>
