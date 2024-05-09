@@ -57,6 +57,16 @@
         "langName": "کوردی",
         "slug": "kurd-tafsir-rebar"
       }
+    ],
+    "ru": [
+      {
+        "key": "ru_tafsir-al-sadi",
+        "name": "Al-Sa'di",
+        "author": "Al-Sa'di",
+        "langCode": "ru",
+        "langName": "русский",
+        "slug": "ru-tafseer-al-saddi"
+      }
     ]
   }
 }
