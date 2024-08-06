@@ -5,12 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScience
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
+import com.quranapp.android.ui.components.homepage.featureProphets.FeatureProphetsSection
+import com.quranapp.android.ui.components.homepage.featuredDua.FeaturedDuaSection
+import com.quranapp.android.ui.components.homepage.featuredReading.FeaturedReadingSection
+import com.quranapp.android.ui.components.homepage.quranEtiquette.QuranEtiquetteSection
+import com.quranapp.android.ui.components.homepage.quranScience.QuranScienceCard
+import com.quranapp.android.ui.components.homepage.quranSolution.QuranSolutionSection
+import com.quranapp.android.ui.components.homepage.readHistory.ReadHistorySection
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
 
@@ -37,14 +46,14 @@ class FragMain : BaseFragment() {
         QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
             override fun onReady(r: QuranMeta) {
                 votdView?.post { votdView?.refresh(r) }
-                binding.readHistory.post { binding.readHistory.refresh(r) }
+                //binding.readHistory.post { binding.readHistory.refresh(r) }
             }
         })
     }
 
     override fun onDestroy() {
         votdView?.destroy()
-        binding.readHistory.destroy()
+        //binding.readHistory.destroy()
         super.onDestroy()
     }
 
@@ -58,6 +67,19 @@ class FragMain : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateManager = UpdateManager(view.context, binding.appUpdateContainer)
+
+        binding.readHistory.setContent {
+            Column {
+                ReadHistorySection()
+                FeaturedReadingSection()
+                FeaturedDuaSection()
+                QuranSolutionSection()
+                QuranEtiquetteSection()
+                FeatureProphetsSection()
+                QuranScienceCard()
+            }
+
+        }
 
         // If update is not critical, proceed to load the rest of the content
         if (!updateManager.check4Update()) {
@@ -74,25 +96,25 @@ class FragMain : BaseFragment() {
 
     private fun initContent(quranMeta: QuranMeta) {
         initVOTD(quranMeta)
-        binding.let {
-            arrayOf(
-                it.readHistory,
-                it.featuredReading,
-                it.featuredDua,
-                it.solutions,
-                it.etiquette,
-                it.prophets
+        /*binding.let {
+            /*arrayOf(
+                //it.readHistory,
+                //it.featuredReading,
+                //it.featuredDua,
+                //it.solutions,
+                //it.etiquette,
+                //it.prophets
             ).forEach { layout ->
                 layout.initialize()
                 layout.refresh(quranMeta)
-            }
+            }*/
 
             it.quranScience.visibility = View.VISIBLE
             it.quranScience.clipToOutline = true
             it.quranScience.setOnClickListener {v->
                 v.context.startActivity(Intent(v.context, ActivityQuranScience::class.java))
             }
-        }
+        }*/
     }
 
 

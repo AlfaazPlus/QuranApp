@@ -81,6 +81,7 @@ import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.verse.VerseUtils;
+import com.quranapp.android.viewModels.ReadHistoryViewModel;
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
 import com.quranapp.android.views.recitation.RecitationPlayer;
@@ -171,6 +172,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         }
     };
     private ReadHistoryDBHelper mReadHistoryDBHelper;
+    private ReadHistoryViewModel readHistoryViewModel;
 
 
     @Override
@@ -496,6 +498,7 @@ public class ActivityReader extends ReaderPossessingActivity {
 
     private void initReadHistory() {
         mReadHistoryDBHelper = new ReadHistoryDBHelper(this);
+        readHistoryViewModel = new ReadHistoryViewModel();
     }
 
     private void initFloatingFooter() {
@@ -1382,7 +1385,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         // Finally save it.
         VerseUtils.saveLastVerses(
             this,
-            mReadHistoryDBHelper,
+            readHistoryViewModel,
             mQuranMetaRef.get(),
             mReaderParams.readType,
             READER_STYLE_TRANSLATION,
@@ -1419,7 +1422,7 @@ public class ActivityReader extends ReaderPossessingActivity {
         // Finally save it.
         VerseUtils.saveLastVerses(
             this,
-            mReadHistoryDBHelper,
+            readHistoryViewModel,
             mQuranMetaRef.get(),
             mReaderParams.readType,
             READER_STYLE_PAGE,
