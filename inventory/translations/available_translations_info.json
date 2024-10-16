@@ -229,6 +229,17 @@
         "downloadPath": "inventory/translations/ml/ml_karakunnu.json"
       }
     },
+    "pl": {
+      "pl_bielawski": {
+        "book": "Józef Bielawski",
+        "author": "Józef Bielawski",
+        "displayName": "Józef Bielawski",
+        "langCode": "pl",
+        "langName": "polski",
+        "lastUpdated": 1729081462836,
+        "downloadPath": "inventory/translations/pl/pl_bielawski.json"
+      }
+    },
     "ru": {
       "ru_elmir-kuliev": {
         "book": "Russian Translation (Elmir Kuliev)",
