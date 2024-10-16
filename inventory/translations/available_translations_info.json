@@ -134,6 +134,15 @@
         "langName": "فارسی",
         "lastUpdated": 1678915800000,
         "downloadPath": "inventory/translations/fa/fa_islamhouse.json"
+      },
+      "fa_taji-kal-dari": {
+        "book": "حسين تاجي كله داري",
+        "author": "حسين تاجي كله داري",
+        "displayName": "حسين تاجي كله داري",
+        "langCode": "fa",
+        "langName": "فارسی",
+        "lastUpdated": 1729081462836,
+        "downloadPath": "inventory/translations/fa/fa_taji-kal-dari.json"
       }
     },
     "fr": {
