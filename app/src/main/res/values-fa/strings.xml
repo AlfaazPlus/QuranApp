@@ -40,7 +40,7 @@
     <string name="strLabelPrevious">قبلی</string>
     <string name="strLabelNext">بعدی</string>
     <string name="strLabelStart">شروع</string>
-    <string name="strLabelUpdateQuranApp">آپدیت برنامه قرآن</string>
+    <string name="strLabelUpdateQuranApp">بروز رسانی برنامهٔ قرآن</string>
     <string name="strLabelDownloadNow">اکنون بارگیری کن</string>
     <string name="strLabelUpdate">آپدیت</string>
     <string name="strLabelInstall">نصب کردن</string>
@@ -76,7 +76,7 @@
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">سوره %1$s %2$d: آیه %3$d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">سوره %1$s: آیه %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">شماره فصل %1$d │ آیات %2$d–%3$d</string>
-    <string name="strTitleAppUser">کاربر برنامه قرآن</string>
+    <string name="strTitleAppUser">کاربر برنامهٔ قرآن</string>
     <string name="strTitleHolyQuran">قرآن مقدس</string>
     <string name="strTitleQuran">قرآن</string>
     <string name="strTitleMakki">مکی</string>
@@ -404,4 +404,16 @@
     <string name="labelPreviousTafsir">تفسیر قبلی</string>
     <string name="strMsgDuaFor" formatted="false">دعا برای %s</string>
     <string name="titleEtiquetteVerses">اخلاق در قرآن</string>
+    <string name="strMsgShareApp" formatted="false">برنامهٔ قرآن برنامه‌ای آزاد و متن‌باز برای خواندن و کاوش در قرآن کریم با ترجمه است. این برنامه رابط کاربری تمیز و خوبی با قابلیت‌هایی مثل تفسیر، قرائت، یادآور و … دارد.\n\nالآن بارگیری کنید:\n%s</string>
+    <string name="msgClearReadHistory">پاک کردن تاریخچهٔ خواندن</string>
+    <string name="msgClearSearchHistory">پاک کردن تاریخچهٔ جستجو</string>
+    <string name="titleResourceDownloadSource">منبع بارگیری محتوا</string>
+    <string name="msgResourceDownloadSource">اگر یکی کار نکرد از این گزینه برای بارگیری داده‌های قرآن از منبعی متفاوت استفاده کنید</string>
+    <string name="titleArabicTextToggle">نمایش متن عربی آیه</string>
+    <string name="msgInvalidParams">ورودی‌های نامعتبر</string>
+    <string name="titleSolutionVerses">راه‌حل‌هایی از قرآن</string>
+    <string name="place" formatted="false">محل %d</string>
+    <string name="strMsgDuaOf" formatted="false">دعای %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">دعای %s در قرآن</string>
+    <string name="msgArabicTextToggle">غیرفعال کردن این قابلیت متن‌های عربی آیات را از کل برنامه پنهان خواهد کرد.</string>
 </resources>
