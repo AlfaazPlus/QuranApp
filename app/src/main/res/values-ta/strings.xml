@@ -402,7 +402,7 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">\"%2$s\" க்கு \"%1$s\" இன் மறுபரிசீலனை.</string>
     <string name="msgInvalidParams">தவறான அளவுருக்கள்</string>
     <string name="msgTafsirLoadFailed">தஃப்சிர் ஏற்றுவதில் தோல்வி</string>
-    <string name="strPreviewTextTransl">அல்லாவின் பெயரில், மிகவும் கிருபையான, மிகவும் இரக்கமுள்ளவர்</string>
+    <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Mercifu</string>
     <string name="msgClearReadHistory">தெளிவான வாசிப்பு வரலாறு</string>
     <string name="msgClearSearchHistory">தேடல் வரலாற்றை அழிக்கவும்</string>
     <string name="titleResourceDownloadSource">வள பதிவிறக்க மூல</string>

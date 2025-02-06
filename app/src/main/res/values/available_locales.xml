@@ -24,6 +24,7 @@
         <item>മലയാളം</item>
         <item>Português</item>
         <item>Русский</item>
+        <item>தமிழ்</item>
         <item>Türkçe</item>
         <item>اردو</item>
     </string-array>
@@ -45,6 +46,7 @@
         <item>ml</item>
         <item>pt</item>
         <item>ru</item>
+        <item>ta</item>
         <item>tr</item>
         <item>ur</item>
     </string-array>
