@@ -154,7 +154,7 @@
     <string name="strLabelReading">Bacaan</string>
     <string name="strLabelMostPlaces">Paling banyak disebutkan</string>
     <string name="strLabelSelectedCount" formatted="false">%d terpilih</string>
-    <string name="strLabelAdvanceSharing">Berbagi Terlebih Dahulu</string>
+    <string name="strLabelAdvanceSharing">Berbagi Lanjutan</string>
     <string name="strLabelSelectVerse">Pilih Ayat</string>
     <string name="strLabelVerseRange">Rentang ayat</string>
     <string name="strLabelSelectTranslations">Pilih terjemahan</string>
@@ -414,4 +414,10 @@
     <string name="titleEtiquetteVerses">adab dalam alquran</string>
     <string name="strMsgDuaOf" formatted="false">Dua dari %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %s di al-Quran</string>
+    <string name="msgClearSearchHistory">Hapus riwayat pencarian</string>
+    <string name="titleResourceDownloadSource">Sumber unduhan sumber daya</string>
+    <string name="msgResourceDownloadSource">Gunakan opsi ini untuk mengunduh data Al Quran dari sumber lain jika sumber yang satu tidak berfungsi</string>
+    <string name="msgClearReadHistory">Hapus riwayat bacaan</string>
+    <string name="titleArabicTextToggle">Tampilkan Teks Ayat Arab</string>
+    <string name="msgArabicTextToggle">Menonaktifkan fitur ini akan menyembunyikan teks ayat Arab di seluruh aplikasi.</string>
 </resources>
