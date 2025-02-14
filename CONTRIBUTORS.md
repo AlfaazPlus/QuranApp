@@ -20,5 +20,6 @@
 - Portuguese (pt) - [fnogcps](https://github.com/fnogcps) and [MisterCosta96](https://github.com/MisterCosta96)
 - Russian (ru) - [ael1x](https://github.com/ael1x)
 - Spanish (es) - [JnBenites](https://github.com/JnBenites) and [gallegonovato](https://github.com/gallegonovato)
+- Tamil (ta) - [TamilNeram](https://github.com/TamilNeram)
 - Turkish (tr) - [croxz900](https://github.com/croxz900)
 - Urdu (ur) - [Faisal Khan](https://github.com/faisalcodes)
