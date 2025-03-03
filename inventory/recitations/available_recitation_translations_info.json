@@ -58,6 +58,28 @@
       "translations": {
         "ur": "شمشاد علی خان"
       }
+    },
+    {
+      "slug": "german",
+      "lang-code": "de",
+      "lang-name": "Deutsch",
+      "reciter": "German Quran translation audio",
+      "url-host": "github.com",
+      "url-path": "/dabatase/de_german/releases/download/v1/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "de": "Deutsche Koran Übersetzung Audio"
+      }
+    },
+    {
+      "slug": "french",
+      "lang-code": "fr",
+      "lang-name": "Français",
+      "reciter": "French Quran translation audio",
+      "url-host": "github.com",
+      "url-path": "/dabatase/fr_french/releases/download/v1/{chapNo:%03d}{verseNo:%03d}.mp3",
+      "translations": {
+        "de": "Traduction audio du Coran en français"
+      }
     }
   ]
 }
