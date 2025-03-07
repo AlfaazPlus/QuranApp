@@ -7,10 +7,10 @@
     <string name="strVersion" formatted="false">പതിപ്പ് %s</string>
     <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
     <string name="strLabelCancel">റദ്ദാക്കുക</string>
-    <string name="strLabelGotIt">കിട്ടി</string>
-    <string name="strLabelApply">പ്രയോഗിക്കുക</string>
+    <string name="strLabelGotIt">മനസ്സിലായി</string>
+    <string name="strLabelApply">അപ്ലയ് ചെയ്യുക</string>
     <string name="strLabelSend">അയക്കുക</string>
-    <string name="strLabelDelete">ഇല്ലാതാക്കുക</string>
+    <string name="strLabelDelete">ഡിലീറ്റ് ചെയ്യുക</string>
     <string name="strLabelRemoveAll">എല്ലാം നീക്കം ചെയ്യുക</string>
     <string name="strLabelCopy">പകർത്തുക</string>
     <string name="strLabelBack">പുറകെ</string>
@@ -31,7 +31,7 @@
     <string name="strLabelViewAll">എല്ലാം കാണുക</string>
     <string name="strLabelAdvertisement">പരസ്യം</string>
     <string name="strLabelChangeNRestart">മാറ്റുക &amp; പുനരാരംഭിക്കുക</string>
-    <string name="strLabelRead">വായിക്കുക</string>
+    <string name="strLabelRead">വായിക്കുക »</string>
     <string name="strLabelNew">പുതിയത്</string>
     <string name="strLabelNext">അടുത്തത്</string>
     <string name="strLabelNotNow">ഇപ്പോള്‍ വേണ്ട</string>
@@ -40,7 +40,7 @@
     <string name="strLabelDownloadNow">ഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
     <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
-    <string name="strLabelClose">അടയ്ക്കുക</string>
+    <string name="strLabelClose">ക്ലോസ് ചെയ്യുക</string>
     <string name="strTitleReaderLayoutStylePageView">പേജ് കാഴ്ച</string>
     <string name="strTitleReaderLayoutStyle">ഖുർആൻ വീക്ഷണ ശൈലി</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">വിവർത്തനം കാഴ്ച</string>
@@ -357,4 +357,5 @@
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
     <string name="labelAdd">ചേർക്കുക</string>
     <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
+    <string name="strMsgShareApp" formatted="false">വിവർത്തനങ്ങളോടൊപ്പം പരിശുദ്ധ ഖുർആൻ വായിക്കാനും പര്യവേക്ഷണം ചെയ്യാനും കഴിയുന്ന സൗജന്യവും ഓപ്പൺ സോഴ്‌സ് ആപ്പാണ് QuranApp. തഫ്‌സിർ, പാരായണം, ഓർമ്മപ്പെടുത്തൽ എന്നിവയും അതിലേറെയും, അതുപോലുള്ളതുമായ സവിശേഷതകളുള്ള നല്ലതും വൃത്തിയുള്ളതുമായ ഇൻ്റർഫേസ് ഈ ആപ്പിനുണ്ട്.\n\nഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക:\n%s</string>
 </resources>
