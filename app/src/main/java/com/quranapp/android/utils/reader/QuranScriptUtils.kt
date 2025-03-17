@@ -21,37 +21,16 @@ object QuranScriptUtils {
 
     const val KEY_SCRIPT = "key.script"
 
-    const val SCRIPT_INDO_PAK = "indopak"
     const val SCRIPT_UTHMANI = "uthmani"
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
     const val SCRIPT_NOOREHUDA = "noorehuda"
 
-    const val PREVIEW_TEXT_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ "
     const val PREVIEW_TEXT_UTHMANI = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١"
     const val PREVIEW_TEXT_KFQPC_V1 = "ﭑ ﭒ ﭓ ﭔ ﭕ"
     const val PREVIEW_TEXT_NOOREHUDA = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ﴿﴾"
 
-    const val SCRIPT_DEFAULT = SCRIPT_INDO_PAK
+    const val SCRIPT_DEFAULT = SCRIPT_NOOREHUDA
     const val TOTAL_DOWNLOAD_PARTS = 4
-
-    val INDO_PAK_SCRIPT_NAMES = mapOf(
-        "en"  to "IndoPak",
-        "ar"  to "نستعليق",
-        "bn"  to "ইন্দোপাক",
-        "ckb" to "هیندوپاک",
-        "de"  to "IndoPak",
-        "es"  to "IndoPak",
-        "fa"  to "هند پاک",
-        "fr"  to "IndoPak",
-        "gu"  to "ઈન્ડોપાક",
-        "hi"  to "इंडो पाक",
-        "in"  to "IndoPak",
-        "it"  to "IndoPak",
-        "ml"  to "ഇൻഡോപാക്",
-        "pt"  to "IndoPak",
-        "tr"  to "Hint Paketi",
-        "ur"  to "انڈو پاک",
-    )
 
     val UTHMANI_SCRIPT_NAMES = mapOf(
         "en"  to "Uthmani Hafs",
@@ -111,7 +90,6 @@ object QuranScriptUtils {
     )
 
     fun availableScriptSlugs(): Array<String> = arrayOf(
-        SCRIPT_INDO_PAK,
         SCRIPT_NOOREHUDA,
         SCRIPT_UTHMANI,
         SCRIPT_KFQPC_V1
@@ -151,8 +129,7 @@ fun String.getQuranScriptName(): String {
     val mapToQuery: Map<String, String> = when (this) {
         QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.UTHMANI_SCRIPT_NAMES
         QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.KFQPC_SCRIPT_NAMES
-        QuranScriptUtils.SCRIPT_NOOREHUDA -> QuranScriptUtils.NOOREHUDA_SCRIPT_NAMES
-        else -> QuranScriptUtils.INDO_PAK_SCRIPT_NAMES
+        else -> QuranScriptUtils.NOOREHUDA_SCRIPT_NAMES
     }
 
     return mapToQuery[Locale.getDefault().toLanguageTag()] ?: mapToQuery["en"]!!
@@ -161,37 +138,32 @@ fun String.getQuranScriptName(): String {
 fun String.getScriptPreviewText(): String = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
-    QuranScriptUtils.SCRIPT_NOOREHUDA -> QuranScriptUtils.PREVIEW_TEXT_NOOREHUDA
-    else -> QuranScriptUtils.PREVIEW_TEXT_INDOPAK
+    else -> QuranScriptUtils.PREVIEW_TEXT_NOOREHUDA
 }
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniSmall
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCSmall
-    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.dimen.dmnReaderTextSizeArNoorehudaSmall
-    else -> R.dimen.dmnReaderTextSizeArIndoPakSmall
+    else -> R.dimen.dmnReaderTextSizeArNoorehudaSmall
 }
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniMedium
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArKFQPCMedium
-    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.dimen.dmnReaderTextSizeArNoorehudaMedium
-    else -> R.dimen.dmnReaderTextSizeArIndoPakMedium
+    else -> R.dimen.dmnReaderTextSizeArNoorehudaMedium
 }
 
 fun String.getQuranScriptFontRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> R.font.uthmanic_hafs
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_page_1
-    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.font.noorehuda
-    else -> R.font.indopak
+    else -> R.font.noorehuda_quranapp_v2
 }
 
 fun String.getQuranScriptResPath(): String = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> "scripts/script_uthmani_hafs.json"
-    QuranScriptUtils.SCRIPT_NOOREHUDA -> "scripts/script_noorehuda.json"
-    else -> "scripts/script_indopak.json"
+    else -> "scripts/script_noorehuda.json"
 }
 
 fun Int.toKFQPCFontFilename(): String {

@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
@@ -28,8 +30,10 @@ import com.quranapp.android.databinding.LytReaderVerseBinding;
 import com.quranapp.android.databinding.LytReaderVerseQuickActionsBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
+import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
 
 @SuppressLint("ViewConstructor")
@@ -223,6 +227,9 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
 
         mBinding.verseHeader.verseSerial.setContentDescription(verseSerialDesc);
         mBinding.verseHeader.verseSerial.setText(verseSerial);
+        mBinding.verseHeader.verseSerial.setOnClickListener(v -> {
+            MessageUtils.INSTANCE.showRemovableToast(v.getContext(), "Verse ID copied: " + verse.getId(), Toast.LENGTH_SHORT);
+        });
 
         mBinding.textArabic.setVisibility(verse.arabicTextSpannable != null ? VISIBLE : GONE);
         if (verse.arabicTextSpannable != null) {
