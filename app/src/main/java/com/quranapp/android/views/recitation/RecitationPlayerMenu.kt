@@ -190,7 +190,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
             contentView = LytPlaybackSpeedExplorerBinding.inflate(player.activity.layoutInflater).apply {
                 val savedSpeed = SPReader.getRecitationSpeed(context)
 
-                arrayOf(0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f).forEach { speed ->
+                arrayOf(0.1f, 0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f, 3f).forEach { speed ->
                     val radio = PeaceRadioButton(context).apply {
                         tag = speed
                         setText(String.format(Locale.getDefault(), "%.1fx", speed))
