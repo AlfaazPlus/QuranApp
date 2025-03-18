@@ -2,6 +2,7 @@
 
 - Localization works: [Goran Gharib](https://facebook.com/goran90909)
 - Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
+- Landing page: [Qomarul Hasan](https://github.com/qomarhsn)
 
 ### App Translations
 
