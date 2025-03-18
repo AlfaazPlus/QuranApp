@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearanceCommonTitleLarge"
         android:textColor="@color/colorText2"
         android:textSize="22sp"
-        tools:text="Translations" />
+        tools:text="Bookmarks" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/description"
@@ -26,12 +26,26 @@
         android:layout_marginVertical="15dp"
         android:gravity="center"
         android:textColor="@color/colorText2"
-        tools:text="5 downloaded translations can be freed up." />
+        tools:text="Export or import your bookmarks with notes." />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/buttonAction"
-        style="@style/ButtonActionAlpha"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/labelFreeUpSpace" />
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/buttonExport"
+            style="@style/ButtonActionAlpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelExport" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/buttonImport"
+            style="@style/ButtonActionAlpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/labelImport" />
+    </LinearLayout>
 </LinearLayout>
