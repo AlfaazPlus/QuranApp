@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -60,15 +61,6 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     }
 
     @Override
-    public void onBackPressed() {
-        if (mAdapter != null && mAdapter.mIsSelecting) {
-            mAdapter.clearSelection();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     protected int getLayoutResource() {
         return R.layout.activity_bookmark;
     }
@@ -115,6 +107,18 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     }
 
     private void initHeader(BoldHeader header) {
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mAdapter != null && mAdapter.mIsSelecting) {
+                    mAdapter.clearSelection();
+                } else {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        });
+
         header.setCallback(new BoldHeader.BoldHeaderCallback() {
             @Override
             public void onBackIconClick() {
@@ -169,7 +173,7 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     }
 
     private void setupAdapter(ArrayList<BookmarkModel> models) {
-        if (mAdapter == null && models.size() > 0) {
+        if (mAdapter == null && !models.isEmpty()) {
             Context context = this;
 
             int spanCount = WindowUtils.isLandscapeMode(context) ? 2 : 1;
@@ -187,7 +191,8 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
             mAdapter.updateModels(models);
         }
 
-        mBinding.noItems.setVisibility(models.size() == 0 ? View.VISIBLE : View.GONE);
+        mBinding.noItems.setVisibility(models.isEmpty() ? View.VISIBLE : View.GONE);
+        mBinding.header.setShowRightIcon(!models.isEmpty());
     }
 
     public CharSequence prepareSubtitleTitle(int fromVerse, int toVerse) {

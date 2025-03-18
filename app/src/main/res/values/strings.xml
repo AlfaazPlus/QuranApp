@@ -354,6 +354,7 @@
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
     <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
     <string name="titleStorageCleanup">Storage cleanup</string>
+    <string name="titleExportData">Export &amp; Import</string>
     <string name="storageCleanupMessage">Free up space by deleting unused downloaded resources. This will not delete any bookmarks or settings.\n\nFollowing resources can be freed up:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d downloaded translations can be freed up.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d stored recitation files from %2$d reciters can be freed up.</string>
@@ -412,4 +413,11 @@
     <string name="msgResourceDownloadSource">Use this option to download Quran data from a different source if one is not working</string>
     <string name="titleArabicTextToggle">Show Arabic Verse Text</string>
     <string name="msgArabicTextToggle">Disabling this feature will hide Arabic verse text from all over the app.</string>
+    <string name="labelExport">Export</string>
+    <string name="labelImport">Import</string>
+    <string name="msgExportImportBookmarks">Export or import your bookmarks along with notes.</string>
+    <string name="msgExportEmpty">No bookmarks to export</string>
+    <string name="msgExportSuccess">Exported successfully</string>
+    <string name="msgImportFailed">Failed to import. Unsupported file.</string>
+    <string name="msgImportSuccess">Imported successfully</string>
 </resources>
