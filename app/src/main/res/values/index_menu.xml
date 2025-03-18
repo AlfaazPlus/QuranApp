@@ -6,6 +6,7 @@
     <item name="indexMenuItemBookmark" type="id" />
     <item name="indexMenuItemSettings" type="id" />
     <item name="indexMenuItemStorageCleanup" type="id" />
+    <item name="indexMenuItemExporter" type="id" />
     <item name="indexMenuItemFeedback" type="id" />
     <item name="indexMenuItemHelp" type="id" />
     <item name="indexMenuItemPrivacy" type="id" />
@@ -25,6 +26,7 @@
         <item>@id/indexMenuItemBookmark</item>
         <item>@id/indexMenuItemSettings</item>
         <item>@id/indexMenuItemStorageCleanup</item>
+        <item>@id/indexMenuItemExporter</item>
     </array>
 
     <!--  Group 2 IDs  -->
@@ -53,6 +55,7 @@
         <item>@drawable/dr_icon_bookmarks</item>
         <item>@drawable/dr_icon_settings</item>
         <item>@drawable/icon_clean</item>
+        <item>@drawable/icon_import_export</item>
     </array>
 
     <!--  Group 2 ICONS  -->
@@ -81,6 +84,7 @@
         <item>@string/strTitleBookmarks</item>
         <item>@string/strTitleSettings</item>
         <item>@string/titleStorageCleanup</item>
+        <item>@string/titleExportData</item>
     </array>
 
     <!--  Group 2 LABELS  -->
