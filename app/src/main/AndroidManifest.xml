@@ -125,6 +125,7 @@
         <activity android:name=".activities.ActivityOnboarding" />
         <activity android:name=".activities.ActivityAbout" />
         <activity android:name=".activities.ActivityStorageCleanup" />
+        <activity android:name=".activities.ActivityExportImport" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

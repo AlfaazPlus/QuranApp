@@ -211,8 +211,8 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
             this.title.setText(title)
             this.description.text = description
 
-            buttonFreeUp.setOnTouchListener(HoverPushOpacityEffect())
-            buttonFreeUp.setOnClickListener { callback() }
+            buttonAction.setOnTouchListener(HoverPushOpacityEffect())
+            buttonAction.setOnClickListener { callback() }
         }
     }
 }

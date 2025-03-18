@@ -7,7 +7,9 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
 import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_CHAPTER_NO;
 import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
 import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_FROM_VERSE_NO;
@@ -23,6 +25,7 @@ import com.quranapp.android.utils.univ.DBUtils;
 import com.quranapp.android.utils.univ.DateUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookmarkDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "Bookmark.db";
@@ -38,12 +41,12 @@ public class BookmarkDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-            _ID + " INTEGER PRIMARY KEY," +
-            COL_CHAPTER_NO + " INTEGER," +
-            COL_FROM_VERSE_NO + " INTEGER," +
-            COL_TO_VERSE_NO + " INTEGER," +
-            COL_DATETIME + " TEXT," +
-            COL_NOTE + " TEXT)";
+                _ID + " INTEGER PRIMARY KEY," +
+                COL_CHAPTER_NO + " INTEGER," +
+                COL_FROM_VERSE_NO + " INTEGER," +
+                COL_TO_VERSE_NO + " INTEGER," +
+                COL_DATETIME + " TEXT," +
+                COL_NOTE + " TEXT)";
         DB.execSQL(CREATE_TABLE);
     }
 
@@ -57,6 +60,25 @@ public class BookmarkDBHelper extends SQLiteOpenHelper {
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    public void addMultipleBookmarks(List<BookmarkModel> bookmarks) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (BookmarkModel bookmark : bookmarks) {
+                ContentValues values = new ContentValues();
+                values.put(COL_CHAPTER_NO, bookmark.getChapterNo());
+                values.put(COL_FROM_VERSE_NO, bookmark.getFromVerseNo());
+                values.put(COL_TO_VERSE_NO, bookmark.getToVerseNo());
+                values.put(COL_DATETIME, bookmark.getDate());
+                values.put(COL_NOTE, bookmark.getNote());
+                db.insert(TABLE_NAME, null, values);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public void addToBookmark(int chapterNo, int fromVerse, int toVerse, String note, OnResultReadyCallback<BookmarkModel> callback) {
@@ -170,9 +192,9 @@ public class BookmarkDBHelper extends SQLiteOpenHelper {
 
         String selection = DBUtils.createDBSelection(COL_CHAPTER_NO, COL_FROM_VERSE_NO, COL_TO_VERSE_NO);
         String[] selectionArgs = {
-            String.valueOf(chapterNo),
-            String.valueOf(fromVerse),
-            String.valueOf(toVerse)
+                String.valueOf(chapterNo),
+                String.valueOf(fromVerse),
+                String.valueOf(toVerse)
         };
 
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME, selection, selectionArgs);
