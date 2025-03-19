@@ -420,4 +420,12 @@
     <string name="msgResourceDownloadSource">استخدم هذا الخيار لتحميل القرآن من مصدر مختلف إذا كان أحد المصادر لا يعمل</string>
     <string name="titleArabicTextToggle">إظهار نص الآية باللغة العربية</string>
     <string name="msgArabicTextToggle">سيؤدي تعطيل هذه الميزة إلى إخفاء نص الآية باللغة العربية من التطبيق.</string>
+    <string name="titleExportData">التصدير والاستيراد</string>
+    <string name="labelImport">استيراد</string>
+    <string name="msgExportEmpty">لا توجد إشارات مرجعية للتصدير</string>
+    <string name="msgExportSuccess">تم التصدير بنجاح</string>
+    <string name="msgImportFailed">فشل الاستيراد. الملف غير مدعوم.</string>
+    <string name="msgImportSuccess">تم الاستيراد بنجاح</string>
+    <string name="labelExport">تصدير</string>
+    <string name="msgExportImportBookmarks">قم بتصدير أو استيراد إشاراتك المرجعية مع الملاحظات.</string>
 </resources>
