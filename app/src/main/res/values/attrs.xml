@@ -89,5 +89,4 @@
         <attr name="android:checked" />
         <attr name="android:textAppearance" />
     </declare-styleable>
-
 </resources>

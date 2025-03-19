@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.Dimen;
@@ -36,7 +38,6 @@ import com.quranapp.android.suppliments.BookmarkViewer;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
-import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
@@ -46,7 +47,6 @@ import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.utils.verse.VerseUtils;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
@@ -217,7 +217,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
             @Override
             public Pair<QuranTranslBookInfo, Translation> call() {
-                QuranTranslBookInfo bookInfo = obtainOptimalSlug(context, factory);
+                QuranTranslBookInfo bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd(context));
                 if (Objects.equals(mLastTranslationSlug, bookInfo.getSlug())) {
                     return null;
                 }
@@ -246,24 +246,6 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
                 }
             }
         });
-    }
-
-    private QuranTranslBookInfo obtainOptimalSlug(Context ctx, QuranTranslationFactory factory) {
-        Set<String> savedTranslations = SPReader.getSavedTranslations(ctx);
-
-        QuranTranslBookInfo bookInfo = null;
-        for (String savedSlug : savedTranslations) {
-            if (!TranslUtils.isTransliteration(savedSlug)) {
-                bookInfo = factory.getTranslationBookInfo(savedSlug);
-                break;
-            }
-        }
-
-        if (bookInfo == null) {
-            bookInfo = factory.getTranslationBookInfo(TranslUtils.TRANSL_SLUG_DEFAULT);
-        }
-
-        return bookInfo;
     }
 
     private void setupTranslation(CharSequence arText, QuranTranslBookInfo bookInfo, Translation translation) {

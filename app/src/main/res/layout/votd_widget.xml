@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/votdWidgetContainer"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/dr_bg_votd"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dr_bg_votd_title"
+            android:drawablePadding="5dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="@string/strTitleVOTD"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dmnCommonSize3"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dr_logo"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/votdText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            tools:text="In the name of Allah, the Most Gracious, the Most Merciful" />
+
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="#806C6C6C"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/verseInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-light"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dmnCommonSize3"
+            tools:text="Surah Al-Fatihah 1: Verse 1" />
+    </LinearLayout>
+</LinearLayout>
+

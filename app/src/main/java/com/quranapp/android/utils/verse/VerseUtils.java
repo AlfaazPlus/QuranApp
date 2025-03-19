@@ -9,18 +9,24 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+
 import androidx.annotation.NonNull;
+
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 import static android.text.Spanned.SPAN_POINT_MARK;
 
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
+import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.interfaceUtils.VOTDCallback;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.others.ShortcutUtils;
+import com.quranapp.android.utils.reader.TranslUtils;
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
 import com.quranapp.android.utils.simplified.SimpleClickableSpan;
 import com.quranapp.android.utils.span.VerseArabicHighlightSpan;
@@ -31,6 +37,7 @@ import com.quranapp.android.utils.univ.Keys;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class VerseUtils {
     private static final int VOTD_RESET_MINUTES = 24 * 60; // one day
@@ -265,6 +272,24 @@ public abstract class VerseUtils {
         }
 
         return chapterNo == VOTD_chap_no && verseNo == VOTD_verse_no;
+    }
+
+    public static String obtainOptimalSlugForVotd(Context ctx) {
+        Set<String> savedTranslations = SPReader.getSavedTranslations(ctx);
+
+        String slug = null;
+        for (String savedSlug : savedTranslations) {
+            if (!TranslUtils.isTransliteration(savedSlug)) {
+                slug = savedSlug;
+                break;
+            }
+        }
+
+        if (slug == null) {
+            slug = TranslUtils.TRANSL_SLUG_DEFAULT;
+        }
+
+        return slug;
     }
 
     public static void saveLastVerses(

@@ -420,4 +420,5 @@
     <string name="msgExportSuccess">Exported successfully</string>
     <string name="msgImportFailed">Failed to import. Unsupported file.</string>
     <string name="msgImportSuccess">Imported successfully</string>
+    <string name="desc_votd_widget">Get a new verse every day</string>
 </resources>

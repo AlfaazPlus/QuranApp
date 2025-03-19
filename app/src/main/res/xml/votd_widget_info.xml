@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/desc_votd_widget"
+    android:initialKeyguardLayout="@layout/votd_widget"
+    android:initialLayout="@layout/votd_widget"
+    android:minWidth="400dp"
+    android:minHeight="180dp"
+    android:previewImage="@drawable/widget_preview"
+    android:resizeMode="vertical"
+    android:updatePeriodMillis="14400000"
+    android:widgetCategory="home_screen|keyguard" />
