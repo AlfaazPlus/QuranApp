@@ -93,7 +93,7 @@
     <string name="strLabelVerseNoWithColon" formatted="false">வசனம்: %d</string>
     <string name="strLabelVersesWithColon" formatted="false">வசனங்கள்: %1$d - %2$d</string>
     <string name="strLabelVerseCountWithColon" formatted="false">வசனங்கள்: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d -%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d - %2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d: %3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">சூரா %1$s %2$d: உரையாடல் %3$d</string>
@@ -327,7 +327,7 @@
     <string name="strMsgReferenceDuas">குர்ஆனில் இருந்து சில துவாக்களை சேகரித்தார்.</string>
     <string name="titleDownloadScriptResources">இந்த ச்கிரிப்டுக்கான ஆதாரங்களைப் பதிவிறக்கவா?</string>
     <string name="msgDownloadKFQPCResources">இந்த ச்கிரிப்டைப் பயன்படுத்துவதற்கு முன்பு பின்வரும் ஆதாரங்கள் பதிவிறக்க வேண்டும்:</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">ச்கிரிப்ட்: %s (m 1mb)</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">ச்கிரிப்ட்: %s (~1mb)</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">எழுத்துருக்கள்: %1$d மொத்த %2$d (~ %3$dmb மீதமுள்ள) பதிவிறக்கம் செய்யப்பட்டது</string>
     <string name="msgDownloadFailed">பதிவிறக்கம் தோல்வியடைந்தது</string>
     <string name="msgDownloadingScript">ச்கிரிப்டைப் பதிவிறக்குகிறது</string>
@@ -355,9 +355,9 @@
     <string name="msgVerseReminderAlarmPermission">உரையாடல் நினைவூட்டலை இயக்க அலாரம் இசைவு தேவை.</string>
     <string name="titleStorageCleanup">சேமிப்பக தூய்மைப்படுத்துதல்</string>
     <string name="storageCleanupMessage">பயன்படுத்தப்படாத பதிவிறக்கம் செய்யப்பட்ட வளங்களை நீக்குவதன் மூலம் இடத்தை விடுவிக்கவும். இது எந்த புக்மார்க்குகள் அல்லது அமைப்புகளையும் நீக்காது.\n\n பின்வரும் வளங்களை விடுவிக்க முடியும்:</string>
-    <string name="recitationCanBeFreedUp" formatted="false">%2$d மறுபயன்பாட்டாளர்களிடமிருந்து 1 $ டி சேமிக்கப்பட்ட பாராயணக் கோப்புகளை விடுவிக்க முடியும்.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d மறுபயன்பாட்டாளர்களிடமிருந்து %1$d சேமிக்கப்பட்ட பாராயணக் கோப்புகளை விடுவிக்க முடியும்.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d பதிவிறக்கம் செய்யப்பட்ட ச்கிரிப்ட்கள் மற்றும் அவற்றின் எழுத்துருக்களை விடுவிக்க முடியும்.</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">%சேமித்த அத்தியாய தகவல்களை தூய்மை செய்யலாம்.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">சேமிக்கப்பட்ட %d அத்தியாயத் தகவலை சுத்தம் செய்யலாம்.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d சேமித்த தஃப்சிர் தூய்மை செய்யப்படலாம்.</string>
     <string name="titleChapterInfo">அத்தியாயம் செய்தி</string>
     <string name="labelFreeUpSpace">இலவச இடம்</string>
@@ -365,7 +365,7 @@
     <string name="titleRecitationCleanup">பாராயணத்தை நீக்கவா?</string>
     <string name="msgRecitationCleanup" formatted="false">%s இலிருந்து சேமிக்கப்பட்ட அனைத்து பாராயணங்களும் நீக்கப்படும். சூராவின் பாராயணங்களை தனித்தனியாக நீக்க, ஆடியோ அமைப்புகளை நிர்வகிக்கவும்.</string>
     <string name="titleScriptCleanup">ச்கிரிப்டை நீக்கவா?</string>
-    <string name="msgScriptCleanup" formatted="false">%ச்கிரிப்ட் மற்றும் அதன் சேமிக்கப்பட்ட அனைத்து எழுத்துருக்களும் நீக்கப்படும். அவற்றைப் பயன்படுத்த நீங்கள் மீண்டும் ஏற்ற வேண்டும்.</string>
+    <string name="msgScriptCleanup" formatted="false">%s ஸ்கிரிப்ட் மற்றும் அதன் சேமிக்கப்பட்ட அனைத்து எழுத்துருக்களும் நீக்கப்படும். அவற்றைப் பயன்படுத்த நீங்கள் மீண்டும் பதிவிறக்க வேண்டும்.</string>
     <string name="titleChapterInfoCleanup">அத்தியாயத் செய்தி தெளிவானதா?</string>
     <string name="msgChapterInfoCleanup">சேமிக்கப்பட்ட அனைத்து அத்தியாய தகவல்களும் நீக்கப்படும்.</string>
     <string name="msgTafsirCleanup" formatted="false">%s இலிருந்து சேமிக்கப்பட்ட அனைத்து தஃப்சீரும் நீக்கப்படும்.</string>
