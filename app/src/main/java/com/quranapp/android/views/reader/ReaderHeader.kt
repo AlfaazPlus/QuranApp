@@ -2,8 +2,10 @@ package com.quranapp.android.views.reader
 
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.google.android.material.appbar.AppBarLayout
@@ -12,9 +14,15 @@ import com.peacedesign.android.utils.DrawableUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.databinding.LytReaderAutoScrollOptionsBinding
 import com.quranapp.android.databinding.LytReaderHeaderBinding
 import com.quranapp.android.interfaceUtils.Destroyable
 import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.gesture.HoverPushEffect
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
+import com.quranapp.android.utils.reader.ReaderTextSizeUtils
+import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener
 import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
@@ -24,8 +32,13 @@ import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem
 import com.quranapp.android.views.readerSpinner2.adapters.ChapterSelectorAdapter2
 import com.quranapp.android.views.readerSpinner2.adapters.JuzSelectorAdapter2
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
 
-class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+class ReaderHeader @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
     AppBarLayout(context, attrs, defStyleAttr), Destroyable {
     val binding = LytReaderHeaderBinding.inflate(LayoutInflater.from(context), this, true)
     private var activity: ActivityReader? = null
@@ -45,7 +58,8 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
         )
 
         (binding.root.layoutParams as? LayoutParams)?.let {
-            it.scrollFlags = LayoutParams.SCROLL_FLAG_SCROLL or LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or LayoutParams.SCROLL_FLAG_SNAP
+            it.scrollFlags =
+                LayoutParams.SCROLL_FLAG_SCROLL or LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or LayoutParams.SCROLL_FLAG_SNAP
             binding.root.layoutParams = it
         }
 
@@ -59,6 +73,7 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
                 }
             }
         }
+        ViewCompat.setTooltipText(binding.back, context.getString(R.string.strDescGoBack))
 
         binding.readerSetting.let {
             it.setOnClickListener { openReaderSetting(-1) }
@@ -68,6 +83,11 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
         binding.btnTranslLauncher.let {
             it.setOnClickListener { openReaderSetting(ActivitySettings.SETTINGS_TRANSLATION) }
             ViewCompat.setTooltipText(it, context.getString(R.string.strLabelSelectTranslations))
+        }
+
+        binding.btnAutoScroller.let {
+            it.setOnClickListener { openAutoScrollOptions() }
+            ViewCompat.setTooltipText(it, context.getString(R.string.autoScroll))
         }
 
         binding.readerTitle.let {
@@ -86,12 +106,56 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
                 putExtra(READER_KEY_SETTING_IS_FROM_READER, true)
                 putExtra(READER_KEY_SAVE_TRANSL_CHANGES, readerParams!!.saveTranslChanges)
                 if (readerParams!!.visibleTranslSlugs != null) {
-                    putExtra(READER_KEY_TRANSL_SLUGS, readerParams!!.visibleTranslSlugs!!.toTypedArray())
+                    putExtra(
+                        READER_KEY_TRANSL_SLUGS,
+                        readerParams!!.visibleTranslSlugs!!.toTypedArray()
+                    )
                 }
                 putExtra(READER_KEY_READ_TYPE, readerParams!!.readType)
             },
             null
         )
+    }
+
+    private fun openAutoScrollOptions() {
+        if (activity == null) return
+
+        val mActivity = activity!!
+        val currentSpeed = SPReader.getAutoScrollSpeed(context).toInt()
+
+        val sheetDialog = PeaceBottomSheet()
+        sheetDialog.params.apply {
+            headerTitle = context.getString(R.string.autoScroll)
+            contentView =
+                LytReaderAutoScrollOptionsBinding.inflate(mActivity.layoutInflater).apply {
+                    progressText.text = TextUtils.concat(currentSpeed.toString())
+
+                    seekBar.progress = currentSpeed
+                    seekBar.setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
+                        override fun onProgressChanged(
+                            seekBar: SeekBar,
+                            progress: Int,
+                            fromUser: Boolean
+                        ) {
+                            val nProgress = 10.coerceAtMost(1.coerceAtLeast(progress))
+                            progressText.text = TextUtils.concat(nProgress.toString())
+                        }
+
+                        override fun onStopTrackingTouch(seekBar: SeekBar) {
+                            val nProgress = 10.coerceAtMost(1.coerceAtLeast(seekBar.progress))
+                            SPReader.setAutoScrollSpeed(context, nProgress.toFloat())
+                        }
+                    })
+
+                    startAutoScroll.setOnTouchListener(HoverPushOpacityEffect(HoverPushEffect.Pressure.LOW))
+                    startAutoScroll.setOnClickListener {
+                        sheetDialog.dismiss()
+                        mActivity.startAutoScroll()
+                    }
+                }.root
+        }
+
+        sheetDialog.show(mActivity.supportFragmentManager)
     }
 
     fun initJuzSelector() {
@@ -137,7 +201,10 @@ class ReaderHeader @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         jcvSelectorView.setVerseAdapter(adp) { item: ReaderSpinnerItem ->
             val verseSpinnerItem = item as VerseSpinnerItem
-            activity?.handleVerseSpinnerSelectedVerseNo(verseSpinnerItem.chapterNo, verseSpinnerItem.verseNo)
+            activity?.handleVerseSpinnerSelectedVerseNo(
+                verseSpinnerItem.chapterNo,
+                verseSpinnerItem.verseNo
+            )
         }
     }
 

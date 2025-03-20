@@ -245,7 +245,7 @@
     <string name="strMsgVOTDOn">காலையில் தினமும் அறிவிப்பைப் பெறுங்கள்.</string>
     <string name="strMsgYouAreReadingVerses">நீங்கள் வசனங்களைப் படிக்கிறீர்கள்:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d என்பது செல்லுபடியாகும் சூரா இல்லை.</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%1$d சூரா எண் 2 $ டி க்கு செல்லுபடியாகும் உரையாடல் எண் அல்ல</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d சூரா எண் %2$d டி க்கு செல்லுபடியாகும் உரையாடல் எண் அல்ல</string>
     <string name="strMsgInvalidVersesRange">செல்லுபடியாகும் வசன வரம்பு அல்ல</string>
     <string name="strMsgInvalidVersesRange2" formatted="false">%1$d- %2$d சூரா எண் %3$d க்கு செல்லுபடியாகும் வசன வரம்பு அல்ல</string>
     <string name="strMsgBookmarkAddFailed">உரையாடல் புக்மார்க்குகளில் சேர்க்கத் தவறிவிட்டது</string>

@@ -15,6 +15,7 @@ object Keys {
     const val READER_KEY_PENDING_SCROLL = "reader.pending_scroll"
     const val READER_KEY_SETTING_IS_FROM_READER = "reader.setting_is_from_reader"
     const val READER_KEY_ARABIC_TEXT_ENABLED = "reader.arabic_text_enabled"
+    const val READER_KEY_AUTO_SCROLL_SPEED = "reader.auto_scroll_speed"
 
     const val KEY_REFERENCE_VERSE_MODEL = "verse_model"
     const val KEY_LANGUAGE = "language"

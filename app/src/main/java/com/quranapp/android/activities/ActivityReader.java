@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
 import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
@@ -70,6 +72,8 @@ import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.reader_managers.Navigator;
 import com.quranapp.android.reader_managers.ReaderParams;
 import com.quranapp.android.suppliments.ReaderLayoutManager;
+import com.quranapp.android.utils.autoScroll.SmoothAutoScrollHelper;
+import com.quranapp.android.utils.autoScroll.SmoothAutoScrollHelperDelegate;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
@@ -80,6 +84,7 @@ import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.Codes;
 import com.quranapp.android.utils.univ.Keys;
+import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.verse.VerseUtils;
 import com.quranapp.android.views.reader.verseSpinner.VerseSpinnerItem;
 import com.quranapp.android.views.readerSpinner2.adapters.VerseSelectorAdapter2;
@@ -98,7 +103,7 @@ import java.util.stream.IntStream;
 
 import kotlin.Pair;
 
-public class ActivityReader extends ReaderPossessingActivity {
+public class ActivityReader extends ReaderPossessingActivity implements SmoothAutoScrollHelperDelegate {
     public static final String KEY_RECITER_CHANGED = "reciter.changed";
     public static final String KEY_TRANSLATION_RECITER_CHANGED = "translation_reciter.changed";
     public static final String KEY_SCRIPT_CHANGED = "script.changed";
@@ -111,6 +116,7 @@ public class ActivityReader extends ReaderPossessingActivity {
     public boolean persistProgressDialog4PendingTask;
     public ActivityReaderBinding mBinding;
     public ReaderLayoutManager mLayoutManager;
+    private SmoothAutoScrollHelper mAutoScrollHelper;
     private boolean mProtectFromPlayerReset;
     public RecitationService mPlayerService;
     private final ServiceConnection mPlayerServiceConnection = new ServiceConnection() {
@@ -189,6 +195,10 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (mPlayerService != null) {
             mPlayerService.setRecitationPlayer(null, this);
         }
+
+        if (mAutoScrollHelper != null) {
+            mAutoScrollHelper.pauseAutoScroll();
+        }
         super.onPause();
     }
 
@@ -209,6 +219,11 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (mPlayerService != null) {
             mPlayerService.setRecitationPlayer(mPlayer, this);
         }
+
+
+        if (mAutoScrollHelper != null) {
+            mAutoScrollHelper.resumeAutoScroll();
+        }
     }
 
     @Override
@@ -224,6 +239,11 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (mReadHistoryDBHelper != null) {
             mReadHistoryDBHelper.close();
         }
+
+        if (mAutoScrollHelper != null) {
+            mAutoScrollHelper.destroy();
+        }
+
         super.onDestroy();
     }
 
@@ -463,6 +483,14 @@ public class ActivityReader extends ReaderPossessingActivity {
     private void initReader() {
         mLayoutManager = new ReaderLayoutManager(this, RecyclerView.VERTICAL, false);
         mBinding.readerVerses.setItemAnimator(null);
+        mAutoScrollHelper = new SmoothAutoScrollHelper(this, mBinding.readerVerses, (int) SPReader.getAutoScrollSpeed(this));
+
+        mBinding.autoScrollStopper.setOnTouchListener(
+            (v, event) -> {
+                mAutoScrollHelper.stopAutoScroll(false);
+                return false;
+            }
+        );
     }
 
     private void resetAdapter(RecyclerView.Adapter<?> adapter) {
@@ -1188,6 +1216,28 @@ public class ActivityReader extends ReaderPossessingActivity {
         if (recParams.getPreviouslyPlaying()) {
             mPlayerService.reciteVerse(new ChapterVersePair(chapterNo, verseNo));
         }
+    }
+
+    public void startAutoScroll() {
+        if (mPlayerService.isPlaying()) {
+            MessageUtils.INSTANCE.showRemovableToast(this, R.string.strMsgCannotAutoScrollWhileReciting, Toast.LENGTH_LONG);
+            return;
+        }
+
+        mAutoScrollHelper.setScrollSpeed((int) SPReader.getAutoScrollSpeed(this));
+        mAutoScrollHelper.startAutoScroll();
+    }
+
+    @Override
+    public void onAutoScrollStarted() {
+        mBinding.autoScrollStopper.setVisibility(View.VISIBLE);
+        mPlayer.conceal();
+    }
+
+    @Override
+    public void onAutoScrollStopped() {
+        mBinding.autoScrollStopper.setVisibility(View.GONE);
+        mPlayer.reveal();
     }
 
     @Override

@@ -1,321 +1,338 @@
-package com.quranapp.android.utils.sharedPrefs;
+package com.quranapp.android.utils.sharedPrefs
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_DEFAULT;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT;
-import static com.quranapp.android.utils.reader.TranslUtils.KEY_TRANSLATIONS;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AUDIO_OPTION_DEFAULT;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_RECITER;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_REPEAT;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_SPEED;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC;
-
-import com.quranapp.android.utils.reader.QuranScriptUtils;
-import com.quranapp.android.utils.reader.TranslUtils;
-import com.quranapp.android.utils.reader.recitation.RecitationManager;
-import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.reader.tafsir.TafsirManager;
-import com.quranapp.android.utils.tafsir.TafsirUtils;
-import com.quranapp.android.utils.univ.Keys;
-
-import java.util.HashSet;
-import java.util.Set;
+import android.annotation.SuppressLint
+import android.content.Context
+import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.reader.QuranScriptUtils
+import com.quranapp.android.utils.reader.ReaderTextSizeUtils
+import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationSlug
+import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationTranslationSlug
+import com.quranapp.android.utils.reader.recitation.RecitationUtils
+import com.quranapp.android.utils.reader.tafsir.TafsirManager.setSavedTafsirKey
+import com.quranapp.android.utils.tafsir.TafsirUtils
+import com.quranapp.android.utils.univ.Keys
 
 /**
  * SharedPreferences utility class for Reader
  */
-public abstract class SPReader {
-    public static final String SP_READER = "sp_reader";
+object SPReader {
+    private const val SP_READER: String = "sp_reader"
 
-    public static final String SP_TEXT_STYLE = "sp_reader_text";
-    public static final String SP_TRANSL = "sp_reader_translations";
-    public static final String SP_RECITATION_OPTIONS = "sp_reader_recitation_options";
-    public static final String SP_TAFSIR = "sp_reader_tafsir";
-    public static final String SP_SCRIPT = "sp_reader_script";
-    public static final String SP_READER_STYLE = "sp_reader_style";
+    private const val SP_TEXT_STYLE: String = "sp_reader_text"
+    private const val SP_TRANSL: String = "sp_reader_translations"
+    private const val SP_RECITATION_OPTIONS: String = "sp_reader_recitation_options"
+    private const val SP_TAFSIR: String = "sp_reader_tafsir"
+    private const val SP_SCRIPT: String = "sp_reader_script"
+    private const val SP_READER_STYLE: String = "sp_reader_style"
 
-    public static boolean getArabicTextEnabled(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE);
-        return sp.getBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, true);
+    @JvmStatic
+    fun getArabicTextEnabled(context: Context): Boolean {
+        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
+        return sp.getBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, true)
     }
 
+    @JvmStatic
     @SuppressLint("ApplySharedPref")
-    public static void setArabicTextEnabled(Context context, boolean enabled) {
-        SharedPreferences sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled);
-        editor.commit();
+    fun setArabicTextEnabled(context: Context, enabled: Boolean) {
+        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled)
+        editor.commit()
     }
 
-    public static float getSavedTextSizeMultArabic(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getAutoScrollSpeed(context: Context): Float {
+        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
+        return sp.getFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, 7f)
+    }
 
-        if (!sp.contains(KEY_TEXT_SIZE_MULT_ARABIC)) {
-            setSavedTextSizeMultArabic(context, TEXT_SIZE_MULT_AR_DEFAULT);
+    @JvmStatic
+    fun setAutoScrollSpeed(context: Context, speed: Float) {
+        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, speed)
+        editor.apply()
+    }
+
+    @JvmStatic
+    fun getSavedTextSizeMultArabic(context: Context): Float {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
+
+        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC)) {
+            setSavedTextSizeMultArabic(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT)
         }
 
-        return sp.getFloat(KEY_TEXT_SIZE_MULT_ARABIC, TEXT_SIZE_MULT_AR_DEFAULT);
+        return sp.getFloat(
+            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC,
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT
+        )
     }
 
-    public static void setSavedTextSizeMultArabic(Context context, float sizeMult) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(KEY_TEXT_SIZE_MULT_ARABIC, sizeMult);
-        editor.apply();
+    @JvmStatic
+    fun setSavedTextSizeMultArabic(context: Context, sizeMult: Float) {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC, sizeMult)
+        editor.apply()
     }
 
-    public static float getSavedTextSizeMultTransl(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getSavedTextSizeMultTransl(context: Context): Float {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
 
-        if (!sp.contains(KEY_TEXT_SIZE_MULT_TRANSL)) {
-            setSavedTextSizeMultTransl(context, TEXT_SIZE_MULT_TRANSL_DEFAULT);
+        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL)) {
+            setSavedTextSizeMultTransl(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT)
         }
 
-        return sp.getFloat(KEY_TEXT_SIZE_MULT_TRANSL, TEXT_SIZE_MULT_TRANSL_DEFAULT);
+        return sp.getFloat(
+            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL,
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT
+        )
     }
 
-    public static void setSavedTextSizeMultTransl(Context context, float sizeMult) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(KEY_TEXT_SIZE_MULT_TRANSL, sizeMult);
-        editor.apply();
+    @JvmStatic
+    fun setSavedTextSizeMultTransl(context: Context, sizeMult: Float) {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL, sizeMult)
+        editor.apply()
     }
 
 
-    public static float getSavedTextSizeMultTafsir(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
+    fun getSavedTextSizeMultTafsir(context: Context): Float {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
 
-        if (!sp.contains(KEY_TEXT_SIZE_MULT_TAFSIR)) {
-            setSavedTextSizeMultTafsir(context, TEXT_SIZE_MULT_TAFSIR_DEFAULT);
+        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR)) {
+            setSavedTextSizeMultTafsir(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT)
         }
 
-        return sp.getFloat(KEY_TEXT_SIZE_MULT_TAFSIR, TEXT_SIZE_MULT_TAFSIR_DEFAULT);
+        return sp.getFloat(
+            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR,
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT
+        )
     }
 
-    public static void setSavedTextSizeMultTafsir(Context context, float sizeMult) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult);
-        editor.apply();
+    @JvmStatic
+    fun setSavedTextSizeMultTafsir(context: Context, sizeMult: Float) {
+        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult)
+        editor.apply()
     }
 
-    public static Set<String> getSavedTranslations(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getSavedTranslations(context: Context): HashSet<String> {
+        val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
 
-        if (!sp.contains(KEY_TRANSLATIONS)) {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putStringSet(KEY_TRANSLATIONS, TranslUtils.defaultTranslationSlugs());
-            editor.apply();
+        if (!sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
+            val editor = sp.edit()
+            editor.putStringSet(TranslUtils.KEY_TRANSLATIONS, TranslUtils.defaultTranslationSlugs())
+            editor.apply()
         }
 
-        if (sp.contains(KEY_TRANSLATIONS)) {
-            return new HashSet<>(sp.getStringSet(KEY_TRANSLATIONS, new HashSet<>()));
+        if (sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
+            return HashSet(sp.getStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet()))
         }
 
-        return new HashSet<>();
+        return HashSet()
     }
 
-    public static void setSavedTranslations(Context context, Set<String> translSlugsSet) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putStringSet(KEY_TRANSLATIONS, new HashSet<>(translSlugsSet));
-        editor.apply();
+    @JvmStatic
+    fun setSavedTranslations(context: Context, translSlugsSet: Set<String>) {
+        val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet(translSlugsSet))
+        editor.apply()
     }
 
-    public static Set<String> addToSavedTranslations(Context context, String translSlug) {
-        Set<String> savedTranslations = new HashSet<>(getSavedTranslations(context));
-        savedTranslations.add(translSlug);
-
-        SharedPreferences sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putStringSet(KEY_TRANSLATIONS, savedTranslations);
-        editor.apply();
-
-        return savedTranslations;
+    @JvmStatic
+    fun getSavedRecitationSlug(context: Context): String? {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        return sp.getString(RecitationUtils.KEY_RECITATION_RECITER, null)
     }
 
-    public static Set<String> removeFromSavedTranslations(Context context, String translSlug) {
-        Set<String> savedTranslations = new HashSet<>(getSavedTranslations(context));
-        savedTranslations.remove(translSlug);
+    @JvmStatic
+    fun setSavedRecitationSlug(context: Context, recitation: String) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(RecitationUtils.KEY_RECITATION_RECITER, recitation)
+        editor.apply()
 
-        SharedPreferences sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putStringSet(KEY_TRANSLATIONS, savedTranslations);
-        editor.apply();
-
-        return savedTranslations;
+        setSavedRecitationSlug(recitation)
     }
 
-    public static String getSavedRecitationSlug(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        return sp.getString(KEY_RECITATION_RECITER, null);
+    @JvmStatic
+    fun getSavedRecitationTranslationSlug(context: Context): String? {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        return sp.getString(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER, null)
     }
 
-    public static void setSavedRecitationSlug(Context context, String recitation) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(KEY_RECITATION_RECITER, recitation);
-        editor.apply();
+    @JvmStatic
+    fun setSavedRecitationTranslationSlug(context: Context, slug: String) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER, slug)
+        editor.apply()
 
-        RecitationManager.setSavedRecitationSlug(recitation);
+        setSavedRecitationTranslationSlug(slug)
     }
 
-    public static String getSavedRecitationTranslationSlug(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        return sp.getString(KEY_RECITATION_TRANSLATION_RECITER, null);
-    }
+    fun getRecitationSpeed(context: Context): Float {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
-    public static void setSavedRecitationTranslationSlug(Context context, String slug) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(KEY_RECITATION_TRANSLATION_RECITER, slug);
-        editor.apply();
-
-        RecitationManager.setSavedRecitationTranslationSlug(slug);
-    }
-
-    public static float getRecitationSpeed(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-
-        if (!sp.contains(KEY_RECITATION_SPEED)) {
-            setRecitationSpeed(context, RecitationUtils.RECITATION_DEFAULT_SPEED);
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_SPEED)) {
+            setRecitationSpeed(context, RecitationUtils.RECITATION_DEFAULT_SPEED)
         }
 
-        return sp.getFloat(KEY_RECITATION_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED);
+        return sp.getFloat(
+            RecitationUtils.KEY_RECITATION_SPEED,
+            RecitationUtils.RECITATION_DEFAULT_SPEED
+        )
     }
 
-    public static void setRecitationSpeed(Context context, float speed) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(KEY_RECITATION_SPEED, speed);
-        editor.apply();
+    fun setRecitationSpeed(context: Context, speed: Float) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putFloat(RecitationUtils.KEY_RECITATION_SPEED, speed)
+        editor.apply()
     }
 
-    public static boolean getRecitationRepeatVerse(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+    fun getRecitationRepeatVerse(context: Context): Boolean {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
-        if (!sp.contains(KEY_RECITATION_REPEAT)) {
-            setRecitationRepeatVerse(context, RecitationUtils.RECITATION_DEFAULT_REPEAT);
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_REPEAT)) {
+            setRecitationRepeatVerse(context, RecitationUtils.RECITATION_DEFAULT_REPEAT)
         }
 
-        return sp.getBoolean(KEY_RECITATION_REPEAT, RecitationUtils.RECITATION_DEFAULT_REPEAT);
+        return sp.getBoolean(
+            RecitationUtils.KEY_RECITATION_REPEAT,
+            RecitationUtils.RECITATION_DEFAULT_REPEAT
+        )
     }
 
-    public static void setRecitationRepeatVerse(Context context, boolean repeatVerse) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(KEY_RECITATION_REPEAT, repeatVerse);
-        editor.apply();
+    fun setRecitationRepeatVerse(context: Context, repeatVerse: Boolean) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_REPEAT, repeatVerse)
+        editor.apply()
     }
 
-    public static boolean getRecitationContinueChapter(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+    fun getRecitationContinueChapter(context: Context): Boolean {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
         if (!sp.contains(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER)) {
-            setRecitationContinueChapter(context, RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER);
+            setRecitationContinueChapter(
+                context,
+                RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
+            )
         }
 
         return sp.getBoolean(
             RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER,
             RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
-        );
+        )
     }
 
-    public static void setRecitationContinueChapter(Context context, boolean continueChapter) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER, continueChapter);
-        editor.apply();
+    fun setRecitationContinueChapter(context: Context, continueChapter: Boolean) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER, continueChapter)
+        editor.apply()
     }
 
-    public static boolean getRecitationScrollSync(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+    fun getRecitationScrollSync(context: Context): Boolean {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
         if (!sp.contains(RecitationUtils.KEY_RECITATION_VERSE_SYNC)) {
-            setRecitationVerseSync(context, RECITATION_DEFAULT_VERSE_SYNC);
+            setRecitationVerseSync(context, RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC)
         }
 
-        return sp.getBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, RECITATION_DEFAULT_VERSE_SYNC);
+        return sp.getBoolean(
+            RecitationUtils.KEY_RECITATION_VERSE_SYNC,
+            RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC
+        )
     }
 
-    public static void setRecitationVerseSync(Context context, boolean sync) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, sync);
-        editor.apply();
+    fun setRecitationVerseSync(context: Context, sync: Boolean) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, sync)
+        editor.apply()
     }
 
-    public static int getRecitationAudioOption(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getRecitationAudioOption(context: Context): Int {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
         if (!sp.contains(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)) {
-            setRecitationAudioOption(context, AUDIO_OPTION_DEFAULT);
+            setRecitationAudioOption(context, RecitationUtils.AUDIO_OPTION_DEFAULT)
         }
 
-        return sp.getInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, AUDIO_OPTION_DEFAULT);
+        return sp.getInt(
+            RecitationUtils.KEY_RECITATION_AUDIO_OPTION,
+            RecitationUtils.AUDIO_OPTION_DEFAULT
+        )
     }
 
-    public static void setRecitationAudioOption(Context context, int option) {
-        SharedPreferences sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option);
-        editor.apply();
+    fun setRecitationAudioOption(context: Context, option: Int) {
+        val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option)
+        editor.apply()
     }
 
-    public static String getSavedScript(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getSavedScript(context: Context): String {
+        val sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE)
 
         if (!sp.contains(QuranScriptUtils.KEY_SCRIPT)) {
-            setSavedScript(context, QuranScriptUtils.SCRIPT_DEFAULT);
+            setSavedScript(context, QuranScriptUtils.SCRIPT_DEFAULT)
         }
 
-        return sp.getString(QuranScriptUtils.KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT);
+        return sp.getString(QuranScriptUtils.KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)!!
     }
 
-    public static void setSavedScript(Context context, String font) {
-        SharedPreferences sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(QuranScriptUtils.KEY_SCRIPT, font);
-        editor.apply();
+    @JvmStatic
+    fun setSavedScript(context: Context, font: String?) {
+        val sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(QuranScriptUtils.KEY_SCRIPT, font)
+        editor.apply()
     }
 
-    public static int getSavedReaderStyle(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
+    @JvmStatic
+    fun getSavedReaderStyle(context: Context): Int {
+        var sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
 
         if (!sp.contains(Keys.READER_KEY_READER_STYLE)) {
-            setSavedReaderStyle(context, READER_STYLE_DEFAULT);
+            setSavedReaderStyle(context, ReaderParams.READER_STYLE_DEFAULT)
         }
 
-        sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
-        return sp.getInt(Keys.READER_KEY_READER_STYLE, READER_STYLE_DEFAULT);
+        sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
+        return sp.getInt(Keys.READER_KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
     }
 
-    public static void setSavedReaderStyle(Context context, int readerStyle) {
-        SharedPreferences sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(Keys.READER_KEY_READER_STYLE, readerStyle);
-        editor.apply();
+    @JvmStatic
+    fun setSavedReaderStyle(context: Context, readerStyle: Int) {
+        val sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(Keys.READER_KEY_READER_STYLE, readerStyle)
+        editor.apply()
     }
 
-    public static String getSavedTafsirKey(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE);
-        return sp.getString(TafsirUtils.KEY_TAFSIR, null);
+    @JvmStatic
+    fun getSavedTafsirKey(context: Context): String? {
+        val sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE)
+        return sp.getString(TafsirUtils.KEY_TAFSIR, null)
     }
 
-    public static void setSavedTafsirKey(Context context, String tafsirKey) {
-        SharedPreferences sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(TafsirUtils.KEY_TAFSIR, tafsirKey);
-        editor.apply();
+    fun setSavedTafsirKey(context: Context, tafsirKey: String) {
+        val sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(TafsirUtils.KEY_TAFSIR, tafsirKey)
+        editor.apply()
 
-        TafsirManager.setSavedTafsirKey(tafsirKey);
+        setSavedTafsirKey(tafsirKey)
     }
 }

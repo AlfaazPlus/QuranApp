@@ -421,4 +421,8 @@
     <string name="msgImportFailed">Failed to import. Unsupported file.</string>
     <string name="msgImportSuccess">Imported successfully</string>
     <string name="desc_votd_widget">Get a new verse every day</string>
+    <string name="autoScroll">Auto scroll</string>
+    <string name="startAutoScroll">Start auto scroll</string>
+    <string name="autoScrollSpeed">Set speed</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Cannot auto scroll while the recitation is playing.</string>
 </resources>

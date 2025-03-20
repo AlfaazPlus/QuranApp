@@ -98,7 +98,7 @@ class PageVerseDialog : PeaceBottomSheet() {
         }
 
         verse.apply {
-            val translSlugs = SPReader.getSavedTranslations(reader)
+            val translSlugs = SPReader.getSavedTranslations(activity)
             val booksInfo = activity.mTranslFactory.getTranslationBooksInfoValidated(translSlugs)
             val transl = activity.mTranslFactory.getTranslationsSingleVerse(
                 translSlugs,

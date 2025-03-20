@@ -57,8 +57,8 @@ public class TranslUtils {
 
     public static final int TRANSL_MAX_SELECTION_LIMIT = 6;
 
-    public static Set<String> defaultTranslationSlugs() {
-        Set<String> defTranslations = new HashSet<>();
+    public static HashSet<String> defaultTranslationSlugs() {
+        HashSet<String> defTranslations = new HashSet<>();
         defTranslations.add(TRANSL_SLUG_DEFAULT);
         return defTranslations;
     }

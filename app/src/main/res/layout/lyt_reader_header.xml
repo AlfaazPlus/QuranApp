@@ -29,6 +29,22 @@
         app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
         app:tint="@color/colorIcon" />
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnAutoScroller"
+        android:layout_width="@dimen/dmnActionButton"
+        android:layout_height="@dimen/dmnActionButton"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/dr_bg_action_round"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="7dp"
+        android:src="@drawable/icon_scroll_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
+        app:tint="@color/colorIcon" />
+
     <include
         android:id="@+id/readerTitle"
         layout="@layout/lyt_reader_chapter_title"
