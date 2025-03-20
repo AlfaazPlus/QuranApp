@@ -289,7 +289,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
         public String call() throws Exception {
             if (chapterInfoFile.exists()) {
                 String read = FilesKt.readText(chapterInfoFile, Charsets.UTF_8);
-                if (read.length() > 0) {
+                if (!read.isEmpty()) {
                     return read;
                 }
             } else {

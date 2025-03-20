@@ -6,12 +6,14 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import com.quranapp.android.R
 import com.quranapp.android.activities.MainActivity
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
 
 
@@ -30,6 +32,15 @@ class VotdWidget : AppWidgetProvider() {
         for (appWidgetId in newWidgetIds!!) {
             updateAppWidget(context!!, AppWidgetManager.getInstance(context), appWidgetId)
         }
+    }
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle?
+    ) {
+        updateAppWidget(context, appWidgetManager, appWidgetId)
     }
 
     override fun onEnabled(context: Context) {
@@ -83,7 +94,11 @@ internal fun updateAppWidget(
                         )
                     )
 
-                    views.setTextViewText(R.id.votdText, translation.text)
+                    // Remove footnote markers etc
+                    views.setTextViewText(
+                        R.id.votdText,
+                        StringUtils.removeHTML(translation.text, false)
+                    )
 
 
                     val intent = Intent(context, MainActivity::class.java)
