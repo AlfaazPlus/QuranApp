@@ -1,6 +1,6 @@
 [versions]
 coreKtx = "1.15.0"
-gradle = "8.7.3"
+gradle = "8.2.1"
 kotlinGradlePlugin = "1.8.0"
 lifecycle = "2.8.7"
 desugaring = "2.1.4"
