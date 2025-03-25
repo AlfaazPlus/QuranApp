@@ -1,6 +1,6 @@
 ### ❤️ Thanks to these amazing people for their useful contributions:
 
-- Localization works: [Goran Gharib](https://facebook.com/goran90909)
+- Localization works: [Goran Gharib](https://facebook.com/GoRaN9O)
 - Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
 - Landing page: [Qomarul Hasan](https://github.com/qomarhsn)
 - Noorehuda script integration: [Luciogi](https://github.com/Luciogi)
@@ -9,7 +9,7 @@
 
 - Arabic (ar) - Mar
 - Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77) and [Mahmud Khan](https://github.com/MAHMUDflmrkh)
-- Kurdish (ckb) - [Goran Gharib](https://facebook.com/goran90909)
+- Kurdish (ckb) - [Goran Gharib](https://facebook.com/GoRaN9O)
 - Filipino (fil) - [ameera2emo](https://github.com/ameera2emo)
 - French (fr) - Sanya Gautam and [pindadu92](https://github.com/pindadu92)
 - German (de) - [Mylinde](https://github.com/Mylinde)
