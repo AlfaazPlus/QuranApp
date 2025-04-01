@@ -420,4 +420,17 @@
     <string name="msgClearReadHistory">Hapus riwayat bacaan</string>
     <string name="titleArabicTextToggle">Tampilkan Teks Ayat Arab</string>
     <string name="msgArabicTextToggle">Menonaktifkan fitur ini akan menyembunyikan teks ayat Arab di seluruh aplikasi.</string>
+    <string name="autoScrollSpeed">Atur kecepatan</string>
+    <string name="msgExportImportBookmarks">Ekspor atau Impor bookmark dengan catatan.</string>
+    <string name="startAutoScroll">Mulai gulir otomatis</string>
+    <string name="msgExportEmpty">Tidak ada bookmark untuk di ekspor</string>
+    <string name="autoScroll">Menggulir otomatis</string>
+    <string name="desc_votd_widget">Dapatkan ayat baru setiap hari</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Tidak dapat menggulir otomatis ketika hafalan berjalan.</string>
+    <string name="labelExport">Ekspor</string>
+    <string name="titleExportData">Ekspor &amp; Impor</string>
+    <string name="labelImport">Impor</string>
+    <string name="msgExportSuccess">Sukses mengekspor</string>
+    <string name="msgImportFailed">Gagal mengimpor. File tidak didukung.</string>
+    <string name="msgImportSuccess">Berhasil mengimpor</string>
 </resources>
