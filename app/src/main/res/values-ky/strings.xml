@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strLabelNextChapter">Кийинки бөлүм</string>
-    <string name="strLabelContinueChapter">Окууну улантуу</string>
+    <string name="strLabelContinueChapter">Бөлүмдү окууну улантуу</string>
     <string name="strVersion" formatted="false">Версия %s</string>
     <string name="strTitleLicenses">Лицензиялар</string>
     <string name="strLabelClose">Жабуу</string>
@@ -340,4 +340,5 @@
     <string name="msgResourceDownloadSource">Куран маалыматтарын башка булактан жүктөп алуу үчүн бул параметрди колдонуңуз, эгер бири иштебей жатса</string>
     <string name="msgChapterRemovedFromFavourites">Сүрө сүйүктүүлөрдөн өчүрүлдү.</string>
     <string name="msgTafsirLoadFailed">Тафсирди жүктөө ийгиликсиз болду</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Куран окулуп жатканда авто жылдыруу иштебейт.</string>
 </resources>
