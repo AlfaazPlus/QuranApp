@@ -341,4 +341,22 @@
     <string name="msgChapterRemovedFromFavourites">Сүрө сүйүктүүлөрдөн өчүрүлдү.</string>
     <string name="msgTafsirLoadFailed">Тафсирди жүктөө ийгиликсиз болду</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Куран окулуп жатканда авто жылдыруу иштебейт.</string>
+    <string name="strLabelMostPlaces">Көп эскерилгендер</string>
+    <string name="strLabelOrder">Тартип</string>
+    <string name="strLabelSelectedCount" formatted="false">%d тандалды</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d дагы башка котомолор</string>
+    <string name="strLabelAdvanceSharing">Кеңейтилген бөлүшүү</string>
+    <string name="strLabelSelectVerse">Аяттарды тандоо</string>
+    <string name="strLabelCurrentVerse">Учурдагы аят</string>
+    <string name="strLabelVerseRange">Аяттар аралыгы</string>
+    <string name="strLabelSelectTranslations">Котормолорду танда</string>
+    <string name="strLabelSelectTranslation">Котормону тандаңыз</string>
+    <string name="strLabelWhatsappStyling">WhatsApp стили</string>
+    <string name="strLabelIncludeArabic">Арабча текстти кошуу</string>
+    <string name="strLabelIncludeFootnotes">Төмөнкү(кыстырма) жазууларды камтуу</string>
+    <string name="strLabelIncludeTranslation">Котормону камтуу</string>
+    <string name="strLabelIncludeReference">Шилтемени камтуу</string>
+    <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
+    <string name="strLabelLater">Кийинчерээк</string>
+    <string name="strHintSearch">Издөө</string>
 </resources>
