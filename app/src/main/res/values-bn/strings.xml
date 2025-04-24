@@ -253,7 +253,7 @@
     <string name="strNotFound">খুঁজে পাওয়া যায়নি</string>
     <string name="strMsgThemeDark">কালো মোড ব্যাটারি খরচ কমিয়ে দেয়।</string>
     <string name="strMsgThemeDefault">সিস্টেম সেটিংস অনুযায়ী সমন্বয় করুন।</string>
-    <string name="strMsgYouAreReadingVerses">আপনি আয়াতগুলো পড়ছেনঃ</string>
+    <string name="strMsgYouAreReadingVerses">আপনি আয়াতগুলো পড়ছেন:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d একটি সঠিক সূরা নং নয়।</string>
     <string name="strMsgInvalidVersesRange">একটি সঠিক আয়াত পরিসীমা নয়</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d একটি সঠিক পারা নং নয়।</string>
@@ -420,4 +420,17 @@
     <string name="msgClearReadHistory">পড়ার ইতিহাস পরিষ্কার করুন</string>
     <string name="titleArabicTextToggle">আরবি আয়াত লেখা দেখান</string>
     <string name="msgArabicTextToggle">এই বৈশিষ্ট্যটি বন্ধ করলে অ্যাপের সব জায়গা থেকে আরবি আয়াতের লেখা সরে যাবে।</string>
+    <string name="desc_votd_widget">প্রতিদিন একটি নতুন পদ পান</string>
+    <string name="startAutoScroll">অটো স্ক্রোল শুরু করুন</string>
+    <string name="autoScrollSpeed">গতি সেট করুন</string>
+    <string name="autoScroll">স্বয়ংক্রিয়ভাবে স্ক্রোল</string>
+    <string name="titleExportData">রপ্তানি ও আমদানি</string>
+    <string name="labelExport">রপ্তানি</string>
+    <string name="labelImport">আমদানি করুন</string>
+    <string name="msgExportImportBookmarks">নোট সহ আপনার বুকমার্কগুলি রপ্তানি বা আমদানি করুন।</string>
+    <string name="msgExportEmpty">রপ্তানি করার জন্য কোনও বুকমার্ক নেই</string>
+    <string name="msgExportSuccess">সফলভাবে রপ্তানি করা হয়েছে</string>
+    <string name="msgImportFailed">আমদানি করা যায়নি। অসমর্থিত ফাইল।</string>
+    <string name="msgImportSuccess">সফলভাবে আমদানি করা হয়েছে</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">আবৃত্তি চলাকালীন স্বয়ংক্রিয়ভাবে স্ক্রোল করা যাবে না।</string>
 </resources>
