@@ -359,4 +359,67 @@
     <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
     <string name="strLabelLater">Кийинчерээк</string>
     <string name="strHintSearch">Издөө</string>
+    <string name="strHintSearchQuran">Терминди териңиз, мисалы \"Өмүр\"</string>
+    <string name="strHintSearchTopic">Теманы издөө</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" ичинен тема издөө</string>
+    <string name="strHintSearchProphet">Пайгамбарды издөө</string>
+    <string name="strMsgVOTDOn">Күн сайын эртең менен билдирүү алыңыз.</string>
+    <string name="strMsgYouAreReadingVerses">Сиз окуп жаткан аяттар:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d туура эмес сүрө номери.</string>
+    <string name="strMsgInvalidVersesRange">Туура эмес аят аралыгы</string>
+    <string name="strHintFromVerse">Аяттан баштап</string>
+    <string name="strHintToVerse">Аятка чейин</string>
+    <string name="strHintFeedback">Пикириңизди бул жерге жазыңыз…</string>
+    <string name="strHintFeedbackEmail">Электрондук почта</string>
+    <string name="strHintBookmarkViewerNote">Бул чөп кат үчүн кошумча эскертмени бул жерге жазыңыз…</string>
+    <string name="strNotFound">Табылган жок</string>
+    <string name="strHintSearchChapter">Сүрөнү издөө</string>
+    <string name="strHintSearchJuz">Жүздү издөө</string>
+    <string name="strHintSearchReciter">Куран окуучуну издөө</string>
+    <string name="strHintSearchScript">Шрифтти издөө</string>
+    <string name="strHintSearchLanguage">Тилди издөө</string>
+    <string name="strMsgBookmarkAdded">Аят ийгиликтүү чөп каттарга кошулду</string>
+    <string name="strMsgBookmarkAddFailed">Аятты чөп каттарга кошуу ишке ашпады</string>
+    <string name="strMsgBookmarkAddedAlready">Аят мурунтан эле чөп каттарга кошулган болчу</string>
+    <string name="strMsgBookmarkRemoved">Аят чөп каттардан ийгиликтүү алынып салынды</string>
+    <string name="strMsgBookmarkRemovedAlready">Аят чөп каттарда жок</string>
+    <string name="strMsgBookmarkNoItems">Чөп каттар жок</string>
+    <string name="strMsgBookmarkDeleteSelected">Тандалган чөп каттар өчүрүлөт.</string>
+    <string name="strMsgBookmarkDeleteAll">Бардык чөп каттар өчүрүлөт.</string>
+    <string name="strTitleReadHistory">Окуу тарыхы</string>
+    <string name="strMsgReadHistoryRemoved">Окуу тарыхы ийгиликтүү өчүрүлдү.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Окуу тарыхын өчүрүү ишке ашпады.</string>
+    <string name="strMsgReadHistoryNoItems">Окуу тарыхы жок</string>
+    <string name="strMsgReadHistoryDeleteAll">Бардык окуу тарыхтары өчүрүлөт.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s , %2$s\'де</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Бүгүн саат %s де</string>
+    <string name="strMsgHistoryRemove">Бул тарыхты өчүрөсүзбү?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" тарыхтан өчүрүлдү</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s: %2$d ичинен табылган жалпы натыйжалар</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d - жүз(пара) номери туура эмес.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s ичинен бир гана натыйжа табылды</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s ичинен натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
+    <string name="strMsgSearchNoResultsFound">Натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Натыйжа табылбады. Издөө фильтрлерин карап көрүңүз.</string>
+    <string name="strMsgSearchWordPart">Сөздүн бир бөлүгүн издөө</string>
+    <string name="strMsgSearchWordPartExample">Мисалы: \"адамзаттагы\" \"адам\"</string>
+    <string name="strMsgSearchArabic">Арабча тексттен издөө</string>
+    <string name="strMsgChangeLanguage">Тилди өзгөртүү үчүн тиркеме кайра башынан ишке киришет.</string>
+    <string name="strMsgResetReaderSettings">Бардык жөндөөлөрдү баштапкы абалга кайтаруу.</string>
+    <string name="strMsgProphetsOrder">Пайгамбарларды хронологиялык тартипте көрсөтүү</string>
+    <string name="strMsgShareRange" formatted="false">%1$d-%2$d диапазон аралыгын жазыңыз</string>
+    <string name="strMsgEnterValidRange">Жарактуу диапазонду киргизиңиз</string>
+    <string name="strMsgTranslLoadFailed">Серверден котормолорду жүктөө ишке ашкан жок. Кийинчерээк кайра аракет кылып көрүңүз.</string>
+    <string name="strMsgTranslNoDownloads">Жеткиликтүү жүктөлүп алынган котормолор жок</string>
+    <string name="strMsgReadHistoryDeleteSelected">Тандалган окуу тарыхтары өчүрүлөт.</string>
+    <string name="strHintFeedbackMessage">Билдирүү</string>
+    <string name="strMsgThemeDark">Караңгы режим энергия коротууну азайтат.</string>
+    <string name="strMsgThemeDefault">Система орнотууларына ылайык жөндөө.</string>
+    <string name="strMsgBookmarkRemoveFailed">Аятты чөп каттардан алып салуу ишке ашпады</string>
+    <string name="strHintSearchVerse">Аятты издөө</string>
+    <string name="strHintSearchTranslation">Котормону издөө</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d аят диапазону %3$d номердүү сүрө үчүн жарактуу эмес</string>
+    <string name="strMsgReadShowupHere">Сиздин окуу тарыхыңыз бул жерде көрсөтүлөт.</string>
+    <string name="strMsgReadHistoryRemovedAlready">Окуу тарыхы мурунтан эле өчүрүлгөн.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d - бул %2$d сурөнүн жарактуу аят номери эмес</string>
 </resources>
