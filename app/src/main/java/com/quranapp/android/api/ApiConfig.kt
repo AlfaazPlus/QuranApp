@@ -7,6 +7,7 @@
 package com.quranapp.android.api
 
 object ApiConfig {
+    const val GH_PROXY_ROOT_URL = "https://gh-proxy.alfaazplus.com/AlfaazPlus/QuranApp/master/"
     const val JS_DELIVR_ROOT_URL = "https://cdn.jsdelivr.net/gh/AlfaazPlus/QuranApp@latest/"
     const val GITHUB_ROOT_URL = "https://raw.githubusercontent.com/AlfaazPlus/QuranApp/master/"
     const val GITHUB_REPOSITORY_URL = "https://github.com/AlfaazPlus/QuranApp"

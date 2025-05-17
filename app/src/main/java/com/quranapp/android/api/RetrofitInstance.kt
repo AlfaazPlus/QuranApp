@@ -18,7 +18,7 @@ object RetrofitInstance {
         .build()
 
     private var githubApi: GithubApi? = null
-    var githubResDownloadUrl: String = ApiConfig.JS_DELIVR_ROOT_URL
+    var githubResDownloadUrl: String = ApiConfig.GH_PROXY_ROOT_URL
 
     val github: GithubApi
         get() {

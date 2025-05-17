@@ -25,7 +25,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        /* ---------------------------------------------------------------- */
+        vectorDrawables.generatedDensities = []
     }
 
     buildFeatures {
@@ -64,6 +64,10 @@ android {
         }
     }
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     compileOptions {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
@@ -96,7 +100,7 @@ dependencies {
     implementation libs.androidx.webkit
     implementation libs.androidx.media
     implementation libs.androidx.browser
-    
+
     implementation libs.exoplayerCore
     implementation libs.exoplayerUI
     implementation libs.extensionMediasession
