@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="strLabelNextChapter">Кийинки бөлүм</string>
+    <string name="strLabelContinueChapter">Бөлүмдү окууну улантуу</string>
+    <string name="strVersion" formatted="false">Версия %s</string>
+    <string name="strTitleLicenses">Лицензиялар</string>
+    <string name="strLabelClose">Жабуу</string>
+    <string name="strLabelOkay">Жарайт</string>
+    <string name="strLabelGotIt">Түшүндүм</string>
+    <string name="strLabelCancel">Жокко чыгаруу</string>
+    <string name="strLabelApply">Колдонуу</string>
+    <string name="strLabelSend">Жөнөтүү</string>
+    <string name="labelAdd">Кошуу</string>
+    <string name="strLabelRemove">Өчүрүү</string>
+    <string name="strLabelDelete">Жок кылуу</string>
+    <string name="strLabelRemoveAll">Баарын өчүрүү</string>
+    <string name="strLabelCopy">Көчүрүү</string>
+    <string name="strLabelBack">Артка</string>
+    <string name="strLabelTop">Жогору</string>
+    <string name="strLabelReset">Баштапкы абалга келтирүү</string>
+    <string name="strLabelRetry">Кайталоо</string>
+    <string name="strLabelRefresh">Жаңылоо</string>
+    <string name="strLabelDismiss">Баш тартуу</string>
+    <string name="strLabelInstall">Орнотуу</string>
+    <string name="strLabelNew">Жаңы</string>
+    <string name="strLabelPremium">Премиум</string>
+    <string name="strLabelOn">Күйүк</string>
+    <string name="strLabelOff">Өчүк</string>
+    <string name="strLabelThemeDark">Караңгы</string>
+    <string name="strLabelSystemDefault">Системалык баштапкы жөндөө</string>
+    <string name="strLabelPreviousChapter">Мурунку бөлүм</string>
+    <string name="strLabelNoPreviousChapter">Мурунку бөлүм жок</string>
+    <string name="strLabelNoNextChapter">Кийинки бөлүм жок</string>
+    <string name="strLabelDiscard">Таштоо</string>
+    <string name="strLabelHide">Жашыруу</string>
+    <string name="strLabelEdit">Оңдоо</string>
+    <string name="strLabelDone">Бүттү</string>
+    <string name="strLabelRestart">Кайра жүргүзүү</string>
+    <string name="strLabelView">Көрүү</string>
+    <string name="strLabelOpen">Ачуу</string>
+    <string name="strLabelOpenInReader">Окурманда ачуу</string>
+    <string name="strLabelViewAll">Баарын көрүү</string>
+    <string name="strLabelChangeNRestart">Өзгөртүү жана жаңыдан баштоо</string>
+    <string name="strLabelAdvertisement">Жарнама</string>
+    <string name="strLabelSkip">Өткөрүп жиберүү</string>
+    <string name="strLabelPrevious">Мурунку</string>
+    <string name="strLabelUpdateQuranApp">QuranApp\'ты жаңылоо</string>
+    <string name="labelDownload">Жүктөп алуу</string>
+    <string name="strLabelDownloadNow">АЗЫР ЖҮКТӨП АЛ</string>
+    <string name="strLabelUpdate">Жаңыртуу</string>
+    <string name="strLabelNextJuz">Кийинки жүз</string>
+    <string name="strLabelNoPreviousJuz">Мурунку жүз жок</string>
+    <string name="strLabelNoNextJuz">Кийинки жүз жок</string>
+    <string name="strLabelFullChapter">Бардык бөлүмдү окуу</string>
+    <string name="strLabelPreviousVerse">мурдакы аят</string>
+    <string name="strLabelNextVerse">Кийинки аят</string>
+    <string name="labelPreviousTafsir">Мурдакы тафсир</string>
+    <string name="labelNextTafsir">Кийинки тафсир</string>
+    <string name="strLabelVersesText">Аяттар</string>
+    <string name="strLabelPageNo" formatted="false">%d - бет</string>
+    <string name="strLabelJuzNo" formatted="false">%d - жүз</string>
+    <string name="strLabelVerseNo" formatted="false">%d - аят</string>
+    <string name="strLabelVerses" formatted="false">%1$d–%2$d - аяттар</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Аят : %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Аяттар : %1$d–%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">Аят: %d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Аят %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s сүрөсү: %3$d - аят</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s сүрөсү │ %2$d аят</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s сүрөсү : %2$d - аят</string>
+    <string name="strTitleAppUser">QuranApp колдонуучусу</string>
+    <string name="strTitleHolyQuran">Курани Карим</string>
+    <string name="strTitleQuran">Куран</string>
+    <string name="strTitleMakki">Меккелик</string>
+    <string name="strTitleFootnote">Кыстырма</string>
+    <string name="strTitleFootnotes">Кыстырмалар</string>
+    <string name="noFootnotesForThisVerse">Бул аяттын кыстырмасы жок.</string>
+    <string name="strTitleReaderChapters">Сүрөлөр (Бөлүмдөр)</string>
+    <string name="strTitleReaderJuz">Жүз (Пара)</string>
+    <string name="strTitleReaderChapters2">Сүрөлөр</string>
+    <string name="strTitleReaderVerses">Аяттар</string>
+    <string name="strTitleReaderJumpToVerse">Аятка өтүү</string>
+    <string name="strTitleVerseOptions">Аяттарды жөндөө</string>
+    <string name="strTitleVerseRecitation">Аят окуу</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">%1$s сүрөсү : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">%d - аятка өтүү</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d - аяттарды оку</string>
+    <string name="strTitleReaderLayoutStyle">Курандын көрүнүү стили</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">Котормолордун көрүнүшү</string>
+    <string name="strTitleReaderLayoutStylePageView">Барактын көрүнүшү</string>
+    <string name="strTitleReaderTextSizeArabic">Арабча тексттин көлөмү</string>
+    <string name="titleReaderTextSizeTafsir">Тафсир текстинин көлөмү</string>
+    <string name="strTitleBookmark">Чөп кат</string>
+    <string name="strTitleSendFeedback">Пикир жөнөтүү</string>
+    <string name="strTitleHelpSupport">Жардам &amp; Колдоо</string>
+    <string name="strTitleAboutUs">Биз жөнүндө</string>
+    <string name="strTitleBookmarks">Чөп каттар</string>
+    <string name="strTitleShareApp">Колдонмону бөлүшүү</string>
+    <string name="strTitleAddNote">Эскертме кошуу</string>
+    <string name="strTitleRateApp">Колдонмого баа берүү</string>
+    <string name="strTitleFilters">Фильтрлер</string>
+    <string name="strTitleMenu">Меню</string>
+    <string name="strTitleSelectTafsir">Тафсирди тандаңыз</string>
+    <string name="strTitleAboutSurah">Сүрө тууралуу</string>
+    <string name="strTitleTranslations">Котормолор</string>
+    <string name="strTitleDownloadTranslations">Жүктөө</string>
+    <string name="strTitleRecitations">Куран окуулар</string>
+    <string name="strTitleSelectReciter">Куран окуучуну танда</string>
+    <string name="titleManageAudio">Аудио жөндөөсү</string>
+    <string name="audioOption">Үн параметри</string>
+    <string name="playbackSpeed">Ойнотуу ылдамдыгы</string>
+    <string name="audioBothArabicTranslation">Экөөсүн тең ойнотуу</string>
+    <string name="strTitleScripts">Шрифттер</string>
+    <string name="strTitleSelectScripts">Шрифтти тандоо</string>
+    <string name="strTitleBookmarkDeleteThis">Бул чөп катты өчүрөсүзбү?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d чөп катты өчүрөсүзбү?</string>
+    <string name="strTitleResetReaderSettings">Окуучу орнотууларын баштапкы абалга келтиресизби?</string>
+    <string name="strTitleHideAd">Жарнаманы жашыруу</string>
+    <string name="strTitleRecitationOptions">Параметрлер</string>
+    <string name="strTitleRepeatVerse">Аятты кайталоо</string>
+    <string name="strTitleAutoPlayNext">Кийинкисин автоматтык ойнотуу</string>
+    <string name="strTitleQuickEdit">Тез түзөтүү</string>
+    <string name="strTitleReportVerse">Аят жөнүндө билдирүү</string>
+    <string name="strTitleSelectReason">Себепти тандоо</string>
+    <string name="strTitleFeaturedQuran">Окуу сунушталат</string>
+    <string name="strTitleVOTD">Күндүн аяты</string>
+    <string name="strTitleTopics">Темалар</string>
+    <string name="strTitleDuas">Куран дубалары</string>
+    <string name="strTitleFeaturedTopics">Курандагы темалар</string>
+    <string name="strTitleFeaturedDuas">Курандагы дубалар</string>
+    <string name="titleSolutionVerses">Курандан чечимдер</string>
+    <string name="titleEtiquetteVerses">Курандагы этикет</string>
+    <string name="strTitlePrivacyPolicy">Купуялык саясаты</string>
+    <string name="strTitleFailed">Ката кетти</string>
+    <string name="strTitleSuccess">Ийгилик</string>
+    <string name="strTitleThresholdReached">Чекке жетти</string>
+    <string name="strChapInfoSeeMore">Көбүрөөк маалымат көрүү ›</string>
+    <string name="strTitleChapInfoJuzNo">Жүз номери</string>
+    <string name="strTitleChapInfoVerses">Аяттар</string>
+    <string name="strTitleChapInfoRukus">Рукулар</string>
+    <string name="strTitleChapInfoPages">Барактар</string>
+    <string name="strTitleChapInfoRevOrder">Вахий ирети боюнча</string>
+    <string name="strTitleChapInfoRevType">Вахий түрү</string>
+    <string name="strMsgChapInfoFailedLoad">Сүрө маалыматын жүктөө ишке ашкан жок. Кийинчерээк кайталап көрүңүз.</string>
+    <string name="strTitleAppSettings">Тиркеме орнотуулары</string>
+    <string name="strTitleReaderSettings">Окуучу орнотуулары</string>
+    <string name="titleOtherSettings">Башка орнотуулар</string>
+    <string name="strTitleAppLanguage">Тиркеме тили</string>
+    <string name="strTitleChangeLanguage">Тилди өзгөртөсүзбү?</string>
+    <string name="strTitleTheme">Тема</string>
+    <string name="strTitleNoInternet">Интернет жок</string>
+    <string name="strLabelPlay">Ойнотуу</string>
+    <string name="strLabelPause">Пауза</string>
+    <string name="strLabelRemoveBookmark">Чөп катты өчүрүү</string>
+    <string name="strLabelBookmarked">Кыстарма катары сакталды</string>
+    <string name="strLabelRemoveAds">Жарнаманы өчүрүү</string>
+    <string name="strLabelShare">Бөлүшүү</string>
+    <string name="strLabelReport">Арыздануу</string>
+    <string name="strLabelContinueReading">Окууну улантуу</string>
+    <string name="strLabelReading">Окуу</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Жеткиликтүү жүктөмөлөр жок</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" жүктөө ийгиликсиз болду.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: \"%s\".</string>
+    <string name="strMsgRecitationsLoadFailed">Серверден Куран окууларды алуу ишке ашкан жок. Кийинчерээк кайра аракет кылыңыз.</string>
+    <string name="strMsgRecitationsNoAvailable">Жеткиликтүү Куран окуулар жок</string>
+    <string name="strMsgTafsirsNoAvailable">Жеткиликтүү тафсирлер жок</string>
+    <string name="strDescAddToBookmarks">Чөп каттарга кошуу</string>
+    <string name="strDescGoBack">Артка кайтуу</string>
+    <string name="strDescClose">Жабуу</string>
+    <string name="strDescVerseNo" formatted="false">Аяттын номери %d.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">%1$s сүрөсү, %2$d - аят.</string>
+    <string name="strMsgNoInternet">Сураныч, интернет байланышыңызды текшериңиз.</string>
+    <string name="strMsgSomethingWrong">Кандайдыр бир ката кетти!</string>
+    <string name="strMsgSomethingWrongFixing">Ката кетти! Биз бул маселени чечүү үчүн аракет кылып жатабыз.</string>
+    <string name="strMsgVerseCredsInvalid">Аят маалыматтары туура эмес.</string>
+    <string name="strMsgTryLater">Сураныч, кийинчерээк кайра аракет кылып көрүңүз.</string>
+    <string name="strMsgCouldNotOpenPage">Барак ачылбай койду.</string>
+    <string name="strLabelNavHome">Башкы бет</string>
+    <string name="strLabelNavSearch">Издөө</string>
+    <string name="strTextPreparing">Даярдалып жатат…</string>
+    <string name="strTextPleaseWait">Сураныч, күтө туруңуз…</string>
+    <string name="strAyatulKursi">Аят ал-Курсий</string>
+    <string name="strTitleOops">Ой!</string>
+    <string name="strLabelProceed">УЛАНТУУ</string>
+    <string name="strTextUpdating">Жаңыртылууда…</string>
+    <string name="strTextInstalling">Орнотулууда…</string>
+    <string name="strTextLoading">Жүктөлүп жатат…</string>
+    <string name="strMsgUpdateAvailable">ЖАҢЫРТУУ ЖЕТКИЛИКТҮҮ! Акыркы функцияларды алуу үчүн тиркемени жаңыртыңыз.</string>
+    <string name="strMsgUpdateAvailable2Continue">ЖАҢЫРТУУ ЗАРЫЛ!\nУлантуу үчүн сураныч тиркемени жаңыртыңыз.</string>
+    <string name="strLabelAllChapters">Бардык бөлүмдөр</string>
+    <string name="strTitleAlphaBG">Альфа фону</string>
+    <string name="strMsgEditShareTransl">Жөндөөлөрдө тандалган котормолор бул жерде гана көрсөтүлөт.</string>
+    <string name="strMsgEditShareLongTransl">Котормо абдан узун, ал экранга толук батпай калышы мүмкүн.</string>
+    <string name="strMsgDuaFor" formatted="false">%s үчүн дуба</string>
+    <string name="strMsgDuaOf" formatted="false">%s дубасы</string>
+    <string name="strMsgReferenceInQuran" formatted="false">Куранда %s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s менен байланышкан аяттар жалпы %2$d жерден табылды.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Курандагы %s дубасы</string>
+    <string name="strMsgReferenceDuas">Курандан бир нече дубалар чогултулду.</string>
+    <string name="strSalam">Ассаламу Алейкум</string>
+    <string name="strSalamShort">Салам</string>
+    <string name="titleDownloadScriptResources">Бул шрифт үчүн керектүү ресурстар жүктөлсүнбү?</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Шрифт: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттер: %1$d/%2$d жүктөлдү (~%3$dМБ калды)</string>
+    <string name="msgDownloadFailed">Жүктөө ийгиликсиз болду</string>
+    <string name="msgDownloadingScript">Шрифт жүктөлүп жатат</string>
+    <string name="msgDownloadingFonts">Шрифттер жүктөлүп жатат</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d/%2$d шрифт жүктөлүп бүттү</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d ичинен %2$d</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">Арткы планда жүктөө</string>
+    <string name="msgAnotherDownloadInProgress">Башка жүктөө жүрүп жатат.</string>
+    <string name="lastCrashLog">Соңку ката журналы</string>
+    <string name="appLogs">Тиркеме журналдары</string>
+    <string name="crashLogs">Ката журналдары</string>
+    <string name="suppressedLogs">Жашырылган журналдар</string>
+    <string name="createIssue">Көйгөйдү каттоо</string>
+    <string name="copiedToClipboard">Алмашуу буферине көчүрүлдү.</string>
+    <string name="github">GitHub</string>
+    <string name="msgAlarmManagerNotAvailable">Бул түзмөктө ойготкуч менеджери жеткиликтүү эмес.</string>
+    <string name="msgVerseReminderAlarmPermission">Аят эскертмесин иштетүү үчүн ойготкуч уруксаты керек.</string>
+    <string name="titleStorageCleanup">Сактоо жайын тазалоо</string>
+    <string name="translationCanBeFreedUp" formatted="false">Жүктөлгөн %d котормолор өчүрүлүүсү мүмкүн.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d Куран окуучулардан сакталган %1$d окума файлдары өчүрүлүүсү мүмкүн.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">Жүктөлгөн %d шрифттер өчүп кетүүсү мүмкүн.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">Сакталган %d бөлүм маалыматы тазаланышы мүмкүн.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">Сакталган %d тафсирлер тазаланышы мүмкүн.</string>
+    <string name="labelFreeUpSpace">Орун бошотуу</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nСиз буларды кайра жүктөп алууңуз керек болот.</string>
+    <string name="titleRecitationCleanup">Куран окуу файлы жок кылынсынбы?</string>
+    <string name="titleScriptCleanup">Шрифт өчүрүлсүнбү?</string>
+    <string name="msgScriptCleanup" formatted="false">%s шрифт өчүрүлөт. Аларды пайдалануу үчүн шрифтти кайра жүктөө керек болот.</string>
+    <string name="msgChapterInfoCleanup">Сакталган бардык бөлүм маалыматтары өчүрүлөт.</string>
+    <string name="titleTafsirCleanup">Тафсирди өчүрүү керекпи?</string>
+    <string name="nothingToCleanup">Тазалоо үчүн эч нерсе калган жок.</string>
+    <string name="nItem" formatted="false">%d нерсе</string>
+    <string name="nItems" formatted="false">%d нерселер</string>
+    <string name="noItems">Эч кандай нерсе жок</string>
+    <string name="verseSyncOn">Аят синхрондоштуруу: КҮЙГҮЗҮЛГӨН</string>
+    <string name="place" formatted="false">%d жери</string>
+    <string name="places" formatted="false">%d жерлери</string>
+    <string name="inPlaces" formatted="false">%s ичинде</string>
+    <string name="inPlacesMore" formatted="false">%1$s жана башка %2$d жерде</string>
+    <string name="onboardDescTheme">Бул жөндөөнү кийинчерээк өзгөртө аласыз.</string>
+    <string name="onboardDescReciter">Бул жөндөөнү кийинчерээк өзгөртө аласыз. Жөндөөлөрдөн дагы Куран окуучуларды таба аласыз.</string>
+    <string name="labelArabic">Арабча</string>
+    <string name="labelTranslation">Котормо</string>
+    <string name="titleAddToFavourites">Сүйүктүүлөргө кошуу</string>
+    <string name="msgAddedToFavourites">Сүйүктүүлөргө кошулду</string>
+    <string name="titleRemoveFromFavourites">Сүйүктүүлөрдөн алып салуу</string>
+    <string name="msgNoFavouriteChapters">Сиз тандаган сүйүктүүлөрдү бул жерде көрүү үчүн ага бөлүм кошуңуз.</string>
+    <string name="msgChapterAddedToFavourites">Сүрө сүйүктүүлөргө кошулду.</string>
+    <string name="textTranslationReciterInfo">Тил: %1$s\nКитеп: %2$s</string>
+    <string name="textNoLogsFound">Журналдар табылган жок</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Хафыз %2$s үчүн %1$s жүктөлбөй калды.</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Хафыз \" %2$s\" Куран окуучусуна тиешелүү \" %1$s\" бардык окумалар өчүрүлөт.</string>
+    <string name="msgInvalidParams">Туура эмес параметрлер</string>
+    <string name="strPreviewTextTransl">Мээримдүү, Ырайымдуу Аллахтын аты менен (баштаймын)</string>
+    <string name="msgClearReadHistory">Окуу тарыхын тазалоо</string>
+    <string name="msgClearSearchHistory">Издөө тарыхын тазалоо</string>
+    <string name="titleResourceDownloadSource">Ресурстарды жүктөө булагы</string>
+    <string name="titleArabicTextToggle">Арабча аят текстин көрсөтүү</string>
+    <string name="msgArabicTextToggle">Бул функцияны өчүрүү тиркеменин бардык жеринде арабча аят текстин жашырып коёт.</string>
+    <string name="labelExport">Экспорт</string>
+    <string name="labelImport">Импорт</string>
+    <string name="msgExportEmpty">Экспорттоо үчүн чөп каттар жок</string>
+    <string name="msgExportSuccess">Ийгиликтүү экспорттолду</string>
+    <string name="msgImportFailed">Импорттоо ишке ашкан жок. Себеби мындай файл колдонулбайт.</string>
+    <string name="desc_votd_widget">Күн сайын жаңы аят билдирүүсүн алыңыз</string>
+    <string name="autoScroll">Авто жылдыруу</string>
+    <string name="startAutoScroll">Авто жылдырууну баштоо</string>
+    <string name="autoScrollSpeed">Ылдамдыкты орнотуу</string>
+    <string name="strLabelSurah" formatted="false">Сүрө %s</string>
+    <string name="strTitleAppVersion">Тиркеме нускасы</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp – бул Курани Каримди окуу жана изилдөө үчүн акысыз жана ачык булактуу колдонмо, котормолор менен. Бул колдонмо жагымдуу жана таза интерфейске ээ, тафсир, окуу, эскертүү жана башка көптөгөн функциялар менен.\n\nАЗЫР ЖҮКТӨП АЛ:\n%s</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strTitleMadani">Мадиналык</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Бөлүм No. %1$d │ Аят %2$d–%3$d</string>
+    <string name="strTitleReaderJuz2">Жүз</string>
+    <string name="strLabelThemeLight">Жарык</string>
+    <string name="strLabelPreviousJuz">Мурунку жүз</string>
+    <string name="strTitleNote">Эскертме</string>
+    <string name="strLabelNotNow">Азыр эмес</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%d - аятынын тафсири</string>
+    <string name="strTitleReaderTextSizeTransl">Котормо текстинин көлөмү</string>
+    <string name="strTitleSettings">Жөндөөлөр</string>
+    <string name="strTitleTafsir">Тафсир</string>
+    <string name="strTitleBookmarkDeleteAll">Бардык чөп каттарды өчүрөсүзбү?</string>
+    <string name="strTitleTranslDelete">Котормону өчүрөсүзбү?</string>
+    <string name="downloadRecitations">Куран окууларды жүктөө</string>
+    <string name="strTitleShareVerse">Аятты бөлүшүү</string>
+    <string name="strLabelNext">Кийинки</string>
+    <string name="audioOnlyTranslation">Бир гана котормону ойнотуу</string>
+    <string name="audioOnlyArabic">Бир гана арабча</string>
+    <string name="strLabelRead">Окуу »</string>
+    <string name="strLabelStart">Баштоо</string>
+    <string name="strTitleFeaturedProphets">Курандагы пайгамбарлар</string>
+    <string name="strTitleChapInfoChapterNo">Бөлүм номери</string>
+    <string name="strLabelBookmark">Чөп кат</string>
+    <string name="strTitleExplainIssue">Маселени түшүндүрүү</string>
+    <string name="strTitleProphets">Пайгамбарлар</string>
+    <string name="strTitleInfo">Маалымат!</string>
+    <string name="strMsgNoInternetLong">Интернет байланышы жок. Wi-Fi же мобилдик дайындар күйгүзүлгөнүн текшериңиз, андан соң кайра аракет кылыңыз.</string>
+    <string name="strLabelDownloadImage">Сүрөттү жүктөө</string>
+    <string name="msgDownloadKFQPCResources">Бул шрифтти колдонуу үчүн төмөнкү ресурстар жүктөлүүсү керек:</string>
+    <string name="strMsgUpdateAvailable4Dialog">ЖАҢЫРТУУ ЖЕТКИЛИКТҮҮ!\nСураныч, тиркемени жаңыртыңыз.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Эң көп дегенде %d котормо бир убакта тандалышы мүмкүн. Башкасын тандоодон мурун бирөөнү алып салыңыз. Бул өндүрүмдүүлүктүн төмөндөшүнө жол бербөө үчүн.</string>
+    <string name="strTextSending">Жөнөтүлүүдө…</string>
+    <string name="strMsgTranslNoneSelected">Котормо тандалган жок. Котормолорду табуу үчүн жөндөөлөргө өтүңүз.</string>
+    <string name="strLabelShareImage">Сүрөттү бөлүшүү</string>
+    <string name="strMsgReportUs">Сураныч, бизге билдириңиз.</string>
+    <string name="strTitleError">Ката!</string>
+    <string name="logRemoved">Журнал өчүрүлдү</string>
+    <string name="strMsgUpdateDownloaded">ЖАҢЫРТУУ ЖҮКТӨЛДҮ! Жаңыртууну аяктоо үчүн орнотуңуз.</string>
+    <string name="strTitleImageSavedWithName" formatted="false">Сүрөт %s деген аталыш менен сакталды</string>
+    <string name="textDownloading">Жүктөлүүдө…</string>
+    <string name="textDownloaded">Жүктөлүп бүттү</string>
+    <string name="msgScriptFontsDownloaded">Шрифттер ийгиликтүү жүктөлдү.</string>
+    <string name="titleChapterInfo">Бөлүм жөнүндө маалымат</string>
+    <string name="msgExportImportBookmarks">Чөп каттарыңызды жана жазмаларыңы экспорттоңуз же импорттоңуз.</string>
+    <string name="pasteCrashLogGithubIssue">Журнал алмашуу буферине көчүрүлдү. Сураныч, аны GitHub маселесине чаптаңыз.</string>
+    <string name="onboardDescLanguage">Тиркемени өз тилиңизде ыңгайлаштырыңыз. Бул жөндөөнү кийинчерээк алмаштыра аласыз.</string>
+    <string name="msgImportSuccess">Ийгиликтүү импорттолду</string>
+    <string name="msgVerseReminderNotifPermission">Аят эскертмесин иштетүү үчүн билдирүү уруксатын берүүңүз керек.</string>
+    <string name="titleExportData">Экспорттоо жана Импорттоо</string>
+    <string name="msgDownloadingResource" formatted="false">%s жүктөлүп жатат</string>
+    <string name="storageCleanupMessage">Колдонулбаган ресурстарды өчүрүү менен орун бошотуңуз. Бул чөп каттарды же жөндөөлөрдү жок кылбайт.\n\nТөмөнкү ресурстарды бошотууга болот:</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Хафыз \" %2$s\" Куран окуучусуна тиешелүү \" %1$s\" бардык окумалар өчүрүлдү.</string>
+    <string name="onboardDescTranslations">Бул жөндөөнү кийинчерээк өзгөртө аласыз. Жөндөөлөрдөн кошумча котормолорду жүктөп алсаңыз болот.</string>
+    <string name="verseSyncOff">Аят синхрондоштуруу: ӨЧҮК</string>
+    <string name="msgRecitationCleanup" formatted="false">%sдан жазылган бардык рецитациялар өчүрүлөт. Сүрөлөр боюнча окууларды жеке өчүрүү үчүн аудио орнотууларга өтүңүз.</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Хафыз %2$s үчүн %1$s жүктөлүп бүттү.</string>
+    <string name="titleChapterInfoCleanup">Бөлүм жөнүндө маалыматты тазалоо керекпи?</string>
+    <string name="msgTafsirCleanup" formatted="false">%sдан сакталган бардык тафсирлер өчүрүлөт.</string>
+    <string name="nFiles" formatted="false">%d файлдар</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d шрифттер жана %2$d жазуу тиби</string>
+    <string name="msgRemovedFromFavourites">Сүйүктүүлөрдөн алынып салынды</string>
+    <string name="msgResourceDownloadSource">Куран маалыматтарын башка булактан жүктөп алуу үчүн бул параметрди колдонуңуз, эгер бири иштебей жатса</string>
+    <string name="msgChapterRemovedFromFavourites">Сүрө сүйүктүүлөрдөн өчүрүлдү.</string>
+    <string name="msgTafsirLoadFailed">Тафсирди жүктөө ийгиликсиз болду</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Куран окулуп жатканда авто жылдыруу иштебейт.</string>
+    <string name="strLabelMostPlaces">Көп эскерилгендер</string>
+    <string name="strLabelOrder">Тартип</string>
+    <string name="strLabelSelectedCount" formatted="false">%d тандалды</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d дагы башка котомолор</string>
+    <string name="strLabelAdvanceSharing">Кеңейтилген бөлүшүү</string>
+    <string name="strLabelSelectVerse">Аяттарды тандоо</string>
+    <string name="strLabelCurrentVerse">Учурдагы аят</string>
+    <string name="strLabelVerseRange">Аяттар аралыгы</string>
+    <string name="strLabelSelectTranslations">Котормолорду танда</string>
+    <string name="strLabelSelectTranslation">Котормону тандаңыз</string>
+    <string name="strLabelWhatsappStyling">WhatsApp стили</string>
+    <string name="strLabelIncludeArabic">Арабча текстти кошуу</string>
+    <string name="strLabelIncludeFootnotes">Төмөнкү(кыстырма) жазууларды камтуу</string>
+    <string name="strLabelIncludeTranslation">Котормону камтуу</string>
+    <string name="strLabelIncludeReference">Шилтемени камтуу</string>
+    <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
+    <string name="strLabelLater">Кийинчерээк</string>
+    <string name="strHintSearch">Издөө</string>
+    <string name="strHintSearchQuran">Терминди териңиз, мисалы \"Өмүр\"</string>
+    <string name="strHintSearchTopic">Теманы издөө</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" ичинен тема издөө</string>
+    <string name="strHintSearchProphet">Пайгамбарды издөө</string>
+    <string name="strMsgVOTDOn">Күн сайын эртең менен билдирүү алыңыз.</string>
+    <string name="strMsgYouAreReadingVerses">Сиз окуп жаткан аяттар:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d туура эмес сүрө номери.</string>
+    <string name="strMsgInvalidVersesRange">Туура эмес аят аралыгы</string>
+    <string name="strHintFromVerse">Аяттан баштап</string>
+    <string name="strHintToVerse">Аятка чейин</string>
+    <string name="strHintFeedback">Пикириңизди бул жерге жазыңыз…</string>
+    <string name="strHintFeedbackEmail">Электрондук почта</string>
+    <string name="strHintBookmarkViewerNote">Бул чөп кат үчүн кошумча эскертмени бул жерге жазыңыз…</string>
+    <string name="strNotFound">Табылган жок</string>
+    <string name="strHintSearchChapter">Сүрөнү издөө</string>
+    <string name="strHintSearchJuz">Жүздү издөө</string>
+    <string name="strHintSearchReciter">Куран окуучуну издөө</string>
+    <string name="strHintSearchScript">Шрифтти издөө</string>
+    <string name="strHintSearchLanguage">Тилди издөө</string>
+    <string name="strMsgBookmarkAdded">Аят ийгиликтүү чөп каттарга кошулду</string>
+    <string name="strMsgBookmarkAddFailed">Аятты чөп каттарга кошуу ишке ашпады</string>
+    <string name="strMsgBookmarkAddedAlready">Аят мурунтан эле чөп каттарга кошулган болчу</string>
+    <string name="strMsgBookmarkRemoved">Аят чөп каттардан ийгиликтүү алынып салынды</string>
+    <string name="strMsgBookmarkRemovedAlready">Аят чөп каттарда жок</string>
+    <string name="strMsgBookmarkNoItems">Чөп каттар жок</string>
+    <string name="strMsgBookmarkDeleteSelected">Тандалган чөп каттар өчүрүлөт.</string>
+    <string name="strMsgBookmarkDeleteAll">Бардык чөп каттар өчүрүлөт.</string>
+    <string name="strTitleReadHistory">Окуу тарыхы</string>
+    <string name="strMsgReadHistoryRemoved">Окуу тарыхы ийгиликтүү өчүрүлдү.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Окуу тарыхын өчүрүү ишке ашпады.</string>
+    <string name="strMsgReadHistoryNoItems">Окуу тарыхы жок</string>
+    <string name="strMsgReadHistoryDeleteAll">Бардык окуу тарыхтары өчүрүлөт.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s , %2$s\'де</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Бүгүн саат %s де</string>
+    <string name="strMsgHistoryRemove">Бул тарыхты өчүрөсүзбү?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" тарыхтан өчүрүлдү</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s: %2$d ичинен табылган жалпы натыйжалар</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d - жүз(пара) номери туура эмес.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s ичинен бир гана натыйжа табылды</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s ичинен натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
+    <string name="strMsgSearchNoResultsFound">Натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Натыйжа табылбады. Издөө фильтрлерин карап көрүңүз.</string>
+    <string name="strMsgSearchWordPart">Сөздүн бир бөлүгүн издөө</string>
+    <string name="strMsgSearchWordPartExample">Мисалы: \"адамзаттагы\" \"адам\"</string>
+    <string name="strMsgSearchArabic">Арабча тексттен издөө</string>
+    <string name="strMsgChangeLanguage">Тилди өзгөртүү үчүн тиркеме кайра башынан ишке киришет.</string>
+    <string name="strMsgResetReaderSettings">Бардык жөндөөлөрдү баштапкы абалга кайтаруу.</string>
+    <string name="strMsgProphetsOrder">Пайгамбарларды хронологиялык тартипте көрсөтүү</string>
+    <string name="strMsgShareRange" formatted="false">%1$d-%2$d диапазон аралыгын жазыңыз</string>
+    <string name="strMsgEnterValidRange">Жарактуу диапазонду киргизиңиз</string>
+    <string name="strMsgTranslLoadFailed">Серверден котормолорду жүктөө ишке ашкан жок. Кийинчерээк кайра аракет кылып көрүңүз.</string>
+    <string name="strMsgTranslNoDownloads">Жеткиликтүү жүктөлүп алынган котормолор жок</string>
+    <string name="strMsgReadHistoryDeleteSelected">Тандалган окуу тарыхтары өчүрүлөт.</string>
+    <string name="strHintFeedbackMessage">Билдирүү</string>
+    <string name="strMsgThemeDark">Караңгы режим энергия коротууну азайтат.</string>
+    <string name="strMsgThemeDefault">Система орнотууларына ылайык жөндөө.</string>
+    <string name="strMsgBookmarkRemoveFailed">Аятты чөп каттардан алып салуу ишке ашпады</string>
+    <string name="strHintSearchVerse">Аятты издөө</string>
+    <string name="strHintSearchTranslation">Котормону издөө</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d аят диапазону %3$d номердүү сүрө үчүн жарактуу эмес</string>
+    <string name="strMsgReadShowupHere">Сиздин окуу тарыхыңыз бул жерде көрсөтүлөт.</string>
+    <string name="strMsgReadHistoryRemovedAlready">Окуу тарыхы мурунтан эле өчүрүлгөн.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d - бул %2$d сурөнүн жарактуу аят номери эмес</string>
+</resources>

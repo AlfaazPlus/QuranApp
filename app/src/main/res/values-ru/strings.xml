@@ -420,4 +420,17 @@
     <string name="inPlaces" formatted="false">в %s</string>
     <string name="inPlacesMore" formatted="false">в %1$s и ещё в %2$d других</string>
     <string name="onboardDescLanguage">Используйте приложение на вашем языке. Вы всегда сможете изменить его позже.</string>
+    <string name="desc_votd_widget">Получать новое стихотворение каждый день</string>
+    <string name="startAutoScroll">Запустить авто промотку</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Авто промотка не доступна пока запущена репетиция.</string>
+    <string name="titleExportData">Экспорт &amp; Импорт</string>
+    <string name="labelExport">Экспорт</string>
+    <string name="labelImport">Импорт</string>
+    <string name="msgExportImportBookmarks">Экспорт или импорт ваших закладок вместе с заметками.</string>
+    <string name="msgExportEmpty">Нет закладок для экспорта</string>
+    <string name="msgExportSuccess">Успешно экспортировано</string>
+    <string name="msgImportFailed">При импорте произошла ошибка. Не поддерживаемый файл.</string>
+    <string name="msgImportSuccess">Успешно импортировано</string>
+    <string name="autoScroll">Авто промотка</string>
+    <string name="autoScrollSpeed">Установка скорости</string>
 </resources>

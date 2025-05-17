@@ -39,7 +39,7 @@
     <string name="strLabelNext">अगला</string>
     <string name="strLabelStart">शुरू करें</string>
     <string name="strLabelUpdateQuranApp">QuranApp अपडेट करें</string>
-    <string name="strLabelDownloadNow">डाउनलोड करें</string>
+    <string name="strLabelDownloadNow">अभी डाउनलोड करें</string>
     <string name="strLabelUpdate">अपडेट करें</string>
     <string name="strLabelInstall">इंस्टॉल करें</string>
     <string name="strLabelNew">नया</string>
@@ -86,7 +86,7 @@
     <string name="strTitleFootnote">फुटनोट</string>
     <string name="strTitleFootnotes">फुटनोट</string>
     <string name="strTitleReaderChapters">सूरह</string>
-    <string name="strTitleReaderJuz">पारा</string>
+    <string name="strTitleReaderJuz">जुज़ (पारा)</string>
     <string name="strTitleReaderChapters2">सूरह</string>
     <string name="strTitleReaderJuz2">पारा</string>
     <string name="strTitleReaderVerses">आयतें</string>
@@ -420,4 +420,17 @@
     <string name="msgResourceDownloadSource">यदि एक स्रोत काम नहीं कर रहा है तो किसी भिन्न स्रोत से कुरान डेटा डाउनलोड करने के लिए इस विकल्प का उपयोग करें</string>
     <string name="msgClearSearchHistory">सर्च हिस्ट्री हटाएं</string>
     <string name="msgArabicTextToggle">इस सुविधा को अक्षम करने से कुरान की आयतें पूरे ऐप से छिप जाएंगी।</string>
+    <string name="desc_votd_widget">हर दिन एक नया आयात प्राप्त करें</string>
+    <string name="autoScroll">स्वतः स्क्रॉल</string>
+    <string name="startAutoScroll">स्वतः स्क्रॉल प्रारंभ करें</string>
+    <string name="autoScrollSpeed">गति सेट करें</string>
+    <string name="labelImport">आयात</string>
+    <string name="msgExportEmpty">निर्यात करने के लिए कोई बुकमार्क नहीं</string>
+    <string name="msgExportSuccess">सफलतापूर्वक निर्यात किया गया</string>
+    <string name="msgImportSuccess">आयात सफल</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">पाठ चलने के दौरान स्वचालित स्क्रॉल नहीं किया जा सकता।</string>
+    <string name="titleExportData">निर्यात और आयात</string>
+    <string name="labelExport">निर्यात</string>
+    <string name="msgExportImportBookmarks">अपने बुकमार्क्स को नोट्स के साथ निर्यात या आयात करें।</string>
+    <string name="msgImportFailed">आयात करने में विफल. असमर्थित फ़ाइल।</string>
 </resources>

@@ -428,4 +428,9 @@
     <string name="msgImportSuccess">تم الاستيراد بنجاح</string>
     <string name="labelExport">تصدير</string>
     <string name="msgExportImportBookmarks">قم بتصدير أو استيراد إشاراتك المرجعية مع الملاحظات.</string>
+    <string name="desc_votd_widget">احصل على آية جديدة كل يوم</string>
+    <string name="autoScroll">التمرير التلقائي</string>
+    <string name="startAutoScroll">بدء التمرير التلقائي</string>
+    <string name="autoScrollSpeed">ضبط السرعة</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">لا يمكن التمرير التلقائي أثناء تشغيل التلاوة.</string>
 </resources>
