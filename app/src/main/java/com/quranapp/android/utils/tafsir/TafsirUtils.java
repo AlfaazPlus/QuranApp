@@ -61,4 +61,13 @@ public class TafsirUtils {
 
         return model.getLangCode().equals("ur");
     }
+
+    public static boolean isArabic(String key) {
+        TafsirInfoModel model = TafsirManager.getModel(key);
+        if (model == null) {
+            return false;
+        }
+
+        return model.getLangCode().equals("ar");
+    }
 }
