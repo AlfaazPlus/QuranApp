@@ -6,6 +6,27 @@
 
 package com.quranapp.android.frags.settings;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_ALFAAZ_PLUS;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_GITHUB;
+import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_JSDELIVR;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
+import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.getMaxProgress;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -29,6 +50,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -38,25 +60,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentResultListener;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT;
-import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_GITHUB;
-import static com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_JSDELIVR;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS;
-import static com.quranapp.android.utils.reader.ReaderTextSizeUtils.getMaxProgress;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
 
 import com.google.android.material.tabs.TabLayout;
 import com.peacedesign.android.utils.DrawableUtils;
@@ -586,7 +589,8 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         Context context = textView.getContext();
         Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
 
-        if (WindowUtils.isRTL(context)) chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
+        if (WindowUtils.isRTL(context))
+            chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
 
         textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
@@ -846,18 +850,16 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
 
         LytResDownloadSourceSheetBinding binding = LytResDownloadSourceSheetBinding.inflate(mInflater);
 
-        binding.downloadSrcGroup.check(
-            (DOWNLOAD_SRC_GITHUB.equals(SPAppConfigs.getResourceDownloadSrc(ctx)))
-                ? R.id.srcGithub
-                : R.id.srcJsDelivr
-        );
+        binding.downloadSrcGroup.check(DownloadSourceUtils.getDownloadSourceId(ctx));
 
         params.setContentView(binding.getRoot());
 
         binding.downloadSrcGroup.setOnCheckChangedListener((button, checkedId) -> {
             final String downloadSrc;
 
-            if (checkedId == R.id.srcGithub) {
+            if (checkedId == R.id.srcAlfaazPlus) {
+                downloadSrc = DOWNLOAD_SRC_ALFAAZ_PLUS;
+            } else if (checkedId == R.id.srcGithub) {
                 downloadSrc = DOWNLOAD_SRC_GITHUB;
             } else if (checkedId == R.id.srcJsDelivr) {
                 downloadSrc = DOWNLOAD_SRC_JSDELIVR;

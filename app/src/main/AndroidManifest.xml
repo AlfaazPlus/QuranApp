@@ -24,6 +24,7 @@
         android:name=".QuranApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/icon_launcher"
         android:label="@string/app_name"
@@ -33,9 +34,9 @@
         tools:targetApi="s">
         <receiver
             android:name=".views.reader.VotdWidget"
-            android:label="@string/strTitleVOTD"
             android:description="@string/desc_votd_widget"
-            android:exported="false">
+            android:exported="false"
+            android:label="@string/strTitleVOTD">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

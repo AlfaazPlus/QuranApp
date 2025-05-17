@@ -27,6 +27,20 @@
             android:layout_height="wrap_content">
 
             <com.quranapp.android.widgets.radio.PeaceRadioButton
+                android:id="@id/srcAlfaazPlus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/dr_bg_hover_cornered"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="AlfaazPlus"
+                android:textAppearance="@style/TextAppearanceCommonTitle"
+                app:peaceComp_spaceBetween="15dp"
+                app:peaceComp_subText="gh-proxy.alfaazplus.com"
+                tools:ignore="HardcodedText" />
+
+            <com.quranapp.android.widgets.radio.PeaceRadioButton
                 android:id="@id/srcGithub"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
