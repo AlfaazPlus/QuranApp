@@ -16,8 +16,8 @@ android {
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         // now just incrementing from there
-        versionCode 23_11_11_119
-        versionName "2025.03.21.2"
+        versionCode 23_11_11_120
+        versionName "2025.05.18.1"
 
         setProperty("archivesBaseName", versionName)
 
