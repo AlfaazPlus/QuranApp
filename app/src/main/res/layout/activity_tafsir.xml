@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -48,9 +49,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/tafsirHeader"
-                layout="@layout/lyt_tafsir_header" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tafsirTitle"
+                style="@style/TextAppearanceCommonTitleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:padding="15dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/settings"
+                app:layout_constraintStart_toEndOf="@id/back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Tafsir Ibn Kathir" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -59,7 +72,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tafsirFooter"
         app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <WebView
@@ -82,6 +95,23 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/gotToTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:rotation="90"
+        android:src="@drawable/dr_icon_chevron_left"
+        android:visibility="gone"
+        app:backgroundTint="@color/bgVerseQuickActions"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fontSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"
+        tools:visibility="visible" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fontSize"
         android:layout_width="wrap_content"
@@ -89,11 +119,14 @@
         android:layout_margin="15dp"
         android:contentDescription="@string/titleReaderTextSizeTafsir"
         android:src="@drawable/icon_font_size"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/bgVerseQuickActions"
         app:elevation="0dp"
-        app:rippleColor="@android:color/transparent"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tafsirFooter"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/white" />
+
+    <include
+        android:id="@+id/tafsirFooter"
+        layout="@layout/lyt_tafsir_footer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

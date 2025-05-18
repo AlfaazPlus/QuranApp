@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface QuranApi {
+    @Deprecated("Use AlfaazPlusApi instead")
     @GET("api/qdc/tafsirs/{slug}/by_ayah/{verseKey}")
     suspend fun getTafsir(
         @Path("slug") slug: String,

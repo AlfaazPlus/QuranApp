@@ -6,15 +6,18 @@
 
 package com.quranapp.android.activities.readerSettings;
 
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
 
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
@@ -53,26 +56,13 @@ public class ActivitySettings extends BaseActivity {
         super.onRestart();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!mBinding.header.checkSearchShown()) {
-            beforeFinish();
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        beforeFinish();
-        super.onPause();
-    }
-
     private void beforeFinish() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frags_container);
         if (f instanceof FragSettingsBase) {
-            Intent intent = new Intent();
             Bundle finishingResult = ((FragSettingsBase) f).getFinishingResult(this);
+
             if (finishingResult != null) {
+                Intent intent = new Intent();
                 intent.putExtras(finishingResult);
                 setResult(SETTINGS_LAUNCHER_RESULT_CODE, intent);
             }
@@ -174,7 +164,24 @@ public class ActivitySettings extends BaseActivity {
     private void init() {
         initHeader(mBinding.header);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(this::onFragChanged);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.addOnBackStackChangedListener(this::onFragChanged);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!mBinding.header.checkSearchShown()) {
+
+                    if (fm.getBackStackEntryCount() == 0) {
+                        beforeFinish();
+                    }
+
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                    setEnabled(true);
+                }
+            }
+        });
     }
 
     private void onFragChanged() {

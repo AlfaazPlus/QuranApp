@@ -4,6 +4,11 @@
 
 package com.quranapp.android.activities.base;
 
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
+import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
+import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -32,10 +38,6 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedLi
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
-import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
 
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
@@ -49,7 +51,10 @@ import java.util.Locale;
 
 public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener,
     ActivityResultStarter {
-    private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
+    private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        this::onActivityResult2
+    );
     protected final AsyncLayoutInflater mAsyncInflater = new AsyncLayoutInflater(this);
     private NetworkStateReceiver mNetworkReceiver;
 
@@ -369,10 +374,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     @Override
     public void startActivity4Result(Intent intent, ActivityOptionsCompat options) {
         mActivityResultLauncher.launch(intent, options);
-    }
-
-    private ActivityResultLauncher<Intent> activityResultHandler() {
-        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::onActivityResult2);
     }
 
     protected void onActivityResult2(ActivityResult result) {

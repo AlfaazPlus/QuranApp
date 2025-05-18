@@ -47,6 +47,17 @@ object RetrofitInstance {
             .create(QuranApi::class.java)
     }
 
+    val alfaazplus: AlfaazPlusApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(ApiConfig.ALFAAZPLUS_API_ROOT_URL)
+            .addConverterFactory(
+                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+            )
+            .client(client)
+            .build()
+            .create(AlfaazPlusApi::class.java)
+    }
+
     fun resetGithubApi() {
         githubApi = null
     }

@@ -1,11 +1,15 @@
 package com.quranapp.android.api.models.tafsir
 
+import kotlinx.serialization.SerialName
+
 @kotlinx.serialization.Serializable
 data class TafsirInfoModel(
     val key: String,
     val name: String,
     val author: String,
+    @SerialName("lang_code")
     val langCode: String,
+    @SerialName("lang_name")
     val langName: String,
     val slug: String,
 ) {

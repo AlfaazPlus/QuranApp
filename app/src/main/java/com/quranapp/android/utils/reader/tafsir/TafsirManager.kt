@@ -3,8 +3,8 @@ package com.quranapp.android.utils.reader.tafsir
 import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
+import com.quranapp.android.api.models.tafsir.v2.AvailableTafsirsModelV2
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -17,7 +17,7 @@ import kotlinx.serialization.decodeFromString
 import java.io.IOException
 
 object TafsirManager {
-    private var availableTafsirsModel: AvailableTafsirsModel? = null
+    private var availableTafsirsModel: AvailableTafsirsModelV2? = null
 
     @JvmStatic
     fun prepare(
@@ -40,7 +40,7 @@ object TafsirManager {
     private fun loadTafsirs(
         ctx: Context,
         force: Boolean,
-        callback: (AvailableTafsirsModel?) -> Unit
+        callback: (AvailableTafsirsModelV2?) -> Unit
     ) {
         val fileUtils = FileUtils.newInstance(ctx)
 
@@ -48,7 +48,7 @@ object TafsirManager {
         if (force) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    val stringData = RetrofitInstance.github.getAvailableTafsirs().string()
+                    val stringData = RetrofitInstance.alfaazplus.getAvailableTafsirs().string()
 
                     fileUtils.createFile(tafsirsFile)
                     tafsirsFile.writeText(stringData)
@@ -89,13 +89,13 @@ object TafsirManager {
     private fun postTafsirsLoad(
         ctx: Context,
         stringData: String,
-        callback: (AvailableTafsirsModel?) -> Unit
+        callback: (AvailableTafsirsModelV2?) -> Unit
     ) {
         SPAppActions.setFetchTafsirsForce(ctx, false)
         val savedTafsirKey = SPReader.getSavedTafsirKey(ctx)
 
         try {
-            val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(
+            val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModelV2>(
                 stringData
             )
 

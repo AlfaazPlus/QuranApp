@@ -18,6 +18,7 @@ import android.webkit.WebView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
+import androidx.core.text.layoutDirection
 import com.peacedesign.android.utils.DrawableUtils
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
@@ -25,12 +26,13 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.api.models.tafsir.TafsirModel
+import com.quranapp.android.api.models.tafsir.v2.TafsirModelV2
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.databinding.ActivityTafsirBinding
-import com.quranapp.android.databinding.LytTafsirHeaderBinding
+import com.quranapp.android.databinding.LytTafsirFooterBinding
 import com.quranapp.android.databinding.LytTafsirTextSizeBinding
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -52,7 +54,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import java.util.*
+import java.util.Locale
 
 class ActivityTafsir : ReaderPossessingActivity() {
     private lateinit var binding: ActivityTafsirBinding
@@ -61,7 +63,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
     private lateinit var jsInterface: TafsirJsInterface
     private lateinit var tafsirInfoModel: TafsirInfoModel
 
-    var tafsirKey: String? = null
+    lateinit var tafsirKey: String
     var chapterNo = 0
     var verseNo = 0
 
@@ -87,11 +89,17 @@ class ActivityTafsir : ReaderPossessingActivity() {
             it.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
             it.settings.setOnClickListener {
                 val intent = Intent(this, ActivitySettings::class.java).apply {
-                    putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_TAFSIR)
+                    putExtra(
+                        ActivitySettings.KEY_SETTINGS_DESTINATION,
+                        ActivitySettings.SETTINGS_TAFSIR
+                    )
                 }
                 startActivity4Result(intent, null)
             }
             it.fontSize.setOnClickListener { showFontSizeDialog() }
+            it.gotToTop.setOnClickListener {
+                scrollToTop()
+            }
         }
     }
 
@@ -124,7 +132,11 @@ class ActivityTafsir : ReaderPossessingActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 SPReader.setSavedTextSizeMultTafsir(
                     seekBar.context,
-                    ReaderTextSizeUtils.calculateMultiplier(ReaderTextSizeUtils.normalizeProgress(seekBar.progress))
+                    ReaderTextSizeUtils.calculateMultiplier(
+                        ReaderTextSizeUtils.normalizeProgress(
+                            seekBar.progress
+                        )
+                    )
                 )
             }
         })
@@ -134,7 +146,11 @@ class ActivityTafsir : ReaderPossessingActivity() {
         binding.webView.loadUrl("javascript:changeFontSize($progress)")
     }
 
-    private fun setProgressAndTextTransl(multiplier: Float, seekBar: SeekBar, progressText: TextView) {
+    private fun setProgressAndTextTransl(
+        multiplier: Float,
+        seekBar: SeekBar,
+        progressText: TextView
+    ) {
         seekBar.progress = ReaderTextSizeUtils.calculateProgress(multiplier)
 
         val text = "${ReaderTextSizeUtils.calculateProgressText(multiplier)}%"
@@ -164,7 +180,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 javaScriptEnabled = true
             }
             it.addJavascriptInterface(jsInterface, "TafsirJSInterface")
-            it.overScrollMode = View.OVER_SCROLL_NEVER
+            it.overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
             it.webChromeClient = object : WebChromeClient() {
                 override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                     Log.d("[" + consoleMessage.lineNumber() + "]" + consoleMessage.message())
@@ -175,9 +191,13 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 override fun onPageFinished(view: WebView, url: String) {
                     super.onPageFinished(view, url)
                     binding.loader.visibility = View.GONE
-                    binding.tafsirHeader.btnPrevVerse.visibility = View.VISIBLE
-                    binding.tafsirHeader.btnNextVerse.visibility = View.VISIBLE
+                    binding.tafsirFooter.btnPrevVerse.visibility = View.VISIBLE
+                    binding.tafsirFooter.btnNextVerse.visibility = View.VISIBLE
                 }
+            }
+
+            it.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                binding.gotToTop.visibility = if (scrollY > 400) View.VISIBLE else View.GONE
             }
         }
     }
@@ -191,7 +211,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
     }
 
     private fun resolveTextDirection(): String {
-        val directionFromLocale = TextUtils.getLayoutDirectionFromLocale(Locale(tafsirInfoModel.langCode))
+        val directionFromLocale = Locale(tafsirInfoModel.langCode).layoutDirection
         return if (directionFromLocale == View.LAYOUT_DIRECTION_RTL) "rtl" else "ltr"
     }
 
@@ -214,26 +234,13 @@ class ActivityTafsir : ReaderPossessingActivity() {
             return
         }
 
-        val model = TafsirManager.getModel(key)
-
-        if (model == null) {
-            fail(R.string.msgTafsirLoadFailed, false)
-            return
-        }
-
-        this.tafsirInfoModel = model
-        this.tafsirKey = key
         this.chapterNo = chapterNo
         this.verseNo = verseNo
 
-        initTafsirHeader(binding.tafsirHeader)
-        loadContent()
+        resetKey(key)
     }
 
-    private fun initTafsirHeader(header: LytTafsirHeaderBinding) {
-        val chapter = mQuranRef.get().getChapter(chapterNo)
-
-        setupTafsirTitle(header, chapter)
+    private fun initTafsirFooter(header: LytTafsirFooterBinding, chapter: Chapter) {
 
         val isRTL = bool(R.bool.isRTL)
 
@@ -243,14 +250,18 @@ class ActivityTafsir : ReaderPossessingActivity() {
         header.btnPrevVerse.visibility = View.GONE
         header.btnNextVerse.visibility = View.GONE
 
-        val prevVerseName = if (verseNo == 1) "" else getString(R.string.strLabelVerseNo, verseNo - 1)
+        val prevVerseName =
+            if (verseNo == 1) "" else getString(R.string.strLabelVerseNo, verseNo - 1)
         val hasPrevVerseName = prevVerseName.isNotEmpty()
         header.btnPrevVerse.disableView(!hasPrevVerseName)
         header.btnPrevVerse.setOnClickListener { jsInterface.previousTafsir() }
         header.prevVerseName.text = if (hasPrevVerseName) prevVerseName else ""
         header.prevVerseName.visibility = if (hasPrevVerseName) View.VISIBLE else View.GONE
 
-        val nextVerseName = if (verseNo == chapter.verseCount) "" else getString(R.string.strLabelVerseNo, verseNo + 1)
+        val nextVerseName = if (verseNo == chapter.verseCount) "" else getString(
+            R.string.strLabelVerseNo,
+            verseNo + 1
+        )
         val hasNextVerseName = nextVerseName.isNotEmpty()
         header.btnNextVerse.disableView(!hasNextVerseName)
         header.btnNextVerse.setOnClickListener { jsInterface.nextTafsir() }
@@ -268,7 +279,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
         return if (isRTL) arrowLeft else DrawableUtils.rotate(context, arrowLeft, 180f)
     }
 
-    private fun setupTafsirTitle(header: LytTafsirHeaderBinding, chapter: Chapter) {
+    private fun setupTafsirTitle(tafsirTitle: TextView, chapter: Chapter) {
         val chapterInfo = SpannableString(
             getString(
                 R.string.strLabelVerseWithChapNameWithBar, chapter.name, verseNo
@@ -289,7 +300,25 @@ class ActivityTafsir : ReaderPossessingActivity() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        header.tafsirTitle.text = TextUtils.concat(tafsirInfoModel.name, "\n", chapterInfo)
+        tafsirTitle.text = TextUtils.concat(tafsirInfoModel.name, "\n", chapterInfo)
+    }
+
+    private fun resetKey(key: String) {
+        val model = TafsirManager.getModel(key)
+
+        if (model == null) {
+            fail(R.string.msgTafsirLoadFailed, false)
+            return
+        }
+
+        this.tafsirInfoModel = model
+        this.tafsirKey = key
+        val chapter = mQuranRef.get().getChapter(chapterNo)
+
+        setupTafsirTitle(binding.tafsirTitle, chapter)
+        initTafsirFooter(binding.tafsirFooter, chapter)
+
+        loadContent()
     }
 
     private fun loadContent() {
@@ -298,13 +327,18 @@ class ActivityTafsir : ReaderPossessingActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val tafsirFile = fileUtils.getTafsirFileSingleVerse(tafsirKey, chapterNo, verseNo)
-            val slug = TafsirUtils.getTafsirSlugFromKey(tafsirKey)
 
             if (tafsirFile.length() > 0) {
                 val read = tafsirFile.readText()
-                val tafsir = JsonHelper.json.decodeFromString<TafsirModel>(read)
-                renderData(tafsir)
-                return@launch
+
+                // try to decode the file as TafsirModelV2 first
+                try {
+                    val tafsir = JsonHelper.json.decodeFromString<TafsirModelV2>(read)
+                    renderData(tafsir)
+                    return@launch
+                } catch (e: Exception) {
+                    // continue to download the latest version
+                }
             }
 
             if (!NetworkStateReceiver.isNetworkConnected(this@ActivityTafsir)) {
@@ -313,7 +347,8 @@ class ActivityTafsir : ReaderPossessingActivity() {
             }
 
             try {
-                val tafsir = RetrofitInstance.quran.getTafsir(slug, "$chapterNo:$verseNo")["tafsir"]!!
+                val tafsir =
+                    RetrofitInstance.alfaazplus.getTafsir(tafsirKey, "$chapterNo:$verseNo")
 
                 fileUtils.createFile(tafsirFile)
                 tafsirFile.writeText(JsonHelper.json.encodeToString(tafsir))
@@ -326,7 +361,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
         }
     }
 
-    private fun renderData(tafsir: TafsirModel) {
+    private fun renderData(tafsir: TafsirModelV2) {
         val map = mapOf(
             "{{THEME}}" to resolveDarkMode(),
             "{{CONTENT}}" to tafsir.text,
@@ -338,21 +373,29 @@ class ActivityTafsir : ReaderPossessingActivity() {
         val html = pattern.replace(getBoilerPlateHTML()) { match -> map[match.value].orEmpty() }
 
         runOnUiThread {
-            binding.webView.loadDataWithBaseURL(null, html, "text/html; charset=UTF-8", "utf-8", null)
+            binding.webView.loadDataWithBaseURL(
+                null,
+                html,
+                "text/html; charset=UTF-8",
+                "utf-8",
+                null
+            )
         }
     }
 
     private fun fail(msgRes: Int, showRetry: Boolean) {
-        binding.loader.visibility = View.GONE
+        runOnUiThread {
+            binding.loader.visibility = View.GONE
 
-        pageAlert.let {
-            it.setMessage(getString(msgRes), null)
-            if (showRetry) {
-                it.setActionButton(R.string.strLabelRetry) { loadContent() }
-            } else {
-                it.setActionButton(null, null)
+            pageAlert.let {
+                it.setMessage(getString(msgRes), null)
+                if (showRetry) {
+                    it.setActionButton(R.string.strLabelRetry) { loadContent() }
+                } else {
+                    it.setActionButton(null, null)
+                }
+                it.show(binding.container)
             }
-            it.show(binding.container)
         }
     }
 
@@ -367,8 +410,10 @@ class ActivityTafsir : ReaderPossessingActivity() {
         super.onActivityResult2(result)
 
         if (result?.resultCode == Codes.SETTINGS_LAUNCHER_RESULT_CODE) {
-            tafsirKey = SPReader.getSavedTafsirKey(this)
-            loadContent()
+            val updatedTafsirKey = SPReader.getSavedTafsirKey(this)
+            if (updatedTafsirKey != null && updatedTafsirKey != tafsirKey) {
+                resetKey(updatedTafsirKey)
+            }
         }
     }
 
