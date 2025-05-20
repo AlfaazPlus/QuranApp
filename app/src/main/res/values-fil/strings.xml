@@ -228,4 +228,74 @@
     <string name="strTitleChapInfoRevType">Uri ng Pahayag</string>
     <string name="strMsgChapInfoFailedLoad">Nabigong i-load ang impormasyon ng surat. Subukan muli mamaya.</string>
     <string name="strTitleTheme">Tema</string>
+    <string name="strMsgThemeDark">Binabawasan ng dark mode ang pagkonsumo ng kuryente.</string>
+    <string name="strMsgThemeDefault">Isaayos ayon sa mga setting ng sistema.</string>
+    <string name="strMsgVOTDOn">\"Tumanggap ng abiso araw-araw sa umaga.</string>
+    <string name="strMsgYouAreReadingVerses">Binabasa mo ang mga taludtod:</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d hindi isang wastong bilang ng Surah.</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d hindi wastong bilang ng taludtod para sa Surah No. %2$d</string>
+    <string name="strMsgInvalidVersesRange">Hindi wastong saklaw ng taludtod</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d hindi wastong saklaw ng taludtod para sa Surah No. %3$d</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d hindi wastong bilang ng Juz (Para).</string>
+    <string name="strMsgBookmarkAdded">Matagumpay na naidagdag ang taludtod sa mga bookmark</string>
+    <string name="strMsgBookmarkAddFailed">Hindi naidagdag ang taludtod sa mga bookmarks</string>
+    <string name="strMsgBookmarkAddedAlready">Ang taludtod ay naidagdag na sa mga bookmark</string>
+    <string name="strMsgBookmarkRemoved">Matagumpay na naalis ang taludtod sa mga bookmarks</string>
+    <string name="strMsgBookmarkRemoveFailed">Nabigong alisin ang taludtod mula sa mga bookmarks</string>
+    <string name="strMsgBookmarkRemovedAlready">Ang taludtod ay wala sa mga bookmark</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Kabuuang mga resulta na natagpuan sa %1$s: %2$d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">1 resulta lang ang nakita sa %s</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Walang nakitang resulta sa %s. Pakisuri ang mga filter ng paghahanap o maghanap sa ibang pagsasalin.</string>
+    <string name="strMsgSearchNoResultsFound">Walang nakitang resulta. Pakisuri ang mga filter ng paghahanap o maghanap sa ibang pagsasalin.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Walang nakitang resulta. Pakisuri ang mga filter ng paghahanap.</string>
+    <string name="strMsgSearchWordPart">Maghanap ng bahagi ng salita</string>
+    <string name="strMsgSearchWordPartExample">Halimbawa: \'tao\' sa \'sangkatauhan\'</string>
+    <string name="strMsgSearchArabic">Maghanap sa Arabic na teksto</string>
+    <string name="strMsgChangeLanguage">Ire-restart ang app upang maapektuhan ang pagbabago ng wika.</string>
+    <string name="strMsgResetReaderSettings">I-reset ang lahat ng mga setting sa default.</string>
+    <string name="strMsgProphetsOrder">Pagpapakita ng mga propeta sa sunud-sunod na pagkakasunud-sunod</string>
+    <string name="strMsgShareRange" formatted="false">Ipasok ang saklaw sa pagitan ng %1$d–%2$d</string>
+    <string name="strMsgTranslLoadFailed">Hindi ma-load ang mga pagsasalin mula sa server. Pakisubukang muli mamaya.</string>
+    <string name="strMsgTranslNoDownloads">Walang magagamit na mga nai-download na pagsasalin</string>
+    <string name="strMsgTranslNoDownloadsAvailable">Walang available na mga download</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Nabigong i-download ang \"%s\".</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Na-download: \"%s\".</string>
+    <string name="strMsgRecitationsLoadFailed">Hindi ma-load ang mga pagbigkas mula sa server. Pakisubukang muli mamaya.</string>
+    <string name="strMsgRecitationsNoAvailable">Walang magagamit na mga pagbigkas</string>
+    <string name="strMsgTafsirsNoAvailable">Walang magagamit na mga tafsir</string>
+    <string name="strDescAddToBookmarks">Idagdag sa mga bookmark</string>
+    <string name="strDescGoBack">Bumalik ka</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, numero ng taludtod %2$d.</string>
+    <string name="strMsgNoInternet">Pakisuri ang iyong koneksyon sa internet.</string>
+    <string name="strMsgNoInternetLong">Walang koneksyon sa internet. Tiyaking naka-on ang Wi-Fi o cellular data, pagkatapos ay subukang muli.</string>
+    <string name="strLabelNavHome">Bahay</string>
+    <string name="strTextPreparing">Inihahanda…</string>
+    <string name="strTextPleaseWait">Mangyaring maghintay…</string>
+    <string name="strTextSending">Ipinapadala…</string>
+    <string name="strAyatulKursi">Ayatul Kursi</string>
+    <string name="strTitleError">Error!</string>
+    <string name="strTitleInfo">Impormasyon!</string>
+    <string name="strTitleOops">Oops!</string>
+    <string name="strLabelProceed">MAGPATULOY</string>
+    <string name="strTextUpdating">Ina-update…</string>
+    <string name="strTextInstalling">Ini-install…</string>
+    <string name="strTextLoading">Naglo-load…</string>
+    <string name="strMsgUpdateAvailable">MAGAGAMIT ANG UPDATE! Mangyaring i-update ang app upang makuha ang pinakabagong mga tampok.</string>
+    <string name="strMsgUpdateAvailable4Dialog">MAGAGAMIT ANG UPDATE!\nPaki-update ang app.</string>
+    <string name="strLabelAllChapters">Lahat ng Kabanata</string>
+    <string name="strLabelDownloadImage">Mag-download ng larawan</string>
+    <string name="strMsgTryLater">Pakisubukang muli mamaya.</string>
+    <string name="strMsgSomethingWrongFixing">Nagkaproblema! Nagsusumikap kaming ayusin ito.</string>
+    <string name="strDescClose">Isara</string>
+    <string name="strMsgCouldNotOpenPage">Hindi mabuksan ang pahina.</string>
+    <string name="strMsgEnterValidRange">Mangyaring magpasok ng wastong hanay</string>
+    <string name="strLabelNavSearch">Maghanap</string>
+    <string name="strMsgTranslNoneSelected">Walang napiling pagsasalin. Pumunta sa mga setting para maghanap ng mga pagsasalin.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Ang maximum na %d na pagsasalin ay maaaring piliin nang sabay-sabay. Mangyaring alisin sa pagkakapili ang isa bago pumili ng isa pa. Ito ay upang maiwasan ang pagkawala ng pagganap.</string>
+    <string name="strDescVerseNo" formatted="false">Numero ng taludtod %d.</string>
+    <string name="strMsgSomethingWrong">Nagkaproblema!</string>
+    <string name="strMsgReportUs">Mangyaring iulat sa amin.</string>
+    <string name="strMsgUpdateDownloaded">NA-DOWNLOAD NA ANG UPDATE! Mangyaring i-install upang makumpleto ang pag-update.</string>
+    <string name="strMsgVerseCredsInvalid">Ang mga kredensyal ng taludtod ay hindi wasto.</string>
+    <string name="strMsgUpdateAvailable2Continue">KINAKAILANGAN ANG UPDATE!\nPaki-update ang app para magpatuloy.</string>
 </resources>
