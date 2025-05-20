@@ -9,7 +9,6 @@ import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimatio
 import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
 import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -32,6 +31,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StyleRes;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedListener;
@@ -83,7 +83,7 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
         return updateResourcesLocaleLegacy(context, locale);
     }
 
-    @TargetApi(Build.VERSION_CODES.N_MR1)
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
     private Context updateResourcesLocale(Context context, Locale locale) {
         Configuration configuration = new Configuration(context.getResources().getConfiguration());
         configuration.setLocale(locale);
