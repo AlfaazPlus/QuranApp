@@ -314,7 +314,7 @@ class RecitationService : Service(), MediaDescriptionAdapter {
 
         recPlayer?.updateVerseSync(recParams, isPlaying)
 
-        SPReader.setRecitationVerseSync(this, recParams.syncWithVerse)
+        SPReader.setRecitationScrollSync(this, recParams.syncWithVerse)
 
         if (fromUser) {
             popMiniMsg(

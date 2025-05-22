@@ -5,7 +5,6 @@ import com.quranapp.android.R
 import com.quranapp.android.utils.univ.DateUtils
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.int
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -14,7 +13,19 @@ import org.json.JSONObject
 import java.text.MessageFormat
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
-import java.util.*
+import java.util.Calendar
+
+
+class JsonKeys {
+    companion object {
+        const val ID = "id"
+        const val CHAPTER_NO = "cn"
+        const val FROM_VERSE_NO = "fvn"
+        const val TO_VERSE_NO = "tvn"
+        const val DATE = "dt"
+        const val NOTE = "nt"
+    }
+}
 
 class BookmarkModel(
     val id: Long,
@@ -65,13 +76,13 @@ class BookmarkModel(
 
     fun toJsonObject(): JSONObject {
         return JSONObject().apply {
-            put("i", id)
-            put("cn", chapterNo)
-            put("fvn", fromVerseNo)
-            put("tvn", toVerseNo)
-            put("dt", date)
+            put(JsonKeys.ID, id)
+            put(JsonKeys.CHAPTER_NO, chapterNo)
+            put(JsonKeys.FROM_VERSE_NO, fromVerseNo)
+            put(JsonKeys.TO_VERSE_NO, toVerseNo)
+            put(JsonKeys.DATE, date)
 
-            if (note != null) put("nt", note)
+            if (note != null) put(JsonKeys.NOTE, note)
         }
     }
 
@@ -102,39 +113,36 @@ class BookmarkModel(
     }
 
     companion object {
-        fun toJson(bookmarks: List<BookmarkModel>): String {
+        fun toJson(bookmarks: List<BookmarkModel>): JSONArray {
             val jsonArray = JSONArray()
             for (bookmark in bookmarks) {
                 jsonArray.put(bookmark.toJsonObject())
             }
-
-            val obj = JSONObject()
-
-            obj.put("bookmarks", jsonArray)
-
-            return obj.toString()
+            return jsonArray
         }
 
         fun fromJson(bookmarks: JsonArray?): List<BookmarkModel> {
             val bookmarkList = arrayListOf<BookmarkModel>()
 
             bookmarks?.forEach { b ->
-                val chapterNo = b.jsonObject["cn"]?.jsonPrimitive?.intOrNull ?: -1
-                val fromVerseNo = b.jsonObject["fvn"]?.jsonPrimitive?.intOrNull ?: -1
-                val toVerseNo = b.jsonObject["tvn"]?.jsonPrimitive?.intOrNull ?: -1
-                val date = b.jsonObject["dt"]?.jsonPrimitive?.contentOrNull
-                val note = b.jsonObject["nt"]?.jsonPrimitive?.contentOrNull
+                val chapterNo = b.jsonObject[JsonKeys.CHAPTER_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val fromVerseNo =
+                    b.jsonObject[JsonKeys.FROM_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val toVerseNo = b.jsonObject[JsonKeys.TO_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val date = b.jsonObject[JsonKeys.DATE]?.jsonPrimitive?.contentOrNull
+                val note = b.jsonObject[JsonKeys.NOTE]?.jsonPrimitive?.contentOrNull
 
                 if (chapterNo != -1 && fromVerseNo != -1 && toVerseNo != -1) {
-                    bookmarkList.add(BookmarkModel(
-                        id = -1,
-                        chapterNo = chapterNo,
-                        fromVerseNo = fromVerseNo,
-                        toVerseNo = toVerseNo,
-                        date = date,
-                    ).also {
-                        it.note = note
-                    })
+                    bookmarkList.add(
+                        BookmarkModel(
+                            id = -1,
+                            chapterNo = chapterNo,
+                            fromVerseNo = fromVerseNo,
+                            toVerseNo = toVerseNo,
+                            date = date,
+                        ).also {
+                            it.note = note
+                        })
                 }
             }
 

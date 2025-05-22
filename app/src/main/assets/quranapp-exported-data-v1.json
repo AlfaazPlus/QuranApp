@@ -1,0 +1,43 @@
+{
+  "bookmarks": [
+    {
+      "id": 2,
+      "cn": 32,
+      "fvn": 23,
+      "tvn": 23,
+      "dt": "2025-05-22 08:20:09",
+      "nt": "Sample note"
+    },
+    {
+      "id": 1,
+      "cn": 2,
+      "fvn": 127,
+      "tvn": 128,
+      "dt": "2025-05-22 08:20:17"
+    }
+  ],
+  "settings": {
+    "config.lang": "default",
+    "config.theme": "app.theme.default",
+    "config.dlSrc": "alfaazplus",
+    "reader.autoScrollSpeed": 10,
+    "reader.arabicTextEnabled": true,
+    "reader.style": 1,
+    "rec.repeat": false,
+    "rec.speed": 1,
+    "rec.reciter": "abdul-basit",
+    "rec.reciter_translation": "ibrahim-walk",
+    "rec.scroll_sync": true,
+    "rec.option_audio": 0,
+    "rec.continue_chapter": true,
+    "text.size_mult_tafsir": 1.03,
+    "text.size_mult_arabic": 1.18,
+    "text.size_mult_translation": 1.14,
+    "script.current": "uthmani",
+    "tafsir.current": "en_tafsir-ibn-kathir",
+    "translation.current": [
+      "en_102_the-clear-quran"
+    ]
+  },
+  "version": 1
+}

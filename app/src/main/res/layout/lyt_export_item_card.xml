@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="10dp"
-    android:background="@drawable/dr_bg_chapter_card"
+    android:background="@drawable/dr_bg_chapter_card_bordered"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="25dp">
@@ -23,7 +23,8 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:textColor="@color/colorText2"
         tools:text="Export or import your bookmarks with notes." />

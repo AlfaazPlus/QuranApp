@@ -34,7 +34,8 @@ object SPAppConfigs {
         }
     }
 
-    fun getThemeMode(ctx: Context): String? = sp(ctx).getString(KEY_APP_THEME, THEME_MODE_DEFAULT)
+    fun getThemeMode(ctx: Context): String =
+        sp(ctx).getString(KEY_APP_THEME, THEME_MODE_DEFAULT) ?: THEME_MODE_DEFAULT
 
     @SuppressLint("ApplySharedPref")
     @JvmStatic
@@ -46,7 +47,8 @@ object SPAppConfigs {
     }
 
     @JvmStatic
-    fun getLocale(ctx: Context): String = sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
+    fun getLocale(ctx: Context): String =
+        sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
 
     fun getUrlsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_URLS_VERSION, 0)
 
@@ -75,7 +77,8 @@ object SPAppConfigs {
         }
     }
 
-    fun getRecitationTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_RECITATION_TRANSLATIONS_VERSION, 0)
+    fun getRecitationTranslationsVersion(ctx: Context): Long =
+        sp(ctx).getLong(KEY_RECITATION_TRANSLATIONS_VERSION, 0)
 
     fun setRecitationTranslationsVersion(ctx: Context, version: Long) {
         sp(ctx).edit().apply {

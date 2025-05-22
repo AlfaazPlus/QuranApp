@@ -34,7 +34,7 @@ public class RecitationUtils {
     public static final String KEY_RECITATION_SPEED = "key.recitation.speed";
     public static final String KEY_RECITATION_REPEAT = "key.recitation.repeat";
     public static final String KEY_RECITATION_CONTINUE_CHAPTER = "key.recitation.continue_chapter";
-    public static final String KEY_RECITATION_VERSE_SYNC = "key.recitation.verse_sync";
+    public static final String KEY_RECITATION_SCROLL_SYNC = "key.recitation.verse_sync";
     public static final String KEY_RECITATION_AUDIO_OPTION = "key.recitation.option_audio";
     public static final float RECITATION_DEFAULT_SPEED = 1.0f;
     public static final boolean RECITATION_DEFAULT_REPEAT = false;

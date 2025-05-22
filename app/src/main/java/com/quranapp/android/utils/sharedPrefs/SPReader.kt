@@ -244,20 +244,20 @@ object SPReader {
     fun getRecitationScrollSync(context: Context): Boolean {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
 
-        if (!sp.contains(RecitationUtils.KEY_RECITATION_VERSE_SYNC)) {
-            setRecitationVerseSync(context, RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC)
+        if (!sp.contains(RecitationUtils.KEY_RECITATION_SCROLL_SYNC)) {
+            setRecitationScrollSync(context, RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC)
         }
 
         return sp.getBoolean(
-            RecitationUtils.KEY_RECITATION_VERSE_SYNC,
+            RecitationUtils.KEY_RECITATION_SCROLL_SYNC,
             RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC
         )
     }
 
-    fun setRecitationVerseSync(context: Context, sync: Boolean) {
+    fun setRecitationScrollSync(context: Context, sync: Boolean) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_VERSE_SYNC, sync)
+        editor.putBoolean(RecitationUtils.KEY_RECITATION_SCROLL_SYNC, sync)
         editor.apply()
     }
 
