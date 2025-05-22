@@ -2,6 +2,7 @@ package com.quranapp.android.utils.sharedPrefs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.core.content.edit
 import com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT
 
 object SPAppConfigs {
@@ -28,21 +29,18 @@ object SPAppConfigs {
 
     @JvmStatic
     fun setThemeMode(ctx: Context, themeMode: String?) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putString(KEY_APP_THEME, themeMode)
-            apply()
         }
     }
 
     fun getThemeMode(ctx: Context): String =
         sp(ctx).getString(KEY_APP_THEME, THEME_MODE_DEFAULT) ?: THEME_MODE_DEFAULT
 
-    @SuppressLint("ApplySharedPref")
     @JvmStatic
     fun setLocale(ctx: Context, locale: String?) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit(commit = true) {
             putString(KEY_APP_LANGUAGE, locale)
-            commit()
         }
     }
 
@@ -53,27 +51,24 @@ object SPAppConfigs {
     fun getUrlsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_URLS_VERSION, 0)
 
     fun setUrlsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putLong(KEY_URLS_VERSION, version)
-            apply()
         }
     }
 
     fun getTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_TRANSLATIONS_VERSION, 0)
 
     fun setTranslationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putLong(KEY_TRANSLATIONS_VERSION, version)
-            apply()
         }
     }
 
     fun getRecitationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_RECITATIONS_VERSION, 0)
 
     fun setRecitationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putLong(KEY_RECITATIONS_VERSION, version)
-            apply()
         }
     }
 
@@ -81,18 +76,16 @@ object SPAppConfigs {
         sp(ctx).getLong(KEY_RECITATION_TRANSLATIONS_VERSION, 0)
 
     fun setRecitationTranslationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putLong(KEY_RECITATIONS_VERSION, version)
-            apply()
         }
     }
 
     fun getTafsirsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_TAFSIRS_VERSION, 0)
 
     fun setTafsirsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putLong(KEY_TAFSIRS_VERSION, version)
-            apply()
         }
     }
 
@@ -104,12 +97,10 @@ object SPAppConfigs {
         ) ?: DOWNLOAD_SRC_DEFAULT
     }
 
-    @SuppressLint("ApplySharedPref")
     @JvmStatic
     fun setResourceDownloadSrc(ctx: Context, src: String?) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit(commit = true) {
             putString(KEY_RESOURCE_DOWNLOAD_SRC, src)
-            commit()
         }
     }
 }

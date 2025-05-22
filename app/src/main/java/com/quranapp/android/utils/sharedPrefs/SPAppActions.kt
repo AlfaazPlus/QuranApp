@@ -7,6 +7,7 @@
 package com.quranapp.android.utils.sharedPrefs
 
 import android.content.Context
+import androidx.core.content.edit
 
 object SPAppActions {
     private const val SP_APP_ACTION = "sp_app_action"
@@ -14,7 +15,8 @@ object SPAppActions {
     // Fetch translations forced in ActivityTranslationDownload.
     private const val KEY_TRANSLATIONS_FETCH_FORCE = "app.action.translations.fetch_force"
     private const val KEY_RECITATIONS_FETCH_FORCE = "app.action.recitations.fetch_force"
-    private const val KEY_RECITATION_TRANSLATIONS_FETCH_FORCE = "app.action.recitation_translations.fetch_force"
+    private const val KEY_RECITATION_TRANSLATIONS_FETCH_FORCE =
+        "app.action.recitation_translations.fetch_force"
     private const val KEY_TAFSIRS_FETCH_FORCE = "app.action.tafsirs.fetch_force"
     private const val KEY_URLS_FETCH_FORCE = "app.action.urls.fetch_force"
     private const val KEY_APP_ACTION_SP_PENDING = "app.action.pending"
@@ -24,9 +26,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setFetchTranslationsForce(ctx: Context, fetchForce: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_TRANSLATIONS_FETCH_FORCE, fetchForce)
-            apply()
         }
     }
 
@@ -38,9 +39,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setFetchRecitationsForce(ctx: Context, fetchForce: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_RECITATIONS_FETCH_FORCE, fetchForce)
-            apply()
         }
     }
 
@@ -52,9 +52,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setFetchRecitationTranslationsForce(ctx: Context, fetchForce: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_RECITATION_TRANSLATIONS_FETCH_FORCE, fetchForce)
-            apply()
         }
     }
 
@@ -66,9 +65,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setFetchTafsirsForce(ctx: Context, fetchForce: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_TAFSIRS_FETCH_FORCE, fetchForce)
-            apply()
         }
     }
 
@@ -80,9 +78,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setFetchUrlsForce(ctx: Context, fetchForce: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_URLS_FETCH_FORCE, fetchForce)
-            apply()
         }
     }
 
@@ -96,12 +93,12 @@ object SPAppActions {
     fun addToPendingAction(ctx: Context, action: String, victim: String?) {
         sp(ctx).apply {
             val pendingActionsSP = getStringSet(KEY_APP_ACTION_SP_PENDING, null)
-            val pendingActions = if (!pendingActionsSP.isNullOrEmpty()) HashSet(pendingActionsSP) else HashSet()
+            val pendingActions =
+                if (!pendingActionsSP.isNullOrEmpty()) HashSet(pendingActionsSP) else HashSet()
             pendingActions.add(makePendingActionKey(action, victim))
 
-            edit().apply {
+            edit() {
                 putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions)
-                apply()
             }
         }
     }
@@ -115,9 +112,8 @@ object SPAppActions {
                 val pendingActions = HashSet<String>(pendingActionsSP)
                 pendingActions.remove(makePendingActionKey(action, victim))
 
-                edit().apply {
+                edit() {
                     putStringSet(KEY_APP_ACTION_SP_PENDING, pendingActions)
-                    apply()
                 }
             }
         }
@@ -145,9 +141,8 @@ object SPAppActions {
 
     @JvmStatic
     fun setRequireOnboarding(ctx: Context, require: Boolean) {
-        sp(ctx).edit().apply {
+        sp(ctx).edit() {
             putBoolean(KEY_APP_ACTION_ONBOARDING_REQUIRED, require)
-            apply()
         }
     }
 }

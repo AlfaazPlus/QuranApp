@@ -2,6 +2,7 @@ package com.quranapp.android.utils.sharedPrefs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.core.content.edit
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -33,12 +34,11 @@ object SPReader {
     }
 
     @JvmStatic
-    @SuppressLint("ApplySharedPref")
     fun setArabicTextEnabled(context: Context, enabled: Boolean) {
         val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled)
-        editor.commit()
+        sp.edit(commit = true) {
+            putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled)
+        }
     }
 
     @JvmStatic
@@ -50,9 +50,9 @@ object SPReader {
     @JvmStatic
     fun setAutoScrollSpeed(context: Context, speed: Float) {
         val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, speed)
-        editor.apply()
+        sp.edit() {
+            putFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, speed)
+        }
     }
 
     @JvmStatic
@@ -72,9 +72,9 @@ object SPReader {
     @JvmStatic
     fun setSavedTextSizeMultArabic(context: Context, sizeMult: Float) {
         val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC, sizeMult)
-        editor.apply()
+        sp.edit() {
+            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC, sizeMult)
+        }
     }
 
     @JvmStatic
@@ -94,9 +94,9 @@ object SPReader {
     @JvmStatic
     fun setSavedTextSizeMultTransl(context: Context, sizeMult: Float) {
         val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL, sizeMult)
-        editor.apply()
+        sp.edit() {
+            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL, sizeMult)
+        }
     }
 
 
@@ -116,9 +116,9 @@ object SPReader {
     @JvmStatic
     fun setSavedTextSizeMultTafsir(context: Context, sizeMult: Float) {
         val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult)
-        editor.apply()
+        sp.edit() {
+            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult)
+        }
     }
 
     @JvmStatic
@@ -126,13 +126,14 @@ object SPReader {
         val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
 
         if (!sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
-            val editor = sp.edit()
-            editor.putStringSet(TranslUtils.KEY_TRANSLATIONS, TranslUtils.defaultTranslationSlugs())
-            editor.apply()
+            sp.edit() {
+                putStringSet(TranslUtils.KEY_TRANSLATIONS, TranslUtils.defaultTranslationSlugs())
+            }
         }
 
         if (sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
-            return HashSet(sp.getStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet()))
+            return sp.getStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet())?.let { HashSet(it) }
+                ?: HashSet()
         }
 
         return HashSet()
@@ -141,9 +142,9 @@ object SPReader {
     @JvmStatic
     fun setSavedTranslations(context: Context, translSlugsSet: Set<String>) {
         val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet(translSlugsSet))
-        editor.apply()
+        sp.edit() {
+            putStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet(translSlugsSet))
+        }
     }
 
     @JvmStatic
@@ -155,9 +156,9 @@ object SPReader {
     @JvmStatic
     fun setSavedRecitationSlug(context: Context, recitation: String) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(RecitationUtils.KEY_RECITATION_RECITER, recitation)
-        editor.apply()
+        sp.edit() {
+            putString(RecitationUtils.KEY_RECITATION_RECITER, recitation)
+        }
 
         setSavedRecitationSlug(recitation)
     }
@@ -171,9 +172,9 @@ object SPReader {
     @JvmStatic
     fun setSavedRecitationTranslationSlug(context: Context, slug: String) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER, slug)
-        editor.apply()
+        sp.edit() {
+            putString(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER, slug)
+        }
 
         setSavedRecitationTranslationSlug(slug)
     }
@@ -193,9 +194,9 @@ object SPReader {
 
     fun setRecitationSpeed(context: Context, speed: Float) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putFloat(RecitationUtils.KEY_RECITATION_SPEED, speed)
-        editor.apply()
+        sp.edit() {
+            putFloat(RecitationUtils.KEY_RECITATION_SPEED, speed)
+        }
     }
 
     fun getRecitationRepeatVerse(context: Context): Boolean {
@@ -213,9 +214,9 @@ object SPReader {
 
     fun setRecitationRepeatVerse(context: Context, repeatVerse: Boolean) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_REPEAT, repeatVerse)
-        editor.apply()
+        sp.edit() {
+            putBoolean(RecitationUtils.KEY_RECITATION_REPEAT, repeatVerse)
+        }
     }
 
     fun getRecitationContinueChapter(context: Context): Boolean {
@@ -236,9 +237,9 @@ object SPReader {
 
     fun setRecitationContinueChapter(context: Context, continueChapter: Boolean) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER, continueChapter)
-        editor.apply()
+        sp.edit() {
+            putBoolean(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER, continueChapter)
+        }
     }
 
     fun getRecitationScrollSync(context: Context): Boolean {
@@ -256,9 +257,9 @@ object SPReader {
 
     fun setRecitationScrollSync(context: Context, sync: Boolean) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putBoolean(RecitationUtils.KEY_RECITATION_SCROLL_SYNC, sync)
-        editor.apply()
+        sp.edit() {
+            putBoolean(RecitationUtils.KEY_RECITATION_SCROLL_SYNC, sync)
+        }
     }
 
     @JvmStatic
@@ -277,9 +278,9 @@ object SPReader {
 
     fun setRecitationAudioOption(context: Context, option: Int) {
         val sp = context.getSharedPreferences(SP_RECITATION_OPTIONS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option)
-        editor.apply()
+        sp.edit() {
+            putInt(RecitationUtils.KEY_RECITATION_AUDIO_OPTION, option)
+        }
     }
 
     @JvmStatic
@@ -296,9 +297,9 @@ object SPReader {
     @JvmStatic
     fun setSavedScript(context: Context, font: String?) {
         val sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(QuranScriptUtils.KEY_SCRIPT, font)
-        editor.apply()
+        sp.edit() {
+            putString(QuranScriptUtils.KEY_SCRIPT, font)
+        }
     }
 
     @JvmStatic
@@ -316,9 +317,9 @@ object SPReader {
     @JvmStatic
     fun setSavedReaderStyle(context: Context, readerStyle: Int) {
         val sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putInt(Keys.READER_KEY_READER_STYLE, readerStyle)
-        editor.apply()
+        sp.edit() {
+            putInt(Keys.READER_KEY_READER_STYLE, readerStyle)
+        }
     }
 
     @JvmStatic
@@ -329,9 +330,9 @@ object SPReader {
 
     fun setSavedTafsirKey(context: Context, tafsirKey: String) {
         val sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(TafsirUtils.KEY_TAFSIR, tafsirKey)
-        editor.apply()
+        sp.edit() {
+            putString(TafsirUtils.KEY_TAFSIR, tafsirKey)
+        }
 
         setSavedTafsirKey(tafsirKey)
     }
