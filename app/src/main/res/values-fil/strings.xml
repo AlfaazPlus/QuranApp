@@ -298,4 +298,75 @@
     <string name="strMsgUpdateDownloaded">NA-DOWNLOAD NA ANG UPDATE! Mangyaring i-install upang makumpleto ang pag-update.</string>
     <string name="strMsgVerseCredsInvalid">Ang mga kredensyal ng taludtod ay hindi wasto.</string>
     <string name="strMsgUpdateAvailable2Continue">KINAKAILANGAN ANG UPDATE!\nPaki-update ang app para magpatuloy.</string>
+    <string name="desc_votd_widget">Kumuha ng bagong taludtod araw-araw</string>
+    <string name="autoScroll">Auto scroll</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Hindi makapag-auto scroll habang nagpe-play ang recitation.</string>
+    <string name="msgClearReadHistory">I-clear ang kasaysayan ng pagbasa</string>
+    <string name="titleResourceDownloadSource">Pinagmulan ng pag-download ng mapagkukunan</string>
+    <string name="msgResourceDownloadSource">Gamitin ang opsyong ito upang mag-download ng data ng Quran mula sa ibang pinagmulan kung hindi gumagana ang isa</string>
+    <string name="titleArabicTextToggle">Ipakita ang Arabic Verse Text</string>
+    <string name="strMsgBookmarkNoItems">Walang mga bookmark</string>
+    <string name="strMsgBookmarkDeleteSelected">Aalisin ang mga napiling bookmark.</string>
+    <string name="strMsgBookmarkDeleteAll">Ang lahat ng mga bookmark ay aalisin.</string>
+    <string name="strTitleReadHistory">Basahin ang Kasaysayan</string>
+    <string name="strMsgReadShowupHere">Lalabas dito ang iyong nabasang history.</string>
+    <string name="strMsgReadHistoryRemoveFailed">Nabigong alisin ang kasaysayan ng pagbabasa.</string>
+    <string name="strMsgReadHistoryRemovedAlready">Inalis na ang kasaysayan ng pagbabasa.</string>
+    <string name="strMsgReadHistoryNoItems">Walang nabasang kasaysayan</string>
+    <string name="strMsgReadHistoryDeleteSelected">Aalisin ang mga piling nabasang kasaysayan.</string>
+    <string name="titleTafsirCleanup">Nagbigay ka ba ng paliwanag?</string>
+    <string name="msgTafsirCleanup" formatted="false">Ang lahat ng nakaimbak na tafsir mula sa %s ay tatanggalin.</string>
+    <string name="nFiles" formatted="false">%d files</string>
+    <string name="nothingToCleanup">Walang dapat linisin.</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d script and %2$d font</string>
+    <string name="nItem" formatted="false">%d item</string>
+    <string name="onboardDescLanguage">I-personalize ang app sa iyong wika. Maaari mong baguhin ito palagi sa ibang pagkakataon.</string>
+    <string name="msgChapterAddedToFavourites">Idinagdag ang Surah sa mga paborito.</string>
+    <string name="msgChapterRemovedFromFavourites">Inalis ang Surah sa mga paborito.</string>
+    <string name="textTranslationReciterInfo">Wika: %1$s \nAklat: %2$s</string>
+    <string name="textNoLogsFound">Walang nakitang mga log</string>
+    <string name="msgRemovedFromFavourites">Inalis sa mga paborito</string>
+    <string name="msgScriptCleanup" formatted="false">%s script at lahat ng nakaimbak nitong font ay tatanggalin. Kakailanganin mong muling i-download upang magamit ang mga ito.</string>
+    <string name="titleChapterInfoCleanup">I-clear ang impormasyon ng kabanata?</string>
+    <string name="msgChapterInfoCleanup">Ang lahat ng naka-save na impormasyon ng kabanata ay tatanggalin.</string>
+    <string name="nItems" formatted="false">%d items</string>
+    <string name="noItems">Walang item</string>
+    <string name="verseSyncOn">Pag-sync ng taludtod : NAKA-ON</string>
+    <string name="verseSyncOff">Pag-sync ng taludtod : NAKA-OFF</string>
+    <string name="place" formatted="false">%d lugar</string>
+    <string name="places" formatted="false">%d lugars</string>
+    <string name="inPlaces" formatted="false">in %s</string>
+    <string name="inPlacesMore" formatted="false">sa %1$s &amp; %2$d pa</string>
+    <string name="onboardDescTheme">Maaari mong baguhin ito palagi sa ibang pagkakataon.</string>
+    <string name="onboardDescTranslations">Maaari mong baguhin ito palagi sa ibang pagkakataon. Maaari kang mag-download ng higit pang mga pagsasalin mula sa mga setting.</string>
+    <string name="labelArabic">Arabic</string>
+    <string name="labelTranslation">Pagsasalin</string>
+    <string name="titleAddToFavourites">Idagdag sa mga paborito</string>
+    <string name="msgAddedToFavourites">Idinagdag sa mga paborito</string>
+    <string name="titleRemoveFromFavourites">Alisin sa mga paborito</string>
+    <string name="msgNoFavouriteChapters">Magdagdag ng isang kabanata sa mga paborito upang makita dito.</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">Nabigong i-download ang \"%1$s\" para sa reciter na \"%2$s\".</string>
+    <string name="msgExportEmpty">Walang mga bookmark na ie-export</string>
+    <string name="msgImportFailed">Nabigong mag-import. Hindi sinusuportahang file.</string>
+    <string name="msgImportSuccess">Matagumpay na na-import</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">Ang lahat ng pagbigkas ng \"%1$s\" para sa reciter na \"%2$s\" ay tatanggalin.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">Tinanggal ang mga pagbigkas ng \"%1$s\" para sa reciter na \"%2$s\".</string>
+    <string name="msgInvalidParams">Di-wastong mga param</string>
+    <string name="msgTafsirLoadFailed">Nabigong i-load ang tafsir</string>
+    <string name="strPreviewTextTransl">Sa Ngalan ng Allâh, ang Pinakamaawain, ang Pinakamaawain</string>
+    <string name="msgClearSearchHistory">I-clear ang kasaysayan ng paghahanap</string>
+    <string name="msgArabicTextToggle">Ang pag-disable sa feature na ito ay magtatago ng Arabic verse text mula sa buong app.</string>
+    <string name="labelExport">I-export</string>
+    <string name="labelImport">Mag-import</string>
+    <string name="msgExportImportBookmarks">I-export o i-import ang iyong mga bookmark kasama ng mga tala.</string>
+    <string name="msgExportSuccess">Matagumpay na na-export</string>
+    <string name="msgRecitaionDownloaded" formatted="false">Na-download ang \"%1$s\" para sa reciter na \"%2$s\".</string>
+    <string name="labelImportExportEverything">Lahat</string>
+    <string name="warnImportSettings">BABALA: I-override ng pag-import ng mga setting ang iyong kasalukuyang mga setting.</string>
+    <string name="startAutoScroll">Simulan ang auto scroll</string>
+    <string name="autoScrollSpeed">Itakda ang bilis</string>
+    <string name="labelImportExportBookmarks">Mga Bookmark lang</string>
+    <string name="onboardDescReciter">Maaari mong baguhin ito palagi sa ibang pagkakataon. Makakahanap ka ng higit pang mga reciter sa mga setting.</string>
+    <string name="strMsgReadHistoryRemoved">Matagumpay na naalis ang kasaysayan ng pagbabasa.</string>
+    <string name="labelImportExportSettings">Mga Setting lang</string>
 </resources>
