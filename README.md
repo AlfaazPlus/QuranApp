@@ -11,11 +11,10 @@ width="100%">](https://techforpalestine.org/learn-more)
 
 The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/AlfaazPlus/QuranApp)
 [![CI](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml/badge.svg)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/release/AlfaazPlus/QuranApp?include_prereleases&sort=semver&color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/releases/latest)
 [![Downloads (QuranApp)](https://img.shields.io/github/downloads/AlfaazPlus/QuranApp/total?logo=github&color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/releases/latest)
-[![Issues](https://img.shields.io/github/issues/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/commits/master)
 [![License](https://img.shields.io/github/license/AlfaazPlus/QuranApp?color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/blob/master/LICENSE)
 
 <hr />
@@ -105,7 +104,7 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
 ## Contributing
 
-If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
+If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started. For a more comprehensive guide to the codebase, please refer to the [DeepWiki documentation](https://deepwiki.com/AlfaazPlus/QuranApp).
 
 ## App Translations
 App translations are hosted at Weblate. If you want to translate the app in your language, you may visit [here](https://hosted.weblate.org/projects/QuranApp)
