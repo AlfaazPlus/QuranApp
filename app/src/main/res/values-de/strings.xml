@@ -261,7 +261,7 @@
     <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
     <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Schriftsystem: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: %1$d heruntergeladen von insgesamt %2$d (~%3$dMB verbleibend)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: ~%dMB</string>
     <string name="msgDownloadFailed">Download fehlgeschlagen</string>
     <string name="msgDownloadingScript">Schriftsystem herunterladen</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>

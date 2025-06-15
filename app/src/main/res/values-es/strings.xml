@@ -305,7 +305,7 @@
     <string name="strTitleRecitations">Recitales</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="labelDownload">Descargar</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fuentes: %1$d descargadas del total %2$d (~%3$dMB restantes)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fuentes: ~%dMB</string>
     <string name="titleDownloadScriptResources">¿Descargar recursos para este script\?</string>
     <string name="msgScriptFontsDownloaded">Los scripts y las fuentes se han descargado correctamente.</string>
     <string name="labelBackgroundDownload">Descarga de fondo</string>

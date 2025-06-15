@@ -293,7 +293,7 @@
     <string name="titleDownloadScriptResources">تنزيل المصادر لهذا الخط؟</string>
     <string name="msgDownloadKFQPCResources">يجب تنزيل المصادر التالية قبل أن تتمكن من استخدام هذا الخط:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">رسم %s ( ~1مب)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">الخطوط: تم تنزيل %1$d من %2$d (المتبقي %3$d مب)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">الخطوط: ~%dMB</string>
     <string name="msgDownloadingFonts">يتم تنزيل الخطوط</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d من %2$d الخطوط تم تنزيلها</string>
     <string name="msgDownloadingResource" formatted="false">جار تنزيل %s</string>

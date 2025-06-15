@@ -9,6 +9,7 @@ import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
+import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
@@ -20,8 +21,12 @@ import java.net.URLConnection
 import java.util.*
 
 
-open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceContent) : WebViewClientCompat() {
-    override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceContent) :
+    WebViewClientCompat() {
+    override fun shouldInterceptRequest(
+        view: WebView,
+        request: WebResourceRequest
+    ): WebResourceResponse? {
         try {
             val webResourceResponse = handleRequest(view, request)
             if (webResourceResponse != null) {
@@ -42,15 +47,23 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         var data: InputStream? = null
         val uriStr = uri.toString().lowercase(Locale.getDefault())
         when (host) {
-            "assets-file" -> data = ctx.assets.open(uri.toString().substring("https://assets-file/".length))
+            "assets-file" -> data =
+                ctx.assets.open(uri.toString().substring("https://assets-file/".length))
+
             "assets-font" -> {
                 if (uriStr.contains("quran-arabic")) {
                     val savedScript = SPReader.getSavedScript(view.context)
                     val decorator = activity.mVerseDecorator
                     if (decorator.isKFQPCScript()) {
                         val pageNo = uri.lastPathSegment!!.split("_").last().toInt()
-                        val file = File(decorator.fileUtils.getKFQPCScriptFontDir(savedScript), pageNo.toKFQPCFontFilename())
-                        data = FileInputStream(file)
+                        val fontsDir = decorator.fileUtils.getKFQPCScriptFontDir(savedScript)
+                        val file = File(fontsDir, pageNo.toKFQPCFontFilename())
+
+                        if (file.length() > 0) {
+                            data = file.inputStream()
+                        } else {
+                            data = File(fontsDir, pageNo.toKFQPCFontFilenameOld()).inputStream()
+                        }
                     } else {
                         data = ctx.resources.openRawResource(+savedScript.getQuranScriptFontRes())
                     }
@@ -67,12 +80,12 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         headers["Access-Control-Allow-Origin"] = "*"
 
         return WebResourceResponse(
-                URLConnection.guessContentTypeFromName(uri.path),
-                "utf-8",
-                200,
-                "OK",
-                headers,
-                data
+            URLConnection.guessContentTypeFromName(uri.path),
+            "utf-8",
+            200,
+            "OK",
+            headers,
+            data
         )
     }
 
@@ -91,13 +104,22 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
             }
 
             if (host == "quranapp.verse.ref") {
-                activity.mActionController.showReferenceSingleVerseOrRange(activity.slugs, chapterNo, Pair(fromVerse, toVerse))
+                activity.mActionController.showReferenceSingleVerseOrRange(
+                    activity.slugs,
+                    chapterNo,
+                    Pair(fromVerse, toVerse)
+                )
             } else if (host == "quranapp.verse.reader") {
-                activity.startActivity(ReaderFactory.prepareVerseRangeIntent(chapterNo, fromVerse, toVerse).apply {
-                    setClass(activity, ActivityReader::class.java)
-                    putExtra(READER_KEY_TRANSL_SLUGS, activity.slugs.toTypedArray<String>())
-                    putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false)
-                })
+                activity.startActivity(
+                    ReaderFactory.prepareVerseRangeIntent(
+                        chapterNo,
+                        fromVerse,
+                        toVerse
+                    ).apply {
+                        setClass(activity, ActivityReader::class.java)
+                        putExtra(READER_KEY_TRANSL_SLUGS, activity.slugs.toTypedArray<String>())
+                        putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false)
+                    })
             }
         }
 

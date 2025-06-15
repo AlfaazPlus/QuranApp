@@ -305,7 +305,7 @@
     <string name="titleDownloadScriptResources">دانلود منابع برای این اسکریپت؟</string>
     <string name="onboardDescReciter">همیشه می توانید بعداً این را تغییر دهید. می توانید قاریان بیشتری را در تنظیمات پیدا کنید.</string>
     <string name="onboardDescLanguage">برنامه را به زبان خود شخصی سازی کنید. همیشه می توانید بعداً این را تغییر دهید.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">قلم‌ها: %1$d دانلود از کل %2$d (~%3$dMB باقی مانده)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">قلم‌ها: ~%dMB</string>
     <string name="copiedToClipboard">در کلیپ بورد کپی شد.</string>
     <string name="textDownloading">در حال بارگیری …</string>
     <string name="createIssue">ایجاد موضوع</string>

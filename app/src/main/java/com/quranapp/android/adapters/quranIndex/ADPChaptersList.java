@@ -4,18 +4,22 @@
 
 package com.quranapp.android.adapters.quranIndex;
 
-import android.content.Context;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import static android.view.ViewGroup.LayoutParams;
 import static android.view.ViewGroup.MarginLayoutParams;
+
+import android.content.Context;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.frags.readerindex.BaseFragReaderIndex;
+import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.viewModels.FavChaptersViewModel;
 import com.quranapp.android.widgets.chapterCard.ChapterCard;
@@ -99,8 +103,12 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
         public void bind(int chapterNo) {
             mChapterCard.setChapterNumber(chapterNo);
 
-            String chapterName = mFragment.getQuranMeta().getChapterName(itemView.getContext(), chapterNo);
-            String nameTranslation = mFragment.getQuranMeta().getChapterNameTranslation(chapterNo);
+            QuranMeta meta = mFragment.getQuranMeta();
+            QuranMeta.ChapterMeta chapterMeta = meta.getChapterMeta(chapterNo);
+
+            CharSequence chapterName = meta.getChapterName(itemView.getContext(), chapterNo);
+
+            String nameTranslation = meta.getChapterNameTranslation(chapterNo);
             mChapterCard.setName(chapterName, nameTranslation);
 
             mChapterCard.setOnClickListener(v -> ReaderFactory.startChapter(v.getContext(), chapterNo));
@@ -108,7 +116,8 @@ public class ADPChaptersList extends ADPReaderIndexBase<ADPChaptersList.VHChapte
                 Context ctx = itemView.getContext();
 
                 FavChaptersViewModel model = mFragment.getFavChaptersModel();
-                if (model.isAddedToFavorites(ctx, chapterNo)) model.removeFromFavourites(ctx, chapterNo);
+                if (model.isAddedToFavorites(ctx, chapterNo))
+                    model.removeFromFavourites(ctx, chapterNo);
                 else model.addToFavourites(ctx, chapterNo);
             });
         }

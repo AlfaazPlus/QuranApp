@@ -15,7 +15,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -43,6 +46,10 @@ public final class QuranMetaParserJSON {
 
     private static final String JUZS_TAG_JUZS = "juzs";
     private static final String PAGES_TAG_PAGES = "pages";
+    private static final String SEJDAH_TAG_SEJDAH = "sajdas";
+    private static final String SEJDAH_ATTR_INDEX = "index";
+    private static final String SEJDAH_ATTR_TYPE = "type";
+    private static final String SEJDAH_ATTR_VERSE = "verse";
 
     public void parseMeta(Context ctx, AtomicReference<QuranMeta> quranMetaRef, Runnable postRunnable) {
         new Thread(() -> {
@@ -64,13 +71,30 @@ public final class QuranMetaParserJSON {
     }
 
     private QuranMeta parseMetaInternal(JSONObject metaObject) throws JSONException {
+        Map<Integer, List<QuranMeta.SejdaMeta>> sejdaMap = new HashMap<>();
         SparseArray<QuranMeta.ChapterMeta> chapterMetaMap = new SparseArray<>();
         SparseArray<QuranMeta.JuzMeta> juzMetaMap = new SparseArray<>();
         SparseArray<QuranMeta.PageMeta> pageMetaMap = new SparseArray<>();
 
+        JSONArray sejdas = metaObject.getJSONArray(SEJDAH_TAG_SEJDAH);
+        for (int i = 0, l = sejdas.length(); i < l; i++) {
+            JSONObject sejdaObj = sejdas.getJSONObject(i);
+            QuranMeta.SejdaMeta sejdaMeta = makeSejdaMeta(sejdaObj);
+
+            List<QuranMeta.SejdaMeta> sejdaList = sejdaMap.computeIfAbsent(sejdaMeta.chapterNo, k -> new ArrayList<>());
+
+            sejdaList.add(sejdaMeta);
+        }
+
         JSONArray chapters = metaObject.getJSONArray(CHAPTERS_TAG_CHAPTERS);
         for (int i = 0, l = chapters.length(); i < l; i++) {
-            QuranMeta.ChapterMeta chapterMeta = makeChapterMeta(chapters.getJSONObject(i));
+            JSONObject chapterObj = chapters.getJSONObject(i);
+            int chapterNo = chapterObj.getInt(ATTR_INDEX);
+            QuranMeta.ChapterMeta chapterMeta = makeChapterMeta(
+                chapterNo,
+                chapterObj,
+                sejdaMap.getOrDefault(chapterNo, new ArrayList<>())
+            );
             chapterMetaMap.put(chapterMeta.chapterNo, chapterMeta);
         }
 
@@ -93,9 +117,9 @@ public final class QuranMetaParserJSON {
         return quranMeta;
     }
 
-    private QuranMeta.ChapterMeta makeChapterMeta(JSONObject chapterObj) throws JSONException {
+    private QuranMeta.ChapterMeta makeChapterMeta(int chapterNo, JSONObject chapterObj, List<QuranMeta.SejdaMeta> sejdaList) throws JSONException {
         QuranMeta.ChapterMeta chapterMeta = new QuranMeta.ChapterMeta();
-        chapterMeta.chapterNo = chapterObj.getInt(ATTR_INDEX);
+        chapterMeta.chapterNo = chapterNo;
         chapterMeta.verseCount = chapterObj.getInt(CHAPTERS_ATTR_VERSE_COUNT);
         chapterMeta.rukuCount = chapterObj.getInt(CHAPTERS_ATTR_RUKU_COUNT);
         chapterMeta.startsVerseId = chapterObj.getInt(CHAPTERS_ATTR_VERSE_START) + 1;
@@ -103,6 +127,7 @@ public final class QuranMetaParserJSON {
         chapterMeta.revelationType = chapterObj.getString(CHAPTERS_ATTR_REVLTN_TYPE);
         chapterMeta.pageRange = prepareRangeItem(chapterObj.getString(ATTR_PAGES));
         chapterMeta.tags = chapterObj.getString(CHAPTERS_ATTR_TAGS);
+        chapterMeta.sejdaList = sejdaList;
 
         StringBuilder nameTags = new StringBuilder();
 
@@ -195,5 +220,16 @@ public final class QuranMetaParserJSON {
         pageMeta.chapters = prepareRangeItem(pageObj.getString(ATTR_CHAPTERS));
         pageMeta.verseRangeOfChapter = prepareVersesOfChapters(pageObj.getString(ATTR_CHAPTERS_VERSES));
         return pageMeta;
+    }
+
+    private QuranMeta.SejdaMeta makeSejdaMeta(JSONObject sejdaObj) throws JSONException {
+        String type = sejdaObj.getString(SEJDAH_ATTR_TYPE);
+        String verse = sejdaObj.getString(SEJDAH_ATTR_VERSE);
+
+        String[] parts = verse.split(":");
+
+        int chapterNo = Integer.parseInt(parts[0]);
+        int verseNo = Integer.parseInt(parts[1]);
+        return new QuranMeta.SejdaMeta(chapterNo, verseNo, type.equals("obligatory"));
     }
 }

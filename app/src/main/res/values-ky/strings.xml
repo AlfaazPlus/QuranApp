@@ -203,7 +203,7 @@
     <string name="strSalamShort">Салам</string>
     <string name="titleDownloadScriptResources">Бул шрифт үчүн керектүү ресурстар жүктөлсүнбү?</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Шрифт: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттер: %1$d/%2$d жүктөлдү (~%3$dМБ калды)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттер: ~%dMB</string>
     <string name="msgDownloadFailed">Жүктөө ийгиликсиз болду</string>
     <string name="msgDownloadingScript">Шрифт жүктөлүп жатат</string>
     <string name="msgDownloadingFonts">Шрифттер жүктөлүп жатат</string>

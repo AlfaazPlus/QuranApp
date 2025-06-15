@@ -330,7 +330,7 @@
     <string name="msgVerseReminderAlarmPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ അലാറം അനുമതി ആവശ്യമാണ്.</string>
     <string name="chapterInfoCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത അധ്യായ വിവരങ്ങൾ ഇല്ലാതാക്കാം.</string>
     <string name="createIssue">ഇഷ്യൂ സൃഷ്ടിക്കുക</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ഫോണ്ടുകൾ : %1$d ആകെ %2$d ഡൗൺലോഡ് ചെയ്തു... (~%3$dMB ബാക്കി)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ഫോണ്ടുകൾ : ~%dMB</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d ന്റെ %2$d</string>
     <string name="pasteCrashLogGithubIssue">ക്രാഷ് ലോഗ് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി. ദയവായി ഇത് ഗിറ്റ്ഹബ് ഇഷ്യൂയിൽ പേസ്റ്റ് ചെയ്യുക.</string>
     <string name="lastCrashLog">അവസാന ക്രാഷ് ലോഗ്</string>

@@ -246,7 +246,7 @@
     <string name="strMsgEditShareTransl">સેટિંગ્સમાંથી પસંદ કરેલા અનુવાદો, ફક્ત અહીં જ બતાવવામાં આવ્યા છે.</string>
     <string name="strMsgEditShareLongTransl">અનુવાદ ઘણો લાંબો છે, તે યોગ્ય રીતે ફિટ ન પણ હોઈ શકે.</string>
     <string name="strMsgReferenceDuas">કુરાનમાંથી કેટલીક દુઆઓ એકઠી કરી.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ફોન્ટ્સ: કુલ %2$dમાંથી %1$d ડાઉનલોડ થયા (~%3$dMB બાકી)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ફોન્ટ્સ: ~%dMB</string>
     <string name="msgDownloadKFQPCResources">તમે આ સ્ક્રિપ્ટનો ઉપયોગ કરી શકો તે પહેલાં નીચેના સંસાધનોને ડાઉનલોડ કરવાની જરૂર છે:</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d માંથી %1$d</string>
     <string name="textDownloaded">ડાઉનલોડ કરેલ</string>

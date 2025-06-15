@@ -20,6 +20,7 @@ swipeRefreshLayout = "1.7.2.4"
 retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
+commonsCompress = "1.24.0"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,3 +62,5 @@ srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
+
+commonsCompress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }

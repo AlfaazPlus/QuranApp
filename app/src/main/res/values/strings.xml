@@ -327,10 +327,11 @@
     <string name="titleDownloadScriptResources">Download resources for this script\?</string>
     <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: %1$d downloaded of total %2$d (~%3$dMB remaining)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: ~%dMB</string>
     <string name="msgDownloadFailed">Download failed</string>
     <string name="msgDownloadingScript">Downloading script</string>
     <string name="msgDownloadingFonts">Downloading fonts</string>
+    <string name="msgExtractingFonts">Extracting fonts</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d of %2$d fonts downloaded</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d of %2$d</string>
     <string name="msgDownloadingResource" formatted="false">Downloading %s</string>

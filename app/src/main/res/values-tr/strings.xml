@@ -334,7 +334,7 @@
     <string name="strMsgReferenceInQuran" formatted="false">Kur\'an\'da %s</string>
     <string name="strMsgReferenceDuas">Kur\'an\'dan bazı dualar bir araya getirildi.</string>
     <string name="msgDownloadKFQPCResources">Bu hattı kullanabilmek için öncelikle gerekli olan şu kaynaklar indirilmeli:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Yazı tipleri: %1$d/%2$d indirildi (~%3$dMB kaldı)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Yazı tipleri: ~%dMB</string>
     <string name="msgDownloadFailed">İndirme başarısız</string>
     <string name="msgVerseReminderAlarmPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için alarm izni gerekiyor.</string>
     <string name="github">GitHub</string>
