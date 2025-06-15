@@ -301,7 +301,7 @@
     <string name="strMsgReferenceDuas">Recolhi algumas duas do Alcorão.</string>
     <string name="strSalam">Assalam Alaikum</string>
     <string name="titleDownloadScriptResources">Descarregar recursos para este script?</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fontes: %1$d descarregadas de um total de %2$d (~%3$dMB restantes)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fontes: ~%dMB</string>
     <string name="textDownloading">Transferindo…</string>
     <string name="titleStorageCleanup">Limpeza do armazenamento</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d ficheiros de recitação armazenados de %2$d recitadores podem ser libertados.</string>

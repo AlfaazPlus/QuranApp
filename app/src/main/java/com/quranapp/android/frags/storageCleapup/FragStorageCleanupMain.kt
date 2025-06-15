@@ -10,6 +10,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.databinding.FragStorageCleanupMainBinding
 import com.quranapp.android.databinding.LytStorageCleanupItemCardBinding
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
@@ -109,13 +110,7 @@ class FragStorageCleanupMain : FragStorageCleanupBase() {
     }
 
     private fun checkScripts(parentBinding: FragStorageCleanupMainBinding) {
-        var scriptsCount = 0
-
-        fileUtils.scriptDir.listFiles()?.filter { it.isFile }?.forEach { scriptFile ->
-            if (scriptFile.length() > 0) {
-                scriptsCount++
-            }
-        }
+        val scriptsCount = fileUtils.scriptFontDir.listFiles()?.count { it.isDirectory }
 
         if (scriptsCount == 0) return
 

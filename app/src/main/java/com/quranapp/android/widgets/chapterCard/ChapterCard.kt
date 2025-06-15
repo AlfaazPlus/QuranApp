@@ -202,13 +202,13 @@ open class ChapterCard @JvmOverloads constructor(
         updateFavIcon()
     }
 
-    fun setName(chapterName: String, chapterTransl: String) {
+    fun setName(chapterName: CharSequence, chapterTransl: String) {
         findViewById<TextView?>(R.id.chapterCardName)?.let {
             it.text = makeName(context, chapterName, chapterTransl)
         }
     }
 
-    private fun makeName(ctx: Context, chapterName: String, chapterTransl: String?): CharSequence {
+    private fun makeName(ctx: Context, chapterName: CharSequence, chapterTransl: String?): CharSequence {
         val nameSS = SpannableString(chapterName)
         setSpan(
             nameSS,

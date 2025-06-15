@@ -14,6 +14,7 @@ import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
+import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.verse.VerseUtils
@@ -54,7 +55,8 @@ class ReaderVerseDecorator(private val ctx: Context) {
         savedTextSizeTranslMultiplier = SPReader.getSavedTextSizeMultTransl(ctx)
 
         savedScript = SPReader.getSavedScript(ctx)
-        textSizeArabic = ctx.getDimension(savedScript.getQuranScriptVerseTextSizeMediumRes()).toFloat()
+        textSizeArabic =
+            ctx.getDimension(savedScript.getQuranScriptVerseTextSizeMediumRes()).toFloat()
     }
 
     fun isKFQPCScript(): Boolean {
@@ -72,12 +74,15 @@ class ReaderVerseDecorator(private val ctx: Context) {
                 if (fontsArabicKFQPC[pageNo] != null) continue
 
                 try {
-                    fontsArabicKFQPC[pageNo] = Typeface.createFromFile(
-                        File(
-                            fileUtils.getKFQPCScriptFontDir(savedScript),
-                            pageNo.toKFQPCFontFilename()
-                        )
-                    )
+                    val fontsDir = fileUtils.getKFQPCScriptFontDir(savedScript)
+                    val fontFile = File(fontsDir, pageNo.toKFQPCFontFilename())
+
+                    if (fontFile.length() > 0L) {
+                        fontsArabicKFQPC[pageNo] = Typeface.createFromFile(fontFile)
+                    } else {
+                        fontsArabicKFQPC[pageNo] =
+                            Typeface.createFromFile(File(fontsDir, pageNo.toKFQPCFontFilenameOld()))
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -115,7 +120,12 @@ class ReaderVerseDecorator(private val ctx: Context) {
             onClick
         )
 
-    fun setupTranslText(translText: String, translClr: Int, txtSize: Int, isUrdu: Boolean): SpannableString {
+    fun setupTranslText(
+        translText: String,
+        translClr: Int,
+        txtSize: Int,
+        isUrdu: Boolean
+    ): SpannableString {
         return VerseUtils.decorateSingleTranslSimple(
             translText,
             translClr,

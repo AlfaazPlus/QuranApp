@@ -7,11 +7,7 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptResPath
-import com.quranapp.android.utils.reader.isKFQPCScript
-import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,21 +49,9 @@ class QuranParser(private val ctx: Context) {
         quranMeta: QuranMeta?,
         quranRef: AtomicReference<Quran>
     ) {
-        val quranStringContent: String = if (scriptKey.isKFQPCScript()) {
-            val fileUtils = FileUtils.newInstance(ctx)
-            val scriptFile = fileUtils.getScriptFile(scriptKey)
-
-            if (scriptFile.length() > 0) {
-                scriptFile.readText()
-            } else {
-                SPReader.setSavedScript(ctx, QuranScriptUtils.SCRIPT_DEFAULT)
-                StringUtils.readInputStream(
-                    ctx.assets.open(QuranScriptUtils.SCRIPT_DEFAULT.getQuranScriptResPath())
-                )
-            }
-        } else {
-            StringUtils.readInputStream(ctx.assets.open(scriptKey.getQuranScriptResPath()))
-        }
+        val quranStringContent: String = StringUtils.readInputStream(
+            ctx.assets.open(scriptKey.getQuranScriptResPath())
+        )
 
         val quranElement = JsonHelper.json.parseToJsonElement(quranStringContent)
 
@@ -77,7 +61,11 @@ class QuranParser(private val ctx: Context) {
     }
 
     @Throws(java.lang.Exception::class)
-    private fun resolveQuranData(script: String, quranMeta: QuranMeta?, quranObject: JsonObject): Quran {
+    private fun resolveQuranData(
+        script: String,
+        quranMeta: QuranMeta?,
+        quranObject: JsonObject
+    ): Quran {
         val chapters = mutableMapOf<Int, Chapter>()
 
         quranObject[KEY_CHAPTER_LIST]!!.jsonArray.forEach {

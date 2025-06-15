@@ -378,7 +378,7 @@
     <string name="textNoLogsFound">কোন লগ খুঁজে পাওয়া যায়নি</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">তেলাওয়াতকারী \"%2$s\" এর জন্য \"%1$s\" ডাউনলোড করতে ব্যর্থ হয়েছে।</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">তেলাওয়াতকারী \"%2$s\"-এর জন্য \"%1$s\"-এর সমস্ত তেলাওয়াত মুছে ফেলা হবে।</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: মোট %2$dটির মধ্যে %1$dটি ডাউনলোড হয়েছে (~%3$dMB অবশিষ্ট আছে)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: ~%dMB</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%2$dটির মধ্যে %1$dটি</string>
     <string name="msgScriptFontsDownloaded">স্ক্রিপ্ট এবং ফন্ট সফলভাবে ডাউনলোড করা হয়েছে।</string>
     <string name="github">GitHub</string>

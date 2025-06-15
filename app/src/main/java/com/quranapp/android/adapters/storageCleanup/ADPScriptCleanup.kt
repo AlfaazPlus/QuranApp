@@ -47,7 +47,7 @@ class ADPScriptCleanup(
                 it.title.text = model.scriptKey.getQuranScriptName()
                 it.subtitle.text = it.root.context.getString(
                     R.string.nScriptsAndFonts,
-                    1,
+                    0,
                     model.fontDownloadsCount
                 )
 

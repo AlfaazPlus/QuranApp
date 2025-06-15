@@ -328,7 +328,7 @@
     <string name="titleDownloadScriptResources">இந்த ச்கிரிப்டுக்கான ஆதாரங்களைப் பதிவிறக்கவா?</string>
     <string name="msgDownloadKFQPCResources">இந்த ச்கிரிப்டைப் பயன்படுத்துவதற்கு முன்பு பின்வரும் ஆதாரங்கள் பதிவிறக்க வேண்டும்:</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">ச்கிரிப்ட்: %s (~1mb)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">எழுத்துருக்கள்: %1$d மொத்த %2$d (~ %3$dmb மீதமுள்ள) பதிவிறக்கம் செய்யப்பட்டது</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">எழுத்துருக்கள்: ~%dMB</string>
     <string name="msgDownloadFailed">பதிவிறக்கம் தோல்வியடைந்தது</string>
     <string name="msgDownloadingScript">ச்கிரிப்டைப் பதிவிறக்குகிறது</string>
     <string name="msgDownloadingFonts">எழுத்துருக்களைப் பதிவிறக்குகிறது</string>

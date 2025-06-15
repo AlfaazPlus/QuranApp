@@ -26,17 +26,6 @@ interface GithubApi {
     @Streaming
     suspend fun getTranslation(@Path("path") path: String):  Response<ResponseBody>
 
-    @GET("inventory/quran_scripts/{filename}")
-    @Streaming
-    suspend fun getQuranScript(@Path("filename") filename: String): Response<ResponseBody>
-
-    @GET("inventory/fonts/{scriptKey}/{part}")
-    @Streaming
-    suspend fun getKFQPCFont(
-        @Path("scriptKey") scriptKey: String,
-        @Path("part") part: String
-    ): Response<ResponseBody>
-
     @GET("inventory/recitations/available_recitations_info.json")
     suspend fun getAvailableRecitations(): ResponseBody
 

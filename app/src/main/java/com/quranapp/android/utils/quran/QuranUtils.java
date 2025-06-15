@@ -483,6 +483,10 @@ public abstract class QuranUtils {
         return value;
     }
 
+    public static String getSejdaSymbol() {
+        return "۩";
+    }
+
     public static boolean doesVerseRangeEqualWhole(QuranMeta quranMeta, int chapterNo, int fromVerse, int toVerse) {
         return fromVerse == 1 && toVerse == quranMeta.getChapterVerseCount(chapterNo);
     }

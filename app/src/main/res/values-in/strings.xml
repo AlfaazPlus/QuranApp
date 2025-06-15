@@ -317,7 +317,7 @@
     <string name="textDownloading">Mengunduh…</string>
     <string name="lastCrashLog">Log error terakhir</string>
     <string name="msgDownloadingFonts">Mengunduh font</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Font: %1$d diunduh dari total %2$d (~%3$dMB tersisa)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Font: ~%dMB</string>
     <string name="msgDownloadFailed">Gagal Mengunduh</string>
     <string name="textPercentage" formatted="false">%d%%</string>
     <string name="labelBackgroundDownload">Mengunduh dari latar belakang</string>

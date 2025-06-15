@@ -378,7 +378,7 @@
     <string name="strMsgDuaOf" formatted="false">Дуа для %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Найдены аяты, относящиеся к %1$s, в %2$d местах.</string>
     <string name="msgDownloadKFQPCResources">Перед использованием этого шрифта необходимо загрузить следующие ресурсы:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифты: %1$d загружено из %2$d (осталось ~%3$d MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифты: ~%dMB</string>
     <string name="msgDownloadingScript">Шрифт загружается</string>
     <string name="msgDownloadingFonts">Шрифты загружаются</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d из %2$d</string>

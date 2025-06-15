@@ -41,7 +41,7 @@ class FragScriptCleanup : FragStorageCleanupBase() {
         CoroutineScope(Dispatchers.IO).launch {
             val scriptItems = ArrayList<ScriptCleanupItemModel>()
 
-            fileUtils.scriptDir.listFiles()?.forEach { scriptFile ->
+            fileUtils.scriptFontDir.listFiles()?.forEach { scriptFile ->
                 val scriptKey = scriptFile.nameWithoutExtension
 
                 val fontDownloadsCount = QuranScriptUtils.getKFQPCFontDownloadedCount(

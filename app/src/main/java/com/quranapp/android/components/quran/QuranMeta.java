@@ -2,6 +2,7 @@ package com.quranapp.android.components.quran;
 
 import android.content.Context;
 import android.util.SparseArray;
+
 import androidx.annotation.NonNull;
 
 import com.quranapp.android.R;
@@ -12,6 +13,7 @@ import com.quranapp.android.utils.quran.parser.QuranMetaParserJSON;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -309,6 +311,10 @@ public class QuranMeta implements Serializable {
         return juz;
     }
 
+    public boolean getChapterHasSejda(int chapterNo) {
+        return getChapterMeta(chapterNo).hasSejda();
+    }
+
     public static class ChapterMeta implements Serializable {
         public int chapterNo;
 
@@ -333,6 +339,7 @@ public class QuranMeta implements Serializable {
          */
         private ArrayList<Integer> juzs;
         public String tags = "";
+        public List<SejdaMeta> sejdaList = new ArrayList<>();
 
         public void addName(String langCode, String name) {
             nameMap.put(langCode, name);
@@ -372,6 +379,10 @@ public class QuranMeta implements Serializable {
 
         public HashMap<String, String> getNameTranslations() {
             return translationMap;
+        }
+
+        public boolean hasSejda() {
+            return !sejdaList.isEmpty();
         }
     }
 
@@ -416,6 +427,18 @@ public class QuranMeta implements Serializable {
                 }
             }
             return false;
+        }
+    }
+
+    public static class SejdaMeta implements Serializable {
+        public int chapterNo;
+        public int verseNo;
+        public boolean obligatory;
+
+        public SejdaMeta(int chapterNo, int verseNo, boolean obligatory) {
+            this.chapterNo = chapterNo;
+            this.verseNo = verseNo;
+            this.obligatory = obligatory;
         }
     }
 }

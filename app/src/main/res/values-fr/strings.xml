@@ -302,7 +302,7 @@
     <string name="strMsgUpdateDownloaded">MISE A JOUR TELECHARGEE ! Veuillez l\'installer pour compléter la mise à jour.</string>
     <string name="strTitleScripts">Types d\'écriture</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Type d\'écriture : %s (~1Mo)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Polices d\'écritures : %1$d téléchargées, sur un total de %2$d (~%3$dMo restants)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Polices d\'écritures : ~%dMB</string>
     <string name="msgDownloadFailed">Téléchargement échoué</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d sur %2$d</string>
     <string name="msgDownloadingResource" formatted="false">Télechargement de %s</string>
