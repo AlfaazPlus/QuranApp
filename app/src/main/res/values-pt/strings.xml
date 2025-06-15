@@ -420,4 +420,21 @@
     <string name="titleRemoveFromFavourites">Remover dos favoritos</string>
     <string name="msgRemovedFromFavourites">Removido dos favoritos</string>
     <string name="titleResourceDownloadSource">Fonte de descarregamento de recursos</string>
+    <string name="desc_votd_widget">Receba um novo versículo todos os dias</string>
+    <string name="startAutoScroll">Iniciar scroll automático</string>
+    <string name="titleExportData">Exportação e Importação</string>
+    <string name="labelExport">Exportar</string>
+    <string name="labelImport">Importar</string>
+    <string name="msgExportImportBookmarks">Exporte ou importe os seus favoritos juntamente com as notas.</string>
+    <string name="labelImportExportEverything">Tudo</string>
+    <string name="labelImportExportBookmarks">Apenas favoritos</string>
+    <string name="labelImportExportSettings">Apenas definições</string>
+    <string name="warnImportSettings">AVISO: A importação das definições substituirá as suas definições atuais.</string>
+    <string name="msgExportEmpty">Não há favoritos para exportar</string>
+    <string name="msgExportSuccess">Exportado com sucesso</string>
+    <string name="msgImportFailed">Falha na importação. Ficheiro não suportado.</string>
+    <string name="msgImportSuccess">Importado com sucesso</string>
+    <string name="autoScroll">Scroll automático</string>
+    <string name="autoScrollSpeed">Definir velocidade</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Não é possível fazer scroll automático enquanto a recitação estiver a ser reproduzida.</string>
 </resources>
