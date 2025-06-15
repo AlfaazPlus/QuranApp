@@ -7,7 +7,7 @@
 \nСКАЧАТЬ СЕЙЧАС:
 \n%s</string>
     <string name="labelAdd">Добавить</string>
-    <string name="strLabelRemove">Удалить</string>
+    <string name="strLabelRemove">Убрать</string>
     <string name="strLabelDelete">Удалить</string>
     <string name="strLabelRemoveAll">Удалить все</string>
     <string name="strLabelCopy">Копировать</string>
@@ -100,7 +100,7 @@
     <string name="strTitleReaderChapters">Суры (Главы)</string>
     <string name="strTitleReaderJuz">Джуз (Раздел)</string>
     <string name="strTitleReaderChapters2">Суры</string>
-    <string name="strTitleReaderJuz2">Джузы</string>
+    <string name="strTitleReaderJuz2">Джуз</string>
     <string name="strTitleReaderVerses">Аяты</string>
     <string name="strTitleReaderJumpToVerse">Перейти к аяту</string>
     <string name="strTitleVerseOptions">Настройки аятов</string>
@@ -212,7 +212,7 @@
     <string name="strTitleThresholdReached">Предел достигнут</string>
     <string name="strChapInfoSeeMore">Узнать больше ›</string>
     <string name="strTitleChapInfoChapterNo">Номер главы</string>
-    <string name="strTitleChapInfoJuzNo">Джузы</string>
+    <string name="strTitleChapInfoJuzNo">Джуз Нет.</string>
     <string name="strTitleChapInfoVerses">Аятов</string>
     <string name="strTitleChapInfoRevType">По периоду ниспосылания</string>
     <string name="strMsgChapInfoFailedLoad">Не удалось загрузить сведения о суре. Пожалуйста, попробуйте позже.</string>
@@ -433,4 +433,8 @@
     <string name="msgImportSuccess">Успешно импортировано</string>
     <string name="autoScroll">Авто промотка</string>
     <string name="autoScrollSpeed">Установка скорости</string>
+    <string name="labelImportExportEverything">Все</string>
+    <string name="labelImportExportSettings">Только настройки</string>
+    <string name="labelImportExportBookmarks">Только закладки</string>
+    <string name="warnImportSettings">ВНИМАНИЕ: Импорт настроек отменяет текущие настройки.</string>
 </resources>

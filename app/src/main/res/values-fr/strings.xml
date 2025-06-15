@@ -420,4 +420,21 @@
     <string name="msgArabicTextToggle">Désactiver cette fonction masquera le texte des versets arabes dans l\'ensemble de l\'application.</string>
     <string name="msgResourceDownloadSource">Utilisez cette option pour télécharger les données du Coran à partir d\'une autre source si l\'une d\'entre elles ne fonctionne pas</string>
     <string name="titleResourceDownloadSource">Source de téléchargement des ressources</string>
+    <string name="titleExportData">Importer &amp; Exporter</string>
+    <string name="msgExportEmpty">Pas de signets à exporter</string>
+    <string name="msgExportSuccess">Exporté avec succès</string>
+    <string name="msgImportSuccess">Importé avec succès</string>
+    <string name="msgExportImportBookmarks">Exportez ou importez vos signets ainsi que vos notes.</string>
+    <string name="labelImport">Importer</string>
+    <string name="labelExport">Exporter</string>
+    <string name="msgImportFailed">Échec de l\'importation. Fichier non pris en charge.</string>
+    <string name="labelImportExportEverything">Tout</string>
+    <string name="labelImportExportBookmarks">Signets uniquement</string>
+    <string name="labelImportExportSettings">Paramètres uniquement</string>
+    <string name="warnImportSettings">AVERTISSEMENT : L\'importation de paramètres remplace les paramètres actuels.</string>
+    <string name="desc_votd_widget">Obtenez un nouveau verset quotidiennement</string>
+    <string name="autoScroll">Défilement automatique</string>
+    <string name="startAutoScroll">Démarrer le défilement automatique</string>
+    <string name="autoScrollSpeed">Régler la vitesse</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Impossible de défiler automatiquement lorsque la récitation est en cours.</string>
 </resources>

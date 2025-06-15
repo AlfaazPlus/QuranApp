@@ -433,4 +433,8 @@
     <string name="labelExport">निर्यात</string>
     <string name="msgExportImportBookmarks">अपने बुकमार्क्स को नोट्स के साथ निर्यात या आयात करें।</string>
     <string name="msgImportFailed">आयात करने में विफल. असमर्थित फ़ाइल।</string>
+    <string name="warnImportSettings">चेतावनी: सेटिंग्स आयात करने से आपकी वर्तमान सेटिंग्स ओवरराइड हो जाएंगी।</string>
+    <string name="labelImportExportEverything">सब कुछ</string>
+    <string name="labelImportExportSettings">केवल सेटिंग्स</string>
+    <string name="labelImportExportBookmarks">केवल बुकमार्क</string>
 </resources>
