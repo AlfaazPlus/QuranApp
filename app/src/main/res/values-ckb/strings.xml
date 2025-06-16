@@ -408,10 +408,7 @@
     <string name="labelNextTafsir">تەفسیری دواتر</string>
     <string name="msgTafsirLoadFailed">کردنەوەی تەفسیر سەرکەوتوو نەبوو</string>
     <string name="titleEtiquetteVerses">ئامۆژگارییەکانی ناو قورئان</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp بەرنامەیەکی خۆڕایی و سەرچاوەکراوەی تایبەت بە خوێندنەوە گەڕانە بە ناو قورئانی پیرۆزدا و بە وەرگێڕانەوە. ئەم بەرنامەیە ڕووکارێکی جوان و پاکی هەیە لەگەڵ تەیبەتمەندی وەک تەفسیر، خوێندنەوە، بیرخەرەوە و زیاتر.
-\n
-\nئێستا دایبگرە:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp بەرنامەیەکی خۆڕایی و سەرچاوەکراوەی تایبەت بە خوێندنەوە گەڕانە بە ناو قورئانی پیرۆزدا و بە وەرگێڕانەوە، ئەم بەرنامەیە ڕووکارێکی جوان و سادەی هەیە لەگەڵ تایبەتمەندی وەک تەفسیر، خوێندنەوە، بیرخەرەوەی ڕۆژانەو زیاتریش. \n \nئێستا دایبگرە: \n%s</string>
     <string name="strMsgDuaOf" formatted="false">نزای %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">نزای %s لە قورئاندا</string>
     <string name="titleResourceDownloadSource">سەرچاوەی داگرتنی سەرچاوە</string>
@@ -420,4 +417,22 @@
     <string name="msgClearReadHistory">پاککردنەوەی مێژووی خوێندنەوە</string>
     <string name="msgArabicTextToggle">ناچالاککردنی ئەم تایبەتمەندییە نووسینی ئایەتی عەرەبی لە گشت بەرنامەکە دەشارێتەوە.</string>
     <string name="titleArabicTextToggle">نووسینی ئایەتی عەرەبی نیشان بدە</string>
+    <string name="msgExtractingFonts">دەرهێنانی فۆنتەکان</string>
+    <string name="labelImportExportSettings">تەنیا ڕێکخستنەکان</string>
+    <string name="msgExportEmpty">هیچ نیشانەکراوێک نیە بۆ هێنان</string>
+    <string name="msgExportSuccess">بەسەرکەوتوویی هەڵگیرا</string>
+    <string name="autoScrollSpeed">ڕێکخستنی خێرایی</string>
+    <string name="labelImportExportBookmarks">تەنیا نیشانەکراوەکان</string>
+    <string name="labelImportExportEverything">هەمووی</string>
+    <string name="warnImportSettings">ئاگاداربە: هێنانی ڕێکخستنەکان ئەبێتە هۆی جێگۆڕکێکردنی ڕێکخستنی ئێستات.</string>
+    <string name="msgImportFailed">هێنان سەرکەوتو نەبوو، جۆری فایل پشتگیریکراو نیە.</string>
+    <string name="msgImportSuccess">بەسەرکەوتوویی هێنرا</string>
+    <string name="desc_votd_widget">هەموو ڕۆژێک ئایەتێکی نوێ فێربە</string>
+    <string name="autoScroll">جوڵانی خۆکاری</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">جوڵانی خۆکاری کار ناکات لەکاتی لێدانی دەنگی قورئانخوێندا.</string>
+    <string name="titleExportData">هەڵگرتن و هێنان</string>
+    <string name="labelExport">هەڵگرتن</string>
+    <string name="labelImport">هێنان</string>
+    <string name="msgExportImportBookmarks">هەڵگرتن یان هێنانی نیشانەکراوەکان لەگەڵ تێبینییەکان.</string>
+    <string name="startAutoScroll">چالاککردنی جوڵانی خۆکاری</string>
 </resources>
