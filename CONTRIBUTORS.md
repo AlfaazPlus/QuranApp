@@ -2,7 +2,7 @@
 
 - Localization works: [Goran Gharib](https://facebook.com/GoRaN9O)
 - Homepage graphics: [ARBoyGo](https://github.com/ARBoyGo)
-- Ling page: [Qomarul Hasan](https://github.com/qomarhsn)
+- Landing page: [Qomarul Hasan](https://github.com/qomarhsn)
 - Noorehuda script integration: [Luciogi](https://github.com/Luciogi)
 
 ### App Translations
