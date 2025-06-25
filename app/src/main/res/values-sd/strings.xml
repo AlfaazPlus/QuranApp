@@ -1,3 +1,430 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="strVersion" formatted="false">ورزن %s</string>
+    <string name="strMsgShareApp" formatted="false">قرآن ايپ هڪ مفت ۽ اوپن سورس ايپ آهي جيڪا ترجمي سان گڏ قرآن پاڪ پڙهڻ ۽ ڳولڻ جي لاءِ آهي. هن ايپ ۾ هڪ بهترين ۽ صاف انٽرفيس آهي جنهن ۾ تفسير، تلاوت، ياد ڏياريندڙ ۽ ٻيون ڪيتريون ئي خاصيتون آهن.\n\nهاڻي ئي ڊائون لوڊ ڪريو:\n%s</string>
+    <string name="labelPreviousTafsir">پوئين تفسير</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="appLogs">ايپ لاگ</string>
+    <string name="strLabelThemeLight">روشنائي</string>
+    <string name="strTitleAppVersion">ايپ جو ورزن</string>
+    <string name="strTitleLicenses">لائسنس</string>
+    <string name="strLabelClose">بند ڪريو</string>
+    <string name="strLabelOkay">ٺيڪ آهي</string>
+    <string name="strLabelGotIt">اهو ملي ويو</string>
+    <string name="strLabelCancel">رد ڪريو</string>
+    <string name="strLabelApply">اپلائي ڪريو</string>
+    <string name="strLabelSend">موڪليو</string>
+    <string name="labelAdd">شامل ڪريو</string>
+    <string name="strLabelRemove">ڊاهيو</string>
+    <string name="strLabelDelete">ڊليٽ ڪريو</string>
+    <string name="strLabelRemoveAll">سڀ ڊاهيو</string>
+    <string name="strLabelCopy">ڪاپي</string>
+    <string name="strLabelBack">پوئتي</string>
+    <string name="strLabelTop">مٿي</string>
+    <string name="strLabelReset">مٽائڻ</string>
+    <string name="strLabelRetry">ٻيهر ڪوشش ڪريو</string>
+    <string name="strLabelRefresh">ريفريش ڪريو</string>
+    <string name="strLabelDismiss">رد</string>
+    <string name="strLabelDiscard">وڃايو</string>
+    <string name="strLabelHide">لڪايو</string>
+    <string name="strLabelEdit">ترميم ڪريو</string>
+    <string name="strLabelDone">ٿي ويو</string>
+    <string name="strLabelRestart">ٻيهر شروع ڪريو</string>
+    <string name="strLabelView">ڏسو</string>
+    <string name="strLabelOpen">کوليو</string>
+    <string name="strLabelOpenInReader">ريڊر ۾ کوليو</string>
+    <string name="strLabelRead">پڙهو »</string>
+    <string name="strLabelViewAll">سڀ ڏسو</string>
+    <string name="strLabelAdvertisement">اشتهار</string>
+    <string name="strLabelSkip">ڇڏي ڏيو</string>
+    <string name="strLabelNotNow">هاڻ نه</string>
+    <string name="strLabelPrevious">اڳوڻو</string>
+    <string name="strLabelNext">اڳيون</string>
+    <string name="strLabelStart">شروع ڪريو</string>
+    <string name="strLabelUpdateQuranApp">قرآن ايپ اپڊيٽ ڪريو</string>
+    <string name="labelDownload">ڊائونلوڊ</string>
+    <string name="strLabelUpdate">اپڊيٽ</string>
+    <string name="strLabelInstall">انسٽال</string>
+    <string name="strLabelNew">نئون</string>
+    <string name="strLabelPremium">پريميئم</string>
+    <string name="strLabelOn">تي</string>
+    <string name="strLabelOff">بند</string>
+    <string name="strLabelThemeDark">اونداهو</string>
+    <string name="strLabelSystemDefault">سسٽم ڊيفالٽ</string>
+    <string name="strLabelNextChapter">اڳين سورت</string>
+    <string name="strLabelNoPreviousChapter">پوئتي سورت ناهي</string>
+    <string name="strLabelPreviousJuz">اڳوڻو جز</string>
+    <string name="strLabelNextJuz">اڳيون جز</string>
+    <string name="strLabelNoPreviousJuz">ڪو به اڳوڻو جُز ناهي</string>
+    <string name="strLabelNoNextJuz">اڳيان ڪو به جُز ناهي</string>
+    <string name="strLabelFullChapter">پوري سورت پڙهو</string>
+    <string name="strLabelContinueChapter">سورت کي جاري رکو</string>
+    <string name="strLabelPreviousVerse">پوئين آيت</string>
+    <string name="strLabelNextVerse">ايندڙ آيت</string>
+    <string name="labelNextTafsir">ايندڙ تفسير</string>
+    <string name="strLabelVersesText">آيتون</string>
+    <string name="strLabelSurah" formatted="false">سورة %s</string>
+    <string name="strLabelPageNo" formatted="false">صفحو %d</string>
+    <string name="strLabelJuzNo" formatted="false">جز %d</string>
+    <string name="strLabelVerseNo" formatted="false">آيت %d</string>
+    <string name="strLabelVerses" formatted="false">آيتون %1$d–%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">آيت: %d</string>
+    <string name="strLabelVersesWithColon" formatted="false">آيتون: %1$d–%2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">آيت %1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورة %1$s %2$d: آيت %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورة %1$s │ آيت %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورة %1$s : آيت %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">سورة نمبر %1$d │ آيتون %2$d–%3$d</string>
+    <string name="strTitleAppUser">قرآن ايپ استعمال ڪندڙ</string>
+    <string name="strTitleHolyQuran">قرآن پاڪ</string>
+    <string name="strTitleQuran">قرآن</string>
+    <string name="strTitleMakki">مَڪِي</string>
+    <string name="strTitleMadani">مَدنِي</string>
+    <string name="strTitleFootnote">حاشيو</string>
+    <string name="noFootnotesForThisVerse">هن آيت لاءِ ڪي به حاشيہ نه آهن.</string>
+    <string name="strTitleReaderChapters">سورتون (Chapters)</string>
+    <string name="strTitleReaderJuz">جُز (سپارو)</string>
+    <string name="strTitleReaderChapters2">سورتون</string>
+    <string name="strTitleReaderJuz2">جُز</string>
+    <string name="strTitleReaderVerses">آيتون</string>
+    <string name="strTitleReaderJumpToVerse">آيت ڏانهن وڃو</string>
+    <string name="strTitleVerseOptions">آيت جا اختيار</string>
+    <string name="strTitleVerseRecitation">آيت جي تلاوت</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">سورة %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">آيت %d ڏانهن وڃو</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">ترجمن جو ڏيک</string>
+    <string name="strTitleReaderLayoutStylePageView">صفحي جو ڏيک</string>
+    <string name="titleReaderTextSizeTafsir">تفسير متن جي سائيز</string>
+    <string name="strTitleSettings">سيٽنگون</string>
+    <string name="strTitleBookmark">بُڪ مارڪ</string>
+    <string name="strTitleSendFeedback">راءِ موڪليو</string>
+    <string name="strTitleHelpSupport">مدد ۽ پٺڀرائي</string>
+    <string name="strTitleAboutUs">اسان بابت</string>
+    <string name="strTitleBookmarks">بُڪ مارڪَ</string>
+    <string name="strTitleShareApp">ايپ جي ورڇ ڪريو</string>
+    <string name="strTitleAddNote">نشان داخل ڪريو</string>
+    <string name="strTitleNote">نشان</string>
+    <string name="strTitleRateApp">ايپ جي ريٽنگ ڏيو</string>
+    <string name="strTitleFilters">پروڻا</string>
+    <string name="strTitleMenu">فهرست</string>
+    <string name="strTitleTafsir">تفسير</string>
+    <string name="strTitleSelectTafsir">تفسير منتخب ڪريو</string>
+    <string name="strTitleAboutSurah">سورت جي باري ۾</string>
+    <string name="strTitleTranslations">ترجما</string>
+    <string name="strTitleDownloadTranslations">ڊائون لوڊ</string>
+    <string name="strTitleRecitations">تلاوتون</string>
+    <string name="strTitleSelectReciter">تلاوت ڪندڙ چونڊيو</string>
+    <string name="titleManageAudio">آواز جو انتظام ڪريو</string>
+    <string name="audioOption">آواز لاءِ آپشن</string>
+    <string name="playbackSpeed">هلندڙ آواز جي رفتار</string>
+    <string name="audioOnlyArabic">صرف عربي ۾ هلايو</string>
+    <string name="audioBothArabicTranslation">عربي ۽ ترجمو ٻئي هلايو</string>
+    <string name="strTitleScripts">رسم الخط</string>
+    <string name="strTitleSelectScripts">رسم الخط چونڊيو</string>
+    <string name="strTitleBookmarkDeleteThis">هي بُڪ مارڪ ڊاهيون؟</string>
+    <string name="strTitleBookmarkDeleteAll">سڀ بُڪ مارڪ ڊاهيون؟</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d بُڪ مارڪَ هٽايون؟</string>
+    <string name="strTitleResetReaderSettings">پڙهندڙ جي ترتيب ٻيهر ڪجي؟</string>
+    <string name="strTitleHideAd">اشتهار لڪايو</string>
+    <string name="strTitleRepeatVerse">آيت ورجايو</string>
+    <string name="strTitleAutoPlayNext">اڳيون پاڻ مرادو هلي</string>
+    <string name="strTitleQuickEdit">تڪڙي تدوين</string>
+    <string name="strTitleShareVerse">آيت ورڇ ڪريو</string>
+    <string name="strTitleReportVerse">آيت رپورٽ ڪريو</string>
+    <string name="strTitleSelectReason">سبَبُ چونڊيو</string>
+    <string name="strTitleExplainIssue">مسئلو واضع ڪريو</string>
+    <string name="strTitleFeaturedQuran">پڙهڻ لاءِ خاص</string>
+    <string name="strTitleVOTD">اڄ جي آيت</string>
+    <string name="strTitleProphets">انبياءَ</string>
+    <string name="strTitleFeaturedTopics">قرآن ۾ موضوع</string>
+    <string name="titleSolutionVerses">قرآن منجهان حَل</string>
+    <string name="titleEtiquetteVerses">قرآني آداب</string>
+    <string name="strTitlePrivacyPolicy">ڳجهه پاليسي</string>
+    <string name="strTitleFailed">ناڪام</string>
+    <string name="strTitleSuccess">سوڀ</string>
+    <string name="strTitleThresholdReached">حد تي پهچي ويو</string>
+    <string name="strChapInfoSeeMore">وڌيڪ معلومات ڏسو ›</string>
+    <string name="strTitleChapInfoChapterNo">سورت نمبر</string>
+    <string name="strTitleChapInfoJuzNo">جُز نمبر</string>
+    <string name="strTitleChapInfoPages">پنا</string>
+    <string name="strTitleChapInfoRevOrder">وحي جي ترتيب</string>
+    <string name="strTitleChapInfoRevType">وحي جو قسم</string>
+    <string name="strMsgChapInfoFailedLoad">سورة جي معلومات لوڊ ڪرڻ ۾ ناڪامي. مھرباني ڪري بعد ۾ ٻيهر ڪوشش ڪريو.</string>
+    <string name="strTitleAppSettings">ايپ جي ترتيب</string>
+    <string name="strTitleReaderSettings">پڙهندڙ جي ترتيب</string>
+    <string name="strTitleAppLanguage">ايپ جي ٻولي</string>
+    <string name="strTitleChangeLanguage">ٻولي بدلايون؟</string>
+    <string name="strTitleTheme">ٿيم</string>
+    <string name="strTitleNoInternet">انٽرنيٽ ناهي</string>
+    <string name="strLabelPlay">پلي</string>
+    <string name="strLabelPause">وقفو</string>
+    <string name="strLabelBookmark">بُڪ مارڪ</string>
+    <string name="strLabelRemoveBookmark">بُڪ مارڪ هٽايو</string>
+    <string name="strLabelRemoveAds">اشتهار هٽايو</string>
+    <string name="strLabelShare">ورڇ ڪريو</string>
+    <string name="strLabelReport">اطلاع</string>
+    <string name="strLabelContinueReading">پڙهڻ جاري رکو »</string>
+    <string name="strLabelReading">پڙهڻ</string>
+    <string name="strLabelMostPlaces">گهڻو ذڪر ڪيل</string>
+    <string name="strLabelOrder">سلسلو</string>
+    <string name="strLabelSelectedCount" formatted="false">%d چونڊيل</string>
+    <string name="strLabelAdvanceSharing">اعليٰ شرڪتداري</string>
+    <string name="strLabelCurrentVerse">روان آيت</string>
+    <string name="strLabelVerseRange">آيت جي حد</string>
+    <string name="strLabelSelectTranslations">ترجما چونڊيو</string>
+    <string name="strLabelSelectTranslation">ترجمو چونڊيو</string>
+    <string name="strLabelWhatsappStyling">واٽس ايپ وانگر وضع</string>
+    <string name="strLabelIncludeFootnotes">حاشيا شامل ڪريو</string>
+    <string name="strLabelIncludeReference">حوالو شامل ڪريو</string>
+    <string name="strLabelQuickLinks">تڪڙيون ڳنڍڻيون</string>
+    <string name="strLabelLater">پوءِ</string>
+    <string name="strHintSearch">کوجنا</string>
+    <string name="strHintSearchQuran">هڪ اصطلاح لکو مثال طور، \"Life\"</string>
+    <string name="strHintSearchTopic">موضوع ڳولهيو</string>
+    <string name="strHintSearchProphet">نبي جي کوجنا ڪريو</string>
+    <string name="strHintSearchChapter">سورة ڳوليو</string>
+    <string name="strHintSearchVerse">آيت ڳوليو</string>
+    <string name="strHintSearchJuz">جُز ڳولهيو</string>
+    <string name="strHintSearchTranslation">ترجمو ڳولهيو</string>
+    <string name="strHintSearchReciter">تلاوت ڪندڙ ڳولهيو</string>
+    <string name="strHintSearchScript">رسم الخط ڳولهيو</string>
+    <string name="strHintSearchLanguage">ٻولي ڳولهيو</string>
+    <string name="strHintToVerse">آيت ڏانهن</string>
+    <string name="strHintFeedback">پنهنجا رايا هتي لکو…</string>
+    <string name="strHintFeedbackEmail">اليڪٽرانڪ ٽپال</string>
+    <string name="strHintFeedbackMessage">سنيهو</string>
+    <string name="strHintBookmarkViewerNote">هن بُڪ مارڪ تي هڪ اضافي نوٽ لکو…</string>
+    <string name="strNotFound">نه مليو</string>
+    <string name="strMsgThemeDefault">سسٽم سيٽنگن جي مطابق ترتيب ڏيو.</string>
+    <string name="strMsgVOTDOn">روزانو صبح جو اطلاع حاصل ڪريو.</string>
+    <string name="strMsgYouAreReadingVerses">توهان آيتون پڙهي رهيا آهيو:</string>
+    <string name="strMsgInvalidVersesRange">آيت جي حد صحيح نه آهي</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d سورت نمبر %3$d لاءِ صحيح آيت جي حد نه آهي</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d هڪ صحيح جُز (پارا) نمبر نه آهي.</string>
+    <string name="strMsgBookmarkAddFailed">آيت بُڪ مارڪ ۾ شامل ڪرڻ ۾ ناڪام ٿي وئي</string>
+    <string name="strMsgBookmarkAddedAlready">آيت اڳ ۾ ئي بُڪ مارڪ ۾ شامل ڪئي وئي آهي</string>
+    <string name="strMsgBookmarkRemoved">آيت ڪاميابي سان بُڪ مارڪ مان هٽائي وئي</string>
+    <string name="strMsgBookmarkRemoveFailed">آيت بُڪ مارڪ مان هٽائڻ ۾ ناڪام ٿي وئي</string>
+    <string name="strMsgBookmarkRemovedAlready">آيت بُڪ مارڪ ۾ ناهي</string>
+    <string name="strMsgBookmarkNoItems">ڪو به بُڪ مارڪ ناهي</string>
+    <string name="strMsgBookmarkDeleteSelected">چونڊيل بُڪ مارڪ هٽايا ويندا.</string>
+    <string name="strMsgBookmarkDeleteAll">سڀئي بُڪ مارڪ هٽايا ويندا.</string>
+    <string name="strTitleReadHistory">پڙهيل پڙهو</string>
+    <string name="strMsgReadShowupHere">توهان جو پڙهيل هتي ڏيکاريو ويندو.</string>
+    <string name="strMsgReadHistoryRemoved">پڙهيل ڪاميابي سان هٽايو ويو.</string>
+    <string name="strMsgReadHistoryRemoveFailed">پڙهيل هٽائڻ ۾ ناڪام ٿيو.</string>
+    <string name="strMsgReadHistoryRemovedAlready">پڙهيل اڳ ۾ ئي هٽايو ويو آهي.</string>
+    <string name="strMsgReadHistoryNoItems">ڪوبه پڙهيل مواد ناهي</string>
+    <string name="strMsgReadHistoryDeleteSelected">چونڊيل پڙهيل ختم ڪيون وينديون.</string>
+    <string name="strMsgReadHistoryDeleteAll">سڀ پڙهيل ختم ڪيون وينديون.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%2$s تي %1$s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">اڄ %s تي</string>
+    <string name="strMsgHistoryRemove">هي پڙهيل هٽائي؟</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" پڙهيل مان هٽايو ويو</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s ۾ صرف 1 نتيجو مليو</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s ۾ ڪو به نتيجو نه مليو. مھرباني ڪري ڳولا فلٽر چيڪ ڪريو يا ٻئي ترجمي ۾ ڳولا ڪريو.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">ڪي به نتيجا نه مليا. مھرباني ڪري ڳولا فلٽر چيڪ ڪريو.</string>
+    <string name="strMsgSearchWordPart">لفظ جي حصي جي ڳولا ڪريو</string>
+    <string name="strMsgSearchWordPartExample">مثال طور: \'man\' ۾ \'mankind\'</string>
+    <string name="strMsgSearchArabic">عربي متن ۾ ڳولا ڪريو</string>
+    <string name="strMsgChangeLanguage">ٻولي جي تبديلي کي لاڳو ڪرڻ لاءِ ايپ کي ٻيهر شروع ڪيو ويندو.</string>
+    <string name="strMsgProphetsOrder">نبين کي تاريخ جي ترتيب ۾ ڏيکارڻ</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d جي وچ حد داخل ڪريو</string>
+    <string name="strMsgEnterValidRange">مھرباني ڪري ھڪ صحيح حد داخل ڪريو</string>
+    <string name="strMsgTranslLoadFailed">سرور تان ترجما لوڊ نه ٿي سگهيا. مهرباني ڪري بعد ۾ ٻيهر ڪوشش ڪريو.</string>
+    <string name="strMsgTranslNoDownloads">ڊائون لوڊ ٿيل ترجما موجود نه آهن</string>
+    <string name="strMsgTranslDownloaded" formatted="false">ڊائون لوڊ ٿيل: \"%s\".</string>
+    <string name="strMsgTranslNoneSelected">ڪو به ترجمو نه چونڊيو ويو آهي. ترجما ڳولڻ لاءِ سيٽنگز ڏانهن وڃو.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">وڌ ۾ وڌ %d ترجما هڪ ڀيرو چونڊي سگھجن ٿا. مھرباني ڪري ٻيو چونڊڻ کان اڳ ھڪ کي غير منتخب ڪريو. ھي پرفارمينس جي نقصان کان بچڻ لاءِ آھي.</string>
+    <string name="strMsgRecitationsLoadFailed">سرور تان تلاوت لوڊ نه ٿي سگهي. مهرباني ڪري بعد ۾ ٻيهر ڪوشش ڪريو.</string>
+    <string name="strMsgRecitationsNoAvailable">ڪابه تلاوت موجود ناهي</string>
+    <string name="strMsgTafsirsNoAvailable">ڪابه تفسير موجود ناهي</string>
+    <string name="strDescAddToBookmarks">بُڪ مارڪ ۾ شامل ڪريو</string>
+    <string name="strDescGoBack">واپس وڃو</string>
+    <string name="strDescClose">بند ڪريو</string>
+    <string name="strDescVerseNo" formatted="false">آيت نمبر %d.</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">سورة %1$s، آيت نمبر %2$d.</string>
+    <string name="strMsgNoInternet">مھرباني ڪري پنھنجو انٽرنيٽ ڪنيڪشن چيڪ ڪريو.</string>
+    <string name="strMsgNoInternetLong">انٽرنيٽ ڪنيڪشن ناهي. پڪ ڪريو ته وائي فائي يا سيلولر ڊيٽا کليل آهي، پوءِ ٻيهر ڪوشش ڪريو.</string>
+    <string name="strMsgSomethingWrong">ڪجهه غلط ٿي ويو!</string>
+    <string name="strMsgSomethingWrongFixing">ڪجهه غلط ٿي ويو! اسان ان کي درست ڪرڻ لاءِ ڪم ڪري رهيا آهيون.</string>
+    <string name="strMsgVerseCredsInvalid">آيتن جا سند صحيح نه آهن.</string>
+    <string name="strMsgTryLater">مهرباني ڪري ڪجھہ دير رکي ٻيهر ڪوشش ڪندا.</string>
+    <string name="strMsgReportUs">مهرباني ڪري اسان کي رپورٽ ڪريو.</string>
+    <string name="strMsgCouldNotOpenPage">صفحو کُلي نه سگهيو.</string>
+    <string name="strLabelNavHome">گهر</string>
+    <string name="strLabelNavSearch">کوجنا</string>
+    <string name="strTextPreparing">تياري ڪري رهيو آهي…</string>
+    <string name="textDownloading">ڊائونلوڊنگ…</string>
+    <string name="textDownloaded">ڊائونلوڊ ٿي ويو</string>
+    <string name="labelBackgroundDownload">پس منظر ۾ ڊائون لوڊ</string>
+    <string name="msgAnotherDownloadInProgress">ٻيو به ڊائون لوڊ جاري آهي.</string>
+    <string name="lastCrashLog">آخري ڪريش جو لاگ</string>
+    <string name="crashLogs">ڪريش لاگ</string>
+    <string name="suppressedLogs">دٻايل لاگ</string>
+    <string name="strTextSending">موڪلي رهيو آهي…</string>
+    <string name="strAyatulKursi">آيت الڪرسي</string>
+    <string name="strTitleError">ڀُل چڪ!</string>
+    <string name="strTitleInfo">ڄاڻ!</string>
+    <string name="strTitleOops">اڙي!</string>
+    <string name="strTextUpdating">اپڊيٽ ٿي رهيو آهي…</string>
+    <string name="strTextInstalling">انسٽال ٿي رهيو آهي…</string>
+    <string name="strTextLoading">لوڊ ٿي رهيو آهي…</string>
+    <string name="strMsgUpdateAvailable2Continue">اپڊيٽ گهربل آهي!\nجاري رکڻ لاءِ مهرباني ڪري ايپ کي اپڊيٽ ڪريو.</string>
+    <string name="strMsgUpdateDownloaded">اپڊيٽ ڊائون لوڊ ٿي وئي! مھرباني ڪري اپڊيٽ مڪمل ڪرڻ لاءِ انسٽال ڪريو.</string>
+    <string name="strLabelAllChapters">سڀ سورتون</string>
+    <string name="strLabelDownloadImage">تصوير ڊائون لوڊ ڪريو</string>
+    <string name="strLabelShareImage">تصوير ورڇ ڪريو</string>
+    <string name="strMsgReferenceInQuran" formatted="false">قرآن ۾ %s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">ڪُل %2$d هنڌن تي %1$s سان لاڳاپيل آيتون مليون.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">قرآن ۾ %s جي دعا</string>
+    <string name="strMsgReferenceDuas">قرآن مان ڪجھ دعائون گڏ ڪيون ويون.</string>
+    <string name="strSalam">السلام عليڪم</string>
+    <string name="strSalamShort">سلام</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">اسڪرپٽ: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فانٽ: ~%dMB</string>
+    <string name="msgDownloadFailed">ڊائون لوڊ ناڪام ٿيو</string>
+    <string name="msgDownloadingScript">رسم الخط ڊائون لوڊ ٿي رهيو آهي</string>
+    <string name="msgDownloadingFonts">فونٽ ڊائون لوڊ ڪرڻ</string>
+    <string name="msgExtractingFonts">فونٽ ڪڍڻ</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%2$d مان %1$d فونٽ ڊائون لوڊ ڪيا ويا</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d مان %1$d</string>
+    <string name="msgDownloadingResource" formatted="false">%s ڊائون لوڊ ٿي رهيو آهي</string>
+    <string name="createIssue">اشو جوڙيو</string>
+    <string name="copiedToClipboard">ڪلپ بورڊ ڏانهن نقل ڪيو ويو.</string>
+    <string name="github">گٽ هب</string>
+    <string name="msgAlarmManagerNotAvailable">هن ڊوائيس ۾ الارم مئنيجر موجود ناهي.</string>
+    <string name="msgVerseReminderNotifPermission">آيت جي ياد ڏياريندڙ کي فعال ڪرڻ لاءِ اطلاع جي اجازت گهربل آهي.</string>
+    <string name="titleStorageCleanup">اسٽوريج جي صفائي</string>
+    <string name="titleExportData">ايڪسپورٽ ۽ امپورٽ</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d ڊائون لوڊ ڪيل ترجما خالي ڪري سگھجن ٿا.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d قارئين مان %1$d ذخيرو ٿيل تلاوت فائلون خالي ڪري سگھجن ٿيون.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d محفوظ ڪيل سورة جي معلومات صاف ڪري سگهجي ٿي.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ ڪيل تفسيرن کي صاف ڪري سگھجي ٿو.</string>
+    <string name="titleChapterInfo">سورة جي معلومات</string>
+    <string name="labelFreeUpSpace">جاءِ خالي ڪريو</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nتوهان کي ان کي ٻيهر ڊائون لوڊ ڪرڻو پوندو.</string>
+    <string name="titleRecitationCleanup">تلاوت ڊليٽ ڪريو؟</string>
+    <string name="titleScriptCleanup">اسڪرپٽ ڊليٽ ڪريو ٿا؟</string>
+    <string name="msgScriptCleanup" formatted="false">%s اسڪرپٽ ۽ ان جا سڀئي محفوظ ٿيل فانٽ ڊهي ويندا. انهن کي استعمال ڪرڻ لاءِ توهان کي ٻيهر ڊائون لوڊ ڪرڻ جي ضرورت پوندي.</string>
+    <string name="titleChapterInfoCleanup">سورة جي معلومات کي صاف ڪريو؟</string>
+    <string name="titleTafsirCleanup">تفسير کي ڊليٽ ڪريو؟</string>
+    <string name="msgTafsirCleanup" formatted="false">%s مان سڀئي ذخيرو ٿيل تفسير ختم ڪيا ويندا.</string>
+    <string name="nFiles" formatted="false">%d فائلون</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d اسڪرپٽ ۽ %2$d فانٽ</string>
+    <string name="nothingToCleanup">هتي صاف ڪرڻ لاءِ ڪجهه به ناهي.</string>
+    <string name="nItem" formatted="false">%d آئٽم</string>
+    <string name="nItems" formatted="false">%d آئٽمَ</string>
+    <string name="noItems">ڪوبه آئٽم ناهي</string>
+    <string name="place" formatted="false">%d جڳهه</string>
+    <string name="places" formatted="false">%d جڳھون</string>
+    <string name="inPlaces" formatted="false">%s ۾</string>
+    <string name="inPlacesMore" formatted="false">%1$s ۾ %2$d وڌيڪ</string>
+    <string name="onboardDescLanguage">ايپ کي پنهنجي ٻولي ۾ سنواريو. پوءِ توهان ڪڏهن به ٻولي بدلائي سگهو ٿا.</string>
+    <string name="onboardDescTheme">توهان ڪڏهن به ان کي بدلائي سگهو ٿا.</string>
+    <string name="onboardDescReciter">توهان ڪڏهن به بعد ۾ هن کي بدلائي سگهو ٿا. توهان سيٽنگز ۾ وڌيڪ تلاوت ڪندڙ ڳولي سگهو ٿا.</string>
+    <string name="labelArabic">عربي</string>
+    <string name="labelTranslation">ترجمو</string>
+    <string name="titleAddToFavourites">وڻندڙ ۾ وجهو</string>
+    <string name="msgAddedToFavourites">وڻندڙن ۾ وڌو ويو</string>
+    <string name="titleRemoveFromFavourites">وڻندڙن مان ڪڍو</string>
+    <string name="msgRemovedFromFavourites">وڻندڙن مان ڪڍيو ويو</string>
+    <string name="msgNoFavouriteChapters">هتي ڏسڻ لاءِ پسنديده ۾ هڪ سورة شامل ڪريو.</string>
+    <string name="msgChapterAddedToFavourites">سورة وڻندڙ ۾ شامل ڪئي وئي.</string>
+    <string name="msgChapterRemovedFromFavourites">سورة وڻندڙ مان ريموو ڪئي وئي.</string>
+    <string name="textTranslationReciterInfo">ٻولي: %1$s\nڪتاب: %2$s</string>
+    <string name="textNoLogsFound">ڪوبه لاگ نه مليو</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">\"%2$s\" جي تلاوت ڪندڙ لاءِ \"%1$s\" ڊائون لوڊ ڪرڻ ۾ ناڪام ٿيو.</string>
+    <string name="msgRecitaionDownloaded" formatted="false">\"%2$s\" جي تلاوت ڪندڙ لاءِ \"%1$s\" ڊائون لوڊ ڪيو ويو.</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">\"%2$s\" جي تلاوت ڪندڙ لاءِ \"%1$s\" جون سڀئي تلاوتون ختم ڪيون وينديون.</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">\"%2$s\" جي تلاوت ڪندڙ لاءِ \"%1$s\" جون تلاوتون ختم ڪيون ويون.</string>
+    <string name="msgInvalidParams">غلط پيرا ميٽر</string>
+    <string name="msgTafsirLoadFailed">تفسير لوڊ ڪرڻ ۾ ناڪام ٿيو</string>
+    <string name="msgClearReadHistory">پڙهڻ جي تاريخ صاف ڪريو</string>
+    <string name="msgClearSearchHistory">ڳولا جي تاريخ صاف ڪريو</string>
+    <string name="titleResourceDownloadSource">مواد ڊائون لوڊ جو ذريعو</string>
+    <string name="titleArabicTextToggle">عربي آيت جو متن ڏيکاريو</string>
+    <string name="msgArabicTextToggle">هن خصوصيت کي غير فعال ڪرڻ سان سڄي ايپ مان عربي آيت جو متن لڪجي ويندو.</string>
+    <string name="labelExport">برآمد ڪريو</string>
+    <string name="labelImport">درآمد ڪريو</string>
+    <string name="labelImportExportEverything">سڀ ڪجهه</string>
+    <string name="labelImportExportBookmarks">صرف بُڪ مارڪ</string>
+    <string name="labelImportExportSettings">صرف سيٽنگون</string>
+    <string name="warnImportSettings">خبردار: سيٽنگون درآمد ڪرڻ سان توهان جي موجوده سيٽنگون اوور رائڊ ٿي وينديون.</string>
+    <string name="msgExportImportBookmarks">نوٽس سان گڏ پنهنجا بُڪ مارڪ برآمد يا درآمد ڪريو.</string>
+    <string name="msgExportEmpty">برآمد ڪرڻ لاءِ ڪي به بُڪ مارڪ نه آهن</string>
+    <string name="msgExportSuccess">ڪاميابي سان برآمد ٿيو</string>
+    <string name="msgImportFailed">درآمد ڪرڻ ۾ ناڪام ٿيو. غير معاون فائل.</string>
+    <string name="msgImportSuccess">ڪاميابي سان درآمد ڪيو ويو</string>
+    <string name="desc_votd_widget">هر روز هڪ نئين آيت حاصل ڪريو</string>
+    <string name="autoScroll">پاڻمرادو اسڪرول</string>
+    <string name="startAutoScroll">پاڻمرادو اسڪرول شروع ڪريو</string>
+    <string name="autoScrollSpeed">رفتار سيٽ ڪريو</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">تلاوت هلندڙ هجي ته خودڪار اسڪرول نه ٿو ڪري سگهجي.</string>
+    <string name="storageCleanupMessage">غير استعمال ٿيل ڊائون لوڊ ڪيل وسيلن کي ختم ڪري جاءِ خالي ڪريو. هي ڪنهن به بُڪ مارڪ يا سيٽنگ کي ختم نه ڪندو.\n\nهيٺيان وسيلا خالي ڪري سگهجن ٿا:</string>
+    <string name="strLabelChangeNRestart">تبديل ڪريو ۽ ٻيهر شروع ڪريو</string>
+    <string name="msgScriptFontsDownloaded">اسڪرپٽ ۽ فانٽ ڪاميابي سان ڊائون لوڊ ٿي ويا.</string>
+    <string name="strTitleTranslDelete">ترجمو ڊليٽ ڪجي؟</string>
+    <string name="strLabelDownloadNow">هاڻي ئي ڊائونلوڊ ڪريو</string>
+    <string name="strLabelPreviousChapter">پوئين سورت</string>
+    <string name="strLabelNoNextChapter">اڳتي سورت ناهي</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">آيتون: %d</string>
+    <string name="logRemoved">لاگ هٽايو ويو</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="pasteCrashLogGithubIssue">لاگ ڪلپ بورڊ تي ڪاپي ڪيو ويو آهي. مھرباني ڪري ان کي گٽ هب اشو ۾ پيسٽ ڪريو.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d ڊائون لوڊ ڪيل اسڪرپٽ ۽ انهن جا فانٽ خالي ڪري سگھجن ٿا.</string>
+    <string name="titleOtherSettings">ٻيون ترتيبون</string>
+    <string name="msgVerseReminderAlarmPermission">آيت جي ياد ڏياريندڙ کي فعال ڪرڻ لاءِ الارم جي اجازت گهربل آهي.</string>
+    <string name="verseSyncOn">آيت جي هم وقت سازي: کوليو</string>
+    <string name="onboardDescTranslations">توهان ڪڏهن به هن کي بعد ۾ تبديل ڪري سگهو ٿا. توهان سيٽنگز مان وڌيڪ ترجما ڊائون لوڊ ڪري سگهو ٿا.</string>
+    <string name="downloadRecitations">تلاوتون ڊائونلوڊ ڪريو</string>
+    <string name="strTitleDuas">قرآني دعائون</string>
+    <string name="msgRecitationCleanup" formatted="false">%s کان سڀئي ذخيرو ٿيل تلاوتون ختم ٿي وينديون. هر اڪيلي سورة جي تلاوت کي ختم ڪرڻ لاءِ آڊيو سيٽنگز ڏانهن وڃو.</string>
+    <string name="msgChapterInfoCleanup">سڀ محفوظ ڪيل سورتن جي معلومات ختم ٿي ويندي.</string>
+    <string name="strTitleFootnotes">حاشيہ</string>
+    <string name="verseSyncOff">آيت جي هم وقت سازي: بند ڪريو</string>
+    <string name="strPreviewTextTransl">الله ٻاجهاري مھربان جي نالي سان ( شروع )</string>
+    <string name="strLabelIncludeArabic">عربي شامل ڪريو</string>
+    <string name="strTitleReaderLayoutStyle">قرآن ڏسڻ جو انداز</string>
+    <string name="strTitleReaderTextSizeTransl">ترجمي جي متن جي سائيز</string>
+    <string name="strTitleTopics">مضمونَ</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ڊائون لوڊ ڪرڻ ۾ ناڪام ٿيو.</string>
+    <string name="titleDownloadScriptResources">هن اسڪرپٽ لاءِ وسيلا ڊائون لوڊ ڪريو؟</string>
+    <string name="strTitleReadVerseRange" formatted="false">آيتون پڙهو %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">آيت %d جي تفسير پڙهو</string>
+    <string name="strMsgDuaFor" formatted="false">%s لاءِ دعا</string>
+    <string name="strMsgDuaOf" formatted="false">%s جي دعا</string>
+    <string name="strTitleReaderTextSizeArabic">عربي متن جي سائيز</string>
+    <string name="strTitleRecitationOptions">ترتيبون</string>
+    <string name="strTitleFeaturedProphets">قرآن ۾ انبياءَ</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" ۾ موضوع ڳولھيو</string>
+    <string name="strMsgThemeDark">اونداهو روپ بجلي جي استعمال کي گھٽائي ٿو.</string>
+    <string name="strMsgSearchNoResultsFound">ڪو به نتيجو نه مليو. مھرباني ڪري ڳولا فلٽر چيڪ ڪريو يا ٻئي ترجمي ۾ ڳولا ڪريو.</string>
+    <string name="strTitleChapInfoVerses">آيتون</string>
+    <string name="strTitleChapInfoRukus">رڪوع</string>
+    <string name="audioOnlyTranslation">صرف ترجمو هلايو</string>
+    <string name="strLabelBookmarked">بُڪ مارڪ ٿي ويو</string>
+    <string name="strLabelIncludeTranslation">ترجمو شامل ڪريو</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d سورت نمبر %2$d لاءِ صحيح آيت نمبر نه آهي</string>
+    <string name="strMsgResetReaderSettings">سڀني سيٽنگن کي ڊفالٽ تي ري سيٽ ڪريو.</string>
+    <string name="strTitleFeaturedDuas">قرآن ۾ دعائون</string>
+    <string name="strMsgEditShareTransl">سيٽنگن مان چونڊيل ترجما، صرف هتي ڏيکاريا ويا آهن.</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s ۾ ڪُل نتيجا مليا: %2$d</string>
+    <string name="strMsgTranslNoDownloadsAvailable">ڪابه ڊائون لوڊ موجود ناهي</string>
+    <string name="strTitleImageSavedWithName" formatted="false">تصوير %s نالي سان محفوظ ڪئي وئي</string>
+    <string name="msgResourceDownloadSource">جيڪڏهن ڪو ٻيو ذريعو ڪم نه ڪري رهيو آهي ته قرآن جي ڊيٽا کي ٻئي ذريعن کان ڊائون لوڊ ڪرڻ لاءِ هي آپشن استعمال ڪريو</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%d وڌيڪ ترجما</string>
+    <string name="strLabelSelectVerse">آيَتُون چونڊيو</string>
+    <string name="strHintFromVerse">آيت منجهان</string>
+    <string name="strMsgUpdateAvailable4Dialog">اپڊيٽ موجود آهي!\nمھرباني ڪري ايپ کي اپڊيٽ ڪريو.</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d سورت جو درست نمبر نه آهي.</string>
+    <string name="strMsgEditShareLongTransl">ترجمو تمام ڊگهو آهي، شايد اهو صحيح طرح سان نه ٺهي.</string>
+    <string name="strMsgBookmarkAdded">آيت ڪاميابي سان بُڪ مارڪ ۾ شامل ڪئي وئي</string>
+    <string name="strTextPleaseWait">مهرباني ڪري انتظار ڪريو…</string>
+    <string name="strLabelProceed">اڳتي وڌو</string>
+    <string name="strMsgUpdateAvailable">اپڊيٽ موجود آهي! تازيون خاصيتون حاصل ڪرڻ لاءِ مهرباني ڪري ايپ کي اپڊيٽ ڪريو.</string>
+    <string name="msgDownloadKFQPCResources">هن اسڪرپٽ کي استعمال ڪرڻ کان اڳ هيٺ ڏنل وسيلن کي ڊائون لوڊ ڪرڻ جي ضرورت آهي:</string>
+    <string name="strTitleAlphaBG">الفا پس منظر</string>
 </resources>
