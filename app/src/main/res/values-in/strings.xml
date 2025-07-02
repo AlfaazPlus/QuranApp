@@ -433,4 +433,7 @@
     <string name="msgExportSuccess">Sukses mengekspor</string>
     <string name="msgImportFailed">Gagal mengimpor. File tidak didukung.</string>
     <string name="msgImportSuccess">Berhasil mengimpor</string>
+    <string name="msgExtractingFonts">Mengekstrak font</string>
+    <string name="labelImportExportEverything">Semuanya</string>
+    <string name="labelImportExportBookmarks">Hanya Markah</string>
 </resources>
