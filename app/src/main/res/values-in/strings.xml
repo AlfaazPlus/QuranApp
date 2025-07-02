@@ -435,5 +435,7 @@
     <string name="msgImportSuccess">Berhasil mengimpor</string>
     <string name="msgExtractingFonts">Mengekstrak font</string>
     <string name="labelImportExportEverything">Semuanya</string>
-    <string name="labelImportExportBookmarks">Hanya Markah</string>
+    <string name="labelImportExportBookmarks">Hanya Bookmark</string>
+    <string name="labelImportExportSettings">Hanya Pengaturan</string>
+    <string name="warnImportSettings">PERINGATAN: Mengimpor pengaturan akan menggantikan pengaturan Anda saat ini.</string>
 </resources>
