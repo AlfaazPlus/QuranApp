@@ -437,4 +437,5 @@
     <string name="labelImportExportSettings">Только настройки</string>
     <string name="labelImportExportBookmarks">Только закладки</string>
     <string name="warnImportSettings">ВНИМАНИЕ: Импорт настроек отменяет текущие настройки.</string>
+    <string name="msgExtractingFonts">Извлечение шрифтов</string>
 </resources>
