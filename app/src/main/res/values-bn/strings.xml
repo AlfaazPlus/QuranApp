@@ -433,4 +433,9 @@
     <string name="msgImportFailed">আমদানি করা যায়নি। অসমর্থিত ফাইল।</string>
     <string name="msgImportSuccess">সফলভাবে আমদানি করা হয়েছে</string>
     <string name="strMsgCannotAutoScrollWhileReciting">আবৃত্তি চলাকালীন স্বয়ংক্রিয়ভাবে স্ক্রোল করা যাবে না।</string>
+    <string name="msgExtractingFonts">ফন্ট বের করা হচ্ছে</string>
+    <string name="labelImportExportEverything">সবকিছু</string>
+    <string name="labelImportExportBookmarks">শুধু বুকমার্ক</string>
+    <string name="labelImportExportSettings">শুধু সেটিংস</string>
+    <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে</string>
 </resources>
