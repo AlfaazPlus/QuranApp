@@ -437,5 +437,5 @@
     <string name="labelImportExportEverything">সবকিছু</string>
     <string name="labelImportExportBookmarks">শুধু বুকমার্ক</string>
     <string name="labelImportExportSettings">শুধু সেটিংস</string>
-    <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে</string>
+    <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে।</string>
 </resources>
