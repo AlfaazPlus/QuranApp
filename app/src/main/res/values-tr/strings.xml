@@ -420,4 +420,5 @@
     <string name="msgClearReadHistory">Okuma geçmişini temizle</string>
     <string name="titleResourceDownloadSource">Kaynak indirme kaynağı</string>
     <string name="msgResourceDownloadSource">Çalışmıyorsa Kuran verilerini farklı bir kaynaktan indirmek için bu seçeneği kullanın</string>
+    <string name="msgExtractingFonts">Yazı tiplerini çıkarma</string>
 </resources>
