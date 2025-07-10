@@ -421,4 +421,21 @@
     <string name="titleResourceDownloadSource">Kaynak indirme kaynağı</string>
     <string name="msgResourceDownloadSource">Çalışmıyorsa Kuran verilerini farklı bir kaynaktan indirmek için bu seçeneği kullanın</string>
     <string name="msgExtractingFonts">Yazı tiplerini çıkarma</string>
+    <string name="titleExportData">Dışa Aktar &amp; İçe Aktar</string>
+    <string name="labelExport">Dışa Aktar</string>
+    <string name="labelImport">İçe Aktar</string>
+    <string name="labelImportExportEverything">Her şey</string>
+    <string name="labelImportExportBookmarks">Yalnızca Yer İmleri</string>
+    <string name="labelImportExportSettings">Yalnızca Ayarlar</string>
+    <string name="warnImportSettings">Uyarı: Ayarları içe aktarmak, mevcut ayarlarınızın üzerine yazacaktır.</string>
+    <string name="msgExportImportBookmarks">Yer imlerinizi notlarla birlikte dışa veya içe aktarın.</string>
+    <string name="msgExportEmpty">Dışa aktarılacak yer imi yok</string>
+    <string name="msgExportSuccess">Başarıyla dışa aktarıldı</string>
+    <string name="msgImportFailed">İçe aktarılamadı. Desteklenmeyen dosya.</string>
+    <string name="msgImportSuccess">Başarıyla içe aktarıldı</string>
+    <string name="desc_votd_widget">Her gün yeni bir ayet alın</string>
+    <string name="autoScroll">Otomatik kaydırma</string>
+    <string name="startAutoScroll">Otomatik kaydırmayı başlat</string>
+    <string name="autoScrollSpeed">Hızı ayarla</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Kıraat oynatılırken otomatik kaydırma yapılamaz.</string>
 </resources>
