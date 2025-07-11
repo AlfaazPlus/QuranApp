@@ -424,9 +424,9 @@
     <string name="titleExportData">Dışa Aktar &amp; İçe Aktar</string>
     <string name="labelExport">Dışa Aktar</string>
     <string name="labelImport">İçe Aktar</string>
-    <string name="labelImportExportEverything">Her şey</string>
-    <string name="labelImportExportBookmarks">Yalnızca Yer İmleri</string>
-    <string name="labelImportExportSettings">Yalnızca Ayarlar</string>
+    <string name="labelImportExportEverything">Her Şeyi İçe/Dışa Aktar</string>
+    <string name="labelImportExportBookmarks">Yer İmlerini İçe/Dışa Aktar</string>
+    <string name="labelImportExportSettings">Ayarları İçe/Dışa Aktar</string>
     <string name="warnImportSettings">Uyarı: Ayarları içe aktarmak, mevcut ayarlarınızın üzerine yazacaktır.</string>
     <string name="msgExportImportBookmarks">Yer imlerinizi notlarla birlikte dışa veya içe aktarın.</string>
     <string name="msgExportEmpty">Dışa aktarılacak yer imi yok</string>
