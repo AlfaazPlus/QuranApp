@@ -433,9 +433,9 @@
     <string name="msgImportSuccess">Успешно импортировано</string>
     <string name="autoScroll">Авто промотка</string>
     <string name="autoScrollSpeed">Установка скорости</string>
-    <string name="labelImportExportEverything">Все</string>
-    <string name="labelImportExportSettings">Только настройки</string>
-    <string name="labelImportExportBookmarks">Только закладки</string>
+    <string name="labelImportExportEverything">Импорт/экспорт всего</string>
+    <string name="labelImportExportSettings">Настройки импорта/экспорта</string>
+    <string name="labelImportExportBookmarks">Импорт/экспорт закладок</string>
     <string name="warnImportSettings">ВНИМАНИЕ: Импорт настроек отменяет текущие настройки.</string>
     <string name="msgExtractingFonts">Извлечение шрифтов</string>
 </resources>
