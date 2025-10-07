@@ -426,9 +426,9 @@
     <string name="labelExport">Exportar</string>
     <string name="labelImport">Importar</string>
     <string name="msgExportImportBookmarks">Exporte ou importe os seus favoritos juntamente com as notas.</string>
-    <string name="labelImportExportEverything">Tudo</string>
-    <string name="labelImportExportBookmarks">Apenas favoritos</string>
-    <string name="labelImportExportSettings">Apenas definições</string>
+    <string name="labelImportExportEverything">Importar/Exportar tudo</string>
+    <string name="labelImportExportBookmarks">Importar/Exportar Marcadores</string>
+    <string name="labelImportExportSettings">Importar/Exportar Definições</string>
     <string name="warnImportSettings">AVISO: A importação das definições substituirá as suas definições atuais.</string>
     <string name="msgExportEmpty">Não há favoritos para exportar</string>
     <string name="msgExportSuccess">Exportado com sucesso</string>
@@ -437,4 +437,5 @@
     <string name="autoScroll">Scroll automático</string>
     <string name="autoScrollSpeed">Definir velocidade</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Não é possível fazer scroll automático enquanto a recitação estiver a ser reproduzida.</string>
+    <string name="msgExtractingFonts">Extrair fontes</string>
 </resources>

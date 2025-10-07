@@ -428,13 +428,14 @@
     <string name="labelImport">Importer</string>
     <string name="labelExport">Exporter</string>
     <string name="msgImportFailed">Échec de l\'importation. Fichier non pris en charge.</string>
-    <string name="labelImportExportEverything">Tout</string>
-    <string name="labelImportExportBookmarks">Signets uniquement</string>
-    <string name="labelImportExportSettings">Paramètres uniquement</string>
+    <string name="labelImportExportEverything">Tout importer/exporter</string>
+    <string name="labelImportExportBookmarks">Importer/Exporter les signets</string>
+    <string name="labelImportExportSettings">Paramètres d\'importation/exportation</string>
     <string name="warnImportSettings">AVERTISSEMENT : L\'importation de paramètres remplace les paramètres actuels.</string>
     <string name="desc_votd_widget">Obtenez un nouveau verset quotidiennement</string>
     <string name="autoScroll">Défilement automatique</string>
     <string name="startAutoScroll">Démarrer le défilement automatique</string>
     <string name="autoScrollSpeed">Régler la vitesse</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Impossible de défiler automatiquement lorsque la récitation est en cours.</string>
+    <string name="msgExtractingFonts">Extraction des polices</string>
 </resources>
