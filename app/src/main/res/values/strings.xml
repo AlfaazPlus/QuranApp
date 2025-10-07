@@ -416,9 +416,9 @@
     <string name="msgArabicTextToggle">Disabling this feature will hide Arabic verse text from all over the app.</string>
     <string name="labelExport">Export</string>
     <string name="labelImport">Import</string>
-    <string name="labelImportExportEverything">Everything</string>
-    <string name="labelImportExportBookmarks">Only Bookmarks</string>
-    <string name="labelImportExportSettings">Only Settings</string>
+    <string name="labelImportExportEverything">Import/Export Everything</string>
+    <string name="labelImportExportBookmarks">Import/Export Bookmarks</string>
+    <string name="labelImportExportSettings">Import/Export Settings</string>
     <string name="warnImportSettings">WARNING: Importing settings will override your current settings.</string>
     <string name="msgExportImportBookmarks">Export or import your bookmarks along with notes.</string>
     <string name="msgExportEmpty">No bookmarks to export</string>

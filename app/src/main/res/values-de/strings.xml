@@ -420,4 +420,22 @@
     <string name="msgClearSearchHistory">Suchverlauf löschen</string>
     <string name="titleArabicTextToggle">Arabischen Verstext anzeigen</string>
     <string name="msgArabicTextToggle">Deaktivieen dieser Funktion wird arabischen Verstext in der ganzen App ausblenden.</string>
+    <string name="msgExtractingFonts">Schriftarten extrahieren</string>
+    <string name="titleExportData">Exportieren &amp; Importieren</string>
+    <string name="labelExport">Export</string>
+    <string name="labelImport">Import</string>
+    <string name="labelImportExportEverything">Alles importieren/exportieren</string>
+    <string name="labelImportExportBookmarks">Lesezeichen importieren/exportieren</string>
+    <string name="labelImportExportSettings">Einstellungen importieren/exportieren</string>
+    <string name="warnImportSettings">WARNUNG: Importieren von Einstellungen überschreibt die aktuellen Einstellungen.</string>
+    <string name="msgExportImportBookmarks">Exportieren oder Importieren von Lesezeichen zusammen mit Notizen.</string>
+    <string name="msgExportEmpty">Keine Lesezeichen zum Export</string>
+    <string name="msgExportSuccess">Erfolgreich exportiert</string>
+    <string name="msgImportFailed">Import fehlgeschlagen. Nicht unterstützte Datei.</string>
+    <string name="msgImportSuccess">Erfolgreich importiert</string>
+    <string name="desc_votd_widget">Erhalte jeden Tag einen neuen Vers</string>
+    <string name="autoScroll">Automatisches Scrollen</string>
+    <string name="startAutoScroll">Automatisches Scrollen starten</string>
+    <string name="autoScrollSpeed">Geschwindigkeit einstellen</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">Während der Wiedergabe der Rezitation kann nicht automatisch gescrollt werden.</string>
 </resources>

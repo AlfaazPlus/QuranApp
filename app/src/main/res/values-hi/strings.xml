@@ -437,4 +437,5 @@
     <string name="labelImportExportEverything">सब कुछ</string>
     <string name="labelImportExportSettings">केवल सेटिंग्स</string>
     <string name="labelImportExportBookmarks">केवल बुकमार्क</string>
+    <string name="msgExtractingFonts">फ़ॉन्ट निकालना</string>
 </resources>
