@@ -13,9 +13,10 @@ import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
+import com.quranapp.android.views.reader.updateAllVotdWidgets
 import com.quranapp.android.widgets.compound.PeaceCompoundButton
 import com.quranapp.android.widgets.radio.PeaceRadioButton
-import java.util.*
+import java.util.Locale
 
 class FragSettingsLanguage : FragSettingsBase() {
     private lateinit var binding: FragSettingsLangBinding
