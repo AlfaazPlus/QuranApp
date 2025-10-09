@@ -1,5 +1,7 @@
 package com.quranapp.android.activities;
 
+import static com.quranapp.android.views.reader.VotdWidgetKt.updateAllVotdWidgets;
+
 import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.DrawableRes;
@@ -101,6 +103,8 @@ public class MainActivity extends BaseActivity {
     private void init() {
         initContent();
         initActions();
+
+        updateAllVotdWidgets(this);
     }
 
     private void initHeader() {
