@@ -159,6 +159,15 @@ fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     else -> R.dimen.dmnReaderTextSizeArNoorehudaSmall
 }
 
+fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
+    QuranScriptUtils.SCRIPT_UTHMANI -> 21f
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> 20f
+    QuranScriptUtils.SCRIPT_KFQPC_V2
+        -> 15f
+
+    else -> 21f
+}
+
 @DimenRes
 fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniMedium

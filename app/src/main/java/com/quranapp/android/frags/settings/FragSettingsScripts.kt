@@ -44,6 +44,8 @@ import com.quranapp.android.utils.receivers.KFQPCScriptFontsDownloadReceiver
 import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.views.BoldHeader
+import com.quranapp.android.views.reader.updateAllVotdWidgets
+import com.quranapp.android.views.reader.updateAppWidget
 
 class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
@@ -142,6 +144,7 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
         if (binding.radio.isChecked) {
             SPReader.setSavedScript(ctx, slug)
+            updateAllVotdWidgets(ctx)
         }
     }
 

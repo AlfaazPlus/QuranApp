@@ -26,6 +26,7 @@ import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_COD
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static com.quranapp.android.views.reader.VotdWidgetKt.updateAllVotdWidgets;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -423,8 +424,10 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         binding.container.setOnClickListener(v -> binding.switcher.toggle());
         binding.switcher.setChecked(SPReader.getArabicTextEnabled(context));
 
-        binding.switcher.setOnCheckedChangeListener((buttonView, isChecked) ->
-            SPReader.setArabicTextEnabled(context, isChecked));
+        binding.switcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SPReader.setArabicTextEnabled(context, isChecked);
+            updateAllVotdWidgets(context);
+        });
 
         prepareTitle(binding.text, R.string.titleArabicTextToggle, context.getString(R.string.msgArabicTextToggle));
     }

@@ -1,5 +1,7 @@
 package com.quranapp.android.utils.reader;
 
+import static com.quranapp.android.views.reader.VotdWidgetKt.updateAllVotdWidgets;
+
 import android.content.Context;
 import android.util.Pair;
 import androidx.annotation.Nullable;
@@ -305,6 +307,7 @@ public class TranslUtils {
 
         if (saveToSP) {
             SPReader.setSavedTranslations(ctx, slugSet);
+            updateAllVotdWidgets(ctx);
         }
 
         return true;

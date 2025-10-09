@@ -4,8 +4,8 @@
     android:initialKeyguardLayout="@layout/votd_widget"
     android:initialLayout="@layout/votd_widget"
     android:minWidth="400dp"
-    android:minHeight="180dp"
+    android:minHeight="200dp"
     android:previewImage="@drawable/widget_preview"
     android:resizeMode="vertical"
-    android:updatePeriodMillis="14400000"
+    android:updatePeriodMillis="7200000"
     android:widgetCategory="home_screen|keyguard" />

@@ -41,8 +41,8 @@
     <dimen name="dmnReaderTextSizeArUthmaniMedium">28sp</dimen>
     <dimen name="dmnReaderTextSizeArUthmaniSmall">23sp</dimen>
 
-    <dimen name="dmnReaderTextSizeArQpcV1Medium">32sp</dimen>
-    <dimen name="dmnReaderTextSizeArQpcV1Small">26sp</dimen>
+    <dimen name="dmnReaderTextSizeArQpcV1Medium">30sp</dimen>
+    <dimen name="dmnReaderTextSizeArQpcV1Small">24sp</dimen>
 
     <dimen name="dmnReaderTextSizeArQpcV2Medium">22sp</dimen>
     <dimen name="dmnReaderTextSizeArQpcV2Small">17sp</dimen>
