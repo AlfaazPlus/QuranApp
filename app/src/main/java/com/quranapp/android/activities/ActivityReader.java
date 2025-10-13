@@ -505,11 +505,11 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
         adjustStatusAndNavigationBar();
 
         final View navDummy = mBinding.navigationBarDummy;
-        final View statusBarDummy = mBinding.readerHeader.getBinding().statusBarDummy;
+        final View statusBarPlaceholder = mBinding.readerHeader.getBinding().statusBarPlaceholder;
 
         ViewCompat.setOnApplyWindowInsetsListener(mBinding.getRoot(), (v, insets) -> {
             final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-            statusBarDummy.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, statusBarHeight));
+            statusBarPlaceholder.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, statusBarHeight));
 
             final int navHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
             navDummy.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, navHeight));
@@ -519,7 +519,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
         final int color = color(R.color.colorBGReaderHeader);
         navDummy.setBackgroundColor(color);
-        statusBarDummy.setBackgroundColor(color);
+        statusBarPlaceholder.setBackgroundColor(color);
     }
 
     private void initReadHistory() {

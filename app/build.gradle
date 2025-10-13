@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.quranapp.android"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         // now just incrementing from there

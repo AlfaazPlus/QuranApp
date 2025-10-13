@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="15dp"
         android:paddingVertical="5dp"
-        android:textIsSelectable="true" />
+        android:shiftDrawingOffsetForStartOverhang="true"
+        android:textIsSelectable="true"
+        android:useBoundsForWidth="true" />
 
     <View
         android:id="@+id/bottomBorder"
