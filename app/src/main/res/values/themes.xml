@@ -30,6 +30,8 @@
 
         <item name="chipGroupStyle">@style/ChipGroupStyle</item>
         <item name="chipStyle">@style/ChipStyle</item>
+
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <style name="Theme.QuranApp.Splash">

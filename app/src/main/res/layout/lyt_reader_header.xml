@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <View
-        android:id="@+id/statusBarDummy"
+        android:id="@+id/statusBarPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:src="@drawable/dr_icon_chevron_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
+        app:layout_constraintTop_toBottomOf="@id/statusBarPlaceholder"
         app:tint="@color/colorIcon" />
 
 
@@ -42,7 +42,7 @@
         android:src="@drawable/icon_scroll_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
-        app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
+        app:layout_constraintTop_toBottomOf="@id/statusBarPlaceholder"
         app:tint="@color/colorIcon" />
 
     <include
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarDummy" />
+        app:layout_constraintTop_toBottomOf="@id/statusBarPlaceholder" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btnTranslLauncher"
@@ -67,7 +67,7 @@
         android:src="@drawable/dr_icon_translations"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/readerSetting"
-        app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
+        app:layout_constraintTop_toBottomOf="@id/statusBarPlaceholder"
         app:tint="@color/colorIcon" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -82,7 +82,7 @@
         android:src="@drawable/dr_icon_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarDummy"
+        app:layout_constraintTop_toBottomOf="@id/statusBarPlaceholder"
         app:tint="@color/colorIcon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
