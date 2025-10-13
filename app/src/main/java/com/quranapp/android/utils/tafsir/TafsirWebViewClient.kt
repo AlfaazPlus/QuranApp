@@ -56,7 +56,7 @@ open class TafsirWebViewClient(private val activity: ActivityTafsir) : WebViewCl
                     data = ctx.resources.openRawResource(+R.font.uthmanic_hafs)
                 } else if (uriStr.contains("content")) {
                     if (TafsirUtils.isUrdu(activity.tafsirKey)) {
-                        data = view.context.resources.openRawResource(+R.font.font_urdu)
+                        data = view.context.resources.openRawResource(+R.font.noto_nastaliq_urdu_variable)
                     } else if (TafsirUtils.isArabic(activity.tafsirKey)) {
                         data = view.context.resources.openRawResource(+R.font.scheherazadenew_regular)
                     }

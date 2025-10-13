@@ -92,7 +92,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         mColorSecondary = ContextKt.color(context, R.color.colorText3);
         mColorPrimary = ContextKt.color(context, R.color.colorPrimary);
         mMoreTransText = context.getString(R.string.strLabelMoreTranslations);
-        fontUrdu = ContextKt.getFont(context, R.font.font_urdu);
+        fontUrdu = ContextKt.getFont(context, R.font.noto_nastaliq_urdu_variable);
         defaultTransFont = Typeface.DEFAULT;
         mQueryHighlightTypeface = Typeface.create("sans-serif", Typeface.BOLD_ITALIC);
 

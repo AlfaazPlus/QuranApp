@@ -41,7 +41,7 @@ class ReaderVerseDecorator(private val ctx: Context) {
      */
     private var fontsArabicKFQPC = mutableMapOf<Int, Typeface>()
 
-    private val fontTranslationUrduAlike by lazy { ctx.getFont(R.font.font_urdu) }
+    private val fontTranslationUrduAlike by lazy { ctx.getFont(R.font.noto_nastaliq_urdu_variable) }
 
     private var savedTextSizeArabicMultiplier = 0f
     private var savedTextSizeTranslMultiplier = 0f
