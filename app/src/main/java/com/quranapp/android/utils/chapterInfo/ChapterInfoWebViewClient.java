@@ -68,7 +68,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
                 if (uriStr.contains("surah-icon")) {
                     data = view.getContext().getResources().openRawResource(+R.font.suracon);
                 } else if ("ur".equals(mActivityChapInfo.mLanguage) && uriStr.contains("content")) {
-                    data = view.getContext().getResources().openRawResource(+R.font.font_urdu);
+                    data = view.getContext().getResources().openRawResource(+R.font.noto_nastaliq_urdu_variable);
                 }
                 break;
             }
