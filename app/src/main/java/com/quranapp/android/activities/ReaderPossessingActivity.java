@@ -106,7 +106,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
         mRefHighlightBGColor = color(R.color.colorPrimaryAlpha10);
         mRefHighlightBGColorPres = color(R.color.colorPrimaryAlpha50);
         mAuthorTextSize = dimen(R.dimen.dmnCommonSize3);
-        mUrduTypeface = font(R.font.font_urdu);
+        mUrduTypeface = font(R.font.noto_nastaliq_urdu_variable);
     }
 
     @Override

@@ -19,13 +19,7 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 <hr />
 
-Join the community:
-
-[![Discord](repo_assets/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
-[![Matrix](repo_assets/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
-[![Telegram](repo_assets/widgets/telegram.svg)](https://t.me/thequranapp)
-
-Download:
+**Download QuranApp:**
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
@@ -36,7 +30,22 @@ height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.quranapp.android)
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
 alt='Get it on GitHub'
 height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
+
+**Join the community:**
+
+[![Discord](repo_assets/widgets/discord.svg)](https://discord.com/invite/vtutnwzxRb)
+[![Matrix](repo_assets/widgets/matrix.svg)](https://matrix.to/#/#quranapp:matrix.org)
+[![Telegram](repo_assets/widgets/telegram.svg)](https://t.me/thequranapp)
+
+**Check out more apps:**
+
+[<img src="https://github.com/AlfaazPlus/SunnahApp/raw/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt='SunnahApp logo' height="80"/>](https://github.com/AlfaazPlus/SunnahApp)
+
+**[SunnahApp](https://github.com/AlfaazPlus/SunnahApp)**
+
 </div>
+
+<hr />
 
 <div align="left">
 
