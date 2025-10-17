@@ -196,15 +196,17 @@ public class IndexMenu implements View.OnClickListener, Destroyable {
         } else if (id == R.id.indexMenuItemAbout) {
             mActivity.launchActivity(ActivityAbout.class);
         } else if (id == R.id.indexMenuItemRate) {
-            AppBridge.newOpener(getContext()).openPlayStore();
+            AppBridge.newOpener(getContext()).openPlayStore(null);
         } else if (id == R.id.indexMenuItemShare) {
             shareApp();
+        }else if (id == R.id.indexMenuItemSunnahApp) {
+            AppBridge.newOpener(getContext()).openPlayStore("com.alfaazplus.sunnah");
         }
     }
 
     private void shareApp() {
         AppBridge.Sharer sharer = AppBridge.newSharer(getContext());
-        sharer.setData(mActivity.str(R.string.strMsgShareApp, AppBridge.preparePlayStoreLink(getContext(), false)))
+        sharer.setData(mActivity.str(R.string.strMsgShareApp, AppBridge.preparePlayStoreLink(getContext(), false, null)))
             .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
             .setChooserTitle(getContext().getString(R.string.strTitleShareApp));
         sharer.share();

@@ -13,6 +13,7 @@
     <item name="indexMenuItemAbout" type="id" />
     <item name="indexMenuItemRate" type="id" />
     <item name="indexMenuItemShare" type="id" />
+    <item name="indexMenuItemSunnahApp" type="id" />
 
     <!--  IDs  -->
     <array name="arrIndexMenuIds">
@@ -41,6 +42,7 @@
     <array name="arrIndexMenuGroup3Ids">
         <item>@id/indexMenuItemRate</item>
         <item>@id/indexMenuItemShare</item>
+        <item>@id/indexMenuItemSunnahApp</item>
     </array>
 
     <!--  ICONS  -->
@@ -70,6 +72,7 @@
     <array name="arrIndexMenuGroup3Icons">
         <item>@drawable/dr_icon_rate</item>
         <item>@drawable/dr_icon_share</item>
+        <item>@drawable/sunnahapp_logo_icon</item>
     </array>
 
     <!--  LABELS  -->
@@ -99,5 +102,6 @@
     <array name="arrIndexMenuGroup3Labels">
         <item>@string/strTitleRateApp</item>
         <item>@string/strTitleShareApp</item>
+        <item>@string/strTitleDownloadSunnahApp</item>
     </array>
 </resources>

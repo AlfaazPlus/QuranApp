@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.List;
 
@@ -38,12 +39,14 @@ public final class AppBridge {
         return new Sharer(context);
     }
 
-    public static String preparePlayStoreLink(Context ctx, boolean toMarket) {
-        String packageName = ctx.getPackageName().replace(".debug", "");
+    public static String preparePlayStoreLink(Context ctx, boolean toMarket, @Nullable String packageName) {
+        final String pkgName = packageName != null ? packageName :
+            ctx.getPackageName().replace(".debug", "");
+
         if (toMarket) {
-            return "market://details?id=" + packageName;
+            return "market://details?id=" + pkgName;
         } else {
-            return "https://play.google.com/store/apps/details?id=" + packageName;
+            return "https://play.google.com/store/apps/details?id=" + pkgName;
         }
     }
 
@@ -118,12 +121,12 @@ public final class AppBridge {
             tryOpen(mIntent);
         }
 
-        public void openPlayStore() {
+        public void openPlayStore(@Nullable String packageName) {
             try {
-                mIntent.setData(Uri.parse(preparePlayStoreLink(mContext, true)));
+                mIntent.setData(Uri.parse(preparePlayStoreLink(mContext, true, packageName)));
                 mContext.startActivity(mIntent);
             } catch (ActivityNotFoundException ignored) {
-                mIntent.setData(Uri.parse(preparePlayStoreLink(mContext, false)));
+                mIntent.setData(Uri.parse(preparePlayStoreLink(mContext, false, packageName)));
                 mContext.startActivity(mIntent);
             }
         }

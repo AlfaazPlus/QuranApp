@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
-import com.quranapp.android.adapters.reference.ADPQuranScience
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
+import com.quranapp.android.adapters.reference.ADPQuranScience
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
 import com.quranapp.android.utils.extended.GapedItemDecoration
@@ -87,7 +87,7 @@ class ActivityQuranScience : BaseActivity() {
             .setMessage(
                 "The contents on this page are taken from the book by Dr. Zakir Naik called " +
                         "\"The Quran and Modern Science: Compatible or Incompatible\"\n\n" +
-                        "The contents in the app are currently available only in English."
+                        "The contents are currently only available in English. The images shown are for illustrative purpose only."
             )
             .setNeutralButton("Close", null)
             .show()

@@ -14,11 +14,10 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
-import java.util.*
+import java.util.Locale
 
 
 open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceContent) :
