@@ -3,6 +3,7 @@
     <string name="strTitleAppVersion">App version</string>
     <string name="strVersion" formatted="false">Version %s</string>
     <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
+    <string name="strTitleDownloadSunnahApp" translatable="false">Download SunnahApp</string>
     <string name="strTitleLicenses">Licenses</string>
     <string name="strLabelClose">Close</string>
     <string name="strLabelOkay">Okay</string>

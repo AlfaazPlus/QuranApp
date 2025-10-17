@@ -32,7 +32,18 @@ h1 {
 h3 {
     font-size: 1.2em;
     margin-top: 0px;
-    padding-top: 50px;
+    padding-top: 30px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+html.dark img {
+    border-color: #353535;
 }
 
 hr {
