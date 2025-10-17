@@ -110,7 +110,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
         builder.setCancelable(false)
         builder.setOnDismissListener { runOnDismiss?.run() }
         builder.setPositiveButton(R.string.strLabelUpdate, ColorUtils.DANGER) { _, _ ->
-            AppBridge.newOpener(ctx).openPlayStore()
+            AppBridge.newOpener(ctx).openPlayStore(null)
         }
         builder.setDismissOnPositive(!isCritical)
 
@@ -134,7 +134,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
             it.txt.setText(R.string.strMsgUpdateAvailable)
             it.button.setText(R.string.strLabelUpdate)
             it.button.setOnClickListener {
-                AppBridge.newOpener(ctx).openPlayStore()
+                AppBridge.newOpener(ctx).openPlayStore(null)
             }
 
             mIconAnimators.add(animateUpdateIcon(mUpdateBinding.icon))
