@@ -45,6 +45,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <com.quranapp.android.views.homepage2.MajorSinsVersesLayout
+            android:id="@+id/majorSins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <com.quranapp.android.views.homepage2.FeatureProphetsLayout
             android:id="@+id/prophets"
             android:layout_width="match_parent"

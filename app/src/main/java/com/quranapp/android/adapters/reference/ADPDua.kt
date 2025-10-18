@@ -19,8 +19,8 @@ class ADPDua(
         val ctx = binding.root.context
         val excluded = verse.id in arrayOf(1, 2)
 
-        val duaName = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.name)
-        else verse.name
+        val duaName = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.title)
+        else verse.title
 
         val count = verse.verses.size
 
@@ -35,13 +35,13 @@ class ADPDua(
         binding.root.setOnClickListener {
             if (verse.id == 1) {
                 it.context.startActivity(Intent(it.context, ActivityPropheticDuas::class.java).apply {
-                    putExtra(Keys.KEY_EXTRA_TITLE, verse.name)
+                    putExtra(Keys.KEY_EXTRA_TITLE, verse.title)
                 })
                 return@setOnClickListener
             }
 
-            val nameTitle = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.name)
-            else ctx.getString(R.string.strMsgReferenceInQuran, "\"" + verse.name + "\"")
+            val nameTitle = if (!excluded) ctx.getString(R.string.strMsgDuaFor, verse.title)
+            else ctx.getString(R.string.strMsgReferenceInQuran, "\"" + verse.title + "\"")
 
             val description = ctx.getString(
                 R.string.strMsgReferenceFoundPlaces,

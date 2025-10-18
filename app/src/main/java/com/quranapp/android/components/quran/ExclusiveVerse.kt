@@ -2,7 +2,8 @@ package com.quranapp.android.components.quran
 
 data class ExclusiveVerse(
     val id: Int,
-    var name: String,
+    var title: String,
+    var description: String? = null,
     var versesRaw: List<String>,
     /**
      * (chapterNo, fromVerse, toVerse)

@@ -8,7 +8,7 @@ import java.io.Serializable
 class ReferenceVerseModel(
     private val showChaptersSugg: Boolean = false,
     val title: String,
-    val desc: String,
+    val desc: String?,
     val translSlugs: Array<String>,
     val chapters: List<Int>,
     val verses: List<String>

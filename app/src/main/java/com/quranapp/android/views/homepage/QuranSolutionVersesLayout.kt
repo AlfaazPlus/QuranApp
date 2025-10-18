@@ -26,10 +26,6 @@ class QuranSolutionVersesLayout @JvmOverloads constructor(
         return R.drawable.dr_icon_read_quran
     }
 
-    override fun showViewAllBtn(): Boolean {
-        return true
-    }
-
     override fun setupHeader(header: LytHomepageTitledItemTitleBinding) {
         header.titleIcon.setColorFilter(context.color(R.color.warning))
     }
