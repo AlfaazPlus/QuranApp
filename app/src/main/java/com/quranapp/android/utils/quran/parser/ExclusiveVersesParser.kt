@@ -1,14 +1,17 @@
 package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.ExclusiveVerse
-import com.quranapp.android.utils.Log
+import com.quranapp.android.components.quran.QuranMeta
 import org.json.JSONObject
 import java.util.Locale
 
 open class ExclusiveVersesParser {
-    protected fun parseFromAssets(context: Context, quranMeta: QuranMeta, filename: String): List<ExclusiveVerse> {
+    protected fun parseFromAssets(
+        context: Context,
+        quranMeta: QuranMeta,
+        filename: String
+    ): List<ExclusiveVerse> {
         val map = context.assets.open("verses/$filename/map.json").bufferedReader().use {
             it.readText()
         }
@@ -20,12 +23,12 @@ open class ExclusiveVersesParser {
         val pathFormat = "verses/$filename/%s"
         val fileName = "$filename.json"
 
-        val fallbackNames = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
+        val fallbackTexts = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
             .bufferedReader().use {
                 it.readText()
             }
 
-        val localeNames = context.assets.takeIf {
+        val localeTexts = context.assets.takeIf {
             currentLocale != fallbackLocale && it.list(pathFormat.format(currentLocale))
                 ?.contains(fileName) == true
         }?.open("${pathFormat.format(currentLocale)}/$fileName")
@@ -36,8 +39,8 @@ open class ExclusiveVersesParser {
         return parseVersesInternal(
             context,
             map,
-            localeNames ?: fallbackNames,
-            fallbackNames,
+            localeTexts ?: fallbackTexts,
+            fallbackTexts,
             quranMeta
         )
     }
@@ -45,18 +48,24 @@ open class ExclusiveVersesParser {
     private fun parseVersesInternal(
         context: Context,
         mapStr: String,
-        localeNamesStr: String,
-        fallbackNamesStr: String,
+        localeTexts: String,
+        fallbackTexts: String,
         quranMeta: QuranMeta
     ): List<ExclusiveVerse> {
         val map = JSONObject(mapStr)
-        val localeNames = JSONObject(localeNamesStr)
-        val fallbackNames = JSONObject(fallbackNamesStr)
+        val localeValues = JSONObject(localeTexts)
+        val fallbackValues = JSONObject(fallbackTexts)
         val duas = ArrayList<ExclusiveVerse>()
 
         map.keys().forEachRemaining { key ->
             val versesStr = map.getString(key)
-            val name = localeNames.optString(key).ifEmpty { fallbackNames.getString(key) }
+
+            val (title, description) = resolveValues(
+                key,
+                localeValues,
+                fallbackValues
+            )
+
             val verses = versesStr.split(",").map { verse ->
                 val split = verse.split(":")
 
@@ -92,7 +101,8 @@ open class ExclusiveVersesParser {
             duas.add(
                 ExclusiveVerse(
                     id = key.toInt(),
-                    name = name,
+                    title = title,
+                    description = description,
                     versesRaw = ParserUtils.prepareVersesList(versesStr, true),
                     verses = verses,
                     chapters = chapters,
@@ -102,5 +112,50 @@ open class ExclusiveVersesParser {
         }
 
         return duas
+    }
+
+    private fun resolveValues(
+        key: String,
+        localeValues: JSONObject,
+        fallbackValues: JSONObject
+    ): Pair<String, String?> {
+        /**
+         * Contents example:
+         * {
+         *   "id": {
+         *     "title": "Exclusive Verse Title",
+         *     "description": "Optional description about the exclusive verse."
+         *   }
+         * }
+         *
+         * Or,
+         *
+         * {
+         *   "id": "Exclusive Verse Title"
+         * }
+         *
+         */
+
+        val localeObj = localeValues.opt(key)
+        val fallbackObj = fallbackValues.opt(key)
+
+        var title: String
+        var description: String? = null
+
+        if (localeObj is JSONObject) {
+            title = localeObj.optString("title", "")
+            description = localeObj.optString("description")
+        } else if (localeObj is String) {
+            title = localeObj
+        } else if (fallbackObj is JSONObject) {
+            title = fallbackObj.optString("title", "")
+            description = fallbackObj.optString("description")
+        } else if (fallbackObj is String) {
+            title = fallbackObj
+        } else {
+            title = ""
+        }
+
+        return Pair(title, description)
     }
 }

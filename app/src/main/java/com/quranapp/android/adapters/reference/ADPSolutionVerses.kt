@@ -17,18 +17,18 @@ class ADPSolutionVerses(
         val count = verse.verses.size
 
         binding.text.text = prepareTexts(
-            verse.name,
+            verse.title,
             if (count > 1) context.getString(R.string.places, count)
             else context.getString(R.string.place, count),
             verse.inChapters
         )
 
         binding.root.setOnClickListener {
-            val nameTitle = context.getString(R.string.strMsgReferenceInQuran, "\"" + verse.name + "\"")
+            val nameTitle = context.getString(R.string.strMsgReferenceInQuran, "\"" + verse.title + "\"")
 
             val description = context.getString(
                 R.string.strMsgReferenceFoundPlaces,
-                "\"" + verse.name + "\"",
+                "\"" + verse.title + "\"",
                 verse.verses.size
             )
 

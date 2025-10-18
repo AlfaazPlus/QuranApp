@@ -81,6 +81,7 @@ class FragMain : BaseFragment() {
                 it.featuredDua,
                 it.solutions,
                 it.etiquette,
+                it.majorSins,
                 it.prophets
             ).forEach { layout ->
                 layout.initialize()
