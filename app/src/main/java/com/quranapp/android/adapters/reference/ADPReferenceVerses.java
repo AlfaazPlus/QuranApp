@@ -170,7 +170,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
 
             if (!TextUtils.isEmpty(model.getDesc())) {
                 if (!TextUtils.isEmpty(model.getTitle())) {
-                    SpannableString newLineSS = new SpannableString("\n\n");
+                    SpannableString newLineSS = new SpannableString("\n\n\n");
                     newLineSS.setSpan(new AbsoluteSizeSpan(10), 0, newLineSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     sb.append(newLineSS);
                 }

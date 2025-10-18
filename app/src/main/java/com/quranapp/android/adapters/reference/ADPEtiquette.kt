@@ -41,7 +41,7 @@ class ADPEtiquette(
         }
 
         fun bind(verse: ExclusiveVerse) {
-            binding.text.text = verse.name
+            binding.text.text = verse.title
 
             binding.root.setOnClickListener {
                 // Take the first reference as it has only one verse

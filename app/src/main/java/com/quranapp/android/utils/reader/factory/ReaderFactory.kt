@@ -147,7 +147,7 @@ object ReaderFactory {
         context: Context,
         showChapterSugg: Boolean,
         title: String,
-        desc: String,
+        desc: String?,
         translSlug: Array<String>,
         chapters: List<Int>,
         verses: List<String>
@@ -175,7 +175,7 @@ object ReaderFactory {
     fun prepareReferenceVerseIntent(
         showChapterSugg: Boolean,
         title: String,
-        desc: String,
+        desc: String?,
         translSlug: Array<String>,
         chapters: List<Int>,
         verses: List<String>
