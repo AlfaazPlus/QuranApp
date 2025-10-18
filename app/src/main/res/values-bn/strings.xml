@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strLabelReset">আবার বা নতুন করে</string>
+    <string name="strLabelReset">পুনরায় সেট করুন</string>
     <string name="strLabelPrevious">পূর্ববর্তী</string>
     <string name="strLabelView">দেখুন</string>
     <string name="strLabelNoPreviousChapter">এর আগে কোনো সূরা নেই</string>
     <string name="strLabelContinueChapter">সূরাটি পড়া চালিয়ে যান</string>
     <string name="strLabelSurah" formatted="false">সূরা %s</string>
     <string name="strLabelGotIt">বুঝেছি</string>
-    <string name="strLabelNotNow">এখন না</string>
+    <string name="strLabelNotNow">এখন নয়</string>
     <string name="strLabelEdit">সম্পাদনা করুন</string>
     <string name="strLabelDownloadNow">এখনই ডাউনলোড করুন</string>
     <string name="strLabelNextChapter">পরবর্তী সূরা</string>
-    <string name="strLabelCopy">কপি করুন</string>
+    <string name="strLabelCopy">অনুলিপি করুন</string>
     <string name="strLabelPreviousVerse">পূর্ববর্তী আয়াত</string>
     <string name="strLabelVersesText">আয়াতসমূহ</string>
     <string name="strLabelNoPreviousJuz">এর আগে কোনো পারা নেই</string>
     <string name="strLabelNoNextChapter">এর পরে আর কোনো সূরা নেই</string>
     <string name="strLabelJuzNo" formatted="false">পারা %d</string>
     <string name="strLabelVerseNo" formatted="false">আয়াত %d</string>
-    <string name="strTitleAppVersion">অ্যাপ সংস্করণ</string>
+    <string name="strTitleAppVersion">অ্যাপের সংস্করণ</string>
     <string name="strVersion" formatted="false">সংস্করণ %s</string>
     <string name="strTitleLicenses">লাইসেন্সসমূহ</string>
     <string name="strLabelClose">বন্ধ করুন</string>
     <string name="strLabelOkay">ঠিক আছে</string>
     <string name="strLabelCancel">বাতিল করুন</string>
     <string name="strLabelApply">প্রয়োগ করুন</string>
-    <string name="strLabelSend">প্রেরণ করুন</string>
+    <string name="strLabelSend">পাঠান</string>
     <string name="strLabelRemove">অপসারণ করুন</string>
     <string name="strLabelDelete">মুছে ফেলুন</string>
-    <string name="strLabelRemoveAll">সবগুলো অপসারণ করুন</string>
-    <string name="strLabelBack">পেছনে ফিরে যান</string>
-    <string name="strLabelTop">উপরে</string>
-    <string name="strLabelRetry">পুনরায় চেষ্টা করুন</string>
+    <string name="strLabelRemoveAll">সব অপসারণ করুন</string>
+    <string name="strLabelBack">ফিরে যান</string>
+    <string name="strLabelTop">শীর্ষে</string>
+    <string name="strLabelRetry">আবার চেষ্টা করুন</string>
     <string name="strLabelRefresh">রিফ্রেস করুন</string>
-    <string name="strLabelDismiss">প্রত্যাখ্যান করুন</string>
-    <string name="strLabelDiscard">পরিত্যাগ করুন</string>
-    <string name="strLabelHide">গোপন করুন</string>
+    <string name="strLabelDismiss">বাতিল করুন</string>
+    <string name="strLabelDiscard">ত্যাগ করুন</string>
+    <string name="strLabelHide">লুকান</string>
     <string name="strLabelDone">সম্পন্ন হয়েছে</string>
-    <string name="strLabelRestart">পুনরায় আরম্ভ করুন</string>
+    <string name="strLabelRestart">পুনরায় শুরু করুন</string>
     <string name="strLabelOpen">খুলুন</string>
     <string name="strLabelOpenInReader">রিডারে খুলুন</string>
     <string name="strLabelRead">পড়ুন »</string>
-    <string name="strLabelViewAll">সবগুলো দেখুন</string>
-    <string name="strLabelChangeNRestart">পরিবর্তন ও পুনরায় চালু করুন</string>
+    <string name="strLabelViewAll">সব দেখুন</string>
+    <string name="strLabelChangeNRestart">পরিবর্তন করুন এবং পুনরায় শুরু করুন</string>
     <string name="strLabelAdvertisement">বিজ্ঞাপন</string>
     <string name="strLabelSkip">এড়িয়ে যান</string>
     <string name="strLabelNext">পরবর্তী</string>
     <string name="strLabelStart">শুরু করুন</string>
-    <string name="strLabelUpdateQuranApp">QuranApp আপডেট করুন</string>
-    <string name="strLabelUpdate">আপডেট করুন</string>
+    <string name="strLabelUpdateQuranApp">কুরআন অ্যাপ হালনাগাদ করুন</string>
+    <string name="strLabelUpdate">হালনাগাদ করুন</string>
     <string name="strLabelInstall">ইনস্টল করুন</string>
     <string name="strLabelNew">নতুন</string>
     <string name="strLabelPremium">প্রিমিয়াম</string>
     <string name="strLabelOn">চালু</string>
     <string name="strLabelOff">বন্ধ</string>
     <string name="strLabelThemeDark">অন্ধকার</string>
-    <string name="strLabelSystemDefault">সিস্টেম ডিফল্ট</string>
-    <string name="strLabelThemeLight">আলোকোজ্জ্বল</string>
+    <string name="strLabelSystemDefault">সিস্টেমের পূর্বনির্ধারিত সেটিংস</string>
+    <string name="strLabelThemeLight">আলো</string>
     <string name="strLabelPreviousJuz">পূর্ববর্তী পারা</string>
     <string name="strLabelNextJuz">পরবর্তী পারা</string>
     <string name="strLabelNoNextJuz">এর পরে আর কোনো পারা নেই</string>
     <string name="strLabelFullChapter">সম্পূর্ণ সূরাটি পড়ুন</string>
     <string name="strLabelNextVerse">পরবর্তী আয়াত</string>
     <string name="strLabelVerseCountWithColon" formatted="false">আয়াতসমূহ: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d থেকে %2$d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">আয়াত %1$d:%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">সূরা %1$s %2$d: আয়াত %3$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">সূরা %1$s │ আয়াত %2$d</string>
     <string name="strLabelVerseWithChapNameWithColon" formatted="false">সূরা %1$s : আয়াত %2$d</string>
-    <string name="strTitleAppUser">QuranApp ব্যবহারকারী</string>
+    <string name="strTitleAppUser">কুরআনঅ্যাপ ব্যবহারকারী</string>
     <string name="strTitleHolyQuran">পবিত্র কুরআন</string>
     <string name="strTitleQuran">কুরআন</string>
-    <string name="strTitleMakki">মাক্কি</string>
+    <string name="strTitleMakki">মাক্কী</string>
     <string name="strTitleMadani">মাদানী</string>
     <string name="strTitleFootnote">পাদটীকা</string>
-    <string name="strTitleFootnotes">পাদটীকাগুলি</string>
-    <string name="strTitleReaderChapters">সূরা (অধ্যায়)</string>
+    <string name="strTitleFootnotes">পাদটীকাসমূহ</string>
+    <string name="strTitleReaderChapters">সূরাসমূহ (অধ্যায়সমূহ)</string>
     <string name="strTitleReaderJuz">জুজ (পারা)</string>
     <string name="strTitleReaderChapters2">সূরাসমূহ</string>
     <string name="strTitleReaderJuz2">পারা</string>
-    <string name="strTitleReaderJumpToVerse">সরাসরি আয়াতে যান</string>
-    <string name="strTitleVerseOptions">আয়াতের অপশনগুলো</string>
+    <string name="strTitleReaderJumpToVerse">আয়াতে যান</string>
+    <string name="strTitleVerseOptions">আয়াতের অপশনসমূহ</string>
     <string name="strTitleReaderVerseInformation" formatted="false">সূরা %1$s : %2$d</string>
-    <string name="strTitleGotoVerseNo" formatted="false">%d নং আয়াতে যান</string>
-    <string name="strTitleReadVerseRange" formatted="false">%1$d থেকে %2$d নং আয়াতগুলো পড়ুন</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদসহ দেখুন</string>
-    <string name="strTitleReaderLayoutStylePageView">শুধু আরবি দেখুন</string>
+    <string name="strTitleGotoVerseNo" formatted="false">আয়াত %d-এ যান</string>
+    <string name="strTitleReadVerseRange" formatted="false">আয়াত %1$d - %2$d পড়ুন</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">অনুবাদ প্রদর্শন</string>
+    <string name="strTitleReaderLayoutStylePageView">পৃষ্ঠা প্রদর্শন</string>
     <string name="strTitleReaderTextSizeArabic">আরবি লেখার আকার</string>
     <string name="strTitleSettings">সেটিংস</string>
     <string name="strTitleBookmark">বুকমার্ক</string>
     <string name="strTitleSendFeedback">আপনার মতামত দিন</string>
-    <string name="strTitleHelpSupport">সহযোগিতা দরকার ? এখানে দেখুন</string>
+    <string name="strTitleHelpSupport">সহায়তা ও সমর্থন</string>
     <string name="strTitleAboutUs">আমাদের সম্পর্কে</string>
-    <string name="strTitleAddNote">নোট যুক্ত করুন</string>
+    <string name="strTitleAddNote">নোট যোগ করুন</string>
     <string name="strTitleNote">নোট</string>
     <string name="strTitleRateApp">অ্যাপে রেটিং দিন</string>
-    <string name="strTitleFilters">ফিল্টার</string>
+    <string name="strTitleFilters">ফিল্টারসমূহ</string>
     <string name="strTitleMenu">মেনু</string>
     <string name="strTitleTafsir">তাফসির</string>
-    <string name="strTitleSelectTafsir">তাফসির নির্বাচন করুন</string>
+    <string name="strTitleSelectTafsir">তাফসীর নির্বাচন করুন</string>
     <string name="strTitleAboutSurah">সূরা সম্পর্কে</string>
     <string name="strTitleTranslations">অনুবাদসমূহ</string>
-    <string name="strTitleSelectReciter">ক্বারী নির্বাচন করুন</string>
-    <string name="strTitleSelectScripts">স্ক্রিপ্ট (লেখার ধরণ) নির্বাচন করুন</string>
-    <string name="strTitleBookmarkDeleteAll">সমস্ত বুকমার্ক মুছে ফেলবেন\?</string>
-    <string name="strTitleTranslDelete">অনুবাদ মুছে ফেলবেন\?</string>
-    <string name="strTitleResetReaderSettings">রিডার সেটিংস পুনরায় সেট করবেন?</string>
+    <string name="strTitleSelectReciter">তিলাওয়াতকারী নির্বাচন করুন</string>
+    <string name="strTitleSelectScripts">লেখার ধরণ নির্বাচন করুন</string>
+    <string name="strTitleBookmarkDeleteAll">সব বুকমার্ক সরাতে চান?</string>
+    <string name="strTitleTranslDelete">অনুবাদ মুছে ফেলতে চান?</string>
+    <string name="strTitleResetReaderSettings">রিডার সেটিংস পুনরায় সেট করতে চান?</string>
     <string name="strTitleHideAd">বিজ্ঞাপন সরিয়ে ফেলুন</string>
     <string name="strTitleRecitationOptions">অপশন</string>
-    <string name="strTitleRepeatVerse">আয়াত পুনরাবৃত্তি করুন</string>
-    <string name="strTitleQuickEdit">দ্রুত সম্পাদনা করুন</string>
+    <string name="strTitleRepeatVerse">আয়াতটি পুনরাবৃত্তি করুন</string>
+    <string name="strTitleQuickEdit">দ্রুত সম্পাদনা</string>
     <string name="strTitleShareVerse">আয়াতটি শেয়ার করুন</string>
     <string name="strTitleSelectReason">কারণ নির্বাচন করুন</string>
     <string name="strTitleExplainIssue">সমস্যাটি ব্যাখ্যা করুন</string>
     <string name="strLabelPreviousChapter">পূর্ববর্তী সূরা</string>
     <string name="strLabelPageNo" formatted="false">পৃষ্ঠা %d</string>
-    <string name="strLabelVerses" formatted="false">আয়াত %1$d থেকে %2$d</string>
+    <string name="strLabelVerses" formatted="false">আয়াত %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">আয়াত : %d</string>
-    <string name="strTitleAutoPlayNext">স্বয়ংক্রিয়ভাবে পরবর্তী আয়াত তেলাওয়াত চালু</string>
+    <string name="strTitleAutoPlayNext">পরবর্তীটি স্বয়ংক্রিয়ভাবে চালান</string>
     <string name="strTitleBookmarks">বুকমার্কসমূহ</string>
     <string name="strTitleDownloadTranslations">ডাউনলোড করুন</string>
-    <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটি মুছে ফেলবেন?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d টি বুকমার্ক মুছে ফেলবেন?</string>
-    <string name="strLabelVersesWithColon" formatted="false">আয়াতসমূহ : %1$d থেকে %2$d</string>
+    <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটি সরাতে চান?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%dটি বুকমার্ক সরাতে চান?</string>
+    <string name="strLabelVersesWithColon" formatted="false">আয়াত : %1$d–%2$d</string>
     <string name="strTitleReaderVerses">আয়াতসমূহ</string>
-    <string name="strTitleVerseRecitation">আয়াত তিলাওয়াত</string>
-    <string name="strTitleReaderLayoutStyle">কুরআন দেখার স্টাইল</string>
+    <string name="strTitleVerseRecitation">আয়াতের তিলাওয়াত</string>
+    <string name="strTitleReaderLayoutStyle">কুরআন প্রদর্শনের ধরন</string>
     <string name="strTitleReaderTextSizeTransl">অনুবাদ লেখার আকার</string>
     <string name="strTitleShareApp">অ্যাপটি শেয়ার করুন</string>
-    <string name="strTitleReportVerse">এই আয়াতে রিপোর্ট করুন</string>
+    <string name="strTitleReportVerse">আয়াত রিপোর্ট করুন</string>
     <string name="strLabelIncludeFootnotes">পাদটীকা অন্তর্ভুক্ত করুন</string>
     <string name="strTitlePrivacyPolicy">গোপনীয়তা নীতি</string>
     <string name="strTitleChapInfoJuzNo">পারা নং</string>
@@ -303,11 +303,11 @@
     <string name="strMsgChangeLanguage">ভাষা পরিবর্তনকে সক্রিয় করতে অ্যাপটি পুনরায় চালু করা হবে।</string>
     <string name="inPlaces">%s এর মধ্যে</string>
     <string name="inPlacesMore">%1$s এবং আরও %2$d এর মধ্যে</string>
-    <string name="strTitleRecitations">তিলাওয়াত</string>
-    <string name="strTitleScripts">স্ক্রিপ্ট (লেখার ধরণ)</string>
+    <string name="strTitleRecitations">তিলাওয়াতসমূহ</string>
+    <string name="strTitleScripts">লেখার ধরণ</string>
     <string name="lastCrashLog">সর্বশেষ ক্র্যাশ লগ</string>
     <string name="labelAdd">যুক্ত করুন</string>
-    <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াত %d এর তাফসীর পড়ুন</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">আয়াত %d-এর তাফসীর পড়ুন</string>
     <string name="strMsgTafsirsNoAvailable">কোনও তাফসীর নেই</string>
     <string name="msgDownloadingFonts">ফন্ট ডাউনলোড করা হচ্ছে</string>
     <string name="labelDownload">ডাউনলোড করুন</string>
@@ -386,11 +386,8 @@
     <string name="onboardDescTheme">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
     <string name="onboardDescLanguage">আপনার ভাষায় অ্যাপটি ব্যক্তিগতকৃত করুন। আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
     <string name="onboardDescTranslations">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন। আপনি সেটিংস থেকে আরও অনুবাদ ডাউনলোড করতে পারেন।</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp অনুবাদ সহ মহান আল-কোরআন পড়ার এবং অন্বেষণ করার জন্য একটি বিনামূল্যের এবং ওপেন সোর্স অ্যাপ। এই অ্যাপটিতে তাফসির, তেলাওয়াত, অনুস্মারক এবং আরও অনেক বৈশিষ্ট্য সহ একটি সুন্দর এবং পরিষ্কার ইন্টারফেস রয়েছে।
-\n
-\nএখনই ডাউনলোড করুন:
-\n%s</string>
-    <string name="noFootnotesForThisVerse">এই আয়াতের জন্য কোন পাদটীকা নেই।</string>
+    <string name="strMsgShareApp" formatted="false">কুরআনঅ্যাপ একটি সম্পূর্ণ বিনামূল্যে ও উন্মুক্ত উৎসের অ্যাপ, যা আপনাকে অনুবাদসহ মহামূল্যবান কুরআন পাঠ ও অন্বেষণের সুযোগ করে দেয়। এই অ্যাপটির সুন্দর ও পরিষ্কার ইন্টারফেসে রয়েছে তাফসির, তিলাওয়াত, স্মরণ করিয়ে দেওয়ার সুবিধা এবং আরও অনেক কিছু।\n\nএখনই ডাউনলোড করুন:\n%s</string>
+    <string name="noFootnotesForThisVerse">এই আয়াতটির জন্য কোনো পাদটীকা নেই</string>
     <string name="strMsgDuaFor" formatted="false">%s এর জন্য দুআ</string>
     <string name="msgDownloadKFQPCResources">এই স্ক্রিপ্টটি ব্যবহার করার আগে আপনাকে নিম্নলিখিত সংস্থানগুলি ডাউনলোড করতে হবে:</string>
     <string name="textDownloaded">ডাউনলোড সম্পন্ন হয়েছে</string>
@@ -438,4 +435,5 @@
     <string name="labelImportExportBookmarks">শুধু বুকমার্ক ইম্পোর্ট/এক্সপোর্ট</string>
     <string name="labelImportExportSettings">শুধু সেটিংস ইম্পর্ট/এক্সপোর্ট</string>
     <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে।</string>
+    <string name="strTitleMajorSins">কুরআনে বর্ণিত বড় গুনাহসমূহ</string>
 </resources>
