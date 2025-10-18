@@ -95,6 +95,15 @@
       }
     },
     "de": {
+      "de_abu-reda-muhammad": {
+        "book": "Abu Reda Muhammad ibn Ahmad",
+        "author": "Abu Reda Muhammad ibn Ahmad",
+        "displayName": "Abu Reda Muhammad",
+        "langCode": "de",
+        "langName": "Deutsch",
+        "lastUpdated": 1760753887374,
+        "downloadPath": "inventory/translations/de/de_abu-reda-muhammad.json"
+      },
       "de_bubenheim": {
         "book": "Frank Bubenheim and Dr. Nadeem Elyas",
         "author": "Frank Bubenheim and Dr. Nadeem Elyas",
@@ -250,14 +259,14 @@
       }
     },
     "ru": {
-      "ru_elmir-kuliev": {
-        "book": "Russian Translation (Elmir Kuliev)",
-        "author": "Elmir Kuliev",
-        "displayName": "Elmir Kuliev",
+      "ru_abu-adel": {
+        "book": "Abu Adel",
+        "author": "Abu Adel",
+        "displayName": "Abu Adel",
         "langCode": "ru",
         "langName": "русский",
-        "lastUpdated": 1680596959732,
-        "downloadPath": "inventory/translations/ru/ru_elmir-kuliev.json"
+        "lastUpdated": 1760753887374,
+        "downloadPath": "inventory/translations/ru/ru_abu-adel.json"
       },
       "ru_ministry-of-awqaf": {
         "book": "Ministry of Awqaf, Egypt",
@@ -267,6 +276,26 @@
         "langName": "русский",
         "lastUpdated": 1680596959732,
         "downloadPath": "inventory/translations/ru/ru_ministry-of-awqaf.json"
+      },
+      "ru_elmir-kuliev": {
+        "book": "Russian Translation (Elmir Kuliev)",
+        "author": "Elmir Kuliev",
+        "displayName": "Elmir Kuliev",
+        "langCode": "ru",
+        "langName": "русский",
+        "lastUpdated": 1680596959732,
+        "downloadPath": "inventory/translations/ru/ru_elmir-kuliev.json"
+      }
+    },
+    "sd": {
+      "sd_taj-mehmood-amroti": {
+        "book": "Taj Mehmood Amroti",
+        "author": "Taj Mehmood Amroti",
+        "displayName": "Taj Mehmood Amroti",
+        "langCode": "sd",
+        "langName": "سِنڌِي",
+        "lastUpdated": 1760753887374,
+        "downloadPath": "inventory/translations/sd/sd_taj-mehmood-amroti.json"
       }
     },
     "tr": {
@@ -290,6 +319,15 @@
       }
     },
     "ur": {
+      "ur_israr-ahmad": {
+        "book": "بیان القرآن",
+        "author": "ڈاکٹر اسرار احمد",
+        "displayName": "بیان القرآن",
+        "langCode": "ur",
+        "langName": "اردو",
+        "lastUpdated": 1658517131580,
+        "downloadPath": "inventory/translations/ur/ur_israr-ahmad.json"
+      },
       "ur_jalandhari": {
         "book": "فتح محمد جالندھری",
         "author": "فتح محمد جالندھری",
@@ -299,15 +337,6 @@
         "lastUpdated": 1658517131580,
         "downloadPath": "inventory/translations/ur/ur_jalandhari.json",
         "hasAudio": true
-      },
-      "ur_israr-ahmad": {
-        "book": "بیان القرآن",
-        "author": "ڈاکٹر اسرار احمد",
-        "displayName": "بیان القرآن",
-        "langCode": "ur",
-        "langName": "اردو",
-        "lastUpdated": 1658517131580,
-        "downloadPath": "inventory/translations/ur/ur_israr-ahmad.json"
       },
       "ur_maududi": {
         "book": "تفہيم القرآن",
