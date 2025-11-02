@@ -418,12 +418,12 @@
     <string name="msgArabicTextToggle">ناچالاککردنی ئەم تایبەتمەندییە نووسینی ئایەتی عەرەبی لە گشت بەرنامەکە دەشارێتەوە.</string>
     <string name="titleArabicTextToggle">نووسینی ئایەتی عەرەبی نیشان بدە</string>
     <string name="msgExtractingFonts">دەرهێنانی فۆنتەکان</string>
-    <string name="labelImportExportSettings">تەنیا ڕێکخستنەکان</string>
+    <string name="labelImportExportSettings">هێنان/هەڵگرتنی ڕێکخستنەکان</string>
     <string name="msgExportEmpty">هیچ نیشانەکراوێک نیە بۆ هێنان</string>
     <string name="msgExportSuccess">بەسەرکەوتوویی هەڵگیرا</string>
     <string name="autoScrollSpeed">ڕێکخستنی خێرایی</string>
-    <string name="labelImportExportBookmarks">تەنیا نیشانەکراوەکان</string>
-    <string name="labelImportExportEverything">هەمووی</string>
+    <string name="labelImportExportBookmarks">هێنان/هەڵگرتنی نیشانەکراوەکان</string>
+    <string name="labelImportExportEverything">هێنان/هەڵگرتن</string>
     <string name="warnImportSettings">ئاگاداربە: هێنانی ڕێکخستنەکان ئەبێتە هۆی جێگۆڕکێکردنی ڕێکخستنی ئێستات.</string>
     <string name="msgImportFailed">هێنان سەرکەوتو نەبوو، جۆری فایل پشتگیریکراو نیە.</string>
     <string name="msgImportSuccess">بەسەرکەوتوویی هێنرا</string>
@@ -435,4 +435,5 @@
     <string name="labelImport">هێنان</string>
     <string name="msgExportImportBookmarks">هەڵگرتن یان هێنانی نیشانەکراوەکان لەگەڵ تێبینییەکان.</string>
     <string name="startAutoScroll">چالاککردنی جوڵانی خۆکاری</string>
+    <string name="strTitleMajorSins">تاوانە گەورەکانی ناو قورئان</string>
 </resources>

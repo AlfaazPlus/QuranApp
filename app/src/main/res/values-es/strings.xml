@@ -420,4 +420,17 @@
     <string name="msgClearReadHistory">Borrar el historial de lectura</string>
     <string name="msgClearSearchHistory">Borrar historial de búsqueda</string>
     <string name="msgArabicTextToggle">Al desactivar esta función, se ocultará el texto en verso árabe de toda la aplicación.</string>
+    <string name="msgExtractingFonts">Extracción de fuentes</string>
+    <string name="titleExportData">Exportación e importación</string>
+    <string name="labelExport">Exportar</string>
+    <string name="labelImport">Importar</string>
+    <string name="labelImportExportEverything">Importar/Exportar todo</string>
+    <string name="labelImportExportBookmarks">Importar/Exportar marcadores</string>
+    <string name="labelImportExportSettings">Importar/Exportar ajustes</string>
+    <string name="warnImportSettings">ADVERTENCIA: La importación de la configuración sobrescribirá tu configuración actual.</string>
+    <string name="msgExportImportBookmarks">Exporta o importa tus marcadores junto con las notas.</string>
+    <string name="msgExportEmpty">No hay marcadores para exportar</string>
+    <string name="msgExportSuccess">Exportado con éxito</string>
+    <string name="msgImportFailed">Error al importar. Archivo no soportado.</string>
+    <string name="msgImportSuccess">Importado con éxito</string>
 </resources>
