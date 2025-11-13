@@ -21,7 +21,8 @@
         "it": "L'Aprente",
         "ru": "Открывающая Коран",
         "tr": "Başlangıç",
-        "ur": "کھولنے والی"
+        "ur": "کھولنے والی",
+        "zh": "开端"
       },
       "name": {
         "ar": "الفاتحة",
@@ -34,7 +35,8 @@
         "in": "Al-Fatihah",
         "ml": "സൂറത്തുൽ ഫാത്തിഹ",
         "tr": "Fâtiha",
-        "ur": "الفاتحة"
+        "ur": "الفاتحة",
+        "zh": "法谛海"
       },
       "tags": "alfatiha,alfaatihah,alfaatiha,alfaatiya,alfatiya,opener,opening,starter,starting"
     }, {
@@ -58,7 +60,8 @@
         "it": "La Giovenca",
         "ru": "Корова",
         "tr": "Sığır",
-        "ur": "گائے"
+        "ur": "گائے",
+        "zh": "黄牛"
       },
       "name": {
         "ar": "البقرة",
@@ -71,7 +74,8 @@
         "in": "Al-Baqarah",
         "ml": "സൂറത്തുൽ ബഖറഃ",
         "tr": "Bakara",
-        "ur": "البقرة"
+        "ur": "البقرة",
+        "zh": "巴格勒"
       },
       "tags": "thecows,the cows,thegoats,the goats,the goats,albaqra,albaqrah,albaqraa,albaqraah,albaqara,albaqaraa,albakara,albakra,albakaraa,albakraa,albakrah,albkra,albqra,albkrah,albqrah,albkraa,albqraa,albkraah,albqraah"
     }, {
@@ -95,7 +99,8 @@
         "it": "La Famiglia di Imran",
         "ru": "Семейство Имрана",
         "tr": "İmran Ailesi",
-        "ur": "عمران کا خاندان"
+        "ur": "عمران کا خاندان",
+        "zh": "仪姆兰的家属"
       },
       "name": {
         "ar": "آل عمران",
@@ -108,7 +113,8 @@
         "in": "Ali `Imran",
         "ml": "സൂറത്ത് ആലുഇംറാൻ",
         "tr": "Âl-i İmrân",
-        "ur": "آل عمران"
+        "ur": "آل عمران",
+        "zh": "阿黎仪姆兰"
       },
       "tags": "alimran,alimraan,aleemran,aleemraan,aleimraan,aleimran,alemran,alemraan"
     }, {
@@ -132,7 +138,8 @@
         "it": "Le Donne",
         "ru": "Женщины",
         "tr": "Kadınlar",
-        "ur": "عورت"
+        "ur": "عورت",
+        "zh": "妇女"
       },
       "name": {
         "ar": "النساء",
@@ -145,7 +152,8 @@
         "in": "An-Nisa`",
         "ml": "സൂറത്തുന്നിസാഅ്",
         "tr": "Nisâ",
-        "ur": "النساء"
+        "ur": "النساء",
+        "zh": "尼萨仪"
       },
       "tags": "woman,womn,wmn,wemon,wemen,annisa,annisaa,anneesa,anneesa,anneesah,annisah,annisaah,annesa,annesaa,annesah,annsa,annsaa"
     }, {
@@ -169,7 +177,8 @@
         "it": "La Tavola Imbandita",
         "ru": "Трапеза",
         "tr": "Sofra",
-        "ur": "دسترخوان"
+        "ur": "دسترخوان",
+        "zh": "筵席"
       },
       "name": {
         "ar": "المائدة",
@@ -182,7 +191,8 @@
         "in": "Al-Ma`idah",
         "ml": "സൂറത്തുൽ മാഇദ",
         "tr": "Mâide",
-        "ur": "المائدة"
+        "ur": "المائدة",
+        "zh": "马以代"
       },
       "tags": "almaedaa,almaaedaa,almaedah,almaaedah,almaedaah,almaaedaah,almaeeda,almaaeeda,almaeedaa,almaaeedaa,almaeedah,almaaeedah,almaeedaah,almaaeedaah,almaida,almaaeda,almaidaa,almaaidaa,almaidah,almaaidah,almaidaah,almaaidaah,almda,almada,almdah,almadah,almadae"
     }, {
@@ -206,7 +216,8 @@
         "it": "Il bestiame",
         "ru": "Скот",
         "tr": "Ehli Hayvanlar",
-        "ur": "مویشی"
+        "ur": "مویشی",
+        "zh": "牲畜"
       },
       "name": {
         "ar": "الأنعام",
@@ -219,7 +230,8 @@
         "in": "Al-An`am",
         "ml": "സൂറത്തുൽ അൻആം",
         "tr": "En'âm",
-        "ur": "الأنعام"
+        "ur": "الأنعام",
+        "zh": "艾奈阿姆"
       },
       "tags": "alanam,alaanam,alaanaam,alanaam,alan'am,ala'naam,ala'nam,al'anam,al'aanaam,catl,catlle,ctll,catle"
     }, {
@@ -243,7 +255,8 @@
         "it": "Al-Arтf",
         "ru": "Ограды",
         "tr": "Yüksek Yerler",
-        "ur": "اونچی جگہ"
+        "ur": "اونچی جگہ",
+        "zh": "高处"
       },
       "name": {
         "ar": "الأعراف",
@@ -256,7 +269,8 @@
         "in": "Al-A’raf",
         "ml": "സൂറത്തുൽ അഅ്റാഫ്",
         "tr": "A'râf",
-        "ur": "الأعراف"
+        "ur": "الأعراف",
+        "zh": "艾耳拉弗"
       },
       "tags": " aaraaf,aaraf,araaf,araf,aaraaph,aaraph,araaph,araph,alaaraaf,alaaraf,alaraaf,alaraf,alaaraaph,alaaraph,alaraaph,alaraph,size,height"
     }, {
@@ -280,7 +294,8 @@
         "it": "Il Bottino",
         "ru": "Трофеи",
         "tr": "Savaş Ganimetleri",
-        "ur": "مال غنیمت"
+        "ur": "مال غنیمت",
+        "zh": "战利品"
       },
       "name": {
         "ar": "الأنفال",
@@ -293,7 +308,8 @@
         "in": "Al-Anfal",
         "ml": "സൂറത്തുൽ അൻഫാൽ",
         "tr": "Enfâl",
-        "ur": "الأنفال"
+        "ur": "الأنفال",
+        "zh": "安法勒"
       },
       "tags": "alanfal,alaanfal,alanphal,alaanphal,alalanfal,alalaanfal,alalanphal,alalaanphal,fights,spoil,wars,wrs,fytes"
     }, {
@@ -317,7 +333,8 @@
         "it": "Il Pentimento o la Disapprovazione",
         "ru": "Покаяние",
         "tr": "Tövbe",
-        "ur": "توبہ"
+        "ur": "توبہ",
+        "zh": "忏悔"
       },
       "name": {
         "ar": "التوبة",
@@ -330,7 +347,8 @@
         "in": "At-Taubah",
         "ml": "സൂറത്തുത്തൗബഃ",
         "tr": "Tevbe",
-        "ur": "التوبة"
+        "ur": "التوبة",
+        "zh": "讨白"
       },
       "tags": "repent,repentence,repntnc,attauba,attoba,attaubaa,attobaa,attawbaa,attwba,attwbaa,attoaba,attoabaa,attbaa"
     }, {
@@ -354,7 +372,8 @@
         "it": "Giona",
         "ur": "یونس",
         "ru": "Йунус",
-        "tr": "Hz. Yunusс"
+        "tr": "Hz. Yunusс",
+        "zh": "优努斯"
       },
       "name": {
         "ar": "يونس",
@@ -367,7 +386,8 @@
         "in": "Yunus",
         "ml": "സൂറത്ത് യൂനുസ്",
         "tr": "Yûnus",
-        "ur": "يونس"
+        "ur": "يونس",
+        "zh": "优努斯"
       },
       "tags": "yunus,unus,younus,yunas,unas,younas,ynus,ynas,yuns,youns,yns,ysn,yusun,usun,yousun,yusan,usan,jns,jons,jnas,janas,jona,jna,jonah,jonh,jnah,jnh,janoh,janh"
     }, {
@@ -391,7 +411,8 @@
         "it": "Hћd",
         "ur": "حود",
         "ru": "Худ",
-        "tr": "Hz. Hudд"
+        "tr": "Hz. Hudд",
+        "zh": "呼德"
       },
       "name": {
         "ar": "هود",
@@ -404,7 +425,8 @@
         "in": "Hud",
         "ml": "സൂറത്ത് ഹൂദ്",
         "tr": "Hûd",
-        "ur": "هود"
+        "ur": "هود",
+        "zh": "呼德"
       },
       "tags": "hood,hd,hdoo,hdu,duh,dooh,dh"
     }, {
@@ -428,7 +450,8 @@
         "it": "Giuseppe",
         "ru": "Йусуф",
         "tr": "Hz. Yusuf",
-        "ur": "یوسف"
+        "ur": "یوسف",
+        "zh": "优素福"
       },
       "name": {
         "ar": "يوسف",
@@ -441,7 +464,8 @@
         "in": "Yusuf",
         "ml": "സൂറത്ത് യൂസുഫ്",
         "tr": "Yûsuf",
-        "ur": "يوسف"
+        "ur": "يوسف",
+        "zh": "优素福"
       },
       "tags": "yusuf,yousuf,yusouf,ysf,yusf,ysuf,yasaf,yasf,ysaf,josph,josh,jsph"
     }, {
@@ -465,7 +489,8 @@
         "it": "Il Tuono",
         "ru": "Гром",
         "tr": "Gök Gürültüsü",
-        "ur": "گرج"
+        "ur": "گرج",
+        "zh": "雷霆"
       },
       "name": {
         "ar": "الرعد",
@@ -478,7 +503,8 @@
         "in": "Ar-Ra’d",
         "ml": "സൂറത്തു റഅ്ദ്",
         "tr": "Ra'd",
-        "ur": "الرعد"
+        "ur": "الرعد",
+        "zh": "赖尔得"
       },
       "tags": "arraad,arrad,araad,arad,arrd,ard,thundar,thundr,thndr,tdr,electricity,lightening"
     }, {
@@ -502,7 +528,8 @@
         "it": "Abramo",
         "ur": "ابراہیم",
         "ru": "Ибрахим",
-        "tr": "Hz. İbrahimм"
+        "tr": "Hz. İbrahimм",
+        "zh": "易卜拉欣"
       },
       "name": {
         "ar": "ابراهيم",
@@ -515,7 +542,8 @@
         "in": "Ibrahim",
         "ml": "സൂറത്ത് ഇബ്റാഹീം",
         "tr": "İbrâhîm",
-        "ur": "ابراهيم"
+        "ur": "ابراهيم",
+        "zh": "易卜拉欣"
       },
       "tags": "ibraahim,ibraheem,ibraaheem,ibrhm,abrhm"
     }, {
@@ -539,7 +567,8 @@
         "it": "Al-Hijr",
         "ur": "پتھر",
         "ru": "Хиджр ",
-        "tr": "Hicr Vadisi "
+        "tr": "Hicr Vadisi ",
+        "zh": "石谷"
       },
       "name": {
         "ar": "الحجر",
@@ -552,7 +581,8 @@
         "in": "Al-Hijr",
         "ml": "സൂറത്തുൽ ഹിജ്ർ",
         "tr": "Hicr",
-        "hi": "अल हिज्र"
+        "hi": "अल हिज्र",
+        "zh": "希只尔"
       },
       "tags": "alhijr,alhjr,alhizr,alheejr,alheezr,alhzr,stone"
     }, {
@@ -576,7 +606,8 @@
         "it": "Le Api",
         "ur": "شہد کی مکھی",
         "ru": "Пчелы",
-        "tr": "Bal Arısıы"
+        "tr": "Bal Arısıы",
+        "zh": "蜜蜂"
       },
       "name": {
         "ar": "النحل",
@@ -589,7 +620,8 @@
         "in": "An-Nahl",
         "ml": "സൂറത്തുന്നഹ്ൽ",
         "tr": "Nahl",
-        "ur": "النحل"
+        "ur": "النحل",
+        "zh": "奈哈勒"
       },
       "tags": "annahl,annhl,annahal,annehel,annehl"
     }, {
@@ -613,7 +645,8 @@
         "it": "Il Viaggio Notturno",
         "ru": "Ночной перенос",
         "tr": "Gece Yürüyüşü",
-        "ur": "رات کا صفر"
+        "ur": "رات کا صفر",
+        "zh": "夜行"
       },
       "name": {
         "ar": "الإسراء",
@@ -626,7 +659,8 @@
         "in": "Al-Isra`",
         "ml": "സൂറത്തുൽ ഇസ്റാഅ്",
         "tr": "İsrâ",
-        "ur": "الإسراء"
+        "ur": "الإسراء",
+        "zh": "伊斯拉"
       },
       "tags": "alisraa,alisr,alesraa,alishraa,aleshraa,travel,jrney,jorney"
     }, {
@@ -650,7 +684,8 @@
         "it": "La Caverna",
         "ru": "Пещера",
         "tr": "Mağara",
-        "ur": "غار"
+        "ur": "غار",
+        "zh": "山洞"
       },
       "name": {
         "ar": "الكهف",
@@ -663,7 +698,8 @@
         "in": "Al-Kahfi",
         "ml": "സൂറത്തുൽ കഹ്ഫ്",
         "tr": "Kehf",
-        "ur": "الكهف"
+        "ur": "الكهف",
+        "zh": "凯海府"
       },
       "tags": "alkhaf,alkahaf,alkhaph,alkahaph,alkahph,thecave"
     }, {
@@ -687,7 +723,8 @@
         "it": "Maria",
         "ur": "مریم",
         "ru": "Марьям",
-        "tr": "Hz. Meryemм"
+        "tr": "Hz. Meryemм",
+        "zh": "麦尔彦"
       },
       "name": {
         "ar": "مريم",
@@ -700,7 +737,8 @@
         "in": "Maryam",
         "ml": "സൂറത്ത് മർയം",
         "tr": "Meryem",
-        "ur": "مريم"
+        "ur": "مريم",
+        "zh": "麦尔彦"
       },
       "tags": "marym,mryam,mrym,marry,mry,mrry"
     }, {
@@ -724,7 +762,8 @@
         "it": "Tт-Hт",
         "ur": "طٰہٰ",
         "ru": "Та Ха ",
-        "tr": "Tâ-Hâ "
+        "tr": "Tâ-Hâ ",
+        "zh": "塔哈"
       },
       "name": {
         "ar": "طه",
@@ -737,7 +776,8 @@
         "in": "Ta Ha",
         "ml": "സൂറത്ത് ത്വാഹാ",
         "tr": "Tâhâ",
-        "ur": "طه"
+        "ur": "طه",
+        "zh": "塔哈"
       },
       "tags": "tahaa,taaha,thaa"
     }, {
@@ -761,7 +801,8 @@
         "it": "I Profeti",
         "ru": "Пророки",
         "tr": "Peygamberler",
-        "ur": "پیغمبر"
+        "ur": "پیغمبر",
+        "zh": "众先知"
       },
       "name": {
         "ar": "الأنبياء",
@@ -774,7 +815,8 @@
         "in": "Al-Anbiya",
         "ml": "സൂറത്തുൽ അൻബിയാഅ്",
         "tr": "Enbiyâ",
-        "ur": "الأنبياء"
+        "ur": "الأنبياء",
+        "zh": "安比雅"
       },
       "tags": "alanbiyaa,alambiyaa,alambyaa,alanbyaa,nabi,nabee,theprophets"
     }, {
@@ -798,7 +840,8 @@
         "it": "Il Pellegrinaggio",
         "ru": "Паломничество",
         "tr": "Hac",
-        "ur": "حج"
+        "ur": "حج",
+        "zh": "朝觐"
       },
       "name": {
         "ar": "الحج",
@@ -811,7 +854,8 @@
         "in": "Al-Hajj",
         "ml": "സൂറത്തുൽ ഹജ്ജ്",
         "tr": "Hac",
-        "ur": "الحج"
+        "ur": "الحج",
+        "zh": "哈只"
       },
       "tags": "alhajj,alhazz,alhjj,alhzz,thepilgrimage"
     }, {
@@ -835,7 +879,8 @@
         "it": "I Credenti",
         "ru": "Верующие",
         "tr": "İnananlar",
-        "ur": "مومنین"
+        "ur": "مومنین",
+        "zh": "信士"
       },
       "name": {
         "ar": "المؤمنون",
@@ -848,7 +893,8 @@
         "in": "Al-Mu’minun",
         "ml": "സൂറത്തുൽ മുഅ്മിനൂൻ",
         "tr": "Mü'minûn",
-        "ur": "المؤمنون"
+        "ur": "المؤمنون",
+        "zh": "慕米农"
       },
       "tags": "almuminoon,almominoon,almuminun,almominun,thebelievers,thebeliefs"
     }, {
@@ -872,7 +918,8 @@
         "it": "La Luce",
         "ru": "Свет",
         "tr": "Nur",
-        "ur": "نور"
+        "ur": "نور",
+        "zh": "光明"
       },
       "name": {
         "ar": "النور",
@@ -885,7 +932,8 @@
         "in": "An-Nur",
         "ml": "സൂറത്തുന്നൂർ",
         "tr": "Nûr",
-        "ur": "النور"
+        "ur": "النور",
+        "zh": "努尔"
       },
       "tags": "annoor,annur,thelights"
     }, {
@@ -909,7 +957,8 @@
         "it": "Il Discrimine",
         "ru": "аль-Фуркан",
         "tr": "Hakkı Bâtıldan Ayıran",
-        "ur": "صحیح اور غلط میں فرق کرنے والی کتاب"
+        "ur": "صحیح اور غلط میں فرق کرنے والی کتاب",
+        "zh": "准则"
       },
       "name": {
         "ar": "الفرقان",
@@ -922,7 +971,8 @@
         "in": "Al-Furqan",
         "ml": "സൂറത്തുൽ ഫുർഖാൻ",
         "tr": "Furkân",
-        "ur": "الفرقان"
+        "ur": "الفرقان",
+        "zh": "弗尔干"
       },
       "tags": ""
     }, {
@@ -946,7 +996,8 @@
         "it": "I Poeti",
         "ru": "Поэты",
         "tr": "Şairler",
-        "ur": "شعراٗ"
+        "ur": "شعراٗ",
+        "zh": "众诗人"
       },
       "name": {
         "ar": "الشعراء",
@@ -959,7 +1010,8 @@
         "in": "Asy-Syu`ara`",
         "ml": "സൂറത്തുശ്ശുഅറാഅ്",
         "tr": "Şuarâ",
-        "ur": "الشعراء"
+        "ur": "الشعراء",
+        "zh": "抒尔拉"
       },
       "tags": "ashshuaraa,ashshuraa,ashsuraa,asshuraa,assuraa,ashsuaraa,asshuaraa,assuaraa,thepoets,thepoetry"
     }, {
@@ -983,7 +1035,8 @@
         "it": "Le Formiche",
         "ru": "Муравьи",
         "tr": "Karınca",
-        "ur": "چیونٹی"
+        "ur": "چیونٹی",
+        "zh": "蚂蚁"
       },
       "name": {
         "ar": "النمل",
@@ -996,7 +1049,8 @@
         "in": "An-Naml",
         "ml": "സൂറത്തുന്നംല്",
         "tr": "Neml",
-        "ur": "النمل"
+        "ur": "النمل",
+        "zh": "奈木勒"
       },
       "tags": "annaml,annamal,annmal,annml,theants"
     }, {
@@ -1020,7 +1074,8 @@
         "it": "Il Racconto",
         "ru": "Рассказ",
         "tr": "Kıssalar",
-        "ur": "قصے"
+        "ur": "قصے",
+        "zh": "故事"
       },
       "name": {
         "ar": "القصص",
@@ -1033,7 +1088,8 @@
         "in": "Al-Qasas",
         "ml": "സൂറത്തുൽ ഖസസ്",
         "tr": "Kasas",
-        "ur": "القصص"
+        "ur": "القصص",
+        "zh": "改赛素"
       },
       "tags": "alqasas,alkasas,alqsas,alksas,alqass,alkass,alqss,alkss"
     }, {
@@ -1057,7 +1113,8 @@
         "it": "Il Ragno",
         "ru": "Паук",
         "tr": "Örümcek",
-        "ur": "مکڑی"
+        "ur": "مکڑی",
+        "zh": "蜘蛛"
       },
       "name": {
         "ar": "العنكبوت",
@@ -1070,7 +1127,8 @@
         "in": "Al-`Ankabut",
         "ml": "സൂറത്തുൽ അൻകബൂത്ത്",
         "tr": "Ankebût",
-        "ur": "العنكبوت"
+        "ur": "العنكبوت",
+        "zh": "安凯逋特"
       },
       "tags": "alankaboot,alankabut,alankboot,alankbut,alankabt,alankbt,thespider,spider"
     }, {
@@ -1094,7 +1152,8 @@
         "it": "I Romani",
         "ru": "Римляне",
         "tr": "Romalılar",
-        "ur": "روم"
+        "ur": "روم",
+        "zh": "罗马人"
       },
       "name": {
         "ar": "الروم",
@@ -1107,7 +1166,8 @@
         "in": "Ar-Rum",
         "ml": "സൂറത്തു റൂം",
         "tr": "Rûm",
-        "ur": "الروم"
+        "ur": "الروم",
+        "zh": "鲁姆"
       },
       "tags": "arroom,arrome,arroam,theromans,arrume"
     }, {
@@ -1131,7 +1191,8 @@
         "it": "Luqmрn",
         "ur": "لقمان",
         "ru": "Лукман",
-        "tr": "Lokman Hekimн"
+        "tr": "Lokman Hekimн",
+        "zh": "鲁格曼"
       },
       "name": {
         "ar": "لقمان",
@@ -1144,7 +1205,8 @@
         "in": "Luqman",
         "ml": "സൂറത്ത് ലുഖ്മാൻ",
         "tr": "Lokmân",
-        "ur": "لقمان"
+        "ur": "لقمان",
+        "zh": "鲁格曼"
       },
       "tags": "luqmaan,lukmaan,lqmaan,lqman,lkmaan,lkman,lqmn,lkmn,luqaman,lukaman"
     }, {
@@ -1168,7 +1230,8 @@
         "it": "La Prosternazione",
         "ru": "Земной поклон",
         "tr": "Secde",
-        "ur": "سجدہ"
+        "ur": "سجدہ",
+        "zh": "叩头"
       },
       "name": {
         "ar": "السجدة",
@@ -1181,7 +1244,8 @@
         "in": "As-Sajdah",
         "ml": "സൂറത്തുസ്സജദഃ",
         "tr": "Secde",
-        "ur": "السجدة"
+        "ur": "السجدة",
+        "zh": "赛直德"
       },
       "tags": "assajdah,assajadah,assejdah,assejadah,assjdah,assjdh,assazdah,assazadah,assezdah,asszdah,asszdh,assajdaah,assajadaah,assejdaah,assejadaah,assjdaah,assazdaah,assazadaah,assezdaah,asszdaah,prostrate,bow down,bowdown,prstrte"
     }, {
@@ -1205,7 +1269,8 @@
         "it": "I Coalizzati",
         "ru": "Союзники",
         "tr": "Gruplar",
-        "ur": "متحد گروہ"
+        "ur": "متحد گروہ",
+        "zh": "同盟军"
       },
       "name": {
         "ar": "الأحزاب",
@@ -1218,7 +1283,8 @@
         "in": "Al-Ahzab",
         "ml": "സൂറത്തുൽ അഹ്സാബ്",
         "tr": "Ahzâb",
-        "ur": "الأحزاب"
+        "ur": "الأحزاب",
+        "zh": "艾哈萨布"
       },
       "tags": "alahzaab,alahzab,alahzb,alaahzaab,alaahzab,alaahzb,alahjaab,alahjab,alahjb,alaahjaab,alaahjab,alaahjb,alehzaab,alehzab,alehzb,alhijaab,alhijab,alhizaab,alhizab,alhejaab,alhejab,alhezaab,alhezab,theclans"
     }, {
@@ -1242,7 +1308,8 @@
         "it": "Sabт",
         "ur": "سبا",
         "ru": "Сава",
-        "tr": "Yemen’de Bir Bölgeа"
+        "tr": "Yemen’de Bir Bölgeа",
+        "zh": "赛伯邑"
       },
       "name": {
         "ar": "سبإ",
@@ -1255,7 +1322,8 @@
         "in": "Saba’",
         "ml": "സൂറത്തുസ്സബഅ്",
         "tr": "Sebe'",
-        "ur": "سبإ"
+        "ur": "سبإ",
+        "zh": "赛伯邑"
       },
       "tags": "sabaa,shabaa,sbaa,shbaa,saabaa,shaabaa,sebaa"
     }, {
@@ -1279,7 +1347,8 @@
         "it": "Colui Che dр origine",
         "ru": "Творец",
         "tr": "Yoktan Var Eden",
-        "ur": "پیدا کرنے والا"
+        "ur": "پیدا کرنے والا",
+        "zh": "创造者"
       },
       "name": {
         "ar": "فاطر",
@@ -1292,7 +1361,8 @@
         "in": "Fatir",
         "ml": "സൂറത്ത് ഫാത്വിർ",
         "tr": "Fâtır",
-        "ur": "فاطر"
+        "ur": "فاطر",
+        "zh": "法颓尔"
       },
       "tags": "fatir,phaatir,phatir,fatr,phatr,ftr,phtr,theoriginator"
     }, {
@@ -1316,7 +1386,8 @@
         "it": "Yт Sюn",
         "ur": "یٰسٓ",
         "ru": "Йа Син",
-        "tr": "Yâ-Sînн"
+        "tr": "Yâ-Sînн",
+        "zh": "雅辛"
       },
       "name": {
         "ar": "يس",
@@ -1329,7 +1400,8 @@
         "in": "Ya Sin",
         "ml": "സൂറത്ത് യാസീൻ",
         "tr": "Yâsîn",
-        "ur": "يس"
+        "ur": "يس",
+        "zh": "雅辛"
       },
       "tags": "yaaseen,yaasin,yasin,yseen,ysin,yaasen,yasen,ysen,ysn"
     }, {
@@ -1353,7 +1425,8 @@
         "it": "I Ranghi",
         "ru": "Выстроившиеся в ряды",
         "tr": "Sıra Sıra Dizilenler",
-        "ur": "صف باندھنے والے"
+        "ur": "صف باندھنے والے",
+        "zh": "列班者"
       },
       "name": {
         "ar": "الصافات",
@@ -1366,7 +1439,8 @@
         "in": "As-Saffat",
         "ml": "സൂറത്തുസ്സ്വാഫ്ഫാത്ത്",
         "tr": "Sâffât",
-        "ur": "الصافات"
+        "ur": "الصافات",
+        "zh": "萨法特"
       },
       "tags": "assaaffaat,assaffaat,assaaffat,assaffat,asshaaffaat,asshaffaat,asshaaffat,asshaffat,assafat,asshafat"
     }, {
@@ -1390,7 +1464,8 @@
         "it": "Sтd",
         "ur": "صٓ",
         "ru": "Сод",
-        "tr": "Sad Harfiд"
+        "tr": "Sad Harfiд",
+        "zh": "萨德"
       },
       "name": {
         "ar": "ص",
@@ -1403,7 +1478,8 @@
         "in": "Shaad",
         "ml": "സൂറത്ത് സ്വാദ്",
         "tr": "Sâd",
-        "ur": "ص"
+        "ur": "ص",
+        "zh": "萨德"
       },
       "tags": "shaad,shad,sad,shd,sd"
     }, {
@@ -1427,7 +1503,8 @@
         "it": "I Gruppi",
         "ru": "Толпы",
         "tr": "Zümreler",
-        "ur": "گروہ"
+        "ur": "گروہ",
+        "zh": "队伍"
       },
       "name": {
         "ar": "الزمر",
@@ -1440,7 +1517,8 @@
         "in": "Az-Zumar",
         "ml": "സൂറത്തുസ്സുമർ",
         "tr": "Zümer",
-        "ur": "الزمر"
+        "ur": "الزمر",
+        "zh": "助迈尔"
       },
       "tags": "azzumar,azzumaar,ajjumaar,ajjumar,groves,group"
     }, {
@@ -1464,7 +1542,8 @@
         "it": "Il Perdonatore",
         "ru": "Прощающий",
         "tr": "İman Eden",
-        "ur": "بخشنے والا"
+        "ur": "بخشنے والا",
+        "zh": "赦宥者"
       },
       "name": {
         "ar": "غافر",
@@ -1477,7 +1556,8 @@
         "in": "Al-Mu’min",
         "ml": "സൂറത്ത് ഗാഫിർ",
         "tr": "Mü'min",
-        "ur": "غافر"
+        "ur": "غافر",
+        "zh": "阿斐尔"
       },
       "tags": "alghaafir,alghafir,algafir,algaafir,algfr,alghfr,almumin,almomin"
     }, {
@@ -1501,7 +1581,8 @@
         "it": "Esposti chiaramente",
         "ru": "Разъяснены",
         "tr": "Detaylıca Açıklamak",
-        "ur": "مفصل"
+        "ur": "مفصل",
+        "zh": "奉绥来特"
       },
       "name": {
         "ar": "فصلت",
@@ -1514,7 +1595,8 @@
         "in": "Fussilat",
         "ml": "സൂറത്ത് ഫുസ്സ്വിലത്ത്",
         "tr": "Fussilet",
-        "ur": "فصلت"
+        "ur": "فصلت",
+        "zh": "奉绥来特"
       },
       "tags": "fusilat,fussillat,fusillat,fusilaat,fusillaat,ha mim assajdah,hamimassajdah,ha meem assajdah,hameemassajdah, ha mim sajdah,hamimsajdah,ha meem sajdah,hameemsajdah"
     }, {
@@ -1538,7 +1620,8 @@
         "it": "La Consultazione",
         "ru": "Совет",
         "tr": "Danışma",
-        "ur": "شورٰی"
+        "ur": "شورٰی",
+        "zh": "协商"
       },
       "name": {
         "ar": "الشورى",
@@ -1551,7 +1634,8 @@
         "in": "Asy-Syura",
         "ml": "സൂറത്തുശ്ശൂറാ",
         "tr": "Şûrâ",
-        "ur": "الشورى"
+        "ur": "الشورى",
+        "zh": "舒拉"
       },
       "tags": "ashshuraa,assuraa,ashsuraa,asshuraa,assraa,asshraa,ashshraa,asraa,ashraa,consulting"
     }, {
@@ -1575,7 +1659,8 @@
         "it": "Gli Ornamenti d'Oro",
         "ru": "Украшения",
         "tr": "Mücevher",
-        "ur": "سونے کی چمک"
+        "ur": "سونے کی چمک",
+        "zh": "金饰"
       },
       "name": {
         "ar": "الزخرف",
@@ -1588,7 +1673,8 @@
         "in": "Az-Zukhruf",
         "ml": "സൂറത്തുസ്സുഖ്റുഫ്",
         "tr": "Zuhruf",
-        "ur": "الزخرف"
+        "ur": "الزخرف",
+        "zh": "助赫鲁弗"
       },
       "tags": "azzukhruf,azukhruf,azzukruf,azukruf,azzakhruf,azakhruf,azzakruf,azakruf,azzukhraf,azukhraf,azzukraf,azukraf,azzakhraf,azakhraf,azzakraf,azakraf,jewellary,metal"
     }, {
@@ -1612,7 +1698,8 @@
         "it": "Il Fumo",
         "ru": "Дым",
         "tr": "Duman",
-        "ur": "دھواں"
+        "ur": "دھواں",
+        "zh": "烟雾"
       },
       "name": {
         "ar": "الدخان",
@@ -1625,7 +1712,8 @@
         "in": "Ad-Dukhan",
         "ml": "സൂറത്തുദ്ദുഖാൻ",
         "tr": "Duhân",
-        "ur": "الدخان"
+        "ur": "الدخان",
+        "zh": "睹罕"
       },
       "tags": "addukhaan,addhukhaan,adukhaan,adhukhaan,addukhan,addhukhan,adukhan,adhukhan,addukaan,addhukaan,adukaan,adhukaan,addukan,addhukan,adukan,adhukan,azzukhaan,azzhukhaan,azukhaan,azhukhaan,azzukhan,azzhukhan,azukhan,azhukhan,azzukaan,azzhukaan,azukaan,azhukaan,azzukan,azzhukan,azukan,azhukan,ajjukhaan,ajjhukhaan,ajukhaan,ajhukhaan,ajjukhan,ajjhukhan,ajukhan,ajhukhan,ajjukaan,ajjhukaan,ajukaan,ajhukaan,ajjukan,ajjhukan,ajukan,ajhukan,smog,fog"
     }, {
@@ -1649,7 +1737,8 @@
         "it": "La Genuflessa",
         "ru": "Коленопреклоненные",
         "tr": "Diz üstü çöken",
-        "ur": "زانوٗوں کے بل گری ہوئی"
+        "ur": "زانوٗوں کے بل گری ہوئی",
+        "zh": "屈膝"
       },
       "name": {
         "ar": "الجاثية",
@@ -1662,7 +1751,8 @@
         "in": "Al-Jasiyah",
         "ml": "സൂറത്തുൽ ജാഥിയഃ",
         "tr": "Câsiye",
-        "ur": "الجاثية"
+        "ur": "الجاثية",
+        "zh": "查西叶"
       },
       "tags": "aljaathiyaa,aljathiyaa,aljaatiyaa,aljatiyaa,aljaashiyaa,aljashiyaa,aljaasiyaa,aljasiyaa"
     }, {
@@ -1686,7 +1776,8 @@
         "it": "Al-Ahqрf",
         "ru": "Барханы",
         "tr": "Kum Yığını",
-        "ur": "ریگستان"
+        "ur": "ریگستان",
+        "zh": "沙丘"
       },
       "name": {
         "ar": "الأحقاف",
@@ -1699,7 +1790,8 @@
         "in": "Al-Ahqaf",
         "ml": "സൂറത്തുൽ അഹ്ഖാഫ്",
         "tr": "Ahkâf",
-        "ur": "الأحقاف"
+        "ur": "الأحقاف",
+        "zh": "艾哈嘎弗"
       },
       "tags": "alahqaf,alahqaaf,alaahqaf,alaahqaaf,alahkaf,alahkaaf,alaahkaf,alaahkaaf,alahaqaf,alahaqaaf,alaahaqaf,alaahaqaaf,alahakaf,alahakaaf,alaahakaf,alaahakaaf,dune,desert"
     }, {
@@ -1723,7 +1815,8 @@
         "it": "Muhammad",
         "ru": "Мухаммад",
         "tr": "Hz. Muhammed",
-        "ur": "محمدﷺ"
+        "ur": "محمدﷺ",
+        "zh": "穆罕默德"
       },
       "name": {
         "ar": "محمد",
@@ -1736,7 +1829,8 @@
         "in": "Muhammad",
         "ml": "സൂറത്ത് മുഹമ്മദ്",
         "tr": "Muhammed",
-        "ur": "محمد"
+        "ur": "محمد",
+        "zh": "穆罕默德"
       },
       "tags": "mohmad,mohmod,mohmed,mehmad,mohammad,mohammed,mohamad,muhamad,muhammed,mhmd,mehmed,md,mohd,mohmd,prophet,saw,pbuh"
     }, {
@@ -1760,7 +1854,8 @@
         "it": "La Vittoria",
         "ru": "Победа",
         "tr": "Fetih",
-        "ur": "فتح"
+        "ur": "فتح",
+        "zh": "胜利"
       },
       "name": {
         "ar": "الفتح",
@@ -1773,7 +1868,8 @@
         "in": "Al-Fath",
         "ml": "സൂറത്തുൽ ഫത്ഹ്",
         "tr": "Fetih",
-        "ur": "الفتح"
+        "ur": "الفتح",
+        "zh": "费特哈"
       },
       "tags": "alfatah,alfath,alfateh,alfeteh,alftah,alfeth,alfth,winning,conquer,winner"
     }, {
@@ -1797,7 +1893,8 @@
         "it": "Le Stanze Intime",
         "ru": "Комнаты",
         "tr": "Odalar",
-        "ur": "حجرے"
+        "ur": "حجرے",
+        "zh": "寝室"
       },
       "name": {
         "ar": "الحجرات",
@@ -1810,7 +1907,8 @@
         "in": "Al-Hujurat",
         "ml": "സൂറത്തുൽ ഹുജുറാത്ത്",
         "tr": "Hucurât",
-        "ur": "الحجرات"
+        "ur": "الحجرات",
+        "zh": "侯主拉特"
       },
       "tags": "alhujuraat,alhujurat,alhujraat,alhajraat,alhujrat,alhajrat,alhijraat,alhijraat,room,house"
     }, {
@@ -1834,7 +1932,8 @@
         "it": "Qтf",
         "ru": "Каф",
         "tr": "Kaf Harfi",
-        "ur": "قٓ"
+        "ur": "قٓ",
+        "zh": "戛弗"
       },
       "name": {
         "ar": "ق",
@@ -1847,7 +1946,8 @@
         "in": "Qaf",
         "ml": "സൂറത്ത് ഖാഫ്",
         "tr": "Kâf",
-        "ur": "ق"
+        "ur": "ق",
+        "zh": "戛弗"
       },
       "tags": "qaf,kaaf,kaf,qaap,qap"
     }, {
@@ -1871,7 +1971,8 @@
         "it": "Quelle che spargono",
         "ru": "Рассеивающие прах",
         "tr": "Kuvvetli Rüzgarlar",
-        "ur": "بکھیرنے والیاں"
+        "ur": "بکھیرنے والیاں",
+        "zh": "播种者"
       },
       "name": {
         "ar": "الذاريات",
@@ -1884,7 +1985,8 @@
         "in": "Az-Zariyat",
         "ml": "സൂറത്തുദ്ദാരിയാത്ത്",
         "tr": "Zâriyât",
-        "ur": "الذاريات"
+        "ur": "الذاريات",
+        "zh": "达理雅特"
       },
       "tags": "adhdhaariyat,adhdhaariyaat,addaariyat,addaariyaat,ajjaariyat,ajjariyat,ajjariyaat,azzaariyat,azzariyat,azzariyaat,adhdhaariat,adhdhaariaat,addaariat,addaariaat,ajjaariat,ajjariat,ajjariaat,azzaariat,azzariat,azzariaat,air"
     }, {
@@ -1908,7 +2010,8 @@
         "it": "Il Monte",
         "ru": "Гора",
         "tr": "Dağ",
-        "ur": "طور پہاڑ"
+        "ur": "طور پہاڑ",
+        "zh": "山岳"
       },
       "name": {
         "ar": "الطور",
@@ -1921,7 +2024,8 @@
         "in": "At-Tur",
         "ml": "സൂറത്തുത്തൂർ",
         "tr": "Tûr",
-        "ur": "الطور"
+        "ur": "الطور",
+        "zh": "突尔"
       },
       "tags": "attur,atur,attuur,mountain,valley"
     }, {
@@ -1945,7 +2049,8 @@
         "it": "La Stella",
         "ru": "Звезда",
         "tr": "Yıldız",
-        "ur": "ستارہ"
+        "ur": "ستارہ",
+        "zh": "星宿"
       },
       "name": {
         "ar": "النجم",
@@ -1958,7 +2063,8 @@
         "in": "An-Najm",
         "ml": "സൂറത്തുന്നജ്മ്",
         "tr": "Necm",
-        "ur": "النجم"
+        "ur": "النجم",
+        "zh": "奈智姆"
       },
       "tags": "annajm,annjm,annajam,annjam"
     }, {
@@ -1982,7 +2088,8 @@
         "it": "La Luna",
         "ru": "Месяц",
         "tr": "Ay",
-        "ur": "چاند"
+        "ur": "چاند",
+        "zh": "月亮"
       },
       "name": {
         "ar": "القمر",
@@ -1995,7 +2102,8 @@
         "in": "Al-Qamar",
         "ml": "സൂറത്തുൽ ഖമർ",
         "tr": "Kamer",
-        "ur": "القمر"
+        "ur": "القمر",
+        "zh": "改买尔"
       },
       "tags": "alqamar,alqamr,alqmar,alqmr,alkmr,alkamar,alkamr,alkmar"
     }, {
@@ -2019,7 +2127,8 @@
         "it": "Il Compassionevole",
         "ru": "Милостивый",
         "tr": "Merhamet Eden",
-        "ur": "مہربان"
+        "ur": "مہربان",
+        "zh": "至仁主"
       },
       "name": {
         "ar": "الرحمن",
@@ -2032,7 +2141,8 @@
         "in": "Ar-Rahman",
         "ml": "സൂറത്തു റഹ്മാൻ",
         "tr": "Rahmân",
-        "ur": "الرحمن"
+        "ur": "الرحمن",
+        "zh": "安赖哈曼"
       },
       "tags": "arrahmaan,arrahman,arrahaman,arrahamaan,arrehmaan,arrehman,mercy,merciful,allah,god"
     }, {
@@ -2056,7 +2166,8 @@
         "it": "L'Evento",
         "ru": "Событие",
         "tr": "Olay",
-        "ur": "واقعہ ہونے والی قیامت"
+        "ur": "واقعہ ہونے والی قیامت",
+        "zh": "大事"
       },
       "name": {
         "ar": "الواقعة",
@@ -2069,7 +2180,8 @@
         "in": "Al-Waqi’ah",
         "ml": "സൂറത്തുൽ വാഖിഅഃ",
         "tr": "Vâkıa",
-        "ur": "الواقعة"
+        "ur": "الواقعة",
+        "zh": "瓦格尔"
       },
       "tags": "alwaaqiaa,alwaqiaa,alwaakiaa,alwakiaa,alwqyaa,alwkyaa,alwqiyaa,alwkiyaa,mandatory,compulsory,obligatory"
     }, {
@@ -2093,7 +2205,8 @@
         "it": "Il Ferro",
         "ru": "Железо",
         "tr": "Demir",
-        "ur": "فولاد"
+        "ur": "فولاد",
+        "zh": "铁"
       },
       "name": {
         "ar": "الحديد",
@@ -2106,7 +2219,8 @@
         "in": "Al-Hadid",
         "ml": "സൂറത്തുൽ ഹദീദ്",
         "tr": "Hadîd",
-        "ur": "الحديد"
+        "ur": "الحديد",
+        "zh": "哈迪德"
       },
       "tags": "alhadid,alhadeed,alhdid,alhdeed,alhdd,alhadd"
     }, {
@@ -2130,7 +2244,8 @@
         "it": "La Disputante",
         "ru": "Препирающаяся",
         "tr": "Mücadele",
-        "ur": "جھگڑنے والی"
+        "ur": "جھگڑنے والی",
+        "zh": "辩诉者"
       },
       "name": {
         "ar": "المجادلة",
@@ -2143,7 +2258,8 @@
         "in": "Al-Mujadilah",
         "ml": "സൂറത്തുൽ മുജാദിലഃ",
         "tr": "Mücâdele",
-        "ur": "المجادلة"
+        "ur": "المجادلة",
+        "zh": "姆查衣赖"
       },
       "tags": "almujaadilaa,almujadilaa,almuzaadilaa,almuzadilaa,almujaadalaa,almujadalaa,almuzaadalaa,almuzadalaa,almajaadilaa,almajadilaa,almazaadilaa,almazadilaa,almajaadalaa,almajadalaa,almazaadalaa,almazadalaa"
     }, {
@@ -2167,7 +2283,8 @@
         "it": "L'Esodo",
         "ru": "Сбор",
         "tr": "Toplanma",
-        "ur": "حشر"
+        "ur": "حشر",
+        "zh": "放逐"
       },
       "name": {
         "ar": "الحشر",
@@ -2180,7 +2297,8 @@
         "in": "Al-Hasyr",
         "ml": "സൂറത്തുൽ ഹശ്ർ",
         "tr": "Haşr",
-        "ur": "الحشر"
+        "ur": "الحشر",
+        "zh": "哈什尔"
       },
       "tags": "alhashr,alhasr,alhshr,alhsr,alhashar,alhasar,alhshar,alhsar"
     }, {
@@ -2204,7 +2322,8 @@
         "it": "L'Esaminata",
         "ru": "Испытуемая",
         "tr": "İmtihan Eden",
-        "ur": "امتحان لی جانے والی"
+        "ur": "امتحان لی جانے والی",
+        "zh": "受考验的妇人"
       },
       "name": {
         "ar": "الممتحنة",
@@ -2217,7 +2336,8 @@
         "in": "Al-Mumtahanah",
         "ml": "സൂറത്തുൽ മുംതഹനഃ",
         "tr": "Mümtehine",
-        "ur": "الممتحنة"
+        "ur": "الممتحنة",
+        "zh": "慕姆太哈奈"
       },
       "tags": "almumtahanaa,almumtihanaa,almumthnaa,almumtanahaa,almumtahnaa,almamtahanaa,almamtihanaa,almamthnaa,almamtanahaa,almamtahnaa"
     }, {
@@ -2241,7 +2361,8 @@
         "it": "I Ranghi Serrati",
         "ru": "Ряды",
         "tr": "Sıra",
-        "ur": "صف"
+        "ur": "صف",
+        "zh": "列阵"
       },
       "name": {
         "ar": "الصف",
@@ -2254,7 +2375,8 @@
         "in": "As-Saff",
         "ml": "സൂറത്തുസ്സ്വഫ്ഫ്",
         "tr": "Saf",
-        "ur": "الصف"
+        "ur": "الصف",
+        "zh": "蒜弗"
       },
       "tags": "assaff,ashshaff,assaaff,asshaaff"
     }, {
@@ -2278,7 +2400,8 @@
         "it": "Il Venerdь",
         "ru": "Собрание",
         "tr": "Cuma Günü",
-        "ur": "جمعہ"
+        "ur": "جمعہ",
+        "zh": "聚礼"
       },
       "name": {
         "ar": "الجمعة",
@@ -2291,7 +2414,8 @@
         "in": "Al-Jumu’ah",
         "ml": "സൂറത്തുൽ ജുമുഅഃ",
         "tr": "Cuma",
-        "ur": "الجمعة"
+        "ur": "الجمعة",
+        "zh": "主麻"
       },
       "tags": "aljummaah,aljummah,aljummuaah,aljummuah,aljmma"
     }, {
@@ -2315,7 +2439,8 @@
         "it": "Gli Ipocriti",
         "ru": "Лицемеры",
         "tr": "Münafıklar",
-        "ur": "منافقین"
+        "ur": "منافقین",
+        "zh": "伪信者"
       },
       "name": {
         "ar": "المنافقون",
@@ -2328,7 +2453,8 @@
         "in": "Al-Munafiqun",
         "ml": "സൂറത്തുൽ മുനാഫിഖൂൻ",
         "tr": "Münâfikûn",
-        "ur": "المنافقون"
+        "ur": "المنافقون",
+        "zh": "莫拿非恭"
       },
       "tags": "almunaafiqoon,almunaafikoon,almonaafiqoon,almonaafikoon,almunafiqoon,almunafikoon,almonafiqoon,almonafikoon"
     }, {
@@ -2352,7 +2478,8 @@
         "it": "Il Reciproco Inganno",
         "ru": "Взаимное обделение",
         "tr": "Aldanma",
-        "ur": "ہار جیت"
+        "ur": "ہار جیت",
+        "zh": "相欺"
       },
       "name": {
         "ar": "التغابن",
@@ -2365,7 +2492,8 @@
         "in": "At-Tagabun",
         "ml": "സൂറത്തുത്തഗാബുൻ",
         "tr": "Tegâbün",
-        "ur": "التغابن"
+        "ur": "التغابن",
+        "zh": "台昂卜尼"
       },
       "tags": "attaghaabun,attagabbun,attaghabbun,attagabun,attaggabbun"
     }, {
@@ -2389,7 +2517,8 @@
         "it": "Il Divorzio",
         "ru": "Развод",
         "tr": "Boşanma",
-        "ur": "طلاق"
+        "ur": "طلاق",
+        "zh": "离婚"
       },
       "name": {
         "ar": "الطلاق",
@@ -2402,7 +2531,8 @@
         "in": "At-Talaq",
         "ml": "സൂറത്തുത്ത്വലാഖ്",
         "tr": "Talâk",
-        "ur": "الطلاق"
+        "ur": "الطلاق",
+        "zh": "特拉格"
       },
       "tags": "attalaaq,attalaq,attalaak,attalak,attlaq,attlaaq,attlak,attlaak,attlq,attlk"
     }, {
@@ -2426,7 +2556,8 @@
         "it": "L'Interdizione",
         "ru": "Запрещение",
         "tr": "Haram Kılmak",
-        "ur": "حرمت"
+        "ur": "حرمت",
+        "zh": "禁戒"
       },
       "name": {
         "ar": "التحريم",
@@ -2439,7 +2570,8 @@
         "in": "At-Tahrim",
         "ml": "സൂറത്തുത്തഹ്രീം",
         "tr": "Tahrîm",
-        "ur": "التحريم"
+        "ur": "التحريم",
+        "zh": "台哈列姆"
       },
       "tags": "attahrim,attahreem,attarim,attareem,atthrim,atthreem,attrim,attreem,atthrm"
     }, {
@@ -2463,7 +2595,8 @@
         "it": "La Sovranitр",
         "ru": "Власть",
         "tr": "Mülk",
-        "ur": "ملک"
+        "ur": "ملک",
+        "zh": "国权"
       },
       "name": {
         "ar": "الملك",
@@ -2476,7 +2609,8 @@
         "in": "Al-Mulk",
         "ml": "സൂറത്തുൽ മുൽക്",
         "tr": "Mülk",
-        "ur": "الملك"
+        "ur": "الملك",
+        "zh": "姆勒克"
       },
       "tags": "almulk,country,nation,almlk"
     }, {
@@ -2500,7 +2634,8 @@
         "it": "Il Calamo",
         "ru": "Письменная трость",
         "tr": "Kalem",
-        "ur": "قلم"
+        "ur": "قلم",
+        "zh": "笔"
       },
       "name": {
         "ar": "القلم",
@@ -2513,7 +2648,8 @@
         "in": "Al-Qalam",
         "ml": "സൂറത്തുൽ ഖലം",
         "tr": "Kalem",
-        "ur": "القلم"
+        "ur": "القلم",
+        "zh": "改赖姆"
       },
       "tags": "alqalam,alkalam,alqalm,alkalm,alqlam,alklam,alqlm,aklm"
     }, {
@@ -2537,7 +2673,8 @@
         "it": "L'Inevitabile",
         "ru": "Неминуемое",
         "tr": "Gerçekleşecek Olan",
-        "ur": "حق ہونے والی"
+        "ur": "حق ہونے والی",
+        "zh": "真灾"
       },
       "name": {
         "ar": "الحاقة",
@@ -2550,7 +2687,8 @@
         "in": "Al-Haqqah",
         "ml": "സൂറത്തുൽ ഹാഖ്ഖഃ",
         "tr": "Hâkka",
-        "ur": "الحاقة"
+        "ur": "الحاقة",
+        "zh": "哈盖"
       },
       "tags": "alhaaqqaah,alhaqqaah,alhaqqah,alhaqah,alhaqaah,alhaaqaah,alhaaqah,alhaakkaah,alhakkaah,alhakkah,alhakah,alhakaah,alhaakaah,alhaakah,alhqh,alhkh"
     }, {
@@ -2574,7 +2712,8 @@
         "it": "Le Vie dell'Ascesa",
         "ru": "Ступени",
         "tr": "Yükselme Dereceleri",
-        "ur": "عروج"
+        "ur": "عروج",
+        "zh": "天梯"
       },
       "name": {
         "ar": "المعارج",
@@ -2587,7 +2726,8 @@
         "in": "Al-Ma’arij",
         "ml": "സൂറത്തുൽ മആരിജ്",
         "tr": "Meâric",
-        "ur": "المعارج"
+        "ur": "المعارج",
+        "zh": "买阿列支"
       },
       "tags": "almaarij,almarij,almaariz,almariz,urooz,urooj,uruz,uruj"
     }, {
@@ -2611,7 +2751,8 @@
         "it": "Noш",
         "ru": "Нух",
         "tr": "Hz. Nuh",
-        "ur": "نوح"
+        "ur": "نوح",
+        "zh": "努哈"
       },
       "name": {
         "ar": "نوح",
@@ -2624,7 +2765,8 @@
         "in": "Nuh",
         "ml": "സൂറത്ത് നൂഹ്",
         "tr": "Nûh",
-        "ur": "نوح"
+        "ur": "نوح",
+        "zh": "努哈"
       },
       "tags": "nuh,noah"
     }, {
@@ -2648,7 +2790,8 @@
         "it": "I Dшmoni",
         "ru": "Джинны",
         "tr": "Cin",
-        "ur": "جن"
+        "ur": "جن",
+        "zh": "精灵"
       },
       "name": {
         "ar": "الجن",
@@ -2661,7 +2804,8 @@
         "in": "Al-Jinn",
         "ml": "സൂറത്തുൽ ജിന്ന്",
         "tr": "Cin",
-        "ur": "الجن"
+        "ur": "الجن",
+        "zh": "精尼"
       },
       "tags": "aljinn,aljinnat,aljinaat,aljinat,aljenn,aljennat,aljenaat,aljenat,alzinn,alzinnat,alzinaat,alzinat,alzenn,alzennat,alzenaat,alzenat"
     }, {
@@ -2685,7 +2829,8 @@
         "it": "L'avvolto",
         "ru": "Закутавшийся",
         "tr": "Örtünüp Bürünen",
-        "ur": "کپڑا لپیٹنے والا"
+        "ur": "کپڑا لپیٹنے والا",
+        "zh": "披衣的人"
       },
       "name": {
         "ar": "المزمل",
@@ -2698,7 +2843,8 @@
         "in": "Al-Muzzammil",
         "ml": "സൂറത്തുൽ മുസ്സമ്മിൽ",
         "tr": "Müzzemmil",
-        "ur": "المزمل"
+        "ur": "المزمل",
+        "zh": "孟赞密鲁"
       },
       "tags": "almuzzammil,almuzammil,almuzamil,almuzmil,almazzammil,almazammil,almazamil,almazmil,almujjammil,almujammil,almujamil,almujmil,almajjammil,almajammil,almajamil,almajmil"
     }, {
@@ -2722,7 +2868,8 @@
         "it": "L'Avvolto nel Mantello",
         "ru": "Завернувшийся",
         "tr": "Örtünüp Bürünen",
-        "ur": "کپڑا اوڑھنے والا"
+        "ur": "کپڑا اوڑھنے والا",
+        "zh": "盖被的人"
       },
       "name": {
         "ar": "المدثر",
@@ -2735,7 +2882,8 @@
         "in": "Al-Muddassir",
         "ml": "സൂറത്തുൽ മുദ്ദഥ്ഥിർ",
         "tr": "Müddessir",
-        "ur": "المدثر"
+        "ur": "المدثر",
+        "zh": "孟荡西尔"
       },
       "tags": "almuddaththir,almudaththir,almuddatthir,almudatthir,almuddathtir,almudathtir,almuddattir,almudattir,almuddashshir,almudashshir,almuddasshir,almudasshir,almuddashsir,almudashsir,almuddassir,almudassir,almudshir,almudsir"
     }, {
@@ -2759,7 +2907,8 @@
         "it": "La Resurrezione",
         "ru": "Воскресение",
         "tr": "Kıyamet",
-        "ur": "قیامۃ"
+        "ur": "قیامۃ",
+        "zh": "复活"
       },
       "name": {
         "ar": "القيامة",
@@ -2772,7 +2921,8 @@
         "in": "Al-Qiyamah",
         "ml": "സൂറത്തുൽ ഖിയാമഃ",
         "tr": "Kıyâmet",
-        "ur": "القيامة"
+        "ur": "القيامة",
+        "zh": "格雅迈"
       },
       "tags": "alqiyaamat,alqiyamat,alqayaamat,alqayamat,alqiyaamah,alqiyamah,alqayaamah,alqayamah,alkiyaamat,alkiyamat,alkayaamat,alkayamat,alkiyaamah,alkiyamah,alkayaamah,alkayamah"
     }, {
@@ -2796,7 +2946,8 @@
         "it": "L'Uomo",
         "ru": "Человек",
         "tr": "İnsan",
-        "ur": "انسان"
+        "ur": "انسان",
+        "zh": "人"
       },
       "name": {
         "ar": "الإنسان",
@@ -2809,7 +2960,8 @@
         "in": "Al-Insan",
         "ml": "സൂറത്തുൽ ഇൻസാൻ",
         "tr": "İnsân",
-        "ur": "الإنسان"
+        "ur": "الإنسان",
+        "zh": "印萨尼"
       },
       "tags": "alinsaan,alinsan,alinsn"
     }, {
@@ -2833,7 +2985,8 @@
         "it": "Le Inviate",
         "ru": "Посылаемые",
         "tr": "Gönderilenler",
-        "ur": "بھیجی جانے والی ہوائیں"
+        "ur": "بھیجی جانے والی ہوائیں",
+        "zh": "天使"
       },
       "name": {
         "ar": "المرسلات",
@@ -2846,7 +2999,8 @@
         "in": "Al-Mursalat",
         "ml": "സൂറത്തുൽ മുർസലാത്ത്",
         "tr": "Mürselât",
-        "ur": "المرسلات"
+        "ur": "المرسلات",
+        "zh": "姆尔赛拉特"
       },
       "tags": "almursalaat,almursilaat,almursalat,almursilat,almurselaat,almurselat,almurslat,almurslt"
     }, {
@@ -2870,7 +3024,8 @@
         "it": "L'Annuncio",
         "ru": "Весть",
         "tr": "Haber",
-        "ur": "خبر"
+        "ur": "خبر",
+        "zh": "消息"
       },
       "name": {
         "ar": "النبإ",
@@ -2883,7 +3038,8 @@
         "in": "An-Naba’",
         "ml": "സൂറത്തുന്നബഅ്",
         "tr": "Nebe",
-        "ur": "النبإ"
+        "ur": "النبإ",
+        "zh": "奈白易"
       },
       "tags": "annabaa,annbaa,annebaa,annibaa,news,alert,information"
     }, {
@@ -2907,7 +3063,8 @@
         "it": "Le Strappanti Violente",
         "ru": "Исторгающие",
         "tr": "Çekip Çıkaranlar",
-        "ur": "زور سے کھینچنے والے"
+        "ur": "زور سے کھینچنے والے",
+        "zh": "急掣的"
       },
       "name": {
         "ar": "النازعات",
@@ -2920,7 +3077,8 @@
         "in": "An-Nazi’at",
         "ml": "സൂറത്തുന്നാസിആത്ത്",
         "tr": "Naziât",
-        "ur": "النازعات"
+        "ur": "النازعات",
+        "zh": "那寂阿特"
       },
       "tags": "annaaziaat,annaaziyaat,annaaziat,annaaziyat,annaziaat,annaziyaat,annaziat,annaziyat,annaajiaat,annaajiyaat,annaajiat,annaajiyat,annajiaat,annajiyaat,annajiat,annajiyat,nazyaat,nazyat,najyaat,najyat,nazaat,najaat,nazat,najat,nzt,njt"
     }, {
@@ -2944,7 +3102,8 @@
         "it": "Si Accigliђ",
         "ru": "Нахмурился",
         "tr": "Yüz Ekşitme",
-        "ur": "تیوری چڑہائی"
+        "ur": "تیوری چڑہائی",
+        "zh": "皱眉"
       },
       "name": {
         "ar": "عبس",
@@ -2957,7 +3116,8 @@
         "in": "`Abasa",
         "ml": "സൂറത്ത് അബസ",
         "tr": "Abese",
-        "ur": "عبس"
+        "ur": "عبس",
+        "zh": "阿百赛"
       },
       "tags": "aabasaa,aabaasaa,aabsaa,aabashaa,aabaashaa,aabshaa"
     }, {
@@ -2981,7 +3141,8 @@
         "it": "L'Oscuramento",
         "ru": "Скручивание",
         "tr": "Dürmek",
-        "ur": "لپیٹنا"
+        "ur": "لپیٹنا",
+        "zh": "黯黜"
       },
       "name": {
         "ar": "التكوير",
@@ -2994,7 +3155,8 @@
         "in": "At-Takwir",
         "ml": "സൂറത്തുത്തക്വീർ",
         "tr": "Tekvîr",
-        "ur": "التكوير"
+        "ur": "التكوير",
+        "zh": "太克威尔"
       },
       "tags": "attakwir,attakweer,attaqwir,attaqweer,attkwir,attkweer,attqwir,attqweer"
     }, {
@@ -3018,7 +3180,8 @@
         "it": "Lo Squarciarsi",
         "ru": "Раскалывание",
         "tr": "Yarılmak",
-        "ur": "ٹکڑے ہونا"
+        "ur": "ٹکڑے ہونا",
+        "zh": "破裂"
       },
       "name": {
         "ar": "الإنفطار",
@@ -3031,7 +3194,8 @@
         "in": "Al-Infitar",
         "ml": "സൂറത്തുൽ ഇൻഫിത്വാർ",
         "tr": "İnfitâr",
-        "ur": "الإنفطار"
+        "ur": "الإنفطار",
+        "zh": "引斐塔尔"
       },
       "tags": "alinfitaar,alinfitar,alinfetaar,alinfetar,alinftaar,alinftar,alinftr, alintifaar,alintifar,alintefaar,alintefar,alintfaar,alintfar,alintfr"
     }, {
@@ -3055,7 +3219,8 @@
         "it": "I Frodatori",
         "ru": "Обвешивающие",
         "tr": "Ölçü ve Tartıda Hile",
-        "ur": "ناپ تول میں کمی کرنے والے"
+        "ur": "ناپ تول میں کمی کرنے والے",
+        "zh": "称量不公"
       },
       "name": {
         "ar": "المطففين",
@@ -3068,7 +3233,8 @@
         "in": "Al-Muthafifin",
         "ml": "സൂറത്തുൽ മുത്വഫ്ഫിഫീൻ",
         "tr": "Mutaffifîn",
-        "ur": "المطففين"
+        "ur": "المطففين",
+        "zh": "太颓斐弗"
       },
       "tags": "almutaffifin,almutaffifeen,almutaffin,almutaffeen,almutafin,almutafeen,almutfin,almutfeen"
     }, {
@@ -3092,7 +3258,8 @@
         "it": "La Fenditura",
         "ru": "Разверзнется",
         "tr": "Göğün Yarılması",
-        "ur": "پھٹنا"
+        "ur": "پھٹنا",
+        "zh": "绽裂"
       },
       "name": {
         "ar": "الإنشقاق",
@@ -3105,7 +3272,8 @@
         "in": "Al-Insyiqaq",
         "ml": "സൂറത്തുൽ ഇൻശിഖാഖ്",
         "tr": "İnşikâk",
-        "ur": "الإنشقاق"
+        "ur": "الإنشقاق",
+        "zh": "引史卡格"
       },
       "tags": "alinshiqaaq,alinshiqaq,alinsiqaaq,alinsiqaq,alinsqaaq,alinsqaq,alinqaaq,alinqaq,alinshikaak,alinshikak,alinsikaak,alinsikak,alinskaak,alinskak,alinkaak,alinkak"
     }, {
@@ -3129,7 +3297,8 @@
         "it": "Le Costellazioni",
         "ru": "Созвездия Зодиака",
         "tr": "Burçlar",
-        "ur": "برج"
+        "ur": "برج",
+        "zh": "十二宫"
       },
       "name": {
         "ar": "البروج",
@@ -3142,7 +3311,8 @@
         "in": "Al-Buruj",
         "ml": "സൂറത്തുൽ ബുറൂജ്",
         "tr": "Burûc",
-        "ur": "البروج"
+        "ur": "البروج",
+        "zh": "补鲁智"
       },
       "tags": "alburooj,alburuj,alburj,alburj,albarooj,albaruj,alburooz,alburuz,alburz,alburz,albarooz,albaruz,stars,albrj,albrz"
     }, {
@@ -3166,7 +3336,8 @@
         "it": "L'Astro Notturno",
         "ru": "Ночной путник",
         "tr": "Gece Gelen Şey",
-        "ur": "رات کو آنے والا"
+        "ur": "رات کو آنے والا",
+        "zh": "启明星"
       },
       "name": {
         "ar": "الطارق",
@@ -3179,7 +3350,8 @@
         "in": "At-Tariq",
         "ml": "സൂറത്തുത്ത്വാരിഖ്",
         "tr": "Târık",
-        "ur": "الطارق"
+        "ur": "الطارق",
+        "zh": "塔里格"
       },
       "tags": "attaarique,attarique,ataarique,atarique,attaarik,attarik,ataarik,atarik,attrk,atrk"
     }, {
@@ -3203,7 +3375,8 @@
         "it": "L'Altissimo",
         "ru": "Всевышний",
         "tr": "En Yüce",
-        "ur": "اعلی"
+        "ur": "اعلی",
+        "zh": "至尊"
       },
       "name": {
         "ar": "الأعلى",
@@ -3216,7 +3389,8 @@
         "in": "Al-A’la",
         "ml": "സൂറത്തുൽ അഅ്ലാ",
         "tr": "A'lâ",
-        "ur": "الأعلى"
+        "ur": "الأعلى",
+        "zh": "艾尔拉"
       },
       "tags": "alalaa,alaalaa,allaa,aallaa,height"
     }, {
@@ -3240,7 +3414,8 @@
         "it": "L'Avvolgente",
         "ru": "Покрывающее",
         "tr": "Her Şeyi Kaplayan",
-        "ur": "چھا جانے والی"
+        "ur": "چھا جانے والی",
+        "zh": "大灾"
       },
       "name": {
         "ar": "الغاشية",
@@ -3253,7 +3428,8 @@
         "in": "Al-Gasyiyah",
         "ml": "സൂറത്തുൽ ഗാശിയഃ",
         "tr": "Gâşiye",
-        "ur": "الغاشية"
+        "ur": "الغاشية",
+        "zh": "阿史叶"
       },
       "tags": "alghaashiyaa,alghashiyaa,alghaasiyaa,alghasiyaa,algaashiyaa,algashiyaa,algaasiyaa,algasiyaa"
     }, {
@@ -3277,7 +3453,8 @@
         "it": "L'Alba",
         "ru": "Заря",
         "tr": "Tan Yerinin Ağarması",
-        "ur": "فجر"
+        "ur": "فجر",
+        "zh": "黎明"
       },
       "name": {
         "ar": "الفجر",
@@ -3290,7 +3467,8 @@
         "in": "Al-Fajr",
         "ml": "സൂറത്തുൽ ഫജ്ർ",
         "tr": "Fecr",
-        "ur": "الفجر"
+        "ur": "الفجر",
+        "zh": "史智尔"
       },
       "tags": "alfajr,alfazr,alfjr,alfzr"
     }, {
@@ -3314,7 +3492,8 @@
         "it": "La Contrada",
         "ru": "Город",
         "tr": "Şehir",
-        "ur": "شہر"
+        "ur": "شہر",
+        "zh": "地方"
       },
       "name": {
         "ar": "البلد",
@@ -3327,7 +3506,8 @@
         "in": "Al-Balad",
         "ml": "സൂറത്തുൽ ബലദ്",
         "tr": "Beled",
-        "ur": "البلد"
+        "ur": "البلد",
+        "zh": "白赖德"
       },
       "tags": "albalad,albalaad,albaalaad,albaalad,albld"
     }, {
@@ -3351,7 +3531,8 @@
         "it": "Il Sole",
         "ru": "Солнце",
         "tr": "Güneş",
-        "ur": "آفتاب"
+        "ur": "آفتاب",
+        "zh": "太阳"
       },
       "name": {
         "ar": "الشمس",
@@ -3364,7 +3545,8 @@
         "in": "Asy-Syams",
         "ml": "സൂറത്തുശ്ശംസ്",
         "tr": "Şems",
-        "ur": "الشمس"
+        "ur": "الشمس",
+        "zh": "晒姆斯"
       },
       "tags": "ashshams,asshams,assams,ashsams,ashams,asams,ashshms,ashsms,asshms,assms"
     }, {
@@ -3388,7 +3570,8 @@
         "it": "La Notte",
         "ru": "Ночь",
         "tr": "Gece",
-        "ur": "رات"
+        "ur": "رات",
+        "zh": "黑夜"
       },
       "name": {
         "ar": "الليل",
@@ -3401,7 +3584,8 @@
         "in": "Al-Lail",
         "ml": "സൂറത്തുല്ലൈൽ",
         "tr": "Leyl",
-        "ur": "الليل"
+        "ur": "الليل",
+        "zh": "赖以里"
       },
       "tags": "allail,alleil,allal,allel,alel,alal,alein,alail,allil,alil,ll"
     }, {
@@ -3425,7 +3609,8 @@
         "it": "La Luce del Mattino",
         "ru": "Утро",
         "tr": "Kuşluk Vakti",
-        "ur": "دن کا چڑھنا"
+        "ur": "دن کا چڑھنا",
+        "zh": "上午"
       },
       "name": {
         "ar": "الضحى",
@@ -3438,7 +3623,8 @@
         "in": "Ad-Duha",
         "ml": "സൂറത്തുള്ളുഹാ",
         "tr": "Duhâ",
-        "ur": "الضحى"
+        "ur": "الضحى",
+        "zh": "堵哈"
       },
       "tags": "addhuhaa,addhuaa,adduhaa,adduaa,azzhuhaa,azzhuaa,azzuhaa,azzuaa,ajjhuhaa,ajjhuaa,ajjuhaa,ajjuaa"
     }, {
@@ -3462,7 +3648,8 @@
         "it": "L'Apertura",
         "ru": "Раскрытие",
         "tr": "Genişlemek",
-        "ur": "تسکین"
+        "ur": "تسکین",
+        "zh": "开拓"
       },
       "name": {
         "ar": "الشرح",
@@ -3475,7 +3662,8 @@
         "in": "Al-Insyirah",
         "ml": "സൂറത്തുശ്ശർഹ്",
         "tr": "İnşirâh",
-        "ur": "الشرح"
+        "ur": "الشرح",
+        "zh": "晒尔哈"
       },
       "tags": "ashsharh,assarh,ashsarh,assharh,ashsharah,assarah,ashsarah,assharah,ashshrh,ashsrh,asshrh,assrh"
     }, {
@@ -3499,7 +3687,8 @@
         "it": "Il Fico",
         "ru": "Смоковница",
         "tr": "İncir",
-        "ur": "انجیر"
+        "ur": "انجیر",
+        "zh": "无花果"
       },
       "name": {
         "ar": "التين",
@@ -3512,7 +3701,8 @@
         "in": "At-Tin",
         "ml": "സൂറത്തുത്തീൻ",
         "tr": "Tîn",
-        "ur": "التين"
+        "ur": "التين",
+        "zh": "梯尼"
       },
       "tags": "attin,atteen,atin,ateen"
     }, {
@@ -3536,7 +3726,8 @@
         "it": "L'Aderenza",
         "ru": "Сгусток крови",
         "tr": "Pıhtılaşmış Kan",
-        "ur": "جما ہوا خون"
+        "ur": "جما ہوا خون",
+        "zh": "血块"
       },
       "name": {
         "ar": "العلق",
@@ -3549,7 +3740,8 @@
         "in": "Al-`Alaq",
         "ml": "സൂറത്തുൽ അലഖ്",
         "tr": "Alak",
-        "ur": "العلق"
+        "ur": "العلق",
+        "zh": "阿赖格"
       },
       "tags": "alalaq,alalak,allaq,allak,alalq,alalk"
     }, {
@@ -3573,7 +3765,8 @@
         "it": "Il Destino",
         "ru": "Предопределение",
         "tr": "Kadir Gecesi",
-        "ur": "شب قدر"
+        "ur": "شب قدر",
+        "zh": "高贵"
       },
       "name": {
         "ar": "القدر",
@@ -3586,7 +3779,8 @@
         "in": "Al-Qadr",
         "ml": "സൂറത്തുൽ ഖദ്ർ",
         "tr": "Kadir",
-        "ur": "القدر"
+        "ur": "القدر",
+        "zh": "盖德尔"
       },
       "tags": "alqadr,alqadar,alqdar,alkadr,alkadar,alkdar"
     }, {
@@ -3610,7 +3804,8 @@
         "it": "La prova",
         "ru": "Ясное знамение",
         "tr": "Apaçık Delil",
-        "ur": "ثبوت"
+        "ur": "ثبوت",
+        "zh": "明证"
       },
       "name": {
         "ar": "البينة",
@@ -3623,7 +3818,8 @@
         "in": "Al-Bayyinah",
         "ml": "സൂറത്തുൽ ബയ്യിനഃ",
         "tr": "Beyyine",
-        "ur": "البينة"
+        "ur": "البينة",
+        "zh": "半以奈"
       },
       "tags": "albayyinaah,albayyinah,albayinaah,albayinah,albayyeenaah,albayyeenah,albayeenaah,albayeenah,albainaah,albaeenaah,albayynaah,albayynah,albaynah,albaynaah"
     }, {
@@ -3647,7 +3843,8 @@
         "it": "Il Terremoto",
         "ru": "Сотрясение",
         "tr": "Deprem",
-        "ur": "زلزلہ"
+        "ur": "زلزلہ",
+        "zh": "地震"
       },
       "name": {
         "ar": "الزلزلة",
@@ -3660,7 +3857,8 @@
         "in": "Az-Zalzalah",
         "ml": "സൂറത്തുസ്സൽസലഃ",
         "tr": "Zilzâl",
-        "ur": "الزلزلة"
+        "ur": "الزلزلة",
+        "zh": "齐勒萨里"
       },
       "tags": "azzalzalaa,azzlzalaa,azzlzlaa,azzalzlaa,ajjaljalaa,ajjljalaa,ajjljlaa,ajjaljlaa"
     }, {
@@ -3684,7 +3882,8 @@
         "it": "Le Scalpitanti",
         "ru": "Скачущие",
         "tr": "Hızlı Koşan Atlar",
-        "ur": "دوڑنے والے گھوڑے"
+        "ur": "دوڑنے والے گھوڑے",
+        "zh": "奔驰的马队"
       },
       "name": {
         "ar": "العاديات",
@@ -3697,7 +3896,8 @@
         "in": "Al-`Adiyat",
         "ml": "സൂറത്തുൽ ആദിയാത്ത്",
         "tr": "Âdiyât",
-        "ur": "العاديات"
+        "ur": "العاديات",
+        "zh": "阿底雅特"
       },
       "tags": "alaadiyaat,aladiyaat,aladiyat,alaadiyat,alaadiaat,aladiaat,aladiat,alaadiat,alaadyaat,aladyaat,aladyat,alaadyat"
     }, {
@@ -3721,7 +3921,8 @@
         "it": "La Percotente",
         "ru": "Великое бедствие",
         "tr": "Şiddetle Çarpan",
-        "ur": "کھڑکھڑاہٹ"
+        "ur": "کھڑکھڑاہٹ",
+        "zh": "大难"
       },
       "name": {
         "ar": "القارعة",
@@ -3734,7 +3935,8 @@
         "in": "Al-Qari`ah",
         "ml": "സൂറത്തുൽ ഖാരിഅഃ",
         "tr": "Kâria",
-        "ur": "القارعة"
+        "ur": "القارعة",
+        "zh": "葛里尔"
       },
       "tags": "alqaariaah,alqariaah,alqaariah,alqariah,alkaariaah,alkariaah,alkaariah,alkariah,alqriaah,alqriah,alkriaah,alkriah"
     }, {
@@ -3758,7 +3960,8 @@
         "it": "Il Rivaleggiare",
         "ru": "Страсть к приумножению",
         "tr": "Çoklukla Övünme",
-        "ur": "کثرت"
+        "ur": "کثرت",
+        "zh": "竞争富庶"
       },
       "name": {
         "ar": "التكاثر",
@@ -3771,7 +3974,8 @@
         "in": "At-Takasur",
         "ml": "സൂറത്തുത്തകാഥുർ",
         "tr": "Tekâsür",
-        "ur": "التكاثر"
+        "ur": "التكاثر",
+        "zh": "太卡素尔"
       },
       "tags": "attakaathur,attakathur,atakathur,attaqaathur,attaqathur,ataqathur,attakaashur,attakashur,atakashur,attaqaashur,attaqashur,ataqashur,attakaasur,attakasur,atakasur,attaqaasur,attaqasur,ataqasur"
     }, {
@@ -3795,7 +3999,8 @@
         "it": "Il Tempo",
         "ru": "Предвечернее время",
         "tr": "Çağ",
-        "ur": "زمانہ"
+        "ur": "زمانہ",
+        "zh": "时光"
       },
       "name": {
         "ar": "العصر",
@@ -3808,7 +4013,8 @@
         "in": "Al-`Asr",
         "ml": "സൂറത്തുൽ അസ്ർ",
         "tr": "Asr",
-        "ur": "العصر"
+        "ur": "العصر",
+        "zh": "阿斯尔"
       },
       "tags": "alasr,alaasr,alashr,alaashr,alasar,alaasar,alashar,alaashar"
     }, {
@@ -3832,7 +4038,8 @@
         "it": "Il Diffamatore",
         "ru": "Хулитель",
         "tr": "Gıybet",
-        "ur": "عیب لگانے والا"
+        "ur": "عیب لگانے والا",
+        "zh": "诽谤者"
       },
       "name": {
         "ar": "الهمزة",
@@ -3845,7 +4052,8 @@
         "in": "Al-Humazah",
         "ml": "സൂറത്തുൽ ഹുമസഃ",
         "tr": "Hümeze",
-        "ur": "الهمزة"
+        "ur": "الهمزة",
+        "zh": "胡买宰"
       },
       "tags": "alhumazaa,alhamazaa,alhmazaa,alhumzaa,alhamzaa,alhmzaa,alhumajaa,alhamajaa,alhmajaa,alhumjaa,alhamjaa,alhmjaa"
     }, {
@@ -3869,7 +4077,8 @@
         "it": "L'Elefante",
         "ru": "Слон",
         "tr": "Fil",
-        "ur": "ہاتھی"
+        "ur": "ہاتھی",
+        "zh": "象"
       },
       "name": {
         "ar": "الفيل",
@@ -3882,7 +4091,8 @@
         "in": "Al-Fil",
         "ml": "സൂറത്തുൽ ഫീൽ",
         "tr": "Fîl",
-        "ur": "الفيل"
+        "ur": "الفيل",
+        "zh": "斐里"
       },
       "tags": "alfill,alfeell,alfell,alphill,alpheell,alphell"
     }, {
@@ -3906,7 +4116,8 @@
         "it": "I Coreisciti",
         "ru": "Курейшиты",
         "tr": "Kureyş Kabilesi",
-        "ur": "قریش"
+        "ur": "قریش",
+        "zh": "古来氏"
       },
       "name": {
         "ar": "قريش",
@@ -3919,7 +4130,8 @@
         "in": "Quraisy",
         "ml": "സൂറത്ത് ഖുറൈശ്",
         "tr": "Kureyş",
-        "ur": "قريش"
+        "ur": "قريش",
+        "zh": "古来氏"
       },
       "tags": "quraysh,kuraysh,quraeesh,kuraeesh,qaraeesh,karaeesh,kuraish,qaraysh,karaysh,karaish,qrsh,krsh"
     }, {
@@ -3943,7 +4155,8 @@
         "it": "L'Utensile",
         "ru": "Мелочь",
         "tr": "Yardım ve Zekat",
-        "ur": "تھوڑی سی چیز"
+        "ur": "تھوڑی سی چیز",
+        "zh": "什物"
       },
       "name": {
         "ar": "الماعون",
@@ -3956,7 +4169,8 @@
         "in": "Al-Ma’un",
         "ml": "സൂറത്തുൽ മാഊൻ",
         "tr": "Maûn",
-        "ur": "الماعون"
+        "ur": "الماعون",
+        "zh": "马欧尼"
       },
       "tags": "almaaun,almaaoon,almaun,almaoon,almaaon,almaon,almaun,almoon,almun"
     }, {
@@ -3980,7 +4194,8 @@
         "it": "L'Abbondanza",
         "ru": "Изобилие",
         "tr": "Kevser Havuzu",
-        "ur": "جنت کی نہر"
+        "ur": "جنت کی نہر",
+        "zh": "多福"
       },
       "name": {
         "ar": "الكوثر",
@@ -3993,7 +4208,8 @@
         "in": "Al-Kausar",
         "ml": "സൂറത്തുൽ കൗഥർ",
         "tr": "Kevser",
-        "ur": "الكوثر"
+        "ur": "الكوثر",
+        "zh": "考赛尔"
       },
       "tags": "alkawthar,alkauthar,alkaothar,alkowthar,alkoathar,alkoauthar,alkauothar,alkawshar,alkaushar,alkaoshar,alkowshar,alkoashar,alkoaushar,alkauoshar,alkawsar,alkausar,alkaosar,alkowsar,alkoasar,alkoausar,alkauosar,alkothar,alkoshar,alkosar"
     }, {
@@ -4017,7 +4233,8 @@
         "it": "Miscredenti",
         "ru": "Неверующие",
         "tr": "İnkarcılar",
-        "ur": "کافرین"
+        "ur": "کافرین",
+        "zh": "不信道的人们"
       },
       "name": {
         "ar": "الكافرون",
@@ -4030,7 +4247,8 @@
         "in": "Al-Kafirun",
         "ml": "സൂറത്തുൽ കാഫിറൂൻ",
         "tr": "Kâfirûn",
-        "ur": "الكافرون"
+        "ur": "الكافرون",
+        "zh": "卡斐伦"
       },
       "tags": "alkaafiroon,alkaafirun,alkafiroon,alkafirun,alqaafiroon,alqaafirun,alqafiroon,alqafirun,alkaaphiroon,alkaaphirun,alkaphiroon,alkaphirun,alqaaphiroon,alqaaphirun,alqaphiroon,alqaphirun"
     }, {
@@ -4054,7 +4272,8 @@
         "it": "L'Ausilio",
         "ru": "Помощь",
         "tr": "Yardım",
-        "ur": "نصرت"
+        "ur": "نصرت",
+        "zh": "援助"
       },
       "name": {
         "ar": "النصر",
@@ -4067,7 +4286,8 @@
         "in": "An-Nasr",
         "ml": "സൂറത്തുന്നസ്ർ",
         "tr": "Nasr",
-        "ur": "النصر"
+        "ur": "النصر",
+        "zh": "奈斯尔"
       },
       "tags": "annasr,annashr,annsr,anshr,annasar,annashar,annsar,annshar,annsher,annser,annasher,annaser"
     }, {
@@ -4091,7 +4311,8 @@
         "it": "Le Fibre di Palma",
         "ru": "Пальмовые волокна",
         "tr": "Kurusun Kahrolsun",
-        "ur": "خوب بٹی ہوئی"
+        "ur": "خوب بٹی ہوئی",
+        "zh": "火焰"
       },
       "name": {
         "ar": "المسد",
@@ -4104,7 +4325,8 @@
         "in": "Al-Lahab",
         "ml": "സൂറത്തുൽ മസദ്",
         "tr": "Tebbet",
-        "ur": "المسد"
+        "ur": "المسد",
+        "zh": "赖海卜"
       },
       "tags": "almasad,almashad,almasd,almashd,almsd,almsad,almshad"
     }, {
@@ -4128,7 +4350,8 @@
         "it": "Il Puro Monoteismo",
         "ru": "Очищение веры",
         "tr": "Samimiyet",
-        "ur": "اخلاص"
+        "ur": "اخلاص",
+        "zh": "忠诚"
       },
       "name": {
         "ar": "الإخلاص",
@@ -4141,7 +4364,8 @@
         "in": "Al-Ikhlas",
         "ml": "സൂറത്തുൽ ഇഖ്ലാസ്",
         "tr": "İhlâs",
-        "ur": "الإخلاص"
+        "ur": "الإخلاص",
+        "zh": "以赫拉斯"
       },
       "tags": "alikhlaash,alikhlash,aliklaash,aliklash,aleekhlaash,aleekhlash,aleeklaash,aleeklash,aliqlaash,aliqlash,alqlaash,alqlash,alkhalsh,alkhals,alklsh"
     }, {
@@ -4165,7 +4389,8 @@
         "it": "L'Alba Nascente",
         "ru": "Рассвет",
         "tr": "Sabah Aydınlığı",
-        "ur": "صبح"
+        "ur": "صبح",
+        "zh": "曙光"
       },
       "name": {
         "ar": "الفلق",
@@ -4178,7 +4403,8 @@
         "in": "Al-Falaq",
         "ml": "സൂറത്തുൽ ഫലഖ്",
         "tr": "Felak",
-        "ur": "الفلق"
+        "ur": "الفلق",
+        "zh": "法赖格"
       },
       "tags": "alfalaq,alfalak,alfalq,alfalk,alflq,alflk,alflaq,alflak,alphalaq,alphalak,alphalq,alphalk,alphlq,alphlk,alphlaq,alphlak"
     }, {
@@ -4202,7 +4428,8 @@
         "it": "Gli Uomini",
         "ru": "Люди",
         "tr": "İnsanlar",
-        "ur": "انسان"
+        "ur": "انسان",
+        "zh": "世人"
       },
       "name": {
         "ar": "الناس",
@@ -4215,7 +4442,8 @@
         "in": "An-Nas",
         "ml": "സൂറത്തുന്നാസ്",
         "tr": "Nâs",
-        "ur": "الناس"
+        "ur": "الناس",
+        "zh": "拿斯"
       },
       "tags": "annaash,annash,insaan,insan"
     }
