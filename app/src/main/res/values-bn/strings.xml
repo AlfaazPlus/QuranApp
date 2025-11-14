@@ -134,7 +134,7 @@
     <string name="strLabelIncludeFootnotes">পাদটীকা অন্তর্ভুক্ত করুন</string>
     <string name="strTitlePrivacyPolicy">গোপনীয়তা নীতি</string>
     <string name="strTitleChapInfoJuzNo">পারা নং</string>
-    <string name="strTitleFeaturedDuas">কুরআনে বর্ণিত দোয়াসমূহ</string>
+    <string name="strTitleFeaturedDuas">কুরআনে বর্ণিত দোয়া</string>
     <string name="strMsgChapInfoFailedLoad">সূরার তথ্য লোড করতে ব্যর্থ হয়েছে। দয়া করে পরে আবার চেষ্টা করুন।</string>
     <string name="strLabelBookmark">বুকমার্ক করুন</string>
     <string name="strLabelSelectTranslations">অনুবাদগুলো নির্বাচন করুন</string>
@@ -197,13 +197,13 @@
     <string name="strMsgEditShareTransl">এখানে শুধুমাত্র সেটিংস থেকে নির্বাচিত অনুবাদগুলি দেখানো হয়েছে।</string>
     <string name="strMsgReferenceDuas">কুরআন থেকে কিছু দোয়া সংগ্রহ করা হয়েছে।</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">সূরা নং %1$d │ আয়াত %2$d–%3$d</string>
-    <string name="strTitleFeaturedQuran">ফিচারড রিডিং</string>
+    <string name="strTitleFeaturedQuran">বিশেষ পাঠ</string>
     <string name="strTitleVOTD">আজকের আয়াত</string>
-    <string name="strTitleTopics">বিষয়</string>
-    <string name="strTitleDuas">কুরআনের দোয়াসমূহ</string>
+    <string name="strTitleTopics">বিষয়সমূহ</string>
+    <string name="strTitleDuas">কুরআনে বর্ণিত দোয়া</string>
     <string name="strTitleProphets">নবীগণ</string>
-    <string name="strTitleFeaturedTopics">কুরআনের বিষয়সমূহ</string>
-    <string name="strTitleFeaturedProphets">কুরআনে বর্ণিত নবীগণ</string>
+    <string name="strTitleFeaturedTopics">কুরআনের আলোচ্য বিষয়</string>
+    <string name="strTitleFeaturedProphets">কোরআনে উল্লিখিত নবীরা</string>
     <string name="strTitleFailed">ব্যর্থ</string>
     <string name="strTitleSuccess">সফল</string>
     <string name="strTitleThresholdReached">শেষ সীমায় পৌঁছেছে</string>
@@ -344,7 +344,7 @@
     <string name="msgAddedToFavourites">পছন্দের তালিকায় যুক্ত করা হয়েছে</string>
     <string name="msgChapterRemovedFromFavourites">সূরা পছন্দের তালিকা থেকে মুছে ফেলা হয়েছে।</string>
     <string name="labelPreviousTafsir">পূর্ববর্তী তাফসীর</string>
-    <string name="titleSolutionVerses">কুরআন থেকে সমাধান</string>
+    <string name="titleSolutionVerses">কোরআন থেকে সমাধান</string>
     <string name="crashLogs">ক্র্যাশ লগসমূহ</string>
     <string name="suppressedLogs">নিরুদ্ধ লগসমূহ</string>
     <string name="logRemoved">লগ মুছে ফেলা হয়েছে</string>
@@ -435,5 +435,5 @@
     <string name="labelImportExportBookmarks">শুধু বুকমার্ক ইম্পোর্ট/এক্সপোর্ট</string>
     <string name="labelImportExportSettings">শুধু সেটিংস ইম্পর্ট/এক্সপোর্ট</string>
     <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে।</string>
-    <string name="strTitleMajorSins">কুরআনে বর্ণিত বড় গুনাহসমূহ</string>
+    <string name="strTitleMajorSins">কোরআনে উল্লেখিত বড় বড় পাপসমূহ</string>
 </resources>
