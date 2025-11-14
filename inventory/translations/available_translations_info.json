@@ -358,6 +358,17 @@
         "lastUpdated": 1707048963878,
         "downloadPath": "inventory/translations/uk/uk_mikhailo.json"
       }
+    },
+    "zh": {
+      "zh_majian": {
+        "book": "马坚译本",
+        "author": "马坚",
+        "displayName": "马坚译本",
+        "langCode": "zh",
+        "langName": "中文简体",
+        "lastUpdated": 1762959566114,
+        "downloadPath": "inventory/translations/zh/zh_majian.json"
+      }
     }
   }
 }
