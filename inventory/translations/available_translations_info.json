@@ -216,6 +216,26 @@
         "downloadPath": "inventory/translations/in/in_ministry.json"
       }
     },
+    "it": {
+      "it_rowwad": {
+        "book": "Rowwad Translation Center",
+        "author": "Rowwad Translation Center",
+        "displayName": "Rowwad Translation Center",
+        "langCode": "it",
+        "langName": "Italiano",
+        "lastUpdated": 1763890370852,
+        "downloadPath": "inventory/translations/it/it_rowwad.json"
+      },
+      "it_piccardo": {
+        "book": "Hamza Roberto Piccardo",
+        "author": "Hamza Roberto Piccardo",
+        "displayName": "Hamza Roberto Piccardo",
+        "langCode": "it",
+        "langName": "Italiano",
+        "lastUpdated": 1763890370852,
+        "downloadPath": "inventory/translations/it/it_piccardo.json"
+      }
+    },
     "ku": {
       "ku_bamoki": {
         "book": "پوختەی قورئان",
