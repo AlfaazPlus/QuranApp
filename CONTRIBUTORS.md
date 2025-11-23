@@ -9,6 +9,7 @@
 
 - Arabic (ar) - Mar
 - Bengali (bn) - [Manjur Muammar Rashidi](https://github.com/rashidi77) and [Mahmud Khan](https://github.com/MAHMUDflmrkh)
+- Chinese (zh) - [stevezxc](https://github.com/stevezxc)
 - Kurdish (ckb) - [Goran Gharib](https://facebook.com/GoRaN9O)
 - Filipino (fil) - [ameera2emo](https://github.com/ameera2emo)
 - French (fr) - Sanya Gautam and [pindadu92](https://github.com/pindadu92)
