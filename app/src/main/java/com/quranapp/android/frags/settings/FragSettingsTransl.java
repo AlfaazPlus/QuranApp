@@ -6,6 +6,14 @@
 
 package com.quranapp.android.frags.settings;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import static java.util.regex.Pattern.DOTALL;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,14 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import static com.quranapp.android.utils.univ.Codes.SETTINGS_LAUNCHER_RESULT_CODE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.DOTALL;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.adapters.transl.ADPTransls;
@@ -34,6 +34,7 @@ import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.FragSettingsTranslBinding;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
@@ -100,7 +101,6 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
 
             @Override
             public void onRightIconClick() {
-                launchFrag(FragSettingsTranslationsDownload.class, null);
             }
 
             @Override
@@ -109,12 +109,12 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
             }
         });
 
-        header.setShowSearchIcon(false);
-        header.setShowRightIcon(true);
+        header.setShowSearchIcon(true);
+        header.setSearchHint(R.string.strHintSearchTranslation);
+
+        header.setShowRightIcon(false);
         header.disableRightBtn(false);
 
-        header.setSearchHint(R.string.strHintSearchTranslation);
-        header.setRightIconRes(R.drawable.dr_icon_download, activity.getString(R.string.strTitleDownloadTranslations));
     }
 
     @Override
@@ -132,6 +132,12 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
 
         saveTranslChanges = args.getBoolean(READER_KEY_SAVE_TRANSL_CHANGES, true);
 
+        mBinding.downloadBtn.setVisibility(VISIBLE);
+        mBinding.downloadBtn.setOnTouchListener(new HoverPushOpacityEffect());
+        mBinding.downloadBtn.setOnClickListener((v) -> {
+            launchFrag(FragSettingsTranslationsDownload.class, null);
+        });
+
         initTranslations(ctx);
     }
 
@@ -139,7 +145,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         mPageAlert = new PageAlert(ctx);
         mPageAlert.setMessage(ctx.getString(R.string.strMsgTranslNoDownloads), null);
         mPageAlert.setActionButton(R.string.strTitleDownloadTranslations,
-                () -> launchFrag(FragSettingsTranslationsDownload.class, null));
+            () -> launchFrag(FragSettingsTranslationsDownload.class, null));
     }
 
     private void initTranslations(Context ctx) {
@@ -242,7 +248,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
     @Override
     public boolean onSelectionChanged(Context ctx, TranslModel translModel, boolean isSelected) {
         boolean succeed = TranslUtils.resolveSelectionChange(ctx, mTranslSlugs, translModel, isSelected,
-                saveTranslChanges);
+            saveTranslChanges);
         if (succeed) {
             // Update the args so that it can reflect when this fragment is recreated.
             Bundle args = getArgs();
@@ -270,8 +276,8 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         }
 
         getParentFragmentManager().setFragmentResult(
-                String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
-                getFinishingResult(getContext())
+            String.valueOf(SETTINGS_LAUNCHER_RESULT_CODE),
+            getFinishingResult(getContext())
         );
     }
 

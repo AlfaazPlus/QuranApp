@@ -12,6 +12,7 @@ import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -43,9 +44,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-
-import kotlin.io.FilesKt;
-import kotlin.text.Charsets;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class ActivityChapInfo extends ReaderPossessingActivity {
@@ -288,7 +286,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
         @Override
         public String call() throws Exception {
             if (chapterInfoFile.exists()) {
-                String read = FilesKt.readText(chapterInfoFile, Charsets.UTF_8);
+                String read = fileUtils.readText(chapterInfoFile);
                 if (!read.isEmpty()) {
                     return read;
                 }
@@ -325,7 +323,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
             conn.disconnect();
 
             String data = sb.toString();
-            FilesKt.writeText(chapterInfoFile, data, Charsets.UTF_8);
+            fileUtils.writeToFile(chapterInfoFile, data);
             return data;
         }
 
