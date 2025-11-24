@@ -36,9 +36,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlin.io.path.deleteIfExists
-import kotlin.io.path.outputStream
-import kotlin.io.path.readText
+import java.io.File
 
 class TranslationDownloadService : Service() {
     companion object {
@@ -85,7 +83,12 @@ class TranslationDownloadService : Service() {
                 this,
                 NotificationUtils.CHANNEL_ID_DOWNLOADS
             )
-            ServiceCompat.startForeground(this, NOTIF_ID, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            ServiceCompat.startForeground(
+                this,
+                NOTIF_ID,
+                notification,
+                FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
             finish()
             return START_NOT_STICKY
         }
@@ -114,7 +117,12 @@ class TranslationDownloadService : Service() {
     ) {
         notifManager.cancel(NOTIF_ID)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_DETACH)
-        ServiceCompat.startForeground(this, notifId, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        ServiceCompat.startForeground(
+            this,
+            notifId,
+            notification,
+            FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
     }
 
     private fun startDownload(
@@ -124,9 +132,10 @@ class TranslationDownloadService : Service() {
     ) {
         CoroutineScope(Dispatchers.Main + jobs[bookInfo.slug]!!).launch {
             val notifId = bookInfo.slug.hashCode()
-            val tmpFile = kotlin.io.path.createTempFile(
-                prefix = bookInfo.slug,
-                suffix = ".json"
+            val tmpFile = File.createTempFile(
+                bookInfo.slug,
+                ".json",
+                cacheDir
             )
 
             flow {
@@ -196,14 +205,24 @@ class TranslationDownloadService : Service() {
                     }
 
                     is TranslationDownloadFlow.Complete -> {
-                        tmpFile.deleteIfExists()
-                        sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED, bookInfo)
+                        if (tmpFile.exists()) {
+                            tmpFile.delete()
+                        }
+                        sendStatusBroadcast(
+                            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED,
+                            bookInfo
+                        )
                         finish()
                     }
 
                     is TranslationDownloadFlow.Failed -> {
-                        tmpFile.deleteIfExists()
-                        sendStatusBroadcast(TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED, bookInfo)
+                        if (tmpFile.exists()) {
+                            tmpFile.delete()
+                        }
+                        sendStatusBroadcast(
+                            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED,
+                            bookInfo
+                        )
                         removeDownload(bookInfo.slug)
                         notifManager.cancel(notifId)
                         finish()

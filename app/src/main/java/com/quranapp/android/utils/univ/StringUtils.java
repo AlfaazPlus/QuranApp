@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -139,7 +138,7 @@ public abstract class StringUtils {
     public static String readInputStream(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         String str;
         while ((str = br.readLine()) != null) {
             sb.append(str);

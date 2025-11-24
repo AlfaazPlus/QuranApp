@@ -1,5 +1,34 @@
 package com.quranapp.android.activities;
 
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.IS_VOTD;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
+import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
+import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER;
+import static com.quranapp.android.utils.quran.QuranUtils.doesVerseRangeEqualWhole;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_PENDING_SCROLL;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_READER_STYLE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
+
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,35 +53,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static com.quranapp.android.components.quran.QuranMeta.canShowBismillah;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.BISMILLAH;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.CHAPTER_TITLE;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.IS_VOTD;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.NO_TRANSL_SELECTED;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.READER_PAGE;
-import static com.quranapp.android.reader_managers.ReaderParams.RecyclerItemViewType.VERSE;
-import static com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER;
-import static com.quranapp.android.utils.quran.QuranUtils.doesVerseRangeEqualWhole;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_PENDING_SCROLL;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_READER_STYLE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPQuranPages;
@@ -1230,14 +1230,24 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
     @Override
     public void onAutoScrollStarted() {
-        mBinding.autoScrollStopper.setVisibility(View.VISIBLE);
-        mPlayer.conceal();
+        if (mBinding != null) {
+            mBinding.autoScrollStopper.setVisibility(View.VISIBLE);
+        }
+
+        if (mPlayer != null) {
+            mPlayer.conceal();
+        }
     }
 
     @Override
     public void onAutoScrollStopped() {
-        mBinding.autoScrollStopper.setVisibility(View.GONE);
-        mPlayer.reveal();
+        if (mBinding != null) {
+            mBinding.autoScrollStopper.setVisibility(View.GONE);
+        }
+
+        if (mPlayer != null) {
+            mPlayer.reveal();
+        }
     }
 
     @Override

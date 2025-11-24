@@ -1,5 +1,10 @@
 package com.quranapp.android.utils.univ;
 
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_AVAILABLE_DOWNLOADS_FILE_NAME;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATIONS_FILENAME;
+import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATION_TRANSLATIONS_FILENAME;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +13,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
-import static com.quranapp.android.utils.reader.TranslUtils.TRANSL_AVAILABLE_DOWNLOADS_FILE_NAME;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATIONS_FILENAME;
-import static com.quranapp.android.utils.reader.recitation.RecitationUtils.AVAILABLE_RECITATION_TRANSLATIONS_FILENAME;
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils;
@@ -189,6 +191,32 @@ public final class FileUtils {
         osw.close();
     }
 
+    public String readText(@NonNull File file) throws IOException {
+        return StringUtils.readInputStream(new FileInputStream(file));
+    }
+
+    public void deleteRecursively(@NonNull String path) throws IOException {
+        File file = new File(path);
+        if (!file.exists()) return;
+
+        deleteRecursively(file);
+    }
+
+    public void deleteRecursively(@NonNull File file) throws IOException {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    deleteRecursively(child);
+                }
+            }
+        }
+
+        if (!file.delete()) {
+            throw new IOException("Failed to delete: " + file.getAbsolutePath());
+        }
+    }
+
     public Context getContext() {
         return mContext;
     }
@@ -242,7 +270,8 @@ public final class FileUtils {
 
             String[] children = sourceLoc.list();
             if (children != null) {
-                for (String child : children) cloneDirectory(new File(sourceLoc, child), new File(targetLoc, child));
+                for (String child : children)
+                    cloneDirectory(new File(sourceLoc, child), new File(targetLoc, child));
             }
         } else {
             File directory = targetLoc.getParentFile();
