@@ -21,6 +21,7 @@ retrofit = "2.9.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
 commonsCompress = "1.24.0"
+workManager = "2.8.1"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,3 +65,4 @@ kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
 
 commonsCompress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
+workManager = { module = "androidx.work:work-runtime-ktx", version.ref = "workManager" }

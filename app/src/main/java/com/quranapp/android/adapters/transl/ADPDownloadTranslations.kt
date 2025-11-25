@@ -21,8 +21,11 @@ class ADPDownloadTranslations(
 ) : RecyclerView.Adapter<ADPDownloadTranslations.VHDownloadTransl>() {
 
     init {
-
         setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return models[position].bookInfo.slug.hashCode().toLong()
     }
 
     override fun getItemCount(): Int {

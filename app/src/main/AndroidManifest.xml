@@ -189,17 +189,19 @@
         </receiver>
 
         <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service
             android:name=".utils.services.RecitationService"
             android:foregroundServiceType="mediaPlayback" />
         <service
             android:name=".utils.services.RecitationChapterDownloadService"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".utils.services.TranslationDownloadService"
-            android:foregroundServiceType="dataSync" />
-        <service
             android:name=".utils.services.KFQPCScriptFontsDownloadService"
             android:foregroundServiceType="dataSync" />
+
     </application>
 
 </manifest>

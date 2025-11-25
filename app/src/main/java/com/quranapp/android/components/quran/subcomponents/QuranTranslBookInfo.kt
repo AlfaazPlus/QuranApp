@@ -14,6 +14,7 @@ import java.io.Serializable
  * e.g., information about Sahih International
  * */
 
+@kotlinx.serialization.Serializable
 class QuranTranslBookInfo(val slug: String) : Serializable {
     companion object {
         const val DISPLAY_NAME_DEFAULT_WITHOUT_HYPHEN = false
