@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">愿平安归于他</string>
+
+    <string name="prophetAdam">阿丹</string>
+    <string name="prophetAlyasaa">艾勒·叶赛</string>
+    <string name="prophetAyyub">安优卜</string>
+    <string name="prophetDawud">达五德</string>
+    <string name="prophetDhulkifl">助勒基福勒</string>
+    <string name="prophetHarun">哈伦</string>
+    <string name="prophetHud">呼德</string>
+    <string name="prophetIbrahim">易卜拉欣</string>
+    <string name="prophetIdrees">易德立斯</string>
+    <string name="prophetIliyas">易勒雅斯</string>
+    <string name="prophetIsa">尔撒·伊本·麦尔彦</string>
+    <string name="prophetIshaq">易斯哈格</string>
+    <string name="prophetIsmail">易斯马仪</string>
+    <string name="prophetLut">鲁特</string>
+    <string name="prophetMuhammad">穆罕默德</string>
+    <string name="prophetMusa">穆萨</string>
+    <string name="prophetNuh">努哈</string>
+    <string name="prophetSaleh">撒立哈</string>
+    <string name="prophetShuaib">舒阿卜</string>
+    <string name="prophetSulayman">素莱曼</string>
+    <string name="prophetYahya">叶哈雅</string>
+    <string name="prophetYaqub">叶尔孤白</string>
+    <string name="prophetYunus">优努斯</string>
+    <string name="prophetYusuf">优素福</string>
+    <string name="prophetZakariyya">宰凯里雅</string>
+</resources>
