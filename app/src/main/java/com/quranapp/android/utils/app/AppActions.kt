@@ -13,8 +13,8 @@ import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
+import com.quranapp.android.utils.maangers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.services.TranslationDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.sharedPrefs.SPLog
@@ -37,7 +37,7 @@ object AppActions {
 
             // The slug could be empty. Check factory.getTranslationBookInfo(slug) for more info.
             if (bookInfo.slug.isNotEmpty()) {
-                TranslationDownloadService.startDownloadService(ctx, bookInfo)
+                TranslationDownloadManager.startDownload(ctx, bookInfo)
             }
         }
         factory.close()
@@ -64,7 +64,8 @@ object AppActions {
                 val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
                 val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
                 val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
-                val localRecitationTranslationsVersion = SPAppConfigs.getRecitationTranslationsVersion(ctx)
+                val localRecitationTranslationsVersion =
+                    SPAppConfigs.getRecitationTranslationsVersion(ctx)
                 val localTafsirsVersion = SPAppConfigs.getTafsirsVersion(ctx)
 
                 if (urlsVersion > localUrlsVersion) {

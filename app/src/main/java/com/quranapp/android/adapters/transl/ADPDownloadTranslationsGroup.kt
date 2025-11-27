@@ -10,10 +10,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.R
+import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.databinding.LytDownloadTranslationGroupItemBinding
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
-import com.quranapp.android.utils.extensions.*
+import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.extensions.color
+import com.quranapp.android.utils.extensions.drawable
+import com.quranapp.android.utils.extensions.isRTL
+import com.quranapp.android.utils.extensions.layoutInflater
+import com.quranapp.android.utils.extensions.rotate
 
 
 class ADPDownloadTranslationsGroup(
@@ -58,7 +64,7 @@ class ADPDownloadTranslationsGroup(
     }
 
 
-    fun remove(slug: String) {
+    fun onDownloadComplete(slug: String) {
         var removedModelPos = -1
         var removedModelGroupPos = -1
 
@@ -72,10 +78,24 @@ class ADPDownloadTranslationsGroup(
             }
         }
 
+        Logger.d("To remove: groupPos=$removedModelGroupPos, modelPos=$removedModelPos")
+
         if (removedModelGroupPos != -1 && removedModelPos != -1) {
             models[removedModelGroupPos].translations.removeAt(removedModelPos)
             notifyItemChanged(removedModelGroupPos)
         }
+    }
+
+    fun getModel(slug: String): TranslModel? {
+        for (group in models) {
+            for (model in group.translations) {
+                if (slug == model.bookInfo.slug) {
+                    return model
+                }
+            }
+        }
+
+        return null
     }
 
     inner class VHDownloadTranslationGroup(private val binding: LytDownloadTranslationGroupItemBinding) :
@@ -88,7 +108,10 @@ class ADPDownloadTranslationsGroup(
         @SuppressLint("RtlHardcoded")
         fun bind(group: TranslationGroupModel) {
             binding.title.let {
-                it.text = if (group.isExpanded) group.langName else prepareText(group.langName, group.translations.size)
+                it.text = if (group.isExpanded) group.langName else prepareText(
+                    group.langName,
+                    group.translations.size
+                )
                 it.gravity = if (itemView.context.isRTL()) Gravity.RIGHT else Gravity.LEFT
                 it.setDrawables(
                     null,
@@ -106,7 +129,8 @@ class ADPDownloadTranslationsGroup(
                 }
             }
 
-            binding.list.visibility = (if (group.isExpanded) RecyclerView.VISIBLE else RecyclerView.GONE)
+            binding.list.visibility =
+                (if (group.isExpanded) RecyclerView.VISIBLE else RecyclerView.GONE)
 
             binding.list.adapter = ADPDownloadTranslations(impl, group.translations)
         }

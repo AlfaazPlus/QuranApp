@@ -1,14 +1,12 @@
 package com.quranapp.android.frags.settings
 
-import android.app.Activity
-import android.content.*
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
@@ -21,13 +19,13 @@ import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
+import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.maangers.TranslationDownloadManager
+import com.quranapp.android.utils.maangers.TranslationDownloadStateListener
+import com.quranapp.android.utils.maangers.TranslationDownloadStatus
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.receivers.TranslDownloadReceiver
-import com.quranapp.android.utils.receivers.TranslDownloadReceiver.TranslDownloadStateListener
-import com.quranapp.android.utils.services.TranslationDownloadService
-import com.quranapp.android.utils.services.TranslationDownloadService.LocalBinder
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.MessageUtils
@@ -37,23 +35,24 @@ import com.quranapp.android.widgets.PageAlert
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.longOrNull
 import java.io.File
 import java.io.IOException
-import java.util.*
+import java.util.LinkedList
 
 class FragSettingsTranslationsDownload :
     FragSettingsBase(),
-    TranslDownloadStateListener,
-    ServiceConnection,
+    TranslationDownloadStateListener,
     TranslDownloadExplorerImpl {
 
     private lateinit var binding: FragSettingsTranslBinding
     private lateinit var fileUtils: FileUtils
     private var translFactory: QuranTranslationFactory? = null
     private var adapter: ADPDownloadTranslationsGroup? = null
-    private var translDownloadReceiver: TranslDownloadReceiver? = null
-    private var translDownloadService: TranslationDownloadService? = null
     private var newTranslations: Array<String>? = null
     private var pageAlert: PageAlert? = null
     private var isRefreshInProgress = false
@@ -66,49 +65,12 @@ class FragSettingsTranslationsDownload :
         super.onStart()
         if (activity == null) return
 
-        translDownloadReceiver = TranslDownloadReceiver().apply {
-            setDownloadStateListener(this@FragSettingsTranslationsDownload)
-           ContextCompat.registerReceiver(
-               requireActivity(),
-                this,
-                IntentFilter(TranslDownloadReceiver.ACTION_TRANSL_DOWNLOAD_STATUS).apply {
-                    addAction(TranslDownloadReceiver.ACTION_NO_MORE_DOWNLOADS)
-                },
-               ContextCompat.RECEIVER_NOT_EXPORTED
-            )
-            bindTranslService(requireActivity())
-        }
-    }
-
-    private fun bindTranslService(actvt: Activity) {
-        actvt.bindService(
-            Intent(actvt, TranslationDownloadService::class.java),
-            this,
-            Context.BIND_AUTO_CREATE
-        )
-    }
-
-    private fun unbindTranslationService(actvt: Activity) {
-        // if mTranslDownloadService is null, it means the service is already unbound
-        // or it was not bound in the first place.
-        if (translDownloadService == null) {
-            return
-        }
-        try {
-            actvt.unbindService(this)
-        } catch (ignored: Exception) {
-        }
+        TranslationDownloadManager.initialize(requireContext())
+        TranslationDownloadManager.observeDownloads(this, this)
     }
 
     override fun onStop() {
         super.onStop()
-
-        if (translDownloadReceiver != null && activity != null) {
-            translDownloadReceiver!!.removeListener()
-            requireActivity().unregisterReceiver(translDownloadReceiver)
-            unbindTranslationService(requireActivity())
-        }
-
         translFactory?.close()
     }
 
@@ -134,6 +96,7 @@ class FragSettingsTranslationsDownload :
     }
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
+
         fileUtils = FileUtils.newInstance(ctx)
         translFactory = QuranTranslationFactory(ctx)
         binding = FragSettingsTranslBinding.bind(view)
@@ -216,7 +179,7 @@ class FragSettingsTranslationsDownload :
         obj["translations"]?.jsonObject?.let { translations ->
             val translationGroups = LinkedList<TranslationGroupModel>()
 
-            val isAnyDownloadInProgress = translDownloadService?.isAnyDownloading() ?: false
+            val isAnyDownloadInProgress = TranslationDownloadManager.isAnyDownloading()
 
             for (langCode in translations.keys) {
                 val translationsForLanguageCode = translations[langCode]?.jsonObject
@@ -228,7 +191,11 @@ class FragSettingsTranslationsDownload :
                 for (slug in slugs) {
                     if (isTranslationDownloaded(slug)) continue
 
-                    val model = readTranslInfo(langCode, slug, translationsForLanguageCode[slug]!!.jsonObject)
+                    val model = readTranslInfo(
+                        langCode,
+                        slug,
+                        translationsForLanguageCode[slug]!!.jsonObject
+                    )
 
                     if (newTranslations?.contains(slug) == true) {
                         model.addMiniInfo(ctx.getString(R.string.strLabelNew))
@@ -238,7 +205,7 @@ class FragSettingsTranslationsDownload :
                         model.isDownloadingDisabled = true
                     }
 
-                    model.isDownloading = isTranslationDownloading(slug)
+                    model.isDownloading = TranslationDownloadManager.isDownloading(slug)
 
                     groupModel.langName = model.bookInfo.langName
                     groupModel.isExpanded = groupModel.isExpanded || model.isDownloading
@@ -265,7 +232,11 @@ class FragSettingsTranslationsDownload :
         hideLoader()
     }
 
-    private fun readTranslInfo(langCode: String, slug: String, translObject: JsonObject): TranslModel {
+    private fun readTranslInfo(
+        langCode: String,
+        slug: String,
+        translObject: JsonObject
+    ): TranslModel {
         val bookInfo = QuranTranslBookInfo(slug)
         bookInfo.langCode = langCode
         bookInfo.bookName = translObject["book"]?.jsonPrimitive?.contentOrNull ?: ""
@@ -305,8 +276,22 @@ class FragSettingsTranslationsDownload :
         return translFactory?.isTranslationDownloaded(slug) == true
     }
 
-    private fun isTranslationDownloading(slug: String): Boolean {
-        return translDownloadService?.isDownloading(slug) ?: false
+    private fun cancelWithConfirmation(
+        ctx: Context,
+        slug: String,
+        bookName: String
+    ) {
+        PeaceDialog.newBuilder(ctx)
+            .setTitle(R.string.titleCancelDownload)
+            .setMessage("")
+            .setPositiveButton(R.string.yesCancelDownload, ColorUtils.DANGER) { _, _ ->
+                TranslationDownloadManager.stopDownload(
+                    ctx,
+                    slug
+                )
+            }
+            .setNegativeButton(R.string.noContinueDownload, null)
+            .show()
     }
 
     override fun onDownloadAttempt(
@@ -315,10 +300,17 @@ class FragSettingsTranslationsDownload :
         referencedView: View,
         model: TranslModel
     ) {
-        if (model.isDownloading) return
+        if (model.isDownloading) {
+            cancelWithConfirmation(
+                referencedView.context,
+                model.bookInfo.slug,
+                model.bookInfo.bookName
+            )
+            return
+        }
         val bookInfo = model.bookInfo
 
-        if (isTranslationDownloading(bookInfo.slug)) {
+        if (TranslationDownloadManager.isDownloading(bookInfo.slug)) {
             model.isDownloading = true
             adapter.notifyItemChanged(vhTransl.bindingAdapterPosition)
             return
@@ -327,7 +319,7 @@ class FragSettingsTranslationsDownload :
         val ctx = referencedView.context
 
         if (isTranslationDownloaded(bookInfo.slug)) {
-            onTranslDownloadStatus(bookInfo, TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED)
+            onTranslDownloadStatus(bookInfo.slug, TranslationDownloadStatus.Completed)
             return
         }
 
@@ -339,60 +331,55 @@ class FragSettingsTranslationsDownload :
             .setTitle(R.string.strTitleDownloadTranslations)
             .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
             .setPositiveButton(R.string.labelDownload) { _, _ ->
-                this.adapter?.onDownloadStatus(bookInfo.slug, true)
-
-                TranslationDownloadService.startDownloadService(ctx as ContextWrapper, bookInfo)
-                activity?.let { bindTranslService(requireActivity()) }
+                onTranslDownloadStatus(bookInfo.slug, TranslationDownloadStatus.Started)
+                TranslationDownloadManager.startDownload(ctx, bookInfo)
             }
             .setNegativeButton(R.string.strLabelCancel, null)
             .show()
     }
 
-    override fun onTranslDownloadStatus(bookInfo: QuranTranslBookInfo, status: String) {
-        adapter?.onDownloadStatus(bookInfo.slug, false)
+    override fun onTranslDownloadStatus(slug: String, status: TranslationDownloadStatus) {
+        val bookInfo = adapter?.getModel(slug)?.bookInfo ?: return
+
+        Logger.d("Download status for '${bookInfo.bookName}': $status")
 
         val ctx = binding.root.context
         var title: String? = null
         var msg: String? = null
+
         when (status) {
-            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_CANCELED -> {
-                translDownloadService?.cancelDownload(bookInfo.slug)
+            is TranslationDownloadStatus.Started -> {
+                adapter?.onDownloadStatus(bookInfo.slug, true)
             }
-            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_FAILED -> {
+
+            is TranslationDownloadStatus.Failed -> {
                 title = ctx.getString(R.string.strTitleFailed)
                 msg = (
                         ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
                                 " " + ctx.getString(R.string.strMsgTryLater)
                         )
+                adapter?.onDownloadStatus(bookInfo.slug, false)
             }
 
-            TranslDownloadReceiver.TRANSL_DOWNLOAD_STATUS_SUCCEED -> {
+            is TranslationDownloadStatus.Completed -> {
                 title = ctx.getString(R.string.strTitleSuccess)
                 msg = ctx.getString(R.string.strMsgTranslDownloaded, bookInfo.bookName)
-                adapter!!.remove(bookInfo.slug)
+                adapter?.onDownloadComplete(bookInfo.slug)
+                adapter?.onDownloadStatus(bookInfo.slug, false)
+            }
+
+            is TranslationDownloadStatus.Cancelled -> {
+                adapter?.onDownloadStatus(bookInfo.slug, false)
+            }
+
+            is TranslationDownloadStatus.InProgress -> {
+                // noop
             }
         }
 
         if (title != null && context != null) {
             MessageUtils.popMessage(ctx, title, msg, ctx.getString(R.string.strLabelClose), null)
         }
-    }
-
-    override fun onNoMoreDownloads() {
-        if (activity != null) {
-            unbindTranslationService(requireActivity())
-        }
-    }
-
-    override fun onServiceConnected(name: ComponentName, service: IBinder) {
-        translDownloadService = (service as LocalBinder).service
-        if (!isRefreshInProgress) {
-            refreshTranslations(binding.root.context, false)
-        }
-    }
-
-    override fun onServiceDisconnected(name: ComponentName) {
-        translDownloadService = null
     }
 
     private fun showLoader() {
