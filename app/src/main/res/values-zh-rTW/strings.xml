@@ -1,3 +1,431 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="strTitleAppVersion">應用版本</string>
+    <string name="strVersion" formatted="false">版本 %s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp 是一款免費開源的應用程式，用於閱讀與探索帶有譯文的《古蘭經》。該應用程式介面簡潔美觀，功能豐富，包括經注、朗誦、提醒等等。\n\n立即下載：\n%s</string>
+    <string name="strTitleLicenses">許可</string>
+    <string name="strLabelClose">關閉</string>
+    <string name="strLabelOkay">確定</string>
+    <string name="strLabelGotIt">知道了</string>
+    <string name="strLabelCancel">取消</string>
+    <string name="strLabelApply">應用</string>
+    <string name="strLabelSend">傳送</string>
+    <string name="labelAdd">新增</string>
+    <string name="strLabelRemove">移除</string>
+    <string name="strLabelDelete">刪除</string>
+    <string name="strLabelRemoveAll">全部刪除</string>
+    <string name="strLabelCopy">複製</string>
+    <string name="strLabelBack">返回</string>
+    <string name="strLabelTop">頁首</string>
+    <string name="strLabelReset">重置</string>
+    <string name="strLabelRetry">重試</string>
+    <string name="strLabelRefresh">重新整理</string>
+    <string name="strLabelDismiss">忽略</string>
+    <string name="strLabelDiscard">放棄</string>
+    <string name="strLabelHide">隱藏</string>
+    <string name="strLabelEdit">編輯</string>
+    <string name="strLabelDone">完成</string>
+    <string name="strLabelRestart">重啟</string>
+    <string name="strLabelView">檢視</string>
+    <string name="strLabelOpen">開啟</string>
+    <string name="strLabelOpenInReader">在閱讀器中開啟</string>
+    <string name="strLabelRead">閱讀 »</string>
+    <string name="strLabelViewAll">檢視全部</string>
+    <string name="strLabelChangeNRestart">更改並重啟</string>
+    <string name="strLabelAdvertisement">廣告</string>
+    <string name="strLabelSkip">跳過</string>
+    <string name="strLabelNotNow">稍後</string>
+    <string name="strLabelPrevious">後退</string>
+    <string name="strLabelNext">前進</string>
+    <string name="strLabelStart">開始</string>
+    <string name="strLabelUpdateQuranApp">更新 QuranApp</string>
+    <string name="labelDownload">下載</string>
+    <string name="strLabelDownloadNow">立即下載</string>
+    <string name="strLabelUpdate">更新</string>
+    <string name="strLabelInstall">安裝</string>
+    <string name="strLabelNew">新</string>
+    <string name="strLabelPremium">專業版</string>
+    <string name="strLabelOn">開啟</string>
+    <string name="strLabelOff">關閉</string>
+    <string name="strLabelThemeDark">暗色</string>
+    <string name="strLabelThemeLight">亮色</string>
+    <string name="strLabelSystemDefault">系統預設</string>
+    <string name="strLabelPreviousChapter">上一章</string>
+    <string name="strLabelNextChapter">下一章</string>
+    <string name="strLabelNoPreviousChapter">已是第一章</string>
+    <string name="strLabelNoNextChapter">已是最後一章</string>
+    <string name="strLabelPreviousJuz">上一卷</string>
+    <string name="strLabelNextJuz">下一卷</string>
+    <string name="strLabelNoPreviousJuz">已是第一卷</string>
+    <string name="strLabelNoNextJuz">已是最後一章</string>
+    <string name="strLabelFullChapter">閱讀完整章節</string>
+    <string name="strLabelContinueChapter">繼續章節</string>
+    <string name="strLabelPreviousVerse">上一節</string>
+    <string name="strLabelNextVerse">下一節</string>
+    <string name="labelPreviousTafsir">上一注</string>
+    <string name="labelNextTafsir">下一注</string>
+    <string name="strLabelVersesText">節</string>
+    <string name="strLabelSurah" formatted="false">%s 章</string>
+    <string name="strLabelPageNo" formatted="false">第 %d 頁</string>
+    <string name="strLabelJuzNo" formatted="false">第 %d 卷</string>
+    <string name="strLabelVerseNo" formatted="false">第 %d 節</string>
+    <string name="strLabelVerses" formatted="false">第 %1$d 至 %2$d 節</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">節：%d</string>
+    <string name="strLabelVersesWithColon" formatted="false">節：%1$d-%2$d</string>
+    <string name="strLabelVerseCountWithColon" formatted="false">節：%d</string>
+    <string name="strLabelVerseNoRange" formatted="false">%1$d-%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">節 %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">%1$s%2$d 章：第 %3$d 節</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s 章｜第 %2$d 節</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">%1$s 章：第 %2$d 節</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">第 %1$d 章｜節 %2$d 至 %3$d</string>
+    <string name="strTitleAppUser">QuranApp 使用者</string>
+    <string name="strTitleHolyQuran">古蘭經</string>
+    <string name="strTitleQuran">古蘭</string>
+    <string name="strTitleMakki">麥加</string>
+    <string name="strTitleMadani">麥地那</string>
+    <string name="strTitleFootnote">腳註</string>
+    <string name="strTitleFootnotes">腳註</string>
+    <string name="noFootnotesForThisVerse">此節無腳註。</string>
+    <string name="strTitleReaderChapters">章</string>
+    <string name="strTitleReaderJuz">卷</string>
+    <string name="strTitleReaderChapters2">章</string>
+    <string name="strTitleReaderJuz2">卷</string>
+    <string name="strTitleReaderVerses">節</string>
+    <string name="strTitleReaderJumpToVerse">跳轉到節</string>
+    <string name="strTitleVerseOptions">經文選項</string>
+    <string name="strTitleVerseRecitation">朗誦經文</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">%1$s 章：%2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">轉到第 %d 節</string>
+    <string name="strTitleReadVerseRange" formatted="false">閱讀第 %1$d 至 %2$d 節</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">閱讀第 %d 節的注</string>
+    <string name="strTitleReaderLayoutStyle">古蘭經的檢視風格</string>
+    <string name="strTitleReaderLayoutStyleTranslationsView">翻譯檢視</string>
+    <string name="strTitleReaderLayoutStylePageView">頁面檢視</string>
+    <string name="strTitleReaderTextSizeArabic">阿拉伯文字大小</string>
+    <string name="strTitleReaderTextSizeTransl">翻譯文字大小</string>
+    <string name="titleReaderTextSizeTafsir">經註文本大小</string>
+    <string name="strTitleSettings">設定</string>
+    <string name="strTitleBookmark">書籤</string>
+    <string name="strTitleSendFeedback">傳送反饋</string>
+    <string name="strTitleHelpSupport">幫助與支援</string>
+    <string name="strTitleAboutUs">關於我們</string>
+    <string name="strTitleBookmarks">書籤</string>
+    <string name="strTitleShareApp">分享應用</string>
+    <string name="strTitleAddNote">新增筆記</string>
+    <string name="strTitleNote">筆記</string>
+    <string name="strTitleRateApp">評價應用</string>
+    <string name="strTitleFilters">過濾</string>
+    <string name="strTitleMenu">選單</string>
+    <string name="strTitleTafsir">注</string>
+    <string name="strTitleSelectTafsir">選擇經注</string>
+    <string name="strTitleAboutSurah">關於本章</string>
+    <string name="strTitleTranslations">翻譯</string>
+    <string name="strTitleDownloadTranslations">下載</string>
+    <string name="strTitleRecitations">朗誦</string>
+    <string name="strTitleSelectReciter">選擇朗誦者</string>
+    <string name="titleManageAudio">管理音訊</string>
+    <string name="downloadRecitations">下載朗誦</string>
+    <string name="audioOption">音訊選項</string>
+    <string name="playbackSpeed">播放速度</string>
+    <string name="audioOnlyArabic">僅播放阿拉伯語</string>
+    <string name="audioOnlyTranslation">僅播放翻譯</string>
+    <string name="audioBothArabicTranslation">播放阿拉伯語與翻譯</string>
+    <string name="strTitleScripts">版本</string>
+    <string name="strTitleSelectScripts">選擇版本</string>
+    <string name="strTitleBookmarkDeleteThis">刪除此書籤？</string>
+    <string name="strTitleBookmarkDeleteAll">刪除所有書籤？</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">刪除 %d 個書籤？</string>
+    <string name="strTitleTranslDelete">刪除翻譯？</string>
+    <string name="strTitleResetReaderSettings">重置閱讀器設定？</string>
+    <string name="strTitleHideAd">隱藏廣告</string>
+    <string name="strTitleRecitationOptions">選項</string>
+    <string name="strTitleRepeatVerse">重複節</string>
+    <string name="strTitleAutoPlayNext">自動播放</string>
+    <string name="strTitleQuickEdit">快速編輯</string>
+    <string name="strTitleShareVerse">分享節</string>
+    <string name="strTitleReportVerse">報告節</string>
+    <string name="strTitleSelectReason">選擇原因</string>
+    <string name="strTitleExplainIssue">解釋問題</string>
+    <string name="strTitleFeaturedQuran">精選閱讀</string>
+    <string name="strTitleVOTD">每日經文</string>
+    <string name="strTitleTopics">主題</string>
+    <string name="strTitleDuas">祈禱</string>
+    <string name="strTitleProphets">先知</string>
+    <string name="strTitleFeaturedTopics">古蘭經主題</string>
+    <string name="strTitleFeaturedDuas">古蘭經中的祈禱</string>
+    <string name="titleSolutionVerses">古蘭經的解答</string>
+    <string name="titleEtiquetteVerses">古蘭經中的禮儀</string>
+    <string name="strTitleFeaturedProphets">古蘭經中的先知</string>
+    <string name="strTitleMajorSins">古蘭經中的大罪</string>
+    <string name="strTitlePrivacyPolicy">隱私政策</string>
+    <string name="strTitleFailed">失敗</string>
+    <string name="strTitleSuccess">成功</string>
+    <string name="strTitleThresholdReached">達到閾值</string>
+    <string name="strChapInfoSeeMore">檢視更多資訊 ›</string>
+    <string name="strTitleChapInfoChapterNo">章節號</string>
+    <string name="strTitleChapInfoJuzNo">卷</string>
+    <string name="strTitleChapInfoVerses">節</string>
+    <string name="strTitleChapInfoRukus">段落</string>
+    <string name="strTitleChapInfoPages">頁</string>
+    <string name="strTitleChapInfoRevOrder">啟示順序</string>
+    <string name="strTitleChapInfoRevType">啟示型別</string>
+    <string name="strMsgChapInfoFailedLoad">載入經文資訊失敗。請稍後再試。</string>
+    <string name="strTitleAppSettings">應用設定</string>
+    <string name="strTitleReaderSettings">閱讀器設定</string>
+    <string name="titleOtherSettings">其他設定</string>
+    <string name="strTitleAppLanguage">應用語言</string>
+    <string name="strTitleChangeLanguage">更改語言？</string>
+    <string name="strTitleTheme">主題</string>
+    <string name="strTitleNoInternet">無網路</string>
+    <string name="strLabelPlay">播放</string>
+    <string name="strLabelPause">暫停</string>
+    <string name="strLabelBookmark">書籤</string>
+    <string name="strLabelRemoveBookmark">刪除書籤</string>
+    <string name="strLabelBookmarked">已新增書籤</string>
+    <string name="strLabelRemoveAds">去廣告</string>
+    <string name="strLabelShare">分享</string>
+    <string name="strLabelReport">報告</string>
+    <string name="strLabelContinueReading">繼續閱讀 »</string>
+    <string name="strLabelReading">閱讀</string>
+    <string name="strLabelMostPlaces">最多提及</string>
+    <string name="strLabelOrder">順序</string>
+    <string name="strLabelSelectedCount" formatted="false">已選擇 %d</string>
+    <string name="strLabelMoreTranslations" formatted="false">更多翻譯 +%d</string>
+    <string name="strLabelAdvanceSharing">高階分享</string>
+    <string name="strLabelSelectVerse">選擇節</string>
+    <string name="strLabelCurrentVerse">當前節</string>
+    <string name="strLabelVerseRange">節句範圍</string>
+    <string name="strLabelSelectTranslations">選擇翻譯</string>
+    <string name="strLabelSelectTranslation">選擇翻譯</string>
+    <string name="strLabelWhatsappStyling">Whatsapp 風格</string>
+    <string name="strLabelIncludeArabic">包括阿拉伯語</string>
+    <string name="strLabelIncludeFootnotes">包括腳註</string>
+    <string name="strLabelIncludeTranslation">包括翻譯</string>
+    <string name="strLabelIncludeReference">包括引用</string>
+    <string name="strLabelQuickLinks">快捷連結</string>
+    <string name="strLabelLater">稍後</string>
+    <string name="strHintSearch">搜尋</string>
+    <string name="strHintSearchQuran">輸入關鍵詞，如「生命」</string>
+    <string name="strHintSearchTopic">搜尋主題</string>
+    <string name="strHintSearchTopicAlphabet" formatted="false">在「%s」中搜索主題</string>
+    <string name="strHintSearchProphet">搜尋先知</string>
+    <string name="strHintSearchChapter">搜尋章</string>
+    <string name="strHintSearchVerse">搜尋節</string>
+    <string name="strHintSearchJuz">搜尋卷</string>
+    <string name="strHintSearchTranslation">搜尋翻譯</string>
+    <string name="strHintSearchReciter">搜尋朗誦者</string>
+    <string name="strHintSearchScript">搜尋版本</string>
+    <string name="strHintSearchLanguage">搜尋語言</string>
+    <string name="strHintFromVerse">從節</string>
+    <string name="strHintToVerse">至節</string>
+    <string name="strHintFeedback">在此寫下您的反饋意見……</string>
+    <string name="strHintFeedbackEmail">郵箱</string>
+    <string name="strHintFeedbackMessage">資訊</string>
+    <string name="strHintBookmarkViewerNote">在此寫下該書籤的補充說明……</string>
+    <string name="strNotFound">未找到</string>
+    <string name="strMsgThemeDark">暗色模式可降低功耗。</string>
+    <string name="strMsgThemeDefault">根據系統設定進行調整。</string>
+    <string name="strMsgVOTDOn">每天早上接收通知。</string>
+    <string name="strMsgYouAreReadingVerses">你正在閱讀節：</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%d 為無效章節號</string>
+    <string name="strMsgInvalidVerseNo" formatted="false">%1$d 為第 %2$d 章的無效節號</string>
+    <string name="strMsgInvalidVersesRange">無效的節句範圍</string>
+    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d 為第 %3$d 章的無效節句範圍</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d 為無效的卷號</string>
+    <string name="strMsgBookmarkAdded">成功將此節新增到書籤</string>
+    <string name="strMsgBookmarkAddFailed">此節未能新增到書籤</string>
+    <string name="strMsgBookmarkAddedAlready">此節已新增到書籤</string>
+    <string name="strMsgBookmarkRemoved">成功從書籤中刪除此節</string>
+    <string name="strMsgBookmarkRemoveFailed">此節未能從書籤中刪除</string>
+    <string name="strMsgBookmarkRemovedAlready">此節未在書籤中</string>
+    <string name="strMsgBookmarkNoItems">無書籤</string>
+    <string name="strMsgBookmarkDeleteSelected">選定的書籤將被刪除。</string>
+    <string name="strMsgBookmarkDeleteAll">所有書籤都將被刪除。</string>
+    <string name="strTitleReadHistory">閱讀歷史</string>
+    <string name="strMsgReadShowupHere">您的閱讀歷史將顯示在這裡。</string>
+    <string name="strMsgReadHistoryRemoved">成功刪除閱讀歷史。</string>
+    <string name="strMsgReadHistoryRemoveFailed">閱讀歷史未能刪除。</string>
+    <string name="strMsgReadHistoryRemovedAlready">閱讀歷史已被刪除。</string>
+    <string name="strMsgReadHistoryNoItems">無閱讀歷史</string>
+    <string name="strMsgReadHistoryDeleteSelected">選定的閱讀歷史將被刪除。</string>
+    <string name="strMsgReadHistoryDeleteAll">所有閱讀歷史都將被刪除。</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s 於 %2$s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">今天於 %s</string>
+    <string name="strMsgHistoryRemove">刪除該歷史？</string>
+    <string name="strMsgHistoryRemoved" formatted="false">「%s」已從歷史中刪除</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">在 %1$s 找到的總結果數：%2$d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">在 %s 中僅找到 1 個結果</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">在 %s 中未找到結果。請檢查搜尋過濾器或使用其他翻譯。</string>
+    <string name="strMsgSearchNoResultsFound">未找到結果。請檢查搜尋過濾器或使用其他翻譯。</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">未找到結果。請檢查搜尋過濾器。</string>
+    <string name="strMsgSearchWordPart">搜尋單詞的部分</string>
+    <string name="strMsgSearchWordPartExample">例如：「人類」中的「人」</string>
+    <string name="strMsgSearchArabic">搜尋阿拉伯文</string>
+    <string name="strMsgChangeLanguage">應用將重啟以更改語言。</string>
+    <string name="strMsgResetReaderSettings">將所有設定重置為預設值。</string>
+    <string name="strMsgProphetsOrder">按時間順序顯示先知</string>
+    <string name="strMsgShareRange" formatted="false">輸入 %1$d-%2$d 之間的範圍</string>
+    <string name="strMsgEnterValidRange">請輸入有效範圍</string>
+    <string name="strMsgTranslLoadFailed">無法從伺服器載入翻譯。請稍後再試。</string>
+    <string name="strMsgTranslNoDownloads">無可下載的翻譯</string>
+    <string name="strMsgTranslNoDownloadsAvailable">無可用下載</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">下載「%s」失敗。</string>
+    <string name="strMsgTranslDownloaded" formatted="false">已下載：「%s」。</string>
+    <string name="strMsgTranslNoneSelected">未選擇翻譯。前往設定查詢翻譯。</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">同時最多可選擇 %d 個翻譯。請先取消選擇一個，再選擇另一個。這是為了避免效能損失。</string>
+    <string name="strMsgRecitationsLoadFailed">無法從伺服器載入朗誦。請稍後再試。</string>
+    <string name="strMsgRecitationsNoAvailable">無可用朗誦</string>
+    <string name="strMsgTafsirsNoAvailable">無可用經注</string>
+    <string name="strDescAddToBookmarks">新增到書籤</string>
+    <string name="strDescGoBack">返回</string>
+    <string name="strDescClose">關閉</string>
+    <string name="strDescVerseNo" formatted="false">第 %d 節。</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">%1$s 章，第 %2$d 節。</string>
+    <string name="strMsgNoInternet">請檢查您的網路連線。</string>
+    <string name="strMsgNoInternetLong">無網路連線。請確保已開啟 Wi-Fi 或蜂窩網路。</string>
+    <string name="strMsgSomethingWrong">出錯了！</string>
+    <string name="strMsgSomethingWrongFixing">出錯了！我們正在努力修復。</string>
+    <string name="strMsgVerseCredsInvalid">經文資訊無效。</string>
+    <string name="strMsgTryLater">請稍後再試。</string>
+    <string name="strMsgReportUs">請報告給我們。</string>
+    <string name="strMsgCouldNotOpenPage">無法開啟頁面。</string>
+    <string name="strLabelNavHome">主頁</string>
+    <string name="strLabelNavSearch">搜尋</string>
+    <string name="strTextPreparing">準備中……</string>
+    <string name="strTextPleaseWait">請稍候……</string>
+    <string name="strTextSending">傳送中……</string>
+    <string name="strAyatulKursi">寶座經文</string>
+    <string name="strTitleError">錯誤！</string>
+    <string name="strTitleInfo">資訊！</string>
+    <string name="strTitleOops">哎呀！</string>
+    <string name="strLabelProceed">繼續</string>
+    <string name="strTextUpdating">更新中……</string>
+    <string name="strTextInstalling">安裝中……</string>
+    <string name="strTextLoading">載入中……</string>
+    <string name="strMsgUpdateAvailable">可更新！請更新應用以獲得最新功能。</string>
+    <string name="strMsgUpdateAvailable4Dialog">可更新！\n請更新應用。</string>
+    <string name="strMsgUpdateAvailable2Continue">需要更新！\n請更新應用以繼續。</string>
+    <string name="strMsgUpdateDownloaded">已下載更新！請安裝以完成更新。</string>
+    <string name="strLabelAllChapters">所有章節</string>
+    <string name="strLabelDownloadImage">下載圖片</string>
+    <string name="strLabelShareImage">分享圖片</string>
+    <string name="strTitleImageSavedWithName" formatted="false">圖片已儲存為：%s</string>
+    <string name="strTitleAlphaBG">透明背景</string>
+    <string name="strMsgEditShareTransl">從設定中選擇的翻譯僅顯示在此處。</string>
+    <string name="strMsgEditShareLongTransl">譯文很長，可能不合適。</string>
+    <string name="strMsgDuaFor" formatted="false">為 %s 祈禱</string>
+    <string name="strMsgDuaOf" formatted="false">%s 的祈禱</string>
+    <string name="strMsgReferenceInQuran" formatted="false">古蘭經中的 %s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">找到共 %2$d 處與 %1$s 有關的節句。</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">古蘭經中 %s 的祈禱</string>
+    <string name="strMsgReferenceDuas">古蘭經中的祈禱的摘要。</string>
+    <string name="strSalam">願主的安寧降臨於你</string>
+    <string name="strSalamShort">願你安好</string>
+    <string name="titleDownloadScriptResources">下載該版本的資源？</string>
+    <string name="msgDownloadKFQPCResources">在使用此版本前需下載以下資源：</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">版本：%s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">字型：~%dMB</string>
+    <string name="msgDownloadFailed">下載失敗</string>
+    <string name="msgDownloadingScript">版本下載中</string>
+    <string name="msgDownloadingFonts">字型下載中</string>
+    <string name="msgExtractingFonts">字型解壓中</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">字型已下載 %1$d/%2$d</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d/%2$d</string>
+    <string name="msgDownloadingResource" formatted="false">%s 下載中</string>
+    <string name="msgScriptFontsDownloaded">版本和字型下載成功。</string>
+    <string name="textDownloading">下載中……</string>
+    <string name="textDownloaded">已下載</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="labelBackgroundDownload">後臺下載</string>
+    <string name="msgAnotherDownloadInProgress">另一項下載正在進行中。</string>
+    <string name="lastCrashLog">上次崩潰日誌</string>
+    <string name="appLogs">應用日誌</string>
+    <string name="crashLogs">崩潰日誌</string>
+    <string name="suppressedLogs">刪除的日誌</string>
+    <string name="logRemoved">日誌已刪除</string>
+    <string name="createIssue">建立問題反饋</string>
+    <string name="copiedToClipboard">已複製到剪貼簿。</string>
+    <string name="pasteCrashLogGithubIssue">日誌已複製到剪貼簿。請將其貼上到 GitHub 問題中。</string>
+    <string name="github">GitHub</string>
+    <string name="msgAlarmManagerNotAvailable">此裝置無可用鬧鈴管理器。</string>
+    <string name="msgVerseReminderNotifPermission">啟用經文提醒需要通知許可權。</string>
+    <string name="msgVerseReminderAlarmPermission">啟用經文提醒需要鬧鈴許可權。</string>
+    <string name="titleStorageCleanup">儲存清理</string>
+    <string name="titleExportData">匯出與匯入</string>
+    <string name="storageCleanupMessage">刪除未使用的下載資源以釋放空間。不會刪除任何書籤或設定。\n\n可清理以下資源：</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d 個下載的翻譯可以清理。</string>
+    <string name="recitationCanBeFreedUp" formatted="false">可以清理 %1$d 個已儲存的來自 %2$d 個朗誦者的朗誦檔案。</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d 個已下載的版本及其字型可清理。</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d 個已儲存的章節資訊可清理。</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d 個已儲存的經注可清理。</string>
+    <string name="titleChapterInfo">章節資訊</string>
+    <string name="labelFreeUpSpace">釋放空間</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\n您需要重新下載。</string>
+    <string name="titleRecitationCleanup">刪除朗誦？</string>
+    <string name="msgRecitationCleanup" formatted="false">將刪除 %s 中儲存的所有朗誦。要按經文單獨刪除朗誦，請轉到音訊管理設定。</string>
+    <string name="titleScriptCleanup">刪除版本？</string>
+    <string name="msgScriptCleanup" formatted="false">%s 個版本及其儲存的所有字型將被刪除。您需要重新下載才能使用它們。</string>
+    <string name="titleChapterInfoCleanup">清除章節資訊？</string>
+    <string name="msgChapterInfoCleanup">所有已儲存的章節資訊都將被刪除。</string>
+    <string name="titleTafsirCleanup">刪除經注？</string>
+    <string name="msgTafsirCleanup" formatted="false">將刪除 %s 中儲存的所有經注。</string>
+    <string name="nFiles" formatted="false">%d 個檔案</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d 個版本與 %2$d 個字型</string>
+    <string name="nothingToCleanup">無需清理。</string>
+    <string name="nItem" formatted="false">第 %d 項</string>
+    <string name="nItems" formatted="false">共 %d 項</string>
+    <string name="noItems">無專案</string>
+    <string name="verseSyncOn">經文同步：開</string>
+    <string name="verseSyncOff">經文同步：關</string>
+    <string name="place" formatted="false">第 %d 處</string>
+    <string name="places" formatted="false">共 %d 處</string>
+    <string name="inPlaces" formatted="false">在 %s</string>
+    <string name="inPlacesMore" formatted="false">在 %1$s 及另外 %2$d 處</string>
+    <string name="onboardDescLanguage">用您的語言個性化應用。您可以隨時更改。</string>
+    <string name="onboardDescTheme">您可隨時更改。</string>
+    <string name="onboardDescTranslations">您可隨時更改。您可從設定中下載更多翻譯。</string>
+    <string name="onboardDescReciter">您可隨時更改。您可於設定中找到更多朗誦者。</string>
+    <string name="labelArabic">阿拉伯文</string>
+    <string name="labelTranslation">翻譯</string>
+    <string name="titleAddToFavourites">新增到收藏</string>
+    <string name="msgAddedToFavourites">已新增到收藏</string>
+    <string name="titleRemoveFromFavourites">從收藏中刪除</string>
+    <string name="msgRemovedFromFavourites">已從收藏中刪除</string>
+    <string name="msgNoFavouriteChapters">新增一章至收藏夾，以此檢視。</string>
+    <string name="msgChapterAddedToFavourites">收藏的經文。</string>
+    <string name="msgChapterRemovedFromFavourites">從收藏中刪除的經文。</string>
+    <string name="textTranslationReciterInfo">語言：%1$s\n書目：%2$s</string>
+    <string name="textNoLogsFound">未找到日誌</string>
+    <string name="msgRecitaionFailedToDownload" formatted="false">為朗誦者「%2$s」下載「%1$s」失敗。</string>
+    <string name="msgRecitaionDownloaded" formatted="false">已為朗誦者「%2$s」下載「%1$s」。</string>
+    <string name="msgRecitaionDeleleSurah" formatted="false">將刪除朗誦者「%2$s」對「%1$s」的所有朗誦。</string>
+    <string name="msgRecitaionDeleletedSurah" formatted="false">已刪除朗誦者「%2$s」對「%1$s」的朗誦。</string>
+    <string name="msgInvalidParams">無效引數</string>
+    <string name="msgTafsirLoadFailed">載入經註失敗</string>
+    <string name="strPreviewTextTransl">奉至仁至慈的真主之名</string>
+    <string name="msgClearReadHistory">清理閱讀歷史</string>
+    <string name="msgClearSearchHistory">清理搜尋歷史</string>
+    <string name="titleResourceDownloadSource">資源下載源</string>
+    <string name="msgResourceDownloadSource">如果一個源無法正常工作，請使用此選項從另一個源下載古蘭經資料</string>
+    <string name="titleArabicTextToggle">顯示阿拉伯文經文</string>
+    <string name="msgArabicTextToggle">停用此功能後，將隱藏整個應用中的阿拉伯文經文。</string>
+    <string name="labelExport">匯出</string>
+    <string name="labelImport">匯入</string>
+    <string name="labelImportExportEverything">匯入/匯出全部</string>
+    <string name="labelImportExportBookmarks">匯入/匯出書籤</string>
+    <string name="labelImportExportSettings">匯入/匯出設定</string>
+    <string name="warnImportSettings">警告：匯入設定將覆蓋當前設定。</string>
+    <string name="msgExportImportBookmarks">匯出或匯入書籤與備註。</string>
+    <string name="msgExportEmpty">無書籤可匯出</string>
+    <string name="msgExportSuccess">匯出成功</string>
+    <string name="msgImportFailed">匯入失敗。不支援的檔案。</string>
+    <string name="msgImportSuccess">匯入成功</string>
+    <string name="desc_votd_widget">每天獲得一句經文</string>
+    <string name="autoScroll">自動滾動</string>
+    <string name="startAutoScroll">開始自動滾動</string>
+    <string name="autoScrollSpeed">設定速度</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">播放朗誦時無法自動滾動。</string>
 </resources>
