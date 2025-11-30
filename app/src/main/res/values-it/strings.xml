@@ -2,13 +2,13 @@
 <resources>
     <string name="strVersion" formatted="false">Versione %s</string>
     <string name="strTitleLicenses">Licenze</string>
-    <string name="strLabelClose">Vicino</string>
+    <string name="strLabelClose">Chiudi</string>
     <string name="strLabelGotIt">Fatto</string>
     <string name="strLabelCancel">Annulla</string>
-    <string name="strLabelApply">fare domanda</string>
+    <string name="strLabelApply">Applica</string>
     <string name="strLabelSend">Inviare</string>
-    <string name="strLabelRemove">rimuovere</string>
-    <string name="strLabelDelete">Eliminare</string>
+    <string name="strLabelRemove">Rimuovi</string>
+    <string name="strLabelDelete">Elimina</string>
     <string name="strLabelRemoveAll">Rimuovi tutto</string>
     <string name="strLabelBack">Indietro</string>
     <string name="strLabelTop">Superiore</string>
@@ -111,7 +111,7 @@
     <string name="strLabelNextChapter">Prossimo capitolo</string>
     <string name="strLabelNoNextChapter">Nessun capitolo successivo</string>
     <string name="strLabelPreviousJuz">Juz precedente</string>
-    <string name="strLabelNextJuz">Il prossimo Juz</string>
+    <string name="strLabelNextJuz">Juz Successivo</string>
     <string name="strLabelPreviousVerse">Verso precedente</string>
     <string name="strLabelJuzNo" formatted="false">Juz %d</string>
     <string name="strLabelVerseNo" formatted="false">Verso %d</string>
@@ -178,7 +178,7 @@
     <string name="strLabelMostPlaces">La maggior parte delle menzioni</string>
     <string name="strLabelOrder">Ordine</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d traduzioni in più</string>
-    <string name="strLabelAdvanceSharing">Condivisione anticipata</string>
+    <string name="strLabelAdvanceSharing">Condivisione avanzata</string>
     <string name="strLabelCurrentVerse">Versetto attuale</string>
     <string name="strLabelVerseRange">Gamma di versi</string>
     <string name="strLabelSelectTranslations">Seleziona le traduzioni</string>
@@ -267,7 +267,7 @@
     <string name="strMsgReferenceInQuran" formatted="false">%s nel Corano</string>
     <string name="strMsgEditShareLongTransl">La traduzione è molto lunga, potrebbe non adattarsi correttamente.</string>
     <string name="strMsgReferenceDuas">Raccolto alcuni duas dal Corano.</string>
-    <string name="strSalam">Ti saluto</string>
+    <string name="strSalam">Assalam Alaikum</string>
     <string name="strSalamShort">Salam</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Visualizzazione della traduzione</string>
     <string name="strHintToVerse">Al verso</string>
@@ -302,4 +302,48 @@
 \nAggiorna l\'app per continuare.</string>
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s e %2$d in più</string>
+    <string name="labelPreviousTafsir">Tafsir Precedente</string>
+    <string name="labelNextTafsir">Tafsir Successivo</string>
+    <string name="labelAdd">Aggiungi</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp è un app libera e open source per leggere ed esplorare il Nobile Corano con traduzioni. Quest\'app ha un interfaccia bella e pulita, con funzionalità come tafsir, recitazione, promemoria e molte altre.\n\nSCARICA ORA:\n%s</string>
+    <string name="labelDownload">Scarica</string>
+    <string name="noFootnotesForThisVerse">Non ci sono note per questo verso.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Leggi il tafsir del verso %d</string>
+    <string name="titleReaderTextSizeTafsir">Dimensione testo tafsir</string>
+    <string name="strTitleSelectTafsir">Seleziona Tafsir</string>
+    <string name="strTitleRecitations">Seleziona Recitatore</string>
+    <string name="downloadRecitations">Scarica Recitazioni</string>
+    <string name="audioOption">Opzioni audio</string>
+    <string name="playbackSpeed">Velocità di riproduzione</string>
+    <string name="titleSolutionVerses">Soluzioni dal Corano</string>
+    <string name="strTitleMajorSins">Peccati Maggioni nel Corano</string>
+    <string name="titleOtherSettings">Altre impostazioni</string>
+    <string name="strMsgTafsirsNoAvailable">Nessun tafsir disponibile</string>
+    <string name="strMsgDuaFor" formatted="false">Dua per %s</string>
+    <string name="msgDownloadFailed">Scaricamento fallito</string>
+    <string name="msgDownloadingFonts">Scaricamento dei font</string>
+    <string name="msgExtractingFonts">Estraendo i font</string>
+    <string name="msgFontsDonwloadProgress" formatted="false">%1$d su %2$d font scaricati</string>
+    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d su %2$d</string>
+    <string name="textDownloading">Scaricamento…</string>
+    <string name="textDownloaded">Scaricato</string>
+    <string name="textPercentage" formatted="false">%d%%</string>
+    <string name="msgAnotherDownloadInProgress">Un altro download è in corso.</string>
+    <string name="lastCrashLog">Ultimo crash log</string>
+    <string name="logRemoved">Log rimosso</string>
+    <string name="copiedToClipboard">Copiato negli appunti.</string>
+    <string name="pasteCrashLogGithubIssue">Il log è stato copiato negli appunti. Si prega di copiarlo nell\'issue di Github.</string>
+    <string name="github">GitHub</string>
+    <string name="msgVerseReminderNotifPermission">L\'autorizzazione notifiche è richiesta per abilitare il promemoria verso.</string>
+    <string name="msgVerseReminderAlarmPermission">L\'autorizzazione sveglia è richiesta per abilitare il promemoria di versi</string>
+    <string name="titleStorageCleanup">Pulizia dell\'archivio</string>
+    <string name="titleExportData">Export e Import</string>
+    <string name="storageCleanupMessage">Libera spazio rimuovendo risorse inutilizzate. Questo non rimuoverà nessun segnalibro o impostazioni.\n\nLe risorse seguenti possono essere rimosse:</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d Delle traduzioni possono essere rimosse.</string>
+    <string name="titleManageAudio">Gestione Audio</string>
+    <string name="audioOnlyArabic">Riproduci solo Arabo</string>
+    <string name="audioOnlyTranslation">Riproduci solo traduzioni</string>
+    <string name="audioBothArabicTranslation">Riproduci sia Arabo e Traduzioni</string>
+    <string name="titleEtiquetteVerses">Buon comportamento nel Corano</string>
+    <string name="strMsgDuaOf" formatted="false">Dua di %s</string>
 </resources>
