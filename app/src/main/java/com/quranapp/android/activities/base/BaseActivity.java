@@ -75,8 +75,17 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
             return context;
         }
 
-        Locale locale = new Locale(language);
+        Locale locale;
+
+        if (language.contains("-r")) {
+            String[] parts = language.split("-r");
+            locale = new Locale(parts[0], parts[1]);
+        } else {
+            locale = new Locale(language);
+        }
+
         Locale.setDefault(locale);
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             return updateResourcesLocale(context, locale);
         }

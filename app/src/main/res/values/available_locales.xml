@@ -30,6 +30,7 @@
         <item>Türkçe</item>
         <item>اردو</item>
         <item>简体中文</item>
+        <item>傳統中文</item>
     </string-array>
 
     <string-array name="availableLocalesValues">
@@ -54,6 +55,7 @@
         <item>ta</item>
         <item>tr</item>
         <item>ur</item>
-        <item>zh</item>
+        <item>zh-rCN</item>
+        <item>zh-rTW</item>
     </string-array>
 </resources>

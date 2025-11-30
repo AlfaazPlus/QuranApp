@@ -113,7 +113,7 @@ class FragSettingsLanguage : FragSettingsBase() {
     }
 
     private fun restartApp(ctx: Context, locale: String) {
-        SPAppConfigs.setLocale(ctx, Locale(locale).toLanguageTag())
+        SPAppConfigs.setLocale(ctx, locale)
         restartMainActivity(ctx)
     }
 }
