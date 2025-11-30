@@ -420,4 +420,26 @@
     <string name="msgArabicTextToggle">اس خصوصیت کو غیر فعال کرنے سے قرآن کی آیت پوری ایپ سے چھپ جائے گی۔</string>
     <string name="msgResourceDownloadSource">اگر ایک ذریعہ کام نہیں کررہا ہے تو قرآن کا ڈیٹا ڈاؤن لوڈ کرنے کے لیے سورس کو تبدیل کریں</string>
     <string name="titleResourceDownloadSource">وسیلہ ڈاؤن لوڈ کا ذریعہ</string>
+    <string name="strTitleMajorSins">قرآن میں کبیرہ گناہ</string>
+    <string name="msgExtractingFonts">فونٹس نکال رہے ہیں</string>
+    <string name="titleExportData">برآمد اور درآمد</string>
+    <string name="labelExport">برآمد کریں</string>
+    <string name="labelImport">درآمد کریں</string>
+    <string name="labelImportExportEverything">ہر چیز کو درآمد/برآمد کریں</string>
+    <string name="labelImportExportBookmarks">بُک مارکس درآمد/برآمد کریں</string>
+    <string name="labelImportExportSettings">ترتیبات درآمد/برآمد کریں</string>
+    <string name="warnImportSettings">انتباہ: ترتیبات کو درآمد کرنا آپ کی موجودہ ترتیبات کو اوور رائیڈ کر دے گا۔</string>
+    <string name="msgExportImportBookmarks">نوٹ کے ساتھ اپنے بُک مارکس کو برآمد یا درآمد کریں۔</string>
+    <string name="msgExportEmpty">برآمد کرنے کے لیے کوئی بک مارکس نہیں ہیں</string>
+    <string name="msgExportSuccess">کامیابی کے ساتھ برآمد کیا گیا</string>
+    <string name="msgImportFailed">درآمد کرنے میں ناکام۔ غیر تعاون یافتہ فائل۔</string>
+    <string name="msgImportSuccess">کامیابی کے ساتھ درآمد ہو گیا</string>
+    <string name="desc_votd_widget">ہر روز ایک نئی آیت حاصل کریں</string>
+    <string name="autoScroll">خودکار سکرول</string>
+    <string name="startAutoScroll">خودکار اسکرول شروع کریں</string>
+    <string name="autoScrollSpeed">رفتار سیٹ کریں</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">تلاوت کے چلتے وقت خودکار طور پر اسکرول نہیں ہو سکتا۔</string>
+    <string name="titleCancelDownload">ڈاؤن لوڈ منسوخ کریں؟</string>
+    <string name="yesCancelDownload">ہاں، منسوخ کریں</string>
+    <string name="noContinueDownload">نہیں، جاری رکھیں</string>
 </resources>

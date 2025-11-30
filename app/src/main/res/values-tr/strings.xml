@@ -439,4 +439,7 @@
     <string name="autoScrollSpeed">Hızı ayarla</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Kıraat oynatılırken otomatik kaydırma yapılamaz.</string>
     <string name="strTitleMajorSins">Kuran\'da Büyük Günahlar</string>
+    <string name="titleCancelDownload">İndirmeyi iptal etmek istiyor musunuz?</string>
+    <string name="yesCancelDownload">Evet, iptal et</string>
+    <string name="noContinueDownload">Hayır, devam et</string>
 </resources>
