@@ -434,8 +434,12 @@
     <string name="msgExportImportBookmarks">अपने बुकमार्क्स को नोट्स के साथ निर्यात या आयात करें।</string>
     <string name="msgImportFailed">आयात करने में विफल. असमर्थित फ़ाइल।</string>
     <string name="warnImportSettings">चेतावनी: सेटिंग्स आयात करने से आपकी वर्तमान सेटिंग्स ओवरराइड हो जाएंगी।</string>
-    <string name="labelImportExportEverything">सब कुछ</string>
-    <string name="labelImportExportSettings">केवल सेटिंग्स</string>
-    <string name="labelImportExportBookmarks">केवल बुकमार्क</string>
+    <string name="labelImportExportEverything">सब कुछ आयात/निर्यात करें</string>
+    <string name="labelImportExportSettings">सेटिंग्स आयात/निर्यात करें</string>
+    <string name="labelImportExportBookmarks">बुकमार्क आयात/निर्यात करें</string>
     <string name="msgExtractingFonts">फ़ॉन्ट निकालना</string>
+    <string name="strTitleMajorSins">कुरान में बड़े पाप</string>
+    <string name="titleCancelDownload">डाउनलोड रद्द करें?</string>
+    <string name="yesCancelDownload">हाँ, रद्द करें</string>
+    <string name="noContinueDownload">नहीं, जारी रखें</string>
 </resources>
