@@ -101,9 +101,9 @@ dependencies {
     implementation libs.androidx.media
     implementation libs.androidx.browser
 
-    implementation libs.exoplayerCore
-    implementation libs.exoplayerUI
-    implementation libs.extensionMediasession
+    implementation libs.media3ExoPlayer
+    implementation libs.media3Session
+    implementation libs.media3UI
 
     coreLibraryDesugaring libs.desugaring
     implementation libs.material

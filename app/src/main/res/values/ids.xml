@@ -5,6 +5,7 @@
     <item name="systemDefault" type="id" />
 
     <item name="recitationPlayer" type="id" />
+    <item name="recitationPlayerStandalone" type="id" />
     <item name="audioOnlyArabic" type="id" />
     <item name="audioOnlyTranslation" type="id" />
     <item name="audioBoth" type="id" />
