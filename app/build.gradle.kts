@@ -116,9 +116,9 @@ dependencies {
     implementation(libs.androidx.activityCompose)
     implementation(libs.androidx.fragmentKtx)
 
-    implementation(libs.exoplayerCore)
-    implementation(libs.exoplayerUI)
-    implementation(libs.extensionMediasession)
+    implementation(libs.media3ExoPlayer)
+    implementation(libs.media3Session)
+    implementation(libs.media3UI)
 
     coreLibraryDesugaring(libs.desugaring)
     implementation(libs.material)

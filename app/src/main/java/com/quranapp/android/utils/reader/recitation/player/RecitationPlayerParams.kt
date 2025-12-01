@@ -8,6 +8,7 @@ import androidx.core.os.ParcelCompat
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
 
@@ -84,6 +85,7 @@ class RecitationPlayerParams() : Parcelable {
 
     fun getNextVerse(quranMeta: QuranMeta, curVerse: ChapterVersePair? = null): ChapterVersePair? {
         val currentVerse = curVerse ?: this.currentVerse
+        Logger.d(quranMeta, currentVerse, firstVerseOfRange, lastVerseOfRange)
 
         val (currentChapterNo, currentVerseNo) = currentVerse
         val (lastChapterNoOfRange, lastVerseNoOfRange) = lastVerseOfRange

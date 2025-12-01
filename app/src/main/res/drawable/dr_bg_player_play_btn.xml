@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Glow effect -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="45dp"
+                android:startColor="#60D4AF37"
+                android:endColor="#00D4AF37" />
+        </shape>
+    </item>
+    <!-- Main button -->
+    <item
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#D4AF37"
+                android:endColor="#B8942D" />
+        </shape>
+    </item>
+</layer-list>

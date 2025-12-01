@@ -60,4 +60,5 @@
     <fraction name="dmnIndexMenuWidth">85%</fraction>
 
     <dimen name="dmnProgressBarSize">35dp</dimen>
+    <dimen name="dmnMiniPlayerHeight">67dp</dimen>
 </resources>
