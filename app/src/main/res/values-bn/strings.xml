@@ -436,4 +436,7 @@
     <string name="labelImportExportSettings">শুধু সেটিংস ইম্পর্ট/এক্সপোর্ট</string>
     <string name="warnImportSettings">সতর্কতাঃ ইমপোর্ট করা সেটিংস আপনার বর্তমান সেটিংস ওভাররাইড করবে।</string>
     <string name="strTitleMajorSins">কোরআনে উল্লেখিত বড় বড় পাপসমূহ</string>
+    <string name="titleCancelDownload">ডাউনলোড বাতিল করবেন?</string>
+    <string name="yesCancelDownload">হ্যাঁ, বাতিল করুন</string>
+    <string name="noContinueDownload">না, চালিয়ে যান</string>
 </resources>
