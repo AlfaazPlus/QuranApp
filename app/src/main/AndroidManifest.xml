@@ -193,8 +193,13 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".utils.services.RecitationService"
-            android:foregroundServiceType="mediaPlayback" />
+            android:name=".utils.mediaplayer.RecitationService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
         <service
             android:name=".utils.services.RecitationChapterDownloadService"
             android:foregroundServiceType="dataSync" />

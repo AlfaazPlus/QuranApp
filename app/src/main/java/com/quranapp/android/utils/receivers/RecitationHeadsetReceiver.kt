@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.services.RecitationService
+import com.quranapp.android.utils.mediaplayer.RecitationService
 
 class RecitationHeadsetReceiver(private val service: RecitationService) : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

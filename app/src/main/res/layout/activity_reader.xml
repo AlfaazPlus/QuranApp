@@ -52,4 +52,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
+
+    <!-- Standalone Recitation Player - Full height when expanded -->
+    <com.quranapp.android.views.recitation.RecitationPlayerStandalone
+        android:id="@+id/recitationPlayerStandalone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="16dp"
+        android:fitsSystemWindows="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -118,12 +118,12 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
         )
 
         binding.repeatCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            player.setRepeat(isChecked)
+            player.controller.setRepeat(isChecked)
             binding.autoplay.disableView(isChecked)
         }
 
         binding.autoplayCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            player.setContinueChapter(isChecked)
+            player.controller.setContinue(isChecked)
         }
     }
 
@@ -174,7 +174,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
                 audioOption.onCheckChangedListener = { _, checkedId ->
                     val audioOption = RecitationUtils.resolveAudioOptionFromId(checkedId)
                     SPReader.setRecitationAudioOption(context, audioOption)
-                    player.setAudioOption(audioOption)
+                    player.controller.setAudioOption(audioOption)
                     sheetDialog.dismiss()
                 }
             }.root
@@ -209,7 +209,7 @@ class RecitationPlayerMenu(private val player: RecitationPlayer) {
                     val speed = button.tag.toString().toFloat()
 
                     SPReader.setRecitationSpeed(context, speed)
-                    player.setPlaybackSpeed(speed)
+                    player.controller.setSpeed(speed)
                     sheetDialog.dismiss()
                 }
             }.root

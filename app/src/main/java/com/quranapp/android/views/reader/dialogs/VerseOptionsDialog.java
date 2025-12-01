@@ -4,6 +4,8 @@
 
 package com.quranapp.android.views.reader.dialogs;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,11 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.AppBridge;
 import com.peacedesign.android.utils.Dimen;
@@ -32,15 +34,14 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
-import com.quranapp.android.components.reader.ChapterVersePair;
 import com.quranapp.android.databinding.LytReaderVodBinding;
 import com.quranapp.android.databinding.LytReaderVodItemBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.utils.mediaplayer.RecitationController;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
 
@@ -141,12 +142,12 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
     }
 
     private void installContents(ReaderPossessingActivity actvt, LytReaderVodBinding vodBinding, VODLayout vodLayout, Verse verse) {
-        if (actvt instanceof ActivityReader) {
-            ActivityReader reader = (ActivityReader) actvt;
-            if (reader.mPlayerService != null) {
-                onVerseRecite(reader.mPlayerService);
-            }
-        }
+        RecitationController controller = RecitationController.getInstance(actvt);
+
+        int chapterNo = verse.chapterNo;
+        int verseNo = verse.verseNo;
+
+        onVerseRecite(chapterNo, verseNo, controller.isReciting(chapterNo, verseNo));
 
 
         boolean hasFootnotes = false;
@@ -160,8 +161,6 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         mHasFootnotes = hasFootnotes;
         disableButton(vodLayout.btnFootnotes, !hasFootnotes);
 
-        final int chapterNo = verse.chapterNo;
-        final int verseNo = verse.verseNo;
         onBookmarkChanged(actvt.isBookmarked(chapterNo, verseNo, verseNo));
 
         vodBinding.scrollView.scrollTo(0, 0);
@@ -172,12 +171,6 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
         String title = ctx.getString(R.string.strTitleReaderVerseInformation, chapterName, verse.verseNo);
         getParams().setHeaderTitle(title);
         updateHeaderTitle();
-    }
-
-    private void onVerseRecite(RecitationService service) {
-        final int chapterNo = service.getP().getCurrentChapterNo();
-        final int verseNo = service.getP().getCurrentVerseNo();
-        onVerseRecite(chapterNo, verseNo, service.isPlaying());
     }
 
     public void onVerseRecite(int chapterNo, int verseNo, boolean isReciting) {
@@ -248,12 +241,7 @@ public class VerseOptionsDialog extends PeaceBottomSheet implements View.OnClick
 
         int id = v.getId();
         if (id == R.id.btnPlayControl) {
-            if (actvt instanceof ActivityReader) {
-                ActivityReader reader = (ActivityReader) actvt;
-                if (reader.mPlayer != null) {
-                    reader.mPlayer.reciteControl(new ChapterVersePair(mVerse.chapterNo, mVerse.verseNo));
-                }
-            }
+            RecitationController.getInstance(actvt).play(mVerse.chapterNo, mVerse.verseNo);
         } else if (id == R.id.btnFootnotes) {
             if (mHasFootnotes) {
                 actvt.showFootnotes(mVerse);
