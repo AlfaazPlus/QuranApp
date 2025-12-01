@@ -30,15 +30,12 @@ import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES;
 
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.Window;
@@ -77,8 +74,6 @@ import com.quranapp.android.utils.autoScroll.SmoothAutoScrollHelperDelegate;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
-import com.quranapp.android.utils.reader.recitation.player.RecitationPlayerParams;
-import com.quranapp.android.utils.services.RecitationService;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner;
 import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
@@ -118,64 +113,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     public ReaderLayoutManager mLayoutManager;
     private SmoothAutoScrollHelper mAutoScrollHelper;
     private boolean mProtectFromPlayerReset;
-    public RecitationService mPlayerService;
-    private final ServiceConnection mPlayerServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            if (service instanceof RecitationService.LocalBinder) {
-                mPlayerService = ((RecitationService.LocalBinder) service).getService();
-
-                if (mPlayer != null) {
-                    mPlayer.setService(mPlayerService);
-                }
-
-                mPlayerService.setRecitationPlayer(mPlayer, ActivityReader.this);
-
-                if (!mPlayerService.isPlaying()) {
-                    Chapter currChapter = mReaderParams.currChapter;
-                    int currJuzNo = mReaderParams.currJuzNo;
-                    QuranMeta quranMeta = mQuranMetaRef.get();
-
-                    if (mReaderParams.readType == READER_READ_TYPE_JUZ && currJuzNo > 0 && quranMeta != null) {
-                        mPlayerService.onJuzChanged(currJuzNo, quranMeta);
-                    } else if (currChapter != null) {
-                        final int fromVerse;
-                        final int toVerse;
-                        Pair<Integer, Integer> verseRange = mReaderParams.verseRange;
-                        final var isSingleVerse = QuranUtils.doesRangeDenoteSingle(verseRange);
-
-                        if (isSingleVerse) {
-                            fromVerse = 1;
-                            toVerse = currChapter.getVerseCount();
-                        } else {
-                            fromVerse = verseRange.getFirst();
-                            toVerse = verseRange.getSecond();
-                        }
-
-                        var playerCurrVerseNo = mPlayerService.getP().getCurrentVerseNo();
-
-                        if (playerCurrVerseNo == -1) {
-                            // get the first verse of the range (even if it's the single verse mode)
-                            playerCurrVerseNo = verseRange.getFirst();
-                        }
-
-                        mPlayerService.onChapterChanged(
-                            currChapter.getChapterNumber(),
-                            fromVerse,
-                            toVerse,
-                            playerCurrVerseNo
-                        );
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mPlayerService.setRecitationPlayer(null, null);
-            mPlayerService = null;
-        }
-    };
     private ReadHistoryDBHelper mReadHistoryDBHelper;
 
 
@@ -192,9 +129,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     @Override
     protected void onPause() {
         saveReaderState(false);
-        if (mPlayerService != null) {
-            mPlayerService.setRecitationPlayer(null, this);
-        }
 
         if (mAutoScrollHelper != null) {
             mAutoScrollHelper.pauseAutoScroll();
@@ -204,7 +138,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
     @Override
     protected void onStart() {
-        bindPlayerService();
         super.onStart();
     }
 
@@ -216,11 +149,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
             new Handler().postDelayed(() -> mPlayer.reveal(), 500);
         }
 
-        if (mPlayerService != null) {
-            mPlayerService.setRecitationPlayer(mPlayer, this);
-        }
-
-
         if (mAutoScrollHelper != null) {
             mAutoScrollHelper.resumeAutoScroll();
         }
@@ -230,11 +158,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     protected void onDestroy() {
         saveReaderState(true);
 
-        unbindPlayerService();
         mBinding.readerHeader.destroy();
-        if (mPlayerService != null) {
-            mPlayerService.destroy();
-        }
 
         if (mReadHistoryDBHelper != null) {
             mReadHistoryDBHelper.close();
@@ -250,7 +174,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("preventRecitationPlayerReset", mPlayerService.isPlaying());
+        outState.putBoolean("preventRecitationPlayerReset", mPlayer != null && mPlayer.getController().isReciting(-1, -1));
 
         if (mLayoutManager != null) {
             outState.putParcelable("recyclerView", mLayoutManager.onSaveInstanceState());
@@ -263,23 +187,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
         if (mLayoutManager != null) {
             mLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("recyclerView"));
-        }
-    }
-
-    public void bindPlayerService() {
-        bindService(new Intent(this, RecitationService.class), mPlayerServiceConnection,
-            Context.BIND_AUTO_CREATE);
-    }
-
-    public void unbindPlayerService() {
-        if (mPlayerService == null) {
-            return;
-        }
-
-        try {
-            unbindService(mPlayerServiceConnection);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -528,16 +435,20 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
     private void initFloatingFooter() {
         if (!RecitationUtils.isRecitationSupported()) {
+            mBinding.recitationPlayerStandalone.setVisibility(View.GONE);
             return;
         }
 
-        mPlayer = new RecitationPlayer(this, mPlayerService);
-
-        if (mPlayerService != null) {
-            mPlayerService.setRecitationPlayer(mPlayer, this);
-        }
-
+        // Old player (kept for compatibility, hidden)
+        mPlayer = new RecitationPlayer(this);
+        mPlayer.setVisibility(View.GONE);
         mBinding.floatingFooter.addView(mPlayer, 0);
+        
+        // Setup standalone player with QuranMeta
+        mBinding.recitationPlayerStandalone.setQuranMeta(mQuranMetaRef.get());
+        
+        // Collapse on start
+        mBinding.recitationPlayerStandalone.collapse();
     }
 
     private void initIntent(Intent intent) {
@@ -817,10 +728,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
                 mPlayer.onJuzChanged(juzNo, false);
             } else {
                 mPlayer.reveal();
-                if (mPlayerService != null && mPlayerService.isPlaying()) {
-                    mNavigator.pendingScrollVerse = mPlayerService.getP().getCurrentVerse();
-                    mNavigator.pendingScrollVerseHighlight = false;
-                }
             }
         }
 
@@ -1141,10 +1048,6 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
             mNavigator.jumpToVerse(chapterNo, verseNo, false);
         }
 
-        if (mPlayerService == null) {
-            return;
-        }
-
         final RecyclerView.Adapter<?> adp = mBinding.readerVerses.getAdapter();
         if (adp instanceof ADPReader) {
             onVerseReciteNonPage((ADPReader) adp, chapterNo, verseNo, reciting);
@@ -1154,6 +1057,9 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     private void onVerseReciteNonPage(ADPReader adapter, int chapterNo, int verseNo, boolean reciting) {
+        // Verse sync is handled by the RecitationPlayer via MediaController
+        boolean shouldSync = reciting && mPlayer != null;
+        
         for (int i = 0, l = adapter.getItemCount(); i < l; i++) {
             final ReaderRecyclerItemModel item = adapter.getItem(i);
 
@@ -1165,17 +1071,16 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
             Verse verse = item.getVerse();
             final boolean isCurrVerse = verse.chapterNo == chapterNo && verse.verseNo == verseNo;
-            final boolean bool = reciting && isCurrVerse;
-            if (bool && mPlayerService.getP().getSyncWithVerse()) {
+            if (shouldSync && isCurrVerse) {
                 mLayoutManager.scrollToPositionWithOffset(i, 0);
             }
         }
     }
 
     private void onVerseRecitePage(ADPQuranPages adapter, int chapterNo, int verseNo, boolean reciting) {
-        if (mPlayerService == null) {
-            return;
-        }
+        // Verse sync is handled by the RecitationPlayer via MediaController
+        boolean shouldSync = reciting && mPlayer != null;
+        
         outer:
         for (int pos = 0, l = adapter.getItemCount(); pos < l; pos++) {
             QuranPageModel pageModel = adapter.getPageModel(pos);
@@ -1196,9 +1101,8 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
                 }
 
                 final boolean isCurrVerse = section.getChapterNo() == chapterNo && section.hasVerse(verseNo);
-                final boolean bool = reciting && isCurrVerse;
 
-                if (bool && mPlayerService.getP().getSyncWithVerse()) {
+                if (shouldSync && isCurrVerse) {
                     mNavigator.scrollToVerseOnPageValidate(pos, verseNo, mLayoutManager.findViewByPosition(pos),
                         section, false);
                     break outer;
@@ -1208,18 +1112,16 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     public void onVerseJump(int chapterNo, int verseNo) {
-        if (mPlayerService == null || !mReaderParams.isSingleVerse()) {
+        if (mPlayer == null || !mReaderParams.isSingleVerse()) {
             return;
         }
 
-        RecitationPlayerParams recParams = mPlayerService.getP();
-        if (recParams.getPreviouslyPlaying()) {
-            mPlayerService.reciteVerse(new ChapterVersePair(chapterNo, verseNo));
-        }
+        // Send recite command via player
+        mPlayer.getController().play(chapterNo, verseNo);
     }
 
     public void startAutoScroll() {
-        if (mPlayerService.isPlaying()) {
+        if (mPlayer != null && mPlayer.getController().isReciting(-1, -1)) {
             MessageUtils.INSTANCE.showRemovableToast(this, R.string.strMsgCannotAutoScrollWhileReciting, Toast.LENGTH_LONG);
             return;
         }
@@ -1307,35 +1209,9 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     private void tryReciterChange() {
-        if (mPlayerService == null) return;
-
-        RecitationPlayerParams params = mPlayerService.getP();
-
-        final boolean reciterChanged = !Objects.equals(
-            SPReader.getSavedRecitationSlug(this),
-            params.getCurrentReciter()
-        );
-        final boolean translationReciterChanged = !Objects.equals(
-            SPReader.getSavedRecitationTranslationSlug(this),
-            params.getCurrentTranslationReciter()
-        );
-
-        final int audioOption = SPReader.getRecitationAudioOption(this);
-        final boolean changed;
-
-        if (audioOption == RecitationUtils.AUDIO_OPTION_BOTH) {
-            changed = reciterChanged || translationReciterChanged;
-        } else if (audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION) {
-            changed = translationReciterChanged;
-        } else {
-            changed = reciterChanged;
-        }
-
-        if (changed) {
-            mPlayerService.onReciterChanged();
-            mPlayerService.onTranslationReciterChanged();
-            mPlayerService.restartVerseOnConfigChange();
-        }
+        // Reciter changes are now handled by the RecitationPlayer via MediaController
+        // The player will detect the change from SharedPreferences when it reconnects
+        // or via explicit commands from the settings
     }
 
     private void onReaderStyleChanged(boolean arTextSizeChanged, boolean translTextSizeChanged) {

@@ -6,6 +6,8 @@ import java.io.Serializable
 data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable {
     constructor(verse: Verse) : this(verse.chapterNo, verse.verseNo)
 
+    val isValid: Boolean get() = chapterNo > 0 && verseNo > 0
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ChapterVersePair) return false
@@ -21,5 +23,12 @@ data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable
         var result = chapterNo
         result = 31 * result + verseNo
         return result
+    }
+
+    companion object {
+        val NONE = ChapterVersePair(
+            chapterNo = -1,
+            verseNo = -1
+        )
     }
 }

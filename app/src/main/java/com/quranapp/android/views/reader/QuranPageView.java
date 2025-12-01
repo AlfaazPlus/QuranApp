@@ -204,7 +204,7 @@ public class QuranPageView extends FrameLayout {
                 boolean anyReciting = false;
                 for (VerseArabicHighlightSpan span : spans) {
                     if (mActivity.mPlayer != null) {
-                        anyReciting = mActivity.mPlayer.isReciting(sectionModel.getChapterNo(), span.verseNo);
+                        anyReciting = mActivity.mPlayer.getController().isReciting(sectionModel.getChapterNo(), span.verseNo);
                     }
                     span.setBackgroundColor(anyReciting ? mBGHighlightBGColor : Color.TRANSPARENT);
 

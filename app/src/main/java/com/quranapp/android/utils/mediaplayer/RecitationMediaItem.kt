@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.reader.recitation.player
+package com.quranapp.android.utils.mediaplayer
 
 data class RecitationMediaItem(
     var reciter: String?,

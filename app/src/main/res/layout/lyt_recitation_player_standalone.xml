@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:layoutDirection="ltr">
+
+    <!-- ======================= MINI PLAYER ======================= -->
+    <LinearLayout
+        android:id="@+id/miniPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dr_bg_player_mini_elegant"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <!-- Gold accent line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D4AF37" />
+
+        <!-- Mini Progress Bar -->
+        <ProgressBar
+            android:id="@+id/miniProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:max="1000"
+            android:progressDrawable="@drawable/dr_bg_player_seekbar_track"
+            tools:progress="400" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp">
+
+            <!-- Artwork with glow -->
+            <FrameLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/dr_bg_primary_cornered" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/quran_kareem"
+                    app:tint="#D4AF37" />
+            </FrameLayout>
+
+            <!-- Verse Info -->
+            <LinearLayout
+                android:id="@+id/miniVerseInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/miniTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    tools:text="Al-Fatiha • Verse 3" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/miniSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="12sp"
+                    tools:text="Mishary Rashid Alafasy" />
+            </LinearLayout>
+
+            <!-- Play/Pause -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/miniPlayControl"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/dr_bg_player_play_btn"
+                    android:padding="12dp"
+                    android:src="@drawable/dr_icon_play_verse"
+                    app:tint="#0D2923" />
+
+                <ProgressBar
+                    android:id="@+id/miniLoader"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <!-- Expand Button -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/expandBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/dr_bg_player_btn_circle"
+                android:padding="8dp"
+                android:src="@drawable/dr_icon_chevron_up"
+                app:tint="#D4AF37" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ======================= FULL PLAYER ======================= -->
+    <LinearLayout
+        android:id="@+id/fullPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dr_bg_player_full_gradient"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <!-- Top Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <!-- Collapse Button -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/collapseBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/dr_bg_player_btn_circle"
+                android:padding="12dp"
+                android:src="@drawable/dr_icon_chevron_down"
+                app:tint="#AAFFFFFF" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:letterSpacing="0.15"
+                android:text="@string/strLabelNowPlaying"
+                android:textAllCaps="true"
+                android:textColor="#80FFFFFF"
+                android:textSize="11sp" />
+
+            <!-- Menu -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/menu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/dr_bg_player_btn_circle"
+                android:padding="12dp"
+                android:src="@drawable/dr_icon_menu"
+                app:tint="#AAFFFFFF" />
+        </LinearLayout>
+
+        <!-- Artwork Area -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="40dp">
+
+                <!-- Large Artwork with Glow -->
+                <FrameLayout
+                    android:id="@+id/artworkContainer"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/dr_bg_player_artwork_glow" />
+
+                    <!-- Quran symbol -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/quran_kareem"
+                        app:tint="#D4AF37" />
+                </FrameLayout>
+
+                <!-- Chapter Name -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chapterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    tools:text="Al-Fatiha" />
+
+                <!-- Verse Info -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verseInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="14sp"
+                    tools:text="Verse 3 of 7" />
+
+                <!-- Reciter Name -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/reciterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="#D4AF37"
+                    android:textSize="13sp"
+                    tools:text="Mishary Rashid Alafasy" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Controls Container -->
+        <LinearLayout
+            android:id="@+id/controlsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:paddingHorizontal="24dp">
+
+            <!-- Progress Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="6dp"
+                    android:minHeight="6dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:progressDrawable="@drawable/dr_bg_player_seekbar_track"
+                    android:splitTrack="false"
+                    android:thumb="@drawable/dr_bg_player_seekbar_thumb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/currentTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="12sp"
+                        tools:text="01:23" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/totalTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="12sp"
+                        tools:text="04:56" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Main Controls -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Verse Sync -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/verseSync"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="10dp"
+                    android:src="@drawable/dr_icon_unlocked"
+                    app:tint="#80FFFFFF" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- Previous Verse -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/prevVerse"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="12dp"
+                    android:src="@drawable/dr_icon_player_seek_left"
+                    app:tint="#FFFFFF" />
+
+                <!-- Seek Backward -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/seekLeft"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="12dp"
+                    android:src="@drawable/dr_icon_backward_5"
+                    app:tint="#FFFFFF" />
+
+                <!-- Play/Pause Button -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/playControl"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/dr_bg_player_play_btn"
+                        android:elevation="8dp"
+                        android:padding="20dp"
+                        android:src="@drawable/dr_icon_play_verse"
+                        app:tint="#0D2923" />
+
+                    <ProgressBar
+                        android:id="@+id/loader"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <!-- Seek Forward -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/seekRight"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="12dp"
+                    android:src="@drawable/dr_icon_forward_5"
+                    app:tint="#FFFFFF" />
+
+                <!-- Next Verse -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/nextVerse"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="12dp"
+                    android:src="@drawable/dr_icon_player_seek_right"
+                    app:tint="#FFFFFF" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- Repeat -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/repeatBtn"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/dr_bg_player_btn_circle"
+                    android:padding="10dp"
+                    android:src="@drawable/dr_icon_player_repeat"
+                    app:tint="#80FFFFFF" />
+            </LinearLayout>
+
+            <!-- Secondary Controls -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Speed Button -->
+                <LinearLayout
+                    android:id="@+id/speedBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/dr_bg_player_control_glass"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/speedLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:includeFontPadding="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        tools:text="1.0x" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:text="@string/playbackSpeed"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
+
+                <!-- Autoplay Button -->
+                <LinearLayout
+                    android:id="@+id/autoplayBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/dr_bg_player_control_glass"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/autoplayIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dr_icon_shuffle"
+                        app:tint="#80FFFFFF" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/autoplayLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:text="@string/strTitleAutoPlayNext"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

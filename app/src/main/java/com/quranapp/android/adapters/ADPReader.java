@@ -169,7 +169,7 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
             }
 
             if (mActivity.mPlayer != null) {
-                verseView.onRecite(mActivity.mPlayer.isReciting(verse.chapterNo, verse.verseNo));
+                verseView.onRecite(mActivity.mPlayer.getController().isReciting(verse.chapterNo, verse.verseNo));
             }
         }
 

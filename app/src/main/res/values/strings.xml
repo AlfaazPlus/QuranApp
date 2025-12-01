@@ -133,6 +133,9 @@
     <string name="downloadRecitations">Download Recitations</string>
     <string name="audioOption">Audio option</string>
     <string name="playbackSpeed">Playback speed</string>
+    <string name="strLabelVerseOf" formatted="false">Verse %1$d of %2$d</string>
+    <string name="strLabelVerseWithNum" formatted="false">Verse %d</string>
+    <string name="strLabelNowPlaying">Now Playing</string>
     <string name="audioOnlyArabic">Play only Arabic</string>
     <string name="audioOnlyTranslation">Play only translation</string>
     <string name="audioBothArabicTranslation">Play both Arabic and translation</string>
@@ -292,6 +295,7 @@
     <string name="strMsgNoInternetLong">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.</string>
     <string name="strMsgSomethingWrong">Something went wrong!</string>
     <string name="strMsgSomethingWrongFixing">Something went wrong! We are working to fix this.</string>
+    <string name="strMsgNoVerseTiming">Playing full chapter audio without verse sync</string>
     <string name="strMsgVerseCredsInvalid">Verse credentials are not valid.</string>
     <string name="strMsgTryLater">Please try again later.</string>
     <string name="strMsgReportUs">Please report us.</string>
