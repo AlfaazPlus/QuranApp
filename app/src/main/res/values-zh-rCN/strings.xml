@@ -428,4 +428,7 @@
     <string name="strMsgCannotAutoScrollWhileReciting">播放朗诵时无法自动滚动。</string>
     <string name="strSalam">愿主的安宁降临于你</string>
     <string name="strSalamShort">愿你安好</string>
+    <string name="titleCancelDownload">取消下载？</string>
+    <string name="yesCancelDownload">确定取消</string>
+    <string name="noContinueDownload">继续下载</string>
 </resources>
