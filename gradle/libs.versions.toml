@@ -22,6 +22,7 @@ kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
 commonsCompress = "1.24.0"
 workManager = "2.8.1"
+composeBom = "2024.09.02"
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,3 +67,12 @@ kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin
 
 commonsCompress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
 workManager = { module = "androidx.work:work-runtime-ktx", version.ref = "workManager" }
+
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

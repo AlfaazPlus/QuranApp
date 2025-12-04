@@ -31,6 +31,7 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        compose true
     }
 
     buildTypes {
@@ -78,6 +79,9 @@ android {
             jvmTarget = '17'
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.2'
+    }
     namespace 'com.quranapp.android'
 }
 
@@ -86,9 +90,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
-
     implementation project(path: ':peacedesign')
+
+    def composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.foundation.layout)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.runtime.livedata)
+    implementation(libs.compose.ui.tooling)
 
     implementation libs.androidx.coreKtx
     implementation libs.lifecycle.runtime
