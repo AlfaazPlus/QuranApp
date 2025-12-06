@@ -6,7 +6,7 @@
     <string name="strLabelGotIt">Fatto</string>
     <string name="strLabelCancel">Annulla</string>
     <string name="strLabelApply">Applica</string>
-    <string name="strLabelSend">Inviare</string>
+    <string name="strLabelSend">Invia</string>
     <string name="strLabelRemove">Rimuovi</string>
     <string name="strLabelDelete">Elimina</string>
     <string name="strLabelRemoveAll">Rimuovi tutto</string>
@@ -72,7 +72,7 @@
     <string name="strTitleChapInfoJuzNo">Juz N.</string>
     <string name="strMsgChapInfoFailedLoad">Impossibile caricare le informazioni sulla sura. Per favore riprova più tardi.</string>
     <string name="strLabelBookmark">Segnalibro</string>
-    <string name="strLabelContinueReading">Continua a leggere,,</string>
+    <string name="strLabelContinueReading">Continua a leggere</string>
     <string name="strLabelSelectedCount" formatted="false">%d selezionato</string>
     <string name="strLabelSelectVerse">Seleziona Versetti</string>
     <string name="strLabelSelectTranslation">Seleziona le traduzione</string>
@@ -89,14 +89,14 @@
     <string name="strLabelReset">Ripristina</string>
     <string name="strLabelRetry">Riprova</string>
     <string name="strLabelRefresh">Ricaricare</string>
-    <string name="strLabelHide">Nascondere</string>
-    <string name="strLabelEdit">Modificare</string>
+    <string name="strLabelHide">Nascondi</string>
+    <string name="strLabelEdit">Modifica</string>
     <string name="strLabelDone">Fatto</string>
     <string name="strLabelRestart">Ricomincia</string>
-    <string name="strLabelView">Visualizzazione</string>
-    <string name="strLabelOpenInReader">aperto nel lettore</string>
-    <string name="strLabelRead">Leggere</string>
-    <string name="strLabelViewAll">Nostra tutto</string>
+    <string name="strLabelView">Visualizza</string>
+    <string name="strLabelOpenInReader">Apri nel lettore</string>
+    <string name="strLabelRead">Leggi »</string>
+    <string name="strLabelViewAll">Mostra tutto</string>
     <string name="strLabelChangeNRestart">Cambia e Riavvia</string>
     <string name="strLabelAdvertisement">Annuncio</string>
     <string name="strLabelPrevious">precedente</string>
@@ -152,7 +152,7 @@
     <string name="strTitleDuas">Coranico Duas</string>
     <string name="strTitleProphets">Profeti</string>
     <string name="strTitleFeaturedTopics">Argomenti nel Corano</string>
-    <string name="strTitleFeaturedDuas">Duas nel Corano</string>
+    <string name="strTitleFeaturedDuas">Dua nel Corano</string>
     <string name="strTitlePrivacyPolicy">politica sulla riservatezza</string>
     <string name="strTitleSuccess">Successo</string>
     <string name="strChapInfoSeeMore">Vedi maggiori informazioni ›</string>
@@ -170,7 +170,7 @@
     <string name="strTitleNoInternet">Senza internet</string>
     <string name="strLabelPause">Pausa</string>
     <string name="strLabelRemoveBookmark">Rimuovi segnalibro</string>
-    <string name="strLabelBookmarked">Segnalibro</string>
+    <string name="strLabelBookmarked">Aggiunto ai segnalibri</string>
     <string name="strLabelRemoveAds">Rimuovere gli annunci</string>
     <string name="strLabelShare">condividere</string>
     <string name="strLabelReport">Rapporto</string>
@@ -194,8 +194,8 @@
     <string name="strHintFromVerse">Dal verso</string>
     <string name="strLabelVersesWithColon" formatted="false">Versi : %1$d–%2$d</string>
     <string name="strLabelDismiss">Congedare</string>
-    <string name="strLabelOpen">Aprire</string>
-    <string name="strLabelDiscard">Scartare</string>
+    <string name="strLabelOpen">Apri</string>
+    <string name="strLabelDiscard">Scarta</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d non è una sura n. valida.</string>
     <string name="strMsgThemeDefault">Regolare in base alle impostazioni di sistema.</string>
     <string name="strMsgVOTDOn">Ricevi una notifica ogni giorno al mattino.</string>
@@ -203,7 +203,7 @@
     <string name="strTitleReaderLayoutStylePageView">Visualizzazioni di pagina</string>
     <string name="strMsgBookmarkAddFailed">Versetto non è stato aggiunto ai segnalibri</string>
     <string name="strMsgBookmarkAdded">Versetto aggiunto con successo ai segnalibri</string>
-    <string name="strTitleReadHistory">Leggi Storia</string>
+    <string name="strTitleReadHistory">Sfoglia la cronologia</string>
     <string name="strMsgReadShowupHere">La cronologia delle tue letture verrà visualizzata qui.</string>
     <string name="strMsgReadHistoryRemoveFailed">Impossibile rimuovere la cronologia delle letture.</string>
     <string name="strMsgBookmarkAddedAlready">Il verso è già stato aggiunto ai segnalibri</string>
@@ -316,7 +316,7 @@
     <string name="audioOption">Opzioni audio</string>
     <string name="playbackSpeed">Velocità di riproduzione</string>
     <string name="titleSolutionVerses">Soluzioni dal Corano</string>
-    <string name="strTitleMajorSins">Peccati Maggioni nel Corano</string>
+    <string name="strTitleMajorSins">Peccati Maggiori nel Corano</string>
     <string name="titleOtherSettings">Altre impostazioni</string>
     <string name="strMsgTafsirsNoAvailable">Nessun tafsir disponibile</string>
     <string name="strMsgDuaFor" formatted="false">Dua per %s</string>
@@ -346,4 +346,57 @@
     <string name="audioBothArabicTranslation">Riproduci sia Arabo e Traduzioni</string>
     <string name="titleEtiquetteVerses">Buon comportamento nel Corano</string>
     <string name="strMsgDuaOf" formatted="false">Dua di %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua di %s nel Corano</string>
+    <string name="titleDownloadScriptResources">Scaricare le risorse per questo script?</string>
+    <string name="msgDownloadKFQPCResources">Le risorse seguenti hanno bisogno di essere scaricate prima di poter usare questo script:</string>
+    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: ~%dMB</string>
+    <string name="msgDownloadingScript">Scaricamento dello script</string>
+    <string name="strTitleScripts">Scripts</string>
+    <string name="msgDownloadingResource" formatted="false">Scaricamento %s</string>
+    <string name="msgScriptFontsDownloaded">Gli script e i font sono stati scaricati con successo.</string>
+    <string name="labelBackgroundDownload">Scarica nel background</string>
+    <string name="appLogs">Log dell\'App</string>
+    <string name="crashLogs">Log di crash</string>
+    <string name="suppressedLogs">Log suppressi</string>
+    <string name="createIssue">Segnala il problema</string>
+    <string name="msgAlarmManagerNotAvailable">L\'alarm manager non è disponibile su questo dispositivo.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d Degli script e i font scaricati possono essere rimossi.</string>
+    <string name="labelFreeUpSpace">Libera spazio</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nHai bisogno di scaricarlo di nuovo.</string>
+    <string name="titleRecitationCleanup">Rimuovere l\'audio della recitazione?</string>
+    <string name="titleChapterInfo">Informazioni sul capitolo</string>
+    <string name="titleTafsirCleanup">Rimuovere il tafsir?</string>
+    <string name="onboardDescTheme">Puoi sempre cambiarlo dopo.</string>
+    <string name="onboardDescTranslations">Puoi sempre cambiarlo dopo. Puoi scaricare più traduzioni dalle impostazioni.</string>
+    <string name="onboardDescReciter">Puoi sempre cambiarlo dopo. Puoi trovare più recitatori nelle impostazioni.</string>
+    <string name="labelArabic">Arabo</string>
+    <string name="labelTranslation">Traduzione</string>
+    <string name="titleAddToFavourites">Aggiungi ai preferiti</string>
+    <string name="msgAddedToFavourites">Aggiunto ai preferiti</string>
+    <string name="titleRemoveFromFavourites">Rimuovi dai preferiti</string>
+    <string name="msgRemovedFromFavourites">Rimosso dai preferiti</string>
+    <string name="msgNoFavouriteChapters">Aggiungi un capitolo ai preferiti per vederlo qui.</string>
+    <string name="msgChapterAddedToFavourites">La surah è stata aggiunta ai preferiti.</string>
+    <string name="onboardDescLanguage">Personalizza l\'app nella tua lingua. Puoi sempre cambiarla dopo.</string>
+    <string name="nothingToCleanup">Non c\'è nulla da pulire.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d dei tafsir salvati possono essere puliti.</string>
+    <string name="titleScriptCleanup">Rimuovere lo script?</string>
+    <string name="noItems">Nessun elemento</string>
+    <string name="verseSyncOn">Sincronizzazione verso: ON</string>
+    <string name="verseSyncOff">Sincronizzazione verso: OFF</string>
+    <string name="msgChapterRemovedFromFavourites">La surah è stata rimossa dai preferiti.</string>
+    <string name="textTranslationReciterInfo">Lingua: %1$s\nLibro: %2$s</string>
+    <string name="textNoLogsFound">Nessun log trovato</string>
+    <string name="strPreviewTextTransl">Nel nome di Allah, il Più Clemente, il Più Misericordioso</string>
+    <string name="msgClearReadHistory">Cancella la cronologia</string>
+    <string name="msgClearSearchHistory">Cancella la cronologia di ricerca</string>
+    <string name="msgResourceDownloadSource">Usa questa opzione per scaricare dati del Corano da un altra fonte se una non sta funzionando</string>
+    <string name="titleArabicTextToggle">Mostra il testo arabo del verso</string>
+    <string name="labelExport">Esporta</string>
+    <string name="labelImport">Importa</string>
+    <string name="labelImportExportEverything">Importa/Esporta Tutto</string>
+    <string name="labelImportExportBookmarks">Importa/Esporta I segnalibri</string>
+    <string name="labelImportExportSettings">Improta/Esporta le impostazioni</string>
+    <string name="warnImportSettings">ATTENZIONE: l\'importazione delle impostazioni sovrascriverà quelle attuali.</string>
 </resources>
