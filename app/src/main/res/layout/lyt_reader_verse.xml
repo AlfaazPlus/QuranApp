@@ -11,7 +11,7 @@
         android:id="@+id/verseHeader"
         layout="@layout/lyt_reader_verse_quick_actions" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.quranapp.android.views.reader.VerseTextView
         android:id="@+id/textArabic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:textDirection="rtl"
         android:textIsSelectable="true" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.quranapp.android.views.reader.VerseTextView
         android:id="@+id/translTextSpannable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
