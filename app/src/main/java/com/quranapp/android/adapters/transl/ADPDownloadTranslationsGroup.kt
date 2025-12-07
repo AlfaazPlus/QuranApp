@@ -78,8 +78,6 @@ class ADPDownloadTranslationsGroup(
             }
         }
 
-        Logger.d("To remove: groupPos=$removedModelGroupPos, modelPos=$removedModelPos")
-
         if (removedModelGroupPos != -1 && removedModelPos != -1) {
             models[removedModelGroupPos].translations.removeAt(removedModelPos)
             notifyItemChanged(removedModelGroupPos)

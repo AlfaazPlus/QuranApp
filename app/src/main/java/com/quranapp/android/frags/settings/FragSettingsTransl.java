@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.adapters.transl.ADPTransls;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.transls.TranslBaseModel;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
@@ -225,7 +225,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
                 continue;
             }
 
-            QuranTranslBookInfo bookInfo = ((TranslModel) model).getBookInfo();
+            TranslationBookInfoModel bookInfo = ((TranslModel) model).getBookInfo();
 
             String bookName = bookInfo.getBookName();
             String authorName = bookInfo.getAuthorName();
@@ -313,9 +313,9 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
         private List<TranslBaseModel> getTranslationsFromDatabase() {
             List<TranslBaseModel> translItems = new ArrayList<>();
 
-            Map<String, List<QuranTranslBookInfo>> languageAndInfo = new HashMap<>();
-            for (QuranTranslBookInfo bookInfo : mTranslFactory.getAvailableTranslationBooksInfo().values()) {
-                List<QuranTranslBookInfo> listOfLang = languageAndInfo.get(bookInfo.getLangCode());
+            Map<String, List<TranslationBookInfoModel>> languageAndInfo = new HashMap<>();
+            for (TranslationBookInfoModel bookInfo : mTranslFactory.getAvailableTranslationBooksInfo().values()) {
+                List<TranslationBookInfoModel> listOfLang = languageAndInfo.get(bookInfo.getLangCode());
 
                 if (listOfLang == null) {
                     listOfLang = new ArrayList<>();
@@ -329,7 +329,7 @@ public class FragSettingsTransl extends FragSettingsBase implements OnTranslSele
                 TranslTitleModel translTitleModel = new TranslTitleModel(langCode, null);
                 translItems.add(translTitleModel);
 
-                for (QuranTranslBookInfo book : listOfBooks) {
+                for (TranslationBookInfoModel book : listOfBooks) {
                     TranslModel model = new TranslModel(book);
                     model.setChecked(isSelected(book.getSlug()));
                     translTitleModel.setLangName(book.getLangName());

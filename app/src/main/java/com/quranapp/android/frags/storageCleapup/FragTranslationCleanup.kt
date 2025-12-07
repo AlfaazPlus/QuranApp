@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quranapp.android.R
 import com.quranapp.android.adapters.storageCleanup.ADPTranslationCleanup
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.storageCleanup.TranslationCleanupItemModel
 import com.quranapp.android.components.transls.TranslBaseModel
 import com.quranapp.android.components.transls.TranslTitleModel
@@ -44,7 +44,7 @@ class FragTranslationCleanup : FragStorageCleanupBase() {
             val translFactory = QuranTranslationFactory(binding.root.context)
             val translItems = ArrayList<TranslBaseModel>()
 
-            val languageAndInfo = HashMap<String, MutableList<QuranTranslBookInfo>>()
+            val languageAndInfo = HashMap<String, MutableList<TranslationBookInfoModel>>()
             for (bookInfo in translFactory.getDownloadedTranslationBooksInfo().values) {
                 var listOfLang = languageAndInfo[bookInfo.langCode]
 

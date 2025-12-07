@@ -14,7 +14,7 @@ import com.quranapp.android.adapters.transl.ADPDownloadTranslations
 import com.quranapp.android.adapters.transl.ADPDownloadTranslationsGroup
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
@@ -237,7 +237,7 @@ class FragSettingsTranslationsDownload :
         slug: String,
         translObject: JsonObject
     ): TranslModel {
-        val bookInfo = QuranTranslBookInfo(slug)
+        val bookInfo = TranslationBookInfoModel(slug)
         bookInfo.langCode = langCode
         bookInfo.bookName = translObject["book"]?.jsonPrimitive?.contentOrNull ?: ""
         bookInfo.authorName = translObject["author"]?.jsonPrimitive?.contentOrNull ?: ""

@@ -35,7 +35,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.ActivitySearch;
 import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.search.ChapterJumpModel;
 import com.quranapp.android.components.search.JuzJumpModel;
@@ -205,7 +205,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             Context context = itemView.getContext();
             final String text;
 
-            QuranTranslBookInfo translModel = model.getBookInfo();
+            TranslationBookInfoModel translModel = model.getBookInfo();
             if (model.resultCount > 0) {
                 if (model.resultCount == 1) {
                     text = context.getString(R.string.strMsgSearchOneResultFoundIn, translModel.getBookName());

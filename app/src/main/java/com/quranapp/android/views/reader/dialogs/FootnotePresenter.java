@@ -31,7 +31,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytReaderVerseFootnoteBinding;
@@ -191,7 +191,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
 
     private void setupTitle(ReaderPossessingActivity actvt, QuranMeta meta, LytReaderVerseFootnoteBinding binding, Verse verse, Footnote footnote, int number) {
         String title;
-        QuranTranslBookInfo bookInfo = null;
+        TranslationBookInfoModel bookInfo = null;
         if (footnote != null) {
             bookInfo = actvt.mTranslFactory.getTranslationBookInfo(footnote.bookSlug);
             String langCode = bookInfo.getLangCode();
@@ -228,7 +228,7 @@ public class FootnotePresenter extends PeaceBottomSheet {
         setupDesc(meta, bookInfo, verse, binding.desc, footnote);
     }
 
-    private void setupDesc(QuranMeta meta, QuranTranslBookInfo bookInfo, Verse verse, TextView descView, Footnote footnote) {
+    private void setupDesc(QuranMeta meta, TranslationBookInfoModel bookInfo, Verse verse, TextView descView, Footnote footnote) {
         String chapterName = meta.getChapterName(descView.getContext(), verse.chapterNo);
 
         String descText = chapterName + " " + verse.chapterNo + ":" + verse.verseNo;
@@ -316,14 +316,14 @@ public class FootnotePresenter extends PeaceBottomSheet {
         authorsGroup.setSelectionRequired(true);
 
         Set<String> slugs = translations.stream().map(Translation::getBookSlug).collect(Collectors.toSet());
-        Map<String, QuranTranslBookInfo> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(slugs);
+        Map<String, TranslationBookInfoModel> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(slugs);
 
         for (Translation translation : translations) {
             if (translation.getFootnotesCount() == 0) {
                 continue;
             }
 
-            QuranTranslBookInfo bookInfo = booksInfo.get(translation.getBookSlug());
+            TranslationBookInfoModel bookInfo = booksInfo.get(translation.getBookSlug());
             if (bookInfo != null) {
                 String displayName = bookInfo.getDisplayName(true);
                 Chip chip = makeAuthorChip(displayName, bookInfo.getSlug());

@@ -435,4 +435,7 @@
     <string name="titleCancelDownload">Cancel download?</string>
     <string name="yesCancelDownload">Yes, cancel</string>
     <string name="noContinueDownload">No, continue</string>
+    <string name="readingTafsirMultiVerses">
+        Reading tafsir for multiple verses:
+    </string>
 </resources>

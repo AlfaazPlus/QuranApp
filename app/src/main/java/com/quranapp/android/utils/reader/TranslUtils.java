@@ -7,7 +7,7 @@ import android.util.Pair;
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.R;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.Logger;
@@ -62,8 +62,8 @@ public class TranslUtils {
         return defTranslations;
     }
 
-    public static List<QuranTranslBookInfo> preBuiltTranslBooksInfo() {
-        List<QuranTranslBookInfo> translItems = new ArrayList<>();
+    public static List<TranslationBookInfoModel> preBuiltTranslBooksInfo() {
+        List<TranslationBookInfoModel> translItems = new ArrayList<>();
 
         String[] enTranslations = {TRANSL_SLUG_EN_SAHIH_INTERNATIONAL, TRANSL_SLUG_EN_THE_CLEAR_QURAN};
         String[] urTranslations = {TRANSL_SLUG_UR_JUNAGARHI};
@@ -79,8 +79,8 @@ public class TranslUtils {
         return translItems;
     }
 
-    private static QuranTranslBookInfo createPrebuiltTranslBookInfo(String slug, String langCode, String langName) {
-        QuranTranslBookInfo bookInfo = new QuranTranslBookInfo(slug);
+    private static TranslationBookInfoModel createPrebuiltTranslBookInfo(String slug, String langCode, String langName) {
+        TranslationBookInfoModel bookInfo = new TranslationBookInfoModel(slug);
         bookInfo.setLangCode(langCode);
         bookInfo.setLangName(getPrebuiltTranslLangName(slug));
         bookInfo.setBookName(getPrebuiltTranslBookName(slug));
@@ -211,7 +211,7 @@ public class TranslUtils {
     }
 
     @Nullable
-    public static List<Pair<QuranTranslBookInfo, File>> getTranslInfosAndFilesForMigration(FileUtils fileUtils, File translDir) throws Exception {
+    public static List<Pair<TranslationBookInfoModel, File>> getTranslInfosAndFilesForMigration(FileUtils fileUtils, File translDir) throws Exception {
         File[] dirsOfLangCodes = translDir.listFiles();
         if (dirsOfLangCodes == null || dirsOfLangCodes.length == 0) {
             Log.d("Nothing was found, deleting root translation directory: " + translDir.getName());
@@ -219,7 +219,7 @@ public class TranslUtils {
             return null;
         }
 
-        List<Pair<QuranTranslBookInfo, File>> translInfosAndFiles = new ArrayList<>();
+        List<Pair<TranslationBookInfoModel, File>> translInfosAndFiles = new ArrayList<>();
         for (File langCodeDir : dirsOfLangCodes) {
             File[] translFiles = langCodeDir.listFiles();
             if (translFiles == null || translFiles.length == 0) {
@@ -236,7 +236,7 @@ public class TranslUtils {
 
                 try {
                     File infoJSONFile = new File(singleTranslDir, TRANSL_INFO_FILE_NAME);
-                    Pair<QuranTranslBookInfo, File> pair = readTranslInfoFromJSONFile(fileUtils, infoJSONFile);
+                    Pair<TranslationBookInfoModel, File> pair = readTranslInfoFromJSONFile(fileUtils, infoJSONFile);
                     if (pair == null) {
                         Logger.print(
                             "Deleting translation directory with its manifest and data files: " + singleTranslDir.getName());
@@ -257,7 +257,7 @@ public class TranslUtils {
     }
 
     // For migrating file base translations to database.
-    private static Pair<QuranTranslBookInfo, File> readTranslInfoFromJSONFile(FileUtils fileUtils, File infoJSONFile) throws JSONException, IOException {
+    private static Pair<TranslationBookInfoModel, File> readTranslInfoFromJSONFile(FileUtils fileUtils, File infoJSONFile) throws JSONException, IOException {
         if (!infoJSONFile.isFile()) {
             return null;
         }
@@ -278,7 +278,7 @@ public class TranslUtils {
             return null;
         }
 
-        QuranTranslBookInfo bookInfo = new QuranTranslBookInfo(slug);
+        TranslationBookInfoModel bookInfo = new TranslationBookInfoModel(slug);
         bookInfo.setLangCode(langCode);
         bookInfo.setBookName(jsonObject.optString("book", ""));
         bookInfo.setAuthorName(jsonObject.optString("author", ""));

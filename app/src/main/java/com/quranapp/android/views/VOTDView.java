@@ -25,7 +25,7 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytVotdBinding;
@@ -35,7 +35,6 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
-import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
@@ -56,7 +55,7 @@ import kotlin.Pair;
  * A very ugly implementation of verse of the day view
  */
 public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallbacks {
-    private final CallableTaskRunner<Pair<QuranTranslBookInfo, Translation>> taskRunner = new CallableTaskRunner<>();
+    private final CallableTaskRunner<Pair<TranslationBookInfoModel, Translation>> taskRunner = new CallableTaskRunner<>();
     private final BookmarkDBHelper mBookmarkDBHelper;
     private final BookmarkViewer mBookmarkViewer;
     private final LytVotdBinding mBinding;
@@ -217,8 +216,8 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             }
 
             @Override
-            public Pair<QuranTranslBookInfo, Translation> call() {
-                QuranTranslBookInfo bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd(context));
+            public Pair<TranslationBookInfoModel, Translation> call() {
+                TranslationBookInfoModel bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd(context));
                 if (Objects.equals(mLastTranslationSlug, bookInfo.getSlug())) {
                     return null;
                 }
@@ -232,7 +231,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             }
 
             @Override
-            public void onComplete(@Nullable Pair<QuranTranslBookInfo, Translation> result) {
+            public void onComplete(@Nullable Pair<TranslationBookInfoModel, Translation> result) {
                 // if translation has changed, update with new translation
                 if (result != null) {
                     setupTranslation(mArText, result.getFirst(), result.getSecond());
@@ -249,7 +248,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         });
     }
 
-    private void setupTranslation(CharSequence arText, QuranTranslBookInfo bookInfo, Translation translation) {
+    private void setupTranslation(CharSequence arText, TranslationBookInfoModel bookInfo, Translation translation) {
         // If translation is null, it means translation was not changed, update with old translation
         if (bookInfo == null || translation == null || TextUtils.isEmpty(translation.getText())) {
             showText(arText, mLastTranslationText, mLastAuthorText);

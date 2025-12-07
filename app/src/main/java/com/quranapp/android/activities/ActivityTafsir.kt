@@ -26,13 +26,12 @@ import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.api.models.tafsir.v2.TafsirModelV2
+import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.quran.subcomponents.Chapter
 import com.quranapp.android.databinding.ActivityTafsirBinding
 import com.quranapp.android.databinding.LytTafsirFooterBinding
 import com.quranapp.android.databinding.LytTafsirTextSizeBinding
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.disableView
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -282,7 +281,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
     private fun setupTafsirTitle(tafsirTitle: TextView, chapter: Chapter) {
         val chapterInfo = SpannableString(
             getString(
-                R.string.strLabelVerseWithChapNameWithBar, chapter.name, verseNo
+                R.string.strLabelVerseWithChapNameAndNo, chapter.name, chapter.chapterNumber, verseNo
             )
         )
 
@@ -333,7 +332,7 @@ class ActivityTafsir : ReaderPossessingActivity() {
 
                 // try to decode the file as TafsirModelV2 first
                 try {
-                    val tafsir = JsonHelper.json.decodeFromString<TafsirModelV2>(read)
+                    val tafsir = JsonHelper.json.decodeFromString<TafsirModel>(read)
                     renderData(tafsir)
                     return@launch
                 } catch (e: Exception) {
@@ -361,10 +360,10 @@ class ActivityTafsir : ReaderPossessingActivity() {
         }
     }
 
-    private fun renderData(tafsir: TafsirModelV2) {
+    private fun renderData(tafsir: TafsirModel) {
         val map = mapOf(
             "{{THEME}}" to resolveDarkMode(),
-            "{{CONTENT}}" to tafsir.text,
+            "{{CONTENT}}" to prepareContent(tafsir),
             "{{DIR}}" to resolveTextDirection(),
             "{{FONT_SIZE}}" to (SPReader.getSavedTextSizeMultTafsir(this) * 100).toString()
         )
@@ -381,6 +380,30 @@ class ActivityTafsir : ReaderPossessingActivity() {
                 null
             )
         }
+    }
+
+    private fun prepareContent(tafsir: TafsirModel): String {
+        val parts = arrayListOf<String>()
+
+        if (tafsir.verses.size > 1) {
+            val alertMsg = getString(R.string.readingTafsirMultiVerses)
+
+            parts.add(
+                """
+                <div class="multiple-verse-alert">
+                    <strong>${alertMsg}</strong> ${
+                    tafsir.verses.joinToString(
+                        ", "
+                    )
+                }
+                </div>
+            """.trimIndent()
+            )
+        }
+
+        parts.add(tafsir.text)
+
+        return parts.joinToString("")
     }
 
     private fun fail(msgRes: Int, showRetry: Boolean) {

@@ -9,7 +9,7 @@ package com.quranapp.android.utils.reader.factory
 import android.content.Context
 import android.database.Cursor
 import com.quranapp.android.components.quran.subcomponents.Footnote
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.db.transl.QuranTranslDBHelper
@@ -24,7 +24,7 @@ import java.util.*
 
 /**
  * This factory prepares contents of translations for the requesters.
- * The content may be [QuranTranslBookInfo] or the actual translation contents.
+ * The content may be [TranslationBookInfoModel] or the actual translation contents.
  * */
 class QuranTranslationFactory(private val context: Context) : Closeable {
 
@@ -64,50 +64,50 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     }
 
     /**
-     * Gets and prepare an instance of [QuranTranslBookInfo] from the database.
+     * Gets and prepare an instance of [TranslationBookInfoModel] from the database.
      * If no book is found in the database, an empty instance is returned.
      * @param slug The slug of the book.
      * */
-    fun getTranslationBookInfo(slug: String): QuranTranslBookInfo {
-        return getTranslationBooksInfo(Collections.singleton(slug))[slug] ?: QuranTranslBookInfo("")
+    fun getTranslationBookInfo(slug: String): TranslationBookInfoModel {
+        return getTranslationBooksInfo(Collections.singleton(slug))[slug] ?: TranslationBookInfoModel("")
     }
 
     /**
-     * Gets a map of [QuranTranslBookInfo] in [getAvailableTranslationBooksInfo] excluding the built-in translations.
+     * Gets a map of [TranslationBookInfoModel] in [getAvailableTranslationBooksInfo] excluding the built-in translations.
      * Only info for translations which are downloaded by the user are returned.
      */
-    fun getDownloadedTranslationBooksInfo(): Map<String, QuranTranslBookInfo> {
+    fun getDownloadedTranslationBooksInfo(): Map<String, TranslationBookInfoModel> {
         return getTranslationBooksInfoValidated().filterKeys { !TranslUtils.isPrebuilt(it) }
     }
 
     /**
-     * Gets and prepare instances of [QuranTranslBookInfo] from the database for all `available` slugs.
+     * Gets and prepare instances of [TranslationBookInfoModel] from the database for all `available` slugs.
      * Here the meaning of `available` is - all books stored in the database.
      * When a book is downloaded from the server, then its information along with its content is stored in the database.
      * Then the information is included in `available` slugs.
      * @return The returned value is a [Map] where the key is the corresponding slug.
      * */
-    fun getAvailableTranslationBooksInfo(): Map<String, QuranTranslBookInfo> {
+    fun getAvailableTranslationBooksInfo(): Map<String, TranslationBookInfoModel> {
         return getTranslationBooksInfoValidated()
     }
 
     /**
-     * Gets and prepare an instances of [QuranTranslBookInfo] from the database for the given slugs and also validating the premiership.
+     * Gets and prepare an instances of [TranslationBookInfoModel] from the database for the given slugs and also validating the premiership.
      * @param slugs If it is empty then empty map is returned. If null is passed as the slugs, all valid books are returned.
      * @return The returned value is a [Map] where the key is the corresponding slug.
      * */
-    fun getTranslationBooksInfoValidated(slugs: Set<String>? = null): Map<String, QuranTranslBookInfo> {
+    fun getTranslationBooksInfoValidated(slugs: Set<String>? = null): Map<String, TranslationBookInfoModel> {
         if (slugs?.isEmpty() == true) return HashMap()
 
         return getTranslationBooksInfo(slugs)
     }
 
     /**
-     * Gets and prepare instances of [QuranTranslBookInfo] from the database for the given slugs.
+     * Gets and prepare instances of [TranslationBookInfoModel] from the database for the given slugs.
      * @return The returned value is a [Map] where the key is the corresponding slug.
      * */
 
-    private fun getTranslationBooksInfo(slugs: Set<String>? = null): Map<String, QuranTranslBookInfo> {
+    private fun getTranslationBooksInfo(slugs: Set<String>? = null): Map<String, TranslationBookInfoModel> {
         val selection = if (slugs != null) {
             List(slugs.size) { "${QuranTranslInfoEntry.COL_SLUG}=?" }.joinToString(" OR ")
         } else {
@@ -134,15 +134,15 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     }
 
     /**
-     * Prepare instances of [QuranTranslBookInfo] from the db cursor.
+     * Prepare instances of [TranslationBookInfoModel] from the db cursor.
      * Each iteration has information for a single book.
      * @return The returned value is a [Map] where the key is the corresponding slug.
      * */
     @Throws(java.lang.Exception::class)
-    private fun getTranslationBookInfoFromCursor(cursor: Cursor): HashMap<String, QuranTranslBookInfo> {
-        val bookInfos = HashMap<String, QuranTranslBookInfo>()
+    private fun getTranslationBookInfoFromCursor(cursor: Cursor): HashMap<String, TranslationBookInfoModel> {
+        val bookInfos = HashMap<String, TranslationBookInfoModel>()
         while (cursor.moveToNext()) {
-            val bookInfo = QuranTranslBookInfo(
+            val bookInfo = TranslationBookInfoModel(
                 cursor.getString(cursor.getColumnIndexOrThrow(QuranTranslInfoEntry.COL_SLUG))
             ).apply {
                 bookName = cursor.getString(

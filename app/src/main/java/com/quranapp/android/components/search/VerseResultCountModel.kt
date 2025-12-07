@@ -1,8 +1,8 @@
 package com.quranapp.android.components.search
 
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 
-class VerseResultCountModel(val bookInfo: QuranTranslBookInfo?) : SearchResultModelBase() {
+class VerseResultCountModel(val bookInfo: TranslationBookInfoModel?) : SearchResultModelBase() {
     @JvmField
     var resultCount = 0
 }

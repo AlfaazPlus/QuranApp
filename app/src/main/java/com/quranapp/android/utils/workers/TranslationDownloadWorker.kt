@@ -12,7 +12,7 @@ import androidx.work.workDataOf
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
@@ -33,7 +33,7 @@ class TranslationDownloadWorker(
 
     override suspend fun doWork(): Result {
         val bookInfoJson = inputData.getString("bookInfo") ?: return Result.failure()
-        val bookInfo = Json.decodeFromString<QuranTranslBookInfo>(bookInfoJson)
+        val bookInfo = Json.decodeFromString<TranslationBookInfoModel>(bookInfoJson)
 
 
         setForeground(createForegroundInfo(bookInfo, 0))
@@ -48,7 +48,7 @@ class TranslationDownloadWorker(
     }
 
     private suspend fun mockDownloadFile(
-        bookInfo: QuranTranslBookInfo
+        bookInfo: TranslationBookInfoModel
     ) {
         for (progress in 0..100 step 5) {
             if (isStopped) break
@@ -63,7 +63,7 @@ class TranslationDownloadWorker(
     }
 
     private suspend fun downloadFile(
-        bookInfo: QuranTranslBookInfo
+        bookInfo: TranslationBookInfoModel
     ) = withContext(Dispatchers.IO) {
         val tmpFile = File.createTempFile(
             bookInfo.slug,
@@ -99,7 +99,6 @@ class TranslationDownloadWorker(
 
                     val progress =
                         if (totalBytes > 0) ((downloaded * 100) / totalBytes).toInt() else null
-                    Logger.d("Downloading ${bookInfo.slug}: $downloaded / $totalBytes bytes")
                     setProgressAsync(workDataOf("progress" to progress))
                     setForeground(createForegroundInfo(bookInfo, progress))
                 }
@@ -120,7 +119,7 @@ class TranslationDownloadWorker(
     }
 
     private fun createForegroundInfo(
-        bookInfo: QuranTranslBookInfo,
+        bookInfo: TranslationBookInfoModel,
         progress: Int?
     ): ForegroundInfo {
         val channelId = NotificationUtils.CHANNEL_ID_DOWNLOADS

@@ -148,3 +148,21 @@ html.dark .navigator .btn-action:active {
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.multiple-verse-alert {
+   background-color: #F5EFE6;
+   border: 1px solid #E2D8C6;
+   padding: 12px 16px;
+   border-radius: 10px;
+   margin: 12px 0;
+   color: #6B5E4A;
+   line-height: 1.5;
+   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+html.dark .multiple-verse-alert {
+   background-color: #2F2A25 !important;
+   border-color: #4A4238 !important;
+   color: #E9DDC9 !important;
+   box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}

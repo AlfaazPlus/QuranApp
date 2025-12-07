@@ -1,21 +1,15 @@
-/*
- * Copyright (c) Faisal Khan (https://github.com/faisalcodes)
- * Created on 6/6/2022.
- * All rights reserved.
- */
-
-package com.quranapp.android.components.quran.subcomponents
+package com.quranapp.android.api.models.translation
 
 import com.quranapp.android.utils.univ.StringUtils
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
 /**
  * Holds information about a translation book.
  * e.g., information about Sahih International
  * */
 
-@kotlinx.serialization.Serializable
-class QuranTranslBookInfo(val slug: String) : Serializable {
+@Serializable
+class TranslationBookInfoModel(val slug: String) : java.io.Serializable {
     companion object {
         const val DISPLAY_NAME_DEFAULT_WITHOUT_HYPHEN = false
     }
@@ -43,7 +37,7 @@ class QuranTranslBookInfo(val slug: String) : Serializable {
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is QuranTranslBookInfo) return false
+        if (other !is TranslationBookInfoModel) return false
 
         if (slug != other.slug) return false
 

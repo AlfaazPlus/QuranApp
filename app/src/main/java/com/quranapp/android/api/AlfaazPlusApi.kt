@@ -1,6 +1,6 @@
 package com.quranapp.android.api
 
-import com.quranapp.android.api.models.tafsir.v2.TafsirModelV2
+import com.quranapp.android.api.models.tafsir.TafsirModel
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -10,7 +10,7 @@ interface AlfaazPlusApi {
     suspend fun getTafsir(
         @Path("tafsir_key") key: String,
         @Path("verse_key") verseKey: String
-    ): TafsirModelV2
+    ): TafsirModel
 
     @GET("/quran/tafsirs")
     suspend fun getAvailableTafsirs(): ResponseBody

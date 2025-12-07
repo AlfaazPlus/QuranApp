@@ -28,7 +28,7 @@ import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.ActivityReferenceBinding;
@@ -315,7 +315,7 @@ public class ActivityReference extends ReaderPossessingActivity {
         List<ReferenceVerseItemModel> models = new ArrayList<>();
         models.add(new ReferenceVerseItemModel(VIEWTYPE_DESCRIPTION, null, -1, -1, -1, null, false));
 
-        Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(
+        Map<String, TranslationBookInfoModel> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(
             mSelectedTranslSlugs);
 
         for (String verseStr : verseModel.getVerses()) {
@@ -365,7 +365,7 @@ public class ActivityReference extends ReaderPossessingActivity {
     private ReferenceVerseItemModel prepareVerseModel(
         int chapterNo,
         int verseNo,
-        Map<String, QuranTranslBookInfo> booksInfo,
+        Map<String, TranslationBookInfoModel> booksInfo,
         boolean isKFQPCScript
     ) {
         Verse verse = mQuran.getVerse(chapterNo, verseNo);

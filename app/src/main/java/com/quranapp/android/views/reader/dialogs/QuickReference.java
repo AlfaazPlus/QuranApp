@@ -31,7 +31,7 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytSheetVerseReferenceBinding;
@@ -341,7 +341,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
                         "could not get chapter object from quranMeta for the chapterNo. [QuickReference]");
                 }
 
-                Map<String, QuranTranslBookInfo> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(
+                Map<String, TranslationBookInfoModel> booksInfo = actvt.mTranslFactory.getTranslationBooksInfoValidated(
                     translSlugs
                 );
 
@@ -377,7 +377,7 @@ public class QuickReference extends PeaceBottomSheet implements BookmarkCallback
 
             private void prepareVerse(
                 Chapter chapter, int verseNo, List<Verse> verses,
-                List<Translation> translations, Map<String, QuranTranslBookInfo> booksInfo
+                List<Translation> translations, Map<String, TranslationBookInfoModel> booksInfo
             ) {
                 Verse verse = chapter.getVerse(verseNo).copy();
 
