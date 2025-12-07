@@ -33,7 +33,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.quran.QuranMeta;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.search.ChapterJumpModel;
 import com.quranapp.android.components.search.JuzJumpModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
@@ -78,7 +78,7 @@ public class ActivitySearch extends BaseActivity {
     public SearchFilters mSearchFilters;
     public SearchLocalHistoryManager mLocalHistoryManager;
     private final Handler mSuggHandler = new Handler(Looper.getMainLooper());
-    public Map<String, QuranTranslBookInfo> availableTranslModels;
+    public Map<String, TranslationBookInfoModel> availableTranslModels;
     public boolean mSupportsVoiceInput;
 
     @Override
@@ -258,7 +258,7 @@ public class ActivitySearch extends BaseActivity {
 
     private void initManagers(ActivitySearch activitySearch) {
         String initiallySelectedSlug = null;
-        for (QuranTranslBookInfo bookInfo : availableTranslModels.values()) {
+        for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
             if ("en".equals(bookInfo.getLangCode())) {
                 initiallySelectedSlug = bookInfo.getSlug();
                 break;
@@ -354,7 +354,7 @@ public class ActivitySearch extends BaseActivity {
         int padV = dp2px(13F);
         int spaceBtwn = dp2px(15F);
 
-        for (QuranTranslBookInfo bookInfo : availableTranslModels.values()) {
+        for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
             PeaceRadioButton radio = new PeaceRadioButton(this);
             ViewPaddingKt.updatePaddings(radio, padH, padV);
             radio.setBackgroundResource(com.peacedesign.R.drawable.dr_bg_action);
@@ -368,7 +368,7 @@ public class ActivitySearch extends BaseActivity {
         }
         radioGroup.setOnCheckChangedListener((btn, id) -> {
             sheet.dismiss();
-            QuranTranslBookInfo bookInfo = (QuranTranslBookInfo) btn.getTag();
+            TranslationBookInfoModel bookInfo = (TranslationBookInfoModel) btn.getTag();
             mSearchFilters.selectedTranslSlug = bookInfo.getSlug();
             mBinding.btnSelectTransl.setText(bookInfo.getBookName());
             reSearch();

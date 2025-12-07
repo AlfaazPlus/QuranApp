@@ -60,7 +60,7 @@ import com.quranapp.android.adapters.ADPReader;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.components.reader.ChapterVersePair;
@@ -757,7 +757,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
     private void initTranslationVersesFinalAsync(Chapter chapter, int fromVerse, int toVerse) {
         Set<String> slugs = mReaderParams.getVisibleTranslSlugs();
-        Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(slugs);
+        Map<String, TranslationBookInfoModel> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(slugs);
         ArrayList<ReaderRecyclerItemModel> models = new ArrayList<>();
 
         final int chapterNo = chapter.getChapterNumber();
@@ -903,7 +903,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
         int toVerse
     ) {
         Set<String> slugs = mReaderParams.getVisibleTranslSlugs();
-        Map<String, QuranTranslBookInfo> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(slugs);
+        Map<String, TranslationBookInfoModel> booksInfo = mTranslFactory.getTranslationBooksInfoValidated(slugs);
 
         List<List<Translation>> listOfTranslations = mTranslFactory.getTranslationsVerseRange(
             slugs,

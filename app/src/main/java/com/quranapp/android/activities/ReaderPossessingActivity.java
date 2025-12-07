@@ -22,7 +22,7 @@ import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
@@ -30,7 +30,6 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ActionController;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.suppliments.BookmarkViewer;
-import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.reader.ReferenceTagHandler;
 import com.quranapp.android.utils.reader.TranslUtils;
@@ -148,7 +147,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
         return mVerseDecorator.prepareArabicText(verse);
     }
 
-    public CharSequence prepareTranslSpannable(Verse verse, List<Translation> translations, Map<String, QuranTranslBookInfo> bookInfos) {
+    public CharSequence prepareTranslSpannable(Verse verse, List<Translation> translations, Map<String, TranslationBookInfoModel> bookInfos) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
 
         for (int i = 0, l = translations.size(), l2 = l - 1; i < l; i++) {
@@ -157,7 +156,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
             sb.append("\n");
 
             String bookSlug = translation.getBookSlug();
-            QuranTranslBookInfo bookInfo = bookInfos.get(bookSlug);
+            TranslationBookInfoModel bookInfo = bookInfos.get(bookSlug);
             if (bookInfo != null) {
                 String author = bookInfo.getDisplayName(false);
                 Typeface authorFont = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;

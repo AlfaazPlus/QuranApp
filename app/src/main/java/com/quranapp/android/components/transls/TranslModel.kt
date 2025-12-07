@@ -3,10 +3,10 @@
  */
 package com.quranapp.android.components.transls
 
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import java.io.Serializable
 
-class TranslModel(val bookInfo: QuranTranslBookInfo) : TranslBaseModel(), Serializable {
+class TranslModel(val bookInfo: TranslationBookInfoModel) : TranslBaseModel(), Serializable {
     var isChecked = false
     var isDownloading: Boolean = false
     var isDownloadingDisabled: Boolean = false

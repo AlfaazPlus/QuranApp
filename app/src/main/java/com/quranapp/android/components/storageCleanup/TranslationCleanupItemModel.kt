@@ -3,9 +3,9 @@
  */
 package com.quranapp.android.components.storageCleanup
 
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.transls.TranslBaseModel
 
-class TranslationCleanupItemModel(val bookInfo: QuranTranslBookInfo) : TranslBaseModel() {
+class TranslationCleanupItemModel(val bookInfo: TranslationBookInfoModel) : TranslBaseModel() {
     var isDeleted: Boolean = false
 }

@@ -10,7 +10,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.utils.Logger
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -40,13 +40,11 @@ object TranslationDownloadManager {
                 }
             }
 
-            Logger.d("TranslationDownloadManager: Current download states: $map")
-
             downloadStates.postValue(map)
         }
     }
 
-    fun startDownload(context: Context, bookInfo: QuranTranslBookInfo) {
+    fun startDownload(context: Context, bookInfo: TranslationBookInfoModel) {
         val data = workDataOf("bookInfo" to Json.encodeToString(bookInfo))
         val itemTag = "${ITEM_TAG_PREFIX}${bookInfo.slug}"
 

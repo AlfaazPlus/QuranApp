@@ -4,7 +4,7 @@ import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.api.models.tafsir.v2.AvailableTafsirsModelV2
+import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -17,7 +17,7 @@ import kotlinx.serialization.decodeFromString
 import java.io.IOException
 
 object TafsirManager {
-    private var availableTafsirsModel: AvailableTafsirsModelV2? = null
+    private var availableTafsirsModel: AvailableTafsirsModel? = null
 
     @JvmStatic
     fun prepare(
@@ -40,7 +40,7 @@ object TafsirManager {
     private fun loadTafsirs(
         ctx: Context,
         force: Boolean,
-        callback: (AvailableTafsirsModelV2?) -> Unit
+        callback: (AvailableTafsirsModel?) -> Unit
     ) {
         val fileUtils = FileUtils.newInstance(ctx)
 
@@ -89,13 +89,13 @@ object TafsirManager {
     private fun postTafsirsLoad(
         ctx: Context,
         stringData: String,
-        callback: (AvailableTafsirsModelV2?) -> Unit
+        callback: (AvailableTafsirsModel?) -> Unit
     ) {
         SPAppActions.setFetchTafsirsForce(ctx, false)
         val savedTafsirKey = SPReader.getSavedTafsirKey(ctx)
 
         try {
-            val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModelV2>(
+            val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(
                 stringData
             )
 

@@ -31,7 +31,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
-import com.quranapp.android.components.quran.subcomponents.QuranTranslBookInfo;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.databinding.LytVerseShareBinding;
 import com.quranapp.android.utils.Log;
@@ -175,7 +175,7 @@ public class VerseShareDialog extends PeaceDialog {
             }
         }
 
-        private void makeTransls(Map<String, QuranTranslBookInfo> bookInfos, PeaceCheckboxGroup translsGroup) {
+        private void makeTransls(Map<String, TranslationBookInfoModel> bookInfos, PeaceCheckboxGroup translsGroup) {
             translsGroup.removeAllViews();
 
             if (bookInfos == null) {
@@ -319,7 +319,7 @@ public class VerseShareDialog extends PeaceDialog {
             boolean hasFootnotes = !footnotes.isEmpty();
 
             if (inclAuthor || (inclFootnotes && hasFootnotes)) {
-                QuranTranslBookInfo bookInfo = mActivity.mTranslFactory.getTranslationBookInfo(transl.getBookSlug());
+                TranslationBookInfoModel bookInfo = mActivity.mTranslFactory.getTranslationBookInfo(transl.getBookSlug());
                 String author = bookInfo.getDisplayName(false);
                 sb.append("\n");
                 italic(sb, author, whatsappStyle);

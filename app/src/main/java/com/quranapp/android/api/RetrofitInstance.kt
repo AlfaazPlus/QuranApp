@@ -36,16 +36,6 @@ object RetrofitInstance {
             return githubApi!!
         }
 
-    val quran: QuranApi by lazy {
-        Retrofit.Builder()
-            .baseUrl(ApiConfig.QURAN_API_ROOT_URL)
-            .addConverterFactory(
-                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
-            )
-            .client(client)
-            .build()
-            .create(QuranApi::class.java)
-    }
 
     val alfaazplus: AlfaazPlusApi by lazy {
         Retrofit.Builder()
