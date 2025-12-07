@@ -442,4 +442,5 @@
     <string name="titleCancelDownload">डाउनलोड रद्द करें?</string>
     <string name="yesCancelDownload">हाँ, रद्द करें</string>
     <string name="noContinueDownload">नहीं, जारी रखें</string>
+    <string name="readingTafsirMultiVerses">आप कई आयतों की तफ़सीर पढ़ रहे हैं:</string>
 </resources>

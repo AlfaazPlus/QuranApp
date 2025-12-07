@@ -124,8 +124,8 @@
     <string name="strTitleAppUser">Utente QuranApp</string>
     <string name="strTitleHolyQuran">Il sacro Corano</string>
     <string name="strTitleQuran">Corano</string>
-    <string name="strTitleMakki">Makki</string>
-    <string name="strTitleMadani">Madani</string>
+    <string name="strTitleMakki">Rivelata alla Mecca</string>
+    <string name="strTitleMadani">Rivelata a Madina</string>
     <string name="strTitleReaderChapters">Sure (capitoli)</string>
     <string name="strTitleReaderJuz">Juz</string>
     <string name="strTitleReaderJumpToVerse">Salta al verso</string>
@@ -343,7 +343,7 @@
     <string name="titleManageAudio">Gestione Audio</string>
     <string name="audioOnlyArabic">Riproduci solo Arabo</string>
     <string name="audioOnlyTranslation">Riproduci solo traduzioni</string>
-    <string name="audioBothArabicTranslation">Riproduci sia Arabo e Traduzioni</string>
+    <string name="audioBothArabicTranslation">Riproduci sia Arabo che Traduzioni</string>
     <string name="titleEtiquetteVerses">Buon comportamento nel Corano</string>
     <string name="strMsgDuaOf" formatted="false">Dua di %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua di %s nel Corano</string>
