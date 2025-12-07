@@ -27,7 +27,7 @@ import com.quranapp.android.views.reader.BismillahView;
 import com.quranapp.android.views.reader.ChapterInfoCardView;
 import com.quranapp.android.views.reader.ChapterTitleView;
 import com.quranapp.android.views.reader.ReaderFooter;
-import com.quranapp.android.views.reader.VerseView;
+import com.quranapp.android.views.reader.VerseViewComposable;
 
 import java.util.ArrayList;
 
@@ -90,7 +90,7 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
         } else if (viewType == BISMILLAH) {
             view = new BismillahView(mActivity);
         } else if (viewType == VERSE) {
-            view = new VerseView(mActivity, parent, null, false);
+            view = new VerseViewComposable(mActivity, parent, null, false);
         } else if (viewType == CHAPTER_TITLE) {
             view = new ChapterTitleView(mActivity);
         } else if (viewType == READER_FOOTER) {
@@ -154,13 +154,13 @@ public class ADPReader extends RecyclerView.Adapter<ADPReader.VHReader> {
         }
 
         private void setupVerseView(ReaderRecyclerItemModel model) {
-            if (!(itemView instanceof VerseView)) {
+            if (!(itemView instanceof VerseViewComposable)) {
                 return;
             }
 
             final Verse verse = model.getVerse();
 
-            VerseView verseView = (VerseView) itemView;
+            VerseViewComposable verseView = (VerseViewComposable) itemView;
             verseView.setVerse(verse);
 
             if (model.isScrollHighlightPending()) {

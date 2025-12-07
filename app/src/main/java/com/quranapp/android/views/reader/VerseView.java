@@ -30,7 +30,6 @@ import com.quranapp.android.databinding.LytReaderVerseBinding;
 import com.quranapp.android.databinding.LytReaderVerseQuickActionsBinding;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
-import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
 import com.quranapp.android.utils.univ.MessageUtils;

@@ -3,11 +3,12 @@ package com.quranapp.android.suppliments;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.quranapp.android.views.reader.VerseView;
+import com.quranapp.android.views.reader.VerseViewComposable;
 
 public class ReaderLayoutManager extends LinearLayoutManager {
     private final Context mContext;
@@ -31,9 +32,9 @@ public class ReaderLayoutManager extends LinearLayoutManager {
                     return;
                 }
 
-                if (view instanceof VerseView) {
-                    final VerseView verseView = (VerseView) view;
-                    if (verseView.getVerse().verseNo == verseNumber) {
+                if (view instanceof VerseViewComposable) {
+                    final VerseViewComposable verseView = (VerseViewComposable) view;
+                    if (verseView.getVerse() != null && verseView.getVerse().verseNo == verseNumber) {
                         verseView.highlightOnScroll();
                     }
                 }
