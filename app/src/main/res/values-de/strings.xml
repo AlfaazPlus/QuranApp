@@ -438,4 +438,9 @@
     <string name="startAutoScroll">Automatisches Scrollen starten</string>
     <string name="autoScrollSpeed">Geschwindigkeit einstellen</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Während der Wiedergabe der Rezitation kann nicht automatisch gescrollt werden.</string>
+    <string name="strTitleMajorSins">Große Sünden im Quran</string>
+    <string name="titleCancelDownload">Download abbrechen?</string>
+    <string name="yesCancelDownload">Ja, abbrechen</string>
+    <string name="noContinueDownload">Nein, weiter</string>
+    <string name="readingTafsirMultiVerses">Tafsir für mehrere Verse lesen:</string>
 </resources>
