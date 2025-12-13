@@ -156,7 +156,7 @@
     <string name="strTitleProphets">先知</string>
     <string name="strTitleFeaturedTopics">古蘭經主題</string>
     <string name="strTitleFeaturedDuas">古蘭經中的祈禱</string>
-    <string name="titleSolutionVerses">古蘭經的解答</string>
+    <string name="titleSolutionVerses">古蘭經中的解答</string>
     <string name="titleEtiquetteVerses">古蘭經中的禮儀</string>
     <string name="strTitleFeaturedProphets">古蘭經中的先知</string>
     <string name="strTitleMajorSins">古蘭經中的大罪</string>
@@ -428,4 +428,8 @@
     <string name="startAutoScroll">開始自動滾動</string>
     <string name="autoScrollSpeed">設定速度</string>
     <string name="strMsgCannotAutoScrollWhileReciting">播放朗誦時無法自動滾動。</string>
+    <string name="titleCancelDownload">取消下載？</string>
+    <string name="yesCancelDownload">確定取消</string>
+    <string name="noContinueDownload">繼續下載</string>
+    <string name="readingTafsirMultiVerses">閱讀多節經文的注：</string>
 </resources>
