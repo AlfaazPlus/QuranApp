@@ -147,6 +147,7 @@ html.dark .navigator .btn-action:active {
 
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   line-height: 1.5;
 }
 
 .multiple-verse-alert {

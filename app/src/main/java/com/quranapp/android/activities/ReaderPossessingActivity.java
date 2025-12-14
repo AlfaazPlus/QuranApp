@@ -1,5 +1,7 @@
 package com.quranapp.android.activities;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -7,22 +9,23 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.bookmark.BookmarkDBHelper;
@@ -196,6 +199,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
 
         Typeface typeface = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;
         sb.setSpan(new TypefaceSpan2(typeface), 0, sb.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new ForegroundColorSpan(mVerseDecorator.getTextColorNonArabic()), 0, sb.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
         if (TranslUtils.isTransliteration(translation.getBookSlug())) {
             sb.setSpan(new StyleSpan(Typeface.ITALIC), 0, sb.length(), SPAN_EXCLUSIVE_EXCLUSIVE);

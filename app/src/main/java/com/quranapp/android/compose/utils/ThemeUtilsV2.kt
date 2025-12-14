@@ -18,17 +18,14 @@ import com.alfaazplus.sunnah.ui.theme.colors.ThemeYellowColors
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.KEY_APP_THEME
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 object ThemeUtilsV2 {
-    const val THEME_DEFAULT = "default"
-    const val THEME_LIGHT = "light"
-    const val THEME_DARK = "dark"
 
     const val THEME_COLOR_DEFAULT = "default"
     const val THEME_COLOR_BLUE = "blue"
@@ -38,20 +35,13 @@ object ThemeUtilsV2 {
     const val THEME_COLOR_VIOLET = "violet"
     const val THEME_COLOR_YELLOW = "yellow"
 
-    fun migrateOldThemePreferences(context: Context) {
+    fun syncOldThemePreferences(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            if (DataStoreManager.contains(stringPreferencesKey(Keys.THEME_MODE))) {
-                return@launch
-            }
-
             try {
-                val newThemeMode = when (SPAppConfigs.getThemeMode(context)) {
-                    SPAppConfigs.THEME_MODE_LIGHT -> THEME_LIGHT
-                    SPAppConfigs.THEME_MODE_DARK -> THEME_DARK
-                    else -> THEME_DEFAULT
-                }
-
-                DataStoreManager.write(stringPreferencesKey(Keys.THEME_MODE), newThemeMode)
+                DataStoreManager.write(
+                    stringPreferencesKey(Keys.THEME_MODE),
+                    SPAppConfigs.getThemeMode(context)
+                )
             } catch (e: Exception) {
                 Log.saveError(
                     e,
@@ -67,8 +57,8 @@ object ThemeUtilsV2 {
 
     fun resolveThemeModeLabel(themeMode: String): Int {
         return when (themeMode) {
-            THEME_LIGHT -> R.string.strLabelThemeLight
-            THEME_DARK -> R.string.strLabelThemeDark
+            SPAppConfigs.THEME_MODE_LIGHT -> R.string.strLabelThemeLight
+            SPAppConfigs.THEME_MODE_DARK -> R.string.strLabelThemeDark
             else -> R.string.strLabelSystemDefault
         }
     }
@@ -77,9 +67,11 @@ object ThemeUtilsV2 {
     fun isDarkTheme(): Boolean {
         val themeMode = getThemeMode()
 
+        Logger.d("ThemeUtilsV2", "isDarkTheme: themeMode=$themeMode")
+
         return when (themeMode) {
-            THEME_LIGHT -> false
-            THEME_DARK -> true
+            SPAppConfigs.THEME_MODE_LIGHT -> false
+            SPAppConfigs.THEME_MODE_DARK -> true
             else -> isSystemInDarkTheme()
         }
     }
@@ -88,7 +80,7 @@ object ThemeUtilsV2 {
     fun getThemeMode(): String {
         return DataStoreManager.observe(
             stringPreferencesKey(Keys.THEME_MODE),
-            THEME_DEFAULT
+            SPAppConfigs.THEME_MODE_DEFAULT
         )
     }
 

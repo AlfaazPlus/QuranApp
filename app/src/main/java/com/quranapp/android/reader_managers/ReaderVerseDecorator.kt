@@ -26,9 +26,9 @@ class ReaderVerseDecorator(private val ctx: Context) {
     private var savedScript = SPReader.getSavedScript(ctx)
     private var savedFontScript = ""
 
-    private val textColorArabic by lazy { ctx.color(R.color.colorTextArabic) }
-    private val textColorNonArabic by lazy { ctx.color(R.color.colorTextNoArabic) }
-    private val textColorAuthor by lazy { ctx.color(R.color.colorSecondary) }
+    val textColorArabic by lazy { ctx.color(R.color.colorTextArabic) }
+    val textColorNonArabic by lazy { ctx.color(R.color.colorTextNoArabic) }
+    val textColorAuthor by lazy { ctx.color(R.color.colorSecondary) }
 
     var textSizeArabic = 0f
     val textSizeTransl by lazy { ctx.getDimension(R.dimen.dmnReaderTextSizeTransl) }
@@ -98,13 +98,18 @@ class ReaderVerseDecorator(private val ctx: Context) {
     }
 
     @JvmOverloads
-    fun prepareArabicText(verse: Verse, verseTextSize: Int = -1): CharSequence {
+    fun prepareArabicText(
+        verse: Verse,
+        verseTextSize: Int = -1,
+        txtColor: Int = textColorArabic
+    ): CharSequence {
         val isKFQPC = isKFQPCScript()
 
         return VerseUtils.decorateVerse(
             verse,
             if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
-            verseTextSize
+            verseTextSize,
+            txtColor
         )
     }
 

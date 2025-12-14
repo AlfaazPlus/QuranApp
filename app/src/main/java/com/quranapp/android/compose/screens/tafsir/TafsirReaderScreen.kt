@@ -1,8 +1,6 @@
 package com.quranapp.android.compose.screens.tafsir
 
 import ThemeUtilsV2
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -24,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,6 +60,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.ResUtils
+import com.quranapp.android.utils.univ.StringUtils.isRtlLanguage
 import com.quranapp.android.viewModels.TafsirContentState
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderViewModel
@@ -82,12 +83,7 @@ fun TafsirReaderScreen(
             .background(colorScheme.background)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // Top App Bar
             TafsirTopBar(
-                tafsirName = uiState.tafsirInfo?.name ?: "",
-                chapterName = uiState.chapterMeta?.name ?: "",
-                chapterNo = uiState.chapterNo,
-                verseNo = uiState.verseNo,
                 onBack = onBack,
                 onOpenSettings = onOpenSettings
             )
@@ -145,7 +141,7 @@ fun TafsirReaderScreen(
                             onClick = { webViewRef?.scrollTo(0, 0) },
                             containerColor = colorScheme.primaryContainer,
                             contentColor = colorScheme.onPrimaryContainer,
-                            elevation = FloatingActionButtonDefaults.elevation(4.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(2.dp),
                             modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
@@ -162,7 +158,7 @@ fun TafsirReaderScreen(
                         onClick = showFontSizeDialog,
                         containerColor = colorScheme.primaryContainer,
                         contentColor = colorScheme.onPrimaryContainer,
-                        elevation = FloatingActionButtonDefaults.elevation(4.dp),
+                        elevation = FloatingActionButtonDefaults.elevation(2.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
@@ -181,20 +177,23 @@ fun TafsirReaderScreen(
 
 @Composable
 private fun TafsirTopBar(
-    tafsirName: String,
-    chapterName: String,
-    chapterNo: Int,
-    verseNo: Int,
     onBack: () -> Unit,
     onOpenSettings: () -> Unit
 ) {
+    val viewModel = viewModel<TafsirReaderViewModel>()
+    val uiState by viewModel.uiState.collectAsState()
+
+    val chapterName = uiState.chapterMeta?.name ?: ""
+    val chapterNo = uiState.chapterNo
+    val verseNo = uiState.verseNo
+
     Surface(
-        color = colorScheme.surface,
-        tonalElevation = 2.dp
+        color = colorScheme.surfaceContainer,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .statusBarsPadding()
                 .padding(horizontal = 12.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -204,13 +203,12 @@ private fun TafsirTopBar(
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
-                    .background(colorScheme.surfaceContainerHigh)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.dr_icon_arrow_left),
+                    painter = painterResource(R.drawable.dr_icon_chevron_left),
                     contentDescription = stringResource(R.string.strDescClose),
                     tint = colorScheme.onSurface,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
 
@@ -222,7 +220,7 @@ private fun TafsirTopBar(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = tafsirName,
+                    text = uiState.tafsirInfo?.name ?: "",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = colorScheme.onSurface,
@@ -233,7 +231,7 @@ private fun TafsirTopBar(
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "$chapterName $chapterNo:$verseNo",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = colorScheme.primary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -247,20 +245,18 @@ private fun TafsirTopBar(
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
-                    .background(colorScheme.surfaceContainerHigh)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.dr_icon_translations),
                     contentDescription = stringResource(R.string.strTitleSelectTafsir),
                     tint = colorScheme.onSurface,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
     }
 }
 
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun TafsirWebViewContent(
     text: String,
@@ -298,7 +294,7 @@ private fun TafsirWebViewContent(
         AndroidView(
             factory = { ctx ->
                 WebView(ctx).apply {
-                    setBackgroundColor(Color.TRANSPARENT)
+                    setBackgroundColor(0x00000000)
                     settings.javaScriptEnabled = true
                     overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
 
@@ -489,10 +485,7 @@ private fun TafsirBottomNavigation() {
     val verseNo = uiState.verseNo
     val hasNext = verseNo < totalVerses
 
-    Surface(
-        color = colorScheme.surfaceContainer,
-        tonalElevation = 3.dp
-    ) {
+    Surface(color = colorScheme.surface, shadowElevation = 5.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -534,22 +527,24 @@ private fun NavigationButton(
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = if (enabled) {
-        colorScheme.primary
+        colorScheme.background
     } else {
-        colorScheme.surfaceContainerHighest
+        Color.Transparent
     }
 
     val contentColor = if (enabled) {
-        colorScheme.onPrimary
+        colorScheme.primary
     } else {
         colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
     }
 
     Surface(
         color = backgroundColor,
-        shape = RoundedCornerShape(12.dp),
         modifier = modifier
             .height(44.dp)
+            .clip(
+                RoundedCornerShape(12.dp)
+            )
             .then(
                 if (enabled) Modifier.clickable(onClick = onClick)
                 else Modifier
@@ -592,10 +587,4 @@ private fun NavigationButton(
             }
         }
     }
-}
-
-private fun isRtlLanguage(langCode: String?): Boolean {
-    if (langCode == null) return false
-    val rtlLanguages = listOf("ar", "fa", "ur", "he", "ps", "ku")
-    return rtlLanguages.contains(langCode.lowercase())
 }

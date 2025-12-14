@@ -1,12 +1,14 @@
 package com.quranapp.android.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
+import androidx.core.view.WindowCompat
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.activities.readerSettings.ActivitySettings
@@ -36,6 +38,16 @@ class ActivityTafsir : BaseActivity() {
 
     override fun getLayoutResource() = 0
     override fun getThemeId() = R.style.Theme_QuranApp_ComposeActivity
+
+    override fun adjustSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val controller = WindowCompat.getInsetsController(window, window.getDecorView())
+        val isLight = isStatusBarLight()
+
+        controller.isAppearanceLightStatusBars = isLight
+        controller.isAppearanceLightNavigationBars = isLight
+    }
 
     override fun onActivityInflated(
         activityView: View,
@@ -70,8 +82,8 @@ class ActivityTafsir : BaseActivity() {
 
     private fun initContent(intent: Intent) {
         val tafsirKey = intent.getStringExtra("tafsirKey")
-        val chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, -1)
-        val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, -1)
+        val chapterNo = intent.getIntExtra(Keys.READER_KEY_CHAPTER_NO, 1)
+        val verseNo = intent.getIntExtra(Keys.READER_KEY_VERSE_NO, 1)
 
         if (chapterNo < 1 || verseNo < 1) {
             finish()
