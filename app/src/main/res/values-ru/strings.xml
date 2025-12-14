@@ -133,7 +133,6 @@
     <string name="strTitleDownloadTranslations">Загрузить</string>
     <string name="strTitleRecitations">Чтения</string>
     <string name="strTitleSelectReciter">Выбрать чтеца</string>
-    <string name="titleManageAudio">Настроить аудио</string>
     <string name="audioOption">Настройки аудио</string>
     <string name="playbackSpeed">Скорость воспроизведения</string>
     <string name="audioOnlyArabic">Проигрывать только арабский</string>

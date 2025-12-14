@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.adapters.transl.ADPTransls
 import com.quranapp.android.components.transls.TranslBaseModel
-import com.quranapp.android.frags.settings.FragSettingsTransl.LoadTranslsTask
+import com.quranapp.android.frags.settings.translation.FragSettingsTransl.LoadTranslsTask
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.thread.runner.CallableTaskRunner

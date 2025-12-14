@@ -11,9 +11,9 @@ import android.database.Cursor
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
-import com.quranapp.android.db.transl.QuranTranslDBHelper
-import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.*
+import com.quranapp.android.db.translation.QuranTranslDBHelper
+import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.search.SearchFilters
@@ -21,6 +21,7 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import org.json.JSONArray
 import java.io.Closeable
 import java.util.*
+import androidx.core.database.sqlite.transaction
 
 /**
  * This factory prepares contents of translations for the requesters.
@@ -36,17 +37,16 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
 
     fun deleteTranslation(translSlug: String) {
         val db = dbHelper.writableDatabase
-        db.beginTransaction()
-        try {
-            db.execSQL("DROP TABLE IF EXISTS '$translSlug'")
-            db.delete(
-                QuranTranslInfoEntry.TABLE_NAME,
-                "${QuranTranslInfoEntry.COL_SLUG}=?",
-                arrayOf(translSlug)
-            )
-            db.setTransactionSuccessful()
-        } finally {
-            db.endTransaction()
+        db.transaction {
+            try {
+                execSQL("DROP TABLE IF EXISTS '$translSlug'")
+                delete(
+                    QuranTranslInfoEntry.TABLE_NAME,
+                    "${QuranTranslInfoEntry.COL_SLUG}=?",
+                    arrayOf(translSlug)
+                )
+            } finally {
+            }
         }
     }
 
@@ -56,7 +56,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     fun isTranslationDownloaded(slug: String): Boolean {
         val query = "SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = '$slug'"
         dbHelper.readableDatabase.rawQuery(query, null).use { cursor ->
-            if (cursor != null && cursor.count > 0) {
+            if (cursor.count > 0) {
                 return true
             }
             return false

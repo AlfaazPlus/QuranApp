@@ -84,7 +84,7 @@ import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.frags.settings.appLogs.FragSettingsAppLogs;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
-import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
+import com.quranapp.android.frags.settings.translation.FragSettingsTransl;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.app.DownloadSourceUtils;
 import com.quranapp.android.utils.app.ThemeUtils;
@@ -440,7 +440,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
         initScriptExplorer(readerSettings.explorerLauncherContainer);
         if (RecitationUtils.isRecitationSupported()) {
             initRecitationExplorer(readerSettings.explorerLauncherContainer);
-            initManageAudioExplorer(readerSettings.explorerLauncherContainer);
         }
         readerSettings.btnReset.setOnTouchListener(new HoverPushOpacityEffect());
         readerSettings.btnReset.setOnClickListener(v -> resetCheckpoint(ctx));
@@ -572,20 +571,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             });
             return Unit.INSTANCE;
         });
-    }
-
-    private void initManageAudioExplorer(LinearLayout parent) {
-        com.quranapp.android.databinding.LytReaderSettingsItemBinding mManageAudioExplorerBinding = LytReaderSettingsItemBinding.inflate(
-            mInflater);
-
-        setupLauncherParamsAndIcon(R.drawable.dr_icon_download, mManageAudioExplorerBinding);
-
-        prepareTitle(mManageAudioExplorerBinding.launcher, R.string.titleManageAudio,
-            getString(R.string.downloadRecitations));
-
-        mManageAudioExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsManageAudio.class, null));
-
-        parent.addView(mManageAudioExplorerBinding.getRoot());
     }
 
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {

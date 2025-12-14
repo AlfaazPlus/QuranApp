@@ -311,7 +311,6 @@
     <string name="strMsgTafsirsNoAvailable">কোনও তাফসীর নেই</string>
     <string name="msgDownloadingFonts">ফন্ট ডাউনলোড করা হচ্ছে</string>
     <string name="labelDownload">ডাউনলোড করুন</string>
-    <string name="titleManageAudio">অডিও পরিচালনা করুন</string>
     <string name="audioOnlyTranslation">শুধু অনুবাদ শুনুন</string>
     <string name="playbackSpeed">তিলাওয়াতের গতি</string>
     <string name="titleOtherSettings">অন্যান্য সেটিংস</string>

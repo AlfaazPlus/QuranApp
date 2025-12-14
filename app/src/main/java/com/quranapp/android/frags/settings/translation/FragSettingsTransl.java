@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.frags.settings;
+package com.quranapp.android.frags.settings.translation;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -33,6 +33,7 @@ import com.quranapp.android.components.transls.TranslBaseModel;
 import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.components.transls.TranslTitleModel;
 import com.quranapp.android.databinding.FragSettingsTranslBinding;
+import com.quranapp.android.frags.settings.FragSettingsBase;
 import com.quranapp.android.interfaceUtils.OnTranslSelectionChangeListener;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.TranslUtils;

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
+import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
@@ -29,6 +30,7 @@ class QuranApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        DataStoreManager.init(this)
         DownloadSourceUtils.resetDownloadSourceBaseUrl(this)
         NotificationUtils.createNotificationChannels(this)
 
@@ -39,5 +41,6 @@ class QuranApp : Application() {
 
         // Handler for uncaught exceptions
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
+        ThemeUtilsV2.migrateOldThemePreferences(this)
     }
 }

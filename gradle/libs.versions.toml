@@ -1,7 +1,7 @@
 [versions]
 coreKtx = "1.15.0"
-gradle = "8.2.1"
-kotlinGradlePlugin = "1.8.0"
+gradle = "8.11.2"
+kotlinGradlePlugin = "2.2.21"
 lifecycle = "2.8.7"
 desugaring = "2.1.4"
 annotation = "1.9.1"
@@ -22,6 +22,11 @@ kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
 commonsCompress = "1.24.0"
 workManager = "2.8.1"
+composeBom = "2024.09.02"
+dataStore = "1.1.7"
+activityKtx = "1.12.1"
+fragmentKtx = "1.8.9"
+
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +37,7 @@ kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", v
 
 lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-legacySupport = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupport" }
@@ -45,6 +51,10 @@ apache-commons = { group = "org.apache.commons", name = "commons-lang3", version
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 viewbinding = { group = "com.android.databinding", name = "viewbinding", version.ref = "viewbinding" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+androidx-activityKtx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+androidx-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityKtx" }
+androidx-fragmentKtx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+
 
 # ExoPlayer
 exoplayerCore = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayer" }
@@ -66,3 +76,17 @@ kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin
 
 commonsCompress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
 workManager = { module = "androidx.work:work-runtime-ktx", version.ref = "workManager" }
+
+dataStore = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+
+[plugins]
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }

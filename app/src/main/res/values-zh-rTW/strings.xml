@@ -126,7 +126,6 @@
     <string name="strTitleDownloadTranslations">下載</string>
     <string name="strTitleRecitations">朗誦</string>
     <string name="strTitleSelectReciter">選擇朗誦者</string>
-    <string name="titleManageAudio">管理音訊</string>
     <string name="downloadRecitations">下載朗誦</string>
     <string name="audioOption">音訊選項</string>
     <string name="playbackSpeed">播放速度</string>

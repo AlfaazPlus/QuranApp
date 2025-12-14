@@ -146,7 +146,6 @@
     <string name="strTitleDownloadTranslations">பதிவிறக்கம்</string>
     <string name="strTitleRecitations">பாராயணங்கள்</string>
     <string name="strTitleSelectReciter">ரிப்பிட்டரைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="titleManageAudio">ஆடியோவை நிர்வகிக்கவும்</string>
     <string name="downloadRecitations">பாராய்ப்புகளைப் பதிவிறக்கவும்</string>
     <string name="audioOption">ஆடியோ விருப்பம்</string>
     <string name="playbackSpeed">பின்னணி விரைவு</string>

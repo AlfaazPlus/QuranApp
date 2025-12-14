@@ -194,11 +194,17 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
             }
         };
 
-        if (savedInstanceState == null && shouldInflateAsynchronously()) {
-            mAsyncInflater.inflate(getLayoutResource(), null, inflateCallback);
+        final int layoutRes = getLayoutResource();
+
+        if (layoutRes != 0) {
+            if (savedInstanceState == null && shouldInflateAsynchronously()) {
+                mAsyncInflater.inflate(layoutRes, null, inflateCallback);
+            } else {
+                View view = getLayoutInflater().inflate(layoutRes, null);
+                inflateCallback.onInflateFinished(view, layoutRes, null);
+            }
         } else {
-            View view = getLayoutInflater().inflate(getLayoutResource(), null);
-            inflateCallback.onInflateFinished(view, getLayoutResource(), null);
+            onActivityInflated(new View(this), savedInstanceState);
         }
     }
 

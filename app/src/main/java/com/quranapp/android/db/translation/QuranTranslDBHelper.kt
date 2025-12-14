@@ -4,22 +4,28 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.db.transl
+package com.quranapp.android.db.translation
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.database.sqlite.transaction
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
-import com.quranapp.android.db.transl.QuranTranslInfoContract.QuranTranslInfoEntry
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_FOOTNOTES
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.TABLE_NAME
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry._ID
+import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
-import java.io.File
 import org.json.JSONObject
+import java.io.File
 
 class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     context,
@@ -57,22 +63,21 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
 
     override fun onCreate(DB: SQLiteDatabase) {
         createTranslInfoTable(DB)
-        DB.beginTransaction()
-        try {
-            for (bookInfo in TranslUtils.preBuiltTranslBooksInfo()) {
-                val prebuiltTranslPath = TranslUtils.getPrebuiltTranslPath(bookInfo.slug)
-                val translStrData = StringUtils.readInputStream(
-                    context.assets.open(prebuiltTranslPath)
-                )
-                storeTranslation(bookInfo, translStrData, DB)
-            }
+        DB.transaction {
+            try {
+                for (bookInfo in TranslUtils.preBuiltTranslBooksInfo()) {
+                    val prebuiltTranslPath = TranslUtils.getPrebuiltTranslPath(bookInfo.slug)
+                    val translStrData = StringUtils.readInputStream(
+                        context.assets.open(prebuiltTranslPath)
+                    )
+                    storeTranslation(bookInfo, translStrData, this)
+                }
 
-            migrateFileBasedTranslsToDatabase(context, DB)
-            DB.setTransactionSuccessful()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DB.endTransaction()
+                migrateFileBasedTranslsToDatabase(context, this)
+            } catch (e: Exception) {
+                Log.saveError(e, "QuranTranslDBHelper.onCreate")
+                e.printStackTrace()
+            }
         }
     }
 
@@ -104,15 +109,15 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     private fun createTranslInfoTable(DB: SQLiteDatabase) {
         DB.execSQL(
             "CREATE TABLE ${QuranTranslInfoEntry.TABLE_NAME} (" +
-                "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
-                "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
-                "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
-                "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
-                "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
-                "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
+                    "${QuranTranslInfoEntry.COL_SLUG} TEXT PRIMARY KEY," +
+                    "${QuranTranslInfoEntry.COL_LANG_CODE} TEXT," +
+                    "${QuranTranslInfoEntry.COL_LANG_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_BOOK_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_AUTHOR_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_DISPLAY_NAME} TEXT," +
+                    "${QuranTranslInfoEntry.COL_LAST_UPDATED} LONG," +
+                    "${QuranTranslInfoEntry.COL_DOWNLOAD_PATH} TEXT," +
+                    "${QuranTranslInfoEntry.COL_IS_PREMIUM} BOOLEAN)"
         )
     }
 
@@ -123,11 +128,11 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     private fun createTranslTable(DB: SQLiteDatabase, bookInfo: TranslationBookInfoModel) {
         DB.execSQL(
             "CREATE TABLE IF NOT EXISTS ${escapeTableName(bookInfo.slug)} (" +
-                "$_ID TEXT PRIMARY KEY," +
-                "$COL_CHAPTER_NO INTEGER," +
-                "$COL_VERSE_NO INTEGER," +
-                "$COL_TEXT TEXT," +
-                "$COL_FOOTNOTES TEXT)"
+                    "$_ID TEXT PRIMARY KEY," +
+                    "$COL_CHAPTER_NO INTEGER," +
+                    "$COL_VERSE_NO INTEGER," +
+                    "$COL_TEXT TEXT," +
+                    "$COL_FOOTNOTES TEXT)"
         )
     }
 
@@ -152,7 +157,8 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         val verses = chapterObj.optJSONArray(QuranConstants.KEY_VERSE_LIST) ?: return
         for (i in 0 until verses.length()) {
             val verseObj = verses.optJSONObject(i) ?: continue
-            val footnotes = verseObj.optJSONArray(QuranConstants.KEY_FOOTNOTE_LIST)?.toString() ?: "[]"
+            val footnotes =
+                verseObj.optJSONArray(QuranConstants.KEY_FOOTNOTE_LIST)?.toString() ?: "[]"
             insertTranslationQuery(
                 DB,
                 bookInfo.slug,
@@ -197,7 +203,11 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         DB.insert(QuranTranslInfoEntry.TABLE_NAME, null, values)
     }
 
-    fun storeTranslation(bookInfo: TranslationBookInfoModel, translData: String, DB: SQLiteDatabase?) {
+    fun storeTranslation(
+        bookInfo: TranslationBookInfoModel,
+        translData: String,
+        DB: SQLiteDatabase?
+    ) {
         (DB ?: writableDatabase).let {
             storeTranslationInfo(bookInfo, it)
             createTranslTable(it, bookInfo)

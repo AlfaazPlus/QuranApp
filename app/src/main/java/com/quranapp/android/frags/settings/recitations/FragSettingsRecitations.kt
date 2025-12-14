@@ -12,6 +12,9 @@ import com.quranapp.android.adapters.utility.ViewPagerAdapter2
 import com.quranapp.android.databinding.FragSettingsRecitationsBinding
 import com.quranapp.android.databinding.LytReaderIndexTabBinding
 import com.quranapp.android.frags.settings.FragSettingsBase
+import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio
+import com.quranapp.android.frags.settings.translation.FragSettingsTranslationsDownload
+import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
 
@@ -79,7 +82,14 @@ class FragSettingsRecitations : FragSettingsBase() {
     }
 
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        binding = FragSettingsRecitationsBinding.bind(view)
+        binding = FragSettingsRecitationsBinding.bind(view).apply {
+            downloadBtn.setVisibility(View.VISIBLE)
+            downloadBtn.setOnTouchListener(HoverPushOpacityEffect())
+            downloadBtn.setOnClickListener({ v ->
+                launchFrag(FragSettingsManageAudio::class.java, null)
+            })
+        }
+
 
         init(ctx)
     }
@@ -89,7 +99,10 @@ class FragSettingsRecitations : FragSettingsBase() {
             pageAdapter = ViewPagerAdapter2(requireActivity())
             it.viewPager.adapter = pageAdapter!!.apply {
                 addFragment(FragSettingsRecitationsArabic(), ctx.getString(R.string.strTitleQuran))
-                addFragment(FragSettingsRecitationsTranslation(), ctx.getString(R.string.labelTranslation))
+                addFragment(
+                    FragSettingsRecitationsTranslation(),
+                    ctx.getString(R.string.labelTranslation)
+                )
             }
             it.viewPager.offscreenPageLimit = pageAdapter!!.itemCount
             it.viewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER

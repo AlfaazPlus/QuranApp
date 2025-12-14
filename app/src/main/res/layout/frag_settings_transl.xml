@@ -13,7 +13,7 @@
         android:layout_centerInParent="true"
         android:overScrollMode="ifContentScrolls"
         android:paddingTop="10dp"
-        android:paddingBottom="@dimen/dmnPadBig"
+        android:paddingBottom="@dimen/dmnPadHuge"
         android:scrollbars="none" />
 
     <RelativeLayout

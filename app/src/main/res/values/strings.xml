@@ -14,6 +14,9 @@
     <string name="labelAdd">Add</string>
     <string name="strLabelRemove">Remove</string>
     <string name="strLabelDelete">Delete</string>
+    <string name="strLabelDownloaded">Downloaded</string>
+    <string name="strTitleDeleteTafsir">Delete Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Are you sure you want to delete \"%s\"? This will remove the downloaded tafsir data from your device.</string>
     <string name="strLabelRemoveAll">Remove all</string>
     <string name="strLabelCopy">Copy</string>
     <string name="strLabelBack">Back</string>
@@ -127,7 +130,6 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
-    <string name="titleManageAudio">Manage Audio</string>
     <string name="downloadRecitations">Download Recitations</string>
     <string name="audioOption">Audio option</string>
     <string name="playbackSpeed">Playback speed</string>
@@ -437,5 +439,11 @@
     <string name="noContinueDownload">No, continue</string>
     <string name="readingTafsirMultiVerses">
         Reading tafsir for multiple verses:
+    </string>
+    <string name="dlRecitations">
+        Download &amp; Manage Recitations
+    </string>
+    <string name="dlTafsirs">
+        Download &amp; Manage Tafsirs
     </string>
 </resources>

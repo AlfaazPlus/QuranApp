@@ -27,4 +27,8 @@ object Keys {
     const val KEY_VOTD_REMINDER_ENABLED = "votd_reminder_enabled"
 
     const val KEY_EXTRA_TITLE = "title"
+
+    const val THEME_MODE = "v2.theme_mode"
+    const val THEME_COLOR = "v2.theme_color"
+    const val THEME_DYNAMIC_COLOR = "v2.theme_dynamic_color"
 }

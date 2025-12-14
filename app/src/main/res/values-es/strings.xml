@@ -380,7 +380,6 @@
     <string name="msgRemovedFromFavourites">Eliminado de favoritos</string>
     <string name="msgRecitaionDownloaded" formatted="false">Descargado \"%1$s\" para el recitador \"%2$s\".</string>
     <string name="msgRecitaionDeleleSurah" formatted="false">Se eliminarán todas las recitaciones de \"%1$s\" para el recitador \"%2$s\".</string>
-    <string name="titleManageAudio">Gestionar el audio</string>
     <string name="msgAddedToFavourites">Añadido a favoritos</string>
     <string name="textNoLogsFound">No se encontraron registros</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">Error al descargar \"%1$s\" para el recitador \"%2$s\".</string>

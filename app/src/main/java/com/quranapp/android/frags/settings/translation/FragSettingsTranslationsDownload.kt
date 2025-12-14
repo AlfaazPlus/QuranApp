@@ -1,4 +1,4 @@
-package com.quranapp.android.frags.settings
+package com.quranapp.android.frags.settings.translation
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -18,11 +18,12 @@ import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.databinding.FragSettingsTranslBinding
+import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.maangers.TranslationDownloadManager
 import com.quranapp.android.utils.maangers.TranslationDownloadStateListener
-import com.quranapp.android.utils.maangers.TranslationDownloadStatus
+import com.quranapp.android.utils.maangers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -319,7 +320,7 @@ class FragSettingsTranslationsDownload :
         val ctx = referencedView.context
 
         if (isTranslationDownloaded(bookInfo.slug)) {
-            onTranslDownloadStatus(bookInfo.slug, TranslationDownloadStatus.Completed)
+            onTranslDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Completed)
             return
         }
 
@@ -331,14 +332,14 @@ class FragSettingsTranslationsDownload :
             .setTitle(R.string.strTitleDownloadTranslations)
             .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
             .setPositiveButton(R.string.labelDownload) { _, _ ->
-                onTranslDownloadStatus(bookInfo.slug, TranslationDownloadStatus.Started)
+                onTranslDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
                 TranslationDownloadManager.startDownload(ctx, bookInfo)
             }
             .setNegativeButton(R.string.strLabelCancel, null)
             .show()
     }
 
-    override fun onTranslDownloadStatus(slug: String, status: TranslationDownloadStatus) {
+    override fun onTranslDownloadStatus(slug: String, status: ResourceDownloadStatus) {
         val bookInfo = adapter?.getModel(slug)?.bookInfo ?: return
 
         Logger.d("Download status for '${bookInfo.bookName}': $status")
@@ -348,11 +349,11 @@ class FragSettingsTranslationsDownload :
         var msg: String? = null
 
         when (status) {
-            is TranslationDownloadStatus.Started -> {
+            is ResourceDownloadStatus.Started -> {
                 adapter?.onDownloadStatus(bookInfo.slug, true)
             }
 
-            is TranslationDownloadStatus.Failed -> {
+            is ResourceDownloadStatus.Failed -> {
                 title = ctx.getString(R.string.strTitleFailed)
                 msg = (
                         ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
@@ -361,18 +362,18 @@ class FragSettingsTranslationsDownload :
                 adapter?.onDownloadStatus(bookInfo.slug, false)
             }
 
-            is TranslationDownloadStatus.Completed -> {
+            is ResourceDownloadStatus.Completed -> {
                 title = ctx.getString(R.string.strTitleSuccess)
                 msg = ctx.getString(R.string.strMsgTranslDownloaded, bookInfo.bookName)
                 adapter?.onDownloadComplete(bookInfo.slug)
                 adapter?.onDownloadStatus(bookInfo.slug, false)
             }
 
-            is TranslationDownloadStatus.Cancelled -> {
+            is ResourceDownloadStatus.Cancelled -> {
                 adapter?.onDownloadStatus(bookInfo.slug, false)
             }
 
-            is TranslationDownloadStatus.InProgress -> {
+            is ResourceDownloadStatus.InProgress -> {
                 // noop
             }
         }

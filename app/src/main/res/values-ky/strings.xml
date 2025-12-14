@@ -108,7 +108,6 @@
     <string name="strTitleDownloadTranslations">Жүктөө</string>
     <string name="strTitleRecitations">Куран окуулар</string>
     <string name="strTitleSelectReciter">Куран окуучуну танда</string>
-    <string name="titleManageAudio">Аудио жөндөөсү</string>
     <string name="audioOption">Үн параметри</string>
     <string name="playbackSpeed">Ойнотуу ылдамдыгы</string>
     <string name="audioBothArabicTranslation">Экөөсүн тең ойнотуу</string>

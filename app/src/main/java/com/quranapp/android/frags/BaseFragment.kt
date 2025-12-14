@@ -52,9 +52,11 @@ abstract class BaseFragment : Fragment(), NetworkStateReceiverListener, Activity
 
     fun restartMainActivity(ctx: Context) {
         // start a new Intent of the app
-        startActivity(ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
+        ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        })
+        }?.let {
+            startActivity(it)
+        }
 
         // kill the current process
         Process.killProcess(Process.myPid())

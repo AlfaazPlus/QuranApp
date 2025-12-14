@@ -142,7 +142,7 @@
         android:maxLines="2"
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
-        android:text="@string/titleManageAudio"
+        android:text="@string/dlRecitations"
         android:textSize="@dimen/dmnCommonSize2"
         app:drawableEndDimen="20dp"
         app:drawableStartDimen="20dp"
