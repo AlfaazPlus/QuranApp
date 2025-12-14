@@ -442,4 +442,5 @@
     <string name="titleCancelDownload">İndirmeyi iptal etmek istiyor musunuz?</string>
     <string name="yesCancelDownload">Evet, iptal et</string>
     <string name="noContinueDownload">Hayır, devam et</string>
+    <string name="readingTafsirMultiVerses">Birden fazla ayet için tefsir okunuyor:</string>
 </resources>
