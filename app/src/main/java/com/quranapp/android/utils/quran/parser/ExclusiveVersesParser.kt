@@ -12,29 +12,42 @@ open class ExclusiveVersesParser {
         quranMeta: QuranMeta,
         filename: String
     ): List<ExclusiveVerse> {
-        val map = context.assets.open("verses/$filename/map.json").bufferedReader().use {
+        val assets = context.assets
+
+        val map = assets.open("verses/$filename/map.json").bufferedReader().use {
             it.readText()
         }
 
-        val fallbackLocale = "en"
-        val currentLocale = with(Locale.getDefault().language) {
+        val fallbackLangCode = "en"
+        val currentLangCode = with(Locale.getDefault().language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }
-        val pathFormat = "verses/$filename/%s"
-        val fileName = "$filename.json"
+        val currentCountry = Locale.getDefault().country
 
-        val fallbackTexts = context.assets.open("${pathFormat.format(fallbackLocale)}/$fileName")
+        val fullPath0 = "verses/$filename/$currentLangCode-r$currentCountry"
+        val fullPath1 = "verses/$filename/$currentLangCode"
+        val fallbackPath = "verses/$filename/$fallbackLangCode"
+        val filenameWithExt = "$filename.json"
+
+        val fallbackTexts = assets.open("$fallbackPath/$filenameWithExt")
             .bufferedReader().use {
                 it.readText()
             }
 
-        val localeTexts = context.assets.takeIf {
-            currentLocale != fallbackLocale && it.list(pathFormat.format(currentLocale))
-                ?.contains(fileName) == true
-        }?.open("${pathFormat.format(currentLocale)}/$fileName")
-            ?.bufferedReader()?.use {
-                it.readText()
-            }
+        val resolvedPath = if (currentLangCode != fallbackLangCode) {
+            if (assets.list(fullPath0)?.contains(filenameWithExt) == true) {
+                fullPath0
+            } else if (assets.list(fullPath1)?.contains(filenameWithExt) == true) {
+                fullPath1
+            } else null
+        } else null
+
+        val localeTexts = resolvedPath?.let {
+            assets.open("$it/$filenameWithExt")
+                .bufferedReader().use { reader ->
+                    reader.readText()
+                }
+        }
 
         return parseVersesInternal(
             context,
