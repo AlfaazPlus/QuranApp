@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.sharedPrefs
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.core.content.edit
 import com.quranapp.android.reader_managers.ReaderParams
@@ -10,7 +9,7 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationSlug
 import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationTranslationSlug
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.reader.tafsir.TafsirManager.setSavedTafsirKey
+import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
 
@@ -334,6 +333,6 @@ object SPReader {
             putString(TafsirUtils.KEY_TAFSIR, tafsirKey)
         }
 
-        setSavedTafsirKey(tafsirKey)
+        TafsirManager.setSavedTafsirKey(tafsirKey)
     }
 }

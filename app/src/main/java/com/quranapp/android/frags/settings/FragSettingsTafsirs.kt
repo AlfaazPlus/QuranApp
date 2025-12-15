@@ -2,41 +2,38 @@ package com.quranapp.android.frags.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.adapters.tafsir.ADPTafsirGroup
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.components.tafsir.TafsirGroupModel
-import com.quranapp.android.databinding.FragSettingsTafsirBinding
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.compose.screens.settings.TafsirSelectionScreen
+import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.viewModels.TafsirEvent
+import com.quranapp.android.viewModels.TafsirViewModel
 import com.quranapp.android.views.BoldHeader
-import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
-import com.quranapp.android.widgets.PageAlert
-import java.util.*
+import kotlinx.coroutines.launch
 
 class FragSettingsTafsirs : FragSettingsBase() {
 
-    private lateinit var binding: FragSettingsTafsirBinding
-    private lateinit var fileUtils: FileUtils
-    private lateinit var pageAlert: PageAlert
-
-    private var initialTafsirKey: String? = null
+    private val tafsirViewModel: TafsirViewModel by viewModels()
 
     override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectTafsir)
 
-    override val layoutResource = R.layout.frag_settings_tafsir
+    override val layoutResource: Int = 0 // Not using XML layout
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (SPReader.getSavedTafsirKey(ctx) != initialTafsirKey) {
+        if (tafsirViewModel.hasTafsirSelectionChanged()) {
             return bundleOf(ActivityReader.KEY_TAFSIR_CHANGED to true)
         }
         return null
@@ -45,17 +42,17 @@ class FragSettingsTafsirs : FragSettingsBase() {
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.apply {
-            setCallback(object : BoldHeaderCallback {
+            setCallback(object : BoldHeader.BoldHeaderCallback {
                 override fun onBackIconClick() {
                     activity.onBackPressedDispatcher.onBackPressed()
                 }
 
                 override fun onRightIconClick() {
-                    refresh(activity, true)
+                    tafsirViewModel.onEvent(TafsirEvent.Refresh)
                 }
             })
 
-            disableRightBtn(false)
+            setShowRightIcon(true)
             setRightIconRes(
                 R.drawable.dr_icon_refresh,
                 activity.getString(R.string.strLabelRefresh)
@@ -63,128 +60,34 @@ class FragSettingsTafsirs : FragSettingsBase() {
         }
     }
 
-    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        fileUtils = FileUtils.newInstance(ctx)
-        initialTafsirKey = SPReader.getSavedTafsirKey(ctx)
-        pageAlert = PageAlert(ctx)
-        binding = FragSettingsTafsirBinding.bind(view).apply {
-            list.layoutManager = LinearLayoutManager(ctx)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-        refresh(ctx, SPAppActions.getFetchTafsirsForce(ctx))
-    }
+            setContent {
+                QuranAppTheme {
+                    val uiState by tafsirViewModel.uiState.collectAsState()
 
-    private fun refresh(ctx: Context, force: Boolean) {
-        if (force && !NetworkStateReceiver.isNetworkConnected(ctx)) {
-            noInternet(ctx)
-        }
-
-        showLoader()
-
-        TafsirManager.prepare(ctx, force) {
-            val models = TafsirManager.getModels()
-
-            if (!models.isNullOrEmpty()) {
-                parseAvailableTafsir(ctx, models)
-            } else {
-                noTafsirsAvailable(ctx)
-            }
-
-            hideLoader()
-        }
-    }
-
-    private fun parseAvailableTafsir(ctx: Context, tafsirs: Map<String, List<TafsirInfoModel>>) {
-        val savedTafsirKey = SPReader.getSavedTafsirKey(ctx)
-        val tafsirGroups = LinkedList<TafsirGroupModel>()
-
-        for (langCode in tafsirs.keys) {
-            val groupModel = TafsirGroupModel(langCode)
-            val tafsirModels = tafsirs[langCode] ?: continue
-            if (tafsirModels.isEmpty()) continue
-
-            var groupHasItemSelected = false
-
-            for (model in tafsirModels) {
-                model.isChecked = model.key == savedTafsirKey
-
-                if (model.isChecked) {
-                    groupHasItemSelected = true
+                    TafsirSelectionScreen(
+                        uiState = uiState,
+                    )
                 }
             }
-
-            groupModel.tafsirs = tafsirModels
-            groupModel.langName = tafsirModels[0].langName
-            groupModel.isExpanded = groupHasItemSelected
-
-            tafsirGroups.add(groupModel)
-        }
-
-        populateTafsirs(ctx, tafsirGroups)
-    }
-
-    private fun populateTafsirs(ctx: Context, models: List<TafsirGroupModel>) {
-        binding.list.let {
-            it.adapter = ADPTafsirGroup(models)
-            it.layoutManager = LinearLayoutManager(ctx)
-            (it.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-        }
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
         }
     }
 
-    private fun noTafsirsAvailable(ctx: Context) {
-        showAlert(ctx, 0, R.string.strMsgTafsirsNoAvailable, R.string.strLabelRefresh) {
-            refresh(ctx, true)
-        }
-    }
-
-    private fun showLoader() {
-        hideAlert()
-        binding.loader.visibility = View.VISIBLE
-
-        activity()?.header?.apply {
-            setShowRightIcon(false)
-        }
-    }
-
-    private fun hideLoader() {
-        binding.loader.visibility = View.GONE
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
-        }
-    }
-
-    private fun showAlert(ctx: Context, titleRes: Int, msgRes: Int, btnRes: Int, action: Runnable) {
-        hideLoader()
-
-        pageAlert.apply {
-            setIcon(null)
-            setMessage(if (titleRes > 0) ctx.getString(titleRes) else "", ctx.getString(msgRes))
-            setActionButton(btnRes, action)
-            show(binding.container)
-        }
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
-        }
-    }
-
-    private fun hideAlert() {
-        pageAlert.remove()
-    }
-
-    private fun noInternet(ctx: Context) {
-        pageAlert.apply {
-            setupForNoInternet { refresh(ctx, true) }
-            show(binding.container)
-        }
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
+    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
+        // Observe loading state to toggle header refresh icon visibility
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                tafsirViewModel.uiState.collect { state ->
+                    activity()?.header?.setShowRightIcon(!state.isLoading)
+                }
+            }
         }
     }
 }

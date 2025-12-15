@@ -16,7 +16,7 @@ import com.quranapp.android.components.search.SearchResultModelBase
 import com.quranapp.android.components.search.VerseResultCountModel
 import com.quranapp.android.components.search.VerseResultModel
 import com.quranapp.android.databinding.FragSearchResultsBinding
-import com.quranapp.android.db.transl.QuranTranslContract.QuranTranslEntry.*
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.*
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.Destroyable
 import com.quranapp.android.utils.Log

@@ -314,7 +314,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     @Override
-    public void adjustStatusAndNavigationBar() {
+    public void adjustSystemBars() {
         Window window = getWindow();
         View decorView = window.getDecorView();
 
@@ -502,7 +502,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     private void initDummyBars() {
-        adjustStatusAndNavigationBar();
+        adjustSystemBars();
 
         final View navDummy = mBinding.navigationBarDummy;
         final View statusBarPlaceholder = mBinding.readerHeader.getBinding().statusBarPlaceholder;

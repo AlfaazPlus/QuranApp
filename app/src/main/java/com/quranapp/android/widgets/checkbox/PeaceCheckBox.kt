@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.widgets.compound.PeaceCompoundButton
+import androidx.core.content.withStyledAttributes
 
 class PeaceCheckBox @JvmOverloads constructor(
     context: Context,
@@ -21,21 +22,21 @@ class PeaceCheckBox @JvmOverloads constructor(
     private lateinit var checkBox: CheckBoxHelper
 
     init {
-        val a = context.obtainStyledAttributes(
+        context.withStyledAttributes(
             attrs,
             R.styleable.PeaceCompoundButton,
             defStyleAttr,
             0
-        )
+        ) {
 
-        if (a.hasValue(R.styleable.PeaceCompoundButton_peaceComp_buttonCompat)) {
-            hasInitialButtonDrawable = true
-            checkBoxButtonCompat = a.getDrawable(
-                R.styleable.PeaceCompoundButton_peaceComp_buttonCompat
-            )
+            if (hasValue(R.styleable.PeaceCompoundButton_peaceComp_buttonCompat)) {
+                hasInitialButtonDrawable = true
+                checkBoxButtonCompat = getDrawable(
+                    R.styleable.PeaceCompoundButton_peaceComp_buttonCompat
+                )
+            }
+
         }
-
-        a.recycle()
     }
 
     override fun initThis() {

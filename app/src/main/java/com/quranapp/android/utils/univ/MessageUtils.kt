@@ -26,7 +26,7 @@ object MessageUtils {
         toast!!.get()!!.show()
     }
 
-    fun popNoInternetMessage(ctx: Context, cancelable: Boolean, runOnDismiss: Runnable?) {
+    fun popNoInternetMessage(ctx: Context, cancelable: Boolean, runOnDismiss: Runnable? = null) {
         PeaceDialog.newBuilder(ctx).apply {
             setTitle(R.string.strTitleNoInternet)
             setMessage(R.string.strMsgNoInternetLong)

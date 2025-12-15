@@ -56,8 +56,12 @@ class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerV
             binding.radio.isClickable = false
             binding.radio.isFocusable = false
             binding.radio.visibility = if (isManageAudio) View.GONE else View.VISIBLE
+            binding.chevron.visibility = if (!isManageAudio) View.GONE else View.VISIBLE
 
-            if (isManageAudio) (binding.reciter.layoutParams as? ViewGroup.MarginLayoutParams)?.marginStart = 0
+            if (isManageAudio) {
+                (binding.reciter.layoutParams as? ViewGroup.MarginLayoutParams)?.marginStart = 0
+                (binding.style.layoutParams as? ViewGroup.MarginLayoutParams)?.marginStart = 0
+            }
         }
 
         fun bind(model: RecitationInfoModel) {

@@ -48,7 +48,8 @@ public abstract class VerseUtils {
     public static CharSequence decorateVerse(
         Verse verse,
         Typeface verseFont,
-        int verseTextSize
+        int verseTextSize,
+        int verseTextColor
     ) {
         if (TextUtils.isEmpty(verse.arabicText)) {
             return "";
@@ -57,6 +58,8 @@ public abstract class VerseUtils {
         SpannableString arabicSS = new SpannableString(verse.arabicText);
         // Set the typeface to span over arabic text
         arabicSS.setSpan(new TypefaceSpan2(verseFont), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        arabicSS.setSpan(new ForegroundColorSpan(verseTextColor), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+
         if (verseTextSize > 0) {
             arabicSS.setSpan(new AbsoluteSizeSpan(verseTextSize), 0, arabicSS.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -68,7 +71,7 @@ public abstract class VerseUtils {
         return TextUtils.concat(
             arabicSS,
             " ",
-            prepareVerseSerial(verse.endText, verseFont, verseTextSize)
+            prepareVerseSerial(verse.endText, verseFont, verseTextSize, verseTextColor)
         );
     }
 
@@ -94,7 +97,7 @@ public abstract class VerseUtils {
             concat = TextUtils.concat(
                 arabicSS,
                 " ",
-                prepareVerseSerial(verse.endText, verseFont, -1)
+                prepareVerseSerial(verse.endText, verseFont, -1, txtColor)
             );
         } else {
             concat = arabicSS;
@@ -109,7 +112,8 @@ public abstract class VerseUtils {
     private static CharSequence prepareVerseSerial(
         String serialText,
         Typeface serialFont,
-        int verseTextSize
+        int verseTextSize,
+        int verseTextColor
     ) {
         final CharSequence text;
         if (Build.VERSION.SDK_INT >= 33) text = serialText;
@@ -118,6 +122,8 @@ public abstract class VerseUtils {
         SpannableString verseNoSpannable = new SpannableString(text);
         // Set the typeface to span over verse number text
         verseNoSpannable.setSpan(new TypefaceSpan2(serialFont), 0, verseNoSpannable.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        verseNoSpannable.setSpan(new ForegroundColorSpan(verseTextColor), 0, verseNoSpannable.length(),
+            SPAN_EXCLUSIVE_EXCLUSIVE);
 
         if (verseTextSize > 0) {
             verseNoSpannable.setSpan(new AbsoluteSizeSpan(verseTextSize), 0, verseNoSpannable.length(),

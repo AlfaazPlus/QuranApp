@@ -366,7 +366,6 @@
     <string name="nItem" formatted="false">عنصر %d</string>
     <string name="nItems" formatted="false">%d عناصر</string>
     <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
-    <string name="titleManageAudio">إدارة الصوتيات</string>
     <string name="downloadRecitations">تنزيل التلاوات</string>
     <string name="audioOption">خيارات الصوت</string>
     <string name="playbackSpeed">سرعة التشغيل</string>

@@ -156,4 +156,14 @@ public abstract class StringUtils {
                 d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING ||
                 d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE;
     }
+
+    public static boolean isRtlLanguage(String langCode) {
+        String[] rtlLangs = {"ar", "fa", "ur", "ps", "sd", "ug", "dv", "he", "yi", "ku", "syr", "az-Arab", "ckb"};
+        for (String rtlLang : rtlLangs) {
+            if (rtlLang.equalsIgnoreCase(langCode)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.quranapp.android.db.transl;
+package com.quranapp.android.db.translation;
 
 import android.provider.BaseColumns;
 

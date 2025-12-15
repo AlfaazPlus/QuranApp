@@ -2,29 +2,25 @@ package com.quranapp.android.frags.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.updatePaddingRelative
-import com.peacedesign.android.utils.WindowUtils
+import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.databinding.FragSettingsLangBinding
-import com.quranapp.android.utils.extensions.dp2px
-import com.quranapp.android.utils.extensions.getStringArray
+import com.quranapp.android.compose.screens.settings.LanguageSelectionScreen
+import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
-import com.quranapp.android.views.reader.updateAllVotdWidgets
-import com.quranapp.android.widgets.compound.PeaceCompoundButton
-import com.quranapp.android.widgets.radio.PeaceRadioButton
-import java.util.Locale
 
 class FragSettingsLanguage : FragSettingsBase() {
-    private lateinit var binding: FragSettingsLangBinding
-    private var initialLocale: String? = null
+    private var selectedLocale: String? = null
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleAppLanguage)
 
-    override val layoutResource = R.layout.frag_settings_lang
+    override val layoutResource: Int = 0 // Not using XML layout
 
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
@@ -46,70 +42,37 @@ class FragSettingsLanguage : FragSettingsBase() {
         }
     }
 
-    override val shouldCreateScrollerView = true
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val initialLocale = SPAppConfigs.getLocale(requireContext())
 
-    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
-        binding = FragSettingsLangBinding.bind(view)
-        initialLocale = SPAppConfigs.getLocale(ctx)
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-        initLanguage(binding)
-    }
-
-    private fun initLanguage(binding: FragSettingsLangBinding) {
-        val ctx = binding.root.context
-
-        val availableLocalesValues = ctx.getStringArray(R.array.availableLocalesValues)
-        val availableLocaleNames = ctx.getStringArray(R.array.availableLocalesNames)
-
-        val forcedTextGravity = if (WindowUtils.isRTL(ctx)) {
-            PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_RIGHT
-        } else {
-            PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT
-        }
-
-        var preCheckedRadioId = View.NO_ID
-
-        availableLocalesValues.forEachIndexed { index, value ->
-            PeaceRadioButton(ctx).apply {
-                tag = value
-
-                setCompoundDirection(PeaceCompoundButton.COMPOUND_TEXT_LEFT)
-                setBackgroundResource(R.drawable.dr_bg_hover)
-                setSpaceBetween(ctx.dp2px(20f))
-                setTextAppearance(R.style.TextAppearanceCommonTitle)
-                setForceTextGravity(forcedTextGravity)
-
-                val padH = ctx.dp2px(20f)
-                val padV = ctx.dp2px(12f)
-
-                updatePaddingRelative(start = padH, end = padH, top = padV, bottom = padV)
-
-                setTexts(availableLocaleNames[index], null)
-
-                binding.list.addView(this)
-
-                if (value == initialLocale) {
-                    preCheckedRadioId = id
+            setContent {
+                QuranAppTheme {
+                    LanguageSelectionScreen(
+                        onLocaleSelected = { locale ->
+                            selectedLocale = locale
+                            activity()?.header?.disableRightBtn(locale == initialLocale)
+                        }
+                    )
                 }
             }
         }
+    }
 
-        if (preCheckedRadioId != View.NO_ID) {
-            binding.list.check(preCheckedRadioId)
-        }
-
-        binding.list.onCheckChangedListener = { button, _ ->
-            activity()?.header?.disableRightBtn(button.tag == initialLocale)
-        }
+    override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
+        // Locale is initialized in onCreateView
     }
 
     private fun changeCheckpoint() {
-        val button = binding.list.findViewById<View>(binding.list.getCheckedRadioId()) ?: return
-        val locale = button.tag as String?
+        val locale = selectedLocale ?: return
 
-        if (locale == null || locale == initialLocale) return
-
-        restartApp(binding.list.context, locale)
+        restartApp(requireContext(), locale)
     }
 
     private fun restartApp(ctx: Context, locale: String) {

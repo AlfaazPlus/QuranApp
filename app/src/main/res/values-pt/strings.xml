@@ -345,7 +345,6 @@
     <string name="titleScriptCleanup">Eliminar o script?</string>
     <string name="msgScriptCleanup" formatted="false">O script %s e todas as suas fontes armazenadas serão eliminados. Terá de voltar a descarregar para as utilizar.</string>
     <string name="titleReaderTextSizeTafsir">Tamanho do texto do Tafsir</string>
-    <string name="titleManageAudio">Gerir áudio</string>
     <string name="downloadRecitations">Transferir recitações</string>
     <string name="audioOption">Opção de áudio</string>
     <string name="msgNoFavouriteChapters">Adicionar um capítulo aos favoritos para ver aqui.</string>

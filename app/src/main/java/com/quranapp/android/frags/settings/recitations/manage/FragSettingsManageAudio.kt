@@ -21,7 +21,7 @@ class FragSettingsManageAudio : FragSettingsBase() {
     private lateinit var binding: FragSettingsRecitationsBinding
     private var pageAdapter: ViewPagerAdapter2? = null
 
-    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.titleManageAudio)
+    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.dlRecitations)
 
     override val layoutResource = R.layout.frag_settings_recitations
 

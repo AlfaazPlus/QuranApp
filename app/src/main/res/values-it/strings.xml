@@ -340,7 +340,6 @@
     <string name="titleExportData">Export e Import</string>
     <string name="storageCleanupMessage">Libera spazio rimuovendo risorse inutilizzate. Questo non rimuoverà nessun segnalibro o impostazioni.\n\nLe risorse seguenti possono essere rimosse:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d Delle traduzioni possono essere rimosse.</string>
-    <string name="titleManageAudio">Gestione Audio</string>
     <string name="audioOnlyArabic">Riproduci solo Arabo</string>
     <string name="audioOnlyTranslation">Riproduci solo traduzioni</string>
     <string name="audioBothArabicTranslation">Riproduci sia Arabo che Traduzioni</string>

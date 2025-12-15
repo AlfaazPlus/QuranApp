@@ -384,7 +384,6 @@
     <string name="noItems">Aucun élément</string>
     <string name="labelTranslation">Traduction</string>
     <string name="titleAddToFavourites">Ajouter aux favoris</string>
-    <string name="titleManageAudio">Gérer l\'audio</string>
     <string name="textNoLogsFound">Aucun journal trouvé</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">Échec du téléchargement de \"%1$s\" pour le récitateur \"%2$s\".</string>
     <string name="playbackSpeed">Vitesse de lecture</string>

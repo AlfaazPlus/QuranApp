@@ -4,9 +4,6 @@
 
 package com.quranapp.android.activities.base;
 
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.DEFAULT;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.NONE;
-import static com.quranapp.android.activities.base.BaseActivity.ActivityAnimationStyle.SLIDE;
 import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
 
 import android.content.Context;
@@ -26,7 +23,6 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.AnimRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -178,7 +174,7 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(getThemeId());
         super.onCreate(savedInstanceState);
-        adjustStatusAndNavigationBar();
+        adjustSystemBars();
         initCreate(savedInstanceState);
     }
 
@@ -194,11 +190,17 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
             }
         };
 
-        if (savedInstanceState == null && shouldInflateAsynchronously()) {
-            mAsyncInflater.inflate(getLayoutResource(), null, inflateCallback);
+        final int layoutRes = getLayoutResource();
+
+        if (layoutRes != 0) {
+            if (savedInstanceState == null && shouldInflateAsynchronously()) {
+                mAsyncInflater.inflate(layoutRes, null, inflateCallback);
+            } else {
+                View view = getLayoutInflater().inflate(layoutRes, null);
+                inflateCallback.onInflateFinished(view, layoutRes, null);
+            }
         } else {
-            View view = getLayoutInflater().inflate(getLayoutResource(), null);
-            inflateCallback.onInflateFinished(view, getLayoutResource(), null);
+            onActivityInflated(new View(this), savedInstanceState);
         }
     }
 
@@ -214,7 +216,7 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
 
     protected abstract void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState);
 
-    public void adjustStatusAndNavigationBar() {
+    public void adjustSystemBars() {
         Window window = getWindow();
         boolean isLight = isStatusBarLight();
 
@@ -284,60 +286,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
         return getStatusBarBG();
     }
 
-    private void setupInAnimation() {
-        @AnimRes int inThisActivity;
-        @AnimRes int outOldActivity;
-        switch (getAnimationStyle()) {
-            case SLIDE:
-                inThisActivity = R.anim.slide_in_right;
-                outOldActivity = R.anim.slide_out_left;
-                break;
-            case NONE:
-                inThisActivity = 0;
-                outOldActivity = 0;
-                break;
-
-            case DEFAULT:
-            default:
-                inThisActivity = -1;
-                outOldActivity = -1;
-                break;
-        }
-
-        if (inThisActivity == -1) return;
-
-        overridePendingTransition(inThisActivity, outOldActivity);
-    }
-
-    private void setupOutAnimation() {
-        @AnimRes int inOldActivity;
-        @AnimRes int outThisActivity;
-        switch (getAnimationStyle()) {
-            case SLIDE:
-                inOldActivity = R.anim.slide_in_left;
-                outThisActivity = R.anim.slide_out_right;
-                break;
-            case NONE:
-                inOldActivity = 0;
-                outThisActivity = 0;
-                break;
-
-            case DEFAULT:
-            default:
-                inOldActivity = -1;
-                outThisActivity = -1;
-                break;
-        }
-
-        if (inOldActivity == -1) return;
-
-        overridePendingTransition(inOldActivity, outThisActivity);
-    }
-
-    protected int getAnimationStyle() {
-        return DEFAULT;
-    }
-
     public void launchActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
@@ -376,9 +324,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
         return isDestroyed() || isFinishing() || isChangingConfigurations();
     }
 
-    protected static class ActivityAnimationStyle {
-        public static final int DEFAULT = 0, SLIDE = 1, NONE = -1;
-    }
 
     @Override
     public void startActivity4Result(Intent intent, ActivityOptionsCompat options) {

@@ -1,8 +1,9 @@
 package com.quranapp.android.api.models.tafsir
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class TafsirInfoModel(
     val key: String,
     val name: String,
@@ -11,9 +12,9 @@ data class TafsirInfoModel(
     val langCode: String,
     @SerialName("lang_name")
     val langName: String,
-    val slug: String,
 ) {
     var isChecked = false
+    var isDownloaded = false
 
 
     override fun equals(other: Any?): Boolean {

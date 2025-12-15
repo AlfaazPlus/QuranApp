@@ -1,13 +1,16 @@
 package com.quranapp.android.utils.sharedPrefs
 
-import android.annotation.SuppressLint
+import ThemeUtilsV2
 import android.content.Context
 import androidx.core.content.edit
 import com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object SPAppConfigs {
     const val SP_APP_CONFIGS = "sp_app_configs"
-    private const val KEY_APP_THEME = "key.app.theme"
+    const val KEY_APP_THEME = "key.app.theme"
     private const val KEY_APP_LANGUAGE = "key.app.language"
     private const val KEY_URLS_VERSION = "key.versions.urls"
     private const val KEY_TRANSLATIONS_VERSION = "key.versions.translations"
@@ -28,9 +31,13 @@ object SPAppConfigs {
     )
 
     @JvmStatic
-    fun setThemeMode(ctx: Context, themeMode: String?) {
+    fun setThemeMode(ctx: Context, themeMode: String) {
         sp(ctx).edit() {
             putString(KEY_APP_THEME, themeMode)
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            ThemeUtilsV2.setThemeMode(themeMode)
         }
     }
 

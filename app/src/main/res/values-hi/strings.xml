@@ -371,7 +371,6 @@
     <string name="titleReaderTextSizeTafsir">तफ़सीर टेक्स्ट साइज</string>
     <string name="labelArabic">अरबी</string>
     <string name="labelTranslation">अनुवाद</string>
-    <string name="titleManageAudio">ऑडियो मैनेज करें</string>
     <string name="playbackSpeed">प्लेबैक गति</string>
     <string name="audioOnlyTranslation">केवल अनुवाद चलायें</string>
     <string name="noItems">कोई आइटम नहीं</string>

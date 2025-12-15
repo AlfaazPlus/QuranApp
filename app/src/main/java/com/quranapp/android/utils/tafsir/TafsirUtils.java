@@ -29,15 +29,6 @@ public class TafsirUtils {
         return model.getName();
     }
 
-    public static String getTafsirSlugFromKey(String key) {
-        TafsirInfoModel model = TafsirManager.getModel(key);
-        if (model == null) {
-            return null;
-        }
-
-        return model.getSlug();
-    }
-
     public static String getDefaultTafsirKey() {
         Map<String, List<TafsirInfoModel>> models = TafsirManager.getModels();
         if (models == null) {

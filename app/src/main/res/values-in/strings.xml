@@ -375,7 +375,6 @@
     <string name="textNoLogsFound">Log tidak ditemukan</string>
     <string name="msgRecitaionDownloaded" formatted="false">Terunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">Murattal yang terhapus \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
-    <string name="titleManageAudio">Kelola Audio</string>
     <string name="msgAddedToFavourites">Telah ditambah ke favorit</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">Gagal mengunduh \"%1$s\" untuk Qori Murattal \"%2$s\".</string>
     <string name="playbackSpeed">Kecepatan pemutaran</string>

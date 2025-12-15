@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
@@ -17,7 +18,7 @@
         android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reciter"
@@ -30,23 +31,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/radio"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Hani ar-Rifai" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/dr_bg_reader_verse_action"
-        android:fontFamily="sans-serif-light"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="1dp"
         android:textAlignment="viewStart"
         android:textSize="@dimen/dmnCommonSize2_5"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/radio"
-        app:layout_constraintTop_toBottomOf="@id/reciter" />
+        app:layout_constraintTop_toBottomOf="@id/reciter"
+        tools:text="Mujawwad"
+        tools:visibility="visible" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/chevron"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dr_icon_chevron_right"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

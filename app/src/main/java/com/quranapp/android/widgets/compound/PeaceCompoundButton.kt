@@ -26,6 +26,7 @@ import com.quranapp.android.R
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.extensions.sp2px
+import androidx.core.content.withStyledAttributes
 
 abstract class PeaceCompoundButton @JvmOverloads constructor(
     context: Context,
@@ -64,38 +65,38 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     private var txtView: AppCompatTextView? = null
 
     init {
-        val a = context.obtainStyledAttributes(
+        context.withStyledAttributes(
             attrs,
             R.styleable.PeaceCompoundButton,
             defStyleAttr,
             0
-        )
+        ) {
 
-        text = a.getText(R.styleable.PeaceCompoundButton_android_text)
-        subText = a.getText(R.styleable.PeaceCompoundButton_peaceComp_subText)
-        initialChecked = a.getBoolean(R.styleable.PeaceCompoundButton_android_checked, false)
-        compoundDirection = a.getInt(
-            R.styleable.PeaceCompoundButton_peaceComp_direction,
-            COMPOUND_TEXT_RIGHT
-        )
-        spaceBetween = a.getDimensionPixelSize(
-            R.styleable.PeaceCompoundButton_peaceComp_spaceBetween,
-            context.dp2px(10f)
-        )
-        textGravity = a.getInt(
-            R.styleable.PeaceCompoundButton_peaceComp_textGravity,
-            COMPOUND_TEXT_GRAVITY_START
-        )
-        textAppearanceResId = a.getResourceId(
-            R.styleable.PeaceCompoundButton_android_textAppearance,
-            R.style.PeaceRadioTextAppearance
-        )
-        subTextAppearanceResId = a.getResourceId(
-            R.styleable.PeaceCompoundButton_peaceComp_subTextAppearance,
-            R.style.PeaceRadioSubTextAppearance
-        )
+            text = getText(R.styleable.PeaceCompoundButton_android_text)
+            subText = getText(R.styleable.PeaceCompoundButton_peaceComp_subText)
+            initialChecked = getBoolean(R.styleable.PeaceCompoundButton_android_checked, false)
+            compoundDirection = getInt(
+                R.styleable.PeaceCompoundButton_peaceComp_direction,
+                COMPOUND_TEXT_RIGHT
+            )
+            spaceBetween = getDimensionPixelSize(
+                R.styleable.PeaceCompoundButton_peaceComp_spaceBetween,
+                context.dp2px(10f)
+            )
+            textGravity = getInt(
+                R.styleable.PeaceCompoundButton_peaceComp_textGravity,
+                COMPOUND_TEXT_GRAVITY_START
+            )
+            textAppearanceResId = getResourceId(
+                R.styleable.PeaceCompoundButton_android_textAppearance,
+                R.style.PeaceRadioTextAppearance
+            )
+            subTextAppearanceResId = getResourceId(
+                R.styleable.PeaceCompoundButton_peaceComp_subTextAppearance,
+                R.style.PeaceRadioSubTextAppearance
+            )
 
-        a.recycle()
+        }
         init()
     }
 
@@ -200,35 +201,35 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     @SuppressLint("CustomViewStyleable")
     private fun setTextAppearanceSpan(ss: SpannableString, styleId: Int, isSubText: Boolean) {
         val txtSizeDef = context.sp2px(if (isSubText) 14F else 16.toFloat())
-        val ta = context.obtainStyledAttributes(styleId, R.styleable.TextAppearance)
+        context.withStyledAttributes(styleId, R.styleable.TextAppearance) {
 
-        var family = "sans-serif"
+            var family = "sans-serif"
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val font = ta.getFont(R.styleable.TextAppearance_android_fontFamily)
-            if (font != null) {
-                ss.setSpan(TypefaceSpan2(font), 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val font = getFont(R.styleable.TextAppearance_android_fontFamily)
+                if (font != null) {
+                    ss.setSpan(TypefaceSpan2(font), 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                } else {
+                    family = resolveFontFamily(
+                        getString(R.styleable.TextAppearance_android_fontFamily)
+                    )
+                }
             } else {
-                family = resolveFontFamily(
-                    ta.getString(R.styleable.TextAppearance_android_fontFamily)
-                )
+                family = resolveFontFamily(getString(R.styleable.TextAppearance_android_fontFamily))
             }
-        } else {
-            family = resolveFontFamily(ta.getString(R.styleable.TextAppearance_android_fontFamily))
+
+            val style = getInt(
+                R.styleable.TextAppearance_android_textStyle,
+                if (isSubText) Typeface.NORMAL else Typeface.BOLD
+            )
+
+            val size =
+                getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, txtSizeDef)
+            val color = getColorStateList(R.styleable.TextAppearance_android_textColor)
+            val txtApSpan = TextAppearanceSpan(family, style, size, color, null)
+
+            ss.setSpan(txtApSpan, 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
-
-        val style = ta.getInt(
-            R.styleable.TextAppearance_android_textStyle,
-            if (isSubText) Typeface.NORMAL else Typeface.BOLD
-        )
-
-        val size = ta.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, txtSizeDef)
-        val color = ta.getColorStateList(R.styleable.TextAppearance_android_textColor)
-        val txtApSpan = TextAppearanceSpan(family, style, size, color, null)
-
-        ss.setSpan(txtApSpan, 0, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        ta.recycle()
     }
 
     private fun resolveFontFamily(s: String?): String {
@@ -368,7 +369,7 @@ abstract class PeaceCompoundButton @JvmOverloads constructor(
     }
 
     @CallSuper
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         background?.state = intArrayOf(
             if (isChecked) android.R.attr.state_checked else -android.R.attr.state_checked
         )

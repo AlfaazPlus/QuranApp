@@ -11,7 +11,6 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.utils.Logger
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
@@ -109,7 +108,7 @@ object TranslationDownloadManager {
                         WorkInfo.State.ENQUEUED -> {
                             listener.onTranslDownloadStatus(
                                 slug,
-                                TranslationDownloadStatus.Started
+                                ResourceDownloadStatus.Started
                             )
                         }
 
@@ -117,14 +116,14 @@ object TranslationDownloadManager {
                             val progress = workInfo.progress.getInt("progress", 0)
                             listener.onTranslDownloadStatus(
                                 slug,
-                                TranslationDownloadStatus.InProgress(progress)
+                                ResourceDownloadStatus.InProgress(progress)
                             )
                         }
 
                         WorkInfo.State.SUCCEEDED -> {
                             listener.onTranslDownloadStatus(
                                 slug,
-                                TranslationDownloadStatus.Completed
+                                ResourceDownloadStatus.Completed
                             )
                         }
 
@@ -132,14 +131,14 @@ object TranslationDownloadManager {
                             val error = workInfo.outputData.getString("error")
                             listener.onTranslDownloadStatus(
                                 slug,
-                                TranslationDownloadStatus.Failed(error)
+                                ResourceDownloadStatus.Failed(error)
                             )
                         }
 
                         WorkInfo.State.CANCELLED -> {
                             listener.onTranslDownloadStatus(
                                 slug,
-                                TranslationDownloadStatus.Cancelled
+                                ResourceDownloadStatus.Cancelled
                             )
                         }
 
@@ -178,14 +177,14 @@ object TranslationDownloadManager {
 }
 
 
-sealed class TranslationDownloadStatus {
-    object Started : TranslationDownloadStatus()
-    data class InProgress(val progress: Int) : TranslationDownloadStatus()
-    object Completed : TranslationDownloadStatus()
-    data class Failed(val error: String?) : TranslationDownloadStatus()
-    object Cancelled : TranslationDownloadStatus()
+sealed class ResourceDownloadStatus {
+    object Started : ResourceDownloadStatus()
+    data class InProgress(val progress: Int) : ResourceDownloadStatus()
+    object Completed : ResourceDownloadStatus()
+    data class Failed(val error: String?) : ResourceDownloadStatus()
+    object Cancelled : ResourceDownloadStatus()
 }
 
 interface TranslationDownloadStateListener {
-    fun onTranslDownloadStatus(slug: String, status: TranslationDownloadStatus)
+    fun onTranslDownloadStatus(slug: String, status: ResourceDownloadStatus)
 }

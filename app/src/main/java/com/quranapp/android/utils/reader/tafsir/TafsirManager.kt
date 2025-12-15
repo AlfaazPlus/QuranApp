@@ -162,7 +162,6 @@ object TafsirManager {
             author = author,
             langCode = langCode,
             langName = langName,
-            slug = slug,
         )
     }
 }

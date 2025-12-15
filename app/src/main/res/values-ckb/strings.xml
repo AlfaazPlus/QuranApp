@@ -387,7 +387,6 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">فایلی دەنگی \"%1$s\" بۆ قورئانخوێن \"%2$s\" سڕایەوە.</string>
     <string name="labelArabic">عەرەبی</string>
     <string name="labelTranslation">وەرگێڕان</string>
-    <string name="titleManageAudio">ڕێکخستنی دەنگەکان</string>
     <string name="msgRecitaionFailedToDownload" formatted="false">داگرتنی \"%1$s\" سەرکەوتو نەبوو بۆ قورئانخوێن \"%2$s\".</string>
     <string name="playbackSpeed">خێرایی لێدان</string>
     <string name="audioOnlyTranslation">تەنیا وەرگێڕان</string>

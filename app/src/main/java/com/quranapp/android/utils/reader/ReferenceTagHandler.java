@@ -1,17 +1,17 @@
 package com.quranapp.android.utils.reader;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.view.View;
-import androidx.annotation.NonNull;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
+import androidx.annotation.NonNull;
+
+import com.peacedesign.android.utils.span.FootnoteRefSpan;
 import com.peacedesign.android.utils.span.RoundedBG_FGSpan;
-import com.peacedesign.android.utils.span.SuperscriptSpan2;
 import com.quranapp.android.utils.parser.HtmlParser;
 import com.quranapp.android.utils.quran.QuranConstants;
 
@@ -106,8 +106,9 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
     private void setFootnoteRefSpans(Editable output, int start, int end, String footnoteNo) {
         try {
             final int footnoteNoInt = Integer.parseInt(footnoteNo);
-
             final int flag = SPAN_EXCLUSIVE_EXCLUSIVE;
+
+            output.setSpan(new FootnoteRefSpan(mRefTxtColor, 0.8f), start, end, flag);
             output.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
@@ -118,14 +119,12 @@ public class ReferenceTagHandler implements HtmlParser.TagHandler {
 
                 @Override
                 public void updateDrawState(TextPaint ds) {
-                    super.updateDrawState(ds);
                     ds.setUnderlineText(false);
                 }
             }, start, end, flag);
-            output.setSpan(new SuperscriptSpan2(), start, end, flag); // set <sup>
-            output.setSpan(new RelativeSizeSpan(0.8f), start, end, flag); // set size
-            output.setSpan(new ForegroundColorSpan(mRefTxtColor), start, end, flag);// set color
-        } catch (NumberFormatException e) {e.printStackTrace();}
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     public interface OnReferenceTagClickCallback {

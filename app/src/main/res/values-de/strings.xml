@@ -394,7 +394,6 @@
     <string name="msgRecitaionDeleletedSurah" formatted="false">Gelöschte Rezitationen von „%1$s“ für Rezitator „%2$s“.</string>
     <string name="msgInvalidParams">Ungültige Parameter</string>
     <string name="titleEtiquetteVerses">Etikette im Koran</string>
-    <string name="titleManageAudio">Audio verwalten</string>
     <string name="audioOption">Audio-Option</string>
     <string name="suppressedLogs">Unterdrückte Protokolle</string>
     <string name="downloadRecitations">Rezitationen herunterladen</string>
