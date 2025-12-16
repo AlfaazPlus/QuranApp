@@ -437,4 +437,14 @@
     <string name="labelImportExportBookmarks">Импорт/экспорт закладок</string>
     <string name="warnImportSettings">ВНИМАНИЕ: Импорт настроек отменяет текущие настройки.</string>
     <string name="msgExtractingFonts">Извлечение шрифтов</string>
+    <string name="strLabelDownloaded">Скачано</string>
+    <string name="strTitleDeleteTafsir">Удалить Тафсир?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Вы уверены что хотите удалить \"%s\"? Это удалит скачанные на ваше устройство данные тафсира.</string>
+    <string name="strTitleMajorSins">Тяжкие Грехи в Коране</string>
+    <string name="titleCancelDownload">Отменить загрузку?</string>
+    <string name="yesCancelDownload">Да, отменить</string>
+    <string name="noContinueDownload">Нет, продолжить</string>
+    <string name="readingTafsirMultiVerses">Чтение тафсира для нескольких строф:</string>
+    <string name="dlRecitations">Скачать и Управлять Декламациями</string>
+    <string name="dlTafsirs">Скачать и Управлять Тафсирами</string>
 </resources>
