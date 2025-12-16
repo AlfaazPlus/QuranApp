@@ -335,7 +335,7 @@
     <string name="pasteCrashLogGithubIssue">Il log è stato copiato negli appunti. Si prega di copiarlo nell\'issue di Github.</string>
     <string name="github">GitHub</string>
     <string name="msgVerseReminderNotifPermission">L\'autorizzazione notifiche è richiesta per abilitare il promemoria verso.</string>
-    <string name="msgVerseReminderAlarmPermission">L\'autorizzazione sveglia è richiesta per abilitare il promemoria di versi</string>
+    <string name="msgVerseReminderAlarmPermission">L\'autorizzazione sveglia è richiesta per abilitare il promemoria di versi.</string>
     <string name="titleStorageCleanup">Pulizia dell\'archivio</string>
     <string name="titleExportData">Export e Import</string>
     <string name="storageCleanupMessage">Libera spazio rimuovendo risorse inutilizzate. Questo non rimuoverà nessun segnalibro o impostazioni.\n\nLe risorse seguenti possono essere rimosse:</string>
@@ -356,7 +356,7 @@
     <string name="msgScriptFontsDownloaded">Gli script e i font sono stati scaricati con successo.</string>
     <string name="labelBackgroundDownload">Scarica nel background</string>
     <string name="appLogs">Log dell\'App</string>
-    <string name="crashLogs">Log di crash</string>
+    <string name="crashLogs">Registri di crash</string>
     <string name="suppressedLogs">Log suppressi</string>
     <string name="createIssue">Segnala il problema</string>
     <string name="msgAlarmManagerNotAvailable">L\'alarm manager non è disponibile su questo dispositivo.</string>
@@ -398,4 +398,7 @@
     <string name="labelImportExportBookmarks">Importa/Esporta I segnalibri</string>
     <string name="labelImportExportSettings">Improta/Esporta le impostazioni</string>
     <string name="warnImportSettings">ATTENZIONE: l\'importazione delle impostazioni sovrascriverà quelle attuali.</string>
+    <string name="strLabelDownloaded">Scaricato</string>
+    <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
 </resources>
