@@ -401,4 +401,5 @@
     <string name="strLabelDownloaded">Scaricato</string>
     <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">È possibile liberare %1$d file di recitazione memorizzati da %2$d recitatori.</string>
 </resources>
