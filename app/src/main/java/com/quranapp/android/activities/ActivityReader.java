@@ -1383,6 +1383,10 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
     private void saveReaderState(boolean saveToHistory) {
         // Get first & last visible item positions (both could be same)
+        if (mLayoutManager == null) {
+            return;
+        }
+
         int firstPos = mLayoutManager.findFirstVisibleItemPosition();
         int lastPos = mLayoutManager.findLastVisibleItemPosition();
 
