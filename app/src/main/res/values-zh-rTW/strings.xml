@@ -334,7 +334,7 @@
     <string name="msgFontsDonwloadProgress" formatted="false">字型已下載 %1$d/%2$d</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d/%2$d</string>
     <string name="msgDownloadingResource" formatted="false">%s 下載中</string>
-    <string name="msgScriptFontsDownloaded">版本和字型下載成功。</string>
+    <string name="msgScriptFontsDownloaded">版本与字型下載成功。</string>
     <string name="textDownloading">下載中……</string>
     <string name="textDownloaded">已下載</string>
     <string name="textPercentage" formatted="false">%d%%</string>
@@ -431,4 +431,9 @@
     <string name="yesCancelDownload">確定取消</string>
     <string name="noContinueDownload">繼續下載</string>
     <string name="readingTafsirMultiVerses">閱讀多節經文的注：</string>
+    <string name="strLabelDownloaded">已下載</string>
+    <string name="strTitleDeleteTafsir">刪除經注？</string>
+    <string name="strMsgDeleteTafsir" formatted="false">確定要刪除「%s」嗎？這將從裝置中刪除已下載的經注資料。</string>
+    <string name="dlRecitations">下載與管理朗誦</string>
+    <string name="dlTafsirs">下載與管理經注</string>
 </resources>

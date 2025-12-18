@@ -442,4 +442,9 @@
     <string name="yesCancelDownload">Ja, abbrechen</string>
     <string name="noContinueDownload">Nein, weiter</string>
     <string name="readingTafsirMultiVerses">Tafsir für mehrere Verse lesen:</string>
+    <string name="strLabelDownloaded">Heruntergeladen</string>
+    <string name="strTitleDeleteTafsir">Erläuterung löschen?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
+    <string name="dlRecitations">Herunterladen &amp; Verwalten von Rezitationen</string>
+    <string name="dlTafsirs">Herunterladen &amp; Verwalten von Erläuterungen</string>
 </resources>
