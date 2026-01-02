@@ -174,7 +174,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
 
                 withContext(Dispatchers.IO) {
                     QuranTafsirDBHelper(context).use { dbHelper ->
-                        dbHelper.storeTafsirs(response.tafsirs)
+                        dbHelper.storeTafsirs(response.tafsirs, response.version, response.timestamp1)
 
                        for (tafsir in response.tafsirs) {
                             if (tafsir.verseKey == verseKey || tafsir.verses.contains(verseKey)) {

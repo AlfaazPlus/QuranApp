@@ -9,7 +9,6 @@ import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.db.tafsir.QuranTafsirContract.QuranTafsirEntry
 import com.quranapp.android.db.tafsir.QuranTafsirInfoContract.QuranTafsirInfoEntry
-import com.quranapp.android.utils.Log
 import java.util.Date
 
 private const val DB_NAME = "QuranTafsir.db"
@@ -92,7 +91,7 @@ class QuranTafsirDBHelper(private val context: Context) : SQLiteOpenHelper(
         )
     }
 
-    fun storeTafsirs(tafsirs: List<TafsirModel>) {
+    fun storeTafsirs(tafsirs: List<TafsirModel>, version: String, timestamp: Long) {
         val db = writableDatabase
 
         for (i in 0 until tafsirs.size) {
@@ -113,8 +112,8 @@ class QuranTafsirDBHelper(private val context: Context) : SQLiteOpenHelper(
                 put(QuranTafsirEntry.COL_FROM_VERSE_NO, fromVerse);
                 put(QuranTafsirEntry.COL_TO_VERSE_NO, toVerse)
                 put(QuranTafsirEntry.COL_TEXT, tafsir.text)
-                put(QuranTafsirEntry.COL_VERSION, tafsir.version ?: "")
-                put(QuranTafsirEntry.COL_LAST_UPDATED, tafsir.timestamp1)
+                put(QuranTafsirEntry.COL_VERSION, version)
+                put(QuranTafsirEntry.COL_LAST_UPDATED, timestamp)
             }
 
             db.insertWithOnConflict(
@@ -164,7 +163,6 @@ class QuranTafsirDBHelper(private val context: Context) : SQLiteOpenHelper(
                 val fromVerse =
                     it.getInt(it.getColumnIndexOrThrow(QuranTafsirEntry.COL_FROM_VERSE_NO))
                 val toVerse = it.getInt(it.getColumnIndexOrThrow(QuranTafsirEntry.COL_TO_VERSE_NO))
-                val version = it.getString(it.getColumnIndexOrThrow(QuranTafsirEntry.COL_VERSION))
 
                 val verses = if (fromVerse > 0 && toVerse > 0) {
                     (fromVerse..toVerse).map { v -> "$chapterNo:$v" }
@@ -177,8 +175,6 @@ class QuranTafsirDBHelper(private val context: Context) : SQLiteOpenHelper(
                     verseKey = verseKey,
                     verses = verses,
                     text = text,
-                    timestamp = "",
-                    version = version
                 )
             } else {
                 null
