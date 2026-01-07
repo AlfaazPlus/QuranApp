@@ -1,6 +1,6 @@
 package com.quranapp.android.api.models.recitation
 
-import com.quranapp.android.api.models.player.ReciterAudioType
+import com.quranapp.android.api.models.mediaplayer.ReciterAudioType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*

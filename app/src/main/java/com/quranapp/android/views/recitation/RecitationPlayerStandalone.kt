@@ -25,7 +25,7 @@ import com.quranapp.android.databinding.LytRecitationPlayerStandaloneBinding
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.recitation.RecitationManager
 import com.quranapp.android.utils.mediaplayer.PlaybackMode
-import com.quranapp.android.utils.mediaplayer.PlaybackSettings
+import com.quranapp.android.utils.mediaplayer.PlayerSettings
 import com.quranapp.android.utils.mediaplayer.PlayerEvent
 import com.quranapp.android.utils.mediaplayer.RecitationService
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -448,7 +448,7 @@ class RecitationPlayerStandalone @JvmOverloads constructor(
         }
     }
 
-    private fun updateSettingsUI(settings: PlaybackSettings) {
+    private fun updateSettingsUI(settings: PlayerSettings) {
         val goldColor = 0xFFD4AF37.toInt()
         val inactiveColor = 0x80FFFFFF.toInt()
         

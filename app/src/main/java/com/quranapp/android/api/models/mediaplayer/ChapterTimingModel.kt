@@ -1,4 +1,4 @@
-package com.quranapp.android.api.models.player
+package com.quranapp.android.api.models.mediaplayer
 
 import android.net.Uri
 import kotlinx.serialization.SerialName
@@ -34,8 +34,17 @@ data class VerseTiming(
     val startMs: Long,
 
     @SerialName("end_ms")
-    val endMs: Long
+    val endMs: Long,
+
+    @SerialName("segments")
+    val segments: List<Int>? = null
 ) {
+
+    /**
+     * Duration of this verse in milliseconds.
+     */
+    val durationMs: Long get() = endMs - startMs
+
     /**
      * Check if a given position falls within this verse's time range.
      */
@@ -43,10 +52,6 @@ data class VerseTiming(
         return positionMs >= startMs && positionMs < endMs
     }
 
-    /**
-     * Duration of this verse in milliseconds.
-     */
-    val durationMs: Long get() = endMs - startMs
 }
 
 /**
@@ -72,7 +77,7 @@ data class ChapterTimingMetadata(
     val chapterNo: Int,
 
     @SerialName("reciter")
-    val reciterSlug: String,
+    val reciterId: String,
 
     @SerialName("duration_ms")
     val durationMs: Long,
@@ -84,9 +89,6 @@ data class ChapterTimingMetadata(
     @SerialName("verses")
     val verses: List<VerseTiming>? = null
 ) {
-    /**
-     * Whether verse-level timing is available for sync
-     */
     val hasVerseTiming: Boolean get() = !verses.isNullOrEmpty()
 
     /**
@@ -95,8 +97,8 @@ data class ChapterTimingMetadata(
      */
     fun getVerseAtPosition(positionMs: Long): VerseTiming? {
         if (verses.isNullOrEmpty()) return null
+
         return verses.find { it.containsPosition(positionMs) }
-            ?: verses.lastOrNull { positionMs >= it.startMs }
     }
 
     /**
@@ -112,6 +114,7 @@ data class ChapterTimingMetadata(
      */
     fun hasCompleteTimingFor(fromVerse: Int, toVerse: Int): Boolean {
         if (verses.isNullOrEmpty()) return false
+
         return (fromVerse..toVerse).all { verseNo ->
             verses.any { it.verseNo == verseNo }
         }
@@ -121,35 +124,17 @@ data class ChapterTimingMetadata(
         /**
          * Filename format for cached timing metadata.
          */
-        fun getCacheFileName(reciterSlug: String, chapterNo: Int): String {
-            return "${reciterSlug}_chapter_${chapterNo}_timing.json"
+        fun getCacheFileName(reciterId: String): String {
+            return "${reciterId}_timing.json"
         }
 
-        /**
-         * Create metadata without verse timing (no sync available)
-         */
-        fun withoutTiming(
-            chapterNo: Int,
-            reciterSlug: String,
-            durationMs: Long
-        ): ChapterTimingMetadata {
-            return ChapterTimingMetadata(
-                chapterNo = chapterNo,
-                reciterSlug = reciterSlug,
-                durationMs = durationMs,
-                verses = null
-            )
-        }
     }
 }
 
-/**
- * Result of resolving chapter audio - includes the audio URI and optional timing metadata.
- */
-class ChapterAudioResult(
-    val audioUri: Uri,
+class RecitationAudioResult(
     val chapterNo: Int,
-    val reciterSlug: String,
+    val reciterId: String,
+    val audioUri: Uri,
     val timingMetadata: ChapterTimingMetadata?,
 ) {
     val hasVerseTiming: Boolean
