@@ -1,4 +1,4 @@
-package com.quranapp.android.api.models.player
+package com.quranapp.android.api.models.mediaplayer
 
 import android.net.Uri
 import kotlinx.serialization.SerialName
@@ -84,9 +84,6 @@ data class ChapterTimingMetadata(
     @SerialName("verses")
     val verses: List<VerseTiming>? = null
 ) {
-    /**
-     * Whether verse-level timing is available for sync
-     */
     val hasVerseTiming: Boolean get() = !verses.isNullOrEmpty()
 
     /**
@@ -95,8 +92,8 @@ data class ChapterTimingMetadata(
      */
     fun getVerseAtPosition(positionMs: Long): VerseTiming? {
         if (verses.isNullOrEmpty()) return null
+
         return verses.find { it.containsPosition(positionMs) }
-            ?: verses.lastOrNull { positionMs >= it.startMs }
     }
 
     /**
@@ -112,6 +109,7 @@ data class ChapterTimingMetadata(
      */
     fun hasCompleteTimingFor(fromVerse: Int, toVerse: Int): Boolean {
         if (verses.isNullOrEmpty()) return false
+
         return (fromVerse..toVerse).all { verseNo ->
             verses.any { it.verseNo == verseNo }
         }
@@ -121,8 +119,8 @@ data class ChapterTimingMetadata(
         /**
          * Filename format for cached timing metadata.
          */
-        fun getCacheFileName(reciterSlug: String, chapterNo: Int): String {
-            return "${reciterSlug}_chapter_${chapterNo}_timing.json"
+        fun getCacheFileName(reciterSlug: String): String {
+            return "${reciterSlug}_timing.json"
         }
 
         /**
@@ -143,9 +141,6 @@ data class ChapterTimingMetadata(
     }
 }
 
-/**
- * Result of resolving chapter audio - includes the audio URI and optional timing metadata.
- */
 class ChapterAudioResult(
     val audioUri: Uri,
     val chapterNo: Int,

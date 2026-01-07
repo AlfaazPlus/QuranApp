@@ -5,15 +5,15 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.net.toUri
 import androidx.core.util.Pair
+import com.quranapp.android.api.models.mediaplayer.ChapterAudioResult
+import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
+import com.quranapp.android.api.models.mediaplayer.ReciterAudioType
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.exceptions.NoInternetException
-import com.quranapp.android.api.models.player.ChapterAudioResult
-import com.quranapp.android.api.models.player.ChapterTimingMetadata
-import com.quranapp.android.api.models.player.ReciterAudioType
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.HttpURLConnection
@@ -43,11 +42,6 @@ import java.net.URL
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-/**
- * Repository for managing recitation audio files.
- * Handles audio file resolution, downloading, and caching.
- * Completely decoupled from UI and playback concerns.
- */
 class RecitationAudioRepository(private val context: Context) {
 
     private val fileUtils = FileUtils.newInstance(context)
@@ -58,9 +52,6 @@ class RecitationAudioRepository(private val context: Context) {
         ignoreUnknownKeys = true
         isLenient = true
     }
-
-    // Cache for timing metadata to avoid repeated file reads
-    private val timingCache = mutableMapOf<String, ChapterTimingMetadata?>()
 
     private val _downloadState = MutableStateFlow<DownloadState>(DownloadState.Idle)
     val downloadState: StateFlow<DownloadState> = _downloadState.asStateFlow()
@@ -139,9 +130,9 @@ class RecitationAudioRepository(private val context: Context) {
      * Resolves audio URIs for a verse. Returns cached URIs if available,
      * otherwise triggers download.
      */
-    suspend fun resolveAudioUris(
-        chapter: Int,
-        verse: Int,
+    private suspend fun resolveAudioUris(
+        chapterNo: Int,
+        verseNo: Int,
         forceManifestFetch: Boolean = false,
         forceTranslationManifestFetch: Boolean = false
     ): Flow<AudioResult> = flow {
@@ -165,14 +156,14 @@ class RecitationAudioRepository(private val context: Context) {
         val recModel = models.first
         val translModel = models.second
 
-        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
-        val isOnlyTranslation = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+        val shouldPlayArabic = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+        val shouldPlayTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC
 
         // Validate models
         val failed = when {
-            isBoth -> recModel == null || translModel == null
-            isOnlyTranslation -> translModel == null
-            else -> recModel == null
+            shouldPlayArabic && recModel == null -> true
+            shouldPlayTranslation && translModel == null -> true
+            else -> false
         }
 
         if (failed) {
@@ -181,9 +172,10 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         // Get file references
-        val verseFile = recModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapter, verse) }
+        val verseFile =
+            recModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
         val verseTranslFile =
-            translModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapter, verse) }
+            translModel?.let { fileUtils.getRecitationAudioFile(it.slug, chapterNo, verseNo) }
 
         // Check if files exist
         val verseFileExists = verseFile == null || verseFile.length() > 0
@@ -197,8 +189,8 @@ class RecitationAudioRepository(private val context: Context) {
                     translationUri = verseTranslFile?.toUri(),
                     reciter = recModel?.slug,
                     translationReciter = translModel?.slug,
-                    chapter = chapter,
-                    verse = verse
+                    chapter = chapterNo,
+                    verse = verseNo
                 )
             )
         } else {
@@ -222,17 +214,15 @@ class RecitationAudioRepository(private val context: Context) {
             downloadAudioFiles(
                 verseFile = verseFile,
                 verseTranslFile = verseTranslFile,
-                recModel = recModel,
-                translModel = translModel,
-                chapter = chapter,
-                verse = verse
+                recModel = if (shouldPlayArabic) recModel else null,
+                translModel = if (shouldPlayTranslation) translModel else null,
+                chapter = chapterNo,
+                verse = verseNo
             ).collect { result ->
                 emit(result)
             }
         }
     }.flowOn(Dispatchers.IO)
-
-    // ======================= Chapter Audio Methods =======================
 
     /**
      * Resolves full chapter audio for a reciter.
@@ -242,7 +232,7 @@ class RecitationAudioRepository(private val context: Context) {
      * @param chapter The chapter number
      * @return Flow of download results culminating in Success with audio URI and timing
      */
-    suspend fun resolveChapterAudio(
+    private suspend fun resolveChapterAudio(
         reciterModel: RecitationInfoModel,
         chapter: Int
     ): Flow<ChapterAudioDownloadResult> = flow {
@@ -262,7 +252,7 @@ class RecitationAudioRepository(private val context: Context) {
         // Check if already cached
         if (chapterFile.length() > 0) {
             // Audio is cached, fetch timing if available
-            val timing = fetchTimingMetadata(reciterModel, chapter)
+            val timing = resolveTimingMetadata(reciterModel, chapter)
             emit(
                 ChapterAudioDownloadResult.Success(
                     ChapterAudioResult(
@@ -305,7 +295,7 @@ class RecitationAudioRepository(private val context: Context) {
             }
 
             // Fetch timing metadata (may be null if not available)
-            val timing = fetchTimingMetadata(reciterModel, chapter)
+            val timing = resolveTimingMetadata(reciterModel, chapter)
 
             emit(
                 ChapterAudioDownloadResult.Success(
@@ -329,29 +319,23 @@ class RecitationAudioRepository(private val context: Context) {
      * Fetches timing metadata for a chapter. Checks cache first, then downloads if available.
      * Returns null if timing data is not available for this reciter.
      */
-    suspend fun fetchTimingMetadata(
+    suspend fun resolveTimingMetadata(
         reciterModel: RecitationInfoModel,
         chapter: Int
     ): ChapterTimingMetadata? = withContext(Dispatchers.IO) {
         val cacheKey = "${reciterModel.slug}:$chapter"
 
-        // Check memory cache
-        timingCache[cacheKey]?.let { return@withContext it }
-
-        // Check if reciter has timing URL
         val timingUrlPath = reciterModel.timingUrlPath
         if (timingUrlPath.isNullOrEmpty()) {
-            timingCache[cacheKey] = null
             return@withContext null
         }
 
         // Check file cache
-        val timingFile = getTimingMetadataFile(reciterModel.slug, chapter)
+        val timingFile = getTimingMetadataFile(reciterModel.slug)
         if (timingFile.length() > 0) {
             try {
                 val content = timingFile.readText()
                 val metadata = json.decodeFromString<ChapterTimingMetadata>(content)
-                timingCache[cacheKey] = metadata
                 return@withContext metadata
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationAudioRepository.fetchTimingMetadata - parse cached")
@@ -365,8 +349,7 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         try {
-            val timingUrl = prepareTimingMetadataUrl(reciterModel, chapter)
-                ?: return@withContext null
+            val timingUrl = reciterModel.timingUrlPath ?: return@withContext null
 
             // Download to temp and parse
             val tempFile = File(context.cacheDir, "timing_temp_${System.currentTimeMillis()}.json")
@@ -379,15 +362,9 @@ class RecitationAudioRepository(private val context: Context) {
             if (fileUtils.createFile(timingFile)) {
                 timingFile.writeText(content)
             }
+
             tempFile.delete()
-
-            timingCache[cacheKey] = metadata
             return@withContext metadata
-
-        } catch (e: HttpNotFoundException) {
-            // Timing not available for this chapter - not an error
-            timingCache[cacheKey] = null
-            return@withContext null
         } catch (e: Exception) {
             Log.saveError(e, "RecitationAudioRepository.fetchTimingMetadata - download")
             return@withContext null
@@ -406,17 +383,10 @@ class RecitationAudioRepository(private val context: Context) {
     /**
      * Gets the cached timing metadata file reference
      */
-    private fun getTimingMetadataFile(reciterSlug: String, chapter: Int): File {
+    private fun getTimingMetadataFile(reciterSlug: String): File {
         val dir = File(fileUtils.recitationDir, reciterSlug)
         if (!dir.exists()) dir.mkdirs()
-        return File(dir, ChapterTimingMetadata.getCacheFileName(reciterSlug, chapter))
-    }
-
-    /**
-     * Checks if chapter audio is cached locally
-     */
-    fun isChapterAudioCached(reciterSlug: String, chapter: Int): Boolean {
-        return getChapterAudioFile(reciterSlug, chapter).length() > 0
+        return File(dir, ChapterTimingMetadata.getCacheFileName(reciterSlug))
     }
 
     /**
@@ -429,26 +399,6 @@ class RecitationAudioRepository(private val context: Context) {
             .replace("{chapNo}", chapter.toString().padStart(3, '0'))
             .replace("{chapter}", chapter.toString().padStart(3, '0'))
         return "$host$path"
-    }
-
-    /**
-     * Prepares the URL for downloading timing metadata.
-     * URL pattern uses {chapNo} placeholder.
-     */
-    private fun prepareTimingMetadataUrl(reciterModel: RecitationInfoModel, chapter: Int): String? {
-        val host = reciterModel.urlHost ?: return null
-        val path = reciterModel.timingUrlPath
-            ?.replace("{chapNo}", chapter.toString().padStart(3, '0'))
-            ?.replace("{chapter}", chapter.toString().padStart(3, '0'))
-            ?: return null
-        return "$host$path"
-    }
-
-    /**
-     * Clears timing cache (useful after reciter change)
-     */
-    fun clearTimingCache() {
-        timingCache.clear()
     }
 
     // ======================= Verse Audio Methods =======================
@@ -471,7 +421,7 @@ class RecitationAudioRepository(private val context: Context) {
             emit(AudioResult.Downloading(0))
 
             // Download Arabic audio if needed
-            if (verseFile != null && verseFile.length() == 0L) {
+            if (verseFile != null && verseFile.length() == 0L && recModel != null) {
                 val url = RecitationUtils.prepareRecitationAudioUrl(recModel, chapter, verse)
                     ?: throw IllegalStateException("Failed to prepare audio URL")
 
@@ -486,7 +436,7 @@ class RecitationAudioRepository(private val context: Context) {
             }
 
             // Download translation audio if needed
-            if (verseTranslFile != null && verseTranslFile.length() == 0L) {
+            if (verseTranslFile != null && verseTranslFile.length() == 0L && translModel != null) {
                 val url = RecitationUtils.prepareRecitationAudioUrl(translModel, chapter, verse)
                     ?: throw IllegalStateException("Failed to prepare translation audio URL")
 
@@ -572,14 +522,18 @@ class RecitationAudioRepository(private val context: Context) {
      * Emits to [preloadCompleted] when each verse finishes downloading.
      */
     fun preloadVerses(
-        chapter: Int, fromVerse: Int, toVerse: Int, count: Int = 10
+        chapter: Int,
+        fromVerse: Int,
+        toVerse: Int,
+        count: Int = 10,
     ) {
         if (!NetworkStateReceiver.isNetworkConnected(context)) return
 
         scope.launch {
             val audioOption = SPReader.getRecitationAudioOption(context)
-            val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
-            val isOnlyTranslation = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+
+            val shouldPlayArabic = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+            val shouldPlayTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC
 
             val models =
                 suspendCoroutine { cont ->
@@ -620,25 +574,31 @@ class RecitationAudioRepository(private val context: Context) {
                         synchronized(preloadingVerses) {
                             preloadingVerses.add(key)
                         }
-                        
+
                         downloadJobs[key] = scope.launch {
                             try {
-                                if (!isOnlyTranslation && verseFile != null && verseFile.length() == 0L) {
+                                if (!shouldPlayArabic && verseFile != null && verseFile.length() == 0L) {
                                     if (fileUtils.createFile(verseFile)) {
                                         val url = RecitationUtils.prepareRecitationAudioUrl(
-                                            recModel, chapter, verseToPreload
+                                            recModel,
+                                            chapter,
+                                            verseToPreload,
                                         )
+
                                         if (url != null) {
                                             downloadFile(verseFile, url)
                                         }
                                     }
                                 }
 
-                                if ((isBoth || isOnlyTranslation) && verseTranslFile != null && verseTranslFile.length() == 0L) {
+                                if (shouldPlayTranslation && verseTranslFile != null && verseTranslFile.length() == 0L) {
                                     if (fileUtils.createFile(verseTranslFile)) {
                                         val url = RecitationUtils.prepareRecitationAudioUrl(
-                                            translModel, chapter, verseToPreload
+                                            translModel,
+                                            chapter,
+                                            verseToPreload,
                                         )
+
                                         if (url != null) {
                                             downloadFile(verseTranslFile, url)
                                         }
@@ -685,61 +645,30 @@ class RecitationAudioRepository(private val context: Context) {
     }
 
     /**
-     * Checks if verse audio is ready (cached or no download needed based on audio option)
-     */
-    fun isVerseReady(chapter: Int, verse: Int): Boolean {
-        val audioOption = SPReader.getRecitationAudioOption(context)
-        val reciterSlug = SPReader.getSavedRecitationSlug(context)
-        val translReciterSlug = SPReader.getSavedRecitationTranslationSlug(context)
-
-        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
-        val isOnlyTranslation = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-
-        val arabicReady = isOnlyTranslation || isAudioCached(reciterSlug, chapter, verse)
-        val translReady = !isBoth && !isOnlyTranslation || isAudioCached(translReciterSlug, chapter, verse)
-
-        return arabicReady && translReady
-    }
-
-    /**
      * Waits for a specific verse to be preloaded (with timeout).
      * Returns true if verse is ready, false if timeout or error.
      */
-    suspend fun awaitVerseReady(chapter: Int, verse: Int, timeoutMs: Long = 30000): Boolean {
-        // Check if already ready
-        if (isVerseReady(chapter, verse)) return true
-
+    suspend fun getAudioUri(chapter: Int, verse: Int): Boolean {
         // Wait for preload completion
-        return withTimeoutOrNull(timeoutMs) {
-            suspendCancellableCoroutine { cont ->
-                var resumed = false
-                val job = scope.launch {
-                    preloadCompleted.collect { preloaded ->
-                        if (preloaded.chapter == chapter && preloaded.verse == verse) {
-                            if (!resumed) {
-                                resumed = true
-                                cont.resume(true) {}
-                            }
+        return suspendCancellableCoroutine { cont ->
+            var resumed = false
+            val job = scope.launch {
+                preloadCompleted.collect { preloaded ->
+                    if (preloaded.chapter == chapter && preloaded.verse == verse) {
+                        if (!resumed) {
+                            resumed = true
+                            cont.resume(true)
                         }
                     }
                 }
-
-                cont.invokeOnCancellation {
-                    job.cancel()
-                }
             }
-        } ?: false
+
+            cont.invokeOnCancellation {
+                job.cancel()
+            }
+        }
     }
 
-    /**
-     * Checks if a download is pending for a specific verse
-     */
-    fun isDownloadPending(
-        reciter: String?, translReciter: String?, chapter: Int, verse: Int
-    ): Boolean {
-        val key = makeKey(reciter, translReciter, chapter, verse)
-        return downloadJobs[key]?.isActive == true
-    }
 
     /**
      * Gets the audio file for a specific reciter and verse (for checking cache)
@@ -748,13 +677,6 @@ class RecitationAudioRepository(private val context: Context) {
         return reciterSlug?.let { fileUtils.getRecitationAudioFile(it, chapter, verse) }
     }
 
-    /**
-     * Checks if audio is cached locally
-     */
-    fun isAudioCached(reciterSlug: String?, chapter: Int, verse: Int): Boolean {
-        val file = getAudioFile(reciterSlug, chapter, verse)
-        return file != null && file.length() > 0
-    }
 
     /**
      * Cancels all pending downloads

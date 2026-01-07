@@ -1,7 +1,8 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.os.Bundle
-import com.quranapp.android.api.models.player.ChapterTimingMetadata
+import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
+import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
@@ -21,7 +22,7 @@ enum class PlayerInterationSource {
     USER
 }
 
-data class PlaybackSettings(
+data class PlayerSettings(
     val speed: Float = 1.0f,
     val repeatVerse: Boolean = false,
     val continueRange: Boolean = true,
@@ -47,7 +48,7 @@ data class RecitationServiceState(
 
     val positionMs: Long = 0L,
     val durationMs: Long = 0L,
-    val settings: PlaybackSettings = PlaybackSettings(),
+    val settings: PlayerSettings = PlayerSettings(),
     // Event with timestamp - controller compares timestamps to detect new events
     val lastEvent: PlayerEvent? = null,
     val lastEventTimestamp: Long = 0L
@@ -58,6 +59,126 @@ data class RecitationServiceState(
 
     fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {
         return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
+    }
+
+    fun getPreviousVerse(meta: QuranMeta): ChapterVersePair? {
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+
+        if (
+            !QuranMeta.isChapterValid(currentChapterNo) ||
+            !meta.isVerseValid4Chapter(
+                currentChapterNo,
+                currentVerseNo
+            )
+        ) {
+            return null
+        }
+
+        var previousChapterNo = currentChapterNo
+        var previousVerseNo = currentVerseNo - 1
+
+        if (previousVerseNo < 1) {
+            // If we are at the first verse of the chapter, go to the last verse of the previous chapter if possible.
+            // Otherwise, change nothing.
+            if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
+                previousChapterNo--
+                previousVerseNo = meta.getChapterVerseCount(previousChapterNo)
+            } else {
+                previousVerseNo = -1
+            }
+        }
+
+        if (previousChapterNo == -1 || previousVerseNo == -1) {
+            return null
+        }
+
+        return ChapterVersePair(previousChapterNo, previousVerseNo)
+    }
+
+    fun getNextVerse(
+        meta: QuranMeta
+    ): ChapterVersePair? {
+        val currentChapterNo = currentVerse.chapterNo
+        val currentVerseNo = currentVerse.verseNo
+
+        if (
+            !QuranMeta.isChapterValid(currentChapterNo) ||
+            !meta.isVerseValid4Chapter(
+                currentChapterNo,
+                currentVerseNo
+            )
+        ) {
+            return null
+        }
+
+        var nextChapterNo = currentChapterNo
+        var nextVerseNo = currentVerseNo + 1
+
+        if (nextVerseNo > meta.getChapterVerseCount(nextChapterNo)) {
+            // If we are at the last verse of the chapter, go to the first verse of the next chapter if possible.
+            // Otherwise, change nothing.
+            if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
+                nextChapterNo++
+                nextVerseNo = 1
+            } else {
+                nextVerseNo = -1
+            }
+        }
+
+        if (nextChapterNo == -1 || nextVerseNo == -1) {
+            return null
+        }
+
+        return ChapterVersePair(nextChapterNo, nextVerseNo)
+    }
+
+    fun getPreviousChapter(
+        meta: QuranMeta
+    ): ChapterVersePair? {
+        val currentChapterNo = currentVerse.chapterNo
+
+        if (!QuranMeta.isChapterValid(currentChapterNo)) {
+            return null
+        }
+
+        var previousChapterNo = currentChapterNo
+        var previousVerseNo = -1
+
+        if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
+            previousChapterNo--
+            previousVerseNo = 1
+        }
+
+        if (previousChapterNo == -1 || previousVerseNo == -1) {
+            return null
+        }
+
+        return ChapterVersePair(previousChapterNo, previousVerseNo)
+    }
+
+    fun getNextChapter(
+        meta: QuranMeta
+    ): ChapterVersePair? {
+        val currentChapterNo = currentVerse.chapterNo
+
+        if (!QuranMeta.isChapterValid(currentChapterNo)) {
+            return null
+        }
+
+        var nextChapterNo = currentChapterNo
+        var nextVerseNo = -1
+
+        if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
+            nextChapterNo++
+            nextVerseNo = 1
+        }
+
+        if (nextChapterNo == -1 || nextVerseNo == -1) {
+            return null
+        }
+
+        return ChapterVersePair(nextChapterNo, nextVerseNo)
     }
 
     fun toBundle(): Bundle = Bundle().apply {
@@ -140,7 +261,7 @@ data class RecitationServiceState(
                 playbackMode = PlaybackMode.fromOrdinal(bundle.getInt(KEY_PLAYBACK_MODE, 0)),
                 positionMs = bundle.getLong(KEY_CURRENT_POSITION, 0L),
                 durationMs = bundle.getLong(KEY_DURATION, 0L),
-                settings = PlaybackSettings(
+                settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
                     repeatVerse = bundle.getBoolean(KEY_REPEAT, false),
                     continueRange = bundle.getBoolean(KEY_CONTINUE, true),

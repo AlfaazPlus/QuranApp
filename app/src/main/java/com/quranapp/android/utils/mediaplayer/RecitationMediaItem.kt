@@ -1,8 +1,8 @@
 package com.quranapp.android.utils.mediaplayer
 
 data class RecitationMediaItem(
-    var reciter: String?,
-    var translReciter: String?,
+    var slug: String,
+    var translationSlug: String?,
     var chapterNo: Int,
     var verseNo: Int
 )

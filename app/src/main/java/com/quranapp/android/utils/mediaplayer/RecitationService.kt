@@ -25,8 +25,8 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.api.models.player.ChapterTimingMetadata
-import com.quranapp.android.api.models.player.ReciterAudioType
+import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
+import com.quranapp.android.api.models.mediaplayer.ReciterAudioType
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.reader.ChapterVersePair
@@ -340,7 +340,7 @@ class RecitationService : MediaSessionService() {
 
     private fun findVerseInPlaylist(chapter: Int, verse: Int): Int {
         for (i in 0 until player.mediaItemCount) {
-            val tag = player.getMediaItemAt(i).localConfiguration?.tag as? RecitationMediaItem
+            val tag = RecitationMediaItem.fromMap(player.getMediaItemAt(i).localConfiguration?.tag)
             if (tag?.chapterNo == chapter && tag.verseNo == verse) {
                 return i
             }
@@ -352,14 +352,17 @@ class RecitationService : MediaSessionService() {
     // ==================== Playback Control ====================
 
     private fun handleMediaItemTransition(mediaItem: MediaItem?) {
-        val tag = mediaItem?.localConfiguration?.tag as? RecitationMediaItem ?: return
+        val tag = RecitationMediaItem.fromMap(mediaItem?.localConfiguration?.tag) ?: return
 
         _state.value = state.value.copy(
-            currentVerse = CurrentVerse(
-                chapterNo = tag.chapterNo, verseNo = tag.verseNo
-            ), settings = state.value.settings.copy(
-                reciter = tag.reciter, translationReciter = tag.translReciter
-            )
+            currentVerse = ChapterVersePair(
+                chapterNo = tag.chapterNo,
+                verseNo = tag.verseNo,
+            ),
+            settings = state.value.settings.copy(
+                reciter = tag.slug,
+                translationReciter = tag.translationSlug,
+            ),
         )
 
         // Update media metadata for notification
@@ -367,19 +370,21 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun updateMediaMetadata() {
-        // TODO: player mode mayve full chapter
+        // TODO: player mode maybe full chapter
         val currentVerse = state.value.currentVerse
 
         scoped {
             val meta = requestQuranMeta()
 
             val chapterName = meta.getChapterName(this@RecitationService, currentVerse.chapterNo)
+
             val title = getString(
                 R.string.strLabelVerseSerialWithChapter,
                 chapterName,
                 state.value.currentVerse.chapterNo,
                 currentVerse.verseNo
             )
+
             val artist = resolveReciterDisplayName()
 
             val metadata = MediaMetadata.Builder().setTitle(title).setArtist(artist).build()
@@ -422,44 +427,38 @@ class RecitationService : MediaSessionService() {
         scoped {
             val meta = requestQuranMeta()
 
-            // TODO: consider playback mode
+            if (state.value.playbackMode == PlaybackMode.FULL_CHAPTER) {
+                val nextVerse = state.value.getNextChapter(meta)
 
-            val nextVerse = recParams.getNextVerse(meta)
+                if (nextVerse == null) {
+                    stopMedia()
+                    return@scoped
+                }
 
-            if (nextVerse == null) {
-                stopMedia()
-                return@scoped
-            }
-
-            // Check if next verse is already in playlist
-            val playlistIndex = findVerseInPlaylist(nextVerse.chapterNo, nextVerse.verseNo)
-            if (playlistIndex >= 0) {
-                // ExoPlayer will auto-transition, just update state
-                return@scoped
-            }
-
-            // Next verse not in playlist, need to load it
-            // Show buffering while we wait/download
-            setLoadingState(true)
-
-            // Wait for verse if it's being downloaded
-            if (audioRepository.isPreloading(
-                    recParams.currentReciter,
-                    recParams.currentTranslationReciter,
-                    nextVerse.chapterNo,
-                    nextVerse.verseNo
+                reciteVerse(
+                    chapterNo = nextVerse.chapterNo,
+                    verseNo = nextVerse.verseNo
                 )
-            ) {
-                audioRepository.awaitVerseReady(
-                    nextVerse.chapterNo, nextVerse.verseNo, 30000
+            } else {
+                val nextVerse = state.value.getNextVerse(meta)
+
+                if (nextVerse == null) {
+                    stopMedia()
+                    return@scoped
+                }
+
+                // Check if next verse is already in playlist
+                val playlistIndex = findVerseInPlaylist(nextVerse.chapterNo, nextVerse.verseNo)
+                if (playlistIndex >= 0) {
+                    // ExoPlayer will auto-transition, just update state
+                    return@scoped
+                }
+
+                reciteVerse(
+                    chapterNo = nextVerse.chapterNo,
+                    verseNo = nextVerse.verseNo
                 )
             }
-
-            setLoadingState(false)
-            reciteVerse(
-                chapterNo = nextVerse.chapterNo,
-                verseNo = nextVerse.verseNo
-            )
         }
     }
 
@@ -528,20 +527,13 @@ class RecitationService : MediaSessionService() {
         )
     }
 
-    fun reciteVerse(
-        chapterNo: Int,
-        verseNo: Int
-    ) {
-        // TODO
-    }
-
     fun recitePreviousVerse() {
         if (player.hasPreviousMediaItem()) {
             player.seekToPreviousMediaItem()
         } else {
             scoped {
                 val meta = requestQuranMeta()
-                val previousVerse = recParams.getPreviousVerse(meta) ?: return@scoped
+                val previousVerse = state.value.getPreviousVerse(meta) ?: return@scoped
 
                 reciteVerse(
                     chapterNo = previousVerse.chapterNo,
@@ -557,7 +549,7 @@ class RecitationService : MediaSessionService() {
         } else {
             scoped {
                 val meta = requestQuranMeta()
-                val nextVerse = recParams.getNextVerse(meta) ?: return@scoped
+                val nextVerse = state.value.getNextVerse(meta) ?: return@scoped
 
                 reciteVerse(
                     chapterNo = nextVerse.chapterNo,
@@ -567,6 +559,102 @@ class RecitationService : MediaSessionService() {
         }
     }
 
+
+    fun reciteVerse(
+        chapterNo: Int,
+        verseNo: Int
+    ) {
+        scoped {
+            audioRepository.getAudioUri(
+                chapterNo,
+                verseNo,
+            )
+
+            // TODO
+        }
+    }
+
+    private fun clipForFullChapter(
+        meta: QuranMeta,
+        chapterNo: Int,
+        verseNo: Int,
+        chapterAudioUri: String,
+        verseStartMs: Long,
+        verseEndMs: Long,
+    ): MediaItem {
+        val settings = state.value.settings
+
+        return MediaItem.Builder()
+            .setUri(chapterAudioUri)
+            .setMediaMetadata(
+                createMetadata(
+                    meta,
+                    settings,
+                    chapterNo,
+                    verseNo
+                )
+            )
+            .setTag(
+                RecitationMediaItem(
+                    slug = settings.reciter ?: "",
+                    translationSlug = if (settings.audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC) {
+                        settings.translationReciter
+                    } else {
+                        null
+                    },
+                    chapterNo = chapterNo,
+                    verseNo = verseNo
+                )
+            )
+            .setClippingConfiguration(
+                MediaItem.ClippingConfiguration.Builder()
+                    .setStartPositionMs(verseStartMs)
+                    .setEndPositionMs(verseEndMs)
+                    .build()
+            )
+            .build()
+    }
+
+    private fun createMetadata(
+        meta: QuranMeta,
+        settings: PlayerSettings,
+        chapterNo: Int,
+        verseNo: Int?
+    ): MediaMetadata {
+        val chapterName = meta.getChapterName(this, chapterNo) ?: ""
+
+        val artist = when (settings.audioOption) {
+            RecitationUtils.AUDIO_OPTION_BOTH -> {
+                val reciterName = RecitationManager.getReciterName(settings.reciter)
+                val translReciterName =
+                    RecitationManager.getTranslationReciterName(settings.translationReciter)
+                "${reciterName ?: ""} & ${translReciterName ?: ""}"
+            }
+
+            RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> {
+                RecitationManager.getTranslationReciterName(settings.translationReciter)
+            }
+
+            else -> {
+                RecitationManager.getReciterName(settings.reciter)
+            }
+        }
+
+        val title = if (verseNo != null) getString(
+            R.string.strLabelVerseSerialWithChapter,
+            chapterName,
+            chapterNo,
+            verseNo
+        ) else getString(
+            R.string.strLabelSurah,
+            chapterName
+        )
+
+        return MediaMetadata.Builder()
+            .setTitle(title)
+            .setArtist(artist)
+            .build()
+    }
 
     fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
         return state.value.isCurrentVerse(chapterNo, verseNo) && state.value.isPlaying
