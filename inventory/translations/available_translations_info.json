@@ -318,6 +318,26 @@
         "downloadPath": "inventory/translations/sd/sd_taj-mehmood-amroti.json"
       }
     },
+    "tg": {
+      "tg_khawaja": {
+        "book": "Khoja Mirov Khoja Mir",
+        "author": "Khawaja Mirof and Khawaja Mir",
+        "displayName": "Khoja Mirov & Khoja Mir",
+        "langCode": "tg",
+        "langName": "Тоҷикӣ",
+        "lastUpdated": 1767970786093,
+        "downloadPath": "inventory/translations/tg/tg_khawaja.json"
+      },
+      "tg_rowwad": {
+        "book": "Rowwad Translation Center",
+        "author": "Rowwad Translation Center",
+        "displayName": "Rowwad Translation Center",
+        "langCode": "tg",
+        "langName": "Тоҷикӣ",
+        "lastUpdated": 1767970786093,
+        "downloadPath": "inventory/translations/tg/tg_rowwad.json"
+      }
+    },
     "tr": {
       "tr_diyanet": {
         "book": "Turkish Translation (Diyanet)",

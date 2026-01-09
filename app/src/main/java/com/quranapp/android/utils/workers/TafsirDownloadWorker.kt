@@ -15,6 +15,7 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.NotificationUtils
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ class TafsirDownloadWorker(
             Result.success()
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.saveError(e, "TafsirDownloadWorker")
             Result.failure()
         }
     }
@@ -66,6 +68,7 @@ class TafsirDownloadWorker(
         // max=10 is supported by the server
         val batchSize = 10
         val totalChapters = QuranMeta.totalChapters()
+        var downloadedChapters = setOf<Int>()
 
         QuranTafsirDBHelper(ctx).use {
             for (start in 1..totalChapters step batchSize) {
@@ -73,12 +76,27 @@ class TafsirDownloadWorker(
                 if (isStopped) break
 
                 val end = (start + batchSize - 1).coerceAtMost(totalChapters)
+
+                if (downloadedChapters.containsAll((start..end).toList())) {
+                    Logger.d("Tafsir ${bookInfo.key} chapters $start-$end already downloaded, skipping")
+                    continue
+                }
+
                 val range = "$start-$end"
                 Logger.d("Downloading tafsir ${bookInfo.key} chapters $range")
 
                 val response = RetrofitInstance.alfaazplus.getTafsirsByChapter(bookInfo.key, range)
 
-                it.storeTafsirs(response.tafsirs)
+                it.storeTafsirs(response.tafsirs, response.version, response.timestamp1)
+
+                // newly downloaded chapter range
+                val newChapters = response.surahs.sorted()
+                val newFrom = newChapters.firstOrNull() ?: -1
+                val newTo = newChapters.lastOrNull() ?: -1
+
+                if (newFrom != -1 && newTo != -1) {
+                    downloadedChapters = downloadedChapters + (newFrom..newTo).toList()
+                }
 
                 val progress = ((end * 100) / totalChapters)
                 setProgressAsync(workDataOf("progress" to progress))

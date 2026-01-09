@@ -35,6 +35,8 @@ class FragTafsirCleanup : FragStorageCleanupBase() {
         fileUtils = FileUtils.newInstance(view.context)
 
         init(FragStorageCleanupBinding.bind(view))
+
+        // FIXME: db based cleanup
     }
 
     private fun init(binding: FragStorageCleanupBinding) {

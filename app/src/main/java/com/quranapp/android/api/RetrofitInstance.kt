@@ -1,6 +1,7 @@
 package com.quranapp.android.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.quranapp.android.BuildConfig
 import com.quranapp.android.utils.Logger
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.MediaType
@@ -12,7 +13,12 @@ object RetrofitInstance {
     private val client: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             Logger.print(chain.request().url())
-            return@addInterceptor chain.proceed(chain.request())
+
+            val newRequest = chain.request().newBuilder()
+                .addHeader("X-QuranApp-Version", BuildConfig.VERSION_CODE.toString())
+                .build()
+
+            return@addInterceptor chain.proceed(newRequest)
         }
         .cache(null)
         .build()

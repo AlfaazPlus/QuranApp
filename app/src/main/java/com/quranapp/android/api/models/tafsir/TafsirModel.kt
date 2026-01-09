@@ -2,6 +2,7 @@ package com.quranapp.android.api.models.tafsir
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.time.Instant
 
 
@@ -12,8 +13,14 @@ data class TafsirModel(
     val verseKey: String,
     val verses: List<String>,
     val text: String,
+)
+
+@Serializable
+data class TafsirResponseModel(
+    val version: String,
     val timestamp: String,
-    val version: String?,
+    val surahs: List<Int>,
+    val tafsirs: List<TafsirModel>,
 ) {
     @Transient
     val timestamp1: Long = try {
@@ -22,9 +29,3 @@ data class TafsirModel(
         -1L
     }
 }
-
-@Serializable
-data class TafsirResponseModel(
-    val version: String,
-    val tafsirs: List<TafsirModel>,
-)
