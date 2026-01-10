@@ -298,8 +298,7 @@
     <string name="strMsgReferenceFoundPlaces" formatted="false">Sono stati trovati versi relativi a %1$s in %2$d posizioni totali.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s a %2$s</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Risultati totali trovati in %1$s: %2$d</string>
-    <string name="strMsgUpdateAvailable2Continue">Aggiornamento richiesto!
-\nAggiorna l\'app per continuare.</string>
+    <string name="strMsgUpdateAvailable2Continue">AGGIORNAMENTO RICHIESTO! \nAggiorna l\'app per continuare.</string>
     <string name="inPlaces">in %s</string>
     <string name="inPlacesMore">in %1$s e %2$d in più</string>
     <string name="labelPreviousTafsir">Tafsir Precedente</string>
@@ -402,4 +401,10 @@
     <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
     <string name="recitationCanBeFreedUp" formatted="false">È possibile liberare %1$d file di recitazione memorizzati da %2$d recitatori.</string>
+    <string name="chapterInfoCanBeFreedUp" formatted="false">%d Delle informazioni sui capitoli possono essere liberate.</string>
+    <string name="msgRecitationCleanup" formatted="false">Tutte le recitazioni memorizzate da %s verranno eliminate. Per eliminare singolarmente le recitazioni per Sura, vai alle impostazioni di gestione audio.</string>
+    <string name="titleChapterInfoCleanup">Pulire le informazioni capitolo?</string>
+    <string name="msgChapterInfoCleanup">Tutte le informazioni dei capitoli saranno eliminate.</string>
+    <string name="msgTafsirCleanup" formatted="false">Tutti i tafsir memorizzati da %s saranno rimossi.</string>
+    <string name="nFiles" formatted="false">%d files</string>
 </resources>
