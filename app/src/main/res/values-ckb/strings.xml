@@ -435,4 +435,13 @@
     <string name="msgExportImportBookmarks">هەڵگرتن یان هێنانی نیشانەکراوەکان لەگەڵ تێبینییەکان.</string>
     <string name="startAutoScroll">چالاککردنی جوڵانی خۆکاری</string>
     <string name="strTitleMajorSins">تاوانە گەورەکانی ناو قورئان</string>
+    <string name="strLabelDownloaded">داگیرا</string>
+    <string name="strTitleDeleteTafsir">سڕینەوەی تەفسیر؟</string>
+    <string name="strMsgDeleteTafsir" formatted="false">ئایا دڵنیایت لە سڕینەوەی \"%s\"؟ ئەمە دەبێتە هۆی سڕینەوەی تەفسیری داگیراو لەناو ئامێرەکەتدا.</string>
+    <string name="titleCancelDownload">هەڵوەشاندنەوەی داگرتن؟</string>
+    <string name="yesCancelDownload">بەڵێ، هەڵیبوەشێنەوە</string>
+    <string name="noContinueDownload">نەخێر، بەردەوامبە</string>
+    <string name="readingTafsirMultiVerses">خوێندنەوەی تەفسیر بۆ ئایەتە جیاوازەکان:</string>
+    <string name="dlRecitations">داگرتن و ڕێکخستنی قورئانخوێنەکان</string>
+    <string name="dlTafsirs">داگرتن و ڕێکخستنی تەفسیرەکان</string>
 </resources>
