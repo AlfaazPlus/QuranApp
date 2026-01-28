@@ -433,4 +433,15 @@
     <string name="autoScrollSpeed">ضبط السرعة</string>
     <string name="strMsgCannotAutoScrollWhileReciting">لا يمكن التمرير التلقائي أثناء تشغيل التلاوة.</string>
     <string name="msgExtractingFonts">استخراج الخطوط</string>
+    <string name="strTitleDeleteTafsir">حذف التفسير؟</string>
+    <string name="strMsgDeleteTafsir" formatted="false">هل أنت متأكد أنك تريد حذف \"%s\"؟ سيؤدي هذا إلى إزالة بيانات التفسير التي تم تنزيلها من جهازك.</string>
+    <string name="strTitleMajorSins">الخطايا الكبرى في القرآن الكريم</string>
+    <string name="labelImportExportEverything">استيراد/تصدير كل شيء</string>
+    <string name="labelImportExportSettings">إعدادات الاستيراد/التصدير</string>
+    <string name="warnImportSettings">تحذير: سيؤدي استيراد الإعدادات إلى إلغاء إعداداتك الحالية.</string>
+    <string name="titleCancelDownload">إلغاء التنزيل؟</string>
+    <string name="yesCancelDownload">نعم إلغاء</string>
+    <string name="noContinueDownload">لا، استمر</string>
+    <string name="readingTafsirMultiVerses">قراءة التفسير لآيات متعددة:</string>
+    <string name="dlRecitations">تنزيل وإدارة التلاوات</string>
 </resources>
