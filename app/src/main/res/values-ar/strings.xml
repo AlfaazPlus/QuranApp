@@ -444,4 +444,7 @@
     <string name="noContinueDownload">لا، استمر</string>
     <string name="readingTafsirMultiVerses">قراءة التفسير لآيات متعددة:</string>
     <string name="dlRecitations">تنزيل وإدارة التلاوات</string>
+    <string name="strLabelDownloaded">تحميل</string>
+    <string name="labelImportExportBookmarks">استيراد/تصدير الإشارات المرجعية</string>
+    <string name="dlTafsirs">تنزيل وإدارة التفاسير</string>
 </resources>
