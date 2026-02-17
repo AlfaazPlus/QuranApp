@@ -20,7 +20,7 @@
     <string name="strLabelOkay">Entendido</string>
     <string name="strLabelGotIt">Entiendo</string>
     <string name="strLabelCancel">Cancelar</string>
-    <string name="strLabelRemove">Remover</string>
+    <string name="strLabelRemove">Retirar</string>
     <string name="strLabelDelete">Eliminar</string>
     <string name="strLabelRemoveAll">Remover todo</string>
     <string name="strLabelBack">Atrás</string>
@@ -39,7 +39,7 @@
     <string name="strLabelOpen">Abrir</string>
     <string name="strLabelOpenInReader">Abrir dentro del Lector</string>
     <string name="strLabelChangeNRestart">Cambiar y reiniciar</string>
-    <string name="strLabelSkip">Saltar</string>
+    <string name="strLabelSkip">Omitir</string>
     <string name="strLabelPrevious">Anterior</string>
     <string name="strLabelNext">Siguiente</string>
     <string name="strLabelStart">Empezar</string>
@@ -68,7 +68,7 @@
     <string name="strLabelReport">Reportar</string>
     <string name="strLabelReading">Leyendo</string>
     <string name="strTextSending">Enviando…</string>
-    <string name="strTitleError">Error!</string>
+    <string name="strTitleError">¡Error!</string>
     <string name="strTitleOops">¡Ups!</string>
     <string name="strTextUpdating">Actualizando…</string>
     <string name="strTextInstalling">Instalando…</string>
@@ -82,7 +82,7 @@
     <string name="strTitleQuran">Corán</string>
     <string name="strLabelAdvertisement">Anuncio</string>
     <string name="strLabelPreviousVerse">Verso anterior</string>
-    <string name="strLabelNextVerse">siguiente verso</string>
+    <string name="strLabelNextVerse">Siguiente verso</string>
     <string name="strLabelVerseNo" formatted="false">Verso %d</string>
     <string name="strLabelVerses" formatted="false">Versos %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Verso : %d</string>
@@ -179,14 +179,14 @@
     <string name="strTitleSelectReciter">Seleccionar recitador</string>
     <string name="strTitleSelectScripts">Seleccionar guión</string>
     <string name="strTitleRepeatVerse">Repetir verso</string>
-    <string name="strTitleQuickEdit">Edición rapida</string>
+    <string name="strTitleQuickEdit">Edición rápida</string>
     <string name="strTitleShareVerse">Compartir verso</string>
     <string name="strTitleReportVerse">Versículo de informe</string>
     <string name="strTitleTranslDelete">¿Eliminar traducción\?</string>
     <string name="strTitleHideAd">Ocultar anuncio</string>
     <string name="strTitleAutoPlayNext">Reproducción automática siguiente</string>
     <string name="strTitleFeaturedQuran">Lectura destacada</string>
-    <string name="strTitlePrivacyPolicy">Política de privacidad</string>
+    <string name="strTitlePrivacyPolicy">Directiva de privacidad</string>
     <string name="strTitleThresholdReached">Umbral alcanzado</string>
     <string name="strTitleChapInfoChapterNo">Número de capítulo</string>
     <string name="strTitleAlphaBG">Fondo principal</string>
@@ -221,7 +221,7 @@
     <string name="strTitleFootnotes">Notas</string>
     <string name="strTitleReaderVerses">Versos</string>
     <string name="strTitleFilters">Filtros</string>
-    <string name="strTitleSuccess">Exitoso</string>
+    <string name="strTitleSuccess">Logrado</string>
     <string name="strTitleMenu">Menú</string>
     <string name="strTitleDownloadTranslations">Descargar</string>
     <string name="strTitleProphets">Profetas</string>
@@ -259,9 +259,9 @@
     <string name="strLabelNoPreviousJuz">Sin juz anterior</string>
     <string name="strLabelNoNextJuz">No hay siguiente juz</string>
     <string name="strLabelPreviousJuz">Juz anterior</string>
-    <string name="strLabelNextJuz">Suguiente juz</string>
+    <string name="strLabelNextJuz">Siguiente juz</string>
     <string name="strLabelSurah" formatted="false">Capítulo %s</string>
-    <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelPageNo" formatted="false">Página %d</string>
     <string name="strLabelJuzNo" formatted="false">Juz\' %d</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Capitulo %1$s:%2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Ir al Verso %d</string>
@@ -331,7 +331,7 @@
     <string name="msgDownloadingScript">Descargar el script</string>
     <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d de %2$d</string>
     <string name="pasteCrashLogGithubIssue">El registro se ha copiado en el portapapeles. Pégalo en la incidencia de GitHub.</string>
-    <string name="lastCrashLog">Último registro de fallos</string>
+    <string name="lastCrashLog">Última bitácora de cuelgue</string>
     <string name="titleStorageCleanup">Limpieza del almacenamiento</string>
     <string name="titleChapterInfo">Información del capítulo</string>
     <string name="msgDownloadingFonts">Descargar las fuentes</string>
@@ -371,10 +371,10 @@
     <string name="noItems">Sin elementos</string>
     <string name="titleAddToFavourites">Añadir a favoritos</string>
     <string name="textDownloaded">Descargado</string>
-    <string name="appLogs">Registros de la aplicación</string>
-    <string name="crashLogs">Registros de los fallos</string>
-    <string name="suppressedLogs">Registros eliminados</string>
-    <string name="logRemoved">Registro eliminado</string>
+    <string name="appLogs">Bitácoras de app</string>
+    <string name="crashLogs">Bitácoras de cuelgue</string>
+    <string name="suppressedLogs">Bitácoras eliminadas</string>
+    <string name="logRemoved">Bitácora eliminada</string>
     <string name="titleRemoveFromFavourites">Quitar de favoritos</string>
     <string name="msgRecitaionDeleletedSurah" formatted="false">Recitaciones eliminadas de \"%1$s\" para el recitador \"%2$s\".</string>
     <string name="msgRemovedFromFavourites">Eliminado de favoritos</string>
@@ -411,7 +411,7 @@
 \nDESCARGAR AHORA:
 \n%s</string>
     <string name="titleEtiquetteVerses">Etiqueta en el Corán</string>
-    <string name="strMsgDuaOf" formatted="false">Dua de %s</string>
+    <string name="strMsgDuaOf" formatted="false">Súplica de %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s en el Corán</string>
     <string name="titleResourceDownloadSource">Fuente de descarga del recurso</string>
     <string name="msgResourceDownloadSource">Utilice esta opción para descargar los datos del Corán de otra fuente si alguna no funciona</string>
@@ -432,4 +432,16 @@
     <string name="msgExportSuccess">Exportado con éxito</string>
     <string name="msgImportFailed">Error al importar. Archivo no soportado.</string>
     <string name="msgImportSuccess">Importado con éxito</string>
+    <string name="strLabelDownloaded">Descargado</string>
+    <string name="titleCancelDownload">¿Cancelar descarga?</string>
+    <string name="autoScrollSpeed">Poner velocidad</string>
+    <string name="desc_votd_widget">Obtener un verso nuevo cada día</string>
+    <string name="autoScroll">Auto arrastrar</string>
+    <string name="startAutoScroll">Iniciar auto arrastrar</string>
+    <string name="strMsgCannotAutoScrollWhileReciting">No se puede auto-arrastrar mientras la recitación se está reproduciendo.</string>
+    <string name="yesCancelDownload">Sí, cancelar</string>
+    <string name="noContinueDownload">No, continúa</string>
+    <string name="readingTafsirMultiVerses">Lectura de tarsir para múltiples versos:</string>
+    <string name="dlRecitations">Descargar y Gestionar Recitaciones</string>
+    <string name="dlTafsirs">Descargar y Gestionar Tafsirs</string>
 </resources>
