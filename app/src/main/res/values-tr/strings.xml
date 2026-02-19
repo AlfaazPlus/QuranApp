@@ -401,10 +401,7 @@
     <string name="strMsgDuaFor" formatted="false">%s için dua ediniz</string>
     <string name="place" formatted="false">%d yeri</string>
     <string name="places" formatted="false">%d yerleri</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp, Kur\'an-ı Kerim\'i meali ile okumak ve keşfetmek için ücretsiz ve açık kaynaklı bir uygulamadır. Bu uygulama, tefsir, tilavet, hatırlatma ve daha birçok özelliğiyle zarif ve sade bir arayüze sahiptir.
-\n
-\nŞİMDİ İNDİR:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp, Kur\'an-ı Kerim\'i meali ile okumak ve keşfetmek için ücretsiz ve açık kaynaklı bir uygulamadır. Bu uygulama, tefsir, tilavet, hatırlatma ve daha birçok özelliğiyle zarif ve sade bir arayüze sahiptir. \n \nŞİMDİ İNDİR: \n%s</string>
     <string name="labelNextTafsir">Sonraki tefsir</string>
     <string name="msgInvalidParams">Geçersiz değişken</string>
     <string name="msgTafsirLoadFailed">Tefsir yüklenemedi</string>
@@ -442,4 +439,6 @@
     <string name="yesCancelDownload">Evet, iptal et</string>
     <string name="noContinueDownload">Hayır, devam et</string>
     <string name="readingTafsirMultiVerses">Birden fazla ayet için tefsir okunuyor:</string>
+    <string name="strLabelDownloaded">İndirildi</string>
+    <string name="strTitleDeleteTafsir">Tefsiri Silmek istiyormusunuz?</string>
 </resources>
