@@ -437,4 +437,6 @@
     <string name="autoScrollSpeed">Régler la vitesse</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Impossible de défiler automatiquement lorsque la récitation est en cours.</string>
     <string name="msgExtractingFonts">Extraction des polices</string>
+    <string name="strLabelDownloaded">Téléchargé</string>
+    <string name="strTitleDeleteTafsir">Supprimer le tafsir ?</string>
 </resources>

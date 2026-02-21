@@ -433,8 +433,18 @@
     <string name="msgImportFailed">Gagal mengimpor. File tidak didukung.</string>
     <string name="msgImportSuccess">Berhasil mengimpor</string>
     <string name="msgExtractingFonts">Mengekstrak font</string>
-    <string name="labelImportExportEverything">Semuanya</string>
-    <string name="labelImportExportBookmarks">Hanya Bookmark</string>
-    <string name="labelImportExportSettings">Hanya Pengaturan</string>
+    <string name="labelImportExportEverything">Impor/Ekspor Semuanya</string>
+    <string name="labelImportExportBookmarks">Impor/Ekspor Bookmark</string>
+    <string name="labelImportExportSettings">Impor/Ekspor Pengaturan</string>
     <string name="warnImportSettings">PERINGATAN: Mengimpor pengaturan akan menggantikan pengaturan Anda saat ini.</string>
+    <string name="strLabelDownloaded">Diunduh</string>
+    <string name="strTitleDeleteTafsir">Hapus Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Apakah Anda yakin ingin menghapus \"%s\"? Ini akan menghapus data tafsir yang diunduh dari perangkat Anda.</string>
+    <string name="strTitleMajorSins">Dosa Besar dalam Alquran</string>
+    <string name="titleCancelDownload">Batalkan unduhan?</string>
+    <string name="yesCancelDownload">Ya, batalkan</string>
+    <string name="noContinueDownload">Tidak, lanjutkan</string>
+    <string name="readingTafsirMultiVerses">Membaca tafsir untuk beberapa ayat:</string>
+    <string name="dlRecitations">Unduh &amp; Kelola Bacaan</string>
+    <string name="dlTafsirs">Unduh &amp; Kelola Tafsir</string>
 </resources>
