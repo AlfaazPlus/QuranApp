@@ -20,6 +20,7 @@ import android.widget.RemoteViews
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.MainActivity
 import com.quranapp.android.components.quran.Quran
 import com.quranapp.android.components.quran.QuranMeta
@@ -29,6 +30,7 @@ import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeWidgetSP
 import com.quranapp.android.utils.reader.isKFQPCScript
@@ -95,6 +97,7 @@ internal fun updateAppWidget(
     val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
     val maxWidth =
         context.dp2px(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat())
+            .takeIf { it > 0 } ?: context.dp2px(300f).toInt()
 
     QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
         override fun onReady(quranMeta: QuranMeta) {
@@ -182,9 +185,9 @@ internal fun onObtainVotd(
             R.id.votdText, StringUtils.removeHTML(translation.text, false)
         )
 
-
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
+            setClass(context, ActivityReader::class.java)
+        }
 
         val pendingIntent = PendingIntent.getActivity(
             context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -254,6 +257,12 @@ internal fun createTextBitmap(
         .setLineSpacing(0f, 1f)
         .setIncludePad(false)
         .build()
+
+    val height = staticLayout.height
+    if (maxWidth <= 0 || height <= 0) {
+        // return null or a 1x1 bitmap to avoid crash
+        return createBitmap(1, 1)
+    }
 
     // Create bitmap with calculated height
     val bitmap = createBitmap(maxWidth, staticLayout.height)
