@@ -4,6 +4,7 @@ import ThemeUtilsV2
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -67,11 +68,11 @@ import com.quranapp.android.viewModels.TafsirReaderViewModel
 
 @Composable
 fun TafsirReaderScreen(
-    onBack: () -> Unit,
     showFontSizeDialog: () -> Unit,
     onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     val viewModel = viewModel<TafsirReaderViewModel>()
     val uiState by viewModel.uiState.collectAsState()
     var webViewScrollY by remember { mutableIntStateOf(0) }
@@ -84,7 +85,6 @@ fun TafsirReaderScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             TafsirTopBar(
-                onBack = onBack,
                 onOpenSettings = onOpenSettings
             )
 
@@ -177,9 +177,9 @@ fun TafsirReaderScreen(
 
 @Composable
 private fun TafsirTopBar(
-    onBack: () -> Unit,
     onOpenSettings: () -> Unit
 ) {
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val viewModel = viewModel<TafsirReaderViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -199,7 +199,7 @@ private fun TafsirTopBar(
         ) {
             // Back button
             IconButton(
-                onClick = onBack,
+                onClick = { backDispatcher?.onBackPressed() },
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)

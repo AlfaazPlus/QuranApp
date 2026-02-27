@@ -174,23 +174,9 @@ open class ChapterCard @JvmOverloads constructor(
                     onFavoriteButtonClickListener!!.run()
                 }
             }
-
-            updateFavIcon()
         }
         addView(view)
         return view
-    }
-
-    private fun updateFavIcon() {
-        val isAdded = SPFavouriteChapters.isAddedToFavorites(context, chapterNumber)
-
-        findViewById<ImageView>(R.id.chapterCardFavIcon)?.let {
-            it.setImageResource(
-                if (isAdded) R.drawable.icon_star_filled
-                else R.drawable.icon_star_outlined
-            )
-            it.setColorFilter(context.color(if (isAdded) R.color.colorPrimary else R.color.colorIcon))
-        }
     }
 
     private fun updateChapterNumber(chapterNo: Int) {
@@ -199,7 +185,6 @@ open class ChapterCard @JvmOverloads constructor(
         }
 
         findViewById<ChapterIcon?>(R.id.chapterCardIcon)?.setChapterNumber(chapterNo)
-        updateFavIcon()
     }
 
     fun setName(chapterName: CharSequence, chapterTransl: String) {
