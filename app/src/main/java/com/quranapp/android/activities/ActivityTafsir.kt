@@ -72,7 +72,6 @@ class ActivityTafsir : BaseActivity() {
         setContent {
             QuranAppTheme {
                 TafsirReaderScreen(
-                    onBack = { onBackPressedDispatcher.onBackPressed() },
                     showFontSizeDialog = { showFontSizeDialog() },
                     onOpenSettings = { openTafsirSettings() },
                 )
