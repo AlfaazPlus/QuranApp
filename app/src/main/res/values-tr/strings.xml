@@ -111,7 +111,7 @@
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s suresi│ %2$d. ayet</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Bölüm nu. %1$d │ Ayet %2$d–%3$d</string>
-    <string name="strTitleReaderChapters">Sureler (Bölümler)</string>
+    <string name="strTitleReaderChapters">Sureler</string>
     <string name="strTitleFootnotes">Dipnotlar</string>
     <string name="strTitleReaderJuz">Cüz (Bölümler)</string>
     <string name="strTitleReaderChapters2">Sureler</string>

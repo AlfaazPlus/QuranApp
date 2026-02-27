@@ -224,11 +224,11 @@
     <string name="strTitleMadani">مەدینەیی</string>
     <string name="strTitleHolyQuran">قورئانی پیرۆز</string>
     <string name="strTitleFootnotes">زانیارییەکان</string>
-    <string name="strTitleReaderChapters">سورەتەکان (بەشەکان)</string>
+    <string name="strTitleReaderChapters">سورەتەکان</string>
     <string name="strTitleSelectReason">هۆکارەکەی بنوسە</string>
     <string name="strTitleFootnote">زانیاری</string>
     <string name="strTitleReaderChapters2">سورەتەکان</string>
-    <string name="strTitleReaderJuz">جوزئەکان (لاپەڕەکان)</string>
+    <string name="strTitleReaderJuz">جوزئەکان</string>
     <string name="strTitleReaderJuz2">جوزﺋ</string>
     <string name="strTitleVerseOptions">ڕێکخستنی ئایەت</string>
     <string name="strTitleReaderVerses">ئایەتەکان</string>

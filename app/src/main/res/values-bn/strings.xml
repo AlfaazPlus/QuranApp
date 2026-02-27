@@ -77,8 +77,8 @@
     <string name="strTitleMadani">মাদানী</string>
     <string name="strTitleFootnote">পাদটীকা</string>
     <string name="strTitleFootnotes">পাদটীকাসমূহ</string>
-    <string name="strTitleReaderChapters">সূরাসমূহ (অধ্যায়সমূহ)</string>
-    <string name="strTitleReaderJuz">জুজ (পারা)</string>
+    <string name="strTitleReaderChapters">সূরাসমূহ</string>
+    <string name="strTitleReaderJuz">জুজ</string>
     <string name="strTitleReaderChapters2">সূরাসমূহ</string>
     <string name="strTitleReaderJuz2">পারা</string>
     <string name="strTitleReaderJumpToVerse">আয়াতে যান</string>

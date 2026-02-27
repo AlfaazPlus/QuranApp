@@ -14,25 +14,4 @@ object SPFavouriteChapters {
         val favChapters = sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())
         return favChapters?.map { it.toInt() }?.toList() ?: listOf()
     }
-
-    fun addToFavorites(ctx: Context, chapterNo: Int) {
-        val favChapters = HashSet(sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!)
-        favChapters.add(chapterNo.toString())
-        sp(ctx).edit(commit = true) {
-            putStringSet(KEY_FAVOURITE_CHAPTERS, favChapters)
-        }
-    }
-
-    fun isAddedToFavorites(ctx: Context, chapterNo: Int): Boolean {
-        return sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!
-            .contains(chapterNo.toString())
-    }
-
-    fun removeFromFavorites(ctx: Context, chapterNo: Int) {
-        val favChapters = HashSet(sp(ctx).getStringSet(KEY_FAVOURITE_CHAPTERS, setOf())!!)
-        favChapters.remove(chapterNo.toString())
-        sp(ctx).edit(commit = true) {
-            putStringSet(KEY_FAVOURITE_CHAPTERS, favChapters)
-        }
-    }
 }
