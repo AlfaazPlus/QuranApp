@@ -11,20 +11,27 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
@@ -34,6 +41,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -41,12 +49,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,14 +72,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
@@ -80,10 +97,15 @@ import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.FavChaptersViewModel
 import kotlinx.coroutines.launch
 
+private val ReaderIndexExpandedHeaderHeight = 220.dp
+private val ReaderIndexCollapsedHeaderHeight = 84.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReaderIndexScreen(
 ) {
     val context = LocalContext.current
+    val density = LocalDensity.current
 
     var quranMeta by remember { mutableStateOf<QuranMeta?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -101,10 +123,19 @@ fun ReaderIndexScreen(
     var chaptersReversed by remember { mutableStateOf(false) }
     var juzReversed by remember { mutableStateOf(false) }
 
-    val chaptersListState = rememberLazyListState()
+    val chaptersListState = rememberLazyGridState()
     val juzListState = rememberLazyListState()
-    val favListState = rememberLazyListState()
+    val favListState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
+    val topAppBarState = rememberTopAppBarState(
+        initialHeightOffsetLimit = with(density) {
+            -(ReaderIndexExpandedHeaderHeight - ReaderIndexCollapsedHeaderHeight).toPx()
+        }
+    )
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        state = topAppBarState,
+        snapAnimationSpec = null
+    )
 
     val selectedTab = pagerState.currentPage
 
@@ -123,26 +154,38 @@ fun ReaderIndexScreen(
 
     val meta = quranMeta ?: return
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
-    ) {
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        containerColor = colorScheme.background,
+        topBar = {
+            ReaderIndexTopBar(scrollBehavior)
+        },
+        floatingActionButton = {
+            ReaderIndexSortFab(
+                visible = !isLoading && quranMeta != null && selectedTab != 2,
+                onClick = {
+                    when (selectedTab) {
+                        0 -> chaptersReversed = !chaptersReversed
+                        1 -> juzReversed = !juzReversed
+                    }
+                    scope.launch {
+                        when (selectedTab) {
+                            0 -> chaptersListState.animateScrollToItem(0)
+                            1 -> juzListState.animateScrollToItem(0)
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colorScheme.surfaceContainer)
-                    .statusBarsPadding(),
-            ) {
-                ReaderIndexHeader()
-                ReaderIndexTopBar(
-                    modifier = Modifier.align(Alignment.TopCenter)
-                )
-            }
+
 
             Box(
                 modifier = Modifier
@@ -157,18 +200,21 @@ fun ReaderIndexScreen(
                         0 -> ReaderIndexChaptersList(
                             quranMeta = meta,
                             reversed = chaptersReversed,
-                            listState = chaptersListState
+                            listState = chaptersListState,
+                            nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
 
                         1 -> ReaderIndexJuzList(
                             quranMeta = meta,
                             reversed = juzReversed,
-                            listState = juzListState
+                            listState = juzListState,
+                            nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
 
                         2 -> ReaderIndexFavChaptersList(
                             quranMeta = meta,
-                            listState = favListState
+                            listState = favListState,
+                            nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
                     }
                 }
@@ -195,88 +241,105 @@ fun ReaderIndexScreen(
             }
         }
 
-        ReaderIndexSortFab(
-            visible = !isLoading && quranMeta != null && selectedTab != 2,
-            onClick = {
-                when (selectedTab) {
-                    0 -> chaptersReversed = !chaptersReversed
-                    1 -> juzReversed = !juzReversed
-                }
-                scope.launch {
-                    when (selectedTab) {
-                        0 -> chaptersListState.animateScrollToItem(0)
-                        1 -> juzListState.animateScrollToItem(0)
-                    }
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .navigationBarsPadding()
-        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ReaderIndexTopBar(
-    modifier: Modifier
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val context = LocalContext.current
+    val collapsedFraction = scrollBehavior.state.collapsedFraction
 
-    Row(
-        modifier = modifier
+    val appBarHeight = lerp(
+        start = ReaderIndexExpandedHeaderHeight,
+        stop = ReaderIndexCollapsedHeaderHeight,
+        fraction = collapsedFraction
+    )
+
+    val padding = lerp(
+        start = 24.dp,
+        stop = 0.dp,
+        fraction = collapsedFraction
+    )
+
+    val iconBottomSpacing = lerp(
+        start = 8.dp,
+        stop = 0.dp,
+        fraction = collapsedFraction
+    )
+
+    Box(
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .height(appBarHeight)
+            .background(colorScheme.surfaceContainer)
+            .windowInsetsPadding(WindowInsets.statusBars),
     ) {
-        IconButton(
-            onClick = { backDispatcher?.onBackPressed() },
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.dr_icon_chevron_left),
-                contentDescription = stringResource(R.string.strLabelBack),
-                tint = colorScheme.onSurface
-            )
-        }
-
-        Spacer(
-            modifier = Modifier.weight(1f)
+        ReaderIndexHeader(
+            padding = padding,
+            iconBottomSpacing = iconBottomSpacing
         )
-
-        IconButton(
-            onClick = {
-                context.startActivity(
-                    Intent(
-                        context,
-                        ActivitySearch::class.java
-                    )
-                )
-
-            },
+        Row(
             modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(
-                painter = painterResource(R.drawable.dr_icon_search),
-                contentDescription = stringResource(R.string.strHintSearch),
-                tint = colorScheme.onSurface
+            IconButton(
+                onClick = { backDispatcher?.onBackPressed() },
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.dr_icon_chevron_left),
+                    contentDescription = stringResource(R.string.strLabelBack),
+                    tint = colorScheme.onSurface
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.weight(1f)
             )
+
+            IconButton(
+                onClick = {
+                    context.startActivity(
+                        Intent(
+                            context,
+                            ActivitySearch::class.java
+                        )
+                    )
+
+                },
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.dr_icon_search),
+                    contentDescription = stringResource(R.string.strHintSearch),
+                    tint = colorScheme.onSurface
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun ReaderIndexHeader() {
+private fun ReaderIndexHeader(
+    padding: Dp,
+    iconBottomSpacing: Dp
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 24.dp, bottom = 24.dp),
+            .padding(vertical = padding),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -288,7 +351,7 @@ private fun ReaderIndexHeader() {
             colorFilter = ColorFilter.tint(colorScheme.primary)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(iconBottomSpacing))
 
         Text(
             text = stringResource(R.string.strTitleHolyQuran),
@@ -381,7 +444,8 @@ private fun ReaderIndexTabs(
 private fun ReaderIndexChaptersList(
     quranMeta: QuranMeta,
     reversed: Boolean,
-    listState: LazyListState,
+    listState: LazyGridState,
+    nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -396,46 +460,52 @@ private fun ReaderIndexChaptersList(
         }
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            start = 16.dp,
-            end = 16.dp,
-            top = ReaderIndexTabHeight + 16.dp,
-            bottom = 16.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        items(chapterNumbers, key = { it }) { chapterNo ->
-            val isFav = favChapters.contains(chapterNo)
+    BoxWithConstraints {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (maxWidth < 600.dp) 1 else 2),
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                top = ReaderIndexTabHeight + 16.dp,
+                bottom = 16.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(chapterNumbers, key = { it }) { chapterNo ->
+                val isFav = favChapters.contains(chapterNo)
 
-            ChapterCard(
-                chapterNo = chapterNo,
-                chapterName = quranMeta.getChapterName(context, chapterNo),
-                chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
-                isFavourite = isFav,
-                onClick = {
-                    ReaderFactory.startChapter(context, chapterNo)
-                },
-                onToggleFavourite = {
-                    scope.launch {
-                        if (isFav) {
-                            favChaptersViewModel.removeFromFavourites(
-                                context,
-                                chapterNo,
-                                favChapters
-                            )
-                        } else {
-                            favChaptersViewModel.addToFavourites(
-                                context,
-                                chapterNo,
-                                favChapters
-                            )
+                ChapterCard(
+                    chapterNo = chapterNo,
+                    chapterName = quranMeta.getChapterName(context, chapterNo),
+                    chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                    isFavourite = isFav,
+                    onClick = {
+                        ReaderFactory.startChapter(context, chapterNo)
+                    },
+                    onToggleFavourite = {
+                        scope.launch {
+                            if (isFav) {
+                                favChaptersViewModel.removeFromFavourites(
+                                    context,
+                                    chapterNo,
+                                    favChapters
+                                )
+                            } else {
+                                favChaptersViewModel.addToFavourites(
+                                    context,
+                                    chapterNo,
+                                    favChapters
+                                )
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
@@ -450,6 +520,7 @@ private fun ReaderIndexJuzList(
     quranMeta: QuranMeta,
     reversed: Boolean,
     listState: LazyListState,
+    nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -480,7 +551,9 @@ private fun ReaderIndexJuzList(
 
     LazyColumn(
         state = listState,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(nestedScrollConnection),
         contentPadding = PaddingValues(
             start = 16.dp,
             end = 16.dp,
@@ -557,9 +630,18 @@ private fun JuzCard(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
+
                 item.chapterMetas.forEach { chapterMeta ->
                     val versesInJuz =
-                        quranMeta.getVerseRangeOfChapterInJuz(item.juzNo, chapterMeta.chapterNo)
+                        remember(
+                            item.juzNo,
+                            chapterMeta.chapterNo
+                        ) {
+                            quranMeta.getVerseRangeOfChapterInJuz(
+                                item.juzNo,
+                                chapterMeta.chapterNo
+                            )
+                        }
 
                     if (versesInJuz != null) {
                         Row(
@@ -642,7 +724,8 @@ private fun JuzCard(
 @Composable
 private fun ReaderIndexFavChaptersList(
     quranMeta: QuranMeta,
-    listState: LazyListState,
+    listState: LazyGridState,
+    nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -680,45 +763,51 @@ private fun ReaderIndexFavChaptersList(
         }
 
         else -> {
-            LazyColumn(
-                state = listState,
-                modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    start = 16.dp,
-                    end = 16.dp,
-                    top = ReaderIndexTabHeight + 16.dp,
-                    bottom = 16.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(favChapters, key = { it }) { chapterNo ->
-                    ChapterCard(
-                        chapterNo = chapterNo,
-                        chapterName = quranMeta.getChapterName(context, chapterNo),
-                        chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
-                        isFavourite = true,
-                        onClick = {
-                            ReaderFactory.startChapter(context, chapterNo)
-                        },
-                        onToggleFavourite = {
-                            MessageUtils.showConfirmationDialog(
-                                context,
-                                title = context.getString(R.string.titleRemoveFromFavourites),
-                                msg = quranMeta.getChapterName(context, chapterNo),
-                                btn = context.getString(R.string.strLabelRemove),
-                                btnColor = ColorUtils.DANGER,
-                                action = Runnable {
-                                    scope.launch {
-                                        favChaptersViewModel.removeFromFavourites(
-                                            context,
-                                            chapterNo,
-                                            favChapters
-                                        )
+            BoxWithConstraints {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(if (maxWidth < 600.dp) 1 else 2),
+                    state = listState,
+                    modifier = modifier
+                        .fillMaxSize()
+                        .nestedScroll(nestedScrollConnection),
+                    contentPadding = PaddingValues(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = ReaderIndexTabHeight + 16.dp,
+                        bottom = 16.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(favChapters, key = { it }) { chapterNo ->
+                        ChapterCard(
+                            chapterNo = chapterNo,
+                            chapterName = quranMeta.getChapterName(context, chapterNo),
+                            chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                            isFavourite = true,
+                            onClick = {
+                                ReaderFactory.startChapter(context, chapterNo)
+                            },
+                            onToggleFavourite = {
+                                MessageUtils.showConfirmationDialog(
+                                    context,
+                                    title = context.getString(R.string.titleRemoveFromFavourites),
+                                    msg = quranMeta.getChapterName(context, chapterNo),
+                                    btn = context.getString(R.string.strLabelRemove),
+                                    btnColor = ColorUtils.DANGER,
+                                    action = Runnable {
+                                        scope.launch {
+                                            favChaptersViewModel.removeFromFavourites(
+                                                context,
+                                                chapterNo,
+                                                favChapters
+                                            )
+                                        }
                                     }
-                                }
-                            )
-                        }
-                    )
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }

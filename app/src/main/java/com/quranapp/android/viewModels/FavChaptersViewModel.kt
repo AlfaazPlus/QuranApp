@@ -75,6 +75,8 @@ class FavChaptersViewModel : ViewModel() {
             CoroutineScope(Dispatchers.IO).launch {
                 val old = SPFavouriteChapters.getFavouriteChapters(context)
 
+                if (old.isEmpty()) return@launch
+
                 try {
                     DataStoreManager.write(
                         KEY,
