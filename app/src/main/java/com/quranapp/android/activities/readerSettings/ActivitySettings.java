@@ -27,7 +27,7 @@ import com.quranapp.android.frags.settings.FragSettingsLanguage;
 import com.quranapp.android.frags.settings.FragSettingsMain;
 import com.quranapp.android.frags.settings.FragSettingsScripts;
 import com.quranapp.android.frags.settings.FragSettingsTafsirs;
-import com.quranapp.android.frags.settings.translation.FragSettingsTransl;
+import com.quranapp.android.frags.settings.translation.FragSettingsTranslation;
 import com.quranapp.android.frags.settings.translation.FragSettingsTranslationsDownload;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
@@ -132,7 +132,7 @@ public class ActivitySettings extends BaseActivity {
                 destFrag = FragSettingsLanguage.class;
                 break;
             case SETTINGS_TRANSLATION:
-                destFrag = FragSettingsTransl.class;
+                destFrag = FragSettingsTranslation.class;
                 break;
             case SETTINGS_TRANSLATION_DOWNLOAD:
                 destFrag = FragSettingsTranslationsDownload.class;

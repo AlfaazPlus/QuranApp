@@ -3,6 +3,7 @@ package com.quranapp.android.utils.univ
 object Codes {
     const val APP_UPDATE = 0x100
     const val SETTINGS_LAUNCHER_RESULT_CODE = 112
+    const val SETTINGS_TRANSLATION_DOWNLOAD_CODE = 116
     const val OPEN_REFERENCE_RESULT_CODE = 113
     const val PICK_IMAGE = 0x114
     const val VOICE_INPUT_ACTIVITY = 114
