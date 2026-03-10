@@ -188,7 +188,7 @@ private fun LanguageGroupCard(
                             Text(
                                 text = group.langName,
                                 style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.onSurface,
+                                color = colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
