@@ -444,4 +444,6 @@
     <string name="readingTafsirMultiVerses">Lectura de tarsir para múltiples versos:</string>
     <string name="dlRecitations">Descargar y Gestionar Recitaciones</string>
     <string name="dlTafsirs">Descargar y Gestionar Tafsirs</string>
+    <string name="strTitleDeleteTafsir">¿Borrar Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">¿Estás seguro de que quieres eliminar \"%s\"? Esto eliminará los datos de tafsir descargados de tu dispositivo.</string>
 </resources>
