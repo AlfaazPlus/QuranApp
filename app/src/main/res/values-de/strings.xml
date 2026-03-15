@@ -74,11 +74,11 @@
     <string name="strTitleMakki">Mekka</string>
     <string name="strTitleFootnote">Fußnote</string>
     <string name="strTitleFootnotes">Fußnoten</string>
-    <string name="strTitleReaderChapters">Suren (Kapitel)</string>
+    <string name="strTitleReaderChapters">Suren</string>
     <string name="strTitleReaderChapters2">Suren</string>
     <string name="strTitleReaderVerses">Verse</string>
     <string name="strTitleReaderJumpToVerse">Springe zu Vers</string>
-    <string name="strTitleReaderJuz">Juz (Abschnitt)</string>
+    <string name="strTitleReaderJuz">Juz</string>
     <string name="strTitleReaderJuz2">Abschnitt</string>
     <string name="strTitleVerseOptions">Vers Einstellungen</string>
     <string name="strTitleVerseRecitation">Vers Rezitation</string>

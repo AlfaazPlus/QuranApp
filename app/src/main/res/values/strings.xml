@@ -93,8 +93,8 @@
     <string name="strTitleFootnote">Footnote</string>
     <string name="strTitleFootnotes">Footnotes</string>
     <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
-    <string name="strTitleReaderChapters">Surahs (Chapters)</string>
-    <string name="strTitleReaderJuz">Juz (Para)</string>
+    <string name="strTitleReaderChapters">Chapters</string>
+    <string name="strTitleReaderJuz">Juz</string>
     <string name="strTitleReaderChapters2">Surahs</string>
     <string name="strTitleReaderJuz2">Juz</string>
     <string name="strTitleReaderVerses">Verses</string>
@@ -395,6 +395,7 @@
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
+    <string name="favourites">Favourites</string>
     <string name="titleAddToFavourites">Add to favourites</string>
     <string name="msgAddedToFavourites">Added to favourites</string>
     <string name="titleRemoveFromFavourites">Remove from favourites</string>

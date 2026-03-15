@@ -236,7 +236,7 @@ fun ErrorMessageCard(
 ) {
     val (icon, message) = when (error) {
         DataLoadError.NoConnection -> R.drawable.dr_icon_no_internet to R.string.strMsgNoInternet
-        DataLoadError.NoData -> R.drawable.dr_icon_info to R.string.strMsgTafsirsNoAvailable
+        DataLoadError.NoData -> R.drawable.dr_icon_info to R.string.noItems
         DataLoadError.Failed -> R.drawable.dr_icon_info to R.string.strMsgSomethingWrong
     }
 

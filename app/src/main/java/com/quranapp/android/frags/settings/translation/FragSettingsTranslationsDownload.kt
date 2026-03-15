@@ -21,13 +21,14 @@ import com.quranapp.android.databinding.FragSettingsTranslBinding
 import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
 import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.maangers.ResourceDownloadStatus
 import com.quranapp.android.utils.maangers.TranslationDownloadManager
 import com.quranapp.android.utils.maangers.TranslationDownloadStateListener
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.univ.Codes
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.views.BoldHeader
@@ -367,6 +368,12 @@ class FragSettingsTranslationsDownload :
                 msg = ctx.getString(R.string.strMsgTranslDownloaded, bookInfo.bookName)
                 adapter?.onDownloadComplete(bookInfo.slug)
                 adapter?.onDownloadStatus(bookInfo.slug, false)
+
+                // Notify the list fragment to refresh its data
+                parentFragmentManager.setFragmentResult(
+                    Codes.SETTINGS_TRANSLATION_DOWNLOAD_CODE.toString(),
+                    Bundle()
+                )
             }
 
             is ResourceDownloadStatus.Cancelled -> {

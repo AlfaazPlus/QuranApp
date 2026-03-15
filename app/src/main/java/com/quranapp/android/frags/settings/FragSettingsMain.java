@@ -84,7 +84,7 @@ import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
 import com.quranapp.android.frags.settings.appLogs.FragSettingsAppLogs;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
-import com.quranapp.android.frags.settings.translation.FragSettingsTransl;
+import com.quranapp.android.frags.settings.translation.FragSettingsTranslation;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.app.DownloadSourceUtils;
 import com.quranapp.android.utils.app.ThemeUtils;
@@ -456,7 +456,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             Bundle args = new Bundle();
             args.putBoolean(READER_KEY_SAVE_TRANSL_CHANGES, saveTranslChanges);
             args.putStringArray(READER_KEY_TRANSL_SLUGS, initTranslSlugs);
-            launchFrag(FragSettingsTransl.class, args);
+            launchFrag(FragSettingsTranslation.class, args);
         });
 
         parent.addView(mTranslExplorerBinding.getRoot());

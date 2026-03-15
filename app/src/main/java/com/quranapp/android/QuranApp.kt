@@ -11,6 +11,7 @@ import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.viewModels.FavChaptersViewModel
 
 class QuranApp : Application() {
     override fun attachBaseContext(base: Context) {
@@ -40,6 +41,7 @@ class QuranApp : Application() {
 
         // Handler for uncaught exceptions
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
-        ThemeUtilsV2.syncOldThemePreferences(this)
+        ThemeUtilsV2.migrateThemePreferences(this)
+        FavChaptersViewModel.migrate(this)
     }
 }

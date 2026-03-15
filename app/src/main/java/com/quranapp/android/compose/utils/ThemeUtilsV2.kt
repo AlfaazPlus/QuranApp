@@ -35,7 +35,7 @@ object ThemeUtilsV2 {
     const val THEME_COLOR_VIOLET = "violet"
     const val THEME_COLOR_YELLOW = "yellow"
 
-    fun syncOldThemePreferences(context: Context) {
+    fun migrateThemePreferences(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 DataStoreManager.write(

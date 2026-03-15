@@ -28,9 +28,9 @@ class FragSettingsTafsirs : FragSettingsBase() {
 
     private val tafsirViewModel: TafsirViewModel by viewModels()
 
-    override fun getFragTitle(ctx: Context): String = ctx.getString(R.string.strTitleSelectTafsir)
+    override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleSelectTafsir)
 
-    override val layoutResource: Int = 0 // Not using XML layout
+    override val layoutResource = 0 // Not using XML layout
 
     override fun getFinishingResult(ctx: Context): Bundle? {
         if (tafsirViewModel.hasTafsirSelectionChanged()) {
