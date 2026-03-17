@@ -1,80 +1,36 @@
 package com.quranapp.android.frags.settings.translation
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
-import com.peacedesign.android.utils.ColorUtils
-import com.peacedesign.android.widget.dialog.base.PeaceDialog
+import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.adapters.transl.ADPDownloadTranslations
-import com.quranapp.android.adapters.transl.ADPDownloadTranslationsGroup
-import com.quranapp.android.api.JsonHelper
-import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
-import com.quranapp.android.databinding.FragSettingsTranslBinding
+import com.quranapp.android.compose.screens.settings.TranslationDownloadScreen
+import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.frags.settings.FragSettingsBase
-import com.quranapp.android.interfaceUtils.TranslDownloadExplorerImpl
-import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
-import com.quranapp.android.utils.maangers.TranslationDownloadManager
-import com.quranapp.android.utils.maangers.TranslationDownloadStateListener
-import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.Codes
-import com.quranapp.android.utils.univ.FileUtils
-import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.viewModels.TranslationDownloadEvent
+import com.quranapp.android.viewModels.TranslationDownloadViewModel
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
-import com.quranapp.android.widgets.PageAlert
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.json.longOrNull
-import java.io.File
-import java.io.IOException
-import java.util.LinkedList
 
 class FragSettingsTranslationsDownload :
-    FragSettingsBase(),
-    TranslationDownloadStateListener,
-    TranslDownloadExplorerImpl {
+    FragSettingsBase() {
 
-    private lateinit var binding: FragSettingsTranslBinding
-    private lateinit var fileUtils: FileUtils
-    private var translFactory: QuranTranslationFactory? = null
-    private var adapter: ADPDownloadTranslationsGroup? = null
-    private var newTranslations: Array<String>? = null
-    private var pageAlert: PageAlert? = null
-    private var isRefreshInProgress = false
+    private val viewModel: TranslationDownloadViewModel by viewModels()
 
     override fun getFragTitle(ctx: Context) = ctx.getString(R.string.strTitleDownloadTranslations)
 
-    override val layoutResource = R.layout.frag_settings_transl
-
-    override fun onStart() {
-        super.onStart()
-        if (activity == null) return
-
-        TranslationDownloadManager.initialize(requireContext())
-        TranslationDownloadManager.observeDownloads(this, this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        translFactory?.close()
-    }
+    override val layoutResource = 0
 
     override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
         super.setupHeader(activity, header)
@@ -84,7 +40,7 @@ class FragSettingsTranslationsDownload :
             }
 
             override fun onRightIconClick() {
-                refreshTranslations(header.context, true)
+                viewModel.onEvent(TranslationDownloadEvent.Refresh)
             }
         })
 
@@ -97,354 +53,37 @@ class FragSettingsTranslationsDownload :
         )
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                QuranAppTheme {
+                    TranslationDownloadScreen()
+                }
+            }
+        }
+    }
+
+
     override fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    activity()?.header?.setShowRightIcon(!state.isLoading)
 
-        fileUtils = FileUtils.newInstance(ctx)
-        translFactory = QuranTranslationFactory(ctx)
-        binding = FragSettingsTranslBinding.bind(view)
-
-        newTranslations = getArgs().getStringArray(TranslUtils.KEY_NEW_TRANSLATIONS)
-
-        view.post { init(ctx) }
-    }
-
-    private fun init(ctx: Context) {
-        refreshTranslations(ctx, SPAppActions.getFetchTranslationsForce(ctx))
-    }
-
-    private fun initPageAlert(ctx: Context) {
-        pageAlert = PageAlert(ctx)
-    }
-
-    private fun refreshTranslations(ctx: Context, force: Boolean) {
-        isRefreshInProgress = true
-        showLoader()
-
-        val storedAvailableDownloads = fileUtils.translsManifestFile
-
-        if (force) {
-            loadAvailableTranslations(ctx, storedAvailableDownloads)
-        } else {
-            if (!storedAvailableDownloads.exists()) {
-                refreshTranslations(ctx, true)
-                return
-            }
-            try {
-                val data = storedAvailableDownloads.readText()
-                if (data.isEmpty()) {
-                    refreshTranslations(ctx, true)
-                    return
-                }
-                parseAvailableTranslationsData(ctx, data)
-            } catch (e: IOException) {
-                e.printStackTrace()
-                refreshTranslations(ctx, true)
-                return
-            }
-        }
-    }
-
-    private fun loadAvailableTranslations(ctx: Context, storedAvailableDownloadsFile: File) {
-        if (!NetworkStateReceiver.isNetworkConnected(ctx)) {
-            hideLoader()
-            noInternet(ctx)
-            return
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val responseBody = RetrofitInstance.github.getAvailableTranslations()
-                responseBody.string().let { data ->
-                    fileUtils.createFile(storedAvailableDownloadsFile)
-                    storedAvailableDownloadsFile.writeText(data)
-
-                    runOnUIThread {
-                        parseAvailableTranslationsData(ctx, data)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-
-                runOnUIThread {
-                    showAlert(
-                        R.string.strTitleOops,
-                        R.string.strMsgTranslLoadFailed,
-                        R.string.strLabelRetry
-                    ) { refreshTranslations(ctx, true) }
-                }
-            }
-        }
-    }
-
-    private fun parseAvailableTranslationsData(ctx: Context, data: String) {
-        val obj = JsonHelper.json.parseToJsonElement(data).jsonObject
-        obj["translations"]?.jsonObject?.let { translations ->
-            val translationGroups = LinkedList<TranslationGroupModel>()
-
-            val isAnyDownloadInProgress = TranslationDownloadManager.isAnyDownloading()
-
-            for (langCode in translations.keys) {
-                val translationsForLanguageCode = translations[langCode]?.jsonObject
-                val slugs = translationsForLanguageCode?.keys ?: continue
-
-                val groupModel = TranslationGroupModel(langCode)
-                val translationItems = ArrayList<TranslModel>()
-
-                for (slug in slugs) {
-                    if (isTranslationDownloaded(slug)) continue
-
-                    val model = readTranslInfo(
-                        langCode,
-                        slug,
-                        translationsForLanguageCode[slug]!!.jsonObject
+                    // Notify the list fragment to refresh its data
+                    parentFragmentManager.setFragmentResult(
+                        Codes.SETTINGS_TRANSLATION_DOWNLOAD_CODE.toString(),
+                        Bundle()
                     )
-
-                    if (newTranslations?.contains(slug) == true) {
-                        model.addMiniInfo(ctx.getString(R.string.strLabelNew))
-                    }
-
-                    if (isAnyDownloadInProgress) {
-                        model.isDownloadingDisabled = true
-                    }
-
-                    model.isDownloading = TranslationDownloadManager.isDownloading(slug)
-
-                    groupModel.langName = model.bookInfo.langName
-                    groupModel.isExpanded = groupModel.isExpanded || model.isDownloading
-
-                    translationItems.add(model)
                 }
-
-                // If no translation was added in this language category, skip
-                if (translationItems.isEmpty()) continue
-
-                groupModel.translations = translationItems
-                translationGroups.add(groupModel)
-            }
-
-            if (translationGroups.isNotEmpty()) {
-                populateTranslations(ctx, translationGroups)
-            } else {
-                noDownloadsAvailable(ctx)
-            }
-            SPAppActions.setFetchTranslationsForce(ctx, false)
-        }
-
-        isRefreshInProgress = false
-        hideLoader()
-    }
-
-    private fun readTranslInfo(
-        langCode: String,
-        slug: String,
-        translObject: JsonObject
-    ): TranslModel {
-        val bookInfo = TranslationBookInfoModel(slug)
-        bookInfo.langCode = langCode
-        bookInfo.bookName = translObject["book"]?.jsonPrimitive?.contentOrNull ?: ""
-        bookInfo.authorName = translObject["author"]?.jsonPrimitive?.contentOrNull ?: ""
-        bookInfo.displayName = translObject["displayName"]?.jsonPrimitive?.contentOrNull ?: ""
-        bookInfo.langName = translObject["langName"]?.jsonPrimitive?.contentOrNull ?: ""
-        bookInfo.lastUpdated = translObject["lastUpdated"]?.jsonPrimitive?.longOrNull ?: -1
-        bookInfo.downloadPath = translObject["downloadPath"]?.jsonPrimitive?.contentOrNull ?: ""
-        return TranslModel(bookInfo)
-    }
-
-    private fun populateTranslations(ctx: Context, models: List<TranslationGroupModel>) {
-        adapter = ADPDownloadTranslationsGroup(models, this)
-
-        binding.list.let {
-            it.layoutManager = LinearLayoutManager(ctx)
-            (it.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-            binding.list.adapter = adapter
-        }
-
-        activity()?.header?.apply {
-            setShowRightIcon(true)
-        }
-    }
-
-    private fun noDownloadsAvailable(ctx: Context) {
-        showAlert(
-            0,
-            R.string.strMsgTranslNoDownloadsAvailable,
-            R.string.strLabelRefresh
-        ) {
-            refreshTranslations(ctx, true)
-        }
-    }
-
-    private fun isTranslationDownloaded(slug: String): Boolean {
-        return translFactory?.isTranslationDownloaded(slug) == true
-    }
-
-    private fun cancelWithConfirmation(
-        ctx: Context,
-        slug: String,
-        bookName: String
-    ) {
-        PeaceDialog.newBuilder(ctx)
-            .setTitle(R.string.titleCancelDownload)
-            .setMessage("")
-            .setPositiveButton(R.string.yesCancelDownload, ColorUtils.DANGER) { _, _ ->
-                TranslationDownloadManager.stopDownload(
-                    ctx,
-                    slug
-                )
-            }
-            .setNegativeButton(R.string.noContinueDownload, null)
-            .show()
-    }
-
-    override fun onDownloadAttempt(
-        adapter: ADPDownloadTranslations,
-        vhTransl: ADPDownloadTranslations.VHDownloadTransl,
-        referencedView: View,
-        model: TranslModel
-    ) {
-        if (model.isDownloading) {
-            cancelWithConfirmation(
-                referencedView.context,
-                model.bookInfo.slug,
-                model.bookInfo.bookName
-            )
-            return
-        }
-        val bookInfo = model.bookInfo
-
-        if (TranslationDownloadManager.isDownloading(bookInfo.slug)) {
-            model.isDownloading = true
-            adapter.notifyItemChanged(vhTransl.bindingAdapterPosition)
-            return
-        }
-
-        val ctx = referencedView.context
-
-        if (isTranslationDownloaded(bookInfo.slug)) {
-            onTranslDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Completed)
-            return
-        }
-
-        if (!NetworkStateReceiver.canProceed(ctx)) {
-            return
-        }
-
-        PeaceDialog.newBuilder(ctx)
-            .setTitle(R.string.strTitleDownloadTranslations)
-            .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
-            .setPositiveButton(R.string.labelDownload) { _, _ ->
-                onTranslDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
-                TranslationDownloadManager.startDownload(ctx, bookInfo)
-            }
-            .setNegativeButton(R.string.strLabelCancel, null)
-            .show()
-    }
-
-    override fun onTranslDownloadStatus(slug: String, status: ResourceDownloadStatus) {
-        val bookInfo = adapter?.getModel(slug)?.bookInfo ?: return
-
-        Logger.d("Download status for '${bookInfo.bookName}': $status")
-
-        val ctx = binding.root.context
-        var title: String? = null
-        var msg: String? = null
-
-        when (status) {
-            is ResourceDownloadStatus.Started -> {
-                adapter?.onDownloadStatus(bookInfo.slug, true)
-            }
-
-            is ResourceDownloadStatus.Failed -> {
-                title = ctx.getString(R.string.strTitleFailed)
-                msg = (
-                        ctx.getString(R.string.strMsgTranslFailedToDownload, bookInfo.bookName) +
-                                " " + ctx.getString(R.string.strMsgTryLater)
-                        )
-                adapter?.onDownloadStatus(bookInfo.slug, false)
-            }
-
-            is ResourceDownloadStatus.Completed -> {
-                title = ctx.getString(R.string.strTitleSuccess)
-                msg = ctx.getString(R.string.strMsgTranslDownloaded, bookInfo.bookName)
-                adapter?.onDownloadComplete(bookInfo.slug)
-                adapter?.onDownloadStatus(bookInfo.slug, false)
-
-                // Notify the list fragment to refresh its data
-                parentFragmentManager.setFragmentResult(
-                    Codes.SETTINGS_TRANSLATION_DOWNLOAD_CODE.toString(),
-                    Bundle()
-                )
-            }
-
-            is ResourceDownloadStatus.Cancelled -> {
-                adapter?.onDownloadStatus(bookInfo.slug, false)
-            }
-
-            is ResourceDownloadStatus.InProgress -> {
-                // noop
             }
         }
 
-        if (title != null && context != null) {
-            MessageUtils.popMessage(ctx, title, msg, ctx.getString(R.string.strLabelClose), null)
-        }
-    }
-
-    private fun showLoader() {
-        hideAlert()
-        binding.loader.visibility = View.VISIBLE
-        if (activity is ActivitySettings) {
-            val header = (activity as ActivitySettings?)!!.header
-            header.setShowRightIcon(false)
-        }
-    }
-
-    private fun hideLoader() {
-        binding.loader.visibility = View.GONE
-        if (activity is ActivitySettings) {
-            val header = (activity as ActivitySettings?)!!.header
-            header.setShowRightIcon(true)
-        }
-    }
-
-    private fun showAlert(titleRes: Int, msgRes: Int, btnRes: Int, action: Runnable) {
-        hideLoader()
-        val ctx = binding.root.context
-        if (pageAlert == null) {
-            initPageAlert(ctx)
-        }
-        pageAlert!!.let {
-            it.setIcon(null as Drawable?)
-            it.setMessage(if (titleRes > 0) ctx.getString(titleRes) else "", ctx.getString(msgRes))
-            it.setActionButton(btnRes, action)
-            it.show(binding.container)
-            if (activity is ActivitySettings) {
-                val header = (activity as ActivitySettings?)!!.header
-                header.setShowRightIcon(true)
-            }
-
-            (activity as? ActivitySettings)?.header?.apply {
-                setShowRightIcon(true)
-            }
-        }
-    }
-
-    private fun hideAlert() {
-        pageAlert?.remove()
-    }
-
-    private fun noInternet(ctx: Context) {
-        if (pageAlert == null) {
-            initPageAlert(ctx)
-        }
-
-        pageAlert!!.let {
-            it.setupForNoInternet { refreshTranslations(ctx, true) }
-            it.show(binding.container)
-
-            (activity as? ActivitySettings)?.header?.apply {
-                setShowRightIcon(true)
-            }
-        }
     }
 }

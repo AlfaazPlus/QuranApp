@@ -2,7 +2,6 @@ package com.quranapp.android.utils.maangers
 
 import TranslationDownloadWorker
 import android.content.Context
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.work.ExistingWorkPolicy
@@ -11,6 +10,9 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
@@ -89,67 +91,6 @@ object TranslationDownloadManager {
         liveData.observeForever(observer)
     }
 
-    fun observeDownloads(
-        viewLifecycleOwner: LifecycleOwner,
-        listener: TranslationDownloadStateListener
-    ) {
-        downloadStates
-            .observe(viewLifecycleOwner) { map ->
-                if (map.isEmpty()) {
-                    return@observe
-                }
-
-                for ((slug, workInfo) in map) {
-                    if (workInfo.state.isFinished) {
-                        removeState(slug)
-                    }
-
-                    when (workInfo.state) {
-                        WorkInfo.State.ENQUEUED -> {
-                            listener.onTranslDownloadStatus(
-                                slug,
-                                ResourceDownloadStatus.Started
-                            )
-                        }
-
-                        WorkInfo.State.RUNNING -> {
-                            val progress = workInfo.progress.getInt("progress", 0)
-                            listener.onTranslDownloadStatus(
-                                slug,
-                                ResourceDownloadStatus.InProgress(progress)
-                            )
-                        }
-
-                        WorkInfo.State.SUCCEEDED -> {
-                            listener.onTranslDownloadStatus(
-                                slug,
-                                ResourceDownloadStatus.Completed
-                            )
-                        }
-
-                        WorkInfo.State.FAILED -> {
-                            val error = workInfo.outputData.getString("error")
-                            listener.onTranslDownloadStatus(
-                                slug,
-                                ResourceDownloadStatus.Failed(error)
-                            )
-                        }
-
-                        WorkInfo.State.CANCELLED -> {
-                            listener.onTranslDownloadStatus(
-                                slug,
-                                ResourceDownloadStatus.Cancelled
-                            )
-                        }
-
-                        else -> {
-                            // noop
-                        }
-                    }
-                }
-            }
-    }
-
     private fun updateState(slug: String, info: WorkInfo) {
         val current = downloadStates.value?.toMutableMap() ?: mutableMapOf()
         current[slug] = info
@@ -174,17 +115,57 @@ object TranslationDownloadManager {
             it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING
         }
     }
+
+
+    fun observeDownloadsAsFlow(): Flow<Pair<String, ResourceDownloadStatus>> = callbackFlow {
+        val observer = Observer<Map<String, WorkInfo>> { map ->
+            for ((slug, workInfo) in map) {
+                val status = when (workInfo.state) {
+                    WorkInfo.State.ENQUEUED -> ResourceDownloadStatus.Started
+                    WorkInfo.State.RUNNING -> {
+                        val progress = workInfo.progress.getInt("progress", 0)
+                        ResourceDownloadStatus.InProgress(progress)
+                    }
+
+                    WorkInfo.State.SUCCEEDED -> {
+                        removeState(slug)
+                        ResourceDownloadStatus.Completed
+                    }
+
+                    WorkInfo.State.FAILED -> {
+                        val error = workInfo.outputData.getString("error")
+                        removeState(slug)
+                        ResourceDownloadStatus.Failed(error)
+                    }
+
+                    WorkInfo.State.CANCELLED -> {
+                        removeState(slug)
+                        ResourceDownloadStatus.Cancelled
+                    }
+
+                    else -> null
+                }
+
+                if (status != null) {
+                    trySend(slug to status)
+                }
+            }
+        }
+
+        downloadStates.observeForever(observer)
+
+        awaitClose {
+            downloadStates.removeObserver(observer)
+        }
+    }
 }
 
 
 sealed class ResourceDownloadStatus {
+    object Idle : ResourceDownloadStatus()
     object Started : ResourceDownloadStatus()
     data class InProgress(val progress: Int) : ResourceDownloadStatus()
     object Completed : ResourceDownloadStatus()
     data class Failed(val error: String?) : ResourceDownloadStatus()
     object Cancelled : ResourceDownloadStatus()
-}
-
-interface TranslationDownloadStateListener {
-    fun onTranslDownloadStatus(slug: String, status: ResourceDownloadStatus)
 }
