@@ -206,7 +206,7 @@
     <string name="strHintFromVerse">Del verso</string>
     <string name="strTitleMadani">Medinesa</string>
     <string name="strTitleReaderChapters">Capítulos</string>
-    <string name="strTitleReaderJuz">Parte/Juz\' (Para)</string>
+    <string name="strTitleReaderJuz">Juz</string>
     <string name="strHintSearchJuz">Buscar juz</string>
     <string name="strHintToVerse">Al verso</string>
     <string name="strNotFound">No encontrado</string>
@@ -444,4 +444,8 @@
     <string name="readingTafsirMultiVerses">Lectura de tarsir para múltiples versos:</string>
     <string name="dlRecitations">Descargar y Gestionar Recitaciones</string>
     <string name="dlTafsirs">Descargar y Gestionar Tafsirs</string>
+    <string name="strTitleDeleteTafsir">¿Eliminar Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">¿Estás seguro que quieres eliminar \"%s\"? Esto retirará los datos de tafsir descargados de tu dispositivo.</string>
+    <string name="strTitleMajorSins">Pecados Mayores en Corán</string>
+    <string name="favourites">Favoritos</string>
 </resources>
