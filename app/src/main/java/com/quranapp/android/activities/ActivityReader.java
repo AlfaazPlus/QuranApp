@@ -57,10 +57,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quranapp.android.R;
 import com.quranapp.android.adapters.ADPQuranPages;
 import com.quranapp.android.adapters.ADPReader;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.components.reader.ChapterVersePair;
@@ -250,7 +250,10 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("preventRecitationPlayerReset", mPlayerService.isPlaying());
+
+        if (mPlayerService != null) {
+            outState.putBoolean("preventRecitationPlayerReset", mPlayerService.isPlaying());
+        }
 
         if (mLayoutManager != null) {
             outState.putParcelable("recyclerView", mLayoutManager.onSaveInstanceState());
