@@ -62,8 +62,12 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private fun loadDownloadedTafsirKeys() {
         viewModelScope.launch {
             val downloadedKeys = withContext(Dispatchers.IO) {
-                QuranTafsirDBHelper(context).use {
-                    it.getDownloadedTafsirKeys()
+                val dbHelper = QuranTafsirDBHelper(context)
+
+                try {
+                    dbHelper.getDownloadedTafsirKeys()
+                } finally {
+                    dbHelper.close()
                 }
             }
             _uiState.update { it.copy(downloadedTafsirKeys = downloadedKeys) }
@@ -211,8 +215,12 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private fun deleteTafsir(key: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                QuranTafsirDBHelper(context).use {
-                    it.deleteTafsirData(key)
+                val dbHelper = QuranTafsirDBHelper(context)
+
+                try {
+                    dbHelper.deleteTafsirData(key)
+                } finally {
+                    dbHelper.close()
                 }
             }
 
