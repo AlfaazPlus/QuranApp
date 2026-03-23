@@ -307,6 +307,26 @@
         "downloadPath": "inventory/translations/ru/ru_elmir-kuliev.json"
       }
     },
+    "ky": {
+      "ky_sadybakas_doolov": {
+        "book": "Курани Карим кыргызча мааниси менен",
+        "author": "Садибакас Доолов, Абдышукур Исмаилов, Дүйшөн Абдылдаев, Садык Гавай",
+        "displayName": "Садибакас Доолов, Абдышукур Исмаилов, Дүйшөн Абдылдаев, Садык Гавай",
+        "langCode": "ky",
+        "langName": "Кыргызча",
+        "lastUpdated": 1774293143000,
+        "downloadPath": "inventory/translations/ky/ky_sadybakas_doolov.json"
+      },
+      "ky_shamsudin-hakimov": {
+        "book": "Ыйык Куран кыргызча котормосу",
+        "author": "Шамсудин Хакимов",
+        "displayName": "Шамсудин Хакимов",
+        "langCode": "ky",
+        "langName": "Кыргызча",
+        "lastUpdated": 1774293143000,
+        "downloadPath": "inventory/translations/ky/ky_shamsudin-hakimov.json"
+        }
+    },
     "sd": {
       "sd_taj-mehmood-amroti": {
         "book": "Taj Mehmood Amroti",
