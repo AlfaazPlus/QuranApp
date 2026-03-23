@@ -416,7 +416,6 @@
     <string name="strMsgTranslNoDownloads">Жеткиликтүү жүктөлүп алынган котормолор жок</string>
     <string name="strMsgReadHistoryDeleteSelected">Тандалган окуу тарыхтары өчүрүлөт.</string>
     <string name="strHintFeedbackMessage">Билдирүү</string>
-    <string name="strBismillahEntity" translatable="false">﷽</string>
     <string name="strMsgThemeDark">Караңгы режим энергия коротууну азайтат.</string>
     <string name="strMsgThemeDefault">Система орнотууларына ылайык жөндөө.</string>
     <string name="strMsgBookmarkRemoveFailed">Аятты чөп каттардан алып салуу ишке ашпады</string>
