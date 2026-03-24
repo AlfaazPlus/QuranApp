@@ -13,6 +13,7 @@
     <string name="labelAdd">Кошуу</string>
     <string name="strLabelRemove">Өчүрүү</string>
     <string name="strLabelDelete">Жок кылуу</string>
+    <string name="strLabelDownloaded">Жүктөлүп бүттү</string>
     <string name="strLabelRemoveAll">Баарын өчүрүү</string>
     <string name="strLabelCopy">Көчүрүү</string>
     <string name="strLabelBack">Артка</string>
@@ -134,7 +135,7 @@
     <string name="titleEtiquetteVerses">Курандагы адеп-ахлак</string>
     <string name="strTitlePrivacyPolicy">Купуялык саясаты</string>
     <string name="strTitleFailed">Ката кетти</string>
-    <string name="strTitleSuccess">Ийгилик</string>
+    <string name="strTitleSuccess">Ийгиликтүү болду</string>
     <string name="strTitleThresholdReached">Чекке жетти</string>
     <string name="strChapInfoSeeMore">Көбүрөөк маалымат көрүү ›</string>
     <string name="strTitleChapInfoJuzNo">Жүз номери</string>
@@ -223,7 +224,8 @@
     <string name="github">GitHub</string>
     <string name="discord">Discord</string>
     <string name="msgAlarmManagerNotAvailable">Ойготкуч менеджери жеткиликтүү эмес</string>
-    <string name="msgVerseReminderAlarmPermission">Аят эскертмеси үчүн уруксат керек</string>
+    <string name="msgVerseReminderAlarmPermission">Аят эскертмелерин иштетүү үчүн ойготкучтарды коюуга уруксат керек.</string>
+    <string name="msgVerseReminderNotifPermission">Билдирүү уруксатын бериңиз.</string>
     <string name="titleStorageCleanup">Сактоо тазалоо</string>
     <string name="translationCanBeFreedUp" formatted="false">Жүктөлгөн %d котормо өчүрүлө алат</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d куран окуусу (%1$d файл) өчүрүлө алат</string>
@@ -326,7 +328,6 @@
     <string name="pasteCrashLogGithubIssue">Журнал GitHub маселесине көчүрүлдү.</string>
     <string name="onboardDescLanguage">Тилди кийинчерээк да өзгөртө аласыз.</string>
     <string name="msgImportSuccess">Ийгиликтүү импорттолду</string>
-    <string name="msgVerseReminderNotifPermission">Билдирүү уруксатын бериңиз.</string>
     <string name="titleExportData">Экспорт жана Импорт</string>
     <string name="msgDownloadingResource" formatted="false">%s жүктөлүүдө</string>
     <string name="storageCleanupMessage">Сакталбаган ресурстар өчүрүлөт. Чөп каттар калыбында калат.\nТөмөнкү ресурстарды тазалоого болот:</string>
@@ -429,4 +430,13 @@
     <string name="labelImportExportBookmarks">Бир гана чөп каттарды</string>
     <string name="warnImportSettings">ЭСКЕРТҮҮ: Жөндөөлөрдү сиздин азыркы жөндөөлөрүңүздү жокко чыгарып, жаңылары менен алмаштырат.</string>
     <string name="labelImportExportEverything">Баарын</string>
+    <string name="strTitleDeleteTafsir">Тафсирди өчүрүү керекпи?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Сиз чын эле \"%s\" тафсирин өчүрүүнү каалайсызбы? Бул сиздин түзмөгүңүзгө жүктөлгөн тафсир маалыматтарын жок кылат.</string>
+    <string name="strTitleMajorSins">Курандагы чоң күнөөлөр</string>
+    <string name="titleCancelDownload">Жүктөөнү токтотуу керекпи?</string>
+    <string name="yesCancelDownload">Ооба, токтот</string>
+    <string name="noContinueDownload">Жок, уланта бер</string>
+    <string name="readingTafsirMultiVerses">Бир нече аят үчүн тафсир окуу:</string>
+    <string name="dlRecitations">Кырааттарды жүктөө жана башкаруу</string>
+    <string name="dlTafsirs">Тафсирлерди жүктөө жана башкаруу</string>
 </resources>
