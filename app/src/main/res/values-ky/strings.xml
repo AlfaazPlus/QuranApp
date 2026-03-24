@@ -252,6 +252,7 @@
     <string name="onboardDescReciter">Бул жөндөөнү кийинчерээк өзгөртө аласыз. Куран окуучу хафиздин аудиосун кийинчерээк жүктөп алсаңыз болот.</string>
     <string name="labelArabic">Арабча</string>
     <string name="labelTranslation">Котормо</string>
+    <string name="favourites">Тандалмалар</string>
     <string name="titleAddToFavourites">Сүйүктүүлөргө кошуу</string>
     <string name="msgAddedToFavourites">Сүйүктүүлөргө кошулду</string>
     <string name="titleRemoveFromFavourites">Сүйүктүүлөрдөн өчүрүү</string>
