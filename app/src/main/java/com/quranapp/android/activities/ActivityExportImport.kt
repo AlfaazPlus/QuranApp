@@ -6,10 +6,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.api.JsonHelper
@@ -20,19 +22,17 @@ import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
 import com.quranapp.android.components.bookmark.BookmarkModel
-import com.quranapp.android.databinding.ActivityExportImportBinding
-import com.quranapp.android.databinding.LytExportItemCardBinding
+import com.quranapp.android.compose.screens.ExportImportScreen
+import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.db.bookmark.BookmarkDBHelper
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_DARK
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_DEFAULT
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_LIGHT
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.MessageUtils
-import com.quranapp.android.views.BoldHeader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,7 +70,7 @@ class ActivityExportImport : BaseActivity() {
         }
     }
 
-    private var importScopes = mutableMapOf<String, Boolean>()
+    private var importScopes = mapOf<String, Boolean>()
     private var importFailuresMap = mutableMapOf<String, String>()
 
     private var exportContent = ""
@@ -81,79 +81,36 @@ class ActivityExportImport : BaseActivity() {
         super.onDestroy()
     }
 
-    override fun getLayoutResource() = R.layout.activity_export_import
+    override fun getLayoutResource() = 0
 
-    override fun shouldInflateAsynchronously() = true
+    override fun shouldInflateAsynchronously() = false
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
-        val binding = ActivityExportImportBinding.bind(activityView)
+        enableEdgeToEdge()
 
-        initHeader(binding.header)
+        setContentView(ComposeView(this).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-        populateTexts(
-            binding.container,
-            R.string.labelImportExportEverything,
-            getString(R.string.warnImportSettings),
-            exportCallback = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    exportData(
-                        mapOf(
-                            ExportKeys.BOOKMARKS to true,
-                            ExportKeys.SETTINGS to true,
-                        )
+            setContent {
+                QuranAppTheme {
+                    ExportImportScreen(
+                        importCallback = { scopes ->
+                            importScopes = scopes
+                            launchImportFilePicker()
+                        },
+                        exportCallback = { scopes ->
+                            CoroutineScope(Dispatchers.IO).launch {
+                                exportData(scopes)
+
+                                withContext(Dispatchers.Main) {
+                                    launchExportFilePicker()
+                                }
+                            }
+                        },
                     )
-
-                    withContext(Dispatchers.Main) {
-                        launchExportFilePicker()
-                    }
                 }
-            },
-            importCallback = {
-                importScopes = mutableMapOf(
-                    ExportKeys.BOOKMARKS to true,
-                    ExportKeys.SETTINGS to true,
-                )
-                launchImportFilePicker()
-            },
-        )
-
-        populateTexts(
-            binding.container,
-            R.string.labelImportExportSettings,
-            getString(R.string.warnImportSettings),
-            exportCallback = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    exportData(mapOf(ExportKeys.SETTINGS to true))
-
-                    withContext(Dispatchers.Main) {
-                        launchExportFilePicker()
-                    }
-                }
-            },
-            importCallback = {
-                importScopes = mutableMapOf(ExportKeys.SETTINGS to true)
-                launchImportFilePicker()
-            },
-        )
-
-        populateTexts(
-            binding.container,
-            R.string.labelImportExportBookmarks,
-            getString(R.string.msgExportImportBookmarks),
-            exportCallback = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    exportData(mapOf(ExportKeys.BOOKMARKS to true))
-
-                    withContext(Dispatchers.Main) {
-                        launchExportFilePicker()
-                    }
-                }
-            },
-            importCallback = {
-                importScopes = mutableMapOf(ExportKeys.BOOKMARKS to true)
-                launchImportFilePicker()
-            },
-        )
+            }
+        })
     }
 
     private fun launchImportFilePicker() {
@@ -172,44 +129,6 @@ class ActivityExportImport : BaseActivity() {
         }
         exportLauncher.launch(intent)
     }
-
-    private fun initHeader(header: BoldHeader) {
-        header.let {
-            it.setCallback { onBackPressedDispatcher.onBackPressed() }
-            it.setTitleText(R.string.titleExportData)
-            it.setShowRightIcon(false)
-            it.setShowSearchIcon(false)
-            it.setBGColor(R.color.colorBGPage)
-        }
-    }
-
-
-    private fun populateTexts(
-        parent: ViewGroup,
-        title: Int,
-        description: String,
-        rootId: Int = View.generateViewId(),
-        exportCallback: () -> Unit,
-        importCallback: (() -> Unit)? = null
-    ) {
-        LytExportItemCardBinding.inflate(layoutInflater, parent, true).apply {
-            root.id = rootId
-
-            this.title.setText(title)
-            this.description.text = description
-
-            buttonExport.setOnTouchListener(HoverPushOpacityEffect())
-            buttonExport.setOnClickListener { exportCallback() }
-
-            if (importCallback != null) {
-                buttonImport.setOnTouchListener(HoverPushOpacityEffect())
-                buttonImport.setOnClickListener { importCallback() }
-            } else {
-                buttonImport.visibility = View.GONE
-            }
-        }
-    }
-
 
     private fun importData(uri: Uri) {
         importFailuresMap = mutableMapOf()
@@ -285,7 +204,7 @@ class ActivityExportImport : BaseActivity() {
 
         jsonObject.safeString(ExportKeys.THEME)?.let {
             SPAppConfigs.setThemeMode(this, it)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 AppCompatDelegate.setDefaultNightMode(
                     when (it) {
                         THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES

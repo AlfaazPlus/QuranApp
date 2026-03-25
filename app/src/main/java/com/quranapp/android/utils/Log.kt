@@ -11,16 +11,16 @@ import java.io.File
 object Log {
     private const val TAG = "QuranAppLogs"
     const val FILE_NAME_DATE_FORMAT = "yyyyMMddHHmmssSSS"
-    val CRASH_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
+    val CRASH_LOGS_DIR: File = FileUtils.makeAndGetAppResourceDir(
         FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "crashes")
     )
-    val SUPPRESSED_ERROR_DIR: File = FileUtils.makeAndGetAppResourceDir(
+    val SUPPRESSED_LOGS_DIR: File = FileUtils.makeAndGetAppResourceDir(
         FileUtils.createPath(AppUtils.BASE_APP_LOG_DATA_DIR, "suppressed_errors")
     )
 
     fun getLastCrashLog(ctx: Context): String? {
         val filename = SPLog.getLastCrashLogFilename(ctx) ?: return null
-        val file = File(CRASH_ERROR_DIR, filename)
+        val file = File(CRASH_LOGS_DIR, filename)
         if (file.length() == 0L) return null
 
         return file.readText()
@@ -35,13 +35,13 @@ object Log {
         try {
             val trc = e.stackTraceToString()
             val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
-            val logFile = File(CRASH_ERROR_DIR, "$filename.txt")
+            val logFile = File(CRASH_LOGS_DIR, "$filename.txt")
 
             logFile.createNewFile()
             logFile.writeText(trc)
 
             // keep last 30 files
-            keepLastNFiles(CRASH_ERROR_DIR, 30)
+            keepLastNFiles(CRASH_LOGS_DIR, 30)
 
             SPLog.saveLastCrashLogFileName(ctx, logFile.name)
         } catch (e: Exception) {
@@ -59,13 +59,13 @@ object Log {
         try {
             val trc = e.stackTraceToString()
             val filename = DateUtils.getDateTimeNow(FILE_NAME_DATE_FORMAT)
-            val logFile = File(SUPPRESSED_ERROR_DIR, "$filename@${place}.txt")
+            val logFile = File(SUPPRESSED_LOGS_DIR, "$filename@${place}.txt")
 
             logFile.createNewFile()
             logFile.writeText(trc)
 
             // keep last 30 files
-            keepLastNFiles(SUPPRESSED_ERROR_DIR, 30)
+            keepLastNFiles(SUPPRESSED_LOGS_DIR, 30)
         } catch (e: Exception) {
             e.printStackTrace()
         }
