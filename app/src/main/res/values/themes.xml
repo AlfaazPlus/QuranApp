@@ -19,6 +19,7 @@
         <item name="android:textSize">@dimen/dmnCommonSize</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="android:textColorHighlight">@color/colorPrimaryAlpha30</item>
 
         <item name="android:clipToPadding">false</item>
 
@@ -40,14 +41,14 @@
         <item name="android:navigationBarColor">@color/colorBGPage</item>
     </style>
 
-    <style name="Theme.QuranApp.Reader">
+    <style name="Theme.QuranApp.Reader" parent="Theme.QuranApp">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.QuranApp.ComposeActivity">
+    <style name="Theme.QuranApp.ComposeActivity" parent="Theme.QuranApp">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
