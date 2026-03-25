@@ -62,7 +62,6 @@
         android:layout_margin="20dp"
         android:background="@drawable/dr_bg_button_action_alpha"
         android:padding="5dp"
-        android:rotation="@integer/intActionBtnRotation"
         android:src="@drawable/dr_icon_chevron_left"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

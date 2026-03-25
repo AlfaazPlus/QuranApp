@@ -576,10 +576,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {
         Context context = textView.getContext();
         Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
-
-        if (WindowUtils.isRTL(context))
-            chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
-
         textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
 

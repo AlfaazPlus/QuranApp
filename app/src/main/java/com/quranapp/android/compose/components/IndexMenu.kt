@@ -48,7 +48,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.peacedesign.android.utils.AppBridge
@@ -113,37 +112,12 @@ private fun getItems(): List<IndexMenuItemGroup> {
         IndexMenuItemGroup(
             listOf(
                 IndexMenuItem(
-                    R.drawable.dr_icon_bug,
-                    R.string.strTitleSendFeedback,
-                    onClick = {
-                        InfoUtils.openHelp(it);
-                    }
-                ),
-                IndexMenuItem(
-                    R.drawable.dr_icon_help,
-                    R.string.strTitleHelpSupport,
-                    onClick = {
-                        InfoUtils.openFeedbackPage(it);
-                    }
-                ),
-                IndexMenuItem(
-                    R.drawable.dr_icon_privacy_policy,
-                    R.string.strTitlePrivacyPolicy,
-                    onClick = {
-                        InfoUtils.openPrivacyPolicy(it);
-                    }
-                ),
-                IndexMenuItem(
                     R.drawable.dr_icon_info,
                     R.string.strTitleAboutUs,
                     onClick = {
                         it.startActivity(Intent(it, ActivityAbout::class.java))
                     }
                 ),
-            )
-        ),
-        IndexMenuItemGroup(
-            listOf(
                 IndexMenuItem(
                     R.drawable.dr_icon_rate,
                     R.string.strTitleRateApp,
