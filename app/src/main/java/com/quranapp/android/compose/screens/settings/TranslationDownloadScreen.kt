@@ -22,10 +22,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,17 +33,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -57,39 +53,54 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.components.tafsir.TafsirGroupModel
+import com.quranapp.android.components.transls.TranslModel
+import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.components.ErrorMessageCard
 import com.quranapp.android.utils.maangers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
-import com.quranapp.android.viewModels.TafsirEvent
-import com.quranapp.android.viewModels.TafsirUiState
-import com.quranapp.android.viewModels.TafsirViewModel
+import com.quranapp.android.viewModels.TranslationDownloadEvent
+import com.quranapp.android.viewModels.TranslationDownloadUiEvent
+import com.quranapp.android.viewModels.TranslationDownloadViewModel
 
 @Composable
-fun TafsirSelectionScreen(
-    uiState: TafsirUiState,
+fun TranslationDownloadScreen(
     modifier: Modifier = Modifier
 ) {
-    val viewModel = viewModel<TafsirViewModel>()
+    val context = LocalContext.current
+    val viewModel = viewModel<TranslationDownloadViewModel>()
+    val uiState = viewModel.uiState.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is TranslationDownloadUiEvent.ShowMessage -> {
+                    MessageUtils.popMessage(
+                        context,
+                        title = event.title,
+                        msg = event.message,
+                        context.getString(R.string.strLabelClose),
+                        null
+                    )
+                }
+            }
+        }
+    }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorScheme.background)
     ) {
         when {
             uiState.isLoading -> LoadingState()
             uiState.error != null -> ErrorMessageCard(
                 error = uiState.error,
-                onRetry = { viewModel.onEvent(TafsirEvent.Refresh) }
+                onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
             )
 
-            else -> TafsirContent(
-                groups = uiState.tafsirGroups,
-                selectedKey = uiState.selectedTafsirKey,
+            else -> TranslationsContent(
+                groups = uiState.groups,
                 downloadStates = uiState.downloadStates,
-                downloadedTafsirKeys = uiState.downloadedTafsirKeys
             )
         }
     }
@@ -102,7 +113,7 @@ private fun LoadingState() {
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
+            color = colorScheme.primary,
             modifier = Modifier.size(36.dp),
             strokeWidth = 3.dp
         )
@@ -110,11 +121,9 @@ private fun LoadingState() {
 }
 
 @Composable
-private fun TafsirContent(
-    groups: List<TafsirGroupModel>,
-    selectedKey: String?,
+private fun TranslationsContent(
+    groups: List<TranslationGroupModel>,
     downloadStates: Map<String, ResourceDownloadStatus>,
-    downloadedTafsirKeys: Set<String>
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -124,9 +133,7 @@ private fun TafsirContent(
         items(groups, key = { it.langCode }) { group ->
             LanguageGroupCard(
                 group = group,
-                selectedKey = selectedKey,
                 downloadStates = downloadStates,
-                downloadedTafsirKeys = downloadedTafsirKeys
             )
         }
 
@@ -136,18 +143,13 @@ private fun TafsirContent(
 
 @Composable
 private fun LanguageGroupCard(
-    group: TafsirGroupModel,
-    selectedKey: String?,
+    group: TranslationGroupModel,
     downloadStates: Map<String, ResourceDownloadStatus>,
-    downloadedTafsirKeys: Set<String>
 ) {
-    val viewModel = viewModel<TafsirViewModel>()
+    val context = LocalContext.current
+    val viewModel = viewModel<TranslationDownloadViewModel>()
     val isAnyDownloading = downloadStates.values.any {
         it is ResourceDownloadStatus.Started || it is ResourceDownloadStatus.InProgress
-    }
-
-    val hasSelection = remember(group.tafsirs, selectedKey) {
-        group.tafsirs.any { it.key == selectedKey }
     }
 
     val chevronRotation by animateFloatAsState(
@@ -161,12 +163,12 @@ private fun LanguageGroupCard(
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                color = colorScheme.outlineVariant.copy(alpha = 0.4f),
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            containerColor = colorScheme.surfaceContainerLow
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
@@ -174,7 +176,13 @@ private fun LanguageGroupCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { viewModel.onEvent(TafsirEvent.ToggleGroup(group.langCode)) })
+                    .clickable(onClick = {
+                        viewModel.onEvent(
+                            TranslationDownloadEvent.ToggleGroup(
+                                group.langCode
+                            )
+                        )
+                    })
                     .padding(horizontal = 16.dp, vertical = 14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -193,16 +201,6 @@ private fun LanguageGroupCard(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
-
-                            if (hasSelection) {
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Box(
-                                    modifier = Modifier
-                                        .size(6.dp)
-                                        .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.primary)
-                                )
-                            }
                         }
 
                         Spacer(modifier = Modifier.height(2.dp))
@@ -210,12 +208,12 @@ private fun LanguageGroupCard(
                         Text(
                             text =
                                 stringResource(
-                                    if (group.tafsirs.size > 1)
+                                    if (group.translations.size > 1)
                                         R.string.nItems else
-                                        R.string.nItem, group.tafsirs.size
+                                        R.string.nItem, group.translations.size
                                 ),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -223,7 +221,7 @@ private fun LanguageGroupCard(
                 Icon(
                     painter = painterResource(R.drawable.dr_icon_chevron_right),
                     contentDescription = if (group.isExpanded) "Collapse" else "Expand",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = colorScheme.onSurfaceVariant,
                     modifier = Modifier
                         .size(20.dp)
                         .rotate(chevronRotation)
@@ -237,35 +235,57 @@ private fun LanguageGroupCard(
             ) {
                 Column {
                     HorizontalDivider(
-                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                        color = colorScheme.outlineVariant.copy(alpha = 0.4f),
                         thickness = 0.5.dp
                     )
 
-                    group.tafsirs.forEachIndexed { index, tafsir ->
+                    group.translations.forEachIndexed { index, model ->
+                        val bookInfo = model.bookInfo
+                        val slug = bookInfo.slug
                         val downloadState =
-                            downloadStates[tafsir.key] ?: ResourceDownloadStatus.Idle
-                        val isDownloaded = downloadedTafsirKeys.contains(tafsir.key)
+                            downloadStates[slug] ?: ResourceDownloadStatus.Idle
 
-                        TafsirRow(
-                            tafsir = tafsir,
-                            isSelected = tafsir.key == selectedKey,
-                            isDownloaded = isDownloaded,
+                        ItemRow(
+                            model = model,
                             isAnyDownloading = isAnyDownloading,
                             downloadState = downloadState,
-                            onSelect = { viewModel.onEvent(TafsirEvent.SelectTafsir(tafsir.key)) },
                             onDownload = {
                                 if (!isAnyDownloading) {
-                                    viewModel.onEvent(TafsirEvent.DownloadTafsir(tafsir.key))
+                                    PeaceDialog.newBuilder(context)
+                                        .setTitle(R.string.strTitleDownloadTranslations)
+                                        .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
+                                        .setPositiveButton(R.string.labelDownload) { _, _ ->
+                                            viewModel.onEvent(
+                                                TranslationDownloadEvent.DownloadTranslation(
+                                                    slug
+                                                )
+                                            )
+                                        }
+                                        .setNegativeButton(R.string.strLabelCancel, null)
+                                        .show()
                                 }
                             },
-                            onCancelDownload = { viewModel.onEvent(TafsirEvent.CancelDownload(tafsir.key)) },
-                            onDelete = { viewModel.onEvent(TafsirEvent.DeleteTafsir(tafsir.key)) }
+                            onCancelDownload = {
+                                PeaceDialog.newBuilder(context)
+                                    .setTitle(R.string.titleCancelDownload)
+                                    .setMessage("${bookInfo.bookName}\n${bookInfo.authorName}")
+                                    .setPositiveButton(
+                                        R.string.yesCancelDownload,
+                                        ColorUtils.DANGER
+                                    ) { _, _ ->
+                                        viewModel.onEvent(
+                                            TranslationDownloadEvent.CancelDownload(slug)
+                                        )
+                                    }
+                                    .setNegativeButton(R.string.noContinueDownload, null)
+                                    .show()
+                            },
                         )
 
-                        if (index < group.tafsirs.lastIndex) {
+                        if (index < group.translations.lastIndex) {
                             HorizontalDivider(
                                 modifier = Modifier.padding(start = 52.dp, end = 16.dp),
-                                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
+                                color = colorScheme.outlineVariant.copy(alpha = 0.3f),
                                 thickness = 0.5.dp
                             )
                         }
@@ -277,18 +297,14 @@ private fun LanguageGroupCard(
 }
 
 @Composable
-private fun TafsirRow(
-    tafsir: TafsirInfoModel,
-    isSelected: Boolean,
-    isDownloaded: Boolean,
+private fun ItemRow(
+    model: TranslModel,
     isAnyDownloading: Boolean,
     downloadState: ResourceDownloadStatus,
-    onSelect: () -> Unit,
     onDownload: () -> Unit,
     onCancelDownload: () -> Unit,
-    onDelete: () -> Unit
 ) {
-    val context = LocalContext.current
+    val bookInfo = model.bookInfo
 
     Row(
         modifier = Modifier
@@ -298,55 +314,35 @@ private fun TafsirRow(
         Row(
             modifier = Modifier
                 .clickable(
+                    enabled = !isAnyDownloading,
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = ripple(color = MaterialTheme.colorScheme.primary),
-                    onClick = onSelect
+                    indication = ripple(color = colorScheme.primary),
+                    onClick = {
+                        if (downloadState is ResourceDownloadStatus.Started || downloadState is ResourceDownloadStatus.InProgress) {
+                            onCancelDownload()
+                        } else {
+                            onDownload()
+                        }
+                    }
                 )
-                .padding(start = 4.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
+                .padding(start = 16.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
                 .weight(1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            RadioButton(
-                selected = isSelected,
-                onClick = onSelect,
-                colors = RadioButtonDefaults.colors(
-                    selectedColor = MaterialTheme.colorScheme.primary,
-                    unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                )
-            )
-
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 6.dp)
+                    .padding(vertical = 6.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = tafsir.name,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = if (isSelected)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f, fill = false)
-                    )
-
-                    // Downloaded indicator
-                    if (isDownloaded && downloadState == ResourceDownloadStatus.Idle) {
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Icon(
-                            painter = painterResource(R.drawable.dr_icon_check),
-                            contentDescription = stringResource(R.string.strLabelDownloaded),
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(14.dp)
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = bookInfo.bookName,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
 
                 when (downloadState) {
                     is ResourceDownloadStatus.InProgress -> {
@@ -354,7 +350,7 @@ private fun TafsirRow(
                             text = stringResource(R.string.textDownloading) + " ${downloadState.progress}%",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = colorScheme.primary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -365,7 +361,7 @@ private fun TafsirRow(
                             text = stringResource(R.string.textDownloading),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = colorScheme.primary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -373,25 +369,17 @@ private fun TafsirRow(
 
                     else -> {
                         Text(
-                            text = tafsir.author,
+                            text = bookInfo.authorName,
                             style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
+                            fontWeight = FontWeight.Light,
+                            color = colorScheme.onSurfaceVariant,
+                            maxLines = 2,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
             }
         }
-
-        VerticalDivider(
-            modifier = Modifier
-                .height(38.dp)
-                .width(1.dp),
-            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
-            thickness = 1.dp
-        )
 
         Box(
             modifier = Modifier.size(48.dp),
@@ -402,7 +390,7 @@ private fun TafsirRow(
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
                         strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.primary
+                        color = colorScheme.primary
                     )
                 }
 
@@ -412,30 +400,20 @@ private fun TafsirRow(
                             progress = { downloadState.progress / 100f },
                             modifier = Modifier.size(24.dp),
                             strokeWidth = 2.5.dp,
-                            color = MaterialTheme.colorScheme.primary,
-                            trackColor = MaterialTheme.colorScheme.surfaceVariant
+                            color = colorScheme.primary,
+                            trackColor = colorScheme.surfaceVariant
                         )
 
                         IconButton(
                             onClick = {
-                                PeaceDialog.newBuilder(context)
-                                    .setTitle(R.string.titleCancelDownload)
-                                    .setMessage("")
-                                    .setPositiveButton(
-                                        R.string.yesCancelDownload,
-                                        ColorUtils.DANGER
-                                    ) { _, _ ->
-                                        onCancelDownload()
-                                    }
-                                    .setNegativeButton(R.string.noContinueDownload, null)
-                                    .show()
+                                onCancelDownload()
                             },
                             modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.dr_icon_close),
                                 contentDescription = stringResource(R.string.strLabelCancel),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(12.dp)
                             )
                         }
@@ -451,53 +429,25 @@ private fun TafsirRow(
                         Icon(
                             painter = painterResource(R.drawable.dr_icon_refresh),
                             contentDescription = stringResource(R.string.strLabelRetry),
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = colorScheme.error,
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
 
                 else -> {
-                    if (isDownloaded) {
-                        IconButton(
-                            onClick = {
-                                MessageUtils.showConfirmationDialog(
-                                    context = context,
-                                    title = context.getString(R.string.strTitleDeleteTafsir),
-                                    msg = context.getString(
-                                        R.string.strMsgDeleteTafsir,
-                                        tafsir.name
-                                    ),
-                                    btn = context.getString(R.string.strLabelDelete),
-                                    btnColor = ColorUtils.DANGER,
-                                    action = {
-                                        onDelete()
-                                    }
-                                )
-                            },
-                            modifier = Modifier.size(40.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_delete),
-                                contentDescription = stringResource(R.string.strLabelDelete),
-                                tint = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = onDownload,
-                            modifier = Modifier.size(40.dp),
-                            enabled = !isAnyDownloading
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_download),
-                                contentDescription = stringResource(R.string.labelDownload),
-                                tint = if (isAnyDownloading) colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
-                                else colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
+                    IconButton(
+                        onClick = onDownload,
+                        modifier = Modifier.size(40.dp),
+                        enabled = !isAnyDownloading
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.dr_icon_download),
+                            contentDescription = stringResource(R.string.labelDownload),
+                            tint = if (isAnyDownloading) colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                            else colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
                 }
             }

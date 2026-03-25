@@ -70,9 +70,12 @@ class TafsirDownloadWorker(
         val totalChapters = QuranMeta.totalChapters()
         var downloadedChapters = setOf<Int>()
 
-        QuranTafsirDBHelper(ctx).use {
+        val dbHelper = QuranTafsirDBHelper(ctx)
+
+        try {
             for (start in 1..totalChapters step batchSize) {
                 ensureActive()
+
                 if (isStopped) break
 
                 val end = (start + batchSize - 1).coerceAtMost(totalChapters)
@@ -87,7 +90,7 @@ class TafsirDownloadWorker(
 
                 val response = RetrofitInstance.alfaazplus.getTafsirsByChapter(bookInfo.key, range)
 
-                it.storeTafsirs(response.tafsirs, response.version, response.timestamp1)
+                dbHelper.storeTafsirs(response.tafsirs, response.version, response.timestamp1)
 
                 // newly downloaded chapter range
                 val newChapters = response.surahs.sorted()
@@ -103,9 +106,11 @@ class TafsirDownloadWorker(
                 setForeground(createForegroundInfo(bookInfo, progress))
             }
 
-            it.storeTafsirInfo(bookInfo.apply {
+            dbHelper.storeTafsirInfo(bookInfo.apply {
                 isDownloaded = true
             })
+        } finally {
+            dbHelper.close()
         }
     }
 

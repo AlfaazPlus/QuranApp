@@ -55,6 +55,7 @@ class FragSettingsTranslation : FragSettingsBase(), FragmentResultListener {
             }
 
             override fun onRightIconClick() {
+                translationViewModel.onEvent(TranslationEvent.Refresh)
             }
 
             override fun onSearchRequest(searchBox: EditText?, newText: CharSequence) {
@@ -62,11 +63,13 @@ class FragSettingsTranslation : FragSettingsBase(), FragmentResultListener {
             }
         })
 
-        header.setShowSearchIcon(true)
-        header.setSearchHint(R.string.strHintSearchTranslation)
-
+        header.setShowSearchIcon(false)
         header.setShowRightIcon(false)
-        header.disableRightBtn(false)
+        header.setSearchHint(R.string.strHintSearchTranslation)
+        header.setRightIconRes(
+            R.drawable.dr_icon_refresh,
+            activity.getString(R.string.strLabelRefresh)
+        )
     }
 
 
@@ -118,7 +121,10 @@ class FragSettingsTranslation : FragSettingsBase(), FragmentResultListener {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 translationViewModel.uiState.collect { state ->
-                    activity()?.header?.setShowSearchIcon(!state.isLoading)
+                    activity()?.header?.let {
+                        it.setShowSearchIcon(!state.isLoading)
+                        it.setShowRightIcon(!state.isLoading)
+                    }
 
                     setArguments(getArgs().apply {
                         putStringArray(

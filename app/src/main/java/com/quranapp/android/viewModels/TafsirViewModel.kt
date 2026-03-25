@@ -1,10 +1,8 @@
 package com.quranapp.android.viewModels
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.quranapp.android.R
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
@@ -15,7 +13,6 @@ import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,24 +22,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.LinkedList
 
-/**
- * Represents the download state for a tafsir
- */
-sealed interface TafsirDownloadState {
-    object Idle : TafsirDownloadState
-    object Started : TafsirDownloadState
-    data class Downloading(val progress: Int) : TafsirDownloadState
-    object Completed : TafsirDownloadState
-    data class Failed(val error: String?) : TafsirDownloadState
-    object Cancelled : TafsirDownloadState
-}
-
 data class TafsirUiState(
     val isLoading: Boolean = true,
     val tafsirGroups: List<TafsirGroupModel> = emptyList(),
     val selectedTafsirKey: String? = null,
     val error: DataLoadError? = null,
-    val downloadStates: Map<String, TafsirDownloadState> = emptyMap(),
+    val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
     val downloadedTafsirKeys: Set<String> = emptySet(),
     val tafsirSelectionChanged: Boolean = false
 )
@@ -77,8 +62,12 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private fun loadDownloadedTafsirKeys() {
         viewModelScope.launch {
             val downloadedKeys = withContext(Dispatchers.IO) {
-                QuranTafsirDBHelper(context).use {
-                    it.getDownloadedTafsirKeys()
+                val dbHelper = QuranTafsirDBHelper(context)
+
+                try {
+                    dbHelper.getDownloadedTafsirKeys()
+                } finally {
+                    dbHelper.close()
                 }
             }
             _uiState.update { it.copy(downloadedTafsirKeys = downloadedKeys) }
@@ -210,39 +199,28 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private fun downloadTafsir(key: String) {
         val tafsirInfo = findTafsirByKey(key) ?: return
 
-        if (!NetworkStateReceiver.isNetworkConnected(context)) {
-            MessageUtils.showRemovableToast(
-                context,
-                R.string.strMsgNoInternet,
-                Toast.LENGTH_LONG
-            )
+        if (!NetworkStateReceiver.canProceed(context)) {
             return
         }
 
         TafsirDownloadManager.startDownload(context, tafsirInfo)
-
-        _uiState.update { state ->
-            val newDownloadStates = state.downloadStates.toMutableMap()
-            newDownloadStates[key] = TafsirDownloadState.Started
-            state.copy(downloadStates = newDownloadStates)
-        }
+        updateDownloadStatus(key, ResourceDownloadStatus.Started)
     }
 
     private fun cancelDownload(key: String) {
         TafsirDownloadManager.stopDownload(context, key)
-
-        _uiState.update { state ->
-            val newDownloadStates = state.downloadStates.toMutableMap()
-            newDownloadStates.remove(key)
-            state.copy(downloadStates = newDownloadStates)
-        }
+        updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)
     }
 
     private fun deleteTafsir(key: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                QuranTafsirDBHelper(context).use {
-                    it.deleteTafsirData(key)
+                val dbHelper = QuranTafsirDBHelper(context)
+
+                try {
+                    dbHelper.deleteTafsirData(key)
+                } finally {
+                    dbHelper.close()
                 }
             }
 
@@ -256,32 +234,24 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun updateDownloadStatus(key: String, status: ResourceDownloadStatus) {
-        val downloadState = when (status) {
-            is ResourceDownloadStatus.Started -> TafsirDownloadState.Started
-            is ResourceDownloadStatus.InProgress -> TafsirDownloadState.Downloading(status.progress)
-            is ResourceDownloadStatus.Completed -> TafsirDownloadState.Completed
-            is ResourceDownloadStatus.Failed -> TafsirDownloadState.Failed(status.error)
-            is ResourceDownloadStatus.Cancelled -> TafsirDownloadState.Cancelled
-        }
-
         _uiState.update { state ->
             val newDownloadStates = state.downloadStates.toMutableMap()
             var newDownloadedKeys = state.downloadedTafsirKeys
 
             // Remove completed/cancelled states, keep failed for retry UI
-            when (downloadState) {
-                is TafsirDownloadState.Completed -> {
+            when (status) {
+                is ResourceDownloadStatus.Completed -> {
                     newDownloadStates.remove(key)
                     // Add to downloaded keys
                     newDownloadedKeys = state.downloadedTafsirKeys + key
                 }
 
-                is TafsirDownloadState.Cancelled -> {
+                is ResourceDownloadStatus.Cancelled -> {
                     newDownloadStates.remove(key)
                 }
 
                 else -> {
-                    newDownloadStates[key] = downloadState
+                    newDownloadStates[key] = status
                 }
             }
 

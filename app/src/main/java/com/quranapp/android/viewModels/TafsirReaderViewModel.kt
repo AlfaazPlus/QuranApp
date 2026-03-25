@@ -142,8 +142,11 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
             _uiState.update { it.copy(contentState = TafsirContentState.Loading) }
 
             val cachedTafsir = withContext(Dispatchers.IO) {
-                QuranTafsirDBHelper(context).use {
-                    it.getTafsirByVerse(state.tafsirKey, state.chapterNo, state.verseNo)
+                val dbHelper = QuranTafsirDBHelper(context)
+                try {
+                    dbHelper.getTafsirByVerse(state.tafsirKey, state.chapterNo, state.verseNo)
+                } finally {
+                    dbHelper.close()
                 }
             }
 
@@ -173,14 +176,22 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                 var tafsirToShow: TafsirModel? = null
 
                 withContext(Dispatchers.IO) {
-                    QuranTafsirDBHelper(context).use { dbHelper ->
-                        dbHelper.storeTafsirs(response.tafsirs, response.version, response.timestamp1)
+                    val dbHelper = QuranTafsirDBHelper(context)
 
-                       for (tafsir in response.tafsirs) {
+                    try {
+                        dbHelper.storeTafsirs(
+                            response.tafsirs,
+                            response.version,
+                            response.timestamp1
+                        )
+
+                        for (tafsir in response.tafsirs) {
                             if (tafsir.verseKey == verseKey || tafsir.verses.contains(verseKey)) {
                                 tafsirToShow = tafsir
                             }
                         }
+                    } finally {
+                        dbHelper.close()
                     }
                 }
 

@@ -50,7 +50,7 @@ class TranslationDownloadWorker(
     private suspend fun mockDownloadFile(
         bookInfo: TranslationBookInfoModel
     ) {
-        for (progress in 0..100 step 5) {
+        for (progress in 0..100 step 10) {
             if (isStopped) break
 
             Logger.d("Mock downloading ${bookInfo.slug}: $progress%")
@@ -58,7 +58,7 @@ class TranslationDownloadWorker(
             setProgressAsync(workDataOf("progress" to progress))
             setForeground(createForegroundInfo(bookInfo, progress))
 
-            kotlinx.coroutines.delay(2000)
+            kotlinx.coroutines.delay(1000)
         }
     }
 
