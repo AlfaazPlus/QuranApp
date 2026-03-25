@@ -36,15 +36,10 @@
             app:layout_constraintEnd_toStartOf="@id/indexMenu"
             app:layout_constraintTop_toTopOf="parent" />-->
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.compose.ui.platform.ComposeView
             android:id="@+id/indexMenu"
             android:layout_width="@dimen/dmnActionButton"
             android:layout_height="@dimen/dmnActionButton"
-            android:background="@drawable/dr_bg_hover_round"
-            android:contentDescription="@string/strTitleMenu"
-            android:padding="7dp"
-            android:src="@drawable/dr_icon_hamburger"
-            android:tooltipText="@string/strTitleMenu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

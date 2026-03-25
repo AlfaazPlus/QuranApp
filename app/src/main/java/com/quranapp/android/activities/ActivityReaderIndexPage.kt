@@ -23,8 +23,7 @@ class ActivityReaderIndexPage : BaseActivity() {
 
             setContent {
                 QuranAppTheme {
-                    ReaderIndexScreen(
-                    )
+                    ReaderIndexScreen()
                 }
             }
         })

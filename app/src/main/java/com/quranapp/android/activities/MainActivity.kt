@@ -1,189 +1,183 @@
-package com.quranapp.android.activities;
+package com.quranapp.android.activities
 
-import static com.quranapp.android.views.reader.VotdWidgetKt.updateAllVotdWidgets;
+import android.os.Bundle
+import android.view.View
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.quranapp.android.R
+import com.quranapp.android.activities.base.BaseActivity
+import com.quranapp.android.adapters.utility.ViewPagerAdapter2
+import com.quranapp.android.compose.components.IndexMenuButton
+import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.databinding.ActivityMainBinding
+import com.quranapp.android.frags.main.FragMain
+import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
+import com.quranapp.android.utils.app.AppActions.checkForResourcesVersions
+import com.quranapp.android.utils.app.AppActions.scheduleActions
+import com.quranapp.android.utils.app.UpdateManager
+import com.quranapp.android.utils.sharedPrefs.SPAppActions.getRequireOnboarding
+import com.quranapp.android.views.reader.updateAllVotdWidgets
+import com.quranapp.android.widgets.tablayout.BottomTab
+import com.quranapp.android.widgets.tablayout.BottomTabLayout.OnKingTabClickListener
+import com.quranapp.android.widgets.tablayout.BottomTabLayout.OnTabSelectionChangeListener
 
-import android.os.Bundle;
-import android.view.View;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager2.widget.ViewPager2;
+class MainActivity : BaseActivity() {
+    private var mBinding: ActivityMainBinding? = null
+    private var mUpdateManager: UpdateManager? = null
 
-import com.quranapp.android.R;
-import com.quranapp.android.activities.base.BaseActivity;
-import com.quranapp.android.adapters.utility.ViewPagerAdapter2;
-import com.quranapp.android.databinding.ActivityMainBinding;
-import com.quranapp.android.suppliments.IndexMenu;
-import com.quranapp.android.utils.app.AppActions;
-import com.quranapp.android.utils.app.UpdateManager;
-import com.quranapp.android.utils.sharedPrefs.SPAppActions;
-import com.quranapp.android.frags.main.FragMain;
-import com.quranapp.android.widgets.tablayout.BottomTab;
-import com.quranapp.android.widgets.tablayout.BottomTabLayout;
+    override fun getStatusBarBG() = ContextCompat.getColor(this, R.color.colorBGHomePageItem)
 
-import java.util.ArrayList;
+    override fun shouldInflateAsynchronously() = true
 
-public class MainActivity extends BaseActivity {
-    private ActivityMainBinding mBinding;
-    private IndexMenu mIndexMenu;
-    private UpdateManager mUpdateManager;
+    override fun getLayoutResource() = R.layout.activity_main
 
-    @Override
-    protected int getStatusBarBG() {
-        return ContextCompat.getColor(this, R.color.colorBGHomePageItem);
-    }
-
-    @Override
-    protected boolean shouldInflateAsynchronously() {
-        return true;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mIndexMenu != null) {
-            mIndexMenu.close();
-        }
-    }
-
-    @Override
-    protected void onPause() {
+    override fun onPause() {
         if (mUpdateManager != null) {
-            mUpdateManager.onPause();
+            mUpdateManager!!.onPause()
         }
-        super.onPause();
+        super.onPause()
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
         if (mUpdateManager != null) {
-            mUpdateManager.onResume();
+            mUpdateManager!!.onResume()
         }
     }
 
-    @Override
-    protected void initCreate(Bundle savedInstanceState) {
-        if (isOnboardingRequired()) {
-            initOnboarding();
-            return;
+    override fun initCreate(savedInstanceState: Bundle?) {
+        if (this.isOnboardingRequired) {
+            initOnboarding()
+            return
         }
 
 
-        mUpdateManager = new UpdateManager(this, null);
-        mUpdateManager.refreshAppUpdatesJson();
+        mUpdateManager = UpdateManager(this, null)
+        mUpdateManager!!.refreshAppUpdatesJson()
 
-        if (mUpdateManager.check4CriticalUpdate()) {
-            return;
+        if (mUpdateManager!!.check4CriticalUpdate()) {
+            return
         }
 
 
-        super.initCreate(savedInstanceState);
+        super.initCreate(savedInstanceState)
     }
 
-    @Override
-    protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
-        mBinding = ActivityMainBinding.bind(activityView);
+    override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
+        mBinding = ActivityMainBinding.bind(activityView)
 
-        if (isOnboardingRequired()) {
-            return;
+        if (this.isOnboardingRequired) {
+            return
         }
 
-        init();
+        init()
     }
 
-    private void init() {
-        initContent();
-        initActions();
+    private fun init() {
+        initContent()
+        initActions()
 
-        updateAllVotdWidgets(this);
+        updateAllVotdWidgets(this)
     }
 
-    private void initHeader() {
-        initMenu();
+    private fun initHeader() {
+        mBinding!!.header.indexMenu.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-        mBinding.header.indexMenu.setOnClickListener(v -> mIndexMenu.open());
-    }
-
-    private void initActions() {
-        AppActions.checkForResourcesVersions(this);
-        AppActions.scheduleActions(this);
-        AppActions.checkForCrashLogs(this);
-    }
-
-    private void initContent() {
-        initHeader();
-        initViewPager();
-        initBottomNavigation();
-    }
-
-    private void initViewPager() {
-        ViewPager2 viewPager = mBinding.viewPager;
-        ViewPagerAdapter2 mViewPagerAdapter = new ViewPagerAdapter2(this);
-        mViewPagerAdapter.addFragment(new FragMain(), str(R.string.strLabelNavHome));
-        viewPager.setAdapter(mViewPagerAdapter);
-        viewPager.setOffscreenPageLimit(mViewPagerAdapter.getItemCount());
-        viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        viewPager.setUserInputEnabled(false);
-
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                mBinding.header.getRoot().setExpanded(true);
-
-                boolean notMainPage = position == 1;
-                mBinding.header.getRoot().setElevation(notMainPage ? 0 : dp2px(4));
+            setContent {
+                QuranAppTheme {
+                    IndexMenuButton()
+                }
             }
-        });
+        }
     }
 
-    private void initBottomNavigation() {
-        BottomTabLayout bottomTabLayout = mBinding.bottomTabLayout;
-        bottomTabLayout.setTabs(getBottomTabs());
-        bottomTabLayout.setKingTab(new BottomTab(R.drawable.quran_kareem),
-            kingTab -> launchActivity(ActivityReaderIndexPage.class));
+    private fun initActions() {
+        checkForResourcesVersions(this)
+        scheduleActions(this)
+        checkForCrashLogs(this)
+    }
 
-        bottomTabLayout.setSelectionChangeListener(tab -> {
-            if (tab.getId() == R.id.navSearch) {
-                launchActivity(ActivitySearch.class);
+    private fun initContent() {
+        initHeader()
+        initViewPager()
+        initBottomNavigation()
+    }
+
+    private fun initViewPager() {
+        val viewPager = mBinding!!.viewPager
+        val mViewPagerAdapter = ViewPagerAdapter2(this)
+        mViewPagerAdapter.addFragment(FragMain(), str(R.string.strLabelNavHome))
+        viewPager.setAdapter(mViewPagerAdapter)
+        viewPager.setOffscreenPageLimit(mViewPagerAdapter.getItemCount())
+        viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER)
+
+        viewPager.setUserInputEnabled(false)
+
+        viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                mBinding!!.header.getRoot().setExpanded(true)
+
+                val notMainPage = position == 1
+                mBinding!!.header.getRoot()
+                    .setElevation((if (notMainPage) 0 else dp2px(4f)).toFloat())
             }
-        });
+        })
     }
 
-    private ArrayList<BottomTab> getBottomTabs() {
-        @DrawableRes int[] bottomTabsIcons = {R.drawable.dr_icon_home, R.drawable.dr_icon_search};
-        @StringRes int[] bottomTabsLabels = {R.string.strLabelNavHome, R.string.strLabelNavSearch};
-        @IdRes int[] ids = {R.id.navHome, R.id.navSearch};
+    private fun initBottomNavigation() {
+        val bottomTabLayout = mBinding!!.bottomTabLayout
+        bottomTabLayout.setTabs(this.bottomTabs)
+        bottomTabLayout.setKingTab(
+            BottomTab(R.drawable.quran_kareem),
+            OnKingTabClickListener { kingTab: BottomTab? -> launchActivity(ActivityReaderIndexPage::class.java) })
 
-        ArrayList<BottomTab> bottomTabs = new ArrayList<>();
-        for (int i = 0; i < bottomTabsIcons.length; i++) {
-            BottomTab bottomTab = new BottomTab(getString(bottomTabsLabels[i]), bottomTabsIcons[i]);
-            bottomTab.setId(ids[i]);
-            bottomTabs.add(bottomTab);
+        bottomTabLayout.setSelectionChangeListener(OnTabSelectionChangeListener { tab: BottomTab? ->
+            if (tab!!.id == R.id.navSearch) {
+                launchActivity(ActivitySearch::class.java)
+            }
+        })
+    }
+
+    private val bottomTabs: ArrayList<BottomTab?>
+        get() {
+            @DrawableRes val bottomTabsIcons =
+                intArrayOf(
+                    R.drawable.dr_icon_home,
+                    R.drawable.dr_icon_search
+                )
+            @StringRes val bottomTabsLabels =
+                intArrayOf(
+                    R.string.strLabelNavHome,
+                    R.string.strLabelNavSearch
+                )
+            @IdRes val ids = intArrayOf(
+                R.id.navHome,
+                R.id.navSearch
+            )
+
+            val bottomTabs = java.util.ArrayList<BottomTab?>()
+            for (i in bottomTabsIcons.indices) {
+                val bottomTab =
+                    BottomTab(getString(bottomTabsLabels[i]), bottomTabsIcons[i])
+                bottomTab.id = ids[i]
+                bottomTabs.add(bottomTab)
+            }
+
+            return bottomTabs
         }
 
-        return bottomTabs;
-    }
 
-    private void initMenu() {
-        mIndexMenu = new IndexMenu(this, mBinding.getRoot());
-    }
+    private val isOnboardingRequired: Boolean
+        get() = getRequireOnboarding(this)
 
-    private boolean isOnboardingRequired() {
-        return SPAppActions.getRequireOnboarding(this);
-    }
-
-    private void initOnboarding() {
-        launchActivity(ActivityOnboarding.class);
-        finish();
+    private fun initOnboarding() {
+        launchActivity(ActivityOnboarding::class.java)
+        finish()
     }
 }
