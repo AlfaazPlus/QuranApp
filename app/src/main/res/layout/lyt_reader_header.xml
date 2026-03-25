@@ -22,7 +22,6 @@
         android:background="@drawable/dr_bg_action_round"
         android:contentDescription="@string/strLabelBack"
         android:padding="7dp"
-        android:rotation="@integer/intActionBtnRotation"
         android:src="@drawable/dr_icon_chevron_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
