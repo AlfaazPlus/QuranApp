@@ -109,7 +109,6 @@
     <string name="strTitleDownloadTranslations">Жүктөө</string>
     <string name="strTitleRecitations">Куран окуу</string>
     <string name="strTitleSelectReciter">Куран окуучуну тандаңыз</string>
-    <string name="titleManageAudio">Аудио жөндөөлөр</string>
     <string name="audioOption">Үн параметри</string>
     <string name="playbackSpeed">Ылдамдык</string>
     <string name="audioBothArabicTranslation">Арабча жана котормо</string>
@@ -151,7 +150,6 @@
     <string name="strTitleAppLanguage">Тиркеме тили</string>
     <string name="strTitleChangeLanguage">Тилди өзгөртөсүзбү?</string>
     <string name="strTitleTheme">Тема</string>
-    <string name="strSelectTitleTheme">Тиркеме темасын тандаңыз</string>
     <string name="strTitleNoInternet">Интернет жок</string>
     <string name="strLabelPlay">Ойнотуу</string>
     <string name="strLabelPause">Пауза</string>
