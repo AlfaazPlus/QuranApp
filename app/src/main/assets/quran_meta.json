@@ -33,13 +33,15 @@
         "gu": "અલ-ફાતિહા",
         "hi": "अल फातेहा",
         "in": "Al-Fatihah",
+        "ky": "Фатиха",
         "ml": "സൂറത്തുൽ ഫാത്തിഹ",
         "tr": "Fâtiha",
         "ur": "الفاتحة",
         "zh": "法谛海"
       },
       "tags": "alfatiha,alfaatihah,alfaatiha,alfaatiya,alfatiya,opener,opening,starter,starting"
-    }, {
+    },
+    {
       "index": 2,
       "count": 286,
       "order": 87,
@@ -72,13 +74,15 @@
         "gu": "અલ-બકરહ",
         "hi": "अल बकराह",
         "in": "Al-Baqarah",
+        "ky": "Бакара",
         "ml": "സൂറത്തുൽ ബഖറഃ",
         "tr": "Bakara",
         "ur": "البقرة",
         "zh": "巴格勒"
       },
       "tags": "thecows,the cows,thegoats,the goats,the goats,albaqra,albaqrah,albaqraa,albaqraah,albaqara,albaqaraa,albakara,albakra,albakaraa,albakraa,albakrah,albkra,albqra,albkrah,albqrah,albkraa,albqraa,albkraah,albqraah"
-    }, {
+    },
+    {
       "index": 3,
       "count": 200,
       "order": 89,
@@ -111,13 +115,15 @@
         "gu": "આલે ઈમરાન",
         "hi": "आले इमरान",
         "in": "Ali `Imran",
+        "ky": "Али Имран",
         "ml": "സൂറത്ത് ആലുഇംറാൻ",
         "tr": "Âl-i İmrân",
         "ur": "آل عمران",
         "zh": "阿黎仪姆兰"
       },
       "tags": "alimran,alimraan,aleemran,aleemraan,aleimraan,aleimran,alemran,alemraan"
-    }, {
+    },
+    {
       "index": 4,
       "count": 176,
       "order": 92,
@@ -150,13 +156,15 @@
         "gu": "અન્ નિસા",
         "hi": "अन-निसा",
         "in": "An-Nisa`",
+        "ky": "Ниса",
         "ml": "സൂറത്തുന്നിസാഅ്",
         "tr": "Nisâ",
         "ur": "النساء",
         "zh": "尼萨仪"
       },
       "tags": "woman,womn,wmn,wemon,wemen,annisa,annisaa,anneesa,anneesa,anneesah,annisah,annisaah,annesa,annesaa,annesah,annsa,annsaa"
-    }, {
+    },
+    {
       "index": 5,
       "count": 120,
       "order": 112,
@@ -189,13 +197,15 @@
         "gu": "અલ માઈદહ",
         "hi": "अल-माइदा",
         "in": "Al-Ma`idah",
+        "ky": "Маида",
         "ml": "സൂറത്തുൽ മാഇദ",
         "tr": "Mâide",
         "ur": "المائدة",
         "zh": "马以代"
       },
       "tags": "almaedaa,almaaedaa,almaedah,almaaedah,almaedaah,almaaedaah,almaeeda,almaaeeda,almaeedaa,almaaeedaa,almaeedah,almaaeedah,almaeedaah,almaaeedaah,almaida,almaaeda,almaidaa,almaaidaa,almaidah,almaaidah,almaidaah,almaaidaah,almda,almada,almdah,almadah,almadae"
-    }, {
+    },
+    {
       "index": 6,
       "count": 165,
       "order": 55,
@@ -228,13 +238,15 @@
         "gu": "અલ અન્આમ",
         "hi": "अल-अनाम",
         "in": "Al-An`am",
+        "ky": "Анъам",
         "ml": "സൂറത്തുൽ അൻആം",
         "tr": "En'âm",
         "ur": "الأنعام",
         "zh": "艾奈阿姆"
       },
       "tags": "alanam,alaanam,alaanaam,alanaam,alan'am,ala'naam,ala'nam,al'anam,al'aanaam,catl,catlle,ctll,catle"
-    }, {
+    },
+    {
       "index": 7,
       "count": 206,
       "order": 39,
@@ -267,13 +279,15 @@
         "gu": "અલ અઅ્.રાફ",
         "hi": "अल-आराफ़",
         "in": "Al-A’raf",
+        "ky": "Аaраф",
         "ml": "സൂറത്തുൽ അഅ്റാഫ്",
         "tr": "A'râf",
         "ur": "الأعراف",
         "zh": "艾耳拉弗"
       },
       "tags": " aaraaf,aaraf,araaf,araf,aaraaph,aaraph,araaph,araph,alaaraaf,alaaraf,alaraaf,alaraf,alaaraaph,alaaraph,alaraaph,alaraph,size,height"
-    }, {
+    },
+    {
       "index": 8,
       "count": 75,
       "order": 88,
@@ -306,13 +320,15 @@
         "gu": "અલ અન્ફાલ",
         "hi": "अल-अन्फाल",
         "in": "Al-Anfal",
+        "ky": "Анфал",
         "ml": "സൂറത്തുൽ അൻഫാൽ",
         "tr": "Enfâl",
         "ur": "الأنفال",
         "zh": "安法勒"
       },
       "tags": "alanfal,alaanfal,alanphal,alaanphal,alalanfal,alalaanfal,alalanphal,alalaanphal,fights,spoil,wars,wrs,fytes"
-    }, {
+    },
+    {
       "index": 9,
       "count": 129,
       "order": 113,
@@ -345,13 +361,15 @@
         "gu": "અત્-તૌબા",
         "hi": "अत-तौबा",
         "in": "At-Taubah",
+        "ky": "Тayба",
         "ml": "സൂറത്തുത്തൗബഃ",
         "tr": "Tevbe",
         "ur": "التوبة",
         "zh": "讨白"
       },
       "tags": "repent,repentence,repntnc,attauba,attoba,attaubaa,attobaa,attawbaa,attwba,attwbaa,attoaba,attoabaa,attbaa"
-    }, {
+    },
+    {
       "index": 10,
       "count": 109,
       "order": 51,
@@ -384,13 +402,15 @@
         "gu": "યૂનુસ",
         "hi": "युनुस",
         "in": "Yunus",
+        "ky": "Юнус",
         "ml": "സൂറത്ത് യൂനുസ്",
         "tr": "Yûnus",
         "ur": "يونس",
         "zh": "优努斯"
       },
       "tags": "yunus,unus,younus,yunas,unas,younas,ynus,ynas,yuns,youns,yns,ysn,yusun,usun,yousun,yusan,usan,jns,jons,jnas,janas,jona,jna,jonah,jonh,jnah,jnh,janoh,janh"
-    }, {
+    },
+    {
       "index": 11,
       "count": 123,
       "order": 52,
@@ -423,13 +443,15 @@
         "gu": "હૂદ",
         "hi": "हूद",
         "in": "Hud",
+        "ky": "Худ",
         "ml": "സൂറത്ത് ഹൂദ്",
         "tr": "Hûd",
         "ur": "هود",
         "zh": "呼德"
       },
       "tags": "hood,hd,hdoo,hdu,duh,dooh,dh"
-    }, {
+    },
+    {
       "index": 12,
       "count": 111,
       "order": 53,
@@ -462,13 +484,15 @@
         "gu": "યૂસુફ",
         "hi": "युसूफ",
         "in": "Yusuf",
+        "ky": "Юсуф",
         "ml": "സൂറത്ത് യൂസുഫ്",
         "tr": "Yûsuf",
         "ur": "يوسف",
         "zh": "优素福"
       },
       "tags": "yusuf,yousuf,yusouf,ysf,yusf,ysuf,yasaf,yasf,ysaf,josph,josh,jsph"
-    }, {
+    },
+    {
       "index": 13,
       "count": 43,
       "order": 96,
@@ -501,13 +525,15 @@
         "gu": "અર્-રઅ્દ",
         "hi": "अर र’आद",
         "in": "Ar-Ra’d",
+        "ky": "Рaад",
         "ml": "സൂറത്തു റഅ്ദ്",
         "tr": "Ra'd",
         "ur": "الرعد",
         "zh": "赖尔得"
       },
       "tags": "arraad,arrad,araad,arad,arrd,ard,thundar,thundr,thndr,tdr,electricity,lightening"
-    }, {
+    },
+    {
       "index": 14,
       "count": 52,
       "order": 72,
@@ -540,13 +566,15 @@
         "gu": "ઇબ્રાહીમ",
         "hi": "इब्राहीम",
         "in": "Ibrahim",
+        "ky": "Ибрахим",
         "ml": "സൂറത്ത് ഇബ്റാഹീം",
         "tr": "İbrâhîm",
         "ur": "ابراهيم",
         "zh": "易卜拉欣"
       },
       "tags": "ibraahim,ibraheem,ibraaheem,ibrhm,abrhm"
-    }, {
+    },
+    {
       "index": 15,
       "count": 99,
       "order": 54,
@@ -579,13 +607,15 @@
         "gu": "અલ હિજ્ર",
         "ur": "الحجر",
         "in": "Al-Hijr",
+        "ky": "Хижр",
         "ml": "സൂറത്തുൽ ഹിജ്ർ",
         "tr": "Hicr",
         "hi": "अल हिज्र",
         "zh": "希只尔"
       },
       "tags": "alhijr,alhjr,alhizr,alheejr,alheezr,alhzr,stone"
-    }, {
+    },
+    {
       "index": 16,
       "count": 128,
       "order": 70,
@@ -618,13 +648,15 @@
         "gu": "અન્-નહલ",
         "hi": "अन नहल",
         "in": "An-Nahl",
+        "ky": "Нахл",
         "ml": "സൂറത്തുന്നഹ്ൽ",
         "tr": "Nahl",
         "ur": "النحل",
         "zh": "奈哈勒"
       },
       "tags": "annahl,annhl,annahal,annehel,annehl"
-    }, {
+    },
+    {
       "index": 17,
       "count": 111,
       "order": 50,
@@ -657,13 +689,15 @@
         "gu": "ઈસ્રા",
         "hi": "अल इस्रा",
         "in": "Al-Isra`",
+        "ky": "Исра",
         "ml": "സൂറത്തുൽ ഇസ്റാഅ്",
         "tr": "İsrâ",
         "ur": "الإسراء",
         "zh": "伊斯拉"
       },
       "tags": "alisraa,alisr,alesraa,alishraa,aleshraa,travel,jrney,jorney"
-    }, {
+    },
+    {
       "index": 18,
       "count": 110,
       "order": 69,
@@ -696,13 +730,15 @@
         "gu": "અલ કહ્ફ",
         "hi": "अल कहफ़",
         "in": "Al-Kahfi",
+        "ky": "Кахф",
         "ml": "സൂറത്തുൽ കഹ്ഫ്",
         "tr": "Kehf",
         "ur": "الكهف",
         "zh": "凯海府"
       },
       "tags": "alkhaf,alkahaf,alkhaph,alkahaph,alkahph,thecave"
-    }, {
+    },
+    {
       "index": 19,
       "count": 98,
       "order": 44,
@@ -735,13 +771,15 @@
         "gu": "મરયમ",
         "hi": "मरियम",
         "in": "Maryam",
+        "ky": "Мариям",
         "ml": "സൂറത്ത് മർയം",
         "tr": "Meryem",
         "ur": "مريم",
         "zh": "麦尔彦"
       },
       "tags": "marym,mryam,mrym,marry,mry,mrry"
-    }, {
+    },
+    {
       "index": 20,
       "count": 135,
       "order": 45,
@@ -774,13 +812,15 @@
         "gu": "તાહા",
         "hi": "अत-तहा",
         "in": "Ta Ha",
+        "ky": "Taxa",
         "ml": "സൂറത്ത് ത്വാഹാ",
         "tr": "Tâhâ",
         "ur": "طه",
         "zh": "塔哈"
       },
       "tags": "tahaa,taaha,thaa"
-    }, {
+    },
+    {
       "index": 21,
       "count": 112,
       "order": 73,
@@ -813,13 +853,15 @@
         "gu": "અલ-અંબિયા",
         "hi": "अल-अम्बिया",
         "in": "Al-Anbiya",
+        "ky": "Анбия",
         "ml": "സൂറത്തുൽ അൻബിയാഅ്",
         "tr": "Enbiyâ",
         "ur": "الأنبياء",
         "zh": "安比雅"
       },
       "tags": "alanbiyaa,alambiyaa,alambyaa,alanbyaa,nabi,nabee,theprophets"
-    }, {
+    },
+    {
       "index": 22,
       "count": 78,
       "order": 103,
@@ -852,13 +894,15 @@
         "gu": "અલ-હજ્જ",
         "hi": "अल-हज",
         "in": "Al-Hajj",
+        "ky": "Хаж",
         "ml": "സൂറത്തുൽ ഹജ്ജ്",
         "tr": "Hac",
         "ur": "الحج",
         "zh": "哈只"
       },
       "tags": "alhajj,alhazz,alhjj,alhzz,thepilgrimage"
-    }, {
+    },
+    {
       "index": 23,
       "count": 118,
       "order": 74,
@@ -891,13 +935,15 @@
         "gu": "અલ-મુ'મિનૂન",
         "hi": "अल-मुमिनून",
         "in": "Al-Mu’minun",
+        "ky": "Муbминyн",
         "ml": "സൂറത്തുൽ മുഅ്മിനൂൻ",
         "tr": "Mü'minûn",
         "ur": "المؤمنون",
         "zh": "慕米农"
       },
       "tags": "almuminoon,almominoon,almuminun,almominun,thebelievers,thebeliefs"
-    }, {
+    },
+    {
       "index": 24,
       "count": 64,
       "order": 102,
@@ -930,13 +976,15 @@
         "gu": "અન્-નૂર",
         "hi": "अन-नूर",
         "in": "An-Nur",
+        "ky": "Нур",
         "ml": "സൂറത്തുന്നൂർ",
         "tr": "Nûr",
         "ur": "النور",
         "zh": "努尔"
       },
       "tags": "annoor,annur,thelights"
-    }, {
+    },
+    {
       "index": 25,
       "count": 77,
       "order": 42,
@@ -969,13 +1017,15 @@
         "gu": "અલ-ફુરકાન",
         "hi": "अल-फुरकान",
         "in": "Al-Furqan",
+        "ky": "Фуркан",
         "ml": "സൂറത്തുൽ ഫുർഖാൻ",
         "tr": "Furkân",
         "ur": "الفرقان",
         "zh": "弗尔干"
       },
       "tags": ""
-    }, {
+    },
+    {
       "index": 26,
       "count": 227,
       "order": 47,
@@ -1008,13 +1058,15 @@
         "gu": "અસ્-શુઅરા",
         "hi": "अस-शुआरा",
         "in": "Asy-Syu`ara`",
+        "ky": "Шуара",
         "ml": "സൂറത്തുശ്ശുഅറാഅ്",
         "tr": "Şuarâ",
         "ur": "الشعراء",
         "zh": "抒尔拉"
       },
       "tags": "ashshuaraa,ashshuraa,ashsuraa,asshuraa,assuraa,ashsuaraa,asshuaraa,assuaraa,thepoets,thepoetry"
-    }, {
+    },
+    {
       "index": 27,
       "count": 93,
       "order": 48,
@@ -1047,13 +1099,15 @@
         "gu": "અન્-નમ્લ",
         "hi": "अन-नम्ल",
         "in": "An-Naml",
+        "ky": "Намл",
         "ml": "സൂറത്തുന്നംല്",
         "tr": "Neml",
         "ur": "النمل",
         "zh": "奈木勒"
       },
       "tags": "annaml,annamal,annmal,annml,theants"
-    }, {
+    },
+    {
       "index": 28,
       "count": 88,
       "order": 49,
@@ -1086,13 +1140,15 @@
         "gu": "અલ-કસસ",
         "hi": "अल-क़सस",
         "in": "Al-Qasas",
+        "ky": "Касас",
         "ml": "സൂറത്തുൽ ഖസസ്",
         "tr": "Kasas",
         "ur": "القصص",
         "zh": "改赛素"
       },
       "tags": "alqasas,alkasas,alqsas,alksas,alqass,alkass,alqss,alkss"
-    }, {
+    },
+    {
       "index": 29,
       "count": 69,
       "order": 85,
@@ -1125,13 +1181,15 @@
         "gu": "અલ-અન્કબૂત",
         "hi": "अल-अनकबूत",
         "in": "Al-`Ankabut",
+        "ky": "Анкабут",
         "ml": "സൂറത്തുൽ അൻകബൂത്ത്",
         "tr": "Ankebût",
         "ur": "العنكبوت",
         "zh": "安凯逋特"
       },
       "tags": "alankaboot,alankabut,alankboot,alankbut,alankabt,alankbt,thespider,spider"
-    }, {
+    },
+    {
       "index": 30,
       "count": 60,
       "order": 84,
@@ -1164,13 +1222,15 @@
         "gu": "અર્-રૂમ",
         "hi": "अर-रूम",
         "in": "Ar-Rum",
+        "ky": "Рум",
         "ml": "സൂറത്തു റൂം",
         "tr": "Rûm",
         "ur": "الروم",
         "zh": "鲁姆"
       },
       "tags": "arroom,arrome,arroam,theromans,arrume"
-    }, {
+    },
+    {
       "index": 31,
       "count": 34,
       "order": 57,
@@ -1203,13 +1263,15 @@
         "gu": "લૂકમાન",
         "hi": "लुकमान",
         "in": "Luqman",
+        "ky": "Лукман",
         "ml": "സൂറത്ത് ലുഖ്മാൻ",
         "tr": "Lokmân",
         "ur": "لقمان",
         "zh": "鲁格曼"
       },
       "tags": "luqmaan,lukmaan,lqmaan,lqman,lkmaan,lkman,lqmn,lkmn,luqaman,lukaman"
-    }, {
+    },
+    {
       "index": 32,
       "count": 30,
       "order": 75,
@@ -1242,13 +1304,15 @@
         "gu": "અસ્-સજદહ",
         "hi": "अस-सजदा",
         "in": "As-Sajdah",
+        "ky": "сажда",
         "ml": "സൂറത്തുസ്സജദഃ",
         "tr": "Secde",
         "ur": "السجدة",
         "zh": "赛直德"
       },
       "tags": "assajdah,assajadah,assejdah,assejadah,assjdah,assjdh,assazdah,assazadah,assezdah,asszdah,asszdh,assajdaah,assajadaah,assejdaah,assejadaah,assjdaah,assazdaah,assazadaah,assezdaah,asszdaah,prostrate,bow down,bowdown,prstrte"
-    }, {
+    },
+    {
       "index": 33,
       "count": 73,
       "order": 90,
@@ -1281,13 +1345,15 @@
         "gu": "અલ-અહ્ઝાબ",
         "hi": "अल-अह्जाब",
         "in": "Al-Ahzab",
+        "ky": "Ахзаб",
         "ml": "സൂറത്തുൽ അഹ്സാബ്",
         "tr": "Ahzâb",
         "ur": "الأحزاب",
         "zh": "艾哈萨布"
       },
       "tags": "alahzaab,alahzab,alahzb,alaahzaab,alaahzab,alaahzb,alahjaab,alahjab,alahjb,alaahjaab,alaahjab,alaahjb,alehzaab,alehzab,alehzb,alhijaab,alhijab,alhizaab,alhizab,alhejaab,alhejab,alhezaab,alhezab,theclans"
-    }, {
+    },
+    {
       "index": 34,
       "count": 54,
       "order": 58,
@@ -1320,13 +1386,15 @@
         "gu": "સબા",
         "hi": "सबा",
         "in": "Saba’",
+        "ky": "Саба",
         "ml": "സൂറത്തുസ്സബഅ്",
         "tr": "Sebe'",
         "ur": "سبإ",
         "zh": "赛伯邑"
       },
       "tags": "sabaa,shabaa,sbaa,shbaa,saabaa,shaabaa,sebaa"
-    }, {
+    },
+    {
       "index": 35,
       "count": 45,
       "order": 43,
@@ -1359,13 +1427,15 @@
         "gu": "ફાતિર",
         "hi": "फातिर",
         "in": "Fatir",
+        "ky": "фaатыр",
         "ml": "സൂറത്ത് ഫാത്വിർ",
         "tr": "Fâtır",
         "ur": "فاطر",
         "zh": "法颓尔"
       },
       "tags": "fatir,phaatir,phatir,fatr,phatr,ftr,phtr,theoriginator"
-    }, {
+    },
+    {
       "index": 36,
       "count": 83,
       "order": 41,
@@ -1398,13 +1468,15 @@
         "gu": "યાસીન",
         "hi": "यासीन",
         "in": "Ya Sin",
+        "ky": "Ya Sin",
         "ml": "സൂറത്ത് യാസീൻ",
         "tr": "Yâsîn",
         "ur": "يس",
         "zh": "雅辛"
       },
       "tags": "yaaseen,yaasin,yasin,yseen,ysin,yaasen,yasen,ysen,ysn"
-    }, {
+    },
+    {
       "index": 37,
       "count": 182,
       "order": 56,
@@ -1437,13 +1509,15 @@
         "gu": "અસ્-સાફફાત",
         "hi": "अस-सफ्फात",
         "in": "As-Saffat",
+        "ky": "ас-Саффат",
         "ml": "സൂറത്തുസ്സ്വാഫ്ഫാത്ത്",
         "tr": "Sâffât",
         "ur": "الصافات",
         "zh": "萨法特"
       },
       "tags": "assaaffaat,assaffaat,assaaffat,assaffat,asshaaffaat,asshaffaat,asshaaffat,asshaffat,assafat,asshafat"
-    }, {
+    },
+    {
       "index": 38,
       "count": 88,
       "order": 38,
@@ -1476,13 +1550,15 @@
         "gu": "સાદ",
         "hi": "स’आद",
         "in": "Shaad",
+        "ky": "Сод",
         "ml": "സൂറത്ത് സ്വാദ്",
         "tr": "Sâd",
         "ur": "ص",
         "zh": "萨德"
       },
       "tags": "shaad,shad,sad,shd,sd"
-    }, {
+    },
+    {
       "index": 39,
       "count": 75,
       "order": 59,
@@ -1515,13 +1591,15 @@
         "gu": "અઝ્-ઝુમર",
         "hi": "अज-ज़ुमर",
         "in": "Az-Zumar",
+        "ky": "Аз-Зумар",
         "ml": "സൂറത്തുസ്സുമർ",
         "tr": "Zümer",
         "ur": "الزمر",
         "zh": "助迈尔"
       },
       "tags": "azzumar,azzumaar,ajjumaar,ajjumar,groves,group"
-    }, {
+    },
+    {
       "index": 40,
       "count": 85,
       "order": 60,
@@ -1554,13 +1632,15 @@
         "gu": "અલ-મુ'મિન",
         "hi": "अल-गाफिर",
         "in": "Al-Mu’min",
+        "ky": "Гафир",
         "ml": "സൂറത്ത് ഗാഫിർ",
         "tr": "Mü'min",
         "ur": "غافر",
         "zh": "阿斐尔"
       },
       "tags": "alghaafir,alghafir,algafir,algaafir,algfr,alghfr,almumin,almomin"
-    }, {
+    },
+    {
       "index": 41,
       "count": 54,
       "order": 61,
@@ -1593,13 +1673,15 @@
         "gu": "હા.મીમ.અસ્સજદહ",
         "hi": "फुसिलत",
         "in": "Fussilat",
+        "ky": "Фуссилат",
         "ml": "സൂറത്ത് ഫുസ്സ്വിലത്ത്",
         "tr": "Fussilet",
         "ur": "فصلت",
         "zh": "奉绥来特"
       },
       "tags": "fusilat,fussillat,fusillat,fusilaat,fusillaat,ha mim assajdah,hamimassajdah,ha meem assajdah,hameemassajdah, ha mim sajdah,hamimsajdah,ha meem sajdah,hameemsajdah"
-    }, {
+    },
+    {
       "index": 42,
       "count": 53,
       "order": 62,
@@ -1632,13 +1714,15 @@
         "gu": "અશ્-શૂરા",
         "hi": "अश-शूरा",
         "in": "Asy-Syura",
+        "ky": "Шура",
         "ml": "സൂറത്തുശ്ശൂറാ",
         "tr": "Şûrâ",
         "ur": "الشورى",
         "zh": "舒拉"
       },
       "tags": "ashshuraa,assuraa,ashsuraa,asshuraa,assraa,asshraa,ashshraa,asraa,ashraa,consulting"
-    }, {
+    },
+    {
       "index": 43,
       "count": 89,
       "order": 63,
@@ -1671,13 +1755,15 @@
         "gu": "અઝ્-ઝુખરુફ",
         "hi": "अज-जुखरूफ",
         "in": "Az-Zukhruf",
+        "ky": "Зухруф",
         "ml": "സൂറത്തുസ്സുഖ്റുഫ്",
         "tr": "Zuhruf",
         "ur": "الزخرف",
         "zh": "助赫鲁弗"
       },
       "tags": "azzukhruf,azukhruf,azzukruf,azukruf,azzakhruf,azakhruf,azzakruf,azakruf,azzukhraf,azukhraf,azzukraf,azukraf,azzakhraf,azakhraf,azzakraf,azakraf,jewellary,metal"
-    }, {
+    },
+    {
       "index": 44,
       "count": 59,
       "order": 64,
@@ -1710,13 +1796,15 @@
         "gu": "અદ્-દુખાન",
         "hi": "अद-दुखान",
         "in": "Ad-Dukhan",
+        "ky": "Духан",
         "ml": "സൂറത്തുദ്ദുഖാൻ",
         "tr": "Duhân",
         "ur": "الدخان",
         "zh": "睹罕"
       },
       "tags": "addukhaan,addhukhaan,adukhaan,adhukhaan,addukhan,addhukhan,adukhan,adhukhan,addukaan,addhukaan,adukaan,adhukaan,addukan,addhukan,adukan,adhukan,azzukhaan,azzhukhaan,azukhaan,azhukhaan,azzukhan,azzhukhan,azukhan,azhukhan,azzukaan,azzhukaan,azukaan,azhukaan,azzukan,azzhukan,azukan,azhukan,ajjukhaan,ajjhukhaan,ajukhaan,ajhukhaan,ajjukhan,ajjhukhan,ajukhan,ajhukhan,ajjukaan,ajjhukaan,ajukaan,ajhukaan,ajjukan,ajjhukan,ajukan,ajhukan,smog,fog"
-    }, {
+    },
+    {
       "index": 45,
       "count": 37,
       "order": 65,
@@ -1749,13 +1837,15 @@
         "gu": "અલ-જાસિયહ",
         "hi": "अल-जाथीया",
         "in": "Al-Jasiyah",
+        "ky": "Жатия",
         "ml": "സൂറത്തുൽ ജാഥിയഃ",
         "tr": "Câsiye",
         "ur": "الجاثية",
         "zh": "查西叶"
       },
       "tags": "aljaathiyaa,aljathiyaa,aljaatiyaa,aljatiyaa,aljaashiyaa,aljashiyaa,aljaasiyaa,aljasiyaa"
-    }, {
+    },
+    {
       "index": 46,
       "count": 35,
       "order": 66,
@@ -1788,13 +1878,15 @@
         "gu": "અલ- અહકાફ",
         "hi": "सूरह अल-अह्काफ़",
         "in": "Al-Ahqaf",
+        "ky": "Ахкаф",
         "ml": "സൂറത്തുൽ അഹ്ഖാഫ്",
         "tr": "Ahkâf",
         "ur": "الأحقاف",
         "zh": "艾哈嘎弗"
       },
       "tags": "alahqaf,alahqaaf,alaahqaf,alaahqaaf,alahkaf,alahkaaf,alaahkaf,alaahkaaf,alahaqaf,alahaqaaf,alaahaqaf,alaahaqaaf,alahakaf,alahakaaf,alaahakaf,alaahakaaf,dune,desert"
-    }, {
+    },
+    {
       "index": 47,
       "count": 38,
       "order": 95,
@@ -1827,13 +1919,15 @@
         "gu": "મુહમ્મદ",
         "hi": "मुहम्मद",
         "in": "Muhammad",
+        "ky": "Мухаммад",
         "ml": "സൂറത്ത് മുഹമ്മദ്",
         "tr": "Muhammed",
         "ur": "محمد",
         "zh": "穆罕默德"
       },
       "tags": "mohmad,mohmod,mohmed,mehmad,mohammad,mohammed,mohamad,muhamad,muhammed,mhmd,mehmed,md,mohd,mohmd,prophet,saw,pbuh"
-    }, {
+    },
+    {
       "index": 48,
       "count": 29,
       "order": 111,
@@ -1866,13 +1960,15 @@
         "gu": "અલ-ફત્હ",
         "hi": "अल-फतह",
         "in": "Al-Fath",
+        "ky": "Фатх",
         "ml": "സൂറത്തുൽ ഫത്ഹ്",
         "tr": "Fetih",
         "ur": "الفتح",
         "zh": "费特哈"
       },
       "tags": "alfatah,alfath,alfateh,alfeteh,alftah,alfeth,alfth,winning,conquer,winner"
-    }, {
+    },
+    {
       "index": 49,
       "count": 18,
       "order": 106,
@@ -1905,13 +2001,15 @@
         "gu": "અલ- હુજુરાત",
         "hi": "अल-हुजरात",
         "in": "Al-Hujurat",
+        "ky": "Хужурат",
         "ml": "സൂറത്തുൽ ഹുജുറാത്ത്",
         "tr": "Hucurât",
         "ur": "الحجرات",
         "zh": "侯主拉特"
       },
       "tags": "alhujuraat,alhujurat,alhujraat,alhajraat,alhujrat,alhajrat,alhijraat,alhijraat,room,house"
-    }, {
+    },
+    {
       "index": 50,
       "count": 45,
       "order": 34,
@@ -1944,13 +2042,15 @@
         "gu": "કૉફ",
         "hi": "क़ाफ़",
         "in": "Qaf",
+        "ky": "Caf",
         "ml": "സൂറത്ത് ഖാഫ്",
         "tr": "Kâf",
         "ur": "ق",
         "zh": "戛弗"
       },
       "tags": "qaf,kaaf,kaf,qaap,qap"
-    }, {
+    },
+    {
       "index": 51,
       "count": 60,
       "order": 67,
@@ -1983,13 +2083,15 @@
         "gu": "અઝ્-ઝારિયાત",
         "hi": "अज़-ज़ारियात",
         "in": "Az-Zariyat",
+        "ky": "Зариат",
         "ml": "സൂറത്തുദ്ദാരിയാത്ത്",
         "tr": "Zâriyât",
         "ur": "الذاريات",
         "zh": "达理雅特"
       },
       "tags": "adhdhaariyat,adhdhaariyaat,addaariyat,addaariyaat,ajjaariyat,ajjariyat,ajjariyaat,azzaariyat,azzariyat,azzariyaat,adhdhaariat,adhdhaariaat,addaariat,addaariaat,ajjaariat,ajjariat,ajjariaat,azzaariat,azzariat,azzariaat,air"
-    }, {
+    },
+    {
       "index": 52,
       "count": 49,
       "order": 76,
@@ -2022,13 +2124,15 @@
         "gu": "અત્-તૂર",
         "hi": "अत-तूर",
         "in": "At-Tur",
+        "ky": "Ат-Тур",
         "ml": "സൂറത്തുത്തൂർ",
         "tr": "Tûr",
         "ur": "الطور",
         "zh": "突尔"
       },
       "tags": "attur,atur,attuur,mountain,valley"
-    }, {
+    },
+    {
       "index": 53,
       "count": 62,
       "order": 23,
@@ -2061,13 +2165,15 @@
         "gu": "અન્‌-નજ્મ",
         "hi": "अन-नज्म",
         "in": "An-Najm",
+        "ky": "Нажм",
         "ml": "സൂറത്തുന്നജ്മ്",
         "tr": "Necm",
         "ur": "النجم",
         "zh": "奈智姆"
       },
       "tags": "annajm,annjm,annajam,annjam"
-    }, {
+    },
+    {
       "index": 54,
       "count": 55,
       "order": 37,
@@ -2100,13 +2206,15 @@
         "gu": "અલ-કમર",
         "hi": "अल-कमर",
         "in": "Al-Qamar",
+        "ky": "аль-Камар",
         "ml": "സൂറത്തുൽ ഖമർ",
         "tr": "Kamer",
         "ur": "القمر",
         "zh": "改买尔"
       },
       "tags": "alqamar,alqamr,alqmar,alqmr,alkmr,alkamar,alkamr,alkmar"
-    }, {
+    },
+    {
       "index": 55,
       "count": 78,
       "order": 97,
@@ -2139,13 +2247,15 @@
         "gu": "અર્‌-રહમાન",
         "hi": "अर-रहमान",
         "in": "Ar-Rahman",
+        "ky": "Ар-Рахман",
         "ml": "സൂറത്തു റഹ്മാൻ",
         "tr": "Rahmân",
         "ur": "الرحمن",
         "zh": "安赖哈曼"
       },
       "tags": "arrahmaan,arrahman,arrahaman,arrahamaan,arrehmaan,arrehman,mercy,merciful,allah,god"
-    }, {
+    },
+    {
       "index": 56,
       "count": 96,
       "order": 46,
@@ -2178,13 +2288,15 @@
         "gu": "અલ-વાકિઅહ",
         "hi": "अल-वाकिया",
         "in": "Al-Waqi’ah",
+        "ky": "Вакиъа",
         "ml": "സൂറത്തുൽ വാഖിഅഃ",
         "tr": "Vâkıa",
         "ur": "الواقعة",
         "zh": "瓦格尔"
       },
       "tags": "alwaaqiaa,alwaqiaa,alwaakiaa,alwakiaa,alwqyaa,alwkyaa,alwqiyaa,alwkiyaa,mandatory,compulsory,obligatory"
-    }, {
+    },
+    {
       "index": 57,
       "count": 29,
       "order": 94,
@@ -2217,13 +2329,15 @@
         "gu": "અલ-હદીદ",
         "hi": "अल-हदीद",
         "in": "Al-Hadid",
+        "ky": "Хадид",
         "ml": "സൂറത്തുൽ ഹദീദ്",
         "tr": "Hadîd",
         "ur": "الحديد",
         "zh": "哈迪德"
       },
       "tags": "alhadid,alhadeed,alhdid,alhdeed,alhdd,alhadd"
-    }, {
+    },
+    {
       "index": 58,
       "count": 22,
       "order": 105,
@@ -2256,13 +2370,15 @@
         "gu": "અલ-મુજાદિલા",
         "hi": "अल-मुजादिला",
         "in": "Al-Mujadilah",
+        "ky": "Мужадила",
         "ml": "സൂറത്തുൽ മുജാദിലഃ",
         "tr": "Mücâdele",
         "ur": "المجادلة",
         "zh": "姆查衣赖"
       },
       "tags": "almujaadilaa,almujadilaa,almuzaadilaa,almuzadilaa,almujaadalaa,almujadalaa,almuzaadalaa,almuzadalaa,almajaadilaa,almajadilaa,almazaadilaa,almazadilaa,almajaadalaa,almajadalaa,almazaadalaa,almazadalaa"
-    }, {
+    },
+    {
       "index": 59,
       "count": 24,
       "order": 101,
@@ -2295,13 +2411,15 @@
         "gu": "અલ-હશ્ર",
         "hi": "अल-हष्र",
         "in": "Al-Hasyr",
+        "ky": "Хашр",
         "ml": "സൂറത്തുൽ ഹശ്ർ",
         "tr": "Haşr",
         "ur": "الحشر",
         "zh": "哈什尔"
       },
       "tags": "alhashr,alhasr,alhshr,alhsr,alhashar,alhasar,alhshar,alhsar"
-    }, {
+    },
+    {
       "index": 60,
       "count": 13,
       "order": 91,
@@ -2334,13 +2452,15 @@
         "gu": "અલ-મુમ્તહિના",
         "hi": "अल-मुमताहिना",
         "in": "Al-Mumtahanah",
+        "ky": "Мумтахана",
         "ml": "സൂറത്തുൽ മുംതഹനഃ",
         "tr": "Mümtehine",
         "ur": "الممتحنة",
         "zh": "慕姆太哈奈"
       },
       "tags": "almumtahanaa,almumtihanaa,almumthnaa,almumtanahaa,almumtahnaa,almamtahanaa,almamtihanaa,almamthnaa,almamtanahaa,almamtahnaa"
-    }, {
+    },
+    {
       "index": 61,
       "count": 14,
       "order": 109,
@@ -2373,13 +2493,15 @@
         "gu": "અસ્-સફ્ફ",
         "hi": "अस-सफ्फ",
         "in": "As-Saff",
+        "ky": "Сафф",
         "ml": "സൂറത്തുസ്സ്വഫ്ഫ്",
         "tr": "Saf",
         "ur": "الصف",
         "zh": "蒜弗"
       },
       "tags": "assaff,ashshaff,assaaff,asshaaff"
-    }, {
+    },
+    {
       "index": 62,
       "count": 11,
       "order": 110,
@@ -2412,13 +2534,15 @@
         "gu": "અલ-જુમુઆ",
         "hi": "अल-जुमाअ",
         "in": "Al-Jumu’ah",
+        "ky": "Жума",
         "ml": "സൂറത്തുൽ ജുമുഅഃ",
         "tr": "Cuma",
         "ur": "الجمعة",
         "zh": "主麻"
       },
       "tags": "aljummaah,aljummah,aljummuaah,aljummuah,aljmma"
-    }, {
+    },
+    {
       "index": 63,
       "count": 11,
       "order": 104,
@@ -2451,13 +2575,15 @@
         "gu": "અલ-મુનાફિકૂન",
         "hi": "अल-मुनाफिकुन",
         "in": "Al-Munafiqun",
+        "ky": "Мунафикун",
         "ml": "സൂറത്തുൽ മുനാഫിഖൂൻ",
         "tr": "Münâfikûn",
         "ur": "المنافقون",
         "zh": "莫拿非恭"
       },
       "tags": "almunaafiqoon,almunaafikoon,almonaafiqoon,almonaafikoon,almunafiqoon,almunafikoon,almonafiqoon,almonafikoon"
-    }, {
+    },
+    {
       "index": 64,
       "count": 18,
       "order": 108,
@@ -2490,13 +2616,15 @@
         "gu": "અત્‌-તગાબુન",
         "hi": "अत-तग़ाबुन",
         "in": "At-Tagabun",
+        "ky": "Тагабун",
         "ml": "സൂറത്തുത്തഗാബുൻ",
         "tr": "Tegâbün",
         "ur": "التغابن",
         "zh": "台昂卜尼"
       },
       "tags": "attaghaabun,attagabbun,attaghabbun,attagabun,attaggabbun"
-    }, {
+    },
+    {
       "index": 65,
       "count": 12,
       "order": 99,
@@ -2529,13 +2657,15 @@
         "gu": "અત્-તલાક",
         "hi": "अत-तलाक",
         "in": "At-Talaq",
+        "ky": "Талак",
         "ml": "സൂറത്തുത്ത്വലാഖ്",
         "tr": "Talâk",
         "ur": "الطلاق",
         "zh": "特拉格"
       },
       "tags": "attalaaq,attalaq,attalaak,attalak,attlaq,attlaaq,attlak,attlaak,attlq,attlk"
-    }, {
+    },
+    {
       "index": 66,
       "count": 12,
       "order": 107,
@@ -2568,13 +2698,15 @@
         "gu": "અત્-તહરીમ",
         "hi": "अत-तहरिम",
         "in": "At-Tahrim",
+        "ky": "Тахрим",
         "ml": "സൂറത്തുത്തഹ്രീം",
         "tr": "Tahrîm",
         "ur": "التحريم",
         "zh": "台哈列姆"
       },
       "tags": "attahrim,attahreem,attarim,attareem,atthrim,atthreem,attrim,attreem,atthrm"
-    }, {
+    },
+    {
       "index": 67,
       "count": 30,
       "order": 77,
@@ -2607,13 +2739,15 @@
         "gu": "અલ-મુલ્ક",
         "hi": "अल-मुल्क",
         "in": "Al-Mulk",
+        "ky": "Мулк",
         "ml": "സൂറത്തുൽ മുൽക്",
         "tr": "Mülk",
         "ur": "الملك",
         "zh": "姆勒克"
       },
       "tags": "almulk,country,nation,almlk"
-    }, {
+    },
+    {
       "index": 68,
       "count": 52,
       "order": 2,
@@ -2646,13 +2780,15 @@
         "gu": "અલ-કલમ",
         "hi": "अल-कलाम",
         "in": "Al-Qalam",
+        "ky": "Калам",
         "ml": "സൂറത്തുൽ ഖലം",
         "tr": "Kalem",
         "ur": "القلم",
         "zh": "改赖姆"
       },
       "tags": "alqalam,alkalam,alqalm,alkalm,alqlam,alklam,alqlm,aklm"
-    }, {
+    },
+    {
       "index": 69,
       "count": 52,
       "order": 78,
@@ -2685,13 +2821,15 @@
         "gu": "અલ-હાક્કા",
         "hi": "अल-हाक्का",
         "in": "Al-Haqqah",
+        "ky": "Хакка",
         "ml": "സൂറത്തുൽ ഹാഖ്ഖഃ",
         "tr": "Hâkka",
         "ur": "الحاقة",
         "zh": "哈盖"
       },
       "tags": "alhaaqqaah,alhaqqaah,alhaqqah,alhaqah,alhaqaah,alhaaqaah,alhaaqah,alhaakkaah,alhakkaah,alhakkah,alhakah,alhakaah,alhaakaah,alhaakah,alhqh,alhkh"
-    }, {
+    },
+    {
       "index": 70,
       "count": 44,
       "order": 79,
@@ -2724,13 +2862,15 @@
         "gu": "અલ-મઆરિજ",
         "hi": "अल-मारिज",
         "in": "Al-Ma’arij",
+        "ky": "Маариж",
         "ml": "സൂറത്തുൽ മആരിജ്",
         "tr": "Meâric",
         "ur": "المعارج",
         "zh": "买阿列支"
       },
       "tags": "almaarij,almarij,almaariz,almariz,urooz,urooj,uruz,uruj"
-    }, {
+    },
+    {
       "index": 71,
       "count": 28,
       "order": 71,
@@ -2763,13 +2903,15 @@
         "gu": "નૂહ્",
         "hi": "नूह",
         "in": "Nuh",
+        "ky": "Нух",
         "ml": "സൂറത്ത് നൂഹ്",
         "tr": "Nûh",
         "ur": "نوح",
         "zh": "努哈"
       },
       "tags": "nuh,noah"
-    }, {
+    },
+    {
       "index": 72,
       "count": 28,
       "order": 40,
@@ -2802,13 +2944,15 @@
         "gu": "અલ-જિન્ન",
         "hi": "अल-जिन्न",
         "in": "Al-Jinn",
+        "ky": "Джин",
         "ml": "സൂറത്തുൽ ജിന്ന്",
         "tr": "Cin",
         "ur": "الجن",
         "zh": "精尼"
       },
       "tags": "aljinn,aljinnat,aljinaat,aljinat,aljenn,aljennat,aljenaat,aljenat,alzinn,alzinnat,alzinaat,alzinat,alzenn,alzennat,alzenaat,alzenat"
-    }, {
+    },
+    {
       "index": 73,
       "count": 20,
       "order": 3,
@@ -2841,13 +2985,15 @@
         "gu": "અલ-મુઝ્ઝમ્મિલ",
         "hi": "अल-मुज़म्मिल",
         "in": "Al-Muzzammil",
+        "ky": "Музаммил",
         "ml": "സൂറത്തുൽ മുസ്സമ്മിൽ",
         "tr": "Müzzemmil",
         "ur": "المزمل",
         "zh": "孟赞密鲁"
       },
       "tags": "almuzzammil,almuzammil,almuzamil,almuzmil,almazzammil,almazammil,almazamil,almazmil,almujjammil,almujammil,almujamil,almujmil,almajjammil,almajammil,almajamil,almajmil"
-    }, {
+    },
+    {
       "index": 74,
       "count": 56,
       "order": 4,
@@ -2880,13 +3026,15 @@
         "gu": "અલ-મુદ્દસ્સિર",
         "hi": "अल्-मुद्दस्सिर",
         "in": "Al-Muddassir",
+        "ky": "Мудасир",
         "ml": "സൂറത്തുൽ മുദ്ദഥ്ഥിർ",
         "tr": "Müddessir",
         "ur": "المدثر",
         "zh": "孟荡西尔"
       },
       "tags": "almuddaththir,almudaththir,almuddatthir,almudatthir,almuddathtir,almudathtir,almuddattir,almudattir,almuddashshir,almudashshir,almuddasshir,almudasshir,almuddashsir,almudashsir,almuddassir,almudassir,almudshir,almudsir"
-    }, {
+    },
+    {
       "index": 75,
       "count": 40,
       "order": 31,
@@ -2919,13 +3067,15 @@
         "gu": "અલ-કિયામહ",
         "hi": "अल-कियामा",
         "in": "Al-Qiyamah",
+        "ky": "Кыямат",
         "ml": "സൂറത്തുൽ ഖിയാമഃ",
         "tr": "Kıyâmet",
         "ur": "القيامة",
         "zh": "格雅迈"
       },
       "tags": "alqiyaamat,alqiyamat,alqayaamat,alqayamat,alqiyaamah,alqiyamah,alqayaamah,alqayamah,alkiyaamat,alkiyamat,alkayaamat,alkayamat,alkiyaamah,alkiyamah,alkayaamah,alkayamah"
-    }, {
+    },
+    {
       "index": 76,
       "count": 31,
       "order": 98,
@@ -2958,13 +3108,15 @@
         "gu": "અલ-ઈન્સાન",
         "hi": "अल-इन्सान",
         "in": "Al-Insan",
+        "ky": "Инсан",
         "ml": "സൂറത്തുൽ ഇൻസാൻ",
         "tr": "İnsân",
         "ur": "الإنسان",
         "zh": "印萨尼"
       },
       "tags": "alinsaan,alinsan,alinsn"
-    }, {
+    },
+    {
       "index": 77,
       "count": 50,
       "order": 33,
@@ -2997,13 +3149,15 @@
         "gu": "અલ-મુરસલાત",
         "hi": "अल-मुर्सलत",
         "in": "Al-Mursalat",
+        "ky": "Мурсалат",
         "ml": "സൂറത്തുൽ മുർസലാത്ത്",
         "tr": "Mürselât",
         "ur": "المرسلات",
         "zh": "姆尔赛拉特"
       },
       "tags": "almursalaat,almursilaat,almursalat,almursilat,almurselaat,almurselat,almurslat,almurslt"
-    }, {
+    },
+    {
       "index": 78,
       "count": 40,
       "order": 80,
@@ -3036,13 +3190,15 @@
         "gu": "અન્‌-નબા",
         "hi": "अल-नबा",
         "in": "An-Naba’",
+        "ky": "Наба",
         "ml": "സൂറത്തുന്നബഅ്",
         "tr": "Nebe",
         "ur": "النبإ",
         "zh": "奈白易"
       },
       "tags": "annabaa,annbaa,annebaa,annibaa,news,alert,information"
-    }, {
+    },
+    {
       "index": 79,
       "count": 46,
       "order": 81,
@@ -3075,13 +3231,15 @@
         "gu": "અન્‌-નાઝિઆત",
         "hi": "अन-नाज़िआ़त",
         "in": "An-Nazi’at",
+        "ky": "Назиат",
         "ml": "സൂറത്തുന്നാസിആത്ത്",
         "tr": "Naziât",
         "ur": "النازعات",
         "zh": "那寂阿特"
       },
       "tags": "annaaziaat,annaaziyaat,annaaziat,annaaziyat,annaziaat,annaziyaat,annaziat,annaziyat,annaajiaat,annaajiyaat,annaajiat,annaajiyat,annajiaat,annajiyaat,annajiat,annajiyat,nazyaat,nazyat,najyaat,najyat,nazaat,najaat,nazat,najat,nzt,njt"
-    }, {
+    },
+    {
       "index": 80,
       "count": 42,
       "order": 24,
@@ -3114,13 +3272,15 @@
         "gu": "અબસ",
         "hi": "सूरह अबसा",
         "in": "`Abasa",
+        "ky": "Абаса",
         "ml": "സൂറത്ത് അബസ",
         "tr": "Abese",
         "ur": "عبس",
         "zh": "阿百赛"
       },
       "tags": "aabasaa,aabaasaa,aabsaa,aabashaa,aabaashaa,aabshaa"
-    }, {
+    },
+    {
       "index": 81,
       "count": 29,
       "order": 7,
@@ -3153,13 +3313,15 @@
         "gu": "અત્-તકવીર",
         "hi": "अत-तक्वीर",
         "in": "At-Takwir",
+        "ky": "Таквир",
         "ml": "സൂറത്തുത്തക്വീർ",
         "tr": "Tekvîr",
         "ur": "التكوير",
         "zh": "太克威尔"
       },
       "tags": "attakwir,attakweer,attaqwir,attaqweer,attkwir,attkweer,attqwir,attqweer"
-    }, {
+    },
+    {
       "index": 82,
       "count": 19,
       "order": 82,
@@ -3192,13 +3354,15 @@
         "gu": "અલ-ઈન્ફિતાર",
         "hi": "अल-इन्फितार,",
         "in": "Al-Infitar",
+        "ky": "Инфитар",
         "ml": "സൂറത്തുൽ ഇൻഫിത്വാർ",
         "tr": "İnfitâr",
         "ur": "الإنفطار",
         "zh": "引斐塔尔"
       },
       "tags": "alinfitaar,alinfitar,alinfetaar,alinfetar,alinftaar,alinftar,alinftr, alintifaar,alintifar,alintefaar,alintefar,alintfaar,alintfar,alintfr"
-    }, {
+    },
+    {
       "index": 83,
       "count": 36,
       "order": 86,
@@ -3231,13 +3395,15 @@
         "gu": "અલ-મુતફ્ફિફીન",
         "hi": "अल-मुताफ्फिन",
         "in": "Al-Muthafifin",
+        "ky": "Мутаффифийн",
         "ml": "സൂറത്തുൽ മുത്വഫ്ഫിഫീൻ",
         "tr": "Mutaffifîn",
         "ur": "المطففين",
         "zh": "太颓斐弗"
       },
       "tags": "almutaffifin,almutaffifeen,almutaffin,almutaffeen,almutafin,almutafeen,almutfin,almutfeen"
-    }, {
+    },
+    {
       "index": 84,
       "count": 25,
       "order": 83,
@@ -3270,13 +3436,15 @@
         "gu": "અલ-ઈન્શિકાક",
         "hi": "अल-इन्शिकाक",
         "in": "Al-Insyiqaq",
+        "ky": "Иншикак",
         "ml": "സൂറത്തുൽ ഇൻശിഖാഖ്",
         "tr": "İnşikâk",
         "ur": "الإنشقاق",
         "zh": "引史卡格"
       },
       "tags": "alinshiqaaq,alinshiqaq,alinsiqaaq,alinsiqaq,alinsqaaq,alinsqaq,alinqaaq,alinqaq,alinshikaak,alinshikak,alinsikaak,alinsikak,alinskaak,alinskak,alinkaak,alinkak"
-    }, {
+    },
+    {
       "index": 85,
       "count": 22,
       "order": 27,
@@ -3309,13 +3477,15 @@
         "gu": "અલ-બુરૂજ",
         "hi": "अल-बुरूज",
         "in": "Al-Buruj",
+        "ky": "Буруж",
         "ml": "സൂറത്തുൽ ബുറൂജ്",
         "tr": "Burûc",
         "ur": "البروج",
         "zh": "补鲁智"
       },
       "tags": "alburooj,alburuj,alburj,alburj,albarooj,albaruj,alburooz,alburuz,alburz,alburz,albarooz,albaruz,stars,albrj,albrz"
-    }, {
+    },
+    {
       "index": 86,
       "count": 17,
       "order": 36,
@@ -3348,13 +3518,15 @@
         "gu": "અત્-તારિક",
         "hi": "अत-तारिक",
         "in": "At-Tariq",
+        "ky": "Таaрик",
         "ml": "സൂറത്തുത്ത്വാരിഖ്",
         "tr": "Târık",
         "ur": "الطارق",
         "zh": "塔里格"
       },
       "tags": "attaarique,attarique,ataarique,atarique,attaarik,attarik,ataarik,atarik,attrk,atrk"
-    }, {
+    },
+    {
       "index": 87,
       "count": 19,
       "order": 8,
@@ -3387,13 +3559,15 @@
         "gu": "અલ-આ'લા",
         "hi": "अल-अला",
         "in": "Al-A’la",
+        "ky": "Аьaла",
         "ml": "സൂറത്തുൽ അഅ്ലാ",
         "tr": "A'lâ",
         "ur": "الأعلى",
         "zh": "艾尔拉"
       },
       "tags": "alalaa,alaalaa,allaa,aallaa,height"
-    }, {
+    },
+    {
       "index": 88,
       "count": 26,
       "order": 68,
@@ -3426,13 +3600,15 @@
         "gu": "અલ-ગાશિયાહ",
         "hi": "अल-घाशिया",
         "in": "Al-Gasyiyah",
+        "ky": "Гаaшия",
         "ml": "സൂറത്തുൽ ഗാശിയഃ",
         "tr": "Gâşiye",
         "ur": "الغاشية",
         "zh": "阿史叶"
       },
       "tags": "alghaashiyaa,alghashiyaa,alghaasiyaa,alghasiyaa,algaashiyaa,algashiyaa,algaasiyaa,algasiyaa"
-    }, {
+    },
+    {
       "index": 89,
       "count": 30,
       "order": 10,
@@ -3465,13 +3641,15 @@
         "gu": "અલ-ફજ્ર",
         "hi": "अल-फज्र",
         "in": "Al-Fajr",
+        "ky": "Фажр",
         "ml": "സൂറത്തുൽ ഫജ്ർ",
         "tr": "Fecr",
         "ur": "الفجر",
         "zh": "史智尔"
       },
       "tags": "alfajr,alfazr,alfjr,alfzr"
-    }, {
+    },
+    {
       "index": 90,
       "count": 20,
       "order": 35,
@@ -3504,13 +3682,15 @@
         "gu": "અલ-બલદ",
         "hi": "अल-बलद",
         "in": "Al-Balad",
+        "ky": "Балад",
         "ml": "സൂറത്തുൽ ബലദ്",
         "tr": "Beled",
         "ur": "البلد",
         "zh": "白赖德"
       },
       "tags": "albalad,albalaad,albaalaad,albaalad,albld"
-    }, {
+    },
+    {
       "index": 91,
       "count": 15,
       "order": 26,
@@ -3543,13 +3723,15 @@
         "gu": "અશ્-શમ્સ",
         "hi": "अस-शम्स",
         "in": "Asy-Syams",
+        "ky": "Шамс",
         "ml": "സൂറത്തുശ്ശംസ്",
         "tr": "Şems",
         "ur": "الشمس",
         "zh": "晒姆斯"
       },
       "tags": "ashshams,asshams,assams,ashsams,ashams,asams,ashshms,ashsms,asshms,assms"
-    }, {
+    },
+    {
       "index": 92,
       "count": 21,
       "order": 9,
@@ -3582,13 +3764,15 @@
         "gu": "અલ-લૈલ",
         "hi": "अल-लैल",
         "in": "Al-Lail",
+        "ky": "Лайл",
         "ml": "സൂറത്തുല്ലൈൽ",
         "tr": "Leyl",
         "ur": "الليل",
         "zh": "赖以里"
       },
       "tags": "allail,alleil,allal,allel,alel,alal,alein,alail,allil,alil,ll"
-    }, {
+    },
+    {
       "index": 93,
       "count": 11,
       "order": 11,
@@ -3621,13 +3805,15 @@
         "gu": "અઝ્‌-ઝુહા",
         "hi": "अद-दुहा",
         "in": "Ad-Duha",
+        "ky": "Зуха",
         "ml": "സൂറത്തുള്ളുഹാ",
         "tr": "Duhâ",
         "ur": "الضحى",
         "zh": "堵哈"
       },
       "tags": "addhuhaa,addhuaa,adduhaa,adduaa,azzhuhaa,azzhuaa,azzuhaa,azzuaa,ajjhuhaa,ajjhuaa,ajjuhaa,ajjuaa"
-    }, {
+    },
+    {
       "index": 94,
       "count": 8,
       "order": 12,
@@ -3660,13 +3846,15 @@
         "gu": "અશ્-શરહ",
         "hi": "अल-इन्शिराह",
         "in": "Al-Insyirah",
+        "ky": "Шарх",
         "ml": "സൂറത്തുശ്ശർഹ്",
         "tr": "İnşirâh",
         "ur": "الشرح",
         "zh": "晒尔哈"
       },
       "tags": "ashsharh,assarh,ashsarh,assharh,ashsharah,assarah,ashsarah,assharah,ashshrh,ashsrh,asshrh,assrh"
-    }, {
+    },
+    {
       "index": 95,
       "count": 8,
       "order": 28,
@@ -3699,13 +3887,15 @@
         "gu": "અત્‌-તીન",
         "hi": "अत-तिन",
         "in": "At-Tin",
+        "ky": "Тийн",
         "ml": "സൂറത്തുത്തീൻ",
         "tr": "Tîn",
         "ur": "التين",
         "zh": "梯尼"
       },
       "tags": "attin,atteen,atin,ateen"
-    }, {
+    },
+    {
       "index": 96,
       "count": 19,
       "order": 1,
@@ -3738,13 +3928,15 @@
         "gu": "અલ-અલક",
         "hi": "अल-अलक",
         "in": "Al-`Alaq",
+        "ky": "Алак",
         "ml": "സൂറത്തുൽ അലഖ്",
         "tr": "Alak",
         "ur": "العلق",
         "zh": "阿赖格"
       },
       "tags": "alalaq,alalak,allaq,allak,alalq,alalk"
-    }, {
+    },
+    {
       "index": 97,
       "count": 5,
       "order": 25,
@@ -3777,13 +3969,15 @@
         "gu": "અલ-કદ્ર",
         "hi": "अल-कद्र",
         "in": "Al-Qadr",
+        "ky": "кадыр",
         "ml": "സൂറത്തുൽ ഖദ്ർ",
         "tr": "Kadir",
         "ur": "القدر",
         "zh": "盖德尔"
       },
       "tags": "alqadr,alqadar,alqdar,alkadr,alkadar,alkdar"
-    }, {
+    },
+    {
       "index": 98,
       "count": 8,
       "order": 100,
@@ -3816,13 +4010,15 @@
         "gu": "અલ-બૈયિનહ",
         "hi": "अल-बय्यिना",
         "in": "Al-Bayyinah",
+        "ky": "Баййина",
         "ml": "സൂറത്തുൽ ബയ്യിനഃ",
         "tr": "Beyyine",
         "ur": "البينة",
         "zh": "半以奈"
       },
       "tags": "albayyinaah,albayyinah,albayinaah,albayinah,albayyeenaah,albayyeenah,albayeenaah,albayeenah,albainaah,albaeenaah,albayynaah,albayynah,albaynah,albaynaah"
-    }, {
+    },
+    {
       "index": 99,
       "count": 8,
       "order": 93,
@@ -3855,13 +4051,15 @@
         "gu": "અઝ્‌-ઝિલઝાલ",
         "hi": "अज़-ज़ल्ज़ला",
         "in": "Az-Zalzalah",
+        "ky": "Залзала",
         "ml": "സൂറത്തുസ്സൽസലഃ",
         "tr": "Zilzâl",
         "ur": "الزلزلة",
         "zh": "齐勒萨里"
       },
       "tags": "azzalzalaa,azzlzalaa,azzlzlaa,azzalzlaa,ajjaljalaa,ajjljalaa,ajjljlaa,ajjaljlaa"
-    }, {
+    },
+    {
       "index": 100,
       "count": 11,
       "order": 14,
@@ -3894,13 +4092,15 @@
         "gu": "અલ-આદિયાત",
         "hi": "अल-आदियात",
         "in": "Al-`Adiyat",
+        "ky": "Аaдият",
         "ml": "സൂറത്തുൽ ആദിയാത്ത്",
         "tr": "Âdiyât",
         "ur": "العاديات",
         "zh": "阿底雅特"
       },
       "tags": "alaadiyaat,aladiyaat,aladiyat,alaadiyat,alaadiaat,aladiaat,aladiat,alaadiat,alaadyaat,aladyaat,aladyat,alaadyat"
-    }, {
+    },
+    {
       "index": 101,
       "count": 11,
       "order": 30,
@@ -3933,13 +4133,15 @@
         "gu": "અલ-કારિઅહ",
         "hi": "अल-क़ारिअह",
         "in": "Al-Qari`ah",
+        "ky": "Кoриа",
         "ml": "സൂറത്തുൽ ഖാരിഅഃ",
         "tr": "Kâria",
         "ur": "القارعة",
         "zh": "葛里尔"
       },
       "tags": "alqaariaah,alqariaah,alqaariah,alqariah,alkaariaah,alkariaah,alkaariah,alkariah,alqriaah,alqriah,alkriaah,alkriah"
-    }, {
+    },
+    {
       "index": 102,
       "count": 8,
       "order": 16,
@@ -3972,13 +4174,15 @@
         "gu": "અત્‌-તકાસુર",
         "hi": "अत-तकासुर",
         "in": "At-Takasur",
+        "ky": "Такaаcур",
         "ml": "സൂറത്തുത്തകാഥുർ",
         "tr": "Tekâsür",
         "ur": "التكاثر",
         "zh": "太卡素尔"
       },
       "tags": "attakaathur,attakathur,atakathur,attaqaathur,attaqathur,ataqathur,attakaashur,attakashur,atakashur,attaqaashur,attaqashur,ataqashur,attakaasur,attakasur,atakasur,attaqaasur,attaqasur,ataqasur"
-    }, {
+    },
+    {
       "index": 103,
       "count": 3,
       "order": 13,
@@ -4011,13 +4215,15 @@
         "gu": "અલ-અસ્ર",
         "hi": "अल-अस्र",
         "in": "Al-`Asr",
+        "ky": "Аср",
         "ml": "സൂറത്തുൽ അസ്ർ",
         "tr": "Asr",
         "ur": "العصر",
         "zh": "阿斯尔"
       },
       "tags": "alasr,alaasr,alashr,alaashr,alasar,alaasar,alashar,alaashar"
-    }, {
+    },
+    {
       "index": 104,
       "count": 9,
       "order": 32,
@@ -4050,13 +4256,15 @@
         "gu": "અલ-હુમઝહ",
         "hi": "अल-हुमज़ह",
         "in": "Al-Humazah",
+        "ky": "Хумаза",
         "ml": "സൂറത്തുൽ ഹുമസഃ",
         "tr": "Hümeze",
         "ur": "الهمزة",
         "zh": "胡买宰"
       },
       "tags": "alhumazaa,alhamazaa,alhmazaa,alhumzaa,alhamzaa,alhmzaa,alhumajaa,alhamajaa,alhmajaa,alhumjaa,alhamjaa,alhmjaa"
-    }, {
+    },
+    {
       "index": 105,
       "count": 5,
       "order": 19,
@@ -4089,13 +4297,15 @@
         "gu": "અલ-ફીલ",
         "hi": "अल-फ़ील",
         "in": "Al-Fil",
+        "ky": "Фил",
         "ml": "സൂറത്തുൽ ഫീൽ",
         "tr": "Fîl",
         "ur": "الفيل",
         "zh": "斐里"
       },
       "tags": "alfill,alfeell,alfell,alphill,alpheell,alphell"
-    }, {
+    },
+    {
       "index": 106,
       "count": 4,
       "order": 29,
@@ -4128,13 +4338,15 @@
         "gu": "કુરૈશ",
         "hi": "क़ुरइश",
         "in": "Quraisy",
+        "ky": "Курайш",
         "ml": "സൂറത്ത് ഖുറൈശ്",
         "tr": "Kureyş",
         "ur": "قريش",
         "zh": "古来氏"
       },
       "tags": "quraysh,kuraysh,quraeesh,kuraeesh,qaraeesh,karaeesh,kuraish,qaraysh,karaysh,karaish,qrsh,krsh"
-    }, {
+    },
+    {
       "index": 107,
       "count": 7,
       "order": 17,
@@ -4167,13 +4379,15 @@
         "gu": "અલ-માઉન",
         "hi": "अल-माऊन",
         "in": "Al-Ma’un",
+        "ky": "Мaаун",
         "ml": "സൂറത്തുൽ മാഊൻ",
         "tr": "Maûn",
         "ur": "الماعون",
         "zh": "马欧尼"
       },
       "tags": "almaaun,almaaoon,almaun,almaoon,almaaon,almaon,almaun,almoon,almun"
-    }, {
+    },
+    {
       "index": 108,
       "count": 3,
       "order": 15,
@@ -4206,13 +4420,15 @@
         "gu": "અલ-કૌસર",
         "hi": "अल-कौसर",
         "in": "Al-Kausar",
+        "ky": "Кавсар",
         "ml": "സൂറത്തുൽ കൗഥർ",
         "tr": "Kevser",
         "ur": "الكوثر",
         "zh": "考赛尔"
       },
       "tags": "alkawthar,alkauthar,alkaothar,alkowthar,alkoathar,alkoauthar,alkauothar,alkawshar,alkaushar,alkaoshar,alkowshar,alkoashar,alkoaushar,alkauoshar,alkawsar,alkausar,alkaosar,alkowsar,alkoasar,alkoausar,alkauosar,alkothar,alkoshar,alkosar"
-    }, {
+    },
+    {
       "index": 109,
       "count": 6,
       "order": 18,
@@ -4245,13 +4461,15 @@
         "gu": "અલ-કાફિરૂન",
         "hi": "अल-काफिरून",
         "in": "Al-Kafirun",
+        "ky": "Кaафирун",
         "ml": "സൂറത്തുൽ കാഫിറൂൻ",
         "tr": "Kâfirûn",
         "ur": "الكافرون",
         "zh": "卡斐伦"
       },
       "tags": "alkaafiroon,alkaafirun,alkafiroon,alkafirun,alqaafiroon,alqaafirun,alqafiroon,alqafirun,alkaaphiroon,alkaaphirun,alkaphiroon,alkaphirun,alqaaphiroon,alqaaphirun,alqaphiroon,alqaphirun"
-    }, {
+    },
+    {
       "index": 110,
       "count": 3,
       "order": 114,
@@ -4284,13 +4502,15 @@
         "gu": "અન્‌-નસ્ર",
         "hi": "अन-नस्र",
         "in": "An-Nasr",
+        "ky": "Наср",
         "ml": "സൂറത്തുന്നസ്ർ",
         "tr": "Nasr",
         "ur": "النصر",
         "zh": "奈斯尔"
       },
       "tags": "annasr,annashr,annsr,anshr,annasar,annashar,annsar,annshar,annsher,annser,annasher,annaser"
-    }, {
+    },
+    {
       "index": 111,
       "count": 5,
       "order": 6,
@@ -4323,13 +4543,15 @@
         "gu": "અલ-લહબ",
         "hi": "अल-मसद",
         "in": "Al-Lahab",
+        "ky": "Масад",
         "ml": "സൂറത്തുൽ മസദ്",
         "tr": "Tebbet",
         "ur": "المسد",
         "zh": "赖海卜"
       },
       "tags": "almasad,almashad,almasd,almashd,almsd,almsad,almshad"
-    }, {
+    },
+    {
       "index": 112,
       "count": 4,
       "order": 22,
@@ -4362,13 +4584,15 @@
         "gu": "અલ-ઈખ્લાસ",
         "hi": "अल-इख़लास",
         "in": "Al-Ikhlas",
+        "ky": "Ихлас",
         "ml": "സൂറത്തുൽ ഇഖ്ലാസ്",
         "tr": "İhlâs",
         "ur": "الإخلاص",
         "zh": "以赫拉斯"
       },
       "tags": "alikhlaash,alikhlash,aliklaash,aliklash,aleekhlaash,aleekhlash,aleeklaash,aleeklash,aliqlaash,aliqlash,alqlaash,alqlash,alkhalsh,alkhals,alklsh"
-    }, {
+    },
+    {
       "index": 113,
       "count": 5,
       "order": 20,
@@ -4401,13 +4625,15 @@
         "gu": "અલ-ફલક",
         "hi": "अल-फलक़",
         "in": "Al-Falaq",
+        "ky": "Фалак",
         "ml": "സൂറത്തുൽ ഫലഖ്",
         "tr": "Felak",
         "ur": "الفلق",
         "zh": "法赖格"
       },
       "tags": "alfalaq,alfalak,alfalq,alfalk,alflq,alflk,alflaq,alflak,alphalaq,alphalak,alphalq,alphalk,alphlq,alphlk,alphlaq,alphlak"
-    }, {
+    },
+    {
       "index": 114,
       "count": 6,
       "order": 21,
@@ -4440,6 +4666,7 @@
         "gu": "અન્‌-નાસ",
         "hi": "अन-नास",
         "in": "An-Nas",
+        "ky": "Нас",
         "ml": "സൂറത്തുന്നാസ്",
         "tr": "Nâs",
         "ur": "الناس",
@@ -4458,7 +4685,8 @@
         "ar": "آلم",
         "en": "Alīf-Lām-Mīm"
       }
-    }, {
+    },
+    {
       "index": 2,
       "chapters": "2",
       "pages": "22-41",
@@ -4467,7 +4695,8 @@
         "ar": "سَيَقُولُ",
         "en": "Sayaqūlu"
       }
-    }, {
+    },
+    {
       "index": 3,
       "chapters": "2-3",
       "pages": "42-61",
@@ -4476,7 +4705,8 @@
         "ar": "تِلْكَ ٱلْرُّسُلُ",
         "en": "Tilka ’r-Rusulu"
       }
-    }, {
+    },
+    {
       "index": 4,
       "chapters": "3-4",
       "pages": "62-81",
@@ -4485,7 +4715,8 @@
         "ar": "لَنْ تَنَالُوْ الْبِرَّ",
         "en": "Lan tanaloo albirra"
       }
-    }, {
+    },
+    {
       "index": 5,
       "chapters": "4",
       "pages": "82-101",
@@ -4494,7 +4725,8 @@
         "ar": "وَٱلْمُحْصَنَاتُ",
         "en": "Wa’l-muḥṣanātu"
       }
-    }, {
+    },
+    {
       "index": 6,
       "chapters": "4-5",
       "pages": "102-120",
@@ -4503,7 +4735,8 @@
         "ar": "لَا يُحِبُّ ٱللهُ",
         "en": "Lā yuḥibbu-’llāhu"
       }
-    }, {
+    },
+    {
       "index": 7,
       "chapters": "5-6",
       "pages": "121-141",
@@ -4512,7 +4745,8 @@
         "ar": "وَإِذَا سَمِعُوا",
         "en": "Wa ’Idha Samiʿū"
       }
-    }, {
+    },
+    {
       "index": 8,
       "chapters": "6-7",
       "pages": "142-161",
@@ -4521,7 +4755,8 @@
         "ar": "وَلَوْ أَنَّنَا",
         "en": "Wa-law annanā"
       }
-    }, {
+    },
+    {
       "index": 9,
       "chapters": "7-8",
       "pages": "162-181",
@@ -4530,7 +4765,8 @@
         "ar": "قَالَ ٱلْمَلَأُ",
         "en": "Qāla ’l-mala’u"
       }
-    }, {
+    },
+    {
       "index": 10,
       "chapters": "8-9",
       "pages": "182-200",
@@ -4539,7 +4775,8 @@
         "ar": "وَٱعْلَمُواْ",
         "en": "Wa-’aʿlamū"
       }
-    }, {
+    },
+    {
       "index": 11,
       "chapters": "9-11",
       "pages": "201-221",
@@ -4548,7 +4785,8 @@
         "ar": "يَعْتَذِرُونَ",
         "en": "Yaʿtazerūn"
       }
-    }, {
+    },
+    {
       "index": 12,
       "chapters": "11-12",
       "pages": "222-241",
@@ -4557,7 +4795,8 @@
         "ar": "وَمَا مِنْ دَآبَّةٍ",
         "en": "Wa mā min dābbatin"
       }
-    }, {
+    },
+    {
       "index": 13,
       "chapters": "12-14",
       "pages": "242-261",
@@ -4566,7 +4805,8 @@
         "ar": "وَمَا أُبَرِّئُ",
         "en": "Wa mā ubarri’u"
       }
-    }, {
+    },
+    {
       "index": 14,
       "chapters": "15-16",
       "pages": "262-281",
@@ -4575,7 +4815,8 @@
         "ar": "رُبَمَا",
         "en": "Alīf-Lām-Rā’Rubamā"
       }
-    }, {
+    },
+    {
       "index": 15,
       "chapters": "17-18",
       "pages": "282-301",
@@ -4584,7 +4825,8 @@
         "ar": "سُبْحَانَ ٱلَّذِى",
         "en": "Subḥāna ’lladhī"
       }
-    }, {
+    },
+    {
       "index": 16,
       "chapters": "18-20",
       "pages": "302-321",
@@ -4593,7 +4835,8 @@
         "ar": "قَالَ أَلَمْ",
         "en": "Qāla ’alam"
       }
-    }, {
+    },
+    {
       "index": 17,
       "chapters": "21-22",
       "pages": "322-341",
@@ -4602,7 +4845,8 @@
         "ar": "ٱقْتَرَبَ لِلْنَّاسِ",
         "en": "Iqtaraba li’n-nāsi"
       }
-    }, {
+    },
+    {
       "index": 18,
       "chapters": "23-25",
       "pages": "342-361",
@@ -4611,7 +4855,8 @@
         "ar": "قَدْ أَفْلَحَ",
         "en": "Qad ’aflaḥa"
       }
-    }, {
+    },
+    {
       "index": 19,
       "chapters": "25-27",
       "pages": "362-381",
@@ -4620,7 +4865,8 @@
         "ar": "وَقَالَ ٱلَّذِينَ",
         "en": "Wa-qāla ’lladhīna"
       }
-    }, {
+    },
+    {
       "index": 20,
       "chapters": "27-29",
       "pages": "382-401",
@@ -4629,7 +4875,8 @@
         "ar": "أَمَّنْ خَلَقَ",
         "en": "’A’man Khalaqa"
       }
-    }, {
+    },
+    {
       "index": 21,
       "chapters": "29-33",
       "pages": "402-421",
@@ -4638,7 +4885,8 @@
         "ar": "أُتْلُ مَاأُوْحِیَ",
         "en": "Otlu ma oohiya"
       }
-    }, {
+    },
+    {
       "index": 22,
       "chapters": "33-36",
       "pages": "422-441",
@@ -4647,7 +4895,8 @@
         "ar": "وَمَنْ يَّقْنُتْ",
         "en": "Wa-man yaqnut"
       }
-    }, {
+    },
+    {
       "index": 23,
       "chapters": "36-39",
       "pages": "442-461",
@@ -4656,7 +4905,8 @@
         "ar": "وَمَآ لي",
         "en": "Wa-Mali"
       }
-    }, {
+    },
+    {
       "index": 24,
       "chapters": "39-41",
       "pages": "462-481",
@@ -4665,7 +4915,8 @@
         "ar": "فَمَنْ أَظْلَمُ",
         "en": "Fa-man ’aẓlamu"
       }
-    }, {
+    },
+    {
       "index": 25,
       "chapters": "41-45",
       "pages": "482-501",
@@ -4674,7 +4925,8 @@
         "ar": "إِلَيْهِ يُرَدُّ",
         "en": "Ilayhi yuraddu"
       }
-    }, {
+    },
+    {
       "index": 26,
       "chapters": "46-51",
       "pages": "502-521",
@@ -4683,7 +4935,8 @@
         "ar": "حم",
         "en": "Ḥā’ Mīm"
       }
-    }, {
+    },
+    {
       "index": 27,
       "chapters": "51-57",
       "pages": "522-541",
@@ -4692,7 +4945,8 @@
         "ar": "قَالَ فَمَا خَطْبُكُم",
         "en": "Qāla fa-mā khaṭbukum"
       }
-    }, {
+    },
+    {
       "index": 28,
       "chapters": "58-66",
       "pages": "542-561",
@@ -4701,7 +4955,8 @@
         "ar": "قَدْ سَمِعَ ٱللهُ",
         "en": "Qad samiʿa ’llāhu"
       }
-    }, {
+    },
+    {
       "index": 29,
       "chapters": "67-77",
       "pages": "562-581",
@@ -4710,7 +4965,8 @@
         "ar": "تَبَارَكَ ٱلَّذِى",
         "en": "Tabāraka ’lladhī"
       }
-    }, {
+    },
+    {
       "index": 30,
       "chapters": "78-114",
       "pages": "582-604",
@@ -4726,2415 +4982,3018 @@
       "index": 1,
       "chapters": "1",
       "verses": "1:1-7"
-    }, {
+    },
+    {
       "index": 2,
       "chapters": "2",
       "verses": "2:1-5"
-    }, {
+    },
+    {
       "index": 3,
       "chapters": "2",
       "verses": "2:6-16"
-    }, {
+    },
+    {
       "index": 4,
       "chapters": "2",
       "verses": "2:17-24"
-    }, {
+    },
+    {
       "index": 5,
       "chapters": "2",
       "verses": "2:25-29"
-    }, {
+    },
+    {
       "index": 6,
       "chapters": "2",
       "verses": "2:30-37"
-    }, {
+    },
+    {
       "index": 7,
       "chapters": "2",
       "verses": "2:38-48"
-    }, {
+    },
+    {
       "index": 8,
       "chapters": "2",
       "verses": "2:49-57"
-    }, {
+    },
+    {
       "index": 9,
       "chapters": "2",
       "verses": "2:58-61"
-    }, {
+    },
+    {
       "index": 10,
       "chapters": "2",
       "verses": "2:62-69"
-    }, {
+    },
+    {
       "index": 11,
       "chapters": "2",
       "verses": "2:70-76"
-    }, {
+    },
+    {
       "index": 12,
       "chapters": "2",
       "verses": "2:77-83"
-    }, {
+    },
+    {
       "index": 13,
       "chapters": "2",
       "verses": "2:84-88"
-    }, {
+    },
+    {
       "index": 14,
       "chapters": "2",
       "verses": "2:89-93"
-    }, {
+    },
+    {
       "index": 15,
       "chapters": "2",
       "verses": "2:94-101"
-    }, {
+    },
+    {
       "index": 16,
       "chapters": "2",
       "verses": "2:102-105"
-    }, {
+    },
+    {
       "index": 17,
       "chapters": "2",
       "verses": "2:106-112"
-    }, {
+    },
+    {
       "index": 18,
       "chapters": "2",
       "verses": "2:113-119"
-    }, {
+    },
+    {
       "index": 19,
       "chapters": "2",
       "verses": "2:120-126"
-    }, {
+    },
+    {
       "index": 20,
       "chapters": "2",
       "verses": "2:127-134"
-    }, {
+    },
+    {
       "index": 21,
       "chapters": "2",
       "verses": "2:135-141"
-    }, {
+    },
+    {
       "index": 22,
       "chapters": "2",
       "verses": "2:142-145"
-    }, {
+    },
+    {
       "index": 23,
       "chapters": "2",
       "verses": "2:146-153"
-    }, {
+    },
+    {
       "index": 24,
       "chapters": "2",
       "verses": "2:154-163"
-    }, {
+    },
+    {
       "index": 25,
       "chapters": "2",
       "verses": "2:164-169"
-    }, {
+    },
+    {
       "index": 26,
       "chapters": "2",
       "verses": "2:170-176"
-    }, {
+    },
+    {
       "index": 27,
       "chapters": "2",
       "verses": "2:177-181"
-    }, {
+    },
+    {
       "index": 28,
       "chapters": "2",
       "verses": "2:182-186"
-    }, {
+    },
+    {
       "index": 29,
       "chapters": "2",
       "verses": "2:187-190"
-    }, {
+    },
+    {
       "index": 30,
       "chapters": "2",
       "verses": "2:191-196"
-    }, {
+    },
+    {
       "index": 31,
       "chapters": "2",
       "verses": "2:197-202"
-    }, {
+    },
+    {
       "index": 32,
       "chapters": "2",
       "verses": "2:203-210"
-    }, {
+    },
+    {
       "index": 33,
       "chapters": "2",
       "verses": "2:211-215"
-    }, {
+    },
+    {
       "index": 34,
       "chapters": "2",
       "verses": "2:216-219"
-    }, {
+    },
+    {
       "index": 35,
       "chapters": "2",
       "verses": "2:220-224"
-    }, {
+    },
+    {
       "index": 36,
       "chapters": "2",
       "verses": "2:225-230"
-    }, {
+    },
+    {
       "index": 37,
       "chapters": "2",
       "verses": "2:231-233"
-    }, {
+    },
+    {
       "index": 38,
       "chapters": "2",
       "verses": "2:234-237"
-    }, {
+    },
+    {
       "index": 39,
       "chapters": "2",
       "verses": "2:238-245"
-    }, {
+    },
+    {
       "index": 40,
       "chapters": "2",
       "verses": "2:246-248"
-    }, {
+    },
+    {
       "index": 41,
       "chapters": "2",
       "verses": "2:249-252"
-    }, {
+    },
+    {
       "index": 42,
       "chapters": "2",
       "verses": "2:253-256"
-    }, {
+    },
+    {
       "index": 43,
       "chapters": "2",
       "verses": "2:257-259"
-    }, {
+    },
+    {
       "index": 44,
       "chapters": "2",
       "verses": "2:260-264"
-    }, {
+    },
+    {
       "index": 45,
       "chapters": "2",
       "verses": "2:265-269"
-    }, {
+    },
+    {
       "index": 46,
       "chapters": "2",
       "verses": "2:270-274"
-    }, {
+    },
+    {
       "index": 47,
       "chapters": "2",
       "verses": "2:275-281"
-    }, {
+    },
+    {
       "index": 48,
       "chapters": "2",
       "verses": "2:282-282"
-    }, {
+    },
+    {
       "index": 49,
       "chapters": "2",
       "verses": "2:283-286"
-    }, {
+    },
+    {
       "index": 50,
       "chapters": "3",
       "verses": "3:1-9"
-    }, {
+    },
+    {
       "index": 51,
       "chapters": "3",
       "verses": "3:10-15"
-    }, {
+    },
+    {
       "index": 52,
       "chapters": "3",
       "verses": "3:16-22"
-    }, {
+    },
+    {
       "index": 53,
       "chapters": "3",
       "verses": "3:23-29"
-    }, {
+    },
+    {
       "index": 54,
       "chapters": "3",
       "verses": "3:30-37"
-    }, {
+    },
+    {
       "index": 55,
       "chapters": "3",
       "verses": "3:38-45"
-    }, {
+    },
+    {
       "index": 56,
       "chapters": "3",
       "verses": "3:46-52"
-    }, {
+    },
+    {
       "index": 57,
       "chapters": "3",
       "verses": "3:53-61"
-    }, {
+    },
+    {
       "index": 58,
       "chapters": "3",
       "verses": "3:62-70"
-    }, {
+    },
+    {
       "index": 59,
       "chapters": "3",
       "verses": "3:71-77"
-    }, {
+    },
+    {
       "index": 60,
       "chapters": "3",
       "verses": "3:78-83"
-    }, {
+    },
+    {
       "index": 61,
       "chapters": "3",
       "verses": "3:84-91"
-    }, {
+    },
+    {
       "index": 62,
       "chapters": "3",
       "verses": "3:92-100"
-    }, {
+    },
+    {
       "index": 63,
       "chapters": "3",
       "verses": "3:101-108"
-    }, {
+    },
+    {
       "index": 64,
       "chapters": "3",
       "verses": "3:109-115"
-    }, {
+    },
+    {
       "index": 65,
       "chapters": "3",
       "verses": "3:116-121"
-    }, {
+    },
+    {
       "index": 66,
       "chapters": "3",
       "verses": "3:122-132"
-    }, {
+    },
+    {
       "index": 67,
       "chapters": "3",
       "verses": "3:133-140"
-    }, {
+    },
+    {
       "index": 68,
       "chapters": "3",
       "verses": "3:141-148"
-    }, {
+    },
+    {
       "index": 69,
       "chapters": "3",
       "verses": "3:149-153"
-    }, {
+    },
+    {
       "index": 70,
       "chapters": "3",
       "verses": "3:154-157"
-    }, {
+    },
+    {
       "index": 71,
       "chapters": "3",
       "verses": "3:158-165"
-    }, {
+    },
+    {
       "index": 72,
       "chapters": "3",
       "verses": "3:166-173"
-    }, {
+    },
+    {
       "index": 73,
       "chapters": "3",
       "verses": "3:174-180"
-    }, {
+    },
+    {
       "index": 74,
       "chapters": "3",
       "verses": "3:181-186"
-    }, {
+    },
+    {
       "index": 75,
       "chapters": "3",
       "verses": "3:187-194"
-    }, {
+    },
+    {
       "index": 76,
       "chapters": "3",
       "verses": "3:195-200"
-    }, {
+    },
+    {
       "index": 77,
       "chapters": "4",
       "verses": "4:1-6"
-    }, {
+    },
+    {
       "index": 78,
       "chapters": "4",
       "verses": "4:7-11"
-    }, {
+    },
+    {
       "index": 79,
       "chapters": "4",
       "verses": "4:12-14"
-    }, {
+    },
+    {
       "index": 80,
       "chapters": "4",
       "verses": "4:15-19"
-    }, {
+    },
+    {
       "index": 81,
       "chapters": "4",
       "verses": "4:20-23"
-    }, {
+    },
+    {
       "index": 82,
       "chapters": "4",
       "verses": "4:24-26"
-    }, {
+    },
+    {
       "index": 83,
       "chapters": "4",
       "verses": "4:27-33"
-    }, {
+    },
+    {
       "index": 84,
       "chapters": "4",
       "verses": "4:34-37"
-    }, {
+    },
+    {
       "index": 85,
       "chapters": "4",
       "verses": "4:38-44"
-    }, {
+    },
+    {
       "index": 86,
       "chapters": "4",
       "verses": "4:45-51"
-    }, {
+    },
+    {
       "index": 87,
       "chapters": "4",
       "verses": "4:52-59"
-    }, {
+    },
+    {
       "index": 88,
       "chapters": "4",
       "verses": "4:60-65"
-    }, {
+    },
+    {
       "index": 89,
       "chapters": "4",
       "verses": "4:66-74"
-    }, {
+    },
+    {
       "index": 90,
       "chapters": "4",
       "verses": "4:75-79"
-    }, {
+    },
+    {
       "index": 91,
       "chapters": "4",
       "verses": "4:80-86"
-    }, {
+    },
+    {
       "index": 92,
       "chapters": "4",
       "verses": "4:87-91"
-    }, {
+    },
+    {
       "index": 93,
       "chapters": "4",
       "verses": "4:92-94"
-    }, {
+    },
+    {
       "index": 94,
       "chapters": "4",
       "verses": "4:95-101"
-    }, {
+    },
+    {
       "index": 95,
       "chapters": "4",
       "verses": "4:102-105"
-    }, {
+    },
+    {
       "index": 96,
       "chapters": "4",
       "verses": "4:106-113"
-    }, {
+    },
+    {
       "index": 97,
       "chapters": "4",
       "verses": "4:114-121"
-    }, {
+    },
+    {
       "index": 98,
       "chapters": "4",
       "verses": "4:122-127"
-    }, {
+    },
+    {
       "index": 99,
       "chapters": "4",
       "verses": "4:128-134"
-    }, {
+    },
+    {
       "index": 100,
       "chapters": "4",
       "verses": "4:135-140"
-    }, {
+    },
+    {
       "index": 101,
       "chapters": "4",
       "verses": "4:141-147"
-    }, {
+    },
+    {
       "index": 102,
       "chapters": "4",
       "verses": "4:148-154"
-    }, {
+    },
+    {
       "index": 103,
       "chapters": "4",
       "verses": "4:155-162"
-    }, {
+    },
+    {
       "index": 104,
       "chapters": "4",
       "verses": "4:163-170"
-    }, {
+    },
+    {
       "index": 105,
       "chapters": "4",
       "verses": "4:171-175"
-    }, {
+    },
+    {
       "index": 106,
       "chapters": "4-5",
       "verses": "4:176-176,5:1-2"
-    }, {
+    },
+    {
       "index": 107,
       "chapters": "5",
       "verses": "5:3-5"
-    }, {
+    },
+    {
       "index": 108,
       "chapters": "5",
       "verses": "5:6-9"
-    }, {
+    },
+    {
       "index": 109,
       "chapters": "5",
       "verses": "5:10-13"
-    }, {
+    },
+    {
       "index": 110,
       "chapters": "5",
       "verses": "5:14-17"
-    }, {
+    },
+    {
       "index": 111,
       "chapters": "5",
       "verses": "5:18-23"
-    }, {
+    },
+    {
       "index": 112,
       "chapters": "5",
       "verses": "5:24-31"
-    }, {
+    },
+    {
       "index": 113,
       "chapters": "5",
       "verses": "5:32-36"
-    }, {
+    },
+    {
       "index": 114,
       "chapters": "5",
       "verses": "5:37-41"
-    }, {
+    },
+    {
       "index": 115,
       "chapters": "5",
       "verses": "5:42-45"
-    }, {
+    },
+    {
       "index": 116,
       "chapters": "5",
       "verses": "5:46-50"
-    }, {
+    },
+    {
       "index": 117,
       "chapters": "5",
       "verses": "5:51-57"
-    }, {
+    },
+    {
       "index": 118,
       "chapters": "5",
       "verses": "5:58-64"
-    }, {
+    },
+    {
       "index": 119,
       "chapters": "5",
       "verses": "5:65-70"
-    }, {
+    },
+    {
       "index": 120,
       "chapters": "5",
       "verses": "5:71-76"
-    }, {
+    },
+    {
       "index": 121,
       "chapters": "5",
       "verses": "5:77-82"
-    }, {
+    },
+    {
       "index": 122,
       "chapters": "5",
       "verses": "5:83-89"
-    }, {
+    },
+    {
       "index": 123,
       "chapters": "5",
       "verses": "5:90-95"
-    }, {
+    },
+    {
       "index": 124,
       "chapters": "5",
       "verses": "5:96-103"
-    }, {
+    },
+    {
       "index": 125,
       "chapters": "5",
       "verses": "5:104-108"
-    }, {
+    },
+    {
       "index": 126,
       "chapters": "5",
       "verses": "5:109-113"
-    }, {
+    },
+    {
       "index": 127,
       "chapters": "5",
       "verses": "5:114-120"
-    }, {
+    },
+    {
       "index": 128,
       "chapters": "6",
       "verses": "6:1-8"
-    }, {
+    },
+    {
       "index": 129,
       "chapters": "6",
       "verses": "6:9-18"
-    }, {
+    },
+    {
       "index": 130,
       "chapters": "6",
       "verses": "6:19-27"
-    }, {
+    },
+    {
       "index": 131,
       "chapters": "6",
       "verses": "6:28-35"
-    }, {
+    },
+    {
       "index": 132,
       "chapters": "6",
       "verses": "6:36-44"
-    }, {
+    },
+    {
       "index": 133,
       "chapters": "6",
       "verses": "6:45-52"
-    }, {
+    },
+    {
       "index": 134,
       "chapters": "6",
       "verses": "6:53-59"
-    }, {
+    },
+    {
       "index": 135,
       "chapters": "6",
       "verses": "6:60-68"
-    }, {
+    },
+    {
       "index": 136,
       "chapters": "6",
       "verses": "6:69-73"
-    }, {
+    },
+    {
       "index": 137,
       "chapters": "6",
       "verses": "6:74-81"
-    }, {
+    },
+    {
       "index": 138,
       "chapters": "6",
       "verses": "6:82-90"
-    }, {
+    },
+    {
       "index": 139,
       "chapters": "6",
       "verses": "6:91-94"
-    }, {
+    },
+    {
       "index": 140,
       "chapters": "6",
       "verses": "6:95-101"
-    }, {
+    },
+    {
       "index": 141,
       "chapters": "6",
       "verses": "6:102-110"
-    }, {
+    },
+    {
       "index": 142,
       "chapters": "6",
       "verses": "6:111-118"
-    }, {
+    },
+    {
       "index": 143,
       "chapters": "6",
       "verses": "6:119-124"
-    }, {
+    },
+    {
       "index": 144,
       "chapters": "6",
       "verses": "6:125-131"
-    }, {
+    },
+    {
       "index": 145,
       "chapters": "6",
       "verses": "6:132-137"
-    }, {
+    },
+    {
       "index": 146,
       "chapters": "6",
       "verses": "6:138-142"
-    }, {
+    },
+    {
       "index": 147,
       "chapters": "6",
       "verses": "6:143-146"
-    }, {
+    },
+    {
       "index": 148,
       "chapters": "6",
       "verses": "6:147-151"
-    }, {
+    },
+    {
       "index": 149,
       "chapters": "6",
       "verses": "6:152-157"
-    }, {
+    },
+    {
       "index": 150,
       "chapters": "6",
       "verses": "6:158-165"
-    }, {
+    },
+    {
       "index": 151,
       "chapters": "7",
       "verses": "7:1-11"
-    }, {
+    },
+    {
       "index": 152,
       "chapters": "7",
       "verses": "7:12-22"
-    }, {
+    },
+    {
       "index": 153,
       "chapters": "7",
       "verses": "7:23-30"
-    }, {
+    },
+    {
       "index": 154,
       "chapters": "7",
       "verses": "7:31-37"
-    }, {
+    },
+    {
       "index": 155,
       "chapters": "7",
       "verses": "7:38-43"
-    }, {
+    },
+    {
       "index": 156,
       "chapters": "7",
       "verses": "7:44-51"
-    }, {
+    },
+    {
       "index": 157,
       "chapters": "7",
       "verses": "7:52-57"
-    }, {
+    },
+    {
       "index": 158,
       "chapters": "7",
       "verses": "7:58-67"
-    }, {
+    },
+    {
       "index": 159,
       "chapters": "7",
       "verses": "7:68-73"
-    }, {
+    },
+    {
       "index": 160,
       "chapters": "7",
       "verses": "7:74-81"
-    }, {
+    },
+    {
       "index": 161,
       "chapters": "7",
       "verses": "7:82-87"
-    }, {
+    },
+    {
       "index": 162,
       "chapters": "7",
       "verses": "7:88-95"
-    }, {
+    },
+    {
       "index": 163,
       "chapters": "7",
       "verses": "7:96-104"
-    }, {
+    },
+    {
       "index": 164,
       "chapters": "7",
       "verses": "7:105-120"
-    }, {
+    },
+    {
       "index": 165,
       "chapters": "7",
       "verses": "7:121-130"
-    }, {
+    },
+    {
       "index": 166,
       "chapters": "7",
       "verses": "7:131-137"
-    }, {
+    },
+    {
       "index": 167,
       "chapters": "7",
       "verses": "7:138-143"
-    }, {
+    },
+    {
       "index": 168,
       "chapters": "7",
       "verses": "7:144-149"
-    }, {
+    },
+    {
       "index": 169,
       "chapters": "7",
       "verses": "7:150-155"
-    }, {
+    },
+    {
       "index": 170,
       "chapters": "7",
       "verses": "7:156-159"
-    }, {
+    },
+    {
       "index": 171,
       "chapters": "7",
       "verses": "7:160-163"
-    }, {
+    },
+    {
       "index": 172,
       "chapters": "7",
       "verses": "7:164-170"
-    }, {
+    },
+    {
       "index": 173,
       "chapters": "7",
       "verses": "7:171-178"
-    }, {
+    },
+    {
       "index": 174,
       "chapters": "7",
       "verses": "7:179-187"
-    }, {
+    },
+    {
       "index": 175,
       "chapters": "7",
       "verses": "7:188-195"
-    }, {
+    },
+    {
       "index": 176,
       "chapters": "7",
       "verses": "7:196-206"
-    }, {
+    },
+    {
       "index": 177,
       "chapters": "8",
       "verses": "8:1-8"
-    }, {
+    },
+    {
       "index": 178,
       "chapters": "8",
       "verses": "8:9-16"
-    }, {
+    },
+    {
       "index": 179,
       "chapters": "8",
       "verses": "8:17-25"
-    }, {
+    },
+    {
       "index": 180,
       "chapters": "8",
       "verses": "8:26-33"
-    }, {
+    },
+    {
       "index": 181,
       "chapters": "8",
       "verses": "8:34-40"
-    }, {
+    },
+    {
       "index": 182,
       "chapters": "8",
       "verses": "8:41-45"
-    }, {
+    },
+    {
       "index": 183,
       "chapters": "8",
       "verses": "8:46-52"
-    }, {
+    },
+    {
       "index": 184,
       "chapters": "8",
       "verses": "8:53-61"
-    }, {
+    },
+    {
       "index": 185,
       "chapters": "8",
       "verses": "8:62-69"
-    }, {
+    },
+    {
       "index": 186,
       "chapters": "8",
       "verses": "8:70-75"
-    }, {
+    },
+    {
       "index": 187,
       "chapters": "9",
       "verses": "9:1-6"
-    }, {
+    },
+    {
       "index": 188,
       "chapters": "9",
       "verses": "9:7-13"
-    }, {
+    },
+    {
       "index": 189,
       "chapters": "9",
       "verses": "9:14-20"
-    }, {
+    },
+    {
       "index": 190,
       "chapters": "9",
       "verses": "9:21-26"
-    }, {
+    },
+    {
       "index": 191,
       "chapters": "9",
       "verses": "9:27-31"
-    }, {
+    },
+    {
       "index": 192,
       "chapters": "9",
       "verses": "9:32-36"
-    }, {
+    },
+    {
       "index": 193,
       "chapters": "9",
       "verses": "9:37-40"
-    }, {
+    },
+    {
       "index": 194,
       "chapters": "9",
       "verses": "9:41-47"
-    }, {
+    },
+    {
       "index": 195,
       "chapters": "9",
       "verses": "9:48-54"
-    }, {
+    },
+    {
       "index": 196,
       "chapters": "9",
       "verses": "9:55-61"
-    }, {
+    },
+    {
       "index": 197,
       "chapters": "9",
       "verses": "9:62-68"
-    }, {
+    },
+    {
       "index": 198,
       "chapters": "9",
       "verses": "9:69-72"
-    }, {
+    },
+    {
       "index": 199,
       "chapters": "9",
       "verses": "9:73-79"
-    }, {
+    },
+    {
       "index": 200,
       "chapters": "9",
       "verses": "9:80-86"
-    }, {
+    },
+    {
       "index": 201,
       "chapters": "9",
       "verses": "9:87-93"
-    }, {
+    },
+    {
       "index": 202,
       "chapters": "9",
       "verses": "9:94-99"
-    }, {
+    },
+    {
       "index": 203,
       "chapters": "9",
       "verses": "9:100-106"
-    }, {
+    },
+    {
       "index": 204,
       "chapters": "9",
       "verses": "9:107-111"
-    }, {
+    },
+    {
       "index": 205,
       "chapters": "9",
       "verses": "9:112-117"
-    }, {
+    },
+    {
       "index": 206,
       "chapters": "9",
       "verses": "9:118-122"
-    }, {
+    },
+    {
       "index": 207,
       "chapters": "9",
       "verses": "9:123-129"
-    }, {
+    },
+    {
       "index": 208,
       "chapters": "10",
       "verses": "10:1-6"
-    }, {
+    },
+    {
       "index": 209,
       "chapters": "10",
       "verses": "10:7-14"
-    }, {
+    },
+    {
       "index": 210,
       "chapters": "10",
       "verses": "10:15-20"
-    }, {
+    },
+    {
       "index": 211,
       "chapters": "10",
       "verses": "10:21-25"
-    }, {
+    },
+    {
       "index": 212,
       "chapters": "10",
       "verses": "10:26-33"
-    }, {
+    },
+    {
       "index": 213,
       "chapters": "10",
       "verses": "10:34-42"
-    }, {
+    },
+    {
       "index": 214,
       "chapters": "10",
       "verses": "10:43-53"
-    }, {
+    },
+    {
       "index": 215,
       "chapters": "10",
       "verses": "10:54-61"
-    }, {
+    },
+    {
       "index": 216,
       "chapters": "10",
       "verses": "10:62-70"
-    }, {
+    },
+    {
       "index": 217,
       "chapters": "10",
       "verses": "10:71-78"
-    }, {
+    },
+    {
       "index": 218,
       "chapters": "10",
       "verses": "10:79-88"
-    }, {
+    },
+    {
       "index": 219,
       "chapters": "10",
       "verses": "10:89-97"
-    }, {
+    },
+    {
       "index": 220,
       "chapters": "10",
       "verses": "10:98-106"
-    }, {
+    },
+    {
       "index": 221,
       "chapters": "10-11",
       "verses": "10:107-109,11:1-5"
-    }, {
+    },
+    {
       "index": 222,
       "chapters": "11",
       "verses": "11:6-12"
-    }, {
+    },
+    {
       "index": 223,
       "chapters": "11",
       "verses": "11:13-19"
-    }, {
+    },
+    {
       "index": 224,
       "chapters": "11",
       "verses": "11:20-28"
-    }, {
+    },
+    {
       "index": 225,
       "chapters": "11",
       "verses": "11:29-37"
-    }, {
+    },
+    {
       "index": 226,
       "chapters": "11",
       "verses": "11:38-45"
-    }, {
+    },
+    {
       "index": 227,
       "chapters": "11",
       "verses": "11:46-53"
-    }, {
+    },
+    {
       "index": 228,
       "chapters": "11",
       "verses": "11:54-62"
-    }, {
+    },
+    {
       "index": 229,
       "chapters": "11",
       "verses": "11:63-71"
-    }, {
+    },
+    {
       "index": 230,
       "chapters": "11",
       "verses": "11:72-81"
-    }, {
+    },
+    {
       "index": 231,
       "chapters": "11",
       "verses": "11:82-88"
-    }, {
+    },
+    {
       "index": 232,
       "chapters": "11",
       "verses": "11:89-97"
-    }, {
+    },
+    {
       "index": 233,
       "chapters": "11",
       "verses": "11:98-108"
-    }, {
+    },
+    {
       "index": 234,
       "chapters": "11",
       "verses": "11:109-117"
-    }, {
+    },
+    {
       "index": 235,
       "chapters": "11-12",
       "verses": "11:118-123,12:1-4"
-    }, {
+    },
+    {
       "index": 236,
       "chapters": "12",
       "verses": "12:5-14"
-    }, {
+    },
+    {
       "index": 237,
       "chapters": "12",
       "verses": "12:15-22"
-    }, {
+    },
+    {
       "index": 238,
       "chapters": "12",
       "verses": "12:23-30"
-    }, {
+    },
+    {
       "index": 239,
       "chapters": "12",
       "verses": "12:31-37"
-    }, {
+    },
+    {
       "index": 240,
       "chapters": "12",
       "verses": "12:38-43"
-    }, {
+    },
+    {
       "index": 241,
       "chapters": "12",
       "verses": "12:44-52"
-    }, {
+    },
+    {
       "index": 242,
       "chapters": "12",
       "verses": "12:53-63"
-    }, {
+    },
+    {
       "index": 243,
       "chapters": "12",
       "verses": "12:64-69"
-    }, {
+    },
+    {
       "index": 244,
       "chapters": "12",
       "verses": "12:70-78"
-    }, {
+    },
+    {
       "index": 245,
       "chapters": "12",
       "verses": "12:79-86"
-    }, {
+    },
+    {
       "index": 246,
       "chapters": "12",
       "verses": "12:87-95"
-    }, {
+    },
+    {
       "index": 247,
       "chapters": "12",
       "verses": "12:96-103"
-    }, {
+    },
+    {
       "index": 248,
       "chapters": "12",
       "verses": "12:104-111"
-    }, {
+    },
+    {
       "index": 249,
       "chapters": "13",
       "verses": "13:1-5"
-    }, {
+    },
+    {
       "index": 250,
       "chapters": "13",
       "verses": "13:6-13"
-    }, {
+    },
+    {
       "index": 251,
       "chapters": "13",
       "verses": "13:14-18"
-    }, {
+    },
+    {
       "index": 252,
       "chapters": "13",
       "verses": "13:19-28"
-    }, {
+    },
+    {
       "index": 253,
       "chapters": "13",
       "verses": "13:29-34"
-    }, {
+    },
+    {
       "index": 254,
       "chapters": "13",
       "verses": "13:35-42"
-    }, {
+    },
+    {
       "index": 255,
       "chapters": "13-14",
       "verses": "13:43-43,14:1-5"
-    }, {
+    },
+    {
       "index": 256,
       "chapters": "14",
       "verses": "14:6-10"
-    }, {
+    },
+    {
       "index": 257,
       "chapters": "14",
       "verses": "14:11-18"
-    }, {
+    },
+    {
       "index": 258,
       "chapters": "14",
       "verses": "14:19-24"
-    }, {
+    },
+    {
       "index": 259,
       "chapters": "14",
       "verses": "14:25-33"
-    }, {
+    },
+    {
       "index": 260,
       "chapters": "14",
       "verses": "14:34-42"
-    }, {
+    },
+    {
       "index": 261,
       "chapters": "14",
       "verses": "14:43-52"
-    }, {
+    },
+    {
       "index": 262,
       "chapters": "15",
       "verses": "15:1-15"
-    }, {
+    },
+    {
       "index": 263,
       "chapters": "15",
       "verses": "15:16-31"
-    }, {
+    },
+    {
       "index": 264,
       "chapters": "15",
       "verses": "15:32-51"
-    }, {
+    },
+    {
       "index": 265,
       "chapters": "15",
       "verses": "15:52-70"
-    }, {
+    },
+    {
       "index": 266,
       "chapters": "15",
       "verses": "15:71-90"
-    }, {
+    },
+    {
       "index": 267,
       "chapters": "15-16",
       "verses": "15:91-99,16:1-6"
-    }, {
+    },
+    {
       "index": 268,
       "chapters": "16",
       "verses": "16:7-14"
-    }, {
+    },
+    {
       "index": 269,
       "chapters": "16",
       "verses": "16:15-26"
-    }, {
+    },
+    {
       "index": 270,
       "chapters": "16",
       "verses": "16:27-34"
-    }, {
+    },
+    {
       "index": 271,
       "chapters": "16",
       "verses": "16:35-42"
-    }, {
+    },
+    {
       "index": 272,
       "chapters": "16",
       "verses": "16:43-54"
-    }, {
+    },
+    {
       "index": 273,
       "chapters": "16",
       "verses": "16:55-64"
-    }, {
+    },
+    {
       "index": 274,
       "chapters": "16",
       "verses": "16:65-72"
-    }, {
+    },
+    {
       "index": 275,
       "chapters": "16",
       "verses": "16:73-79"
-    }, {
+    },
+    {
       "index": 276,
       "chapters": "16",
       "verses": "16:80-87"
-    }, {
+    },
+    {
       "index": 277,
       "chapters": "16",
       "verses": "16:88-93"
-    }, {
+    },
+    {
       "index": 278,
       "chapters": "16",
       "verses": "16:94-102"
-    }, {
+    },
+    {
       "index": 279,
       "chapters": "16",
       "verses": "16:103-110"
-    }, {
+    },
+    {
       "index": 280,
       "chapters": "16",
       "verses": "16:111-118"
-    }, {
+    },
+    {
       "index": 281,
       "chapters": "16",
       "verses": "16:119-128"
-    }, {
+    },
+    {
       "index": 282,
       "chapters": "17",
       "verses": "17:1-7"
-    }, {
+    },
+    {
       "index": 283,
       "chapters": "17",
       "verses": "17:8-17"
-    }, {
+    },
+    {
       "index": 284,
       "chapters": "17",
       "verses": "17:18-27"
-    }, {
+    },
+    {
       "index": 285,
       "chapters": "17",
       "verses": "17:28-38"
-    }, {
+    },
+    {
       "index": 286,
       "chapters": "17",
       "verses": "17:39-49"
-    }, {
+    },
+    {
       "index": 287,
       "chapters": "17",
       "verses": "17:50-58"
-    }, {
+    },
+    {
       "index": 288,
       "chapters": "17",
       "verses": "17:59-66"
-    }, {
+    },
+    {
       "index": 289,
       "chapters": "17",
       "verses": "17:67-75"
-    }, {
+    },
+    {
       "index": 290,
       "chapters": "17",
       "verses": "17:76-86"
-    }, {
+    },
+    {
       "index": 291,
       "chapters": "17",
       "verses": "17:87-98"
-    }, {
+    },
+    {
       "index": 292,
       "chapters": "17",
       "verses": "17:97-104"
-    }, {
+    },
+    {
       "index": 293,
       "chapters": "17-18",
       "verses": "17:105-111,18:1-4"
-    }, {
+    },
+    {
       "index": 294,
       "chapters": "18",
       "verses": "18:5-15"
-    }, {
+    },
+    {
       "index": 295,
       "chapters": "18",
       "verses": "18:16-20"
-    }, {
+    },
+    {
       "index": 296,
       "chapters": "18",
       "verses": "18:21-27"
-    }, {
+    },
+    {
       "index": 297,
       "chapters": "18",
       "verses": "18:28-34"
-    }, {
+    },
+    {
       "index": 298,
       "chapters": "18",
       "verses": "18:35-45"
-    }, {
+    },
+    {
       "index": 299,
       "chapters": "18",
       "verses": "18:46-53"
-    }, {
+    },
+    {
       "index": 300,
       "chapters": "18",
       "verses": "18:54-61"
-    }, {
+    },
+    {
       "index": 301,
       "chapters": "18",
       "verses": "18:62-74"
-    }, {
+    },
+    {
       "index": 302,
       "chapters": "18",
       "verses": "18:75-83"
-    }, {
+    },
+    {
       "index": 303,
       "chapters": "18",
       "verses": "18:84-97"
-    }, {
+    },
+    {
       "index": 304,
       "chapters": "18",
       "verses": "18:98-110"
-    }, {
+    },
+    {
       "index": 305,
       "chapters": "19",
       "verses": "19:1-11"
-    }, {
+    },
+    {
       "index": 306,
       "chapters": "19",
       "verses": "19:12-25"
-    }, {
+    },
+    {
       "index": 307,
       "chapters": "19",
       "verses": "19:26-38"
-    }, {
+    },
+    {
       "index": 308,
       "chapters": "19",
       "verses": "19:39-51"
-    }, {
+    },
+    {
       "index": 309,
       "chapters": "19",
       "verses": "19:52-64"
-    }, {
+    },
+    {
       "index": 310,
       "chapters": "19",
       "verses": "19:65-76"
-    }, {
+    },
+    {
       "index": 311,
       "chapters": "19",
       "verses": "19:77-95"
-    }, {
+    },
+    {
       "index": 312,
       "chapters": "19-20",
       "verses": "19:96-98,20:1-12"
-    }, {
+    },
+    {
       "index": 313,
       "chapters": "20",
       "verses": "20:13-37"
-    }, {
+    },
+    {
       "index": 314,
       "chapters": "20",
       "verses": "20:38-51"
-    }, {
+    },
+    {
       "index": 315,
       "chapters": "20",
       "verses": "20:52-64"
-    }, {
+    },
+    {
       "index": 316,
       "chapters": "20",
       "verses": "20:65-76"
-    }, {
+    },
+    {
       "index": 317,
       "chapters": "20",
       "verses": "20:77-87"
-    }, {
+    },
+    {
       "index": 318,
       "chapters": "20",
       "verses": "20:88-98"
-    }, {
+    },
+    {
       "index": 319,
       "chapters": "20",
       "verses": "20:99-113"
-    }, {
+    },
+    {
       "index": 320,
       "chapters": "20",
       "verses": "20:114-125"
-    }, {
+    },
+    {
       "index": 321,
       "chapters": "20",
       "verses": "20:126-135"
-    }, {
+    },
+    {
       "index": 322,
       "chapters": "21",
       "verses": "21:1-10"
-    }, {
+    },
+    {
       "index": 323,
       "chapters": "21",
       "verses": "21:11-24"
-    }, {
+    },
+    {
       "index": 324,
       "chapters": "21",
       "verses": "21:25-35"
-    }, {
+    },
+    {
       "index": 325,
       "chapters": "21",
       "verses": "21:36-44"
-    }, {
+    },
+    {
       "index": 326,
       "chapters": "21",
       "verses": "21:45-57"
-    }, {
+    },
+    {
       "index": 327,
       "chapters": "21",
       "verses": "21:58-72"
-    }, {
+    },
+    {
       "index": 328,
       "chapters": "21",
       "verses": "21:73-81"
-    }, {
+    },
+    {
       "index": 329,
       "chapters": "21",
       "verses": "21:82-90"
-    }, {
+    },
+    {
       "index": 330,
       "chapters": "21",
       "verses": "21:91-101"
-    }, {
+    },
+    {
       "index": 331,
       "chapters": "21",
       "verses": "21:102-112"
-    }, {
+    },
+    {
       "index": 332,
       "chapters": "22",
       "verses": "22:1-5"
-    }, {
+    },
+    {
       "index": 333,
       "chapters": "22",
       "verses": "22:6-15"
-    }, {
+    },
+    {
       "index": 334,
       "chapters": "22",
       "verses": "22:16-23"
-    }, {
+    },
+    {
       "index": 335,
       "chapters": "22",
       "verses": "22:24-30"
-    }, {
+    },
+    {
       "index": 336,
       "chapters": "22",
       "verses": "22:31-38"
-    }, {
+    },
+    {
       "index": 337,
       "chapters": "22",
       "verses": "22:39-46"
-    }, {
+    },
+    {
       "index": 338,
       "chapters": "22",
       "verses": "22:47-55"
-    }, {
+    },
+    {
       "index": 339,
       "chapters": "22",
       "verses": "22:56-64"
-    }, {
+    },
+    {
       "index": 340,
       "chapters": "22",
       "verses": "22:65-72"
-    }, {
+    },
+    {
       "index": 341,
       "chapters": "22",
       "verses": "22:73-78"
-    }, {
+    },
+    {
       "index": 342,
       "chapters": "23",
       "verses": "23:1-17"
-    }, {
+    },
+    {
       "index": 343,
       "chapters": "23",
       "verses": "23:18-27"
-    }, {
+    },
+    {
       "index": 344,
       "chapters": "23",
       "verses": "23:28-42"
-    }, {
+    },
+    {
       "index": 345,
       "chapters": "23",
       "verses": "23:43-59"
-    }, {
+    },
+    {
       "index": 346,
       "chapters": "23",
       "verses": "23:60-74"
-    }, {
+    },
+    {
       "index": 347,
       "chapters": "23",
       "verses": "23:75-89"
-    }, {
+    },
+    {
       "index": 348,
       "chapters": "23",
       "verses": "23:90-104"
-    }, {
+    },
+    {
       "index": 349,
       "chapters": "23",
       "verses": "23:105-118"
-    }, {
+    },
+    {
       "index": 350,
       "chapters": "24",
       "verses": "24:1-10"
-    }, {
+    },
+    {
       "index": 351,
       "chapters": "24",
       "verses": "24:11-20"
-    }, {
+    },
+    {
       "index": 352,
       "chapters": "24",
       "verses": "24:21-27"
-    }, {
+    },
+    {
       "index": 353,
       "chapters": "24",
       "verses": "24:28-31"
-    }, {
+    },
+    {
       "index": 354,
       "chapters": "24",
       "verses": "24:32-36"
-    }, {
+    },
+    {
       "index": 355,
       "chapters": "24",
       "verses": "24:37-43"
-    }, {
+    },
+    {
       "index": 356,
       "chapters": "24",
       "verses": "24:44-53"
-    }, {
+    },
+    {
       "index": 357,
       "chapters": "24",
       "verses": "24:54-58"
-    }, {
+    },
+    {
       "index": 358,
       "chapters": "24",
       "verses": "24:59-61"
-    }, {
+    },
+    {
       "index": 359,
       "chapters": "24-25",
       "verses": "24:62-64,25:1-2"
-    }, {
+    },
+    {
       "index": 360,
       "chapters": "25",
       "verses": "25:3-11"
-    }, {
+    },
+    {
       "index": 361,
       "chapters": "25",
       "verses": "25:12-20"
-    }, {
+    },
+    {
       "index": 362,
       "chapters": "25",
       "verses": "25:21-32"
-    }, {
+    },
+    {
       "index": 363,
       "chapters": "25",
       "verses": "25:33-43"
-    }, {
+    },
+    {
       "index": 364,
       "chapters": "25",
       "verses": "25:44-55"
-    }, {
+    },
+    {
       "index": 365,
       "chapters": "25",
       "verses": "25:56-67"
-    }, {
+    },
+    {
       "index": 366,
       "chapters": "25",
       "verses": "25:68-77"
-    }, {
+    },
+    {
       "index": 367,
       "chapters": "26",
       "verses": "26:1-19"
-    }, {
+    },
+    {
       "index": 368,
       "chapters": "26",
       "verses": "26:20-39"
-    }, {
+    },
+    {
       "index": 369,
       "chapters": "26",
       "verses": "26:40-60"
-    }, {
+    },
+    {
       "index": 370,
       "chapters": "26",
       "verses": "26:61-83"
-    }, {
+    },
+    {
       "index": 371,
       "chapters": "26",
       "verses": "26:84-111"
-    }, {
+    },
+    {
       "index": 372,
       "chapters": "26",
       "verses": "26:112-136"
-    }, {
+    },
+    {
       "index": 373,
       "chapters": "26",
       "verses": "26:137-159"
-    }, {
+    },
+    {
       "index": 374,
       "chapters": "26",
       "verses": "26:160-183"
-    }, {
+    },
+    {
       "index": 375,
       "chapters": "26",
       "verses": "26:184-206"
-    }, {
+    },
+    {
       "index": 376,
       "chapters": "26",
       "verses": "26:207-227"
-    }, {
+    },
+    {
       "index": 377,
       "chapters": "27",
       "verses": "27:1-13"
-    }, {
+    },
+    {
       "index": 378,
       "chapters": "27",
       "verses": "27:14-22"
-    }, {
+    },
+    {
       "index": 379,
       "chapters": "27",
       "verses": "27:23-35"
-    }, {
+    },
+    {
       "index": 380,
       "chapters": "27",
       "verses": "27:36-44"
-    }, {
+    },
+    {
       "index": 381,
       "chapters": "27",
       "verses": "27:45-55"
-    }, {
+    },
+    {
       "index": 382,
       "chapters": "27",
       "verses": "27:56-63"
-    }, {
+    },
+    {
       "index": 383,
       "chapters": "27",
       "verses": "27:64-76"
-    }, {
+    },
+    {
       "index": 384,
       "chapters": "27",
       "verses": "27:77-88"
-    }, {
+    },
+    {
       "index": 385,
       "chapters": "27-28",
       "verses": "27:89-93,28:1-5"
-    }, {
+    },
+    {
       "index": 386,
       "chapters": "28",
       "verses": "28:6-13"
-    }, {
+    },
+    {
       "index": 387,
       "chapters": "28",
       "verses": "28:14-21"
-    }, {
+    },
+    {
       "index": 388,
       "chapters": "28",
       "verses": "28:22-28"
-    }, {
+    },
+    {
       "index": 389,
       "chapters": "28",
       "verses": "28:29-35"
-    }, {
+    },
+    {
       "index": 390,
       "chapters": "28",
       "verses": "28:36-43"
-    }, {
+    },
+    {
       "index": 391,
       "chapters": "28",
       "verses": "28:44-50"
-    }, {
+    },
+    {
       "index": 392,
       "chapters": "28",
       "verses": "28:51-59"
-    }, {
+    },
+    {
       "index": 393,
       "chapters": "28",
       "verses": "28:60-70"
-    }, {
+    },
+    {
       "index": 394,
       "chapters": "28",
       "verses": "28:71-77"
-    }, {
+    },
+    {
       "index": 395,
       "chapters": "28",
       "verses": "28:78-84"
-    }, {
+    },
+    {
       "index": 396,
       "chapters": "28-29",
       "verses": "28:85-88,29:1-6"
-    }, {
+    },
+    {
       "index": 397,
       "chapters": "29",
       "verses": "29:7-14"
-    }, {
+    },
+    {
       "index": 398,
       "chapters": "29",
       "verses": "29:15-23"
-    }, {
+    },
+    {
       "index": 399,
       "chapters": "29",
       "verses": "29:24-30"
-    }, {
+    },
+    {
       "index": 400,
       "chapters": "29",
       "verses": "29:31-38"
-    }, {
+    },
+    {
       "index": 401,
       "chapters": "29",
       "verses": "29:39-45"
-    }, {
+    },
+    {
       "index": 402,
       "chapters": "29",
       "verses": "29:46-52"
-    }, {
+    },
+    {
       "index": 403,
       "chapters": "29",
       "verses": "29:53-63"
-    }, {
+    },
+    {
       "index": 404,
       "chapters": "29-30",
       "verses": "29:64-69,30:1-5"
-    }, {
+    },
+    {
       "index": 405,
       "chapters": "30",
       "verses": "30:6-15"
-    }, {
+    },
+    {
       "index": 406,
       "chapters": "30",
       "verses": "30:16-24"
-    }, {
+    },
+    {
       "index": 407,
       "chapters": "30",
       "verses": "30:25-32"
-    }, {
+    },
+    {
       "index": 408,
       "chapters": "30",
       "verses": "30:33-41"
-    }, {
+    },
+    {
       "index": 409,
       "chapters": "30",
       "verses": "30:42-50"
-    }, {
+    },
+    {
       "index": 410,
       "chapters": "30",
       "verses": "30:51-60"
-    }, {
+    },
+    {
       "index": 411,
       "chapters": "31",
       "verses": "31:1-11"
-    }, {
+    },
+    {
       "index": 412,
       "chapters": "31",
       "verses": "31:12-19"
-    }, {
+    },
+    {
       "index": 413,
       "chapters": "31",
       "verses": "31:20-28"
-    }, {
+    },
+    {
       "index": 414,
       "chapters": "31",
       "verses": "31:29-34"
-    }, {
+    },
+    {
       "index": 415,
       "chapters": "32",
       "verses": "32:1-11"
-    }, {
+    },
+    {
       "index": 416,
       "chapters": "32",
       "verses": "32:12-20"
-    }, {
+    },
+    {
       "index": 417,
       "chapters": "32",
       "verses": "32:21-30"
-    }, {
+    },
+    {
       "index": 418,
       "chapters": "33",
       "verses": "33:1-6"
-    }, {
+    },
+    {
       "index": 419,
       "chapters": "33",
       "verses": "33:7-15"
-    }, {
+    },
+    {
       "index": 420,
       "chapters": "33",
       "verses": "33:16-22"
-    }, {
+    },
+    {
       "index": 421,
       "chapters": "33",
       "verses": "33:23-30"
-    }, {
+    },
+    {
       "index": 422,
       "chapters": "33",
       "verses": "33:31-35"
-    }, {
+    },
+    {
       "index": 423,
       "chapters": "33",
       "verses": "33:36-43"
-    }, {
+    },
+    {
       "index": 424,
       "chapters": "33",
       "verses": "33:44-50"
-    }, {
+    },
+    {
       "index": 425,
       "chapters": "33",
       "verses": "33:51-54"
-    }, {
+    },
+    {
       "index": 426,
       "chapters": "33",
       "verses": "33:55-62"
-    }, {
+    },
+    {
       "index": 427,
       "chapters": "33",
       "verses": "33:63-73"
-    }, {
+    },
+    {
       "index": 428,
       "chapters": "34",
       "verses": "34:1-7"
-    }, {
+    },
+    {
       "index": 429,
       "chapters": "34",
       "verses": "34:8-14"
-    }, {
+    },
+    {
       "index": 430,
       "chapters": "34",
       "verses": "34:15-22"
-    }, {
+    },
+    {
       "index": 431,
       "chapters": "34",
       "verses": "34:23-31"
-    }, {
+    },
+    {
       "index": 432,
       "chapters": "34",
       "verses": "34:32-39"
-    }, {
+    },
+    {
       "index": 433,
       "chapters": "34",
       "verses": "34:40-48"
-    }, {
+    },
+    {
       "index": 434,
       "chapters": "34-35",
       "verses": "34:49-54,35:1-3"
-    }, {
+    },
+    {
       "index": 435,
       "chapters": "35",
       "verses": "35:4-11"
-    }, {
+    },
+    {
       "index": 436,
       "chapters": "35",
       "verses": "35:12-18"
-    }, {
+    },
+    {
       "index": 437,
       "chapters": "35",
       "verses": "35:19-30"
-    }, {
+    },
+    {
       "index": 438,
       "chapters": "35",
       "verses": "35:31-38"
-    }, {
+    },
+    {
       "index": 439,
       "chapters": "35",
       "verses": "35:39-44"
-    }, {
+    },
+    {
       "index": 440,
       "chapters": "35-36",
       "verses": "35:45-45,36:1-12"
-    }, {
+    },
+    {
       "index": 441,
       "chapters": "36",
       "verses": "36:13-27"
-    }, {
+    },
+    {
       "index": 442,
       "chapters": "36",
       "verses": "36:28-40"
-    }, {
+    },
+    {
       "index": 443,
       "chapters": "36",
       "verses": "36:41-54"
-    }, {
+    },
+    {
       "index": 444,
       "chapters": "36",
       "verses": "36:55-70"
-    }, {
+    },
+    {
       "index": 445,
       "chapters": "36",
       "verses": "36:71-83"
-    }, {
+    },
+    {
       "index": 446,
       "chapters": "37",
       "verses": "37:1-24"
-    }, {
+    },
+    {
       "index": 447,
       "chapters": "37",
       "verses": "37:25-51"
-    }, {
+    },
+    {
       "index": 448,
       "chapters": "37",
       "verses": "37:52-76"
-    }, {
+    },
+    {
       "index": 449,
       "chapters": "37",
       "verses": "37:77-102"
-    }, {
+    },
+    {
       "index": 450,
       "chapters": "37",
       "verses": "37:103-126"
-    }, {
+    },
+    {
       "index": 451,
       "chapters": "37",
       "verses": "37:127-153"
-    }, {
+    },
+    {
       "index": 452,
       "chapters": "37",
       "verses": "37:154-182"
-    }, {
+    },
+    {
       "index": 453,
       "chapters": "38",
       "verses": "38:1-16"
-    }, {
+    },
+    {
       "index": 454,
       "chapters": "38",
       "verses": "38:17-26"
-    }, {
+    },
+    {
       "index": 455,
       "chapters": "38",
       "verses": "38:27-42"
-    }, {
+    },
+    {
       "index": 456,
       "chapters": "38",
       "verses": "38:43-61"
-    }, {
+    },
+    {
       "index": 457,
       "chapters": "38",
       "verses": "38:62-83"
-    }, {
+    },
+    {
       "index": 458,
       "chapters": "38-39",
       "verses": "38:84-88,39:1-5"
-    }, {
+    },
+    {
       "index": 459,
       "chapters": "39",
       "verses": "39:6-10"
-    }, {
+    },
+    {
       "index": 460,
       "chapters": "39",
       "verses": "39:11-21"
-    }, {
+    },
+    {
       "index": 461,
       "chapters": "39",
       "verses": "39:22-31"
-    }, {
+    },
+    {
       "index": 462,
       "chapters": "39",
       "verses": "39:32-40"
-    }, {
+    },
+    {
       "index": 463,
       "chapters": "39",
       "verses": "39:41-47"
-    }, {
+    },
+    {
       "index": 464,
       "chapters": "39",
       "verses": "39:48-56"
-    }, {
+    },
+    {
       "index": 465,
       "chapters": "39",
       "verses": "39:57-67"
-    }, {
+    },
+    {
       "index": 466,
       "chapters": "39",
       "verses": "39:68-74"
-    }, {
+    },
+    {
       "index": 467,
       "chapters": "39-40",
       "verses": "39:75-75,40:1-7"
-    }, {
+    },
+    {
       "index": 468,
       "chapters": "40",
       "verses": "40:8-16"
-    }, {
+    },
+    {
       "index": 469,
       "chapters": "40",
       "verses": "40:17-25"
-    }, {
+    },
+    {
       "index": 470,
       "chapters": "40",
       "verses": "40:26-33"
-    }, {
+    },
+    {
       "index": 471,
       "chapters": "40",
       "verses": "40:34-40"
-    }, {
+    },
+    {
       "index": 472,
       "chapters": "40",
       "verses": "40:41-49"
-    }, {
+    },
+    {
       "index": 473,
       "chapters": "40",
       "verses": "40:50-58"
-    }, {
+    },
+    {
       "index": 474,
       "chapters": "40",
       "verses": "40:59-66"
-    }, {
+    },
+    {
       "index": 475,
       "chapters": "40",
       "verses": "40:67-77"
-    }, {
+    },
+    {
       "index": 476,
       "chapters": "40",
       "verses": "40:78-85"
-    }, {
+    },
+    {
       "index": 477,
       "chapters": "41",
       "verses": "41:1-11"
-    }, {
+    },
+    {
       "index": 478,
       "chapters": "41",
       "verses": "41:12-20"
-    }, {
+    },
+    {
       "index": 479,
       "chapters": "41",
       "verses": "41:21-29"
-    }, {
+    },
+    {
       "index": 480,
       "chapters": "41",
       "verses": "41:30-38"
-    }, {
+    },
+    {
       "index": 481,
       "chapters": "41",
       "verses": "41:39-46"
-    }, {
+    },
+    {
       "index": 482,
       "chapters": "41",
       "verses": "41:47-54"
-    }, {
+    },
+    {
       "index": 483,
       "chapters": "42",
       "verses": "42:1-10"
-    }, {
+    },
+    {
       "index": 484,
       "chapters": "42",
       "verses": "42:11-15"
-    }, {
+    },
+    {
       "index": 485,
       "chapters": "42",
       "verses": "42:16-22"
-    }, {
+    },
+    {
       "index": 486,
       "chapters": "42",
       "verses": "42:23-31"
-    }, {
+    },
+    {
       "index": 487,
       "chapters": "42",
       "verses": "42:32-44"
-    }, {
+    },
+    {
       "index": 488,
       "chapters": "42",
       "verses": "42:45-51"
-    }, {
+    },
+    {
       "index": 489,
       "chapters": "42-43",
       "verses": "42:52-53,43:1-10"
-    }, {
+    },
+    {
       "index": 490,
       "chapters": "43",
       "verses": "43:11-22"
-    }, {
+    },
+    {
       "index": 491,
       "chapters": "43",
       "verses": "43:23-33"
-    }, {
+    },
+    {
       "index": 492,
       "chapters": "43",
       "verses": "43:34-47"
-    }, {
+    },
+    {
       "index": 493,
       "chapters": "43",
       "verses": "43:48-60"
-    }, {
+    },
+    {
       "index": 494,
       "chapters": "43",
       "verses": "43:61-73"
-    }, {
+    },
+    {
       "index": 495,
       "chapters": "43",
       "verses": "43:74-89"
-    }, {
+    },
+    {
       "index": 496,
       "chapters": "44",
       "verses": "44:1-18"
-    }, {
+    },
+    {
       "index": 497,
       "chapters": "44",
       "verses": "44:19-39"
-    }, {
+    },
+    {
       "index": 498,
       "chapters": "44",
       "verses": "44:40-59"
-    }, {
+    },
+    {
       "index": 499,
       "chapters": "45",
       "verses": "45:1-13"
-    }, {
+    },
+    {
       "index": 500,
       "chapters": "45",
       "verses": "45:14-22"
-    }, {
+    },
+    {
       "index": 501,
       "chapters": "45",
       "verses": "45:23-32"
-    }, {
+    },
+    {
       "index": 502,
       "chapters": "45-46",
       "verses": "45:33-37,46:1-5"
-    }, {
+    },
+    {
       "index": 503,
       "chapters": "46",
       "verses": "46:6-14"
-    }, {
+    },
+    {
       "index": 504,
       "chapters": "46",
       "verses": "46:15-20"
-    }, {
+    },
+    {
       "index": 505,
       "chapters": "46",
       "verses": "46:21-28"
-    }, {
+    },
+    {
       "index": 506,
       "chapters": "46",
       "verses": "46:29-35"
-    }, {
+    },
+    {
       "index": 507,
       "chapters": "47",
       "verses": "47:1-11"
-    }, {
+    },
+    {
       "index": 508,
       "chapters": "47",
       "verses": "47:12-19"
-    }, {
+    },
+    {
       "index": 509,
       "chapters": "47",
       "verses": "47:20-29"
-    }, {
+    },
+    {
       "index": 510,
       "chapters": "47",
       "verses": "47:30-38"
-    }, {
+    },
+    {
       "index": 511,
       "chapters": "48",
       "verses": "48:1-9"
-    }, {
+    },
+    {
       "index": 512,
       "chapters": "48",
       "verses": "48:10-15"
-    }, {
+    },
+    {
       "index": 513,
       "chapters": "48",
       "verses": "48:16-23"
-    }, {
+    },
+    {
       "index": 514,
       "chapters": "48",
       "verses": "48:24-28"
-    }, {
+    },
+    {
       "index": 515,
       "chapters": "48-49",
       "verses": "48:29-29,49:1-4"
-    }, {
+    },
+    {
       "index": 516,
       "chapters": "49",
       "verses": "49:5-11"
-    }, {
+    },
+    {
       "index": 517,
       "chapters": "49",
       "verses": "49:12-18"
-    }, {
+    },
+    {
       "index": 518,
       "chapters": "50",
       "verses": "50:1-15"
-    }, {
+    },
+    {
       "index": 519,
       "chapters": "50",
       "verses": "50:16-35"
-    }, {
+    },
+    {
       "index": 520,
       "chapters": "50-51",
       "verses": "50:36-45,51:1-6"
-    }, {
+    },
+    {
       "index": 521,
       "chapters": "51",
       "verses": "51:7-30"
-    }, {
+    },
+    {
       "index": 522,
       "chapters": "51",
       "verses": "51:31-51"
-    }, {
+    },
+    {
       "index": 523,
       "chapters": "51-52",
       "verses": "51:52-60,52:1-14"
-    }, {
+    },
+    {
       "index": 524,
       "chapters": "52",
       "verses": "52:15-31"
-    }, {
+    },
+    {
       "index": 525,
       "chapters": "52",
       "verses": "52:32-49"
-    }, {
+    },
+    {
       "index": 526,
       "chapters": "53",
       "verses": "53:1-26"
-    }, {
+    },
+    {
       "index": 527,
       "chapters": "53",
       "verses": "53:27-44"
-    }, {
+    },
+    {
       "index": 528,
       "chapters": "53-54",
       "verses": "53:45-62,54:1-6"
-    }, {
+    },
+    {
       "index": 529,
       "chapters": "54",
       "verses": "54:7-27"
-    }, {
+    },
+    {
       "index": 530,
       "chapters": "54",
       "verses": "54:28-49"
-    }, {
+    },
+    {
       "index": 531,
       "chapters": "54-55",
       "verses": "54:50-55,55:1-16"
-    }, {
+    },
+    {
       "index": 532,
       "chapters": "55",
       "verses": "55:17-40"
-    }, {
+    },
+    {
       "index": 533,
       "chapters": "55",
       "verses": "55:41-67"
-    }, {
+    },
+    {
       "index": 534,
       "chapters": "55-56",
       "verses": "55:68-78,56:1-16"
-    }, {
+    },
+    {
       "index": 535,
       "chapters": "56",
       "verses": "56:17-50"
-    }, {
+    },
+    {
       "index": 536,
       "chapters": "56",
       "verses": "56:51-76"
-    }, {
+    },
+    {
       "index": 537,
       "chapters": "56-57",
       "verses": "56:77-96,57:1-3"
-    }, {
+    },
+    {
       "index": 538,
       "chapters": "57",
       "verses": "57:4-11"
-    }, {
+    },
+    {
       "index": 539,
       "chapters": "57",
       "verses": "57:12-18"
-    }, {
+    },
+    {
       "index": 540,
       "chapters": "57",
       "verses": "57:19-24"
-    }, {
+    },
+    {
       "index": 541,
       "chapters": "57",
       "verses": "57:25-29"
-    }, {
+    },
+    {
       "index": 542,
       "chapters": "58",
       "verses": "58:1-6"
-    }, {
+    },
+    {
       "index": 543,
       "chapters": "58",
       "verses": "58:7-11"
-    }, {
+    },
+    {
       "index": 544,
       "chapters": "58",
       "verses": "58:12-21"
-    }, {
+    },
+    {
       "index": 545,
       "chapters": "58-59",
       "verses": "58:22-22,59:1-3"
-    }, {
+    },
+    {
       "index": 546,
       "chapters": "59",
       "verses": "59:4-9"
-    }, {
+    },
+    {
       "index": 547,
       "chapters": "59",
       "verses": "59:10-16"
-    }, {
+    },
+    {
       "index": 548,
       "chapters": "59",
       "verses": "59:17-24"
-    }, {
+    },
+    {
       "index": 549,
       "chapters": "60",
       "verses": "60:1-5"
-    }, {
+    },
+    {
       "index": 550,
       "chapters": "60",
       "verses": "60:6-11"
-    }, {
+    },
+    {
       "index": 551,
       "chapters": "60-61",
       "verses": "60:12-13,61:1-5"
-    }, {
+    },
+    {
       "index": 552,
       "chapters": "61",
       "verses": "61:6-14"
-    }, {
+    },
+    {
       "index": 553,
       "chapters": "62",
       "verses": "62:1-8"
-    }, {
+    },
+    {
       "index": 554,
       "chapters": "62-63",
       "verses": "62:9-11,63:1-4"
-    }, {
+    },
+    {
       "index": 555,
       "chapters": "63",
       "verses": "63:5-11"
-    }, {
+    },
+    {
       "index": 556,
       "chapters": "64",
       "verses": "64:1-9"
-    }, {
+    },
+    {
       "index": 557,
       "chapters": "64",
       "verses": "64:10-18"
-    }, {
+    },
+    {
       "index": 558,
       "chapters": "65",
       "verses": "65:1-5"
-    }, {
+    },
+    {
       "index": 559,
       "chapters": "65",
       "verses": "65:6-12"
-    }, {
+    },
+    {
       "index": 560,
       "chapters": "66",
       "verses": "66:1-7"
-    }, {
+    },
+    {
       "index": 561,
       "chapters": "66",
       "verses": "66:8-12"
-    }, {
+    },
+    {
       "index": 562,
       "chapters": "67",
       "verses": "67:1-12"
-    }, {
+    },
+    {
       "index": 563,
       "chapters": "67",
       "verses": "67:13-26"
-    }, {
+    },
+    {
       "index": 564,
       "chapters": "67-68",
       "verses": "67:27-30,68:1-15"
-    }, {
+    },
+    {
       "index": 565,
       "chapters": "68",
       "verses": "68:16-42"
-    }, {
+    },
+    {
       "index": 566,
       "chapters": "68-69",
       "verses": "68:43-52,69:1-8"
-    }, {
+    },
+    {
       "index": 567,
       "chapters": "69",
       "verses": "69:9-34"
-    }, {
+    },
+    {
       "index": 568,
       "chapters": "69-70",
       "verses": "69:35-52,70:1-10"
-    }, {
+    },
+    {
       "index": 569,
       "chapters": "70",
       "verses": "70:11-39"
-    }, {
+    },
+    {
       "index": 570,
       "chapters": "70-71",
       "verses": "70:40-44,71:1-10"
-    }, {
+    },
+    {
       "index": 571,
       "chapters": "71",
       "verses": "71:11-28"
-    }, {
+    },
+    {
       "index": 572,
       "chapters": "72",
       "verses": "72:1-13"
-    }, {
+    },
+    {
       "index": 573,
       "chapters": "72",
       "verses": "72:14-28"
-    }, {
+    },
+    {
       "index": 574,
       "chapters": "73",
       "verses": "73:1-19"
-    }, {
+    },
+    {
       "index": 575,
       "chapters": "73-74",
       "verses": "73:20-20,74:1-17"
-    }, {
+    },
+    {
       "index": 576,
       "chapters": "74",
       "verses": "74:18-47"
-    }, {
+    },
+    {
       "index": 577,
       "chapters": "74-75",
       "verses": "74:48-56,75:1-19"
-    }, {
+    },
+    {
       "index": 578,
       "chapters": "75-76",
       "verses": "75:20-40,76:1-5"
-    }, {
+    },
+    {
       "index": 579,
       "chapters": "76",
       "verses": "76:6-25"
-    }, {
+    },
+    {
       "index": 580,
       "chapters": "76-77",
       "verses": "76:26-31,77:1-19"
-    }, {
+    },
+    {
       "index": 581,
       "chapters": "77",
       "verses": "77:20-50"
-    }, {
+    },
+    {
       "index": 582,
       "chapters": "78",
       "verses": "78:1-30"
-    }, {
+    },
+    {
       "index": 583,
       "chapters": "78-79",
       "verses": "78:31-40,79:1-15"
-    }, {
+    },
+    {
       "index": 584,
       "chapters": "79",
       "verses": "79:16-46"
-    }, {
+    },
+    {
       "index": 585,
       "chapters": "80",
       "verses": "80:1-42"
-    }, {
+    },
+    {
       "index": 586,
       "chapters": "81",
       "verses": "81:1-29"
-    }, {
+    },
+    {
       "index": 587,
       "chapters": "82-83",
       "verses": "82:1-19,83:1-6"
-    }, {
+    },
+    {
       "index": 588,
       "chapters": "83",
       "verses": "83:7-34"
-    }, {
+    },
+    {
       "index": 589,
       "chapters": "83-84",
       "verses": "83:35-36,84:1-25"
-    }, {
+    },
+    {
       "index": 590,
       "chapters": "85",
       "verses": "85:1-22"
-    }, {
+    },
+    {
       "index": 591,
       "chapters": "86-87",
       "verses": "86:1-17,87:1-15"
-    }, {
+    },
+    {
       "index": 592,
       "chapters": "87-88",
       "verses": "87:16-19,88:1-26"
-    }, {
+    },
+    {
       "index": 593,
       "chapters": "89",
       "verses": "89:1-23"
-    }, {
+    },
+    {
       "index": 594,
       "chapters": "89-90",
       "verses": "89:24-30,90:1-20"
-    }, {
+    },
+    {
       "index": 595,
       "chapters": "91-92",
       "verses": "91:1-15,92:1-14"
-    }, {
+    },
+    {
       "index": 596,
       "chapters": "92-94",
       "verses": "92:15-21,93:1-11,94:1-8"
-    }, {
+    },
+    {
       "index": 597,
       "chapters": "95-96",
       "verses": "95:1-8,96:1-19"
-    }, {
+    },
+    {
       "index": 598,
       "chapters": "97-98",
       "verses": "97:1-5,98:1-7"
-    }, {
+    },
+    {
       "index": 599,
       "chapters": "98-100",
       "verses": "98:8-8,99:1-8,100:1-9"
-    }, {
+    },
+    {
       "index": 600,
       "chapters": "100-102",
       "verses": "100:10-11,101:1-11,102:1-8"
-    }, {
+    },
+    {
       "index": 601,
       "chapters": "103-105",
       "verses": "103:1-3,104:1-9,105:1-5"
-    }, {
+    },
+    {
       "index": 602,
       "chapters": "106-108",
       "verses": "106:1-4,107:1-7,108:1-3"
-    }, {
+    },
+    {
       "index": 603,
       "chapters": "109-111",
       "verses": "109:1-6,110:1-3,111:1-5"
-    }, {
+    },
+    {
       "index": 604,
       "chapters": "112-114",
       "verses": "112:1-4,113:1-5,114:1-6"
@@ -7145,959 +8004,1198 @@
       "index": 1,
       "chapters": "1",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 2,
       "chapters": "2",
       "verses": "26"
-    }, {
+    },
+    {
       "index": 3,
       "chapters": "2",
       "verses": "44"
-    }, {
+    },
+    {
       "index": 4,
       "chapters": "2",
       "verses": "60"
-    }, {
+    },
+    {
       "index": 5,
       "chapters": "2",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 6,
       "chapters": "2",
       "verses": "92"
-    }, {
+    },
+    {
       "index": 7,
       "chapters": "2",
       "verses": "106"
-    }, {
+    },
+    {
       "index": 8,
       "chapters": "2",
       "verses": "124"
-    }, {
+    },
+    {
       "index": 9,
       "chapters": "2",
       "verses": "142"
-    }, {
+    },
+    {
       "index": 10,
       "chapters": "2",
       "verses": "158"
-    }, {
+    },
+    {
       "index": 11,
       "chapters": "2",
       "verses": "177"
-    }, {
+    },
+    {
       "index": 12,
       "chapters": "2",
       "verses": "189"
-    }, {
+    },
+    {
       "index": 13,
       "chapters": "2",
       "verses": "203"
-    }, {
+    },
+    {
       "index": 14,
       "chapters": "2",
       "verses": "219"
-    }, {
+    },
+    {
       "index": 15,
       "chapters": "2",
       "verses": "233"
-    }, {
+    },
+    {
       "index": 16,
       "chapters": "2",
       "verses": "243"
-    }, {
+    },
+    {
       "index": 17,
       "chapters": "2",
       "verses": "253"
-    }, {
+    },
+    {
       "index": 18,
       "chapters": "2",
       "verses": "263"
-    }, {
+    },
+    {
       "index": 19,
       "chapters": "2",
       "verses": "272"
-    }, {
+    },
+    {
       "index": 20,
       "chapters": "2",
       "verses": "283"
-    }, {
+    },
+    {
       "index": 21,
       "chapters": "3",
       "verses": "15"
-    }, {
+    },
+    {
       "index": 22,
       "chapters": "3",
       "verses": "33"
-    }, {
+    },
+    {
       "index": 23,
       "chapters": "3",
       "verses": "52"
-    }, {
+    },
+    {
       "index": 24,
       "chapters": "3",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 25,
       "chapters": "3",
       "verses": "93"
-    }, {
+    },
+    {
       "index": 26,
       "chapters": "3",
       "verses": "113"
-    }, {
+    },
+    {
       "index": 27,
       "chapters": "3",
       "verses": "133"
-    }, {
+    },
+    {
       "index": 28,
       "chapters": "3",
       "verses": "153"
-    }, {
+    },
+    {
       "index": 29,
       "chapters": "3",
       "verses": "171"
-    }, {
+    },
+    {
       "index": 30,
       "chapters": "3",
       "verses": "186"
-    }, {
+    },
+    {
       "index": 31,
       "chapters": "4",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 32,
       "chapters": "4",
       "verses": "12"
-    }, {
+    },
+    {
       "index": 33,
       "chapters": "4",
       "verses": "24"
-    }, {
+    },
+    {
       "index": 34,
       "chapters": "4",
       "verses": "36"
-    }, {
+    },
+    {
       "index": 35,
       "chapters": "4",
       "verses": "58"
-    }, {
+    },
+    {
       "index": 36,
       "chapters": "4",
       "verses": "74"
-    }, {
+    },
+    {
       "index": 37,
       "chapters": "4",
       "verses": "88"
-    }, {
+    },
+    {
       "index": 38,
       "chapters": "4",
       "verses": "100"
-    }, {
+    },
+    {
       "index": 39,
       "chapters": "4",
       "verses": "114"
-    }, {
+    },
+    {
       "index": 40,
       "chapters": "4",
       "verses": "135"
-    }, {
+    },
+    {
       "index": 41,
       "chapters": "4",
       "verses": "148"
-    }, {
+    },
+    {
       "index": 42,
       "chapters": "4",
       "verses": "163"
-    }, {
+    },
+    {
       "index": 43,
       "chapters": "5",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 44,
       "chapters": "5",
       "verses": "12"
-    }, {
+    },
+    {
       "index": 45,
       "chapters": "5",
       "verses": "27"
-    }, {
+    },
+    {
       "index": 46,
       "chapters": "5",
       "verses": "41"
-    }, {
+    },
+    {
       "index": 47,
       "chapters": "5",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 48,
       "chapters": "5",
       "verses": "67"
-    }, {
+    },
+    {
       "index": 49,
       "chapters": "5",
       "verses": "82"
-    }, {
+    },
+    {
       "index": 50,
       "chapters": "5",
       "verses": "97"
-    }, {
+    },
+    {
       "index": 51,
       "chapters": "5",
       "verses": "109"
-    }, {
+    },
+    {
       "index": 52,
       "chapters": "6",
       "verses": "13"
-    }, {
+    },
+    {
       "index": 53,
       "chapters": "6",
       "verses": "36"
-    }, {
+    },
+    {
       "index": 54,
       "chapters": "6",
       "verses": "59"
-    }, {
+    },
+    {
       "index": 55,
       "chapters": "6",
       "verses": "74"
-    }, {
+    },
+    {
       "index": 56,
       "chapters": "6",
       "verses": "95"
-    }, {
+    },
+    {
       "index": 57,
       "chapters": "6",
       "verses": "111"
-    }, {
+    },
+    {
       "index": 58,
       "chapters": "6",
       "verses": "127"
-    }, {
+    },
+    {
       "index": 59,
       "chapters": "6",
       "verses": "141"
-    }, {
+    },
+    {
       "index": 60,
       "chapters": "6",
       "verses": "151"
-    }, {
+    },
+    {
       "index": 61,
       "chapters": "7",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 62,
       "chapters": "7",
       "verses": "31"
-    }, {
+    },
+    {
       "index": 63,
       "chapters": "7",
       "verses": "47"
-    }, {
+    },
+    {
       "index": 64,
       "chapters": "7",
       "verses": "65"
-    }, {
+    },
+    {
       "index": 65,
       "chapters": "7",
       "verses": "88"
-    }, {
+    },
+    {
       "index": 66,
       "chapters": "7",
       "verses": "117"
-    }, {
+    },
+    {
       "index": 67,
       "chapters": "7",
       "verses": "142"
-    }, {
+    },
+    {
       "index": 68,
       "chapters": "7",
       "verses": "156"
-    }, {
+    },
+    {
       "index": 69,
       "chapters": "7",
       "verses": "171"
-    }, {
+    },
+    {
       "index": 70,
       "chapters": "7",
       "verses": "189"
-    }, {
+    },
+    {
       "index": 71,
       "chapters": "8",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 72,
       "chapters": "8",
       "verses": "22"
-    }, {
+    },
+    {
       "index": 73,
       "chapters": "8",
       "verses": "41"
-    }, {
+    },
+    {
       "index": 74,
       "chapters": "8",
       "verses": "61"
-    }, {
+    },
+    {
       "index": 75,
       "chapters": "9",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 76,
       "chapters": "9",
       "verses": "19"
-    }, {
+    },
+    {
       "index": 77,
       "chapters": "9",
       "verses": "34"
-    }, {
+    },
+    {
       "index": 78,
       "chapters": "9",
       "verses": "46"
-    }, {
+    },
+    {
       "index": 79,
       "chapters": "9",
       "verses": "60"
-    }, {
+    },
+    {
       "index": 80,
       "chapters": "9",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 81,
       "chapters": "9",
       "verses": "93"
-    }, {
+    },
+    {
       "index": 82,
       "chapters": "9",
       "verses": "111"
-    }, {
+    },
+    {
       "index": 83,
       "chapters": "9",
       "verses": "122"
-    }, {
+    },
+    {
       "index": 84,
       "chapters": "10",
       "verses": "11"
-    }, {
+    },
+    {
       "index": 85,
       "chapters": "10",
       "verses": "26"
-    }, {
+    },
+    {
       "index": 86,
       "chapters": "10",
       "verses": "53"
-    }, {
+    },
+    {
       "index": 87,
       "chapters": "10",
       "verses": "71"
-    }, {
+    },
+    {
       "index": 88,
       "chapters": "10",
       "verses": "90"
-    }, {
+    },
+    {
       "index": 89,
       "chapters": "11",
       "verses": "6"
-    }, {
+    },
+    {
       "index": 90,
       "chapters": "11",
       "verses": "24"
-    }, {
+    },
+    {
       "index": 91,
       "chapters": "11",
       "verses": "41"
-    }, {
+    },
+    {
       "index": 92,
       "chapters": "11",
       "verses": "61"
-    }, {
+    },
+    {
       "index": 93,
       "chapters": "11",
       "verses": "84"
-    }, {
+    },
+    {
       "index": 94,
       "chapters": "11",
       "verses": "108"
-    }, {
+    },
+    {
       "index": 95,
       "chapters": "12",
       "verses": "7"
-    }, {
+    },
+    {
       "index": 96,
       "chapters": "12",
       "verses": "30"
-    }, {
+    },
+    {
       "index": 97,
       "chapters": "12",
       "verses": "53"
-    }, {
+    },
+    {
       "index": 98,
       "chapters": "12",
       "verses": "77"
-    }, {
+    },
+    {
       "index": 99,
       "chapters": "12",
       "verses": "101"
-    }, {
+    },
+    {
       "index": 100,
       "chapters": "13",
       "verses": "5"
-    }, {
+    },
+    {
       "index": 101,
       "chapters": "13",
       "verses": "19"
-    }, {
+    },
+    {
       "index": 102,
       "chapters": "13",
       "verses": "35"
-    }, {
+    },
+    {
       "index": 103,
       "chapters": "14",
       "verses": "10"
-    }, {
+    },
+    {
       "index": 104,
       "chapters": "14",
       "verses": "28"
-    }, {
+    },
+    {
       "index": 105,
       "chapters": "15",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 106,
       "chapters": "15",
       "verses": "50"
-    }, {
+    },
+    {
       "index": 107,
       "chapters": "16",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 108,
       "chapters": "16",
       "verses": "30"
-    }, {
+    },
+    {
       "index": 109,
       "chapters": "16",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 110,
       "chapters": "16",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 111,
       "chapters": "16",
       "verses": "90"
-    }, {
+    },
+    {
       "index": 112,
       "chapters": "16",
       "verses": "111"
-    }, {
+    },
+    {
       "index": 113,
       "chapters": "17",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 114,
       "chapters": "17",
       "verses": "23"
-    }, {
+    },
+    {
       "index": 115,
       "chapters": "17",
       "verses": "50"
-    }, {
+    },
+    {
       "index": 116,
       "chapters": "17",
       "verses": "70"
-    }, {
+    },
+    {
       "index": 117,
       "chapters": "17",
       "verses": "99"
-    }, {
+    },
+    {
       "index": 118,
       "chapters": "18",
       "verses": "17"
-    }, {
+    },
+    {
       "index": 119,
       "chapters": "18",
       "verses": "32"
-    }, {
+    },
+    {
       "index": 120,
       "chapters": "18",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 121,
       "chapters": "18",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 122,
       "chapters": "18",
       "verses": "99"
-    }, {
+    },
+    {
       "index": 123,
       "chapters": "19",
       "verses": "22"
-    }, {
+    },
+    {
       "index": 124,
       "chapters": "19",
       "verses": "59"
-    }, {
+    },
+    {
       "index": 125,
       "chapters": "20",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 126,
       "chapters": "20",
       "verses": "55"
-    }, {
+    },
+    {
       "index": 127,
       "chapters": "20",
       "verses": "83"
-    }, {
+    },
+    {
       "index": 128,
       "chapters": "20",
       "verses": "111"
-    }, {
+    },
+    {
       "index": 129,
       "chapters": "21",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 130,
       "chapters": "21",
       "verses": "29"
-    }, {
+    },
+    {
       "index": 131,
       "chapters": "21",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 132,
       "chapters": "21",
       "verses": "83"
-    }, {
+    },
+    {
       "index": 133,
       "chapters": "22",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 134,
       "chapters": "22",
       "verses": "19"
-    }, {
+    },
+    {
       "index": 135,
       "chapters": "22",
       "verses": "38"
-    }, {
+    },
+    {
       "index": 136,
       "chapters": "22",
       "verses": "60"
-    }, {
+    },
+    {
       "index": 137,
       "chapters": "23",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 138,
       "chapters": "23",
       "verses": "36"
-    }, {
+    },
+    {
       "index": 139,
       "chapters": "23",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 140,
       "chapters": "24",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 141,
       "chapters": "24",
       "verses": "21"
-    }, {
+    },
+    {
       "index": 142,
       "chapters": "24",
       "verses": "35"
-    }, {
+    },
+    {
       "index": 143,
       "chapters": "24",
       "verses": "53"
-    }, {
+    },
+    {
       "index": 144,
       "chapters": "25",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 145,
       "chapters": "25",
       "verses": "21"
-    }, {
+    },
+    {
       "index": 146,
       "chapters": "25",
       "verses": "53"
-    }, {
+    },
+    {
       "index": 147,
       "chapters": "26",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 148,
       "chapters": "26",
       "verses": "52"
-    }, {
+    },
+    {
       "index": 149,
       "chapters": "26",
       "verses": "111"
-    }, {
+    },
+    {
       "index": 150,
       "chapters": "26",
       "verses": "181"
-    }, {
+    },
+    {
       "index": 151,
       "chapters": "27",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 152,
       "chapters": "27",
       "verses": "27"
-    }, {
+    },
+    {
       "index": 153,
       "chapters": "27",
       "verses": "56"
-    }, {
+    },
+    {
       "index": 154,
       "chapters": "27",
       "verses": "82"
-    }, {
+    },
+    {
       "index": 155,
       "chapters": "28",
       "verses": "12"
-    }, {
+    },
+    {
       "index": 156,
       "chapters": "28",
       "verses": "29"
-    }, {
+    },
+    {
       "index": 157,
       "chapters": "28",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 158,
       "chapters": "28",
       "verses": "76"
-    }, {
+    },
+    {
       "index": 159,
       "chapters": "29",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 160,
       "chapters": "29",
       "verses": "26"
-    }, {
+    },
+    {
       "index": 161,
       "chapters": "29",
       "verses": "46"
-    }, {
+    },
+    {
       "index": 162,
       "chapters": "30",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 163,
       "chapters": "30",
       "verses": "31"
-    }, {
+    },
+    {
       "index": 164,
       "chapters": "30",
       "verses": "54"
-    }, {
+    },
+    {
       "index": 165,
       "chapters": "31",
       "verses": "22"
-    }, {
+    },
+    {
       "index": 166,
       "chapters": "32",
       "verses": "11"
-    }, {
+    },
+    {
       "index": 167,
       "chapters": "33",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 168,
       "chapters": "33",
       "verses": "18"
-    }, {
+    },
+    {
       "index": 169,
       "chapters": "33",
       "verses": "31"
-    }, {
+    },
+    {
       "index": 170,
       "chapters": "33",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 171,
       "chapters": "33",
       "verses": "60"
-    }, {
+    },
+    {
       "index": 172,
       "chapters": "34",
       "verses": "10"
-    }, {
+    },
+    {
       "index": 173,
       "chapters": "34",
       "verses": "24"
-    }, {
+    },
+    {
       "index": 174,
       "chapters": "34",
       "verses": "46"
-    }, {
+    },
+    {
       "index": 175,
       "chapters": "35",
       "verses": "15"
-    }, {
+    },
+    {
       "index": 176,
       "chapters": "35",
       "verses": "41"
-    }, {
+    },
+    {
       "index": 177,
       "chapters": "36",
       "verses": "28"
-    }, {
+    },
+    {
       "index": 178,
       "chapters": "36",
       "verses": "60"
-    }, {
+    },
+    {
       "index": 179,
       "chapters": "37",
       "verses": "22"
-    }, {
+    },
+    {
       "index": 180,
       "chapters": "37",
       "verses": "83"
-    }, {
+    },
+    {
       "index": 181,
       "chapters": "37",
       "verses": "145"
-    }, {
+    },
+    {
       "index": 182,
       "chapters": "38",
       "verses": "21"
-    }, {
+    },
+    {
       "index": 183,
       "chapters": "38",
       "verses": "52"
-    }, {
+    },
+    {
       "index": 184,
       "chapters": "39",
       "verses": "8"
-    }, {
+    },
+    {
       "index": 185,
       "chapters": "39",
       "verses": "32"
-    }, {
+    },
+    {
       "index": 186,
       "chapters": "39",
       "verses": "53"
-    }, {
+    },
+    {
       "index": 187,
       "chapters": "40",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 188,
       "chapters": "40",
       "verses": "21"
-    }, {
+    },
+    {
       "index": 189,
       "chapters": "40",
       "verses": "41"
-    }, {
+    },
+    {
       "index": 190,
       "chapters": "40",
       "verses": "66"
-    }, {
+    },
+    {
       "index": 191,
       "chapters": "41",
       "verses": "9"
-    }, {
+    },
+    {
       "index": 192,
       "chapters": "41",
       "verses": "25"
-    }, {
+    },
+    {
       "index": 193,
       "chapters": "41",
       "verses": "47"
-    }, {
+    },
+    {
       "index": 194,
       "chapters": "42",
       "verses": "13"
-    }, {
+    },
+    {
       "index": 195,
       "chapters": "42",
       "verses": "27"
-    }, {
+    },
+    {
       "index": 196,
       "chapters": "42",
       "verses": "51"
-    }, {
+    },
+    {
       "index": 197,
       "chapters": "43",
       "verses": "24"
-    }, {
+    },
+    {
       "index": 198,
       "chapters": "43",
       "verses": "57"
-    }, {
+    },
+    {
       "index": 199,
       "chapters": "44",
       "verses": "17"
-    }, {
+    },
+    {
       "index": 200,
       "chapters": "45",
       "verses": "12"
-    }, {
+    },
+    {
       "index": 201,
       "chapters": "46",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 202,
       "chapters": "46",
       "verses": "21"
-    }, {
+    },
+    {
       "index": 203,
       "chapters": "47",
       "verses": "10"
-    }, {
+    },
+    {
       "index": 204,
       "chapters": "47",
       "verses": "33"
-    }, {
+    },
+    {
       "index": 205,
       "chapters": "48",
       "verses": "18"
-    }, {
+    },
+    {
       "index": 206,
       "chapters": "49",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 207,
       "chapters": "49",
       "verses": "14"
-    }, {
+    },
+    {
       "index": 208,
       "chapters": "50",
       "verses": "27"
-    }, {
+    },
+    {
       "index": 209,
       "chapters": "51",
       "verses": "31"
-    }, {
+    },
+    {
       "index": 210,
       "chapters": "52",
       "verses": "24"
-    }, {
+    },
+    {
       "index": 211,
       "chapters": "53",
       "verses": "26"
-    }, {
+    },
+    {
       "index": 212,
       "chapters": "54",
       "verses": "9"
-    }, {
+    },
+    {
       "index": 213,
       "chapters": "55",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 214,
       "chapters": "56",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 215,
       "chapters": "56",
       "verses": "75"
-    }, {
+    },
+    {
       "index": 216,
       "chapters": "57",
       "verses": "16"
-    }, {
+    },
+    {
       "index": 217,
       "chapters": "58",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 218,
       "chapters": "58",
       "verses": "14"
-    }, {
+    },
+    {
       "index": 219,
       "chapters": "59",
       "verses": "11"
-    }, {
+    },
+    {
       "index": 220,
       "chapters": "60",
       "verses": "7"
-    }, {
+    },
+    {
       "index": 221,
       "chapters": "62",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 222,
       "chapters": "63",
       "verses": "4"
-    }, {
+    },
+    {
       "index": 223,
       "chapters": "65",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 224,
       "chapters": "66",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 225,
       "chapters": "67",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 226,
       "chapters": "68",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 227,
       "chapters": "69",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 228,
       "chapters": "70",
       "verses": "19"
-    }, {
+    },
+    {
       "index": 229,
       "chapters": "72",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 230,
       "chapters": "73",
       "verses": "20"
-    }, {
+    },
+    {
       "index": 231,
       "chapters": "75",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 232,
       "chapters": "76",
       "verses": "19"
-    }, {
+    },
+    {
       "index": 233,
       "chapters": "78",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 234,
       "chapters": "80",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 235,
       "chapters": "82",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 236,
       "chapters": "84",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 237,
       "chapters": "87",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 238,
       "chapters": "90",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 239,
       "chapters": "94",
       "verses": "1"
-    }, {
+    },
+    {
       "index": 240,
       "chapters": "100",
       "verses": "9"
@@ -8107,1669 +9205,2224 @@
     {
       "index": 1,
       "fromVerse": "1:1"
-    }, {
+    },
+    {
       "index": 2,
       "fromVerse": "2:1"
-    }, {
+    },
+    {
       "index": 3,
       "fromVerse": "2:8"
-    }, {
+    },
+    {
       "index": 4,
       "fromVerse": "2:21"
-    }, {
+    },
+    {
       "index": 5,
       "fromVerse": "2:30"
-    }, {
+    },
+    {
       "index": 6,
       "fromVerse": "2:40"
-    }, {
+    },
+    {
       "index": 7,
       "fromVerse": "2:47"
-    }, {
+    },
+    {
       "index": 8,
       "fromVerse": "2:60"
-    }, {
+    },
+    {
       "index": 9,
       "fromVerse": "2:62"
-    }, {
+    },
+    {
       "index": 10,
       "fromVerse": "2:72"
-    }, {
+    },
+    {
       "index": 11,
       "fromVerse": "2:83"
-    }, {
+    },
+    {
       "index": 12,
       "fromVerse": "2:87"
-    }, {
+    },
+    {
       "index": 13,
       "fromVerse": "2:97"
-    }, {
+    },
+    {
       "index": 14,
       "fromVerse": "2:104"
-    }, {
+    },
+    {
       "index": 15,
       "fromVerse": "2:113"
-    }, {
+    },
+    {
       "index": 16,
       "fromVerse": "2:122"
-    }, {
+    },
+    {
       "index": 17,
       "fromVerse": "2:130"
-    }, {
+    },
+    {
       "index": 18,
       "fromVerse": "2:142"
-    }, {
+    },
+    {
       "index": 19,
       "fromVerse": "2:148"
-    }, {
+    },
+    {
       "index": 20,
       "fromVerse": "2:153"
-    }, {
+    },
+    {
       "index": 21,
       "fromVerse": "2:164"
-    }, {
+    },
+    {
       "index": 22,
       "fromVerse": "2:168"
-    }, {
+    },
+    {
       "index": 23,
       "fromVerse": "2:177"
-    }, {
+    },
+    {
       "index": 24,
       "fromVerse": "2:183"
-    }, {
+    },
+    {
       "index": 25,
       "fromVerse": "2:189"
-    }, {
+    },
+    {
       "index": 26,
       "fromVerse": "2:197"
-    }, {
+    },
+    {
       "index": 27,
       "fromVerse": "2:211"
-    }, {
+    },
+    {
       "index": 28,
       "fromVerse": "2:217"
-    }, {
+    },
+    {
       "index": 29,
       "fromVerse": "2:222"
-    }, {
+    },
+    {
       "index": 30,
       "fromVerse": "2:229"
-    }, {
+    },
+    {
       "index": 31,
       "fromVerse": "2:232"
-    }, {
+    },
+    {
       "index": 32,
       "fromVerse": "2:236"
-    }, {
+    },
+    {
       "index": 33,
       "fromVerse": "2:243"
-    }, {
+    },
+    {
       "index": 34,
       "fromVerse": "2:249"
-    }, {
+    },
+    {
       "index": 35,
       "fromVerse": "2:254"
-    }, {
+    },
+    {
       "index": 36,
       "fromVerse": "2:258"
-    }, {
+    },
+    {
       "index": 37,
       "fromVerse": "2:261"
-    }, {
+    },
+    {
       "index": 38,
       "fromVerse": "2:267"
-    }, {
+    },
+    {
       "index": 39,
       "fromVerse": "2:274"
-    }, {
+    },
+    {
       "index": 40,
       "fromVerse": "2:282"
-    }, {
+    },
+    {
       "index": 41,
       "fromVerse": "2:284"
-    }, {
+    },
+    {
       "index": 42,
       "fromVerse": "3:1"
-    }, {
+    },
+    {
       "index": 43,
       "fromVerse": "3:10"
-    }, {
+    },
+    {
       "index": 44,
       "fromVerse": "3:21"
-    }, {
+    },
+    {
       "index": 45,
       "fromVerse": "3:31"
-    }, {
+    },
+    {
       "index": 46,
       "fromVerse": "3:42"
-    }, {
+    },
+    {
       "index": 47,
       "fromVerse": "3:55"
-    }, {
+    },
+    {
       "index": 48,
       "fromVerse": "3:64"
-    }, {
+    },
+    {
       "index": 49,
       "fromVerse": "3:72"
-    }, {
+    },
+    {
       "index": 50,
       "fromVerse": "3:81"
-    }, {
+    },
+    {
       "index": 51,
       "fromVerse": "3:92"
-    }, {
+    },
+    {
       "index": 52,
       "fromVerse": "3:102"
-    }, {
+    },
+    {
       "index": 53,
       "fromVerse": "3:110"
-    }, {
+    },
+    {
       "index": 54,
       "fromVerse": "3:121"
-    }, {
+    },
+    {
       "index": 55,
       "fromVerse": "3:130"
-    }, {
+    },
+    {
       "index": 56,
       "fromVerse": "3:144"
-    }, {
+    },
+    {
       "index": 57,
       "fromVerse": "3:149"
-    }, {
+    },
+    {
       "index": 58,
       "fromVerse": "3:156"
-    }, {
+    },
+    {
       "index": 59,
       "fromVerse": "3:172"
-    }, {
+    },
+    {
       "index": 60,
       "fromVerse": "3:181"
-    }, {
+    },
+    {
       "index": 61,
       "fromVerse": "3:190"
-    }, {
+    },
+    {
       "index": 62,
       "fromVerse": "4:1"
-    }, {
+    },
+    {
       "index": 63,
       "fromVerse": "4:11"
-    }, {
+    },
+    {
       "index": 64,
       "fromVerse": "4:15"
-    }, {
+    },
+    {
       "index": 65,
       "fromVerse": "4:23"
-    }, {
+    },
+    {
       "index": 66,
       "fromVerse": "4:26"
-    }, {
+    },
+    {
       "index": 67,
       "fromVerse": "4:34"
-    }, {
+    },
+    {
       "index": 68,
       "fromVerse": "4:43"
-    }, {
+    },
+    {
       "index": 69,
       "fromVerse": "4:51"
-    }, {
+    },
+    {
       "index": 70,
       "fromVerse": "4:60"
-    }, {
+    },
+    {
       "index": 71,
       "fromVerse": "4:71"
-    }, {
+    },
+    {
       "index": 72,
       "fromVerse": "4:77"
-    }, {
+    },
+    {
       "index": 73,
       "fromVerse": "4:88"
-    }, {
+    },
+    {
       "index": 74,
       "fromVerse": "4:92"
-    }, {
+    },
+    {
       "index": 75,
       "fromVerse": "4:97"
-    }, {
+    },
+    {
       "index": 76,
       "fromVerse": "4:101"
-    }, {
+    },
+    {
       "index": 77,
       "fromVerse": "4:105"
-    }, {
+    },
+    {
       "index": 78,
       "fromVerse": "4:113"
-    }, {
+    },
+    {
       "index": 79,
       "fromVerse": "4:116"
-    }, {
+    },
+    {
       "index": 80,
       "fromVerse": "4:127"
-    }, {
+    },
+    {
       "index": 81,
       "fromVerse": "4:135"
-    }, {
+    },
+    {
       "index": 82,
       "fromVerse": "4:142"
-    }, {
+    },
+    {
       "index": 83,
       "fromVerse": "4:153"
-    }, {
+    },
+    {
       "index": 84,
       "fromVerse": "4:163"
-    }, {
+    },
+    {
       "index": 85,
       "fromVerse": "4:172"
-    }, {
+    },
+    {
       "index": 86,
       "fromVerse": "5:1"
-    }, {
+    },
+    {
       "index": 87,
       "fromVerse": "5:6"
-    }, {
+    },
+    {
       "index": 88,
       "fromVerse": "5:12"
-    }, {
+    },
+    {
       "index": 89,
       "fromVerse": "5:20"
-    }, {
+    },
+    {
       "index": 90,
       "fromVerse": "5:27"
-    }, {
+    },
+    {
       "index": 91,
       "fromVerse": "5:35"
-    }, {
+    },
+    {
       "index": 92,
       "fromVerse": "5:44"
-    }, {
+    },
+    {
       "index": 93,
       "fromVerse": "5:51"
-    }, {
+    },
+    {
       "index": 94,
       "fromVerse": "5:57"
-    }, {
+    },
+    {
       "index": 95,
       "fromVerse": "5:67"
-    }, {
+    },
+    {
       "index": 96,
       "fromVerse": "5:78"
-    }, {
+    },
+    {
       "index": 97,
       "fromVerse": "5:87"
-    }, {
+    },
+    {
       "index": 98,
       "fromVerse": "5:94"
-    }, {
+    },
+    {
       "index": 99,
       "fromVerse": "5:101"
-    }, {
+    },
+    {
       "index": 100,
       "fromVerse": "5:109"
-    }, {
+    },
+    {
       "index": 101,
       "fromVerse": "5:116"
-    }, {
+    },
+    {
       "index": 102,
       "fromVerse": "6:1"
-    }, {
+    },
+    {
       "index": 103,
       "fromVerse": "6:11"
-    }, {
+    },
+    {
       "index": 104,
       "fromVerse": "6:21"
-    }, {
+    },
+    {
       "index": 105,
       "fromVerse": "6:31"
-    }, {
+    },
+    {
       "index": 106,
       "fromVerse": "6:42"
-    }, {
+    },
+    {
       "index": 107,
       "fromVerse": "6:51"
-    }, {
+    },
+    {
       "index": 108,
       "fromVerse": "6:56"
-    }, {
+    },
+    {
       "index": 109,
       "fromVerse": "6:61"
-    }, {
+    },
+    {
       "index": 110,
       "fromVerse": "6:71"
-    }, {
+    },
+    {
       "index": 111,
       "fromVerse": "6:83"
-    }, {
+    },
+    {
       "index": 112,
       "fromVerse": "6:91"
-    }, {
+    },
+    {
       "index": 113,
       "fromVerse": "6:95"
-    }, {
+    },
+    {
       "index": 114,
       "fromVerse": "6:101"
-    }, {
+    },
+    {
       "index": 115,
       "fromVerse": "6:111"
-    }, {
+    },
+    {
       "index": 116,
       "fromVerse": "6:122"
-    }, {
+    },
+    {
       "index": 117,
       "fromVerse": "6:130"
-    }, {
+    },
+    {
       "index": 118,
       "fromVerse": "6:141"
-    }, {
+    },
+    {
       "index": 119,
       "fromVerse": "6:145"
-    }, {
+    },
+    {
       "index": 120,
       "fromVerse": "6:151"
-    }, {
+    },
+    {
       "index": 121,
       "fromVerse": "6:155"
-    }, {
+    },
+    {
       "index": 122,
       "fromVerse": "7:1"
-    }, {
+    },
+    {
       "index": 123,
       "fromVerse": "7:11"
-    }, {
+    },
+    {
       "index": 124,
       "fromVerse": "7:26"
-    }, {
+    },
+    {
       "index": 125,
       "fromVerse": "7:32"
-    }, {
+    },
+    {
       "index": 126,
       "fromVerse": "7:40"
-    }, {
+    },
+    {
       "index": 127,
       "fromVerse": "7:48"
-    }, {
+    },
+    {
       "index": 128,
       "fromVerse": "7:54"
-    }, {
+    },
+    {
       "index": 129,
       "fromVerse": "7:59"
-    }, {
+    },
+    {
       "index": 130,
       "fromVerse": "7:65"
-    }, {
+    },
+    {
       "index": 131,
       "fromVerse": "7:73"
-    }, {
+    },
+    {
       "index": 132,
       "fromVerse": "7:85"
-    }, {
+    },
+    {
       "index": 133,
       "fromVerse": "7:94"
-    }, {
+    },
+    {
       "index": 134,
       "fromVerse": "7:100"
-    }, {
+    },
+    {
       "index": 135,
       "fromVerse": "7:109"
-    }, {
+    },
+    {
       "index": 136,
       "fromVerse": "7:127"
-    }, {
+    },
+    {
       "index": 137,
       "fromVerse": "7:130"
-    }, {
+    },
+    {
       "index": 138,
       "fromVerse": "7:142"
-    }, {
+    },
+    {
       "index": 139,
       "fromVerse": "7:148"
-    }, {
+    },
+    {
       "index": 140,
       "fromVerse": "7:152"
-    }, {
+    },
+    {
       "index": 141,
       "fromVerse": "7:158"
-    }, {
+    },
+    {
       "index": 142,
       "fromVerse": "7:163"
-    }, {
+    },
+    {
       "index": 143,
       "fromVerse": "7:172"
-    }, {
+    },
+    {
       "index": 144,
       "fromVerse": "7:182"
-    }, {
+    },
+    {
       "index": 145,
       "fromVerse": "7:189"
-    }, {
+    },
+    {
       "index": 146,
       "fromVerse": "8:1"
-    }, {
+    },
+    {
       "index": 147,
       "fromVerse": "8:11"
-    }, {
+    },
+    {
       "index": 148,
       "fromVerse": "8:20"
-    }, {
+    },
+    {
       "index": 149,
       "fromVerse": "8:29"
-    }, {
+    },
+    {
       "index": 150,
       "fromVerse": "8:38"
-    }, {
+    },
+    {
       "index": 151,
       "fromVerse": "8:45"
-    }, {
+    },
+    {
       "index": 152,
       "fromVerse": "8:49"
-    }, {
+    },
+    {
       "index": 153,
       "fromVerse": "8:59"
-    }, {
+    },
+    {
       "index": 154,
       "fromVerse": "8:65"
-    }, {
+    },
+    {
       "index": 155,
       "fromVerse": "8:70"
-    }, {
+    },
+    {
       "index": 156,
       "fromVerse": "9:1"
-    }, {
+    },
+    {
       "index": 157,
       "fromVerse": "9:7"
-    }, {
+    },
+    {
       "index": 158,
       "fromVerse": "9:17"
-    }, {
+    },
+    {
       "index": 159,
       "fromVerse": "9:25"
-    }, {
+    },
+    {
       "index": 160,
       "fromVerse": "9:30"
-    }, {
+    },
+    {
       "index": 161,
       "fromVerse": "9:38"
-    }, {
+    },
+    {
       "index": 162,
       "fromVerse": "9:43"
-    }, {
+    },
+    {
       "index": 163,
       "fromVerse": "9:60"
-    }, {
+    },
+    {
       "index": 164,
       "fromVerse": "9:67"
-    }, {
+    },
+    {
       "index": 165,
       "fromVerse": "9:73"
-    }, {
+    },
+    {
       "index": 166,
       "fromVerse": "9:81"
-    }, {
+    },
+    {
       "index": 167,
       "fromVerse": "9:90"
-    }, {
+    },
+    {
       "index": 168,
       "fromVerse": "9:100"
-    }, {
+    },
+    {
       "index": 169,
       "fromVerse": "9:111"
-    }, {
+    },
+    {
       "index": 170,
       "fromVerse": "9:119"
-    }, {
+    },
+    {
       "index": 171,
       "fromVerse": "9:123"
-    }, {
+    },
+    {
       "index": 172,
       "fromVerse": "10:1"
-    }, {
+    },
+    {
       "index": 173,
       "fromVerse": "10:11"
-    }, {
+    },
+    {
       "index": 174,
       "fromVerse": "10:21"
-    }, {
+    },
+    {
       "index": 175,
       "fromVerse": "10:31"
-    }, {
+    },
+    {
       "index": 176,
       "fromVerse": "10:41"
-    }, {
+    },
+    {
       "index": 177,
       "fromVerse": "10:54"
-    }, {
+    },
+    {
       "index": 178,
       "fromVerse": "10:61"
-    }, {
+    },
+    {
       "index": 179,
       "fromVerse": "10:71"
-    }, {
+    },
+    {
       "index": 180,
       "fromVerse": "10:83"
-    }, {
+    },
+    {
       "index": 181,
       "fromVerse": "10:93"
-    }, {
+    },
+    {
       "index": 182,
       "fromVerse": "10:104"
-    }, {
+    },
+    {
       "index": 183,
       "fromVerse": "11:1"
-    }, {
+    },
+    {
       "index": 184,
       "fromVerse": "11:9"
-    }, {
+    },
+    {
       "index": 185,
       "fromVerse": "11:25"
-    }, {
+    },
+    {
       "index": 186,
       "fromVerse": "11:36"
-    }, {
+    },
+    {
       "index": 187,
       "fromVerse": "11:50"
-    }, {
+    },
+    {
       "index": 188,
       "fromVerse": "11:61"
-    }, {
+    },
+    {
       "index": 189,
       "fromVerse": "11:69"
-    }, {
+    },
+    {
       "index": 190,
       "fromVerse": "11:84"
-    }, {
+    },
+    {
       "index": 191,
       "fromVerse": "11:96"
-    }, {
+    },
+    {
       "index": 192,
       "fromVerse": "11:110"
-    }, {
+    },
+    {
       "index": 193,
       "fromVerse": "12:1"
-    }, {
+    },
+    {
       "index": 194,
       "fromVerse": "12:7"
-    }, {
+    },
+    {
       "index": 195,
       "fromVerse": "12:21"
-    }, {
+    },
+    {
       "index": 196,
       "fromVerse": "12:30"
-    }, {
+    },
+    {
       "index": 197,
       "fromVerse": "12:36"
-    }, {
+    },
+    {
       "index": 198,
       "fromVerse": "12:43"
-    }, {
+    },
+    {
       "index": 199,
       "fromVerse": "12:50"
-    }, {
+    },
+    {
       "index": 200,
       "fromVerse": "12:58"
-    }, {
+    },
+    {
       "index": 201,
       "fromVerse": "12:69"
-    }, {
+    },
+    {
       "index": 202,
       "fromVerse": "12:80"
-    }, {
+    },
+    {
       "index": 203,
       "fromVerse": "12:94"
-    }, {
+    },
+    {
       "index": 204,
       "fromVerse": "12:105"
-    }, {
+    },
+    {
       "index": 205,
       "fromVerse": "13:1"
-    }, {
+    },
+    {
       "index": 206,
       "fromVerse": "13:8"
-    }, {
+    },
+    {
       "index": 207,
       "fromVerse": "13:19"
-    }, {
+    },
+    {
       "index": 208,
       "fromVerse": "13:27"
-    }, {
+    },
+    {
       "index": 209,
       "fromVerse": "13:32"
-    }, {
+    },
+    {
       "index": 210,
       "fromVerse": "13:38"
-    }, {
+    },
+    {
       "index": 211,
       "fromVerse": "14:1"
-    }, {
+    },
+    {
       "index": 212,
       "fromVerse": "14:7"
-    }, {
+    },
+    {
       "index": 213,
       "fromVerse": "14:13"
-    }, {
+    },
+    {
       "index": 214,
       "fromVerse": "14:22"
-    }, {
+    },
+    {
       "index": 215,
       "fromVerse": "14:28"
-    }, {
+    },
+    {
       "index": 216,
       "fromVerse": "14:35"
-    }, {
+    },
+    {
       "index": 217,
       "fromVerse": "14:42"
-    }, {
+    },
+    {
       "index": 218,
       "fromVerse": "15:1"
-    }, {
+    },
+    {
       "index": 219,
       "fromVerse": "15:16"
-    }, {
+    },
+    {
       "index": 220,
       "fromVerse": "15:26"
-    }, {
+    },
+    {
       "index": 221,
       "fromVerse": "15:45"
-    }, {
+    },
+    {
       "index": 222,
       "fromVerse": "15:61"
-    }, {
+    },
+    {
       "index": 223,
       "fromVerse": "15:80"
-    }, {
+    },
+    {
       "index": 224,
       "fromVerse": "16:1"
-    }, {
+    },
+    {
       "index": 225,
       "fromVerse": "16:10"
-    }, {
+    },
+    {
       "index": 226,
       "fromVerse": "16:22"
-    }, {
+    },
+    {
       "index": 227,
       "fromVerse": "16:26"
-    }, {
+    },
+    {
       "index": 228,
       "fromVerse": "16:35"
-    }, {
+    },
+    {
       "index": 229,
       "fromVerse": "16:41"
-    }, {
+    },
+    {
       "index": 230,
       "fromVerse": "16:51"
-    }, {
+    },
+    {
       "index": 231,
       "fromVerse": "16:61"
-    }, {
+    },
+    {
       "index": 232,
       "fromVerse": "16:66"
-    }, {
+    },
+    {
       "index": 233,
       "fromVerse": "16:71"
-    }, {
+    },
+    {
       "index": 234,
       "fromVerse": "16:77"
-    }, {
+    },
+    {
       "index": 235,
       "fromVerse": "16:84"
-    }, {
+    },
+    {
       "index": 236,
       "fromVerse": "16:90"
-    }, {
+    },
+    {
       "index": 237,
       "fromVerse": "16:101"
-    }, {
+    },
+    {
       "index": 238,
       "fromVerse": "16:111"
-    }, {
+    },
+    {
       "index": 239,
       "fromVerse": "16:120"
-    }, {
+    },
+    {
       "index": 240,
       "fromVerse": "17:1"
-    }, {
+    },
+    {
       "index": 241,
       "fromVerse": "17:11"
-    }, {
+    },
+    {
       "index": 242,
       "fromVerse": "17:23"
-    }, {
+    },
+    {
       "index": 243,
       "fromVerse": "17:31"
-    }, {
+    },
+    {
       "index": 244,
       "fromVerse": "17:41"
-    }, {
+    },
+    {
       "index": 245,
       "fromVerse": "17:53"
-    }, {
+    },
+    {
       "index": 246,
       "fromVerse": "17:61"
-    }, {
+    },
+    {
       "index": 247,
       "fromVerse": "17:71"
-    }, {
+    },
+    {
       "index": 248,
       "fromVerse": "17:78"
-    }, {
+    },
+    {
       "index": 249,
       "fromVerse": "17:85"
-    }, {
+    },
+    {
       "index": 250,
       "fromVerse": "17:94"
-    }, {
+    },
+    {
       "index": 251,
       "fromVerse": "17:101"
-    }, {
+    },
+    {
       "index": 252,
       "fromVerse": "18:1"
-    }, {
+    },
+    {
       "index": 253,
       "fromVerse": "18:13"
-    }, {
+    },
+    {
       "index": 254,
       "fromVerse": "18:18"
-    }, {
+    },
+    {
       "index": 255,
       "fromVerse": "18:23"
-    }, {
+    },
+    {
       "index": 256,
       "fromVerse": "18:32"
-    }, {
+    },
+    {
       "index": 257,
       "fromVerse": "18:45"
-    }, {
+    },
+    {
       "index": 258,
       "fromVerse": "18:50"
-    }, {
+    },
+    {
       "index": 259,
       "fromVerse": "18:54"
-    }, {
+    },
+    {
       "index": 260,
       "fromVerse": "18:60"
-    }, {
+    },
+    {
       "index": 261,
       "fromVerse": "18:71"
-    }, {
+    },
+    {
       "index": 262,
       "fromVerse": "18:83"
-    }, {
+    },
+    {
       "index": 263,
       "fromVerse": "18:102"
-    }, {
+    },
+    {
       "index": 264,
       "fromVerse": "19:1"
-    }, {
+    },
+    {
       "index": 265,
       "fromVerse": "19:16"
-    }, {
+    },
+    {
       "index": 266,
       "fromVerse": "19:41"
-    }, {
+    },
+    {
       "index": 267,
       "fromVerse": "19:51"
-    }, {
+    },
+    {
       "index": 268,
       "fromVerse": "19:66"
-    }, {
+    },
+    {
       "index": 269,
       "fromVerse": "19:83"
-    }, {
+    },
+    {
       "index": 270,
       "fromVerse": "20:1"
-    }, {
+    },
+    {
       "index": 271,
       "fromVerse": "20:25"
-    }, {
+    },
+    {
       "index": 272,
       "fromVerse": "20:55"
-    }, {
+    },
+    {
       "index": 273,
       "fromVerse": "20:77"
-    }, {
+    },
+    {
       "index": 274,
       "fromVerse": "20:90"
-    }, {
+    },
+    {
       "index": 275,
       "fromVerse": "20:105"
-    }, {
+    },
+    {
       "index": 276,
       "fromVerse": "20:116"
-    }, {
+    },
+    {
       "index": 277,
       "fromVerse": "20:129"
-    }, {
+    },
+    {
       "index": 278,
       "fromVerse": "21:1"
-    }, {
+    },
+    {
       "index": 279,
       "fromVerse": "21:11"
-    }, {
+    },
+    {
       "index": 280,
       "fromVerse": "21:30"
-    }, {
+    },
+    {
       "index": 281,
       "fromVerse": "21:42"
-    }, {
+    },
+    {
       "index": 282,
       "fromVerse": "21:51"
-    }, {
+    },
+    {
       "index": 283,
       "fromVerse": "21:76"
-    }, {
+    },
+    {
       "index": 284,
       "fromVerse": "21:94"
-    }, {
+    },
+    {
       "index": 285,
       "fromVerse": "22:1"
-    }, {
+    },
+    {
       "index": 286,
       "fromVerse": "22:11"
-    }, {
+    },
+    {
       "index": 287,
       "fromVerse": "22:23"
-    }, {
+    },
+    {
       "index": 288,
       "fromVerse": "22:26"
-    }, {
+    },
+    {
       "index": 289,
       "fromVerse": "22:34"
-    }, {
+    },
+    {
       "index": 290,
       "fromVerse": "22:39"
-    }, {
+    },
+    {
       "index": 291,
       "fromVerse": "22:49"
-    }, {
+    },
+    {
       "index": 292,
       "fromVerse": "22:58"
-    }, {
+    },
+    {
       "index": 293,
       "fromVerse": "22:65"
-    }, {
+    },
+    {
       "index": 294,
       "fromVerse": "22:73"
-    }, {
+    },
+    {
       "index": 295,
       "fromVerse": "23:1"
-    }, {
+    },
+    {
       "index": 296,
       "fromVerse": "23:23"
-    }, {
+    },
+    {
       "index": 297,
       "fromVerse": "23:33"
-    }, {
+    },
+    {
       "index": 298,
       "fromVerse": "23:51"
-    }, {
+    },
+    {
       "index": 299,
       "fromVerse": "23:78"
-    }, {
+    },
+    {
       "index": 300,
       "fromVerse": "23:93"
-    }, {
+    },
+    {
       "index": 301,
       "fromVerse": "24:1"
-    }, {
+    },
+    {
       "index": 302,
       "fromVerse": "24:11"
-    }, {
+    },
+    {
       "index": 303,
       "fromVerse": "24:21"
-    }, {
+    },
+    {
       "index": 304,
       "fromVerse": "24:27"
-    }, {
+    },
+    {
       "index": 305,
       "fromVerse": "24:35"
-    }, {
+    },
+    {
       "index": 306,
       "fromVerse": "24:41"
-    }, {
+    },
+    {
       "index": 307,
       "fromVerse": "24:51"
-    }, {
+    },
+    {
       "index": 308,
       "fromVerse": "24:58"
-    }, {
+    },
+    {
       "index": 309,
       "fromVerse": "24:62"
-    }, {
+    },
+    {
       "index": 310,
       "fromVerse": "25:1"
-    }, {
+    },
+    {
       "index": 311,
       "fromVerse": "25:10"
-    }, {
+    },
+    {
       "index": 312,
       "fromVerse": "25:21"
-    }, {
+    },
+    {
       "index": 313,
       "fromVerse": "25:35"
-    }, {
+    },
+    {
       "index": 314,
       "fromVerse": "25:45"
-    }, {
+    },
+    {
       "index": 315,
       "fromVerse": "25:61"
-    }, {
+    },
+    {
       "index": 316,
       "fromVerse": "26:1"
-    }, {
+    },
+    {
       "index": 317,
       "fromVerse": "26:10"
-    }, {
+    },
+    {
       "index": 318,
       "fromVerse": "26:34"
-    }, {
+    },
+    {
       "index": 319,
       "fromVerse": "26:53"
-    }, {
+    },
+    {
       "index": 320,
       "fromVerse": "26:70"
-    }, {
+    },
+    {
       "index": 321,
       "fromVerse": "26:105"
-    }, {
+    },
+    {
       "index": 322,
       "fromVerse": "26:123"
-    }, {
+    },
+    {
       "index": 323,
       "fromVerse": "26:141"
-    }, {
+    },
+    {
       "index": 324,
       "fromVerse": "26:160"
-    }, {
+    },
+    {
       "index": 325,
       "fromVerse": "26:176"
-    }, {
+    },
+    {
       "index": 326,
       "fromVerse": "26:192"
-    }, {
+    },
+    {
       "index": 327,
       "fromVerse": "27:1"
-    }, {
+    },
+    {
       "index": 328,
       "fromVerse": "27:15"
-    }, {
+    },
+    {
       "index": 329,
       "fromVerse": "27:32"
-    }, {
+    },
+    {
       "index": 330,
       "fromVerse": "27:45"
-    }, {
+    },
+    {
       "index": 331,
       "fromVerse": "27:59"
-    }, {
+    },
+    {
       "index": 332,
       "fromVerse": "27:67"
-    }, {
+    },
+    {
       "index": 333,
       "fromVerse": "27:83"
-    }, {
+    },
+    {
       "index": 334,
       "fromVerse": "28:1"
-    }, {
+    },
+    {
       "index": 335,
       "fromVerse": "28:14"
-    }, {
+    },
+    {
       "index": 336,
       "fromVerse": "28:22"
-    }, {
+    },
+    {
       "index": 337,
       "fromVerse": "28:29"
-    }, {
+    },
+    {
       "index": 338,
       "fromVerse": "28:43"
-    }, {
+    },
+    {
       "index": 339,
       "fromVerse": "28:51"
-    }, {
+    },
+    {
       "index": 340,
       "fromVerse": "28:61"
-    }, {
+    },
+    {
       "index": 341,
       "fromVerse": "28:76"
-    }, {
+    },
+    {
       "index": 342,
       "fromVerse": "29:1"
-    }, {
+    },
+    {
       "index": 343,
       "fromVerse": "29:14"
-    }, {
+    },
+    {
       "index": 344,
       "fromVerse": "29:23"
-    }, {
+    },
+    {
       "index": 345,
       "fromVerse": "29:31"
-    }, {
+    },
+    {
       "index": 346,
       "fromVerse": "29:45"
-    }, {
+    },
+    {
       "index": 347,
       "fromVerse": "29:52"
-    }, {
+    },
+    {
       "index": 348,
       "fromVerse": "29:64"
-    }, {
+    },
+    {
       "index": 349,
       "fromVerse": "30:1"
-    }, {
+    },
+    {
       "index": 350,
       "fromVerse": "30:11"
-    }, {
+    },
+    {
       "index": 351,
       "fromVerse": "30:20"
-    }, {
+    },
+    {
       "index": 352,
       "fromVerse": "30:28"
-    }, {
+    },
+    {
       "index": 353,
       "fromVerse": "30:41"
-    }, {
+    },
+    {
       "index": 354,
       "fromVerse": "30:54"
-    }, {
+    },
+    {
       "index": 355,
       "fromVerse": "31:1"
-    }, {
+    },
+    {
       "index": 356,
       "fromVerse": "31:12"
-    }, {
+    },
+    {
       "index": 357,
       "fromVerse": "31:20"
-    }, {
+    },
+    {
       "index": 358,
       "fromVerse": "32:1"
-    }, {
+    },
+    {
       "index": 359,
       "fromVerse": "32:12"
-    }, {
+    },
+    {
       "index": 360,
       "fromVerse": "32:23"
-    }, {
+    },
+    {
       "index": 361,
       "fromVerse": "33:1"
-    }, {
+    },
+    {
       "index": 362,
       "fromVerse": "33:9"
-    }, {
+    },
+    {
       "index": 363,
       "fromVerse": "33:21"
-    }, {
+    },
+    {
       "index": 364,
       "fromVerse": "33:28"
-    }, {
+    },
+    {
       "index": 365,
       "fromVerse": "33:35"
-    }, {
+    },
+    {
       "index": 366,
       "fromVerse": "33:41"
-    }, {
+    },
+    {
       "index": 367,
       "fromVerse": "33:53"
-    }, {
+    },
+    {
       "index": 368,
       "fromVerse": "33:59"
-    }, {
+    },
+    {
       "index": 369,
       "fromVerse": "33:69"
-    }, {
+    },
+    {
       "index": 370,
       "fromVerse": "34:1"
-    }, {
+    },
+    {
       "index": 371,
       "fromVerse": "34:10"
-    }, {
+    },
+    {
       "index": 372,
       "fromVerse": "34:22"
-    }, {
+    },
+    {
       "index": 373,
       "fromVerse": "34:31"
-    }, {
+    },
+    {
       "index": 374,
       "fromVerse": "34:37"
-    }, {
+    },
+    {
       "index": 375,
       "fromVerse": "34:46"
-    }, {
+    },
+    {
       "index": 376,
       "fromVerse": "35:1"
-    }, {
+    },
+    {
       "index": 377,
       "fromVerse": "35:8"
-    }, {
+    },
+    {
       "index": 378,
       "fromVerse": "35:15"
-    }, {
+    },
+    {
       "index": 379,
       "fromVerse": "35:27"
-    }, {
+    },
+    {
       "index": 380,
       "fromVerse": "35:38"
-    }, {
+    },
+    {
       "index": 381,
       "fromVerse": "36:1"
-    }, {
+    },
+    {
       "index": 382,
       "fromVerse": "36:13"
-    }, {
+    },
+    {
       "index": 383,
       "fromVerse": "36:33"
-    }, {
+    },
+    {
       "index": 384,
       "fromVerse": "36:51"
-    }, {
+    },
+    {
       "index": 385,
       "fromVerse": "36:68"
-    }, {
+    },
+    {
       "index": 386,
       "fromVerse": "37:1"
-    }, {
+    },
+    {
       "index": 387,
       "fromVerse": "37:22"
-    }, {
+    },
+    {
       "index": 388,
       "fromVerse": "37:75"
-    }, {
+    },
+    {
       "index": 389,
       "fromVerse": "37:114"
-    }, {
+    },
+    {
       "index": 390,
       "fromVerse": "37:139"
-    }, {
+    },
+    {
       "index": 391,
       "fromVerse": "38:1"
-    }, {
+    },
+    {
       "index": 392,
       "fromVerse": "38:15"
-    }, {
+    },
+    {
       "index": 393,
       "fromVerse": "38:27"
-    }, {
+    },
+    {
       "index": 394,
       "fromVerse": "38:41"
-    }, {
+    },
+    {
       "index": 395,
       "fromVerse": "38:65"
-    }, {
+    },
+    {
       "index": 396,
       "fromVerse": "39:1"
-    }, {
+    },
+    {
       "index": 397,
       "fromVerse": "39:10"
-    }, {
+    },
+    {
       "index": 398,
       "fromVerse": "39:22"
-    }, {
+    },
+    {
       "index": 399,
       "fromVerse": "39:32"
-    }, {
+    },
+    {
       "index": 400,
       "fromVerse": "39:42"
-    }, {
+    },
+    {
       "index": 401,
       "fromVerse": "39:53"
-    }, {
+    },
+    {
       "index": 402,
       "fromVerse": "39:64"
-    }, {
+    },
+    {
       "index": 403,
       "fromVerse": "39:71"
-    }, {
+    },
+    {
       "index": 404,
       "fromVerse": "40:1"
-    }, {
+    },
+    {
       "index": 405,
       "fromVerse": "40:10"
-    }, {
+    },
+    {
       "index": 406,
       "fromVerse": "40:21"
-    }, {
+    },
+    {
       "index": 407,
       "fromVerse": "40:28"
-    }, {
+    },
+    {
       "index": 408,
       "fromVerse": "40:38"
-    }, {
+    },
+    {
       "index": 409,
       "fromVerse": "40:51"
-    }, {
+    },
+    {
       "index": 410,
       "fromVerse": "40:61"
-    }, {
+    },
+    {
       "index": 411,
       "fromVerse": "40:69"
-    }, {
+    },
+    {
       "index": 412,
       "fromVerse": "40:79"
-    }, {
+    },
+    {
       "index": 413,
       "fromVerse": "41:1"
-    }, {
+    },
+    {
       "index": 414,
       "fromVerse": "41:9"
-    }, {
+    },
+    {
       "index": 415,
       "fromVerse": "41:19"
-    }, {
+    },
+    {
       "index": 416,
       "fromVerse": "41:26"
-    }, {
+    },
+    {
       "index": 417,
       "fromVerse": "41:33"
-    }, {
+    },
+    {
       "index": 418,
       "fromVerse": "41:45"
-    }, {
+    },
+    {
       "index": 419,
       "fromVerse": "42:1"
-    }, {
+    },
+    {
       "index": 420,
       "fromVerse": "42:10"
-    }, {
+    },
+    {
       "index": 421,
       "fromVerse": "42:20"
-    }, {
+    },
+    {
       "index": 422,
       "fromVerse": "42:30"
-    }, {
+    },
+    {
       "index": 423,
       "fromVerse": "42:44"
-    }, {
+    },
+    {
       "index": 424,
       "fromVerse": "43:1"
-    }, {
+    },
+    {
       "index": 425,
       "fromVerse": "43:16"
-    }, {
+    },
+    {
       "index": 426,
       "fromVerse": "43:26"
-    }, {
+    },
+    {
       "index": 427,
       "fromVerse": "43:36"
-    }, {
+    },
+    {
       "index": 428,
       "fromVerse": "43:46"
-    }, {
+    },
+    {
       "index": 429,
       "fromVerse": "43:57"
-    }, {
+    },
+    {
       "index": 430,
       "fromVerse": "43:68"
-    }, {
+    },
+    {
       "index": 431,
       "fromVerse": "44:1"
-    }, {
+    },
+    {
       "index": 432,
       "fromVerse": "44:30"
-    }, {
+    },
+    {
       "index": 433,
       "fromVerse": "44:43"
-    }, {
+    },
+    {
       "index": 434,
       "fromVerse": "45:1"
-    }, {
+    },
+    {
       "index": 435,
       "fromVerse": "45:12"
-    }, {
+    },
+    {
       "index": 436,
       "fromVerse": "45:22"
-    }, {
+    },
+    {
       "index": 437,
       "fromVerse": "45:27"
-    }, {
+    },
+    {
       "index": 438,
       "fromVerse": "46:1"
-    }, {
+    },
+    {
       "index": 439,
       "fromVerse": "46:11"
-    }, {
+    },
+    {
       "index": 440,
       "fromVerse": "46:21"
-    }, {
+    },
+    {
       "index": 441,
       "fromVerse": "46:27"
-    }, {
+    },
+    {
       "index": 442,
       "fromVerse": "47:1"
-    }, {
+    },
+    {
       "index": 443,
       "fromVerse": "47:12"
-    }, {
+    },
+    {
       "index": 444,
       "fromVerse": "47:20"
-    }, {
+    },
+    {
       "index": 445,
       "fromVerse": "47:29"
-    }, {
+    },
+    {
       "index": 446,
       "fromVerse": "48:1"
-    }, {
+    },
+    {
       "index": 447,
       "fromVerse": "48:11"
-    }, {
+    },
+    {
       "index": 448,
       "fromVerse": "48:18"
-    }, {
+    },
+    {
       "index": 449,
       "fromVerse": "48:27"
-    }, {
+    },
+    {
       "index": 450,
       "fromVerse": "49:1"
-    }, {
+    },
+    {
       "index": 451,
       "fromVerse": "49:11"
-    }, {
+    },
+    {
       "index": 452,
       "fromVerse": "50:1"
-    }, {
+    },
+    {
       "index": 453,
       "fromVerse": "50:16"
-    }, {
+    },
+    {
       "index": 454,
       "fromVerse": "50:30"
-    }, {
+    },
+    {
       "index": 455,
       "fromVerse": "51:1"
-    }, {
+    },
+    {
       "index": 456,
       "fromVerse": "51:24"
-    }, {
+    },
+    {
       "index": 457,
       "fromVerse": "51:47"
-    }, {
+    },
+    {
       "index": 458,
       "fromVerse": "52:1"
-    }, {
+    },
+    {
       "index": 459,
       "fromVerse": "52:29"
-    }, {
+    },
+    {
       "index": 460,
       "fromVerse": "53:1"
-    }, {
+    },
+    {
       "index": 461,
       "fromVerse": "53:26"
-    }, {
+    },
+    {
       "index": 462,
       "fromVerse": "53:33"
-    }, {
+    },
+    {
       "index": 463,
       "fromVerse": "54:1"
-    }, {
+    },
+    {
       "index": 464,
       "fromVerse": "54:23"
-    }, {
+    },
+    {
       "index": 465,
       "fromVerse": "54:41"
-    }, {
+    },
+    {
       "index": 466,
       "fromVerse": "55:1"
-    }, {
+    },
+    {
       "index": 467,
       "fromVerse": "55:26"
-    }, {
+    },
+    {
       "index": 468,
       "fromVerse": "55:46"
-    }, {
+    },
+    {
       "index": 469,
       "fromVerse": "56:1"
-    }, {
+    },
+    {
       "index": 470,
       "fromVerse": "56:39"
-    }, {
+    },
+    {
       "index": 471,
       "fromVerse": "56:75"
-    }, {
+    },
+    {
       "index": 472,
       "fromVerse": "57:1"
-    }, {
+    },
+    {
       "index": 473,
       "fromVerse": "57:11"
-    }, {
+    },
+    {
       "index": 474,
       "fromVerse": "57:20"
-    }, {
+    },
+    {
       "index": 475,
       "fromVerse": "57:26"
-    }, {
+    },
+    {
       "index": 476,
       "fromVerse": "58:1"
-    }, {
+    },
+    {
       "index": 477,
       "fromVerse": "58:7"
-    }, {
+    },
+    {
       "index": 478,
       "fromVerse": "58:14"
-    }, {
+    },
+    {
       "index": 479,
       "fromVerse": "59:1"
-    }, {
+    },
+    {
       "index": 480,
       "fromVerse": "59:11"
-    }, {
+    },
+    {
       "index": 481,
       "fromVerse": "59:18"
-    }, {
+    },
+    {
       "index": 482,
       "fromVerse": "60:1"
-    }, {
+    },
+    {
       "index": 483,
       "fromVerse": "60:7"
-    }, {
+    },
+    {
       "index": 484,
       "fromVerse": "61:1"
-    }, {
+    },
+    {
       "index": 485,
       "fromVerse": "61:10"
-    }, {
+    },
+    {
       "index": 486,
       "fromVerse": "62:1"
-    }, {
+    },
+    {
       "index": 487,
       "fromVerse": "62:9"
-    }, {
+    },
+    {
       "index": 488,
       "fromVerse": "63:1"
-    }, {
+    },
+    {
       "index": 489,
       "fromVerse": "63:9"
-    }, {
+    },
+    {
       "index": 490,
       "fromVerse": "64:1"
-    }, {
+    },
+    {
       "index": 491,
       "fromVerse": "64:11"
-    }, {
+    },
+    {
       "index": 492,
       "fromVerse": "65:1"
-    }, {
+    },
+    {
       "index": 493,
       "fromVerse": "65:8"
-    }, {
+    },
+    {
       "index": 494,
       "fromVerse": "66:1"
-    }, {
+    },
+    {
       "index": 495,
       "fromVerse": "66:8"
-    }, {
+    },
+    {
       "index": 496,
       "fromVerse": "67:1"
-    }, {
+    },
+    {
       "index": 497,
       "fromVerse": "67:15"
-    }, {
+    },
+    {
       "index": 498,
       "fromVerse": "68:1"
-    }, {
+    },
+    {
       "index": 499,
       "fromVerse": "68:34"
-    }, {
+    },
+    {
       "index": 500,
       "fromVerse": "69:1"
-    }, {
+    },
+    {
       "index": 501,
       "fromVerse": "69:38"
-    }, {
+    },
+    {
       "index": 502,
       "fromVerse": "70:1"
-    }, {
+    },
+    {
       "index": 503,
       "fromVerse": "70:36"
-    }, {
+    },
+    {
       "index": 504,
       "fromVerse": "71:1"
-    }, {
+    },
+    {
       "index": 505,
       "fromVerse": "71:21"
-    }, {
+    },
+    {
       "index": 506,
       "fromVerse": "72:1"
-    }, {
+    },
+    {
       "index": 507,
       "fromVerse": "72:20"
-    }, {
+    },
+    {
       "index": 508,
       "fromVerse": "73:1"
-    }, {
+    },
+    {
       "index": 509,
       "fromVerse": "73:20"
-    }, {
+    },
+    {
       "index": 510,
       "fromVerse": "74:1"
-    }, {
+    },
+    {
       "index": 511,
       "fromVerse": "74:32"
-    }, {
+    },
+    {
       "index": 512,
       "fromVerse": "75:1"
-    }, {
+    },
+    {
       "index": 513,
       "fromVerse": "75:31"
-    }, {
+    },
+    {
       "index": 514,
       "fromVerse": "76:1"
-    }, {
+    },
+    {
       "index": 515,
       "fromVerse": "76:23"
-    }, {
+    },
+    {
       "index": 516,
       "fromVerse": "77:1"
-    }, {
+    },
+    {
       "index": 517,
       "fromVerse": "77:41"
-    }, {
+    },
+    {
       "index": 518,
       "fromVerse": "78:1"
-    }, {
+    },
+    {
       "index": 519,
       "fromVerse": "78:31"
-    }, {
+    },
+    {
       "index": 520,
       "fromVerse": "79:1"
-    }, {
+    },
+    {
       "index": 521,
       "fromVerse": "79:27"
-    }, {
+    },
+    {
       "index": 522,
       "fromVerse": "80:1"
-    }, {
+    },
+    {
       "index": 523,
       "fromVerse": "81:1"
-    }, {
+    },
+    {
       "index": 524,
       "fromVerse": "82:1"
-    }, {
+    },
+    {
       "index": 525,
       "fromVerse": "83:1"
-    }, {
+    },
+    {
       "index": 526,
       "fromVerse": "84:1"
-    }, {
+    },
+    {
       "index": 527,
       "fromVerse": "85:1"
-    }, {
+    },
+    {
       "index": 528,
       "fromVerse": "86:1"
-    }, {
+    },
+    {
       "index": 529,
       "fromVerse": "87:1"
-    }, {
+    },
+    {
       "index": 530,
       "fromVerse": "88:1"
-    }, {
+    },
+    {
       "index": 531,
       "fromVerse": "89:1"
-    }, {
+    },
+    {
       "index": 532,
       "fromVerse": "90:1"
-    }, {
+    },
+    {
       "index": 533,
       "fromVerse": "91:1"
-    }, {
+    },
+    {
       "index": 534,
       "fromVerse": "92:1"
-    }, {
+    },
+    {
       "index": 535,
       "fromVerse": "93:1"
-    }, {
+    },
+    {
       "index": 536,
       "fromVerse": "94:1"
-    }, {
+    },
+    {
       "index": 537,
       "fromVerse": "95:1"
-    }, {
+    },
+    {
       "index": 538,
       "fromVerse": "96:1"
-    }, {
+    },
+    {
       "index": 539,
       "fromVerse": "97:1"
-    }, {
+    },
+    {
       "index": 540,
       "fromVerse": "98:1"
-    }, {
+    },
+    {
       "index": 541,
       "fromVerse": "99:1"
-    }, {
+    },
+    {
       "index": 542,
       "fromVerse": "100:1"
-    }, {
+    },
+    {
       "index": 543,
       "fromVerse": "101:1"
-    }, {
+    },
+    {
       "index": 544,
       "fromVerse": "102:1"
-    }, {
+    },
+    {
       "index": 545,
       "fromVerse": "103:1"
-    }, {
+    },
+    {
       "index": 546,
       "fromVerse": "104:1"
-    }, {
+    },
+    {
       "index": 547,
       "fromVerse": "105:1"
-    }, {
+    },
+    {
       "index": 548,
       "fromVerse": "106:1"
-    }, {
+    },
+    {
       "index": 549,
       "fromVerse": "107:1"
-    }, {
+    },
+    {
       "index": 550,
       "fromVerse": "108:1"
-    }, {
+    },
+    {
       "index": 551,
       "fromVerse": "109:1"
-    }, {
+    },
+    {
       "index": 552,
       "fromVerse": "110:1"
-    }, {
+    },
+    {
       "index": 553,
       "fromVerse": "111:1"
-    }, {
+    },
+    {
       "index": 554,
       "fromVerse": "112:1"
-    }, {
+    },
+    {
       "index": 555,
       "fromVerse": "113:1"
-    }, {
+    },
+    {
       "index": 556,
       "fromVerse": "114:1"
     }
@@ -9779,59 +11432,73 @@
       "index": 1,
       "type": "recommended",
       "verse": "7:206"
-    }, {
+    },
+    {
       "index": 2,
       "type": "recommended",
       "verse": "13:15"
-    }, {
+    },
+    {
       "index": 3,
       "type": "recommended",
       "verse": "16:50"
-    }, {
+    },
+    {
       "index": 4,
       "type": "recommended",
       "verse": "17:109"
-    }, {
+    },
+    {
       "index": 5,
       "type": "recommended",
       "verse": "19:58"
-    }, {
+    },
+    {
       "index": 6,
       "type": "recommended",
       "verse": "22:18"
-    }, {
+    },
+    {
       "index": 7,
       "type": "recommended",
       "verse": "22:77"
-    }, {
+    },
+    {
       "index": 8,
       "type": "recommended",
       "verse": "25:60"
-    }, {
+    },
+    {
       "index": 9,
       "type": "recommended",
       "verse": "27:26"
-    }, {
+    },
+    {
       "index": 10,
       "type": "obligatory",
       "verse": "32:15"
-    }, {
+    },
+    {
       "index": 11,
       "type": "recommended",
       "verse": "38:24"
-    }, {
+    },
+    {
       "index": 12,
       "type": "obligatory",
       "verse": "41:38"
-    }, {
+    },
+    {
       "index": 13,
       "type": "obligatory",
       "verse": "53:62"
-    }, {
+    },
+    {
       "index": 14,
       "type": "recommended",
       "verse": "84:21"
-    }, {
+    },
+    {
       "index": 15,
       "type": "obligatory",
       "verse": "96:19"
