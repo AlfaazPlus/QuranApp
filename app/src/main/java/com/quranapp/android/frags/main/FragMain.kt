@@ -88,9 +88,8 @@ class FragMain : BaseFragment() {
                 layout.refresh(quranMeta)
             }
 
-            it.quranScience.visibility = View.VISIBLE
-            it.quranScience.clipToOutline = true
-            it.quranScience.setOnClickListener {v->
+            it.quranScienceContainer.visibility = View.VISIBLE
+            it.quranScienceContainer.setOnClickListener {v->
                 v.context.startActivity(Intent(v.context, ActivityQuranScience::class.java))
             }
         }

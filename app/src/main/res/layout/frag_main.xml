@@ -55,14 +55,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/quranScience"
+        <FrameLayout
+            android:id="@+id/quranScienceContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:adjustViewBounds="true"
             android:background="@drawable/bg_card_round"
-            android:src="@drawable/quran_science_wallpaper"
-            android:visibility="gone" />
+            android:clipToOutline="true"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/quranScience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/quran_science_wallpaper" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/quran_and_science"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
