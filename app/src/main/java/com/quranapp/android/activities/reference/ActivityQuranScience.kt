@@ -11,6 +11,7 @@ import com.quranapp.android.adapters.reference.ADPQuranScience
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.databinding.ActivityExclusiveVersesBinding
 import com.quranapp.android.utils.extended.GapedItemDecoration
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.views.BoldHeader
 import org.json.JSONArray
 
@@ -25,7 +26,7 @@ class ActivityQuranScience : BaseActivity() {
 
         binding.header.let {
             it.setBGColor(R.color.colorBGPage)
-            it.setTitleText("Quran & Science")
+            it.setTitleText(getString(R.string.quran_and_science))
             it.setShowRightIcon(true)
             it.setRightIconRes(R.drawable.dr_icon_info)
             it.setCallback(object : BoldHeader.BoldHeaderCallback {
@@ -41,7 +42,20 @@ class ActivityQuranScience : BaseActivity() {
 
         val items = mutableListOf<QuranScienceItem>()
 
-        assets.open("science/index.json").use { inputStream ->
+        val locale = SPAppConfigs.getLocale(this)
+        val indexPath = if (locale == "en" || locale == SPAppConfigs.LOCALE_DEFAULT) {
+            "science/en/index.json"
+        } else {
+            val langPath = "science/$locale/index.json"
+            try {
+                assets.open(langPath).close()
+                langPath
+            } catch (e: Exception) {
+                "science/en/index.json"
+            }
+        }
+
+        assets.open(indexPath).use { inputStream ->
             val json = inputStream.bufferedReader().use { it.readText() }
             val jsonArray = JSONArray(json)
 
@@ -83,13 +97,9 @@ class ActivityQuranScience : BaseActivity() {
 
     private fun showInfoDialog() {
         PeaceDialog.newBuilder(this)
-            .setTitle("About this page")
-            .setMessage(
-                "The contents on this page are taken from the book by Dr. Zakir Naik called " +
-                        "\"The Quran and Modern Science: Compatible or Incompatible\"\n\n" +
-                        "The contents are currently only available in English. The images shown are for illustrative purpose only."
-            )
-            .setNeutralButton("Close", null)
+            .setTitle(getString(R.string.about_this_page))
+            .setMessage(getString(R.string.about_quran_science_msg))
+            .setNeutralButton(getString(R.string.strLabelClose), null)
             .show()
     }
 }

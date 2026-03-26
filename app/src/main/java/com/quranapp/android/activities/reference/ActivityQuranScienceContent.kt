@@ -19,6 +19,7 @@ import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +52,7 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
 
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val title = "Quran & Science"
-        binding.title.text = title
+        binding.title.text = getString(R.string.quran_and_science)
 
         showLoader()
 
@@ -99,7 +99,20 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         val base = assets.open("science/base.html").bufferedReader().use { it.readText() }
             .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
 
-        var document = assets.open("science/topics/${item.path}").bufferedReader().use { it.readText() }
+        val locale = SPAppConfigs.getLocale(this)
+        val topicPath = if (locale == "en" || locale == SPAppConfigs.LOCALE_DEFAULT) {
+            "science/en/topics/${item.path}"
+        } else {
+            val langPath = "science/$locale/topics/${item.path}"
+            try {
+                assets.open(langPath).close()
+                langPath
+            } catch (e: Exception) {
+                "science/en/topics/${item.path}"
+            }
+        }
+
+        var document = assets.open(topicPath).bufferedReader().use { it.readText() }
         document = base.replace("{{CONTENT}}", document)
 
         val regexAr = Regex("\\{\\{REF_AR=(\\d+):(\\d+)\\}\\}")
@@ -144,20 +157,24 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            StringUtils.removeHTML(
-                translFactory.getTranslationsSingleVerse(
-                    slugs,
-                    chapterNo.toInt(),
-                    verse.toInt()
-                )[0].text, false
+            val translations = translFactory.getTranslationsSingleVerse(
+                slugs,
+                chapterNo.toInt(),
+                verse.toInt()
             )
+
+            if (translations.isNotEmpty()) {
+                StringUtils.removeHTML(translations[0].text, false)
+            } else {
+                ""
+            }
         }
 
         document = regexName.replace(document) { matchResult ->
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            "${quranMeta.getChapterName(this, chapterNo.toInt(), "en", false)} $chapterNo:$verse"
+            "${quranMeta.getChapterName(this, chapterNo.toInt(), locale, false)} $chapterNo:$verse"
         }
 
         runOnUiThread {
@@ -166,16 +183,29 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
     }
 
     private fun resolveTranslationSlugs(): Set<String> {
+        val locale = SPAppConfigs.getLocale(this)
         val slugs = mutableSetOf<String>()
         val bookInfos = translFactory.getAvailableTranslationBooksInfo()
 
+        // 1. Адегенде тандалган тилге (locale) туура келген котормону издөө
         for (bookInfo in bookInfos) {
-            if (bookInfo.key.contains("yusuf")) {
+            if (bookInfo.value.langCode == locale) {
                 slugs.add(bookInfo.key)
                 break
             }
         }
 
+        // 2. Эгер тандалган тилде жок болсо, дефолттук котормолорду издөө
+        if (slugs.isEmpty()) {
+            for (bookInfo in bookInfos) {
+                if (bookInfo.key.contains("yusuf")) {
+                    slugs.add(bookInfo.key)
+                    break
+                }
+            }
+        }
+
+        // 3. Акыркы вариант катары "The Clear Quran"
         if (slugs.isEmpty()) {
             slugs.add(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN)
         }

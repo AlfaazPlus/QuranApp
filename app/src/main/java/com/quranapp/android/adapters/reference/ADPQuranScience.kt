@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.databinding.LytQuranScienceItemBinding
@@ -12,11 +13,11 @@ class ADPQuranScience(private val items: List<QuranScienceItem>) :
     RecyclerView.Adapter<ADPQuranScience.VHQuranScience>() {
     inner class VHQuranScience(val binding: LytQuranScienceItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: QuranScienceItem) {
+            val ctx = binding.root.context
             binding.image.setImageResource(item.drawableRes)
             binding.title.text = item.title
 
-            val subtitle = "${item.referencesCount} references"
-            binding.subTitle.text = subtitle
+            binding.subTitle.text = ctx.getString(R.string.strLabelScienceReferences, item.referencesCount)
 
             binding.root.setOnClickListener {
                 it.context.startActivity(Intent(it.context, ActivityQuranScienceContent::class.java).apply {

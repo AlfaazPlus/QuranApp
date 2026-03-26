@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "title": "Астрономия",
+    "referencesCount": 16,
+    "path": "astronomy.html"
+  },
+  {
+    "id": 2,
+    "title": "Физика",
+    "referencesCount": 2,
+    "path": "physics.html"
+  },
+  {
+    "id": 3,
+    "title": "География",
+    "referencesCount": 17,
+    "path": "geography.html"
+  },
+  {
+    "id": 4,
+    "title": "Геология",
+    "referencesCount": 6,
+    "path": "geology.html"
+  },
+  {
+    "id": 5,
+    "title": "Океанография",
+    "referencesCount": 3,
+    "path": "oceanography.html"
+  },
+  {
+    "id": 6,
+    "title": "Биология",
+    "referencesCount": 3,
+    "path": "biology.html"
+  },
+  {
+    "id": 7,
+    "title": "Ботаника",
+    "referencesCount": 2,
+    "path": "botany.html"
+  },
+  {
+    "id": 8,
+    "title": "Зоология",
+    "referencesCount": 7,
+    "path": "zoology.html"
+  },
+  {
+    "id": 9,
+    "title": "Медицина",
+    "referencesCount": 2,
+    "path": "medicine.html"
+  },
+  {
+    "id": 10,
+    "title": "Физиология",
+    "referencesCount": 1,
+    "path": "physiology.html"
+  },
+  {
+    "id": 11,
+    "title": "Эмбриология",
+    "referencesCount": 28,
+    "path": "embryology.html"
+  },
+  {
+    "id": 12,
+    "title": "Жалпы илим",
+    "referencesCount": 3,
+    "path": "general.html"
+  }
+]
