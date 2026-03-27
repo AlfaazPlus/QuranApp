@@ -99,10 +99,6 @@ public class QuranMeta implements Serializable {
         return getChapterName(ctx, chapterNo, false);
     }
 
-    public String getChapterName(Context ctx, int chapterNo, String langCode) {
-        return getChapterName(ctx, chapterNo, langCode, false);
-    }
-
     public String getChapterName(Context ctx, int chapterNo, boolean withPrefix) {
         ChapterMeta chapterMeta = getChapterMeta(chapterNo);
         if (chapterMeta == null) {
@@ -110,14 +106,6 @@ public class QuranMeta implements Serializable {
         }
 
         String name = chapterMeta.getName();
-        if (withPrefix) {
-            name = ctx.getString(R.string.strLabelSurah, name);
-        }
-        return name;
-    }
-
-    public String getChapterName(Context ctx, int chapterNo, String langCode, boolean withPrefix) {
-        String name = getChapterMeta(chapterNo).getName(langCode);
         if (withPrefix) {
             name = ctx.getString(R.string.strLabelSurah, name);
         }

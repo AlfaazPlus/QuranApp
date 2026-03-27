@@ -54,7 +54,7 @@ import com.quranapp.android.components.appLogs.AppLogModel
 import com.quranapp.android.compose.components.AppBar
 import com.quranapp.android.compose.components.IconButton
 import com.quranapp.android.compose.components.Loader
-import com.quranapp.android.compose.components.SimpleTooltip
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard

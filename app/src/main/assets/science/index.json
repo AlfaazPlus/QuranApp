@@ -1,0 +1,110 @@
+[
+  {
+    "id": "astronomy",
+    "title": "Astronomy",
+    "referencesCount": 16,
+    "path": "astronomy.html",
+    "translations": {
+      "ky": "Астрономия"
+    }
+  },
+  {
+    "id": "physics",
+    "title": "Physics",
+    "referencesCount": 2,
+    "path": "physics.html",
+    "translations": {
+      "ky": "Физика"
+    }
+  },
+  {
+    "id": "geography",
+    "title": "Geography",
+    "referencesCount": 17,
+    "path": "geography.html",
+    "translations": {
+      "ky": "География"
+    }
+  },
+  {
+    "id": "geology",
+    "title": "Geology",
+    "referencesCount": 6,
+    "path": "geology.html",
+    "translations": {
+      "ky": "Геология"
+    }
+  },
+  {
+    "id": "oceanography",
+    "title": "Oceanography",
+    "referencesCount": 3,
+    "path": "oceanography.html",
+    "translations": {
+      "ky": "Океанография"
+    }
+  },
+  {
+    "id": "biology",
+    "title": "Biology",
+    "referencesCount": 3,
+    "path": "biology.html",
+    "translations": {
+      "ky": "Биология"
+    }
+  },
+  {
+    "id": "botany",
+    "title": "Botany",
+    "referencesCount": 2,
+    "path": "botany.html",
+    "translations": {
+      "ky": "Ботаника"
+    }
+  },
+  {
+    "id": "zoology",
+    "title": "Zoology",
+    "referencesCount": 7,
+    "path": "zoology.html",
+    "translations": {
+      "ky": "Зоология"
+    }
+  },
+  {
+    "id": "medicine",
+    "title": "Medicine",
+    "referencesCount": 2,
+    "path": "medicine.html",
+    "translations": {
+      "ky": "Медицина"
+    }
+  },
+  {
+    "id": "physiology",
+    "title": "Physiology",
+    "referencesCount": 1,
+    "path": "physiology.html",
+    "translations": {
+      "ky": "Физиология"
+    }
+  },
+  {
+    "id": "embryology",
+    "title": "Embryology",
+    "referencesCount": 28,
+    "path": "embryology.html",
+    "translations": {
+      "ky": "Эмбриология"
+    }
+  },
+  {
+    "id": "general_science",
+    "title": "General Science",
+    "referencesCount": 3,
+    "path": "general.html",
+    "translations": {
+      "ky": "Жалпы илим"
+    }
+  }
+]

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

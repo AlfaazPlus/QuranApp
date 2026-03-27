@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.components
+package com.quranapp.android.compose.components.dialogs
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme

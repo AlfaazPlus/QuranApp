@@ -24,6 +24,7 @@ import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class ActivityQuranScienceContent : ReaderPossessingActivity() {
     private lateinit var binding: ActivityChapterInfoBinding
@@ -99,20 +100,26 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         val base = assets.open("science/base.html").bufferedReader().use { it.readText() }
             .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
 
-        val locale = SPAppConfigs.getLocale(this)
-        val topicPath = if (locale == "en" || locale == SPAppConfigs.LOCALE_DEFAULT) {
-            "science/en/topics/${item.path}"
-        } else {
-            val langPath = "science/$locale/topics/${item.path}"
-            try {
-                assets.open(langPath).close()
-                langPath
-            } catch (e: Exception) {
-                "science/en/topics/${item.path}"
-            }
+
+        val fallbackLangCode = "en"
+        val currentLangCode = with(Locale.getDefault().language) {
+            if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
+        }
+        val currentCountry = Locale.getDefault().country
+
+        val fullPath0 = "science/topics/$currentLangCode-r$currentCountry"
+        val fullPath1 = "science/topics/$currentLangCode"
+        val fallbackPath = "science/topics/$fallbackLangCode"
+
+        val inputStream = listOf(
+            "$fullPath0/${item.path}",
+            "$fullPath1/${item.path}",
+            "$fallbackPath/${item.path}"
+        ).firstNotNullOfOrNull { path ->
+            runCatching { assets.open(path) }.getOrNull()
         }
 
-        var document = assets.open(topicPath).bufferedReader().use { it.readText() }
+        var document = inputStream?.bufferedReader().use { it?.readText() ?: "" }
         document = base.replace("{{CONTENT}}", document)
 
         val regexAr = Regex("\\{\\{REF_AR=(\\d+):(\\d+)\\}\\}")
@@ -130,7 +137,11 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
             val verseNo = matchResult.groupValues[2]
 
             val verse = quran.getVerse(chapterNo.toInt(), verseNo.toInt())
-            val quranText = if (isKFQPC) verse.arabicText else TextUtils.concat(verse.arabicText, " ", verse.endText)
+            val quranText = if (isKFQPC) verse.arabicText else TextUtils.concat(
+                verse.arabicText,
+                " ",
+                verse.endText
+            )
 
             if (isKFQPC) {
                 fontPageNos.add(verse.pageNo)
@@ -149,7 +160,8 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
                 fontStyles += "@font-face { font-family: page_$it; src: url('https://assets-font/quran-arabic/page_$it'); }"
             }
         } else {
-            fontStyles = "@font-face { font-family: quran-arabic; src: url('https://assets-font/quran-arabic'); }"
+            fontStyles =
+                "@font-face { font-family: quran-arabic; src: url('https://assets-font/quran-arabic'); }"
         }
         document = document.replace("{{STYLE}}", fontStyles)
 
@@ -157,28 +169,30 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            val translations = translFactory.getTranslationsSingleVerse(
-                slugs,
-                chapterNo.toInt(),
-                verse.toInt()
+            StringUtils.removeHTML(
+                translFactory.getTranslationsSingleVerse(
+                    slugs,
+                    chapterNo.toInt(),
+                    verse.toInt()
+                )[0].text, false
             )
-
-            if (translations.isNotEmpty()) {
-                StringUtils.removeHTML(translations[0].text, false)
-            } else {
-                ""
-            }
         }
 
         document = regexName.replace(document) { matchResult ->
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            "${quranMeta.getChapterName(this, chapterNo.toInt(), locale, false)} $chapterNo:$verse"
+            "${quranMeta.getChapterName(this, chapterNo.toInt(), false)} $chapterNo:$verse"
         }
 
         runOnUiThread {
-            binding.webView.loadDataWithBaseURL(null, document, "text/html; charset=UTF-8", "utf-8", null)
+            binding.webView.loadDataWithBaseURL(
+                null,
+                document,
+                "text/html; charset=UTF-8",
+                "utf-8",
+                null
+            )
         }
     }
 
