@@ -3,6 +3,7 @@ package com.quranapp.android.api
 import com.quranapp.android.api.models.AppUpdate
 import com.quranapp.android.api.models.AppUrls
 import com.quranapp.android.api.models.ResourcesVersions
+import com.quranapp.android.api.models.mediaplayer.AudioTimingMetadata
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
@@ -31,4 +32,7 @@ interface GithubApi {
 
     @GET("inventory/recitations/available_recitation_translations_info.json")
     suspend fun getAvailableRecitationTranslations(): ResponseBody
+
+    @GET("inventory/recitations/available_recitation_translations_info.json")
+    suspend fun getAudioTiming(): AudioTimingMetadata
 }

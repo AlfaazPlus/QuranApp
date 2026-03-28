@@ -48,6 +48,9 @@
 
         <activity
             android:name=".activities.MainActivity"
+            />
+        <activity
+            android:name=".activities.ActivityRecitationDemo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -195,8 +198,8 @@
             android:foregroundServiceType="dataSync" />
         <service
             android:name=".utils.mediaplayer.RecitationService"
-            android:foregroundServiceType="mediaPlayback"
-            android:exported="true">
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="androidx.media3.session.MediaSessionService" />
             </intent-filter>

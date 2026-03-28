@@ -1,0 +1,70 @@
+{
+  "reciters": [
+    {
+      "id": "ibrahim_walk",
+      "lang_code": "en",
+      "lang_name": "English",
+      "reciter": "Ibrahim Walk",
+      "book": "Sahih International",
+      "url_template": "https://download.quranicaudio.com/quran/ibrahim_walk/{chapNo:%03d}.mp3",
+      "timing_url": null,
+      "translations": {}
+    },
+    {
+      "id": "fooladvand_hedayatfar",
+      "lang_code": "fa",
+      "lang_name": "فارسی",
+      "reciter": "Fooladvand Hedayatfar",
+      "url_template": "",
+      "timing_url": null,
+      "translations": {
+        "fa": "فولادوند - هدایتفر"
+      }
+    },
+    {
+      "id": "mohammed_ahmed",
+      "lang_code": "ks",
+      "lang_name": "كٲشُر",
+      "reciter": "Molvi Mohammed Ahmed",
+      "book": "Mirwaiz Mohammed Yusuf",
+      "url_template": "",
+      "timing_url": null,
+      "translations": {
+      }
+    },
+    {
+      "id": "shamshad_ali_khan",
+      "lang_code": "ur",
+      "lang_name": "اردو",
+      "reciter": "Shamshad Ali Khan",
+      "book": "Fateh Muhammad Jalandhari",
+      "url_template": "",
+      "timing_url": null,
+      "translations": {
+        "ur": "شمشاد علی خان"
+      }
+    },
+    {
+      "id": "german",
+      "lang_code": "de",
+      "lang_name": "Deutsch",
+      "reciter": "German Quran translation audio",
+      "url_template": "",
+      "timing_url": null,
+      "translations": {
+        "de": "Deutsche Koran Übersetzung Audio"
+      }
+    },
+    {
+      "id": "french",
+      "lang_code": "fr",
+      "lang_name": "Français",
+      "reciter": "French Quran translation audio",
+      "url_template": "",
+      "timing_url": null,
+      "translations": {
+        "de": "Traduction audio du Coran en français"
+      }
+    }
+  ]
+}

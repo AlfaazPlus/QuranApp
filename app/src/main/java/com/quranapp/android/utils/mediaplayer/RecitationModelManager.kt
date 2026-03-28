@@ -209,6 +209,12 @@ class RecitationModelManager private constructor(
         )
     }
 
+    fun getRecitationTimingFile(reciterId: String): File {
+        return File(
+            getRecitationsDir(),
+            FileUtils.createPath("timing_metadata", "$reciterId.json"),
+        )
+    }
 
     private fun getQuranManifestFile() = File(getRecitationsDir(), QURAN_MANIFEST_FILENAME)
 

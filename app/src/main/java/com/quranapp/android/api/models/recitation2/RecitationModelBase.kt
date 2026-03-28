@@ -18,7 +18,7 @@ open class RecitationModelBase {
      * If null, chapter audio plays without verse sync.
      */
     @SerialName("timing_url")
-    var timingUrlPath: String? = null
+    var timingUrl: String? = null
 
     val translations: Map<String, String> = mapOf()
 

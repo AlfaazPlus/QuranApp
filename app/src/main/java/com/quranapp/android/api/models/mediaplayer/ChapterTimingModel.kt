@@ -22,9 +22,6 @@ enum class ReciterAudioType {
     }
 }
 
-/**
- * Timing information for a single verse within a chapter audio file.
- */
 @Serializable
 data class VerseTiming(
     @SerialName("verse")
@@ -36,13 +33,10 @@ data class VerseTiming(
     @SerialName("end_ms")
     val endMs: Long,
 
+    // word by word
     @SerialName("segments")
     val segments: List<Int>? = null
 ) {
-
-    /**
-     * Duration of this verse in milliseconds.
-     */
     val durationMs: Long get() = endMs - startMs
 
     /**
@@ -75,9 +69,6 @@ data class VerseTiming(
 data class ChapterTimingMetadata(
     @SerialName("chapter")
     val chapterNo: Int,
-
-    @SerialName("reciter")
-    val reciterId: String,
 
     @SerialName("duration_ms")
     val durationMs: Long,
@@ -119,17 +110,15 @@ data class ChapterTimingMetadata(
             verses.any { it.verseNo == verseNo }
         }
     }
-
-    companion object {
-        /**
-         * Filename format for cached timing metadata.
-         */
-        fun getCacheFileName(reciterId: String): String {
-            return "${reciterId}_timing.json"
-        }
-
-    }
 }
+
+@Serializable
+data class AudioTimingMetadata(
+    @SerialName("reciter")
+    val reciterId: String,
+    @SerialName("verses")
+    val chapters: List<ChapterTimingMetadata> = emptyList()
+) {}
 
 class RecitationAudioResult(
     val chapterNo: Int,

@@ -1,4 +1,5 @@
 package com.quranapp.android.views.recitation
+/*
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
+*/
 /**
  * RecitationPlayer - UI component for controlling Quran recitation playback.
  *
@@ -34,7 +36,8 @@ import java.util.concurrent.TimeUnit
  * - playbackProgress for seekbar
  * - playbackSettings for verse sync
  * - currentVerse for verse highlighting
- */
+ *//*
+
 @SuppressLint("ViewConstructor")
 class RecitationPlayer(val activity: ActivityReader) : FrameLayout(activity) {
 
@@ -378,3 +381,4 @@ class RecitationPlayer(val activity: ActivityReader) : FrameLayout(activity) {
         activity.mBinding.readerHeader.setExpanded(false)
     }
 }
+*/
