@@ -7,6 +7,8 @@ import androidx.media3.exoplayer.ExoPlayer
  * Virtual timeline over a playlist of clipped [MediaItem]s.
  * Each item is a verse (or verse+translation pair) clipped from a full chapter file.
  * This class maps per-clip positions to a single continuous timeline for UI progress/seek.
+ *
+ * Verse identity is encoded in each item's [MediaItem.mediaId] as "chapterNo:verseNo".
  */
 class VerseClipPlan private constructor(
     val items: List<MediaItem>,
@@ -36,10 +38,12 @@ class VerseClipPlan private constructor(
         player.seekTo(last, clipDurationMs[last])
     }
 
+    /**
+     * Returns the playlist index of the first clip whose mediaId contains [verseNo].
+     */
     fun firstIndexForVerse(verseNo: Int): Int {
         items.forEachIndexed { index, item ->
-            val tag = RecitationMediaItem.fromTag(item.localConfiguration?.tag)
-            if (tag?.verseNo == verseNo) return index
+            if (item.mediaId.endsWith(":$verseNo")) return index
         }
         return 0
     }

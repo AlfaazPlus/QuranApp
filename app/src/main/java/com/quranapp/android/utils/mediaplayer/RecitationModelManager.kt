@@ -18,7 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.decodeFromStream
 import java.io.File
+import java.io.InputStream
 import java.util.Locale
 
 class RecitationModelManager private constructor(
@@ -26,6 +29,9 @@ class RecitationModelManager private constructor(
 ) {
     private val appContext = context.applicationContext
 
+    private val DIR_NAME_LEGACY: String = FileUtils.createPath(
+        AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "recitations"
+    )
     private val DIR_NAME: String = FileUtils.createPath(
         AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR, "recitations_v2"
     )
@@ -42,6 +48,16 @@ class RecitationModelManager private constructor(
 
     private val quranLoadLock = Mutex()
     private val translationLoadLock = Mutex()
+
+    fun migrateLegacyData() {
+        // There is nothing to migrate as the new implementation is completely different
+        // and does not rely on the old data structure. We can simply delete the old data
+        // to free up space.
+        val legacyDir = File(DIR_NAME_LEGACY)
+        if (legacyDir.exists()) {
+            legacyDir.deleteRecursively()
+        }
+    }
 
     suspend fun resolveModels(): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
         val audioOption = getRecitationAudioOption(appContext)
@@ -131,6 +147,7 @@ class RecitationModelManager private constructor(
         }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadQuranFromLocal(): AvailableRecitationsModel? =
         withContext(Dispatchers.IO) {
             val file = getQuranManifestFile()
@@ -140,13 +157,16 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                JsonHelper.json.decodeFromString<AvailableRecitationsModel>(file.readText())
+                file.inputStream().buffered().use {
+                    JsonHelper.json.decodeFromStream<AvailableRecitationsModel>(it)
+                }
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadQuranFromLocal")
                 null
             }
         }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadTranslationFromLocal(): AvailableRecitationTranslationsModel? =
         withContext(Dispatchers.IO) {
             val file = getTranslationManifestFile()
@@ -155,39 +175,42 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                val model = JsonHelper.json.decodeFromString<AvailableRecitationTranslationsModel>(
-                    file.readText()
-                )
-                model
+                file.inputStream().buffered().use {
+                    JsonHelper.json.decodeFromStream<AvailableRecitationTranslationsModel>(it)
+                }
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadTranslationFromLocal")
                 null
             }
         }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadQuranFromNetwork(): AvailableRecitationsModel? =
         withContext(Dispatchers.IO) {
             try {
-                val raw = RetrofitInstance.github.getAvailableRecitations().string()
+                val raw = RetrofitInstance.github.getAvailableRecitations().byteStream()
                 writeManifest(getQuranManifestFile(), raw)
-                JsonHelper.json.decodeFromString<AvailableRecitationsModel>(raw)
+
+                raw.buffered().use {
+                    JsonHelper.json.decodeFromStream<AvailableRecitationsModel>(it)
+                }
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadQuranFromNetwork")
                 null
             }
         }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadTranslationFromNetwork(): AvailableRecitationTranslationsModel? =
         withContext(Dispatchers.IO) {
             try {
-                val raw = RetrofitInstance.github.getAvailableRecitationTranslations().string()
+                val raw = RetrofitInstance.github.getAvailableRecitationTranslations().byteStream()
 
                 writeManifest(getTranslationManifestFile(), raw)
 
-                val model =
-                    JsonHelper.json.decodeFromString<AvailableRecitationTranslationsModel>(raw)
-
-                model
+                raw.buffered().use {
+                    JsonHelper.json.decodeFromStream<AvailableRecitationTranslationsModel>(it)
+                }
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadTranslationFromNetwork")
                 null
@@ -221,12 +244,18 @@ class RecitationModelManager private constructor(
     private fun getTranslationManifestFile() =
         File(getRecitationsDir(), TRANSLATION_MANIFEST_FILENAME)
 
-    private fun writeManifest(file: File, raw: String) {
+    private fun writeManifest(file: File, inputStream: InputStream) {
         val fileUtils = FileUtils.newInstance(appContext)
 
         if (fileUtils.createFile(file)) {
-            file.writeText(raw)
+            inputStream.use { input ->
+                file.outputStream().buffered().use { output ->
+                    input.copyTo(output)
+                    output.flush()
+                }
+            }
         }
+
     }
 
     private fun <T : RecitationModelBase> List<T>.selectById(id: String?): T? {

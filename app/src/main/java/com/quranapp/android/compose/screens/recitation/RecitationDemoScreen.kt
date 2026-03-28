@@ -35,11 +35,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -48,7 +52,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.utils.mediaplayer.PlaybackMode
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 
@@ -71,6 +74,9 @@ private val DEMO_CHAPTERS = listOf(
 fun RecitationDemoScreen(controller: RecitationController) {
     val context = LocalContext.current
     val state by controller.state.collectAsState()
+    val isPlaying by controller.isPlayingState.collectAsState()
+    val isBuffering by controller.isBufferingState.collectAsState()
+    val isLoading = state.isResolving || isBuffering
 
     Scaffold(
         modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
@@ -97,9 +103,12 @@ fun RecitationDemoScreen(controller: RecitationController) {
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            if (state.isPlaying || state.isLoading || state.currentVerse.isValid) {
+            if (isPlaying || isLoading || state.currentVerse.isValid) {
                 NowPlayingPanel(
                     state = state,
+                    isPlaying = isPlaying,
+                    isLoading = isLoading,
+                    controller = controller,
                     onPlayPause = { controller.playPause() },
                     onStop = { controller.stop() },
                     onPrevious = { controller.previousVerse() },
@@ -113,6 +122,7 @@ fun RecitationDemoScreen(controller: RecitationController) {
 
             ChapterList(
                 state = state,
+                isPlaying = isPlaying,
                 onChapterSelected = { chapter ->
                     controller.play(chapterNo = chapter.number, verseNo = 1)
                 },
@@ -124,6 +134,9 @@ fun RecitationDemoScreen(controller: RecitationController) {
 @Composable
 private fun NowPlayingPanel(
     state: RecitationServiceState,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
     onPlayPause: () -> Unit,
     onStop: () -> Unit,
     onPrevious: () -> Unit,
@@ -146,13 +159,9 @@ private fun NowPlayingPanel(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val verse = state.currentVerse
-            val modeLabel = when (state.playbackMode) {
-                PlaybackMode.FULL_CHAPTER -> "Chapter"
-                PlaybackMode.VERSE_BY_VERSE -> "Verse"
-            }
 
             Text(
-                text = if (verse.isValid) "$modeLabel ${verse.chapterNo}:${verse.verseNo}" else "Loading...",
+                text = if (verse.isValid) "${verse.chapterNo}:${verse.verseNo}" else "Loading...",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -169,12 +178,19 @@ private fun NowPlayingPanel(
 
             Spacer(Modifier.height(12.dp))
 
-            ProgressBar(state = state, onSeek = onSeek)
+            ProgressBar(
+                isPlaying = isPlaying,
+                isLoading = isLoading,
+                controller = controller,
+                onSeek = onSeek,
+            )
 
             Spacer(Modifier.height(8.dp))
 
             TransportControls(
-                state = state,
+                isPlaying = isPlaying,
+                isLoading = isLoading,
+                repeatVerse = state.settings.repeatVerse,
                 onPlayPause = onPlayPause,
                 onStop = onStop,
                 onPrevious = onPrevious,
@@ -189,17 +205,34 @@ private fun NowPlayingPanel(
 
 @Composable
 private fun ProgressBar(
-    state: RecitationServiceState,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
     onSeek: (Long) -> Unit,
 ) {
     var isSeeking by remember { mutableStateOf(false) }
     var seekValue by remember { mutableStateOf(0f) }
 
-    val position = state.positionMs.toFloat()
-    val duration = state.durationMs.toFloat().coerceAtLeast(1f)
+    var positionMs by remember { mutableLongStateOf(0L) }
+    var durationMs by remember { mutableLongStateOf(0L) }
+
+    LaunchedEffect(isPlaying) {
+        while (isPlaying && isActive) {
+            positionMs = controller.currentPositionMs
+            durationMs = controller.durationMs
+            delay(100)
+        }
+        if (!isPlaying) {
+            positionMs = controller.currentPositionMs
+            durationMs = controller.durationMs
+        }
+    }
+
+    val position = positionMs.toFloat()
+    val duration = durationMs.toFloat().coerceAtLeast(1f)
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (state.isLoading) {
+        if (isLoading) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         } else {
             Slider(
@@ -221,12 +254,12 @@ private fun ProgressBar(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = formatMs(state.positionMs),
+                text = formatMs(positionMs),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
             )
             Text(
-                text = formatMs(state.durationMs),
+                text = formatMs(durationMs),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
             )
@@ -236,7 +269,9 @@ private fun ProgressBar(
 
 @Composable
 private fun TransportControls(
-    state: RecitationServiceState,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    repeatVerse: Boolean,
     onPlayPause: () -> Unit,
     onStop: () -> Unit,
     onPrevious: () -> Unit,
@@ -254,7 +289,7 @@ private fun TransportControls(
             Icon(
                 painterResource(R.drawable.dr_icon_player_repeat),
                 contentDescription = "Repeat",
-                tint = if (state.settings.repeatVerse) MaterialTheme.colorScheme.primary
+                tint = if (repeatVerse) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f),
             )
         }
@@ -267,14 +302,14 @@ private fun TransportControls(
             )
         }
 
-        AnimatedVisibility(visible = state.isLoading, enter = fadeIn(), exit = fadeOut()) {
+        AnimatedVisibility(visible = isLoading, enter = fadeIn(), exit = fadeOut()) {
             CircularProgressIndicator(
                 modifier = Modifier.size(48.dp),
                 strokeWidth = 3.dp,
             )
         }
 
-        AnimatedVisibility(visible = !state.isLoading, enter = fadeIn(), exit = fadeOut()) {
+        AnimatedVisibility(visible = !isLoading, enter = fadeIn(), exit = fadeOut()) {
             FilledTonalIconButton(
                 onClick = onPlayPause,
                 modifier = Modifier.size(56.dp),
@@ -285,10 +320,10 @@ private fun TransportControls(
             ) {
                 Icon(
                     painterResource(
-                        if (state.isPlaying) R.drawable.dr_icon_pause2
+                        if (isPlaying) R.drawable.dr_icon_pause2
                         else R.drawable.dr_icon_play2,
                     ),
-                    contentDescription = if (state.isPlaying) "Pause" else "Play",
+                    contentDescription = if (isPlaying) "Pause" else "Play",
                     modifier = Modifier.size(32.dp),
                 )
             }
@@ -315,6 +350,7 @@ private fun TransportControls(
 @Composable
 private fun ChapterList(
     state: RecitationServiceState,
+    isPlaying: Boolean,
     onChapterSelected: (ChapterEntry) -> Unit,
 ) {
     val activeChapter = state.currentVerse.chapterNo
@@ -324,7 +360,7 @@ private fun ChapterList(
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         items(DEMO_CHAPTERS, key = { it.number }) { chapter ->
-            val isActive = chapter.number == activeChapter && state.isPlaying
+            val isActive = chapter.number == activeChapter && isPlaying
             ChapterRow(
                 chapter = chapter,
                 isActive = isActive,

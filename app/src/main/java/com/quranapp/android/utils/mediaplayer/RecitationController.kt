@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
+import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionResult
@@ -32,19 +33,32 @@ class RecitationController private constructor(private val appContext: Context) 
     private val _isConnected = MutableStateFlow(false)
     val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
 
+    private val _isPlaying = MutableStateFlow(false)
+    /** Whether the player is currently playing. Source: MediaController (Player.Listener). */
+    val isPlayingState: StateFlow<Boolean> = _isPlaying.asStateFlow()
+
+    private val _isBuffering = MutableStateFlow(false)
+    /** Whether the player is buffering. Source: MediaController (Player.Listener). */
+    val isBufferingState: StateFlow<Boolean> = _isBuffering.asStateFlow()
+
     /** Events from service (errors, messages). UI subscribes to show toasts/snackbars. */
     private val _events = MutableSharedFlow<PlayerEvent>(extraBufferCapacity = 10)
     val events: SharedFlow<PlayerEvent> = _events.asSharedFlow()
 
-    // Track last event timestamp to detect new events
     private var lastSeenEventTimestamp: Long = 0L
 
     // ==================== Convenience Getters ====================
 
-    val isPlaying: Boolean get() = _fullState.value.isPlaying
-    val isLoading: Boolean get() = _fullState.value.isLoading
+    val isPlaying: Boolean get() = _isPlaying.value
+    val isLoading: Boolean get() = _fullState.value.isResolving || _isBuffering.value
 
     val state: StateFlow<RecitationServiceState> = _fullState.asStateFlow()
+
+    /** Current playback position in ms. Query on UI frame for smooth progress. */
+    val currentPositionMs: Long get() = mediaController?.currentPosition ?: 0L
+
+    /** Total duration in ms. */
+    val durationMs: Long get() = mediaController?.duration ?: 0L
 
     // ==================== Connection ====================
 
@@ -68,7 +82,11 @@ class RecitationController private constructor(private val appContext: Context) 
 
         controllerFuture?.addListener({
             try {
-                mediaController = controllerFuture?.get()
+                val controller = controllerFuture?.get()
+                mediaController = controller
+                controller?.addListener(playerListener)
+                _isPlaying.value = controller?.isPlaying ?: false
+                _isBuffering.value = controller?.playbackState == Player.STATE_BUFFERING
                 _isConnected.value = true
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationController.connect")
@@ -78,11 +96,24 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     fun disconnect() {
+        mediaController?.removeListener(playerListener)
         controllerFuture?.let { MediaController.releaseFuture(it) }
         mediaController = null
         controllerFuture = null
         _isConnected.value = false
+        _isPlaying.value = false
+        _isBuffering.value = false
         synchronized(pendingCallbacks) { pendingCallbacks.clear() }
+    }
+
+    private val playerListener = object : Player.Listener {
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            _isPlaying.value = isPlaying
+        }
+
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            _isBuffering.value = playbackState == Player.STATE_BUFFERING
+        }
     }
 
     private fun ensureServiceStarted(onReady: Runnable? = null) {
@@ -255,7 +286,7 @@ class RecitationController private constructor(private val appContext: Context) 
     // ==================== Query ====================
 
     fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
-        return state.value.isCurrentVerse(chapterNo, verseNo) && state.value.isPlaying
+        return state.value.isCurrentVerse(chapterNo, verseNo) && isPlaying
     }
 
     // ==================== Internal ====================

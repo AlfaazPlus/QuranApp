@@ -23,12 +23,22 @@ object DownloadSourceUtils {
     }
 
     @JvmStatic
+    fun getDownloadSourceRoot(context: Context): String {
+        return when (SPAppConfigs.getResourceDownloadSrc(context)) {
+            DOWNLOAD_SRC_ALFAAZ_PLUS -> ApiConfig.GH_PROXY_ROOT
+            DOWNLOAD_SRC_GITHUB -> ApiConfig.GH_RAW_ROOT
+            DOWNLOAD_SRC_JSDELIVR -> ApiConfig.JS_DELIVR_ROOT
+            else -> ApiConfig.GH_PROXY_ROOT
+        }
+    }
+
+    @JvmStatic
     fun getDownloadSourceBaseUrl(context: Context): String {
         return when (SPAppConfigs.getResourceDownloadSrc(context)) {
-            DOWNLOAD_SRC_ALFAAZ_PLUS -> ApiConfig.GH_PROXY_ROOT_URL
-            DOWNLOAD_SRC_GITHUB -> ApiConfig.GITHUB_ROOT_URL
-            DOWNLOAD_SRC_JSDELIVR -> ApiConfig.JS_DELIVR_ROOT_URL
-            else -> ApiConfig.GH_PROXY_ROOT_URL
+            DOWNLOAD_SRC_ALFAAZ_PLUS -> ApiConfig.GH_PROXY_BASE_URL
+            DOWNLOAD_SRC_GITHUB -> ApiConfig.GH_RAW_BASE_URL
+            DOWNLOAD_SRC_JSDELIVR -> ApiConfig.JS_DELIVR_BASE_URL
+            else -> ApiConfig.GH_PROXY_BASE_URL
         }
     }
 

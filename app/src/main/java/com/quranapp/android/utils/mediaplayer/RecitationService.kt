@@ -15,6 +15,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -23,19 +24,19 @@ import androidx.media3.session.SessionCommands
 import androidx.media3.session.SessionResult
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
-import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioResult
+import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
+import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.recitation.RecitationManager
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -99,10 +100,11 @@ class RecitationService : MediaSessionService() {
         QuranMeta2.prepareInstance(applicationContext)
     }
 
-    private var chapterTimingMetadata: ChapterTimingMetadata? = null
+    private var singleTrackTimingMetadata: ChapterTimingMetadata? = null
     private var verseClipPlan: VerseClipPlan? = null
     private var verseTrackingJob: Job? = null
-    private var progressBroadcastJob: Job? = null
+    private var latestPlaybackRequestId: Long = 0L
+    private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
 
     val _state = MutableStateFlow(RecitationServiceState.EMPTY)
     val state: StateFlow<RecitationServiceState> = _state.asStateFlow()
@@ -124,13 +126,10 @@ class RecitationService : MediaSessionService() {
         }
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
-        return mediaSession
-    }
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
 
     override fun onDestroy() {
         unregisterReceiver(headsetReceiver)
-        audioRepository.cancelAll()
         mediaSession?.run {
             player.release()
             release()
@@ -141,16 +140,28 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun initializePlayer() {
-        player = ExoPlayer.Builder(this).build().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(C.USAGE_MEDIA)
-                    .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
-                    .build(),
-                true,
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                /* minBufferMs */ 15_000,
+                /* maxBufferMs */ 30_000,
+                /* bufferForPlaybackMs */ 1_500,
+                /* bufferForPlaybackAfterRebufferMs */ 3_000,
             )
-            addListener(playerListener)
-        }
+            .build()
+
+        player = ExoPlayer.Builder(this)
+            .setLoadControl(loadControl)
+            .build()
+            .apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(C.USAGE_MEDIA)
+                        .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
+                        .build(),
+                    true,
+                )
+                addListener(playerListener)
+            }
     }
 
     private fun initializeMediaSession() {
@@ -185,8 +196,8 @@ class RecitationService : MediaSessionService() {
 
     // ==================== State helpers ====================
 
-    private fun setLoadingState(loading: Boolean) {
-        _state.value = state.value.copy(isLoading = loading)
+    private fun setResolving(resolving: Boolean) {
+        _state.value = state.value.copy(isResolving = resolving)
     }
 
     private fun emitEvent(event: PlayerEvent) {
@@ -220,7 +231,7 @@ class RecitationService : MediaSessionService() {
 
     fun playControl() {
         if (currentDuration() > 0 && currentPosition() < currentDuration()) {
-            if (state.value.isPlaying) pauseMedia() else playMedia()
+            if (player.isPlaying) pauseMedia() else playMedia()
         } else {
             restartVerse()
         }
@@ -231,13 +242,14 @@ class RecitationService : MediaSessionService() {
         player.stop()
         player.clearMediaItems()
         stopVerseTracking()
-        stopProgressTracking()
-        chapterTimingMetadata = null
+        singleTrackTimingMetadata = null
         verseClipPlan = null
+        chapterResolutionRequests.values.forEach { it.cancel() }
+        chapterResolutionRequests.clear()
     }
 
     fun seek(amountOrDirection: Long) {
-        if (state.value.isLoading) return
+        if (state.value.isResolving) return
 
         val isRelative =
             amountOrDirection == ACTION_SEEK_LEFT || amountOrDirection == ACTION_SEEK_RIGHT
@@ -265,15 +277,15 @@ class RecitationService : MediaSessionService() {
     }
 
     fun seekToVerse(verseNo: Int) {
-        if (state.value.playbackMode != PlaybackMode.FULL_CHAPTER) return
-
         val plan = verseClipPlan
+
         if (plan != null && !plan.isEmpty) {
             player.seekTo(plan.firstIndexForVerse(verseNo), 0L)
         } else {
-            val timing = chapterTimingMetadata?.getVerseTiming(verseNo) ?: return
+            val timing = singleTrackTimingMetadata?.getVerseTiming(verseNo) ?: return
             player.seekTo(timing.startMs)
         }
+
         updateState {
             copy(currentVerse = ChapterVersePair(currentVerse.chapterNo, verseNo))
         }
@@ -281,81 +293,166 @@ class RecitationService : MediaSessionService() {
 
     fun restartVerse() {
         val cv = state.value.currentVerse
+        if (!cv.isValid) return
         reciteVerse(cv.chapterNo, cv.verseNo)
     }
 
     fun recitePreviousVerse() {
-        if (player.hasPreviousMediaItem()) {
-            player.seekToPreviousMediaItem()
-        } else {
-            scoped {
-                val prev = state.value.getPreviousVerse(requestQuranMeta()) ?: return@scoped
-                reciteVerse(prev.chapterNo, prev.verseNo)
-            }
+        scoped {
+            val meta = requestQuranMeta()
+            val prev = state.value.getPreviousVerse(meta) ?: return@scoped
+            loadChapterVerse(prev.chapterNo, prev.verseNo, meta)
         }
     }
 
     fun reciteNextVerse() {
-        if (player.hasNextMediaItem()) {
-            player.seekToNextMediaItem()
-        } else {
-            scoped {
-                val next = state.value.getNextVerse(requestQuranMeta()) ?: return@scoped
-                reciteVerse(next.chapterNo, next.verseNo)
-            }
+        scoped {
+            val meta = requestQuranMeta()
+            val next = state.value.getNextVerse(meta) ?: return@scoped
+            loadChapterVerse(next.chapterNo, next.verseNo, meta)
         }
     }
 
     fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
-        return state.value.isCurrentVerse(chapterNo, verseNo) && state.value.isPlaying
+        return state.value.isCurrentVerse(chapterNo, verseNo) && player.isPlaying
     }
 
     fun cancelLoading() {
         audioRepository.cancelAll()
-        setLoadingState(false)
+        setResolving(false)
     }
 
     // ==================== Chapter playback ====================
 
     fun reciteVerse(chapterNo: Int, verseNo: Int) {
         scoped {
-            setLoadingState(true)
+            val meta = requestQuranMeta()
+            loadChapterVerse(chapterNo, verseNo, meta)
+        }
+    }
+
+    /**
+     * Loads and plays [verseNo] in [chapterNo], or seeks within the current chapter media
+     * when the same chapter is already loaded and verse-level seeking is available.
+     */
+    private suspend fun loadChapterVerse(chapterNo: Int, verseNo: Int, meta: QuranMeta) {
+        if (!meta.isVerseValid4Chapter(chapterNo, verseNo)) {
+            return
+        }
+
+        val requestId = ++latestPlaybackRequestId
+
+        if (trySeekToVerseInLoadedChapter(chapterNo, verseNo, meta)) {
+            if (requestId == latestPlaybackRequestId) {
+                setResolving(false)
+            }
+            return
+        }
+
+        setResolving(true)
+
+        try {
+            when (val result = awaitChapterResolution(chapterNo)) {
+                is ResolvedAudioResult.Downloading -> {
+                    // Terminal resolver output is always Error or Resolved.
+                }
+
+                is ResolvedAudioResult.Error -> {
+                    if (requestId != latestPlaybackRequestId) return
+                    setResolving(false)
+                    emitEvent(PlayerEvent.Error(result.error.message))
+                }
+
+                is ResolvedAudioResult.Resoved -> {
+                    if (requestId != latestPlaybackRequestId) return
+                    setResolving(false)
+                    startChapterPlayback(chapterNo, verseNo, result)
+                }
+            }
+        } catch (e: Exception) {
+            if (requestId != latestPlaybackRequestId) return
+            setResolving(false)
+            Log.saveError(e, "RecitationService.loadChapterVerse")
+            emitEvent(PlayerEvent.Error(e.message))
+        }
+    }
+
+    /**
+     * Reuses an in-flight chapter resolution when available; otherwise starts a new one.
+     * This keeps same-chapter requests efficient while allowing different chapters to
+     * continue downloading in parallel.
+     */
+    private suspend fun awaitChapterResolution(chapterNo: Int): ResolvedAudioResult {
+        val inFlight = chapterResolutionRequests[chapterNo]
+        if (inFlight != null && inFlight.isActive) {
+            return inFlight.await()
+        }
+
+        val deferred = serviceScope.async {
             try {
+                var terminal: ResolvedAudioResult? = null
                 audioRepository.resolveAudioUris(chapterNo).collect { result ->
                     when (result) {
-                        is RecitationAudioRepository.AudioResult.Downloading -> {
-                            setLoadingState(true)
-                        }
-
-                        is RecitationAudioRepository.AudioResult.Error -> {
-                            setLoadingState(false)
-                            emitEvent(PlayerEvent.Error(result.error.message))
-                        }
-
-                        is RecitationAudioRepository.AudioResult.Success -> {
-                            setLoadingState(false)
-                            startChapterPlayback(chapterNo, verseNo, result)
-                        }
+                        is ResolvedAudioResult.Downloading -> Unit
+                        is ResolvedAudioResult.Error -> terminal = result
+                        is ResolvedAudioResult.Resoved -> terminal = result
                     }
                 }
+
+                terminal ?: ResolvedAudioResult.Error(
+                    IllegalStateException("Audio resolution ended without terminal result")
+                )
             } catch (e: Exception) {
-                setLoadingState(false)
-                Log.saveError(e, "RecitationService.reciteVerse")
-                emitEvent(PlayerEvent.Error(e.message))
+                ResolvedAudioResult.Error(e)
             }
         }
+
+        chapterResolutionRequests[chapterNo] = deferred
+
+        return try {
+            deferred.await()
+        } finally {
+            if (chapterResolutionRequests[chapterNo] == deferred && deferred.isCompleted) {
+                chapterResolutionRequests.remove(chapterNo)
+            }
+        }
+    }
+
+    /**
+     * Returns true if playback was adjusted in place (seek + play) without re-resolving audio.
+     */
+    private fun trySeekToVerseInLoadedChapter(
+        chapterNo: Int,
+        verseNo: Int,
+        meta: QuranMeta
+    ): Boolean {
+        if (state.value.isResolving) return false
+        if (state.value.currentVerse.chapterNo != chapterNo) return false
+        if (player.mediaItemCount == 0) return false
+        if (player.playbackState == Player.STATE_IDLE) return false
+
+        val timingMeta = singleTrackTimingMetadata ?: return false
+        if (timingMeta.chapterNo != chapterNo) return false
+
+        val plan = verseClipPlan
+        val canSeekWithPlan = plan != null && !plan.isEmpty
+        val canSeekWithTiming = timingMeta.getVerseTiming(verseNo) != null
+        if (!canSeekWithPlan && !canSeekWithTiming) return false
+
+        seekToVerse(verseNo)
+        playMedia()
+        return true
     }
 
     private suspend fun startChapterPlayback(
         chapterNo: Int,
         startVerse: Int,
-        result: RecitationAudioRepository.AudioResult.Success,
+        result: ResolvedAudioResult.Resoved,
     ) {
         val meta = requestQuranMeta()
         val settings = state.value.settings
 
-        chapterTimingMetadata = result.quran?.timingMetadata ?: result.translation?.timingMetadata
-        val plan = buildVerseClipPlan(meta, chapterNo, result, settings)
+        val plan = buildMultiTrackVerseClipPlan(meta, chapterNo, result, settings)
         verseClipPlan = plan
 
         val updatedSettings = settings.copy(
@@ -367,19 +464,26 @@ class RecitationService : MediaSessionService() {
         player.clearMediaItems()
 
         if (plan != null) {
+            // Multi-track clipped playlist: verse boundaries are encoded in the clips themselves,
+            // so per-track timing metadata is not needed at the service level.
+            singleTrackTimingMetadata = null
             player.setMediaItems(plan.items)
             player.seekTo(plan.firstIndexForVerse(startVerse), 0L)
         } else {
-            val primary = resolvePrimaryAudio(result, settings) ?: run {
+            // Single file fallback — store the timing of the track we actually load,
+            // so verse seeking / tracking works against its positions.
+            val primary = result.quran ?: result.translation ?: run {
                 emitEvent(PlayerEvent.Error("No audio for this chapter"))
                 return
             }
 
+            singleTrackTimingMetadata = primary.timingMetadata
+
             player.setMediaItem(
-                buildFullChapterMediaItem(meta, updatedSettings, chapterNo, startVerse, primary),
+                buildFullChapterMediaItem(meta, updatedSettings, chapterNo, primary),
             )
 
-            val seekMs = chapterTimingMetadata?.getVerseTiming(startVerse)?.startMs ?: 0L
+            val seekMs = singleTrackTimingMetadata?.getVerseTiming(startVerse)?.startMs ?: 0L
             player.seekTo(seekMs)
         }
 
@@ -390,89 +494,77 @@ class RecitationService : MediaSessionService() {
 
         updateState {
             copy(
-                playbackMode = PlaybackMode.FULL_CHAPTER,
-                timingMetadata = chapterTimingMetadata,
                 settings = updatedSettings,
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
-                isPlaying = true,
                 pausedByHeadset = false,
             )
         }
     }
 
-    private fun resolvePrimaryAudio(
-        result: RecitationAudioRepository.AudioResult.Success,
-        settings: PlayerSettings,
-    ): RecitationAudioResult? {
-        val preferred = when (settings.audioOption) {
-            RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> result.translation
-            else -> result.quran
-        }
-        return preferred ?: result.translation ?: result.quran
-    }
-
     // ==================== Playlist building ====================
-
-    private data class TrackSource(
-        val audio: RecitationAudioResult,
-        val kind: RecitationClipKind,
-    )
-
     /**
      * Determines which audio sources to include as separate tracks in the clipped playlist.
      * Result already contains resolved URIs and timing metadata based on current settings,
      * so this just maps to internal TrackSource objects.
      */
     private fun resolveTrackSources(
-        result: RecitationAudioRepository.AudioResult.Success,
-    ): List<TrackSource>? {
-        val sources = listOf<TrackSource>()
+        result: ResolvedAudioResult.Resoved,
+    ): List<RecitationAudioTrack>? {
+        val sources = listOf<RecitationAudioTrack>()
 
         if (
             result.quran != null && result.quran.hasVerseTiming
         ) {
-            sources.plus(TrackSource(result.quran, RecitationClipKind.QURAN))
+            sources.plus(result.quran)
         }
 
         if (
             result.translation != null && result.translation.hasVerseTiming
         ) {
-            sources.plus(TrackSource(result.translation, RecitationClipKind.TRANSLATION))
+            sources.plus(result.translation)
         }
 
         return if (sources.isEmpty()) null else sources
     }
 
     /**
-     * Builds a clipped playlist for verse-level playback.
+     * Builds a clipped playlist for verse-level playback for multiple audio tracks (Quran + translation).
      * Returns null when timing is unavailable; caller falls back to single unclipped file.
      */
-    private fun buildVerseClipPlan(
+    private fun buildMultiTrackVerseClipPlan(
         meta: QuranMeta,
         chapterNo: Int,
-        result: RecitationAudioRepository.AudioResult.Success,
+        result: ResolvedAudioResult.Resoved,
         settings: PlayerSettings,
     ): VerseClipPlan? {
         val tracks = resolveTrackSources(result) ?: return null
 
-        val items = mutableListOf<MediaItem>()
+        if (tracks.size < 2) {
+            // not worth building a playlist for a single track.
+            // Caller can just play the single file and seek to verse timing.
+            return null
+        }
 
-        for (v in 1..meta.getChapterVerseCount(chapterNo)) {
+        val verseCount = meta.getChapterVerseCount(chapterNo)
+        val trackCount = tracks.size
+        val items = ArrayList<MediaItem>(verseCount * trackCount)
+        val artist = buildArtist(settings)
+
+        for (verseNo in 1..verseCount) {
+            val mediaId = "$chapterNo:$verseNo"
+            val verseMetadata = MediaMetadata.Builder()
+                .setTitle(buildTitle(meta, chapterNo, verseNo))
+                .setArtist(artist)
+                .build()
+
             for (track in tracks) {
-                val vt = track.audio.timingMetadata!!.getVerseTiming(v) ?: return null
+                val vt = track.timingMetadata!!.getVerseTiming(verseNo) ?: return null
                 if (vt.durationMs <= 0L) continue
-
-                val verseMetadata = createVerseMetadata(
-                    meta,
-                    settings,
-                    chapterNo,
-                    v,
-                    track.kind,
-                )
 
                 items.add(
                     MediaItem.Builder()
-                        .setUri(track.audio.audioUri)
+                        .setMediaId(mediaId)
+                        .setUri(track.audioUri)
                         .setMediaMetadata(verseMetadata)
                         .setClippingConfiguration(
                             MediaItem.ClippingConfiguration.Builder()
@@ -495,114 +587,92 @@ class RecitationService : MediaSessionService() {
         meta: QuranMeta,
         settings: PlayerSettings,
         chapterNo: Int,
-        startVerse: Int,
-        audio: RecitationAudioResult,
+        audio: RecitationAudioTrack,
     ): MediaItem {
-        val kind = if (settings.audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION) {
-            RecitationClipKind.TRANSLATION
-        } else {
-            RecitationClipKind.QURAN
-        }
         return MediaItem.Builder()
+            .setMediaId("$chapterNo")
             .setUri(audio.audioUri)
-            .setMediaMetadata(createVerseMetadata(meta, settings, chapterNo, startVerse, kind))
-            .setTag(
-                RecitationMediaItem(
-                    slug = audio.reciterId,
-                    translationSlug = null,
-                    chapterNo = chapterNo,
-                    verseNo = startVerse,
-                    clipKind = kind,
-                ),
-            )
+            .setMediaMetadata(buildMediaMetadata(meta, settings, chapterNo, verseNo = null))
             .build()
     }
 
     // ==================== Metadata ====================
 
-    private fun createVerseMetadata(
+    private fun buildTitle(meta: QuranMeta, chapterNo: Int, verseNo: Int?): String {
+        val chapterName = meta.getChapterName(this, chapterNo) ?: "Chapter $chapterNo"
+        return if (verseNo != null) "$chapterName ($chapterNo:$verseNo)" else chapterName
+    }
+
+    private fun buildArtist(settings: PlayerSettings): String? {
+        val quranReciter = settings.reciter?.let { RecitationManager.getReciterName(it) }
+        val translationReciter =
+            settings.translationReciter?.let { RecitationManager.getTranslationReciterName(it) }
+
+        return when {
+            quranReciter != null && translationReciter != null -> "$quranReciter & $translationReciter"
+            quranReciter != null -> quranReciter
+            translationReciter != null -> translationReciter
+            else -> null
+        }
+    }
+
+    private fun buildMediaMetadata(
         meta: QuranMeta,
         settings: PlayerSettings,
         chapterNo: Int,
-        verseNo: Int,
-        kind: RecitationClipKind = RecitationClipKind.QURAN,
+        verseNo: Int?
     ): MediaMetadata {
-        val chapterName = meta.getChapterName(this, chapterNo) ?: ""
-        val baseTitle = getString(
-            R.string.strLabelVerseSerialWithChapter,
-            chapterName,
-            chapterNo,
-            verseNo,
-        )
-        val title = when (kind) {
-            RecitationClipKind.TRANSLATION ->
-                "$baseTitle · ${getString(R.string.strLabelIncludeTranslation)}"
-
-            RecitationClipKind.QURAN -> baseTitle
-        }
-
-        val artist = when (settings.audioOption) {
-            RecitationUtils.AUDIO_OPTION_BOTH -> {
-                val r = RecitationManager.getReciterName(settings.reciter) ?: ""
-                val t =
-                    RecitationManager.getTranslationReciterName(settings.translationReciter) ?: ""
-                "$r & $t"
-            }
-
-            RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION ->
-                RecitationManager.getTranslationReciterName(settings.translationReciter)
-
-            else ->
-                RecitationManager.getReciterName(settings.reciter)
-        }
-
         return MediaMetadata.Builder()
-            .setTitle(title)
-            .setArtist(artist)
+            .setTitle(buildTitle(meta, chapterNo, verseNo))
+            .setArtist(buildArtist(settings))
             .build()
     }
 
-    // ==================== Progress & verse tracking ====================
-
-    private fun startProgressTracking() {
-        progressBroadcastJob?.cancel()
-        progressBroadcastJob = serviceScope.launch {
-            while (isActive && player.isPlaying) {
-                updateState { copy(positionMs = currentPosition(), durationMs = currentDuration()) }
-                delay(100)
-            }
-        }
-    }
-
-    private fun stopProgressTracking() {
-        progressBroadcastJob?.cancel()
-        progressBroadcastJob = null
-    }
+    // ==================== Verse tracking ====================
 
     /**
-     * Polls player position to update current verse when playing a single unclipped chapter file.
-     * Not needed for clipped playlists (verse transitions fire [onMediaItemTransition]).
+     * Starts position-based verse tracking for single-track mode.
+     * Clip-plan mode does not need polling — verse changes are detected
+     * via [onVerseTransition] on media item transitions, and each clip
+     * already has per-verse MediaMetadata baked in.
      */
     private fun startVerseTracking() {
-        if (state.value.playbackMode != PlaybackMode.FULL_CHAPTER) return
+        verseTrackingJob?.cancel()
+
         if (verseClipPlan != null) return
 
-        verseTrackingJob?.cancel()
-        val timing = chapterTimingMetadata
+        val timing = singleTrackTimingMetadata
         if (timing == null || !timing.hasVerseTiming) return
 
         verseTrackingJob = serviceScope.launch {
+            val meta = requestQuranMeta()
             while (isActive && player.isPlaying) {
                 val vt = timing.getVerseAtPosition(player.currentPosition)
                 val current = state.value.currentVerse
                 if (vt != null && vt.verseNo != current.verseNo) {
-                    updateState {
-                        copy(currentVerse = ChapterVersePair(timing.chapterNo, vt.verseNo))
-                    }
+                    val newVerse = ChapterVersePair(timing.chapterNo, vt.verseNo)
+                    updateState { copy(currentVerse = newVerse) }
+                    updateNotificationMetadata(meta, timing.chapterNo, vt.verseNo)
                 }
                 delay(200)
             }
         }
+    }
+
+    /**
+     * Updates the current media item's metadata so the notification reflects the current verse.
+     * Only needed for single-track mode where one media item spans the whole chapter.
+     */
+    private fun updateNotificationMetadata(meta: QuranMeta, chapterNo: Int, verseNo: Int) {
+        if (player.mediaItemCount == 0) return
+
+        val settings = state.value.settings
+
+        val updated = player.currentMediaItem?.buildUpon()
+            ?.setMediaMetadata(buildMediaMetadata(meta, settings, chapterNo, verseNo))
+            ?.build() ?: return
+
+        player.replaceMediaItem(player.currentMediaItemIndex, updated)
     }
 
     private fun stopVerseTracking() {
@@ -614,7 +684,7 @@ class RecitationService : MediaSessionService() {
 
     private val playerListener = object : Player.Listener {
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-            handleMediaItemTransition(mediaItem)
+            onVerseTransition()
         }
 
         override fun onPositionDiscontinuity(
@@ -625,26 +695,19 @@ class RecitationService : MediaSessionService() {
             if (reason == Player.DISCONTINUITY_REASON_AUTO_TRANSITION ||
                 reason == Player.DISCONTINUITY_REASON_SEEK
             ) {
-                handleMediaItemTransition(newPosition.mediaItem)
+                onVerseTransition()
             }
         }
 
         override fun onPlaybackStateChanged(playbackState: Int) {
-            when (playbackState) {
-                Player.STATE_BUFFERING -> setLoadingState(true)
-                Player.STATE_READY -> setLoadingState(false)
-                Player.STATE_ENDED -> handlePlaybackEnded()
-                else -> {}
-            }
+            if (playbackState == Player.STATE_ENDED) handlePlaybackEnded()
         }
 
         override fun onIsPlayingChanged(isPlaying: Boolean) {
-            updateState { copy(isPlaying = isPlaying, pausedByHeadset = false) }
             if (isPlaying) {
-                startProgressTracking()
+                updateState { copy(pausedByHeadset = false) }
                 startVerseTracking()
             } else {
-                stopProgressTracking()
                 stopVerseTracking()
             }
         }
@@ -655,16 +718,22 @@ class RecitationService : MediaSessionService() {
         }
     }
 
-    private fun handleMediaItemTransition(mediaItem: MediaItem?) {
-        val tag = RecitationMediaItem.fromTag(mediaItem?.localConfiguration?.tag) ?: return
-        updateState {
-            copy(
-                currentVerse = ChapterVersePair(tag.chapterNo, tag.verseNo),
-                settings = settings.copy(
-                    reciter = tag.slug,
-                    translationReciter = tag.translationSlug,
-                ),
-            )
+    /**
+     * Called on media item transitions and seek discontinuities.
+     * Parses the mediaId ("chapterNo:verseNo") to update the current verse.
+     * Only meaningful for clip-plan playlists where each item is a verse.
+     */
+    private fun onVerseTransition() {
+        val mediaId = player.currentMediaItem?.mediaId ?: return
+        val parts = mediaId.split(':')
+        if (parts.size != 2) return
+
+        val chapter = parts[0].toIntOrNull() ?: return
+        val verse = parts[1].toIntOrNull() ?: return
+
+        val resolved = ChapterVersePair(chapter, verse)
+        if (resolved != state.value.currentVerse) {
+            updateState { copy(currentVerse = resolved) }
         }
     }
 
@@ -673,24 +742,10 @@ class RecitationService : MediaSessionService() {
 
         scoped {
             val meta = requestQuranMeta()
-            if (state.value.playbackMode == PlaybackMode.FULL_CHAPTER) {
-                val next = state.value.getNextChapter(meta)
-                if (next != null) reciteVerse(next.chapterNo, next.verseNo)
-                else stopMedia()
-            } else {
-                val next = state.value.getNextVerse(meta) ?: run { stopMedia(); return@scoped }
-                val idx = findVerseInPlaylist(next.chapterNo, next.verseNo)
-                if (idx < 0) reciteVerse(next.chapterNo, next.verseNo)
-            }
+            val next = state.value.getNextChapter(meta)
+            if (next != null) reciteVerse(next.chapterNo, next.verseNo)
+            else stopMedia()
         }
-    }
-
-    private fun findVerseInPlaylist(chapter: Int, verse: Int): Int {
-        for (i in 0 until player.mediaItemCount) {
-            val tag = RecitationMediaItem.fromTag(player.getMediaItemAt(i).localConfiguration?.tag)
-            if (tag?.chapterNo == chapter && tag.verseNo == verse) return i
-        }
-        return -1
     }
 
     // ==================== Session callback & command dispatch ====================
@@ -798,8 +853,6 @@ class RecitationService : MediaSessionService() {
             }
         }
     }
-
-    // ==================== Utility ====================
 
     private fun scoped(action: suspend CoroutineScope.() -> Unit) {
         serviceScope.launch { action() }

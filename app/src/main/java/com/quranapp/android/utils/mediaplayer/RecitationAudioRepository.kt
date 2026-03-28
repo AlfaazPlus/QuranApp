@@ -3,57 +3,59 @@ package com.quranapp.android.utils.mediaplayer
 import android.content.Context
 import android.os.Build
 import androidx.core.net.toUri
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.quranapp.android.api.JsonHelper
-import com.quranapp.android.api.models.mediaplayer.AudioTimingMetadata
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioResult
+import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
+import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
+import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.exceptions.NoInternetException
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
+import com.quranapp.android.utils.extensions.isGzip
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import androidx.lifecycle.asFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
+import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
+import java.util.zip.GZIPInputStream
 
 class RecitationAudioRepository(private val context: Context) {
+    companion object {
+        private const val DOWNLOAD_BUFFER_SIZE = 4096
+    }
+
     private val fileUtils = FileUtils.newInstance(context)
     private val modelManager = RecitationModelManager.getInstance(context)
+    private val workManager = WorkManager.getInstance(context)
 
-    /** Reserved for cancelable downloads; no-op until downloads are job-backed. */
-    fun cancelAll() {}
-
-    private val _downloadState =
-        MutableStateFlow(ResourceDownloadStatus.Idle)
-    val downloadState: StateFlow<ResourceDownloadStatus> = _downloadState.asStateFlow()
-
-    /**
-     * Result class for verse-by-verse audio resolution
-     */
-    sealed class AudioResult {
-        data class Success(
-            val chapter: Int,
-            val quran: RecitationAudioResult?,
-            val translation: RecitationAudioResult?,
-        ) : AudioResult()
-
-        data class Error(val error: Throwable) : AudioResult()
-        data class Downloading(val progress: Int) : AudioResult()
+    fun cancelAll() {
+        workManager.cancelAllWorkByTag(RecitationAudioDownloadWorker.TAG)
     }
 
 
@@ -72,7 +74,7 @@ class RecitationAudioRepository(private val context: Context) {
      */
     fun resolveAudioUris(
         chapterNo: Int,
-    ): Flow<AudioResult> = flow {
+    ): Flow<ResolvedAudioResult> = flow {
         val audioOption = SPReader.getRecitationAudioOption(context)
 
         val (quranModel, translationModel) = modelManager.resolveModels()
@@ -87,7 +89,7 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         if (failed) {
-            emit(AudioResult.Error(IllegalStateException("Failed to obtain recitation models")))
+            emit(ResolvedAudioResult.Error(IllegalStateException("Failed to obtain recitation models")))
             return@flow
         }
 
@@ -103,7 +105,7 @@ class RecitationAudioRepository(private val context: Context) {
 
         if (quranNeedsDownload || translationNeedsDownload) {
             if (!NetworkStateReceiver.isNetworkConnected(context)) {
-                emit(AudioResult.Error(NoInternetException()))
+                emit(ResolvedAudioResult.Error(NoInternetException()))
                 return@flow
             }
 
@@ -112,20 +114,28 @@ class RecitationAudioRepository(private val context: Context) {
                 translationFile == null || fileUtils.createFile(translationFile)
 
             if (!quranFileCreated || !translationFileCreated) {
-                emit(AudioResult.Error(IllegalStateException("Failed to create audio files")))
+                emit(ResolvedAudioResult.Error(IllegalStateException("Failed to create audio files")))
                 return@flow
             }
 
-            emit(AudioResult.Downloading(0))
+            emit(ResolvedAudioResult.Downloading(0))
 
             var deleteQuran = false
             var deleteTranslation = false
+
             try {
                 if (quranNeedsDownload) {
                     val url = prepareAudioUrl(quranModel.urlTemplate, chapterNo)
                         ?: throw IllegalStateException("Failed to prepare audio URL")
                     try {
-                        downloadFile(quranFile, url) { }
+                        downloadAudioWithWorker(
+                            reciterId = quranModel.id,
+                            chapterNo = chapterNo,
+                            url = url,
+                            destinationFile = quranFile,
+                            title = "Downloading recitation",
+                            subtitle = quranModel.reciter,
+                        )
                     } catch (e: Exception) {
                         deleteQuran = true
                         throw e
@@ -136,7 +146,14 @@ class RecitationAudioRepository(private val context: Context) {
                     val url = prepareAudioUrl(translationModel.urlTemplate, chapterNo)
                         ?: throw IllegalStateException("Failed to prepare translation audio URL")
                     try {
-                        downloadFile(translationFile, url) { }
+                        downloadAudioWithWorker(
+                            reciterId = translationModel.id,
+                            chapterNo = chapterNo,
+                            url = url,
+                            destinationFile = translationFile,
+                            title = "Downloading recitation translation",
+                            subtitle = translationModel.reciter,
+                        )
                     } catch (e: Exception) {
                         deleteTranslation = true
                         throw e
@@ -148,7 +165,7 @@ class RecitationAudioRepository(private val context: Context) {
                 if (deleteQuran) quranFile?.delete()
                 if (deleteTranslation) translationFile?.delete()
 
-                emit(AudioResult.Error(e))
+                emit(ResolvedAudioResult.Error(e))
 
                 return@flow
             }
@@ -171,10 +188,11 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         emit(
-            AudioResult.Success(
+            ResolvedAudioResult.Resoved(
                 chapter = chapterNo,
                 quran = quranFile?.let { file ->
-                    RecitationAudioResult(
+                    RecitationAudioTrack(
+                        kind = RecitationAudioKind.QURAN,
                         chapterNo = chapterNo,
                         reciterId = quranModel.id,
                         audioUri = file.toUri(),
@@ -182,7 +200,8 @@ class RecitationAudioRepository(private val context: Context) {
                     )
                 },
                 translation = translationFile?.let { file ->
-                    RecitationAudioResult(
+                    RecitationAudioTrack(
+                        kind = RecitationAudioKind.TRANSLATION,
                         chapterNo = chapterNo,
                         reciterId = translationModel.id,
                         audioUri = file.toUri(),
@@ -193,13 +212,62 @@ class RecitationAudioRepository(private val context: Context) {
         )
     }.flowOn(Dispatchers.IO)
 
+    private suspend fun downloadAudioWithWorker(
+        reciterId: String,
+        chapterNo: Int,
+        url: String,
+        destinationFile: File,
+        title: String,
+        subtitle: String?,
+    ) {
+        val workName = RecitationAudioDownloadWorker.uniqueWorkName(reciterId, chapterNo)
+        val request = OneTimeWorkRequestBuilder<RecitationAudioDownloadWorker>()
+            .setInputData(
+                RecitationAudioDownloadWorker.inputData(
+                    url = url,
+                    outputPath = destinationFile.absolutePath,
+                    title = title,
+                    subtitle = subtitle,
+                )
+            )
+            .addTag(RecitationAudioDownloadWorker.TAG)
+            .build()
+
+        workManager.enqueueUniqueWork(workName, ExistingWorkPolicy.KEEP, request)
+        awaitWorkCompletion(workName)
+    }
+
+    private suspend fun awaitWorkCompletion(workName: String) {
+        workManager.getWorkInfosForUniqueWorkLiveData(workName).asFlow()
+            .mapNotNull { infos -> infos.firstOrNull() }
+            .first { info ->
+                when (info.state) {
+                    WorkInfo.State.ENQUEUED,
+                    WorkInfo.State.RUNNING,
+                    WorkInfo.State.BLOCKED -> false
+
+                    WorkInfo.State.SUCCEEDED -> true
+                    WorkInfo.State.FAILED -> {
+                        val message =
+                            info.outputData.getString(RecitationAudioDownloadWorker.KEY_ERROR)
+                                ?: "Download failed"
+                        throw IllegalStateException(message)
+                    }
+
+                    WorkInfo.State.CANCELLED -> {
+                        throw IllegalStateException("Download cancelled")
+                    }
+                }
+            }
+    }
+
     suspend fun resolveChapterTimingMetadata(
         model: RecitationModelBase?,
         chapterNo: Int,
     ): ChapterTimingMetadata? = withContext(Dispatchers.IO) {
         if (model == null) return@withContext null
 
-        val timingUrl = model.timingUrl?.trim().orEmpty()
+        var timingUrl = model.timingUrl?.trim().orEmpty()
 
         if (timingUrl.isEmpty()) return@withContext null
 
@@ -207,7 +275,7 @@ class RecitationAudioRepository(private val context: Context) {
 
         if (cacheFile.length() > 0L) {
             try {
-                when (val parsed = parseTimingFile(cacheFile.readText(), chapterNo)) {
+                when (val parsed = parseTimingFile(cacheFile.inputStream().buffered(), chapterNo)) {
                     is TimingParseResult.Found -> return@withContext parsed.metadata
                     TimingParseResult.ChapterMissing -> return@withContext null
                     TimingParseResult.ParseFailed -> cacheFile.delete()
@@ -226,17 +294,48 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         try {
-            val tempFile = File(context.cacheDir, "timing_temp_${System.currentTimeMillis()}.json")
+            val tempFile =
+                File(context.cacheDir, "timing_temp_${System.currentTimeMillis()}")
+
+            // If timing url start will ghraw://, the use user preferred ghraw mirror url,
+            // otherwise use the url as is (which may also be a full ghraw url or a direct link to timing file)
+            if (timingUrl.startsWith("ghraw://")) {
+                val root = DownloadSourceUtils.getDownloadSourceRoot(context)
+                val relativePath = timingUrl.removePrefix("ghraw://")
+                timingUrl = root + relativePath
+            }
+
             downloadFile(tempFile, timingUrl)
 
-            val content = tempFile.readText()
+            if (!tempFile.exists() || tempFile.length() == 0L) {
+                tempFile.delete()
+                return@withContext null
+            }
+
+            // It maybe .json.gz or .json; handle gzipped case when needed
+            val contentStream: InputStream = try {
+                if (tempFile.isGzip()) {
+                    GZIPInputStream(tempFile.inputStream().buffered())
+                } else {
+                    tempFile.inputStream().buffered()
+                }
+            } catch (e: Exception) {
+                tempFile.inputStream().buffered()
+            }
+
             tempFile.delete()
 
-            when (val parsed = parseTimingFile(content, chapterNo)) {
+            when (val parsed = parseTimingFile(contentStream, chapterNo)) {
                 is TimingParseResult.Found -> {
                     if (fileUtils.createFile(cacheFile)) {
-                        cacheFile.writeText(content)
+                        contentStream.use { input ->
+                            cacheFile.outputStream().buffered().use { output ->
+                                input.copyTo(output)
+                                output.flush()
+                            }
+                        }
                     }
+
                     return@withContext parsed.metadata
                 }
 
@@ -275,16 +374,30 @@ class RecitationAudioRepository(private val context: Context) {
         }
     }
 
-    private fun parseTimingFile(content: String, chapterNo: Int): TimingParseResult {
+    /**
+     * Parses only the requested chapter from the timing JSON, avoiding full
+     * deserialization of all 114 chapters and their verse/segment data.
+     */
+    private fun parseTimingFile(contentStream: InputStream, chapterNo: Int): TimingParseResult {
         try {
-            val bundle = JsonHelper.json.decodeFromString<AudioTimingMetadata>(content)
-            val chapter = bundle.chapters.find { it.chapterNo == chapterNo }
-
-            return if (chapter != null) {
-                TimingParseResult.Found(chapter)
-            } else {
-                TimingParseResult.ChapterMissing
+            val root = contentStream.use { stream ->
+                JsonHelper.json.parseToJsonElement(
+                    stream.bufferedReader().readText()
+                ).jsonObject
             }
+
+            val versesArray = root["verses"]?.jsonArray ?: return TimingParseResult.ParseFailed
+
+            for (element in versesArray) {
+                val obj = element.jsonObject
+                val chapter = obj["chapter"]?.jsonPrimitive?.intOrNull ?: continue
+                if (chapter == chapterNo) {
+                    val metadata = JsonHelper.json.decodeFromJsonElement<ChapterTimingMetadata>(obj)
+                    return TimingParseResult.Found(metadata)
+                }
+            }
+
+            return TimingParseResult.ChapterMissing
         } catch (e: Exception) {
             Log.saveError(e, "RecitationAudioRepository.parseTimingFile")
             return TimingParseResult.ParseFailed
@@ -316,9 +429,9 @@ class RecitationAudioRepository(private val context: Context) {
             conn.contentLength.toLong()
         }
 
-        conn.inputStream.buffered().use { input ->
-            file.outputStream().buffered().use { output ->
-                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        conn.inputStream.buffered(DOWNLOAD_BUFFER_SIZE).use { input ->
+            file.outputStream().buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
+                val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
                 var totalConsumed = 0L
 
                 while (true) {

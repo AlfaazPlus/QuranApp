@@ -1,21 +1,9 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.os.Bundle
-import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
-
-enum class PlaybackMode {
-    VERSE_BY_VERSE,
-    FULL_CHAPTER;
-
-    companion object {
-        fun fromOrdinal(ordinal: Int): PlaybackMode {
-            return entries.getOrElse(ordinal) { VERSE_BY_VERSE }
-        }
-    }
-}
 
 enum class PlayerInterationSource {
     HEADSET,
@@ -40,29 +28,21 @@ sealed class PlayerEvent {
 
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair.NONE,
-    val isLoading: Boolean = false,
-    val isPlaying: Boolean = false,
+    /** True while the service is resolving/downloading audio (pre-player). */
+    val isResolving: Boolean = false,
     val pausedByHeadset: Boolean = false,
 
-    val playbackMode: PlaybackMode = PlaybackMode.VERSE_BY_VERSE,
-    var timingMetadata: ChapterTimingMetadata? = null,
-
-    val positionMs: Long = 0L,
-    val durationMs: Long = 0L,
     val settings: PlayerSettings = PlayerSettings(),
-    // Event with timestamp - controller compares timestamps to detect new events
     val lastEvent: PlayerEvent? = null,
     val lastEventTimestamp: Long = 0L
 ) {
-    val progressPercent: Float
-        get() = if (durationMs > 0) positionMs.toFloat() / durationMs else 0f
-
-
     fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {
         return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
     }
 
     fun getPreviousVerse(meta: QuranMeta): ChapterVersePair? {
+        if (!currentVerse.isValid) return null
+
         val currentChapterNo = currentVerse.chapterNo
         val currentVerseNo = currentVerse.verseNo
 
@@ -80,8 +60,6 @@ data class RecitationServiceState(
         var previousVerseNo = currentVerseNo - 1
 
         if (previousVerseNo < 1) {
-            // If we are at the first verse of the chapter, go to the last verse of the previous chapter if possible.
-            // Otherwise, change nothing.
             if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
                 previousChapterNo--
                 previousVerseNo = meta.getChapterVerseCount(previousChapterNo)
@@ -97,9 +75,9 @@ data class RecitationServiceState(
         return ChapterVersePair(previousChapterNo, previousVerseNo)
     }
 
-    fun getNextVerse(
-        meta: QuranMeta
-    ): ChapterVersePair? {
+    fun getNextVerse(meta: QuranMeta): ChapterVersePair? {
+        if (!currentVerse.isValid) return null
+
         val currentChapterNo = currentVerse.chapterNo
         val currentVerseNo = currentVerse.verseNo
 
@@ -117,8 +95,6 @@ data class RecitationServiceState(
         var nextVerseNo = currentVerseNo + 1
 
         if (nextVerseNo > meta.getChapterVerseCount(nextChapterNo)) {
-            // If we are at the last verse of the chapter, go to the first verse of the next chapter if possible.
-            // Otherwise, change nothing.
             if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
                 nextChapterNo++
                 nextVerseNo = 1
@@ -185,13 +161,8 @@ data class RecitationServiceState(
     fun toBundle(): Bundle = Bundle().apply {
         putInt(KEY_CURRENT_CHAPTER, currentVerse.chapterNo)
         putInt(KEY_CURRENT_VERSE, currentVerse.verseNo)
-        putBoolean(KEY_IS_LOADING, isLoading)
-        putBoolean(KEY_IS_PLAYING, isPlaying)
+        putBoolean(KEY_IS_RESOLVING, isResolving)
         putBoolean(KEY_PAUSED_BY_HEADSET, pausedByHeadset)
-        putInt(KEY_PLAYBACK_MODE, playbackMode.ordinal)
-        putBoolean(KEY_HAS_VERSE_TIMING, timingMetadata != null)
-        putLong(KEY_CURRENT_POSITION, positionMs)
-        putLong(KEY_DURATION, durationMs)
         putString(KEY_CURRENT_RECITER, settings.reciter)
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
@@ -221,13 +192,8 @@ data class RecitationServiceState(
         private const val KEY_CURRENT_VERSE = "state_current_verse"
         private const val KEY_CURRENT_RECITER = "state_current_reciter"
         private const val KEY_CURRENT_TRANSLATION_RECITER = "state_current_translation_reciter"
-        private const val KEY_IS_LOADING = "state_is_loading"
-        private const val KEY_IS_PLAYING = "state_is_playing"
+        private const val KEY_IS_RESOLVING = "state_is_resolving"
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
-        private const val KEY_PLAYBACK_MODE = "state_playback_mode"
-        private const val KEY_HAS_VERSE_TIMING = "state_has_verse_timing"
-        private const val KEY_CURRENT_POSITION = "state_current_position"
-        private const val KEY_DURATION = "state_duration"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
         private const val KEY_REPEAT = "state_repeat"
         private const val KEY_CONTINUE = "state_continue"
@@ -254,14 +220,10 @@ data class RecitationServiceState(
             return RecitationServiceState(
                 currentVerse = ChapterVersePair(
                     chapterNo = bundle.getInt(KEY_CURRENT_CHAPTER, -1),
-                    verseNo = bundle.getInt(KEY_CURRENT_VERSE, -1)
+                    verseNo = bundle.getInt(KEY_CURRENT_VERSE, -1),
                 ),
-                isLoading = bundle.getBoolean(KEY_IS_LOADING, false),
-                isPlaying = bundle.getBoolean(KEY_IS_PLAYING, false),
+                isResolving = bundle.getBoolean(KEY_IS_RESOLVING, false),
                 pausedByHeadset = bundle.getBoolean(KEY_PAUSED_BY_HEADSET, false),
-                playbackMode = PlaybackMode.fromOrdinal(bundle.getInt(KEY_PLAYBACK_MODE, 0)),
-                positionMs = bundle.getLong(KEY_CURRENT_POSITION, 0L),
-                durationMs = bundle.getLong(KEY_DURATION, 0L),
                 settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
                     repeatVerse = bundle.getBoolean(KEY_REPEAT, false),
