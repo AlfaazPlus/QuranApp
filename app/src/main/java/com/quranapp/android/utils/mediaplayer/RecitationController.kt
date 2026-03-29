@@ -6,8 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionResult
@@ -27,8 +29,6 @@ class RecitationController private constructor(private val appContext: Context) 
     private var mediaController: MediaController? = null
     private val handler = Handler(Looper.getMainLooper())
     private val pendingCallbacks = mutableListOf<Runnable>()
-
-    private val _fullState = MutableStateFlow(RecitationServiceState.EMPTY)
 
     private val _isConnected = MutableStateFlow(false)
     val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
@@ -50,9 +50,10 @@ class RecitationController private constructor(private val appContext: Context) 
     // ==================== Convenience Getters ====================
 
     val isPlaying: Boolean get() = _isPlaying.value
-    val isLoading: Boolean get() = _fullState.value.isResolving || _isBuffering.value
+    val isLoading: Boolean get() = state.value.isResolving || _isBuffering.value
 
-    val state: StateFlow<RecitationServiceState> = _fullState.asStateFlow()
+    /** Directly observes the service's state flow (same process). */
+    val state: StateFlow<RecitationServiceState> = RecitationService.sharedState
 
     /** Current playback position in ms. Query on UI frame for smooth progress. */
     val currentPositionMs: Long get() = mediaController?.currentPosition ?: 0L
@@ -62,6 +63,7 @@ class RecitationController private constructor(private val appContext: Context) 
 
     // ==================== Connection ====================
 
+    @OptIn(UnstableApi::class)
     fun connect() {
         if (mediaController != null || controllerFuture != null) return
 
@@ -75,7 +77,7 @@ class RecitationController private constructor(private val appContext: Context) 
                 }
 
                 override fun onExtrasChanged(controller: MediaController, extras: Bundle) {
-                    updateStateFromExtras(extras)
+                    checkForNewEvents(RecitationServiceState.fromBundle(extras))
                 }
             })
             .buildAsync()
@@ -85,6 +87,7 @@ class RecitationController private constructor(private val appContext: Context) 
                 val controller = controllerFuture?.get()
                 mediaController = controller
                 controller?.addListener(playerListener)
+
                 _isPlaying.value = controller?.isPlaying ?: false
                 _isBuffering.value = controller?.playbackState == Player.STATE_BUFFERING
                 _isConnected.value = true
@@ -144,11 +147,7 @@ class RecitationController private constructor(private val appContext: Context) 
         callbacks.forEach { it.run() }
     }
 
-    private fun updateStateFromExtras(extras: Bundle) {
-        val newState = RecitationServiceState.fromBundle(extras)
-        _fullState.value = newState
-
-        // Check for new events
+    private fun checkForNewEvents(newState: RecitationServiceState) {
         if (newState.lastEventTimestamp > lastSeenEventTimestamp && newState.lastEvent != null) {
             lastSeenEventTimestamp = newState.lastEventTimestamp
             _events.tryEmit(newState.lastEvent)

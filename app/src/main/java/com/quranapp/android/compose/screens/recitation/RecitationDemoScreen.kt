@@ -1,8 +1,6 @@
 package com.quranapp.android.compose.screens.recitation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,9 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -21,29 +17,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -52,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 
@@ -75,273 +60,41 @@ fun RecitationDemoScreen(controller: RecitationController) {
     val context = LocalContext.current
     val state by controller.state.collectAsState()
     val isPlaying by controller.isPlayingState.collectAsState()
-    val isBuffering by controller.isBufferingState.collectAsState()
-    val isLoading = state.isResolving || isBuffering
 
-    Scaffold(
-        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
-        topBar = {
-            TopAppBar(
-                title = { Text("Recitation Player") },
-                navigationIcon = {
-                    val activity = context as? android.app.Activity
-                    IconButton(onClick = { activity?.finish() }) {
-                        Icon(
-                            painterResource(R.drawable.dr_icon_arrow_left),
-                            contentDescription = "Back",
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
-            )
-        },
-    ) { innerPadding ->
-        Column(
+    RecitationPlayerSheet(
+        controller = controller,
+    ) { playerPadding ->
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-        ) {
-            if (isPlaying || isLoading || state.currentVerse.isValid) {
-                NowPlayingPanel(
-                    state = state,
-                    isPlaying = isPlaying,
-                    isLoading = isLoading,
-                    controller = controller,
-                    onPlayPause = { controller.playPause() },
-                    onStop = { controller.stop() },
-                    onPrevious = { controller.previousVerse() },
-                    onNext = { controller.nextVerse() },
-                    onSeek = { controller.seekTo(it) },
-                    onSeekLeft = { controller.seekLeft() },
-                    onSeekRight = { controller.seekRight() },
-                    onToggleRepeat = { controller.setRepeat(!state.settings.repeatVerse) },
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .padding(playerPadding),
+            topBar = {
+                TopAppBar(
+                    title = { Text("Recitation Player") },
+                    navigationIcon = {
+                        val activity = context as? Activity
+                        IconButton(onClick = { activity?.finish() }) {
+                            Icon(
+                                painterResource(R.drawable.dr_icon_arrow_left),
+                                contentDescription = "Back",
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
                 )
-            }
-
+            },
+        ) { innerPadding ->
             ChapterList(
                 state = state,
                 isPlaying = isPlaying,
                 onChapterSelected = { chapter ->
                     controller.play(chapterNo = chapter.number, verseNo = 1)
                 },
-            )
-        }
-    }
-}
-
-@Composable
-private fun NowPlayingPanel(
-    state: RecitationServiceState,
-    isPlaying: Boolean,
-    isLoading: Boolean,
-    controller: RecitationController,
-    onPlayPause: () -> Unit,
-    onStop: () -> Unit,
-    onPrevious: () -> Unit,
-    onNext: () -> Unit,
-    onSeek: (Long) -> Unit,
-    onSeekLeft: () -> Unit,
-    onSeekRight: () -> Unit,
-    onToggleRepeat: () -> Unit,
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-        ),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val verse = state.currentVerse
-
-            Text(
-                text = if (verse.isValid) "${verse.chapterNo}:${verse.verseNo}" else "Loading...",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-
-            Spacer(Modifier.height(4.dp))
-
-            val reciter = state.settings.reciter ?: "Unknown"
-            Text(
-                text = reciter,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            ProgressBar(
-                isPlaying = isPlaying,
-                isLoading = isLoading,
-                controller = controller,
-                onSeek = onSeek,
-            )
-
-            Spacer(Modifier.height(8.dp))
-
-            TransportControls(
-                isPlaying = isPlaying,
-                isLoading = isLoading,
-                repeatVerse = state.settings.repeatVerse,
-                onPlayPause = onPlayPause,
-                onStop = onStop,
-                onPrevious = onPrevious,
-                onNext = onNext,
-                onSeekLeft = onSeekLeft,
-                onSeekRight = onSeekRight,
-                onToggleRepeat = onToggleRepeat,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ProgressBar(
-    isPlaying: Boolean,
-    isLoading: Boolean,
-    controller: RecitationController,
-    onSeek: (Long) -> Unit,
-) {
-    var isSeeking by remember { mutableStateOf(false) }
-    var seekValue by remember { mutableStateOf(0f) }
-
-    var positionMs by remember { mutableLongStateOf(0L) }
-    var durationMs by remember { mutableLongStateOf(0L) }
-
-    LaunchedEffect(isPlaying) {
-        while (isPlaying && isActive) {
-            positionMs = controller.currentPositionMs
-            durationMs = controller.durationMs
-            delay(100)
-        }
-        if (!isPlaying) {
-            positionMs = controller.currentPositionMs
-            durationMs = controller.durationMs
-        }
-    }
-
-    val position = positionMs.toFloat()
-    val duration = durationMs.toFloat().coerceAtLeast(1f)
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        if (isLoading) {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-        } else {
-            Slider(
-                value = if (isSeeking) seekValue else position / duration,
-                onValueChange = { v ->
-                    isSeeking = true
-                    seekValue = v
-                },
-                onValueChangeFinished = {
-                    isSeeking = false
-                    onSeek((seekValue * duration).toLong())
-                },
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                text = formatMs(positionMs),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
-            )
-            Text(
-                text = formatMs(durationMs),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
-            )
-        }
-    }
-}
-
-@Composable
-private fun TransportControls(
-    isPlaying: Boolean,
-    isLoading: Boolean,
-    repeatVerse: Boolean,
-    onPlayPause: () -> Unit,
-    onStop: () -> Unit,
-    onPrevious: () -> Unit,
-    onNext: () -> Unit,
-    onSeekLeft: () -> Unit,
-    onSeekRight: () -> Unit,
-    onToggleRepeat: () -> Unit,
-) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        IconButton(onClick = onToggleRepeat) {
-            Icon(
-                painterResource(R.drawable.dr_icon_player_repeat),
-                contentDescription = "Repeat",
-                tint = if (repeatVerse) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f),
-            )
-        }
-
-        IconButton(onClick = onPrevious) {
-            Icon(
-                painterResource(R.drawable.dr_icon_player_seek_left),
-                contentDescription = "Previous verse",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-        }
-
-        AnimatedVisibility(visible = isLoading, enter = fadeIn(), exit = fadeOut()) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(48.dp),
-                strokeWidth = 3.dp,
-            )
-        }
-
-        AnimatedVisibility(visible = !isLoading, enter = fadeIn(), exit = fadeOut()) {
-            FilledTonalIconButton(
-                onClick = onPlayPause,
-                modifier = Modifier.size(56.dp),
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
-            ) {
-                Icon(
-                    painterResource(
-                        if (isPlaying) R.drawable.dr_icon_pause2
-                        else R.drawable.dr_icon_play2,
-                    ),
-                    contentDescription = if (isPlaying) "Pause" else "Play",
-                    modifier = Modifier.size(32.dp),
-                )
-            }
-        }
-
-        IconButton(onClick = onNext) {
-            Icon(
-                painterResource(R.drawable.dr_icon_player_seek_right),
-                contentDescription = "Next verse",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-        }
-
-        IconButton(onClick = onStop) {
-            Icon(
-                painterResource(R.drawable.icon_verse_stop),
-                contentDescription = "Stop",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
             )
         }
     }
@@ -352,10 +105,12 @@ private fun ChapterList(
     state: RecitationServiceState,
     isPlaying: Boolean,
     onChapterSelected: (ChapterEntry) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val activeChapter = state.currentVerse.chapterNo
 
     LazyColumn(
+        modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -428,12 +183,4 @@ private fun ChapterRow(
             }
         }
     }
-}
-
-private fun formatMs(ms: Long): String {
-    if (ms <= 0) return "0:00"
-    val totalSeconds = ms / 1000
-    val minutes = totalSeconds / 60
-    val seconds = totalSeconds % 60
-    return "$minutes:${seconds.toString().padStart(2, '0')}"
 }

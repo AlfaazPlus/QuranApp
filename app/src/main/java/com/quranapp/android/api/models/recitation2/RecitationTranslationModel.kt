@@ -8,4 +8,8 @@ data class RecitationTranslationModel(
     @SerialName("lang_code") val langCode: String,
     @SerialName("lang_name") var langName: String,
     val book: String?,
-) : RecitationModelBase()
+) : RecitationModelBase() {
+    override fun toString(): String {
+        return "RecitationTranslationModel(${super.toString()}, langCode:$langCode, langName:$langName, book:$book)"
+    }
+}

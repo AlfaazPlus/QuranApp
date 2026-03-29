@@ -45,7 +45,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -82,6 +81,8 @@ class RecitationService : MediaSessionService() {
         const val EXTRA_FROM_USER = "from_user"
 
         private const val SEEK_STEP_MS = 5000L
+
+        val sharedState = MutableStateFlow(RecitationServiceState.EMPTY)
     }
 
     private var mediaSession: MediaSession? = null
@@ -106,8 +107,8 @@ class RecitationService : MediaSessionService() {
     private var latestPlaybackRequestId: Long = 0L
     private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
 
-    val _state = MutableStateFlow(RecitationServiceState.EMPTY)
-    val state: StateFlow<RecitationServiceState> = _state.asStateFlow()
+    val _state: MutableStateFlow<RecitationServiceState> get() = sharedState
+    val state: StateFlow<RecitationServiceState> get() = sharedState
 
     // ==================== Lifecycle ====================
 
@@ -130,12 +131,14 @@ class RecitationService : MediaSessionService() {
 
     override fun onDestroy() {
         unregisterReceiver(headsetReceiver)
+        audioRepository.cancelAll()
         mediaSession?.run {
             player.release()
             release()
             mediaSession = null
         }
         serviceScope.cancel()
+        sharedState.value = RecitationServiceState.EMPTY
         super.onDestroy()
     }
 
@@ -642,18 +645,22 @@ class RecitationService : MediaSessionService() {
         if (verseClipPlan != null) return
 
         val timing = singleTrackTimingMetadata
-        if (timing == null || !timing.hasVerseTiming) return
+        if (timing == null || !timing.hasVerseTiming) {
+            return
+        }
 
         verseTrackingJob = serviceScope.launch {
             val meta = requestQuranMeta()
             while (isActive && player.isPlaying) {
                 val vt = timing.getVerseAtPosition(player.currentPosition)
                 val current = state.value.currentVerse
+
                 if (vt != null && vt.verseNo != current.verseNo) {
                     val newVerse = ChapterVersePair(timing.chapterNo, vt.verseNo)
                     updateState { copy(currentVerse = newVerse) }
                     updateNotificationMetadata(meta, timing.chapterNo, vt.verseNo)
                 }
+
                 delay(200)
             }
         }
@@ -738,6 +745,7 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun handlePlaybackEnded() {
+        /*fixme: temporarily disable
         if (!state.value.settings.continueRange) return
 
         scoped {
@@ -745,7 +753,7 @@ class RecitationService : MediaSessionService() {
             val next = state.value.getNextChapter(meta)
             if (next != null) reciteVerse(next.chapterNo, next.verseNo)
             else stopMedia()
-        }
+        }*/
     }
 
     // ==================== Session callback & command dispatch ====================

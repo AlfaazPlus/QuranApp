@@ -11,4 +11,8 @@ data class RecitationQuranModel(
     fun getStyleName(): String? {
         return styleTranslations[Locale.getDefault().toLanguageTag()] ?: this.style
     }
+
+    override fun toString(): String {
+        return "RecitationQuranModel(${super.toString()})"
+    }
 }

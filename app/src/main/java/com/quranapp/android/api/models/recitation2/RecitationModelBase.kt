@@ -35,7 +35,7 @@ open class RecitationModelBase {
     }
 
     override fun toString(): String {
-        return "id:$id, reciter:$reciter, translated:${getReciterName()}"
+        return "id:$id, reciter:$reciter, translated:${getReciterName()}, urlTemplate:$urlTemplate, timingUrl:$timingUrl"
     }
 
     override fun hashCode(): Int {

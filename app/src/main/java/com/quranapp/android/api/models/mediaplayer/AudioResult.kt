@@ -7,8 +7,8 @@ import kotlinx.serialization.Transient
 
 data class VerseSegment(
     val index: Int,
-    val startMs: Double,
-    val endMs: Double
+    val startMs: Long,
+    val endMs: Long
 )
 
 @Serializable
@@ -23,17 +23,16 @@ data class VerseTiming(
     val endMs: Long,
 
     @SerialName("segments")
-    private val segments: List<List<Int>>? = null
+    private val segments: List<List<Long>>? = null
 ) {
     val durationMs: Long get() = endMs - startMs
 
-    @Transient
     val seg: List<VerseSegment> by lazy {
         segments?.map {
             VerseSegment(
-                index = it[0],
-                startMs = it[1].toDouble(),
-                endMs = it[2].toDouble()
+                index = it[0].toInt(),
+                startMs = it[1],
+                endMs = it[2]
             )
         } ?: emptyList()
     }
@@ -92,7 +91,7 @@ data class ChapterTimingMetadata(
 data class AudioTimingMetadata(
     @SerialName("reciter")
     val reciterId: String,
-    @SerialName("verses")
+    @SerialName("chapters")
     val chapters: List<ChapterTimingMetadata> = emptyList()
 ) {}
 

@@ -27,7 +27,7 @@ sealed class PlayerEvent {
 
 
 data class RecitationServiceState(
-    val currentVerse: ChapterVersePair = ChapterVersePair.NONE,
+    val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
     /** True while the service is resolving/downloading audio (pre-player). */
     val isResolving: Boolean = false,
     val pausedByHeadset: Boolean = false,

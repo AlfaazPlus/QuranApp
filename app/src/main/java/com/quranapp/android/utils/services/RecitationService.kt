@@ -71,7 +71,7 @@ import com.quranapp.android.views.recitation.RecitationPlayer
 import java.io.File
 
 
-class RecitationService : Service(), MediaDescriptionAdapter {
+class RecitationService : Service(), PlayerNotificationManager.MediaDescriptionAdapter {
     companion object {
         const val NOTIF_ID = 55
         const val MILLIS_MULTIPLIER = 100L

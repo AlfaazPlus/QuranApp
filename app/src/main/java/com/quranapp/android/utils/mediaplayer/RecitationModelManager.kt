@@ -21,7 +21,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.decodeFromStream
 import java.io.File
-import java.io.InputStream
 import java.util.Locale
 
 class RecitationModelManager private constructor(
@@ -184,33 +183,28 @@ class RecitationModelManager private constructor(
             }
         }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadQuranFromNetwork(): AvailableRecitationsModel? =
         withContext(Dispatchers.IO) {
             try {
-                val raw = RetrofitInstance.github.getAvailableRecitations().byteStream()
-                writeManifest(getQuranManifestFile(), raw)
-
-                raw.buffered().use {
-                    JsonHelper.json.decodeFromStream<AvailableRecitationsModel>(it)
-                }
+                downloadManifest(
+                    getQuranManifestFile(),
+                    RetrofitInstance.github.getAvailableRecitations(),
+                )
+                loadQuranFromLocal()
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadQuranFromNetwork")
                 null
             }
         }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadTranslationFromNetwork(): AvailableRecitationTranslationsModel? =
         withContext(Dispatchers.IO) {
             try {
-                val raw = RetrofitInstance.github.getAvailableRecitationTranslations().byteStream()
-
-                writeManifest(getTranslationManifestFile(), raw)
-
-                raw.buffered().use {
-                    JsonHelper.json.decodeFromStream<AvailableRecitationTranslationsModel>(it)
-                }
+                downloadManifest(
+                    getTranslationManifestFile(),
+                    RetrofitInstance.github.getAvailableRecitationTranslations(),
+                )
+                loadTranslationFromLocal()
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadTranslationFromNetwork")
                 null
@@ -244,18 +238,17 @@ class RecitationModelManager private constructor(
     private fun getTranslationManifestFile() =
         File(getRecitationsDir(), TRANSLATION_MANIFEST_FILENAME)
 
-    private fun writeManifest(file: File, inputStream: InputStream) {
+    private fun downloadManifest(file: File, body: okhttp3.ResponseBody) {
         val fileUtils = FileUtils.newInstance(appContext)
 
         if (fileUtils.createFile(file)) {
-            inputStream.use { input ->
+            body.byteStream().use { input ->
                 file.outputStream().buffered().use { output ->
                     input.copyTo(output)
                     output.flush()
                 }
             }
         }
-
     }
 
     private fun <T : RecitationModelBase> List<T>.selectById(id: String?): T? {

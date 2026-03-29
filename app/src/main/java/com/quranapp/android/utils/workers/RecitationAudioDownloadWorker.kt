@@ -14,14 +14,13 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.app.NotificationUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
 
 class RecitationAudioDownloadWorker(
     private val ctx: Context,
@@ -55,9 +54,7 @@ class RecitationAudioDownloadWorker(
             }
             Result.success()
         } catch (e: Exception) {
-            if (outputFile.exists() && outputFile.length() == 0L) {
-                outputFile.delete()
-            }
+            outputFile.delete()
             Result.failure(workDataOf(KEY_ERROR to (e.message ?: "Download failed")))
         }
     }
@@ -67,38 +64,37 @@ class RecitationAudioDownloadWorker(
         targetFile: File,
         onProgress: suspend (Int) -> Unit,
     ) = withContext(Dispatchers.IO) {
-        val conn = URL(urlStr).openConnection() as HttpURLConnection
-        conn.setRequestProperty("Connection", "close")
-        conn.connectTimeout = 180000
-        conn.readTimeout = 180000
-        conn.allowUserInteraction = false
-        conn.connect()
+        val response = RetrofitInstance.any.downloadStreaming(urlStr)
 
-        if (conn.responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+        if (response.code() == 404) {
             throw IllegalStateException("Audio file not found")
         }
-
-        val totalLength = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            conn.contentLengthLong
-        } else {
-            conn.contentLength.toLong()
+        if (!response.isSuccessful) {
+            throw IllegalStateException("Download failed: HTTP ${response.code()}")
         }
 
-        conn.inputStream.buffered(DOWNLOAD_BUFFER_SIZE).use { input ->
-            FileOutputStream(targetFile).buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
-                val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
-                var totalConsumed = 0L
-                while (true) {
-                    ensureActive()
-                    val bytes = input.read(buffer)
-                    if (bytes <= 0) break
-                    output.write(buffer, 0, bytes)
-                    totalConsumed += bytes
-                    if (totalLength > 0L) {
-                        onProgress((totalConsumed * 100 / totalLength).toInt())
+        val body = response.body()
+            ?: throw IllegalStateException("Download response body is null")
+
+        val totalLength = body.contentLength()
+
+        body.use { responseBody ->
+            responseBody.byteStream().buffered(DOWNLOAD_BUFFER_SIZE).use { input ->
+                FileOutputStream(targetFile).buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
+                    val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
+                    var totalConsumed = 0L
+                    while (true) {
+                        ensureActive()
+                        val bytes = input.read(buffer)
+                        if (bytes <= 0) break
+                        output.write(buffer, 0, bytes)
+                        totalConsumed += bytes
+                        if (totalLength > 0L) {
+                            onProgress((totalConsumed * 100 / totalLength).toInt())
+                        }
                     }
+                    output.flush()
                 }
-                output.flush()
             }
         }
     }

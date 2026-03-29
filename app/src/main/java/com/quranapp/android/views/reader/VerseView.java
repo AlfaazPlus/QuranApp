@@ -158,7 +158,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
             if (mActivity instanceof ActivityReader) {
                 ActivityReader reader = (ActivityReader) mActivity;
                 if (reader.mPlayer != null) {
-                    reader.mPlayer.getController().play(chapterNo, verseNo);
+                    reader.mPlayer.reciteControl(new ChapterVersePair(chapterNo, verseNo));
                 }
             }
         });

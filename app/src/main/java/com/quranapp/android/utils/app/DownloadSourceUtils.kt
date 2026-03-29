@@ -54,11 +54,8 @@ object DownloadSourceUtils {
 
     @JvmStatic
     fun resetDownloadSourceBaseUrl(ctx: Context) {
-        val downloadSrcUrl = getDownloadSourceBaseUrl(ctx)
-
-        if (RetrofitInstance.githubResDownloadUrl != downloadSrcUrl) {
-            RetrofitInstance.githubResDownloadUrl = downloadSrcUrl
-            RetrofitInstance.resetGithubApi()
-        }
+        RetrofitInstance.githubProxyBaseUrl = getDownloadSourceBaseUrl(ctx)
+        RetrofitInstance.githubLikeProxyBaseUrl = getDownloadSourceRoot(ctx)
+        RetrofitInstance.resetGithubApi()
     }
 }

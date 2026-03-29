@@ -24,13 +24,15 @@ object RetrofitInstance {
         .build()
 
     private var githubApi: GithubApi? = null
-    var githubResDownloadUrl: String = ApiConfig.GH_PROXY_BASE_URL
+    private var githubLikeApi: GithubLikeApi? = null
+    var githubProxyBaseUrl: String = ApiConfig.GH_PROXY_BASE_URL
+    var githubLikeProxyBaseUrl: String = ApiConfig.GH_PROXY_ROOT
 
     val github: GithubApi
         get() {
             if (githubApi == null) {
                 githubApi = Retrofit.Builder()
-                    .baseUrl(githubResDownloadUrl)
+                    .baseUrl(githubProxyBaseUrl)
                     .addConverterFactory(
                         JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
                     )
@@ -41,6 +43,33 @@ object RetrofitInstance {
 
             return githubApi!!
         }
+
+    val githubLike: GithubLikeApi
+        get() {
+            if (githubLikeApi == null) {
+                githubLikeApi = Retrofit.Builder()
+                    .baseUrl(githubLikeProxyBaseUrl)
+                    .addConverterFactory(
+                        JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                    )
+                    .client(client)
+                    .build()
+                    .create(GithubLikeApi::class.java)
+            }
+
+            return githubLikeApi!!
+        }
+
+    val any: AnyApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://example.com")
+            .addConverterFactory(
+                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+            )
+            .client(client)
+            .build()
+            .create(AnyApi::class.java)
+    }
 
 
     val alfaazplus: AlfaazPlusApi by lazy {
@@ -56,5 +85,6 @@ object RetrofitInstance {
 
     fun resetGithubApi() {
         githubApi = null
+        githubLikeApi = null
     }
 }
