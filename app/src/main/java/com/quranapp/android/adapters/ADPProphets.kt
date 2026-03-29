@@ -7,7 +7,6 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +19,7 @@ import com.quranapp.android.databinding.LytQuranProphetItemBinding
 import com.quranapp.android.utils.extensions.drawable
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.reader.factory.ReaderFactory.prepareReferenceVerseIntent
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import java.text.MessageFormat
 import java.util.LinkedList
 
@@ -43,22 +43,29 @@ class ADPProphets(ctx: Context, private val itemWidth: Int, private val limit: I
         holder.bind(prophets[position])
     }
 
-    private fun prepareTexts(title: String, subTitle: CharSequence, inChapters: String?): CharSequence {
-        val titleSS = SpannableString(title)
-        val titleTASpan = TextAppearanceSpan("sans-serif", Typeface.BOLD, txtSize, null, null)
-        titleSS.setSpan(titleTASpan, 0, titleSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        val subTitleSS = SpannableString(subTitle)
-        val subTitleTASpan = TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, null, null)
-        subTitleSS.setSpan(subTitleTASpan, 0, subTitleSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        subTitleSS.setSpan(LineHeightSpan2(20, false, true), 0, subTitleSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        val chaptersSS = SpannableString(inChapters)
-        val inChaptersTASpan = TextAppearanceSpan(
-            "sans-serif-light", Typeface.NORMAL, txtSize,
-            txtColor2,
-            null
-        )
-        chaptersSS.setSpan(inChaptersTASpan, 0, chaptersSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return TextUtils.concat(titleSS, "\n", subTitleSS, "\n", chaptersSS)
+    private fun prepareTexts(title: String, subTitle: CharSequence?, inChapters: String?): CharSequence {
+        val titleSS = SpannableString(title).apply {
+            setSpan(TextAppearanceSpan("sans-serif", Typeface.BOLD, txtSize, null, null), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        var result: CharSequence = titleSS
+
+        if (!subTitle.isNullOrEmpty()) {
+            val subTitleSS = SpannableString(subTitle).apply {
+                setSpan(TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, null, null), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(LineHeightSpan2(20, false, true), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            result = TextUtils.concat(result, "\n", subTitleSS)
+        }
+
+        if (!inChapters.isNullOrEmpty()) {
+            val chaptersSS = SpannableString(inChapters).apply {
+                setSpan(TextAppearanceSpan("sans-serif-light", Typeface.NORMAL, txtSize, txtColor2, null), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            result = TextUtils.concat(result, "\n", chaptersSS)
+        }
+
+        return result
     }
 
     inner class VHProphet(private val binding: LytQuranProphetItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -82,8 +89,18 @@ class ADPProphets(ctx: Context, private val itemWidth: Int, private val limit: I
 
             binding.icon.setImageDrawable(binding.root.context.drawable(prophet.iconRes))
 
+            val context = binding.root.context
             val name = MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific)
-            val nameEng = "English : " + prophet.nameEn
+
+            val locale = SPAppConfigs.getLocale(context)
+            val isEnglish = locale == "en" || (locale == SPAppConfigs.LOCALE_DEFAULT && context.resources.configuration.locale.language == "en")
+
+            val nameEng = if (!isEnglish || prophet.name.equals(prophet.nameEn, ignoreCase = true)) {
+                null
+            } else {
+                "English : " + prophet.nameEn
+            }
+
             binding.text.text = prepareTexts(name, nameEng, prophet.inChapters)
         }
 

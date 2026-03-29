@@ -21,6 +21,10 @@ public class VerseResultModel extends SearchResultModelBase {
     public List<Integer> endIndices;
     public View translationsView;
 
+    public String arabicText;
+    public List<Integer> arabicStartIndices;
+    public List<Integer> arabicEndIndices;
+
     @NonNull
     @Override
     public String toString() {

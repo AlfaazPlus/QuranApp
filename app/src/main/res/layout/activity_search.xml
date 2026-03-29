@@ -50,34 +50,60 @@
                 android:paddingHorizontal="10dp"
                 android:textColorHint="@color/colorText3"
                 app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintEnd_toStartOf="@id/voiceSearch"
+                app:layout_constraintEnd_toStartOf="@id/actionContainer"
                 app:layout_constraintStart_toEndOf="@id/back"
                 app:layout_constraintTop_toTopOf="@id/back" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/voiceSearch"
-                android:layout_width="35dp"
+            <LinearLayout
+                android:id="@+id/actionContainer"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@drawable/dr_bg_action_round"
-                android:padding="5dp"
-                android:src="@drawable/dr_icon_mic"
-                app:layout_constraintBottom_toBottomOf="@id/search"
-                app:layout_constraintEnd_toStartOf="@id/filter"
-                app:layout_constraintTop_toTopOf="@id/search"
-                app:tint="@color/colorIcon" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/filter"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/dr_bg_action_round"
-                android:padding="5dp"
-                android:src="@drawable/dr_icon_filter"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@id/search"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/search"
-                app:tint="@color/colorIcon" />
+                app:layout_constraintTop_toTopOf="@id/search">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/clearSearch"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/dr_bg_action_round"
+                    android:padding="8dp"
+                    android:src="@drawable/dr_icon_close"
+                    android:visibility="gone"
+                    app:tint="@color/colorIcon" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/voiceSearch"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/dr_bg_action_round"
+                    android:padding="5dp"
+                    android:src="@drawable/dr_icon_mic"
+                    app:tint="@color/colorIcon" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/voiceSettings"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/dr_bg_action_round"
+                    android:padding="7dp"
+                    android:src="@drawable/dr_icon_settings"
+                    app:tint="@color/colorIcon" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/filter"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/dr_bg_action_round"
+                    android:padding="5dp"
+                    android:src="@drawable/dr_icon_filter"
+                    app:tint="@color/colorIcon" />
+            </LinearLayout>
 
             <com.quranapp.android.widgets.IconedTextView
                 android:id="@+id/btnSelectTransl"

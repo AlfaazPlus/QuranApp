@@ -8,7 +8,7 @@ import com.quranapp.android.widgets.list.base.BaseListItem
 import com.quranapp.android.widgets.radio.PeaceRadioButton
 import com.quranapp.android.widgets.radio.PeaceRadioGroup
 
-class SingleChoiceListAdapter(context: Context) : BaseListAdapter(context) {
+open class SingleChoiceListAdapter(context: Context) : BaseListAdapter(context) {
     override fun onCreateItemView(item: BaseListItem, position: Int): View {
         val radio = PeaceRadioButton(context).apply {
             tag = item
@@ -26,7 +26,7 @@ class SingleChoiceListAdapter(context: Context) : BaseListAdapter(context) {
         super.onAppendItemView(container, itemView, position)
 
         if (getItem(position).selected && container is PeaceRadioGroup) {
-            container.check(itemView.id)
+            container.checkSansInvocation(itemView.id)
         }
     }
 }

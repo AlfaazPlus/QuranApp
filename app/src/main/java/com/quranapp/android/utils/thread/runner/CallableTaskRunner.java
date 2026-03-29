@@ -15,6 +15,7 @@ public class CallableTaskRunner<R> {
     private final ExecutorService executor = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
     private final Handler mHandler;
     private Future<R> mFuture;
+    private TaskCallable<R> mCurrentTask;
 
     public CallableTaskRunner() {
         this(new Handler(Looper.getMainLooper()));
@@ -25,21 +26,25 @@ public class CallableTaskRunner<R> {
     }
 
     public void callAsync(@NonNull TaskCallable<R> callable) {
-        mFuture = null;
+        cancel();
+        mCurrentTask = callable;
         callable.preExecute();
 
-        new Thread(() -> {
-            mFuture = executor.submit(callable);
+        mFuture = executor.submit(() -> {
             try {
-                onComplete(callable, mFuture.get());
+                R result = callable.call();
+                onComplete(callable, result);
+                return result;
             } catch (Exception e) {
                 onError(callable, e);
+                throw e;
             }
-        }).start();
+        });
     }
 
     private void onComplete(TaskCallable<R> callable, R result) {
         mHandler.post(() -> {
+            if (mCurrentTask != callable) return;
             callable.postExecute();
             callable.onComplete(result);
             callable.setDone(true);
@@ -48,6 +53,7 @@ public class CallableTaskRunner<R> {
 
     private void onError(TaskCallable<R> callable, Exception e) {
         mHandler.post(() -> {
+            if (mCurrentTask != callable) return;
             callable.onFailed(e);
             callable.postExecute();
             callable.setDone(true);
@@ -55,7 +61,12 @@ public class CallableTaskRunner<R> {
     }
 
     public boolean cancel() {
-        if (mFuture != null) return mFuture.cancel(true);
+        mCurrentTask = null;
+        if (mFuture != null) {
+            boolean cancelled = mFuture.cancel(true);
+            mFuture = null;
+            return cancelled;
+        }
         return true;
     }
 
@@ -69,6 +80,6 @@ public class CallableTaskRunner<R> {
      * @return {@code true} if this task completed
      */
     public boolean isDone() {
-        return mFuture == null || mFuture.isDone();
+        return mCurrentTask == null || (mFuture != null && mFuture.isDone());
     }
 }

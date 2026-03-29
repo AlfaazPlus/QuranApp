@@ -13,6 +13,7 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
 import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
@@ -48,18 +50,25 @@ import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
+import com.quranapp.android.utils.search.ArabicSearchManager;
 import com.quranapp.android.utils.search.SearchFilters;
 import com.quranapp.android.utils.search.SearchLocalHistoryManager;
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
 import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetParams;
+import com.quranapp.android.widgets.list.base.BaseListAdapter;
+import com.quranapp.android.widgets.list.base.BaseListItem;
+import com.quranapp.android.widgets.list.base.BaseListItemView;
 import com.quranapp.android.widgets.radio.PeaceRadioButton;
 import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.MatchResult;
@@ -67,6 +76,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.quranapp.android.utils.sharedPrefs.SPReader;
+import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheetMenu;
+import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
+import com.quranapp.android.widgets.list.singleChoice.SingleChoiceListAdapter;
 
 import kotlin.Unit;
 
@@ -84,6 +96,8 @@ public class ActivitySearch extends BaseActivity {
     private final Handler mSuggHandler = new Handler(Looper.getMainLooper());
     public Map<String, TranslationBookInfoModel> availableTranslModels;
     public boolean mSupportsVoiceInput;
+    private String mVoiceLangCode = null;
+    private boolean mIsSuggFrag = true;
 
     @Override
     protected void onDestroy() {
@@ -150,8 +164,19 @@ public class ActivitySearch extends BaseActivity {
 
     private void initHeader() {
         mBinding.back.setOnClickListener(v -> onBackPressed());
-        mBinding.voiceSearch.setOnClickListener(v -> startVoiceRecognitionActivity());
+        mBinding.voiceSearch.setOnClickListener(v -> startVoiceRecognitionActivity(mVoiceLangCode));
+        mBinding.voiceSettings.setOnClickListener(v -> showVoiceLanguageSelector());
         mBinding.filter.setOnClickListener(v -> mSearchFilters.show());
+        mBinding.clearSearch.setOnClickListener(v -> {
+            mBinding.search.setText("");
+            mLocalHistoryManager.setLastQuery("");
+            if (!mIsSuggFrag) {
+                showSugg();
+            } else {
+                initSugg("");
+                updateActionIconsVisibility();
+            }
+        });
 
         mBinding.search.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -165,7 +190,11 @@ public class ActivitySearch extends BaseActivity {
                     return;
                 }
 
-                mBinding.voiceSearch.setVisibility((mSupportsVoiceInput && s.length() == 0) ? VISIBLE : GONE);
+                if (s.length() == 0 && !mIsSuggFrag) {
+                    showSugg();
+                }
+
+                updateActionIconsVisibility();
             }
 
             @Override
@@ -202,22 +231,37 @@ public class ActivitySearch extends BaseActivity {
             return Unit.INSTANCE;
         });
 
-        mBinding.filter.setVisibility(GONE);
-        mBinding.btnSelectTransl.setVisibility(GONE);
-        mBinding.btnQuickLinks.setVisibility(GONE);
+        TranslationBookInfoModel selectedBook = availableTranslModels.get(mSearchFilters.selectedTranslSlug);
+        if (selectedBook != null) {
+            mBinding.btnSelectTransl.setText(selectedBook.getBookName());
+        }
+
+        updateActionIconsVisibility();
+    }
+
+    private void updateActionIconsVisibility() {
+        if (mBinding == null) return;
+
+        String query = mBinding.search.getText() != null ? mBinding.search.getText().toString() : "";
+        boolean isEmpty = query.isEmpty();
+        boolean isArabic = ArabicSearchManager.INSTANCE.isArabic(query);
+        
+        mBinding.clearSearch.setVisibility(isEmpty ? GONE : VISIBLE);
+        mBinding.voiceSearch.setVisibility(mSupportsVoiceInput ? VISIBLE : GONE);
+        mBinding.voiceSettings.setVisibility((mSupportsVoiceInput && isEmpty && mIsSuggFrag) ? VISIBLE : GONE);
+
+        int resultsVisibility = mIsSuggFrag ? GONE : VISIBLE;
+
+        mBinding.btnSelectTransl.setVisibility(isArabic ? GONE : resultsVisibility);
+        mBinding.btnQuickLinks.setVisibility(isArabic ? GONE : resultsVisibility);
+        
+        mBinding.filter.setVisibility(resultsVisibility);
+        mBinding.header.setElevation(mIsSuggFrag ? 0 : dp2px(4));
     }
 
     private void setupActionButtons(boolean isSuggFrag) {
-        if (isSuggFrag) {
-            mBinding.filter.setVisibility(GONE);
-            boolean isQueryEmpty = mBinding.search.getText() == null || mBinding.search.getText().length() == 0;
-            mBinding.voiceSearch.setVisibility((mSupportsVoiceInput && isQueryEmpty) ? VISIBLE : GONE);
-        } else {
-            if (!mFragSearchResult.mIsLoadingInProgress) {
-                mBinding.filter.setVisibility(VISIBLE);
-                mBinding.voiceSearch.setVisibility(mSupportsVoiceInput ? VISIBLE : GONE);
-            }
-        }
+        mIsSuggFrag = isSuggFrag;
+        updateActionIconsVisibility();
     }
 
     private void initFrags() {
@@ -225,17 +269,19 @@ public class ActivitySearch extends BaseActivity {
         mFragSearchSugg = FragSearchSuggestions.newInstance();
 
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            boolean isSuggFrag = fragment instanceof FragSearchSuggestions;
-
-            setupActionButtons(isSuggFrag);
-            setupHeader(isSuggFrag);
-            mBinding.search.setLongClickable(isSuggFrag);
+            if (fragment instanceof FragSearchSuggestions) {
+                setupActionButtons(true);
+            } else if (fragment instanceof FragSearchResult) {
+                setupActionButtons(false);
+            }
+            
+            mBinding.search.setLongClickable(fragment instanceof FragSearchSuggestions);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-            if (isSuggFrag) {
-                mBinding.search.requestFocus();
-            } else {
+            if (fragment instanceof FragSearchSuggestions) {
+                // Focus but don't request keyboard
+            } else if (fragment instanceof FragSearchResult) {
                 mBinding.search.clearFocus();
                 imm.hideSoftInputFromWindow(mBinding.search.getWindowToken(), 0);
             }
@@ -245,11 +291,10 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void addInitialFrag() {
-        mBinding.search.postDelayed(() -> mBinding.search.requestFocus(FOCUS_DOWN, null), 50);
+        showSugg();
     }
 
     private void initVoiceInput() {
-        // Disable button if no recognition service is present
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),
                 0);
@@ -257,6 +302,7 @@ public class ActivitySearch extends BaseActivity {
         if (!mSupportsVoiceInput) {
             mBinding.voiceSearch.setEnabled(false);
             mBinding.voiceSearch.setVisibility(GONE);
+            mBinding.voiceSettings.setVisibility(GONE);
         }
     }
 
@@ -286,6 +332,8 @@ public class ActivitySearch extends BaseActivity {
 
         mSearchFilters = new SearchFilters(activitySearch, initiallySelectedSlug);
         mLocalHistoryManager = new SearchLocalHistoryManager();
+        
+        mVoiceLangCode = SPAppConfigs.getVoiceSearchLang(this);
     }
 
     public void reSearch() {
@@ -327,107 +375,166 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void showSugg() {
-        if (mFragSearchSugg.isVisible()) {
-            return;
-        }
-
+        mIsSuggFrag = true;
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.frameLayout, mFragSearchSugg);
-        t.runOnCommit(() -> initSugg(mLocalHistoryManager.getLastQuery()));
+        t.runOnCommit(() -> {
+            initSugg(mLocalHistoryManager.getLastQuery());
+            updateActionIconsVisibility();
+        });
         t.commitAllowingStateLoss();
     }
 
     private void hideSugg(Runnable runnable) {
-        if (mFragSearchResult.isVisible()) {
-            mBinding.search.clearFocus();
-            mBinding.search.setText(mLocalHistoryManager.getLastQuery());
-            mBinding.header.setExpanded(true);
-
-            if (runnable != null) {
-                runnable.run();
-            }
-            return;
-        }
-
-        mBinding.search.clearFocus();
-        mBinding.search.setText(mLocalHistoryManager.getLastQuery());
-        mBinding.header.setExpanded(true);
-
+        mIsSuggFrag = false;
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.frameLayout, mFragSearchResult);
         t.runOnCommit(() -> {
             if (runnable != null) {
                 runnable.run();
             }
-            setupHeader(false);
+            updateActionIconsVisibility();
         });
         t.commitAllowingStateLoss();
     }
 
-    private void showTranslationSheet() {
-        PeaceBottomSheet sheet = new PeaceBottomSheet();
-        NestedScrollView scrollView = new NestedScrollView(this);
-        PeaceRadioGroup radioGroup = new PeaceRadioGroup(this);
-        ViewPaddingKt.updatePaddingVertical(radioGroup, dp2px(15F), dp2px(25F));
-        int padH = dp2px(25F);
-        int padV = dp2px(13F);
-        int spaceBtwn = dp2px(15F);
+    private void showVoiceLanguageSelector() {
+        showVoiceLanguageSelector(false);
+    }
 
-        for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
-            PeaceRadioButton radio = new PeaceRadioButton(this);
-            ViewPaddingKt.updatePaddings(radio, padH, padV);
-            radio.setBackgroundResource(com.peacedesign.R.drawable.dr_bg_action);
-            radio.setText(bookInfo.getBookName());
-            radio.setTag(bookInfo);
-            radio.setTextAppearance(R.style.TextAppearanceCommonTitle);
-            radio.setChecked(bookInfo.getSlug().equals(mSearchFilters.selectedTranslSlug));
-            radio.setForceTextGravity(COMPOUND_TEXT_GRAVITY_LEFT);
-            radio.setSpaceBetween(spaceBtwn);
-            radioGroup.addView(radio);
+    private void showVoiceLanguageSelector(final boolean expanded) {
+        final PeaceBottomSheetMenu menu = new PeaceBottomSheetMenu();
+        menu.getParams().setHeaderTitleResource(R.string.strTitleVoiceSearchLang);
+
+        final ArrayList<BaseListItem> listItems = new ArrayList<>();
+
+        final String appLangTag = Locale.getDefault().toLanguageTag();
+        Set<String> addedCodes = new HashSet<>();
+
+        // 1. Arabic
+        BaseListItem arItem = new BaseListItem(0, "العربية (Arabic)", null);
+        arItem.setKey("ar-SA");
+        arItem.setSelected("ar-SA".equals(mVoiceLangCode));
+        listItems.add(arItem);
+        addedCodes.add("ar-SA");
+
+        // 2. English
+        BaseListItem enItem = new BaseListItem(0, "English", null);
+        enItem.setKey("en-US");
+        enItem.setSelected("en-US".equals(mVoiceLangCode));
+        listItems.add(enItem);
+        addedCodes.add("en-US");
+
+        // 3. Urdu if app language is English, else App Language
+        if (appLangTag.startsWith("en")) {
+            BaseListItem urItem = new BaseListItem(0, "اردو (Urdu)", null);
+            urItem.setKey("ur-PK");
+            urItem.setSelected("ur-PK".equals(mVoiceLangCode));
+            listItems.add(urItem);
+            addedCodes.add("ur-PK");
+        } else if (!addedCodes.contains(appLangTag)) {
+            BaseListItem appItem = new BaseListItem(0, Locale.getDefault().getDisplayName(), null);
+            appItem.setKey(appLangTag);
+            appItem.setSelected(appLangTag.equals(mVoiceLangCode));
+            listItems.add(appItem);
+            addedCodes.add(appLangTag);
         }
-        radioGroup.setOnCheckChangedListener((btn, id) -> {
-            sheet.dismiss();
-            TranslationBookInfoModel bookInfo = (TranslationBookInfoModel) btn.getTag();
-            mSearchFilters.selectedTranslSlug = bookInfo.getSlug();
-            mBinding.btnSelectTransl.setText(bookInfo.getBookName());
-            reSearch();
 
-            return Unit.INSTANCE;
+        if (!expanded) {
+            BaseListItem trigger = new BaseListItem(com.peacedesign.R.drawable.dr_icon_chevron_right, getString(R.string.strLabelOtherLanguages), null);
+            trigger.setId(3000);
+            listItems.add(trigger);
+        } else {
+            String[][] langData = {
+                {"Deutsch (German)", "de-DE"}, {"Español (Spanish)", "es-ES"},
+                {"Français (French)", "fr-FR"}, {"Hindi", "hi-IN"}, {"Bahasa Indonesia", "id-ID"},
+                {"Italiano (Italian)", "it-IT"}, {"Português (Portuguese)", "pt-PT"},
+                {"Русский", "ru-RU"}, {"Türkçe (Turkish)", "tr-TR"}, {"اردو (Urdu)", "ur-PK"},
+                {"O'zbekchа (Uzbek)", "uz-UZ"}, {"中文 (Chinese)", "zh-CN"}
+            };
+            
+            List<BaseListItem> othersList = new ArrayList<>();
+            int idCounter = 2001;
+            for (String[] data : langData) {
+                if (addedCodes.contains(data[1])) continue;
+                BaseListItem item = new BaseListItem(0, data[0], null);
+                item.setId(idCounter++);
+                item.setKey(data[1]);
+                item.setSelected(data[1].equals(mVoiceLangCode));
+                othersList.add(item);
+            }
+            Collections.sort(othersList, (l1, l2) -> l1.getLabel().compareToIgnoreCase(l2.getLabel()));
+            listItems.addAll(othersList);
+        }
+
+        BaseListAdapter adapter = new BaseListAdapter(this) {
+            @Override
+            protected View onCreateItemView(BaseListItem item, int position) {
+                if (item.getId() == 3000) {
+                    BaseListItemView v = new BaseListItemView(getContext(), item);
+                    int padH = dp2px(20F);
+                    int padV = dp2px(12F);
+                    v.getContainerView().setPadding(padH, padV, padH, padV);
+                    v.setBackgroundResource(com.peacedesign.R.drawable.dr_bg_action);
+
+                    v.setOnClickListener(view -> {
+                        menu.dismiss();
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> showVoiceLanguageSelector(true), 50);
+                    });
+                    return v;
+                }
+
+                PeaceRadioButton radio = new PeaceRadioButton(getContext());
+                radio.setTexts(item.getLabel(), item.getMessage());
+                radio.setChecked(item.getSelected());
+                
+                int padH = dp2px(20F);
+                int padV = dp2px(12F);
+                ViewPaddingKt.updatePaddings(radio, padH, padV);
+                
+                // Border for selected language
+                radio.setBackgroundResource(item.getSelected() ? R.drawable.dr_bg_chapter_card_bordered : com.peacedesign.R.drawable.dr_bg_action);
+
+                radio.setTextAppearance(R.style.TextAppearanceCommonTitle);
+                radio.setForceTextGravity(COMPOUND_TEXT_GRAVITY_LEFT);
+                radio.setSpaceBetween(dp2px(15F));
+
+                return radio;
+            }
+        };
+
+        adapter.setItems(listItems);
+        menu.setAdapter(adapter);
+        menu.setOnItemClickListener((dialog, item) -> {
+            if (item.getId() == 3000) {
+                dialog.dismiss();
+                new Handler(Looper.getMainLooper()).postDelayed(() -> showVoiceLanguageSelector(true), 50);
+            } else if (item.getKey() != null) {
+                mVoiceLangCode = item.getKey();
+                SPAppConfigs.setVoiceSearchLang(ActivitySearch.this, mVoiceLangCode);
+                dialog.dismiss();
+            }
         });
-        scrollView.addView(radioGroup);
-
-        PeaceBottomSheetParams params = sheet.getParams();
-        params.setHeaderTitleResource(R.string.strLabelSelectTranslation);
-        params.setContentView(scrollView);
-        sheet.show(getSupportFragmentManager());
+        menu.show(getSupportFragmentManager());
     }
 
-    private void setupHeader(boolean isFragSugg) {
-        mBinding.header.setElevation(isFragSugg ? 0 : dp2px(4));
-        mBinding.btnSelectTransl.setVisibility(isFragSugg ? GONE : VISIBLE);
-        mBinding.btnQuickLinks.setVisibility(isFragSugg ? GONE : VISIBLE);
-    }
-
-    /**
-     * Fire an intent to start the voice recognition activity.
-     */
-    private void startVoiceRecognitionActivity() {
+    private void startVoiceRecognitionActivity(String langCode) {
         if (!mSupportsVoiceInput) {
             return;
         }
 
         try {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Search in Quran");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            if (langCode != null) {
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, langCode);
+            }
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.strHintSearch));
             mActivityResultLauncher.launch(intent);
         } catch (ActivityNotFoundException ignored) {
         }
     }
 
-    /**
-     * Handle the results from the voice recognition activity.
-     */
     private ActivityResultLauncher<Intent> activityResultHandler() {
         return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), resultIntent -> {
             Intent data = resultIntent.getData();
@@ -436,12 +543,12 @@ public class ActivitySearch extends BaseActivity {
             }
             int resultCode = resultIntent.getResultCode();
             if (resultCode == RESULT_OK) {
-                // Populate the wordsList with the String values the recognition engine thought it heard
                 ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 if (matches.size() < 1) {
                     return;
                 }
                 String query = matches.get(0);
+                mBinding.search.setText(query);
                 initSearch(query, false, false);
             }
         });
@@ -449,7 +556,7 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mFragSearchSugg.isVisible()) {
+        if (mFragSearchSugg.isAdded() && mFragSearchSugg.isVisible()) {
             if (!TextUtils.isEmpty(mLocalHistoryManager.getLastQuery())) {
                 hideSugg(null);
             } else {
@@ -492,7 +599,6 @@ public class ActivitySearch extends BaseActivity {
                 int fromVerse = Integer.parseInt(r.group(2));
                 int toVerse = Integer.parseInt(r.group(3));
 
-                // swap
                 int tmpFrom = fromVerse;
                 fromVerse = Math.min(fromVerse, toVerse);
                 toVerse = Math.max(tmpFrom, toVerse);
@@ -580,8 +686,12 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void makeChapterSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo) {
-        collection.add(new ChapterJumpModel(chapNo, String.valueOf(chapNo), quranMeta.getChapterName(this, chapNo),
+        collection.add(new ChapterJumpModel(chapNo, String.valueOf(chapNo), quranName(this, chapNo),
                 quranMeta.getChapterNameTranslation(chapNo)));
+    }
+
+    private String quranName(Context context, int chapNo) {
+        return mQuranMeta.getChapterName(context, chapNo);
     }
 
     private void makeVerseSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int fromVerse, int toVerse) {
@@ -601,6 +711,44 @@ public class ActivitySearch extends BaseActivity {
         collection.add(tafsirJumpModel);
     }
 
+    private void showTranslationSheet() {
+        PeaceBottomSheet sheet = new PeaceBottomSheet();
+        NestedScrollView scrollView = new NestedScrollView(this);
+        PeaceRadioGroup radioGroup = new PeaceRadioGroup(this);
+        ViewPaddingKt.updatePaddingVertical(radioGroup, dp2px(15F), dp2px(25F));
+        int padH = dp2px(25F);
+        int padV = dp2px(13F);
+        int spaceBtwn = dp2px(15F);
+
+        for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
+            PeaceRadioButton radio = new PeaceRadioButton(this);
+            ViewPaddingKt.updatePaddings(radio, padH, padV);
+            radio.setBackgroundResource(com.peacedesign.R.drawable.dr_bg_action);
+            radio.setText(bookInfo.getBookName());
+            radio.setTag(bookInfo);
+            radio.setTextAppearance(R.style.TextAppearanceCommonTitle);
+            radio.setChecked(bookInfo.getSlug().equals(mSearchFilters.selectedTranslSlug));
+            radio.setForceTextGravity(COMPOUND_TEXT_GRAVITY_LEFT);
+            radio.setSpaceBetween(spaceBtwn);
+            radioGroup.addView(radio);
+        }
+        radioGroup.setOnCheckChangedListener((btn, id) -> {
+            sheet.dismiss();
+            TranslationBookInfoModel bookInfo = (TranslationBookInfoModel) btn.getTag();
+            mSearchFilters.selectedTranslSlug = bookInfo.getSlug();
+            mBinding.btnSelectTransl.setText(bookInfo.getBookName());
+            reSearch();
+
+            return Unit.INSTANCE;
+        });
+        scrollView.addView(radioGroup);
+
+        PeaceBottomSheetParams params = sheet.getParams();
+        params.setHeaderTitleResource(R.string.strLabelSelectTranslation);
+        params.setContentView(scrollView);
+        sheet.show(getSupportFragmentManager());
+    }
+
     public static class SearchResultViewType {
         public static final int VERSE_JUMPER = 0x0;
         public static final int CHAPTER_JUMPER = 0x1;
@@ -608,5 +756,6 @@ public class ActivitySearch extends BaseActivity {
         public static final int TAFSIR_JUMPER = 0x3;
         public static final int RESULT_COUNT = 0x4;
         public static final int RESULT = 0x5;
+        public static final int LOAD_MORE = 0x6;
     }
 }

@@ -69,10 +69,10 @@ public class ADPSearchSugg extends RecyclerView.Adapter<VHSearchResultBase> {
 
     @NonNull
     @Override
-    public VHSearchResultBase onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+    public VHSearchResultBase onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final VHSearchResultBase vh;
 
-        SearchResultModelBase modelBase = mSuggModels.get(position);
+        SearchResultModelBase modelBase = mSuggModels.get(viewType);
         if (modelBase instanceof VerseJumpModel) {
             vh = new VHVerseJump(new AppCompatTextView(parent.getContext()), true);
         } else if (modelBase instanceof ChapterJumpModel) {
@@ -116,6 +116,7 @@ public class ADPSearchSugg extends RecyclerView.Adapter<VHSearchResultBase> {
         private void bindHistoryItem(LytSearchHistoryItemBinding binding, SearchHistoryModel historyModel) {
             binding.getRoot().setOnClickListener(v -> {
                 if (mActivitySearch != null) {
+                    mActivitySearch.pushQuery(historyModel.getText());
                     mActivitySearch.initSearch(historyModel.getText().toString(), false, false);
                 }
             });

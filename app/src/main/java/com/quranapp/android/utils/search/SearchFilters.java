@@ -17,13 +17,11 @@ public class SearchFilters {
     private LytSearchFiltersBinding mBinding;
 
     public boolean searchWordPart;
-    public boolean searchInArText;
     public boolean showQuickLinks = true;
 
     public String selectedTranslSlug;
 
     private boolean mTmpSearchWordPart;
-    private boolean mTmpSearchInArText;
 
     public SearchFilters(ActivitySearch activitySearch, String initiallySelectedSlug) {
         mActivitySearch = activitySearch;
@@ -49,7 +47,6 @@ public class SearchFilters {
 
     private View prepareFiltersLayout(Context context) {
         mBinding = LytSearchFiltersBinding.inflate(LayoutInflater.from(context));
-        /*setupTranslsSpinner(mBinding.translsSpinner);*/
         setupCheckBoxes();
         return mBinding.getRoot();
     }
@@ -62,12 +59,11 @@ public class SearchFilters {
     }
 
     private boolean commitChanges() {
-        if (searchWordPart == mTmpSearchWordPart && searchInArText == mTmpSearchInArText) {
+        if (searchWordPart == mTmpSearchWordPart) {
             return false;
         }
 
         searchWordPart = mTmpSearchWordPart;
-        searchInArText = mTmpSearchInArText;
 
         return true;
     }

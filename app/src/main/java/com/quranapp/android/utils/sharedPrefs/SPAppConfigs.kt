@@ -18,6 +18,7 @@ object SPAppConfigs {
     private const val KEY_RECITATION_TRANSLATIONS_VERSION = "key.versions.recitation_translations"
     private const val KEY_TAFSIRS_VERSION = "key.versions.tafsirs"
     private const val KEY_RESOURCE_DOWNLOAD_SRC = "key.resource.download_src"
+    private const val KEY_VOICE_SEARCH_LANG = "key.voice.search.lang"
 
     const val LOCALE_DEFAULT = "default"
     const val THEME_MODE_DEFAULT = "app.theme.default"
@@ -63,11 +64,11 @@ object SPAppConfigs {
         }
     }
 
-    fun getTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_TRANSLATIONS_VERSION, 0)
+    fun getTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_URLS_VERSION, 0)
 
     fun setTranslationsVersion(ctx: Context, version: Long) {
         sp(ctx).edit() {
-            putLong(KEY_TRANSLATIONS_VERSION, version)
+            putLong(KEY_URLS_VERSION, version)
         }
     }
 
@@ -108,6 +109,18 @@ object SPAppConfigs {
     fun setResourceDownloadSrc(ctx: Context, src: String?) {
         sp(ctx).edit(commit = true) {
             putString(KEY_RESOURCE_DOWNLOAD_SRC, src)
+        }
+    }
+
+    @JvmStatic
+    fun getVoiceSearchLang(ctx: Context): String? {
+        return sp(ctx).getString(KEY_VOICE_SEARCH_LANG, null)
+    }
+
+    @JvmStatic
+    fun setVoiceSearchLang(ctx: Context, langCode: String?) {
+        sp(ctx).edit(commit = true) {
+            putString(KEY_VOICE_SEARCH_LANG, langCode)
         }
     }
 }

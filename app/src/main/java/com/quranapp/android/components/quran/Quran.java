@@ -35,12 +35,14 @@ public class Quran {
 
 
     public static void prepareInstance(Context context, @Nullable QuranMeta quranMeta, OnResultReadyCallback<Quran> resultReadyCallback) {
-        String savedScript = SPReader.getSavedScript(context);
+        prepareInstance(context, SPReader.getSavedScript(context), quranMeta, resultReadyCallback);
+    }
 
-        if (sQuranRef.get() == null || !Objects.equals(sQuranRef.get().mScript, savedScript)) {
+    public static void prepareInstance(Context context, String script, @Nullable QuranMeta quranMeta, OnResultReadyCallback<Quran> resultReadyCallback) {
+        if (sQuranRef.get() == null || !Objects.equals(sQuranRef.get().mScript, script)) {
             synchronized (Quran.class) {
-                if (sQuranRef.get() == null || !Objects.equals(sQuranRef.get().mScript, savedScript)) {
-                    prepare(context, savedScript, quranMeta, resultReadyCallback);
+                if (sQuranRef.get() == null || !Objects.equals(sQuranRef.get().mScript, script)) {
+                    prepare(context, script, quranMeta, resultReadyCallback);
                 } else {
                     resultReadyCallback.onReady(sQuranRef.get());
                 }

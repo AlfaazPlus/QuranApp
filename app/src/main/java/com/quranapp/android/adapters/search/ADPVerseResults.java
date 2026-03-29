@@ -17,17 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.TAFSIR_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
@@ -53,7 +42,10 @@ import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.extensions.ViewKt;
 import com.quranapp.android.utils.extensions.ViewPaddingKt;
+import com.quranapp.android.utils.reader.QuranScriptUtils;
+import com.quranapp.android.utils.reader.QuranScriptUtilsKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.vh.search.VHChapterJump;
 import com.quranapp.android.vh.search.VHJuzJump;
@@ -67,6 +59,19 @@ import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.LOAD_MORE;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.TAFSIR_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 
 public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> implements Destroyable {
     private final FragmentManager mFm;
@@ -82,8 +87,10 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
     private final LayoutInflater mInflater;
     private ArrayList<SearchResultModelBase> mResultModels = new ArrayList<>();
     private ActivitySearch mActivity;
+    private final FragSearchResult mFrag;
 
     public ADPVerseResults(Context context, FragSearchResult fragSearchResult) {
+        mFrag = fragSearchResult;
         mFm = fragSearchResult.getParentFragmentManager();
         mInflater = LayoutInflater.from(context);
         mTransTextSize = ContextKt.getDimenPx(context, R.dimen.dmnCommonSize);
@@ -124,6 +131,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             return RESULT_COUNT;
         } else if (modelBase instanceof VerseResultModel) {
             return RESULT;
+        } else if (modelBase instanceof FragSearchResult.LoadMoreModel) {
+            return LOAD_MORE;
         }
         return -1;
     }
@@ -155,6 +164,9 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             case RESULT:
                 vh = new VHVerseResultVerse(LytSearchResultItemBinding.inflate(mInflater, parent, false));
                 break;
+            case LOAD_MORE:
+                vh = new VHLoadMore(makeLoadMoreView(parent.getContext()));
+                break;
             default:
                 vh = new VHSearchResultBase(new View(parent.getContext()));
                 break;
@@ -167,16 +179,33 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         AppCompatTextView resultCountView = new AppCompatTextView(context);
 
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT);
-        params.topMargin = mActivity.dp2px(5);
+        params.topMargin = Dimen.dp2px(context, 5);
         resultCountView.setLayoutParams(params);
 
-        ViewPaddingKt.updatePaddingHorizontal(resultCountView, mActivity.dp2px(15));
-        ViewPaddingKt.updatePaddingVertical(resultCountView, mActivity.dp2px(2));
+        ViewPaddingKt.updatePaddingHorizontal(resultCountView, Dimen.dp2px(context, 15));
+        ViewPaddingKt.updatePaddingVertical(resultCountView, Dimen.dp2px(context, 2));
 
         resultCountView.setTextColor(mColorSecondary);
         resultCountView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAuthorTextSize);
 
         return resultCountView;
+    }
+
+    private View makeLoadMoreView(Context context) {
+        AppCompatTextView btn = new AppCompatTextView(context);
+        btn.setText(R.string.strChapInfoSeeMore);
+        btn.setTextColor(mColorPrimary);
+        btn.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTransTextSize);
+        btn.setGravity(android.view.Gravity.CENTER);
+        btn.setBackgroundResource(R.drawable.dr_bg_hover_cornered);
+        
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        params.setMargins(Dimen.dp2px(context, 20), Dimen.dp2px(context, 10), Dimen.dp2px(context, 20), Dimen.dp2px(context, 20));
+        btn.setLayoutParams(params);
+        ViewPaddingKt.updatePaddings(btn, Dimen.dp2px(context, 15));
+        
+        btn.setOnClickListener(v -> mFrag.loadMore());
+        return btn;
     }
 
     @Override
@@ -200,7 +229,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
         @SuppressWarnings("ConstantConditions")
         @Override
-        public void bind(SearchResultModelBase baseModel, int pos) {
+        public void bind(@NonNull SearchResultModelBase baseModel, int pos) {
             VerseResultCountModel model = (VerseResultCountModel) baseModel;
             Context context = itemView.getContext();
             final String text;
@@ -208,9 +237,11 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             TranslationBookInfoModel translModel = model.getBookInfo();
             if (model.resultCount > 0) {
                 if (model.resultCount == 1) {
-                    text = context.getString(R.string.strMsgSearchOneResultFoundIn, translModel.getBookName());
+                    text = context.getString(R.string.strMsgSearchOneResultFoundIn,
+                        translModel != null ? translModel.getBookName() : context.getString(R.string.labelArabic));
                 } else {
-                    text = context.getString(R.string.strMsgSearchMultResultsFound, translModel.getBookName(),
+                    text = context.getString(R.string.strMsgSearchMultResultsFound,
+                        translModel != null ? translModel.getBookName() : context.getString(R.string.labelArabic),
                         model.resultCount);
                 }
             } else {
@@ -236,7 +267,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         }
 
         @Override
-        public void bind(SearchResultModelBase baseModel, int pos) {
+        public void bind(@NonNull SearchResultModelBase baseModel, int pos) {
             if (mBinding == null) {
                 return;
             }
@@ -248,12 +279,40 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
             mBinding.transPlaceholder.removeAllViews();
             if (model.translationsView == null) {
-                model.translationsView = makeTranslations(model);
+                model.translationsView = makeView(model);
             } else {
                 ViewKt.removeView(model.translationsView);
             }
             mBinding.transPlaceholder.addView(model.translationsView);
             itemView.setOnClickListener(v -> openItem(itemView.getContext(), model));
+        }
+
+        private View makeView(VerseResultModel model) {
+            if (model.arabicText != null) {
+                return makeArabicView(model);
+            } else {
+                return makeTranslations(model);
+            }
+        }
+
+        private View makeArabicView(VerseResultModel model) {
+            Context context = itemView.getContext();
+            String script = QuranScriptUtils.SCRIPT_UTHMANI;
+            Typeface typeface = ContextKt.getFont(context, QuranScriptUtilsKt.getQuranScriptFontRes(script));
+
+            AppCompatTextView arabicTextView = new AppCompatTextView(context);
+            ViewPaddingKt.updatePaddings(arabicTextView, Dimen.dp2px(context, 10));
+            
+            float sizeMult = SPReader.getSavedTextSizeMultArabic(context);
+            int baseSize = ContextKt.getDimenPx(context, QuranScriptUtilsKt.getQuranScriptVerseTextSizeMediumRes(script));
+            arabicTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, baseSize * sizeMult);
+            
+            arabicTextView.setTypeface(typeface);
+            arabicTextView.setTextColor(ContextKt.color(context, R.color.colorText));
+            arabicTextView.setLineSpacing(0, 1.2f);
+            arabicTextView.setText(prepareArabicText(model.arabicText, model.arabicStartIndices, model.arabicEndIndices));
+
+            return arabicTextView;
         }
 
         private View makeTranslations(VerseResultModel model) {
@@ -271,7 +330,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
             int hideableTransCount = model.translations.size() - visibleTransCount;
             if (hideableTransCount > 0) {
-                makeMoreTransNavigator(model, container, visibleTransCount, hideableTransCount, model);
+                makeMoreTransNavigator(container, visibleTransCount, hideableTransCount, model);
             }
 
             return container;
@@ -287,16 +346,19 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             translRoot.setOrientation(LinearLayout.VERTICAL);
 
             AppCompatTextView transTextView = new AppCompatTextView(context);
-            ViewPaddingKt.updatePaddingHorizontal(transTextView, mActivity.dp2px(10));
-            transTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTransTextSize);
+            ViewPaddingKt.updatePaddingHorizontal(transTextView, Dimen.dp2px(context, 10));
+            
+            float sizeMult = SPReader.getSavedTextSizeMultTransl(context);
+            transTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTransTextSize * sizeMult);
+            
             transTextView.setText(prepareTransText(translation.getText(), startIndex, endIndex, translation.isUrdu()));
             transTextView.setShadowLayer(mTransTextSize, 0f, 0f, Color.TRANSPARENT);
             transTextView.setLayerType(View.LAYER_TYPE_SOFTWARE, transTextView.getPaint());
             translRoot.addView(transTextView, new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
             AppCompatTextView authorTextView = new AppCompatTextView(context);
-            ViewPaddingKt.updatePaddingHorizontal(authorTextView, mActivity.dp2px(10));
-            authorTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAuthorTextSize);
+            ViewPaddingKt.updatePaddingHorizontal(authorTextView, Dimen.dp2px(context, 10));
+            authorTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAuthorTextSize * sizeMult);
             authorTextView.setTextColor(mColorSecondary);
             authorTextView.setShadowLayer(mAuthorTextSize, 0f, 0f, Color.TRANSPARENT);
             authorTextView.setLayerType(View.LAYER_TYPE_SOFTWARE, authorTextView.getPaint());
@@ -313,18 +375,19 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             }
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            params.topMargin = mActivity.dp2px(5);
+            params.topMargin = Dimen.dp2px(context, 5);
             translRoot.addView(authorTextView, params);
 
             LinearLayout.LayoutParams rootParams = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            LayoutParamsKt.updateMarginVertical(rootParams, mActivity.dp2px(5));
+            LayoutParamsKt.updateMarginVertical(rootParams, Dimen.dp2px(context, 5));
 
             container.addView(translRoot, rootParams);
         }
 
-        private void makeMoreTransNavigator(VerseResultModel verseResultModel, LinearLayout container, int visibleTransCount, int hideableCount, VerseResultModel model) {
-            AppCompatTextView moreTransView = new AppCompatTextView(itemView.getContext());
-            ViewPaddingKt.updatePaddings(moreTransView, mActivity.dp2px(5));
+        private void makeMoreTransNavigator(LinearLayout container, int visibleTransCount, int hideableCount, VerseResultModel model) {
+            Context context = itemView.getContext();
+            AppCompatTextView moreTransView = new AppCompatTextView(context);
+            ViewPaddingKt.updatePaddings(moreTransView, Dimen.dp2px(context, 5));
 
             moreTransView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mMoreBtnTextSize);
             moreTransView.setText(String.format(mMoreTransText, hideableCount));
@@ -332,8 +395,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             moreTransView.setBackgroundResource(R.drawable.dr_bg_hover_cornered);
             moreTransView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-            LayoutParamsKt.updateMarginHorizontal(params, mActivity.dp2px(10));
-            LayoutParamsKt.updateMarginVertical(params, mActivity.dp2px(5));
+            LayoutParamsKt.updateMarginHorizontal(params, Dimen.dp2px(context, 10));
+            LayoutParamsKt.updateMarginVertical(params, Dimen.dp2px(context, 5));
             container.addView(moreTransView, params);
 
             moreTransView.setOnClickListener(v -> {
@@ -347,6 +410,43 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             });
         }
 
+        private CharSequence prepareArabicText(String text, List<Integer> startIndices, List<Integer> endIndices) {
+            if (startIndices == null || startIndices.isEmpty() || endIndices == null || endIndices.isEmpty()) return text;
+
+            SpannableString ss = new SpannableString(text);
+            for (int i = 0; i < startIndices.size(); i++) {
+                int start = startIndices.get(i);
+                int end = endIndices.get(i);
+                if (start >= 0 && end <= text.length()) {
+                    ss.setSpan(new ForegroundColorSpan(mColorPrimary), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            }
+
+            // Find the best snippet to show
+            int firstStart = startIndices.get(0);
+            int lastEnd = endIndices.get(endIndices.size() - 1);
+            
+            int textInitialLength = text.length();
+            int subStrStart = Math.max(0, firstStart - 40);
+            if (subStrStart > 0) {
+                while (subStrStart > 0 && !Character.isWhitespace(text.charAt(subStrStart - 1))) {
+                    subStrStart--;
+                }
+            }
+
+            int subStrEnd = Math.min(textInitialLength, lastEnd + 40);
+            if (subStrEnd < textInitialLength) {
+                while (subStrEnd < textInitialLength && !Character.isWhitespace(text.charAt(subStrEnd))) {
+                    subStrEnd++;
+                }
+            }
+
+            CharSequence snippet = ss.subSequence(subStrStart, subStrEnd);
+
+            String startEllipsis = subStrStart == 0 ? "" : "...";
+            String endEllipsis = (subStrEnd == textInitialLength ? "" : "...");
+            return TextUtils.concat(startEllipsis, snippet, endEllipsis);
+        }
 
         private CharSequence prepareTransText(String text, int startIndex, int endIndex, boolean isUrdu) {
             int starEndDiff = endIndex - startIndex;
@@ -400,14 +500,16 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             int[] descs = {R.string.strLabelOpenInReader, 0};
 
             PeaceBottomSheetMenuAdapter adapter = new PeaceBottomSheetMenuAdapter(context);
+            ArrayList<BaseListItem> menuItems = new ArrayList<>();
             for (int i = 0, l = labels.length; i < l; i++) {
                 BaseListItem item = new BaseListItem(icons[i], context.getString(labels[i]));
                 if (descs[i] != 0) {
                     item.setMessage(context.getString(descs[i]));
                 }
                 item.setId(i);
-                adapter.addItem(item);
+                menuItems.add(item);
             }
+            adapter.setItems(menuItems);
 
             dialog.setAdapter(adapter);
             dialog.setOnItemClickListener((menu, item) -> {
@@ -434,10 +536,21 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
         private void openItem(Context context, VerseResultModel model) {
             Intent intent = ReaderFactory.prepareSingleVerseIntent(model.chapterNo, model.verseNo);
             intent.setClass(context, ActivityReader.class);
-            String[] requestedSlugs = model.translSlugs.toArray(new String[0]);
-            intent.putExtra(READER_KEY_TRANSL_SLUGS, requestedSlugs);
+            if (model.translSlugs != null) {
+                String[] requestedSlugs = model.translSlugs.toArray(new String[0]);
+                intent.putExtra(READER_KEY_TRANSL_SLUGS, requestedSlugs);
+            }
             intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);
             context.startActivity(intent);
         }
+    }
+
+    static class VHLoadMore extends VHSearchResultBase {
+        public VHLoadMore(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void bind(@NonNull SearchResultModelBase model, int pos) {}
     }
 }

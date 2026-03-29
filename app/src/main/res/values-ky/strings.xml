@@ -193,17 +193,17 @@
     <string name="strTitleAlphaBG">Альфа фон</string>
     <string name="strMsgEditShareTransl">Жөндөөлөрдө тандалган котормолор бул жерде көрсөтүлөт.</string>
     <string name="strMsgEditShareLongTransl">Котормо узун, экранга батпай калышы мүмкүн.</string>
-    <string name="strMsgDuaFor" formatted="false">%s үчүн дуба</string>
+    <string name="strMsgDuaFor" formatted="false">%s үчүн</string>
     <string name="strMsgDuaOf" formatted="false">%s дубасы</string>
     <string name="strMsgReferenceInQuran" formatted="false">Куранда %s</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s менен байланышкан аяттар %2$d жерден табылды.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s темасы менен байланышкан аяттар %2$d жерден табылды.</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Курандагы %s дубасы</string>
     <string name="strMsgReferenceDuas">Курандан дубалар чогултулду.</string>
     <string name="strSalam">Ассаламу алейкум</string>
     <string name="strSalamShort">Салам</string>
     <string name="titleDownloadScriptResources">Шрифт ресурстарын жүктөйсүңбү?</string>
     <string name="msgDownloadKFQPCResourcesScript" formatted="false">Шрифт: %s (~1MB)</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттер: %1$d/%2$d жүктөлдү (~%3$dМБ калды)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттин көлөмү: %dМБ</string>
     <string name="msgDownloadFailed">Жүктөө ийгиликсиз</string>
     <string name="msgDownloadingScript">Шрифт жүктөлүүдө</string>
     <string name="msgDownloadingFonts">Шрифттер жүктөлүүдө</string>
@@ -248,7 +248,7 @@
     <string name="inPlacesMore" formatted="false">%1$s жана %2$d жерде</string>
     <string name="onboardDescTheme">Бул жөндөөнү кийинчерээк өзгөртө аласыз</string>
     <string name="onboardDescReciter">Бул жөндөөнү кийинчерээк өзгөртө аласыз. Куран окуучу хафиздин аудиосун кийинчерээк жүктөп алсаңыз болот.</string>
-    <string name="labelArabic">Арабча</string>
+    <string name="labelArabic">Курани Карим</string>
     <string name="labelTranslation">Котормо</string>
     <string name="favourites">Тандалмалар</string>
     <string name="titleAddToFavourites">Сүйүктүүлөргө кошуу</string>
@@ -308,7 +308,7 @@
     <string name="strTitleInfo">Маалымат!</string>
     <string name="strMsgNoInternetLong">Интернет жок. Wi-Fi же мобилдик дайындарды күйгүзүңүз жана кайра аракет кылыңыз.</string>
     <string name="strLabelDownloadImage">Сүрөттү жүктөө</string>
-    <string name="msgDownloadKFQPCResources">Бул шрифт үчүн керектүү ресурстар жүктөлөт:</string>
+    <string name="msgDownloadKFQPCResources">Бул шрифтти колдоуу үчүн ага керектүү ресурстарды жүктөшүңуз керек:</string>
     <string name="strMsgUpdateAvailable4Dialog">Жаңыртуу жеткиликтүү! Тиркемени жаңыртыңыз.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Эң көп %d котормо тандала алат. Өндүрүмдүүлүктү сактоо үчүн мурунку котормону өчүрүңүз.</string>
     <string name="strTextSending">Жөнөтүлүүдө…</string>
@@ -398,10 +398,10 @@
     <string name="strMsgBookmarkDateToday" formatted="false">Бүгүн саат %s де</string>
     <string name="strMsgHistoryRemove">Бул тарыхты өчүрөсүзбү?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" тарыхтан өчүрүлдү</string>
-    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s: %2$d ичинен табылган жалпы натыйжалар</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">\"%1$s\" китебинен %2$d натыйжа табылды</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d - жүз(пара) номери туура эмес.</string>
-    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s ичинен бир гана натыйжа табылды</string>
-    <string name="strMsgSearchNoResultsFoundIn" formatted="false">\"%s\" китебинин ичинен натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">\"%s\" китебинен бир эле натыйжа табылды</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">\"%s\" китебинен эч нерсе табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
     <string name="strMsgSearchNoResultsFound">Натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Натыйжа табылбады. Издөө фильтрлерин карап көрүңүз.</string>
     <string name="strMsgSearchWordPart">Сөздүн бир бөлүгүн издөө</string>
@@ -443,4 +443,6 @@
     <string name="about_this_page">БУЛ БАРАКЧА ЖӨНҮНДӨ</string>
     <string name="about_quran_science_msg">Бул баракчадагы маалыматтар доктор Закир Найктин \"Куран жана заманбап илим: Шайкешпи же карама-каршыбы\" аттуу китебинен алынды.\n\nКөрсөтүлгөн сүрөттөр иллюстрациялык максатта гана берилген.</string>
     <string name="strLabelScienceReferences">%d шилтеме</string>
+    <string name="strTitleVoiceSearchLang">Үн менен издөө тили</string>
+    <string name="strLabelOtherLanguages">Башка тилдер</string>
 </resources>

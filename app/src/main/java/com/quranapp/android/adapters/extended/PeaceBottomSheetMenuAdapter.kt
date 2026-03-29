@@ -10,7 +10,7 @@ import com.quranapp.android.widgets.list.base.BaseListAdapter
 import com.quranapp.android.widgets.list.base.BaseListItem
 import com.quranapp.android.widgets.list.base.BaseListItemView
 
-class PeaceBottomSheetMenuAdapter(context: Context) : BaseListAdapter(context) {
+open class PeaceBottomSheetMenuAdapter(context: Context) : BaseListAdapter(context) {
     private val mMessageColor = context.color(R.color.colorText2)
 
     override fun onCreateItemView(item: BaseListItem, position: Int): View {

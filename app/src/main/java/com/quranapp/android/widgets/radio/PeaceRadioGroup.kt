@@ -72,15 +72,15 @@ class PeaceRadioGroup @JvmOverloads constructor(
     }
 
     override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
-        if (child !is PeaceRadioButton) return
+        if (child is PeaceRadioButton) {
+            child.setGroup(this)
 
-        child.setGroup(this)
-
-        if (child.isChecked) {
-            protectFromCheckedChange = true
-            if (checkedId != NO_ID) setCheckedForView(checkedId, false)
-            setCheckedId(child.id)
-            protectFromCheckedChange = false
+            if (child.isChecked) {
+                protectFromCheckedChange = true
+                if (checkedId != NO_ID) setCheckedForView(checkedId, false)
+                setCheckedId(child.id)
+                protectFromCheckedChange = false
+            }
         }
 
         super.addView(child, index, params)
