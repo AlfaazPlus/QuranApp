@@ -15,9 +15,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
@@ -98,9 +97,10 @@ object RecitationManager {
         val savedRecitationSlug = SPReader.getSavedRecitationSlug(ctx)
 
         try {
-            val availableRecitationsModel = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
-                stringData
-            )
+            val availableRecitationsModel =
+                JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
+                    stringData
+                )
 
             availableRecitationsModel.reciters.forEach { recitationModel ->
                 if (recitationModel.urlHost.isNullOrEmpty()) {
@@ -146,7 +146,8 @@ object RecitationManager {
         if (force) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    val stringData = RetrofitInstance.github.getAvailableRecitationTranslations().string()
+                    val stringData =
+                        RetrofitInstance.github.getAvailableRecitationTranslations().string()
 
                     fileUtils.createFile(recitationTranslationsFile)
                     recitationTranslationsFile.writeText(stringData)
@@ -201,7 +202,8 @@ object RecitationManager {
                 if (reciterModel.urlHost.isNullOrEmpty()) {
                     reciterModel.urlHost = model.urlInfo.commonHost
                 }
-                reciterModel.langName = Locale(reciterModel.langCode).getDisplayName(Locale.getDefault())
+                reciterModel.langName =
+                    Locale(reciterModel.langCode).getDisplayName(Locale.getDefault())
                 reciterModel.isChecked = reciterModel.slug == savedSlug
             }
 
@@ -222,10 +224,6 @@ object RecitationManager {
         return getModel(slug)?.getReciterName()
     }
 
-    fun getCurrentReciterName(ctx: Context): String? {
-        return getReciterName(SPReader.getSavedRecitationSlug(ctx))
-    }
-
     @JvmStatic
     fun getTranslationModel(slug: String?): RecitationTranslationInfoModel? {
         return availableRecitationTranslationsModel?.reciters?.firstOrNull { it.slug == slug }
@@ -235,10 +233,6 @@ object RecitationManager {
         return getTranslationModel(slug)?.getReciterName()
     }
 
-    fun getCurrentTranslationReciterName(ctx: Context): String? {
-        return getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx))
-    }
-
     @JvmStatic
     fun getCurrentReciterNameForAudioOption(ctx: Context): String {
         val audioOption = SPReader.getRecitationAudioOption(ctx)
@@ -246,9 +240,14 @@ object RecitationManager {
         val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
         val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
-        val reciterName = if (!isOnlyTransl) getReciterName(SPReader.getSavedRecitationSlug(ctx)) else null
+        val reciterName =
+            if (!isOnlyTransl) getReciterName(SPReader.getSavedRecitationSlug(ctx)) else null
         val translReciterName =
-            if (isBoth || isOnlyTransl) getTranslationReciterName(SPReader.getSavedRecitationTranslationSlug(ctx)) else null
+            if (isBoth || isOnlyTransl) getTranslationReciterName(
+                SPReader.getSavedRecitationTranslationSlug(
+                    ctx
+                )
+            ) else null
 
         return if (isBoth && !reciterName.isNullOrEmpty() && !translReciterName.isNullOrEmpty()) {
             "$reciterName & $translReciterName"

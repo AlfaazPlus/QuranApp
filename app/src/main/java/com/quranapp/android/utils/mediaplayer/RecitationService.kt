@@ -532,6 +532,7 @@ class RecitationService : MediaSessionService() {
 
     /**
      * Builds a clipped playlist for verse-level playback for multiple audio tracks (Quran + translation).
+     * Used also if verse repeat is enabled (TODO).
      * Returns null when timing is unavailable; caller falls back to single unclipped file.
      */
     private fun buildMultiTrackVerseClipPlan(

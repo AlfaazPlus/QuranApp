@@ -4,6 +4,9 @@ package com.quranapp.android.compose.components.player
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +16,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -23,26 +30,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-
-private val MinPlayerBgColor = Color(0xFF14141C)
-private val MinPlayerContentColor = Color.White
 
 @Composable
 fun MiniPlayer(
@@ -58,11 +69,15 @@ fun MiniPlayer(
 
     val verse = state.currentVerse
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
+    val reciterNames by produceState<String?>(null, context) {
+        value = RecitationModelManager.getInstance(context).getCurrentReciterNameForAudioOption()
+    }
+    val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MinPlayerBgColor)
+            .background(PlayerBgColor)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -70,61 +85,184 @@ fun MiniPlayer(
             ),
     ) {
         MiniProgressBar(
-            isPlaying = isPlaying,
-            isLoading = isLoading,
-            controller = controller,
+            positionMs = positionMs,
+            durationMs = durationMs,
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(start = 16.dp, end = 4.dp),
+                .padding(start = 16.dp, end = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
+            MiniPlayerThumbnail(verse = verse)
+
+            Spacer(modifier = Modifier.width(8.dp))
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = if (verse.isValid) "$chapterName ${verse.chapterNo}:${verse.verseNo}"
-                    else "Loading...",
+                    text = stringResource(
+                        R.string.strLabelVerseSerialWithChapter,
+                        chapterName,
+                        verse.chapterNo,
+                        verse.verseNo
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
-                    color = MinPlayerContentColor,
+                    color = PlayerContentColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                val reciter = state.settings.reciter
-                if (!reciter.isNullOrBlank()) {
-                    Text(
-                        text = reciter,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MinPlayerContentColor.alpha(0.7f),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                Text(
+                    text = reciterNames ?: "…",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = PlayerContentColor.alpha(0.7f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+
+            IconButton(
+                onClick = {
+                    // TODO: scroll sync
+                },
+                modifier = Modifier.size(48.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_lock_open),
+                    contentDescription = stringResource(R.string.verseSyncOff),
+                    modifier = Modifier.size(20.dp),
+                    tint = PlayerContentColor.alpha(.7f),
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(40.dp)
+                    .shadow(
+                        elevation = 12.dp,
+                        shape = CircleShape,
+                        ambientColor = colorScheme.primary.copy(alpha = 0.35f),
+                        spotColor = colorScheme.primary.copy(alpha = 0.45f),
+                    )
+                    .clip(CircleShape)
+                    .background(colorScheme.primary)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = { controller.playPause() },
+                    ),
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 3.dp,
+                        color = colorScheme.onPrimary,
+                    )
+                } else {
+                    Icon(
+                        painterResource(
+                            if (isPlaying) R.drawable.ic_pause
+                            else R.drawable.ic_play,
+                        ),
+                        contentDescription = if (isPlaying) stringResource(R.string.strLabelPause)
+                        else stringResource(R.string.strLabelPlay),
+                        modifier = Modifier.size(24.dp),
+                        tint = colorScheme.onPrimary,
                     )
                 }
             }
 
-            Spacer(Modifier.width(8.dp))
+            Timestamp(
+                positionMs = positionMs,
+                durationMs = durationMs,
+            )
+        }
+    }
+}
 
-            IconButton(onClick = { controller.playPause() }) {
-                Icon(
-                    painterResource(
-                        if (isPlaying) R.drawable.dr_icon_pause_verse
-                        else R.drawable.dr_icon_play_verse,
-                    ),
-                    contentDescription = if (isPlaying) "Pause" else "Play",
-                    modifier = Modifier.size(28.dp),
-                    tint = colorScheme.primary,
+
+@Composable
+private fun MiniProgressBar(
+    positionMs: Long,
+    durationMs: Long,
+) {
+    val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
+
+    LinearProgressIndicator(
+        progress = { progress.coerceIn(0f, 1f) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(3.dp),
+        color = colorScheme.primary,
+        trackColor = colorScheme.primary.copy(alpha = 0.15f),
+    )
+}
+
+@Composable
+fun Timestamp(
+    positionMs: Long,
+    durationMs: Long,
+) {
+    val current = formatDuration(positionMs)
+    val total = formatDuration(durationMs)
+
+    BoxWithConstraints(
+        modifier = Modifier.padding(start = 8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        val isCompact = maxWidth < 600.dp
+
+        if (isCompact) {
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.wrapContentHeight()
+            ) {
+                Text(
+                    text = current,
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1
+                )
+
+                Text(
+                    text = total,
+                    color = Color.White.copy(alpha = 0.60f),
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 1
                 )
             }
+        } else {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                Text(
+                    text = current,
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1
+                )
 
-            IconButton(onClick = { controller.stop() }) {
-                Icon(
-                    painterResource(R.drawable.dr_icon_close),
-                    contentDescription = "Close",
-                    modifier = Modifier.size(20.dp),
-                    tint = MinPlayerContentColor.alpha(0.7f),
+                Text(
+                    text = " / ",
+                    color = Color.White.copy(alpha = 0.45f),
+                    style = MaterialTheme.typography.labelSmall
+                )
+
+                Text(
+                    text = total,
+                    color = Color.White.copy(alpha = 0.60f),
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 1
                 )
             }
         }
@@ -132,11 +270,10 @@ fun MiniPlayer(
 }
 
 @Composable
-private fun MiniProgressBar(
+fun rememberTimestamp(
     isPlaying: Boolean,
-    isLoading: Boolean,
     controller: RecitationController,
-) {
+): Pair<Long, Long> {
     var positionMs by remember { mutableLongStateOf(0L) }
     var durationMs by remember { mutableLongStateOf(0L) }
 
@@ -146,30 +283,12 @@ private fun MiniProgressBar(
             durationMs = controller.durationMs
             delay(250)
         }
+
         if (!isPlaying) {
             positionMs = controller.currentPositionMs
             durationMs = controller.durationMs
         }
     }
 
-    val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
-
-    if (isLoading) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(3.dp),
-            color = colorScheme.primary,
-            trackColor = colorScheme.primary.copy(alpha = 0.15f),
-        )
-    } else {
-        LinearProgressIndicator(
-            progress = { progress.coerceIn(0f, 1f) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(3.dp),
-            color = colorScheme.primary,
-            trackColor = colorScheme.primary.copy(alpha = 0.15f),
-        )
-    }
+    return positionMs to durationMs
 }

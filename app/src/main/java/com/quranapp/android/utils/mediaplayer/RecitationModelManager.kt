@@ -146,6 +146,26 @@ class RecitationModelManager private constructor(
         }
     }
 
+
+    suspend fun getCurrentReciterNameForAudioOption(): String {
+        val audioOption = SPReader.getRecitationAudioOption(appContext)
+
+        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
+        val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+
+        val reciterName =
+            if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null
+        val translReciterName =
+            if (isBoth || isOnlyTransl) getSelectedTranslationModel()?.getReciterName() else null
+
+        return if (isBoth && !reciterName.isNullOrEmpty() && !translReciterName.isNullOrEmpty()) {
+            "$reciterName & $translReciterName"
+        } else {
+            reciterName ?: translReciterName ?: ""
+        }
+    }
+
+
     @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadQuranFromLocal(): AvailableRecitationsModel? =
         withContext(Dispatchers.IO) {

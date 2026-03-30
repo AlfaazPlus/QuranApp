@@ -64,8 +64,7 @@ fun RecitationPlayerSheet(
     val isPlaying by controller.isPlayingState.collectAsState()
     val isBuffering by controller.isBufferingState.collectAsState()
     val isLoading = state.isResolving || isBuffering
-//    val isVisible = isPlaying || isLoading || state.currentVerse.isValid
-    val isVisible = true
+    val isVisible = isPlaying || isLoading || state.currentVerse.isValid
 
     var expanded by rememberSaveable { mutableStateOf(true) }
 
