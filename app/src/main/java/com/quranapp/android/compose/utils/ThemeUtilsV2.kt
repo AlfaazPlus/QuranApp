@@ -20,12 +20,14 @@ import com.quranapp.android.R
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 object ThemeUtilsV2 {
+    private val KEY_THEME_MODE = stringPreferencesKey("v2.theme_mode")
+    private val KEY_THEME_COLOR = stringPreferencesKey("v2.theme_color")
+    private val KEY_THEME_DYNAMIC_COLOR = booleanPreferencesKey("v2.theme_dynamic_color")
 
     const val THEME_COLOR_DEFAULT = "default"
     const val THEME_COLOR_BLUE = "blue"
@@ -39,7 +41,7 @@ object ThemeUtilsV2 {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 DataStoreManager.write(
-                    stringPreferencesKey(Keys.THEME_MODE),
+                    KEY_THEME_MODE,
                     SPAppConfigs.getThemeMode(context)
                 )
             } catch (e: Exception) {
@@ -78,32 +80,29 @@ object ThemeUtilsV2 {
 
     @Composable
     fun getThemeMode(): String {
-        return DataStoreManager.observe(
-            stringPreferencesKey(Keys.THEME_MODE),
-            SPAppConfigs.THEME_MODE_DEFAULT
-        )
+        return DataStoreManager.observe(KEY_THEME_MODE, SPAppConfigs.THEME_MODE_DEFAULT)
     }
 
     suspend fun setThemeMode(themeMode: String) {
-        DataStoreManager.write(stringPreferencesKey(Keys.THEME_MODE), themeMode)
+        DataStoreManager.write(KEY_THEME_MODE, themeMode)
     }
 
     @Composable
     fun getThemeColor(): String {
-        return DataStoreManager.observe(stringPreferencesKey(Keys.THEME_COLOR), THEME_COLOR_DEFAULT)
+        return DataStoreManager.observe(KEY_THEME_COLOR, THEME_COLOR_DEFAULT)
     }
 
     suspend fun setThemeColor(themeColor: String) {
-        DataStoreManager.write(stringPreferencesKey(Keys.THEME_COLOR), themeColor)
+        DataStoreManager.write(KEY_THEME_COLOR, themeColor)
     }
 
     @Composable
     fun isDynamicColor(): Boolean {
-        return DataStoreManager.observe(booleanPreferencesKey(Keys.THEME_DYNAMIC_COLOR), false)
+        return DataStoreManager.observe(KEY_THEME_DYNAMIC_COLOR, false)
     }
 
     suspend fun setDynamicColor(isDynamicColor: Boolean) {
-        DataStoreManager.write(booleanPreferencesKey(Keys.THEME_DYNAMIC_COLOR), isDynamicColor)
+        DataStoreManager.write(KEY_THEME_DYNAMIC_COLOR, isDynamicColor)
     }
 
     @Composable

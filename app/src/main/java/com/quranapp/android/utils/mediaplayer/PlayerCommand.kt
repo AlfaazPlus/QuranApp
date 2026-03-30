@@ -108,24 +108,6 @@ data class SetContinuePlayingCommand(
     }
 }
 
-data class SetVerseSyncCommand(
-    val verseSync: Boolean
-) : BasePlayerCommand(ACTION) {
-    override fun toBundle(): Bundle = Bundle().apply {
-        putBoolean("verseSync", verseSync)
-    }
-
-    companion object {
-        const val ACTION = "SET_VERSE_SYNC"
-
-        fun fromBundle(bundle: Bundle): SetVerseSyncCommand? {
-            val verseSync = bundle.getBoolean("verseSync", false)
-
-            return SetVerseSyncCommand(verseSync)
-        }
-    }
-}
-
 data class SetRecitorCommand(
     val reciter: String
 ) : BasePlayerCommand(ACTION) {
@@ -204,7 +186,6 @@ val ALL_PLAYER_ACTIONS = arrayOf(
     SetPlaybackSpeedCommand.ACTION,
     SetRepeatCommand.ACTION,
     SetContinuePlayingCommand.ACTION,
-    SetVerseSyncCommand.ACTION,
     SetRecitorCommand.ACTION,
     SetTranslationRecitorCommand.ACTION,
     SeekToPositionCommand.ACTION,

@@ -14,7 +14,6 @@ data class PlayerSettings(
     val speed: Float = 1.0f,
     val repeatVerse: Boolean = false,
     val continueRange: Boolean = true,
-    val verseSync: Boolean = true,
     val audioOption: Int = RecitationUtils.AUDIO_OPTION_DEFAULT,
     val reciter: String? = null,
     val translationReciter: String? = null
@@ -168,7 +167,6 @@ data class RecitationServiceState(
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
         putBoolean(KEY_REPEAT, settings.repeatVerse)
         putBoolean(KEY_CONTINUE, settings.continueRange)
-        putBoolean(KEY_VERSE_SYNC, settings.verseSync)
         putInt(KEY_AUDIO_OPTION, settings.audioOption)
         // Event data
         putLong(KEY_EVENT_TIMESTAMP, lastEventTimestamp)
@@ -197,7 +195,6 @@ data class RecitationServiceState(
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
         private const val KEY_REPEAT = "state_repeat"
         private const val KEY_CONTINUE = "state_continue"
-        private const val KEY_VERSE_SYNC = "state_verse_sync"
         private const val KEY_AUDIO_OPTION = "state_audio_option"
         private const val KEY_EVENT_TYPE = "state_event_type"
         private const val KEY_EVENT_MESSAGE = "state_event_message"
@@ -228,7 +225,6 @@ data class RecitationServiceState(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
                     repeatVerse = bundle.getBoolean(KEY_REPEAT, false),
                     continueRange = bundle.getBoolean(KEY_CONTINUE, true),
-                    verseSync = bundle.getBoolean(KEY_VERSE_SYNC, true),
                     audioOption = bundle.getInt(
                         KEY_AUDIO_OPTION,
                         RecitationUtils.AUDIO_OPTION_DEFAULT

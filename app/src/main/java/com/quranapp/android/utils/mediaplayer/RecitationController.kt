@@ -248,12 +248,6 @@ class RecitationController private constructor(private val appContext: Context) 
         )
     }
 
-    fun setVerseSync(sync: Boolean, fromUser: Boolean = false) {
-        ensureConnectedAndSend(
-            SetVerseSyncCommand(verseSync = sync)
-        )
-    }
-
     fun setAudioOption(option: Int) {
         ensureConnectedAndSend(
             SetAudioOptionCommand(audioOption = option)

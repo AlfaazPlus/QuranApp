@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,17 +44,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 @Composable
 fun MiniPlayer(
@@ -65,6 +67,7 @@ fun MiniPlayer(
     onExpand: () -> Unit,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val quranMeta = QuranMeta2.rememberQuranMeta()
 
     val verse = state.currentVerse
@@ -72,6 +75,7 @@ fun MiniPlayer(
     val reciterNames by produceState<String?>(null, context) {
         value = RecitationModelManager.getInstance(context).getCurrentReciterNameForAudioOption()
     }
+    val syncVerse = RecitationPreferences.observeRecitationScrollSync()
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(
@@ -127,15 +131,20 @@ fun MiniPlayer(
 
             IconButton(
                 onClick = {
-                    // TODO: scroll sync
+                    scope.launch {
+                        RecitationPreferences.setRecitationScrollSync(!syncVerse)
+                    }
                 },
                 modifier = Modifier.size(48.dp),
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_lock_open),
-                    contentDescription = stringResource(R.string.verseSyncOff),
+                    painterResource(if (syncVerse) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
+                    contentDescription = stringResource(
+                        if (syncVerse) R.string.verseSyncOn else
+                            R.string.verseSyncOff
+                    ),
                     modifier = Modifier.size(20.dp),
-                    tint = PlayerContentColor.alpha(.7f),
+                    tint = if (syncVerse) colorScheme.primary else PlayerContentColor.alpha(.7f),
                 )
             }
 

@@ -136,9 +136,9 @@
     <string name="strLabelVerseOf" formatted="false">Verse %1$d of %2$d</string>
     <string name="strLabelVerseWithNum" formatted="false">Verse %d</string>
     <string name="strLabelNowPlaying">Now Playing</string>
-    <string name="audioOnlyArabic">Play only Arabic</string>
+    <string name="audioOnlyArabic">Play only Quran</string>
     <string name="audioOnlyTranslation">Play only translation</string>
-    <string name="audioBothArabicTranslation">Play both Arabic and translation</string>
+    <string name="audioBothArabicTranslation">Play both Qurab and translation</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>

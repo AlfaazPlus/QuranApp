@@ -800,9 +800,6 @@ class RecitationService : MediaSessionService() {
             SetContinuePlayingCommand.ACTION ->
                 SetContinuePlayingCommand.fromBundle(args)?.let { reduce(it) }
 
-            SetVerseSyncCommand.ACTION ->
-                SetVerseSyncCommand.fromBundle(args)?.let { reduce(it) }
-
             SeekToPositionCommand.ACTION ->
                 SeekToPositionCommand.fromBundle(args)?.let { reduce(it) }
 
@@ -835,11 +832,6 @@ class RecitationService : MediaSessionService() {
 
             is SetContinuePlayingCommand -> {
                 updateState { copy(settings = settings.copy(continueRange = cmd.continuePlaying)) }
-                // TODO
-            }
-
-            is SetVerseSyncCommand -> {
-                updateState { copy(settings = settings.copy(verseSync = cmd.verseSync)) }
                 // TODO
             }
 

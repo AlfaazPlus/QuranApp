@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -40,13 +41,19 @@ object DataStoreManager {
         return preferences.contains(key)
     }
 
-    @Composable
-    fun <T> observe(key: Preferences.Key<T>, defaultValue: T): T {
+    private fun <T> observeFlow(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
         val dValue = read(key, defaultValue)
 
         return appContext.dataStore.data.map { preferences ->
             preferences[key] ?: dValue
-        }.collectAsStateWithLifecycle(dValue).value
+        }
+    }
+
+    @Composable
+    fun <T> observe(key: Preferences.Key<T>, defaultValue: T): T {
+        return observeFlow(key, defaultValue)
+            .collectAsStateWithLifecycle(defaultValue)
+            .value
     }
 
     suspend fun <T> observeWithCallback(key: Preferences.Key<T>, onChange: (T) -> Unit) {

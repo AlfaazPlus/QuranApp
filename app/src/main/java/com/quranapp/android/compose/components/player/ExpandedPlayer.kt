@@ -54,11 +54,13 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import java.util.Locale
 
 val PlayerBgColor = Color(0xFF14141C)
 val PlayerContentColor = Color.White
@@ -160,9 +162,17 @@ private fun JumpToVerseButton(verse: ChapterVersePair) {
 @Composable
 private fun Configurations() {
     val context = LocalContext.current
-    val audioOption = RecitationUtils.resolveAudioOptionText(context);
+    val audioOption = RecitationPreferences.observeRecitationAudioOption();
+    val speed = RecitationPreferences.observeRecitationSpeed();
+    val repeatVerse = RecitationPreferences.observeRecitationRepeatVerse();
     val reciterNames by produceState<String?>(null, context) {
         value = RecitationModelManager.getInstance(context).getCurrentReciterNameForAudioOption()
+    }
+
+    val audioOptionTextId = when (audioOption) {
+        RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> R.string.audioOnlyTranslation
+        RecitationUtils.AUDIO_OPTION_BOTH -> R.string.audioBothArabicTranslation
+        else -> R.string.audioOnlyArabic
     }
 
     Column(
@@ -188,7 +198,7 @@ private fun Configurations() {
 
             PlayerConfigButton(
                 text = stringResource(R.string.audioOption),
-                subtext = audioOption,
+                subtext = stringResource(audioOptionTextId),
                 icon = painterResource(R.drawable.dr_icon_settings),
                 onClick = { /*TODO*/ },
                 modifier = Modifier.weight(1f),
@@ -205,14 +215,14 @@ private fun Configurations() {
             PlayerConfigButton(
                 text = stringResource(R.string.strTitleRepeatVerse),
                 icon = painterResource(R.drawable.ic_repeat),
-                subtext = "On",
+                subtext = if (repeatVerse) stringResource(R.string.strLabelOn) else stringResource(R.string.strLabelOff),
                 onClick = { /*TODO*/ },
                 modifier = Modifier.weight(1f),
             )
 
             PlayerConfigButton(
                 text = stringResource(R.string.playbackSpeed),
-                subtext = "",
+                subtext = String.format(Locale.getDefault(), "%.1fx", speed),
                 icon = painterResource(R.drawable.icon_playback_speed),
                 onClick = { /*TODO*/ },
                 modifier = Modifier.weight(1f),

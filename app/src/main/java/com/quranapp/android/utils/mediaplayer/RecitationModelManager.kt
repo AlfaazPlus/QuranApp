@@ -11,8 +11,6 @@ import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.utils.sharedPrefs.SPReader.getRecitationAudioOption
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -59,7 +57,7 @@ class RecitationModelManager private constructor(
     }
 
     suspend fun resolveModels(): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
-        val audioOption = getRecitationAudioOption(appContext)
+        val audioOption = RecitationPreferences.getRecitationAudioOption()
 
         val resolveQuran = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
         val resolveTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC
@@ -72,14 +70,14 @@ class RecitationModelManager private constructor(
 
     suspend fun getSelectedQuranModel(
     ): RecitationQuranModel? {
-        val id = SPReader.getSavedRecitationSlug(appContext)
+        val id = RecitationPreferences.getReciterId()
 
         return getAllQuranModel()?.reciters?.selectById(id)
     }
 
     suspend fun getSelectedTranslationModel(
     ): RecitationTranslationModel? {
-        val id = SPReader.getSavedRecitationTranslationSlug(appContext)
+        val id = RecitationPreferences.getTranslationReciterId()
 
         return getAllTranslationModel()?.reciters?.selectById(id)
     }
@@ -117,7 +115,6 @@ class RecitationModelManager private constructor(
     suspend fun getAllTranslationModel(
         forceRefresh: Boolean = false
     ): AvailableRecitationTranslationsModel? {
-        val id = SPReader.getSavedRecitationTranslationSlug(appContext)
         val inMemory = cachedTranslation
 
         if (!forceRefresh && inMemory != null) {
@@ -148,7 +145,7 @@ class RecitationModelManager private constructor(
 
 
     suspend fun getCurrentReciterNameForAudioOption(): String {
-        val audioOption = SPReader.getRecitationAudioOption(appContext)
+        val audioOption = RecitationPreferences.getRecitationAudioOption()
 
         val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
         val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
