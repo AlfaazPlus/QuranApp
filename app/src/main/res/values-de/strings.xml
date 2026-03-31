@@ -447,4 +447,5 @@
     <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
     <string name="dlRecitations">Herunterladen &amp; Verwalten von Rezitationen</string>
     <string name="dlTafsirs">Herunterladen &amp; Verwalten von Erläuterungen</string>
+    <string name="favourites">Favoriten</string>
 </resources>
