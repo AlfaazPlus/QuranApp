@@ -67,6 +67,7 @@ import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
+import com.quranapp.android.activities.ActivityAppLogs;
 import com.quranapp.android.activities.readerSettings.ActivitySettings;
 import com.quranapp.android.api.models.recitation.RecitationInfoModel;
 import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel;
@@ -82,7 +83,6 @@ import com.quranapp.android.databinding.LytSettingsLayoutStyleBinding;
 import com.quranapp.android.databinding.LytSettingsReaderBinding;
 import com.quranapp.android.databinding.LytSettingsVotdToggleBinding;
 import com.quranapp.android.databinding.LytThemeExplorerBinding;
-import com.quranapp.android.frags.settings.appLogs.FragSettingsAppLogs;
 import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
 import com.quranapp.android.frags.settings.translation.FragSettingsTranslation;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
@@ -576,10 +576,6 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
     private void setupLauncherIcon(int startIconRes, IconedTextView textView) {
         Context context = textView.getContext();
         Drawable chevronRight = ContextKt.drawable(context, R.drawable.dr_icon_chevron_right);
-
-        if (WindowUtils.isRTL(context))
-            chevronRight = DrawableUtils.rotate(context, chevronRight, 180);
-
         textView.setDrawables(ContextKt.drawable(context, startIconRes), null, chevronRight, null);
     }
 
@@ -887,7 +883,7 @@ public class FragSettingsMain extends FragSettingsBase implements FragmentResult
             TextUtils.concat(ctx.getString(R.string.crashLogs), ", ", ctx.getString(R.string.suppressedLogs)).toString()
         );
 
-        logExplorerBinding.launcher.setOnClickListener(v -> launchFrag(FragSettingsAppLogs.class, null));
+        logExplorerBinding.launcher.setOnClickListener(v -> launchActivity(ctx, ActivityAppLogs.class));
 
         parent.addView(logExplorerBinding.getRoot());
     }

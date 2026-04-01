@@ -10,4 +10,5 @@ data class AppUrls(
     val help: String,
     val feedback: String,
     val discord: String,
+    val donation: String?
 )

@@ -84,9 +84,7 @@ public class ChapterInfoCardView extends CardView {
     private void expand(boolean expand) {
         mIsExpanded = expand;
 
-
-        int defDegree = mIsRTL ? 180 : 0;
-        mBinding.arrow.setRotation(mIsExpanded ? -90 : defDegree);
+        mBinding.arrow.setRotation(mIsExpanded ? -90 : 0);
 
         ViewGroup.LayoutParams params = mBinding.content.getLayoutParams();
         params.height = expand ? WRAP_CONTENT : 0;

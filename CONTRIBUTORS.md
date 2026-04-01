@@ -18,6 +18,7 @@
 - Hindi (hi) - [Faisal Khan](https://github.com/faisalcodes)
 - Indonesian (id) - [rraven](https://instagram.com/r4ravv), [friczky](https://github.com/friczky) and [Yogi Hermawan](https://github.com/yHpgi)
 - Italian (it) - [Wasif Raza Khan](https://www.instagram.com/wasifffff5) [Muhammad Ouedraogo](https://codeberg.org/MukiFreeSoftware/)
+- Kyrgyz (ky) - [Nursultan Glamov](https://github.com/nursultangithab)
 - Malayalam (ml) - [Fayaz](https://github.com/Sharpentine)
 - Persian (fa) - [rchookan](https://github.com/rchookan)
 - Portuguese (pt) - [fnogcps](https://github.com/fnogcps) and [MisterCosta96](https://github.com/MisterCosta96)

@@ -49,7 +49,11 @@ class FragMain : BaseFragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,7 +65,8 @@ class FragMain : BaseFragment() {
 
         // If update is not critical, proceed to load the rest of the content
         if (!updateManager.check4Update()) {
-            QuranMeta.prepareInstance(view.context,
+            QuranMeta.prepareInstance(
+                view.context,
                 object : OnResultReadyCallback<QuranMeta> {
                     override fun onReady(r: QuranMeta) {
                         initContent(r)
@@ -89,8 +94,8 @@ class FragMain : BaseFragment() {
             }
 
             it.quranScience.visibility = View.VISIBLE
-            it.quranScience.clipToOutline = true
-            it.quranScience.setOnClickListener {v->
+            it.quranScienceBg.clipToOutline = true
+            it.quranScience.setOnClickListener { v ->
                 v.context.startActivity(Intent(v.context, ActivityQuranScience::class.java))
             }
         }

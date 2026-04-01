@@ -1,74 +1,134 @@
 [
   {
-    "id": 1,
+    "id": "astronomy",
     "title": "Astronomy",
     "referencesCount": 16,
-    "path": "astronomy.html"
+    "path": "astronomy.html",
+    "translations": {
+      "hi": "खगोल विज्ञान",
+      "ky": "Астрономия",
+      "ur": "فلکیات"
+    }
   },
   {
-    "id": 2,
+    "id": "physics",
     "title": "Physics",
     "referencesCount": 2,
-    "path": "physics.html"
+    "path": "physics.html",
+    "translations": {
+      "hi": "भौतिकी",
+      "ky": "Физика",
+      "ur": "طبیعیات"
+    }
   },
   {
-    "id": 3,
+    "id": "geography",
     "title": "Geography",
     "referencesCount": 17,
-    "path": "geography.html"
+    "path": "geography.html",
+    "translations": {
+      "hi": "भूगोल",
+      "ky": "География",
+      "ur": "جغرافیہ"
+    }
   },
   {
-    "id": 4,
+    "id": "geology",
     "title": "Geology",
     "referencesCount": 6,
-    "path": "geology.html"
+    "path": "geology.html",
+    "translations": {
+      "hi": "भूविज्ञान",
+      "ky": "Геология",
+      "ur": "ارضیات"
+    }
   },
   {
-    "id": 5,
+    "id": "oceanography",
     "title": "Oceanography",
     "referencesCount": 3,
-    "path": "oceanography.html"
+    "path": "oceanography.html",
+    "translations": {
+      "hi": "समुद्र विज्ञान",
+      "ky": "Океанография",
+      "ur": "سمندری سائنس"
+    }
   },
   {
-    "id": 6,
+    "id": "biology",
     "title": "Biology",
     "referencesCount": 3,
-    "path": "biology.html"
+    "path": "biology.html",
+    "translations": {
+      "hi": "जीव विज्ञान",
+      "ky": "Биология",
+      "ur": "حیاتیات"
+    }
   },
   {
-    "id": 7,
+    "id": "botany",
     "title": "Botany",
     "referencesCount": 2,
-    "path": "botany.html"
+    "path": "botany.html",
+    "translations": {
+      "hi": "वनस्पति विज्ञान",
+      "ky": "Ботаника",
+      "ur": "نباتیات"
+    }
   },
   {
-    "id": 8,
+    "id": "zoology",
     "title": "Zoology",
     "referencesCount": 7,
-    "path": "zoology.html"
+    "path": "zoology.html",
+    "translations": {
+      "hi": "जंतु विज्ञान",
+      "ky": "Зоология",
+      "ur": "حیوانیات"
+    }
   },
   {
-    "id": 9,
+    "id": "medicine",
     "title": "Medicine",
     "referencesCount": 2,
-    "path": "medicine.html"
+    "path": "medicine.html",
+    "translations": {
+      "hi": "चिकित्सा",
+      "ky": "Медицина",
+      "ur": "دوائی"
+    }
   },
   {
-    "id": 10,
+    "id": "physiology",
     "title": "Physiology",
     "referencesCount": 1,
-    "path": "physiology.html"
+    "path": "physiology.html",
+    "translations": {
+      "hi": "शरीर क्रिया विज्ञान",
+      "ky": "Физиология",
+      "ur": "فزیالوجی"
+    }
   },
   {
-    "id": 11,
+    "id": "embryology",
     "title": "Embryology",
     "referencesCount": 28,
-    "path": "embryology.html"
+    "path": "embryology.html",
+    "translations": {
+      "hi": "भ्रूण विज्ञान",
+      "ky": "Эмбриология",
+      "ur": "ایمبریالوجی"
+    }
   },
   {
-    "id": 12,
+    "id": "general_science",
     "title": "General Science",
     "referencesCount": 3,
-    "path": "general.html"
+    "path": "general.html",
+    "translations": {
+      "hi": "सामान्य विज्ञान",
+      "ky": "Жалпы илим",
+      "ur": "جنرل سائنس"
+    }
   }
 ]

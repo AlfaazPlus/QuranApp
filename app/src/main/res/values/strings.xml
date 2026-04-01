@@ -447,4 +447,11 @@
     <string name="dlTafsirs">
         Download &amp; Manage Tafsirs
     </string>
+    <string name="donate">
+        Donate to Us
+    </string>
+    <string name="quran_and_science">Quran and Science</string>
+    <string name="about_this_page">About this page</string>
+    <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called \"The Quran and Modern Science: Compatible or Incompatible\"\n\nThe images shown are for illustrative purpose only.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d references</string>
 </resources>

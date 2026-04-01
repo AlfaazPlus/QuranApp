@@ -14,7 +14,7 @@
         <item name="colorControlNormal">@color/colorIcon</item>
 
         <item name="android:windowBackground">@color/colorBGPage</item>
-        <item name="android:statusBarColor">?android:windowBackground</item>
+        <item name="android:statusBarColor">@color/colorBGPage</item>
 
         <item name="android:textSize">@dimen/dmnCommonSize</item>
         <item name="android:textColor">@color/colorText</item>

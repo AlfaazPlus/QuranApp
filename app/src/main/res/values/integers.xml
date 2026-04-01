@@ -3,6 +3,5 @@
   -->
 
 <resources>
-    <integer name="intActionBtnRotation">0</integer>
     <integer name="intBGTransition">120</integer>
 </resources>

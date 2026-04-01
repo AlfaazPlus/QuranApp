@@ -58,11 +58,15 @@ import com.quranapp.android.widgets.radio.PeaceRadioButton;
 import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 
 import kotlin.Unit;
 
@@ -248,7 +252,7 @@ public class ActivitySearch extends BaseActivity {
         // Disable button if no recognition service is present
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),
-            0);
+                0);
         mSupportsVoiceInput = activities.size() != 0;
         if (!mSupportsVoiceInput) {
             mBinding.voiceSearch.setEnabled(false);
@@ -258,11 +262,26 @@ public class ActivitySearch extends BaseActivity {
 
     private void initManagers(ActivitySearch activitySearch) {
         String initiallySelectedSlug = null;
-        for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
-            if ("en".equals(bookInfo.getLangCode())) {
-                initiallySelectedSlug = bookInfo.getSlug();
+
+        Set<String> savedTranslations = SPReader.getSavedTranslations(activitySearch);
+        for (String slug : savedTranslations) {
+            if (availableTranslModels.containsKey(slug)) {
+                initiallySelectedSlug = slug;
                 break;
             }
+        }
+
+        if (initiallySelectedSlug == null) {
+            for (TranslationBookInfoModel bookInfo : availableTranslModels.values()) {
+                if ("en".equals(bookInfo.getLangCode())) {
+                    initiallySelectedSlug = bookInfo.getSlug();
+                    break;
+                }
+            }
+        }
+
+        if (initiallySelectedSlug == null && !availableTranslModels.isEmpty()) {
+            initiallySelectedSlug = availableTranslModels.keySet().iterator().next();
         }
 
         mSearchFilters = new SearchFilters(activitySearch, initiallySelectedSlug);
@@ -562,7 +581,7 @@ public class ActivitySearch extends BaseActivity {
 
     private void makeChapterSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo) {
         collection.add(new ChapterJumpModel(chapNo, String.valueOf(chapNo), quranMeta.getChapterName(this, chapNo),
-            quranMeta.getChapterNameTranslation(chapNo)));
+                quranMeta.getChapterNameTranslation(chapNo)));
     }
 
     private void makeVerseSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int fromVerse, int toVerse) {

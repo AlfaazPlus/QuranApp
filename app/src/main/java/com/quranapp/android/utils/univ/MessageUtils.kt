@@ -2,6 +2,7 @@ package com.quranapp.android.utils.univ
 
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.view.View
 import android.widget.Toast
 import com.peacedesign.android.utils.ColorUtils
@@ -91,5 +92,11 @@ object MessageUtils {
             setNeutralButton(R.string.strLabelCancel, null)
             setNegativeButton(btn, btnColor ?: 0) { _, _ -> action?.run() }
         }.show()
+    }
+
+    fun showClipboardMessage(context: Context, text: String) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            showRemovableToast(context = context, msg = text, duration = Toast.LENGTH_SHORT)
+        }
     }
 }

@@ -179,3 +179,14 @@ fun JsonObject?.safeJsonArray(key: String, default: JsonArray): JsonArray {
         return default
     }
 }
+
+
+fun JsonObject.toStringMap(): Map<String, String> {
+    val map = mutableMapOf<String, String>()
+
+    entries.forEach { entry ->
+        map[entry.key] = entry.value.jsonPrimitive.content
+    }
+
+    return map
+}
