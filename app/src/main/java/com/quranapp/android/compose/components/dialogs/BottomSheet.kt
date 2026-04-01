@@ -17,14 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(
+fun BottomSheetBare(
     isOpen: Boolean,
     onDismiss: () -> Unit,
-    icon: Int? = null,
-    title: String? = null,
-    headerArrangement: Arrangement.Horizontal = Arrangement.Center,
+    header: (@Composable () -> Unit)? = null,
     dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
     content: @Composable () -> Unit,
 ) {
@@ -38,29 +37,56 @@ fun BottomSheet(
         contentColor = MaterialTheme.colorScheme.onSurface,
         dragHandle = dragHandle,
     ) {
-        if (icon != null || title != null) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
-                horizontalArrangement = headerArrangement,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (icon != null) {
-                    Icon(
-                        painter = painterResource(id = icon),
-                        contentDescription = title,
-                        modifier = Modifier.padding(end = 8.dp),
-                    )
-                }
-                if (title != null) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                }
-            }
-        }
+        header?.invoke()
         content()
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomSheet(
+    isOpen: Boolean,
+    onDismiss: () -> Unit,
+    icon: Int? = null,
+    title: String? = null,
+    headerArrangement: Arrangement.Horizontal = Arrangement.Center,
+    dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
+    content: @Composable () -> Unit,
+) {
+    BottomSheetBare(
+        isOpen = isOpen,
+        onDismiss = onDismiss,
+        dragHandle = dragHandle,
+        header = {
+            if (icon != null || title != null) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = if (dragHandle != null) 0.dp else 16.dp,
+                            bottom = 16.dp,
+                            start = 16.dp,
+                            end = 16.dp
+                        ),
+                    horizontalArrangement = headerArrangement,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (icon != null) {
+                        Icon(
+                            painter = painterResource(id = icon),
+                            contentDescription = title,
+                            modifier = Modifier.padding(end = 8.dp),
+                        )
+                    }
+                    if (title != null) {
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
+                }
+            }
+        },
+        content = content,
+    )
 }

@@ -49,7 +49,7 @@ class RecitationAudioRepository(private val context: Context) {
     }
 
     private val fileUtils = FileUtils.newInstance(context)
-    private val modelManager = RecitationModelManager.getInstance(context)
+    private val modelManager = RecitationModelManager.get(context)
     private val workManager = WorkManager.getInstance(context)
 
     fun cancelAll() {
@@ -73,12 +73,12 @@ class RecitationAudioRepository(private val context: Context) {
     fun resolveAudioUris(
         chapterNo: Int,
     ): Flow<ResolvedAudioResult> = flow {
-        val audioOption = SPReader.getRecitationAudioOption(context)
+        val audioOption = RecitationPreferences.getRecitationAudioOption()
 
         val (quranModel, translationModel) = modelManager.resolveModels()
 
         val shouldPlayArabic = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-        val shouldPlayTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC
+        val shouldPlayTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_QURAN
 
         val failed = when {
             shouldPlayArabic && quranModel == null -> true

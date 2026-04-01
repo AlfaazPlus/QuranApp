@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
@@ -16,13 +17,14 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.bookmark.BookmarkModel
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.databinding.LytPageVerseDialogBinding
 import com.quranapp.android.databinding.LytReaderVerseQuickActionsBinding
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks
+import com.quranapp.android.utils.extensions.layoutInflater
 import com.quranapp.android.utils.extensions.removeView
 import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.reader.factory.ReaderFactory.startTafsir
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod
@@ -82,11 +84,7 @@ class PageVerseDialog : PeaceBottomSheet() {
         }
     }
 
-    private fun setupContent(
-        binding: LytPageVerseDialogBinding,
-        verse: Verse,
-        activity: ActivityReader
-    ) {
+    private fun setupContent(binding: LytPageVerseDialogBinding, verse: Verse, activity: ActivityReader) {
         onDismissListener = object : OnPeaceBottomSheetDismissListener {
             override fun onDismissed() {
                 this@PageVerseDialog.binding = null
@@ -95,11 +93,9 @@ class PageVerseDialog : PeaceBottomSheet() {
             }
         }
 
-        // Use global RecitationController to check recitation state
-        val controller = RecitationController.getInstance(activity)
-        val chapterNo = verse.chapterNo
-        val verseNo = verse.verseNo
-        onVerseRecite(chapterNo, verseNo, controller.isReciting(chapterNo, verseNo))
+        activity.mPlayerService?.let {
+            onVerseRecite(it.p.currentChapterNo, it.p.currentVerseNo, it.isPlaying)
+        }
 
         verse.apply {
             val translSlugs = SPReader.getSavedTranslations(activity)
@@ -140,17 +136,10 @@ class PageVerseDialog : PeaceBottomSheet() {
 
             val name = activity.mQuranMetaRef.get()!!.getChapterName(activity, chapterNo)
 
-            it.verseSerial.contentDescription =
-                activity.getString(R.string.strDescVerseNoWithChapter, name, verseNo)
-            it.verseSerial.text = activity.getString(
-                R.string.strLabelVerseSerialWithChapter,
-                name,
-                chapterNo,
-                verseNo
-            )
+            it.verseSerial.contentDescription = activity.getString(R.string.strDescVerseNoWithChapter, name, verseNo)
+            it.verseSerial.text = activity.getString(R.string.strLabelVerseSerialWithChapter, name, chapterNo, verseNo)
 
-            it.btnVerseRecitation.visibility =
-                if (!RecitationUtils.isRecitationSupported()) View.GONE else View.VISIBLE
+            it.btnVerseRecitation.visibility = if (!RecitationUtils.isRecitationSupported()) View.GONE else View.VISIBLE
 
             it.btnVerseOptions.setOnClickListener {
                 dismiss()
@@ -158,7 +147,7 @@ class PageVerseDialog : PeaceBottomSheet() {
             }
 
             it.btnVerseRecitation.setOnClickListener {
-                RecitationController.getInstance(activity).play(chapterNo, verseNo)
+                activity.mPlayer?.reciteControl(ChapterVersePair(chapterNo, verseNo))
             }
 
             it.btnTafsir.setOnClickListener { v ->
@@ -179,10 +168,7 @@ class PageVerseDialog : PeaceBottomSheet() {
         }
     }
 
-    private fun onBookmarkChanged(
-        binding: LytReaderVerseQuickActionsBinding,
-        isBookmarked: Boolean
-    ) {
+    private fun onBookmarkChanged(binding: LytReaderVerseQuickActionsBinding, isBookmarked: Boolean) {
         binding.btnBookmark.setColorFilter(
             ContextCompat.getColor(
                 binding.root.context,

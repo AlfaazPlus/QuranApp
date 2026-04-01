@@ -59,7 +59,7 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
-import com.quranapp.android.compose.components.ErrorMessageCard
+import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.utils.maangers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TafsirEvent

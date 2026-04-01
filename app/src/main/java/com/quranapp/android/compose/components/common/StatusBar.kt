@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.components
+package com.quranapp.android.compose.components.common
 
 
 import androidx.compose.foundation.background

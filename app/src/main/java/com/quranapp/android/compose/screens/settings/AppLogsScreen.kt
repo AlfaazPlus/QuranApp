@@ -51,9 +51,9 @@ import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.components.appLogs.AppLogModel
-import com.quranapp.android.compose.components.AppBar
-import com.quranapp.android.compose.components.IconButton
-import com.quranapp.android.compose.components.Loader
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.Log

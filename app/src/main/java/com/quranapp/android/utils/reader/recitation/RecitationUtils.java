@@ -3,6 +3,7 @@ package com.quranapp.android.utils.reader.recitation;
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
@@ -23,6 +24,7 @@ import java.util.regex.Pattern;
 
 import kotlin.Unit;
 
+@Deprecated
 public class RecitationUtils {
     public static final String DIR_NAME = FileUtils.createPath(AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
         "recitations");
@@ -45,10 +47,10 @@ public class RecitationUtils {
     public static final String AVAILABLE_RECITATION_TRANSLATIONS_FILENAME = "available_recitation_translations.json";
     public static final String RECITATION_AUDIO_NAME_FORMAT_LOCAL = "%03d-%03d.mp3";
 
-    public static final int AUDIO_OPTION_ONLY_ARABIC = 0;
+    public static final int AUDIO_OPTION_ONLY_QURAN = 0;
     public static final int AUDIO_OPTION_ONLY_TRANSLATION = 1;
     public static final int AUDIO_OPTION_BOTH = 2;
-    public static final int AUDIO_OPTION_DEFAULT = AUDIO_OPTION_ONLY_ARABIC;
+    public static final int AUDIO_OPTION_DEFAULT = AUDIO_OPTION_ONLY_QURAN;
 
     public static boolean isRecitationSupported() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;

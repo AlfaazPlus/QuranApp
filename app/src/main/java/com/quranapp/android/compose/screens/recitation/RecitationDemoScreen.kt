@@ -2,6 +2,7 @@ package com.quranapp.android.compose.screens.recitation
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
@@ -56,18 +58,17 @@ private val DEMO_CHAPTERS = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecitationDemoScreen(controller: RecitationController) {
+fun RecitationDemoScreen() {
     val context = LocalContext.current
+    val controller = RecitationController.getInstance(context)
     val state by controller.state.collectAsState()
     val isPlaying by controller.isPlayingState.collectAsState()
 
-    RecitationPlayerSheet(
-        controller = controller,
-    ) { playerPadding ->
+    Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             modifier = Modifier
                 .windowInsetsPadding(WindowInsets.statusBars)
-                .padding(playerPadding),
+                .fillMaxSize(),
             topBar = {
                 TopAppBar(
                     title = { Text("Recitation Player") },
@@ -90,13 +91,14 @@ fun RecitationDemoScreen(controller: RecitationController) {
                 state = state,
                 isPlaying = isPlaying,
                 onChapterSelected = { chapter ->
-                    controller.play(chapterNo = chapter.number, verseNo = 1)
+                    controller.start(ChapterVersePair(chapterNo = chapter.number, verseNo = 1))
                 },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
             )
         }
+        RecitationPlayerSheet()
     }
 }
 

@@ -1,7 +1,5 @@
 package com.quranapp.android.compose.screens.settings
 
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -56,19 +54,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
-import com.quranapp.android.compose.components.ErrorMessageCard
+import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationEvent
-import com.quranapp.android.viewModels.TranslationUiState
 import com.quranapp.android.viewModels.TranslationViewModel
 import java.util.regex.Pattern
 

@@ -138,7 +138,11 @@
     <string name="strLabelNowPlaying">Now Playing</string>
     <string name="audioOnlyArabic">Play only Quran</string>
     <string name="audioOnlyTranslation">Play only translation</string>
-    <string name="audioBothArabicTranslation">Play both Qurab and translation</string>
+    <string name="audioBothArabicTranslation">Play both Quran and translation</string>
+    <string name="titleRecitationGroupSize">Quran Verse Group Size</string>
+    <string name="msgRecitationGroupSize">
+        Choose how many Quran verses play before translation starts. Example: if you select 3, it plays 3 Quran verses followed by their translations.
+    </string>
     <string name="strTitleScripts">Scripts</string>
     <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
@@ -458,4 +462,14 @@
     <string name="about_this_page">About this page</string>
     <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called \"The Quran and Modern Science: Compatible or Incompatible\"\n\nThe images shown are for illustrative purpose only.</string>
     <string name="strLabelScienceReferences" formatted="false">%d references</string>
+    <string name="once">Once</string>
+    <string name="twice">Twice</string>
+    <string name="nTimes" formatted="false">%d times</string>
+    <string name="msgRepeat">
+        Number of times a verse will be played before moving to the next verse. This option is only available when \"Play only Quran\" is selected in the audio options.
+    </string>
+    <string name="notSupported">Not supported</string>
+    <string name="missingTimingData" formatted="false">
+        Missing timing data for %s — cannot play.
+    </string>
 </resources>

@@ -1,6 +1,7 @@
 package com.quranapp.android.api.models.mediaplayer
 
 import android.net.Uri
+import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -110,6 +111,14 @@ class RecitationAudioTrack(
     val hasVerseTiming: Boolean
         get() =
             timingMetadata?.hasVerseTiming ?: false
+
+    suspend fun getReciterName(manager: RecitationModelManager): String {
+        if (kind == RecitationAudioKind.QURAN) {
+            return manager.getQuranModel(reciterId)?.getReciterName() ?: ""
+        } else {
+            return manager.getTranslationModel(reciterId)?.getReciterName() ?: ""
+        }
+    }
 
 }
 

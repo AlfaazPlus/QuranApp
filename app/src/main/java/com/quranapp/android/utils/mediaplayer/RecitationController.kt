@@ -16,12 +16,11 @@ import androidx.media3.session.SessionResult
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.utils.Log
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class RecitationController private constructor(private val appContext: Context) {
@@ -30,22 +29,20 @@ class RecitationController private constructor(private val appContext: Context) 
     private val handler = Handler(Looper.getMainLooper())
     private val pendingCallbacks = mutableListOf<Runnable>()
 
+    /** Only show buffering UI if it lasts this long, to avoid flicker on short stalls. */
+    private val bufferingShowRunnable = Runnable { _isBuffering.value = true }
+    private val connectionLock = Any()
+    private var activeConnectionOwners = 0
+
     private val _isConnected = MutableStateFlow(false)
-    val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
+    val isConnectedState: StateFlow<Boolean> = _isConnected.asStateFlow()
 
     private val _isPlaying = MutableStateFlow(false)
-    /** Whether the player is currently playing. Source: MediaController (Player.Listener). */
+
     val isPlayingState: StateFlow<Boolean> = _isPlaying.asStateFlow()
 
     private val _isBuffering = MutableStateFlow(false)
-    /** Whether the player is buffering. Source: MediaController (Player.Listener). */
     val isBufferingState: StateFlow<Boolean> = _isBuffering.asStateFlow()
-
-    /** Events from service (errors, messages). UI subscribes to show toasts/snackbars. */
-    private val _events = MutableSharedFlow<PlayerEvent>(extraBufferCapacity = 10)
-    val events: SharedFlow<PlayerEvent> = _events.asSharedFlow()
-
-    private var lastSeenEventTimestamp: Long = 0L
 
     // ==================== Convenience Getters ====================
 
@@ -63,17 +60,43 @@ class RecitationController private constructor(private val appContext: Context) 
 
     // ==================== Connection ====================
 
-    @OptIn(UnstableApi::class)
     fun connect() {
-        if (mediaController != null || controllerFuture != null) return
+        synchronized(connectionLock) {
+            activeConnectionOwners += 1
 
-        val sessionToken =
-            SessionToken(appContext, ComponentName(appContext, RecitationService::class.java))
+            // Shared controller already active/connecting, only increase owner count.
+            if (mediaController != null || controllerFuture != null) return
+        }
+
+        establishConnection()
+    }
+
+    @OptIn(UnstableApi::class)
+    private fun establishConnection() {
+        synchronized(connectionLock) {
+            if (mediaController != null || controllerFuture != null) return
+        }
+
+        val sessionToken = SessionToken(
+            appContext,
+            ComponentName(appContext, RecitationService::class.java)
+        )
+
         controllerFuture = MediaController.Builder(appContext, sessionToken)
             .setListener(object : MediaController.Listener {
                 override fun onDisconnected(controller: MediaController) {
                     mediaController = null
                     _isConnected.value = false
+                    controllerFuture = null
+
+                    // If there are still active owners, reconnect automatically.
+                    val shouldReconnect = synchronized(connectionLock) {
+                        activeConnectionOwners > 0
+                    }
+
+                    if (shouldReconnect) {
+                        establishConnection()
+                    }
                 }
 
                 override fun onExtrasChanged(controller: MediaController, extras: Bundle) {
@@ -89,7 +112,9 @@ class RecitationController private constructor(private val appContext: Context) 
                 controller?.addListener(playerListener)
 
                 _isPlaying.value = controller?.isPlaying ?: false
-                _isBuffering.value = controller?.playbackState == Player.STATE_BUFFERING
+
+                applyPlaybackStateForBuffering(controller?.playbackState ?: Player.STATE_IDLE)
+
                 _isConnected.value = true
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationController.connect")
@@ -99,6 +124,13 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     fun disconnect() {
+        val shouldRelease = synchronized(connectionLock) {
+            activeConnectionOwners == (--activeConnectionOwners).coerceAtLeast(0)
+        }
+
+        // Another component is still using the shared controller.
+        if (!shouldRelease) return
+
         mediaController?.removeListener(playerListener)
         controllerFuture?.let { MediaController.releaseFuture(it) }
         mediaController = null
@@ -106,7 +138,19 @@ class RecitationController private constructor(private val appContext: Context) 
         _isConnected.value = false
         _isPlaying.value = false
         _isBuffering.value = false
+        handler.removeCallbacks(bufferingShowRunnable)
+
         synchronized(pendingCallbacks) { pendingCallbacks.clear() }
+    }
+
+    private fun applyPlaybackStateForBuffering(playbackState: Int) {
+        handler.removeCallbacks(bufferingShowRunnable)
+
+        if (playbackState == Player.STATE_BUFFERING) {
+            handler.postDelayed(bufferingShowRunnable, 500)
+        } else {
+            _isBuffering.value = false
+        }
     }
 
     private val playerListener = object : Player.Listener {
@@ -115,7 +159,7 @@ class RecitationController private constructor(private val appContext: Context) 
         }
 
         override fun onPlaybackStateChanged(playbackState: Int) {
-            _isBuffering.value = playbackState == Player.STATE_BUFFERING
+            applyPlaybackStateForBuffering(playbackState)
         }
     }
 
@@ -134,7 +178,7 @@ class RecitationController private constructor(private val appContext: Context) 
                 appContext,
                 Intent(appContext, RecitationService::class.java)
             )
-            handler.postDelayed({ connect() }, 100)
+            handler.postDelayed({ establishConnection() }, 100)
         }
     }
 
@@ -148,21 +192,13 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     private fun checkForNewEvents(newState: RecitationServiceState) {
-        if (newState.lastEventTimestamp > lastSeenEventTimestamp && newState.lastEvent != null) {
-            lastSeenEventTimestamp = newState.lastEventTimestamp
-            _events.tryEmit(newState.lastEvent)
-        }
-
         handler.post { executePendingCallbacks() }
     }
 
     // ==================== Playback Commands ====================
-    fun play(chapterNo: Int, verseNo: Int) {
+    fun start(verse: ChapterVersePair? = null) {
         ensureConnectedAndSend(
-            PlayCommand(
-                chapterNo = chapterNo,
-                verseNo = verseNo
-            )
+            StartCommand(verse)
         )
     }
 
@@ -170,6 +206,11 @@ class RecitationController private constructor(private val appContext: Context) 
      * Play/pause toggle.
      */
     fun playPause() {
+        if (mediaController == null || mediaController!!.playbackState == Player.STATE_IDLE) {
+            start()
+            return
+        }
+
         ensureConnectedAndRun {
             val controller = mediaController ?: return@ensureConnectedAndRun
             if (controller.isPlaying) controller.pause() else controller.play()
@@ -222,12 +263,6 @@ class RecitationController private constructor(private val appContext: Context) 
         )
     }
 
-    fun cancelLoading() {
-        sendCommand(
-            CancelLoadingCommand
-        )
-    }
-
     // ==================== Settings Commands ====================
 
     fun setSpeed(speed: Float) {
@@ -236,9 +271,9 @@ class RecitationController private constructor(private val appContext: Context) 
         )
     }
 
-    fun setRepeat(repeat: Boolean) {
+    fun setRepeatCount(repeatCount: Int) {
         ensureConnectedAndSend(
-            SetRepeatCommand(repeat = repeat)
+            SetRepeatCommand(repeatCount = repeatCount.coerceAtLeast(1))
         )
     }
 
@@ -253,6 +288,19 @@ class RecitationController private constructor(private val appContext: Context) 
             SetAudioOptionCommand(audioOption = option)
         )
     }
+
+    fun setVerseGroupSize(size: Int) {
+        ensureConnectedAndSend(
+            SetVerseGroupSizeCommand(verseGroupSize = size.coerceAtLeast(1))
+        )
+    }
+
+    fun setReciter(id: String, kind: RecitationAudioKind) {
+        ensureConnectedAndSend(
+            SetReciterCommand(reciter = id, kind = kind)
+        )
+    }
+
 
     /**
      * Ensures service is running and connected, then sends command.

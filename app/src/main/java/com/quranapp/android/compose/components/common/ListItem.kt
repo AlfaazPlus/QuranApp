@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.components
+package com.quranapp.android.compose.components.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
@@ -18,11 +17,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+@Composable
+fun ListItem(
+    modifier: Modifier = Modifier,
+    title: Int,
+    subtitle: Int? = null,
+    subtitleStr: String? = null,
+    leading: (@Composable () -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.small)
+            .shadow(2.dp)
+            .background(colorScheme.surface),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(15.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            if (leading != null) leading()
+
+            ListItemContent(
+                title = title,
+                subtitle = subtitle,
+                subtitleStr = subtitleStr,
+                modifier = Modifier.weight(1f)
+            )
+
+            if (trailing != null) {
+                trailing()
+            }
+        }
+    }
+}
 
 @Composable
 fun ListItemContent(
@@ -52,42 +90,6 @@ fun ListItemContent(
                     .padding(top = 3.dp)
                     .alpha(0.75f),
             )
-        }
-    }
-}
-
-@Composable
-fun ListItem(
-    modifier: Modifier = Modifier,
-    title: Int,
-    subtitle: Int? = null,
-    subtitleStr: String? = null,
-    leading: (@Composable () -> Unit)? = null,
-    trailing: (@Composable () -> Unit)? = null,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(MaterialTheme.shapes.small)
-            .shadow(2.dp)
-            .background(MaterialTheme.colorScheme.surface),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(15.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            if (leading != null) leading()
-
-            ListItemContent(title = title, subtitle = subtitle, subtitleStr = subtitleStr, modifier = Modifier.weight(1f))
-
-            if (trailing != null) {
-                trailing()
-            }
         }
     }
 }

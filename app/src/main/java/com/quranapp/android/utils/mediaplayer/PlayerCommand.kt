@@ -1,6 +1,8 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.os.Bundle
+import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
+import com.quranapp.android.components.reader.ChapterVersePair
 
 
 sealed class BasePlayerCommand(
@@ -9,27 +11,21 @@ sealed class BasePlayerCommand(
     abstract fun toBundle(): Bundle
 }
 
-data class PlayCommand(
-    val chapterNo: Int,
-    val verseNo: Int,
+data class StartCommand(
+    val verse: ChapterVersePair?
 ) : BasePlayerCommand(ACTION) {
     override fun toBundle(): Bundle = Bundle().apply {
-        putInt("chapterNo", chapterNo)
-        putInt("verseNo", verseNo)
+        if (verse != null) {
+            putSerializable("verse", verse)
+        }
     }
 
     companion object {
-        const val ACTION = "PLAY_VERSE"
+        const val ACTION = "START"
 
-        fun fromBundle(bundle: Bundle): PlayCommand? {
-            val chapterNo = bundle.getInt("chapterNo", -1)
-            val verseNo = bundle.getInt("verseNo", -1)
-            if (chapterNo < 1 || verseNo < 1) return null
-
-            return PlayCommand(
-                chapterNo = chapterNo,
-                verseNo = verseNo,
-            )
+        fun fromBundle(bundle: Bundle): StartCommand? {
+            val verse = bundle.getSerializable("verse", ChapterVersePair::class.java)
+            return StartCommand(verse)
         }
     }
 }
@@ -49,6 +45,25 @@ data class SetAudioOptionCommand(
             if (audioOption < 0) return null
 
             return SetAudioOptionCommand(audioOption)
+        }
+    }
+}
+
+data class SetVerseGroupSizeCommand(
+    val verseGroupSize: Int
+) : BasePlayerCommand(ACTION) {
+    override fun toBundle(): Bundle = Bundle().apply {
+        putInt("verseGroupSize", verseGroupSize)
+    }
+
+    companion object {
+        const val ACTION = "SET_VERSE_GROUP_SIZE"
+
+        fun fromBundle(bundle: Bundle): SetVerseGroupSizeCommand? {
+            val verseGroupSize = bundle.getInt("verseGroupSize", -1)
+            if (verseGroupSize < 1) return null
+
+            return SetVerseGroupSizeCommand(verseGroupSize)
         }
     }
 }
@@ -73,19 +88,20 @@ data class SetPlaybackSpeedCommand(
 }
 
 data class SetRepeatCommand(
-    val repeat: Boolean
+    val repeatCount: Int
 ) : BasePlayerCommand(ACTION) {
     override fun toBundle(): Bundle = Bundle().apply {
-        putBoolean("repeat", repeat)
+        putInt("repeatCount", repeatCount)
     }
 
     companion object {
         const val ACTION = "SET_REPEAT_VERSE"
 
         fun fromBundle(bundle: Bundle): SetRepeatCommand? {
-            val repeat = bundle.getBoolean("repeat", false)
+            val repeatCount = bundle.getInt("repeatCount", 1)
+            if (repeatCount < 1) return null
 
-            return SetRepeatCommand(repeat)
+            return SetRepeatCommand(repeatCount)
         }
     }
 }
@@ -108,38 +124,26 @@ data class SetContinuePlayingCommand(
     }
 }
 
-data class SetRecitorCommand(
-    val reciter: String
+data class SetReciterCommand(
+    val reciter: String,
+    val kind: RecitationAudioKind
 ) : BasePlayerCommand(ACTION) {
     override fun toBundle(): Bundle = Bundle().apply {
         putString("reciter", reciter)
+        putSerializable("kind", kind)
     }
 
     companion object {
         const val ACTION = "SET_RECITOR"
 
-        fun fromBundle(bundle: Bundle): SetRecitorCommand? {
+        fun fromBundle(bundle: Bundle): SetReciterCommand? {
             val reciter = bundle.getString("reciter") ?: return null
+            val kind = bundle.getSerializable(
+                "kind",
+                RecitationAudioKind::class.java,
+            ) ?: return null
 
-            return SetRecitorCommand(reciter)
-        }
-    }
-}
-
-data class SetTranslationRecitorCommand(
-    val translationReciter: String
-) : BasePlayerCommand(ACTION) {
-    override fun toBundle(): Bundle = Bundle().apply {
-        putString("translationReciter", translationReciter)
-    }
-
-    companion object {
-        const val ACTION = "SET_TRANSLATION_RECITOR"
-
-        fun fromBundle(bundle: Bundle): SetTranslationRecitorCommand? {
-            val translationReciter = bundle.getString("translationReciter") ?: return null
-
-            return SetTranslationRecitorCommand(translationReciter)
+            return SetReciterCommand(reciter, kind)
         }
     }
 }
@@ -167,10 +171,6 @@ object StopCommand : BasePlayerCommand("STOP") {
     override fun toBundle(): Bundle = Bundle()
 }
 
-object CancelLoadingCommand : BasePlayerCommand("CANCEL_LOADING") {
-    override fun toBundle(): Bundle = Bundle()
-}
-
 object PreviousVerseCommand : BasePlayerCommand("PREVIOUS_VERSE") {
     override fun toBundle(): Bundle = Bundle()
 }
@@ -181,16 +181,15 @@ object NextVerseCommand : BasePlayerCommand("NEXT_VERSE") {
 
 
 val ALL_PLAYER_ACTIONS = arrayOf(
-    PlayCommand.ACTION,
+    StartCommand.ACTION,
     SetAudioOptionCommand.ACTION,
     SetPlaybackSpeedCommand.ACTION,
+    SetVerseGroupSizeCommand.ACTION,
     SetRepeatCommand.ACTION,
     SetContinuePlayingCommand.ACTION,
-    SetRecitorCommand.ACTION,
-    SetTranslationRecitorCommand.ACTION,
+    SetReciterCommand.ACTION,
     SeekToPositionCommand.ACTION,
     StopCommand.ACTION,
-    CancelLoadingCommand.ACTION,
     PreviousVerseCommand.ACTION,
     NextVerseCommand.ACTION,
 )

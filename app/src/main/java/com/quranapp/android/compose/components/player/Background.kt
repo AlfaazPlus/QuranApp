@@ -1,19 +1,12 @@
 package com.quranapp.android.compose.components.player
 
 
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -24,38 +17,6 @@ fun Background(
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
-    val transition = rememberInfiniteTransition(label = "bg")
-
-    val t1 by transition.animateFloat(
-        initialValue = -80f,
-        targetValue = 80f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(12000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "t1"
-    )
-
-    val t2 by transition.animateFloat(
-        initialValue = 60f,
-        targetValue = -60f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(16000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "t2"
-    )
-
-    val t3 by transition.animateFloat(
-        initialValue = -40f,
-        targetValue = 40f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(18000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "t3"
-    )
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -85,7 +46,7 @@ fun Background(
                     )
                 ),
                 radius = w * 0.45f,
-                center = Offset(w * 0.18f + t1, h * 0.22f)
+                center = Offset(w * 0.18f, h * 0.22f)
             )
 
             // Glow 2 - pink
@@ -97,7 +58,7 @@ fun Background(
                     )
                 ),
                 radius = w * 0.42f,
-                center = Offset(w * 0.82f + t2, h * 0.28f)
+                center = Offset(w * 0.82f, h * 0.28f)
             )
 
             // Glow 3 - cyan
@@ -109,7 +70,7 @@ fun Background(
                     )
                 ),
                 radius = w * 0.50f,
-                center = Offset(w * 0.52f, h * 0.78f + t3)
+                center = Offset(w * 0.52f, h * 0.78f)
             )
 
             // Focus light behind album art area

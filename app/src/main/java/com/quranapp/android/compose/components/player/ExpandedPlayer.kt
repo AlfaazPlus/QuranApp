@@ -36,7 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,11 +51,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
+import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
+import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
+import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
@@ -78,12 +83,10 @@ fun ExpandedPlayer(
     val settings = state.settings
 
     Background(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
@@ -118,7 +121,9 @@ fun ExpandedPlayer(
 
             Spacer(Modifier.weight(1f))
 
-            Configurations()
+            Configurations(
+                controller = controller
+            )
 
             ProgressSeekBar(
                 isPlaying = isPlaying,
@@ -133,7 +138,6 @@ fun ExpandedPlayer(
                 isLoading = isLoading,
                 controller = controller,
                 continueRange = settings.continueRange,
-                repeatVerse = settings.repeatVerse,
             )
         }
     }
@@ -141,8 +145,12 @@ fun ExpandedPlayer(
 
 @Composable
 private fun JumpToVerseButton(verse: ChapterVersePair) {
+    val context = LocalContext.current
+
     TextButton(
-        onClick = {},
+        onClick = {
+            ReaderFactory.startVerse(context, chapterNo = verse.chapterNo, verseNo = verse.verseNo)
+        },
         modifier = Modifier.height(32.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = Color.Transparent,
@@ -160,20 +168,28 @@ private fun JumpToVerseButton(verse: ChapterVersePair) {
 }
 
 @Composable
-private fun Configurations() {
+private fun Configurations(
+    controller: RecitationController,
+) {
     val context = LocalContext.current
     val audioOption = RecitationPreferences.observeRecitationAudioOption();
     val speed = RecitationPreferences.observeRecitationSpeed();
-    val repeatVerse = RecitationPreferences.observeRecitationRepeatVerse();
-    val reciterNames by produceState<String?>(null, context) {
-        value = RecitationModelManager.getInstance(context).getCurrentReciterNameForAudioOption()
-    }
+    val repeatCount = RecitationPreferences.observeRecitationRepeatCount()
+    val reciterNames =
+        RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
 
     val audioOptionTextId = when (audioOption) {
         RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> R.string.audioOnlyTranslation
         RecitationUtils.AUDIO_OPTION_BOTH -> R.string.audioBothArabicTranslation
         else -> R.string.audioOnlyArabic
     }
+
+    val repeatSupported = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_QURAN
+
+    var showReciterSelector by remember { mutableStateOf(false) }
+    var showAudioOptions by remember { mutableStateOf(false) }
+    var showRepeatOptions by remember { mutableStateOf(false) }
+    var showPlaybackSpeedOptions by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -192,7 +208,9 @@ private fun Configurations() {
                 text = stringResource(R.string.strTitleSelectReciter),
                 icon = painterResource(R.drawable.ic_mic),
                 subtext = reciterNames,
-                onClick = { /*TODO*/ },
+                onClick = {
+                    showReciterSelector = true
+                },
                 modifier = Modifier.weight(1f),
             )
 
@@ -200,7 +218,9 @@ private fun Configurations() {
                 text = stringResource(R.string.audioOption),
                 subtext = stringResource(audioOptionTextId),
                 icon = painterResource(R.drawable.dr_icon_settings),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    showAudioOptions = true
+                },
                 modifier = Modifier.weight(1f),
             )
         }
@@ -215,8 +235,15 @@ private fun Configurations() {
             PlayerConfigButton(
                 text = stringResource(R.string.strTitleRepeatVerse),
                 icon = painterResource(R.drawable.ic_repeat),
-                subtext = if (repeatVerse) stringResource(R.string.strLabelOn) else stringResource(R.string.strLabelOff),
-                onClick = { /*TODO*/ },
+                subtext = when {
+                    !repeatSupported -> stringResource(R.string.notSupported)
+                    repeatCount == 0 -> stringResource(R.string.once)
+                    repeatCount == 1 -> stringResource(R.string.twice)
+                    else -> stringResource(R.string.nTimes, repeatCount + 1)
+                },
+                onClick = {
+                    showRepeatOptions = true
+                },
                 modifier = Modifier.weight(1f),
             )
 
@@ -224,10 +251,40 @@ private fun Configurations() {
                 text = stringResource(R.string.playbackSpeed),
                 subtext = String.format(Locale.getDefault(), "%.1fx", speed),
                 icon = painterResource(R.drawable.icon_playback_speed),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    showPlaybackSpeedOptions = true
+                },
                 modifier = Modifier.weight(1f),
             )
         }
+    }
+
+    ReciterSelectorSheet(
+        controller = controller,
+        isOpen = showReciterSelector,
+    ) {
+        showReciterSelector = false
+    }
+
+    AudioOptionsSheet(
+        controller = controller,
+        isOpen = showAudioOptions,
+    ) {
+        showAudioOptions = false
+    }
+
+    RepeatOptionsSheet(
+        controller = controller,
+        isOpen = showRepeatOptions,
+    ) {
+        showRepeatOptions = false
+    }
+
+    PlaybackSpeedSheet(
+        controller = controller,
+        isOpen = showPlaybackSpeedOptions,
+    ) {
+        showPlaybackSpeedOptions = false
     }
 }
 
@@ -237,7 +294,6 @@ private fun ProgressSeekBar(
     isPlaying: Boolean,
     isLoading: Boolean,
     controller: RecitationController,
-    barCount: Int = 44,
 ) {
     var positionMs by remember { mutableLongStateOf(0L) }
     var durationMs by remember { mutableLongStateOf(0L) }
@@ -255,13 +311,10 @@ private fun ProgressSeekBar(
         }
     }
 
-    val progress =
-        if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
+    val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
 
     val animatedProgress by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = tween(300),
-        label = ""
+        targetValue = progress, animationSpec = tween(300), label = ""
     )
 
     Column(
@@ -270,13 +323,11 @@ private fun ProgressSeekBar(
             .padding(horizontal = 24.dp)
     ) {
         Slider(
-            value = animatedProgress,
-            onValueChange = {
+            value = animatedProgress, onValueChange = {
                 val seekPosition = (it * durationMs).toLong()
                 controller.seekTo(seekPosition)
                 positionMs = seekPosition
-            },
-            modifier = Modifier
+            }, modifier = Modifier
                 .fillMaxWidth()
                 .height(28.dp),
 
@@ -310,15 +361,13 @@ private fun ProgressSeekBar(
                             .background(
                                 Brush.horizontalGradient(
                                     listOf(
-                                        colorScheme.primary,
-                                        colorScheme.primaryContainer
+                                        colorScheme.primary, colorScheme.primaryContainer
                                     )
                                 )
                             )
                     )
                 }
-            }
-        )
+            })
 
         Row(
             modifier = Modifier
@@ -346,7 +395,6 @@ private fun ExpandedTransportControls(
     isLoading: Boolean,
     controller: RecitationController,
     continueRange: Boolean,
-    repeatVerse: Boolean,
 ) {
     Row(
         modifier = Modifier
@@ -367,7 +415,7 @@ private fun ExpandedTransportControls(
             )
         }
 
-        IconButton(
+        /*IconButton(
             onClick = { controller.seekLeft() },
             modifier = Modifier.size(48.dp),
         ) {
@@ -377,7 +425,7 @@ private fun ExpandedTransportControls(
                 modifier = Modifier.size(30.dp),
                 tint = PlayerContentColor.alpha(.7f),
             )
-        }
+        }*/
 
         Box(
             contentAlignment = Alignment.Center,
@@ -417,7 +465,7 @@ private fun ExpandedTransportControls(
             }
         }
 
-        IconButton(
+        /*IconButton(
             onClick = { controller.seekRight() },
             modifier = Modifier.size(48.dp),
         ) {
@@ -427,7 +475,7 @@ private fun ExpandedTransportControls(
                 modifier = Modifier.size(30.dp),
                 tint = PlayerContentColor.alpha(.7f),
             )
-        }
+        }*/
 
         IconButton(
             onClick = { controller.nextVerse() },

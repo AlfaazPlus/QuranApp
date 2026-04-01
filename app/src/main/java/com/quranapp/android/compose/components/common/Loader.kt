@@ -7,7 +7,7 @@
  * --------------------------------------------------------------------------
  */
 
-package com.quranapp.android.compose.components
+package com.quranapp.android.compose.components.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

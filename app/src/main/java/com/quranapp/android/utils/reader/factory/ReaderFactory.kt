@@ -3,29 +3,27 @@ package com.quranapp.android.utils.reader.factory
 import android.content.Context
 import android.content.Intent
 import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.activities.ActivityTafsir
+import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER
 import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
 
 object ReaderFactory {
-    @JvmStatic
     fun startEmptyReader(context: Context) {
         context.startActivity(Intent().setClass(context, ActivityReader::class.java))
     }
 
-    @JvmStatic
     fun startJuz(context: Context, juzNo: Int) {
         context.startActivity(prepareJuzIntent(juzNo).setClass(context, ActivityReader::class.java))
     }
 
-    @JvmStatic
     fun startChapter(context: Context, chapterNo: Int) {
         context.startActivity(
             prepareChapterIntent(chapterNo).setClass(
@@ -60,7 +58,6 @@ object ReaderFactory {
         )
     }
 
-    @JvmStatic
     fun startVerseRange(context: Context, chapterNo: Int, fromVerse: Int, toVerse: Int) {
         context.startActivity(
             prepareVerseRangeIntent(chapterNo, fromVerse, toVerse).setClass(
@@ -83,7 +80,7 @@ object ReaderFactory {
     @JvmStatic
     fun prepareJuzIntent(juzNo: Int): Intent {
         val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, 5)
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_JUZ)
         intent.putExtra(Keys.READER_KEY_JUZ_NO, juzNo)
         return intent
     }
@@ -91,19 +88,18 @@ object ReaderFactory {
     @JvmStatic
     fun prepareChapterIntent(chapterNo: Int): Intent {
         val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, 3)
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_CHAPTER)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         return intent
     }
 
-    @JvmStatic
     fun prepareChapterIntent(
         translSlugs: Array<String>,
         saveTranslChanges: Boolean,
         chapterNo: Int
     ): Intent {
         val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, 3)
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_CHAPTER)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         intent.putExtra(Keys.READER_KEY_TRANSL_SLUGS, translSlugs)
         intent.putExtra(Keys.READER_KEY_SAVE_TRANSL_CHANGES, saveTranslChanges)
@@ -123,7 +119,7 @@ object ReaderFactory {
     @JvmStatic
     fun prepareVerseRangeIntent(chapterNo: Int, range: Pair<Int, Int>): Intent {
         val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, 4)
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_VERSES)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         intent.putExtra(Keys.READER_KEY_VERSES, range)
         return intent
@@ -136,7 +132,7 @@ object ReaderFactory {
      */
     fun prepareVerseRangeIntentForShortcut(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
         val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, 4)
+        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_VERSES)
         intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
         intent.putExtra(Keys.READER_KEY_VERSES, intArrayOf(fromVerse, toVerse))
         return intent

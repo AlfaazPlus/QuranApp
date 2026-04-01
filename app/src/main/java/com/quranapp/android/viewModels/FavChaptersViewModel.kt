@@ -20,9 +20,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class FavChaptersViewModel : ViewModel() {
-    private val _favChapters = MutableLiveData<List<Int>>()
-    val favChapters: LiveData<List<Int>> = _favChapters
-
     @Composable
     fun getFavouriteChapters(): List<Int> {
         val raw = DataStoreManager.observe(

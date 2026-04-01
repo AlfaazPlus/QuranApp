@@ -12,7 +12,7 @@ enum class PlayerInterationSource {
 
 data class PlayerSettings(
     val speed: Float = 1.0f,
-    val repeatVerse: Boolean = false,
+    val repeatCount: Int = 1,
     val continueRange: Boolean = true,
     val audioOption: Int = RecitationUtils.AUDIO_OPTION_DEFAULT,
     val reciter: String? = null,
@@ -32,8 +32,6 @@ data class RecitationServiceState(
     val pausedByHeadset: Boolean = false,
 
     val settings: PlayerSettings = PlayerSettings(),
-    val lastEvent: PlayerEvent? = null,
-    val lastEventTimestamp: Long = 0L
 ) {
     fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {
         return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
@@ -165,24 +163,9 @@ data class RecitationServiceState(
         putString(KEY_CURRENT_RECITER, settings.reciter)
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
-        putBoolean(KEY_REPEAT, settings.repeatVerse)
+        putInt(KEY_REPEAT_COUNT, settings.repeatCount.coerceAtLeast(1))
         putBoolean(KEY_CONTINUE, settings.continueRange)
         putInt(KEY_AUDIO_OPTION, settings.audioOption)
-        // Event data
-        putLong(KEY_EVENT_TIMESTAMP, lastEventTimestamp)
-        when (lastEvent) {
-            is PlayerEvent.Error -> {
-                putString(KEY_EVENT_TYPE, "error")
-                putString(KEY_EVENT_MESSAGE, lastEvent.message)
-            }
-
-            is PlayerEvent.Message -> {
-                putString(KEY_EVENT_TYPE, "message")
-                putString(KEY_EVENT_MESSAGE, lastEvent.message)
-            }
-
-            null -> putString(KEY_EVENT_TYPE, null)
-        }
     }
 
     companion object {
@@ -193,27 +176,12 @@ data class RecitationServiceState(
         private const val KEY_IS_RESOLVING = "state_is_resolving"
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
-        private const val KEY_REPEAT = "state_repeat"
+        private const val KEY_REPEAT_COUNT = "state_repeat_count"
         private const val KEY_CONTINUE = "state_continue"
         private const val KEY_AUDIO_OPTION = "state_audio_option"
-        private const val KEY_EVENT_TYPE = "state_event_type"
-        private const val KEY_EVENT_MESSAGE = "state_event_message"
-        private const val KEY_EVENT_TIMESTAMP = "state_event_timestamp"
-
         val EMPTY = RecitationServiceState()
 
         fun fromBundle(bundle: Bundle): RecitationServiceState {
-            // Parse event
-            val eventType = bundle.getString(KEY_EVENT_TYPE)
-            val eventMessage = bundle.getString(KEY_EVENT_MESSAGE)
-            val eventTimestamp = bundle.getLong(KEY_EVENT_TIMESTAMP, 0L)
-
-            val event: PlayerEvent? = when (eventType) {
-                "error" -> PlayerEvent.Error(eventMessage)
-                "message" -> PlayerEvent.Message(eventMessage)
-                else -> null
-            }
-
             return RecitationServiceState(
                 currentVerse = ChapterVersePair(
                     chapterNo = bundle.getInt(KEY_CURRENT_CHAPTER, -1),
@@ -223,7 +191,7 @@ data class RecitationServiceState(
                 pausedByHeadset = bundle.getBoolean(KEY_PAUSED_BY_HEADSET, false),
                 settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
-                    repeatVerse = bundle.getBoolean(KEY_REPEAT, false),
+                    repeatCount = bundle.getInt(KEY_REPEAT_COUNT, 1).coerceAtLeast(1),
                     continueRange = bundle.getBoolean(KEY_CONTINUE, true),
                     audioOption = bundle.getInt(
                         KEY_AUDIO_OPTION,
@@ -232,8 +200,6 @@ data class RecitationServiceState(
                     reciter = bundle.getString(KEY_CURRENT_RECITER),
                     translationReciter = bundle.getString(KEY_CURRENT_TRANSLATION_RECITER)
                 ),
-                lastEvent = event,
-                lastEventTimestamp = eventTimestamp
             )
         }
     }

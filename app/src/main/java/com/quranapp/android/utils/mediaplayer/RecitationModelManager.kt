@@ -1,6 +1,9 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.recitation2.AvailableRecitationTranslationsModel
@@ -43,6 +46,9 @@ class RecitationModelManager private constructor(
     @Volatile
     private var cachedTranslation: AvailableRecitationTranslationsModel? = null
 
+    var forceRefreshQuran = false
+    var forceRefreshTranslation = false
+
     private val quranLoadLock = Mutex()
     private val translationLoadLock = Mutex()
 
@@ -60,7 +66,7 @@ class RecitationModelManager private constructor(
         val audioOption = RecitationPreferences.getRecitationAudioOption()
 
         val resolveQuran = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-        val resolveTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_ARABIC
+        val resolveTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_QURAN
 
         return Pair(
             if (resolveQuran) getSelectedQuranModel() else null,
@@ -72,10 +78,24 @@ class RecitationModelManager private constructor(
     ): RecitationQuranModel? {
         val id = RecitationPreferences.getReciterId()
 
-        return getAllQuranModel()?.reciters?.selectById(id)
+        return getQuranModel(id)
     }
 
     suspend fun getSelectedTranslationModel(
+    ): RecitationTranslationModel? {
+        val id = RecitationPreferences.getTranslationReciterId()
+
+        return getTranslationModel(id)
+    }
+
+    suspend fun getQuranModel(
+        id: String?
+    ): RecitationQuranModel? {
+        return getAllQuranModel()?.reciters?.selectById(id)
+    }
+
+    suspend fun getTranslationModel(
+        id: String?
     ): RecitationTranslationModel? {
         val id = RecitationPreferences.getTranslationReciterId()
 
@@ -83,7 +103,7 @@ class RecitationModelManager private constructor(
     }
 
     suspend fun getAllQuranModel(
-        forceRefresh: Boolean = false
+        forceRefresh: Boolean = forceRefreshQuran
     ): AvailableRecitationsModel? {
         val inMemory = cachedQuran
 
@@ -106,14 +126,16 @@ class RecitationModelManager private constructor(
             }
 
             val networkModel = loadQuranFromNetwork() ?: return@withLock null
+            
             cachedQuran = networkModel
+            forceRefreshQuran = false
 
             networkModel
         }
     }
 
     suspend fun getAllTranslationModel(
-        forceRefresh: Boolean = false
+        forceRefresh: Boolean = forceRefreshTranslation
     ): AvailableRecitationTranslationsModel? {
         val inMemory = cachedTranslation
 
@@ -138,28 +160,47 @@ class RecitationModelManager private constructor(
             val networkModel = loadTranslationFromNetwork() ?: return@withLock null
 
             cachedTranslation = networkModel
+            forceRefreshTranslation = false
 
             networkModel
         }
     }
 
 
-    suspend fun getCurrentReciterNameForAudioOption(): String {
-        val audioOption = RecitationPreferences.getRecitationAudioOption()
+    @Composable
+    fun rememberCurrentReciterNameForAudioOption(): String {
+        val audioOption = RecitationPreferences.observeRecitationAudioOption()
 
-        val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
-        val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+        val reciterId = RecitationPreferences.observeReciterId()
+        val translationReciterId = RecitationPreferences.observeTranslationReciterId()
 
-        val reciterName =
-            if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null
-        val translReciterName =
-            if (isBoth || isOnlyTransl) getSelectedTranslationModel()?.getReciterName() else null
+        val reciterName by produceState(
+            initialValue = "",
+            key1 = audioOption,
+            reciterId,
+            translationReciterId
+        ) {
+            val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
+            val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
 
-        return if (isBoth && !reciterName.isNullOrEmpty() && !translReciterName.isNullOrEmpty()) {
-            "$reciterName & $translReciterName"
-        } else {
-            reciterName ?: translReciterName ?: ""
+            val quranReciterName =
+                if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null
+
+            val translationReciterName =
+                if (isBoth || isOnlyTransl) getSelectedTranslationModel()?.getReciterName() else null
+
+            value = if (
+                isBoth &&
+                !quranReciterName.isNullOrEmpty() &&
+                !translationReciterName.isNullOrEmpty()
+            ) {
+                "$quranReciterName & $translationReciterName"
+            } else {
+                quranReciterName ?: translationReciterName ?: ""
+            }
         }
+
+        return reciterName
     }
 
 
@@ -278,7 +319,7 @@ class RecitationModelManager private constructor(
         @Volatile
         private var instance: RecitationModelManager? = null
 
-        fun getInstance(context: Context): RecitationModelManager {
+        fun get(context: Context): RecitationModelManager {
             return instance ?: synchronized(this) {
                 instance ?: RecitationModelManager(context).also { instance = it }
             }

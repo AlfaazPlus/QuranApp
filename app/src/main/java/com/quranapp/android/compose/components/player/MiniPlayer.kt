@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.player
 
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -30,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -47,11 +47,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta2
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -72,9 +74,8 @@ fun MiniPlayer(
 
     val verse = state.currentVerse
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
-    val reciterNames by produceState<String?>(null, context) {
-        value = RecitationModelManager.getInstance(context).getCurrentReciterNameForAudioOption()
-    }
+    val reciterNames =
+        RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
     val syncVerse = RecitationPreferences.observeRecitationScrollSync()
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
@@ -129,23 +130,35 @@ fun MiniPlayer(
                 )
             }
 
-            IconButton(
-                onClick = {
-                    scope.launch {
-                        RecitationPreferences.setRecitationScrollSync(!syncVerse)
-                    }
-                },
-                modifier = Modifier.size(48.dp),
+            SimpleTooltip(
+                text = if (syncVerse) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
             ) {
-                Icon(
-                    painterResource(if (syncVerse) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
-                    contentDescription = stringResource(
-                        if (syncVerse) R.string.verseSyncOn else
-                            R.string.verseSyncOff
-                    ),
-                    modifier = Modifier.size(20.dp),
-                    tint = if (syncVerse) colorScheme.primary else PlayerContentColor.alpha(.7f),
-                )
+                IconButton(
+                    onClick = {
+                        val newSync = !syncVerse
+
+                        scope.launch {
+                            RecitationPreferences.setRecitationScrollSync(newSync)
+                        }
+
+                        MessageUtils.showRemovableToast(
+                            context,
+                            if (newSync) R.string.verseSyncOn else R.string.verseSyncOff,
+                            Toast.LENGTH_SHORT
+                        )
+                    },
+                    modifier = Modifier.size(48.dp),
+                ) {
+                    Icon(
+                        painterResource(if (syncVerse) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
+                        contentDescription = stringResource(
+                            if (syncVerse) R.string.verseSyncOn else
+                                R.string.verseSyncOff
+                        ),
+                        modifier = Modifier.size(20.dp),
+                        tint = if (syncVerse) colorScheme.primary else PlayerContentColor.alpha(.7f),
+                    )
+                }
             }
 
             Box(

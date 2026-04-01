@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.player
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -14,7 +15,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,11 +36,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.utils.Log
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.quranapp.android.utils.mediaplayer.PlayerEvent
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.mediaplayer.RecitationEventBus
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.viewModels.RecitationPlayerViewModel
 
 private const val MINI_PLAYER_HEIGHT_DP = 72
 private val SPEED_OPTIONS = listOf(0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f)
@@ -56,17 +61,31 @@ private val PlayerHeartSyncOn = Color(0xFF4DD0E1)
 
 @Composable
 fun RecitationPlayerSheet(
-    controller: RecitationController,
     modifier: Modifier = Modifier,
-    content: @Composable (PaddingValues) -> Unit,
 ) {
-    val state by controller.state.collectAsState()
-    val isPlaying by controller.isPlayingState.collectAsState()
-    val isBuffering by controller.isBufferingState.collectAsState()
-    val isLoading = state.isResolving || isBuffering
+    val viewModel = viewModel<RecitationPlayerViewModel>()
+    val context = LocalContext.current
+
+    val state by viewModel.state.collectAsState()
+    val isPlaying by viewModel.isPlaying.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
     val isVisible = isPlaying || isLoading || state.currentVerse.isValid
 
-    var expanded by rememberSaveable { mutableStateOf(true) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        RecitationEventBus.events.collect {
+            when (it) {
+                is PlayerEvent.Error -> {
+                    MessageUtils.showRemovableToast(context, it.message, Toast.LENGTH_LONG)
+                }
+
+                is PlayerEvent.Message -> {
+                    MessageUtils.showRemovableToast(context, it.message, Toast.LENGTH_LONG)
+                }
+            }
+        }
+    }
 
     LaunchedEffect(isVisible) {
         if (!isVisible) expanded = false
@@ -76,22 +95,11 @@ fun RecitationPlayerSheet(
         expanded = false
     }
 
-    Log.d("Current verse: ${state.currentVerse}, isPlaying: $isPlaying, isLoading: $isLoading")
-
     val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp + navBarBottom
 
-    val targetBottomPadding = if (isVisible) miniPlayerTotalHeight else 0.dp
-    val animatedBottomPadding by animateDpAsState(
-        targetValue = targetBottomPadding,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy),
-        label = "bottomPadding",
-    )
-
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val fullHeight = maxHeight
-
-        content(PaddingValues(bottom = animatedBottomPadding))
 
         AnimatedVisibility(
             visible = isVisible,
@@ -106,7 +114,7 @@ fun RecitationPlayerSheet(
                 state = state,
                 isPlaying = isPlaying,
                 isLoading = isLoading,
-                controller = controller,
+                controller = viewModel.controller,
                 onExpand = { expanded = true },
                 onCollapse = { expanded = false },
             )

@@ -16,14 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
-import com.quranapp.android.compose.components.AppBar
-import com.quranapp.android.compose.components.ListItem
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.ListItem
 import com.quranapp.android.utils.app.InfoUtils
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.univ.MessageUtils

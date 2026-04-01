@@ -49,8 +49,8 @@ import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
 import com.quranapp.android.api.toStringMap
 import com.quranapp.android.components.quran.QuranScienceItem
-import com.quranapp.android.compose.components.AppBar
-import com.quranapp.android.compose.components.IconButton
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.theme.alpha
