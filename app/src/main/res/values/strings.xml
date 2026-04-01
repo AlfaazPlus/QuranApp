@@ -473,4 +473,6 @@
     <string name="missingTimingData" formatted="false">
         Missing timing data for %s — cannot play.
     </string>
+    <string name="expandedPlayerModeControls">Controls</string>
+    <string name="expandedPlayerModeSpotlight">Spotlight</string>
 </resources>

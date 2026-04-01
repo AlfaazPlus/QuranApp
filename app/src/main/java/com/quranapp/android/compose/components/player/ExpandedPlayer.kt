@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -45,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
@@ -65,6 +67,11 @@ import java.util.Locale
 val PlayerBgColor = Color(0xFF14141C)
 val PlayerContentColor = Color.White
 
+private enum class ExpandedPlayerMode {
+    Controls,
+    Spotlight,
+}
+
 @Composable
 fun ExpandedPlayer(
     state: RecitationServiceState,
@@ -76,6 +83,7 @@ fun ExpandedPlayer(
 ) {
     val verse = state.currentVerse
     val settings = state.settings
+    var mode by remember { mutableStateOf(ExpandedPlayerMode.Controls) }
 
     Background(
         modifier = Modifier.fillMaxSize(),
@@ -100,40 +108,98 @@ fun ExpandedPlayer(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                ModeTabs()
+                ModeTabs(
+                    selected = mode,
+                    onSelect = { mode = it },
+                )
             }
 
-            ExtendedThumbnail(
-                verse = verse,
-            )
+            when (mode) {
+                ExpandedPlayerMode.Controls -> {
+                    ExtendedThumbnail(
+                        verse = verse,
+                    )
 
-            Spacer(Modifier.weight(1f))
+                    Spacer(Modifier.weight(1f))
 
-            Configurations(
-                controller = controller
-            )
+                    Configurations(
+                        controller = controller
+                    )
 
-            ProgressSeekBar(
-                isPlaying = isPlaying,
-                isLoading = isLoading,
-                controller = controller,
-            )
+                    ProgressSeekBar(
+                        isPlaying = isPlaying,
+                        isLoading = isLoading,
+                        controller = controller,
+                    )
 
-            Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(20.dp))
 
-            ExpandedTransportControls(
-                isPlaying = isPlaying,
-                isLoading = isLoading,
-                controller = controller,
-                continueRange = settings.continueRange,
-            )
+                    ExpandedTransportControls(
+                        isPlaying = isPlaying,
+                        isLoading = isLoading,
+                        controller = controller,
+                        continueRange = settings.continueRange,
+                    )
+                }
+
+                ExpandedPlayerMode.Spotlight -> {
+                    SpotlightVersePanel(
+                        verse = verse,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun ModeTabs() {
-
+private fun ModeTabs(
+    selected: ExpandedPlayerMode,
+    onSelect: (ExpandedPlayerMode) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .widthIn(max = 220.dp)
+            .clip(RoundedCornerShape(999.dp))
+            .background(Color.White.copy(alpha = 0.08f))
+            .padding(3.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+    ) {
+        ExpandedPlayerMode.entries.forEach { tab ->
+            val isSelected = tab == selected
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(RoundedCornerShape(999.dp))
+                    .background(
+                        if (isSelected) Color.White.copy(alpha = 0.14f) else Color.Transparent,
+                    )
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = { onSelect(tab) },
+                    )
+                    .padding(horizontal = 10.dp, vertical = 7.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(
+                        when (tab) {
+                            ExpandedPlayerMode.Controls -> R.string.expandedPlayerModeControls
+                            ExpandedPlayerMode.Spotlight -> R.string.expandedPlayerModeSpotlight
+                        },
+                    ),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                    color = if (isSelected) PlayerContentColor else PlayerContentColor.alpha(0.55f),
+                    maxLines = 1,
+                )
+            }
+        }
+    }
 }
 
 @Composable
