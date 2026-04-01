@@ -27,7 +27,6 @@ sealed class PlayerEvent {
 
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
-    /** True while the service is resolving/downloading audio (pre-player). */
     val isResolving: Boolean = false,
     val pausedByHeadset: Boolean = false,
 
@@ -163,7 +162,7 @@ data class RecitationServiceState(
         putString(KEY_CURRENT_RECITER, settings.reciter)
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
-        putInt(KEY_REPEAT_COUNT, settings.repeatCount.coerceAtLeast(1))
+        putInt(KEY_REPEAT_COUNT, settings.repeatCount)
         putBoolean(KEY_CONTINUE, settings.continueRange)
         putInt(KEY_AUDIO_OPTION, settings.audioOption)
     }

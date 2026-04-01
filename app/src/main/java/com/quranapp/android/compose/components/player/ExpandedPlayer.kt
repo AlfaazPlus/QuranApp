@@ -9,7 +9,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,7 +29,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,7 +47,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
 import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
 import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
@@ -60,7 +56,6 @@ import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
@@ -105,16 +100,9 @@ fun ExpandedPlayer(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                JumpToVerseButton(verse)
+                ModeTabs()
             }
 
-            /*Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center,
-            ) {
-            }*/
             ExtendedThumbnail(
                 verse = verse,
             )
@@ -144,27 +132,8 @@ fun ExpandedPlayer(
 }
 
 @Composable
-private fun JumpToVerseButton(verse: ChapterVersePair) {
-    val context = LocalContext.current
+private fun ModeTabs() {
 
-    TextButton(
-        onClick = {
-            ReaderFactory.startVerse(context, chapterNo = verse.chapterNo, verseNo = verse.verseNo)
-        },
-        modifier = Modifier.height(32.dp),
-        colors = ButtonDefaults.textButtonColors(
-            containerColor = Color.Transparent,
-            contentColor = colorScheme.primary,
-        ),
-        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
-    ) {
-        Text(stringResource(R.string.strLabelOpenInReader))
-        Icon(
-            painterResource(R.drawable.dr_icon_chevron_right),
-            contentDescription = null,
-            modifier = Modifier.size(20.dp)
-        )
-    }
 }
 
 @Composable
@@ -233,7 +202,7 @@ private fun Configurations(
                 .padding(horizontal = 24.dp),
         ) {
             PlayerConfigButton(
-                text = stringResource(R.string.strTitleRepeatVerse),
+                text = stringResource(R.string.playbackCount),
                 icon = painterResource(R.drawable.ic_repeat),
                 subtext = when {
                     !repeatSupported -> stringResource(R.string.notSupported)

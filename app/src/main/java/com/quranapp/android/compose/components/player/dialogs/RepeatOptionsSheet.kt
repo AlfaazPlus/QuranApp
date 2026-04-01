@@ -37,7 +37,7 @@ fun RepeatOptionsSheet(
         isOpen = isOpen,
         onDismiss = onClose,
         icon = R.drawable.ic_repeat,
-        title = stringResource(R.string.strTitleRepeatVerse),
+        title = stringResource(R.string.playbackCount),
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(2.dp),

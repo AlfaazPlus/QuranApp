@@ -126,7 +126,7 @@ class RecitationModelManager private constructor(
             }
 
             val networkModel = loadQuranFromNetwork() ?: return@withLock null
-            
+
             cachedQuran = networkModel
             forceRefreshQuran = false
 
@@ -167,6 +167,31 @@ class RecitationModelManager private constructor(
     }
 
 
+    suspend fun getCurrentReciterNameForAudioOption(): String {
+        val audioAudio = RecitationPreferences.getRecitationAudioOption()
+
+        val isBoth = audioAudio == RecitationUtils.AUDIO_OPTION_BOTH
+        val isOnlyTransl = audioAudio == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+
+        val quranReciterName =
+            if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null
+
+        val translationReciterName =
+            if (isBoth || isOnlyTransl) getSelectedTranslationModel()?.getReciterName() else null
+
+        val reciterName = if (
+            isBoth &&
+            !quranReciterName.isNullOrEmpty() &&
+            !translationReciterName.isNullOrEmpty()
+        ) {
+            "$quranReciterName & $translationReciterName"
+        } else {
+            quranReciterName ?: translationReciterName ?: ""
+        }
+
+        return reciterName
+    }
+
     @Composable
     fun rememberCurrentReciterNameForAudioOption(): String {
         val audioOption = RecitationPreferences.observeRecitationAudioOption()
@@ -176,28 +201,11 @@ class RecitationModelManager private constructor(
 
         val reciterName by produceState(
             initialValue = "",
-            key1 = audioOption,
+            audioOption,
             reciterId,
             translationReciterId
         ) {
-            val isBoth = audioOption == RecitationUtils.AUDIO_OPTION_BOTH
-            val isOnlyTransl = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-
-            val quranReciterName =
-                if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null
-
-            val translationReciterName =
-                if (isBoth || isOnlyTransl) getSelectedTranslationModel()?.getReciterName() else null
-
-            value = if (
-                isBoth &&
-                !quranReciterName.isNullOrEmpty() &&
-                !translationReciterName.isNullOrEmpty()
-            ) {
-                "$quranReciterName & $translationReciterName"
-            } else {
-                quranReciterName ?: translationReciterName ?: ""
-            }
+            value = getCurrentReciterNameForAudioOption()
         }
 
         return reciterName
