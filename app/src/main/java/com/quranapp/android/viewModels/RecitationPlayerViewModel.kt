@@ -17,6 +17,11 @@ class RecitationPlayerViewModel(application: Application) : AndroidViewModel(app
         controller.connect()
     }
 
+    override fun onCleared() {
+        controller.disconnect()
+        super.onCleared()
+    }
+
     val state: StateFlow<RecitationServiceState> = controller.state
 
     val isPlaying: StateFlow<Boolean> = controller.isPlayingState
@@ -31,9 +36,4 @@ class RecitationPlayerViewModel(application: Application) : AndroidViewModel(app
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = controller.isLoading,
     )
-
-    override fun onCleared() {
-        controller.disconnect()
-        super.onCleared()
-    }
 }

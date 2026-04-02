@@ -2,148 +2,76 @@ package com.quranapp.android.utils.sharedPrefs
 
 import android.content.Context
 import androidx.core.content.edit
-import com.quranapp.android.reader_managers.ReaderParams
-import com.quranapp.android.utils.reader.QuranScriptUtils
-import com.quranapp.android.utils.reader.ReaderTextSizeUtils
-import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationSlug
 import com.quranapp.android.utils.reader.recitation.RecitationManager.setSavedRecitationTranslationSlug
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.tafsir.TafsirUtils
-import com.quranapp.android.utils.univ.Keys
+import kotlinx.coroutines.runBlocking
 
 /**
  * SharedPreferences utility class for Reader
  */
+@Deprecated("Use ReaderPreferences (DataStore)")
 object SPReader {
-    private const val SP_READER: String = "sp_reader"
-
-    private const val SP_TEXT_STYLE: String = "sp_reader_text"
-    private const val SP_TRANSL: String = "sp_reader_translations"
     private const val SP_RECITATION_OPTIONS: String = "sp_reader_recitation_options"
-    private const val SP_TAFSIR: String = "sp_reader_tafsir"
-    private const val SP_SCRIPT: String = "sp_reader_script"
-    private const val SP_READER_STYLE: String = "sp_reader_style"
 
     @JvmStatic
     fun getArabicTextEnabled(context: Context): Boolean {
-        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        return sp.getBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, true)
+        return ReaderPreferences.getArabicTextEnabled()
     }
 
     @JvmStatic
     fun setArabicTextEnabled(context: Context, enabled: Boolean) {
-        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        sp.edit(commit = true) {
-            putBoolean(Keys.READER_KEY_ARABIC_TEXT_ENABLED, enabled)
-        }
+        runBlocking { ReaderPreferences.setArabicTextEnabled(enabled) }
     }
 
     @JvmStatic
     fun getAutoScrollSpeed(context: Context): Float {
-        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        return sp.getFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, 7f)
+        return ReaderPreferences.getAutoScrollSpeed()
     }
 
     @JvmStatic
     fun setAutoScrollSpeed(context: Context, speed: Float) {
-        val sp = context.getSharedPreferences(SP_READER, Context.MODE_PRIVATE)
-        sp.edit() {
-            putFloat(Keys.READER_KEY_AUTO_SCROLL_SPEED, speed)
-        }
+        runBlocking { ReaderPreferences.setAutoScrollSpeed(speed) }
     }
 
     @JvmStatic
     fun getSavedTextSizeMultArabic(context: Context): Float {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-
-        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC)) {
-            setSavedTextSizeMultArabic(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT)
-        }
-
-        return sp.getFloat(
-            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT
-        )
+        return ReaderPreferences.getArabicTextSizeMultiplier()
     }
 
     @JvmStatic
     fun setSavedTextSizeMultArabic(context: Context, sizeMult: Float) {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        sp.edit() {
-            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC, sizeMult)
-        }
+        runBlocking { ReaderPreferences.setArabicTextSizeMultiplier(sizeMult) }
     }
 
     @JvmStatic
     fun getSavedTextSizeMultTransl(context: Context): Float {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-
-        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL)) {
-            setSavedTextSizeMultTransl(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT)
-        }
-
-        return sp.getFloat(
-            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT
-        )
+        return ReaderPreferences.getTranslationTextSizeMultiplier()
     }
 
     @JvmStatic
     fun setSavedTextSizeMultTransl(context: Context, sizeMult: Float) {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        sp.edit() {
-            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL, sizeMult)
-        }
+        runBlocking { ReaderPreferences.setTranslationTextSizeMultiplier(sizeMult) }
     }
 
-
     fun getSavedTextSizeMultTafsir(context: Context): Float {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-
-        if (!sp.contains(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR)) {
-            setSavedTextSizeMultTafsir(context, ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT)
-        }
-
-        return sp.getFloat(
-            ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT
-        )
+        return ReaderPreferences.getTafsirTextSizeMultiplier()
     }
 
     @JvmStatic
     fun setSavedTextSizeMultTafsir(context: Context, sizeMult: Float) {
-        val sp = context.getSharedPreferences(SP_TEXT_STYLE, Context.MODE_PRIVATE)
-        sp.edit() {
-            putFloat(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR, sizeMult)
-        }
+        runBlocking { ReaderPreferences.setTafsirTextSizeMultiplier(sizeMult) }
     }
 
     @JvmStatic
     fun getSavedTranslations(context: Context): HashSet<String> {
-        val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
-
-        if (!sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
-            sp.edit() {
-                putStringSet(TranslUtils.KEY_TRANSLATIONS, TranslUtils.defaultTranslationSlugs())
-            }
-        }
-
-        if (sp.contains(TranslUtils.KEY_TRANSLATIONS)) {
-            return sp.getStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet())?.let { HashSet(it) }
-                ?: HashSet()
-        }
-
-        return HashSet()
+        return ReaderPreferences.getTranslations()
     }
 
     @JvmStatic
     fun setSavedTranslations(context: Context, translSlugsSet: Set<String>) {
-        val sp = context.getSharedPreferences(SP_TRANSL, Context.MODE_PRIVATE)
-        sp.edit() {
-            putStringSet(TranslUtils.KEY_TRANSLATIONS, HashSet(translSlugsSet))
-        }
+        runBlocking { ReaderPreferences.setTranslations(translSlugsSet) }
     }
 
     @JvmStatic
@@ -284,55 +212,30 @@ object SPReader {
 
     @JvmStatic
     fun getSavedScript(context: Context): String {
-        val sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE)
-
-        if (!sp.contains(QuranScriptUtils.KEY_SCRIPT)) {
-            setSavedScript(context, QuranScriptUtils.SCRIPT_DEFAULT)
-        }
-
-        return sp.getString(QuranScriptUtils.KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)!!
+        return ReaderPreferences.getQuranScript()
     }
 
     @JvmStatic
     fun setSavedScript(context: Context, font: String?) {
-        val sp = context.getSharedPreferences(SP_SCRIPT, Context.MODE_PRIVATE)
-        sp.edit() {
-            putString(QuranScriptUtils.KEY_SCRIPT, font)
-        }
+        runBlocking { ReaderPreferences.setQuranScript(font) }
     }
 
     @JvmStatic
     fun getSavedReaderStyle(context: Context): Int {
-        var sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
-
-        if (!sp.contains(Keys.READER_KEY_READER_STYLE)) {
-            setSavedReaderStyle(context, ReaderParams.READER_STYLE_DEFAULT)
-        }
-
-        sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
-        return sp.getInt(Keys.READER_KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
+        return ReaderPreferences.getReaderStyle()
     }
 
     @JvmStatic
     fun setSavedReaderStyle(context: Context, readerStyle: Int) {
-        val sp = context.getSharedPreferences(SP_READER_STYLE, Context.MODE_PRIVATE)
-        sp.edit() {
-            putInt(Keys.READER_KEY_READER_STYLE, readerStyle)
-        }
+        runBlocking { ReaderPreferences.setReaderStyle(readerStyle) }
     }
 
     @JvmStatic
     fun getSavedTafsirKey(context: Context): String? {
-        val sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE)
-        return sp.getString(TafsirUtils.KEY_TAFSIR, null)
+        return ReaderPreferences.getTafsirId()
     }
 
     fun setSavedTafsirKey(context: Context, tafsirKey: String) {
-        val sp = context.getSharedPreferences(SP_TAFSIR, Context.MODE_PRIVATE)
-        sp.edit() {
-            putString(TafsirUtils.KEY_TAFSIR, tafsirKey)
-        }
-
-        TafsirManager.setSavedTafsirKey(tafsirKey)
+        runBlocking { ReaderPreferences.setTafsirId(tafsirKey) }
     }
 }

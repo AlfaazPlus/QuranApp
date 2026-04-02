@@ -51,7 +51,7 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
-import com.quranapp.android.utils.mediaplayer.RecitationPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.formatDuration

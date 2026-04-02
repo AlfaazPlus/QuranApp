@@ -178,4 +178,12 @@ class ReaderVerseDecorator(private val ctx: Context) {
     fun setTextColorNonArabic(txtView: TextView) {
         txtView.setTextColor(textColorNonArabic)
     }
+
+    /** Resolved Arabic body size in px for Compose (matches [setTextSizeArabic]). */
+    fun resolvedArabicTextSizePx(): Float =
+        textSizeArabic * SPReader.getSavedTextSizeMultArabic(ctx)
+
+    /** Resolved translation body size in px for Compose (matches [setTextSizeTransl]). */
+    fun resolvedTranslTextSizePx(): Float =
+        textSizeTransl * SPReader.getSavedTextSizeMultTransl(ctx)
 }

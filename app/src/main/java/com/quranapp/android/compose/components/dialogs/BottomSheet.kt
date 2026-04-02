@@ -8,6 +8,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.compose.theme.alpha
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,8 +35,9 @@ fun BottomSheetBare(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface,
+        scrimColor = colorScheme.scrim.alpha(0.5f),
+        containerColor = colorScheme.surface,
+        contentColor = colorScheme.onSurface,
         dragHandle = dragHandle,
     ) {
         header?.invoke()

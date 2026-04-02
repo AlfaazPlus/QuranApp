@@ -40,10 +40,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quranapp.android.utils.mediaplayer.PlayerEvent
 import com.quranapp.android.utils.mediaplayer.RecitationController
-import com.quranapp.android.utils.mediaplayer.RecitationEventBus
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.univ.ErrorEvent
+import com.quranapp.android.utils.univ.EventBus
+import com.quranapp.android.utils.univ.MessageEvent
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.RecitationPlayerViewModel
 
@@ -74,13 +75,13 @@ fun RecitationPlayerSheet(
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        RecitationEventBus.events.collect {
+        EventBus.events.collect {
             when (it) {
-                is PlayerEvent.Error -> {
+                is ErrorEvent -> {
                     MessageUtils.showRemovableToast(context, it.message, Toast.LENGTH_LONG)
                 }
 
-                is PlayerEvent.Message -> {
+                is MessageEvent -> {
                     MessageUtils.showRemovableToast(context, it.message, Toast.LENGTH_LONG)
                 }
             }

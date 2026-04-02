@@ -9,9 +9,19 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.quranapp.android.R
 
 val fontFamilyTitle = FontFamily.Default
 val fontFamily = FontFamily.Default
+val fontUrdu by lazy {
+    FontFamily(
+        Font(
+            R.font.noto_nastaliq_urdu_variable,
+            weight = FontWeight.Normal,
+        ),
+    )
+}
+
 
 private val platformTextStyle = PlatformTextStyle(false)
 

@@ -41,7 +41,7 @@ object DataStoreManager {
         return preferences.contains(key)
     }
 
-    private fun <T> observeFlow(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
+    fun <T> flow(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
         val dValue = read(key, defaultValue)
 
         return appContext.dataStore.data.map { preferences ->
@@ -51,7 +51,7 @@ object DataStoreManager {
 
     @Composable
     fun <T> observe(key: Preferences.Key<T>, defaultValue: T): T {
-        return observeFlow(key, defaultValue)
+        return flow(key, defaultValue)
             .collectAsStateWithLifecycle(defaultValue)
             .value
     }

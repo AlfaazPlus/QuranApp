@@ -36,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,7 +57,7 @@ import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
-import com.quranapp.android.utils.mediaplayer.RecitationPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
@@ -221,10 +222,10 @@ private fun Configurations(
 
     val repeatSupported = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_QURAN
 
-    var showReciterSelector by remember { mutableStateOf(false) }
-    var showAudioOptions by remember { mutableStateOf(false) }
-    var showRepeatOptions by remember { mutableStateOf(false) }
-    var showPlaybackSpeedOptions by remember { mutableStateOf(false) }
+    var showReciterSelector by rememberSaveable { mutableStateOf(false) }
+    var showAudioOptions by rememberSaveable { mutableStateOf(false) }
+    var showRepeatOptions by rememberSaveable { mutableStateOf(false) }
+    var showPlaybackSpeedOptions by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier

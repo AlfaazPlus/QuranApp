@@ -11,6 +11,7 @@ import com.quranapp.android.api.models.recitation2.AvailableRecitationsModel
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.reader.recitation.RecitationUtils

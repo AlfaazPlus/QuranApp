@@ -3,7 +3,8 @@ package com.quranapp.android.components.quran.subcomponents
 import android.content.Context
 import com.quranapp.android.utils.verse.VerseUtils
 import java.io.Serializable
-import java.util.*
+import java.util.Locale
+
 
 class Verse : Serializable {
     val id: Int
@@ -20,6 +21,8 @@ class Verse : Serializable {
     @JvmField
     val arabicText: String
 
+    var segments: List<String> = emptyList()
+
     @JvmField
     val endText: String
     var translations: List<Translation> = ArrayList()
@@ -33,12 +36,21 @@ class Verse : Serializable {
     @JvmField
     var translTextSpannable: CharSequence? = null
 
-    constructor(id: Int, chapterNo: Int, verseNo: Int, pageNo: Int, arabicText: String, endText: String) {
+    constructor(
+        id: Int,
+        chapterNo: Int,
+        verseNo: Int,
+        pageNo: Int,
+        arabicText: String,
+        endText: String,
+        segments: List<String> = emptyList()
+    ) {
         this.id = id
         this.chapterNo = chapterNo
         this.verseNo = verseNo
         this.pageNo = pageNo
         this.arabicText = arabicText
+        this.segments = segments
         this.endText = endText
     }
 
@@ -49,6 +61,8 @@ class Verse : Serializable {
         pageNo = verse.pageNo
         arabicText = verse.arabicText
         endText = verse.endText
+        segments = verse.segments
+
         // not copying
         translations = verse.translations
         includeChapterNameInSerial = verse.includeChapterNameInSerial
@@ -63,6 +77,11 @@ class Verse : Serializable {
     fun copy() = Verse(this)
 
     override fun toString(): String {
-        return String.format(Locale.getDefault(), "VERSE: ChapterNo - %d, VerseNo - %d\n", chapterNo, verseNo)
+        return String.format(
+            Locale.getDefault(),
+            "VERSE: ChapterNo - %d, VerseNo - %d\n",
+            chapterNo,
+            verseNo
+        )
     }
 }

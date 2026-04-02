@@ -77,4 +77,20 @@ public class RoundedBG_FGSpan extends ReplacementSpan {
         mRadius = radius;
         return this;
     }
+
+    public int getNormalBackgroundColor() {
+        return mBGColor;
+    }
+
+    public int getPressedBackgroundColor() {
+        return mBGColorPressed;
+    }
+
+    public int getSpanTextColor() {
+        return mTextColor;
+    }
+
+    public int getCornerRadiusPx() {
+        return mRadius;
+    }
 }

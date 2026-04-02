@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.mediaplayer
+package com.quranapp.android.compose.utils.preferences
 
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -9,7 +9,7 @@ import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
 /**
- * Recitation settings for Compose UI, stored in DataStore via [DataStoreManager].
+ * Recitation settings for Compose UI, stored in DataStore via [com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager].
  *
  * Legacy reader, services, and [com.quranapp.android.utils.sharedPrefs.SPReader] keep using
  * SharedPreferences (`sp_reader_recitation_options`); that path is unchanged.

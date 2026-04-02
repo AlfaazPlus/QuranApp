@@ -1,11 +1,13 @@
 package com.quranapp.android
 
+import ThemeUtilsV2
 import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
@@ -43,5 +45,6 @@ class QuranApp : Application() {
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
         ThemeUtilsV2.migrateThemePreferences(this)
         FavChaptersViewModel.migrate(this)
+        ReaderPreferences.migrateFromLegacyIfNeeded(this)
     }
 }

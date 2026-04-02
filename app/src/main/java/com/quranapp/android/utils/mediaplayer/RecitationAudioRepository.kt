@@ -14,6 +14,7 @@ import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.exceptions.NoInternetException
@@ -248,8 +249,6 @@ class RecitationAudioRepository(private val context: Context) {
         model: RecitationModelBase,
         chapterNo: Int,
     ): ChapterTimingMetadata? = withContext(Dispatchers.IO) {
-        Log.d("RecitationAudioRepository", "Resolving timing metadata for chapter $model")
-
         var timingUrl = model.timingUrl?.trim().orEmpty()
 
         if (timingUrl.isEmpty()) return@withContext null

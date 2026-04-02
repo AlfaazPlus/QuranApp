@@ -69,8 +69,6 @@ object ThemeUtilsV2 {
     fun isDarkTheme(): Boolean {
         val themeMode = getThemeMode()
 
-        Logger.d("ThemeUtilsV2", "isDarkTheme: themeMode=$themeMode")
-
         return when (themeMode) {
             SPAppConfigs.THEME_MODE_LIGHT -> false
             SPAppConfigs.THEME_MODE_DARK -> true

@@ -40,7 +40,7 @@ import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheetBare
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
-import com.quranapp.android.utils.mediaplayer.RecitationPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.viewModels.ReciterSelectorViewModel
 import kotlinx.coroutines.launch
 
@@ -51,7 +51,6 @@ fun ReciterSelectorSheet(
     onClose: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
     val viewModel = viewModel<ReciterSelectorViewModel>()
 
     val tabs = listOf(

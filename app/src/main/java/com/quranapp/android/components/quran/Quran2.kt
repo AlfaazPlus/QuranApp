@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -26,8 +27,9 @@ object Quran2 {
     @Composable
     fun rememberQuran(): Quran? {
         val context = LocalContext.current
+        val script = ReaderPreferences.observeQuranScript()
 
-        val quranState = produceState<Quran?>(initialValue = null, context) {
+        val quranState = produceState<Quran?>(initialValue = null, context, script) {
             value = prepareInstance(context)
         }
 

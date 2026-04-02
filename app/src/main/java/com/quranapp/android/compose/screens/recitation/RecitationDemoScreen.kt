@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +30,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,10 +41,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.components.quran.Quran2
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
+import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenter
+import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenterData
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.sharedPrefs.SPReader
 
 private data class ChapterEntry(val number: Int, val name: String, val verseCount: Int)
 
@@ -109,13 +118,54 @@ private fun ChapterList(
     onChapterSelected: (ChapterEntry) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     val activeChapter = state.currentVerse.chapterNo
+    val quran = Quran2.rememberQuran()
+    val translFactory = QuranTranslationFactory.rememberFactory(context)
+    val verse = quran?.getVerse(1, 2)?.apply {
+        translations = translFactory.getTranslationsSingleVerse(
+            slugs = SPReader.getSavedTranslations(context),
+            chapterNo,
+            verseNo
+        )
+    }
+
+    var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
 
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
+        item {
+            Button(
+                onClick = {
+                    if (verse != null) {
+                        footnotePresenterData = FootnotePresenterData(
+                            verse = verse,
+                            singleFootnote = null,
+                        )
+                    }
+                }
+            ) {
+                Text("Open all footnotes")
+            }
+            Button(
+                onClick = {
+                    if (verse != null) {
+                        footnotePresenterData = FootnotePresenterData(
+                            verse = verse,
+                            singleFootnote = verse.translations.get(0).footnotes.get(1),
+                        )
+                    }
+                }
+            ) {
+                Text("Open one footnote")
+            }
+        }
+        item {
+            ReaderTextDemoSection(Modifier.padding(bottom = 6.dp))
+        }
         items(DEMO_CHAPTERS, key = { it.number }) { chapter ->
             val isActive = chapter.number == activeChapter && isPlaying
             ChapterRow(
@@ -125,6 +175,12 @@ private fun ChapterList(
                 onClick = { onChapterSelected(chapter) },
             )
         }
+    }
+
+    FootnotePresenter(
+        data = footnotePresenterData,
+    ) {
+        footnotePresenterData = null
     }
 }
 

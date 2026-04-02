@@ -16,7 +16,7 @@ import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.utils.mediaplayer.RecitationController
-import com.quranapp.android.utils.mediaplayer.RecitationPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import kotlinx.coroutines.launch
 

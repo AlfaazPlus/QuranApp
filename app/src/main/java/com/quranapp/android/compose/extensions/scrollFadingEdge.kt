@@ -53,3 +53,45 @@ fun Modifier.verticalFadingEdge(
         }
     }
 }
+
+@Composable
+fun Modifier.horizontalFadingEdge(
+    scrollState: ScrollState,
+    length: Dp = 24.dp,
+    color: Color = MaterialTheme.colorScheme.background
+): Modifier = composed {
+    val lengthPx = with(LocalDensity.current) { length.toPx() }
+
+    drawWithContent {
+        drawContent()
+
+        val leftFade = minOf(scrollState.value.toFloat(), lengthPx)
+        val rightFade = minOf(
+            (scrollState.maxValue - scrollState.value).toFloat(),
+            lengthPx
+        )
+
+        if (scrollState.value > 0) {
+            drawRect(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(color, Color.Transparent),
+                    startX = 0f,
+                    endX = leftFade
+                ),
+                size = Size(leftFade, size.height)
+            )
+        }
+
+        if (scrollState.value < scrollState.maxValue) {
+            drawRect(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(Color.Transparent, color),
+                    startX = size.width - rightFade,
+                    endX = size.width
+                ),
+                topLeft = Offset(size.width - rightFade, 0f),
+                size = Size(rightFade, size.height)
+            )
+        }
+    }
+}

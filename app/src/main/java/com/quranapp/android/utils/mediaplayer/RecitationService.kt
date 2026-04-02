@@ -37,9 +37,12 @@ import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.utils.univ.ErrorEvent
+import com.quranapp.android.utils.univ.EventBus
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.CoroutineScope
@@ -227,8 +230,8 @@ class RecitationService : MediaSessionService() {
         _state.value = state.value.copy(isResolving = resolving)
     }
 
-    private fun emitEvent(event: PlayerEvent) {
-        scoped { RecitationEventBus.send(event) }
+    private fun emitEvent(event: Any) {
+        scoped { EventBus.send(event) }
     }
 
     private fun updateState(block: RecitationServiceState.() -> RecitationServiceState) {
@@ -399,7 +402,7 @@ class RecitationService : MediaSessionService() {
                 }
 
                 is ResolvedAudioResult.Error -> {
-                    emitEvent(PlayerEvent.Error(result.error.message))
+                    emitEvent(ErrorEvent(result.error.message))
 
                     if (requestId != latestPlaybackRequestId) return
                     setResolving(false)
@@ -416,7 +419,7 @@ class RecitationService : MediaSessionService() {
             if (requestId != latestPlaybackRequestId) return
             setResolving(false)
             Log.saveError(e, "RecitationService.loadChapterVerse")
-            emitEvent(PlayerEvent.Error(e.message))
+            emitEvent(ErrorEvent(e.message))
         }
     }
 
@@ -521,7 +524,7 @@ class RecitationService : MediaSessionService() {
             // Single file fallback — store the timing of the track we actually load,
             // so verse seeking / tracking works against its positions.
             val primary = result.quran ?: result.translation ?: run {
-                emitEvent(PlayerEvent.Error("No audio for this chapter"))
+                emitEvent(ErrorEvent("No audio for this chapter"))
                 return
             }
 
@@ -567,7 +570,7 @@ class RecitationService : MediaSessionService() {
                 sources.add(result.quran)
             } else {
                 emitEvent(
-                    PlayerEvent.Error(
+                    ErrorEvent(
                         getString(
                             R.string.missingTimingData, result.quran.getReciterName(
                                 RecitationModelManager.get(this)
@@ -583,7 +586,7 @@ class RecitationService : MediaSessionService() {
                 sources.add(result.translation)
             } else {
                 emitEvent(
-                    PlayerEvent.Error(
+                    ErrorEvent(
                         getString(
                             R.string.missingTimingData, result.translation.getReciterName(
                                 RecitationModelManager.get(this)

@@ -19,12 +19,6 @@ data class PlayerSettings(
     val translationReciter: String? = null
 )
 
-sealed class PlayerEvent {
-    data class Error(val message: String? = null) : PlayerEvent()
-    data class Message(val message: String? = null) : PlayerEvent()
-}
-
-
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
     val isResolving: Boolean = false,
