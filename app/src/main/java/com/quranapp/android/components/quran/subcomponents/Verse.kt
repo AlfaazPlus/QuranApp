@@ -19,7 +19,7 @@ class Verse : Serializable {
     val verseNo: Int
 
     @JvmField
-    val arabicText: String
+    val arabicText: String = ""
 
     var segments: List<String> = emptyList()
 
@@ -41,15 +41,13 @@ class Verse : Serializable {
         chapterNo: Int,
         verseNo: Int,
         pageNo: Int,
-        arabicText: String,
+        segments: List<String>,
         endText: String,
-        segments: List<String> = emptyList()
     ) {
         this.id = id
         this.chapterNo = chapterNo
         this.verseNo = verseNo
         this.pageNo = pageNo
-        this.arabicText = arabicText
         this.segments = segments
         this.endText = endText
     }
@@ -59,9 +57,8 @@ class Verse : Serializable {
         chapterNo = verse.chapterNo
         verseNo = verse.verseNo
         pageNo = verse.pageNo
-        arabicText = verse.arabicText
-        endText = verse.endText
         segments = verse.segments
+        endText = verse.endText
 
         // not copying
         translations = verse.translations

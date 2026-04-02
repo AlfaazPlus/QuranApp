@@ -236,8 +236,13 @@ object ReaderPreferences {
     }
 
     fun getQuranScript(): String {
-        val s = DataStoreManager.read(KEY_SCRIPT, "")
-        return if (s.isEmpty()) QuranScriptUtils.SCRIPT_DEFAULT else s
+        val s = DataStoreManager.read(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)
+
+        if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
+            return QuranScriptUtils.SCRIPT_DEFAULT
+        }
+
+        return s
     }
 
     suspend fun setQuranScript(font: String?) {
@@ -246,8 +251,13 @@ object ReaderPreferences {
 
     @Composable
     fun observeQuranScript(): String {
-        val s = DataStoreManager.observe(KEY_SCRIPT, "")
-        return if (s.isEmpty()) QuranScriptUtils.SCRIPT_DEFAULT else s
+        val s = DataStoreManager.observe(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)
+
+        if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
+            return QuranScriptUtils.SCRIPT_DEFAULT
+        }
+
+        return s
     }
 
     fun getReaderStyle(): Int {

@@ -71,7 +71,9 @@ fun rememberQuranTextStyle(
             fontFamily = fontFamily,
             fontSize = fontSize,
             color = colorScheme.onBackground,
-            textDirection = TextDirection.Rtl
+            textDirection = TextDirection.Rtl,
+
+            lineHeight = fontSize * 1.8f
         )
     }
 }

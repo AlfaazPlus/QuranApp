@@ -2,6 +2,7 @@ package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -77,7 +78,8 @@ fun TranslationText(
                             }
                         }
                     },
-                    style = translationTextStyle(translation.bookSlug)
+                    style = translationTextStyle(translation.bookSlug),
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
