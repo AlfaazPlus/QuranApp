@@ -52,6 +52,7 @@ import com.quranapp.android.viewModels.VerseViewModel
 fun VerseView(
     verse: Verse,
     slugs: Set<String>,
+    showDivider: Boolean = false
 ) {
     val viewmodel = viewModel<VerseViewModel>()
     val controller = viewmodel.controller
@@ -78,11 +79,14 @@ fun VerseView(
             )
 
         }
-        HorizontalDivider(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            thickness = 1.dp,
-            color = colorScheme.outlineVariant,
-        )
+
+        if (showDivider) {
+            HorizontalDivider(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                thickness = 1.dp,
+                color = colorScheme.outlineVariant,
+            )
+        }
     }
 }
 
@@ -226,7 +230,7 @@ private fun VerseSerial(verse: Verse) {
             .background(colorResource(R.color.colorBGLightGrey))
             .clickable(
                 onClick = {
-                    context.copyToClipboard(label)
+                    context.copyToClipboard(verse.id.toString())
                 },
             )
             .padding(horizontal = 8.dp, vertical = 4.dp),

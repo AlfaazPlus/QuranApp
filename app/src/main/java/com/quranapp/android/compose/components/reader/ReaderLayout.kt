@@ -1,10 +1,8 @@
 package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.quran.subcomponents.Verse
@@ -60,7 +57,7 @@ sealed class ReaderLayoutItem(var key: String? = null) {
     data object ChapterInfo : ReaderLayoutItem()
     data object Bismillah : ReaderLayoutItem()
     data class ChapterTitle(val chapterNo: Int) : ReaderLayoutItem()
-    data class VerseUI(val verse: Verse) : ReaderLayoutItem()
+    data class VerseUI(val verse: Verse, val isLastInGroup: Boolean) : ReaderLayoutItem()
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -108,7 +105,7 @@ private fun ReaderLayoutTranslationMode(
 private fun TranslationRow(
     readerVm: ReaderViewModel,
     item: ReaderLayoutItem,
-    slugs: Set<String>?
+    slugs: Set<String>?,
 ) {
     if (slugs == null) return
 
@@ -122,28 +119,18 @@ private fun TranslationRow(
         }
 
         is ReaderLayoutItem.ChapterTitle -> {
-            Text(
-                text = "Surah ${item.chapterNo}",
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            )
+            ChapterTitle(chapterNo = item.chapterNo)
         }
 
         ReaderLayoutItem.Bismillah -> {
-            Text(
-                text = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            )
+            Bismillah()
         }
 
         is ReaderLayoutItem.VerseUI -> {
             VerseView(
                 verse = item.verse,
-                slugs = slugs
+                slugs = slugs,
+                showDivider = !item.isLastInGroup
             )
         }
     }

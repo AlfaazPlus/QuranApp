@@ -20,8 +20,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class ReaderUiState(
     val loading: Boolean = true,
@@ -62,6 +64,14 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     val pageViewItems = mutableStateOf<List<QuranPageItem>>(emptyList())
 
     private val context get() = application
+
+    init {
+        viewModelScope.launch {
+            ReaderPreferences.quranScriptFlow().collectLatest {
+                buildItems(uiState.value)
+            }
+        }
+    }
 
     suspend fun initReader(data: ReaderIntentData) {
         _uiState.update {

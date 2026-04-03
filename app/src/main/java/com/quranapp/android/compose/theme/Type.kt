@@ -21,6 +21,14 @@ val fontUrdu by lazy {
         ),
     )
 }
+val fontBismillah by lazy {
+    FontFamily(
+        Font(
+            R.font.bismillah,
+            weight = FontWeight.Normal,
+        ),
+    )
+}
 
 
 private val platformTextStyle = PlatformTextStyle(false)

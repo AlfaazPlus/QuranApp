@@ -17,6 +17,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -32,13 +34,18 @@ fun TranslationText(
 ) {
     val viewModel = viewModel<VerseViewModel>()
     val verseActions = LocalVerseActions.current
-    val (translations, booksInfo) = remember(slugs, verse.chapterNo, verse.verseNo) {
+    val translations = remember(slugs, verse.chapterNo, verse.verseNo) {
         viewModel.translationFactory.getTranslationsSingleVerse(
             slugs,
             verse.chapterNo,
             verse.verseNo,
-        ) to viewModel.translationFactory.getTranslationBooksInfoValidated(slugs)
+        )
     }
+
+    val booksInfo = remember(slugs) {
+        viewModel.translationFactory.getTranslationBooksInfoValidated(slugs)
+    }
+
 
     SelectionContainer {
         Column(
@@ -46,42 +53,61 @@ fun TranslationText(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             translations.forEach { translation ->
-                Text(
-                    buildAnnotatedString {
-                        append(
-                            buildTranslationAnnotatedString(
-                                translation,
-                                colorScheme,
-                                actions = VerseActions(
-                                    verseActions.onReferenceClick,
-                                    onFootnoteClickRaw = { slug, footnoteNo ->
-                                        verseActions.onFootnoteClick?.invoke(
-                                            verse,
-                                            translation.footnotes[footnoteNo]
-                                        )
-                                    }
-                                )
-                            )
-                        )
-
-                        append("\n")
-
-                        booksInfo.get(translation.bookSlug)?.let { bookInfo ->
-                            withStyle(
-                                style = SpanStyle(
-                                    color = colorScheme.onBackground.alpha(0.6f),
-                                    fontSize = typography.labelMedium.fontSize,
-                                    fontFamily = if (bookInfo.isUrdu) fontUrdu else null,
-                                )
-                            ) {
-                                append(bookInfo.getDisplayName(false))
-                            }
-                        }
-                    },
-                    style = translationTextStyle(translation.bookSlug),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                SingleTranslation(verse, translation, booksInfo, verseActions)
             }
         }
     }
+}
+
+@Composable
+private fun SingleTranslation(
+    verse: Verse,
+    translation: Translation,
+    booksInfo: Map<String, TranslationBookInfoModel>,
+    verseActions: VerseActions
+) {
+    val colors = colorScheme
+    val type = typography
+
+    val annotatedText = remember(
+        verse, translation, booksInfo, colors, type
+    ) {
+        buildAnnotatedString {
+            append(
+                buildTranslationAnnotatedString(
+                    translation,
+                    colors,
+                    actions = VerseActions(
+                        verseActions.onReferenceClick,
+                        onFootnoteClickRaw = { slug, footnoteNo ->
+                            verseActions.onFootnoteClick?.invoke(
+                                verse,
+                                translation.footnotes[footnoteNo]
+                            )
+                        }
+                    )
+                )
+            )
+
+            append("\n")
+
+            booksInfo.get(translation.bookSlug)?.let { bookInfo ->
+                withStyle(
+                    style = SpanStyle(
+                        color = colors.onBackground.alpha(0.6f),
+                        fontSize = type.labelMedium.fontSize,
+                        fontFamily = if (bookInfo.isUrdu) fontUrdu else null,
+                    )
+                ) {
+                    append(bookInfo.getDisplayName(false))
+                }
+            }
+        }
+    }
+
+    Text(
+        annotatedText,
+        style = translationTextStyle(translation.bookSlug),
+        modifier = Modifier.fillMaxWidth()
+    )
 }

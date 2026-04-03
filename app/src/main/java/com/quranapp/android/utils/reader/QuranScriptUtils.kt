@@ -23,7 +23,7 @@ object QuranScriptUtils {
 
     const val SCRIPT_UTHMANI = "uthmani"
 
-    //    const val SCRIPT_INDOPAK = "indopak"
+    const val SCRIPT_DK_INDOPAK = "dk_indopak"
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
     const val SCRIPT_KFQPC_V2 = "kfqpc_v2"
     const val SCRIPT_NOOREHUDA = "noorehuda"
@@ -117,7 +117,7 @@ object QuranScriptUtils {
     fun availableScriptSlugs(): Array<String> = arrayOf(
         SCRIPT_NOOREHUDA,
         SCRIPT_UTHMANI,
-//        SCRIPT_INDOPAK,
+        SCRIPT_DK_INDOPAK,
         SCRIPT_KFQPC_V1,
         SCRIPT_KFQPC_V2
     )
@@ -155,69 +155,64 @@ fun String.isKFQPCScript(): Boolean = when (this) {
 
 fun String.getQuranScriptName(): String {
     val mapToQuery: Map<String, String> = when (this) {
-        QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.UTHMANI_SCRIPT_NAMES
-//        QuranScriptUtils.SCRIPT_INDOPAK -> QuranScriptUtils.INDO_PAK_SCRIPT_NAMES
+        QuranScriptUtils.SCRIPT_NOOREHUDA -> QuranScriptUtils.NOOREHUDA_SCRIPT_NAMES
+        QuranScriptUtils.SCRIPT_DK_INDOPAK -> QuranScriptUtils.INDO_PAK_SCRIPT_NAMES
         QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.KFQPC_SCRIPT_NAMES(1)
         QuranScriptUtils.SCRIPT_KFQPC_V2 -> QuranScriptUtils.KFQPC_SCRIPT_NAMES(2)
-        else -> QuranScriptUtils.NOOREHUDA_SCRIPT_NAMES
+        else -> QuranScriptUtils.UTHMANI_SCRIPT_NAMES
     }
 
     return mapToQuery[Locale.getDefault().toLanguageTag()] ?: mapToQuery["en"]!!
 }
 
 fun String.getScriptPreviewText(): String = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
-//    QuranScriptUtils.SCRIPT_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_INDOPAK
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> QuranScriptUtils.PREVIEW_TEXT_NOOREHUDA
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_INDOPAK
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V2
-    else -> QuranScriptUtils.PREVIEW_TEXT_NOOREHUDA
+    else -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
 }
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniSmall
-//    QuranScriptUtils.SCRIPT_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakSmall
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.dimen.dmnReaderTextSizeArNoorehudaSmall
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakSmall
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Small
-    QuranScriptUtils.SCRIPT_KFQPC_V2
-        -> R.dimen.dmnReaderTextSizeArQpcV2Small
-
-    else -> R.dimen.dmnReaderTextSizeArNoorehudaSmall
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.dimen.dmnReaderTextSizeArQpcV2Small
+    else -> R.dimen.dmnReaderTextSizeArUthmaniSmall
 }
 
 fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> 21f
-//    QuranScriptUtils.SCRIPT_INDOPAK -> 21f
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> 21f
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> 21f
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> 20f
-    QuranScriptUtils.SCRIPT_KFQPC_V2
-        -> 15f
-
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> 15f
     else -> 21f
 }
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> R.dimen.dmnReaderTextSizeArUthmaniMedium
-//    QuranScriptUtils.SCRIPT_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakMedium
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.dimen.dmnReaderTextSizeArNoorehudaMedium
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakMedium
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Medium
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.dimen.dmnReaderTextSizeArQpcV2Medium
-
-    else -> R.dimen.dmnReaderTextSizeArNoorehudaMedium
+    else -> R.dimen.dmnReaderTextSizeArUthmaniMedium
 }
 
 fun String.getQuranScriptFontRes(): Int = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> R.font.uthmanic_hafs
-//    QuranScriptUtils.SCRIPT_INDOPAK -> R.font.indopak
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> R.font.noorehuda_quranapp_v2
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.font.digital_khatt_indopak
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_v1_page_1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.font.qpc_v2_page_604
-    else -> R.font.noorehuda_quranapp_v2
+    else -> R.font.uthmanic_hafs
 }
 
 fun String.getQuranScriptResPath(): String = when (this) {
-    QuranScriptUtils.SCRIPT_UTHMANI -> "scripts/script_uthmani.json"
-//    QuranScriptUtils.SCRIPT_INDOPAK -> "scripts/script_indopak.json"
+    QuranScriptUtils.SCRIPT_NOOREHUDA -> "scripts/script_noorehuda.json" // fixme convert to wbw
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> "scripts/script_dk_indopak.json"
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> "scripts/script_qpc_v1.json"
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> "scripts/script_qpc_v2.json"
-    else -> "scripts/script_noorehuda.json" // fixme convert to wbw
+    else -> "scripts/script_uthmani.json"
 }
 
 fun Int.toKFQPCFontFilename(): String {

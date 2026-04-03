@@ -6,6 +6,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.asFontFamily
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -49,6 +50,7 @@ class VerseViewModel(application: Application) : AndroidViewModel(application) {
         script: String,
         verse: Verse,
     ): FontFamily {
+        Log.d(script, scriptFontCache)
         return if (script.isKFQPCScript()) {
             kfqpcFontCache.getOrPut(script to verse.pageNo) {
                 loadKfqpcTypeface(script, verse.pageNo).asFontFamily()

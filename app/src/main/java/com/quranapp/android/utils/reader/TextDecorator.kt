@@ -16,6 +16,7 @@ import com.alfaazplus.sunnah.ui.theme.fontFamily
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.viewModels.VerseViewModel
 

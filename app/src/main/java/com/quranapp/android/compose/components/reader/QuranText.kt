@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.LinkAnnotation
@@ -24,17 +25,18 @@ fun QuranText(
 ) {
     val style = rememberQuranTextStyle(verse)
     val context = LocalContext.current
+    val colors = colorScheme
 
-    Text(
-        text = buildAnnotatedString {
+    val annotatedText = remember(verse, context, colors) {
+        buildAnnotatedString {
             verse.segments.forEachIndexed { index, word ->
                 withLink(
                     LinkAnnotation.Clickable(
                         tag = "wbw",
                         styles = TextLinkStyles(
-                            focusedStyle = SpanStyle(color = colorScheme.primary),
-                            pressedStyle = SpanStyle(color = colorScheme.primary),
-                            hoveredStyle = SpanStyle(color = colorScheme.primary),
+                            focusedStyle = SpanStyle(color = colors.primary),
+                            pressedStyle = SpanStyle(color = colors.primary),
+                            hoveredStyle = SpanStyle(color = colors.primary),
                         )
                     ) {
                         // TODO
@@ -50,9 +52,13 @@ fun QuranText(
             }
 
             if (!verse.endText.isNullOrEmpty()) {
-                append("  " + verse.endText)
+                append(" " + verse.endText)
             }
-        },
+        }
+    }
+
+    Text(
+        text = annotatedText,
         style = style,
         modifier = Modifier
             .fillMaxWidth()

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.quranapp.android.compose.utils.preferences
 
 import android.content.Context
@@ -15,7 +17,9 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -251,6 +255,16 @@ object ReaderPreferences {
 
     suspend fun setQuranScript(font: String?) {
         DataStoreManager.write(KEY_SCRIPT, font ?: QuranScriptUtils.SCRIPT_DEFAULT)
+    }
+
+    fun quranScriptFlow(): Flow<String> {
+        return DataStoreManager.flow(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT).mapLatest {
+            if (!QuranScriptUtils.availableScriptSlugs().contains(it)) {
+                return@mapLatest QuranScriptUtils.SCRIPT_DEFAULT
+            }
+
+            it
+        }
     }
 
     @Composable

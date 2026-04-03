@@ -53,7 +53,7 @@ object ReaderItemsBuilder {
 
         for (v in fromVerseResolved..toVerseResolved) {
             val verse = quran.getVerse(chapterNo, v) ?: continue
-            out.add(ReaderLayoutItem.VerseUI(verse).apply {
+            out.add(ReaderLayoutItem.VerseUI(verse, v == toVerseResolved).apply {
                 key = "verse-$chapterNo:${verse.verseNo}"
             })
         }
@@ -92,7 +92,7 @@ object ReaderItemsBuilder {
             for (v in verseRange.first..verseRange.second) {
                 val verse = quran.getVerse(chapterNo, v)
 
-                out.add(ReaderLayoutItem.VerseUI(verse).apply {
+                out.add(ReaderLayoutItem.VerseUI(verse, v == verseRange.second).apply {
                     key = "verse-$chapterNo:${verse.verseNo}"
                 })
             }
