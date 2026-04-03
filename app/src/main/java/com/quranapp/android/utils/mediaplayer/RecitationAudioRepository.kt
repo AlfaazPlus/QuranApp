@@ -256,7 +256,11 @@ class RecitationAudioRepository(private val context: Context) {
 
         if (cacheFile.length() > 0L) {
             try {
-                when (val parsed = parseTimingFile(cacheFile.inputStream().buffered(), chapterNo)) {
+                when (val parsed = parseTimingFile(
+                    cacheFile.inputStream().buffered(),
+                    chapterNo,
+                    model.timingVersion ?: 0
+                )) {
                     is TimingParseResult.Found -> return@withContext parsed.metadata
                     TimingParseResult.ChapterMissing -> return@withContext null
                     TimingParseResult.ParseFailed -> cacheFile.delete()
@@ -309,7 +313,11 @@ class RecitationAudioRepository(private val context: Context) {
 
             try {
                 when (val parsed =
-                    parseTimingFile(contentFile.inputStream().buffered(), chapterNo)) {
+                    parseTimingFile(
+                        contentFile.inputStream().buffered(),
+                        chapterNo,
+                        model.timingVersion ?: 0
+                    )) {
                     is TimingParseResult.Found -> {
                         if (fileUtils.createFile(cacheFile)) {
                             contentFile.inputStream().buffered().use { src ->
@@ -363,12 +371,22 @@ class RecitationAudioRepository(private val context: Context) {
      * Parses only the requested chapter from the timing JSON, avoiding full
      * deserialization of all 114 chapters and their verse/segment data.
      */
-    private fun parseTimingFile(contentStream: InputStream, chapterNo: Int): TimingParseResult {
+    private fun parseTimingFile(
+        contentStream: InputStream,
+        chapterNo: Int,
+        upstreamVersion: Int
+    ): TimingParseResult {
         try {
             val root = contentStream.use { stream ->
                 JsonHelper.json.parseToJsonElement(
                     stream.bufferedReader().readText()
                 ).jsonObject
+            }
+
+            val version = root["version"]?.jsonPrimitive?.intOrNull ?: 0
+
+            if (version < upstreamVersion) {
+                return TimingParseResult.ParseFailed
             }
 
             val chaptersArray = root["chapters"]?.jsonArray ?: return TimingParseResult.ParseFailed

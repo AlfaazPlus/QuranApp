@@ -20,6 +20,9 @@ open class RecitationModelBase {
     @SerialName("timing_url")
     var timingUrl: String? = null
 
+    @SerialName("timing_version")
+    var timingVersion: Int? = null
+
     val translations: Map<String, String> = mapOf()
 
 

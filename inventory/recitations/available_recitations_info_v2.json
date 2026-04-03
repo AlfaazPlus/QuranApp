@@ -6,6 +6,7 @@
       "style": "Mujawwad",
       "url_template": "https://download.quranicaudio.com/qdc/abdul_baset/mujawwad/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/abdul_basit.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "عبد الباسط عبد الصمد",
         "bn": "আবদুল বাসিত 'আব্দ উস-সামাদ",
@@ -32,6 +33,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/abdurrahmaan_as_sudais/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/as_sudais.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "عبد الرحمن السديس",
         "bn": "আবদুর রহমান আল-সুদাইস",
@@ -58,6 +60,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/abu_bakr_shatri/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_shatri.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "أبو بكر الشطري",
         "bn": "আবু বকর আল-শাত্রী",
@@ -84,6 +87,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/ahmed_ibn_3ali_al-3ajamy/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_ajmi.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "أحمد بن علي العجمي",
         "bn": "আহমদ বিন আলী আল-আজমী",
@@ -110,6 +114,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/huthayfi/{chapNo:%03d}.mp3",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
         "ar": "علي بن عبد الرحمن الحذيفي",
         "bn": "আলী বিন আবদুর রহমান আল হুজায়ফী",
@@ -135,7 +140,8 @@
       "reciter": "Fares Abbad",
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/fares/{chapNo:%03d}.mp3",
-      "timing_url": null,
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/fares_abbad.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "فارس عباد",
         "bn": "ফারেস আবাদ",
@@ -162,6 +168,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/hani_ar_rifai/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ar_rifai.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "هاني الرفاعي",
         "bn": "হানি আল-রিফাই",
@@ -188,6 +195,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/khalifah_taniji/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_tunaiji.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "خليفة الطنيجي",
         "bn": "খলিফা আল-তুনাইজি",
@@ -214,6 +222,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_afasy.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "مشاري بن راشد العفاسي",
         "bn": "মিশারি রশিদ আল-আফাসি",
@@ -239,7 +248,8 @@
       "reciter": "Nasser Al Qatami",
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/nasser_bin_ali_alqatami/{chapNo:%03d}.mp3",
-      "timing_url": null,
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_qatami.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "ناصر القطامي",
         "bn": "নাসের আল কাতামি",
@@ -266,6 +276,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/sa3d_al-ghaamidi/complete/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_ghamdi.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "سعد الغامدي",
         "bn": "সাদ আল-গামদি",
@@ -291,7 +302,8 @@
       "reciter": "Sahl Yassin",
       "style": null,
       "url_template": "https://download.quranicaudio.com/quran/sahl_yaaseen/{chapNo:%03d}.mp3",
-      "timing_url": null,
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/sahl_yassin.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "سهل ياسين",
         "bn": "সাহল ইয়াসিন",
@@ -318,6 +330,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/saud_ash-shuraym/murattal/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/as_shuraym.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "سعود الشريم",
         "bn": "সৌদ আল-শুরাইম",
@@ -344,6 +357,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/yasser_ad-dussary/mp3/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ad_dussary.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "ياسر الدوسري",
         "bn": "ইয়াসির আদ-দুসারী",
@@ -370,6 +384,7 @@
       "style": "Murattal",
       "url_template": "https://download.quranicaudio.com/qdc/siddiq_minshawi/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_minshawi.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "محمد صديق المنشاوي",
         "bn": "মোহাম্মদ সিদ্দিক আল-মিনশাওয়ি",
@@ -396,6 +411,7 @@
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/khalil_al_husary/murattal/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_husary.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "محمود الحصري",
         "bn": "মাহমুদ খলিল আল-হুসারী",
@@ -422,6 +438,7 @@
       "style": "Muallim",
       "url_template": "https://download.quranicaudio.com/qdc/khalil_al_husary/muallim/{chapNo:%01d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_husary_muallim.json.gz",
+      "timing_version": 1,
       "translations": {
         "ar": "محمود الحصري",
         "bn": "মাহমুদ খলিল আল-হুসারী",

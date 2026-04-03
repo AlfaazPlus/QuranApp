@@ -8,6 +8,7 @@
       "book": "Sahih International",
       "url_template": "https://download.quranicaudio.com/quran/ibrahim_walk/{chapNo:%03d}.mp3",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {}
     },
     {
@@ -17,6 +18,7 @@
       "reciter": "Fooladvand Hedayatfar",
       "url_template": "",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
         "fa": "فولادوند - هدایتفر"
       }
@@ -29,6 +31,7 @@
       "book": "Mirwaiz Mohammed Yusuf",
       "url_template": "",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
       }
     },
@@ -40,6 +43,7 @@
       "book": "Fateh Muhammad Jalandhari",
       "url_template": "",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
         "ur": "شمشاد علی خان"
       }
@@ -51,6 +55,7 @@
       "reciter": "German Quran translation audio",
       "url_template": "",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
         "de": "Deutsche Koran Übersetzung Audio"
       }
@@ -62,6 +67,7 @@
       "reciter": "French Quran translation audio",
       "url_template": "",
       "timing_url": null,
+      "timing_version": 1,
       "translations": {
         "de": "Traduction audio du Coran en français"
       }
