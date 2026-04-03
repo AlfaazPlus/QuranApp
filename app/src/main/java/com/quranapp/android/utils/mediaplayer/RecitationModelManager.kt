@@ -64,7 +64,7 @@ class RecitationModelManager private constructor(
     }
 
     suspend fun resolveModels(): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
-        val audioOption = RecitationPreferences.getRecitationAudioOption()
+        val audioOption = RecitationPreferences.getAudioOption()
 
         val resolveQuran = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
         val resolveTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_QURAN
@@ -169,7 +169,7 @@ class RecitationModelManager private constructor(
 
 
     suspend fun getCurrentReciterNameForAudioOption(): String {
-        val audioAudio = RecitationPreferences.getRecitationAudioOption()
+        val audioAudio = RecitationPreferences.getAudioOption()
 
         val isBoth = audioAudio == RecitationUtils.AUDIO_OPTION_BOTH
         val isOnlyTransl = audioAudio == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
@@ -195,7 +195,7 @@ class RecitationModelManager private constructor(
 
     @Composable
     fun rememberCurrentReciterNameForAudioOption(): String {
-        val audioOption = RecitationPreferences.observeRecitationAudioOption()
+        val audioOption = RecitationPreferences.observeAudioOption()
 
         val reciterId = RecitationPreferences.observeReciterId()
         val translationReciterId = RecitationPreferences.observeTranslationReciterId()

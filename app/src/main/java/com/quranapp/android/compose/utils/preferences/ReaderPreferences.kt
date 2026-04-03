@@ -15,6 +15,7 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -230,9 +231,12 @@ object ReaderPreferences {
     }
 
     @Composable
-    fun observeTranslations(): HashSet<String> {
-        val raw = DataStoreManager.observe(KEY_TRANSLATIONS, emptySet())
-        return if (raw.isEmpty()) TranslUtils.defaultTranslationSlugs() else HashSet(raw)
+    fun observeTranslations(): Set<String> {
+        return DataStoreManager.observe(KEY_TRANSLATIONS, emptySet())
+    }
+
+    fun translationsFlow(): Flow<Set<String>> {
+        return DataStoreManager.flow(KEY_TRANSLATIONS, emptySet())
     }
 
     fun getQuranScript(): String {
@@ -266,6 +270,10 @@ object ReaderPreferences {
 
     suspend fun setReaderStyle(readerStyle: Int) {
         DataStoreManager.write(KEY_READER_STYLE, readerStyle)
+    }
+
+    fun readerStyleFlow(): Flow<Int> {
+        return DataStoreManager.flow(KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
     }
 
     @Composable

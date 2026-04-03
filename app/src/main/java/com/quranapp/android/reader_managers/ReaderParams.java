@@ -98,7 +98,7 @@ public class ReaderParams {
         return SPReader.getSavedReaderStyle(context);
     }
 
-    public int defaultReadType() {
+    public static int defaultReadType() {
         return READER_READ_TYPE_CHAPTER;
     }
 

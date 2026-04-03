@@ -28,7 +28,6 @@ class VerseViewModel(application: Application) : AndroidViewModel(application) {
 
     val controller = RecitationController.getInstance(application)
 
-
     // non-KFQPC: one font per script
     private val scriptFontCache = ConcurrentHashMap<String, FontFamily>()
 

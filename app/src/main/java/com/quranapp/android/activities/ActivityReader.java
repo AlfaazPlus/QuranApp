@@ -1081,14 +1081,22 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
 
             sections.add(section);
 
-            chaptersName.append(chapterNo).append(". ").append(quranMeta.getChapterName(this, chapterNo));
+            chaptersName
+                .append(chapterNo).append(". ")
+                .append(quranMeta.getChapterName(this, chapterNo));
+
             if (chapterNo < toChapterNo) {
                 chaptersName.append(", ");
             }
         }
 
-        return new QuranPageModel(pageNo, quranMeta.getJuzForPage(pageNo), chapterRange, chaptersName.toString(),
-            sections);
+        return new QuranPageModel(
+            pageNo,
+            quranMeta.getJuzForPage(pageNo),
+            chapterRange,
+            chaptersName.toString(),
+            sections
+        );
     }
 
     public void handleVerseSpinnerSelectedVerseNo(int chapterNo, int verseNo) {

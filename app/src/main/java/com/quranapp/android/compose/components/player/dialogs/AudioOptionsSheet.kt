@@ -34,7 +34,7 @@ fun AudioOptionsSheet(
     isOpen: Boolean,
     onClose: () -> Unit,
 ) {
-    val selectedAudioOption = RecitationPreferences.observeRecitationAudioOption()
+    val selectedAudioOption = RecitationPreferences.observeAudioOption()
     val selectedVerseGroupSize = RecitationPreferences.observeVerseGroupSize()
     val coroutineScope = rememberCoroutineScope()
 
@@ -63,7 +63,7 @@ fun AudioOptionsSheet(
                     selected = option == selectedAudioOption,
                     onClick = {
                         coroutineScope.launch {
-                            RecitationPreferences.setRecitationAudioOption(option)
+                            RecitationPreferences.setAudioOption(option)
                             controller.setAudioOption(option)
                         }
                     },

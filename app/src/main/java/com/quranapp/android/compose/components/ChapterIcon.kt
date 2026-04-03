@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontLoadingStrategy
@@ -54,6 +56,7 @@ fun ChapterIcon(
         color = color,
         fontFamily = fontFamilyChapterIcon,
         fontSize = fontSize,
+        fontWeight = FontWeight.Normal,
     )
 }
 

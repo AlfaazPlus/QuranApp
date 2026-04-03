@@ -211,10 +211,10 @@ class RecitationService : MediaSessionService() {
 
     private suspend fun initializeStateFromPreferences() {
         val initialSettings = PlayerSettings(
-            speed = RecitationPreferences.getRecitationSpeed(),
-            repeatCount = RecitationPreferences.getRecitationRepeatCount(),
+            speed = RecitationPreferences.getSpeed(),
+            repeatCount = RecitationPreferences.getRepeatCount(),
             continueRange = SPReader.getRecitationContinueChapter(this),
-            audioOption = RecitationPreferences.getRecitationAudioOption(),
+            audioOption = RecitationPreferences.getAudioOption(),
             reciter = RecitationPreferences.getReciterId(),
             translationReciter = RecitationPreferences.getTranslationReciterId(),
         )

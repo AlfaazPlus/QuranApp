@@ -55,9 +55,9 @@ import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
 import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
 import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
-import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
@@ -145,7 +145,7 @@ fun ExpandedPlayer(
 
                 ExpandedPlayerMode.Spotlight -> {
                     SpotlightVersePanel(
-                        verse = verse,
+                        versePair = verse,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
@@ -208,9 +208,9 @@ private fun Configurations(
     controller: RecitationController,
 ) {
     val context = LocalContext.current
-    val audioOption = RecitationPreferences.observeRecitationAudioOption();
-    val speed = RecitationPreferences.observeRecitationSpeed();
-    val repeatCount = RecitationPreferences.observeRecitationRepeatCount()
+    val audioOption = RecitationPreferences.observeAudioOption();
+    val speed = RecitationPreferences.observeSpeed();
+    val repeatCount = RecitationPreferences.observeRepeatCount()
     val reciterNames =
         RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
 

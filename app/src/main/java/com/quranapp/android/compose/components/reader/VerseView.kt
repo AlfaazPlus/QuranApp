@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -40,6 +41,7 @@ import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -53,23 +55,33 @@ fun VerseView(
 ) {
     val viewmodel = viewModel<VerseViewModel>()
     val controller = viewmodel.controller
+    val scrollSync = RecitationPreferences.observeScrollSync()
 
     val state by controller.state.collectAsState()
     val isPlaying by controller.isPlayingState.collectAsState()
     val isVersePlaying = isPlaying && state.isCurrentVerse(verse.chapterNo, verse.verseNo)
 
-    Column(
-        modifier = Modifier
-            .background(
-                if (isVersePlaying) colorScheme.primary.alpha(0.2f) else Color.Transparent
+    Box() {
+        Column(
+            modifier = Modifier
+                .background(
+                    if (isVersePlaying && scrollSync) colorScheme.primary.alpha(0.2f)
+                    else Color.Transparent
+                )
+                .padding(horizontal = 12.dp, vertical = 16.dp)
+        ) {
+            VerseActionBar(verse = verse, controller, isVersePlaying)
+            QuranText(verse)
+            TranslationText(
+                verse = verse,
+                slugs,
             )
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-    ) {
-        VerseActionBar(verse = verse, controller, isVersePlaying)
-        QuranText(verse)
-        TranslationText(
-            verse = verse,
-            slugs,
+
+        }
+        HorizontalDivider(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            thickness = 1.dp,
+            color = colorScheme.outlineVariant,
         )
     }
 }
@@ -91,7 +103,7 @@ private fun VerseActionBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(horizontal = 10.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
@@ -157,7 +169,7 @@ private fun VerseActionIconButton(
 ) {
     Box(
         modifier = modifier
-            .size(36.dp)
+            .size(32.dp)
             .clip(CircleShape)
             .clickable(
                 onClick = onClick,
@@ -168,7 +180,7 @@ private fun VerseActionIconButton(
             painter = painter,
             contentDescription = contentDescription,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(6.dp)
                 .then(iconModifier),
             tint = tint,
         )
@@ -217,8 +229,8 @@ private fun VerseSerial(verse: Verse) {
                     context.copyToClipboard(label)
                 },
             )
-            .padding(horizontal = 8.dp, vertical = 3.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorResource(R.color.colorIcon),
-        style = typography.labelMedium,
+        style = typography.labelLarge,
     )
 }

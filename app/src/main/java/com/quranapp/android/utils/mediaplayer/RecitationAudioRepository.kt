@@ -21,7 +21,6 @@ import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.extensions.isGzip
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +73,7 @@ class RecitationAudioRepository(private val context: Context) {
     fun resolveAudioUris(
         chapterNo: Int,
     ): Flow<ResolvedAudioResult> = flow {
-        val audioOption = RecitationPreferences.getRecitationAudioOption()
+        val audioOption = RecitationPreferences.getAudioOption()
 
         val (quranModel, translationModel) = modelManager.resolveModels()
 

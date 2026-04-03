@@ -113,7 +113,11 @@ inline fun runOnTimeout(crossinline block: () -> Unit, timeoutMillis: Long) {
 
 // interval
 
-fun runOnInterval(block: () -> Unit, intervalMillis: Long, runImmediately: Boolean = false): Handler {
+fun runOnInterval(
+    block: () -> Unit,
+    intervalMillis: Long,
+    runImmediately: Boolean = false
+): Handler {
     val handler = Handler(Looper.getMainLooper())
     handler.postDelayed({
         block()
@@ -126,3 +130,12 @@ fun runOnInterval(block: () -> Unit, intervalMillis: Long, runImmediately: Boole
 
     return handler
 }
+
+val IntRange.normalized: IntRange
+    get() = if (first <= last) this else IntRange(last, first)
+
+val IntRange.asPair: Pair<Int, Int>
+    get() = Pair(first, last)
+
+val Pair<Int, Int>.asIntRange: IntRange
+    get() = IntRange(first, second)

@@ -64,71 +64,71 @@ object RecitationPreferences {
     }
 
     @Composable
-    fun observeRecitationSpeed(): Float {
+    fun observeSpeed(): Float {
         return DataStoreManager.observe(KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED)
     }
 
-    suspend fun getRecitationSpeed(): Float {
+    suspend fun getSpeed(): Float {
         return DataStoreManager.read(
             KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED
         ).coerceAtLeast(0.1f)
     }
 
-    suspend fun setRecitationSpeed(speed: Float) {
+    suspend fun setSpeed(speed: Float) {
         DataStoreManager.write(KEY_SPEED, speed)
     }
 
     @Composable
-    fun observeRecitationRepeatCount(): Int {
+    fun observeRepeatCount(): Int {
         return DataStoreManager.observe(
             KEY_REPEAT_COUNT, RECITATION_DEFAULT_REPEAT_COUNT
         ).coerceAtLeast(0)
     }
 
-    suspend fun getRecitationRepeatCount(): Int {
+    suspend fun getRepeatCount(): Int {
         return DataStoreManager.read(
             KEY_REPEAT_COUNT, RECITATION_DEFAULT_REPEAT_COUNT
         ).coerceAtLeast(0)
     }
 
-    suspend fun setRecitationRepeatCount(repeatCount: Int) {
+    suspend fun setRepeatCount(repeatCount: Int) {
         DataStoreManager.write(KEY_REPEAT_COUNT, repeatCount.coerceAtLeast(0))
     }
 
     @Composable
-    fun observeRecitationContinueChapter(): Boolean {
+    fun observeContinueChapter(): Boolean {
         return DataStoreManager.observe(
             KEY_CONTINUE_CHAPTER,
             RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
         )
     }
 
-    suspend fun setRecitationContinueChapter(continueChapter: Boolean) {
+    suspend fun setContinueChapter(continueChapter: Boolean) {
         DataStoreManager.write(KEY_CONTINUE_CHAPTER, continueChapter)
     }
 
     @Composable
-    fun observeRecitationScrollSync(): Boolean {
+    fun observeScrollSync(): Boolean {
         return DataStoreManager.observe(
             KEY_SCROLL_SYNC,
             RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC
         )
     }
 
-    suspend fun setRecitationScrollSync(sync: Boolean) {
+    suspend fun setScrollSync(sync: Boolean) {
         DataStoreManager.write(KEY_SCROLL_SYNC, sync)
     }
 
     @Composable
-    fun observeRecitationAudioOption(): Int {
+    fun observeAudioOption(): Int {
         return DataStoreManager.observe(KEY_AUDIO_OPTION, RecitationUtils.AUDIO_OPTION_DEFAULT)
     }
 
-    suspend fun getRecitationAudioOption(): Int {
+    suspend fun getAudioOption(): Int {
         return DataStoreManager.read(KEY_AUDIO_OPTION, RecitationUtils.AUDIO_OPTION_DEFAULT)
     }
 
-    suspend fun setRecitationAudioOption(option: Int) {
+    suspend fun setAudioOption(option: Int) {
         DataStoreManager.write(KEY_AUDIO_OPTION, option)
     }
 

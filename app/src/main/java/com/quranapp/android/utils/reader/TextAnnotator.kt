@@ -36,7 +36,7 @@ val LocalVerseActions = staticCompositionLocalOf<VerseActions> {
 fun buildTranslationAnnotatedString(
     translation: Translation,
     colorScheme: ColorScheme,
-    actions: VerseActions,
+    actions: VerseActions?,
 ): AnnotatedString {
     return buildTranslationAnnotatedString(
         parseTranslationText(translation.text, translation.bookSlug),
@@ -49,7 +49,7 @@ fun buildTranslationAnnotatedString(
     text: String,
     slug: String,
     colorScheme: ColorScheme,
-    actions: VerseActions,
+    actions: VerseActions?,
 ): AnnotatedString {
     return buildTranslationAnnotatedString(
         parseTranslationText(text, slug),
@@ -61,7 +61,7 @@ fun buildTranslationAnnotatedString(
 fun buildTranslationAnnotatedString(
     parts: List<RichTextPart>,
     colorScheme: ColorScheme,
-    actions: VerseActions,
+    actions: VerseActions?,
 ): AnnotatedString {
     return buildAnnotatedString {
         parts.forEach { part ->
@@ -87,7 +87,7 @@ fun buildTranslationAnnotatedString(
                                 ),
                             ),
                         ) {
-                            actions.onReferenceClick(part.slugs, part.chapter, part.verses)
+                            actions?.onReferenceClick(part.slugs, part.chapter, part.verses)
                         }
                     ) {
                         append(part.text)
@@ -100,13 +100,13 @@ fun buildTranslationAnnotatedString(
                             tag = QuranConstants.FOOTNOTE_REF_TAG,
                             styles = TextLinkStyles(
                                 style = SpanStyle(
-                                    color = colorScheme.primary,
+                                    color = colorScheme.onSurface.alpha(0.6f),
                                     baselineShift = BaselineShift.Superscript,
                                     fontSize = 0.8.em
                                 ),
                             ),
                         ) {
-                            actions.onFootnoteClickRaw?.invoke(part.slug, part.footnoteNo)
+                            actions?.onFootnoteClickRaw?.invoke(part.slug, part.footnoteNo)
                         }
                     ) {
                         append(part.text)

@@ -50,7 +50,7 @@
             android:name=".activities.MainActivity"
             />
         <activity
-            android:name=".activities.ActivityRecitationDemo"
+            android:name=".activities.ActivityReader2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

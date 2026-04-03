@@ -21,7 +21,7 @@ fun PlaybackSpeedSheet(
     isOpen: Boolean,
     onClose: () -> Unit,
 ) {
-    val selectedSpeed = RecitationPreferences.observeRecitationSpeed()
+    val selectedSpeed = RecitationPreferences.observeSpeed()
     val coroutineScope = rememberCoroutineScope()
     val speedOptions = listOf(0.1f, 0.3f, 0.5f, 0.7f, 1f, 1.3f, 1.5f, 1.7f, 2f, 3f)
 
@@ -48,7 +48,7 @@ fun PlaybackSpeedSheet(
                         if (speed == selectedSpeed) return@RadioItem
 
                         coroutineScope.launch {
-                            RecitationPreferences.setRecitationSpeed(speed)
+                            RecitationPreferences.setSpeed(speed)
                             controller.setSpeed(speed)
                         }
                     },

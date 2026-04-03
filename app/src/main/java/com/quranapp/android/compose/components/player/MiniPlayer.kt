@@ -76,7 +76,7 @@ fun MiniPlayer(
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
     val reciterNames =
         RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
-    val syncVerse = RecitationPreferences.observeRecitationScrollSync()
+    val syncVerse = RecitationPreferences.observeScrollSync()
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(
@@ -138,7 +138,7 @@ fun MiniPlayer(
                         val newSync = !syncVerse
 
                         scope.launch {
-                            RecitationPreferences.setRecitationScrollSync(newSync)
+                            RecitationPreferences.setScrollSync(newSync)
                         }
 
                         MessageUtils.showRemovableToast(

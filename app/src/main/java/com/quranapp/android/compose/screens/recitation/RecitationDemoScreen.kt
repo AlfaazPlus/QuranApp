@@ -73,6 +73,19 @@ fun RecitationDemoScreen() {
     val state by controller.state.collectAsState()
     val isPlaying by controller.isPlayingState.collectAsState()
 
+    val quran = Quran2.rememberQuran()
+    val translFactory = QuranTranslationFactory.rememberFactory(context)
+    val verse = quran?.getVerse(1, 2)?.apply {
+        translations = translFactory.getTranslationsSingleVerse(
+            slugs = SPReader.getSavedTranslations(context),
+            chapterNo,
+            verseNo
+        )
+    }
+
+
+    var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             modifier = Modifier
@@ -96,18 +109,52 @@ fun RecitationDemoScreen() {
                 )
             },
         ) { innerPadding ->
-            ChapterList(
-                state = state,
-                isPlaying = isPlaying,
-                onChapterSelected = { chapter ->
-                    controller.start(ChapterVersePair(chapterNo = chapter.number, verseNo = 1))
-                },
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
-            )
+            ) {
+                Button(
+                    onClick = {
+                        if (verse != null) {
+                            footnotePresenterData = FootnotePresenterData(
+                                verse = verse,
+                                singleFootnote = null,
+                            )
+                        }
+                    }
+                ) {
+                    Text("Open all footnotes")
+                }
+                Button(
+                    onClick = {
+                        if (verse != null) {
+                            footnotePresenterData = FootnotePresenterData(
+                                verse = verse,
+                                singleFootnote = verse.translations.get(0).footnotes.get(1),
+                            )
+                        }
+                    }
+                ) {
+                    Text("Open one footnote")
+                }
+
+                ChapterList(
+                    state = state,
+                    isPlaying = isPlaying,
+                    onChapterSelected = { chapter ->
+                        controller.start(ChapterVersePair(chapterNo = chapter.number, verseNo = 1))
+                    },
+                )
+            }
         }
         RecitationPlayerSheet()
+    }
+
+    FootnotePresenter(
+        data = footnotePresenterData,
+    ) {
+        footnotePresenterData = null
     }
 }
 
@@ -118,54 +165,13 @@ private fun ChapterList(
     onChapterSelected: (ChapterEntry) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val activeChapter = state.currentVerse.chapterNo
-    val quran = Quran2.rememberQuran()
-    val translFactory = QuranTranslationFactory.rememberFactory(context)
-    val verse = quran?.getVerse(1, 2)?.apply {
-        translations = translFactory.getTranslationsSingleVerse(
-            slugs = SPReader.getSavedTranslations(context),
-            chapterNo,
-            verseNo
-        )
-    }
-
-    var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
 
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        item {
-            Button(
-                onClick = {
-                    if (verse != null) {
-                        footnotePresenterData = FootnotePresenterData(
-                            verse = verse,
-                            singleFootnote = null,
-                        )
-                    }
-                }
-            ) {
-                Text("Open all footnotes")
-            }
-            Button(
-                onClick = {
-                    if (verse != null) {
-                        footnotePresenterData = FootnotePresenterData(
-                            verse = verse,
-                            singleFootnote = verse.translations.get(0).footnotes.get(1),
-                        )
-                    }
-                }
-            ) {
-                Text("Open one footnote")
-            }
-        }
-        item {
-            ReaderTextDemoSection(Modifier.padding(bottom = 6.dp))
-        }
         items(DEMO_CHAPTERS, key = { it.number }) { chapter ->
             val isActive = chapter.number == activeChapter && isPlaying
             ChapterRow(
@@ -175,12 +181,6 @@ private fun ChapterList(
                 onClick = { onChapterSelected(chapter) },
             )
         }
-    }
-
-    FootnotePresenter(
-        data = footnotePresenterData,
-    ) {
-        footnotePresenterData = null
     }
 }
 
