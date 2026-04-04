@@ -108,18 +108,6 @@ object RecitationPreferences {
     }
 
     @Composable
-    fun observeScrollSync(): Boolean {
-        return DataStoreManager.observe(
-            KEY_SCROLL_SYNC,
-            RecitationUtils.RECITATION_DEFAULT_VERSE_SYNC
-        )
-    }
-
-    suspend fun setScrollSync(sync: Boolean) {
-        DataStoreManager.write(KEY_SCROLL_SYNC, sync)
-    }
-
-    @Composable
     fun observeAudioOption(): Int {
         return DataStoreManager.observe(KEY_AUDIO_OPTION, RecitationUtils.AUDIO_OPTION_DEFAULT)
     }

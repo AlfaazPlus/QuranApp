@@ -24,7 +24,7 @@ import com.quranapp.android.api.safeString
 import com.quranapp.android.components.bookmark.BookmarkModel
 import com.quranapp.android.compose.screens.ExportImportScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.db.bookmark.BookmarkDBHelper
+import com.quranapp.android.db.bookmark.BookmarkDbHelper
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
@@ -49,7 +49,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class ActivityExportImport : BaseActivity() {
-    private val bookmarkDbHeader = BookmarkDBHelper(this)
+    private val bookmarkDbHeader = BookmarkDbHelper(this)
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -321,7 +321,7 @@ class ActivityExportImport : BaseActivity() {
     }
 
     private fun prepareBookmarksForExport(): JSONArray? {
-        val bookmarks = bookmarkDbHeader.bookmarks
+        val bookmarks = bookmarkDbHeader.getBookmarks()
 
         if (bookmarks.isEmpty()) {
             return null

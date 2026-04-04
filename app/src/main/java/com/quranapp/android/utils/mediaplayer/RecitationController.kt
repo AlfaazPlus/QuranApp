@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.OptIn
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -362,6 +365,19 @@ class RecitationController private constructor(private val appContext: Context) 
                     instance = it
                 }
             }
+        }
+
+
+        // composable
+        @Composable
+        fun remember(): RecitationController? {
+            val context = LocalContext.current
+
+            val state = produceState<RecitationController?>(initialValue = null, context) {
+                value = getInstance(context)
+            }
+
+            return state.value
         }
     }
 }

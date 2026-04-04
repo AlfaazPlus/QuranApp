@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.content.ContextCompat;
 
@@ -20,7 +21,7 @@ import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBookmarkDialogBinding;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.Logger;
@@ -32,10 +33,12 @@ import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import kotlin.Unit;
+
 public class BookmarkViewer implements Destroyable {
     private final Context mContext;
     private final AtomicReference<QuranMeta> mQuranMetaRef;
-    private final BookmarkDBHelper mDBHelper;
+    private final BookmarkDbHelper mDBHelper;
     private final boolean mIsReader;
     private final BookmarkCallbacks mBookmarkCallbacks;
 
@@ -50,7 +53,7 @@ public class BookmarkViewer implements Destroyable {
     private int mLastViewItemPosition;
     private boolean mViewerOpenedForEdit;
 
-    public BookmarkViewer(Context context, AtomicReference<QuranMeta> quranMetaRef, BookmarkDBHelper dbHelper, BookmarkCallbacks callbacks) {
+    public BookmarkViewer(Context context, AtomicReference<QuranMeta> quranMetaRef, BookmarkDbHelper dbHelper, BookmarkCallbacks callbacks) {
         mContext = context;
         mQuranMetaRef = quranMetaRef;
         mDBHelper = dbHelper;
@@ -217,6 +220,7 @@ public class BookmarkViewer implements Destroyable {
                     if (mBookmarkCallbacks != null) {
                         mBookmarkCallbacks.onBookmarkUpdated(nModel);
                     }
+                    return Unit.INSTANCE;
                 });
         }
     }
@@ -247,6 +251,7 @@ public class BookmarkViewer implements Destroyable {
                 mBookmarkCallbacks.onBookmarkRemoved(model);
             }
             close();
+            return Unit.INSTANCE;
         });
     }
 
@@ -263,7 +268,14 @@ public class BookmarkViewer implements Destroyable {
     }
 
     public void view(BookmarkModel model) {
-        mInitialModel = model.copy();
+        mInitialModel = model.copy(
+            model.getId(),
+            model.getChapterNo(),
+            model.getFromVerseNo(),
+            model.getToVerseNo(),
+            model.getDate(),
+            model.getNote()
+        );
         mModel = model;
 
         if (mBinding == null) {

@@ -61,35 +61,45 @@ fun BottomSheet(
         onDismiss = onDismiss,
         dragHandle = dragHandle,
         header = {
-            if (icon != null || title != null) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = if (dragHandle != null) 0.dp else 16.dp,
-                            bottom = 16.dp,
-                            start = 16.dp,
-                            end = 16.dp
-                        ),
-                    horizontalArrangement = headerArrangement,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (icon != null) {
-                        Icon(
-                            painter = painterResource(id = icon),
-                            contentDescription = title,
-                            modifier = Modifier.padding(end = 8.dp),
-                        )
-                    }
-                    if (title != null) {
-                        Text(
-                            text = title,
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                    }
-                }
-            }
+            BottomSheetHeader(icon, title, headerArrangement, dragHandle != null)
         },
         content = content,
     )
+}
+
+@Composable
+fun BottomSheetHeader(
+    icon: Int? = null,
+    title: String? = null,
+    headerArrangement: Arrangement.Horizontal = Arrangement.Center,
+    hasDragHandle: Boolean,
+) {
+    if (icon != null || title != null) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = if (hasDragHandle) 0.dp else 16.dp,
+                    bottom = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            horizontalArrangement = headerArrangement,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = title,
+                    modifier = Modifier.padding(end = 8.dp),
+                )
+            }
+            if (title != null) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+        }
+    }
 }

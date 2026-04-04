@@ -236,6 +236,7 @@
     <string name="strHintFeedbackEmail">Email</string>
     <string name="strHintFeedbackMessage">Message</string>
     <string name="strHintBookmarkViewerNote">Write an additional note on this bookmark here…</string>
+    <string name="noNoteProvided">No note provided…</string>
     <string name="strNotFound">Not found</string>
     <string name="strBismillahEntity" translatable="false">﷽</string>
     <string name="strMsgThemeDark">Dark mode reduces power consumption.</string>
@@ -442,6 +443,7 @@
     <string name="desc_votd_widget">Get a new verse every day</string>
     <string name="autoScroll">Auto scroll</string>
     <string name="startAutoScroll">Start auto scroll</string>
+    <string name="stopAutoScroll">Stop auto scroll</string>
     <string name="autoScrollSpeed">Set speed</string>
     <string name="strMsgCannotAutoScrollWhileReciting">Cannot auto scroll while the recitation is playing.</string>
     <string name="titleCancelDownload">Cancel download?</string>

@@ -7,33 +7,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.components.quran.Quran2
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.components.reader.ChapterVersePair
-import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.reader.RichTextPart
-import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
-import com.quranapp.android.utils.reader.parseTranslationText
-import com.quranapp.android.utils.reader.rememberQuranTextStyle
-import com.quranapp.android.utils.reader.translationTextStyle
-import com.quranapp.android.viewModels.VerseViewModel
 
 @Composable
 fun SpotlightVersePanel(
@@ -93,7 +80,7 @@ fun SpotlightVersePanel(
 private fun SpotlightQuranText(
     verse: Verse,
 ) {
-    val style = rememberQuranTextStyle(verse)
+    /*val style = rememberQuranTextStyle(verse.pageNo)
 
     Text(
         text = buildAnnotatedString {
@@ -112,7 +99,7 @@ private fun SpotlightQuranText(
         style = style,
         modifier = Modifier.padding(8.dp),
         textAlign = TextAlign.Center
-    )
+    )*/
 }
 
 
@@ -121,7 +108,7 @@ private fun SpotlightTranslationText(
     verse: Verse,
     slugs: Set<String>,
 ) {
-    val viewModel = viewModel<VerseViewModel>()
+    /*val viewModel = viewModel<VerseViewModel>()
     val translations = remember(slugs, verse.chapterNo, verse.verseNo) {
         viewModel.translationFactory.getTranslationsSingleVerse(
             slugs,
@@ -149,12 +136,12 @@ private fun SpotlightTranslationText(
                             )
                         )
                     },
-                    style = translationTextStyle(translation.bookSlug),
+                    style = rememberTranslationTextStyle(translation.bookSlug),
                     modifier = Modifier.fillMaxWidth(),
                     color = PlayerContentColor.alpha(0.8f),
                     textAlign = TextAlign.Center
                 )
             }
         }
-    }
+    }*/
 }

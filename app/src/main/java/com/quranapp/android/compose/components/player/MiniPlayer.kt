@@ -32,7 +32,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,32 +50,30 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
-import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 
 @Composable
 fun MiniPlayer(
     modifier: Modifier = Modifier,
+    controller: RecitationController,
     state: RecitationServiceState,
     isPlaying: Boolean,
     isLoading: Boolean,
-    controller: RecitationController,
+    isSyncing: Boolean,
+    onSyncRequest: () -> Unit,
     onExpand: () -> Unit,
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val quranMeta = QuranMeta2.rememberQuranMeta()
 
     val verse = state.currentVerse
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
     val reciterNames =
         RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
-    val syncVerse = RecitationPreferences.observeScrollSync()
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(
@@ -122,7 +119,7 @@ fun MiniPlayer(
                 )
 
                 Text(
-                    text = reciterNames ?: "…",
+                    text = reciterNames,
                     style = MaterialTheme.typography.bodySmall,
                     color = PlayerContentColor.alpha(0.7f),
                     maxLines = 1,
@@ -131,32 +128,28 @@ fun MiniPlayer(
             }
 
             SimpleTooltip(
-                text = if (syncVerse) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
+                text = if (isSyncing) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
             ) {
                 IconButton(
                     onClick = {
-                        val newSync = !syncVerse
-
-                        scope.launch {
-                            RecitationPreferences.setScrollSync(newSync)
-                        }
+                        onSyncRequest()
 
                         MessageUtils.showRemovableToast(
                             context,
-                            if (newSync) R.string.verseSyncOn else R.string.verseSyncOff,
+                            if (isSyncing) R.string.verseSyncOn else R.string.verseSyncOff,
                             Toast.LENGTH_SHORT
                         )
                     },
                     modifier = Modifier.size(48.dp),
                 ) {
                     Icon(
-                        painterResource(if (syncVerse) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
+                        painterResource(if (isSyncing) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
                         contentDescription = stringResource(
-                            if (syncVerse) R.string.verseSyncOn else
+                            if (isSyncing) R.string.verseSyncOn else
                                 R.string.verseSyncOff
                         ),
                         modifier = Modifier.size(20.dp),
-                        tint = if (syncVerse) colorScheme.primary else PlayerContentColor.alpha(.7f),
+                        tint = if (isSyncing) colorScheme.primary else PlayerContentColor.alpha(.7f),
                     )
                 }
             }

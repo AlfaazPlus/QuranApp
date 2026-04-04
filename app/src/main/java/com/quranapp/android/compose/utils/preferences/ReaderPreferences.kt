@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -35,25 +36,48 @@ object ReaderPreferences {
     private const val LEGACY_SP_READER_STYLE = "sp_reader_style"
     private const val LEGACY_SP_TAFSIR = "sp_reader_tafsir"
 
-    private val KEY_LEGACY_MIGRATED = booleanPreferencesKey("reader.prefs.legacy_migrated_v1")
+    val KEY_ARABIC_TEXT_ENABLED =
+        PrefKey(booleanPreferencesKey(Keys.READER_KEY_ARABIC_TEXT_ENABLED), true)
 
-    private val KEY_ARABIC_TEXT_ENABLED =
-        booleanPreferencesKey(Keys.READER_KEY_ARABIC_TEXT_ENABLED)
-    private val KEY_AUTO_SCROLL_SPEED = floatPreferencesKey(Keys.READER_KEY_AUTO_SCROLL_SPEED)
-    private val KEY_TEXT_SIZE_MULT_ARABIC =
-        floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC)
-    private val KEY_TEXT_SIZE_MULT_TRANSL =
-        floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL)
-    private val KEY_TEXT_SIZE_MULT_TAFSIR =
-        floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR)
-    private val KEY_TRANSLATIONS = stringSetPreferencesKey(TranslUtils.KEY_TRANSLATIONS)
-    private val KEY_SCRIPT = stringPreferencesKey(QuranScriptUtils.KEY_SCRIPT)
-    private val KEY_READER_STYLE = intPreferencesKey(Keys.READER_KEY_READER_STYLE)
-    private val KEY_TAFSIR = stringPreferencesKey(TafsirUtils.KEY_TAFSIR)
+    val KEY_AUTO_SCROLL_SPEED =
+        PrefKey(floatPreferencesKey(Keys.READER_KEY_AUTO_SCROLL_SPEED), 7f)
+
+    val KEY_TEXT_SIZE_MULT_ARABIC =
+        PrefKey(
+            floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_ARABIC),
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT
+        )
+
+    val KEY_TEXT_SIZE_MULT_TRANSL =
+        PrefKey(
+            floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TRANSL),
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT
+        )
+
+    val KEY_TEXT_SIZE_MULT_TAFSIR =
+        PrefKey(
+            floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_TAFSIR),
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT
+        )
+
+    val KEY_TRANSLATIONS =
+        PrefKey(stringSetPreferencesKey(TranslUtils.KEY_TRANSLATIONS), emptySet<String>())
+
+    val KEY_SCRIPT =
+        PrefKey(stringPreferencesKey(QuranScriptUtils.KEY_SCRIPT), QuranScriptUtils.SCRIPT_DEFAULT)
+
+    val KEY_READER_STYLE =
+        PrefKey(intPreferencesKey(Keys.READER_KEY_READER_STYLE), ReaderParams.READER_STYLE_DEFAULT)
+
+    val KEY_TAFSIR =
+        PrefKey(stringPreferencesKey(TafsirUtils.KEY_TAFSIR), "")
+
+    val KEY_LEGACY_MIGRATED =
+        PrefKey(booleanPreferencesKey("reader.prefs.legacy_migrated_v1"), false)
 
     fun migrateFromLegacyIfNeeded(context: Context) {
         runBlocking {
-            if (DataStoreManager.read(KEY_LEGACY_MIGRATED, false)) return@runBlocking
+            if (DataStoreManager.read(KEY_LEGACY_MIGRATED)) return@runBlocking
 
             val appCtx = context.applicationContext
 
@@ -140,7 +164,7 @@ object ReaderPreferences {
     }
 
     fun getArabicTextEnabled(): Boolean {
-        return DataStoreManager.read(KEY_ARABIC_TEXT_ENABLED, true)
+        return DataStoreManager.read(KEY_ARABIC_TEXT_ENABLED)
     }
 
     suspend fun setArabicTextEnabled(enabled: Boolean) {
@@ -149,11 +173,11 @@ object ReaderPreferences {
 
     @Composable
     fun observeArabicTextEnabled(): Boolean {
-        return DataStoreManager.observe(KEY_ARABIC_TEXT_ENABLED, true)
+        return DataStoreManager.observe(KEY_ARABIC_TEXT_ENABLED)
     }
 
     fun getAutoScrollSpeed(): Float {
-        return DataStoreManager.read(KEY_AUTO_SCROLL_SPEED, 7f)
+        return DataStoreManager.read(KEY_AUTO_SCROLL_SPEED)
     }
 
     suspend fun setAutoScrollSpeed(speed: Float) {
@@ -162,14 +186,11 @@ object ReaderPreferences {
 
     @Composable
     fun observeAutoScrollSpeed(): Float {
-        return DataStoreManager.observe(KEY_AUTO_SCROLL_SPEED, 7f)
+        return DataStoreManager.observe(KEY_AUTO_SCROLL_SPEED)
     }
 
     fun getArabicTextSizeMultiplier(): Float {
-        return DataStoreManager.read(
-            KEY_TEXT_SIZE_MULT_ARABIC,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT
-        )
+        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_ARABIC)
     }
 
     suspend fun setArabicTextSizeMultiplier(sizeMult: Float) {
@@ -178,17 +199,11 @@ object ReaderPreferences {
 
     @Composable
     fun observeArabicTextSizeMultiplier(): Float {
-        return DataStoreManager.observe(
-            KEY_TEXT_SIZE_MULT_ARABIC,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_AR_DEFAULT
-        )
+        return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_ARABIC)
     }
 
     fun getTranslationTextSizeMultiplier(): Float {
-        return DataStoreManager.read(
-            KEY_TEXT_SIZE_MULT_TRANSL,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT
-        )
+        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_TRANSL)
     }
 
     suspend fun setTranslationTextSizeMultiplier(sizeMult: Float) {
@@ -197,17 +212,11 @@ object ReaderPreferences {
 
     @Composable
     fun observeTranlationTextSizeMultiplier(): Float {
-        return DataStoreManager.observe(
-            KEY_TEXT_SIZE_MULT_TRANSL,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TRANSL_DEFAULT
-        )
+        return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_TRANSL)
     }
 
     fun getTafsirTextSizeMultiplier(): Float {
-        return DataStoreManager.read(
-            KEY_TEXT_SIZE_MULT_TAFSIR,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT
-        )
+        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_TAFSIR)
     }
 
     suspend fun setTafsirTextSizeMultiplier(sizeMult: Float) {
@@ -216,14 +225,11 @@ object ReaderPreferences {
 
     @Composable
     fun observeTafsirTextSizeMultiplier(): Float {
-        return DataStoreManager.observe(
-            KEY_TEXT_SIZE_MULT_TAFSIR,
-            ReaderTextSizeUtils.TEXT_SIZE_MULT_TAFSIR_DEFAULT
-        )
+        return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_TAFSIR)
     }
 
     fun getTranslations(): HashSet<String> {
-        val raw = DataStoreManager.read(KEY_TRANSLATIONS, emptySet())
+        val raw = DataStoreManager.read(KEY_TRANSLATIONS)
         if (raw.isEmpty()) {
             return TranslUtils.defaultTranslationSlugs()
         }
@@ -236,15 +242,15 @@ object ReaderPreferences {
 
     @Composable
     fun observeTranslations(): Set<String> {
-        return DataStoreManager.observe(KEY_TRANSLATIONS, emptySet())
+        return DataStoreManager.observe(KEY_TRANSLATIONS)
     }
 
     fun translationsFlow(): Flow<Set<String>> {
-        return DataStoreManager.flow(KEY_TRANSLATIONS, emptySet())
+        return DataStoreManager.flow(KEY_TRANSLATIONS)
     }
 
     fun getQuranScript(): String {
-        val s = DataStoreManager.read(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)
+        val s = DataStoreManager.read(KEY_SCRIPT)
 
         if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
             return QuranScriptUtils.SCRIPT_DEFAULT
@@ -258,18 +264,19 @@ object ReaderPreferences {
     }
 
     fun quranScriptFlow(): Flow<String> {
-        return DataStoreManager.flow(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT).mapLatest {
-            if (!QuranScriptUtils.availableScriptSlugs().contains(it)) {
-                return@mapLatest QuranScriptUtils.SCRIPT_DEFAULT
-            }
+        return DataStoreManager.flow(KEY_SCRIPT)
+            .mapLatest {
+                if (!QuranScriptUtils.availableScriptSlugs().contains(it)) {
+                    return@mapLatest QuranScriptUtils.SCRIPT_DEFAULT
+                }
 
-            it
-        }
+                it
+            }
     }
 
     @Composable
     fun observeQuranScript(): String {
-        val s = DataStoreManager.observe(KEY_SCRIPT, QuranScriptUtils.SCRIPT_DEFAULT)
+        val s = DataStoreManager.observe(KEY_SCRIPT)
 
         if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
             return QuranScriptUtils.SCRIPT_DEFAULT
@@ -279,7 +286,7 @@ object ReaderPreferences {
     }
 
     fun getReaderStyle(): Int {
-        return DataStoreManager.read(KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
+        return DataStoreManager.read(KEY_READER_STYLE)
     }
 
     suspend fun setReaderStyle(readerStyle: Int) {
@@ -287,16 +294,16 @@ object ReaderPreferences {
     }
 
     fun readerStyleFlow(): Flow<Int> {
-        return DataStoreManager.flow(KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
+        return DataStoreManager.flow(KEY_READER_STYLE)
     }
 
     @Composable
     fun observeReaderStyle(): Int {
-        return DataStoreManager.observe(KEY_READER_STYLE, ReaderParams.READER_STYLE_DEFAULT)
+        return DataStoreManager.observe(KEY_READER_STYLE)
     }
 
     fun getTafsirId(): String? {
-        val s = DataStoreManager.read(KEY_TAFSIR, "")
+        val s = DataStoreManager.read(KEY_TAFSIR)
         return s.ifEmpty { null }
     }
 
@@ -307,7 +314,7 @@ object ReaderPreferences {
 
     @Composable
     fun observeTafsirId(): String? {
-        val raw = DataStoreManager.observe(KEY_TAFSIR, "")
+        val raw = DataStoreManager.observe(KEY_TAFSIR)
         return raw.ifEmpty { null }
     }
 }

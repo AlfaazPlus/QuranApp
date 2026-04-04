@@ -8,6 +8,14 @@ data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable
 
     val isValid: Boolean get() = chapterNo > 0 && verseNo > 0
 
+    fun doesEqual(verse: Verse): Boolean {
+        return doesEqual(verse.chapterNo, verse.verseNo)
+    }
+
+    fun doesEqual(chapterNo: Int, verseNo: Int): Boolean {
+        return chapterNo == this.chapterNo && verseNo == this.verseNo
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ChapterVersePair) return false

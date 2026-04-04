@@ -9,6 +9,7 @@ import java.util.Locale
 object DateUtils {
     const val DATETIME_FORMAT_SYSTEM = "yyyy-MM-dd HH:mm:ss"
     const val DATETIME_FORMAT_USER = "dd-MM-yyyy hh:mm a"
+
     fun toDate(dateStr: String, format: String): Date? {
         val formatter = SimpleDateFormat(format, Locale.ENGLISH)
 

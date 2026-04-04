@@ -1,5 +1,13 @@
 package com.quranapp.android.activities;
 
+import static android.view.View.FOCUS_DOWN;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
+import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
+import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -15,32 +23,26 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
-import static com.quranapp.android.utils.univ.RegexPattern.CHAPTER_OR_JUZ_PATTERN;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_JUMP_PATTERN;
-import static com.quranapp.android.utils.univ.RegexPattern.VERSE_RANGE_JUMP_PATTERN;
-import static com.quranapp.android.widgets.compound.PeaceCompoundButton.COMPOUND_TEXT_GRAVITY_LEFT;
-import static android.view.View.FOCUS_DOWN;
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 import com.peacedesign.android.utils.DrawableUtils;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
-import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
+import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.search.ChapterJumpModel;
 import com.quranapp.android.components.search.JuzJumpModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.components.search.TafsirJumpModel;
 import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.databinding.ActivitySearchBinding;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.frags.search.FragSearchSuggestions;
@@ -50,6 +52,7 @@ import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory;
 import com.quranapp.android.utils.search.SearchFilters;
 import com.quranapp.android.utils.search.SearchLocalHistoryManager;
+import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.simplified.SimpleTextWatcher;
 import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet;
@@ -58,7 +61,6 @@ import com.quranapp.android.widgets.radio.PeaceRadioButton;
 import com.quranapp.android.widgets.radio.PeaceRadioGroup;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,15 +68,13 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.quranapp.android.utils.sharedPrefs.SPReader;
-
 import kotlin.Unit;
 
 public class ActivitySearch extends BaseActivity {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     public ActivitySearchBinding mBinding;
     public QuranTranslationFactory mTranslFactory;
-    public BookmarkDBHelper mBookmarkDBHelper;
+    public BookmarkDbHelper mBookmarkDBHelper;
     public SearchHistoryDBHelper mHistoryDBHelper;
     private FragSearchResult mFragSearchResult;
     private FragSearchSuggestions mFragSearchSugg;
@@ -121,7 +121,7 @@ public class ActivitySearch extends BaseActivity {
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         mTranslFactory = new QuranTranslationFactory(this);
-        mBookmarkDBHelper = new BookmarkDBHelper(this);
+        mBookmarkDBHelper = new BookmarkDbHelper(this);
         mHistoryDBHelper = new SearchHistoryDBHelper(this);
     }
 
@@ -252,7 +252,7 @@ public class ActivitySearch extends BaseActivity {
         // Disable button if no recognition service is present
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),
-                0);
+            0);
         mSupportsVoiceInput = activities.size() != 0;
         if (!mSupportsVoiceInput) {
             mBinding.voiceSearch.setEnabled(false);
@@ -574,14 +574,14 @@ public class ActivitySearch extends BaseActivity {
 
     private void makeJuzSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int juzNo) {
         JuzJumpModel juzJumpModel = new JuzJumpModel(juzNo, "Juz " + juzNo,
-                quranMeta.getJuzNameTransliterated(juzNo), quranMeta.getJuzNameArabic(juzNo));
+            quranMeta.getJuzNameTransliterated(juzNo), quranMeta.getJuzNameArabic(juzNo));
 
         collection.add(juzJumpModel);
     }
 
     private void makeChapterSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo) {
         collection.add(new ChapterJumpModel(chapNo, String.valueOf(chapNo), quranMeta.getChapterName(this, chapNo),
-                quranMeta.getChapterNameTranslation(chapNo)));
+            quranMeta.getChapterNameTranslation(chapNo)));
     }
 
     private void makeVerseSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int fromVerse, int toVerse) {
@@ -589,14 +589,14 @@ public class ActivitySearch extends BaseActivity {
         if (fromVerse == toVerse) formatted = getString(R.string.strTitleGotoVerseNo, fromVerse);
 
         VerseJumpModel verseJumpModel = new VerseJumpModel(chapNo, fromVerse, toVerse, formatted,
-                quranMeta.getChapterName(this, chapNo, true));
+            quranMeta.getChapterName(this, chapNo, true));
 
         collection.add(verseJumpModel);
     }
 
     private void makeTafsirSuggestion(QuranMeta quranMeta, ArrayList<SearchResultModelBase> collection, int chapNo, int verseNo) {
         TafsirJumpModel tafsirJumpModel = new TafsirJumpModel(chapNo, verseNo, getString(R.string.strTitleReadTafsirOfVerse, verseNo),
-                quranMeta.getChapterName(this, chapNo, true));
+            quranMeta.getChapterName(this, chapNo, true));
 
         collection.add(tafsirJumpModel);
     }

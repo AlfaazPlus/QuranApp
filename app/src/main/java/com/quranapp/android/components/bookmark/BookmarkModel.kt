@@ -16,26 +16,23 @@ import java.time.temporal.ChronoField
 import java.util.Calendar
 
 
-class JsonKeys {
-    companion object {
-        const val ID = "id"
-        const val CHAPTER_NO = "cn"
-        const val FROM_VERSE_NO = "fvn"
-        const val TO_VERSE_NO = "tvn"
-        const val DATE = "dt"
-        const val NOTE = "nt"
-    }
+private object BookmarkJsonKeys {
+    const val ID = "id"
+    const val CHAPTER_NO = "cn"
+    const val FROM_VERSE_NO = "fvn"
+    const val TO_VERSE_NO = "tvn"
+    const val DATE = "dt"
+    const val NOTE = "nt"
 }
 
-class BookmarkModel(
+data class BookmarkModel(
     val id: Long,
     val chapterNo: Int,
     val fromVerseNo: Int,
     val toVerseNo: Int,
-    val date: String?
-) {
+    val date: String?,
     var note: String? = null
-
+) {
     fun getFormattedDate(ctx: Context): String? {
         val oldFormatter = DateTimeFormatter.ofPattern(DateUtils.DATETIME_FORMAT_SYSTEM)
         try {
@@ -68,48 +65,24 @@ class BookmarkModel(
         return null
     }
 
-    fun copy(): BookmarkModel {
-        return BookmarkModel(id, chapterNo, fromVerseNo, toVerseNo, date).apply {
-            note = this@BookmarkModel.note
-        }
-    }
-
     fun toJsonObject(): JSONObject {
         return JSONObject().apply {
-            put(JsonKeys.ID, id)
-            put(JsonKeys.CHAPTER_NO, chapterNo)
-            put(JsonKeys.FROM_VERSE_NO, fromVerseNo)
-            put(JsonKeys.TO_VERSE_NO, toVerseNo)
-            put(JsonKeys.DATE, date)
+            put(BookmarkJsonKeys.ID, id)
+            put(BookmarkJsonKeys.CHAPTER_NO, chapterNo)
+            put(BookmarkJsonKeys.FROM_VERSE_NO, fromVerseNo)
+            put(BookmarkJsonKeys.TO_VERSE_NO, toVerseNo)
+            put(BookmarkJsonKeys.DATE, date)
 
-            if (note != null) put(JsonKeys.NOTE, note)
+            if (note != null) put(BookmarkJsonKeys.NOTE, note)
         }
     }
 
     override fun toString(): String {
-        return MessageFormat.format("(VERSE: chapterNo: {0}, verseNo: {1})", chapterNo, fromVerseNo)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is BookmarkModel) return false
-
-        return id == other.id &&
-                chapterNo == other.chapterNo &&
-                fromVerseNo == other.fromVerseNo &&
-                toVerseNo == other.toVerseNo &&
-                date == other.date &&
-                note == other.note
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + chapterNo
-        result = 31 * result + fromVerseNo
-        result = 31 * result + toVerseNo
-        result = 31 * result + (date?.hashCode() ?: 0)
-        result = 31 * result + (note?.hashCode() ?: 0)
-        return result
+        return MessageFormat.format(
+            "(VERSE: chapterNo: {0}, verseNo: {1})",
+            chapterNo,
+            fromVerseNo
+        )
     }
 
     companion object {
@@ -125,12 +98,14 @@ class BookmarkModel(
             val bookmarkList = arrayListOf<BookmarkModel>()
 
             bookmarks?.forEach { b ->
-                val chapterNo = b.jsonObject[JsonKeys.CHAPTER_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val chapterNo =
+                    b.jsonObject[BookmarkJsonKeys.CHAPTER_NO]?.jsonPrimitive?.intOrNull ?: -1
                 val fromVerseNo =
-                    b.jsonObject[JsonKeys.FROM_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
-                val toVerseNo = b.jsonObject[JsonKeys.TO_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
-                val date = b.jsonObject[JsonKeys.DATE]?.jsonPrimitive?.contentOrNull
-                val note = b.jsonObject[JsonKeys.NOTE]?.jsonPrimitive?.contentOrNull
+                    b.jsonObject[BookmarkJsonKeys.FROM_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val toVerseNo =
+                    b.jsonObject[BookmarkJsonKeys.TO_VERSE_NO]?.jsonPrimitive?.intOrNull ?: -1
+                val date = b.jsonObject[BookmarkJsonKeys.DATE]?.jsonPrimitive?.contentOrNull
+                val note = b.jsonObject[BookmarkJsonKeys.NOTE]?.jsonPrimitive?.contentOrNull
 
                 if (chapterNo != -1 && fromVerseNo != -1 && toVerseNo != -1) {
                     bookmarkList.add(

@@ -5,6 +5,10 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
 
+private val translationXmlPullParserFactory by lazy {
+    XmlPullParserFactory.newInstance()
+}
+
 sealed interface RichTextPart {
     data class Plain(val text: String) : RichTextPart
 
@@ -25,7 +29,7 @@ sealed interface RichTextPart {
 fun parseTranslationText(html: String, slug: String): List<RichTextPart> {
     val parts = mutableListOf<RichTextPart>()
 
-    val parser = XmlPullParserFactory.newInstance().newPullParser()
+    val parser = translationXmlPullParserFactory.newPullParser()
     parser.setInput(StringReader("<root>$html</root>"))
 
     val plainBuffer = StringBuilder()

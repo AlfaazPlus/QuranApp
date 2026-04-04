@@ -1,80 +1,92 @@
 package com.quranapp.android.utils.reader
 
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import android.content.Context
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextDirection
-import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alfaazplus.sunnah.ui.theme.fontFamily
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
-import com.quranapp.android.components.quran.subcomponents.Verse
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.getDimension
-import com.quranapp.android.viewModels.VerseViewModel
 
-@Composable
-fun translationTextStyle(
-    slug: String?
+data class TextBuilderParams(
+    val context: Context,
+    val fontResolver: FontResolver,
+    val verseActions: VerseActions,
+    val colors: ColorScheme,
+    val type: Typography,
+    val arabicEnabled: Boolean,
+    val script: String,
+    val arabicSizeMultiplier: Float,
+    val translationSizeMultiplier: Float,
+    val slugs: Set<String>,
+) {
+    fun toKey(): String {
+        return "$script,$arabicSizeMultiplier,$translationSizeMultiplier,$slugs"
+    }
+
+    override fun toString(): String {
+        return "script:$script, arabicSizeMultiplier:$arabicSizeMultiplier, translationSizeMultiplier:$translationSizeMultiplier ,slugs:$slugs"
+    }
+}
+
+data class TranslationTextStyleParams(
+    val slug: String,
+    val sizeMultiplier: Float
+)
+
+data class QuranTextStyleParams(
+    val context: Context,
+    val fontResolver: FontResolver,
+    val colors: ColorScheme,
+    val type: Typography,
+    val pageNo: Int,
+    val script: String,
+    val sizeMultiplier: Float
+)
+
+fun getTranslationTextStyle(
+    params: TranslationTextStyleParams
 ): TextStyle {
-    val isUrdu = slug != null && TranslUtils.isUrdu(slug)
-    val baseStyle = LocalTextStyle.current
-    val textSizeMultiplier = ReaderPreferences.observeTranlationTextSizeMultiplier()
+    val isUrdu = TranslUtils.isUrdu(params.slug)
+    val resolvedFontSize = 16.sp * params.sizeMultiplier
 
-    val resolvedFontSize = if (baseStyle.fontSize != TextUnit.Unspecified) {
-        baseStyle.fontSize
-    } else {
-        16.sp
-    } * textSizeMultiplier
-
-    return baseStyle.copy(
+    return TextStyle(
         textDirection = if (isUrdu) TextDirection.Rtl else TextDirection.Ltr,
         fontFamily = if (isUrdu) fontUrdu else fontFamily,
         platformStyle = PlatformTextStyle(
             includeFontPadding = true
         ),
-        lineHeight = if (isUrdu) resolvedFontSize * 2.5f else resolvedFontSize * 1.5
+        fontSize = resolvedFontSize,
+        lineHeight = if (isUrdu) resolvedFontSize * 2.5f else resolvedFontSize * 1.5,
     )
 }
 
-@Composable
-fun rememberQuranTextStyle(
-    verse: Verse,
+fun getQuranTextStyle(
+    params: QuranTextStyleParams,
 ): TextStyle {
-    val viewModel = viewModel<VerseViewModel>()
-    val context = LocalContext.current
-    val density = LocalDensity.current
-    val typography = MaterialTheme.typography
-    val colorScheme = MaterialTheme.colorScheme
-    val script = ReaderPreferences.observeQuranScript()
-    val textSizeMultiplier = ReaderPreferences.observeArabicTextSizeMultiplier()
+    val context = params.context
 
-    val fontFamily = remember(script, verse, verse.pageNo) {
-        viewModel.fontFamily(script, verse)
-    }
+    val density = Density(
+        density = context.resources.displayMetrics.density,
+        fontScale = context.resources.configuration.fontScale
+    )
 
-    val fontSize = remember(script, textSizeMultiplier, density) {
-        val basePx = context.getDimension(
-            script.getQuranScriptVerseTextSizeMediumRes()
-        )
-        with(density) { (basePx * textSizeMultiplier).toSp() }
-    }
+    val basePx = context.getDimension(
+        params.script.getQuranScriptVerseTextSizeMediumRes()
+    )
+    val fontSize = with(density) { (basePx * params.sizeMultiplier).toSp() }
 
-    return remember(fontFamily, fontSize) {
-        typography.headlineSmall.copy(
-            fontFamily = fontFamily,
-            fontSize = fontSize,
-            color = colorScheme.onBackground,
-            textDirection = TextDirection.Rtl,
-
-            lineHeight = fontSize * 1.8f
-        )
-    }
+    return params.type.headlineSmall.copy(
+        fontFamily = params.fontResolver.fontFamily(params.script, params.pageNo),
+        fontSize = fontSize,
+        color = params.colors.onBackground,
+        textDirection = TextDirection.Rtl,
+        lineHeight = fontSize * 1.8f
+    )
 }

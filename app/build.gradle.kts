@@ -28,6 +28,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.generatedDensities()
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas", "room.incremental" to "true"
+                )
+            }
+        }
     }
 
     buildFeatures {
@@ -148,4 +156,13 @@ dependencies {
     implementation(libs.commonsCompress)
     implementation(libs.workManager)
     implementation(libs.dataStore)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.paging)
+    implementation(libs.pagingCompose)
+    implementation(libs.roomPaging)
 }

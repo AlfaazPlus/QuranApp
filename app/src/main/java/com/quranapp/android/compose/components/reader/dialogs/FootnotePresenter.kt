@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
@@ -28,22 +27,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.OnReferenceClick
+import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.reader.translationTextStyle
+import com.quranapp.android.utils.reader.getTranslationTextStyle
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils
 import horizontalFadingEdge
@@ -62,16 +66,8 @@ fun FootnotePresenter(
     data: FootnotePresenterData?,
     onClose: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val translFactory = QuranTranslationFactory.rememberFactory(context)
-
     val sheetState = rememberModalBottomSheetState(true)
     if (data == null) return
-
-    val verse = data.verse
-    val singleFootnote = data.singleFootnote
-
-    var selectedSlug by rememberSaveable { mutableStateOf(verse.translations.firstOrNull()?.bookSlug) }
 
     ModalBottomSheet(
         onDismissRequest = onClose,
@@ -80,30 +76,45 @@ fun FootnotePresenter(
         containerColor = colorScheme.surface,
         contentColor = colorScheme.onSurface,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(580.dp),
-        ) {
-            Header(translFactory, verse, singleFootnote)
+        PresentSheetContent(data)
+    }
+}
 
-            if (singleFootnote == null) {
-                AuthorChips(
-                    translFactory,
-                    verse,
-                    selectedSlug,
-                ) {
-                    selectedSlug = it
-                }
-            }
+@Composable
+private fun PresentSheetContent(data: FootnotePresenterData) {
+    val context = LocalContext.current
+    val translFactory = QuranTranslationFactory.rememberFactory(context)
 
-            FootnoteContent(
+    val verse = data.verse
+    val singleFootnote = data.singleFootnote
+
+    var selectedSlug by rememberSaveable {
+        mutableStateOf(verse.translations.firstOrNull { it.getFootnotesCount() > 0 }?.bookSlug)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(580.dp),
+    ) {
+        Header(translFactory, verse, singleFootnote)
+
+        if (singleFootnote == null) {
+            AuthorChips(
                 translFactory,
-                selectedSlug,
                 verse,
-                singleFootnote
-            )
+                selectedSlug,
+            ) {
+                selectedSlug = it
+            }
         }
+
+        FootnoteContent(
+            translFactory,
+            selectedSlug,
+            verse,
+            singleFootnote
+        )
     }
 }
 
@@ -129,8 +140,8 @@ private fun Header(
             R.string.strTitleFootnote,
             Locale.of(it.langCode)
         )
-    } ?: if (singleFootnote != null) context.getString(R.string.strTitleFootnote)
-    else context.getString(R.string.strTitleFootnotes)
+    } ?: if (singleFootnote != null) stringResource(R.string.strTitleFootnote)
+    else stringResource(R.string.strTitleFootnotes)
 
 
     Column(
@@ -163,7 +174,7 @@ private fun Header(
             Text(
                 text = buildAnnotatedString {
                     append(
-                        context.getString(
+                        stringResource(
                             R.string.strLabelVerseSerialWithChapter,
                             meta.getChapterName(context, verse.chapterNo),
                             verse.chapterNo,
@@ -202,29 +213,27 @@ fun AuthorChips(
         Row(
             modifier = Modifier
                 .horizontalScroll(scrollState)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             verse.translations.forEach { translation ->
                 if (translation.getFootnotesCount() > 0) {
                     val slug = translation.bookSlug
                     val bookInfo = booksInfo[slug] ?: return@forEach
 
-                    FilterChip(
+                    Chip(
+                        modifier = Modifier.height(48.dp),
                         selected = slug == selectedSlug,
                         onClick = {
                             onSelectionChange(slug)
                         },
-                        label = { Text(bookInfo.getDisplayName(true)) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = colorScheme.primary,
-                            selectedLabelColor = colorScheme.onPrimary,
-                        ),
-                        border = FilterChipDefaults.filterChipBorder(
-                            enabled = true,
-                            selected = slug == selectedSlug,
-                            borderColor = colorScheme.outlineVariant,
-                        ),
+                        label = {
+                            Text(
+                                bookInfo.getDisplayName(true),
+                                fontFamily = if (bookInfo.isUrdu) fontUrdu else null
+                            )
+                        },
                     )
                 }
             }
@@ -240,6 +249,8 @@ fun FootnoteContent(
     singleFootnote: Footnote?,
 ) {
     val scrollState = rememberScrollState()
+    val textSizeMultiplier = ReaderPreferences.observeTranlationTextSizeMultiplier()
+    val isDark = isSystemInDarkTheme()
 
     val footnotes = remember(selectedSlug, translFactory) {
         selectedSlug?.let {
@@ -276,8 +287,13 @@ fun FootnoteContent(
                             colorScheme,
                             actions = VerseActions(onReferenceClick)
                         ),
-                        color = colorScheme.onSurface,
-                        style = translationTextStyle(singleFootnote.bookSlug)
+                        color = if (isDark) colorScheme.onSurface.alpha(0.8f) else colorScheme.onSurface,
+                        style = getTranslationTextStyle(
+                            TranslationTextStyleParams(
+                                slug = singleFootnote.bookSlug,
+                                sizeMultiplier = textSizeMultiplier
+                            )
+                        )
                     )
                 } else {
                     footnotes.forEach { (number, footnote) ->
@@ -301,8 +317,13 @@ fun FootnoteContent(
                                     )
                                 )
                             },
-                            color = colorScheme.onSurface,
-                            style = translationTextStyle(selectedSlug)
+                            color = if (isDark) colorScheme.onSurface.alpha(0.8f) else colorScheme.onSurface,
+                            style = getTranslationTextStyle(
+                                TranslationTextStyleParams(
+                                    slug = selectedSlug ?: "",
+                                    sizeMultiplier = textSizeMultiplier
+                                )
+                            )
                         )
                     }
                 }

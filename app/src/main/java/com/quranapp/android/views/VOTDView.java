@@ -1,5 +1,7 @@
 package com.quranapp.android.views;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.SpannableString;
@@ -15,22 +17,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityBookmark;
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.Quran;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Chapter;
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.databinding.LytVotdBinding;
 import com.quranapp.android.databinding.LytVotdContentBinding;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
@@ -50,13 +50,14 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
+import kotlin.Unit;
 
 /*
  * A very ugly implementation of verse of the day view
  */
 public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallbacks {
     private final CallableTaskRunner<Pair<TranslationBookInfoModel, Translation>> taskRunner = new CallableTaskRunner<>();
-    private final BookmarkDBHelper mBookmarkDBHelper;
+    private final BookmarkDbHelper mBookmarkDBHelper;
     private final BookmarkViewer mBookmarkViewer;
     private final LytVotdBinding mBinding;
     private final ReaderVerseDecorator mVerseDecorator;
@@ -82,7 +83,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
     public VOTDView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mBookmarkDBHelper = new BookmarkDBHelper(context);
+        mBookmarkDBHelper = new BookmarkDbHelper(context);
         mBookmarkViewer = new BookmarkViewer(context, new AtomicReference<>(null), mBookmarkDBHelper, this);
         mVerseDecorator = new ReaderVerseDecorator(context);
         mColorNormal = ContextCompat.getColor(context, R.color.white3);
@@ -323,6 +324,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
             mBookmarkDBHelper.addToBookmark(chapterNo, verseNo, verseNo, null, model -> {
                 setupVOTDBookmarkIcon(true);
                 mBookmarkViewer.edit(model);
+                return Unit.INSTANCE;
             });
         }
     }

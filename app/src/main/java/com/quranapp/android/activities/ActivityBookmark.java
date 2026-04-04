@@ -21,7 +21,7 @@ import com.quranapp.android.adapters.ADPBookmark;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.ActivityBookmarkBinding;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.suppliments.BookmarkViewer;
 import com.quranapp.android.utils.Logger;
@@ -33,11 +33,13 @@ import com.quranapp.android.views.BoldHeader;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
+import kotlin.Unit;
+
 public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks {
     public final AtomicReference<QuranMeta> quranMetaRef = new AtomicReference<>();
     private final CallableTaskRunner<ArrayList<BookmarkModel>> taskRunner = new CallableTaskRunner<>();
     private ActivityBookmarkBinding mBinding;
-    private BookmarkDBHelper mBookmarkDBHelper;
+    private BookmarkDbHelper mBookmarkDBHelper;
     private BookmarkViewer mBookmarkViewer;
     private ADPBookmark mAdapter;
 
@@ -68,7 +70,7 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         super.preActivityInflate(savedInstanceState);
-        mBookmarkDBHelper = new BookmarkDBHelper(this);
+        mBookmarkDBHelper = new BookmarkDbHelper(this);
     }
 
     @Override
@@ -142,8 +144,8 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     private void deleteAllWithCheckpoint() {
         boolean isSelecting = mAdapter != null && mAdapter.mIsSelecting && !mAdapter.mSelectedModels.isEmpty();
         String title = isSelecting ? getString(R.string.strTitleBookmarkDeleteCount,
-                mAdapter.mSelectedModels.size()) : getString(
-                R.string.strTitleBookmarkDeleteAll);
+            mAdapter.mSelectedModels.size()) : getString(
+            R.string.strTitleBookmarkDeleteAll);
         int dec = isSelecting ? R.string.strMsgBookmarkDeleteSelected : R.string.strMsgBookmarkDeleteAll;
         int labelNeg = isSelecting ? R.string.strLabelRemove : R.string.strLabelRemoveAll;
 
@@ -158,7 +160,10 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
         builder.setNegativeButton(labelNeg, ColorUtils.DANGER, (dialog, which) -> {
             if (isSelecting) {
                 long[] ids = mAdapter.mSelectedModels.stream().mapToLong(BookmarkModel::getId).toArray();
-                mBookmarkDBHelper.removeBookmarksBulk(ids, this::refreshBookmarks);
+                mBookmarkDBHelper.removeBookmarksBulk(ids, () -> {
+                    refreshBookmarks();
+                    return Unit.INSTANCE;
+                });
             } else {
                 mBookmarkDBHelper.removeAllBookmarks();
                 refreshBookmarks();
@@ -234,7 +239,7 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
 
     public void onOpen(BookmarkModel model) {
         Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
-                model.getToVerseNo());
+            model.getToVerseNo());
         intent.setClass(this, ActivityReader.class);
         startActivity(intent);
     }

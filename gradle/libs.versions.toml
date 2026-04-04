@@ -27,6 +27,8 @@ composeBom = "2024.09.02"
 dataStore = "1.1.7"
 activityKtx = "1.12.1"
 fragmentKtx = "1.8.9"
+room = "2.8.4"
+paging = "3.4.2"
 
 
 [libraries]
@@ -92,6 +94,14 @@ compose-foundation-layout = { group = "androidx.compose.foundation", name = "fou
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+roomPaging = { module = "androidx.room:room-paging", version.ref = "room" }
+
+paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 [plugins]
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }

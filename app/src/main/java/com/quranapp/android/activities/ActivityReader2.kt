@@ -44,7 +44,7 @@ class ActivityReader2 : BaseActivity() {
             QuranAppTheme {
                 ReaderScreen(
 //                    resolveReaderIntentData(intent) // fixme
-                    ReaderIntentData.FullJuz(30)
+                    ReaderIntentData.FullChapter(1)
                 )
             }
         }

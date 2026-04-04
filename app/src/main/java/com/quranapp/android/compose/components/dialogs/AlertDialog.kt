@@ -52,7 +52,7 @@ internal fun AlertDialogAction.toTextButtonColors(): ButtonColors {
     val (container, content) = when (style) {
         AlertDialogActionStyle.Default -> scheme.surfaceVariant to scheme.onSurfaceVariant
         AlertDialogActionStyle.Primary -> scheme.primary to scheme.onPrimary
-        AlertDialogActionStyle.Danger -> scheme.error to scheme.onPrimary
+        AlertDialogActionStyle.Danger -> scheme.errorContainer to scheme.onPrimary
     }
 
     return ButtonDefaults.textButtonColors(

@@ -28,7 +28,7 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Footnote;
 import com.quranapp.android.components.quran.subcomponents.Translation;
 import com.quranapp.android.components.quran.subcomponents.Verse;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.reader_managers.ActionController;
 import com.quranapp.android.reader_managers.ReaderVerseDecorator;
@@ -48,6 +48,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
+import kotlin.Unit;
 
 public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivity implements BookmarkCallbacks {
     public final AtomicReference<Quran> mQuranRef = new AtomicReference<>();
@@ -65,7 +66,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
     public int mAuthorTextSize;
     public Typeface mUrduTypeface;
 
-    private BookmarkDBHelper mBookmarkDBHelper;
+    private BookmarkDbHelper mBookmarkDBHelper;
     private BookmarkViewer mBookmarkViewer;
     private BookmarkCallbacks mLastBookmarkCallback;
 
@@ -97,7 +98,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         mTranslFactory = new QuranTranslationFactory(this);
 
-        mBookmarkDBHelper = new BookmarkDBHelper(this);
+        mBookmarkDBHelper = new BookmarkDbHelper(this);
         mBookmarkViewer = new BookmarkViewer(this, mQuranMetaRef, mBookmarkDBHelper, this);
         mVerseDecorator = new ReaderVerseDecorator(this);
         mActionController = new ActionController(this);
@@ -223,6 +224,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
         mBookmarkDBHelper.addToBookmark(chapterNo, fromVerse, toVerse, null, model -> {
             mBookmarkViewer.edit(model);
             callbacks.onBookmarkAdded(model);
+            return Unit.INSTANCE;
         });
     }
 

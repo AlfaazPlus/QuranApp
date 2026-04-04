@@ -21,12 +21,14 @@ typealias OnReferenceClick = (slugs: Set<String>, chapterNo: Int, verses: String
 typealias OnFootnoteClickRaw = (slug: String, footnoteNo: Int) -> Unit
 typealias OnFootnoteClick = (verse: Verse, footnote: Footnote?) -> Unit
 typealias OnVerseOption = (verse: Verse) -> Unit
+typealias OnBookmarkRequest = (verse: Verse) -> Unit
 
 data class VerseActions(
     val onReferenceClick: OnReferenceClick,
     val onFootnoteClickRaw: OnFootnoteClickRaw? = null,
     val onFootnoteClick: OnFootnoteClick? = null,
     val onVerseOption: OnVerseOption? = null,
+    val onBookmarkRequest: OnBookmarkRequest? = null,
 )
 
 val LocalVerseActions = staticCompositionLocalOf<VerseActions> {
@@ -38,6 +40,14 @@ fun buildTranslationAnnotatedString(
     colorScheme: ColorScheme,
     actions: VerseActions?,
 ): AnnotatedString {
+    // early check for potential clickables
+    if (actions == null) {
+        val raw = translation.text
+        if ('<' !in raw) {
+            return AnnotatedString(raw)
+        }
+    }
+
     return buildTranslationAnnotatedString(
         parseTranslationText(translation.text, translation.bookSlug),
         colorScheme,
@@ -100,7 +110,7 @@ fun buildTranslationAnnotatedString(
                             tag = QuranConstants.FOOTNOTE_REF_TAG,
                             styles = TextLinkStyles(
                                 style = SpanStyle(
-                                    color = colorScheme.onSurface.alpha(0.6f),
+                                    color = colorScheme.secondary.alpha(0.7f),
                                     baselineShift = BaselineShift.Superscript,
                                     fontSize = 0.8.em
                                 ),

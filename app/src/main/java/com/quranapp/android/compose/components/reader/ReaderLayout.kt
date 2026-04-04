@@ -1,24 +1,30 @@
 package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.db.bookmark.BookmarkKey
 import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
+import kotlinx.coroutines.delay
 
 data class QuranPageSectionItem(
     val chapterNo: Int,
@@ -54,10 +60,16 @@ data class QuranPageItem(
 }
 
 sealed class ReaderLayoutItem(var key: String? = null) {
-    data object ChapterInfo : ReaderLayoutItem()
+    data class ChapterInfo(val chapterNo: Int) : ReaderLayoutItem()
     data object Bismillah : ReaderLayoutItem()
+    data object IsVotd : ReaderLayoutItem()
     data class ChapterTitle(val chapterNo: Int) : ReaderLayoutItem()
-    data class VerseUI(val verse: Verse, val isLastInGroup: Boolean) : ReaderLayoutItem()
+    data class VerseUI(
+        val verse: Verse,
+        val parsedQuranText: AnnotatedString? = null,
+        val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
+        val isLastInGroup: Boolean = false,
+    ) : ReaderLayoutItem()
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -68,7 +80,7 @@ fun ReaderLayout(
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
 
-    if (uiState.loading || readerMode == null) {
+    if (readerMode == null) {
         return Loader(fill = true)
     }
 
@@ -84,19 +96,93 @@ private fun ReaderLayoutTranslationMode(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
 ) {
-    val items by readerVm.translationViewItems
-    val slugs by readerVm.slugs.collectAsState()
+    val listState = rememberLazyListState()
+    val items by readerVm.translationViewItems.collectAsStateWithLifecycle()
+    val allBookmarks by readerVm.bookmarksRepository.getBookmarksFlow()
+        .collectAsStateWithLifecycle(initialValue = emptyList())
+
+    // Build only the keys that exist in the current list
+    val visibleVerseKeys = remember(items) {
+        items.asSequence()
+            .filterIsInstance<ReaderLayoutItem.VerseUI>()
+            .map {
+                BookmarkKey(
+                    chapterNo = it.verse.chapterNo,
+                    fromVerse = it.verse.verseNo,
+                    toVerse = it.verse.verseNo
+                )
+            }
+            .toHashSet()
+    }
+
+    val bookmarkedVerseKeys = remember(allBookmarks, visibleVerseKeys) {
+        allBookmarks.asSequence()
+            .map {
+                if (it.chapterNo == null || it.fromVerseNo == null || it.toVerseNo == null) {
+                    null
+                } else {
+                    BookmarkKey(
+                        chapterNo = it.chapterNo,
+                        fromVerse = it.fromVerseNo,
+                        toVerse = it.toVerseNo
+                    )
+                }
+            }
+            .filterNotNull()
+            .filter { it in visibleVerseKeys }
+            .toHashSet()
+    }
+
+    var autoScrollSpeed by readerVm.autoScrollSpeed
+    var playerVerseSync by readerVm.playerVerseSync
+
+    val playerState = LocalRecitationState.current
+
+    val isPlaying = playerState.isAnyPlaying
+    val playingVerse = playerState.playingVerse
+
+    LaunchedEffect(listState, autoScrollSpeed, playerVerseSync, isPlaying, playingVerse, items) {
+        if (autoScrollSpeed == null && playerVerseSync && isPlaying) {
+            val currentPlayingIndex = items.indexOfFirst { item ->
+                item is ReaderLayoutItem.VerseUI &&
+                        item.verse.chapterNo == playingVerse.chapterNo &&
+                        item.verse.verseNo == playingVerse.verseNo
+            }
+
+            listState.animateScrollToItem(currentPlayingIndex)
+        }
+    }
+
+    LaunchedEffect(listState, autoScrollSpeed) {
+        val speed = autoScrollSpeed
+
+        while (speed != null) {
+            listState.scrollBy(speed)
+            delay(16L) // ~60 FPS
+        }
+    }
 
     LazyColumn(
+        state = listState,
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .pointerInput(autoScrollSpeed) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        if (event.changes.any { it.pressed }) {
+                            autoScrollSpeed = null
+                        }
+                    }
+                }
+            },
         contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
     ) {
         items(
             items = items,
             key = { item -> item.key ?: "" },
         ) { item ->
-            TranslationRow(readerVm, item, uiState.transientTranslationSlugs ?: slugs)
+            TranslationRow(readerVm, item, bookmarkedVerseKeys)
         }
     }
 }
@@ -105,32 +191,24 @@ private fun ReaderLayoutTranslationMode(
 private fun TranslationRow(
     readerVm: ReaderViewModel,
     item: ReaderLayoutItem,
-    slugs: Set<String>?,
+    bookmarkedVerseKeys: Set<BookmarkKey>
 ) {
-    if (slugs == null) return
-
     when (item) {
-        ReaderLayoutItem.ChapterInfo -> {
-            Text(
-                text = "Chapter info",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            )
-        }
-
-        is ReaderLayoutItem.ChapterTitle -> {
-            ChapterTitle(chapterNo = item.chapterNo)
-        }
-
-        ReaderLayoutItem.Bismillah -> {
-            Bismillah()
-        }
-
+        ReaderLayoutItem.Bismillah -> Bismillah()
+        ReaderLayoutItem.IsVotd -> IsVotd()
+        is ReaderLayoutItem.ChapterInfo -> ChapterInfoCard(item.chapterNo)
+        is ReaderLayoutItem.ChapterTitle -> ChapterTitle(item.chapterNo)
         is ReaderLayoutItem.VerseUI -> {
+            val isBookmarked = BookmarkKey(
+                chapterNo = item.verse.chapterNo,
+                fromVerse = item.verse.verseNo,
+                toVerse = item.verse.verseNo
+            ) in bookmarkedVerseKeys
+
             VerseView(
-                verse = item.verse,
-                slugs = slugs,
-                showDivider = !item.isLastInGroup
+                verseUi = item,
+                isBookmarked = isBookmarked,
+                showDivider = !item.isLastInGroup,
             )
         }
     }

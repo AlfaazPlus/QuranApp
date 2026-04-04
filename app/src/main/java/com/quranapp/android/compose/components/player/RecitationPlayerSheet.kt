@@ -63,6 +63,8 @@ private val PlayerHeartSyncOn = Color(0xFF4DD0E1)
 @Composable
 fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
+    isSyncing: Boolean,
+    onSyncRequest: () -> Unit,
 ) {
     val viewModel = viewModel<RecitationPlayerViewModel>()
     val context = LocalContext.current
@@ -112,10 +114,12 @@ fun RecitationPlayerSheet(
                 expanded = expanded,
                 fullHeight = fullHeight,
                 miniPlayerTotalHeight = miniPlayerTotalHeight,
+                controller = viewModel.controller,
                 state = state,
                 isPlaying = isPlaying,
                 isLoading = isLoading,
-                controller = viewModel.controller,
+                isSyncing = isSyncing,
+                onSyncRequest = onSyncRequest,
                 onExpand = { expanded = true },
                 onCollapse = { expanded = false },
             )
@@ -128,10 +132,12 @@ private fun PlayerContainer(
     expanded: Boolean,
     fullHeight: Dp,
     miniPlayerTotalHeight: Dp,
+    controller: RecitationController,
     state: RecitationServiceState,
     isPlaying: Boolean,
     isLoading: Boolean,
-    controller: RecitationController,
+    isSyncing: Boolean,
+    onSyncRequest: () -> Unit,
     onExpand: () -> Unit,
     onCollapse: () -> Unit,
 ) {
@@ -178,12 +184,14 @@ private fun PlayerContainer(
                 )
             } else {
                 MiniPlayer(
+                    modifier = Modifier.navigationBarsPadding(),
                     state = state,
+                    controller = controller,
                     isPlaying = isPlaying,
                     isLoading = isLoading,
-                    controller = controller,
+                    isSyncing = isSyncing,
+                    onSyncRequest = onSyncRequest,
                     onExpand = onExpand,
-                    modifier = Modifier.navigationBarsPadding(),
                 )
             }
         }

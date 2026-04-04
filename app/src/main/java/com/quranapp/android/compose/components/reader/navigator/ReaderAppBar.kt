@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.navigator
 
+import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.clickable
@@ -21,6 +22,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +40,12 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
+import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
+import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
+import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
+import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
+import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +59,7 @@ fun ReaderAppBar(
     val context = LocalContext.current
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
+    var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     val currentJuzNo = uiState.currentJuzNo
     val currentChapterNo = uiState.currentChapterNo
@@ -114,23 +125,55 @@ fun ReaderAppBar(
                 }
             },
             navigationIcon = {
-                SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
-                    IconButton(
-                        onClick = {
-                            backPressedDispatcher?.onBackPressed()
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
+                        IconButton(
+                            onClick = {
+                                backPressedDispatcher?.onBackPressed()
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.dr_icon_chevron_left),
+                                contentDescription = stringResource(R.string.strDescGoBack),
+                            )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.dr_icon_chevron_left),
-                            contentDescription = stringResource(R.string.strDescGoBack),
-                        )
+                    }
+                    SimpleTooltip(text = stringResource(R.string.autoScroll)) {
+                        IconButton(
+                            onClick = {
+                                autoScrollSheetOpen = true
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.icon_scroll_down),
+                                contentDescription = stringResource(R.string.autoScroll),
+                            )
+                        }
                     }
                 }
             },
             actions = {
+                SimpleTooltip(text = stringResource(R.string.strLabelSelectTranslations)) {
+                    IconButton(
+                        onClick = {
+                            openReaderSetting(
+                                context,
+                                uiState,
+                                ActivitySettings.SETTINGS_TRANSLATION
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.dr_icon_translations),
+                            contentDescription = stringResource(R.string.strLabelSelectTranslations),
+                        )
+                    }
+                }
                 SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
                     IconButton(onClick = {
-                        context.startActivity(Intent(context, ActivitySettings::class.java))
+                        openReaderSetting(context, uiState, -1)
                     }) {
                         Icon(
                             painter = painterResource(R.drawable.dr_icon_settings),
@@ -142,4 +185,33 @@ fun ReaderAppBar(
             scrollBehavior = scrollBehavior,
         )
     }
+
+    AutoScrollSheet(
+        readerVm,
+        autoScrollSheetOpen,
+    ) {
+        autoScrollSheetOpen = false
+    }
+}
+
+fun openReaderSetting(context: Context, state: ReaderUiState, destination: Int) {
+    context.startActivity(
+        Intent(context, ActivitySettings::class.java).apply {
+            putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, destination)
+            putExtra(READER_KEY_SETTING_IS_FROM_READER, true)
+            putExtra(READER_KEY_SAVE_TRANSL_CHANGES, state.transientTranslationSlugs == null)
+
+            if (state.transientTranslationSlugs != null) {
+                putExtra(
+                    READER_KEY_TRANSL_SLUGS,
+                    state.transientTranslationSlugs.toTypedArray()
+                )
+            }
+
+            if (state.transientReaderMode != null) {
+                putExtra(READER_KEY_READ_TYPE, state.transientReaderMode)
+            }
+        },
+        null
+    )
 }
