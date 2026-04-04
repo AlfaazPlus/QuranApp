@@ -68,7 +68,7 @@ fun MiniPlayer(
     onExpand: () -> Unit,
 ) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.rememberQuranMeta()
+    val quranMeta = QuranMeta2.remember()
 
     val verse = state.currentVerse
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"

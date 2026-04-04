@@ -4,7 +4,9 @@
 package com.quranapp.android.utils.univ
 
 object Keys {
+    @Deprecated("to cleanup")
     const val READER_KEY_READER_STYLE = "reader.style"
+    const val READER_KEY_READER_MODE = "reader.mode"
     const val READER_KEY_READ_TYPE = "reader.read_type"
     const val READER_KEY_CHAPTER_NO = "reader.chapter_no"
     const val READER_KEY_VERSES = "reader.verses"

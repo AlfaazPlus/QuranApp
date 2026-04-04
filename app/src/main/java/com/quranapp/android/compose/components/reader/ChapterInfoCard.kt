@@ -46,7 +46,7 @@ import java.util.Locale
 
 @Composable
 fun ChapterInfoCard(chapterNo: Int) {
-    val quranMeta = QuranMeta2.rememberQuranMeta()
+    val quranMeta = QuranMeta2.remember()
     val chapterMeta = remember(quranMeta, chapterNo) {
         quranMeta?.getChapterMeta(chapterNo)
     } ?: return

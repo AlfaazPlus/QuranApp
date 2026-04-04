@@ -21,10 +21,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.db.bookmark.BookmarkKey
-import com.quranapp.android.reader_managers.ReaderParams
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.delay
+
+enum class ReaderMode(val value: String) {
+    VerseByVerse("mode_vbv"),
+    Reading("mode_reading"),
+    Translation("mode_translation");
+
+    companion object {
+        fun fromValue(value: String): ReaderMode {
+            return values().find { it.value == value } ?: ReaderMode.VerseByVerse
+        }
+    }
+}
+
 
 data class QuranPageSectionItem(
     val chapterNo: Int,
@@ -85,14 +97,15 @@ fun ReaderLayout(
     }
 
     when (uiState.transientReaderMode ?: readerMode) {
-        ReaderParams.READER_STYLE_PAGE -> ReaderLayoutPageMode(readerVm)
-        else -> ReaderLayoutTranslationMode(readerVm, uiState)
+        ReaderMode.Reading -> ReaderLayoutPageMode(readerVm)
+        ReaderMode.Translation -> {}
+        else -> ReaderLayoutVerseMode(readerVm, uiState)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ReaderLayoutTranslationMode(
+private fun ReaderLayoutVerseMode(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
 ) {

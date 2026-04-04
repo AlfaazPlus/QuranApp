@@ -194,7 +194,7 @@ private fun VerseActionIconButton(
 @Composable
 private fun VerseSerial(verse: Verse) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.rememberQuranMeta()
+    val quranMeta = QuranMeta2.remember()
 
     val chapterNo = verse.chapterNo
     val verseNo = verse.verseNo

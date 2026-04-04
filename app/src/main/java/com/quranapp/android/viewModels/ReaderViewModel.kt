@@ -14,8 +14,10 @@ import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.bookmark.BookmarkDatabaseProvider
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.asIntRange
 import com.quranapp.android.utils.extensions.asPair
 import com.quranapp.android.utils.extensions.normalized
@@ -44,7 +46,7 @@ data class ReaderUiState(
     val currentJuzNo: Int? = null,
     val verseRange: IntRange? = null,
     val transientTranslationSlugs: Set<String>? = null,
-    val transientReaderMode: Int? = null
+    val transientReaderMode: ReaderMode? = null
 )
 
 sealed class ReaderIntentData() {
@@ -53,18 +55,19 @@ sealed class ReaderIntentData() {
     data class VerseRange(val chapterNo: Int, val verseRange: IntRange) : ReaderIntentData()
 
     var slugs: Set<String>? = null
-    var readerMode: Int? = null
+    var readerMode: ReaderMode? = null
 }
 
 class ReaderViewModel(application: Application) : AndroidViewModel(application) {
     val controller = RecitationController.getInstance(application)
     val bookmarksRepository = BookmarkDatabaseProvider.getRepository(application)
+
     private val fontResolver = FontResolver(application)
 
     private val _uiState = MutableStateFlow(ReaderUiState())
     val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
 
-    val readerMode = ReaderPreferences.readerStyleFlow().stateIn(
+    val readerMode = ReaderPreferences.readerModeFlow().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = null,
@@ -100,15 +103,15 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
             combine(
                 _uiState,
                 DataStoreManager.flowMultiple(
-                    ReaderPreferences.KEY_READER_STYLE,
                     ReaderPreferences.KEY_SCRIPT,
                     ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
                     ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
                     ReaderPreferences.KEY_TRANSLATIONS,
                     ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
                 ),
-            ) { uiState, prefs ->
-                Pair(
+                readerMode,
+            ) { uiState, prefs, readerMode ->
+                Triple(
                     uiState,
                     TextBuilderParams(
                         context,
@@ -123,13 +126,18 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                         slugs = uiState.transientTranslationSlugs
                             ?: prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
                     ),
+                    readerMode
                 )
             }
                 .distinctUntilChanged { prev, next ->
-                    prev.second == next.second && prev.first.rebuildEquals(next.first)
+                    prev.second == next.second &&
+                            prev.third == next.third &&
+                            prev.first.rebuildEquals(next.first)
                 }
-                .collectLatest { (uiState, params) ->
-                    buildItems(params, uiState)
+                .collectLatest { (uiState, params, readerMode) ->
+                    if (readerMode != null) {
+                        buildItems(params, uiState, readerMode)
+                    }
                 }
         }
     }
@@ -218,7 +226,9 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     private suspend fun buildItems(
         params: TextBuilderParams,
         state: ReaderUiState,
+        readerMode: ReaderMode,
     ) {
+        Log.d("BUILDING")
         when {
             state.currentJuzNo != null -> {
                 _translationViewItems.value = withContext(Dispatchers.IO) {

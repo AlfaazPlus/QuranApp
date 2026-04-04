@@ -65,7 +65,7 @@ object SPReader {
     }
 
     @JvmStatic
-    fun getSavedTranslations(context: Context): HashSet<String> {
+    fun getSavedTranslations(context: Context): Set<String> {
         return ReaderPreferences.getTranslations()
     }
 
@@ -222,12 +222,12 @@ object SPReader {
 
     @JvmStatic
     fun getSavedReaderStyle(context: Context): Int {
-        return ReaderPreferences.getReaderStyle()
+        return -1
     }
 
     @JvmStatic
     fun setSavedReaderStyle(context: Context, readerStyle: Int) {
-        runBlocking { ReaderPreferences.setReaderStyle(readerStyle) }
+//        runBlocking { ReaderPreferences.setReaderStyle(readerStyle) }
     }
 
     @JvmStatic

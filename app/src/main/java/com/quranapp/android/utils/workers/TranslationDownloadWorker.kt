@@ -13,6 +13,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
@@ -22,7 +23,6 @@ import com.quranapp.android.utils.sharedPrefs.SPReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.File
 
@@ -112,7 +112,7 @@ class TranslationDownloadWorker(
         }
 
         removeFromPendingAction(ctx, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
-        val savedTranslations = SPReader.getSavedTranslations(ctx)
+        val savedTranslations = ReaderPreferences.getTranslations().toMutableSet()
         if (savedTranslations.remove(bookInfo.slug)) {
             SPReader.setSavedTranslations(ctx, savedTranslations)
         }

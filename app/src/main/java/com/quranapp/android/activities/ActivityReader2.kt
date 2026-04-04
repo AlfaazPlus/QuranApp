@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.screens.reader.ReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -21,6 +22,7 @@ import com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.asIntRange
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO
 import com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO
 import com.quranapp.android.utils.univ.Keys.READER_KEY_READER_STYLE
@@ -95,10 +97,9 @@ class ActivityReader2 : BaseActivity() {
             slugs = intent.getStringArrayExtra(READER_KEY_TRANSL_SLUGS)?.toSet()
                 ?: ReaderPreferences.getTranslations()
 
-            readerMode = intent.getIntExtra(
-                READER_KEY_READER_STYLE,
-                ReaderPreferences.getReaderStyle()
-            )
+            readerMode = intent.getStringExtra(
+                Keys.READER_KEY_READER_MODE,
+            ).let { ReaderMode.fromValue(it ?: "") }
         }
     }
 

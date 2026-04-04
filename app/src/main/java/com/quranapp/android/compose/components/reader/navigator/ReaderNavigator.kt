@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.navigator
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -13,4 +14,6 @@ fun ReaderNavigator(
     onClose: () -> Unit,
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
+
+    Text("Navigator")
 }

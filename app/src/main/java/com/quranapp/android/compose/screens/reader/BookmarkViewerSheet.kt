@@ -105,7 +105,7 @@ fun BookmarkViewerSheet(
         BookmarkDatabaseProvider.getRepository(context)
     }
 
-    val meta = QuranMeta2.rememberQuranMeta()
+    val meta = QuranMeta2.remember()
 
     var bookmark = repo.getBookmarkFlow(data.chapterNo, data.fromVerse, data.toVerse)
         .collectAsStateWithLifecycle(null).value

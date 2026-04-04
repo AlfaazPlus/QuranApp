@@ -79,7 +79,7 @@ fun VerseShareSheet(
 
     val context = LocalContext.current
     val quran = Quran2.rememberQuran()
-    val quranMeta = QuranMeta2.rememberQuranMeta()
+    val quranMeta = QuranMeta2.remember()
     val translFactory = QuranTranslationFactory.rememberFactory(context)
 
     val translationBooks = remember(translFactory) {

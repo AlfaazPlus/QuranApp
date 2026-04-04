@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -69,13 +70,15 @@ fun ReaderScreen(data: ReaderIntentData) {
 
             Box(modifier = Modifier.fillMaxSize()) {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     topBar = {
                         ReaderAppBar(
                             readerVm = readerVm,
                             isWideScreen = isWideScreen,
                             scrollBehavior = scrollBehavior,
-                            onReaderTitleClick = { showNavigatorSheet = true },
+                            onNavigatorRequest = { showNavigatorSheet = true },
                         )
                     },
                 ) { padding ->

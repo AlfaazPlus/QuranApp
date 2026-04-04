@@ -126,7 +126,7 @@ private fun Header(
 ) {
     val context = LocalContext.current
 
-    val meta = QuranMeta2.rememberQuranMeta()
+    val meta = QuranMeta2.remember()
 
     val singleFootnoteBooInfo = remember(singleFootnote, translFactory) {
         singleFootnote?.let {

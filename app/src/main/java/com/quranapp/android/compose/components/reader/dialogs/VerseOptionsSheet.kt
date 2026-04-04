@@ -89,7 +89,7 @@ private fun VodSheetContent(
     onShare: () -> Unit,
 ) {
     val context = LocalContext.current
-    val meta = QuranMeta2.rememberQuranMeta()
+    val meta = QuranMeta2.remember()
 
     val title = stringResource(
         R.string.strTitleReaderVerseInformation,

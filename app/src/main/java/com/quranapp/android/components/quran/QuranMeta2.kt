@@ -21,7 +21,7 @@ object QuranMeta2 {
 
     // composable
     @Composable
-    fun rememberQuranMeta(): QuranMeta? {
+    fun remember(): QuranMeta? {
         val context = LocalContext.current
 
         val quranMetaState = produceState<QuranMeta?>(initialValue = null, context) {

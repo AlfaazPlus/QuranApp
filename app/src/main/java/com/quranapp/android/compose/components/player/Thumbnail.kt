@@ -43,7 +43,7 @@ fun ExtendedThumbnail(
     verse: ChapterVersePair,
 ) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.rememberQuranMeta()
+    val quranMeta = QuranMeta2.remember()
     val headerShape = RoundedCornerShape(32.dp)
 
     val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"

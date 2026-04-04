@@ -6,12 +6,11 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.floatPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
-import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
@@ -20,6 +19,7 @@ import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 
@@ -66,8 +66,8 @@ object ReaderPreferences {
     val KEY_SCRIPT =
         PrefKey(stringPreferencesKey(QuranScriptUtils.KEY_SCRIPT), QuranScriptUtils.SCRIPT_DEFAULT)
 
-    val KEY_READER_STYLE =
-        PrefKey(intPreferencesKey(Keys.READER_KEY_READER_STYLE), ReaderParams.READER_STYLE_DEFAULT)
+    val KEY_READER_MODE =
+        PrefKey(stringPreferencesKey(Keys.READER_KEY_READER_MODE), ReaderMode.VerseByVerse.value)
 
     val KEY_TAFSIR =
         PrefKey(stringPreferencesKey(TafsirUtils.KEY_TAFSIR), "")
@@ -137,18 +137,6 @@ object ReaderPreferences {
             if (spScript.contains(QuranScriptUtils.KEY_SCRIPT)) {
                 val script = spScript.getString(QuranScriptUtils.KEY_SCRIPT, null)
                 DataStoreManager.write(KEY_SCRIPT, script ?: QuranScriptUtils.SCRIPT_DEFAULT)
-            }
-
-            val spReaderStyle =
-                appCtx.getSharedPreferences(LEGACY_SP_READER_STYLE, Context.MODE_PRIVATE)
-            if (spReaderStyle.contains(Keys.READER_KEY_READER_STYLE)) {
-                DataStoreManager.write(
-                    KEY_READER_STYLE,
-                    spReaderStyle.getInt(
-                        Keys.READER_KEY_READER_STYLE,
-                        ReaderParams.READER_STYLE_DEFAULT
-                    )
-                )
             }
 
             val spTafsir = appCtx.getSharedPreferences(LEGACY_SP_TAFSIR, Context.MODE_PRIVATE)
@@ -228,12 +216,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_TAFSIR)
     }
 
-    fun getTranslations(): HashSet<String> {
-        val raw = DataStoreManager.read(KEY_TRANSLATIONS)
-        if (raw.isEmpty()) {
-            return TranslUtils.defaultTranslationSlugs()
-        }
-        return HashSet(raw)
+    fun getTranslations(): Set<String> {
+        return DataStoreManager.read(KEY_TRANSLATIONS)
     }
 
     suspend fun setTranslations(translSlugsSet: Set<String>) {
@@ -285,21 +269,21 @@ object ReaderPreferences {
         return s
     }
 
-    fun getReaderStyle(): Int {
-        return DataStoreManager.read(KEY_READER_STYLE)
+    fun getReaderMode(): ReaderMode {
+        return DataStoreManager.read(KEY_READER_MODE).let { ReaderMode.fromValue(it) }
     }
 
-    suspend fun setReaderStyle(readerStyle: Int) {
-        DataStoreManager.write(KEY_READER_STYLE, readerStyle)
+    suspend fun setReaderMode(mode: ReaderMode) {
+        DataStoreManager.write(KEY_READER_MODE, mode.value)
     }
 
-    fun readerStyleFlow(): Flow<Int> {
-        return DataStoreManager.flow(KEY_READER_STYLE)
+    fun readerModeFlow(): Flow<ReaderMode> {
+        return DataStoreManager.flow(KEY_READER_MODE).map { ReaderMode.fromValue(it) }
     }
 
     @Composable
-    fun observeReaderStyle(): Int {
-        return DataStoreManager.observe(KEY_READER_STYLE)
+    fun observeReaderMode(): ReaderMode {
+        return DataStoreManager.observe(KEY_READER_MODE).let { ReaderMode.fromValue(it) }
     }
 
     fun getTafsirId(): String? {

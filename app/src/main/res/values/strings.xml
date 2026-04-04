@@ -200,6 +200,8 @@
     <string name="strLabelShare">Share</string>
     <string name="strLabelReport">Report</string>
     <string name="strLabelContinueReading">Continue Reading »</string>
+    <string name="modeVerseByVerse">Verse by verse mode</string>
+    <string name="modeMushaf">Mushaf mode</string>
     <string name="strLabelReading">Reading</string>
     <string name="strLabelMostPlaces">Most mentions</string>
     <string name="strLabelOrder">Order</string>
