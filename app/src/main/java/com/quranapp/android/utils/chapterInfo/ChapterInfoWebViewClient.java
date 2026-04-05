@@ -5,6 +5,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
@@ -12,7 +13,7 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.ActivityChapInfo;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.utils.Log;
-import com.quranapp.android.utils.quran.QuranUtils;
+import com.quranapp.android.utils.quran.QuranGlyphs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,7 +159,7 @@ public class ChapterInfoWebViewClient extends WebViewClient {
     }
 
     private String prepareChapterIconUnicode() {
-        return QuranUtils.getChapterIconUnicode(mChapterInfoMeta.chapterNo) + QuranUtils.getChapterIconUnicode(0);
+        return QuranGlyphs.Chapter.INSTANCE.get(mChapterInfoMeta.chapterNo) + QuranGlyphs.Chapter.INSTANCE.getPrefix();
     }
 
     private String prepareJuzs() {

@@ -1,17 +1,20 @@
 package com.quranapp.android.views.reader;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.TextViewCompat;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
+import com.quranapp.android.utils.quran.QuranGlyphs;
 
 public class BismillahView extends AppCompatTextView {
     public BismillahView(Context context) {
@@ -29,7 +32,7 @@ public class BismillahView extends AppCompatTextView {
     }
 
     private void init(Context context) {
-        setText(context.getString(R.string.strBismillahEntity));
+        setText(QuranGlyphs.Special.BISMILLAH);
         TextViewCompat.setTextAppearance(this, R.style.TextAppearanceBismillah);
         setGravity(Gravity.CENTER);
     }

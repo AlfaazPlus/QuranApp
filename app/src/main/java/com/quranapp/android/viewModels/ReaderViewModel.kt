@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
@@ -16,17 +17,19 @@ import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.bookmark.BookmarkDatabaseProvider
-import com.quranapp.android.utils.Log
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.extensions.asIntRange
 import com.quranapp.android.utils.extensions.asPair
 import com.quranapp.android.utils.extensions.normalized
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.PageBuilderParams
+import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
+import com.quranapp.android.utils.reader.getQuranMushafId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,6 +47,7 @@ data class ReaderUiState(
     var error: String? = null,
     val currentChapterNo: Int? = null,
     val currentJuzNo: Int? = null,
+    val currentPageNo: Int? = 1,
     val verseRange: IntRange? = null,
     val transientTranslationSlugs: Set<String>? = null,
     val transientReaderMode: ReaderMode? = null
@@ -60,9 +64,10 @@ sealed class ReaderIntentData() {
 
 class ReaderViewModel(application: Application) : AndroidViewModel(application) {
     val controller = RecitationController.getInstance(application)
-    val bookmarksRepository = BookmarkDatabaseProvider.getRepository(application)
+    val bookmarksRepository = DatabaseProvider.getUserRepository(application)
+    val scriptRepository = DatabaseProvider.getQuranRepository(application)
 
-    private val fontResolver = FontResolver(application)
+    val fontResolver = FontResolver.getInstance(application)
 
     private val _uiState = MutableStateFlow(ReaderUiState())
     val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
@@ -76,11 +81,16 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     var autoScrollSpeed = mutableStateOf<Float?>(null)
     var playerVerseSync = mutableStateOf(false)
 
-    private val _translationViewItems = MutableStateFlow<List<ReaderLayoutItem>>(emptyList())
-    val translationViewItems: StateFlow<List<ReaderLayoutItem>> =
-        _translationViewItems.asStateFlow()
+    private val _verseByVerseItems = MutableStateFlow<List<ReaderLayoutItem>>(emptyList())
+    val verseByVerseItems: StateFlow<List<ReaderLayoutItem>> =
+        _verseByVerseItems.asStateFlow()
 
-    val pageViewItems = mutableStateOf<List<QuranPageItem>>(emptyList())
+    val pageItems = mutableStateMapOf<Int, QuranPageItem>()
+    val pageCounts = mutableStateMapOf<String, Int>()
+    private val mushafPagesInFlight = mutableSetOf<Int>()
+
+    /** Script + IndoPak variant; mushaf DB rows change when this changes. */
+    private var mushafPageLayoutKey: String? = null
 
     private val context get() = application
 
@@ -91,6 +101,12 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     override fun onCleared() {
         controller.disconnect()
         super.onCleared()
+    }
+
+    fun updateState(updater: (ReaderUiState) -> ReaderUiState) {
+        _uiState.update {
+            updater(it)
+        }
     }
 
     fun observeChanges(
@@ -104,6 +120,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 _uiState,
                 DataStoreManager.flowMultiple(
                     ReaderPreferences.KEY_SCRIPT,
+                    ReaderPreferences.KEY_SCRIPT_VARIANT,
                     ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
                     ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
                     ReaderPreferences.KEY_TRANSLATIONS,
@@ -111,6 +128,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 ),
                 readerMode,
             ) { uiState, prefs, readerMode ->
+                val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
+                val scriptVariantRaw = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
                 Triple(
                     uiState,
                     TextBuilderParams(
@@ -122,11 +141,11 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                         arabicEnabled = prefs.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED),
                         arabicSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC),
                         translationSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL),
-                        script = prefs.get(ReaderPreferences.KEY_SCRIPT),
+                        script = script,
                         slugs = uiState.transientTranslationSlugs
                             ?: prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
                     ),
-                    readerMode
+                    Triple(readerMode, script, scriptVariantRaw),
                 )
             }
                 .distinctUntilChanged { prev, next ->
@@ -134,9 +153,29 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                             prev.third == next.third &&
                             prev.first.rebuildEquals(next.first)
                 }
-                .collectLatest { (uiState, params, readerMode) ->
-                    if (readerMode != null) {
-                        buildItems(params, uiState, readerMode)
+                .collectLatest { (uiState, params, modeAndScript) ->
+                    val (readerMode, script, scriptVariantRaw) = modeAndScript
+                    when (readerMode) {
+                        ReaderMode.VerseByVerse -> {
+                            buildVerseByVerseItems(params, uiState, readerMode)
+                        }
+
+                        ReaderMode.Reading -> {
+                            val layoutKey = "$script|$scriptVariantRaw"
+
+                            if (mushafPageLayoutKey != layoutKey) {
+                                mushafPageLayoutKey = layoutKey
+                                pageItems.clear()
+                            }
+                        }
+
+                        ReaderMode.Translation -> {
+
+                        }
+
+                        else -> {
+                            // noop
+                        }
                     }
                 }
         }
@@ -223,25 +262,25 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    private suspend fun buildItems(
+    private suspend fun buildVerseByVerseItems(
         params: TextBuilderParams,
         state: ReaderUiState,
         readerMode: ReaderMode,
     ) {
-        Log.d("BUILDING")
         when {
             state.currentJuzNo != null -> {
-                _translationViewItems.value = withContext(Dispatchers.IO) {
+                _verseByVerseItems.value = withContext(Dispatchers.IO) {
                     ReaderItemsBuilder.buildJuzVersesForTranslationMode(
                         context,
                         params,
+                        scriptRepository,
                         state.currentJuzNo
                     )
                 }
             }
 
             state.currentChapterNo != null -> {
-                _translationViewItems.value = withContext(Dispatchers.IO) {
+                _verseByVerseItems.value = withContext(Dispatchers.IO) {
                     ReaderItemsBuilder.buildVersesForTranslationMode(
                         context,
                         params,
@@ -254,7 +293,60 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         }
 
     }
+
+    suspend fun mushafPageCount(script: String, scriptVariant: QuranScriptVariant?): Int {
+        return pageCounts.getOrPut(script + scriptVariant?.value) {
+            scriptRepository.getNumberOfPages(script.getQuranMushafId(scriptVariant))
+        }
+    }
+
+    suspend fun prefetchMushafPages(
+        context: Context,
+        anchorPages: Collection<Int>,
+        totalPages: Int,
+        params: PageBuilderParams
+    ) = withContext(Dispatchers.IO) {
+        if (totalPages <= 0) return@withContext
+
+        val targets = linkedSetOf<Int>()
+        for (anchorPage in anchorPages) {
+            if (anchorPage !in 1..totalPages) continue
+
+            for (d in -MUSHAF_PREFETCH_RADIUS..MUSHAF_PREFETCH_RADIUS) {
+                val page = anchorPage + d
+                if (page in 1..totalPages) {
+                    targets += page
+                }
+            }
+        }
+
+        if (targets.isEmpty()) return@withContext
+
+        val missing = targets.filter { page ->
+            !pageItems.containsKey(page) && mushafPagesInFlight.add(page)
+        }
+        if (missing.isEmpty()) return@withContext
+
+        try {
+            fontResolver.prefetch(ReaderPreferences.getQuranScript(), missing)
+
+            val built = ReaderItemsBuilder.buildMushafPages(
+                scriptRepository,
+                fontResolver,
+                missing,
+                params
+            )
+
+            for (page in missing) {
+                built[page]?.let { pageItems[page] = it }
+            }
+        } finally {
+            mushafPagesInFlight.removeAll(missing.toSet())
+        }
+    }
 }
+
+const val MUSHAF_PREFETCH_RADIUS = 4
 
 private fun ReaderUiState.rebuildEquals(other: ReaderUiState): Boolean =
     currentJuzNo == other.currentJuzNo &&

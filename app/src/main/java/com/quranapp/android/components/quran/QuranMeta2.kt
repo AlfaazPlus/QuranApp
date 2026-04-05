@@ -8,6 +8,7 @@ import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
+@Deprecated("Use db")
 object QuranMeta2 {
     suspend fun prepareInstance(context: Context): QuranMeta {
         return suspendCancellableCoroutine { cont ->
@@ -19,7 +20,6 @@ object QuranMeta2 {
         }
     }
 
-    // composable
     @Composable
     fun remember(): QuranMeta? {
         val context = LocalContext.current

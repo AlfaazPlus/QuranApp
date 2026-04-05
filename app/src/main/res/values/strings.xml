@@ -240,7 +240,6 @@
     <string name="strHintBookmarkViewerNote">Write an additional note on this bookmark here…</string>
     <string name="noNoteProvided">No note provided…</string>
     <string name="strNotFound">Not found</string>
-    <string name="strBismillahEntity" translatable="false">﷽</string>
     <string name="strMsgThemeDark">Dark mode reduces power consumption.</string>
     <string name="strMsgThemeDefault">Adjust according to system settings.</string>
     <string name="strMsgVOTDOn">Get a notification daily in the morning.</string>

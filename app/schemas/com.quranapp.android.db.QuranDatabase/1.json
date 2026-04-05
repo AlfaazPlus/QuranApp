@@ -1,0 +1,647 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "27f16f5062996da3277f7390480f20a0",
+    "entities": [
+      {
+        "tableName": "surahs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`surah_no` INTEGER NOT NULL, `ayah_count` INTEGER NOT NULL, `revelation_order` INTEGER NOT NULL, `rukus_count` INTEGER NOT NULL, `revelation_type` TEXT NOT NULL, PRIMARY KEY(`surah_no`))",
+        "fields": [
+          {
+            "fieldPath": "surahNo",
+            "columnName": "surah_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ayahCount",
+            "columnName": "ayah_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revelationOrder",
+            "columnName": "revelation_order",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rukusCount",
+            "columnName": "rukus_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revelationType",
+            "columnName": "revelation_type",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "surah_no"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_surahs_revelation_type",
+            "unique": false,
+            "columnNames": [
+              "revelation_type"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_surahs_revelation_type` ON `${TABLE_NAME}` (`revelation_type`)"
+          },
+          {
+            "name": "idx_surahs_order",
+            "unique": false,
+            "columnNames": [
+              "revelation_order"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_surahs_order` ON `${TABLE_NAME}` (`revelation_order`)"
+          }
+        ]
+      },
+      {
+        "tableName": "surah_localizations",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`surah_no` INTEGER NOT NULL, `lang_code` TEXT NOT NULL, `name` TEXT, `meaning` TEXT, PRIMARY KEY(`surah_no`, `lang_code`), FOREIGN KEY(`surah_no`) REFERENCES `surahs`(`surah_no`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "surahNo",
+            "columnName": "surah_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "langCode",
+            "columnName": "lang_code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "meaning",
+            "columnName": "meaning",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "surah_no",
+            "lang_code"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_surah_localizations_lang",
+            "unique": false,
+            "columnNames": [
+              "lang_code"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_surah_localizations_lang` ON `${TABLE_NAME}` (`lang_code`)"
+          },
+          {
+            "name": "idx_surah_localizations_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_surah_localizations_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "surahs",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "surah_no"
+            ],
+            "referencedColumns": [
+              "surah_no"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ayahs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ayah_id` INTEGER NOT NULL, `surah_no` INTEGER NOT NULL, `ayah_no` INTEGER NOT NULL, `juz_no` INTEGER NOT NULL, `hizb_no` INTEGER NOT NULL, `rub_no` INTEGER NOT NULL, `manzil_no` INTEGER NOT NULL, `ruku_no` INTEGER NOT NULL, `sajdah_type` INTEGER DEFAULT 0, PRIMARY KEY(`ayah_id`), FOREIGN KEY(`surah_no`) REFERENCES `surahs`(`surah_no`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "ayahId",
+            "columnName": "ayah_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahNo",
+            "columnName": "surah_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ayahNo",
+            "columnName": "ayah_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "juzNo",
+            "columnName": "juz_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hizbNo",
+            "columnName": "hizb_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rubNo",
+            "columnName": "rub_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "manzilNo",
+            "columnName": "manzil_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rukuNo",
+            "columnName": "ruku_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sajdahType",
+            "columnName": "sajdah_type",
+            "affinity": "INTEGER",
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ayah_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_ayahs_surah",
+            "unique": false,
+            "columnNames": [
+              "surah_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayahs_surah` ON `${TABLE_NAME}` (`surah_no`)"
+          },
+          {
+            "name": "idx_ayahs_surah_ayah",
+            "unique": true,
+            "columnNames": [
+              "surah_no",
+              "ayah_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `idx_ayahs_surah_ayah` ON `${TABLE_NAME}` (`surah_no`, `ayah_no`)"
+          },
+          {
+            "name": "idx_ayahs_juz",
+            "unique": false,
+            "columnNames": [
+              "juz_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayahs_juz` ON `${TABLE_NAME}` (`juz_no`)"
+          },
+          {
+            "name": "idx_ayahs_hizb",
+            "unique": false,
+            "columnNames": [
+              "hizb_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayahs_hizb` ON `${TABLE_NAME}` (`hizb_no`)"
+          },
+          {
+            "name": "idx_ayahs_rub",
+            "unique": false,
+            "columnNames": [
+              "rub_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayahs_rub` ON `${TABLE_NAME}` (`rub_no`)"
+          },
+          {
+            "name": "idx_ayahs_juz_hizb_rub",
+            "unique": false,
+            "columnNames": [
+              "juz_no",
+              "hizb_no",
+              "rub_no",
+              "manzil_no",
+              "ruku_no",
+              "surah_no",
+              "ayah_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayahs_juz_hizb_rub` ON `${TABLE_NAME}` (`juz_no`, `hizb_no`, `rub_no`, `manzil_no`, `ruku_no`, `surah_no`, `ayah_no`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "surahs",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "surah_no"
+            ],
+            "referencedColumns": [
+              "surah_no"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "scripts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`script_id` INTEGER NOT NULL, `code` TEXT NOT NULL, `display_name` TEXT NOT NULL, PRIMARY KEY(`script_id`))",
+        "fields": [
+          {
+            "fieldPath": "scriptId",
+            "columnName": "script_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "display_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "script_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_scripts_code",
+            "unique": true,
+            "columnNames": [
+              "code"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_scripts_code` ON `${TABLE_NAME}` (`code`)"
+          }
+        ]
+      },
+      {
+        "tableName": "ayah_words",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ayah_id` INTEGER NOT NULL, `script_id` INTEGER NOT NULL, `word_index` INTEGER NOT NULL, `text` TEXT NOT NULL, PRIMARY KEY(`ayah_id`, `script_id`, `word_index`), FOREIGN KEY(`ayah_id`) REFERENCES `ayahs`(`ayah_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`script_id`) REFERENCES `scripts`(`script_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "ayahId",
+            "columnName": "ayah_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scriptId",
+            "columnName": "script_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wordIndex",
+            "columnName": "word_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ayah_id",
+            "script_id",
+            "word_index"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_ayah_words_ayah_script",
+            "unique": false,
+            "columnNames": [
+              "ayah_id",
+              "script_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_ayah_words_ayah_script` ON `${TABLE_NAME}` (`ayah_id`, `script_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "ayahs",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "ayah_id"
+            ],
+            "referencedColumns": [
+              "ayah_id"
+            ]
+          },
+          {
+            "table": "scripts",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "script_id"
+            ],
+            "referencedColumns": [
+              "script_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "navigation_ranges",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `unit_no` INTEGER NOT NULL, `surah_no` INTEGER NOT NULL, `start_ayah` INTEGER NOT NULL, `end_ayah` INTEGER NOT NULL, PRIMARY KEY(`type`, `unit_no`, `surah_no`), FOREIGN KEY(`surah_no`) REFERENCES `surahs`(`surah_no`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitNo",
+            "columnName": "unit_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahNo",
+            "columnName": "surah_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startAyah",
+            "columnName": "start_ayah",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endAyah",
+            "columnName": "end_ayah",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "type",
+            "unit_no",
+            "surah_no"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "surahs",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "surah_no"
+            ],
+            "referencedColumns": [
+              "surah_no"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mushafs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mushaf_id` INTEGER NOT NULL, `mushaf_code` TEXT NOT NULL, `no_of_pages` INTEGER NOT NULL, `lines_per_page` INTEGER NOT NULL, PRIMARY KEY(`mushaf_id`))",
+        "fields": [
+          {
+            "fieldPath": "mushafId",
+            "columnName": "mushaf_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mushafCode",
+            "columnName": "mushaf_code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "noOfPages",
+            "columnName": "no_of_pages",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "linesPerPage",
+            "columnName": "lines_per_page",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mushaf_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mushafs_mushaf_code",
+            "unique": true,
+            "columnNames": [
+              "mushaf_code"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mushafs_mushaf_code` ON `${TABLE_NAME}` (`mushaf_code`)"
+          }
+        ]
+      },
+      {
+        "tableName": "mushaf_map",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mushaf_id` INTEGER NOT NULL, `page_number` INTEGER NOT NULL, `line_number` INTEGER NOT NULL, `line_type` TEXT NOT NULL, `is_centered` INTEGER NOT NULL, `start_ayah_id` INTEGER, `start_word_index` INTEGER, `end_ayah_id` INTEGER, `end_word_index` INTEGER, `surah_no` INTEGER, PRIMARY KEY(`mushaf_id`, `page_number`, `line_number`), FOREIGN KEY(`mushaf_id`) REFERENCES `mushafs`(`mushaf_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`start_ayah_id`) REFERENCES `ayahs`(`ayah_id`) ON UPDATE CASCADE ON DELETE SET NULL , FOREIGN KEY(`end_ayah_id`) REFERENCES `ayahs`(`ayah_id`) ON UPDATE CASCADE ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "mushafId",
+            "columnName": "mushaf_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pageNumber",
+            "columnName": "page_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lineNumber",
+            "columnName": "line_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lineType",
+            "columnName": "line_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isCentered",
+            "columnName": "is_centered",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startAyahId",
+            "columnName": "start_ayah_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "startWordIndex",
+            "columnName": "start_word_index",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "endAyahId",
+            "columnName": "end_ayah_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "endWordIndex",
+            "columnName": "end_word_index",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "surahNo",
+            "columnName": "surah_no",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mushaf_id",
+            "page_number",
+            "line_number"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_pages_lookup",
+            "unique": false,
+            "columnNames": [
+              "mushaf_id",
+              "page_number"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_pages_lookup` ON `${TABLE_NAME}` (`mushaf_id`, `page_number`)"
+          },
+          {
+            "name": "index_mushaf_map_start_ayah_id",
+            "unique": false,
+            "columnNames": [
+              "start_ayah_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mushaf_map_start_ayah_id` ON `${TABLE_NAME}` (`start_ayah_id`)"
+          },
+          {
+            "name": "index_mushaf_map_end_ayah_id",
+            "unique": false,
+            "columnNames": [
+              "end_ayah_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mushaf_map_end_ayah_id` ON `${TABLE_NAME}` (`end_ayah_id`)"
+          },
+          {
+            "name": "index_mushaf_map_surah_no",
+            "unique": false,
+            "columnNames": [
+              "surah_no"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mushaf_map_surah_no` ON `${TABLE_NAME}` (`surah_no`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "mushafs",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "mushaf_id"
+            ],
+            "referencedColumns": [
+              "mushaf_id"
+            ]
+          },
+          {
+            "table": "ayahs",
+            "onDelete": "SET NULL",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "start_ayah_id"
+            ],
+            "referencedColumns": [
+              "ayah_id"
+            ]
+          },
+          {
+            "table": "ayahs",
+            "onDelete": "SET NULL",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "end_ayah_id"
+            ],
+            "referencedColumns": [
+              "ayah_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '27f16f5062996da3277f7390480f20a0')"
+    ]
+  }
+}

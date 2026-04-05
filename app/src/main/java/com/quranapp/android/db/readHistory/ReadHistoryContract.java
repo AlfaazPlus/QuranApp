@@ -3,7 +3,8 @@ package com.quranapp.android.db.readHistory;
 import android.provider.BaseColumns;
 
 public final class ReadHistoryContract {
-    private ReadHistoryContract() {}
+    private ReadHistoryContract() {
+    }
 
     public static class ReadHistoryEntry implements BaseColumns {
         public static final String TABLE_NAME = "ReadHistory";

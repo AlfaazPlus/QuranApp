@@ -9,7 +9,8 @@ package com.quranapp.android.db.translation;
 import android.provider.BaseColumns;
 
 public final class QuranTranslContract {
-    private QuranTranslContract() {}
+    private QuranTranslContract() {
+    }
 
     public static class QuranTranslEntry implements BaseColumns {
         public static final String TABLE_NAME = "Translation";

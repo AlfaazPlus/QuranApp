@@ -104,7 +104,8 @@ class QuranParser(private val ctx: Context) {
                     chapterNo,
                     verseObj[KEY_NUMBER]!!.jsonPrimitive.int,
                     verseObj[KEY_PAGE_NUMBER]?.jsonPrimitive?.int ?: -1,
-                    verseObj[KEY_SEGMENTS]!!.jsonArray.map { it.jsonPrimitive.content },
+                    verseObj[KEY_SEGMENTS]?.jsonArray?.map { it.jsonPrimitive.content }
+                        ?: emptyList(),
                     verseObj[KEY_END_TEXT]?.jsonPrimitive?.content ?: ""
                 )
             )

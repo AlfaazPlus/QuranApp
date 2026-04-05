@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -13,7 +14,7 @@ import androidx.core.widget.TextViewCompat;
 
 import com.peacedesign.android.utils.Dimen;
 import com.quranapp.android.R;
-import com.quranapp.android.utils.quran.QuranUtils;
+import com.quranapp.android.utils.quran.QuranGlyphs;
 
 public class ChapterIcon extends AppCompatTextView {
     private int mChapterNumber;
@@ -53,20 +54,11 @@ public class ChapterIcon extends AppCompatTextView {
         setupChapterIcon();
     }
 
-
-    private void setupChapterIconNew() {
-        setText(QuranUtils.getChapterIconValue(mChapterNumber));
-    }
-
     private void setupChapterIcon() {
-        String chapterName = null;
+        String chapterName = QuranGlyphs.Chapter.INSTANCE.get(mChapterNumber);
 
-        String unicode = QuranUtils.getChapterIconUnicode(mChapterNumber);
-        if (unicode != null) {
-            chapterName = unicode;
-            if (mIncludePrefix) {
-                chapterName += QuranUtils.getChapterIconUnicode(0);
-            }
+        if (mIncludePrefix) {
+            chapterName += QuranGlyphs.Chapter.INSTANCE.getPrefix();
         }
 
         setText(chapterName);

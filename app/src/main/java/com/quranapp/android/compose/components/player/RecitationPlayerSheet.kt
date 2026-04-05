@@ -48,7 +48,7 @@ import com.quranapp.android.utils.univ.MessageEvent
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.RecitationPlayerViewModel
 
-private const val MINI_PLAYER_HEIGHT_DP = 72
+const val MINI_PLAYER_HEIGHT_DP = 72
 private val SPEED_OPTIONS = listOf(0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f)
 
 private val PlayerGradientTop = Color(0xFF25243A)

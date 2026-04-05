@@ -50,8 +50,8 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.db.bookmark.BookmarkDatabaseProvider
-import com.quranapp.android.db.bookmark.BookmarkRepository
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.UserRepository
 import com.quranapp.android.utils.extensions.orMinusOne
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -71,7 +71,7 @@ private suspend fun persistBookmarkNoteIfChanged(
     bookmark: BookmarkModel,
     noteDraft: String,
     initialNote: String?,
-    repo: BookmarkRepository,
+    repo: UserRepository,
 ): String? {
     val newNote = noteDraft.trim().takeIf { it.isNotEmpty() }
     if (newNote == initialNote) return null
@@ -102,7 +102,7 @@ fun BookmarkViewerSheet(
     val coroutineScope = rememberCoroutineScope()
 
     val repo = remember(context) {
-        BookmarkDatabaseProvider.getRepository(context)
+        DatabaseProvider.getUserRepository(context)
     }
 
     val meta = QuranMeta2.remember()

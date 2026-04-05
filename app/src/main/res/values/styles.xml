@@ -2,7 +2,7 @@
 <resources>
 
     <style name="TextAppearanceBismillah">
-        <item name="android:fontFamily">@font/bismillah</item>
+        <item name="android:fontFamily">@font/quran_common</item>
         <item name="android:textSize">40sp</item>
     </style>
 
@@ -193,7 +193,7 @@
         <item name="android:windowBackground">@color/colorBGPage</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    
+
     <style name="PeaceBottomSheetTheme" parent="Theme.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/SheetDialogStyle</item>
         <item name="android:windowAnimationStyle">@style/PeaceBottomSheetAnimations</item>

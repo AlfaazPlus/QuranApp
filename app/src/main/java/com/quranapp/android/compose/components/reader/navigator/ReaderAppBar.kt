@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -46,7 +47,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -54,12 +55,13 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.components.ChapterIcon
+import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.reader_managers.ReaderParams
+import com.quranapp.android.utils.reader.getQuranMushafId
 import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
@@ -79,10 +81,7 @@ fun ReaderAppBar(
     val context = LocalContext.current
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
-    var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
-
-    val currentJuzNo = uiState.currentJuzNo
-    val currentChapterNo = uiState.currentChapterNo
+    val readerMode by readerVm.readerMode.collectAsState()
 
     Surface(
         shadowElevation = 4.dp,
@@ -95,84 +94,23 @@ fun ReaderAppBar(
                     scrolledContainerColor = MaterialTheme.colorScheme.surface,
                 ),
                 title = {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.small)
-                            .clickable(
-                                enabled = !isWideScreen,
-                                onClick = onNavigatorRequest,
-                            )
-                            .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 4.dp),
-                    ) {
-                        if (currentJuzNo != null) {
-                            Text(
-                                text = stringResource(
-                                    R.string.strLabelJuzNo,
-                                    currentJuzNo,
-                                ),
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = colorScheme.primary,
-                                fontWeight = FontWeight.Medium,
-                            )
-                        } else if (currentChapterNo != null) {
-                            ChapterIcon(
-                                modifier = Modifier.padding(top = 8.dp),
-                                chapterNo = currentChapterNo,
-                                fontSize = 42.sp,
-                                color = colorScheme.primary
-                            )
-                        }
-                    }
+                    ModeTabs(readerVm, readerMode)
                 },
                 navigationIcon = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
-                            IconButton(
-                                onClick = {
-                                    backPressedDispatcher?.onBackPressed()
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.dr_icon_chevron_left),
-                                    contentDescription = stringResource(R.string.strDescGoBack),
-                                )
+                    SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
+                        IconButton(
+                            onClick = {
+                                backPressedDispatcher?.onBackPressed()
                             }
-                        }
-                        SimpleTooltip(text = stringResource(R.string.autoScroll)) {
-                            IconButton(
-                                onClick = {
-                                    autoScrollSheetOpen = true
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.icon_scroll_down),
-                                    contentDescription = stringResource(R.string.autoScroll),
-                                )
-                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.dr_icon_chevron_left),
+                                contentDescription = stringResource(R.string.strDescGoBack),
+                            )
                         }
                     }
                 },
                 actions = {
-                    SimpleTooltip(text = stringResource(R.string.strLabelSelectTranslations)) {
-                        IconButton(
-                            onClick = {
-                                openReaderSetting(
-                                    context,
-                                    uiState,
-                                    ActivitySettings.SETTINGS_TRANSLATION
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_translations),
-                                contentDescription = stringResource(R.string.strLabelSelectTranslations),
-                            )
-                        }
-                    }
                     SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
                         IconButton(onClick = {
                             openReaderSetting(context, uiState, -1)
@@ -190,65 +128,51 @@ fun ReaderAppBar(
                 color = colorScheme.outlineVariant.alpha(0.5f)
             )
 
-            StickyHeader(readerVm, uiState, onNavigatorRequest)
-        }
-    }
+            when (readerMode) {
+                ReaderMode.VerseByVerse -> {
+                    StickyHeaderModeVbV(readerVm, uiState, onNavigatorRequest)
+                }
 
-    AutoScrollSheet(
-        readerVm,
-        autoScrollSheetOpen,
-    ) {
-        autoScrollSheetOpen = false
+                ReaderMode.Reading -> {
+                    StickyHeaderModeMushaf(readerVm, uiState, onNavigatorRequest)
+                }
+
+                else -> {
+                    // TODO
+                }
+            }
+        }
     }
 }
 
 @Composable
-private fun StickyHeader(
+private fun ModeTabs(
     readerVm: ReaderViewModel,
-    uiState: ReaderUiState,
-    onNavigatorRequest: () -> Unit
+    readerMode: ReaderMode?
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val quranMeta = QuranMeta2.remember()
-    val chapterName = remember(context, uiState.currentChapterNo) {
-        uiState.currentChapterNo?.let { quranMeta?.getChapterName(context, it) } ?: ""
-    }
-
-    val readerMode by readerVm.readerMode.collectAsState()
 
     Row(
-        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier
+            .clip(RoundedCornerShape(999.dp))
+            .background(colorScheme.background)
+            .padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        TextButton(
-            modifier = Modifier.height(28.dp),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = colorScheme.onSurface
-            ),
-            onClick = onNavigatorRequest,
-        ) {
-            Text(chapterName)
-            Icon(
-                painterResource(R.drawable.dr_icon_chevron_down),
-                contentDescription = null
+        listOf(
+            ReaderMode.VerseByVerse,
+            ReaderMode.Reading,
+        ).forEach { mode ->
+            val isSelected = mode == readerMode
+            val label = stringResource(
+                when (mode) {
+                    ReaderMode.VerseByVerse -> R.string.modeVerseByVerse
+                    ReaderMode.Reading -> R.string.modeMushaf
+                    ReaderMode.Translation -> R.string.labelTranslation
+                },
             )
-        }
 
-        Spacer(Modifier.weight(1f))
-
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(999.dp))
-                .background(colorScheme.background)
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            ReaderMode.entries.forEach { mode ->
-                val isSelected = mode == readerMode
-
+            SimpleTooltip(label) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(999.dp))
@@ -275,19 +199,182 @@ private fun StickyHeader(
                                 ReaderMode.Translation -> R.drawable.ic_mode_translation
                             },
                         ),
-                        contentDescription = stringResource(
-                            when (mode) {
-                                ReaderMode.VerseByVerse -> R.string.modeVerseByVerse
-                                ReaderMode.Reading -> R.string.modeMushaf
-                                ReaderMode.Translation -> R.string.labelTranslation
-                            },
-                        ),
-                        modifier = Modifier.size(24.dp)
+                        contentDescription = label,
+                        modifier = Modifier.size(24.dp),
+                        tint = if (isSelected) colorScheme.onSurface else colorScheme.onSurface.alpha(
+                            0.6f
+                        )
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+private fun StickyHeaderModeVbV(
+    readerVm: ReaderViewModel,
+    uiState: ReaderUiState,
+    onNavigatorRequest: () -> Unit
+) {
+    val context = LocalContext.current
+    val quranMeta = QuranMeta2.remember()
+    val chapterName = remember(context, uiState.currentChapterNo, quranMeta) {
+        uiState.currentChapterNo?.let { quranMeta?.getChapterName(context, it) } ?: ""
+    }
+
+    val currentJuzNo = uiState.currentJuzNo
+    val currentChapterNo = uiState.currentChapterNo
+
+    var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier.padding(horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        SimpleTooltip(text = stringResource(R.string.autoScroll)) {
+            IconButton(
+                onClick = {
+                    autoScrollSheetOpen = true
+                },
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.icon_scroll_down),
+                    contentDescription = stringResource(R.string.autoScroll),
+                    tint = colorScheme.onSurface.alpha(0.75f)
+                )
+            }
+        }
+
+        SimpleTooltip(text = stringResource(R.string.strLabelSelectTranslations)) {
+            IconButton(
+                onClick = {
+                    openReaderSetting(
+                        context,
+                        uiState,
+                        ActivitySettings.SETTINGS_TRANSLATION
+                    )
+                }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.dr_icon_translations),
+                    contentDescription = stringResource(R.string.strLabelSelectTranslations),
+                    tint = colorScheme.onSurface.alpha(0.75f)
+                )
+            }
+        }
+
+        Spacer(
+            Modifier.weight(1f)
+        )
+
+        TextButton(
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = colorScheme.primary
+            ),
+            onClick = onNavigatorRequest,
+        ) {
+            Icon(
+                painterResource(R.drawable.dr_icon_chevron_down),
+                contentDescription = null,
+                modifier = Modifier.padding(end = 6.dp).size(18.dp)
+            )
+
+            if (currentJuzNo != null) {
+                JuzIcon(
+                    juzNo = currentJuzNo,
+                    fontSize = 22.sp,
+                    color = colorScheme.primary
+                )
+            } else if (currentChapterNo != null) {
+                ChapterIcon(
+                    modifier = Modifier.padding(top = 8.dp),
+                    chapterNo = currentChapterNo,
+                    fontSize = 32.sp,
+                    color = colorScheme.primary
+                )
+            }
+        }
+    }
+
+    AutoScrollSheet(
+        readerVm,
+        autoScrollSheetOpen,
+    ) {
+        autoScrollSheetOpen = false
+    }
+}
+
+@Composable
+private fun StickyHeaderModeMushaf(
+    readerVm: ReaderViewModel,
+    uiState: ReaderUiState,
+    onNavigatorRequest: () -> Unit
+) {
+    val currentPageNo = uiState.currentPageNo
+    val scriptCode = ReaderPreferences.observeQuranScript()
+    val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
+
+    val chaptersOfPage by produceState(
+        initialValue = "",
+        currentPageNo,
+        scriptCode,
+        scriptVariant,
+    ) {
+        val pageNo = currentPageNo
+        if (pageNo == null || pageNo <= 0) {
+            value = ""
+            return@produceState
+        }
+        val mushafId = scriptCode.getQuranMushafId(scriptVariant)
+        if (mushafId <= 0) {
+            value = ""
+            return@produceState
+        }
+        value = readerVm.scriptRepository.getChapterNamesOnMushafPage(
+            mushafId,
+            pageNo,
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            chaptersOfPage,
+            style = typography.labelMedium,
+            modifier = Modifier.widthIn(max = 120.dp),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+
+
+        Spacer(Modifier.weight(1f))
+
+        TextButton(
+            modifier = Modifier.height(28.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = colorScheme.onSurface
+            ),
+            onClick = onNavigatorRequest,
+        ) {
+            if (currentPageNo != null) {
+                Text(stringResource(R.string.strLabelPageNo, currentPageNo))
+            }
+            Icon(
+                painterResource(R.drawable.dr_icon_chevron_down),
+                contentDescription = null
+            )
+        }
+    }
+
 }
 
 fun openReaderSetting(context: Context, state: ReaderUiState, destination: Int) {

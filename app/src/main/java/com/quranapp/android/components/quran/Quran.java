@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
 
+@Deprecated
 public class Quran {
     private static final AtomicReference<Quran> sQuranRef = new AtomicReference<>();
     private final String mScript;

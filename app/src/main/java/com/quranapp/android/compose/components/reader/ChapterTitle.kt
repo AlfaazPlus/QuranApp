@@ -1,52 +1,48 @@
 package com.quranapp.android.compose.components.reader
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.quranapp.android.R
+import com.alfaazplus.sunnah.ui.theme.fontCommon
 import com.quranapp.android.compose.components.ChapterIcon
+import com.quranapp.android.utils.quran.QuranGlyphs
 
 @Composable
 fun ChapterTitle(
     chapterNo: Int,
 ) {
-    Row(
+    Box(
         modifier = Modifier
-            .padding(vertical = 20.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        HorizontalDivider(
-            Modifier.weight(1f),
-            thickness = 1.dp,
-            color = colorScheme.primary,
-        )
-        Box(
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(R.drawable.quran_frame3),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(colorScheme.primary),
-                modifier = Modifier.height(55.dp)
-            )
 
-            ChapterIcon(chapterNo, fontSize = 31.sp, modifier = Modifier.padding(top = 10.dp))
-        }
-        HorizontalDivider(
-            Modifier.weight(1f),
-            thickness = 1.dp,
-            color = colorScheme.primary,
+        Text(
+            text = QuranGlyphs.Special.TITLE_FRAME,
+            modifier = Modifier
+                .fillMaxWidth(),
+            style = TextStyle(
+                fontFamily = fontCommon,
+                fontSize = 46.sp,
+                textAlign = TextAlign.Center,
+                color = colorScheme.primary,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
         )
+
+        ChapterIcon(chapterNo, fontSize = 30.sp, modifier = Modifier.padding(top = 8.dp))
     }
 }

@@ -21,10 +21,20 @@ val fontUrdu by lazy {
         ),
     )
 }
-val fontBismillah by lazy {
+
+val fontCommon by lazy {
     FontFamily(
         Font(
-            R.font.bismillah,
+            R.font.quran_common,
+            weight = FontWeight.Normal,
+        ),
+    )
+}
+
+val fontSurah by lazy {
+    FontFamily(
+        Font(
+            R.font.suracon,
             weight = FontWeight.Normal,
         ),
     )

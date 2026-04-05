@@ -3,15 +3,19 @@ package com.quranapp.android.utils.reader
 import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.LineBreak
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alfaazplus.sunnah.ui.theme.fontFamily
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.compose.components.reader.MushafLineLayout
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.extensions.getDimension
 
 data class TextBuilderParams(
@@ -34,6 +38,15 @@ data class TextBuilderParams(
         return "script:$script, arabicSizeMultiplier:$arabicSizeMultiplier, translationSizeMultiplier:$translationSizeMultiplier ,slugs:$slugs"
     }
 }
+
+data class PageBuilderParams(
+    val context: Context,
+    val textMeasurer: TextMeasurer,
+    val colors: ColorScheme,
+    val type: Typography,
+    val density: Density,
+    val contentWidthPx: Int,
+)
 
 data class TranslationTextStyleParams(
     val slug: String,
@@ -90,3 +103,107 @@ fun getQuranTextStyle(
         lineHeight = fontSize * 1.8f
     )
 }
+
+fun mushafCappedBaseStyle(base: TextStyle, lineInnerWidthDp: Float): TextStyle {
+    val cap = mushafScreenMaxFontScale(lineInnerWidthDp)
+    val scaled = (base.fontSize.value * cap).sp
+    return base.copy(
+        fontSize = scaled,
+        lineHeight = (scaled.value * MUSHAF_LINE_HEIGHT_MULT).sp,
+    )
+}
+
+/**
+ * Scales the dimen-derived mushaf base font by available line width (dp).
+ * Narrow phones use a slightly lower ceiling; large screens allow a larger max before shrink-only logic.
+ */
+private fun mushafScreenMaxFontScale(lineInnerWidthDp: Float): Float {
+    val w = lineInnerWidthDp.coerceIn(MUSHAF_FONT_WIDTH_DP_MIN, MUSHAF_FONT_WIDTH_DP_MAX)
+    return (MUSHAF_FONT_SCALE_AT_MIN_WIDTH + (w - MUSHAF_FONT_WIDTH_DP_MIN) / (MUSHAF_FONT_WIDTH_DP_MAX - MUSHAF_FONT_WIDTH_DP_MIN) * (MUSHAF_FONT_SCALE_AT_MAX_WIDTH - MUSHAF_FONT_SCALE_AT_MIN_WIDTH)).coerceIn(
+        MUSHAF_FONT_SCALE_AT_MIN_WIDTH,
+        MUSHAF_FONT_SCALE_AT_MAX_WIDTH
+    )
+}
+
+
+fun fitMushafLineLayout(
+    words: List<AyahWordEntity>,
+    centered: Boolean,
+    cappedBaseStyle: TextStyle,
+    maxLineWidthPx: Float,
+    lineWidthBounded: Boolean,
+    density: Density,
+    textMeasurer: TextMeasurer,
+): MushafLineLayout {
+    if (words.isEmpty()) {
+        return MushafLineLayout(
+            fittedStyle = cappedBaseStyle,
+            centeredGap = 0.dp,
+        )
+    }
+
+    val baseGapPx =
+        with(density) { cappedBaseStyle.fontSize.toPx() * MUSHAF_CENTERED_GAP_FRACTION }
+
+    val baseWidth = measureMushafLineWidth(
+        words = words,
+        centered = centered,
+        textMeasurer = textMeasurer,
+        style = cappedBaseStyle,
+        centeredGapPx = baseGapPx,
+    ).coerceAtLeast(1f)
+
+    val shrinkOnly = when {
+        !lineWidthBounded -> 1f
+        baseWidth <= maxLineWidthPx -> 1f
+        else -> (maxLineWidthPx / baseWidth).coerceAtLeast(MUSHAF_LINE_SHRINK_MIN)
+    }
+
+    val fittedSp = (cappedBaseStyle.fontSize.value * shrinkOnly).sp
+    return MushafLineLayout(
+        fittedStyle = cappedBaseStyle.copy(
+            fontSize = fittedSp,
+            lineHeight = (fittedSp.value * MUSHAF_LINE_HEIGHT_MULT).sp,
+        ),
+        centeredGap = with(density) { (baseGapPx * shrinkOnly).toDp() },
+    )
+}
+
+private fun measureMushafLineWidth(
+    words: List<AyahWordEntity>,
+    centered: Boolean,
+    textMeasurer: TextMeasurer,
+    style: TextStyle,
+    centeredGapPx: Float,
+): Float {
+    var sum = 0f
+
+    for (word in words) {
+        sum += textMeasurer.measure(
+            text = AnnotatedString(word.text),
+            style = style,
+            softWrap = false,
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+        ).size.width
+    }
+
+    if (centered && words.size > 1) {
+        sum += centeredGapPx * (words.size - 1)
+    }
+
+    return sum
+}
+
+
+private const val MUSHAF_LINE_HEIGHT_MULT = 1.8f
+private const val MUSHAF_FONT_WIDTH_DP_MIN = 260f
+private const val MUSHAF_FONT_WIDTH_DP_MAX = 820f
+private const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.88f
+private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1.22f
+
+/** Inter-word gap as a fraction of font size for centered mushaf lines. */
+private const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f
+
+/** When shrinking to fit, do not go below this fraction of the (screen-capped) base size. */
+private const val MUSHAF_LINE_SHRINK_MIN = 0.16f

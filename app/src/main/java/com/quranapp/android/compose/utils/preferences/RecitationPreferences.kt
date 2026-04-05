@@ -30,7 +30,7 @@ object RecitationPreferences {
     private val KEY_VERSE_GROUP_SIZE =
         intPreferencesKey("key.recitation.verse_group_size")
 
-    const val RECITATION_DEFAULT_REPEAT_COUNT = 1
+    const val RECITATION_DEFAULT_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_VERSE_GROUP_SIZE = 1
 
     @Composable

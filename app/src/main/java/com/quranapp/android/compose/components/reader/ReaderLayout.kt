@@ -2,8 +2,11 @@ package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -15,12 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.common.Loader
-import com.quranapp.android.db.bookmark.BookmarkKey
+import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.delay
@@ -37,39 +41,6 @@ enum class ReaderMode(val value: String) {
     }
 }
 
-
-data class QuranPageSectionItem(
-    val chapterNo: Int,
-    val showBismillah: Boolean,
-    val verses: List<Verse>,
-)
-
-data class QuranPageItem(
-    val pageNo: Int,
-    val juzNo: Int,
-    val sections: List<QuranPageSectionItem>,
-    val chapterRange: IntRange,
-    val chaptersName: String,
-) {
-    val verseRanges: Map<Int, IntRange> by lazy {
-        HashMap<Int, IntRange>().apply {
-            for (section in sections) {
-                if (section.verses.isNotEmpty()) {
-                    this[section.chapterNo] =
-                        section.verses.first().verseNo..section.verses.last().verseNo
-                }
-            }
-        }
-    }
-
-    fun hasChapter(chapterNo: Int): Boolean {
-        return chapterNo in chapterRange
-    }
-
-    fun hasVerse(chapterNo: Int, verseNo: Int): Boolean {
-        return hasChapter(chapterNo) && verseRanges.values.any { verseNo in it }
-    }
-}
 
 sealed class ReaderLayoutItem(var key: String? = null) {
     data class ChapterInfo(val chapterNo: Int) : ReaderLayoutItem()
@@ -97,7 +68,22 @@ fun ReaderLayout(
     }
 
     when (uiState.transientReaderMode ?: readerMode) {
-        ReaderMode.Reading -> ReaderLayoutPageMode(readerVm)
+        ReaderMode.Reading -> {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            ) {
+                val horizontalPadding = 16.dp * 2
+
+                val contentWidthPx = with(LocalDensity.current) {
+                    (maxWidth - horizontalPadding).coerceAtLeast(1.dp).roundToPx()
+                }
+
+                ReaderLayoutPageMode(readerVm, contentWidthPx)
+            }
+        }
+
         ReaderMode.Translation -> {}
         else -> ReaderLayoutVerseMode(readerVm, uiState)
     }
@@ -110,7 +96,7 @@ private fun ReaderLayoutVerseMode(
     uiState: ReaderUiState,
 ) {
     val listState = rememberLazyListState()
-    val items by readerVm.translationViewItems.collectAsStateWithLifecycle()
+    val items by readerVm.verseByVerseItems.collectAsStateWithLifecycle()
     val allBookmarks by readerVm.bookmarksRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
@@ -131,15 +117,11 @@ private fun ReaderLayoutVerseMode(
     val bookmarkedVerseKeys = remember(allBookmarks, visibleVerseKeys) {
         allBookmarks.asSequence()
             .map {
-                if (it.chapterNo == null || it.fromVerseNo == null || it.toVerseNo == null) {
-                    null
-                } else {
-                    BookmarkKey(
-                        chapterNo = it.chapterNo,
-                        fromVerse = it.fromVerseNo,
-                        toVerse = it.toVerseNo
-                    )
-                }
+                BookmarkKey(
+                    chapterNo = it.chapterNo,
+                    fromVerse = it.fromVerseNo,
+                    toVerse = it.toVerseNo
+                )
             }
             .filterNotNull()
             .filter { it in visibleVerseKeys }
@@ -225,16 +207,4 @@ private fun TranslationRow(
             )
         }
     }
-}
-
-@Composable
-private fun ReaderLayoutPageMode(
-    readerVm: ReaderViewModel,
-) {
-
-}
-
-@Composable
-private fun PageModePage(page: QuranPageItem) {
-
 }

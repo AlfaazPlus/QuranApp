@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
 
+@Deprecated
 public class QuranMeta implements Serializable {
     private static final AtomicReference<QuranMeta> sQuranMetaRef = new AtomicReference<>();
     private SparseArray<ChapterMeta> chapterMetaMap = new SparseArray<>();

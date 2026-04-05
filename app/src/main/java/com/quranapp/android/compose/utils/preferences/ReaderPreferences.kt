@@ -12,6 +12,7 @@ import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.utils.reader.QuranScriptUtils
+import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
@@ -65,6 +66,8 @@ object ReaderPreferences {
 
     val KEY_SCRIPT =
         PrefKey(stringPreferencesKey(QuranScriptUtils.KEY_SCRIPT), QuranScriptUtils.SCRIPT_DEFAULT)
+
+    val KEY_SCRIPT_VARIANT = PrefKey(stringPreferencesKey("script_variant"), "")
 
     val KEY_READER_MODE =
         PrefKey(stringPreferencesKey(Keys.READER_KEY_READER_MODE), ReaderMode.VerseByVerse.value)
@@ -267,6 +270,29 @@ object ReaderPreferences {
         }
 
         return s
+    }
+
+
+    fun getQuranScriptVariant(): QuranScriptVariant? {
+        return QuranScriptVariant.fromValue(DataStoreManager.read(KEY_SCRIPT_VARIANT))
+    }
+
+    suspend fun setQuranScriptVariant(variant: QuranScriptVariant) {
+        DataStoreManager.write(KEY_SCRIPT_VARIANT, variant.value)
+    }
+
+    fun quranScriptVariantFlow(): Flow<QuranScriptVariant?> {
+        return DataStoreManager.flow(KEY_SCRIPT_VARIANT)
+            .mapLatest {
+                QuranScriptVariant.fromValue(it)
+            }
+    }
+
+    @Composable
+    fun observeQuranScriptVariant(): QuranScriptVariant? {
+        val value = DataStoreManager.observe(KEY_SCRIPT_VARIANT)
+
+        return QuranScriptVariant.fromValue(value)
     }
 
     fun getReaderMode(): ReaderMode {

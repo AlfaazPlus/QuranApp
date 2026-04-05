@@ -5,20 +5,38 @@ import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.provider.BaseColumns
 import android.widget.Toast
 import androidx.core.database.sqlite.transaction
 import com.quranapp.android.R
 import com.quranapp.android.components.bookmark.BookmarkModel
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_CHAPTER_NO
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_FROM_VERSE_NO
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_NOTE
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_TO_VERSE_NO
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.TABLE_NAME
-import com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry._ID
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.COL_CHAPTER_NO
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.COL_DATETIME
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.COL_FROM_VERSE_NO
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.COL_NOTE
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.COL_TO_VERSE_NO
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry.TABLE_NAME
+import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry._ID
 import com.quranapp.android.utils.univ.DBUtils
 import com.quranapp.android.utils.univ.DateUtils
 
+// TODO
+@Deprecated("to cleanup - moved to BookmarkContract")
+private object BookmarkContractOld {
+
+    object BookmarkEntry : BaseColumns {
+        const val TABLE_NAME = "QuranBookmark"
+
+        const val _ID = "_id"
+        const val COL_CHAPTER_NO = "ChapterNumber"
+        const val COL_FROM_VERSE_NO = "FromVerseNumber"
+        const val COL_TO_VERSE_NO = "ToVerseNumber"
+        const val COL_DATETIME = "Date"
+        const val COL_NOTE = "Note"
+    }
+}
+
+@Deprecated("to cleaup - moved to UserDatabase")
 class BookmarkDbHelper(
     private val context: Context
 ) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {

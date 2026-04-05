@@ -6,6 +6,7 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
@@ -14,11 +15,15 @@ import com.quranapp.android.components.quran.Quran
 import com.quranapp.android.components.quran.Quran2
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
-import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.reader.QuranPageItem
-import com.quranapp.android.compose.components.reader.QuranPageSectionItem
+import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.db.entities.quran.MushafLineType
+import com.quranapp.android.db.entities.quran.MushafMapEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.MessageUtils
@@ -83,21 +88,19 @@ object ReaderItemsBuilder {
     suspend fun buildJuzVersesForTranslationMode(
         context: Context,
         params: TextBuilderParams,
+        quranRepository: QuranRepository,
         juzNo: Int
     ): List<ReaderLayoutItem> {
         if (!QuranMeta.isJuzValid(juzNo)) return emptyList()
 
         val quran = Quran2.prepareInstance(context)
-        val meta = QuranMeta2.prepareInstance(context)
         val translationFactory = QuranTranslationFactory(context)
 
         val out = ArrayList<ReaderLayoutItem>()
 
         translationFactory.use {
-            val chapters = meta.getChaptersInJuz(juzNo)
-            for (chapterNo in chapters.first..chapters.second) {
-                val verseRange = meta.getVerseRangeOfChapterInJuz(juzNo, chapterNo)
-
+            val chapterRanges = quranRepository.getChapterVerseRangesInJuz(juzNo)
+            for ((chapterNo, verseRange) in chapterRanges) {
                 if (verseRange.first == 1) {
                     out.add(ReaderLayoutItem.ChapterTitle(chapterNo).apply {
                         key = "chapterTitle-$chapterNo"
@@ -117,7 +120,7 @@ object ReaderItemsBuilder {
                     quran,
                     chapterNo,
                     verseRange.first,
-                    verseRange.second,
+                    verseRange.last,
                 )
             }
         }
@@ -286,89 +289,103 @@ object ReaderItemsBuilder {
         }
     }
 
+    /**
+     * Builds several mushaf pages in one pass: one read of script / mushaf id, then sequential
+     * DB work per page (lines + juz from [ayahs] via mushaf map).
+     */
+    suspend fun buildMushafPages(
+        quranRepository: QuranRepository,
+        fontResolver: FontResolver,
+        pageNumbers: Collection<Int>,
+        params: PageBuilderParams
+    ): Map<Int, QuranPageItem> {
+        val distinct = pageNumbers.filter { it > 0 }.distinct().sorted()
+        if (distinct.isEmpty()) return emptyMap()
 
-    suspend fun buildChapterForPageMode(
-        context: Context,
-        chapterNo: Int,
-    ): List<QuranPageItem> {
-        if (!QuranMeta.isChapterValid(chapterNo)) return emptyList()
+        val scriptCode = ReaderPreferences.getQuranScript()
+        val mushafId = scriptCode.getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
-        val quran = Quran2.prepareInstance(context)
-        val meta = QuranMeta2.prepareInstance(context)
+        Log.d("BUILDING PAGES", distinct)
 
-        val pageRange = meta.getChapterPageRange(chapterNo)
-        val pages = ArrayList<QuranPageItem>()
+        val out = LinkedHashMap<Int, QuranPageItem>(distinct.size)
+        for (pageNo in distinct) {
+            val rows = quranRepository.getPageLines(mushafId, pageNo)
+            val lines = ArrayList<QuranPageLineItem>(rows.size)
 
-        for (pageNo in pageRange.first..pageRange.second) {
-            pages.add(buildPage(pageNo, quran, meta))
-        }
-
-        return pages
-    }
-
-    suspend fun buildJuzForPageMode(
-        context: Context,
-        juzNo: Int,
-    ): List<QuranPageItem> {
-        if (!QuranMeta.isJuzValid(juzNo)) return emptyList()
-
-        val quran = Quran2.prepareInstance(context)
-        val meta = QuranMeta2.prepareInstance(context)
-
-        val pageRange = meta.getJuzPageRange(juzNo)
-
-        val pages = ArrayList<QuranPageItem>()
-
-        for (pageNo in pageRange.first..pageRange.second) {
-            pages.add(buildPage(pageNo, quran, meta))
-        }
-
-        return pages
-    }
-
-    private fun buildPage(
-        pageNo: Int,
-        quran: Quran,
-        meta: QuranMeta,
-    ): QuranPageItem {
-        val chaptersOnPage = meta.getChaptersOnPage(pageNo)
-
-        val sections = ArrayList<QuranPageSectionItem>()
-
-        val nameBuilder = StringBuilder()
-
-        for (chapterNo in chaptersOnPage.first..chaptersOnPage.second) {
-            val verseRange = meta.getVerseRangeOfChapterOnPage(pageNo, chapterNo)
-
-            val verses = ArrayList<Verse>()
-            val showBismillah = verseRange.first == 1 && QuranMeta.canShowBismillah(chapterNo)
-
-            for (v in verseRange.first..verseRange.second) {
-                quran.getVerse(chapterNo, v)?.let { verses.add(it) }
-            }
-
-            sections.add(
-                QuranPageSectionItem(
-                    chapterNo = chapterNo,
-                    showBismillah = showBismillah,
-                    verses = verses,
-                ),
+            val baseStyle = getQuranTextStyle(
+                QuranTextStyleParams(
+                    context = params.context,
+                    fontResolver = fontResolver,
+                    colors = params.colors,
+                    type = params.type,
+                    pageNo = pageNo,
+                    script = scriptCode,
+                    sizeMultiplier = 1f,
+                )
             )
 
-            if (nameBuilder.isNotEmpty()) nameBuilder.append(", ")
+            val contentWidthDp = with(params.density) { params.contentWidthPx.toDp().value }
+            val cappedBaseStyle = mushafCappedBaseStyle(baseStyle, contentWidthDp)
 
-            nameBuilder
-                .append(chapterNo)
-                .append(". ")
-                .append(meta.getChapterMeta(chapterNo).getName())
+            for (row in rows) {
+                mapMushafRowToLineItem(
+                    row,
+                    quranRepository,
+                    scriptCode,
+                    cappedBaseStyle,
+                    params
+                )?.let {
+                    lines.add(it)
+                }
+            }
+
+            out[pageNo] = QuranPageItem(
+                pageNo = pageNo,
+                juzNo = quranRepository.getJuzForMushafPage(mushafId, pageNo),
+                lines = lines,
+            )
         }
 
-        return QuranPageItem(
-            pageNo = pageNo,
-            juzNo = meta.getJuzForPage(pageNo),
-            sections = sections,
-            chapterRange = chaptersOnPage.first..chaptersOnPage.second,
-            chaptersName = nameBuilder.toString(),
-        )
+        Log.d("BUILT PAGES", distinct)
+
+        return out
+    }
+
+    private suspend fun mapMushafRowToLineItem(
+        row: MushafMapEntity,
+        quranRepository: QuranRepository,
+        scriptCode: String,
+        cappedBaseStyle: TextStyle,
+        params: PageBuilderParams,
+    ): QuranPageLineItem? {
+        return when (row.lineType) {
+            MushafLineType.surah_name -> {
+                val chapter = row.surahNo.takeIf { it != null && it > 0 } ?: return null
+                QuranPageLineItem.Title(row.lineNumber, chapter)
+            }
+
+            MushafLineType.basmallah -> QuranPageLineItem.Bismillah(row.lineNumber)
+
+            MushafLineType.ayah -> {
+                val words = quranRepository.resolveMushafLineWords(row, scriptCode)
+
+                val layout = fitMushafLineLayout(
+                    words = words,
+                    centered = row.isCentered,
+                    cappedBaseStyle = cappedBaseStyle,
+                    maxLineWidthPx = params.contentWidthPx.toFloat(),
+                    lineWidthBounded = true,
+                    density = params.density,
+                    textMeasurer = params.textMeasurer,
+                )
+
+                QuranPageLineItem.Text(
+                    lineNo = row.lineNumber,
+                    centered = row.isCentered,
+                    words = words,
+                    layout = layout
+                )
+            }
+        }
     }
 }

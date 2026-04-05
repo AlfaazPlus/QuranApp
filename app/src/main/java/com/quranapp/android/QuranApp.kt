@@ -8,6 +8,8 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.bookmark.UserDataMigrationManager
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
@@ -46,5 +48,6 @@ class QuranApp : Application() {
         ThemeUtilsV2.migrateThemePreferences(this)
         FavChaptersViewModel.migrate(this)
         ReaderPreferences.migrateFromLegacyIfNeeded(this)
+        UserDataMigrationManager(this).migrateBookmarksIfNeeded()
     }
 }
