@@ -21,7 +21,7 @@ typealias OnReferenceClick = (slugs: Set<String>, chapterNo: Int, verses: String
 typealias OnFootnoteClickRaw = (slug: String, footnoteNo: Int) -> Unit
 typealias OnFootnoteClick = (verse: Verse, footnote: Footnote?) -> Unit
 typealias OnVerseOption = (verse: Verse) -> Unit
-typealias OnBookmarkRequest = (verse: Verse) -> Unit
+typealias OnBookmarkRequest = (chapterNo: Int, verseRange: IntRange) -> Unit
 
 data class VerseActions(
     val onReferenceClick: OnReferenceClick,

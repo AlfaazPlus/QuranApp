@@ -11,12 +11,12 @@ interface SurahDao {
     @Query("SELECT * FROM surahs ORDER BY surah_no")
     fun getAllSurahs(): Flow<List<SurahEntity>>
 
-    @Query("SELECT * FROM surahs WHERE surah_no = :surahNo LIMIT 1")
-    suspend fun getSurah(surahNo: Int): SurahEntity?
+    @Query("SELECT * FROM surahs ORDER BY surah_no")
+    fun getAllSurahsWithLocalizations(): Flow<List<SurahWithLocalizations>>
 
     @Transaction
-    @Query("SELECT * FROM surahs WHERE surah_no = :surahNo LIMIT 1")
-    suspend fun getSurahWithLocalizations(surahNo: Int): SurahWithLocalizations?
+    @Query("SELECT * FROM surahs WHERE surah_no IN (:surahNos)")
+    suspend fun getSurahsWithLocalizationsByNos(surahNos: List<Int>): List<SurahWithLocalizations>
 
     @Query(
         """

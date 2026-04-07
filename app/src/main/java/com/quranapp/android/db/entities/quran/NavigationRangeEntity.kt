@@ -7,7 +7,8 @@ import androidx.room.ForeignKey
 enum class NavigationType {
     juz,
     hizb,
-    rub
+    rub,
+    manzil,
 }
 
 @Entity(

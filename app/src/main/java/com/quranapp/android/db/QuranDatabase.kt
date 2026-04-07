@@ -9,19 +9,24 @@ import com.quranapp.android.db.dao.AyahWordDao
 import com.quranapp.android.db.dao.MushafDao
 import com.quranapp.android.db.dao.NavigationDao
 import com.quranapp.android.db.dao.SurahDao
+import com.quranapp.android.db.dao.SurahSearchDao
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafEntity
 import com.quranapp.android.db.entities.quran.MushafMapEntity
 import com.quranapp.android.db.entities.quran.NavigationRangeEntity
 import com.quranapp.android.db.entities.quran.ScriptEntity
+import com.quranapp.android.db.entities.quran.SurahAliasFtsEntity
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
+import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
 
 @Database(
     entities = [
         SurahEntity::class,
         SurahLocalizationEntity::class,
+        SurahSearchAliasEntity::class,
+        SurahAliasFtsEntity::class,
         AyahEntity::class,
         ScriptEntity::class,
         AyahWordEntity::class,
@@ -30,11 +35,12 @@ import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
         MushafMapEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(QuranConverters::class)
 abstract class QuranDatabase : RoomDatabase() {
     abstract fun surahDao(): SurahDao
+    abstract fun surahSearchDao(): SurahSearchDao
     abstract fun ayahDao(): AyahDao
     abstract fun ayahWordDao(): AyahWordDao
     abstract fun navigationDao(): NavigationDao

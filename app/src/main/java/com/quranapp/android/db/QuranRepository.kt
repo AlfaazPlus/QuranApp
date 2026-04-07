@@ -1,9 +1,19 @@
 package com.quranapp.android.db
 
 import android.content.Context
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
+import com.quranapp.android.db.entities.quran.NavigationType
+import com.quranapp.android.db.relations.NavigationUnit
+import com.quranapp.android.db.relations.NavigationUnitRange
+import com.quranapp.android.db.relations.SurahNoSearchResult
+import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.reader.getQuranMushafId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import java.util.Locale
 
 class QuranRepository(
@@ -14,6 +24,8 @@ class QuranRepository(
     private val ayahDao get() = database.ayahDao()
     private val ayahWordDao get() = database.ayahWordDao()
     private val surahDao get() = database.surahDao()
+    private val surahSearchDao get() = database.surahSearchDao()
+    private val navigationDao get() = database.navigationDao()
 
     suspend fun getNumberOfPages(mushafId: Int): Int {
         if (mushafId <= 0) return 0
@@ -153,5 +165,133 @@ class QuranRepository(
                 append(name)
             }
         }
+    }
+
+    fun getAllSurahs(): Flow<List<SurahWithLocalizations>> {
+        return surahDao.getAllSurahsWithLocalizations()
+    }
+
+    fun getJuzs() = getRangesResolved(NavigationType.juz)
+
+    fun getHizbs() = getRangesResolved(NavigationType.hizb)
+
+    fun getRubs() = getRangesResolved(NavigationType.rub)
+    fun getManzil() = getRangesResolved(NavigationType.manzil)
+
+    private fun getRangesResolved(type: NavigationType): Flow<List<NavigationUnit>> {
+        return combine(
+            navigationDao.getRanges(type),
+            surahDao.getAllSurahsWithLocalizations()
+        ) { ranges, surahs ->
+            val surahsByNo = surahs.associateBy { it.surah.surahNo }
+            ranges.groupBy { it.type to it.unitNo }
+                .map { (key, ranges) ->
+                    val (type, unitNo) = key
+
+                    NavigationUnit(
+                        type = type,
+                        unitNo = unitNo,
+                        ranges = ranges
+                            .sortedBy { it.surahNo }
+                            .mapNotNull { range ->
+                                surahsByNo[range.surahNo]?.let { surah ->
+                                    NavigationUnitRange(
+                                        surah = surah,
+                                        startAyah = range.startAyah,
+                                        endAyah = range.endAyah
+                                    )
+                                }
+                            }
+                    )
+                }
+                .sortedWith(compareBy<NavigationUnit> { it.type.name }.thenBy { it.unitNo })
+        }
+    }
+
+    suspend fun searchSurahNos(query: String): List<Int> {
+        return surahSearchDao.searchSurahNos(
+            query
+                .trim()
+                .lowercase()
+                .split(Regex("\\s+"))
+                .filter { it.isNotBlank() }
+                .joinToString(" ") { "$it*" }
+        ).map { it.surahNo }
+    }
+
+    suspend fun searchSurahs(query: String): List<SurahWithLocalizations> {
+        val surahNos = searchSurahNos(query)
+        if (surahNos.isEmpty()) return emptyList()
+
+        val byNo = surahDao.getSurahsWithLocalizationsByNos(surahNos)
+            .associateBy { it.surah.surahNo }
+
+        return surahNos.mapNotNull { byNo[it] }
+    }
+
+    suspend fun getChapterName(chapterNo: Int): String {
+        if (chapterNo <= 0) return ""
+        val langCode = Locale.getDefault().language
+        return surahDao.getLocalization(chapterNo, langCode)?.name?.takeIf { it.isNotBlank() }
+            ?: surahDao.getLocalization(chapterNo, "en")?.name.orEmpty()
+    }
+
+    suspend fun getFirstPageOfChapter(chapterNo: Int): Int? {
+        val mushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+        if (mushafId <= 0 || chapterNo <= 0) return null
+
+        return mushafDao.getFirstPageOfChapter(mushafId, chapterNo)
+    }
+
+    suspend fun getPageForVerse(surahNo: Int, ayahNo: Int): Int? {
+        val mushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+        if (mushafId <= 0 || surahNo <= 0 || ayahNo <= 0) return null
+        return mushafDao.getPageForVerse(mushafId, ayahId = QuranUtils.getAyahId(surahNo, ayahNo))
+    }
+
+    suspend fun getFirstPageOfJuz(juzNo: Int): Int? {
+        val mushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+        if (mushafId <= 0 || juzNo <= 0) return null
+        return mushafDao.getFirstPageOfJuz(mushafId, juzNo)
+    }
+
+    suspend fun getFirstPageOfHizb(hizbNo: Int): Int? {
+        val mushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+        if (mushafId <= 0 || hizbNo <= 0) return null
+        return mushafDao.getFirstPageOfHizb(mushafId, hizbNo)
+    }
+
+    suspend fun getChapterVerseRangesInHizb(hizbNo: Int): List<Pair<Int, IntRange>> {
+        if (hizbNo <= 0) return emptyList()
+
+        val ayahs = ayahDao.getAyahsByHizb(hizbNo)
+        if (ayahs.isEmpty()) return emptyList()
+
+        return ayahs.groupBy { it.surahNo }
+            .entries
+            .sortedBy { it.key }
+            .map { (surahNo, list) ->
+                val minAyah = list.minOf { it.ayahNo }
+                val maxAyah = list.maxOf { it.ayahNo }
+                surahNo to (minAyah..maxAyah)
+            }
+    }
+
+    suspend fun getFirstVerseOnPage(mushafId: Int, pageNo: Int, surahNo: Int): Int? {
+        if (mushafId <= 0 || pageNo <= 0 || surahNo <= 0) return null
+        return mushafDao.getFirstVerseOnPage(mushafId, pageNo, surahBase = surahNo * 1000)
+    }
+
+    suspend fun getFirstAyahIdOnPage(mushafId: Int, pageNo: Int): Int? {
+        if (mushafId <= 0 || pageNo <= 0) return null
+        return mushafDao.getFirstAyahIdOnPage(mushafId, pageNo)
     }
 }

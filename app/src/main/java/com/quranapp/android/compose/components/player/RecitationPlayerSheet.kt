@@ -176,6 +176,7 @@ private fun PlayerContainer(
         ) { isExpanded ->
             if (isExpanded) {
                 ExpandedPlayer(
+                    modifier = Modifier.navigationBarsPadding(),
                     state = state,
                     isPlaying = isPlaying,
                     isLoading = isLoading,

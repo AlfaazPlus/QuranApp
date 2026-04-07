@@ -26,11 +26,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,7 +55,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.activities.readerSettings.ActivitySettings
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
@@ -62,12 +63,10 @@ import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.getQuranMushafId
-import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
-import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
-import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
+import com.quranapp.android.viewModels.ReaderViewType
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,12 +75,13 @@ fun ReaderAppBar(
     readerVm: ReaderViewModel,
     isWideScreen: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
-    onNavigatorRequest: () -> Unit,
 ) {
     val context = LocalContext.current
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
+    var showNavigatorSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(true)
 
     Surface(
         shadowElevation = 4.dp,
@@ -113,7 +113,7 @@ fun ReaderAppBar(
                 actions = {
                     SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
                         IconButton(onClick = {
-                            openReaderSetting(context, uiState, -1)
+                            openReaderSetting(context, -1)
                         }) {
                             Icon(
                                 painter = painterResource(R.drawable.dr_icon_settings),
@@ -129,18 +129,36 @@ fun ReaderAppBar(
             )
 
             when (readerMode) {
-                ReaderMode.VerseByVerse -> {
-                    StickyHeaderModeVbV(readerVm, uiState, onNavigatorRequest)
+                ReaderMode.Reading -> {
+                    StickyHeaderModeMushaf(readerVm, uiState) {
+                        showNavigatorSheet = true
+                    }
                 }
 
-                ReaderMode.Reading -> {
-                    StickyHeaderModeMushaf(readerVm, uiState, onNavigatorRequest)
-                }
+                ReaderMode.Translation -> {}
 
                 else -> {
-                    // TODO
+                    StickyHeaderModeVbV(readerVm, uiState) {
+                        showNavigatorSheet = true
+                    }
                 }
             }
+        }
+    }
+
+    if (showNavigatorSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showNavigatorSheet = false },
+            sheetState = sheetState,
+            scrimColor = colorScheme.scrim.alpha(0.5f),
+            containerColor = colorScheme.background,
+            contentColor = colorScheme.onSurface,
+            dragHandle = null,
+            sheetGesturesEnabled = false
+        ) {
+            ReaderNavigator(
+                readerVm = readerVm,
+            ) { showNavigatorSheet = false }
         }
     }
 }
@@ -177,7 +195,7 @@ private fun ModeTabs(
                     modifier = Modifier
                         .clip(RoundedCornerShape(999.dp))
                         .background(
-                            if (isSelected) Color.White.copy(alpha = 0.14f) else Color.Transparent,
+                            if (isSelected) colorScheme.surface else Color.Transparent,
                         )
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
@@ -218,13 +236,6 @@ private fun StickyHeaderModeVbV(
     onNavigatorRequest: () -> Unit
 ) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.remember()
-    val chapterName = remember(context, uiState.currentChapterNo, quranMeta) {
-        uiState.currentChapterNo?.let { quranMeta?.getChapterName(context, it) } ?: ""
-    }
-
-    val currentJuzNo = uiState.currentJuzNo
-    val currentChapterNo = uiState.currentChapterNo
 
     var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
 
@@ -252,7 +263,6 @@ private fun StickyHeaderModeVbV(
                 onClick = {
                     openReaderSetting(
                         context,
-                        uiState,
                         ActivitySettings.SETTINGS_TRANSLATION
                     )
                 }
@@ -280,22 +290,32 @@ private fun StickyHeaderModeVbV(
             Icon(
                 painterResource(R.drawable.dr_icon_chevron_down),
                 contentDescription = null,
-                modifier = Modifier.padding(end = 6.dp).size(18.dp)
+                modifier = Modifier
+                    .padding(end = 6.dp)
+                    .size(18.dp)
             )
 
-            if (currentJuzNo != null) {
-                JuzIcon(
-                    juzNo = currentJuzNo,
+            when (val vt = uiState.viewType) {
+                is ReaderViewType.Juz -> JuzIcon(
+                    juzNo = vt.juzNo,
                     fontSize = 22.sp,
                     color = colorScheme.primary
                 )
-            } else if (currentChapterNo != null) {
-                ChapterIcon(
+
+                is ReaderViewType.Hizb -> Text(
+                    text = stringResource(R.string.labelHizbNo, vt.hizbNo),
+                    style = typography.titleMedium,
+                    color = colorScheme.primary,
+                )
+
+                is ReaderViewType.Chapter -> ChapterIcon(
                     modifier = Modifier.padding(top = 8.dp),
-                    chapterNo = currentChapterNo,
+                    chapterNo = vt.chapterNo,
                     fontSize = 32.sp,
                     color = colorScheme.primary
                 )
+
+                null -> {}
             }
         }
     }
@@ -334,7 +354,7 @@ private fun StickyHeaderModeMushaf(
             value = ""
             return@produceState
         }
-        value = readerVm.scriptRepository.getChapterNamesOnMushafPage(
+        value = readerVm.repository.getChapterNamesOnMushafPage(
             mushafId,
             pageNo,
         )
@@ -366,7 +386,11 @@ private fun StickyHeaderModeMushaf(
             onClick = onNavigatorRequest,
         ) {
             if (currentPageNo != null) {
-                Text(stringResource(R.string.strLabelPageNo, currentPageNo))
+                Text(
+                    stringResource(R.string.strLabelPageNo, currentPageNo),
+                    style = typography.titleMedium,
+                    color = colorScheme.primary,
+                )
             }
             Icon(
                 painterResource(R.drawable.dr_icon_chevron_down),
@@ -374,26 +398,13 @@ private fun StickyHeaderModeMushaf(
             )
         }
     }
-
 }
 
-fun openReaderSetting(context: Context, state: ReaderUiState, destination: Int) {
+fun openReaderSetting(context: Context, destination: Int) {
     context.startActivity(
         Intent(context, ActivitySettings::class.java).apply {
             putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, destination)
             putExtra(READER_KEY_SETTING_IS_FROM_READER, true)
-            putExtra(READER_KEY_SAVE_TRANSL_CHANGES, state.transientTranslationSlugs == null)
-
-            if (state.transientTranslationSlugs != null) {
-                putExtra(
-                    READER_KEY_TRANSL_SLUGS,
-                    state.transientTranslationSlugs.toTypedArray()
-                )
-            }
-
-            if (state.transientReaderMode != null) {
-                putExtra(READER_KEY_READ_TYPE, state.transientReaderMode)
-            }
         },
         null
     )

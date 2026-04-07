@@ -66,7 +66,7 @@ fun VerseView(
     val recState = LocalRecitationState.current
     val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
 
-    Box() {
+    Box {
         Column(
             modifier = Modifier
                 .background(
@@ -151,7 +151,10 @@ private fun VerseActionBar(
                 contentDescription = stringResource(R.string.strLabelBookmark),
                 tint = bookmarkTint,
             ) {
-                verseActions.onBookmarkRequest?.invoke(verse)
+                verseActions.onBookmarkRequest?.invoke(
+                    verse.chapterNo,
+                    verse.verseNo..verse.verseNo
+                )
             }
         }
         Spacer(modifier = Modifier.width(10.dp))

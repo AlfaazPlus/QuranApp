@@ -7,7 +7,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.quranapp.android.R
 import com.quranapp.android.db.entities.BookmarkEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 
 class UserRepository(
     private val context: Context,
@@ -21,19 +23,18 @@ class UserRepository(
 
     suspend fun addToBookmark(
         chapterNo: Int,
-        fromVerse: Int,
-        toVerse: Int,
+        verseRange: IntRange,
         note: String?,
     ) {
-        if (isBookmarked(chapterNo, fromVerse, toVerse)) {
+        if (isBookmarked(chapterNo, verseRange)) {
             Toast.makeText(context, R.string.strMsgBookmarkAddedAlready, Toast.LENGTH_SHORT).show()
             return
         }
 
         val entity = BookmarkEntity(
             chapterNo = chapterNo,
-            fromVerseNo = fromVerse,
-            toVerseNo = toVerse,
+            fromVerseNo = verseRange.first,
+            toVerseNo = verseRange.last,
             note = note
         )
 
@@ -97,10 +98,18 @@ class UserRepository(
 
     suspend fun isBookmarked(
         chapterNo: Int,
-        fromVerse: Int,
-        toVerse: Int
+        verseRange: IntRange
     ): Boolean {
-        return bookmarkDao.countBookmark(chapterNo, fromVerse, toVerse) > 0
+        return bookmarkDao.countBookmark(chapterNo, verseRange.first, verseRange.last) > 0
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun isBookmarkedFlow(
+        chapterNo: Int,
+        verseRange: IntRange
+    ): Flow<Boolean> {
+        return bookmarkDao.countBookmarkFlow(chapterNo, verseRange.first, verseRange.last)
+            .mapLatest { it > 0 }
     }
 
     suspend fun removeAllBookmarks() {

@@ -60,7 +60,7 @@ class ActivityReader2 : BaseActivity() {
     }
 
     private fun resolveReaderIntentData(intent: Intent?): ReaderIntentData {
-        if (intent == null) return ReaderIntentData.FullChapter(1)
+        if (intent == null) return ReaderIntentData.FullJuz(29)
 
         try {
             validateIntent(intent)

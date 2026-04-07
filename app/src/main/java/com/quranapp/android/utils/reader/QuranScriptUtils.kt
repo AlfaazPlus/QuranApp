@@ -2,8 +2,10 @@ package com.quranapp.android.utils.reader
 
 import android.content.Context
 import androidx.annotation.DimenRes
+import androidx.compose.runtime.Composable
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
@@ -231,6 +233,29 @@ fun String.getQuranMushafId(
     QuranScriptUtils.SCRIPT_UTHMANI -> 1
 
     else -> 0
+}
+
+@Composable
+fun rememberQuranMushafId(): Int {
+    val scriptCode = ReaderPreferences.observeQuranScript()
+    val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
+
+    return when (scriptCode) {
+//    QuranScriptUtils.SCRIPT_NOOREHUDA,
+        QuranScriptUtils.SCRIPT_DK_INDOPAK -> {
+            when (scriptVariant) {
+                // QuranScriptVariant.INDOPAK_13 -> 2
+                QuranScriptVariant.INDOPAK_15 -> 3
+                else -> 4
+            }
+        }
+
+        QuranScriptUtils.SCRIPT_KFQPC_V1,
+        QuranScriptUtils.SCRIPT_KFQPC_V2,
+        QuranScriptUtils.SCRIPT_UTHMANI -> 1
+
+        else -> 0
+    }
 }
 
 fun Int.toKFQPCFontFilename(): String {

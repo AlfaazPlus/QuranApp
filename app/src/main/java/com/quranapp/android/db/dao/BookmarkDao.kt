@@ -61,6 +61,20 @@ interface BookmarkDao {
 
     @Query(
         """
+        SELECT COUNT(*) FROM user_bookmarks
+        WHERE chapter_no = :chapterNo
+          AND from_verse_no = :fromVerse
+          AND to_verse_no = :toVerse
+    """
+    )
+    fun countBookmarkFlow(
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int
+    ): Flow<Int>
+
+    @Query(
+        """
         SELECT * FROM user_bookmarks
         WHERE chapter_no = :chapterNo
           AND from_verse_no = :fromVerse

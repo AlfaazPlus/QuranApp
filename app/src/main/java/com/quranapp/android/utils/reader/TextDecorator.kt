@@ -198,9 +198,11 @@ private fun measureMushafLineWidth(
 
 private const val MUSHAF_LINE_HEIGHT_MULT = 1.8f
 private const val MUSHAF_FONT_WIDTH_DP_MIN = 260f
-private const val MUSHAF_FONT_WIDTH_DP_MAX = 820f
+const val MUSHAF_FONT_WIDTH_DP_MAX = 720f
+
+val MUSHAF_PAGE_HORIZONTAL_PADDING = 16.dp
 private const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.88f
-private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1.22f
+private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1f
 
 /** Inter-word gap as a fraction of font size for centered mushaf lines. */
 private const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f

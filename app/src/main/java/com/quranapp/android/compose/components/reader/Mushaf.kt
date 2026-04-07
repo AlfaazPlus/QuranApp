@@ -1,7 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,13 +11,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -36,15 +35,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
+import com.quranapp.android.utils.reader.rememberQuranMushafId
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -90,17 +91,17 @@ private data class MushafPageMeasurementKey(
     val styleHash: Int,
 )
 
+
 @Composable
 fun ReaderLayoutPageMode(
     readerVm: ReaderViewModel,
-    contextWidthPx: Int,
+    contentWidth: Dp,
 ) {
-    val script = ReaderPreferences.observeQuranScript()
-    val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
+    val mushafId = rememberQuranMushafId()
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
 
-    val pageCount by produceState(0, script, scriptVariant) {
-        value = readerVm.mushafPageCount(script, scriptVariant)
+    val pageCount by produceState(0) {
+        value = readerVm.mushafPageCount(mushafId)
     }
 
     val context = LocalContext.current
@@ -131,7 +132,9 @@ fun ReaderLayoutPageMode(
                             type = typography,
                             textMeasurer = textMeasurer,
                             density = density,
-                            contentWidthPx = contextWidthPx
+                            contentWidthPx = with(density) {
+                                (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
+                            }
                         )
                     )
                 }
@@ -150,7 +153,20 @@ fun ReaderLayoutPageMode(
                     )
                 }
 
+                if (pageCount > 0) {
+                    readerVm.updateLastKnownVerseFromPage(currentPageNo)
+                }
             }
+    }
+
+    val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+
+    LaunchedEffect(navigateToPage, pageCount) {
+        val target = navigateToPage ?: return@LaunchedEffect
+        if (target in 1..pageCount) {
+            pagerState.scrollToPage(target - 1)
+            readerVm.consumePageNavigation()
+        }
     }
 
     HorizontalPager(
@@ -164,7 +180,7 @@ fun ReaderLayoutPageMode(
         PageModePage(
             readerVm = readerVm,
             pageNo = page + 1,
-            script = script,
+            contentWidth,
         )
     }
 }
@@ -173,7 +189,7 @@ fun ReaderLayoutPageMode(
 private fun PageModePage(
     readerVm: ReaderViewModel,
     pageNo: Int,
-    script: String,
+    contentWidth: Dp,
 ) {
     val item = readerVm.pageItems[pageNo]
 
@@ -198,34 +214,42 @@ private fun PageModePage(
             .toSet()
     }
 
-    Surface(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 48.dp),
-        color = colorScheme.surfaceContainerLowest,
-        tonalElevation = 0.dp,
-        shadowElevation = 0.dp,
-        border = BorderStroke(8.dp, Color.Transparent),
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center,
     ) {
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-            Column(
-                Modifier
-                    .verticalScroll(scrollState)
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 64.dp)
-                    .fillMaxWidth(),
-            ) {
-                Column(Modifier.fillMaxWidth()) {
-                    item.lines.forEach { line ->
-                        key(line.lineNo) {
-                            when (line) {
-                                is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo)
-                                is QuranPageLineItem.Bismillah -> Bismillah()
-                                is QuranPageLineItem.Text -> MushafLineText(
-                                    textLine = line,
-                                    layout = line.layout,
-                                    playingWordKeys = playingWordKeys,
-                                    controller = playerState.controller
-                                )
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .widthIn(max = contentWidth)
+                .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 48.dp),
+        ) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                Column(
+                    Modifier
+                        .verticalScroll(scrollState)
+                        .padding(
+                            start = MUSHAF_PAGE_HORIZONTAL_PADDING,
+                            end = MUSHAF_PAGE_HORIZONTAL_PADDING,
+                            top = 16.dp,
+                            bottom = 64.dp
+                        )
+                        .fillMaxWidth(),
+                ) {
+                    Column(Modifier.fillMaxWidth()) {
+                        item.lines.forEach { line ->
+                            key(line.lineNo) {
+                                when (line) {
+                                    is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo)
+                                    is QuranPageLineItem.Bismillah -> Bismillah()
+                                    is QuranPageLineItem.Text -> MushafLineText(
+                                        textLine = line,
+                                        layout = line.layout,
+                                        playingWordKeys = playingWordKeys,
+                                        controller = playerState.controller
+                                    )
+                                }
                             }
                         }
                     }

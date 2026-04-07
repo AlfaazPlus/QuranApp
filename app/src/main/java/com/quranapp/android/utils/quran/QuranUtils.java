@@ -7,6 +7,17 @@ import java.util.stream.IntStream;
 import kotlin.Pair;
 
 public abstract class QuranUtils {
+    public static int getAyahId(int chapterNo, int verseNo) {
+        return chapterNo * 1000 + verseNo;
+    }
+
+    public static Pair<Integer, Integer> getVerseNo(int ayahId) {
+        int chapterNo = ayahId / 1000;
+        int ayahNo = ayahId % 1000;
+
+        return new Pair(chapterNo, ayahNo);
+    }
+
     public static boolean doesVerseRangeEqualWhole(QuranMeta quranMeta, int chapterNo, int fromVerse, int toVerse) {
         return fromVerse == 1 && toVerse == quranMeta.getChapterVerseCount(chapterNo);
     }

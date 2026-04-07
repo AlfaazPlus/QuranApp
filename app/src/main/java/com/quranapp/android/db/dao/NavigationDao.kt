@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.quranapp.android.db.entities.quran.NavigationRangeEntity
 import com.quranapp.android.db.entities.quran.NavigationType
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NavigationDao {
@@ -14,9 +15,9 @@ interface NavigationDao {
         ORDER BY surah_no
     """
     )
-    suspend fun getRanges(
+    fun getRanges(
         type: NavigationType,
-    ): List<NavigationRangeEntity>
+    ): Flow<List<NavigationRangeEntity>>
 
     @Query(
         """

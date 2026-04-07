@@ -28,6 +28,9 @@ import androidx.room.PrimaryKey
     ]
 )
 data class AyahEntity(
+    /**
+     * ayahId = surahNo * 1000 + ayahNo
+     */
     @PrimaryKey
     @ColumnInfo(name = "ayah_id")
     val ayahId: Int,

@@ -33,4 +33,68 @@ interface MushafDao {
         """
     )
     suspend fun getJuzForPage(mushafId: Int, pageNumber: Int): Int?
+
+    @Query(
+        """
+        SELECT MIN(m.page_number) FROM mushaf_map AS m
+        WHERE m.mushaf_id = :mushafId AND m.surah_no = :chapterNo
+        """
+    )
+    suspend fun getFirstPageOfChapter(mushafId: Int, chapterNo: Int): Int?
+
+    @Query(
+        """
+        SELECT m.page_number FROM mushaf_map AS m
+        WHERE m.mushaf_id = :mushafId
+          AND :ayahId BETWEEN m.start_ayah_id AND m.end_ayah_id
+        LIMIT 1
+        """
+    )
+    suspend fun getPageForVerse(mushafId: Int, ayahId: Int): Int?
+
+    @Query(
+        """
+        SELECT MIN(m.page_number) FROM mushaf_map AS m
+        INNER JOIN ayahs AS a ON m.start_ayah_id = a.ayah_id
+        WHERE m.mushaf_id = :mushafId AND a.juz_no = :juzNo
+          AND m.start_ayah_id IS NOT NULL
+        """
+    )
+    suspend fun getFirstPageOfJuz(mushafId: Int, juzNo: Int): Int?
+
+    @Query(
+        """
+        SELECT MIN(m.page_number) FROM mushaf_map AS m
+        INNER JOIN ayahs AS a ON m.start_ayah_id = a.ayah_id
+        WHERE m.mushaf_id = :mushafId AND a.hizb_no = :hizbNo
+          AND m.start_ayah_id IS NOT NULL
+        """
+    )
+    suspend fun getFirstPageOfHizb(mushafId: Int, hizbNo: Int): Int?
+
+    @Query(
+        """
+        SELECT MIN(
+            CASE
+                WHEN m.start_ayah_id > :surahBase
+                THEN m.start_ayah_id - :surahBase
+                ELSE 1
+            END
+        ) FROM mushaf_map AS m
+        WHERE m.mushaf_id = :mushafId AND m.page_number = :pageNo
+          AND m.end_ayah_id > :surahBase
+          AND m.start_ayah_id < :surahBase + 1000
+          AND m.start_ayah_id IS NOT NULL AND m.end_ayah_id IS NOT NULL
+        """
+    )
+    suspend fun getFirstVerseOnPage(mushafId: Int, pageNo: Int, surahBase: Int): Int?
+
+    @Query(
+        """
+        SELECT MIN(m.start_ayah_id) FROM mushaf_map AS m
+        WHERE m.mushaf_id = :mushafId AND m.page_number = :pageNo
+          AND m.start_ayah_id IS NOT NULL
+        """
+    )
+    suspend fun getFirstAyahIdOnPage(mushafId: Int, pageNo: Int): Int?
 }

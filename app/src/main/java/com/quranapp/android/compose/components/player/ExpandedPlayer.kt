@@ -87,7 +87,7 @@ fun ExpandedPlayer(
     var mode by remember { mutableStateOf(ExpandedPlayerMode.Controls) }
 
     Background(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),

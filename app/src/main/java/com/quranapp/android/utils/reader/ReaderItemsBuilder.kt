@@ -15,6 +15,7 @@ import com.quranapp.android.components.quran.Quran
 import com.quranapp.android.components.quran.Quran2
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranMeta2
+import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
@@ -59,14 +60,10 @@ object ReaderItemsBuilder {
                 toVerseResolved
             )
         ) {
-            out.add(ReaderLayoutItem.ChapterInfo(chapterNo).apply {
-                key = "chapterInfo-$chapterNo"
-            })
+            out.add(ReaderLayoutItem.ChapterInfo(chapterNo, key = "chapterInfo-$chapterNo"))
 
             if (chapter.canShowBismillah()) {
-                out.add(ReaderLayoutItem.Bismillah.apply {
-                    key = "bismillah-$chapterNo"
-                })
+                out.add(ReaderLayoutItem.Bismillah(key = "bismillah-$chapterNo"))
             }
         }
 
@@ -91,36 +88,50 @@ object ReaderItemsBuilder {
         quranRepository: QuranRepository,
         juzNo: Int
     ): List<ReaderLayoutItem> {
-        if (!QuranMeta.isJuzValid(juzNo)) return emptyList()
+        if (juzNo !in 1..30) return emptyList()
+        return buildGroupedVerses(
+            context, params,
+            quranRepository.getChapterVerseRangesInJuz(juzNo)
+        )
+    }
+
+    suspend fun buildHizbVersesForTranslationMode(
+        context: Context,
+        params: TextBuilderParams,
+        quranRepository: QuranRepository,
+        hizbNo: Int
+    ): List<ReaderLayoutItem> {
+        if (hizbNo !in 1..60) return emptyList()
+        return buildGroupedVerses(
+            context, params,
+            quranRepository.getChapterVerseRangesInHizb(hizbNo)
+        )
+    }
+
+    private suspend fun buildGroupedVerses(
+        context: Context,
+        params: TextBuilderParams,
+        chapterRanges: List<Pair<Int, IntRange>>,
+    ): List<ReaderLayoutItem> {
+        if (chapterRanges.isEmpty()) return emptyList()
 
         val quran = Quran2.prepareInstance(context)
         val translationFactory = QuranTranslationFactory(context)
-
         val out = ArrayList<ReaderLayoutItem>()
 
         translationFactory.use {
-            val chapterRanges = quranRepository.getChapterVerseRangesInJuz(juzNo)
             for ((chapterNo, verseRange) in chapterRanges) {
                 if (verseRange.first == 1) {
-                    out.add(ReaderLayoutItem.ChapterTitle(chapterNo).apply {
-                        key = "chapterTitle-$chapterNo"
-                    })
+                    out.add(ReaderLayoutItem.ChapterTitle(chapterNo, key = "chapterTitle-$chapterNo"))
 
                     if (QuranMeta.canShowBismillah(chapterNo)) {
-                        out.add(ReaderLayoutItem.Bismillah.apply {
-                            key = "bismillah-$chapterNo"
-                        })
+                        out.add(ReaderLayoutItem.Bismillah(key = "bismillah-$chapterNo"))
                     }
                 }
 
                 buildVerses(
-                    params,
-                    out,
-                    it,
-                    quran,
-                    chapterNo,
-                    verseRange.first,
-                    verseRange.last,
+                    params, out, it, quran,
+                    chapterNo, verseRange.first, verseRange.last,
                 )
             }
         }
@@ -200,7 +211,7 @@ object ReaderItemsBuilder {
             }
 
             if (verse.isVOTD(params.context)) {
-                out.add(ReaderLayoutItem.IsVotd)
+                out.add(ReaderLayoutItem.IsVotd(key = "isVotd-$chapterNo:$verseNo"))
             }
 
             val parsedQuranText = if (params.arabicEnabled) buildAnnotatedString {
@@ -282,11 +293,164 @@ object ReaderItemsBuilder {
                     parsedQuranText = parsedQuranText,
                     parsedTranslationTexts = parsedTranslationTexts,
                     isLastInGroup = verseNo == toVerse,
-                ).apply {
                     key = "verse-$chapterNo:${verse.verseNo}${params.toKey()}"
-                }
+                )
             )
         }
+    }
+
+    suspend fun buildQuickReferenceItems(
+        context: Context,
+        params: TextBuilderParams,
+        repository: QuranRepository,
+        chapterNo: Int,
+        verseNos: List<Int>,
+    ): List<ReaderLayoutItem> {
+        if (chapterNo !in 1..114 || verseNos.isEmpty()) return emptyList()
+
+        val scriptCode = ReaderPreferences.getQuranScript()
+        val translationFactory = QuranTranslationFactory(context)
+        val out = ArrayList<ReaderLayoutItem>(verseNos.size)
+
+        translationFactory.use { factory ->
+            val booksInfo = factory.getTranslationBooksInfoValidated(params.slugs)
+
+            val arabicWrapByPage = HashMap<Int, Pair<ParagraphStyle, SpanStyle>>()
+
+            fun arabicWrapForPage(pageNo: Int): Pair<ParagraphStyle, SpanStyle> =
+                arabicWrapByPage.getOrPut(pageNo) {
+                    val style = getQuranTextStyle(
+                        QuranTextStyleParams(
+                            context = params.context,
+                            fontResolver = params.fontResolver,
+                            colors = params.colors,
+                            type = params.type,
+                            script = params.script,
+                            pageNo = pageNo,
+                            sizeMultiplier = params.arabicSizeMultiplier,
+                        )
+                    )
+                    style.toParagraphStyle() to style.toSpanStyle()
+                }
+
+            val translationWrapStyles = booksInfo.keys.associateWith { slug ->
+                val ts = getTranslationTextStyle(
+                    TranslationTextStyleParams(slug, params.translationSizeMultiplier)
+                )
+                ts.toParagraphStyle() to ts.toSpanStyle()
+            }
+
+            val labelMutedNonUrdu = SpanStyle(
+                color = params.colors.onBackground.alpha(0.6f),
+                fontSize = params.type.labelMedium.fontSize,
+            )
+            val labelMutedUrdu = SpanStyle(
+                color = params.colors.onBackground.alpha(0.6f),
+                fontSize = params.type.labelMedium.fontSize,
+                fontFamily = fontUrdu,
+            )
+
+            val wbwStyles = TextLinkStyles(
+                focusedStyle = SpanStyle(color = params.colors.primary),
+                pressedStyle = SpanStyle(color = params.colors.primary),
+                hoveredStyle = SpanStyle(color = params.colors.primary),
+            )
+
+            for ((idx, verseNo) in verseNos.withIndex()) {
+                val ayahId = QuranUtils.getAyahId(chapterNo, verseNo)
+                val words = repository.getWordsForAyah(ayahId, scriptCode)
+                if (words.isEmpty()) continue
+
+                val segments = ArrayList<String>(words.size)
+                var endText = ""
+                for (w in words) {
+                    if (w.isLastWordOfAyah) {
+                        endText = w.text
+                    } else {
+                        segments.add(w.text)
+                    }
+                }
+
+                val pageNo = repository.getPageForVerse(chapterNo, verseNo) ?: -1
+
+                val translations = factory.getTranslationsVerseRange(
+                    params.slugs, chapterNo, verseNo, verseNo
+                ).firstOrNull() ?: emptyList()
+
+                val verse = Verse(ayahId, chapterNo, verseNo, pageNo, segments, endText).apply {
+                    this.translations = translations
+                    includeChapterNameInSerial = true
+                }
+
+                val parsedQuranText = if (params.arabicEnabled) buildAnnotatedString {
+                    val (paragraphStyle, spanStyle) = arabicWrapForPage(pageNo)
+                    withStyle(paragraphStyle) {
+                        withStyle(spanStyle) {
+                            verse.segments.forEachIndexed { index, word ->
+                                withLink(
+                                    LinkAnnotation.Clickable(
+                                        tag = "wbw", styles = wbwStyles
+                                    ) {
+                                        MessageUtils.showRemovableToast(
+                                            params.context, word, Toast.LENGTH_LONG
+                                        )
+                                    }
+                                ) { append(word) }
+
+                                if (index != verse.segments.lastIndex) append(" ")
+                            }
+
+                            if (!verse.endText.isNullOrEmpty()) {
+                                append(" " + verse.endText)
+                            }
+                        }
+                    }
+                } else null
+
+                val parsedTranslationTexts = translations.mapNotNull { translation ->
+                    val bookInfo = booksInfo[translation.bookSlug] ?: return@mapNotNull null
+                    val (paragraphStyle, translationSpanStyle) =
+                        translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
+
+                    val annotatedString = buildAnnotatedString {
+                        withStyle(paragraphStyle) {
+                            withStyle(translationSpanStyle) {
+                                append(
+                                    buildTranslationAnnotatedString(
+                                        translation, params.colors,
+                                        actions = VerseActions(
+                                            params.verseActions.onReferenceClick,
+                                            onFootnoteClickRaw = { slug, footnoteNo ->
+                                                params.verseActions.onFootnoteClick?.invoke(
+                                                    verse, translation.footnotes[footnoteNo]
+                                                )
+                                            }
+                                        )
+                                    )
+                                )
+                            }
+                            append("\n")
+                            withStyle(
+                                if (bookInfo.isUrdu) labelMutedUrdu else labelMutedNonUrdu
+                            ) { append(bookInfo.getDisplayName(false)) }
+                        }
+                    }
+                    Pair(translation.bookSlug, annotatedString)
+                }
+
+                out.add(
+                    ReaderLayoutItem.VerseUI(
+                        verse = verse,
+                        parsedQuranText = parsedQuranText,
+                        parsedTranslationTexts = parsedTranslationTexts,
+                        isLastInGroup = idx == verseNos.lastIndex,
+                        key = "qref-$chapterNo:$verseNo${params.toKey()}"
+                    )
+                )
+            }
+        }
+
+        return out
     }
 
     /**
@@ -304,8 +468,6 @@ object ReaderItemsBuilder {
 
         val scriptCode = ReaderPreferences.getQuranScript()
         val mushafId = scriptCode.getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
-
-        Log.d("BUILDING PAGES", distinct)
 
         val out = LinkedHashMap<Int, QuranPageItem>(distinct.size)
         for (pageNo in distinct) {
@@ -345,8 +507,6 @@ object ReaderItemsBuilder {
                 lines = lines,
             )
         }
-
-        Log.d("BUILT PAGES", distinct)
 
         return out
     }

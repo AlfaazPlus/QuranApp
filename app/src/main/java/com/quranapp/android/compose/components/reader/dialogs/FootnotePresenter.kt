@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,6 +43,7 @@ import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.OnReferenceClick
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
@@ -95,7 +97,7 @@ private fun PresentSheetContent(data: FootnotePresenterData) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(580.dp),
+            .fillMaxHeight(.9f),
     ) {
         Header(translFactory, verse, singleFootnote)
 
@@ -138,7 +140,7 @@ private fun Header(
         ResUtils.getLocalizedString(
             context,
             R.string.strTitleFootnote,
-            Locale.of(it.langCode)
+            Locale.forLanguageTag(it.langCode)
         )
     } ?: if (singleFootnote != null) stringResource(R.string.strTitleFootnote)
     else stringResource(R.string.strTitleFootnotes)
@@ -261,8 +263,9 @@ fun FootnoteContent(
         } ?: emptyMap()
     }
 
+    val verseActions = LocalVerseActions.current
     val onReferenceClick: OnReferenceClick = { slugs, chapterNo, verses ->
-        // TODO
+        verseActions.onReferenceClick(slugs, chapterNo, verses)
     }
 
     SelectionContainer {

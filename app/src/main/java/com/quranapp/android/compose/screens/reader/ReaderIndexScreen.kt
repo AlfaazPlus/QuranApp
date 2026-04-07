@@ -90,7 +90,10 @@ import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.compose.components.ChapterCard
+import com.quranapp.android.compose.components.reader.navigator.ChapterCard
+import com.quranapp.android.db.entities.quran.RevelationType
+import com.quranapp.android.db.entities.quran.SurahEntity
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.MessageUtils
@@ -480,9 +483,16 @@ private fun ReaderIndexChaptersList(
                 val isFav = favChapters.contains(chapterNo)
 
                 ChapterCard(
-                    chapterNo = chapterNo,
-                    chapterName = quranMeta.getChapterName(context, chapterNo),
-                    chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                    surah = SurahWithLocalizations(
+                        surah = SurahEntity(
+                            surahNo = chapterNo,
+                            ayahCount = 0,
+                            rukusCount = 0,
+                            revelationType = RevelationType.meccan,
+                            revelationOrder = 0,
+                        ),
+                        localizations = listOf()
+                    ),
                     isFavourite = isFav,
                     onClick = {
                         ReaderFactory.startChapter(context, chapterNo)
@@ -781,9 +791,16 @@ private fun ReaderIndexFavChaptersList(
                 ) {
                     items(favChapters, key = { it }) { chapterNo ->
                         ChapterCard(
-                            chapterNo = chapterNo,
-                            chapterName = quranMeta.getChapterName(context, chapterNo),
-                            chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                            surah = SurahWithLocalizations(
+                                surah = SurahEntity(
+                                    surahNo = chapterNo,
+                                    ayahCount = 0,
+                                    rukusCount = 0,
+                                    revelationType = RevelationType.meccan,
+                                    revelationOrder = 0,
+                                ),
+                                localizations = listOf()
+                            ),
                             isFavourite = true,
                             onClick = {
                                 ReaderFactory.startChapter(context, chapterNo)

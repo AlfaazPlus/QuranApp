@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,20 +13,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 enum class ReaderMode(val value: String) {
     VerseByVerse("mode_vbv"),
@@ -42,16 +45,19 @@ enum class ReaderMode(val value: String) {
 }
 
 
-sealed class ReaderLayoutItem(var key: String? = null) {
-    data class ChapterInfo(val chapterNo: Int) : ReaderLayoutItem()
-    data object Bismillah : ReaderLayoutItem()
-    data object IsVotd : ReaderLayoutItem()
-    data class ChapterTitle(val chapterNo: Int) : ReaderLayoutItem()
+sealed class ReaderLayoutItem() {
+    abstract val key: String
+
+    data class ChapterInfo(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
+    data class Bismillah(override val key: String) : ReaderLayoutItem()
+    data class IsVotd(override val key: String) : ReaderLayoutItem()
+    data class ChapterTitle(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
     data class VerseUI(
         val verse: Verse,
         val parsedQuranText: AnnotatedString? = null,
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
         val isLastInGroup: Boolean = false,
+        override val key: String
     ) : ReaderLayoutItem()
 }
 
@@ -67,20 +73,31 @@ fun ReaderLayout(
         return Loader(fill = true)
     }
 
-    when (uiState.transientReaderMode ?: readerMode) {
+    val prevMode = remember { mutableStateOf(readerMode) }
+
+    LaunchedEffect(readerMode) {
+        val prev = prevMode.value
+        prevMode.value = readerMode
+
+        if (prev != null && readerMode != null && prev != readerMode) {
+            readerVm.handleModeTransition(readerMode!!)
+        }
+    }
+
+    when (readerMode) {
         ReaderMode.Reading -> {
             BoxWithConstraints(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .fillMaxHeight()
             ) {
-                val horizontalPadding = 16.dp * 2
+                val contentWidth =
+                    (maxWidth.coerceAtMost(MUSHAF_FONT_WIDTH_DP_MAX.dp))
+                        .coerceAtLeast(1.dp)
 
-                val contentWidthPx = with(LocalDensity.current) {
-                    (maxWidth - horizontalPadding).coerceAtLeast(1.dp).roundToPx()
-                }
-
-                ReaderLayoutPageMode(readerVm, contentWidthPx)
+                ReaderLayoutPageMode(
+                    readerVm,
+                    contentWidth,
+                )
             }
         }
 
@@ -128,6 +145,18 @@ private fun ReaderLayoutVerseMode(
             .toHashSet()
     }
 
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .distinctUntilChanged()
+            .collect { readerVm.updateLastKnownVerseFromItems(it) }
+    }
+
+    LaunchedEffect(items) {
+        if (items.isNotEmpty()) {
+            readerVm.updateLastKnownVerseFromItems(listState.firstVisibleItemIndex)
+        }
+    }
+
     var autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
 
@@ -144,7 +173,24 @@ private fun ReaderLayoutVerseMode(
                         item.verse.verseNo == playingVerse.verseNo
             }
 
-            listState.animateScrollToItem(currentPlayingIndex)
+            if (currentPlayingIndex > 0) {
+                listState.animateScrollToItem(currentPlayingIndex)
+            }
+        }
+    }
+
+    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+
+    LaunchedEffect(navigateToVerse, items) {
+        val (chapterNo, verseNo) = navigateToVerse ?: return@LaunchedEffect
+        val idx = items.indexOfFirst { item ->
+            item is ReaderLayoutItem.VerseUI &&
+                    item.verse.chapterNo == chapterNo &&
+                    item.verse.verseNo == verseNo
+        }
+        if (idx >= 0) {
+            listState.requestScrollToItem(idx)
+            readerVm.consumeVerseNavigation()
         }
     }
 
@@ -189,8 +235,8 @@ private fun TranslationRow(
     bookmarkedVerseKeys: Set<BookmarkKey>
 ) {
     when (item) {
-        ReaderLayoutItem.Bismillah -> Bismillah()
-        ReaderLayoutItem.IsVotd -> IsVotd()
+        is ReaderLayoutItem.Bismillah -> Bismillah()
+        is ReaderLayoutItem.IsVotd -> IsVotd()
         is ReaderLayoutItem.ChapterInfo -> ChapterInfoCard(item.chapterNo)
         is ReaderLayoutItem.ChapterTitle -> ChapterTitle(item.chapterNo)
         is ReaderLayoutItem.VerseUI -> {
