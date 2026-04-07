@@ -63,7 +63,7 @@
     <string name="strTitleShareVerse">Condividi Versetto</string>
     <string name="strTitleTopics">Temi</string>
     <string name="strTitleExplainIssue">Spiega il problema</string>
-    <string name="strTitleFeaturedQuran">lettura in primo piano</string>
+    <string name="strTitleFeaturedQuran">Lettura in primo piano</string>
     <string name="strTitleVOTD">Versetto del giorno</string>
     <string name="strTitleFailed">Fallito</string>
     <string name="strTitleThresholdReached">Soglia raggiunta</string>
@@ -120,7 +120,7 @@
     <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">Verso %1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Sura %1$s : Verso %2$d</string>
+    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Sura %1$s, verso %2$d</string>
     <string name="strTitleAppUser">Utente QuranApp</string>
     <string name="strTitleHolyQuran">Il sacro Corano</string>
     <string name="strTitleQuran">Corano</string>
@@ -266,7 +266,7 @@
     <string name="strLabelShareImage">Condividi immagine</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s nel Corano</string>
     <string name="strMsgEditShareLongTransl">La traduzione è molto lunga, potrebbe non adattarsi correttamente.</string>
-    <string name="strMsgReferenceDuas">Raccolto alcuni duas dal Corano.</string>
+    <string name="strMsgReferenceDuas">Sono stati raccolti alcuni dua presi dal corano.</string>
     <string name="strSalam">Assalam Alaikum</string>
     <string name="strSalamShort">Salam</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Visualizzazione della traduzione</string>
@@ -407,4 +407,10 @@
     <string name="msgChapterInfoCleanup">Tutte le informazioni dei capitoli saranno eliminate.</string>
     <string name="msgTafsirCleanup" formatted="false">Tutti i tafsir memorizzati da %s saranno rimossi.</string>
     <string name="nFiles" formatted="false">%d files</string>
+    <string name="msgScriptCleanup" formatted="false">Lo script %s e tutti i suoi font verranno eliminati. Per continuare a usarli dopo averli eliminati, dovrai scaricarli di nuovo.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d fonti</string>
+    <string name="about_quran_science_msg">I contenuti di questa pagina sono stati presi dal libro \"The Quran and Modern Science: Compatible or Incompatibe\" scritto da Dr. Zakir Naik\n\nLe immagini presenti sono mostrate solo a scopo illustrativo.</string>
+    <string name="about_this_page">Informazioni riguardo questa pagina</string>
+    <string name="quran_and_science">Il corano e la scienza</string>
+    <string name="donate">Donaci</string>
 </resources>
