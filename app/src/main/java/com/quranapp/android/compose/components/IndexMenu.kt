@@ -55,8 +55,8 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityAbout
 import com.quranapp.android.activities.ActivityBookmark
 import com.quranapp.android.activities.ActivityExportImport
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.activities.ActivityStorageCleanup
-import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.app.InfoUtils
 import verticalFadingEdge

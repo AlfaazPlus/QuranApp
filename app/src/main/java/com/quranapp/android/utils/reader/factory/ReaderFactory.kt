@@ -2,11 +2,10 @@ package com.quranapp.android.utils.reader.factory
 
 import android.content.Context
 import android.content.Intent
-import com.quranapp.android.activities.ActivityReader2
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.components.ReferenceVerseModel
-import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.entities.ReadHistoryEntity
@@ -19,14 +18,14 @@ import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
 
 object ReaderFactory {
     fun startEmptyReader(context: Context) {
-        context.startActivity(Intent().setClass(context, ActivityReader2::class.java))
+        context.startActivity(Intent().setClass(context, ActivityReader::class.java))
     }
 
     fun startJuz(context: Context, juzNo: Int) {
         context.startActivity(
             prepareJuzIntent(juzNo).setClass(
                 context,
-                ActivityReader2::class.java
+                ActivityReader::class.java
             )
         )
     }
@@ -35,14 +34,14 @@ object ReaderFactory {
         context.startActivity(
             prepareHizbIntent(hizbNo).setClass(
                 context,
-                ActivityReader2::class.java
+                ActivityReader::class.java
             )
         )
     }
 
     fun startChapter(context: Context, chapterNo: Int) {
         context.startActivity(
-            prepareChapterIntent(chapterNo).setClass(context, ActivityReader2::class.java)
+            prepareChapterIntent(chapterNo).setClass(context, ActivityReader::class.java)
         )
     }
 
@@ -58,7 +57,7 @@ object ReaderFactory {
             slugs = translSlugs.toSet(),
         )
         context.startActivity(
-            params.toIntent().setClass(context, ActivityReader2::class.java)
+            params.toIntent().setClass(context, ActivityReader::class.java)
         )
     }
 
@@ -66,14 +65,14 @@ object ReaderFactory {
     fun startVerse(context: Context, chapterNo: Int, verseNo: Int) {
         context.startActivity(
             prepareSingleVerseIntent(chapterNo, verseNo)
-                .setClass(context, ActivityReader2::class.java)
+                .setClass(context, ActivityReader::class.java)
         )
     }
 
     fun startVerseRange(context: Context, chapterNo: Int, fromVerse: Int, toVerse: Int) {
         context.startActivity(
             prepareVerseRangeIntent(chapterNo, fromVerse, toVerse)
-                .setClass(context, ActivityReader2::class.java)
+                .setClass(context, ActivityReader::class.java)
         )
     }
 

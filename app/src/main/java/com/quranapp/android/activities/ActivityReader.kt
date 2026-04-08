@@ -21,7 +21,7 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ActivityReader2 : BaseActivity() {
+class ActivityReader : BaseActivity() {
     private val readerVm: ReaderViewModel by viewModels()
     val intentFlow = MutableStateFlow<Intent?>(null)
 

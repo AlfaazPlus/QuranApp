@@ -1,6 +1,7 @@
 package com.quranapp.android.activities
 
 
+import ThemeUtils
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -22,15 +23,19 @@ import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
 import com.quranapp.android.components.bookmark.BookmarkModel
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.screens.ExportImportScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.compose.utils.preferences.AppPreferences
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.db.bookmark.BookmarkDbHelper
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
+import com.quranapp.android.utils.app.ResourceDownloadProxy
+import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_DARK
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_DEFAULT
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs.THEME_MODE_LIGHT
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.CoroutineScope
@@ -203,13 +208,14 @@ class ActivityExportImport : BaseActivity() {
         }
 
         jsonObject.safeString(ExportKeys.THEME)?.let {
-            SPAppConfigs.setThemeMode(this, it)
+            ThemeUtils.setThemeMode(it)
+
             withContext(Dispatchers.Main) {
                 AppCompatDelegate.setDefaultNightMode(
                     when (it) {
-                        THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                        THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                        THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                        ThemeUtils.THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+                        ThemeUtils.THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+                        ThemeUtils.THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                         else -> {
                             AppCompatDelegate.getDefaultNightMode()
                         }
@@ -219,67 +225,61 @@ class ActivityExportImport : BaseActivity() {
         }
 
         jsonObject.safeString(ExportKeys.DL_SRC)?.let {
-            SPAppConfigs.setResourceDownloadSrc(this, it)
+            AppPreferences.setResourceDownloadProxy(ResourceDownloadProxy.fromValue(it))
         }
 
         jsonObject.safeFloat(ExportKeys.READER_AUTO_SCROLL_SPEED)?.let {
-            SPReader.setAutoScrollSpeed(this, it)
+            ReaderPreferences.setAutoScrollSpeed(it)
         }
 
         jsonObject.safeBoolean(ExportKeys.READER_ARABIC_TEXT_ENABLED)?.let {
-            SPReader.setArabicTextEnabled(this, it)
+            ReaderPreferences.setArabicTextEnabled(it)
         }
 
         jsonObject.safeInt(ExportKeys.READER_STYLE)?.let {
-            SPReader.setSavedReaderStyle(this, it)
+            ReaderPreferences.setReaderMode(ReaderMode.fromLegacyStyleInt(it))
         }
 
-        jsonObject.safeBoolean(ExportKeys.RECITATION_REPEAT)?.let {
-            SPReader.setRecitationRepeatVerse(this, it)
-        }
 
         jsonObject.safeFloat(ExportKeys.RECITATION_SPEED)?.let {
-            SPReader.setRecitationSpeed(this, it)
+            RecitationPreferences.setSpeed(it)
         }
 
         jsonObject.safeString(ExportKeys.RECITATION_RECITER)?.let {
-            SPReader.setSavedRecitationSlug(this, it)
+            RecitationPreferences.setReciterId(it)
         }
 
         jsonObject.safeString(ExportKeys.RECITATION_RECITER_TRANSLATION)?.let {
-            SPReader.setSavedRecitationTranslationSlug(this, it)
+            RecitationPreferences.setTranslationReciterId(it)
         }
 
-        jsonObject.safeBoolean(ExportKeys.RECITATION_SCROLL_SYNC)?.let {
-            SPReader.setRecitationScrollSync(this, it)
+        jsonObject.safeString(ExportKeys.RECITATION_OPTION_AUDIO)?.let {
+            RecitationPreferences.setAudioOption(AudioOption.fromValue(it))
         }
 
-        jsonObject.safeInt(ExportKeys.RECITATION_OPTION_AUDIO)?.let {
-            SPReader.setRecitationAudioOption(this, it)
-        }
-
-        jsonObject.safeBoolean(ExportKeys.RECITATION_CONTINUE_CHAPTER)?.let {
-            SPReader.setRecitationContinueChapter(this, it)
-        }
 
         jsonObject.safeFloat(ExportKeys.TEXT_SIZE_MULT_TAFSIR)?.let {
-            SPReader.setSavedTextSizeMultTafsir(this, it)
+            ReaderPreferences.setTafsirTextSizeMultiplier(it)
         }
 
         jsonObject.safeFloat(ExportKeys.TEXT_SIZE_MULT_ARABIC)?.let {
-            SPReader.setSavedTextSizeMultArabic(this, it)
+            ReaderPreferences.setArabicTextSizeMultiplier(it)
         }
 
         jsonObject.safeFloat(ExportKeys.TEXT_SIZE_MULT_TRANSLATION)?.let {
-            SPReader.setSavedTextSizeMultTransl(this, it)
+            ReaderPreferences.setTranslationTextSizeMultiplier(it)
         }
 
         jsonObject.safeString(ExportKeys.SCRIPT_CURRENT)?.let {
-            SPReader.setSavedScript(this, it)
+            ReaderPreferences.setQuranScript(it)
+        }
+
+        jsonObject.safeString(ExportKeys.SCRIPT_VARIANT_CURRENT)?.let {
+            ReaderPreferences.setQuranScriptVariant(QuranScriptVariant.fromValue(it))
         }
 
         jsonObject.safeString(ExportKeys.TAFSIR_CURRENT)?.let {
-            SPReader.setSavedTafsirKey(this, it)
+            ReaderPreferences.setTafsirId(it)
         }
 
         jsonObject.safeJsonArray(ExportKeys.TRANSLATION_CURRENT)?.let { translations ->
@@ -290,7 +290,7 @@ class ActivityExportImport : BaseActivity() {
                 }
             }
 
-            SPReader.setSavedTranslations(this, translationList)
+            ReaderPreferences.setTranslations(translationList)
         }
 
     }
@@ -334,8 +334,8 @@ class ActivityExportImport : BaseActivity() {
         val settings = JSONObject()
 
         settings.put(ExportKeys.LOCALE, SPAppConfigs.getLocale(this))
-        settings.put(ExportKeys.THEME, SPAppConfigs.getThemeMode(this))
-        settings.put(ExportKeys.DL_SRC, SPAppConfigs.getResourceDownloadSrc(this))
+        settings.put(ExportKeys.THEME, ThemeUtils.getThemeMode())
+        settings.put(ExportKeys.DL_SRC, AppPreferences.getResourceDownloadProxy().value)
 
         settings.put(ExportKeys.READER_AUTO_SCROLL_SPEED, SPReader.getAutoScrollSpeed(this))
         settings.put(ExportKeys.READER_ARABIC_TEXT_ENABLED, SPReader.getArabicTextEnabled(this))
@@ -422,6 +422,7 @@ class ExportKeys {
         const val TEXT_SIZE_MULT_TRANSLATION = "text.size_mult_translation"
         const val TEXT_SIZE_MULT_ARABIC = "text.size_mult_arabic"
         const val SCRIPT_CURRENT = "script.current"
+        const val SCRIPT_VARIANT_CURRENT = "script_variant.current"
         const val TAFSIR_CURRENT = "tafsir.current"
         const val TRANSLATION_CURRENT = "translation.current"
     }

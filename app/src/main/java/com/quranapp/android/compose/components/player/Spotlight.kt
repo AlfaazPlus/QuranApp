@@ -24,6 +24,8 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun SpotlightVersePanel(
@@ -53,29 +55,30 @@ fun SpotlightVersePanel(
             return@produceState
         }
 
-        val ayah = repository.getAyah(chapterNo, verseNo)
-        val surah = repository.getSurahWithLocalizations(chapterNo)
+        value = withContext(Dispatchers.IO) {
+            val ayah = repository.getAyah(chapterNo, verseNo)
+            val surah = repository.getSurahWithLocalizations(chapterNo)
 
-        if (ayah == null || surah == null) {
-            value = null
-            return@produceState
-        }
+            if (ayah == null || surah == null) {
+                return@withContext null
+            }
 
-        val words = repository.getWordsForAyah(chapterNo, verseNo, scriptCode)
+            val words = repository.getWordsForAyah(chapterNo, verseNo, scriptCode)
 
-        val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
+            val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
 
-        value = VerseWithDetails(
-            words = words,
-            pageNo = 0,
-            verse = ayah,
-            chapter = surah
-        ).apply {
-            this.translations = factory.getTranslationsSingleVerse(
-                setOf(aSlug),
-                chapterNo,
-                verseNo
-            )
+            VerseWithDetails(
+                words = words,
+                pageNo = 0,
+                verse = ayah,
+                chapter = surah
+            ).apply {
+                this.translations = factory.getTranslationsSingleVerse(
+                    setOf(aSlug),
+                    chapterNo,
+                    verseNo
+                )
+            }
         }
     }
 
@@ -111,7 +114,7 @@ fun SpotlightVersePanel(
 private fun SpotlightQuranText(
     vwd: VerseWithDetails,
 ) {
-    /*val style = rememberQuranTextStyle(verse.pageNo)
+    /*fixme val style = rememberQuranTextStyle(verse.pageNo)
 
     Text(
         text = buildAnnotatedString {

@@ -30,6 +30,12 @@ fragmentKtx = "1.8.9"
 room = "2.8.4"
 paging = "3.4.2"
 
+compose-navigation = "2.9.7"
+navigation-fragment-ktx = "2.9.7"
+navigation-ui-ktx = "2.9.7"
+
+accompanist = "0.37.3"
+
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -102,6 +108,12 @@ roomPaging = { module = "androidx.room:room-paging", version.ref = "room" }
 
 paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
+navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 
 [plugins]
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }

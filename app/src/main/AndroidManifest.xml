@@ -49,12 +49,14 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
+            android:exported="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity android:name=".activities.ActivityDownloads" />
@@ -108,8 +110,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.readerSettings.ActivitySettings"
+            android:name=".activities.ActivitySettings"
             android:launchMode="singleTask" />
+
         <activity
             android:name=".activities.ActivitySearch"
             android:exported="true">
@@ -123,7 +126,7 @@
         </activity>
         <activity android:name=".activities.ActivityReaderIndexPage" />
         <activity
-            android:name=".activities.ActivityReader2"
+            android:name=".activities.ActivityReader"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -166,33 +169,14 @@
         </provider>
 
         <receiver
-            android:name=".utils.receivers.VotdReceiver"
-            android:enabled="true"
-            android:process=":remote" />
-        <receiver
             android:name=".utils.receivers.CrashReceiver"
             android:enabled="true" />
-        <receiver
-            android:name=".utils.receivers.AlarmPermissionReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".utils.receivers.BootReceiver"
-            android:enabled="false"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+
         <service
             android:name=".utils.mediaplayer.RecitationService"
             android:exported="true"
@@ -201,11 +185,9 @@
                 <action android:name="androidx.media3.session.MediaSessionService" />
             </intent-filter>
         </service>
+
         <service
             android:name=".utils.services.RecitationChapterDownloadService"
-            android:foregroundServiceType="dataSync" />
-        <service
-            android:name=".utils.services.KFQPCScriptFontsDownloadService"
             android:foregroundServiceType="dataSync" />
 
     </application>

@@ -9,7 +9,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader2
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.entities.ReadHistoryEntity
@@ -21,7 +21,7 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory
 object ShortcutUtils {
     fun pushVOTDShortcut(ctx: Context, chapterNo: Int, verseNo: Int) {
         val intent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
-            setClass(ctx, ActivityReader2::class.java)
+            setClass(ctx, ActivityReader::class.java)
             action = Intent.ACTION_VIEW
         }
 
@@ -58,7 +58,7 @@ object ShortcutUtils {
                 return
             }
 
-            intent.setClass(ctx, ActivityReader2::class.java)
+            intent.setClass(ctx, ActivityReader::class.java)
             intent.action = Intent.ACTION_VIEW
 
             val builder = ShortcutInfoCompat.Builder(ctx, id)

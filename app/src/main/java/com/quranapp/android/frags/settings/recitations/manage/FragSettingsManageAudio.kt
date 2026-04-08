@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2
 import com.quranapp.android.databinding.FragSettingsRecitationsBinding
 import com.quranapp.android.databinding.LytReaderIndexTabBinding
@@ -25,7 +25,7 @@ class FragSettingsManageAudio : FragSettingsBase() {
 
     override val layoutResource = R.layout.frag_settings_recitations
 
-    override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
+    override fun setupHeader(activity: ActivitySettingsOld, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.apply {
             setCallback(object : BoldHeaderCallback {

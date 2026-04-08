@@ -136,11 +136,11 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
         mBinding.getRoot().setVisibility(GONE);
         initActions(quranMeta);
 
-        VerseUtils.getVOTD(getContext(), quranMeta, quran, (chapterNo, verseNo) -> {
+        /*VerseUtils.getVOTD(getContext(), quranMeta, quran, (chapterNo, verseNo) -> {
             mChapterNo = chapterNo;
             mVerseNo = verseNo;
             if (runnable != null) runnable.run();
-        });
+        });*/
     }
 
     public void installVotdContents(QuranMeta quranMeta) {
@@ -218,7 +218,7 @@ public class VOTDView extends FrameLayout implements Destroyable, BookmarkCallba
 
             @Override
             public Pair<TranslationBookInfoModel, Translation> call() {
-                TranslationBookInfoModel bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd(context));
+                TranslationBookInfoModel bookInfo = factory.getTranslationBookInfo(VerseUtils.INSTANCE.obtainOptimalSlugForVotd());
                 if (Objects.equals(mLastTranslationSlug, bookInfo.getSlug())) {
                     return null;
                 }

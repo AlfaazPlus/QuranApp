@@ -23,31 +23,13 @@ import com.quranapp.android.R;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.databinding.ActivitySettingsBinding;
 import com.quranapp.android.frags.settings.FragSettingsBase;
-import com.quranapp.android.frags.settings.FragSettingsLanguage;
-import com.quranapp.android.frags.settings.FragSettingsMain;
-import com.quranapp.android.frags.settings.FragSettingsScripts;
-import com.quranapp.android.frags.settings.FragSettingsTafsirs;
-import com.quranapp.android.frags.settings.translation.FragSettingsTranslation;
-import com.quranapp.android.frags.settings.translation.FragSettingsTranslationsDownload;
-import com.quranapp.android.frags.settings.recitations.FragSettingsRecitations;
-import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio;
-import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter;
 import com.quranapp.android.views.BoldHeader;
 
 import java.util.Objects;
 
-public class ActivitySettings extends BaseActivity {
+public class ActivitySettingsOld extends BaseActivity {
     public static final String KEY_SETTINGS_DESTINATION = "key.settings_destination";
-    public static final int SETTINGS_LANG = 0x1;
-    public static final int SETTINGS_THEME = 0x2;
-    public static final int SETTINGS_VOTD = 0x3;
-    public static final int SETTINGS_TRANSLATION = 0x4;
-    public static final int SETTINGS_TRANSLATION_DOWNLOAD = 0x5;
-    public static final int SETTINGS_TAFSIR = 0x6;
     public static final int SETTINGS_SCRIPT = 0x7;
-    public static final int SETTINGS_RECITER = 0x8;
-    public static final int SETTINGS_MANAGE_AUDIO = 0x9;
-    public static final int SETTINGS_MANAGE_AUDIO_RECITER = 0x10;
 
     private ActivitySettingsBinding mBinding;
 
@@ -84,11 +66,13 @@ public class ActivitySettings extends BaseActivity {
         super.onNewIntent(intent);
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frags_container);
+
         if (f instanceof FragSettingsBase) {
             if (!Objects.equals(f.getClass().getSimpleName(), resolveInitialFrag(intent).getSimpleName())) {
                 initIntent(intent, true);
             } else {
                 Bundle args = intent.getExtras();
+                
                 if (args != null) {
                     ((FragSettingsBase) f).onNewArguments(args);
                 }
@@ -112,6 +96,8 @@ public class ActivitySettings extends BaseActivity {
     }
 
     private void initFrag(Class<? extends FragSettingsBase> frag, Bundle args, boolean isNewIntent) {
+        if (frag == null) return;
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction t = fm.beginTransaction();
         t.add(R.id.frags_container, frag, args, frag.getSimpleName());
@@ -125,39 +111,10 @@ public class ActivitySettings extends BaseActivity {
     }
 
     private Class<? extends FragSettingsBase> resolveInitialFrag(Intent intent) {
-        final Class<? extends FragSettingsBase> destFrag;
+        Class<? extends FragSettingsBase> destFrag = null;
         final int destination = intent.getIntExtra(KEY_SETTINGS_DESTINATION, -1);
-        switch (destination) {
-            case SETTINGS_LANG:
-                destFrag = FragSettingsLanguage.class;
-                break;
-            case SETTINGS_TRANSLATION:
-                destFrag = FragSettingsTranslation.class;
-                break;
-            case SETTINGS_TRANSLATION_DOWNLOAD:
-                destFrag = FragSettingsTranslationsDownload.class;
-                break;
-            case SETTINGS_TAFSIR:
-                destFrag = FragSettingsTafsirs.class;
-                break;
-            case SETTINGS_SCRIPT:
-                destFrag = FragSettingsScripts.class;
-                break;
-            case SETTINGS_RECITER:
-                destFrag = FragSettingsRecitations.class;
-                break;
-            case SETTINGS_MANAGE_AUDIO:
-                destFrag = FragSettingsManageAudio.class;
-                break;
-            case SETTINGS_MANAGE_AUDIO_RECITER:
-                destFrag = FragSettingsManageAudioReciter.class;
-                break;
-            case SETTINGS_THEME:
-            case SETTINGS_VOTD:
-            default:
-                destFrag = FragSettingsMain.class;
-                break;
-        }
+
+
         return destFrag;
     }
 
@@ -188,7 +145,7 @@ public class ActivitySettings extends BaseActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frags_container);
         if (f instanceof FragSettingsBase) {
             FragSettingsBase frag = (FragSettingsBase) f;
-            frag.setupHeader(this, mBinding.header);
+//            frag.setupHeader(this, mBinding.header);
             mBinding.getRoot().setBackgroundColor(frag.getPageBackgroundColor(this));
         }
     }

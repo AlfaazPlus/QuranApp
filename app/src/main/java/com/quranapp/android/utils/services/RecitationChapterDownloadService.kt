@@ -16,7 +16,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.components.recitation.ManageAudioChapterModel
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
 import com.quranapp.android.utils.Log
@@ -269,8 +269,8 @@ class RecitationChapterDownloadService : Service() {
             flag = flag or PendingIntent.FLAG_IMMUTABLE
         }
 
-        val activityIntent = Intent(this, ActivitySettings::class.java).apply {
-            putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_MANAGE_AUDIO_RECITER)
+       /* val activityIntent = Intent(this, ActivitySettingsOld::class.java).apply {
+            putExtra(ActivitySettingsOld.KEY_SETTINGS_DESTINATION, ActivitySettingsOld.SETTINGS_MANAGE_AUDIO_RECITER)
             putExtra(FragSettingsManageAudioReciter.KEY_RECITATION_INFO_MODEL, chapterModel.reciterModel)
         }
 
@@ -280,7 +280,7 @@ class RecitationChapterDownloadService : Service() {
             activityIntent,
             flag
         )
-        builder.setContentIntent(pendingIntent)
+        builder.setContentIntent(pendingIntent)*/
 
         val cancelIntent = PendingIntent.getBroadcast(
             this,

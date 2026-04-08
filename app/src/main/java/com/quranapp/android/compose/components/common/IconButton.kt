@@ -23,6 +23,7 @@ fun IconButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = Color.Transparent,
         contentColor = tint,
+        disabledContainerColor = Color.Transparent
     ),
     shape: RoundedCornerShape = RoundedCornerShape(100),
     enabled: Boolean = true,

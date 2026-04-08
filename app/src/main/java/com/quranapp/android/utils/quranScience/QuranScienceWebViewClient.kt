@@ -4,7 +4,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
-import com.quranapp.android.activities.ActivityReader2
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
@@ -115,7 +115,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
                         fromVerse,
                         toVerse
                     ).apply {
-                        setClass(activity, ActivityReader2::class.java)
+                        setClass(activity, ActivityReader::class.java)
                         putExtra(READER_KEY_TRANSL_SLUGS, activity.slugs.toTypedArray<String>())
                         putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false)
                     })

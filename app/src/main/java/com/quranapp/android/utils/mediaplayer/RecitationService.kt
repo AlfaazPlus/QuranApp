@@ -29,7 +29,7 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader2
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
@@ -177,7 +177,7 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun initializeMediaSession() {
-        val intent = Intent(this, ActivityReader2::class.java).apply {
+        val intent = Intent(this, ActivityReader::class.java).apply {
             putExtra(Keys.KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION, true)
         }
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

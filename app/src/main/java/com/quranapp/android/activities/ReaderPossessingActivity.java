@@ -164,13 +164,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
             if (bookInfo != null) {
                 String author = bookInfo.getDisplayName(false);
                 Typeface authorFont = translation.isUrdu() ? mUrduTypeface : Typeface.SANS_SERIF;
-                sb.append(VerseUtils.prepareTranslAuthorText(
-                    author,
-                    mColorSecondary,
-                    mAuthorTextSize,
-                    authorFont,
-                    TranslUtils.isTransliteration(bookSlug)
-                ));
+                sb.append("");
             }
 
             sb.append(i < l2 ? "\n\n" : "\n");

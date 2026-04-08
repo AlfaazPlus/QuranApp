@@ -3,6 +3,7 @@ package com.quranapp.android.reader_managers
 import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.util.TypedValue
 import android.widget.TextView
 import com.quranapp.android.R
@@ -105,25 +106,16 @@ class ReaderVerseDecorator(private val ctx: Context) {
     ): CharSequence {
         val isKFQPC = isKFQPCScript()
 
-        return VerseUtils.decorateVerse(
+        /*return VerseUtils.decorateVerse(
             verse,
             if (isKFQPC) fontsArabicKFQPC[verse.pageNo] ?: Typeface.DEFAULT else fontQuranText,
             verseTextSize,
             txtColor
-        )
+        )*/
+
+        return ""
     }
 
-    fun setupArabicTextQuranPage(
-        txtColor: Int,
-        verse: Verse,
-        onClick: Runnable,
-    ): CharSequence =
-        VerseUtils.decorateQuranPageVerse(
-            txtColor,
-            verse,
-            if (isKFQPCScript()) fontsArabicKFQPC[verse.pageNo] else fontQuranText,
-            onClick
-        )
 
     fun setupTranslText(
         translText: String,
@@ -131,12 +123,13 @@ class ReaderVerseDecorator(private val ctx: Context) {
         txtSize: Int,
         isUrdu: Boolean
     ): SpannableString {
-        return VerseUtils.decorateSingleTranslSimple(
+        /*return VerseUtils.decorateSingleTranslSimple(
             translText,
             translClr,
             txtSize,
             if (isUrdu) fontTranslationUrduAlike else Typeface.SANS_SERIF
-        )
+        )*/
+        return SpannableString("")
     }
 
     @JvmOverloads
@@ -145,13 +138,13 @@ class ReaderVerseDecorator(private val ctx: Context) {
         authorClr: Int = textColorAuthor,
         txtSize: Int = textSizeAuthor,
         isUrdu: Boolean,
-    ): SpannableString = VerseUtils.prepareTranslAuthorText(
+    ): SpannableString = /*VerseUtils.prepareTranslAuthorText(
         author,
         authorClr,
         txtSize,
         if (isUrdu) fontTranslationUrduAlike else Typeface.SANS_SERIF,
         false
-    )
+    )*/ SpannableString("")
 
     @JvmOverloads
     fun setTextSizeArabic(txtView: TextView, multiplier: Float = savedTextSizeArabicMultiplier) {

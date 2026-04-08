@@ -1,7 +1,6 @@
 package com.quranapp.android.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.text.SpannableString;
@@ -20,14 +19,12 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.extensions.LayoutParamsKt;
 import com.quranapp.android.utils.quran.QuranUtils;
-import com.quranapp.android.utils.reader.factory.ReaderFactory;
 
 import java.util.List;
 import java.util.Locale;

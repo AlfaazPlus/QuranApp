@@ -22,7 +22,7 @@ data class VerseWithDetails(
 
     fun getTranslationCount() = translations.size
 
-    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(ctx, chapterNo, verseNo)
+    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(chapterNo, verseNo)
 
     fun isIdealForVOTD(): Boolean {
         val arabicText = words.joinToString(" ") { it.text }

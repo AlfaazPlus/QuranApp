@@ -12,8 +12,8 @@ import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
-import com.quranapp.android.utils.maangers.TranslationDownloadManager
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions

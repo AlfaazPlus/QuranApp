@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 
 private const val DATASTORE_NAME = "app_preferences"
 
-private val Context.dataStore by preferencesDataStore(name = DATASTORE_NAME)
+val Context.dataStore by preferencesDataStore(name = DATASTORE_NAME)
 
 data class PrefKey<T>(
     val key: Preferences.Key<T>,
@@ -35,6 +35,17 @@ object DataStoreManager {
         appContext = context.applicationContext
     }
 
+    fun <T> read(prefKey: PrefKey<T>): T {
+        return read(prefKey.key, prefKey.default)
+    }
+
+    fun <T> read(key: Preferences.Key<T>, defaultValue: T): T {
+        return runBlocking {
+            val preferences = appContext.dataStore.data.first()
+            preferences[key] ?: defaultValue
+        }
+    }
+
     suspend fun <T> write(prefKey: PrefKey<T>, value: T) {
         write(prefKey.key, value)
     }
@@ -45,14 +56,22 @@ object DataStoreManager {
         }
     }
 
-    fun <T> read(prefKey: PrefKey<T>): T {
-        return read(prefKey.key, prefKey.default)
+
+    suspend fun <T> remove(prefKey: PrefKey<T>) {
+        remove(prefKey.key)
     }
 
-    fun <T> read(key: Preferences.Key<T>, defaultValue: T): T {
-        return runBlocking {
-            val preferences = appContext.dataStore.data.first()
-            preferences[key] ?: defaultValue
+    suspend fun <T> remove(key: Preferences.Key<T>) {
+        appContext.dataStore.edit { preferences ->
+            preferences.remove(key)
+        }
+    }
+
+    suspend fun removeAll(vararg keys: Preferences.Key<*>) {
+        appContext.dataStore.edit { preferences ->
+            keys.forEach {
+                preferences.remove(it)
+            }
         }
     }
 

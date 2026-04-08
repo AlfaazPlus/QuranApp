@@ -20,10 +20,13 @@ object Keys {
     // Keys still referenced by old ActivityReader.java — remove when that class is deleted
     @Deprecated("Used only by legacy ActivityReader")
     const val READER_KEY_READER_STYLE = "reader.style"
+
     @Deprecated("Used only by legacy ActivityReader")
     const val READER_KEY_JUZ_NO = "reader.juz_no"
+
     @Deprecated("Used only by legacy ActivityReader")
     const val READER_KEY_VERSES = "reader.verses"
+
     @Deprecated("Replaced by ReaderIntentData.initialVerse; used only by legacy ActivityReader")
     const val READER_KEY_PENDING_SCROLL = "reader.pending_scroll"
 
@@ -39,4 +42,7 @@ object Keys {
     const val KEY_EXTRA_TITLE = "title"
 
     const val FAVOURITE_CHAPTERS = "favourite_chapters"
+
+    const val NAV_DESTINATION = "nav_destination"
+    const val SHOW_READER_SETTINGS_ONLY = "reader_settings_only"
 }

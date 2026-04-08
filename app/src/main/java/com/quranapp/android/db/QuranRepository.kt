@@ -285,8 +285,8 @@ class QuranRepository(
         return mushafDao.getFirstPageOfChapter(mushafId, chapterNo)
     }
 
-    suspend fun getPageForVerse(surahNo: Int, ayahNo: Int): Int? {
-        val mushafId = ReaderPreferences.getQuranScript()
+    suspend fun getPageForVerse(surahNo: Int, ayahNo: Int, scriptCode: String? = null): Int? {
+        val mushafId = (scriptCode ?: ReaderPreferences.getQuranScript())
             .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || surahNo <= 0 || ayahNo <= 0) return null

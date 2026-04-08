@@ -13,7 +13,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.app.NotificationUtils
 import kotlinx.coroutines.Dispatchers
@@ -126,10 +126,10 @@ class RecitationAudioDownloadWorker(
             flag = flag or PendingIntent.FLAG_IMMUTABLE
         }
 
-        val activityIntent = Intent(ctx, ActivitySettings::class.java).apply {
+        /*val activityIntent = Intent(ctx, ActivitySettingsOld::class.java).apply {
             putExtra(
-                ActivitySettings.KEY_SETTINGS_DESTINATION,
-                ActivitySettings.SETTINGS_MANAGE_AUDIO_RECITER
+                ActivitySettingsOld.KEY_SETTINGS_DESTINATION,
+                ActivitySettingsOld.SETTINGS_MANAGE_AUDIO_RECITER
             )
         }
         val pendingIntent = PendingIntent.getActivity(
@@ -138,7 +138,7 @@ class RecitationAudioDownloadWorker(
             activityIntent,
             flag
         )
-        builder.setContentIntent(pendingIntent)
+        builder.setContentIntent(pendingIntent)*/
 
         val cancelIntent = WorkManager.getInstance(applicationContext)
             .createCancelPendingIntent(id)

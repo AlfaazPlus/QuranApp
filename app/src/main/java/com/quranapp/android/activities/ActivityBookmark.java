@@ -16,7 +16,6 @@ import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.utils.WindowUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.adapters.ADPBookmark;
 import com.quranapp.android.components.bookmark.BookmarkModel;
@@ -241,7 +240,7 @@ public class ActivityBookmark extends BaseActivity implements BookmarkCallbacks 
     public void onOpen(BookmarkModel model) {
         Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
             model.getToVerseNo());
-        intent.setClass(this, ActivityReader2.class);
+        intent.setClass(this, ActivityReader.class);
         startActivity(intent);
     }
 

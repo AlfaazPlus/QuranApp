@@ -52,7 +52,7 @@ class FragScriptCleanup : FragStorageCleanupBase() {
                 scriptItems.add(
                     ScriptCleanupItemModel(
                         scriptKey = scriptKey,
-                        fontDownloadsCount = fontDownloadsCount.second
+                        fontDownloadsCount = fontDownloadsCount.downloaded
                     )
                 )
             }

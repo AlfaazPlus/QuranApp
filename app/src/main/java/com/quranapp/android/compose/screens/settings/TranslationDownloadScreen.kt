@@ -7,7 +7,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,6 +32,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -55,17 +55,17 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
+import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TranslationDownloadEvent
 import com.quranapp.android.viewModels.TranslationDownloadUiEvent
 import com.quranapp.android.viewModels.TranslationDownloadViewModel
 
 @Composable
-fun TranslationDownloadScreen(
-    modifier: Modifier = Modifier
-) {
+fun TranslationDownloadScreen() {
     val context = LocalContext.current
     val viewModel = viewModel<TranslationDownloadViewModel>()
     val uiState = viewModel.uiState.collectAsState().value
@@ -86,22 +86,37 @@ fun TranslationDownloadScreen(
         }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
+    Scaffold(
+        topBar = {
+            AppBar(
+                stringResource(R.string.strTitleDownloadTranslations),
+                actions = {
+                    IconButton(
+                        painterResource(R.drawable.dr_icon_refresh)
+                    ) {
+                        viewModel.onEvent(TranslationDownloadEvent.Refresh)
+                    }
+                }
+            )
+        }
     ) {
-        when {
-            uiState.isLoading -> LoadingState()
-            uiState.error != null -> ErrorMessageCard(
-                error = uiState.error,
-                onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
-            )
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            when {
+                uiState.isLoading -> LoadingState()
+                uiState.error != null -> ErrorMessageCard(
+                    error = uiState.error,
+                    onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
+                )
 
-            else -> TranslationsContent(
-                groups = uiState.groups,
-                downloadStates = uiState.downloadStates,
-            )
+                else -> TranslationsContent(
+                    groups = uiState.groups,
+                    downloadStates = uiState.downloadStates,
+                )
+            }
         }
     }
 }

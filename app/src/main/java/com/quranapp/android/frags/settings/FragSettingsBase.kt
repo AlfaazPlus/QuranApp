@@ -16,13 +16,13 @@ import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.core.widget.NestedScrollView
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.utils.extensions.color
 import com.quranapp.android.views.BoldHeader
 
 abstract class FragSettingsBase : BaseFragment() {
-    protected fun activity(): ActivitySettings? = activity as? ActivitySettings
+    protected fun activity(): ActivitySettingsOld? = activity as? ActivitySettingsOld
 
     protected open val shouldCreateScrollerView = false
 
@@ -76,7 +76,7 @@ abstract class FragSettingsBase : BaseFragment() {
     abstract fun onViewReady(ctx: Context, view: View, savedInstanceState: Bundle?)
 
     @CallSuper
-    open fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
+    open fun setupHeader(activity: ActivitySettingsOld, header: BoldHeader) {
         header.setTitleText(getFragTitle(activity))
     }
 

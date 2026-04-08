@@ -7,13 +7,12 @@ import android.view.View
 import android.widget.EditText
 import androidx.viewpager2.widget.ViewPager2
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.adapters.utility.ViewPagerAdapter2
 import com.quranapp.android.databinding.FragSettingsRecitationsBinding
 import com.quranapp.android.databinding.LytReaderIndexTabBinding
 import com.quranapp.android.frags.settings.FragSettingsBase
 import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudio
-import com.quranapp.android.frags.settings.translation.FragSettingsTranslationsDownload
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.BoldHeader.BoldHeaderCallback
@@ -42,7 +41,7 @@ class FragSettingsRecitations : FragSettingsBase() {
         return if (bundle.isEmpty) null else bundle
     }
 
-    override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
+    override fun setupHeader(activity: ActivitySettingsOld, header: BoldHeader) {
         super.setupHeader(activity, header)
         header.apply {
             setCallback(object : BoldHeaderCallback {

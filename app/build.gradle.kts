@@ -124,11 +124,6 @@ dependencies {
     implementation(libs.androidx.activityCompose)
     implementation(libs.androidx.fragmentKtx)
 
-    // TODO: to be removed after migrating to media3
-    implementation(libs.exoplayerCore)
-    implementation(libs.exoplayerUI)
-    implementation(libs.extensionMediasession)
-
     implementation(libs.media3ExoPlayer)
     implementation(libs.media3Session)
     implementation(libs.media3UI)
@@ -165,4 +160,11 @@ dependencies {
     implementation(libs.paging)
     implementation(libs.pagingCompose)
     implementation(libs.roomPaging)
+
+
+    implementation(libs.compose.navigation)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
+
+    implementation(libs.accompanist.permissions)
 }

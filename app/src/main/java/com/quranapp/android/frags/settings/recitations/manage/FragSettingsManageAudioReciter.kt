@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.readerSettings.ActivitySettingsOld
 import com.quranapp.android.adapters.recitation.ADPManageAudioChapters
 import com.quranapp.android.api.models.recitation.RecitationInfoBaseModel
 import com.quranapp.android.components.quran.QuranMeta
@@ -109,7 +109,7 @@ class FragSettingsManageAudioReciter :
         }
     }
 
-    override fun setupHeader(activity: ActivitySettings, header: BoldHeader) {
+    override fun setupHeader(activity: ActivitySettingsOld, header: BoldHeader) {
         super.setupHeader(activity, header)
 
         header.apply {

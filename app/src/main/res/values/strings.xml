@@ -110,6 +110,7 @@
     <string name="strTitleReaderLayoutStyle">Quran view style</string>
     <string name="strTitleReaderLayoutStyleTranslationsView">Translations view</string>
     <string name="strTitleReaderLayoutStylePageView">Page view</string>
+    <string name="textSizes">Text sizes</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
     <string name="titleReaderTextSizeTafsir">Tafsir text Size</string>
@@ -372,6 +373,9 @@
     <string name="github">GitHub</string>
     <string name="discord" translatable="false">Discord</string>
     <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
+    <string name="notification_permission">
+        Notification Permission
+    </string>
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
     <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
     <string name="titleStorageCleanup">Storage cleanup</string>
@@ -483,4 +487,16 @@
     </string>
     <string name="expandedPlayerModeControls">Controls</string>
     <string name="expandedPlayerModeSpotlight">Spotlight</string>
+
+    <string name="theme_default">Default</string>
+    <string name="theme_blue">Blue</string>
+    <string name="theme_red">Red</string>
+    <string name="theme_purple">Purple</string>
+    <string name="theme_violet">Violet</string>
+    <string name="theme_yellow">Yellow</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_colors">Theme Colors</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="dynamic_color">Dynamic Color</string>
+    <string name="dynamic_color_description">Change theme color based on the wallpaper</string>
 </resources>

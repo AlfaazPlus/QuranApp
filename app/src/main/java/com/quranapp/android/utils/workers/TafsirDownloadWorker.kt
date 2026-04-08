@@ -10,14 +10,16 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
@@ -67,18 +69,18 @@ class TafsirDownloadWorker(
     ) = withContext(Dispatchers.IO) {
         // max=10 is supported by the server
         val batchSize = 10
-        val totalChapters = QuranMeta.totalChapters()
+        val chapterRange = QuranMeta.chapterRange
         var downloadedChapters = setOf<Int>()
 
         val dbHelper = QuranTafsirDBHelper(ctx)
 
         try {
-            for (start in 1..totalChapters step batchSize) {
+            for (start in chapterRange step batchSize) {
                 ensureActive()
 
                 if (isStopped) break
 
-                val end = (start + batchSize - 1).coerceAtMost(totalChapters)
+                val end = (start + batchSize - 1).coerceAtMost(chapterRange.last)
 
                 if (downloadedChapters.containsAll((start..end).toList())) {
                     Logger.d("Tafsir ${bookInfo.key} chapters $start-$end already downloaded, skipping")
@@ -101,7 +103,7 @@ class TafsirDownloadWorker(
                     downloadedChapters = downloadedChapters + (newFrom..newTo).toList()
                 }
 
-                val progress = ((end * 100) / totalChapters)
+                val progress = ((end * 100) / chapterRange.last)
                 setProgressAsync(workDataOf("progress" to progress))
                 setForeground(createForegroundInfo(bookInfo, progress))
             }
@@ -137,8 +139,8 @@ class TafsirDownloadWorker(
 
         val activityIntent = Intent(ctx, ActivitySettings::class.java).apply {
             putExtra(
-                ActivitySettings.KEY_SETTINGS_DESTINATION,
-                ActivitySettings.SETTINGS_TAFSIR
+                Keys.NAV_DESTINATION,
+                SettingRoutes.TAFSIR
             )
         }
         val pendingIntent = PendingIntent.getActivity(

@@ -70,7 +70,7 @@ class Verse : Serializable {
 
     fun getTranslationCount() = translations.size
 
-    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(ctx, chapterNo, verseNo)
+    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(chapterNo, verseNo)
 
     fun isIdealForVOTD() = arabicText.length in 6..300
 

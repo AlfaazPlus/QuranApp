@@ -7,6 +7,7 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -73,7 +74,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
 
     private fun initialize(tafsirKey: String?, chapterNo: Int, verseNo: Int) {
         val key =
-            tafsirKey ?: SPReader.getSavedTafsirKey(context) ?: TafsirUtils.getDefaultTafsirKey()
+            tafsirKey ?: ReaderPreferences.getTafsirId() ?: TafsirUtils.getDefaultTafsirKey()
 
         if (key == null) {
             _uiState.update {

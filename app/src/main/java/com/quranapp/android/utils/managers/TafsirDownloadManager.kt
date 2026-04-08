@@ -1,4 +1,4 @@
-package com.quranapp.android.utils.maangers
+package com.quranapp.android.utils.managers
 
 import TafsirDownloadWorker
 import android.content.Context

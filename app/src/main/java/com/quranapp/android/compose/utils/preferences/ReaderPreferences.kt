@@ -24,10 +24,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 
-/**
- * Reader settings stored in DataStore via [DataStoreManager].
- * Legacy SharedPreferences (`sp_reader`, `sp_reader_text`, etc.) are migrated once on startup.
- */
 object ReaderPreferences {
 
     private const val LEGACY_SP_READER = "sp_reader"
@@ -239,7 +235,7 @@ object ReaderPreferences {
     fun getQuranScript(): String {
         val s = DataStoreManager.read(KEY_SCRIPT)
 
-        if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
+        if (!QuranScriptUtils.availableScripts().contains(s)) {
             return QuranScriptUtils.SCRIPT_DEFAULT
         }
 
@@ -253,7 +249,7 @@ object ReaderPreferences {
     fun quranScriptFlow(): Flow<String> {
         return DataStoreManager.flow(KEY_SCRIPT)
             .mapLatest {
-                if (!QuranScriptUtils.availableScriptSlugs().contains(it)) {
+                if (!QuranScriptUtils.availableScripts().contains(it)) {
                     return@mapLatest QuranScriptUtils.SCRIPT_DEFAULT
                 }
 
@@ -265,7 +261,7 @@ object ReaderPreferences {
     fun observeQuranScript(): String {
         val s = DataStoreManager.observe(KEY_SCRIPT)
 
-        if (!QuranScriptUtils.availableScriptSlugs().contains(s)) {
+        if (!QuranScriptUtils.availableScripts().contains(s)) {
             return QuranScriptUtils.SCRIPT_DEFAULT
         }
 
@@ -277,8 +273,8 @@ object ReaderPreferences {
         return QuranScriptVariant.fromValue(DataStoreManager.read(KEY_SCRIPT_VARIANT))
     }
 
-    suspend fun setQuranScriptVariant(variant: QuranScriptVariant) {
-        DataStoreManager.write(KEY_SCRIPT_VARIANT, variant.value)
+    suspend fun setQuranScriptVariant(variant: QuranScriptVariant?) {
+        DataStoreManager.write(KEY_SCRIPT_VARIANT, variant?.value ?: "")
     }
 
     fun quranScriptVariantFlow(): Flow<QuranScriptVariant?> {

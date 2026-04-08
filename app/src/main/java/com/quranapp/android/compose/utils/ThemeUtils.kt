@@ -1,5 +1,6 @@
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -16,15 +17,21 @@ import com.alfaazplus.sunnah.ui.theme.colors.ThemeRedColors
 import com.alfaazplus.sunnah.ui.theme.colors.ThemeVioletColors
 import com.alfaazplus.sunnah.ui.theme.colors.ThemeYellowColors
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.alfaazplus.sunnah.ui.utils.shared_preference.dataStore
 import com.quranapp.android.R
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-object ThemeUtilsV2 {
+object ThemeUtils {
+    const val THEME_MODE_DEFAULT = "app.theme.default"
+    const val THEME_MODE_LIGHT = "app.theme.light"
+    const val THEME_MODE_DARK = "app.theme.dark"
+
     private val KEY_THEME_MODE = stringPreferencesKey("v2.theme_mode")
     private val KEY_THEME_COLOR = stringPreferencesKey("v2.theme_color")
     private val KEY_THEME_DYNAMIC_COLOR = booleanPreferencesKey("v2.theme_dynamic_color")
@@ -59,26 +66,30 @@ object ThemeUtilsV2 {
 
     fun resolveThemeModeLabel(themeMode: String): Int {
         return when (themeMode) {
-            SPAppConfigs.THEME_MODE_LIGHT -> R.string.strLabelThemeLight
-            SPAppConfigs.THEME_MODE_DARK -> R.string.strLabelThemeDark
+            THEME_MODE_LIGHT -> R.string.strLabelThemeLight
+            THEME_MODE_DARK -> R.string.strLabelThemeDark
             else -> R.string.strLabelSystemDefault
         }
     }
 
     @Composable
-    fun isDarkTheme(): Boolean {
-        val themeMode = getThemeMode()
+    fun observeDarkTheme(): Boolean {
+        val themeMode = observeThemeMode()
 
         return when (themeMode) {
-            SPAppConfigs.THEME_MODE_LIGHT -> false
-            SPAppConfigs.THEME_MODE_DARK -> true
+            THEME_MODE_LIGHT -> false
+            THEME_MODE_DARK -> true
             else -> isSystemInDarkTheme()
         }
     }
 
     @Composable
+    fun observeThemeMode(): String {
+        return DataStoreManager.observe(KEY_THEME_MODE, THEME_MODE_DEFAULT)
+    }
+
     fun getThemeMode(): String {
-        return DataStoreManager.observe(KEY_THEME_MODE, SPAppConfigs.THEME_MODE_DEFAULT)
+        return DataStoreManager.read(KEY_THEME_MODE, THEME_MODE_DEFAULT)
     }
 
     suspend fun setThemeMode(themeMode: String) {
@@ -86,7 +97,7 @@ object ThemeUtilsV2 {
     }
 
     @Composable
-    fun getThemeColor(): String {
+    fun observeThemeColor(): String {
         return DataStoreManager.observe(KEY_THEME_COLOR, THEME_COLOR_DEFAULT)
     }
 
@@ -95,7 +106,7 @@ object ThemeUtilsV2 {
     }
 
     @Composable
-    fun isDynamicColor(): Boolean {
+    fun observeIsDynamicColor(): Boolean {
         return DataStoreManager.observe(KEY_THEME_DYNAMIC_COLOR, false)
     }
 
@@ -104,9 +115,12 @@ object ThemeUtilsV2 {
     }
 
     @Composable
-    fun getColorScheme(context: Context, isDarkTheme: Boolean = isDarkTheme()): ColorScheme {
-        val themeColor = getThemeColor()
-        val isDynamicColor = isDynamicColor()
+    fun observeColorScheme(
+        context: Context,
+        isDarkTheme: Boolean = observeDarkTheme()
+    ): ColorScheme {
+        val themeColor = observeThemeColor()
+        val isDynamicColor = observeIsDynamicColor()
 
         // Dynamic color is available on Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDynamicColor) {
@@ -126,5 +140,15 @@ object ThemeUtilsV2 {
         }
 
         return if (isDarkTheme) preferredColor.darkColors() else preferredColor.lightColors()
+    }
+
+
+    fun resolveThemeModeForDelegate(): Int {
+        return when (getThemeMode()) {
+            THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
     }
 }

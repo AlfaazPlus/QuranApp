@@ -19,14 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
 import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader2;
+import com.quranapp.android.activities.ActivityReader;
 import com.quranapp.android.activities.reference.ActivityReference;
 import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
@@ -199,7 +197,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             binding.openInReader.setOnClickListener(v -> {
                 Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerse(),
                     model.getToVerse());
-                intent.setClass(mActivity, ActivityReader2.class);
+                intent.setClass(mActivity, ActivityReader.class);
                 intent.putExtra(READER_KEY_TRANSL_SLUGS, mActivity.mSelectedTranslSlugs.toArray(new String[0]));
                 intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);
                 mActivity.startActivity(intent);

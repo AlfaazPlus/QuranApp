@@ -11,14 +11,15 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.compose.utils.VerseOfTheDayScheduler
+import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.maangers.TranslationDownloadManager
+import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.sharedPrefs.SPLog
-import com.quranapp.android.utils.votd.VOTDUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,8 +46,8 @@ object AppActions {
 
     @JvmStatic
     fun scheduleActions(ctx: Context) {
-        if (VOTDUtils.isVOTDTrulyEnabled(ctx)) {
-            VOTDUtils.enableVOTDReminder(ctx)
+        if (VersePreferences.getVOTDReminderEnabled()) {
+            VerseOfTheDayScheduler.scheduleDailyNotification(ctx)
         }
     }
 

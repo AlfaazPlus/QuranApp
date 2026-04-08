@@ -34,7 +34,7 @@ fun ListItem(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.small)
+            .clip(MaterialTheme.shapes.medium)
             .shadow(2.dp)
             .background(colorScheme.surface),
     ) {

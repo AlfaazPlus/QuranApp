@@ -1,7 +1,6 @@
 package com.quranapp.android.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
@@ -11,8 +10,8 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.screens.tafsir.TafsirReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.databinding.LytTafsirTextSizeBinding
@@ -114,7 +113,7 @@ class ActivityTafsir : BaseActivity() {
         binding.progressText.text = text
 
         binding.seekBar.apply {
-            max = ReaderTextSizeUtils.getMaxProgress()
+            max = ReaderTextSizeUtils.maxProgress
             progress = ReaderTextSizeUtils.calculateProgress(multiplier)
             setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -145,9 +144,10 @@ class ActivityTafsir : BaseActivity() {
 
     private fun openTafsirSettings() {
         val intent = Intent(this, ActivitySettings::class.java).apply {
-            putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, ActivitySettings.SETTINGS_TAFSIR)
+            putExtra(Keys.NAV_DESTINATION, SettingRoutes.TAFSIR)
         }
         startActivity4Result(intent, null)
+        // fixme: observe changes
     }
 
     override fun onActivityResult2(result: ActivityResult?) {

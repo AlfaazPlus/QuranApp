@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -20,15 +19,15 @@ import android.widget.RemoteViews
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader2
-import com.quranapp.android.activities.MainActivity
-import com.quranapp.android.components.quran.Quran
-import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.subcomponents.Verse
-import com.quranapp.android.interfaceUtils.OnResultReadyCallback
+import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
@@ -36,10 +35,12 @@ import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeWidgetSP
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -94,70 +95,64 @@ fun updateAllVotdWidgets(context: Context) {
 internal fun updateAppWidget(
     context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int
 ) {
-    val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
-    val maxWidth =
-        context.dp2px(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat())
-            .takeIf { it > 0 } ?: context.dp2px(300f).toInt()
+    CoroutineScope(Dispatchers.Default).launch {
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val maxWidth =
+            context.dp2px(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat())
+                .takeIf { it > 0 } ?: context.dp2px(300f)
 
-    QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
-        override fun onReady(quranMeta: QuranMeta) {
-            VerseUtils.getVOTD(context, quranMeta, null) { chapterNo, verseNo ->
-                if (!QuranMeta.isChapterValid(chapterNo) || !quranMeta.isVerseValid4Chapter(
-                        chapterNo, verseNo
-                    )
-                ) {
-                    return@getVOTD
-                }
 
-                if (SPReader.getArabicTextEnabled(context)) {
-                    Quran.prepareInstance(
-                        context, quranMeta, object : OnResultReadyCallback<Quran> {
-                            override fun onReady(quran: Quran) {
-                                onObtainVotd(
-                                    context,
-                                    appWidgetManager,
-                                    appWidgetId,
-                                    quranMeta,
-                                    chapterNo,
-                                    verseNo,
-                                    prepareArabicTextBitmap(
-                                        context,
-                                        quran.getVerse(chapterNo, verseNo),
-                                        quran.script,
-                                        maxWidth
-                                    )
-                                )
-                            }
-                        })
-                } else {
-                    onObtainVotd(
-                        context,
-                        appWidgetManager,
-                        appWidgetId,
-                        quranMeta,
-                        chapterNo,
-                        verseNo,
-                        null,
-                    )
-                }
-            }
+        val repository = DatabaseProvider.getQuranRepository(context)
+
+        val verse = VerseUtils.getVOTD(context, repository) ?: return@launch
+
+        if (
+            !QuranMeta.isChapterValid(verse.chapterNo) ||
+            !repository.isVerseValid4Chapter(verse.chapterNo, verse.verseNo)
+        ) {
+            return@launch
         }
-    })
+
+        if (ReaderPreferences.getArabicTextEnabled()) {
+            onObtainVotd(
+                context,
+                appWidgetManager,
+                appWidgetId,
+                repository,
+                verse,
+                prepareArabicTextBitmap(
+                    context,
+                    verse,
+                    maxWidth
+                )
+            )
+        } else {
+            onObtainVotd(
+                context,
+                appWidgetManager,
+                appWidgetId,
+                repository,
+                verse,
+                null,
+            )
+        }
+    }
 }
 
-internal fun onObtainVotd(
+internal suspend fun onObtainVotd(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int,
-    quranMeta: QuranMeta,
-    chapterNo: Int,
-    verseNo: Int,
+    repository: QuranRepository,
+    vwd: VerseWithDetails,
     arabicTextBitmap: Bitmap?
 ) {
+    val chapterNo = vwd.chapterNo
+    val verseNo = vwd.verseNo
     val views = RemoteViews(context.packageName, R.layout.votd_widget)
 
     QuranTranslationFactory(context).use { factory ->
-        val bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd(context))
+        val bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd())
 
         val translation = factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
 
@@ -165,7 +160,7 @@ internal fun onObtainVotd(
         views.setTextViewText(
             R.id.verseInfo, context.getString(
                 R.string.strLabelVerseWithChapNameAndNo,
-                quranMeta.getChapterName(context, chapterNo),
+                repository.getChapterName(chapterNo),
                 chapterNo,
                 verseNo
             )
@@ -186,7 +181,7 @@ internal fun onObtainVotd(
         )
 
         val intent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
-            setClass(context, ActivityReader2::class.java)
+            setClass(context, ActivityReader::class.java)
         }
 
         val pendingIntent = PendingIntent.getActivity(
@@ -201,12 +196,12 @@ internal fun onObtainVotd(
 
 internal fun prepareArabicTextBitmap(
     context: Context,
-    verse: Verse,
-    quranScript: String,
+    vwd: VerseWithDetails,
     maxWidth: Int,
 ): Bitmap? {
-    val pageNo = verse.pageNo
+    val pageNo = vwd.pageNo
 
+    val quranScript = ReaderPreferences.getQuranScript()
     val txtSizeSp = quranScript.getQuranScriptVerseTextSizeWidgetSP()
     val verseTextSize = context.sp2px(txtSizeSp)
     var fontQuranText: Typeface?
@@ -230,7 +225,7 @@ internal fun prepareArabicTextBitmap(
 
     val bitmap = createTextBitmap(
         context,
-        verse.arabicText,
+        vwd.words.joinToString(" ") { it.text },
         fontQuranText,
         verseTextSize,
         Color.WHITE,
@@ -241,9 +236,13 @@ internal fun prepareArabicTextBitmap(
 }
 
 internal fun createTextBitmap(
-    context: Context, text: String, typeface: Typeface, textSize: Int, color: Int, maxWidth: Int,
+    context: Context,
+    text: String,
+    typeface: Typeface,
+    textSize: Int,
+    color: Int,
+    maxWidth: Int,
 ): Bitmap {
-
     val paint = TextPaint(Paint.ANTI_ALIAS_FLAG)
 
     paint.color = color

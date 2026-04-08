@@ -54,16 +54,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.getQuranMushafId
-import com.quranapp.android.utils.univ.Keys.READER_KEY_SETTING_IS_FROM_READER
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
@@ -113,7 +114,7 @@ fun ReaderAppBar(
                 actions = {
                     SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
                         IconButton(onClick = {
-                            openReaderSetting(context, -1)
+                            openReaderSetting(context, null)
                         }) {
                             Icon(
                                 painter = painterResource(R.drawable.dr_icon_settings),
@@ -263,7 +264,7 @@ private fun StickyHeaderModeVbV(
                 onClick = {
                     openReaderSetting(
                         context,
-                        ActivitySettings.SETTINGS_TRANSLATION
+                        SettingRoutes.TRANSLATIONS
                     )
                 }
             ) {
@@ -400,11 +401,13 @@ private fun StickyHeaderModeMushaf(
     }
 }
 
-fun openReaderSetting(context: Context, destination: Int) {
+fun openReaderSetting(context: Context, destination: String?) {
     context.startActivity(
         Intent(context, ActivitySettings::class.java).apply {
-            putExtra(ActivitySettings.KEY_SETTINGS_DESTINATION, destination)
-            putExtra(READER_KEY_SETTING_IS_FROM_READER, true)
+            if (destination != null) {
+                putExtra(Keys.NAV_DESTINATION, destination)
+            }
+            putExtra(Keys.SHOW_READER_SETTINGS_ONLY, true)
         },
         null
     )

@@ -10,16 +10,17 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
-import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -114,7 +115,7 @@ class TranslationDownloadWorker(
         removeFromPendingAction(ctx, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
         val savedTranslations = ReaderPreferences.getTranslations().toMutableSet()
         if (savedTranslations.remove(bookInfo.slug)) {
-            SPReader.setSavedTranslations(ctx, savedTranslations)
+            ReaderPreferences.setTranslations(savedTranslations)
         }
     }
 
@@ -141,8 +142,8 @@ class TranslationDownloadWorker(
 
         val activityIntent = Intent(ctx, ActivitySettings::class.java).apply {
             putExtra(
-                ActivitySettings.KEY_SETTINGS_DESTINATION,
-                ActivitySettings.SETTINGS_TRANSLATION_DOWNLOAD
+                Keys.NAV_DESTINATION,
+                SettingRoutes.TRANSLATIONS_DOWNLOAD
             )
         }
         val pendingIntent = PendingIntent.getActivity(
@@ -171,5 +172,4 @@ class TranslationDownloadWorker(
             ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
         )
     }
-
 }

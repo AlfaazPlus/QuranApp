@@ -5,6 +5,7 @@ import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
@@ -92,7 +93,7 @@ object TafsirManager {
         callback: (AvailableTafsirsModel?) -> Unit
     ) {
         SPAppActions.setFetchTafsirsForce(ctx, false)
-        val savedTafsirKey = SPReader.getSavedTafsirKey(ctx)
+        val savedTafsirKey = ReaderPreferences.getTafsirId()
 
         try {
             val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(

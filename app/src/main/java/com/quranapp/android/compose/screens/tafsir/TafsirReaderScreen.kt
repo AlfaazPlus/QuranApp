@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.tafsir
 
-import ThemeUtilsV2
+import ThemeUtils
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -269,7 +269,7 @@ private fun TafsirWebViewContent(
     val uiState by viewModel.uiState.collectAsState()
 
     val context = LocalContext.current
-    val isDarkTheme = ThemeUtilsV2.isDarkTheme()
+    val isDarkTheme = ThemeUtils.observeDarkTheme()
 
     val htmlContent = remember(
         text,
