@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.adapters.recitation.ADPRecitations
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.utils.reader.recitation.RecitationManager
@@ -22,9 +21,9 @@ class FragSettingsRecitationsArabic : FragSettingsRecitationsBase() {
     private var mInitialRecitation: String? = null
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (mInitialRecitation != null && SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
+        /*if (mInitialRecitation != null && SPReader.getSavedRecitationSlug(ctx) != mInitialRecitation) {
             return bundleOf(ActivityReader.KEY_RECITER_CHANGED to true)
-        }
+        }*/
         return null
     }
 

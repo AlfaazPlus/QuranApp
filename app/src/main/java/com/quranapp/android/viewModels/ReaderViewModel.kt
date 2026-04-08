@@ -19,12 +19,17 @@ import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.utils.extensions.normalized
+import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.others.ShortcutUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.PageBuilderParams
+import com.quranapp.android.utils.reader.ReadType
+import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.getQuranMushafId
@@ -42,7 +47,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 sealed class ReaderViewType {
-    data class Chapter(val chapterNo: Int, val verseRange: IntRange? = null) : ReaderViewType()
+    data class Chapter(val chapterNo: Int) : ReaderViewType()
     data class Juz(val juzNo: Int) : ReaderViewType()
     data class Hizb(val hizbNo: Int) : ReaderViewType()
 }
@@ -52,16 +57,6 @@ data class ReaderUiState(
     val viewType: ReaderViewType? = null,
     val currentPageNo: Int? = null,
 )
-
-sealed class ReaderIntentData {
-    data class FullChapter(val chapterNo: Int) : ReaderIntentData()
-    data class FullJuz(val juzNo: Int) : ReaderIntentData()
-    data class FullHizb(val hizbNo: Int) : ReaderIntentData()
-    data class VerseRange(val chapterNo: Int, val verseRange: IntRange) : ReaderIntentData()
-
-    var slugs: Set<String>? = null
-    var readerMode: ReaderMode? = null
-}
 
 class ReaderViewModel(application: Application) : AndroidViewModel(application) {
     val controller = RecitationController.getInstance(application)
@@ -151,7 +146,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     ) {
         viewModelScope.launch {
             combine(
-                _uiState,
+                _uiState.distinctUntilChanged { old, new -> old.rebuildEquals(new) },
                 DataStoreManager.flowMultiple(
                     ReaderPreferences.KEY_SCRIPT,
                     ReaderPreferences.KEY_SCRIPT_VARIANT,
@@ -162,34 +157,22 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 ),
                 readerMode,
             ) { uiState, prefs, readerMode ->
-                val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
-                val scriptVariantRaw = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
-                Triple(
-                    uiState,
-                    TextBuilderParams(
-                        context,
-                        fontResolver,
-                        verseActions,
-                        colors,
-                        type,
-                        arabicEnabled = prefs.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED),
-                        arabicSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC),
-                        translationSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL),
-                        script = script,
-                        slugs = prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
-                    ),
-                    Triple(readerMode, script, scriptVariantRaw),
-                )
+                Triple(uiState, prefs, readerMode)
             }
-                .distinctUntilChanged { prev, next ->
-                    prev.second == next.second &&
-                            prev.third == next.third &&
-                            prev.first.rebuildEquals(next.first)
-                }
-                .collectLatest { (uiState, params, modeAndScript) ->
-                    val (readerMode, script, scriptVariantRaw) = modeAndScript
+                .collectLatest { (uiState, prefs, readerMode) ->
+                    val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
+                    val scriptVariantRaw = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
+
                     when (readerMode) {
                         ReaderMode.VerseByVerse -> {
+                            val params = TextBuilderParams(
+                                context, fontResolver, verseActions, colors, type,
+                                arabicEnabled = prefs.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED),
+                                arabicSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC),
+                                translationSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL),
+                                script = script,
+                                slugs = prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
+                            )
                             buildVerseByVerseItems(params, uiState, readerMode)
                         }
 
@@ -202,57 +185,90 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                             }
                         }
 
-                        ReaderMode.Translation -> {
-
-                        }
-
-                        else -> {
-                            // noop
-                        }
+                        else -> {}
                     }
                 }
         }
     }
 
-    suspend fun initReader(data: ReaderIntentData) {
+    suspend fun initReader(params: ReaderLaunchParams) {
         playerVerseSync.value = true
 
-        data.readerMode?.let { ReaderPreferences.setReaderMode(it) }
-        data.slugs?.let { ReaderPreferences.setTranslations(it) }
+        params.readerMode?.let { ReaderPreferences.setReaderMode(it) }
+        params.slugs?.let { ReaderPreferences.setTranslations(it) }
+
+        val data = params.data
 
         selectedNavigationTabIndex.intValue = when (data) {
             is ReaderIntentData.FullJuz -> 1
             is ReaderIntentData.FullHizb -> 2
+            is ReaderIntentData.MushafPage -> 3
             else -> 0
+        }
+
+        if (data is ReaderIntentData.MushafPage) {
+            initMushafPage(data)
+            return
         }
 
         val state = ReaderUiState().resolveIntent(data)
         _uiState.update { state }
+
+        data.initialVerse?.let { requestVerseNavigation(it.chapterNo, it.verseNo) }
+    }
+
+    private suspend fun initMushafPage(data: ReaderIntentData.MushafPage) {
+        ReaderPreferences.setReaderMode(ReaderMode.Reading)
+
+        val currentMushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+        if (currentMushafId == data.mushafId && data.pageNo > 0) {
+            _uiState.update {
+                ReaderUiState(
+                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo.coerceIn(1, 114)),
+                    currentPageNo = data.pageNo,
+                )
+            }
+            requestPageNavigation(data.pageNo)
+        } else if (QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0) {
+            val page = withContext(Dispatchers.IO) {
+                repository.getPageForVerse(data.fallbackChapterNo, data.fallbackVerseNo)
+            }
+            _uiState.update {
+                ReaderUiState(
+                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo),
+                    currentPageNo = page,
+                )
+            }
+            if (page != null) requestPageNavigation(page)
+        } else {
+            _uiState.update {
+                ReaderUiState(viewType = ReaderViewType.Chapter(1))
+            }
+        }
     }
 
     private fun ReaderUiState.resolveIntent(data: ReaderIntentData): ReaderUiState = when (data) {
         is ReaderIntentData.FullChapter -> {
-            if (data.chapterNo in 1..114) copy(viewType = ReaderViewType.Chapter(data.chapterNo))
+            if (QuranMeta.isChapterValid(data.chapterNo)) copy(
+                viewType = ReaderViewType.Chapter(data.chapterNo)
+            )
             else copy(error = context.getString(R.string.strMsgInvalidChapterNo, data.chapterNo))
         }
 
         is ReaderIntentData.FullJuz -> {
-            if (data.juzNo in 1..30) copy(viewType = ReaderViewType.Juz(data.juzNo))
+            if (QuranMeta.isJuzValid(data.juzNo)) copy(viewType = ReaderViewType.Juz(data.juzNo))
             else copy(error = context.getString(R.string.strMsgInvalidJuzNo, data.juzNo))
         }
 
         is ReaderIntentData.FullHizb -> {
-            if (data.hizbNo in 1..60) copy(viewType = ReaderViewType.Hizb(data.hizbNo))
+            if (QuranMeta.isHizbValid(data.hizbNo)) copy(viewType = ReaderViewType.Hizb(data.hizbNo))
             else copy(error = context.getString(R.string.strMsgInvalidJuzNo, data.hizbNo))
         }
 
-        is ReaderIntentData.VerseRange -> {
-            val chapterNo = data.chapterNo
-            if (chapterNo !in 1..114) {
-                copy(error = context.getString(R.string.strMsgInvalidChapterNo, chapterNo))
-            } else {
-                copy(viewType = ReaderViewType.Chapter(chapterNo, data.verseRange.normalized))
-            }
+        is ReaderIntentData.MushafPage -> {
+            this
         }
     }
 
@@ -282,12 +298,59 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
         viewModelScope.launch(Dispatchers.IO) {
-            val mushafId = ReaderPreferences.getQuranScript()
-                .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
-            val ayahId = repository.getFirstAyahIdOnPage(mushafId, pageNo) ?: return@launch
+            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
             lastKnownVerse = QuranUtils.getVerseNo(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }
+        }
+    }
+
+    fun saveReadHistory() {
+        val state = _uiState.value
+        val viewType = state.viewType ?: return
+        val mode = readerMode.value ?: return
+        val verse = lastKnownVerse
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val mushafId = ReaderPreferences.getQuranScript()
+                .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+
+            val entity = when (viewType) {
+                is ReaderViewType.Chapter -> ReadHistoryEntity(
+                    readType = ReadType.Chapter.value,
+                    readerMode = mode.value,
+                    chapterNo = viewType.chapterNo,
+                    fromVerseNo = verse?.verseNo ?: 1,
+                    toVerseNo = verse?.verseNo ?: 1,
+                    mushafId = mushafId,
+                    pageNo = state.currentPageNo,
+                )
+
+                is ReaderViewType.Juz -> ReadHistoryEntity(
+                    readType = ReadType.Juz.value,
+                    readerMode = mode.value,
+                    divisionNo = viewType.juzNo,
+                    chapterNo = verse?.chapterNo ?: 0,
+                    fromVerseNo = verse?.verseNo ?: 0,
+                    toVerseNo = verse?.verseNo ?: 0,
+                    mushafId = mushafId,
+                    pageNo = state.currentPageNo,
+                )
+
+                is ReaderViewType.Hizb -> ReadHistoryEntity(
+                    readType = ReadType.Hizb.value,
+                    readerMode = mode.value,
+                    divisionNo = viewType.hizbNo,
+                    chapterNo = verse?.chapterNo ?: 0,
+                    fromVerseNo = verse?.verseNo ?: 0,
+                    toVerseNo = verse?.verseNo ?: 0,
+                    mushafId = mushafId,
+                    pageNo = state.currentPageNo,
+                )
+            }
+
+            bookmarksRepository.saveReadHistory(entity)
+            ShortcutUtils.pushLastVersesShortcut(context, entity)
         }
     }
 
@@ -312,8 +375,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 val vt = _uiState.value.viewType
 
                 val needsNewChapter = vt !is ReaderViewType.Chapter ||
-                        vt.chapterNo != chapterNo ||
-                        (vt.verseRange != null && verseNo !in vt.verseRange)
+                        vt.chapterNo != chapterNo
 
                 if (needsNewChapter) {
                     _uiState.update {
@@ -398,8 +460,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 )
 
                 is ReaderViewType.Chapter -> ReaderItemsBuilder.buildVersesForTranslationMode(
-                    context, params, vt.chapterNo,
-                    vt.verseRange?.first, vt.verseRange?.last,
+                    context, params, repository, vt.chapterNo,
                 )
 
                 null -> emptyList()

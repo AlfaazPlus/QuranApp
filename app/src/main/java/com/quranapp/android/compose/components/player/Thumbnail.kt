@@ -19,6 +19,11 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,19 +39,27 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.ChapterIcon
+import com.quranapp.android.db.DatabaseProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun ExtendedThumbnail(
     verse: ChapterVersePair,
 ) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.remember()
     val headerShape = RoundedCornerShape(32.dp)
 
-    val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var chapterName by remember { mutableStateOf("") }
+
+    LaunchedEffect(verse.chapterNo) {
+        chapterName = withContext(Dispatchers.IO) {
+            repository.getChapterName(verse.chapterNo)
+        }
+    }
 
     Box(
         modifier = Modifier

@@ -2,14 +2,16 @@ package com.quranapp.android.db
 
 import android.content.Context
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
 import com.quranapp.android.db.entities.quran.NavigationType
+import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.db.relations.NavigationUnitRange
-import com.quranapp.android.db.relations.SurahNoSearchResult
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.getQuranMushafId
 import kotlinx.coroutines.flow.Flow
@@ -43,8 +45,44 @@ class QuranRepository(
         return mushafDao.getJuzForPage(mushafId, pageNo) ?: -1
     }
 
-    suspend fun getWordsForAyah(ayahId: Int, scriptCode: String): List<AyahWordEntity> {
-        val words = ayahWordDao.getWordsForAyah(ayahId, scriptCode)
+    suspend fun getSurah(
+        chapterNo: Int,
+    ): SurahEntity? {
+        return surahDao.getSurah(chapterNo)
+    }
+
+    suspend fun getSurahWithLocalizations(
+        chapterNo: Int,
+    ): SurahWithLocalizations? {
+        return surahDao.getSurahWithLocalization(chapterNo)
+    }
+
+    suspend fun getAyah(
+        chapterNo: Int,
+        verseNo: Int,
+    ): AyahEntity? {
+        return ayahDao.getAyah(chapterNo, verseNo)
+    }
+
+    suspend fun getWordsForAyah(
+        chapterNo: Int,
+        verseNo: Int,
+        scriptCode: String
+    ): List<AyahWordEntity> {
+        val words = ayahWordDao.getWordsForAyah(chapterNo, verseNo, scriptCode)
+            .sortedBy { it.wordIndex }
+
+        val lastWordIndex = words.lastOrNull()?.wordIndex
+
+        return words.map {
+            it.apply {
+                isLastWordOfAyah = it.wordIndex == lastWordIndex
+            }
+        }
+    }
+
+    suspend fun getWordsForAyahById(ayahId: Int, scriptCode: String): List<AyahWordEntity> {
+        val words = ayahWordDao.getWordsForAyahById(ayahId, scriptCode)
             .sortedBy { it.wordIndex }
 
         val lastWordIndex = words.lastOrNull()?.wordIndex
@@ -90,7 +128,7 @@ class QuranRepository(
 
         val out = ArrayList<AyahWordEntity>(32)
 
-        getWordsForAyah(startAyah, scriptCode)
+        getWordsForAyahById(startAyah, scriptCode)
             .asSequence()
             .filter { it.wordIndex >= startWi }
             .sortedBy { it.wordIndex }
@@ -100,11 +138,11 @@ class QuranRepository(
             val middle = ayahDao.getAyahsStrictlyBetween(startAyah, endAyah)
 
             for (ayah in middle) {
-                getWordsForAyah(ayah.ayahId, scriptCode).mapTo(out) { it }
+                getWordsForAyahById(ayah.ayahId, scriptCode).mapTo(out) { it }
             }
         }
 
-        getWordsForAyah(endAyah, scriptCode)
+        getWordsForAyahById(endAyah, scriptCode)
             .asSequence()
             .filter { it.wordIndex <= endWi }
             .sortedBy { it.wordIndex }
@@ -231,7 +269,9 @@ class QuranRepository(
 
     suspend fun getChapterName(chapterNo: Int): String {
         if (chapterNo <= 0) return ""
+
         val langCode = Locale.getDefault().language
+
         return surahDao.getLocalization(chapterNo, langCode)?.name?.takeIf { it.isNotBlank() }
             ?: surahDao.getLocalization(chapterNo, "en")?.name.orEmpty()
     }
@@ -285,13 +325,21 @@ class QuranRepository(
             }
     }
 
-    suspend fun getFirstVerseOnPage(mushafId: Int, pageNo: Int, surahNo: Int): Int? {
-        if (mushafId <= 0 || pageNo <= 0 || surahNo <= 0) return null
-        return mushafDao.getFirstVerseOnPage(mushafId, pageNo, surahBase = surahNo * 1000)
-    }
+    suspend fun getFirstAyahIdOnPage(pageNo: Int): Int? {
+        val mushafId = ReaderPreferences.getQuranScript()
+            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
-    suspend fun getFirstAyahIdOnPage(mushafId: Int, pageNo: Int): Int? {
         if (mushafId <= 0 || pageNo <= 0) return null
         return mushafDao.getFirstAyahIdOnPage(mushafId, pageNo)
+    }
+
+    suspend fun getChapterVerseCount(chapterNo: Int): Int {
+        if (!QuranMeta.isChapterValid(chapterNo)) return 0
+
+        return surahDao.getSurah(chapterNo)?.ayahCount ?: 0
+    }
+
+    suspend fun isVerseValid4Chapter(chapterNo: Int, verseNo: Int): Boolean {
+        return getSurah(chapterNo)?.isVerseValid(verseNo) == true
     }
 }

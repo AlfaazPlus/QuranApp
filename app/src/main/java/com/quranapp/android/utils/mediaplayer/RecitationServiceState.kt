@@ -1,9 +1,10 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.os.Bundle
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.reader.ChapterVersePair
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
+import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.utils.quran.QuranMeta
 
 enum class PlayerInterationSource {
     HEADSET,
@@ -14,7 +15,7 @@ data class PlayerSettings(
     val speed: Float = 1.0f,
     val repeatCount: Int = 1,
     val continueRange: Boolean = true,
-    val audioOption: Int = RecitationUtils.AUDIO_OPTION_DEFAULT,
+    val audioOption: AudioOption = AudioOption.DEFAULT,
     val reciter: String? = null,
     val translationReciter: String? = null
 )
@@ -30,7 +31,7 @@ data class RecitationServiceState(
         return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
     }
 
-    fun getPreviousVerse(meta: QuranMeta): ChapterVersePair? {
+    suspend fun getPreviousVerse(repository: QuranRepository): ChapterVersePair? {
         if (!currentVerse.isValid) return null
 
         val currentChapterNo = currentVerse.chapterNo
@@ -38,7 +39,7 @@ data class RecitationServiceState(
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
-            !meta.isVerseValid4Chapter(
+            !repository.isVerseValid4Chapter(
                 currentChapterNo,
                 currentVerseNo
             )
@@ -52,7 +53,7 @@ data class RecitationServiceState(
         if (previousVerseNo < 1) {
             if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
                 previousChapterNo--
-                previousVerseNo = meta.getChapterVerseCount(previousChapterNo)
+                previousVerseNo = repository.getChapterVerseCount(previousChapterNo)
             } else {
                 previousVerseNo = -1
             }
@@ -65,7 +66,7 @@ data class RecitationServiceState(
         return ChapterVersePair(previousChapterNo, previousVerseNo)
     }
 
-    fun getNextVerse(meta: QuranMeta): ChapterVersePair? {
+    suspend fun getNextVerse(repository: QuranRepository): ChapterVersePair? {
         if (!currentVerse.isValid) return null
 
         val currentChapterNo = currentVerse.chapterNo
@@ -73,7 +74,7 @@ data class RecitationServiceState(
 
         if (
             !QuranMeta.isChapterValid(currentChapterNo) ||
-            !meta.isVerseValid4Chapter(
+            !repository.isVerseValid4Chapter(
                 currentChapterNo,
                 currentVerseNo
             )
@@ -84,7 +85,7 @@ data class RecitationServiceState(
         var nextChapterNo = currentChapterNo
         var nextVerseNo = currentVerseNo + 1
 
-        if (nextVerseNo > meta.getChapterVerseCount(nextChapterNo)) {
+        if (nextVerseNo > repository.getChapterVerseCount(nextChapterNo)) {
             if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
                 nextChapterNo++
                 nextVerseNo = 1
@@ -101,7 +102,7 @@ data class RecitationServiceState(
     }
 
     fun getPreviousChapter(
-        meta: QuranMeta
+        repository: QuranRepository
     ): ChapterVersePair? {
         val currentChapterNo = currentVerse.chapterNo
 
@@ -158,7 +159,7 @@ data class RecitationServiceState(
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
         putInt(KEY_REPEAT_COUNT, settings.repeatCount)
         putBoolean(KEY_CONTINUE, settings.continueRange)
-        putInt(KEY_AUDIO_OPTION, settings.audioOption)
+        putString(KEY_AUDIO_OPTION, settings.audioOption.value)
     }
 
     companion object {
@@ -186,10 +187,9 @@ data class RecitationServiceState(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
                     repeatCount = bundle.getInt(KEY_REPEAT_COUNT, 1).coerceAtLeast(1),
                     continueRange = bundle.getBoolean(KEY_CONTINUE, true),
-                    audioOption = bundle.getInt(
-                        KEY_AUDIO_OPTION,
-                        RecitationUtils.AUDIO_OPTION_DEFAULT
-                    ),
+                    audioOption = bundle.getString(
+                        KEY_AUDIO_OPTION
+                    )?.let { AudioOption.fromValue(it) } ?: AudioOption.DEFAULT,
                     reciter = bundle.getString(KEY_CURRENT_RECITER),
                     translationReciter = bundle.getString(KEY_CURRENT_TRANSLATION_RECITER)
                 ),

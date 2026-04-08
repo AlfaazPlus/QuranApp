@@ -1,25 +1,53 @@
 package com.quranapp.android.viewModels
 
+import android.app.Application
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class FavChaptersViewModel : ViewModel() {
+class ReaderIndexViewModel(application: Application) : AndroidViewModel(application) {
+    val repository = DatabaseProvider.getQuranRepository(application)
+
+    val surahs = repository.getAllSurahs()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    val juzs = repository.getJuzs()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    val hizbs = repository.getHizbs()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+
     @Composable
     fun getFavouriteChapters(): List<Int> {
         val raw = DataStoreManager.observe(
@@ -68,7 +96,7 @@ class FavChaptersViewModel : ViewModel() {
     companion object {
         private val KEY = stringPreferencesKey(Keys.FAVOURITE_CHAPTERS)
 
-        fun migrate(context: Context) {
+        fun migrateFavourites(context: Context) {
             CoroutineScope(Dispatchers.IO).launch {
                 val old = SPFavouriteChapters.getFavouriteChapters(context)
 

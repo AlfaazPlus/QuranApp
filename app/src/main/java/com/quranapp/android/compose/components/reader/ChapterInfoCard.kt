@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,22 +41,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityChapInfo
-import com.quranapp.android.components.quran.QuranMeta2
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.entities.quran.RevelationType
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.univ.Keys
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 @Composable
 fun ChapterInfoCard(chapterNo: Int) {
-    val quranMeta = QuranMeta2.remember()
-    val chapterMeta = remember(quranMeta, chapterNo) {
-        quranMeta?.getChapterMeta(chapterNo)
-    } ?: return
-
     val context = LocalContext.current
+
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var _swl by remember { mutableStateOf<SurahWithLocalizations?>(null) }
+
+    LaunchedEffect(chapterNo) {
+        _swl = withContext(Dispatchers.IO) {
+            repository.getSurahWithLocalizations(chapterNo)
+        }
+    }
+
+    val swl = _swl ?: return
+
     var expanded by remember(chapterNo) { mutableStateOf(false) }
 
-    val isMeccan = chapterMeta.revelationType == "meccan"
-    val title = stringResource(R.string.strLabelSurah, chapterMeta.name)
+    val isMeccan = swl.surah.revelationType == RevelationType.meccan
+    val title = stringResource(R.string.strLabelSurah, swl.getCurrentName())
     val revelationLabel =
         stringResource(if (isMeccan) R.string.strTitleMakki else R.string.strTitleMadani)
 
@@ -119,7 +131,7 @@ fun ChapterInfoCard(chapterNo: Int) {
                         .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
                         .clickable {
                             val intent = Intent(context, ActivityChapInfo::class.java).apply {
-                                putExtra(Keys.READER_KEY_CHAPTER_NO, chapterMeta.chapterNo)
+                                putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
                                 putExtra(Keys.KEY_LANGUAGE, Locale.getDefault().toLanguageTag())
                             }
                             context.startActivity(intent)
@@ -149,13 +161,13 @@ fun ChapterInfoCard(chapterNo: Int) {
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strTitleChapInfoVerses) + ": ${chapterMeta.verseCount}",
+                                text = stringResource(R.string.strTitleChapInfoVerses) + ": ${swl.surah.ayahCount}",
                             )
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strTitleChapInfoRukus) + ": ${chapterMeta.rukuCount}",
+                                text = stringResource(R.string.strTitleChapInfoRukus) + ": ${swl.surah.rukusCount}",
                             )
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strLabelOrder) + ": ${chapterMeta.revelationOrder}",
+                                text = stringResource(R.string.strLabelOrder) + ": ${swl.surah.revelationOrder}",
                             )
                         }
 

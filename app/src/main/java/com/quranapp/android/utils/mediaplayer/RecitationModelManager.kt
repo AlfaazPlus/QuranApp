@@ -11,6 +11,7 @@ import com.quranapp.android.api.models.recitation2.AvailableRecitationsModel
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
@@ -66,8 +67,8 @@ class RecitationModelManager private constructor(
     suspend fun resolveModels(): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
         val audioOption = RecitationPreferences.getAudioOption()
 
-        val resolveQuran = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-        val resolveTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_QURAN
+        val resolveQuran = audioOption != AudioOption.ONLY_TRANSLATION
+        val resolveTranslation = audioOption != AudioOption.ONLY_QURAN
 
         return Pair(
             if (resolveQuran) getSelectedQuranModel() else null,
@@ -171,8 +172,8 @@ class RecitationModelManager private constructor(
     suspend fun getCurrentReciterNameForAudioOption(): String {
         val audioAudio = RecitationPreferences.getAudioOption()
 
-        val isBoth = audioAudio == RecitationUtils.AUDIO_OPTION_BOTH
-        val isOnlyTransl = audioAudio == RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
+        val isBoth = audioAudio == AudioOption.BOTH
+        val isOnlyTransl = audioAudio == AudioOption.ONLY_TRANSLATION
 
         val quranReciterName =
             if (!isOnlyTransl) getSelectedQuranModel()?.getReciterName() else null

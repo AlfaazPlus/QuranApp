@@ -14,6 +14,7 @@ import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
@@ -77,8 +78,8 @@ class RecitationAudioRepository(private val context: Context) {
 
         val (quranModel, translationModel) = modelManager.resolveModels()
 
-        val shouldPlayArabic = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION
-        val shouldPlayTranslation = audioOption != RecitationUtils.AUDIO_OPTION_ONLY_QURAN
+        val shouldPlayArabic = audioOption != AudioOption.ONLY_TRANSLATION
+        val shouldPlayTranslation = audioOption != AudioOption.ONLY_QURAN
 
         val failed = when {
             shouldPlayArabic && quranModel == null -> true

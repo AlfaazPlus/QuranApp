@@ -21,6 +21,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.utils.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -286,7 +287,7 @@ class RecitationController private constructor(private val appContext: Context) 
         )
     }
 
-    fun setAudioOption(option: Int) {
+    fun setAudioOption(option: AudioOption) {
         ensureConnectedAndSend(
             SetAudioOptionCommand(audioOption = option)
         )

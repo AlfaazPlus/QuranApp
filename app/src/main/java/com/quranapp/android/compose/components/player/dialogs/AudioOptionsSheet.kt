@@ -22,10 +22,24 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheet
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
+import com.quranapp.android.utils.mediaplayer.RecitationController
 import kotlinx.coroutines.launch
+
+
+enum class AudioOption(val value: String) {
+    ONLY_QURAN("only_quran"),
+    ONLY_TRANSLATION("only_translation"),
+    BOTH("both");
+
+    companion object {
+        val DEFAULT = ONLY_QURAN
+
+        fun fromValue(value: String): AudioOption {
+            return entries.firstOrNull { it.value == value } ?: ONLY_QURAN
+        }
+    }
+}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -39,13 +53,13 @@ fun AudioOptionsSheet(
     val coroutineScope = rememberCoroutineScope()
 
     val items = listOf(
-        Pair(RecitationUtils.AUDIO_OPTION_ONLY_QURAN, R.string.audioOnlyArabic),
-        Pair(RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION, R.string.audioOnlyTranslation),
-        Pair(RecitationUtils.AUDIO_OPTION_BOTH, R.string.audioBothArabicTranslation),
+        Pair(AudioOption.ONLY_QURAN, R.string.audioOnlyArabic),
+        Pair(AudioOption.ONLY_TRANSLATION, R.string.audioOnlyTranslation),
+        Pair(AudioOption.BOTH, R.string.audioBothArabicTranslation),
     )
 
     val verseGroupSizes = listOf(1, 2, 3, 5, 10)
-    val sizeOptionEnabled = selectedAudioOption == RecitationUtils.AUDIO_OPTION_BOTH
+    val sizeOptionEnabled = selectedAudioOption == AudioOption.BOTH
     val sizeOptionOpacity = if (sizeOptionEnabled) 1f else 0.5f
 
     BottomSheet(

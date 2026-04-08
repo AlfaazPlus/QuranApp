@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,16 +46,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.formatDuration
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 
 @Composable
 fun MiniPlayer(
@@ -68,12 +71,19 @@ fun MiniPlayer(
     onExpand: () -> Unit,
 ) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.remember()
 
     val verse = state.currentVerse
-    val chapterName = quranMeta?.getChapterName(context, verse.chapterNo) ?: "…"
-    val reciterNames =
-        RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var chapterName by remember { mutableStateOf("") }
+
+    LaunchedEffect(verse.chapterNo) {
+        chapterName = withContext(Dispatchers.IO) {
+            repository.getChapterName(verse.chapterNo)
+        }
+    }
+
+    val reciterNames = RecitationModelManager.get(context)
+        .rememberCurrentReciterNameForAudioOption()
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(

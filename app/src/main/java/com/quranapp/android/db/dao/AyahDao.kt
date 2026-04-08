@@ -1,6 +1,8 @@
 package com.quranapp.android.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.relations.AyahWithWords
 import kotlinx.coroutines.flow.Flow
@@ -51,16 +53,6 @@ interface AyahDao {
     """
     )
     suspend fun getAyahsByRub(rubNo: Int): List<AyahEntity>
-
-    @Transaction
-    @Query(
-        """
-        SELECT * FROM ayahs
-        WHERE surah_no = :surahNo
-        ORDER BY ayah_no
-    """
-    )
-    suspend fun getAyahsWithWordsBySurah(surahNo: Int): List<AyahWithWords>
 
     @Query(
         """

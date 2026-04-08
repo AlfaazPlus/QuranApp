@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.quranapp.android.R
 import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
@@ -16,6 +17,11 @@ class UserRepository(
     private val database: UserDatabase
 ) {
     private val bookmarkDao get() = database.bookmarkDao()
+    private val readHistoryDao get() = database.readHistoryDao()
+
+    companion object {
+        private const val HISTORY_LIMIT = 40
+    }
 
     suspend fun addMultipleBookmarks(bookmarks: List<BookmarkEntity>) {
         bookmarkDao.insertAll(bookmarks)
@@ -150,5 +156,32 @@ class UserRepository(
         toVerse: Int
     ): Flow<BookmarkEntity?> {
         return bookmarkDao.getBookmarkFlow(chapterNo, fromVerse, toVerse)
+    }
+
+    // ── Read History ──
+    suspend fun saveReadHistory(entity: ReadHistoryEntity) {
+        readHistoryDao.deleteDuplicate(
+            readType = entity.readType,
+            readerMode = entity.readerMode,
+            divisionNo = entity.divisionNo,
+            chapterNo = entity.chapterNo,
+            fromVerseNo = entity.fromVerseNo,
+            toVerseNo = entity.toVerseNo,
+        )
+        readHistoryDao.insert(entity)
+        readHistoryDao.trimToSize(HISTORY_LIMIT)
+    }
+
+    fun getAllHistoriesFlow(limit: Int? = null): Flow<List<ReadHistoryEntity>> {
+        return if (limit != null) readHistoryDao.getAllFlow(limit)
+        else readHistoryDao.getAllFlow()
+    }
+
+    suspend fun deleteHistory(id: Long) {
+        readHistoryDao.deleteById(id)
+    }
+
+    suspend fun deleteAllHistories() {
+        readHistoryDao.deleteAll()
     }
 }

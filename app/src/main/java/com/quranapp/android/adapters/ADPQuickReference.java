@@ -1,12 +1,12 @@
 package com.quranapp.android.adapters;
 
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quranapp.android.activities.ReaderPossessingActivity;
 import com.quranapp.android.components.quran.subcomponents.Verse;
-import com.quranapp.android.views.reader.VerseView;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class ADPQuickReference extends RecyclerView.Adapter<ADPQuickReference.VH
     @NonNull
     @Override
     public VHReader onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        return new VHReader(new VerseView(mActivity, parent, null, true));
+        return new VHReader(new View(mActivity));
     }
 
     @Override
@@ -52,18 +52,12 @@ public class ADPQuickReference extends RecyclerView.Adapter<ADPQuickReference.VH
 
 
     public static class VHReader extends RecyclerView.ViewHolder {
-        private final VerseView mVerseView;
 
-        public VHReader(@NonNull VerseView verseView) {
+        public VHReader(@NonNull View verseView) {
             super(verseView);
-            mVerseView = verseView;
         }
 
         public void bind(Verse verse) {
-            if (mVerseView == null) {
-                return;
-            }
-            mVerseView.setVerse(verse);
         }
     }
 }

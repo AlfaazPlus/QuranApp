@@ -41,7 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
@@ -167,7 +167,7 @@ fun QuickReference(
 
     var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
-    var verseOptionsVerse by remember { mutableStateOf<Verse?>(null) }
+    var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceStack by remember { mutableStateOf<QuickReferenceData?>(null) }
 
     CompositionLocalProvider(
@@ -230,7 +230,7 @@ fun QuickReference(
         }
 
         VerseOptionsSheet(
-            verse = verseOptionsVerse,
+            vwd = verseOptionsVerse,
             onFootnotes = { v ->
                 verseOptionsVerse = null
                 footnotePresenterData = FootnotePresenterData(v, null)

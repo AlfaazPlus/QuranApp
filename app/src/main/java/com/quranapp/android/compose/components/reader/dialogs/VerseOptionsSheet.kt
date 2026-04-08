@@ -36,29 +36,27 @@ import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
-import com.quranapp.android.components.quran.QuranMeta2
-import com.quranapp.android.components.quran.subcomponents.Verse
-import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.theme.alpha
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerseOptionsSheet(
-    verse: Verse?,
-    onFootnotes: (Verse) -> Unit,
+    vwd: VerseWithDetails?,
+    onFootnotes: (VerseWithDetails) -> Unit,
     onClose: () -> Unit,
 ) {
-    var shareVerseData by remember { mutableStateOf<ChapterVersePair?>(null) }
+    var shareSheetData by remember { mutableStateOf<VerseWithDetails?>(null) }
 
     VerseShareSheet(
-        data = shareVerseData,
-        onDismiss = { shareVerseData = null },
+        vwd = shareSheetData,
+        onDismiss = { shareSheetData = null },
     )
 
     val sheetState = rememberModalBottomSheetState(true)
 
-    if (verse == null) {
+    if (vwd == null) {
         return
     }
 
@@ -70,11 +68,11 @@ fun VerseOptionsSheet(
         contentColor = colorScheme.onSurface,
     ) {
         VodSheetContent(
-            verse = verse,
+            verse = vwd,
             onDismiss = onClose,
             onFootnotes = onFootnotes,
             onShare = {
-                shareVerseData = ChapterVersePair(verse.chapterNo, verse.verseNo)
+                shareSheetData = vwd
                 onClose()
             },
         )
@@ -83,17 +81,16 @@ fun VerseOptionsSheet(
 
 @Composable
 private fun VodSheetContent(
-    verse: Verse,
+    verse: VerseWithDetails,
     onDismiss: () -> Unit,
-    onFootnotes: (Verse) -> Unit,
+    onFootnotes: (VerseWithDetails) -> Unit,
     onShare: () -> Unit,
 ) {
     val context = LocalContext.current
-    val meta = QuranMeta2.remember()
 
     val title = stringResource(
         R.string.strTitleReaderVerseInformation,
-        meta?.getChapterName(context, verse.chapterNo).orEmpty(),
+        verse.chapter.getCurrentName(),
         verse.verseNo
     )
 

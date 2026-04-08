@@ -103,11 +103,11 @@ class FragMain : BaseFragment() {
 
 
     private fun initVOTD(quranMeta: QuranMeta) {
-        votdView = VOTDView(binding.container.context).apply {
+        /*votdView = VOTDView(binding.container.context).apply {
             id = R.id.homepageVOTD
             refresh(quranMeta)
             binding.container.addView(this, 1)
-        }
+        }*/
     }
 
 }

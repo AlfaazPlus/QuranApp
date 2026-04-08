@@ -24,6 +24,7 @@ object DatabaseProvider {
                 UserDatabase::class.java,
                 "user_db"
             )
+                .addMigrations(UserDatabase.MIGRATION_1_2)
                 .fallbackToDestructiveMigration(false)
                 .build()
                 .also { userDatabase = it }

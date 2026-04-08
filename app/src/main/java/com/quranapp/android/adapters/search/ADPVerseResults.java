@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader;
+import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.activities.ActivitySearch;
 import com.quranapp.android.adapters.extended.PeaceBottomSheetMenuAdapter;
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel;
@@ -436,7 +436,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
         private void openItem(Context context, VerseResultModel model) {
             Intent intent = ReaderFactory.prepareSingleVerseIntent(model.chapterNo, model.verseNo);
-            intent.setClass(context, ActivityReader.class);
+            intent.setClass(context, ActivityReader2.class);
             String[] requestedSlugs = model.translSlugs.toArray(new String[0]);
             intent.putExtra(READER_KEY_TRANSL_SLUGS, requestedSlugs);
             intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);

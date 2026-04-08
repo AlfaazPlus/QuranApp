@@ -13,14 +13,14 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.em
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.quran.QuranConstants
 
 typealias OnReferenceClick = (slugs: Set<String>, chapterNo: Int, verses: String) -> Unit
 typealias OnFootnoteClickRaw = (slug: String, footnoteNo: Int) -> Unit
-typealias OnFootnoteClick = (verse: Verse, footnote: Footnote?) -> Unit
-typealias OnVerseOption = (verse: Verse) -> Unit
+typealias OnFootnoteClick = (verse: VerseWithDetails, footnote: Footnote?) -> Unit
+typealias OnVerseOption = (verse: VerseWithDetails) -> Unit
 typealias OnBookmarkRequest = (chapterNo: Int, verseRange: IntRange) -> Unit
 
 data class VerseActions(

@@ -34,8 +34,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta2
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
@@ -92,7 +91,7 @@ fun VerseView(
 
 @Composable
 private fun VerseActionBar(
-    verse: Verse,
+    verse: VerseWithDetails,
     isVersePlaying: Boolean,
     isBookmarked: Boolean
 ) {
@@ -195,18 +194,15 @@ private fun VerseActionIconButton(
 }
 
 @Composable
-private fun VerseSerial(verse: Verse) {
+private fun VerseSerial(verse: VerseWithDetails) {
     val context = LocalContext.current
-    val quranMeta = QuranMeta2.remember()
-
     val chapterNo = verse.chapterNo
     val verseNo = verse.verseNo
 
-    if (quranMeta == null) return
 
     val contentDescription = stringResource(
         R.string.strDescVerseNoWithChapter,
-        quranMeta.getChapterName(context, chapterNo),
+        verse.chapter.getCurrentName(),
         verseNo
     )
 
@@ -214,7 +210,7 @@ private fun VerseSerial(verse: Verse) {
         text = if (verse.includeChapterNameInSerial) {
             stringResource(
                 R.string.strLabelVerseSerialWithChapter,
-                quranMeta.getChapterName(context, chapterNo),
+                verse.chapter.getCurrentName(),
                 chapterNo,
                 verseNo
             )

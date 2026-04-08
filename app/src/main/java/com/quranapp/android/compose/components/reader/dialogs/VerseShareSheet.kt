@@ -27,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,19 +40,19 @@ import androidx.core.text.HtmlCompat
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.components.quran.Quran
-import com.quranapp.android.components.quran.Quran2
-import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.QuranRepository
 import com.quranapp.android.utils.extensions.copyToClipboard
+import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
+import kotlinx.coroutines.launch
 
 private val footnoteTagPattern = Regex("""(?s)<fn.*?>(.*?)<.*?fn>""")
 
@@ -70,21 +71,21 @@ private typealias UpdateVerseShareState = (VerseShareState.() -> VerseShareState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerseShareSheet(
-    data: ChapterVersePair?,
+    vwd: VerseWithDetails?,
     onDismiss: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    if (data == null) return
+    if (vwd == null) return
 
     val context = LocalContext.current
-    val quran = Quran2.rememberQuran()
-    val quranMeta = QuranMeta2.remember()
-    val translFactory = QuranTranslationFactory.rememberFactory(context)
+    val coroutineScope = rememberCoroutineScope()
+    val translFactory = QuranTranslationFactory.remember(context)
 
     val translationBooks = remember(translFactory) {
         translFactory.getAvailableTranslationBooksInfo()
     }
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
 
     var state by remember { mutableStateOf(VerseShareState()) }
 
@@ -92,7 +93,7 @@ fun VerseShareSheet(
         state = state.transform()
     }
 
-    LaunchedEffect(data) {
+    LaunchedEffect(vwd) {
         updateState { VerseShareState() }
     }
 
@@ -106,9 +107,8 @@ fun VerseShareSheet(
         }
     }
 
-    if (quran == null || quranMeta == null) {
-        return
-    }
+    val clipboardMsg = stringResource(R.string.copiedToClipboard)
+    val shareTitle = stringResource(R.string.strTitleShareVerse)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -132,8 +132,7 @@ fun VerseShareSheet(
                     .verticalScroll(rememberScrollState())
             ) {
                 AdvancedShareForm(
-                    chapterNo = data.chapterNo,
-                    quranMeta = quranMeta,
+                    vwd = vwd,
                     translationBooks = translationBooks,
                     state,
                     updateState = updateState
@@ -153,24 +152,24 @@ fun VerseShareSheet(
 
                 Button(
                     onClick = {
-                        val text = buildShareText(
-                            context,
-                            quran = quran,
-                            quranMeta = quranMeta,
-                            translFactory = translFactory,
-                            chapterNo = data.chapterNo,
-                            verseNo = data.verseNo,
-                            state = state,
-                        )
+                        coroutineScope.launch {
+                            val text = buildShareText(
+                                context,
+                                repository,
+                                translFactory,
+                                state = state,
+                                vwd = vwd,
+                            )
 
-                        if (text.isNullOrEmpty()) return@Button
+                            if (text.isNullOrEmpty()) return@launch
 
-                        context.copyToClipboard(text)
+                            context.copyToClipboard(text)
 
-                        MessageUtils.showClipboardMessage(
-                            context,
-                            context.getString(R.string.copiedToClipboard)
-                        )
+                            MessageUtils.showClipboardMessage(
+                                context,
+                                clipboardMsg
+                            )
+                        }
 
                         onDismiss()
                     },
@@ -180,23 +179,24 @@ fun VerseShareSheet(
 
                 Button(
                     onClick = {
-                        val text = buildShareText(
-                            context,
-                            quran = quran,
-                            quranMeta = quranMeta,
-                            translFactory = translFactory,
-                            chapterNo = data.chapterNo,
-                            verseNo = data.verseNo,
-                            state = state,
-                        )
+                        coroutineScope.launch {
+                            val text = buildShareText(
+                                context,
+                                repository,
+                                translFactory = translFactory,
+                                state = state,
+                                vwd = vwd,
+                            )
 
-                        if (text.isNullOrEmpty()) return@Button
+                            if (text.isNullOrEmpty()) return@launch
 
-                        AppBridge.newSharer(context)
-                            .setData(text)
-                            .setChooserTitle(context.getString(R.string.strTitleShareVerse))
-                            .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
-                            .share()
+                            AppBridge.newSharer(context)
+                                .setData(text)
+                                .setChooserTitle(shareTitle)
+                                .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
+                                .share()
+                        }
+
                         onDismiss()
                     },
                 ) {
@@ -209,14 +209,11 @@ fun VerseShareSheet(
 
 @Composable
 private fun AdvancedShareForm(
-    chapterNo: Int,
-    quranMeta: QuranMeta?,
+    vwd: VerseWithDetails,
     translationBooks: Map<String, TranslationBookInfoModel>,
     state: VerseShareState,
     updateState: UpdateVerseShareState,
 ) {
-    val verseCount = quranMeta?.getChapterVerseCount(chapterNo) ?: 0
-
     Text(
         text = stringResource(R.string.strLabelSelectVerse),
         modifier = Modifier
@@ -252,7 +249,7 @@ private fun AdvancedShareForm(
 
     if (state.useVerseRange) {
         Text(
-            text = stringResource(R.string.strMsgShareRange, 1, verseCount),
+            text = stringResource(R.string.strMsgShareRange, 1, vwd.chapter.surah.ayahCount),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 6.dp),
@@ -399,14 +396,12 @@ private fun resolveVerseRange(
     return from to to
 }
 
-private fun buildShareText(
+private suspend fun buildShareText(
     context: Context,
-    quran: Quran,
-    quranMeta: QuranMeta,
+    repository: QuranRepository,
     translFactory: QuranTranslationFactory,
-    chapterNo: Int,
-    verseNo: Int,
     state: VerseShareState,
+    vwd: VerseWithDetails,
 ): String? {
     val proceed = state.selectedSlugs.isNotEmpty() || state.includeArabic
 
@@ -415,7 +410,7 @@ private fun buildShareText(
 
     val (fromVerse, toVerse) = resolveVerseRange(
         state = state,
-        defaultVerse = verseNo,
+        defaultVerse = vwd.verseNo,
     )
 
     if (fromVerse == null || toVerse == null) {
@@ -427,7 +422,7 @@ private fun buildShareText(
         return null
     }
 
-    if (!quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
+    if (!vwd.chapter.isVerseRangeValid(fromVerse, toVerse)) {
         Toast.makeText(
             context,
             R.string.strMsgEnterValidRange,
@@ -441,9 +436,9 @@ private fun buildShareText(
     for (verseNo in fromVerse..toVerse) {
         appendVerseBlock(
             sb = sb,
-            quran = quran,
+            repository = repository,
             translFactory = translFactory,
-            chapterNo = chapterNo,
+            chapterNo = vwd.chapterNo,
             verseNo = verseNo,
             isSingleVerse = fromVerse == toVerse,
             state,
@@ -459,14 +454,14 @@ private fun buildShareText(
     return sb.toString()
 }
 
-private fun appendVerseBlock(
+private suspend fun appendVerseBlock(
     sb: StringBuilder,
-    quran: Quran,
+    repository: QuranRepository,
     translFactory: QuranTranslationFactory,
     chapterNo: Int,
     verseNo: Int,
     isSingleVerse: Boolean,
-    state: VerseShareState
+    state: VerseShareState,
 ) {
     val transls = translFactory.getTranslationsSingleVerse(state.selectedSlugs, chapterNo, verseNo)
     val hasMultiTransls = transls.size > 1
@@ -476,7 +471,12 @@ private fun appendVerseBlock(
     }
 
     if (state.includeArabic) {
-        sb.append(quran.getVerse(chapterNo, verseNo).arabicText)
+        val words = repository.getWordsForAyah(chapterNo, verseNo, QuranScriptUtils.SCRIPT_UTHMANI)
+        val text = words.joinToString(" ") { it.text }
+
+        if (text.isNotEmpty()) {
+            sb.append(text)
+        }
     }
 
     for (i in transls.indices) {

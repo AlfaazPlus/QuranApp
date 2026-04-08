@@ -20,6 +20,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,13 +37,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.quran.subcomponents.Footnote
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.OnReferenceClick
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
@@ -53,12 +54,14 @@ import com.quranapp.android.utils.reader.getTranslationTextStyle
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils
 import horizontalFadingEdge
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import verticalFadingEdge
 import java.util.Locale
 
 
 data class FootnotePresenterData(
-    val verse: Verse,
+    val verse: VerseWithDetails,
     val singleFootnote: Footnote?,
 )
 
@@ -85,7 +88,7 @@ fun FootnotePresenter(
 @Composable
 private fun PresentSheetContent(data: FootnotePresenterData) {
     val context = LocalContext.current
-    val translFactory = QuranTranslationFactory.rememberFactory(context)
+    val translFactory = QuranTranslationFactory.remember(context)
 
     val verse = data.verse
     val singleFootnote = data.singleFootnote
@@ -123,12 +126,10 @@ private fun PresentSheetContent(data: FootnotePresenterData) {
 @Composable
 private fun Header(
     translFactory: QuranTranslationFactory,
-    verse: Verse,
+    verse: VerseWithDetails,
     singleFootnote: Footnote?
 ) {
     val context = LocalContext.current
-
-    val meta = QuranMeta2.remember()
 
     val singleFootnoteBooInfo = remember(singleFootnote, translFactory) {
         singleFootnote?.let {
@@ -144,6 +145,15 @@ private fun Header(
         )
     } ?: if (singleFootnote != null) stringResource(R.string.strTitleFootnote)
     else stringResource(R.string.strTitleFootnotes)
+
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var chapterName by remember { mutableStateOf("") }
+
+    LaunchedEffect(verse.chapterNo) {
+        chapterName = withContext(Dispatchers.IO) {
+            repository.getChapterName(verse.chapterNo)
+        }
+    }
 
 
     Column(
@@ -172,33 +182,31 @@ private fun Header(
             }
         )
 
-        if (meta != null) {
-            Text(
-                text = buildAnnotatedString {
-                    append(
-                        stringResource(
-                            R.string.strLabelVerseSerialWithChapter,
-                            meta.getChapterName(context, verse.chapterNo),
-                            verse.chapterNo,
-                            verse.verseNo
-                        )
+        Text(
+            text = buildAnnotatedString {
+                append(
+                    stringResource(
+                        R.string.strLabelVerseSerialWithChapter,
+                        chapterName,
+                        verse.chapterNo,
+                        verse.verseNo
                     )
+                )
 
-                    if (singleFootnoteBooInfo != null) {
-                        append(" ${StringUtils.HYPHEN} ")
-                        append(singleFootnoteBooInfo.getDisplayName(true))
-                    }
-                },
-                style = typography.labelSmall
-            )
-        }
+                if (singleFootnoteBooInfo != null) {
+                    append(" ${StringUtils.HYPHEN} ")
+                    append(singleFootnoteBooInfo.getDisplayName(true))
+                }
+            },
+            style = typography.labelSmall
+        )
     }
 }
 
 @Composable
 fun AuthorChips(
     translFactory: QuranTranslationFactory,
-    verse: Verse,
+    verse: VerseWithDetails,
     selectedSlug: String?,
     onSelectionChange: (String) -> Unit
 ) {
@@ -247,7 +255,7 @@ fun AuthorChips(
 fun FootnoteContent(
     translFactory: QuranTranslationFactory,
     selectedSlug: String?,
-    verse: Verse,
+    verse: VerseWithDetails,
     singleFootnote: Footnote?,
 ) {
     val scrollState = rememberScrollState()

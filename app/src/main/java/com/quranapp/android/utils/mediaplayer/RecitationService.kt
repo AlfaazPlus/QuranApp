@@ -29,19 +29,16 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.ActivityReader2
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
-import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.ErrorEvent
 import com.quranapp.android.utils.univ.EventBus
 import com.quranapp.android.utils.univ.FileUtils
@@ -108,8 +105,8 @@ class RecitationService : MediaSessionService() {
     var forceTranslationManifestFetch = false
 
     @Volatile
-    private var _quranMeta = serviceScope.async {
-        QuranMeta2.prepareInstance(applicationContext)
+    private var _repository = serviceScope.async {
+        DatabaseProvider.getQuranRepository(applicationContext)
     }
 
     private var singleTrackTimingMetadata: ChapterTimingMetadata? = null
@@ -208,13 +205,13 @@ class RecitationService : MediaSessionService() {
         )
     }
 
-    private suspend fun requestQuranMeta(): QuranMeta = _quranMeta.await()
+    private suspend fun repository() = _repository.await()
 
     private suspend fun initializeStateFromPreferences() {
         val initialSettings = PlayerSettings(
             speed = RecitationPreferences.getSpeed(),
             repeatCount = RecitationPreferences.getRepeatCount(),
-            continueRange = SPReader.getRecitationContinueChapter(this),
+            continueRange = true,
             audioOption = RecitationPreferences.getAudioOption(),
             reciter = RecitationPreferences.getReciterId(),
             translationReciter = RecitationPreferences.getTranslationReciterId(),
@@ -335,16 +332,14 @@ class RecitationService : MediaSessionService() {
 
     fun recitePreviousVerse() {
         scoped {
-            val meta = requestQuranMeta()
-            val prev = state.value.getPreviousVerse(meta) ?: return@scoped
+            val prev = state.value.getPreviousVerse(repository()) ?: return@scoped
             playChapter(prev.chapterNo, prev.verseNo)
         }
     }
 
     fun reciteNextVerse() {
         scoped {
-            val meta = requestQuranMeta()
-            val next = state.value.getNextVerse(meta) ?: return@scoped
+            val next = state.value.getNextVerse(repository()) ?: return@scoped
             playChapter(next.chapterNo, next.verseNo)
         }
     }
@@ -371,15 +366,15 @@ class RecitationService : MediaSessionService() {
      * when the same chapter is already loaded and verse-level seeking is available.
      */
     private suspend fun playChapter(chapterNo: Int, fromVerse: Int) {
-        val meta = requestQuranMeta()
+        val repository = repository()
 
-        if (!meta.isVerseValid4Chapter(chapterNo, fromVerse)) {
+        if (!repository.isVerseValid4Chapter(chapterNo, fromVerse)) {
             return
         }
 
         val requestId = ++latestPlaybackRequestId
 
-        if (trySeekToVerseInLoadedChapter(chapterNo, fromVerse, meta)) {
+        if (trySeekToVerseInLoadedChapter(chapterNo, fromVerse)) {
             if (requestId == latestPlaybackRequestId) {
                 setResolving(false)
             }
@@ -470,7 +465,7 @@ class RecitationService : MediaSessionService() {
      * Returns true if playback was adjusted in place (seek + play) without re-resolving audio.
      */
     private fun trySeekToVerseInLoadedChapter(
-        chapterNo: Int, verseNo: Int, meta: QuranMeta
+        chapterNo: Int, verseNo: Int
     ): Boolean {
         if (
             state.value.isResolving ||
@@ -627,7 +622,7 @@ class RecitationService : MediaSessionService() {
             return null
         }
 
-        val meta = requestQuranMeta()
+        val meta = repository()
         val verseCount = meta.getChapterVerseCount(chapterNo)
         val trackCount = tracks.size
         val items = ArrayList<MediaItem>(verseCount * trackCount)
@@ -684,8 +679,8 @@ class RecitationService : MediaSessionService() {
     // ==================== Metadata ====================
 
     private suspend fun buildTitle(chapterNo: Int, verseNo: Int?): String {
-        val meta = requestQuranMeta()
-        val chapterName = meta.getChapterName(this, chapterNo)
+        val repository = repository()
+        val chapterName = repository.getChapterName(chapterNo)
         return if (verseNo != null) getString(
             R.string.strLabelVerseWithChapNameAndNo,
             chapterName,
@@ -848,7 +843,7 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun isSingleTrackRepeatEligible(): Boolean {
-        return state.value.settings.audioOption == RecitationUtils.AUDIO_OPTION_ONLY_QURAN &&
+        return state.value.settings.audioOption == AudioOption.ONLY_QURAN &&
                 repeatRemainingPlaysForCurrentItem > 0 &&
                 singleTrackTimingMetadata != null
     }

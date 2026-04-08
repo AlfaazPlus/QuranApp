@@ -4,20 +4,28 @@
 package com.quranapp.android.utils.univ
 
 object Keys {
-    @Deprecated("to cleanup")
-    const val READER_KEY_READER_STYLE = "reader.style"
+    // Reader keys used by ActivityTafsir, ActivityChapInfo, ChapterInfoCard, etc.
+    const val READER_KEY_CHAPTER_NO = "reader.chapter_no"
+    const val READER_KEY_VERSE_NO = "reader.verse_no"
+
+    // Reader keys used by settings, translation fragments, and other non-reader screens
     const val READER_KEY_READER_MODE = "reader.mode"
     const val READER_KEY_READ_TYPE = "reader.read_type"
-    const val READER_KEY_CHAPTER_NO = "reader.chapter_no"
-    const val READER_KEY_VERSES = "reader.verses"
-    const val READER_KEY_JUZ_NO = "reader.juz_no"
-    const val READER_KEY_VERSE_NO = "reader.verse_no"
     const val READER_KEY_TRANSL_SLUGS = "reader.translation_slugs"
     const val READER_KEY_SAVE_TRANSL_CHANGES = "reader.save_translation_changes"
-    const val READER_KEY_PENDING_SCROLL = "reader.pending_scroll"
     const val READER_KEY_SETTING_IS_FROM_READER = "reader.setting_is_from_reader"
     const val READER_KEY_ARABIC_TEXT_ENABLED = "reader.arabic_text_enabled"
     const val READER_KEY_AUTO_SCROLL_SPEED = "reader.auto_scroll_speed"
+
+    // Keys still referenced by old ActivityReader.java — remove when that class is deleted
+    @Deprecated("Used only by legacy ActivityReader")
+    const val READER_KEY_READER_STYLE = "reader.style"
+    @Deprecated("Used only by legacy ActivityReader")
+    const val READER_KEY_JUZ_NO = "reader.juz_no"
+    @Deprecated("Used only by legacy ActivityReader")
+    const val READER_KEY_VERSES = "reader.verses"
+    @Deprecated("Replaced by ReaderIntentData.initialVerse; used only by legacy ActivityReader")
+    const val READER_KEY_PENDING_SCROLL = "reader.pending_scroll"
 
     const val KEY_REFERENCE_VERSE_MODEL = "verse_model"
     const val KEY_LANGUAGE = "language"

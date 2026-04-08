@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT_DP
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.LocalRecitationState
@@ -41,13 +41,13 @@ import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.viewModels.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReaderScreen(data: ReaderIntentData) {
+fun ReaderScreen(params: ReaderLaunchParams) {
     val readerVm = viewModel<ReaderViewModel>()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -61,8 +61,8 @@ fun ReaderScreen(data: ReaderIntentData) {
 
     var isSyncing by readerVm.playerVerseSync
 
-    LaunchedEffect(data) {
-        readerVm.initReader(data)
+    LaunchedEffect(params) {
+        readerVm.initReader(params)
     }
 
     Providers(readerVm) {
@@ -129,7 +129,7 @@ private fun Providers(
 
     var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
-    var verseOptionsVerse by remember { mutableStateOf<Verse?>(null) }
+    var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceStack by remember { mutableStateOf<QuickReferenceData?>(null) }
 
     val context = LocalContext.current
@@ -182,7 +182,7 @@ private fun Providers(
         content()
 
         VerseOptionsSheet(
-            verse = verseOptionsVerse,
+            vwd = verseOptionsVerse,
             onFootnotes = { v ->
                 verseOptionsVerse = null
                 footnotePresenterData = FootnotePresenterData(v, null)

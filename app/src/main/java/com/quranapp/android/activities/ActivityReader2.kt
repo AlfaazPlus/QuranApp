@@ -6,120 +6,67 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.screens.reader.ReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.reader_managers.ReaderParams
-import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
-import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_VERSES
-import com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_PAGE
-import com.quranapp.android.reader_managers.ReaderParams.READER_STYLE_TRANSLATION
 import com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.extensions.asIntRange
+import com.quranapp.android.utils.reader.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.univ.Keys
-import com.quranapp.android.utils.univ.Keys.READER_KEY_CHAPTER_NO
-import com.quranapp.android.utils.univ.Keys.READER_KEY_JUZ_NO
-import com.quranapp.android.utils.univ.Keys.READER_KEY_READER_STYLE
-import com.quranapp.android.utils.univ.Keys.READER_KEY_READ_TYPE
-import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
-import com.quranapp.android.utils.univ.Keys.READER_KEY_VERSES
-import com.quranapp.android.viewModels.ReaderIntentData
+import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivityReader2 : BaseActivity() {
-    val intentFlow = MutableStateFlow<Intent?>(intent)
+    private val readerVm: ReaderViewModel by viewModels()
+    val intentFlow = MutableStateFlow<Intent?>(null)
 
     override fun getLayoutResource() = 0
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         enableEdgeToEdge()
 
+        intentFlow.value = intent
+
         setContent {
-            val intent by intentFlow.collectAsState(initial = this.intent)
+            val currentIntent by intentFlow.collectAsState()
 
             QuranAppTheme {
                 ReaderScreen(
-//                    resolveReaderIntentData(intent) // fixme
-                    ReaderIntentData.FullChapter(1)
+                    resolveReaderLaunchParams(currentIntent)
+                    // ReaderLaunchParams(ReaderIntentData.FullChapter(1))
                 )
             }
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        readerVm.saveReadHistory()
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
-        this.intent = intent
+        setIntent(intent)
         intentFlow.value = intent
     }
 
-    private fun resolveReaderIntentData(intent: Intent?): ReaderIntentData {
-        if (intent == null) return ReaderIntentData.FullJuz(29)
+    private fun resolveReaderLaunchParams(intent: Intent?): ReaderLaunchParams {
+        if (intent == null) return ReaderLaunchParams(ReaderIntentData.FullChapter(1))
 
         try {
             validateIntent(intent)
         } catch (e: Exception) {
-            Log.saveError(e, "resolveReaderIntentData")
+            Log.saveError(e, "resolveReaderLaunchParams")
         }
 
-        val readType = intent.getIntExtra(READER_KEY_READ_TYPE, ReaderParams.defaultReadType())
-
-        var initialJuzNo = intent.getIntExtra(READER_KEY_JUZ_NO, 1)
-        var initialChapterNo = intent.getIntExtra(READER_KEY_CHAPTER_NO, 1)
-        var initVerses = resolveIntentVerseRange(intent)
-
-        val intentData = when (readType) {
-
-            READER_READ_TYPE_JUZ -> {
-                ReaderIntentData.FullJuz(initialJuzNo)
-            }
-
-            READER_READ_TYPE_VERSES -> {
-                if (initVerses == null) {
-                    ReaderIntentData.FullChapter(initialChapterNo)
-                } else {
-                    ReaderIntentData.VerseRange(initialChapterNo, initVerses.asIntRange)
-                }
-            }
-
-            else -> {
-                ReaderIntentData.FullChapter(initialChapterNo)
-            }
-        }
-
-        return intentData.apply {
-            slugs = intent.getStringArrayExtra(READER_KEY_TRANSL_SLUGS)?.toSet()
-                ?: ReaderPreferences.getTranslations()
-
-            readerMode = intent.getStringExtra(
-                Keys.READER_KEY_READER_MODE,
-            ).let { ReaderMode.fromValue(it ?: "") }
-        }
+        return ReaderLaunchParams.fromIntent(intent)
     }
-
-    private fun resolveIntentVerseRange(intent: Intent): Pair<Int, Int>? {
-        val serializable = intent.getSerializableExtra(READER_KEY_VERSES)
-
-        return when (serializable) {
-            is Pair<*, *> -> {
-                @Suppress("UNCHECKED_CAST")
-                serializable as Pair<Int, Int>
-            }
-
-            is IntArray -> {
-                serializable[0] to serializable[1]
-            }
-
-            else -> null
-        }
-    }
-
 
     private fun validateIntent(intent: Intent) {
         val action = intent.action
@@ -150,10 +97,9 @@ class ActivityReader2 : BaseActivity() {
             } else {
                 val chapterNo = firstSeg.toInt()
 
-                val verseRange: Pair<Int, Int>
-                var splits = secondSeg.split("-")
+                val splits = secondSeg.split("-")
 
-                verseRange = if (splits.size >= 2) {
+                val verseRange = if (splits.size >= 2) {
                     Pair(splits[0].toInt(), splits[1].toInt())
                 } else {
                     val verseNo = splits[0].toInt()
@@ -184,10 +130,8 @@ class ActivityReader2 : BaseActivity() {
 
         if (url.queryParameterNames.contains("reading")) {
             val reading = url.getBooleanQueryParameter("reading", false)
-            intent.putExtra(
-                READER_KEY_READER_STYLE,
-                if (reading) READER_STYLE_PAGE else READER_STYLE_TRANSLATION
-            )
+            val mode = if (reading) ReaderMode.Reading else ReaderMode.VerseByVerse
+            intent.putExtra(ReaderLaunchParams.EXTERNAL_KEY_READER_MODE, mode.value)
         }
     }
 
@@ -195,7 +139,7 @@ class ActivityReader2 : BaseActivity() {
         val requestedTranslSlugs = intent.getStringArrayExtra("translations")
         if (requestedTranslSlugs != null) {
             intent.putExtra(
-                READER_KEY_TRANSL_SLUGS,
+                ReaderLaunchParams.EXTERNAL_KEY_TRANSL_SLUGS,
                 requestedTranslSlugs.toCollection(sortedSetOf())
             )
         }

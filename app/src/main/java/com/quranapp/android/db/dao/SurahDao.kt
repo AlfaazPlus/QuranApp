@@ -1,6 +1,8 @@
 package com.quranapp.android.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
@@ -17,6 +19,12 @@ interface SurahDao {
     @Transaction
     @Query("SELECT * FROM surahs WHERE surah_no IN (:surahNos)")
     suspend fun getSurahsWithLocalizationsByNos(surahNos: List<Int>): List<SurahWithLocalizations>
+
+    @Query("SELECT * FROM surahs WHERE surah_no = :surahNo LIMIT 1")
+    suspend fun getSurah(surahNo: Int): SurahEntity?
+
+    @Query("SELECT * FROM surahs WHERE surah_no = :surahNo LIMIT 1")
+    fun getSurahWithLocalization(surahNo: Int): SurahWithLocalizations?
 
     @Query(
         """

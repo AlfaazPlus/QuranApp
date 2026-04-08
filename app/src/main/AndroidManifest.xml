@@ -48,9 +48,6 @@
 
         <activity
             android:name=".activities.MainActivity"
-            />
-        <activity
-            android:name=".activities.ActivityReader2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -126,7 +123,7 @@
         </activity>
         <activity android:name=".activities.ActivityReaderIndexPage" />
         <activity
-            android:name=".activities.ActivityReader"
+            android:name=".activities.ActivityReader2"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>

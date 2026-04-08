@@ -13,14 +13,17 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.components.quran.Quran2
-import com.quranapp.android.components.quran.subcomponents.Verse
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 
 @Composable
 fun SpotlightVersePanel(
@@ -29,23 +32,51 @@ fun SpotlightVersePanel(
 ) {
     val context = LocalContext.current
     val slugs = ReaderPreferences.observeTranslations()
+    val scriptCode = ReaderPreferences.observeQuranScript()
     val chapterNo = versePair.chapterNo
     val verseNo = versePair.verseNo
 
-    val verse by produceState<Verse?>(
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    val factory = QuranTranslationFactory.remember(context)
+
+    val verse by produceState<VerseWithDetails?>(
         initialValue = null,
+        repository,
+        factory,
         chapterNo,
         verseNo,
+        scriptCode,
+        slugs
     ) {
         if (!versePair.isValid) {
             value = null
             return@produceState
         }
 
-        val quran = Quran2.prepareInstance(context)
+        val ayah = repository.getAyah(chapterNo, verseNo)
+        val surah = repository.getSurahWithLocalizations(chapterNo)
 
-        value = quran.getVerse(chapterNo, verseNo)
+        if (ayah == null || surah == null) {
+            value = null
+            return@produceState
+        }
 
+        val words = repository.getWordsForAyah(chapterNo, verseNo, scriptCode)
+
+        val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
+
+        value = VerseWithDetails(
+            words = words,
+            pageNo = 0,
+            verse = ayah,
+            chapter = surah
+        ).apply {
+            this.translations = factory.getTranslationsSingleVerse(
+                setOf(aSlug),
+                chapterNo,
+                verseNo
+            )
+        }
     }
 
     val scroll = rememberScrollState()
@@ -69,7 +100,7 @@ fun SpotlightVersePanel(
                 verticalArrangement = Arrangement.Center,
             ) {
                 SpotlightQuranText(v)
-                SpotlightTranslationText(v, slugs.firstOrNull()?.let { setOf(it) } ?: setOf())
+                SpotlightTranslationText(v)
             }
         }
     }
@@ -78,7 +109,7 @@ fun SpotlightVersePanel(
 
 @Composable
 private fun SpotlightQuranText(
-    verse: Verse,
+    vwd: VerseWithDetails,
 ) {
     /*val style = rememberQuranTextStyle(verse.pageNo)
 
@@ -105,8 +136,7 @@ private fun SpotlightQuranText(
 
 @Composable
 private fun SpotlightTranslationText(
-    verse: Verse,
-    slugs: Set<String>,
+    vwd: VerseWithDetails,
 ) {
     /*val viewModel = viewModel<VerseViewModel>()
     val translations = remember(slugs, verse.chapterNo, verse.verseNo) {

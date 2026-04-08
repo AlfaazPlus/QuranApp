@@ -20,7 +20,7 @@ import android.widget.RemoteViews
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.activities.ActivityReader2
 import com.quranapp.android.activities.MainActivity
 import com.quranapp.android.components.quran.Quran
 import com.quranapp.android.components.quran.QuranMeta
@@ -186,7 +186,7 @@ internal fun onObtainVotd(
         )
 
         val intent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
-            setClass(context, ActivityReader::class.java)
+            setClass(context, ActivityReader2::class.java)
         }
 
         val pendingIntent = PendingIntent.getActivity(

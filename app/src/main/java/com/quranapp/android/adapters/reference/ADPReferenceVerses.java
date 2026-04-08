@@ -26,7 +26,7 @@ import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.DrawableUtils;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader;
+import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.activities.reference.ActivityReference;
 import com.quranapp.android.components.ReferenceVerseItemModel;
 import com.quranapp.android.components.ReferenceVerseModel;
@@ -37,7 +37,6 @@ import com.quranapp.android.interfaceUtils.BookmarkCallbacks;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.gesture.HoverPushOpacityEffect;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
-import com.quranapp.android.views.reader.VerseView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +90,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             LytReferenceVerseTitleBinding binding = LytReferenceVerseTitleBinding.inflate(mInflater, parent, false);
             vh = new VHReferenceVerse(binding);
         } else if (viewType == VIEWTYPE_VERSE) {
-            VerseView verseView = new VerseView(mActivity, parent, null, false);
-            vh = new VHReferenceVerse(verseView);
+            vh = new VHReferenceVerse(new View(parent.getContext()));
         } else {
             vh = new VHReferenceVerse(new View(parent.getContext()));
         }
@@ -117,7 +115,6 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
     class VHReferenceVerse extends RecyclerView.ViewHolder implements BookmarkCallbacks {
         private LytActivityReferenceDescriptionBinding mDescBinding;
         private LytReferenceVerseTitleBinding mTitleBinding;
-        private VerseView mVerseView;
 
         public VHReferenceVerse(View itemView) {
             super(itemView);
@@ -132,12 +129,6 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             mDescBinding.getRoot().setBackground(bgGradient);
         }
 
-        public VHReferenceVerse(@NonNull VerseView verseView) {
-            super(verseView);
-            mVerseView = verseView;
-            verseView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-        }
-
         public VHReferenceVerse(LytReferenceVerseTitleBinding binding) {
             this(binding.getRoot());
             mTitleBinding = binding;
@@ -145,13 +136,13 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
         }
 
         public void bind(ReferenceVerseItemModel model) {
-            if (model.getViewType() == VIEWTYPE_DESCRIPTION) {
+            /*if (model.getViewType() == VIEWTYPE_DESCRIPTION) {
                 bindReferenceDesc(mDescBinding, mRefModel);
             } else if (model.getViewType() == VIEWTYPE_TITLE) {
                 bindTitle(mTitleBinding, model);
             } else if (model.getViewType() == VIEWTYPE_VERSE && mVerseView != null) {
                 mVerseView.setVerse(model.getVerse());
-            }
+            }*/
         }
 
         private void bindReferenceDesc(LytActivityReferenceDescriptionBinding binding, ReferenceVerseModel model) {
@@ -208,7 +199,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             binding.openInReader.setOnClickListener(v -> {
                 Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerse(),
                     model.getToVerse());
-                intent.setClass(mActivity, ActivityReader.class);
+                intent.setClass(mActivity, ActivityReader2.class);
                 intent.putExtra(READER_KEY_TRANSL_SLUGS, mActivity.mSelectedTranslSlugs.toArray(new String[0]));
                 intent.putExtra(READER_KEY_SAVE_TRANSL_CHANGES, false);
                 mActivity.startActivity(intent);

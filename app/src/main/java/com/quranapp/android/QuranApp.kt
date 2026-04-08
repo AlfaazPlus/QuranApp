@@ -9,13 +9,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.ThemeUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.univ.FileUtils
-import com.quranapp.android.viewModels.FavChaptersViewModel
+import com.quranapp.android.viewModels.ReaderIndexViewModel
 
 class QuranApp : Application() {
     override fun attachBaseContext(base: Context) {
@@ -46,8 +45,10 @@ class QuranApp : Application() {
         // Handler for uncaught exceptions
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
         ThemeUtilsV2.migrateThemePreferences(this)
-        FavChaptersViewModel.migrate(this)
+        ReaderIndexViewModel.migrateFavourites(this)
         ReaderPreferences.migrateFromLegacyIfNeeded(this)
-        UserDataMigrationManager(this).migrateBookmarksIfNeeded()
+        val migrationManager = UserDataMigrationManager(this)
+        migrationManager.migrateBookmarksIfNeeded()
+        migrationManager.migrateReadHistoryIfNeeded()
     }
 }

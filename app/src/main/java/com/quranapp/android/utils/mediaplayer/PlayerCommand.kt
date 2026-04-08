@@ -3,6 +3,7 @@ package com.quranapp.android.utils.mediaplayer
 import android.os.Bundle
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 
 
 sealed class BasePlayerCommand(
@@ -31,20 +32,20 @@ data class StartCommand(
 }
 
 data class SetAudioOptionCommand(
-    val audioOption: Int
+    val audioOption: AudioOption
 ) : BasePlayerCommand(ACTION) {
     override fun toBundle(): Bundle = Bundle().apply {
-        putInt("audioOption", audioOption)
+        putString("audioOption", audioOption.value)
     }
 
     companion object {
         const val ACTION = "SET_AUDIO_OPTION"
 
         fun fromBundle(bundle: Bundle): SetAudioOptionCommand? {
-            val audioOption = bundle.getInt("audioOption", -1)
-            if (audioOption < 0) return null
+            val audioOption = bundle.getString("audioOption")
+            if (audioOption == null) return null
 
-            return SetAudioOptionCommand(audioOption)
+            return SetAudioOptionCommand(AudioOption.fromValue(audioOption))
         }
     }
 }

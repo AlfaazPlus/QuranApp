@@ -11,11 +11,27 @@ interface AyahWordDao {
         SELECT aw.*
         FROM ayah_words aw
         INNER JOIN scripts s ON aw.script_id = s.script_id
-        WHERE aw.ayah_id = :ayahId AND s.code = :scriptCode
+        INNER JOIN ayahs a ON a.surah_no = :chapterNo AND a.ayah_no = :verseNo
+        WHERE aw.ayah_id = a.ayah_id AND s.code = :scriptCode
         ORDER BY aw.word_index
     """
     )
     suspend fun getWordsForAyah(
+        chapterNo: Int,
+        verseNo: Int,
+        scriptCode: String
+    ): List<AyahWordEntity>
+
+    @Query(
+        """
+        SELECT aw.*
+        FROM ayah_words aw
+        INNER JOIN scripts s ON aw.script_id = s.script_id
+        WHERE aw.ayah_id = :ayahId AND s.code = :scriptCode
+        ORDER BY aw.word_index
+    """
+    )
+    suspend fun getWordsForAyahById(
         ayahId: Int,
         scriptCode: String
     ): List<AyahWordEntity>

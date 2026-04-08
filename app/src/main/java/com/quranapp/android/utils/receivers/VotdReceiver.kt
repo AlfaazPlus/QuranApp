@@ -10,17 +10,18 @@ import android.text.TextUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.activities.ActivityReader2
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.reader.factory.ReaderFactory.prepareSingleVerseIntent
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.sharedPrefs.SPVerses
 import com.quranapp.android.utils.univ.Codes
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.utils.reader.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
 import com.quranapp.android.utils.votd.VOTDUtils
@@ -57,9 +58,14 @@ class VotdReceiver : BroadcastReceiver() {
                             flag = flag or PendingIntent.FLAG_IMMUTABLE
                         }
 
-                        val readerIntent = prepareSingleVerseIntent(chapterNo, verseNo)
-                        readerIntent.putExtra(Keys.READER_KEY_TRANSL_SLUGS, slugs.toTypedArray())
-                        readerIntent.setClass(context, ActivityReader::class.java)
+                        val readerIntent = ReaderLaunchParams(
+                            data = ReaderIntentData.FullChapter(
+                                chapterNo,
+                                ChapterVersePair(chapterNo, verseNo),
+                            ),
+                            slugs = slugs,
+                        ).toIntent()
+                        readerIntent.setClass(context, ActivityReader2::class.java)
                         val readerPendingIntent = PendingIntent.getActivity(context, notificationId, readerIntent, flag)
 
                         val channelId = NotificationUtils.CHANNEL_ID_VOTD

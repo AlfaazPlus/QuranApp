@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.peacedesign.android.utils.ColorUtils;
 import com.peacedesign.android.widget.dialog.base.PeaceDialog;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader;
+import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.components.bookmark.BookmarkModel;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.LytBookmarkDialogBinding;
@@ -57,7 +57,7 @@ public class BookmarkViewer implements Destroyable {
         mContext = context;
         mQuranMetaRef = quranMetaRef;
         mDBHelper = dbHelper;
-        mIsReader = context instanceof ActivityReader;
+        mIsReader = false;
         mBookmarkCallbacks = callbacks;
 
         mVerseNoFormat = mContext.getString(R.string.strLabelVerseNoWithColon);
@@ -228,7 +228,7 @@ public class BookmarkViewer implements Destroyable {
     public void open(BookmarkModel model) {
         Intent intent = ReaderFactory.prepareVerseRangeIntent(model.getChapterNo(), model.getFromVerseNo(),
             model.getToVerseNo());
-        intent.setClass(mContext, ActivityReader.class);
+        intent.setClass(mContext, ActivityReader2.class);
         mContext.startActivity(intent);
     }
 

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
@@ -39,7 +39,12 @@ enum class ReaderMode(val value: String) {
 
     companion object {
         fun fromValue(value: String): ReaderMode {
-            return values().find { it.value == value } ?: ReaderMode.VerseByVerse
+            return entries.find { it.value == value } ?: VerseByVerse
+        }
+
+        fun fromLegacyStyleInt(style: Int): ReaderMode = when (style) {
+            0x2 -> Reading
+            else -> VerseByVerse
         }
     }
 }
@@ -53,7 +58,7 @@ sealed class ReaderLayoutItem() {
     data class IsVotd(override val key: String) : ReaderLayoutItem()
     data class ChapterTitle(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
     data class VerseUI(
-        val verse: Verse,
+        val verse: VerseWithDetails,
         val parsedQuranText: AnnotatedString? = null,
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
         val isLastInGroup: Boolean = false,
@@ -221,7 +226,7 @@ private fun ReaderLayoutVerseMode(
     ) {
         items(
             items = items,
-            key = { item -> item.key ?: "" },
+            key = { item -> item.key },
         ) { item ->
             TranslationRow(readerVm, item, bookmarkedVerseKeys)
         }

@@ -2,34 +2,47 @@ package com.quranapp.android.utils.reader.factory
 
 import android.content.Context
 import android.content.Intent
-import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.activities.ActivityReader2
 import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.activities.reference.ActivityReference
 import com.quranapp.android.components.ReferenceVerseModel
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.readHistory.ReadHistoryModel
 import com.quranapp.android.components.reader.ChapterVersePair
-import com.quranapp.android.reader_managers.ReaderParams
-import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_CHAPTER
-import com.quranapp.android.reader_managers.ReaderParams.READER_READ_TYPE_JUZ
+import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.ReadType
+import com.quranapp.android.utils.reader.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
 
 object ReaderFactory {
     fun startEmptyReader(context: Context) {
-        context.startActivity(Intent().setClass(context, ActivityReader::class.java))
+        context.startActivity(Intent().setClass(context, ActivityReader2::class.java))
     }
 
     fun startJuz(context: Context, juzNo: Int) {
-        context.startActivity(prepareJuzIntent(juzNo).setClass(context, ActivityReader::class.java))
+        context.startActivity(
+            prepareJuzIntent(juzNo).setClass(
+                context,
+                ActivityReader2::class.java
+            )
+        )
+    }
+
+    fun startHizb(context: Context, hizbNo: Int) {
+        context.startActivity(
+            prepareHizbIntent(hizbNo).setClass(
+                context,
+                ActivityReader2::class.java
+            )
+        )
     }
 
     fun startChapter(context: Context, chapterNo: Int) {
         context.startActivity(
-            prepareChapterIntent(chapterNo).setClass(
-                context,
-                ActivityReader::class.java
-            )
+            prepareChapterIntent(chapterNo).setClass(context, ActivityReader2::class.java)
         )
     }
 
@@ -40,102 +53,67 @@ object ReaderFactory {
         saveTranslChanges: Boolean,
         chapterNo: Int
     ) {
+        val params = ReaderLaunchParams(
+            data = ReaderIntentData.FullChapter(chapterNo),
+            slugs = translSlugs.toSet(),
+        )
         context.startActivity(
-            prepareChapterIntent(translSlugs, saveTranslChanges, chapterNo).setClass(
-                context,
-                ActivityReader::class.java
-            )
+            params.toIntent().setClass(context, ActivityReader2::class.java)
         )
     }
 
     @JvmStatic
     fun startVerse(context: Context, chapterNo: Int, verseNo: Int) {
         context.startActivity(
-            prepareSingleVerseIntent(chapterNo, verseNo).setClass(
-                context,
-                ActivityReader::class.java
-            )
+            prepareSingleVerseIntent(chapterNo, verseNo)
+                .setClass(context, ActivityReader2::class.java)
         )
     }
 
     fun startVerseRange(context: Context, chapterNo: Int, fromVerse: Int, toVerse: Int) {
         context.startActivity(
-            prepareVerseRangeIntent(chapterNo, fromVerse, toVerse).setClass(
-                context,
-                ActivityReader::class.java
-            )
+            prepareVerseRangeIntent(chapterNo, fromVerse, toVerse)
+                .setClass(context, ActivityReader2::class.java)
         )
     }
 
     @JvmStatic
     fun startVerseRange(context: Context, chapterNo: Int, range: Pair<Int, Int>) {
-        context.startActivity(
-            prepareVerseRangeIntent(chapterNo, range).setClass(
-                context,
-                ActivityReader::class.java
-            )
-        )
+        startVerseRange(context, chapterNo, range.first, range.second)
     }
 
     @JvmStatic
     fun prepareJuzIntent(juzNo: Int): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_JUZ)
-        intent.putExtra(Keys.READER_KEY_JUZ_NO, juzNo)
-        return intent
+        return ReaderLaunchParams(ReaderIntentData.FullJuz(juzNo)).toIntent()
+    }
+
+    @JvmStatic
+    fun prepareHizbIntent(hizbNo: Int): Intent {
+        return ReaderLaunchParams(ReaderIntentData.FullHizb(hizbNo)).toIntent()
     }
 
     @JvmStatic
     fun prepareChapterIntent(chapterNo: Int): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_CHAPTER)
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        return intent
-    }
-
-    fun prepareChapterIntent(
-        translSlugs: Array<String>,
-        saveTranslChanges: Boolean,
-        chapterNo: Int
-    ): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_CHAPTER)
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        intent.putExtra(Keys.READER_KEY_TRANSL_SLUGS, translSlugs)
-        intent.putExtra(Keys.READER_KEY_SAVE_TRANSL_CHANGES, saveTranslChanges)
-        return intent
+        return ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)).toIntent()
     }
 
     @JvmStatic
     fun prepareSingleVerseIntent(chapterNo: Int, verseNo: Int): Intent {
-        return prepareVerseRangeIntent(chapterNo, verseNo, verseNo)
+        return ReaderLaunchParams(
+            ReaderIntentData.FullChapter(chapterNo, ChapterVersePair(chapterNo, verseNo))
+        ).toIntent()
     }
 
     @JvmStatic
     fun prepareVerseRangeIntent(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
-        return prepareVerseRangeIntent(chapterNo, Pair(fromVerse, toVerse))
+        return ReaderLaunchParams(
+            ReaderIntentData.FullChapter(chapterNo, ChapterVersePair(chapterNo, fromVerse))
+        ).toIntent()
     }
 
     @JvmStatic
     fun prepareVerseRangeIntent(chapterNo: Int, range: Pair<Int, Int>): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_VERSES)
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        intent.putExtra(Keys.READER_KEY_VERSES, range)
-        return intent
-    }
-
-    /**
-     * This function creates intent for reader verse range using intArray instead of Pair
-     * which will be used in [ShortcutUtils][com.quranapp.android.utils.others.ShortcutUtils], because shortcut uses
-     * persistable bundle which doesn't support Pair.
-     */
-    fun prepareVerseRangeIntentForShortcut(chapterNo: Int, fromVerse: Int, toVerse: Int): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_READ_TYPE, ReaderParams.READER_READ_TYPE_VERSES)
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        intent.putExtra(Keys.READER_KEY_VERSES, intArrayOf(fromVerse, toVerse))
-        return intent
+        return prepareVerseRangeIntent(chapterNo, range.first, range.second)
     }
 
     @JvmStatic
@@ -149,12 +127,7 @@ object ReaderFactory {
         verses: List<String>
     ) {
         val intent = prepareReferenceVerseIntent(
-            showChapterSugg,
-            title,
-            desc,
-            translSlug,
-            chapters,
-            verses
+            showChapterSugg, title, desc, translSlug, chapters, verses
         )
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
@@ -177,95 +150,67 @@ object ReaderFactory {
         verses: List<String>
     ): Intent {
         val referenceVerseModel = ReferenceVerseModel(
-            showChapterSugg,
-            title,
-            desc,
-            translSlug,
-            chapters,
-            verses
+            showChapterSugg, title, desc, translSlug, chapters, verses
         )
         return prepareReferenceVerseIntent(referenceVerseModel)
     }
 
     @JvmStatic
     fun prepareReferenceVerseIntent(referenceVerseModel: ReferenceVerseModel): Intent {
-        val intent = Intent()
-        intent.putExtra(KEY_REFERENCE_VERSE_MODEL, referenceVerseModel)
-        return intent
+        return Intent().apply {
+            putExtra(KEY_REFERENCE_VERSE_MODEL, referenceVerseModel)
+        }
     }
 
     @JvmStatic
     fun prepareLastVersesIntent(
-        quranMeta: QuranMeta,
-        juzNo: Int,
-        chapterNo: Int,
-        fromVerse: Int,
-        toVerse: Int,
-        readType: Int,
-        readerStyle: Int
+        readType: ReadType,
+        readerMode: ReaderMode?,
+        verse: ChapterVersePair,
+        divisionNo: Int?,
     ): Intent? {
-        var intent: Intent? = null
-        if (readType == READER_READ_TYPE_CHAPTER && QuranMeta.isChapterValid(chapterNo)) {
-            intent = prepareChapterIntent(chapterNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
-        } else if (readType == READER_READ_TYPE_JUZ && QuranMeta.isJuzValid(juzNo)) {
-            intent = prepareJuzIntent(juzNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
-        } else if (quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
-            intent = prepareVerseRangeIntent(chapterNo, fromVerse, toVerse)
-        }
+        val data = when (readType) {
+            ReadType.Chapter -> {
+                if (!QuranMeta.isChapterValid(verse.chapterNo)) return null
+                ReaderIntentData.FullChapter(verse.chapterNo, verse)
+            }
 
-        if (intent != null) {
-            if (readerStyle != -1) {
-                intent.putExtra(Keys.READER_KEY_READER_STYLE, readerStyle)
+            ReadType.Juz -> {
+                if (!QuranMeta.isJuzValid(divisionNo)) return null
+                ReaderIntentData.FullJuz(divisionNo!!, verse)
+            }
+
+            ReadType.Hizb -> {
+                if (!QuranMeta.isHizbValid(divisionNo)) return null
+                ReaderIntentData.FullHizb(divisionNo!!, verse)
             }
         }
 
-        return intent
+        return ReaderLaunchParams(data = data, readerMode = readerMode).toIntent()
     }
 
-    /**
-     * This function creates intent for reader verse range using intArray instead of Pair
-     * which will be used in [ShortcutUtils][com.quranapp.android.utils.others.ShortcutUtils], because shortcut uses
-     * persistable bundle which doesn't support Pair.
-     */
-    fun prepareLastVersesIntentForShortcut(
-        quranMeta: QuranMeta,
-        juzNo: Int,
-        chapterNo: Int,
-        fromVerse: Int,
-        toVerse: Int,
-        readType: Int,
-        readerStyle: Int
-    ): Intent? {
-        var intent: Intent? = null
-        if (readType == READER_READ_TYPE_CHAPTER && QuranMeta.isChapterValid(chapterNo)) {
-            intent = prepareChapterIntent(chapterNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
-        } else if (readType == READER_READ_TYPE_JUZ && QuranMeta.isJuzValid(juzNo)) {
-            intent = prepareJuzIntent(juzNo)
-            intent.putExtra(Keys.READER_KEY_PENDING_SCROLL, ChapterVersePair(chapterNo, fromVerse))
-        } else if (quranMeta.isVerseRangeValid4Chapter(chapterNo, fromVerse, toVerse)) {
-            intent = prepareVerseRangeIntentForShortcut(chapterNo, fromVerse, toVerse)
+    fun prepareHistoryIntent(entity: ReadHistoryEntity): Intent? {
+        val readType = ReadType.fromValue(entity.readType)
+        val readerMode = ReaderMode.fromValue(entity.readerMode)
+        val pageNo = entity.pageNo
+
+        if (readerMode == ReaderMode.Reading && pageNo != null && pageNo > 0 && entity.mushafId > 0) {
+            return ReaderLaunchParams(
+                data = ReaderIntentData.MushafPage(
+                    mushafId = entity.mushafId,
+                    pageNo = pageNo,
+                    fallbackChapterNo = entity.chapterNo,
+                    fallbackVerseNo = entity.fromVerseNo,
+                ),
+                readerMode = readerMode,
+            ).toIntent()
         }
 
-        if (intent != null && readerStyle != -1) {
-            intent.putExtra(Keys.READER_KEY_READER_STYLE, readerStyle)
-        }
-
-        return intent
-    }
-
-    @JvmStatic
-    fun prepareLastVersesIntent(quranMeta: QuranMeta, lastVersesModel: ReadHistoryModel): Intent? {
         return prepareLastVersesIntent(
-            quranMeta,
-            lastVersesModel.juzNo,
-            lastVersesModel.chapterNo,
-            lastVersesModel.fromVerseNo,
-            lastVersesModel.toVerseNo,
-            lastVersesModel.readType,
-            lastVersesModel.readerStyle
+            readType = readType,
+            readerMode = readerMode,
+            verse = ChapterVersePair(entity.chapterNo, entity.fromVerseNo),
+            divisionNo = entity.divisionNo,
         )
     }
 
@@ -278,9 +223,9 @@ object ReaderFactory {
 
     @JvmStatic
     fun prepareTafsirIntent(chapterNo: Int, verseNo: Int): Intent {
-        val intent = Intent()
-        intent.putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-        intent.putExtra(Keys.READER_KEY_VERSE_NO, verseNo)
-        return intent
+        return Intent().apply {
+            putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
+            putExtra(Keys.READER_KEY_VERSE_NO, verseNo)
+        }
     }
 }

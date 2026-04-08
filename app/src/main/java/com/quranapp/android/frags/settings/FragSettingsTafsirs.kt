@@ -15,7 +15,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.compose.screens.settings.TafsirSelectionScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
@@ -33,9 +32,9 @@ class FragSettingsTafsirs : FragSettingsBase() {
     override val layoutResource = 0 // Not using XML layout
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (tafsirViewModel.hasTafsirSelectionChanged()) {
+        /*if (tafsirViewModel.hasTafsirSelectionChanged()) {
             return bundleOf(ActivityReader.KEY_TAFSIR_CHANGED to true)
-        }
+        }*/
         return null
     }
 

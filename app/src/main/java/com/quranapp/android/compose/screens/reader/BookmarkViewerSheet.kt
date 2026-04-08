@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.components.bookmark.BookmarkModel
-import com.quranapp.android.components.quran.QuranMeta2
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
@@ -105,8 +104,6 @@ fun BookmarkViewerSheet(
         DatabaseProvider.getUserRepository(context)
     }
 
-    val meta = QuranMeta2.remember()
-
     var bookmark = repo.getBookmarkFlow(data.chapterNo, data.fromVerse, data.toVerse)
         .collectAsStateWithLifecycle(null).value
 
@@ -124,6 +121,15 @@ fun BookmarkViewerSheet(
     val fromVerseNo = bookmark.fromVerseNo.orMinusOne()
     val toVerseNo = bookmark.toVerseNo.orMinusOne()
     var note by remember { mutableStateOf(bookmark.note) }
+
+    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var chapterName by remember { mutableStateOf("") }
+
+    LaunchedEffect(chapterNo) {
+        chapterName = withContext(Dispatchers.IO) {
+            repository.getChapterName(chapterNo)
+        }
+    }
 
     LaunchedEffect(editing, bookmark) {
         if (editing) {
@@ -237,7 +243,7 @@ fun BookmarkViewerSheet(
                     .padding(horizontal = 16.dp, vertical = 16.dp),
             ) {
                 Text(
-                    text = meta?.getChapterName(context, chapterNo, true).orEmpty(),
+                    text = stringResource(R.string.strLabelSurah, chapterName),
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(

@@ -36,8 +36,8 @@ import java.util.Collections
 class QuranTranslationFactory(private val context: Context) : Closeable {
     companion object {
         @Composable
-        fun rememberFactory(context: Context): QuranTranslationFactory {
-            val factory = remember {
+        fun remember(context: Context): QuranTranslationFactory {
+            val factory = remember(context) {
                 QuranTranslationFactory(context)
             }
 

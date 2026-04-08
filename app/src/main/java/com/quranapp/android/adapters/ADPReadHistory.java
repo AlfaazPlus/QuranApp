@@ -20,7 +20,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.LineHeightSpan2;
 import com.quranapp.android.R;
-import com.quranapp.android.activities.ActivityReader;
+import com.quranapp.android.activities.ActivityReader2;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.databinding.LytBookmarkItemBinding;
@@ -150,12 +150,12 @@ public class ADPReadHistory extends RecyclerView.Adapter<ADPReadHistory.VHReadHi
 
         private void setupActions(ReadHistoryModel history) {
             mBinding.getRoot().setOnClickListener(v -> {
-                Intent intent = ReaderFactory.prepareLastVersesIntent(mQuranMeta, history);
+                /*Intent intent = ReaderFactory.prepareLastVersesIntent(history);
 
                 if (intent != null) {
-                    intent.setClass(itemView.getContext(), ActivityReader.class);
+                    intent.setClass(itemView.getContext(), ActivityReader2.class);
                     itemView.getContext().startActivity(intent);
-                }
+                }*/
             });
         }
 

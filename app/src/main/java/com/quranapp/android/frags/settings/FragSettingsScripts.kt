@@ -24,11 +24,9 @@ import androidx.core.view.children
 import androidx.core.view.updatePaddingRelative
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
-import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.readerSettings.ActivitySettings
 import com.quranapp.android.databinding.LytScriptDownloadProgressBinding
 import com.quranapp.android.databinding.LytSettingsScriptItemBinding
-import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.extensions.getFont
@@ -45,7 +43,6 @@ import com.quranapp.android.utils.services.KFQPCScriptFontsDownloadService
 import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.views.BoldHeader
 import com.quranapp.android.views.reader.updateAllVotdWidgets
-import com.quranapp.android.views.reader.updateAppWidget
 
 class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
 
@@ -347,11 +344,11 @@ class FragSettingsScripts : FragSettingsBase(), ServiceConnection {
     }
 
     override fun getFinishingResult(ctx: Context): Bundle? {
-        if (SPReader.getSavedScript(ctx) != initScript) {
+        /*if (SPReader.getSavedScript(ctx) != initScript) {
             return bundleOf(
                 ActivityReader.KEY_SCRIPT_CHANGED to true
             )
-        }
+        }*/
 
         return null
     }

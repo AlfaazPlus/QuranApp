@@ -29,10 +29,12 @@ class Verse : Serializable {
     var translations: List<Translation> = ArrayList()
     var includeChapterNameInSerial = false
 
+    @Deprecated("")
     @Transient
     @JvmField
     var arabicTextSpannable: CharSequence? = null
 
+    @Deprecated("")
     @Transient
     @JvmField
     var translTextSpannable: CharSequence? = null

@@ -27,7 +27,7 @@ fun RepeatOptionsSheet(
     onClose: () -> Unit,
 ) {
     val selectedAudioOption = RecitationPreferences.observeAudioOption()
-    val repeatSupported = selectedAudioOption == RecitationUtils.AUDIO_OPTION_ONLY_QURAN
+    val repeatSupported = selectedAudioOption == AudioOption.ONLY_QURAN
 
     val currentRepeatCount = RecitationPreferences.observeRepeatCount()
     val coroutineScope = rememberCoroutineScope()

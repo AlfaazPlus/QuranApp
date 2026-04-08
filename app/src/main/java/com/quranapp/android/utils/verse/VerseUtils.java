@@ -21,8 +21,10 @@ import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.components.quran.subcomponents.Verse;
 import com.quranapp.android.db.readHistory.ReadHistoryDBHelper;
 import com.quranapp.android.interfaceUtils.VOTDCallback;
+import com.quranapp.android.compose.components.reader.ReaderMode;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.others.ShortcutUtils;
+import com.quranapp.android.utils.reader.ReadType;
 import com.quranapp.android.utils.reader.TranslUtils;
 import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.sharedPrefs.SPVerses;
@@ -240,7 +242,7 @@ public abstract class VerseUtils {
 
             SPVerses.saveVOTD(ctx, cal.getTimeInMillis(), chapterNo, verseNo);
 
-            ShortcutUtils.pushVOTDShortcut(ctx, chapterNo, verseNo);
+            ShortcutUtils.INSTANCE.pushVOTDShortcut(ctx, chapterNo, verseNo);
         }
 
         return new int[]{chapterNo, verseNo};
@@ -297,17 +299,21 @@ public abstract class VerseUtils {
     }
 
     public static void saveLastVerses(
-        Context ctx, ReadHistoryDBHelper dbHelper, QuranMeta quranMeta,
+        Context ctx, ReadHistoryDBHelper dbHelper,
         int readType, int readerStyle, int juzNo, int chapterNo, int fromVerse, int toVerse
     ) {
         dbHelper.addToHistory(readType, readerStyle, juzNo, chapterNo, fromVerse, toVerse, null);
 
-        try {
-            ShortcutUtils.pushLastVersesShortcut(ctx, quranMeta, readType, readerStyle, juzNo, chapterNo, fromVerse,
-                toVerse);
+        /*try {
+            ShortcutUtils.pushLastVersesShortcut(
+                ctx,
+                ReadType.Companion.fromLegacyInt(readType),
+                ReaderMode.Companion.fromLegacyStyleInt(readerStyle),
+                juzNo, chapterNo, fromVerse, toVerse
+            );
         } catch (Exception e) {
             e.printStackTrace();
             Logger.reportError(e);
-        }
+        }*/
     }
 }

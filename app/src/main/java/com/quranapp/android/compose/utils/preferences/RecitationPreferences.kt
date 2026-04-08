@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
 /**
@@ -26,7 +27,7 @@ object RecitationPreferences {
     private val KEY_CONTINUE_CHAPTER =
         booleanPreferencesKey(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER)
     private val KEY_SCROLL_SYNC = booleanPreferencesKey(RecitationUtils.KEY_RECITATION_SCROLL_SYNC)
-    private val KEY_AUDIO_OPTION = intPreferencesKey(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)
+    private val KEY_AUDIO_OPTION = stringPreferencesKey(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)
     private val KEY_VERSE_GROUP_SIZE =
         intPreferencesKey("key.recitation.verse_group_size")
 
@@ -108,16 +109,20 @@ object RecitationPreferences {
     }
 
     @Composable
-    fun observeAudioOption(): Int {
-        return DataStoreManager.observe(KEY_AUDIO_OPTION, RecitationUtils.AUDIO_OPTION_DEFAULT)
+    fun observeAudioOption(): AudioOption {
+        return DataStoreManager.observe(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
+            AudioOption.fromValue(it)
+        }
     }
 
-    suspend fun getAudioOption(): Int {
-        return DataStoreManager.read(KEY_AUDIO_OPTION, RecitationUtils.AUDIO_OPTION_DEFAULT)
+    suspend fun getAudioOption(): AudioOption {
+        return DataStoreManager.read(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
+            AudioOption.fromValue(it)
+        }
     }
 
-    suspend fun setAudioOption(option: Int) {
-        DataStoreManager.write(KEY_AUDIO_OPTION, option)
+    suspend fun setAudioOption(option: AudioOption) {
+        DataStoreManager.write(KEY_AUDIO_OPTION, option.value)
     }
 
     @Composable

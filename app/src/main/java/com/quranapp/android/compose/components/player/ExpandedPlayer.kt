@@ -50,6 +50,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
 import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
 import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
@@ -215,12 +216,12 @@ private fun Configurations(
         RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
 
     val audioOptionTextId = when (audioOption) {
-        RecitationUtils.AUDIO_OPTION_ONLY_TRANSLATION -> R.string.audioOnlyTranslation
-        RecitationUtils.AUDIO_OPTION_BOTH -> R.string.audioBothArabicTranslation
+        AudioOption.ONLY_TRANSLATION -> R.string.audioOnlyTranslation
+        AudioOption.BOTH -> R.string.audioBothArabicTranslation
         else -> R.string.audioOnlyArabic
     }
 
-    val repeatSupported = audioOption == RecitationUtils.AUDIO_OPTION_ONLY_QURAN
+    val repeatSupported = audioOption == AudioOption.ONLY_QURAN
 
     var showReciterSelector by rememberSaveable { mutableStateOf(false) }
     var showAudioOptions by rememberSaveable { mutableStateOf(false) }

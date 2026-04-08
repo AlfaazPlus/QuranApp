@@ -1,15 +1,15 @@
 package com.quranapp.android.components.reader
 
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranUtils
 import java.io.Serializable
 
 data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable {
-    constructor(verse: Verse) : this(verse.chapterNo, verse.verseNo)
+    constructor(verse: VerseWithDetails) : this(verse.chapterNo, verse.verseNo)
 
     val isValid: Boolean get() = chapterNo > 0 && verseNo > 0
 
-    fun doesEqual(verse: Verse): Boolean {
+    fun doesEqual(verse: VerseWithDetails): Boolean {
         return doesEqual(verse.chapterNo, verse.verseNo)
     }
 

@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -21,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
-import com.quranapp.android.utils.reader.rememberQuranMushafId
-import com.quranapp.android.viewModels.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderIntentData
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,7 +60,7 @@ fun ReaderNavigator(
                 }
                 if (page != null) readerVm.requestPageNavigation(page)
             } else {
-                readerVm.initReader(ReaderIntentData.FullChapter(chapterNo))
+                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
             }
             onClose()
         }
@@ -84,7 +83,7 @@ fun ReaderNavigator(
                 if (isInCurrentView) {
                     readerVm.requestVerseNavigation(chapterNo, verseNo)
                 } else {
-                    readerVm.initReader(ReaderIntentData.FullChapter(chapterNo))
+                    readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
                     readerVm.requestVerseNavigation(chapterNo, verseNo)
                 }
             }
@@ -100,7 +99,7 @@ fun ReaderNavigator(
                 }
                 if (page != null) readerVm.requestPageNavigation(page)
             } else {
-                readerVm.initReader(ReaderIntentData.FullJuz(juzNo))
+                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullJuz(juzNo)))
             }
             onClose()
         }
@@ -114,7 +113,7 @@ fun ReaderNavigator(
                 }
                 if (page != null) readerVm.requestPageNavigation(page)
             } else {
-                readerVm.initReader(ReaderIntentData.FullHizb(hizbNo))
+                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullHizb(hizbNo)))
             }
             onClose()
         }
