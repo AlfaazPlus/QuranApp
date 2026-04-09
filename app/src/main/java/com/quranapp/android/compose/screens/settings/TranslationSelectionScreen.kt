@@ -40,13 +40,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,8 +68,10 @@ import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.components.ErrorMessageCard
 import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
+import com.quranapp.android.views.reader.updateAllVotdWidgets
 import com.quranapp.android.viewModels.TranslationEvent
 import com.quranapp.android.viewModels.TranslationUiState
 import com.quranapp.android.viewModels.TranslationViewModel
@@ -152,6 +157,10 @@ private fun Content(
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 48.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        item {
+            ArabicTextToggle()
+        }
+
         items(groups, key = { it.langCode }) { group ->
             LanguageGroupCard(
                 group = group,
@@ -160,6 +169,61 @@ private fun Content(
         }
 
         item { Spacer(modifier = Modifier.height(60.dp)) }
+    }
+}
+
+@Composable
+private fun ArabicTextToggle() {
+    val context = LocalContext.current
+    var isEnabled by remember { mutableStateOf(SPReader.getArabicTextEnabled(context)) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = colorScheme.outlineVariant.copy(alpha = 0.4f),
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainerLow),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    isEnabled = !isEnabled
+                    SPReader.setArabicTextEnabled(context, isEnabled)
+                    updateAllVotdWidgets(context)
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.titleArabicTextToggle),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colorScheme.onSurface,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.msgArabicTextToggle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorScheme.onSurfaceVariant
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Switch(
+                checked = isEnabled,
+                onCheckedChange = {
+                    isEnabled = it
+                    SPReader.setArabicTextEnabled(context, it)
+                    updateAllVotdWidgets(context)
+                }
+            )
+        }
     }
 }
 

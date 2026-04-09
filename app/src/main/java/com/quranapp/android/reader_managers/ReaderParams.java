@@ -43,6 +43,7 @@ public class ReaderParams {
     public String readerScript;
     public float arTextSizeMult;
     public float translTextSizeMult;
+    public boolean arabicTextEnabled;
     public Chapter currChapter;
     public int currJuzNo;
     public Pair<Integer, Integer> verseRange;
@@ -105,6 +106,7 @@ public class ReaderParams {
     public void resetTextSizesStates() {
         arTextSizeMult = SPReader.getSavedTextSizeMultArabic(mActivity);
         translTextSizeMult = SPReader.getSavedTextSizeMultTransl(mActivity);
+        arabicTextEnabled = SPReader.getArabicTextEnabled(mActivity);
     }
 
 

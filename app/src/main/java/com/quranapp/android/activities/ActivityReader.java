@@ -1265,6 +1265,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
         boolean translTextSizeChanged = SPReader.getSavedTextSizeMultTransl(this) != mReaderParams.translTextSizeMult;
         boolean readerStyleChanged = mReaderParams.getReaderStyle() != SPReader.getSavedReaderStyle(this);
         boolean scriptChanged = !Objects.equals(SPReader.getSavedScript(this), mReaderParams.readerScript);
+        boolean arabicTextVisibilityChanged = SPReader.getArabicTextEnabled(this) != mReaderParams.arabicTextEnabled;
 
         tryReciterChange();
 
@@ -1301,7 +1302,7 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
         if (readerStyleChanged) {
             onReaderStyleChanged(arTextSizeChanged, translTextSizeChanged);
         } else {
-            if (mReaderParams.getReaderStyle() != READER_STYLE_PAGE && translChanged) {
+            if (mReaderParams.getReaderStyle() != READER_STYLE_PAGE && (translChanged || arabicTextVisibilityChanged)) {
                 onTranslChanged(arTextSizeChanged, translTextSizeChanged);
             } else {
                 applySettingsChanges(arTextSizeChanged, translTextSizeChanged, false);
