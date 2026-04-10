@@ -1,0 +1,51 @@
+name: Automated Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Build APK (Debug/Unsigned)
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Rename APK
+        id: rename_apk
+        run: |
+          # Get current date as ddmmyyyy
+          DATE_STR=$(date +'%d%m%Y')
+          # Get the version from the tag (e.g. from v1.0.0 extract 1.0.0)
+          VERSION_STR=${GITHUB_REF_NAME#v}
+          
+          # Desired format: QuranApp_ddmmyyyy_version.apk
+          NEW_NAME="QuranApp_${DATE_STR}_${VERSION_STR}.apk"
+          
+          # Find the generated APK and rename it
+          APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
+          cp "$APK_PATH" "$NEW_NAME"
+          
+          echo "apk_file=$NEW_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.rename_apk.outputs.apk_file }}
+          generate_release_notes: true
