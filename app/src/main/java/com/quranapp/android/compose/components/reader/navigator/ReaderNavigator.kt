@@ -62,6 +62,7 @@ fun ReaderNavigator(
             } else {
                 readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
             }
+
             onClose()
         }
     }

@@ -89,7 +89,7 @@ interface BookmarkDao {
         toVerse: Int
     ): BookmarkEntity?
 
-    @Query("SELECT * FROM  user_bookmarks")
+    @Query("SELECT * FROM  user_bookmarks ORDER BY id DESC")
     fun getBookmarksFlow(): Flow<List<BookmarkEntity>>
 
     @Query("SELECT * FROM user_bookmarks ORDER BY id DESC")

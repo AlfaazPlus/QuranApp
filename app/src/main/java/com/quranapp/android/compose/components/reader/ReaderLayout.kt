@@ -23,9 +23,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -160,6 +160,12 @@ private fun ReaderLayoutVerseMode(
         if (items.isNotEmpty()) {
             readerVm.updateLastKnownVerseFromItems(listState.firstVisibleItemIndex)
         }
+    }
+
+    LaunchedEffect(uiState.viewType) {
+        snapshotFlow { uiState.viewType }
+            .distinctUntilChanged()
+            .collect { listState.scrollToItem(0) }
     }
 
     var autoScrollSpeed by readerVm.autoScrollSpeed

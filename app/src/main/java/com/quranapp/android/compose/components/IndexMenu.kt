@@ -277,7 +277,7 @@ fun IndexMenuContent(
             ) {
                 items.forEachIndexed { groupIndex, group ->
                     group.items.forEachIndexed { _, item ->
-                        IndexMenuItemRow(item)
+                        IndexMenuItemRow(item, onClose)
                     }
 
                     if (groupIndex < items.lastIndex) {
@@ -295,7 +295,8 @@ fun IndexMenuContent(
 
 @Composable
 private fun IndexMenuItemRow(
-    item: IndexMenuItem
+    item: IndexMenuItem,
+    onClose: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -304,6 +305,7 @@ private fun IndexMenuItemRow(
             .fillMaxWidth()
             .clickable(onClick = {
                 item.onClick(context)
+                onClose()
             })
             .padding(horizontal = 20.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically

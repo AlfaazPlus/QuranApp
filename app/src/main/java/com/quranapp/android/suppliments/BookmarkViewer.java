@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
 
+@Deprecated
 public class BookmarkViewer implements Destroyable {
     private final Context mContext;
     private final AtomicReference<QuranMeta> mQuranMetaRef;

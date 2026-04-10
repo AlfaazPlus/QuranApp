@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.settings
 
 import ThemeUtils
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -47,6 +48,7 @@ fun ThemeSelectorSheet(isOpen: Boolean, onDismiss: () -> Unit) {
                     onClick = {
                         coroutineScope.launch {
                             ThemeUtils.setThemeMode(theme)
+                            AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate(theme))
 
                             withContext(Dispatchers.Main) {
                                 onDismiss()

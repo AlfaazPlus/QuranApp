@@ -104,7 +104,7 @@ fun BookmarkViewerSheet(
         DatabaseProvider.getUserRepository(context)
     }
 
-    var bookmark = repo.getBookmarkFlow(data.chapterNo, data.fromVerse, data.toVerse)
+    val bookmark = repo.getBookmarkFlow(data.chapterNo, data.fromVerse, data.toVerse)
         .collectAsStateWithLifecycle(null).value
 
     var editing by remember(data) { mutableStateOf(data.startInEditMode) }
@@ -120,7 +120,7 @@ fun BookmarkViewerSheet(
     val chapterNo = bookmark.chapterNo.orMinusOne()
     val fromVerseNo = bookmark.fromVerseNo.orMinusOne()
     val toVerseNo = bookmark.toVerseNo.orMinusOne()
-    var note by remember { mutableStateOf(bookmark.note) }
+    var note by remember(bookmark.id) { mutableStateOf(bookmark.note.orEmpty()) }
 
     val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
     var chapterName by remember { mutableStateOf("") }
@@ -146,7 +146,7 @@ fun BookmarkViewerSheet(
                 chapterNo,
                 fromVerseNo,
                 toVerseNo,
-                note,
+                note.trim().takeIf { it.isNotEmpty() },
             )
         }
     }
@@ -264,7 +264,7 @@ fun BookmarkViewerSheet(
 
                 if (editing) {
                     OutlinedTextField(
-                        value = note ?: "",
+                        value = note,
                         onValueChange = { note = it },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -282,10 +282,10 @@ fun BookmarkViewerSheet(
                         ),
                     )
                 } else {
-                    val hasNote = !note.isNullOrBlank()
+                    val hasNote = note.isNotBlank()
 
                     Text(
-                        text = if (!hasNote) stringResource(R.string.noNoteProvided) else note!!,
+                        text = if (!hasNote) stringResource(R.string.noNoteProvided) else note,
                         style = MaterialTheme.typography.bodyLarge,
                         color = if (hasNote) colorScheme.onSurface
                         else colorScheme.onSurface.alpha(0.6f),

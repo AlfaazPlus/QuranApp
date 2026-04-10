@@ -11,6 +11,7 @@ import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.db.relations.NavigationUnitRange
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.getQuranMushafId
@@ -62,6 +63,33 @@ class QuranRepository(
         verseNo: Int,
     ): AyahEntity? {
         return ayahDao.getAyah(chapterNo, verseNo)
+    }
+
+    suspend fun getVerseWithDetails(
+        chapterNo: Int,
+        verseNo: Int,
+        scriptCode: String? = null
+    ): VerseWithDetails? {
+        val ayah = getAyah(chapterNo, verseNo)
+        val surah = getSurahWithLocalizations(chapterNo)
+
+        if (ayah == null || surah == null) {
+            return null
+        }
+
+        val script = scriptCode ?: ReaderPreferences.getQuranScript()
+        val words = getWordsForAyah(
+            chapterNo,
+            verseNo,
+            script
+        )
+
+        return VerseWithDetails(
+            words = words,
+            pageNo = getPageForVerse(chapterNo, verseNo, script) ?: 0,
+            verse = ayah,
+            chapter = surah
+        )
     }
 
     suspend fun getWordsForAyah(

@@ -56,23 +56,15 @@ fun SpotlightVersePanel(
         }
 
         value = withContext(Dispatchers.IO) {
-            val ayah = repository.getAyah(chapterNo, verseNo)
-            val surah = repository.getSurahWithLocalizations(chapterNo)
+            val vwd = repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
 
-            if (ayah == null || surah == null) {
+            if (vwd == null) {
                 return@withContext null
             }
 
-            val words = repository.getWordsForAyah(chapterNo, verseNo, scriptCode)
-
             val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
 
-            VerseWithDetails(
-                words = words,
-                pageNo = 0,
-                verse = ayah,
-                chapter = surah
-            ).apply {
+            vwd.apply {
                 this.translations = factory.getTranslationsSingleVerse(
                     setOf(aSlug),
                     chapterNo,

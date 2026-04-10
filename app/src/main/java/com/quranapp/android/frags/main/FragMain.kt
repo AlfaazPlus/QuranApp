@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.ComposeView
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityQuranScience
+import com.quranapp.android.compose.components.VerseOfTheDay
+import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.databinding.FragMainBinding
 import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.app.UpdateManager
-import com.quranapp.android.views.VOTDView
 
 class FragMain : BaseFragment() {
     private lateinit var binding: FragMainBinding
     private lateinit var updateManager: UpdateManager
-    private var votdView: VOTDView? = null
+    private var votdComposeView: ComposeView? = null
 
     override fun networkReceiverRegistrable(): Boolean {
         return true
@@ -36,14 +40,14 @@ class FragMain : BaseFragment() {
 
         QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
             override fun onReady(r: QuranMeta) {
-                votdView?.post { votdView?.refresh(r) }
                 binding.readHistory.post { binding.readHistory.refresh(r) }
             }
         })
     }
 
     override fun onDestroy() {
-        votdView?.destroy()
+        votdComposeView?.disposeComposition()
+        votdComposeView = null
         binding.readHistory.destroy()
         super.onDestroy()
     }
@@ -78,7 +82,7 @@ class FragMain : BaseFragment() {
     }
 
     private fun initContent(quranMeta: QuranMeta) {
-        initVOTD(quranMeta)
+        initVOTD()
         binding.let {
             arrayOf(
                 it.readHistory,
@@ -102,12 +106,26 @@ class FragMain : BaseFragment() {
     }
 
 
-    private fun initVOTD(quranMeta: QuranMeta) {
-        /*votdView = VOTDView(binding.container.context).apply {
+    private fun initVOTD() {
+        if (votdComposeView != null) {
+            return
+        }
+
+        votdComposeView = ComposeView(binding.container.context).apply {
             id = R.id.homepageVOTD
-            refresh(quranMeta)
-            binding.container.addView(this, 1)
-        }*/
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            )
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                QuranAppTheme {
+                    VerseOfTheDay()
+                }
+            }
+        }
+
+        binding.container.addView(votdComposeView, 1)
     }
 
 }

@@ -26,7 +26,6 @@ class FragOnboardThemes : FragOnboardBase() {
             it.onCheckChangedListener = { button, checkedId ->
                 val themeMode = resolveThemeModeFromId(checkedId)
                 setThemeMode(button.context, themeMode)
-
                 AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate())
             }
         }

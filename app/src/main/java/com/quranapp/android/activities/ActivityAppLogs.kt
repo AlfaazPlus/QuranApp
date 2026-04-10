@@ -2,11 +2,9 @@ package com.quranapp.android.activities
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.reader.ReaderIndexScreen
 import com.quranapp.android.compose.screens.settings.AppLogsScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 
@@ -18,15 +16,11 @@ class ActivityAppLogs : BaseActivity() {
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         enableEdgeToEdge()
 
-        setContentView(ComposeView(this).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
-            setContent {
-                QuranAppTheme {
-                    AppLogsScreen()
-                }
+        setContent {
+            QuranAppTheme {
+                AppLogsScreen()
             }
-        })
+        }
     }
 
 }

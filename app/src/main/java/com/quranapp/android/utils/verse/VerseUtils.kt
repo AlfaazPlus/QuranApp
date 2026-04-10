@@ -85,18 +85,7 @@ object VerseUtils {
         if (!QuranMeta.isChapterValid(chapterNo)) return null
         if (!repository.isVerseValid4Chapter(chapterNo, verseNo)) return null
 
-        val ayah = repository.getAyah(chapterNo, verseNo)
-        val surah = repository.getSurahWithLocalizations(chapterNo)
-        val script = ReaderPreferences.getQuranScript()
-
-        if (ayah == null || surah == null) return null
-
-        return VerseWithDetails(
-            words = repository.getWordsForAyah(chapterNo, verseNo, script),
-            pageNo = repository.getPageForVerse(chapterNo, verseNo, script) ?: 0,
-            verse = ayah,
-            chapter = surah
-        )
+        return repository.getVerseWithDetails(chapterNo, verseNo)
     }
 
     private fun isExpired(timestamp: Long): Boolean {

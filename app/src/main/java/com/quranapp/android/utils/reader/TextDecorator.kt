@@ -60,7 +60,8 @@ data class QuranTextStyleParams(
     val type: Typography,
     val pageNo: Int,
     val script: String,
-    val sizeMultiplier: Float
+    val sizeMultiplier: Float,
+    val useSmallSize: Boolean = false
 )
 
 fun getTranslationTextStyle(
@@ -91,7 +92,8 @@ fun getQuranTextStyle(
     )
 
     val basePx = context.getDimension(
-        params.script.getQuranScriptVerseTextSizeMediumRes()
+        if (params.useSmallSize) params.script.getQuranScriptVerseTextSizeSmallRes()
+        else params.script.getQuranScriptVerseTextSizeMediumRes()
     )
     val fontSize = with(density) { (basePx * params.sizeMultiplier).toSp() }
 

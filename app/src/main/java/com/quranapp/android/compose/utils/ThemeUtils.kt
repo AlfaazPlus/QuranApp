@@ -17,15 +17,7 @@ import com.alfaazplus.sunnah.ui.theme.colors.ThemeRedColors
 import com.alfaazplus.sunnah.ui.theme.colors.ThemeVioletColors
 import com.alfaazplus.sunnah.ui.theme.colors.ThemeYellowColors
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
-import com.alfaazplus.sunnah.ui.utils.shared_preference.dataStore
 import com.quranapp.android.R
-import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 object ThemeUtils {
     const val THEME_MODE_DEFAULT = "app.theme.default"
@@ -43,22 +35,6 @@ object ThemeUtils {
     const val THEME_COLOR_MONO = "mono"
     const val THEME_COLOR_VIOLET = "violet"
     const val THEME_COLOR_YELLOW = "yellow"
-
-    fun migrateThemePreferences(context: Context) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                DataStoreManager.write(
-                    KEY_THEME_MODE,
-                    SPAppConfigs.getThemeMode(context)
-                )
-            } catch (e: Exception) {
-                Log.saveError(
-                    e,
-                    "migrateOldThemePreferences",
-                )
-            }
-        }
-    }
 
     fun isDynamicColorSupported(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -143,8 +119,8 @@ object ThemeUtils {
     }
 
 
-    fun resolveThemeModeForDelegate(): Int {
-        return when (getThemeMode()) {
+    fun resolveThemeModeForDelegate(themeMode: String? = null): Int {
+        return when (themeMode ?: getThemeMode()) {
             THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
             THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
             THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM

@@ -34,10 +34,12 @@ import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.app.DownloadSourceUtils
+import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,6 +53,20 @@ fun SettingsMainScreen(
     var showDailyReminderSheet by remember { mutableStateOf(false) }
     var showTextSizesSheet by remember { mutableStateOf(false) }
     var showResourceDownloadSrcSheet by remember { mutableStateOf(false) }
+
+    val selectedLanguage = remember(context) {
+        val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
+        val availableLocaleNames = context.getStringArray(R.array.availableLocalesNames)
+        val selectedLocaleIndex = SPAppConfigs.getLocale(context).let { languageCode ->
+            availableLocalesValues.indexOfFirst { it == languageCode }
+        }
+
+        if (selectedLocaleIndex > -1) {
+            availableLocaleNames[selectedLocaleIndex] ?: ""
+        } else {
+            ""
+        }
+    }
 
     val votdEnabled = VersePreferences.observeVOTDReminderEnabled()
     val slugs = ReaderPreferences.observeTranslations()
@@ -84,7 +100,7 @@ fun SettingsMainScreen(
 
                 SettingsItem(
                     title = R.string.strTitleAppLanguage,
-                    subtitle = ThemeUtils.resolveThemeModeLabel(ThemeUtils.observeThemeMode()),
+                    subtitleStr = selectedLanguage,
                     icon = R.drawable.dr_icon_language,
                 ) { navController.navigate(SettingRoutes.LANGUAGE) }
 

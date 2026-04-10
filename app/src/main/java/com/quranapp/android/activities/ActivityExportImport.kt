@@ -8,11 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.api.JsonHelper
@@ -93,29 +92,25 @@ class ActivityExportImport : BaseActivity() {
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         enableEdgeToEdge()
 
-        setContentView(ComposeView(this).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            QuranAppTheme {
+                ExportImportScreen(
+                    importCallback = { scopes ->
+                        importScopes = scopes
+                        launchImportFilePicker()
+                    },
+                    exportCallback = { scopes ->
+                        CoroutineScope(Dispatchers.IO).launch {
+                            exportData(scopes)
 
-            setContent {
-                QuranAppTheme {
-                    ExportImportScreen(
-                        importCallback = { scopes ->
-                            importScopes = scopes
-                            launchImportFilePicker()
-                        },
-                        exportCallback = { scopes ->
-                            CoroutineScope(Dispatchers.IO).launch {
-                                exportData(scopes)
-
-                                withContext(Dispatchers.Main) {
-                                    launchExportFilePicker()
-                                }
+                            withContext(Dispatchers.Main) {
+                                launchExportFilePicker()
                             }
-                        },
-                    )
-                }
+                        }
+                    },
+                )
             }
-        })
+        }
     }
 
     private fun launchImportFilePicker() {

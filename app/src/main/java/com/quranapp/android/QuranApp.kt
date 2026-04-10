@@ -43,7 +43,6 @@ class QuranApp : Application() {
 
         // Handler for uncaught exceptions
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
-        ThemeUtils.migrateThemePreferences(this)
         ReaderIndexViewModel.migrateFavourites(this)
         ReaderPreferences.migrateFromLegacyIfNeeded(this)
         val migrationManager = UserDataMigrationManager(this)
