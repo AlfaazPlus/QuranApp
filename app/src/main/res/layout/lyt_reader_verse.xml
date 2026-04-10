@@ -32,6 +32,23 @@
         android:textIsSelectable="true"
         android:useBoundsForWidth="true" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnMarkAsRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/dr_bg_reader_verse_action"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="sans-serif-medium"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="@string/strLabelMarkAsRead"
+        android:textColor="@color/colorText2"
+        android:textSize="12sp" />
+
     <View
         android:id="@+id/bottomBorder"
         android:layout_width="match_parent"

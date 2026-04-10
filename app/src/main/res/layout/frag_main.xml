@@ -26,6 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <com.quranapp.android.views.homepage.LastReadLayout
+            android:id="@+id/lastRead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <com.quranapp.android.views.homepage2.FeaturedReadingLayout
             android:id="@+id/featuredReading"
             android:layout_width="match_parent"

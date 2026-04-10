@@ -278,4 +278,7 @@ public abstract class ReaderPossessingActivity extends QuranMetaPossessingActivi
             mLastBookmarkCallback.onBookmarkUpdated(model);
         }
     }
+
+    public void refreshReader() {
+    }
 }

@@ -390,4 +390,11 @@ public class ActivityReference extends ReaderPossessingActivity {
 
         return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);
     }
+
+    @Override
+    public void refreshReader() {
+        if (mBinding.verses.getAdapter() != null) {
+            mBinding.verses.getAdapter().notifyDataSetChanged();
+        }
+    }
 }

@@ -13,6 +13,7 @@ import com.quranapp.android.frags.BaseFragment
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.views.VOTDView
+import com.quranapp.android.views.homepage2.HomepageCollectionLayoutBase
 
 class FragMain : BaseFragment() {
     private lateinit var binding: FragMainBinding
@@ -38,6 +39,7 @@ class FragMain : BaseFragment() {
             override fun onReady(r: QuranMeta) {
                 votdView?.post { votdView?.refresh(r) }
                 binding.readHistory.post { binding.readHistory.refresh(r) }
+                binding.lastRead.post { binding.lastRead.refresh(r) }
             }
         })
     }
@@ -45,6 +47,7 @@ class FragMain : BaseFragment() {
     override fun onDestroy() {
         votdView?.destroy()
         binding.readHistory.destroy()
+        binding.lastRead.destroy()
         super.onDestroy()
     }
 
@@ -80,8 +83,9 @@ class FragMain : BaseFragment() {
     private fun initContent(quranMeta: QuranMeta) {
         initVOTD(quranMeta)
         binding.let {
-            arrayOf(
+            arrayOf<HomepageCollectionLayoutBase>(
                 it.readHistory,
+                it.lastRead,
                 it.featuredReading,
                 it.featuredDua,
                 it.solutions,

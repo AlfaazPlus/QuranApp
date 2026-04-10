@@ -33,8 +33,11 @@ import com.quranapp.android.reader_managers.ReaderVerseDecorator;
 import com.quranapp.android.utils.extensions.ContextKt;
 import com.quranapp.android.utils.reader.factory.ReaderFactory;
 import com.quranapp.android.utils.reader.recitation.RecitationUtils;
+import com.quranapp.android.utils.sharedPrefs.SPLastRead;
 import com.quranapp.android.utils.univ.MessageUtils;
 import com.quranapp.android.utils.univ.SelectableLinkMovementMethod;
+import com.peacedesign.android.utils.Dimen;
+import com.peacedesign.android.utils.DrawableUtils;
 
 @SuppressLint("ViewConstructor")
 public class VerseView extends FrameLayout implements BookmarkCallbacks {
@@ -186,6 +189,39 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
         mBinding.verseHeader.btnBookmark.setImageResource(res);
     }
 
+    private void setupMarkAsRead() {
+        if (mVerse == null) {
+            return;
+        }
+
+        int chapterNo = mVerse.chapterNo;
+        int verseNo = mVerse.verseNo;
+
+        boolean isMarked = SPLastRead.getLastRead(getContext(), chapterNo) == verseNo;
+        updateMarkAsReadUI(isMarked);
+
+        mBinding.btnMarkAsRead.setOnClickListener(v -> {
+            boolean currentMarked = SPLastRead.getLastRead(getContext(), chapterNo) == verseNo;
+            if (currentMarked) {
+                SPLastRead.removeLastRead(getContext(), chapterNo);
+            } else {
+                SPLastRead.setLastRead(getContext(), chapterNo, verseNo);
+            }
+
+            if (mActivity != null) {
+                mActivity.refreshReader();
+            }
+        });
+    }
+
+    private void updateMarkAsReadUI(boolean marked) {
+        int bgColor = marked ? mActivity.color(R.color.colorPrimary) : mActivity.color(R.color.colorBGLightGrey);
+        int textColor = marked ? Color.WHITE : mActivity.color(R.color.colorText2);
+
+        mBinding.btnMarkAsRead.setTextColor(textColor);
+        mBinding.btnMarkAsRead.setBackground(DrawableUtils.createBackground(bgColor, Dimen.dp2px(mActivity, 5)));
+    }
+
     public Verse getVerse() {
         return mVerse;
     }
@@ -205,6 +241,7 @@ public class VerseView extends FrameLayout implements BookmarkCallbacks {
 
     private void initWithVerse(Verse verse) {
         initActionsButtons();
+        setupMarkAsRead();
         mapAyahContents(verse);
     }
 

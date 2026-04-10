@@ -1499,6 +1499,13 @@ public class ActivityReader extends ReaderPossessingActivity implements SmoothAu
     }
 
     @Override
+    public void refreshReader() {
+        if (mBinding.readerVerses.getAdapter() != null) {
+            mBinding.readerVerses.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
     protected void onActivityResult2(ActivityResult result) {
         super.onActivityResult2(result);
 

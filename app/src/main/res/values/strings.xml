@@ -249,6 +249,8 @@
     <string name="strMsgBookmarkDeleteSelected">Selected bookmarks will be removed.</string>
     <string name="strMsgBookmarkDeleteAll">All bookmarks will be removed.</string>
     <string name="strTitleReadHistory">Read History</string>
+    <string name="strTitleLastRead">Last Read</string>
+    <string name="strLabelMarkAsRead">Mark as Read</string>
     <string name="strMsgReadShowupHere">Your read history will show up here.</string>
     <string name="strMsgReadHistoryRemoved">Read history successfully removed.</string>
     <string name="strMsgReadHistoryRemoveFailed">Read history failed to remove.</string>

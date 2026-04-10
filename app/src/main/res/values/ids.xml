@@ -40,6 +40,7 @@
     <item name="appUpdateContainer" type="id" />
     <item name="homepageVOTD" type="id" />
     <item name="homepageReadHistoryLayout" type="id" />
+    <item name="homepageLastReadLayout" type="id" />
     <item name="homepageReadingLayout" type="id" />
     <item name="homepageTopicsLayout" type="id" />
     <item name="homepageProphetsLayout" type="id" />
