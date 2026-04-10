@@ -11,6 +11,7 @@ import com.quranapp.android.db.entities.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.runBlocking
 
 class UserRepository(
     private val context: Context,
@@ -56,6 +57,14 @@ class UserRepository(
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
+    fun addToBookmarkBlocking(
+        chapterNo: Int,
+        verseRange: IntRange,
+        note: String?,
+    ) = runBlocking {
+        addToBookmark(chapterNo, verseRange, note)
+    }
+
     suspend fun updateBookmark(
         chapterNo: Int,
         fromVerse: Int,
@@ -85,6 +94,14 @@ class UserRepository(
         return deleted
     }
 
+    fun removeFromBookmarkBlocking(
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int,
+    ): Boolean = runBlocking {
+        removeFromBookmark(chapterNo, fromVerse, toVerse)
+    }
+
     suspend fun removeBookmarksBulk(
         ids: LongArray,
     ): Boolean {
@@ -107,6 +124,13 @@ class UserRepository(
         verseRange: IntRange
     ): Boolean {
         return bookmarkDao.countBookmark(chapterNo, verseRange.first, verseRange.last) > 0
+    }
+
+    fun isBookmarkedBlocking(
+        chapterNo: Int,
+        verseRange: IntRange
+    ): Boolean = runBlocking {
+        isBookmarked(chapterNo, verseRange)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

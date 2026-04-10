@@ -17,7 +17,6 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.safeBoolean
 import com.quranapp.android.api.safeFloat
-import com.quranapp.android.api.safeInt
 import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
@@ -29,13 +28,12 @@ import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
-import com.quranapp.android.db.bookmark.BookmarkDbHelper
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +51,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class ActivityExportImport : BaseActivity() {
-    private val bookmarkDbHeader = BookmarkDbHelper(this)
+    private val userRepository = DatabaseProvider.getUserRepository(this)
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -78,12 +76,6 @@ class ActivityExportImport : BaseActivity() {
     private var importFailuresMap = mutableMapOf<String, String>()
 
     private var exportContent = ""
-
-    override fun onDestroy() {
-        bookmarkDbHeader.close()
-
-        super.onDestroy()
-    }
 
     override fun getLayoutResource() = 0
 
@@ -185,7 +177,7 @@ class ActivityExportImport : BaseActivity() {
     ) {
         try {
             val bookmarks = BookmarkModel.fromJson(jsonArray)
-            bookmarkDbHeader.addMultipleBookmarks(bookmarks)
+            userRepository.addMultipleBookmarks(bookmarks.map { it.toEntity() })
         } catch (e: Exception) {
             failureCallback(e.message ?: "Unknown error")
             withContext(Dispatchers.Main) {
@@ -231,8 +223,8 @@ class ActivityExportImport : BaseActivity() {
             ReaderPreferences.setArabicTextEnabled(it)
         }
 
-        jsonObject.safeInt(ExportKeys.READER_STYLE)?.let {
-            ReaderPreferences.setReaderMode(ReaderMode.fromLegacyStyleInt(it))
+        jsonObject.safeString(ExportKeys.READER_MODE)?.let {
+            ReaderPreferences.setReaderMode(ReaderMode.fromValue(it))
         }
 
 
@@ -291,7 +283,7 @@ class ActivityExportImport : BaseActivity() {
     }
 
 
-    private fun exportData(scopes: Map<String, Boolean>) {
+    private suspend fun exportData(scopes: Map<String, Boolean>) {
         val obj = JSONObject()
 
         // bookmarks
@@ -315,14 +307,14 @@ class ActivityExportImport : BaseActivity() {
 
     }
 
-    private fun prepareBookmarksForExport(): JSONArray? {
-        val bookmarks = bookmarkDbHeader.getBookmarks()
+    private suspend fun prepareBookmarksForExport(): JSONArray? {
+        val bookmarks = userRepository.getBookmarks()
 
         if (bookmarks.isEmpty()) {
             return null
         }
 
-        return BookmarkModel.toJson(bookmarks)
+        return BookmarkModel.toJson(bookmarks.map { BookmarkModel.fromEntity(it) })
     }
 
     private fun prepareSettingsForExport(): JSONObject {
@@ -332,37 +324,50 @@ class ActivityExportImport : BaseActivity() {
         settings.put(ExportKeys.THEME, ThemeUtils.getThemeMode())
         settings.put(ExportKeys.DL_SRC, AppPreferences.getResourceDownloadProxy().value)
 
-        settings.put(ExportKeys.READER_AUTO_SCROLL_SPEED, SPReader.getAutoScrollSpeed(this))
-        settings.put(ExportKeys.READER_ARABIC_TEXT_ENABLED, SPReader.getArabicTextEnabled(this))
-        settings.put(ExportKeys.READER_STYLE, SPReader.getSavedReaderStyle(this))
+        settings.put(
+            ExportKeys.READER_AUTO_SCROLL_SPEED,
+            ReaderPreferences.getAutoScrollSpeed()
+        )
+        settings.put(
+            ExportKeys.READER_ARABIC_TEXT_ENABLED,
+            ReaderPreferences.getArabicTextEnabled()
+        )
+        settings.put(ExportKeys.READER_MODE, ReaderPreferences.getReaderMode())
 
-        settings.put(ExportKeys.RECITATION_REPEAT, SPReader.getRecitationRepeatVerse(this))
-        settings.put(ExportKeys.RECITATION_SPEED, SPReader.getRecitationSpeed(this))
-        settings.put(ExportKeys.RECITATION_RECITER, SPReader.getSavedRecitationSlug(this))
+        settings.put(ExportKeys.RECITATION_SPEED, RecitationPreferences.getSpeed())
+        settings.put(ExportKeys.RECITATION_RECITER, RecitationPreferences.getReciterId())
         settings.put(
             ExportKeys.RECITATION_RECITER_TRANSLATION,
-            SPReader.getSavedRecitationTranslationSlug(this)
+            RecitationPreferences.getTranslationReciterId()
         )
-        settings.put(ExportKeys.RECITATION_SCROLL_SYNC, SPReader.getRecitationScrollSync(this))
-        settings.put(ExportKeys.RECITATION_OPTION_AUDIO, SPReader.getRecitationAudioOption(this))
+        settings.put(
+            ExportKeys.RECITATION_OPTION_AUDIO,
+            RecitationPreferences.getAudioOption().value
+        )
         settings.put(
             ExportKeys.RECITATION_CONTINUE_CHAPTER,
-            SPReader.getRecitationContinueChapter(this)
+            RecitationPreferences.getContinueChapter()
         )
 
-        settings.put(ExportKeys.TEXT_SIZE_MULT_TAFSIR, SPReader.getSavedTextSizeMultTafsir(this))
-        settings.put(ExportKeys.TEXT_SIZE_MULT_ARABIC, SPReader.getSavedTextSizeMultArabic(this))
+        settings.put(
+            ExportKeys.TEXT_SIZE_MULT_TAFSIR,
+            ReaderPreferences.getTafsirTextSizeMultiplier()
+        )
+        settings.put(
+            ExportKeys.TEXT_SIZE_MULT_ARABIC,
+            ReaderPreferences.getArabicTextSizeMultiplier()
+        )
         settings.put(
             ExportKeys.TEXT_SIZE_MULT_TRANSLATION,
-            SPReader.getSavedTextSizeMultTransl(this)
+            ReaderPreferences.getTranslationTextSizeMultiplier()
         )
 
-        settings.put(ExportKeys.SCRIPT_CURRENT, SPReader.getSavedScript(this))
-        settings.put(ExportKeys.TAFSIR_CURRENT, SPReader.getSavedTafsirKey(this))
+        settings.put(ExportKeys.SCRIPT_CURRENT, ReaderPreferences.getQuranScript())
+        settings.put(ExportKeys.TAFSIR_CURRENT, ReaderPreferences.getTafsirId())
 
         val translations = JSONArray()
 
-        for (translation in SPReader.getSavedTranslations(this)) {
+        for (translation in ReaderPreferences.getTranslations()) {
             translations.put(translation)
         }
 
@@ -405,12 +410,10 @@ class ExportKeys {
         const val DL_SRC = "config.dlSrc"
         const val READER_AUTO_SCROLL_SPEED = "reader.autoScrollSpeed"
         const val READER_ARABIC_TEXT_ENABLED = "reader.arabicTextEnabled"
-        const val READER_STYLE = "reader.style"
-        const val RECITATION_REPEAT = "rec.repeat"
+        const val READER_MODE = "reader.mode"
         const val RECITATION_SPEED = "rec.speed"
         const val RECITATION_RECITER = "rec.reciter"
         const val RECITATION_RECITER_TRANSLATION = "rec.reciter_translation"
-        const val RECITATION_SCROLL_SYNC = "rec.scroll_sync"
         const val RECITATION_OPTION_AUDIO = "rec.option_audio"
         const val RECITATION_CONTINUE_CHAPTER = "rec.continue_chapter"
         const val TEXT_SIZE_MULT_TAFSIR = "text.size_mult_tafsir"

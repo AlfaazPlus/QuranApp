@@ -2,6 +2,7 @@ package com.quranapp.android.components.bookmark
 
 import android.content.Context
 import com.quranapp.android.R
+import com.quranapp.android.db.entities.BookmarkEntity
 import com.quranapp.android.utils.univ.DateUtils
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.contentOrNull
@@ -11,9 +12,12 @@ import kotlinx.serialization.json.jsonPrimitive
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.MessageFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 import java.util.Calendar
+import java.util.Date
 
 
 private object BookmarkJsonKeys {
@@ -77,6 +81,19 @@ data class BookmarkModel(
         }
     }
 
+    fun toEntity(): BookmarkEntity {
+        val formatter = DateTimeFormatter.ofPattern(DateUtils.DATETIME_FORMAT_SYSTEM)
+        val dateTime = LocalDateTime.parse(date, formatter)
+
+        return BookmarkEntity(
+            chapterNo = this.chapterNo,
+            fromVerseNo = this.fromVerseNo,
+            toVerseNo = this.toVerseNo,
+            note = this.note,
+            dateTime = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant())
+        )
+    }
+
     override fun toString(): String {
         return MessageFormat.format(
             "(VERSE: chapterNo: {0}, verseNo: {1})",
@@ -122,6 +139,23 @@ data class BookmarkModel(
             }
 
             return bookmarkList
+        }
+
+
+        fun fromEntity(entity: BookmarkEntity): BookmarkModel {
+            val formatter = DateTimeFormatter.ofPattern(DateUtils.DATETIME_FORMAT_SYSTEM)
+
+            return BookmarkModel(
+                id = entity.id,
+                chapterNo = entity.chapterNo,
+                fromVerseNo = entity.fromVerseNo,
+                toVerseNo = entity.toVerseNo,
+                note = entity.note,
+                date = entity.dateTime.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime()
+                    .format(formatter)
+            )
         }
     }
 }

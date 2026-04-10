@@ -59,7 +59,6 @@
 
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
-        <activity android:name=".activities.ActivityDownloads" />
         <activity
             android:name=".activities.reference.ActivityReference"
             android:exported="true">

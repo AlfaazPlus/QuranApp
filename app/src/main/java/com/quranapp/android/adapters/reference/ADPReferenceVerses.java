@@ -110,7 +110,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
         mRefModel = null;
     }
 
-    class VHReferenceVerse extends RecyclerView.ViewHolder implements BookmarkCallbacks {
+    class VHReferenceVerse extends RecyclerView.ViewHolder {
         private LytActivityReferenceDescriptionBinding mDescBinding;
         private LytReferenceVerseTitleBinding mTitleBinding;
 
@@ -187,11 +187,11 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
                 model.getBookmarked() ? mActivity.color(R.color.colorPrimary) : mActivity.color(R.color.colorIcon)
             );
             binding.btnBookmark.setOnClickListener(v -> {
-                if (model.getBookmarked()) {
+                /*if (model.getBookmarked()) {
                     mActivity.onBookmarkView(model.getChapterNo(), model.getFromVerse(), model.getToVerse(), this);
                 } else {
                     mActivity.addVerseToBookmark(model.getChapterNo(), model.getFromVerse(), model.getToVerse(), this);
-                }
+                }*/
             });
             binding.openInReader.setOnTouchListener(new HoverPushOpacityEffect());
             binding.openInReader.setOnClickListener(v -> {
@@ -204,7 +204,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             });
         }
 
-
+/*
         @Override
         public void onBookmarkRemoved(BookmarkModel model) {
             int adapterPosition = getBindingAdapterPosition();
@@ -217,7 +217,7 @@ public class ADPReferenceVerses extends RecyclerView.Adapter<ADPReferenceVerses.
             int adapterPosition = getBindingAdapterPosition();
             mVerseModels.get(adapterPosition).setBookmarked(true);
             notifyItemChanged(adapterPosition);
-        }
+        }*/
     }
 
     private Drawable prepareVerseTitleBG(Context context) {

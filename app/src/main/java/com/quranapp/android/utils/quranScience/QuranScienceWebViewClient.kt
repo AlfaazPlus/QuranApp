@@ -7,13 +7,8 @@ import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.reader.getQuranScriptFontRes
-import com.quranapp.android.utils.reader.toKFQPCFontFilename
-import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES
 import com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
@@ -51,6 +46,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
 
             "assets-font" -> {
                 if (uriStr.contains("quran-arabic")) {
+                    /*TODO:
                     val savedScript = SPReader.getSavedScript(view.context)
                     val decorator = activity.mVerseDecorator
                     if (decorator.isKFQPCScript()) {
@@ -65,7 +61,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
                         }
                     } else {
                         data = ctx.resources.openRawResource(+savedScript.getQuranScriptFontRes())
-                    }
+                    }*/
                 }
             }
         }
@@ -103,11 +99,12 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
             }
 
             if (host == "quranapp.verse.ref") {
+                /*TODO:
                 activity.mActionController.showReferenceSingleVerseOrRange(
                     activity.slugs,
                     chapterNo,
                     Pair(fromVerse, toVerse)
-                )
+                )*/
             } else if (host == "quranapp.verse.reader") {
                 activity.startActivity(
                     ReaderFactory.prepareVerseRangeIntent(

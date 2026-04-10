@@ -274,7 +274,7 @@ public class ActivityReference extends ReaderPossessingActivity {
     }
 
     private void resetVerses(int requestedChapterNo, ReferenceVerseModel verseModel) {
-        mTaskRunner.runAsync(new BaseRunnableTask() {
+        /*mTaskRunner.runAsync(new BaseRunnableTask() {
             private List<ReferenceVerseItemModel> models;
 
             @Override
@@ -308,7 +308,7 @@ public class ActivityReference extends ReaderPossessingActivity {
             public void onFailed(@NonNull Exception e) {
                 super.onFailed(e);
             }
-        });
+        });*/
     }
 
     private List<ReferenceVerseItemModel> prepareVerses(int requestChapterNo, ReferenceVerseModel verseModel, boolean isKFQPCScript) {
@@ -358,7 +358,7 @@ public class ActivityReference extends ReaderPossessingActivity {
             fromVerse,
             toVerse,
             titleText,
-            isBookmarked(chapterNo, fromVerse, toVerse)
+            /*isBookmarked(chapterNo, fromVerse, toVerse)*/ false
         );
     }
 
@@ -371,11 +371,11 @@ public class ActivityReference extends ReaderPossessingActivity {
         Verse verse = mQuran.getVerse(chapterNo, verseNo);
         verse.setIncludeChapterNameInSerial(true);
 
-        if (isKFQPCScript) {
+       /* if (isKFQPCScript) {
             mVerseDecorator.refreshQuranTextFonts(
                 new Pair<>(verse.pageNo, verse.pageNo)
             );
-        }
+        }*/
 
         mTranslFactory.getTranslationsSingleVerse(mSelectedTranslSlugs, chapterNo, verseNo);
 
@@ -385,8 +385,8 @@ public class ActivityReference extends ReaderPossessingActivity {
             verseNo
         );
         verse.setTranslations(translations);
-        verse.arabicTextSpannable = SPReader.getArabicTextEnabled(this) ? prepareVerseText(verse) : null;
-        verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
+//        verse.arabicTextSpannable = SPReader.getArabicTextEnabled(this) ? prepareVerseText(verse) : null;
+//        verse.translTextSpannable = prepareTranslSpannable(verse, translations, booksInfo);
 
         return new ReferenceVerseItemModel(VIEWTYPE_VERSE, verse, chapterNo, -1, -1, null, false);
     }

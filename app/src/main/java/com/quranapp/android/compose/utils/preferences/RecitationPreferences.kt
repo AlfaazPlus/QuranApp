@@ -40,7 +40,7 @@ object RecitationPreferences {
         return raw.ifEmpty { null }
     }
 
-    suspend fun getReciterId(): String? {
+    fun getReciterId(): String? {
         val raw = DataStoreManager.read(KEY_RECITER, "")
         return raw.ifEmpty { null }
     }
@@ -55,7 +55,7 @@ object RecitationPreferences {
         return raw.ifEmpty { null }
     }
 
-    suspend fun getTranslationReciterId(): String? {
+    fun getTranslationReciterId(): String? {
         val raw = DataStoreManager.read(KEY_TRANSLATION_RECITER, "")
         return raw.ifEmpty { null }
     }
@@ -69,7 +69,7 @@ object RecitationPreferences {
         return DataStoreManager.observe(KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED)
     }
 
-    suspend fun getSpeed(): Float {
+    fun getSpeed(): Float {
         return DataStoreManager.read(
             KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED
         ).coerceAtLeast(0.1f)
@@ -108,6 +108,10 @@ object RecitationPreferences {
         DataStoreManager.write(KEY_CONTINUE_CHAPTER, continueChapter)
     }
 
+    fun getContinueChapter(): Boolean {
+        return DataStoreManager.read(KEY_CONTINUE_CHAPTER, true)
+    }
+
     @Composable
     fun observeAudioOption(): AudioOption {
         return DataStoreManager.observe(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
@@ -115,7 +119,7 @@ object RecitationPreferences {
         }
     }
 
-    suspend fun getAudioOption(): AudioOption {
+    fun getAudioOption(): AudioOption {
         return DataStoreManager.read(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
             AudioOption.fromValue(it)
         }

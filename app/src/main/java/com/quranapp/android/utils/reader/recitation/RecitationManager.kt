@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.Locale
 
+@Deprecated("")
 object RecitationManager {
     private var availableRecitationsModel: AvailableRecitationsModel? = null
     private var availableRecitationTranslationsModel: AvailableRecitationTranslationsModel? = null

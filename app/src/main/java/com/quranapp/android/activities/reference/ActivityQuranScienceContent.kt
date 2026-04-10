@@ -129,7 +129,7 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         val quranMeta = mQuranMetaRef.get()!!
         val quran = mQuranRef.get()
 
-        val isKFQPC = mVerseDecorator.isKFQPCScript()
+        val isKFQPC =  false /*TODO: mVerseDecorator.isKFQPCScript()*/
         val fontPageNos = HashSet<Int>()
 
         document = regexAr.replace(document) { matchResult ->

@@ -41,7 +41,10 @@ import com.quranapp.android.components.search.JuzJumpModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
 import com.quranapp.android.components.search.TafsirJumpModel;
 import com.quranapp.android.components.search.VerseJumpModel;
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences;
 import com.quranapp.android.databinding.ActivitySearchBinding;
+import com.quranapp.android.db.DatabaseProvider;
+import com.quranapp.android.db.UserRepository;
 import com.quranapp.android.db.bookmark.BookmarkDbHelper;
 import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
@@ -74,7 +77,7 @@ public class ActivitySearch extends BaseActivity {
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = activityResultHandler();
     public ActivitySearchBinding mBinding;
     public QuranTranslationFactory mTranslFactory;
-    public BookmarkDbHelper mBookmarkDBHelper;
+    public UserRepository userRepository;
     public SearchHistoryDBHelper mHistoryDBHelper;
     private FragSearchResult mFragSearchResult;
     private FragSearchSuggestions mFragSearchSugg;
@@ -92,9 +95,6 @@ public class ActivitySearch extends BaseActivity {
         }
         if (mFragSearchSugg != null) {
             mFragSearchSugg.destroy();
-        }
-        if (mBookmarkDBHelper != null) {
-            mBookmarkDBHelper.close();
         }
         if (mHistoryDBHelper != null) {
             mHistoryDBHelper.close();
@@ -121,7 +121,7 @@ public class ActivitySearch extends BaseActivity {
     @Override
     protected void preActivityInflate(@Nullable Bundle savedInstanceState) {
         mTranslFactory = new QuranTranslationFactory(this);
-        mBookmarkDBHelper = new BookmarkDbHelper(this);
+        userRepository = DatabaseProvider.INSTANCE.getUserRepository(this);
         mHistoryDBHelper = new SearchHistoryDBHelper(this);
     }
 
@@ -263,7 +263,7 @@ public class ActivitySearch extends BaseActivity {
     private void initManagers(ActivitySearch activitySearch) {
         String initiallySelectedSlug = null;
 
-        Set<String> savedTranslations = SPReader.getSavedTranslations(activitySearch);
+        Set<String> savedTranslations = ReaderPreferences.INSTANCE.getTranslations();
         for (String slug : savedTranslations) {
             if (availableTranslModels.containsKey(slug)) {
                 initiallySelectedSlug = slug;

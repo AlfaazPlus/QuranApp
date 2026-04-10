@@ -29,9 +29,10 @@ public class ChapterInfoJSInterface {
             return;
         }
 
-        mActivity.showReferenceSingleVerseOrRange(
+        // TODO
+        /*mActivity.showReferenceSingleVerseOrRange(
                 TranslUtils.defaultTranslationSlugs(),
                 chapterNo, new Pair<>(fromVerse, toVerse)
-        );
+        );*/
     }
 }

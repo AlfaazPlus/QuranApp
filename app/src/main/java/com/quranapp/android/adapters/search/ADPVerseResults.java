@@ -48,7 +48,7 @@ import com.quranapp.android.components.search.VerseResultCountModel;
 import com.quranapp.android.components.search.VerseResultModel;
 import com.quranapp.android.databinding.LytReaderJuzSpinnerItemBinding;
 import com.quranapp.android.databinding.LytSearchResultItemBinding;
-import com.quranapp.android.db.bookmark.BookmarkDbHelper;
+import com.quranapp.android.db.UserRepository;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.extensions.ContextKt;
@@ -69,6 +69,8 @@ import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kotlin.ranges.IntRange;
 
 public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> implements Destroyable {
     private final FragmentManager mFm;
@@ -391,8 +393,8 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
 
         private void openItemMenu(Context context, VerseResultModel model) {
-            BookmarkDbHelper dbHelper = mActivity.mBookmarkDBHelper;
-            final boolean isBookmarked = dbHelper.isBookmarked(model.chapterNo, model.verseNo, model.verseNo);
+            UserRepository userRepository = mActivity.userRepository;
+            final boolean isBookmarked = userRepository.isBookmarkedBlocking(model.chapterNo, new IntRange(model.verseNo, model.verseNo));
 
             PeaceBottomSheetMenu dialog = new PeaceBottomSheetMenu();
             dialog.getParams().setHeaderTitle(model.chapterName + " " + model.verseSerial);
@@ -420,9 +422,9 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                     break;
                     case 1: {
                         if (isBookmarked) {
-                            dbHelper.removeFromBookmark(model.chapterNo, model.verseNo, model.verseNo, null);
+                            userRepository.removeFromBookmarkBlocking(model.chapterNo, model.verseNo, model.verseNo);
                         } else {
-                            dbHelper.addToBookmark(model.chapterNo, model.verseNo, model.verseNo, null, null);
+                            userRepository.addToBookmarkBlocking(model.chapterNo, new IntRange(model.verseNo, model.verseNo), null);
                         }
                         break;
                     }
