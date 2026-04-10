@@ -32,7 +32,6 @@ import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
-import com.quranapp.android.utils.reader.getQuranMushafId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -220,10 +219,14 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     private suspend fun initMushafPage(data: ReaderIntentData.MushafPage) {
         ReaderPreferences.setReaderMode(ReaderMode.Reading)
 
-        val currentMushafId = ReaderPreferences.getQuranScript()
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        if (data.mushafCode != null) {
+            ReaderPreferences.setQuranScript(data.mushafCode)
+        }
+        if (data.mushafVariant != null) {
+            ReaderPreferences.setQuranScriptVariant(data.mushafVariant)
+        }
 
-        if (currentMushafId == data.mushafId && data.pageNo > 0) {
+        if (data.pageNo > 0) {
             _uiState.update {
                 ReaderUiState(
                     viewType = ReaderViewType.Chapter(data.fallbackChapterNo.coerceIn(1, 114)),
@@ -312,8 +315,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         val verse = lastKnownVerse
 
         viewModelScope.launch(Dispatchers.IO) {
-            val mushafId = ReaderPreferences.getQuranScript()
-                .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            val mushafCode = ReaderPreferences.getQuranScript()
+            val mushafVariant = ReaderPreferences.getQuranScriptVariant()?.value
 
             val entity = when (viewType) {
                 is ReaderViewType.Chapter -> ReadHistoryEntity(
@@ -322,7 +325,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                     chapterNo = viewType.chapterNo,
                     fromVerseNo = verse?.verseNo ?: 1,
                     toVerseNo = verse?.verseNo ?: 1,
-                    mushafId = mushafId,
+                    mushafCode = mushafCode,
+                    mushafVariant = mushafVariant,
                     pageNo = state.currentPageNo,
                 )
 
@@ -333,7 +337,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                     chapterNo = verse?.chapterNo ?: 0,
                     fromVerseNo = verse?.verseNo ?: 0,
                     toVerseNo = verse?.verseNo ?: 0,
-                    mushafId = mushafId,
+                    mushafCode = mushafCode,
+                    mushafVariant = mushafVariant,
                     pageNo = state.currentPageNo,
                 )
 
@@ -344,7 +349,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                     chapterNo = verse?.chapterNo ?: 0,
                     fromVerseNo = verse?.verseNo ?: 0,
                     toVerseNo = verse?.verseNo ?: 0,
-                    mushafId = mushafId,
+                    mushafCode = mushafCode,
+                    mushafVariant = mushafVariant,
                     pageNo = state.currentPageNo,
                 )
             }

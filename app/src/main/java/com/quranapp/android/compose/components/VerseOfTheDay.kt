@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,7 +34,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -191,196 +195,205 @@ fun VerseOfTheDay(
     val gradient = remember(colors) {
         Brush.linearGradient(
             colors = listOf(
-                colors.primary.copy(alpha = 0.24f),
-                colors.secondaryContainer.copy(alpha = 0.72f),
-                colors.surfaceContainerHigh.copy(alpha = 0.98f),
+                colors.primary,
+                Color.Black,
             )
         )
     }
 
-    Card(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.surface)
             .padding(12.dp),
-        shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = colors.surface,
-        ),
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .background(gradient)
-                .animateContentSize(),
+                .clip(shapes.medium)
+                .animateContentSize()
         ) {
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Surface(
-                    shape = RoundedCornerShape(999.dp),
-                    color = colorScheme.primary.copy(alpha = 0.12f),
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.dr_icon_heart_filled),
-                            contentDescription = null,
-                            tint = colorScheme.primary,
-                            modifier = Modifier.size(16.dp),
-                        )
-                        Text(
-                            text = stringResource(R.string.strTitleVOTD),
-                            style = typography.labelMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colorScheme.onSurface,
-                        )
-                    }
-                }
+                    .matchParentSize()
+                    .background(gradient)
+            )
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(Color.Black.alpha(0.5f))
+            )
 
-                FilledTonalButton(
-                    modifier = Modifier.height(28.dp),
-                    onClick = { ReaderFactory.startVerse(context, verse.chapterNo, verse.verseNo) },
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
-                ) {
-                    Text(
-                        stringResource(R.string.strLabelRead),
-                        style = type.labelMedium
-                    )
-                }
-            }
-
-            if (arabicEnabled && arabicText.isNotBlank()) {
-                Text(
-                    text = arabicText,
-                    style = quranTextStyle,
-                    textAlign = TextAlign.Center,
+            Column() {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                )
-            }
-
-            if (translationText.isNotBlank()) {
-                SelectionContainer {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(999.dp),
+                        color = Color.White.copy(alpha = 0.12f),
                     ) {
-                        Text(
-                            text = translationText,
-                            style = translationTextStyle,
-                            color = colorScheme.onSurface,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-
-                        if (!translationAuthor.isNullOrBlank()) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.dr_icon_heart_filled),
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(16.dp),
+                            )
                             Text(
-                                text = "${StringUtils.HYPHEN} $translationAuthor",
-                                style = translationTextStyle.copy(
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = type.labelMedium.fontSize
-                                ),
-                                color = colorScheme.onSurface.alpha(0.6f),
-                                textAlign = TextAlign.Center,
+                                text = stringResource(R.string.strTitleVOTD),
+                                style = typography.labelMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.White,
                             )
                         }
                     }
-                }
-            }
 
-            HorizontalDivider(
-                modifier = Modifier.padding(top = 8.dp),
-                color = colorScheme.outlineVariant.alpha(0.7f)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(
-                        R.string.strLabelVerseSerialWithChapter,
-                        votdState.verse.chapter.getCurrentName(),
-                        verse.chapterNo,
-                        verse.verseNo
-                    ),
-                    modifier = Modifier.weight(1f),
-                    style = typography.labelMedium,
-                    color = colorScheme.onSurface,
-                )
-
-                IconButton(
-                    onClick = {
-                        ReaderFactory.startTafsir(
-                            context,
-                            verse.chapterNo,
-                            verse.verseNo
+                    FilledTonalButton(
+                        modifier = Modifier.height(28.dp),
+                        onClick = {
+                            ReaderFactory.startVerse(
+                                context,
+                                verse.chapterNo,
+                                verse.verseNo
+                            )
+                        },
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.strLabelRead),
+                            style = type.labelMedium
                         )
                     }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.dr_icon_tafsir),
-                        contentDescription = stringResource(R.string.strTitleTafsir),
-                        tint = null,
+                }
+
+                if (arabicEnabled && arabicText.isNotBlank()) {
+                    Text(
+                        text = arabicText,
+                        style = quranTextStyle.copy(
+                            color = Color.White
+                        ),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }
 
-                IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            if (isBookmarked) {
-                                bookmarkViewerData = BookmarkViewerData(
-                                    chapterNo = verse.chapterNo,
-                                    fromVerse = verse.verseNo,
-                                    toVerse = verse.verseNo,
-                                    showOpenInReaderButton = false,
-                                )
-                            } else {
-                                userRepository.addToBookmark(
-                                    chapterNo = verse.chapterNo,
-                                    verseRange = verse.verseNo..verse.verseNo,
-                                    note = null,
-                                )
+                if (translationText.isNotBlank()) {
+                    SelectionContainer {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(
+                                text = translationText,
+                                style = translationTextStyle,
+                                color = Color.White,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                            )
 
-                                bookmarkViewerData = BookmarkViewerData(
-                                    chapterNo = verse.chapterNo,
-                                    fromVerse = verse.verseNo,
-                                    toVerse = verse.verseNo,
-                                    showOpenInReaderButton = false,
-                                    startInEditMode = true,
+                            if (!translationAuthor.isNullOrBlank()) {
+                                Text(
+                                    text = "${StringUtils.HYPHEN} $translationAuthor",
+                                    style = translationTextStyle.copy(
+                                        fontStyle = FontStyle.Italic,
+                                        fontSize = type.labelMedium.fontSize
+                                    ),
+                                    color = Color.White.alpha(0.6f),
+                                    textAlign = TextAlign.Center,
                                 )
                             }
                         }
                     }
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(top = 16.dp),
+                    color = Color.White.alpha(0.2f)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        painter = painterResource(
-                            if (isBookmarked) {
-                                R.drawable.dr_icon_bookmark_added
-                            } else {
-                                R.drawable.dr_icon_bookmark_outlined
-                            }
+                    Text(
+                        text = stringResource(
+                            R.string.strLabelVerseSerialWithChapter,
+                            votdState.verse.chapter.getCurrentName(),
+                            verse.chapterNo,
+                            verse.verseNo
                         ),
-                        contentDescription = null,
-                        tint = if (isBookmarked) {
-                            colorScheme.primary
-                        } else {
-                            colorScheme.onSurfaceVariant
-                        },
+                        modifier = Modifier.weight(1f),
+                        style = typography.labelMedium.copy(
+                            color = Color.White.alpha(0.75f),
+                            fontWeight = FontWeight.Normal
+                        ),
                     )
+
+                    IconButton(
+                        onClick = {
+                            ReaderFactory.startTafsir(
+                                context,
+                                verse.chapterNo,
+                                verse.verseNo
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.dr_icon_tafsir),
+                            contentDescription = stringResource(R.string.strTitleTafsir),
+                            modifier = Modifier.size(22.dp),
+                            tint = null,
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                if (!isBookmarked) {
+                                    userRepository.addToBookmark(
+                                        chapterNo = verse.chapterNo,
+                                        verseRange = verse.verseNo..verse.verseNo,
+                                        note = null,
+                                    )
+                                }
+
+                                bookmarkViewerData = BookmarkViewerData(
+                                    chapterNo = verse.chapterNo,
+                                    fromVerse = verse.verseNo,
+                                    toVerse = verse.verseNo,
+                                    startInEditMode = !isBookmarked,
+                                )
+                            }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                if (isBookmarked) {
+                                    R.drawable.dr_icon_bookmark_added
+                                } else {
+                                    R.drawable.dr_icon_bookmark_outlined
+                                }
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.size(23.dp),
+                            tint = if (isBookmarked) colorScheme.primary else {
+                                Color.White.alpha(0.8f)
+                            },
+                        )
+                    }
                 }
             }
         }

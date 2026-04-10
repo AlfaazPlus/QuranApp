@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.screens.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -162,6 +163,7 @@ private fun ScriptItem(
         Modifier
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.medium)
+            .border(1.dp, colorScheme.outline.alpha(0.2f), MaterialTheme.shapes.medium)
             .clickable {
                 if (!isDownloading) {
                     onSelect(script, null)
@@ -184,7 +186,7 @@ private fun ScriptItem(
             }
 
             HorizontalDivider(
-                color = colorScheme.outline.alpha(0.5f),
+                color = colorScheme.outline.alpha(0.2f),
             )
 
             Column(

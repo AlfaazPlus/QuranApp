@@ -20,9 +20,9 @@ class ActivityEtiquette : ActivityExclusiveVersesBase() {
         savedInstanceState: Bundle?,
         quranMeta: QuranMeta
     ) {
-        QuranEtiquette.prepareInstance(this, quranMeta) { references ->
+        /*QuranEtiquette.prepareInstance(this, quranMeta) { references ->
             initContent(ActivityExclusiveVersesBinding.bind(activityView), references, R.string.titleEtiquetteVerses)
-        }
+        }*/
     }
 
     override fun getLayoutManager(): RecyclerView.LayoutManager {

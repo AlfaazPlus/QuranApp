@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "7e9533a03ee265fa6e3121189a0859af",
+    "identityHash": "16b3844cca7eb4db6ecffea15f6c027a",
     "entities": [
       {
         "tableName": "user_bookmarks",
@@ -53,7 +53,7 @@
       },
       {
         "tableName": "read_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read_type` TEXT NOT NULL, `reader_mode` TEXT NOT NULL, `division_no` INTEGER NOT NULL, `chapter_no` INTEGER NOT NULL, `from_verse_no` INTEGER NOT NULL, `to_verse_no` INTEGER NOT NULL, `mushaf_id` INTEGER NOT NULL, `page_no` INTEGER, `datetime` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read_type` TEXT NOT NULL, `reader_mode` TEXT NOT NULL, `division_no` INTEGER NOT NULL, `chapter_no` INTEGER NOT NULL, `from_verse_no` INTEGER NOT NULL, `to_verse_no` INTEGER NOT NULL, `mushaf_code` TEXT, `mushaf_variant` TEXT, `page_no` INTEGER, `datetime` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -98,10 +98,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "mushafId",
-            "columnName": "mushaf_id",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "mushafCode",
+            "columnName": "mushaf_code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "mushafVariant",
+            "columnName": "mushaf_variant",
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "pageNo",
@@ -125,7 +129,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7e9533a03ee265fa6e3121189a0859af')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16b3844cca7eb4db6ecffea15f6c027a')"
     ]
   }
 }

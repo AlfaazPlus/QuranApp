@@ -1,33 +1,28 @@
 package com.quranapp.android.components.quran
 
 import android.content.Context
-import com.quranapp.android.utils.quran.parser.QuranEtiquetteParser
-import com.quranapp.android.utils.quran.parser.SituationVersesParser
+import com.quranapp.android.utils.quran.parser.ExclusiveVersesParser
 import java.util.concurrent.atomic.AtomicReference
 
 object QuranEtiquette {
     private val sQuranEtiquetteRef = AtomicReference<List<ExclusiveVerse>>()
-    fun prepareInstance(
-        context: Context,
-        quranMeta: QuranMeta,
-        callback: (List<ExclusiveVerse>) -> Unit
-    ) {
-        if (sQuranEtiquetteRef.get() == null) {
-            prepare(context, quranMeta, callback)
-        } else {
-            callback(sQuranEtiquetteRef.get())
-        }
-    }
 
-    private fun prepare(
+    suspend fun get(
         context: Context,
-        quranMeta: QuranMeta,
-        callback: (List<ExclusiveVerse>) -> Unit
-    ) {
-        QuranEtiquetteParser.parseVerses(
+    ): List<ExclusiveVerse> {
+        val cached = sQuranEtiquetteRef.get()
+
+        if (cached != null) {
+            return cached
+        }
+
+        val verses = ExclusiveVersesParser.parseFromAssets(
             context,
-            quranMeta,
-            sQuranEtiquetteRef
-        ) { callback(sQuranEtiquetteRef.get()) }
+            "type2"
+        )
+
+        sQuranEtiquetteRef.set(verses)
+
+        return verses
     }
 }

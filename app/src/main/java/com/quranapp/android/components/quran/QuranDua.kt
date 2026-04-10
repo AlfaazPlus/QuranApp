@@ -1,32 +1,28 @@
 package com.quranapp.android.components.quran
 
 import android.content.Context
-import com.quranapp.android.utils.quran.parser.QuranDuaParser
+import com.quranapp.android.utils.quran.parser.ExclusiveVersesParser
 import java.util.concurrent.atomic.AtomicReference
 
 object QuranDua {
     private val sQuranDuaRef = AtomicReference<List<ExclusiveVerse>>()
-    fun prepareInstance(
-        context: Context,
-        quranMeta: QuranMeta,
-        callback: (List<ExclusiveVerse>) -> Unit
-    ) {
-        if (sQuranDuaRef.get() == null) {
-            prepare(context, quranMeta, callback)
-        } else {
-            callback(sQuranDuaRef.get())
-        }
-    }
 
-    private fun prepare(
+    suspend fun get(
         context: Context,
-        quranMeta: QuranMeta,
-        callback: (List<ExclusiveVerse>) -> Unit
-    ) {
-        QuranDuaParser.parseDua(
+    ): List<ExclusiveVerse> {
+        val cached = sQuranDuaRef.get()
+
+        if (cached != null) {
+            return cached
+        }
+
+        val verses = ExclusiveVersesParser.parseFromAssets(
             context,
-            quranMeta,
-            sQuranDuaRef
-        ) { callback(sQuranDuaRef.get()) }
+            "type1"
+        )
+
+        sQuranDuaRef.set(verses)
+
+        return verses
     }
 }

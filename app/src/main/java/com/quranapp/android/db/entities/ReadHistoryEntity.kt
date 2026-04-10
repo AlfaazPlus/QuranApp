@@ -2,6 +2,7 @@ package com.quranapp.android.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "read_history")
@@ -28,12 +29,18 @@ data class ReadHistoryEntity(
     @ColumnInfo(name = "to_verse_no")
     val toVerseNo: Int = 0,
 
-    @ColumnInfo(name = "mushaf_id")
-    val mushafId: Int = 0,
+    @ColumnInfo(name = "mushaf_code")
+    val mushafCode: String? = null,
+
+    @ColumnInfo(name = "mushaf_variant")
+    val mushafVariant: String? = null,
 
     @ColumnInfo(name = "page_no")
     val pageNo: Int? = null,
 
     @ColumnInfo(name = "datetime")
     val datetime: Long = System.currentTimeMillis(),
-)
+) {
+    @Ignore
+    var chapterName: String? = null
+}

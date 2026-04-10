@@ -454,7 +454,7 @@ object ReaderItemsBuilder {
         if (distinct.isEmpty()) return emptyMap()
 
         val scriptCode = ReaderPreferences.getQuranScript()
-        val mushafId = scriptCode.getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         val out = LinkedHashMap<Int, QuranPageItem>(distinct.size)
         for (pageNo in distinct) {

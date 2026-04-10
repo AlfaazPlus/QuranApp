@@ -94,7 +94,7 @@ object QuranPropheticDuasParser {
                         prophet.references?.let {
                             prophet.verses = prepareVersesList(it, true)
                             prophet.chapters = prepareChaptersList(prophet.verses)
-                            prophet.inChapters = prepareChapterText(context, quranMeta, prophet.chapters, 2)
+// fixme                            prophet.inChapters = prepareChapterText(context, quranMeta, prophet.chapters, 2)
                         }
                     }
                 }

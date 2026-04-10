@@ -10,6 +10,7 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
@@ -115,7 +116,6 @@ object ReaderFactory {
         return prepareVerseRangeIntent(chapterNo, range.first, range.second)
     }
 
-    @JvmStatic
     fun startReferenceVerse(
         context: Context,
         showChapterSugg: Boolean,
@@ -132,14 +132,12 @@ object ReaderFactory {
         context.startActivity(intent)
     }
 
-    @JvmStatic
     fun startReferenceVerse(context: Context, referenceVerseModel: ReferenceVerseModel) {
         val intent = prepareReferenceVerseIntent(referenceVerseModel)
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
     }
 
-    @JvmStatic
     fun prepareReferenceVerseIntent(
         showChapterSugg: Boolean,
         title: String,
@@ -154,14 +152,12 @@ object ReaderFactory {
         return prepareReferenceVerseIntent(referenceVerseModel)
     }
 
-    @JvmStatic
     fun prepareReferenceVerseIntent(referenceVerseModel: ReferenceVerseModel): Intent {
         return Intent().apply {
             putExtra(KEY_REFERENCE_VERSE_MODEL, referenceVerseModel)
         }
     }
 
-    @JvmStatic
     fun prepareLastVersesIntent(
         readType: ReadType,
         readerMode: ReaderMode?,
@@ -193,10 +189,11 @@ object ReaderFactory {
         val readerMode = ReaderMode.fromValue(entity.readerMode)
         val pageNo = entity.pageNo
 
-        if (readerMode == ReaderMode.Reading && pageNo != null && pageNo > 0 && entity.mushafId > 0) {
+        if (readerMode == ReaderMode.Reading && pageNo != null && pageNo > 0 && entity.mushafCode != null) {
             return ReaderLaunchParams(
                 data = ReaderIntentData.MushafPage(
-                    mushafId = entity.mushafId,
+                    mushafCode = entity.mushafCode,
+                    mushafVariant = QuranScriptVariant.fromValue(entity.mushafVariant),
                     pageNo = pageNo,
                     fallbackChapterNo = entity.chapterNo,
                     fallbackVerseNo = entity.fromVerseNo,
@@ -213,14 +210,12 @@ object ReaderFactory {
         )
     }
 
-    @JvmStatic
     fun startTafsir(context: Context, chapterNo: Int, verseNo: Int) {
         val intent = prepareTafsirIntent(chapterNo, verseNo)
         intent.setClass(context, ActivityTafsir::class.java)
         context.startActivity(intent)
     }
 
-    @JvmStatic
     fun prepareTafsirIntent(chapterNo: Int, verseNo: Int): Intent {
         return Intent().apply {
             putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)

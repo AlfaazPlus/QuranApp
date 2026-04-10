@@ -41,7 +41,8 @@ sealed class ReaderIntentData {
     ) : ReaderIntentData()
 
     data class MushafPage(
-        val mushafId: Int,
+        val mushafCode: String?,
+        val mushafVariant: QuranScriptVariant?,
         val pageNo: Int,
         val fallbackChapterNo: Int = 0,
         val fallbackVerseNo: Int = 0,
@@ -86,7 +87,8 @@ data class ReaderLaunchParams(
                 }
 
                 is ReaderIntentData.MushafPage -> {
-                    putExtra(KEY_MUSHAF_ID, d.mushafId)
+                    putExtra(KEY_MUSHAF_CODE, d.mushafCode)
+                    putExtra(KEY_MUSHAF_VARIANT, d.mushafVariant?.value)
                     putExtra(KEY_RESTORE_PAGE, d.pageNo)
                     putExtra(KEY_CHAPTER_NO, d.fallbackChapterNo)
                     putExtra(KEY_FALLBACK_VERSE, d.fallbackVerseNo)
@@ -103,7 +105,8 @@ data class ReaderLaunchParams(
         private const val KEY_CHAPTER_NO = "reader.chapter_no"
         private const val KEY_JUZ_NO = "reader.juz_no"
         private const val KEY_HIZB_NO = "reader.hizb_no"
-        private const val KEY_MUSHAF_ID = "reader.mushaf_id"
+        private const val KEY_MUSHAF_CODE = "reader.mushaf_code"
+        private const val KEY_MUSHAF_VARIANT = "reader.mushaf_variant"
         private const val KEY_RESTORE_PAGE = "reader.restore_page"
         private const val KEY_FALLBACK_VERSE = "reader.fallback_verse"
         private const val KEY_INITIAL_VERSE_CHAPTER = "reader.initial_verse_chapter"
@@ -117,13 +120,17 @@ data class ReaderLaunchParams(
         const val EXTERNAL_KEY_TRANSL_SLUGS = KEY_TRANSL_SLUGS
 
         fun fromIntent(intent: Intent): ReaderLaunchParams {
-            val mushafId = intent.getIntExtra(KEY_MUSHAF_ID, -1)
+            val mushafCode = intent.getStringExtra(KEY_MUSHAF_CODE)
+            val mushafVariant = QuranScriptVariant.fromValue(
+                intent.getStringExtra(KEY_MUSHAF_VARIANT)
+            )
             val restorePage = intent.getIntExtra(KEY_RESTORE_PAGE, -1)
 
-            if (mushafId > 0 && restorePage > 0) {
+            if (mushafCode != null && restorePage > 0) {
                 return ReaderLaunchParams(
                     data = ReaderIntentData.MushafPage(
-                        mushafId = mushafId,
+                        mushafCode = mushafCode,
+                        mushafVariant = mushafVariant,
                         pageNo = restorePage,
                         fallbackChapterNo = intent.getIntExtra(KEY_CHAPTER_NO, 1),
                         fallbackVerseNo = intent.getIntExtra(KEY_FALLBACK_VERSE, 1),

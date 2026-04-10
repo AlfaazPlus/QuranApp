@@ -196,9 +196,15 @@ class UserRepository(
         readHistoryDao.trimToSize(HISTORY_LIMIT)
     }
 
-    fun getAllHistoriesFlow(limit: Int? = null): Flow<List<ReadHistoryEntity>> {
-        return if (limit != null) readHistoryDao.getAllFlow(limit)
-        else readHistoryDao.getAllFlow()
+    fun getHistoriesFlow(limit: Int): Flow<List<ReadHistoryEntity>> {
+        return readHistoryDao.getFlow(limit)
+    }
+
+    fun getHistoriesPaginated(): Flow<PagingData<ReadHistoryEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { readHistoryDao.getAllPaginated() }
+        ).flow
     }
 
     suspend fun deleteHistory(id: Long) {

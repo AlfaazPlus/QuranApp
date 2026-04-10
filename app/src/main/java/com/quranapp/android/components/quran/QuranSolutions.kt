@@ -4,13 +4,13 @@ import android.content.Context
 import com.quranapp.android.utils.quran.parser.ExclusiveVersesParser
 import java.util.concurrent.atomic.AtomicReference
 
-object QuranMajorSins {
-    private val sQuranMajorSinsRef = AtomicReference<List<ExclusiveVerse>>()
+object QuranSolutions {
+    private val sSolutionsRef = AtomicReference<List<ExclusiveVerse>>()
 
     suspend fun get(
         context: Context,
     ): List<ExclusiveVerse> {
-        val cached = sQuranMajorSinsRef.get()
+        val cached = sSolutionsRef.get()
 
         if (cached != null) {
             return cached
@@ -18,10 +18,10 @@ object QuranMajorSins {
 
         val verses = ExclusiveVersesParser.parseFromAssets(
             context,
-            "major_sins"
+            "type0"
         )
 
-        sQuranMajorSinsRef.set(verses)
+        sSolutionsRef.set(verses)
 
         return verses
     }

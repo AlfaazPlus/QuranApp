@@ -67,7 +67,7 @@ fun JuzCard(
                     start = 8.dp,
                     top = 8.dp,
                     bottom = 8.dp,
-                    end = if (showFavouriteIcon) 0.dp else 8.dp
+                    end = if (showFavouriteIcon) 0.dp else 16.dp
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {

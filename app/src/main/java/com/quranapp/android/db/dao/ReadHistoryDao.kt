@@ -1,9 +1,11 @@
 package com.quranapp.android.db.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.quranapp.android.db.entities.BookmarkEntity
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -16,11 +18,11 @@ interface ReadHistoryDao {
     @Query("SELECT * FROM read_history ORDER BY datetime DESC LIMIT 1")
     suspend fun getLatest(): ReadHistoryEntity?
 
-    @Query("SELECT * FROM read_history ORDER BY datetime DESC")
-    fun getAllFlow(): Flow<List<ReadHistoryEntity>>
-
     @Query("SELECT * FROM read_history ORDER BY datetime DESC LIMIT :limit")
-    fun getAllFlow(limit: Int): Flow<List<ReadHistoryEntity>>
+    fun getFlow(limit: Int): Flow<List<ReadHistoryEntity>>
+
+    @Query("SELECT * FROM read_history ORDER BY id DESC")
+    fun getAllPaginated(): PagingSource<Int, ReadHistoryEntity>
 
     @Query(
         """

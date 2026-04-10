@@ -62,7 +62,6 @@ object ReadHistoryMigration {
                         chapterNo = chapterNo,
                         fromVerseNo = fromVerseNo,
                         toVerseNo = toVerseNo,
-                        mushafId = 0,
                         datetime = parseLegacyDate(dateStr),
                     )
                 }

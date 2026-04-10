@@ -51,7 +51,7 @@ class ADPProphets(ctx: Context, private val itemWidth: Int, private val limit: I
         val subTitleTASpan = TextAppearanceSpan("sans-serif", Typeface.NORMAL, txtSize, null, null)
         subTitleSS.setSpan(subTitleTASpan, 0, subTitleSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         subTitleSS.setSpan(LineHeightSpan2(20, false, true), 0, subTitleSS.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        val chaptersSS = SpannableString(inChapters)
+        val chaptersSS = SpannableString(inChapters ?: "")
         val inChaptersTASpan = TextAppearanceSpan(
             "sans-serif-light", Typeface.NORMAL, txtSize,
             txtColor2,

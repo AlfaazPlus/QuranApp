@@ -1,9 +1,6 @@
 package com.quranapp.android.compose.screens
 
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,12 +35,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.components.common.AppBar
-import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.MessageCard
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
@@ -55,6 +50,7 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.viewModels.ReadHistoryViewModel
 import kotlinx.coroutines.launch
 
@@ -67,7 +63,7 @@ private sealed interface HistoryDeleteTarget {
 fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val allHistories = vm.allHistories.collectAsLazyPagingItems()
 
     var deleteTarget by remember { mutableStateOf<HistoryDeleteTarget?>(null) }
 
@@ -88,7 +84,7 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
             AppBar(
                 title = stringResource(R.string.strTitleReadHistory),
                 actions = {
-                    if (uiState.histories.isNotEmpty()) {
+                    if (allHistories.itemCount > 0) {
                         SimpleTooltip(text = stringResource(R.string.msgClearReadHistory)) {
                             IconButton(onClick = { deleteTarget = HistoryDeleteTarget.All }) {
                                 Icon(
@@ -103,8 +99,7 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
         }
     ) { paddingValues ->
         when {
-            uiState.isLoading -> Loader(fill = true)
-            uiState.histories.isEmpty() -> {
+            allHistories.itemCount == 0 -> {
                 MessageCard(
                     icon = R.drawable.dr_icon_history,
                     messageRes = R.string.strMsgReadHistoryNoItems,
@@ -125,17 +120,34 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
                     ),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(uiState.histories, key = { it.id }) { history ->
-                        ReadHistoryCard(
-                            history = history,
-                            chapterName = uiState.chapterNames[history.chapterNo].orEmpty(),
-                            onOpen = {
-                                openReadHistory(context, history)
-                            },
-                            onDelete = {
-                                deleteTarget = HistoryDeleteTarget.Single(history.id)
-                            },
-                        )
+                    items(
+                        allHistories.itemCount,
+                        key = { index ->
+                            val item = allHistories[index]
+                            if (item != null) {
+                                return@items item.id.toString()
+                            } else {
+                                index
+                            }
+                        },
+                    ) { index ->
+                        val history = allHistories[index]
+
+                        if (history != null) {
+                            ReadHistoryCard(
+                                history = history,
+                                chapterName = history.chapterName.orEmpty(),
+                                onOpen = {
+                                    ReaderFactory.prepareHistoryIntent(history)?.let {
+                                        it.setClass(context, ActivityReader::class.java)
+                                        context.startActivity(it)
+                                    }
+                                },
+                                onDelete = {
+                                    deleteTarget = HistoryDeleteTarget.Single(history.id)
+                                },
+                            )
+                        }
                     }
                 }
             }
@@ -175,29 +187,24 @@ private fun ReadHistoryCard(
                 horizontalArrangement = Arrangement.spacedBy(14.dp),
                 verticalAlignment = Alignment.Top,
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(42.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(colorScheme.surface.copy(alpha = 0.88f))
-                        .border(
-                            width = 1.dp,
-                            color = accentColor.copy(alpha = 0.22f),
-                            shape = RoundedCornerShape(12.dp),
-                        ),
-                    contentAlignment = Alignment.Center,
+                Surface(
+                    modifier = Modifier.size(42.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    color = colorScheme.surfaceVariant.copy(alpha = 0.55f),
                 ) {
-                    Icon(
-                        painter = painterResource(
-                            when (ReaderMode.fromValue(history.readerMode)) {
-                                ReaderMode.Reading -> R.drawable.ic_mode_mushaf
-                                else -> R.drawable.ic_mode_verse
-                            }
-                        ),
-                        contentDescription = null,
-                        tint = accentColor,
-                        modifier = Modifier.size(18.dp),
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            painter = painterResource(
+                                when (ReaderMode.fromValue(history.readerMode)) {
+                                    ReaderMode.Reading -> R.drawable.ic_mode_mushaf
+                                    else -> R.drawable.ic_mode_verse
+                                }
+                            ),
+                            contentDescription = null,
+                            tint = accentColor,
+                            modifier = Modifier.size(18.dp),
+                        )
+                    }
                 }
 
                 Column(modifier = Modifier.weight(1f)) {
@@ -214,7 +221,7 @@ private fun ReadHistoryCard(
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = colorScheme.onSurfaceVariant,
+                            color = colorScheme.onSurface.alpha(0.8f),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(top = 4.dp),
@@ -297,20 +304,8 @@ private fun HistoryDeleteDialog(
     }
 }
 
-
 @Composable
-private fun ReadHistoryEntity.readTypeLabel(chapterName: String): String =
-    when (ReadType.fromValue(readType)) {
-        ReadType.Chapter -> stringResource(
-            R.string.strLabelSurah,
-            chapterName.ifBlank { chapterNo.toString() })
-
-        ReadType.Juz -> stringResource(R.string.strLabelJuzNo, divisionNo)
-        ReadType.Hizb -> stringResource(R.string.labelHizbNo, divisionNo)
-    }
-
-@Composable
-private fun ReadHistoryEntity.titleLabel(chapterName: String): String {
+fun ReadHistoryEntity.titleLabel(chapterName: String): String {
     if (readerMode == ReaderMode.Reading.value) {
         return pageNo?.let { stringResource(R.string.strLabelPageNo, pageNo) } ?: ""
     } else {
@@ -327,7 +322,7 @@ private fun ReadHistoryEntity.titleLabel(chapterName: String): String {
 }
 
 @Composable
-private fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
+fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
     val verseLabel = if (fromVerseNo == toVerseNo) {
         stringResource(R.string.strLabelVerseNo, fromVerseNo)
     } else {
@@ -335,7 +330,7 @@ private fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
 
     }
     if (readerMode == ReaderMode.Reading.value) {
-        return null
+        return mushafCode?.getQuranScriptName()
     } else {
         return when (ReadType.fromValue(readType)) {
             ReadType.Chapter -> verseLabel
@@ -345,10 +340,4 @@ private fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
             }
         }
     }
-}
-
-private fun openReadHistory(context: Context, history: ReadHistoryEntity) {
-    val intent = ReaderFactory.prepareHistoryIntent(history) ?: return
-    intent.setClass(context, ActivityReader::class.java)
-    context.startActivity(intent)
 }

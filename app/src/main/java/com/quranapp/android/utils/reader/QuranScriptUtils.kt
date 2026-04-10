@@ -114,7 +114,6 @@ object QuranScriptUtils {
         )
     )
 
-
     fun availableScripts() = mapOf(
         SCRIPT_UTHMANI to listOf(),
         SCRIPT_KFQPC_V1 to listOf(),
@@ -212,7 +211,7 @@ fun String.getQuranScriptResPath(): String = when (this) {
     else -> "scripts/script_uthmani.json"
 }
 
-fun String.getQuranMushafId(
+fun String.toQuranMushafId(
     variant: QuranScriptVariant?
 ): Int = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> {
@@ -234,7 +233,7 @@ fun rememberQuranMushafId(): Int {
     val scriptCode = ReaderPreferences.observeQuranScript()
     val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
 
-    return scriptCode.getQuranMushafId(scriptVariant)
+    return scriptCode.toQuranMushafId(scriptVariant)
 }
 
 
@@ -260,7 +259,7 @@ enum class QuranScriptVariant(val value: String) {
     INDOPAK_15("indopak_15");
 
     companion object {
-        fun fromValue(value: String): QuranScriptVariant? {
+        fun fromValue(value: String?): QuranScriptVariant? {
             return values().find { it.value == value }
         }
     }

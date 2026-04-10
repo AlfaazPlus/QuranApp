@@ -2,9 +2,9 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranProphet
 import com.quranapp.android.components.quran.QuranProphet.Prophet
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
@@ -28,7 +28,6 @@ object QuranProphetParser {
 
     fun parseProphet(
         context: Context,
-        quranMeta: QuranMeta,
         instanceRef: AtomicReference<QuranProphet>,
         callback: () -> Unit
     ) {
@@ -36,7 +35,6 @@ object QuranProphetParser {
             try {
                 val parsedQuranProphets = parseProphetsInternal(
                     context,
-                    quranMeta,
                 )
 
                 instanceRef.set(parsedQuranProphets)
@@ -49,10 +47,10 @@ object QuranProphetParser {
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun parseProphetsInternal(
+    private suspend fun parseProphetsInternal(
         context: Context,
-        quranMeta: QuranMeta,
     ): QuranProphet {
+        val repository = DatabaseProvider.getQuranRepository(context)
         val parser = context.resources.getXml(R.xml.quran_prophets_reference)
         val prophetList: MutableList<Prophet> = ArrayList()
 
@@ -98,7 +96,8 @@ object QuranProphetParser {
                         prophet.references?.let {
                             prophet.verses = prepareVersesList(it, true)
                             prophet.chapters = prepareChaptersList(prophet.verses)
-                            prophet.inChapters = prepareChapterText(context, quranMeta, prophet.chapters, 2)
+                            prophet.inChapters =
+                                prepareChapterText(context, repository, prophet.chapters, 1)
                         }
                     }
                 }

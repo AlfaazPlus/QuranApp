@@ -3,45 +3,43 @@ package com.quranapp.android.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.entities.ReadHistoryEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 
-data class ReadHistoryUiState(
-    val isLoading: Boolean = true,
-    val histories: List<ReadHistoryEntity> = emptyList(),
-    val chapterNames: Map<Int, String> = emptyMap(),
-)
-
+@OptIn(ExperimentalCoroutinesApi::class)
 class ReadHistoryViewModel(application: Application) : AndroidViewModel(application) {
     private val userRepository = DatabaseProvider.getUserRepository(application)
     private val quranRepository = DatabaseProvider.getQuranRepository(application)
 
-    private val _uiState = MutableStateFlow(ReadHistoryUiState())
-    val uiState: StateFlow<ReadHistoryUiState> = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            userRepository.getAllHistoriesFlow().collectLatest { histories ->
-                val chapterNames = loadMissingChapterNames(histories)
-
-                _uiState.update { state ->
-                    state.copy(
-                        isLoading = false,
-                        histories = histories,
-                        chapterNames = state.chapterNames + chapterNames,
-                    )
+    val allHistories = userRepository.getHistoriesPaginated()
+        .map { pagingData ->
+            pagingData.map { item ->
+                item.apply {
+                    chapterName = quranRepository.getChapterName(item.chapterNo)
                 }
             }
         }
-    }
+        .cachedIn(viewModelScope)
+
+    val recentHistories = userRepository.getHistoriesFlow(10)
+        .mapLatest {
+            it.forEach { item ->
+                item.chapterName = quranRepository.getChapterName(item.chapterNo)
+            }
+
+            it
+        }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyList()
+        )
 
     suspend fun deleteHistory(id: Long) {
         userRepository.deleteHistory(id)
@@ -49,23 +47,5 @@ class ReadHistoryViewModel(application: Application) : AndroidViewModel(applicat
 
     suspend fun deleteAllHistories() {
         userRepository.deleteAllHistories()
-    }
-
-    private suspend fun loadMissingChapterNames(
-        histories: List<ReadHistoryEntity>
-    ): Map<Int, String> {
-        val existing = _uiState.value.chapterNames
-        val missing = histories
-            .map { it.chapterNo }
-            .distinct()
-            .filter { it > 0 && !existing.containsKey(it) }
-
-        if (missing.isEmpty()) {
-            return emptyMap()
-        }
-
-        return withContext(Dispatchers.IO) {
-            missing.associateWith { quranRepository.getChapterName(it) }
-        }
     }
 }

@@ -498,5 +498,5 @@
     <string name="theme_colors">Theme Colors</string>
     <string name="theme_mode">Theme Mode</string>
     <string name="dynamic_color">Dynamic Color</string>
-    <string name="dynamic_color_description">Change theme color based on the wallpaper</string>
+    <string name="dynamic_color_description">Change theme color based on the system colors</string>
 </resources>

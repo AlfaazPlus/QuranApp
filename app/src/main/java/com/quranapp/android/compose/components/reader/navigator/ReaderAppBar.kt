@@ -63,7 +63,7 @@ import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.reader.getQuranMushafId
+import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -350,7 +350,7 @@ private fun StickyHeaderModeMushaf(
             value = ""
             return@produceState
         }
-        val mushafId = scriptCode.getQuranMushafId(scriptVariant)
+        val mushafId = scriptCode.toQuranMushafId(scriptVariant)
         if (mushafId <= 0) {
             value = ""
             return@produceState

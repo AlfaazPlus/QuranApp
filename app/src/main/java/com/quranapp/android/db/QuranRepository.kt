@@ -14,7 +14,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
-import com.quranapp.android.utils.reader.getQuranMushafId
+import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.util.Locale
@@ -306,7 +306,7 @@ class QuranRepository(
 
     suspend fun getFirstPageOfChapter(chapterNo: Int): Int? {
         val mushafId = ReaderPreferences.getQuranScript()
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || chapterNo <= 0) return null
 
@@ -315,7 +315,7 @@ class QuranRepository(
 
     suspend fun getPageForVerse(surahNo: Int, ayahNo: Int, scriptCode: String? = null): Int? {
         val mushafId = (scriptCode ?: ReaderPreferences.getQuranScript())
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || surahNo <= 0 || ayahNo <= 0) return null
         return mushafDao.getPageForVerse(mushafId, ayahId = QuranUtils.getAyahId(surahNo, ayahNo))
@@ -323,7 +323,7 @@ class QuranRepository(
 
     suspend fun getFirstPageOfJuz(juzNo: Int): Int? {
         val mushafId = ReaderPreferences.getQuranScript()
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || juzNo <= 0) return null
         return mushafDao.getFirstPageOfJuz(mushafId, juzNo)
@@ -331,7 +331,7 @@ class QuranRepository(
 
     suspend fun getFirstPageOfHizb(hizbNo: Int): Int? {
         val mushafId = ReaderPreferences.getQuranScript()
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || hizbNo <= 0) return null
         return mushafDao.getFirstPageOfHizb(mushafId, hizbNo)
@@ -355,7 +355,7 @@ class QuranRepository(
 
     suspend fun getFirstAyahIdOnPage(pageNo: Int): Int? {
         val mushafId = ReaderPreferences.getQuranScript()
-            .getQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         if (mushafId <= 0 || pageNo <= 0) return null
         return mushafDao.getFirstAyahIdOnPage(mushafId, pageNo)
