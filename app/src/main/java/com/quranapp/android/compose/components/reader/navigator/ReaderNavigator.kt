@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.utils.reader.ReaderIntentData
@@ -36,12 +37,10 @@ fun ReaderNavigator(
 ) {
     val scope = rememberCoroutineScope()
     val readerMode by readerVm.readerMode.collectAsState()
-    val isReading = readerMode == ReaderMode.Reading
 
-
-    val tabs = remember(isReading) {
-        if (isReading) NavTab.entries
-        else listOf(NavTab.Chapter, NavTab.Juz, NavTab.Hizb)
+    val tabs = remember(readerMode) {
+        if (readerMode == ReaderMode.VerseByVerse) NavTab.entries.filter { it != NavTab.Page }
+        else NavTab.entries
     }
 
     var selectedTabIndex by readerVm.selectedNavigationTabIndex
@@ -54,13 +53,15 @@ fun ReaderNavigator(
 
     fun navigateChapter(chapterNo: Int) {
         scope.launch {
-            if (isReading) {
-                val page = withContext(Dispatchers.IO) {
-                    readerVm.repository.getFirstPageOfChapter(chapterNo)
+            when (readerMode) {
+                ReaderMode.Reading -> {
+                    val page = readerVm.resolvePageNo(chapterNo, 1)
+                    if (page != null) readerVm.requestPageNavigation(page)
                 }
-                if (page != null) readerVm.requestPageNavigation(page)
-            } else {
-                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
+
+                else -> {
+                    readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
+                }
             }
 
             onClose()
@@ -69,53 +70,72 @@ fun ReaderNavigator(
 
     fun navigateVerse(chapterNo: Int, verseNo: Int) {
         scope.launch {
-            if (isReading) {
-                val page = withContext(Dispatchers.IO) {
-                    readerVm.repository.getPageForVerse(chapterNo, verseNo)
-                }
-                if (page != null) readerVm.requestPageNavigation(page)
-            } else {
-                val isInCurrentView = readerVm.verseByVerseItems.value.any { item ->
-                    item is ReaderLayoutItem.VerseUI &&
-                            item.verse.chapterNo == chapterNo &&
-                            item.verse.verseNo == verseNo
+            when (readerMode) {
+                ReaderMode.Reading -> {
+                    val page = readerVm.resolvePageNo(chapterNo, verseNo)
+                    if (page != null) readerVm.requestPageNavigation(page)
                 }
 
-                if (isInCurrentView) {
-                    readerVm.requestVerseNavigation(chapterNo, verseNo)
-                } else {
-                    readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullChapter(chapterNo)))
-                    readerVm.requestVerseNavigation(chapterNo, verseNo)
+                else -> {
+                    val isInCurrentView = readerVm.verseByVerseItems.value.any { item ->
+                        item is ReaderLayoutItem.VerseUI &&
+                                item.verse.chapterNo == chapterNo &&
+                                item.verse.verseNo == verseNo
+                    }
+
+                    if (isInCurrentView) {
+                        readerVm.requestVerseNavigation(chapterNo, verseNo)
+                    } else {
+                        readerVm.initReader(
+                            ReaderLaunchParams(
+                                ReaderIntentData.FullChapter(
+                                    chapterNo,
+                                    ChapterVersePair(chapterNo, verseNo)
+                                )
+                            )
+                        )
+                    }
                 }
             }
+
             onClose()
         }
     }
 
     fun navigateJuz(juzNo: Int) {
         scope.launch {
-            if (isReading) {
-                val page = withContext(Dispatchers.IO) {
-                    readerVm.repository.getFirstPageOfJuz(juzNo)
+            when (readerMode) {
+                ReaderMode.Reading -> {
+                    val page = withContext(Dispatchers.IO) {
+                        readerVm.repository.getFirstPageOfJuz(juzNo)
+                    }
+                    if (page != null) readerVm.requestPageNavigation(page)
                 }
-                if (page != null) readerVm.requestPageNavigation(page)
-            } else {
-                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullJuz(juzNo)))
+
+                else -> {
+                    readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullJuz(juzNo)))
+                }
             }
+
             onClose()
         }
     }
 
     fun navigateHizb(hizbNo: Int) {
         scope.launch {
-            if (isReading) {
-                val page = withContext(Dispatchers.IO) {
-                    readerVm.repository.getFirstPageOfHizb(hizbNo)
+            when (readerMode) {
+                ReaderMode.Reading -> {
+                    val page = withContext(Dispatchers.IO) {
+                        readerVm.repository.getFirstPageOfHizb(hizbNo)
+                    }
+                    if (page != null) readerVm.requestPageNavigation(page)
                 }
-                if (page != null) readerVm.requestPageNavigation(page)
-            } else {
-                readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullHizb(hizbNo)))
+
+                else -> {
+                    readerVm.initReader(ReaderLaunchParams(ReaderIntentData.FullHizb(hizbNo)))
+                }
             }
+
             onClose()
         }
     }

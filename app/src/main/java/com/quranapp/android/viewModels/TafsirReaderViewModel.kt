@@ -8,15 +8,17 @@ import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,7 +35,7 @@ data class TafsirReaderUiState(
     val tafsirInfo: TafsirInfoModel? = null,
     val chapterNo: Int = 0,
     val verseNo: Int = 0,
-    val chapterMeta: QuranMeta.ChapterMeta? = null,
+    val chapterMeta: SurahWithLocalizations? = null,
     val contentState: TafsirContentState = TafsirContentState.Loading,
     val textSizeMultiplier: Float = 1.0f
 )
@@ -55,15 +57,26 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     val uiState: StateFlow<TafsirReaderUiState> = _uiState.asStateFlow()
 
     private val context get() = getApplication<Application>()
-    private var quranMeta: QuranMeta? = null
+    private val repository = DatabaseProvider.getQuranRepository(context)
 
-    fun setQuranMeta(meta: QuranMeta) {
-        quranMeta = meta
+    init {
+        viewModelScope.launch {
+            ReaderPreferences.tafsirIdFlow().collectLatest {
+                onEvent(TafsirReaderEvent.ChangeTafsir(it))
+            }
+        }
     }
 
     fun onEvent(event: TafsirReaderEvent) {
         when (event) {
-            is TafsirReaderEvent.Init -> initialize(event.tafsirKey, event.chapterNo, event.verseNo)
+            is TafsirReaderEvent.Init -> {
+                viewModelScope.launch {
+                    withContext(Dispatchers.IO) {
+                        initialize(event.tafsirKey, event.chapterNo, event.verseNo)
+                    }
+                }
+            }
+
             is TafsirReaderEvent.ChangeTafsir -> changeTafsir(event.tafsirKey)
             is TafsirReaderEvent.NextVerse -> navigateVerse(1)
             is TafsirReaderEvent.PreviousVerse -> navigateVerse(-1)
@@ -72,7 +85,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun initialize(tafsirKey: String?, chapterNo: Int, verseNo: Int) {
+    private suspend fun initialize(tafsirKey: String?, chapterNo: Int, verseNo: Int) {
         val key =
             tafsirKey ?: ReaderPreferences.getTafsirId() ?: TafsirUtils.getDefaultTafsirKey()
 
@@ -84,7 +97,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         }
 
         val tafsirInfo = TafsirManager.getModel(key)
-        val chapterMeta = quranMeta?.getChapterMeta(chapterNo)
+        val chapterMeta = repository.getSurahWithLocalizations(chapterNo)
 
         _uiState.update {
             it.copy(
@@ -93,7 +106,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                 chapterNo = chapterNo,
                 verseNo = verseNo,
                 chapterMeta = chapterMeta,
-                textSizeMultiplier = SPReader.getSavedTextSizeMultTafsir(context),
+                textSizeMultiplier = ReaderPreferences.getTafsirTextSizeMultiplier(),
                 contentState = TafsirContentState.Loading
             )
         }
@@ -119,7 +132,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         val state = _uiState.value
         val newVerseNo = state.verseNo + delta
 
-        if (newVerseNo < 1 || newVerseNo > (state.chapterMeta?.verseCount ?: 0)) return
+        if (newVerseNo < 1 || newVerseNo > (state.chapterMeta?.surah?.ayahCount ?: 0)) return
 
         _uiState.update {
             it.copy(
@@ -132,7 +145,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun updateTextSize(multiplier: Float) {
-        SPReader.setSavedTextSizeMultTafsir(context, multiplier)
+        viewModelScope.launch { ReaderPreferences.setTafsirTextSizeMultiplier(multiplier) }
         _uiState.update { it.copy(textSizeMultiplier = multiplier) }
     }
 

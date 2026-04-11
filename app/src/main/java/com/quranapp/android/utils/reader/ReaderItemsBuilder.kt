@@ -18,6 +18,7 @@ import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
 import com.quranapp.android.utils.quran.QuranMeta
@@ -133,9 +134,11 @@ object ReaderItemsBuilder {
         fromVerse: Int,
         toVerse: Int
     ) {
-        val surah = quranRepository.getSurahWithLocalizations(chapterNo) ?: return
-
         val scriptCode = ReaderPreferences.getQuranScript()
+        val batch = quranRepository.loadChapterVerseBatch(chapterNo, fromVerse, toVerse, scriptCode)
+            ?: return
+        val surah = batch.surah
+
         val booksInfo = factory.getTranslationBooksInfoValidated(params.slugs)
         val translationsByVerseIndex = factory.getTranslationsVerseRange(
             params.slugs,
@@ -193,12 +196,12 @@ object ReaderItemsBuilder {
             val translations =
                 translationsByVerseIndex.getOrElse(verseNo - fromVerse) { emptyList() }
 
-            val ayah = quranRepository.getAyah(chapterNo, verseNo) ?: continue
-            val words = quranRepository.getWordsForAyah(chapterNo, verseNo, scriptCode)
+            val ayah = batch.ayahByVerseNo[verseNo] ?: continue
+            val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
 
             if (words.isEmpty()) continue
 
-            val pageNo = quranRepository.getPageForVerse(chapterNo, verseNo) ?: -1
+            val pageNo = batch.pageByVerseNo[verseNo] ?: -1
 
             val verse = VerseWithDetails(
                 words = words,
@@ -301,9 +304,11 @@ object ReaderItemsBuilder {
         chapterNo: Int,
         verseNos: List<Int>,
     ): List<ReaderLayoutItem> {
-        val surah = repository.getSurahWithLocalizations(chapterNo) ?: return emptyList()
-
         val scriptCode = ReaderPreferences.getQuranScript()
+        val batch = repository.loadQuickReferenceBatch(chapterNo, verseNos, scriptCode)
+            ?: return emptyList()
+        val surah = batch.surah
+
         val translationFactory = QuranTranslationFactory(context)
         val out = ArrayList<ReaderLayoutItem>(verseNos.size)
 
@@ -352,12 +357,11 @@ object ReaderItemsBuilder {
             )
 
             for ((idx, verseNo) in verseNos.withIndex()) {
-                val ayah = repository.getAyah(chapterNo, verseNo) ?: continue
-                val words = repository.getWordsForAyah(chapterNo, verseNo, scriptCode)
+                val ayah = batch.ayahByVerseNo[verseNo] ?: continue
+                val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
                 if (words.isEmpty()) continue
 
-
-                val pageNo = repository.getPageForVerse(chapterNo, verseNo) ?: -1
+                val pageNo = batch.pageByVerseNo[verseNo] ?: -1
 
                 val translations = factory.getTranslationsVerseRange(
                     params.slugs, chapterNo, verseNo, verseNo
@@ -441,8 +445,7 @@ object ReaderItemsBuilder {
     }
 
     /**
-     * Builds several mushaf pages in one pass: one read of script / mushaf id, then sequential
-     * DB work per page (lines + juz from [ayahs] via mushaf map).
+     * Builds several mushaf pages: batched mushaf_map + juz queries, two-phase ayah word preload.
      */
     suspend fun buildMushafPages(
         quranRepository: QuranRepository,
@@ -456,9 +459,18 @@ object ReaderItemsBuilder {
         val scriptCode = ReaderPreferences.getQuranScript()
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
+        val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
+        val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
+        val ayahRows = linesByPage.values.asSequence()
+            .flatten()
+            .filter { it.lineType == MushafLineType.ayah }
+            .toList()
+        val wordCacheFull = quranRepository.preloadMushafLineWordCache(ayahRows, scriptCode)
+        val wordCache = wordCacheFull.takeIf { it.isNotEmpty() }
+
         val out = LinkedHashMap<Int, QuranPageItem>(distinct.size)
         for (pageNo in distinct) {
-            val rows = quranRepository.getPageLines(mushafId, pageNo)
+            val rows = linesByPage[pageNo].orEmpty()
             val lines = ArrayList<QuranPageLineItem>(rows.size)
 
             val baseStyle = getQuranTextStyle(
@@ -482,7 +494,8 @@ object ReaderItemsBuilder {
                     quranRepository,
                     scriptCode,
                     cappedBaseStyle,
-                    params
+                    params,
+                    wordCache,
                 )?.let {
                     lines.add(it)
                 }
@@ -490,7 +503,7 @@ object ReaderItemsBuilder {
 
             out[pageNo] = QuranPageItem(
                 pageNo = pageNo,
-                juzNo = quranRepository.getJuzForMushafPage(mushafId, pageNo),
+                juzNo = juzByPage[pageNo] ?: -1,
                 lines = lines,
             )
         }
@@ -504,6 +517,7 @@ object ReaderItemsBuilder {
         scriptCode: String,
         cappedBaseStyle: TextStyle,
         params: PageBuilderParams,
+        wordCache: Map<Int, List<AyahWordEntity>>?,
     ): QuranPageLineItem? {
         return when (row.lineType) {
             MushafLineType.surah_name -> {
@@ -514,7 +528,7 @@ object ReaderItemsBuilder {
             MushafLineType.basmallah -> QuranPageLineItem.Bismillah(row.lineNumber)
 
             MushafLineType.ayah -> {
-                val words = quranRepository.resolveMushafLineWords(row, scriptCode)
+                val words = quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
 
                 val layout = fitMushafLineLayout(
                     words = words,

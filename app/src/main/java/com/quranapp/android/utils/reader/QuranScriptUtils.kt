@@ -161,6 +161,15 @@ fun String.isKFQPCScript(): Boolean = when (this) {
     else -> false
 }
 
+/**
+ * When true, page mode draws a thin frame around the mushaf text block and horizontal rules between
+ * lines. Purely visual (drawBehind); does not change measure or text fitting.
+ */
+fun String.mushafShowsRuledPageDecoration(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> true
+    else -> false
+}
+
 fun String.getQuranScriptName(): String {
     val mapToQuery = SCRIPT_NAMES(this)
 
@@ -261,6 +270,27 @@ enum class QuranScriptVariant(val value: String) {
     companion object {
         fun fromValue(value: String?): QuranScriptVariant? {
             return values().find { it.value == value }
+        }
+    }
+}
+
+data class QuranScript(
+    val scriptCode: String,
+    var variant: QuranScriptVariant?
+) {
+    fun toMushafId(): Int {
+        return scriptCode.toQuranMushafId(variant)
+    }
+
+    companion object {
+        fun fromRawValues(
+            script: String,
+            variant: String?
+        ): QuranScript {
+            return QuranScript(
+                script,
+                QuranScriptVariant.fromValue(variant)
+            )
         }
     }
 }

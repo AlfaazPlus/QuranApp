@@ -23,10 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT_DP
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.LocalRecitationState
@@ -38,10 +40,11 @@ import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
+import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.launch
 
@@ -52,6 +55,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val colors = MaterialTheme.colorScheme
     val type = MaterialTheme.typography
     val isDark = isSystemInDarkTheme()
@@ -61,15 +65,20 @@ fun ReaderScreen(params: ReaderLaunchParams) {
 
     var isSyncing by readerVm.playerVerseSync
 
-    LaunchedEffect(params) {
-        readerVm.initReader(params)
-    }
+    var lastInitParams by remember { mutableStateOf<ReaderLaunchParams?>(null) }
 
     Providers(readerVm) {
         val verseActions = LocalVerseActions.current
 
-        LaunchedEffect(context, colors, type, verseActions) {
-            readerVm.observeChanges(context, colors, type, verseActions)
+        LaunchedEffect(params, lifecycleOwner, context, colors, type, verseActions) {
+            if (lastInitParams != params) {
+                readerVm.initReader(params)
+                lastInitParams = params
+            }
+
+            lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                readerVm.observeChanges(context, colors, type, verseActions)
+            }
         }
 
         BoxWithConstraints {

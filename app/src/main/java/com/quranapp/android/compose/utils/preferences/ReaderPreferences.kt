@@ -318,6 +318,10 @@ object ReaderPreferences {
         TafsirManager.setSavedTafsirKey(tafsirKey)
     }
 
+    fun tafsirIdFlow(): Flow<String> {
+        return DataStoreManager.flow(KEY_TAFSIR)
+    }
+
     @Composable
     fun observeTafsirId(): String? {
         val raw = DataStoreManager.observe(KEY_TAFSIR)

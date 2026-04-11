@@ -29,7 +29,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -42,10 +46,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.AyahWordEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
-import com.quranapp.android.utils.reader.rememberQuranMushafId
+import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -97,12 +102,15 @@ fun ReaderLayoutPageMode(
     readerVm: ReaderViewModel,
     contentWidth: Dp,
 ) {
-    val mushafId = rememberQuranMushafId()
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
+    val mushafLayoutKey by readerVm.mushafLayoutKey
+    val ruledPageDecoration = mushafLayoutKey.scriptCode.mushafShowsRuledPageDecoration()
 
-    val pageCount by produceState(0) {
-        value = readerVm.mushafPageCount(mushafId)
+    val pageCount by produceState(0, mushafLayoutKey) {
+        value = readerVm.mushafPageCount(mushafLayoutKey.toMushafId())
     }
+
+    Log.d(mushafLayoutKey, pageCount)
 
     val context = LocalContext.current
     val pagerState = rememberPagerState(
@@ -114,7 +122,7 @@ fun ReaderLayoutPageMode(
     val typography = MaterialTheme.typography
     val density = LocalDensity.current
 
-    LaunchedEffect(pagerState, pageCount) {
+    LaunchedEffect(pagerState, pageCount, mushafLayoutKey) {
         snapshotFlow {
             listOf(
                 pagerState.currentPage + 1,
@@ -124,8 +132,16 @@ fun ReaderLayoutPageMode(
         }
             .distinctUntilChanged()
             .collect { anchorPages ->
+                Log.d(
+                    "INSIDE",
+                    pageCount,
+                    mushafLayoutKey,
+                    anchorPages,
+                    pagerState.pageCount,
+                )
+
                 if (pageCount > 0) {
-                    readerVm.prefetchMushafPages(
+                    readerVm.fetchMushafPages(
                         context, anchorPages, pageCount, PageBuilderParams(
                             context = context,
                             colors = colors,
@@ -141,10 +157,16 @@ fun ReaderLayoutPageMode(
             }
     }
 
-    LaunchedEffect(context, pagerState, pageCount) {
+    val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+
+    LaunchedEffect(context, pagerState, pageCount, navigateToPage) {
         snapshotFlow { pagerState.currentPage }
             .distinctUntilChanged()
             .collect { currentPage ->
+                // While a programmatic scroll is pending, the pager may still report page 1 until
+                // [pageCount] is ready; do not overwrite [currentPageNo] from the initial open.
+                if (navigateToPage != null) return@collect
+
                 val currentPageNo = currentPage + 1
 
                 readerVm.updateState {
@@ -159,14 +181,26 @@ fun ReaderLayoutPageMode(
             }
     }
 
-    val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
 
     LaunchedEffect(navigateToPage, pageCount) {
-        val target = navigateToPage ?: return@LaunchedEffect
-        if (target in 1..pageCount) {
-            pagerState.scrollToPage(target - 1)
+        val targetPage = navigateToPage ?: return@LaunchedEffect
+        if (targetPage in 1..pageCount) {
+            pagerState.scrollToPage(targetPage - 1)
             readerVm.consumePageNavigation()
+            Log.d("scrollToPage", targetPage)
         }
+    }
+
+    LaunchedEffect(navigateToVerse, pageCount) {
+        val targetVerse = navigateToVerse ?: return@LaunchedEffect
+
+        val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
+            ?: return@LaunchedEffect
+
+        Log.d("requestPageNavigation", targetPage)
+
+        readerVm.requestPageNavigation(targetPage)
     }
 
     HorizontalPager(
@@ -181,6 +215,7 @@ fun ReaderLayoutPageMode(
             readerVm = readerVm,
             pageNo = page + 1,
             contentWidth,
+            ruledPageDecoration,
         )
     }
 }
@@ -190,8 +225,11 @@ private fun PageModePage(
     readerVm: ReaderViewModel,
     pageNo: Int,
     contentWidth: Dp,
+    ruledPageDecoration: Boolean,
 ) {
     val item = readerVm.pageItems[pageNo]
+
+    Log.d(readerVm.pageItems)
 
     if (item == null) {
         return Loader(true)
@@ -214,6 +252,7 @@ private fun PageModePage(
             .toSet()
     }
 
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -229,26 +268,80 @@ private fun PageModePage(
                 Column(
                     Modifier
                         .verticalScroll(scrollState)
-                        .padding(
-                            start = MUSHAF_PAGE_HORIZONTAL_PADDING,
-                            end = MUSHAF_PAGE_HORIZONTAL_PADDING,
-                            top = 16.dp,
-                            bottom = 64.dp
+                        .padding(top = 16.dp, bottom = 64.dp)
+                        .then(
+                            if (ruledPageDecoration) {
+                                Modifier
+                            } else {
+                                Modifier.padding(
+                                    start = MUSHAF_PAGE_HORIZONTAL_PADDING,
+                                    end = MUSHAF_PAGE_HORIZONTAL_PADDING,
+                                )
+                            }
                         )
                         .fillMaxWidth(),
                 ) {
-                    Column(Modifier.fillMaxWidth()) {
-                        item.lines.forEach { line ->
-                            key(line.lineNo) {
-                                when (line) {
-                                    is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo)
-                                    is QuranPageLineItem.Bismillah -> Bismillah()
-                                    is QuranPageLineItem.Text -> MushafLineText(
-                                        textLine = line,
-                                        layout = line.layout,
-                                        playingWordKeys = playingWordKeys,
-                                        controller = playerState.controller
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .then(
+                                if (ruledPageDecoration) {
+                                    Modifier.mushafPageOuterFrameBorder(
+                                        color = colorScheme.outline.alpha(0.5f),
+                                        strokeWidth = 1.dp,
                                     )
+                                } else {
+                                    Modifier
+                                }
+                            ),
+                    ) {
+                        Column(Modifier.fillMaxWidth()) {
+                            item.lines.forEachIndexed { index, line ->
+                                key(line.lineNo) {
+                                    val showLineRuleBelow =
+                                        ruledPageDecoration && index < item.lines.lastIndex
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .then(
+                                                if (showLineRuleBelow) {
+                                                    Modifier.mushafHorizontalRuleBelow(
+                                                        color = colorScheme.outline.alpha(0.5f),
+                                                        strokeWidth = 1.dp,
+                                                    )
+                                                } else {
+                                                    Modifier
+                                                }
+                                            ),
+                                    ) {
+                                        if (ruledPageDecoration) {
+                                            val hPadding = if (line is QuranPageLineItem.Title) 0.dp
+                                            else MUSHAF_PAGE_HORIZONTAL_PADDING
+
+                                            Column(
+                                                Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(
+                                                        start = hPadding,
+                                                        end = hPadding,
+                                                    ),
+                                            ) {
+                                                MushafLineContent(
+                                                    line = line,
+                                                    playingWordKeys = playingWordKeys,
+                                                    controller = playerState.controller,
+                                                    ruledPageDecoration
+                                                )
+                                            }
+                                        } else {
+                                            MushafLineContent(
+                                                line = line,
+                                                playingWordKeys = playingWordKeys,
+                                                controller = playerState.controller,
+                                                ruledPageDecoration = ruledPageDecoration,
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -256,6 +349,25 @@ private fun PageModePage(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun MushafLineContent(
+    line: QuranPageLineItem,
+    playingWordKeys: Set<Pair<Int, Int>>,
+    controller: RecitationController,
+    ruledPageDecoration: Boolean,
+) {
+    when (line) {
+        is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo, ruledPageDecoration)
+        is QuranPageLineItem.Bismillah -> Bismillah()
+        is QuranPageLineItem.Text -> MushafLineText(
+            textLine = line,
+            layout = line.layout,
+            playingWordKeys = playingWordKeys,
+            controller = controller,
+        )
     }
 }
 
@@ -334,5 +446,33 @@ private fun Word(
                     MessageUtils.showRemovableToast(context, word.text, Toast.LENGTH_LONG)
                 }
             },
+    )
+}
+
+private fun Modifier.mushafHorizontalRuleBelow(
+    color: Color,
+    strokeWidth: Dp,
+): Modifier = drawBehind {
+    val h = strokeWidth.toPx()
+    val y = size.height - h / 2f
+    drawLine(
+        color = color,
+        start = Offset(0f, y),
+        end = Offset(size.width, y),
+        strokeWidth = h,
+    )
+}
+
+private fun Modifier.mushafPageOuterFrameBorder(
+    color: Color,
+    strokeWidth: Dp,
+): Modifier = drawBehind {
+    val w = strokeWidth.toPx()
+    val half = w / 2f
+    drawRect(
+        color = color,
+        topLeft = Offset(half, half),
+        size = Size(size.width - w, size.height - w),
+        style = Stroke(width = w),
     )
 }

@@ -24,7 +24,7 @@ interface SurahDao {
     suspend fun getSurah(surahNo: Int): SurahEntity?
 
     @Query("SELECT * FROM surahs WHERE surah_no = :surahNo LIMIT 1")
-    fun getSurahWithLocalization(surahNo: Int): SurahWithLocalizations?
+    suspend fun getSurahWithLocalization(surahNo: Int): SurahWithLocalizations?
 
     @Query(
         """

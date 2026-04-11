@@ -67,4 +67,18 @@ interface AyahWordDao {
         ayahId: Int,
         scriptCode: String
     ): Int?
+
+    @Query(
+        """
+        SELECT aw.*
+        FROM ayah_words aw
+        INNER JOIN scripts s ON aw.script_id = s.script_id
+        WHERE aw.ayah_id IN (:ayahIds) AND s.code = :scriptCode
+        ORDER BY aw.ayah_id ASC, aw.word_index ASC
+        """
+    )
+    suspend fun getWordsForAyahs(
+        ayahIds: List<Int>,
+        scriptCode: String,
+    ): List<AyahWordEntity>
 }

@@ -1,12 +1,12 @@
 package com.quranapp.android.components.quran.subcomponents
 
 import android.content.Context
-import androidx.compose.ui.text.AnnotatedString
 import com.quranapp.android.utils.verse.VerseUtils
 import java.io.Serializable
 import java.util.Locale
 
 
+@Deprecated("migrate to QuranRepository")
 class Verse : Serializable {
     val id: Int
 

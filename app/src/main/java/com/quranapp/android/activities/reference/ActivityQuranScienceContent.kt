@@ -1,35 +1,35 @@
 package com.quranapp.android.activities.reference
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import com.peacedesign.android.utils.WindowUtils
 import com.quranapp.android.R
-import com.quranapp.android.activities.ReaderPossessingActivity
+import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem
+import com.quranapp.android.compose.components.QuickReferenceHost
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.databinding.ActivityChapterInfoBinding
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log.d
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
+import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-class ActivityQuranScienceContent : ReaderPossessingActivity() {
+class ActivityQuranScienceContent : BaseActivity() {
     private lateinit var binding: ActivityChapterInfoBinding
     private lateinit var translFactory: QuranTranslationFactory
-    lateinit var slugs: Set<String>
+    private lateinit var quickRefHost: QuickReferenceHost
 
     override fun getLayoutResource() = R.layout.activity_chapter_info
 
@@ -43,27 +43,28 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
 
     override fun initCreate(savedInstanceState: Bundle?) {
         translFactory = QuranTranslationFactory(this)
-        slugs = resolveTranslationSlugs()
 
         super.initCreate(savedInstanceState)
     }
 
-    override fun preReaderReady(activityView: View, intent: Intent, savedInstanceState: Bundle?) {
+    override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         binding = ActivityChapterInfoBinding.bind(activityView)
-
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-
         binding.title.text = getString(R.string.quran_and_science)
+
+        quickRefHost = QuickReferenceHost(this, binding.composeQuickReference)
 
         showLoader()
 
         setupWebView(binding.webView)
-    }
 
-    override fun onReaderReady(intent: Intent, savedInstanceState: Bundle?) {
         CoroutineScope(Dispatchers.IO).launch {
             renderData(intent.serializableExtra<QuranScienceItem>("item")!!)
         }
+    }
+
+    fun showQuickReference(chapterNo: Int, fromVerse: Int, toVerse: Int) {
+        quickRefHost.show(chapterNo, fromVerse, toVerse)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -96,7 +97,9 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
     }
 
 
-    private fun renderData(item: QuranScienceItem) {
+    private suspend fun renderData(item: QuranScienceItem) {
+        val repository = DatabaseProvider.getQuranRepository(this)
+
         val base = assets.open("science/base.html").bufferedReader().use { it.readText() }
             .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
 
@@ -119,36 +122,46 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
             runCatching { assets.open(path) }.getOrNull()
         }
 
+        val scriptCode = ReaderPreferences.getQuranScript()
         var document = inputStream?.bufferedReader().use { it?.readText() ?: "" }
         document = base.replace("{{CONTENT}}", document)
 
         val regexAr = Regex("\\{\\{REF_AR=(\\d+):(\\d+)\\}\\}")
-        val regexTr = Regex("\\{\\{REF_TR=(\\d+):(\\d+)\\}\\}")
         val regexName = Regex("\\{\\{REF_NAME=(\\d+):(\\d+)\\}\\}")
 
-        val quranMeta = mQuranMetaRef.get()!!
-        val quran = mQuranRef.get()
+        val verseMatches = regexAr.findAll(document).toList()
+        val nameMatches = regexName.findAll(document).toList()
 
-        val isKFQPC =  false /*TODO: mVerseDecorator.isKFQPCScript()*/
+
+        val verseMap = verseMatches.map {
+            it.groupValues[1].toInt() to it.groupValues[2].toInt()
+        }.distinct().associateWith { (chapterNo, verseNo) ->
+            repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
+        }
+
+        val referenceMap = nameMatches.map {
+            it.groupValues[1].toInt() to it.groupValues[2].toInt()
+        }.distinct().associateWith { (chapterNo, verse) ->
+            "${repository.getChapterName(chapterNo)} $chapterNo:$verse"
+        }
+
+        val isKFQPC = scriptCode.isKFQPCScript()
         val fontPageNos = HashSet<Int>()
 
         document = regexAr.replace(document) { matchResult ->
-            val chapterNo = matchResult.groupValues[1]
-            val verseNo = matchResult.groupValues[2]
+            val chapterNo = matchResult.groupValues[1].toInt()
+            val verseNo = matchResult.groupValues[2].toInt()
 
-            val verse = quran.getVerse(chapterNo.toInt(), verseNo.toInt())
-            val quranText = if (isKFQPC) verse.arabicText else TextUtils.concat(
-                verse.arabicText,
-                " ",
-                verse.endText
-            )
+            val details = verseMap[chapterNo to verseNo] ?: return@replace ""
+
+            val quranText = details.words.joinToString(" ") { it.text }
 
             if (isKFQPC) {
-                fontPageNos.add(verse.pageNo)
+                fontPageNos.add(details.pageNo)
             }
 
             if (isKFQPC) {
-                "<p class='arabic' style='font-family:page_${verse.pageNo}'>$quranText</p>"
+                "<p class='arabic' style='font-family:page_${details.pageNo}'>$quranText</p>"
             } else {
                 "<p class='arabic' style='font-family:quran-arabic'>$quranText</p>"
             }
@@ -165,13 +178,13 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         }
         document = document.replace("{{STYLE}}", fontStyles)
 
+        val regexTr = Regex("\\{\\{REF_TR=(\\d+):(\\d+)\\}\\}")
         document = regexTr.replace(document) { matchResult ->
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
             StringUtils.removeHTML(
                 translFactory.getTranslationsSingleVerse(
-                    slugs,
                     chapterNo.toInt(),
                     verse.toInt()
                 )[0].text, false
@@ -179,10 +192,10 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         }
 
         document = regexName.replace(document) { matchResult ->
-            val chapterNo = matchResult.groupValues[1]
-            val verse = matchResult.groupValues[2]
+            val chapterNo = matchResult.groupValues[1].toInt()
+            val verse = matchResult.groupValues[2].toInt()
 
-            "${quranMeta.getChapterName(this, chapterNo.toInt(), false)} $chapterNo:$verse"
+            referenceMap[chapterNo to verse] ?: ""
         }
 
         runOnUiThread {
@@ -196,35 +209,21 @@ class ActivityQuranScienceContent : ReaderPossessingActivity() {
         }
     }
 
-    private fun resolveTranslationSlugs(): Set<String> {
-        val locale = SPAppConfigs.getLocale(this)
-        val slugs = mutableSetOf<String>()
-        val bookInfos = translFactory.getAvailableTranslationBooksInfo()
-
-        // 1. Адегенде тандалган тилге (locale) туура келген котормону издөө
-        for (bookInfo in bookInfos) {
-            if (bookInfo.value.langCode == locale) {
-                slugs.add(bookInfo.key)
-                break
-            }
+    /**
+     * Like [Regex.replace], but [transform] may call suspend functions (e.g. [com.quranapp.android.db.QuranRepository]).
+     */
+    private suspend fun Regex.replaceSuspend(
+        input: String,
+        transform: suspend (MatchResult) -> CharSequence,
+    ): String {
+        val sb = StringBuilder(input.length + 64)
+        var lastIndex = 0
+        for (match in findAll(input)) {
+            sb.append(input, lastIndex, match.range.first)
+            sb.append(transform(match))
+            lastIndex = match.range.last + 1
         }
-
-        // 2. Эгер тандалган тилде жок болсо, дефолттук котормолорду издөө
-        if (slugs.isEmpty()) {
-            for (bookInfo in bookInfos) {
-                if (bookInfo.key.contains("yusuf")) {
-                    slugs.add(bookInfo.key)
-                    break
-                }
-            }
-        }
-
-        // 3. Акыркы вариант катары "The Clear Quran"
-        if (slugs.isEmpty()) {
-            slugs.add(TranslUtils.TRANSL_SLUG_EN_THE_CLEAR_QURAN)
-        }
-
-        return slugs
+        sb.append(input, lastIndex, input.length)
+        return sb.toString()
     }
-
 }

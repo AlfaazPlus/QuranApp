@@ -20,19 +20,23 @@ import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.PageBuilderParams
+import com.quranapp.android.utils.reader.QuranScript
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
+import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -106,8 +110,8 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     private val _navigateToPage = MutableStateFlow<Int?>(null)
     val navigateToPage: StateFlow<Int?> = _navigateToPage.asStateFlow()
 
-    private val _navigateToVerse = MutableStateFlow<Pair<Int, Int>?>(null)
-    val navigateToVerse: StateFlow<Pair<Int, Int>?> = _navigateToVerse.asStateFlow()
+    private val _navigateToVerse = MutableStateFlow<ChapterVersePair?>(null)
+    val navigateToVerse: StateFlow<ChapterVersePair?> = _navigateToVerse.asStateFlow()
 
     private val _verseByVerseItems = MutableStateFlow<List<ReaderLayoutItem>>(emptyList())
     val verseByVerseItems: StateFlow<List<ReaderLayoutItem>> =
@@ -117,8 +121,14 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     val pageCounts = mutableStateMapOf<Int, Int>()
     private val mushafPagesInFlight = mutableSetOf<Int>()
 
-    /** Script + IndoPak variant; mushaf DB rows change when this changes. */
-    private var mushafPageLayoutKey: String? = null
+    var mushafLayoutKey = mutableStateOf(
+        QuranScript(
+            ReaderPreferences.getQuranScript(),
+            ReaderPreferences.getQuranScriptVariant(),
+        )
+    )
+
+    private var pageRestoreOnMushafChangeJob: Job? = null
 
     private val context get() = application
 
@@ -137,57 +147,68 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun observeChanges(
+    /**
+     * Collects UI-driving prefs and rebuilds reader content. Intended to run only while this
+     * screen is visible.
+     */
+    suspend fun observeChanges(
         context: Context,
         colors: ColorScheme,
         type: Typography,
         verseActions: VerseActions
     ) {
-        viewModelScope.launch {
-            combine(
-                _uiState.distinctUntilChanged { old, new -> old.rebuildEquals(new) },
-                DataStoreManager.flowMultiple(
-                    ReaderPreferences.KEY_SCRIPT,
-                    ReaderPreferences.KEY_SCRIPT_VARIANT,
-                    ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
-                    ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
-                    ReaderPreferences.KEY_TRANSLATIONS,
-                    ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
-                ),
-                readerMode,
-            ) { uiState, prefs, readerMode ->
-                Triple(uiState, prefs, readerMode)
-            }
-                .collectLatest { (uiState, prefs, readerMode) ->
-                    val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
-                    val scriptVariantRaw = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
+        combine(
+            _uiState.distinctUntilChanged { old, new -> old.rebuildEquals(new) },
+            DataStoreManager.flowMultiple(
+                ReaderPreferences.KEY_SCRIPT,
+                ReaderPreferences.KEY_SCRIPT_VARIANT,
+                ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
+                ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
+                ReaderPreferences.KEY_TRANSLATIONS,
+                ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
+            ),
+            readerMode,
+        ) { uiState, prefs, readerMode ->
+            Triple(uiState, prefs, readerMode)
+        }
+            .collectLatest { (uiState, prefs, readerMode) ->
+                val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
+                val scriptVariant = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
 
-                    when (readerMode) {
-                        ReaderMode.VerseByVerse -> {
-                            val params = TextBuilderParams(
-                                context, fontResolver, verseActions, colors, type,
-                                arabicEnabled = prefs.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED),
-                                arabicSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC),
-                                translationSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL),
-                                script = script,
-                                slugs = prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
-                            )
-                            buildVerseByVerseItems(params, uiState, readerMode)
-                        }
+                when (readerMode) {
+                    ReaderMode.VerseByVerse -> {
+                        val params = TextBuilderParams(
+                            context, fontResolver, verseActions, colors, type,
+                            arabicEnabled = prefs.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED),
+                            arabicSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC),
+                            translationSizeMultiplier = prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL),
+                            script = script,
+                            slugs = prefs.get(ReaderPreferences.KEY_TRANSLATIONS),
+                        )
+                        buildVerseByVerseItems(params, uiState, readerMode)
+                    }
 
-                        ReaderMode.Reading -> {
-                            val layoutKey = "$script|$scriptVariantRaw"
+                    ReaderMode.Reading -> {
+                        val newLayoutKey = QuranScript.fromRawValues(script, scriptVariant)
+                        val oldLayoutKey = mushafLayoutKey.value
 
-                            if (mushafPageLayoutKey != layoutKey) {
-                                mushafPageLayoutKey = layoutKey
-                                pageItems.clear()
+                        if (oldLayoutKey != newLayoutKey) {
+                            Log.d("CLEARING ITEMS", mushafLayoutKey)
+
+                            mushafPagesInFlight.clear()
+                            pageItems.clear()
+                            mushafLayoutKey.value = newLayoutKey
+
+                            pageRestoreOnMushafChangeJob?.cancel()
+                            pageRestoreOnMushafChangeJob = viewModelScope.launch {
+                                restorePageOnMushafChange(oldLayoutKey)
                             }
                         }
-
-                        else -> {}
                     }
+
+                    else -> {}
                 }
-        }
+            }
     }
 
     suspend fun initReader(params: ReaderLaunchParams) {
@@ -205,6 +226,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
             else -> 0
         }
 
+        // Check if explicitly requested mushaf mode
         if (data is ReaderIntentData.MushafPage) {
             initMushafPage(data)
             return
@@ -213,7 +235,36 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         val state = ReaderUiState().resolveIntent(data)
         _uiState.update { state }
 
-        data.initialVerse?.let { requestVerseNavigation(it.chapterNo, it.verseNo) }
+        Log.d(readerMode.value)
+
+        // Try to navigate to initial verse (works in both mode)
+        if (data.initialVerse != null) {
+            requestVerseNavigation(data.initialVerse!!.chapterNo, data.initialVerse!!.verseNo)
+        }
+        // fallback to manual resolution for reader mode
+        else if (ReaderPreferences.getReaderMode() != ReaderMode.VerseByVerse) {
+            val targetPage = when (state.viewType) {
+                is ReaderViewType.Chapter -> {
+                    resolvePageNo(state.viewType.chapterNo)
+                }
+
+                is ReaderViewType.Juz -> {
+                    withContext(Dispatchers.IO) {
+                        repository.getFirstPageOfJuz(state.viewType.juzNo)
+                    }
+                }
+
+                is ReaderViewType.Hizb -> {
+                    withContext(Dispatchers.IO) {
+                        repository.getFirstPageOfHizb(state.viewType.hizbNo)
+                    }
+                }
+
+                else -> null
+            }
+
+            targetPage?.let { requestPageNavigation(it) }
+        }
     }
 
     private suspend fun initMushafPage(data: ReaderIntentData.MushafPage) {
@@ -221,23 +272,27 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
 
         if (data.mushafCode != null) {
             ReaderPreferences.setQuranScript(data.mushafCode)
-        }
-        if (data.mushafVariant != null) {
             ReaderPreferences.setQuranScriptVariant(data.mushafVariant)
+
+            // Keep in sync with DataStore so [observeChanges] does not treat this as a layout
+            // change and run [restorePageOnMushafChange] (which can override the intended page).
+            mushafLayoutKey.value = QuranScript(
+                ReaderPreferences.getQuranScript(),
+                ReaderPreferences.getQuranScriptVariant(),
+            )
         }
 
         if (data.pageNo > 0) {
             _uiState.update {
                 ReaderUiState(
-                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo.coerceIn(1, 114)),
+                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo.coerceIn(QuranMeta.chapterRange)),
                     currentPageNo = data.pageNo,
                 )
             }
             requestPageNavigation(data.pageNo)
         } else if (QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0) {
-            val page = withContext(Dispatchers.IO) {
-                repository.getPageForVerse(data.fallbackChapterNo, data.fallbackVerseNo)
-            }
+            val page = resolvePageNo(data.fallbackChapterNo, data.fallbackVerseNo, data.mushafCode)
+
             _uiState.update {
                 ReaderUiState(
                     viewType = ReaderViewType.Chapter(data.fallbackChapterNo),
@@ -364,11 +419,13 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         val verse = lastKnownVerse ?: return
         val (chapterNo, verseNo) = verse
 
+        // reset if any
+        consumePageNavigation()
+        consumeVerseNavigation()
+
         when (to) {
             ReaderMode.Reading -> {
-                val page = withContext(Dispatchers.IO) {
-                    repository.getPageForVerse(chapterNo, verseNo)
-                }
+                val page = resolvePageNo(chapterNo, verseNo)
 
                 if (page != null) {
                     _uiState.update { it.copy(currentPageNo = page) }
@@ -406,7 +463,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun requestVerseNavigation(chapterNo: Int, verseNo: Int) {
-        _navigateToVerse.value = chapterNo to verseNo
+        _navigateToVerse.value = ChapterVersePair(chapterNo, verseNo)
     }
 
     fun consumeVerseNavigation() {
@@ -422,10 +479,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
 
         when (mode) {
             ReaderMode.Reading -> {
-                val page = withContext(Dispatchers.IO) {
-                    repository.getPageForVerse(chapterNo, verseNo)
-                }
-
+                val page = resolvePageNo(chapterNo, verseNo)
                 if (page != null) requestPageNavigation(page)
             }
 
@@ -474,13 +528,18 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    suspend fun resolvePageNo(chapterNo: Int, verseNo: Int = 1, mushafCode: String? = null) =
+        withContext(Dispatchers.IO) {
+            repository.getPageForVerse(chapterNo, verseNo, mushafCode)
+        }
+
     suspend fun mushafPageCount(mushafId: Int): Int {
         return pageCounts.getOrPut(mushafId) {
             repository.getNumberOfPages(mushafId)
         }
     }
 
-    suspend fun prefetchMushafPages(
+    suspend fun fetchMushafPages(
         context: Context,
         anchorPages: Collection<Int>,
         totalPages: Int,
@@ -517,11 +576,46 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 params
             )
 
-            for (page in missing) {
-                built[page]?.let { pageItems[page] = it }
+            withContext(Dispatchers.Main) {
+                for (page in missing) {
+                    built[page]?.let { pageItems[page] = it }
+                }
             }
         } finally {
             mushafPagesInFlight.removeAll(missing.toSet())
+        }
+    }
+
+    /**
+     * Resolves reading position after script/mushaf change: [lastKnownVerse] if valid, else first ayah
+     * on the current page using the **previous** mushaf layout, then maps that verse to a page in the new mushaf.
+     */
+    private suspend fun restorePageOnMushafChange(oldLayoutKey: QuranScript) {
+        val verseFromMemory = withContext(Dispatchers.Main) {
+            lastKnownVerse?.takeIf { it.isValid }
+        }
+
+        val versePair = verseFromMemory ?: run {
+            val oldMushafId = oldLayoutKey.scriptCode.toQuranMushafId(oldLayoutKey.variant)
+            val currentPage = _uiState.value.currentPageNo
+
+            if (currentPage == null || currentPage <= 0 || oldMushafId <= 0) return
+
+            val ayahId = repository.getFirstAyahIdOnPage(oldMushafId, currentPage) ?: return
+            val (c, v) = QuranUtils.getVerseNo(ayahId)
+
+            ChapterVersePair(c, v)
+        }
+
+        val newPage = withContext(Dispatchers.IO) {
+            repository.getPageForVerse(versePair.chapterNo, versePair.verseNo)
+        } ?: return
+
+        withContext(Dispatchers.Main) {
+            lastKnownVerse = versePair
+            _uiState.update { it.copy(currentPageNo = newPage) }
+
+            requestPageNavigation(newPage)
         }
     }
 }

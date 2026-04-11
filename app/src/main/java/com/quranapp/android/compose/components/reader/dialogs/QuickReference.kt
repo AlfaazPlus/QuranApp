@@ -41,7 +41,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
@@ -56,6 +55,7 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.UserRepository
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -71,65 +71,66 @@ import kotlinx.coroutines.withContext
 data class QuickReferenceData(
     val slugs: Set<String>,
     val chapterNo: Int,
-    val verses: String,
+    val verses: String? = null,
+    val parsedVerses: QuickReferenceParsedVerses? = null
 )
 
-private sealed class ParsedVerses {
-    data class Range(val range: IntRange) : ParsedVerses()
-    data class Discrete(val verseNos: List<Int>) : ParsedVerses()
-    data object ChapterOnly : ParsedVerses()
+sealed class QuickReferenceParsedVerses {
+    data class Range(val range: IntRange) : QuickReferenceParsedVerses()
+    data class Discrete(val verseNos: List<Int>) : QuickReferenceParsedVerses()
+    data object ChapterOnly : QuickReferenceParsedVerses()
 }
 
-private fun parseVerses(versesStr: String): ParsedVerses {
-    if (versesStr.isBlank()) return ParsedVerses.ChapterOnly
+private fun parseVerses(versesStr: String): QuickReferenceParsedVerses {
+    if (versesStr.isBlank()) return QuickReferenceParsedVerses.ChapterOnly
 
     val parts = versesStr.split(",")
     if (parts.size > 1) {
         val ints = parts.mapNotNull { it.trim().toIntOrNull() }.sorted()
-        return ParsedVerses.Discrete(ints)
+        return QuickReferenceParsedVerses.Discrete(ints)
     }
 
     val matcher = RegexPattern.VERSE_RANGE_PATTERN.matcher(versesStr)
     if (matcher.find() && matcher.groupCount() >= 2) {
         val from = matcher.group(1)!!.toInt()
         val to = matcher.group(2)!!.toInt()
-        return ParsedVerses.Range(from..to)
+        return QuickReferenceParsedVerses.Range(from..to)
     }
 
     val single = versesStr.trim().toIntOrNull()
-    return if (single != null) ParsedVerses.Range(single..single)
-    else ParsedVerses.ChapterOnly
+    return if (single != null) QuickReferenceParsedVerses.Range(single..single)
+    else QuickReferenceParsedVerses.ChapterOnly
 }
 
-private fun parsedVersesToList(parsed: ParsedVerses): List<Int> = when (parsed) {
-    is ParsedVerses.Range -> parsed.range.toList()
-    is ParsedVerses.Discrete -> parsed.verseNos
-    is ParsedVerses.ChapterOnly -> emptyList()
+private fun parsedVersesToList(parsed: QuickReferenceParsedVerses): List<Int> = when (parsed) {
+    is QuickReferenceParsedVerses.Range -> parsed.range.toList()
+    is QuickReferenceParsedVerses.Discrete -> parsed.verseNos
+    is QuickReferenceParsedVerses.ChapterOnly -> emptyList()
 }
 
-private fun parsedVersesToIntRange(parsed: ParsedVerses): IntRange? = when (parsed) {
-    is ParsedVerses.Range -> parsed.range
-    is ParsedVerses.Discrete -> {
+private fun parsedVersesToIntRange(parsed: QuickReferenceParsedVerses): IntRange? = when (parsed) {
+    is QuickReferenceParsedVerses.Range -> parsed.range
+    is QuickReferenceParsedVerses.Discrete -> {
         if (parsed.verseNos.isNotEmpty()) parsed.verseNos.min()..parsed.verseNos.max()
         else null
     }
 
-    is ParsedVerses.ChapterOnly -> null
+    is QuickReferenceParsedVerses.ChapterOnly -> null
 }
 
-private fun formatTitle(chapterNo: Int, parsed: ParsedVerses): String {
+private fun formatTitle(chapterNo: Int, parsed: QuickReferenceParsedVerses): String {
     val prefix = "Quran $chapterNo:"
     return when (parsed) {
-        is ParsedVerses.Range -> {
+        is QuickReferenceParsedVerses.Range -> {
             if (parsed.range.first == parsed.range.last) "$prefix${parsed.range.first}"
             else "$prefix${parsed.range.first}-${parsed.range.last}"
         }
 
-        is ParsedVerses.Discrete -> {
+        is QuickReferenceParsedVerses.Discrete -> {
             prefix + parsed.verseNos.joinToString(", ")
         }
 
-        is ParsedVerses.ChapterOnly -> "Quran $chapterNo"
+        is QuickReferenceParsedVerses.ChapterOnly -> "Quran $chapterNo"
     }
 }
 
@@ -142,9 +143,21 @@ fun QuickReference(
 ) {
     if (data == null) return
 
-    val parsed = remember(data) { parseVerses(data.verses) }
+    val parsed = remember(data) {
+        if (data.parsedVerses != null) {
+            data.parsedVerses
+        } else if (data.verses != null) {
+            parseVerses(data.verses)
+        } else {
+            null
+        }
+    }
 
-    if (parsed is ParsedVerses.ChapterOnly) {
+    if (parsed == null) {
+        return
+    }
+
+    if (parsed is QuickReferenceParsedVerses.ChapterOnly) {
         ChapterOnlyDialog(
             chapterNo = data.chapterNo,
             slugs = data.slugs,
@@ -261,7 +274,7 @@ fun QuickReference(
 @Composable
 private fun QuickReferenceContent(
     data: QuickReferenceData,
-    parsed: ParsedVerses,
+    parsed: QuickReferenceParsedVerses,
     onOpenInReader: (Int, IntRange) -> Unit,
     onClose: () -> Unit,
 ) {

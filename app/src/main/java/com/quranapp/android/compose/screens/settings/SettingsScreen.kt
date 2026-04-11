@@ -58,10 +58,12 @@ private fun NavGraphBuilder.route(
 }
 
 @Composable
-fun SettingsScreen(intent: Intent?) {
+fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
     val navController = rememberNavController()
 
-    LaunchedEffect(intent) {
+    LaunchedEffect(intent, isNewIntent) {
+        if (!isNewIntent) return@LaunchedEffect
+
         val startDestination = intent?.getStringExtra(Keys.NAV_DESTINATION)
 
         if (startDestination != null) {
@@ -72,11 +74,14 @@ fun SettingsScreen(intent: Intent?) {
         }
     }
 
+    val startDestination = intent?.getStringExtra(Keys.NAV_DESTINATION)
+        ?: SettingRoutes.MAIN.arg(false)
+
     CompositionLocalProvider(LocalSettingsNavHostController provides navController) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             NavHost(
                 navController = navController,
-                startDestination = SettingRoutes.MAIN.arg(false),
+                startDestination = startDestination,
             ) {
                 route(
                     SettingRoutes.MAIN(), arguments = listOf(

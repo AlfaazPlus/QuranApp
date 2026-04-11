@@ -15,6 +15,7 @@ import androidx.core.database.sqlite.transaction
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Translation
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_FOOTNOTES
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
@@ -196,7 +197,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     }
 
     fun getTranslationsSingleVerse(chapNo: Int, verseNo: Int): List<Translation> {
-        return getTranslationsSingleVerse(SPReader.getSavedTranslations(context), chapNo, verseNo)
+        return getTranslationsSingleVerse(ReaderPreferences.getTranslations(), chapNo, verseNo)
     }
 
     fun getTranslationsSingleSlugVerse(slug: String, chapNo: Int, verseNo: Int): Translation {

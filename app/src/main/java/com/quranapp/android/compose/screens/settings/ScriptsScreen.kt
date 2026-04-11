@@ -165,8 +165,8 @@ private fun ScriptItem(
             .clip(shape = MaterialTheme.shapes.medium)
             .border(1.dp, colorScheme.outline.alpha(0.2f), MaterialTheme.shapes.medium)
             .clickable {
-                if (!isDownloading) {
-                    onSelect(script, null)
+                if (!isDownloading && script != selectedScript) {
+                    onSelect(script, variants.firstOrNull())
                 }
             }
     ) {

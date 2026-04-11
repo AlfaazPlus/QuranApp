@@ -20,11 +20,12 @@ import com.quranapp.android.utils.quran.QuranGlyphs
 @Composable
 fun ChapterTitle(
     chapterNo: Int,
+    withinBox: Boolean = false
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
+            .padding(vertical = if (withinBox) 0.dp else 16.dp),
         contentAlignment = Alignment.Center,
     ) {
 
