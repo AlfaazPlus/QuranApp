@@ -184,7 +184,7 @@ fun SettingsMainScreen(
                 title = R.string.downloadRecitations,
                 icon = R.drawable.dr_icon_download,
             ) {
-                navController.navigate(SettingRoutes.RECITATION)
+                navController.navigate(SettingRoutes.RECITATION_DOWNLOAD)
             }
 
             if (!showReaderSettingsOnly) {

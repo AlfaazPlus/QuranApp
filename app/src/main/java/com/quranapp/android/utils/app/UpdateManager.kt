@@ -23,6 +23,7 @@ import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlin.math.pow
 
@@ -37,8 +38,8 @@ class UpdateManager(private val ctx: Context) {
     private val mIconAnimationHandler = Handler(Looper.getMainLooper())
     private var mIconAnimators = ArrayList<ObjectAnimator>()
 
-    fun refreshAppUpdatesJson() {
-        CoroutineScope(Dispatchers.IO).launch {
+    suspend fun fetchAndSaveUpdates() {
+        withContext(Dispatchers.IO) {
             try {
                 val updates = RetrofitInstance.github.getAppUpdates()
                 val updatesString = JsonHelper.json.encodeToString(updates)
@@ -46,7 +47,6 @@ class UpdateManager(private val ctx: Context) {
 
                 FileUtils.newInstance(ctx).apply {
                     val updatesFile = appUpdatesFile
-
                     if (createFile(updatesFile)) {
                         updatesFile.writeText(updatesString)
                     }
@@ -57,9 +57,10 @@ class UpdateManager(private val ctx: Context) {
         }
     }
 
-    /**
-     * Returns true if there is an update available
-     */
+    fun refreshAppUpdatesJson() {
+        CoroutineScope(Dispatchers.IO).launch { fetchAndSaveUpdates() }
+    }
+
     fun check4CriticalUpdate(): Boolean {
         val decision = getBannerDecision()
         if (decision.showCriticalDialog) {
@@ -70,32 +71,13 @@ class UpdateManager(private val ctx: Context) {
         return false
     }
 
-    /**
-     * Returns true if there is an update available
-     */
-    fun check4Update(onInlineBannerChanged: ((Boolean) -> Unit)? = null): Boolean {
+    fun showUpdateDialogsIfNeeded() {
         val decision = getBannerDecision()
         Logger.print("Update priority = ${decision.priority}")
-
-        onInlineBannerChanged?.invoke(false)
-
         when {
-            decision.showCriticalDialog -> {
-                showUpdateAvailableDialog(true)
-            }
-
-            decision.showMajorDialog -> {
-                showUpdateAvailableDialog(false) {
-                    onInlineBannerChanged?.invoke(true)
-                }
-            }
-
-            decision.showInlineBanner -> {
-                onInlineBannerChanged?.invoke(true)
-            }
+            decision.showCriticalDialog -> showUpdateAvailableDialog(true)
+            decision.showMajorDialog -> showUpdateAvailableDialog(false)
         }
-
-        return decision.showCriticalDialog
     }
 
     fun getBannerDecision(): UpdateBannerDecision {

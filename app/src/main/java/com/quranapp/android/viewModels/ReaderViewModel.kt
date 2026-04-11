@@ -28,6 +28,7 @@ import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.QuranScript
+import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
@@ -172,7 +173,9 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
             Triple(uiState, prefs, readerMode)
         }
             .collectLatest { (uiState, prefs, readerMode) ->
-                val script = prefs.get(ReaderPreferences.KEY_SCRIPT)
+                val script = QuranScriptUtils.validatePreferredScript(
+                    prefs.get(ReaderPreferences.KEY_SCRIPT)
+                )
                 val scriptVariant = prefs.get(ReaderPreferences.KEY_SCRIPT_VARIANT)
 
                 when (readerMode) {

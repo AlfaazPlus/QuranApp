@@ -59,13 +59,13 @@ import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationDownloadEvent
 import com.quranapp.android.viewModels.TranslationDownloadUiEvent
 import com.quranapp.android.viewModels.TranslationDownloadViewModel
-import com.quranapp.android.viewModels.TranslationEvent
 import java.util.regex.Pattern
 
 @Composable
@@ -141,7 +141,7 @@ fun TranslationDownloadScreen() {
                 .padding(it)
         ) {
             when {
-                uiState.isLoading -> LoadingState()
+                uiState.isLoading -> Loader(true)
                 uiState.error != null -> ErrorMessageCard(
                     error = uiState.error,
                     onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
@@ -153,20 +153,6 @@ fun TranslationDownloadScreen() {
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun LoadingState() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = colorScheme.primary,
-            modifier = Modifier.size(36.dp),
-            strokeWidth = 3.dp
-        )
     }
 }
 

@@ -66,13 +66,6 @@ public final class FileUtils {
         return makeAndGetAppResourceDir(RecitationUtils.DIR_NAME);
     }
 
-    public File getRecitationAudioFile(String reciterSlug, int chapterNo, int verseNo) {
-        File recitationDir = getRecitationDir();
-        String audioSubPathWithReciter = RecitationUtils.prepareAudioPathForSpecificReciter(reciterSlug, chapterNo,
-            verseNo);
-        return new File(recitationDir, audioSubPathWithReciter);
-    }
-
     public File getRecitationsManifestFile() {
         File recitationDir = getRecitationDir();
         return new File(recitationDir, AVAILABLE_RECITATIONS_FILENAME);

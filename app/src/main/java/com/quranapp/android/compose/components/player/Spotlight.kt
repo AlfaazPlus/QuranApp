@@ -42,6 +42,7 @@ import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
@@ -72,7 +73,9 @@ fun SpotlightVersePanel(
 
     val preferences = prefs!!
     val slugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
-    val scriptCode = preferences.get(ReaderPreferences.KEY_SCRIPT)
+    val scriptCode = QuranScriptUtils.validatePreferredScript(
+        preferences.get(ReaderPreferences.KEY_SCRIPT)
+    )
     val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
     val arabicMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
     val translationMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)

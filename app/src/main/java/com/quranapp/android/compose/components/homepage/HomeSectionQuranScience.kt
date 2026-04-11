@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.homepage
 
 import android.content.Intent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

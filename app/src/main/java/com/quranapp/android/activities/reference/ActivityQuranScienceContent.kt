@@ -1,12 +1,16 @@
 package com.quranapp.android.activities.reference
 
+import ThemeUtils
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import com.peacedesign.android.utils.WindowUtils
+import androidx.annotation.ColorInt
+import androidx.compose.material3.ColorScheme
+import androidx.compose.ui.graphics.toArgb
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem
@@ -30,15 +34,30 @@ class ActivityQuranScienceContent : BaseActivity() {
     private lateinit var binding: ActivityChapterInfoBinding
     private lateinit var translFactory: QuranTranslationFactory
     private lateinit var quickRefHost: QuickReferenceHost
+    private lateinit var colorScheme: ColorScheme
 
     override fun getLayoutResource() = R.layout.activity_chapter_info
 
     override fun shouldInflateAsynchronously() = false
 
+    override fun getStatusBarBG(): Int {
+        return colorScheme.surface.toArgb()
+    }
+
+    override fun getNavBarBG(): Int {
+        return colorScheme.surface.toArgb()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         translFactory.close()
         binding.webView.destroy()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        colorScheme = ThemeUtils.colorSchemeFromPreferences(this)
+
+        super.onCreate(savedInstanceState)
     }
 
     override fun initCreate(savedInstanceState: Bundle?) {
@@ -53,6 +72,7 @@ class ActivityQuranScienceContent : BaseActivity() {
         binding.title.text = getString(R.string.quran_and_science)
 
         quickRefHost = QuickReferenceHost(this, binding.composeQuickReference)
+        binding.header.setBackgroundColor(colorScheme.surface.toArgb())
 
         showLoader()
 
@@ -100,8 +120,19 @@ class ActivityQuranScienceContent : BaseActivity() {
     private suspend fun renderData(item: QuranScienceItem) {
         val repository = DatabaseProvider.getQuranRepository(this)
 
+        val varMap = mapOf(
+            "--primary" to colorIntToCssHex(colorScheme.primary.toArgb()),
+            "--on-primary" to colorIntToCssHex(colorScheme.onPrimary.toArgb()),
+            "--background" to colorIntToCssHex(colorScheme.surface.toArgb()),
+            "--on-background" to colorIntToCssHex(colorScheme.onSurface.toArgb()),
+        )
+
         val base = assets.open("science/base.html").bufferedReader().use { it.readText() }
-            .replace("{{THEME}}", if (WindowUtils.isNightMode(this)) "dark" else "light")
+            .replace("{{THEME}}", if (ThemeUtils.isDarkTheme(this)) "dark" else "light")
+            .replaceFirst(
+                "{{STYLE}}",
+                "<style>:root{${varMap.entries.joinToString("") { "${it.key}:${it.value};" }}}</style>",
+            )
 
 
         val fallbackLangCode = "en"
@@ -209,21 +240,7 @@ class ActivityQuranScienceContent : BaseActivity() {
         }
     }
 
-    /**
-     * Like [Regex.replace], but [transform] may call suspend functions (e.g. [com.quranapp.android.db.QuranRepository]).
-     */
-    private suspend fun Regex.replaceSuspend(
-        input: String,
-        transform: suspend (MatchResult) -> CharSequence,
-    ): String {
-        val sb = StringBuilder(input.length + 64)
-        var lastIndex = 0
-        for (match in findAll(input)) {
-            sb.append(input, lastIndex, match.range.first)
-            sb.append(transform(match))
-            lastIndex = match.range.last + 1
-        }
-        sb.append(input, lastIndex, input.length)
-        return sb.toString()
-    }
+    private fun colorIntToCssHex(@ColorInt color: Int): String =
+        String.format("#%06X", 0xFFFFFF and color)
+
 }

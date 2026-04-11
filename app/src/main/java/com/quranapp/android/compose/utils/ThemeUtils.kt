@@ -1,4 +1,5 @@
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -97,11 +98,28 @@ object ThemeUtils {
     ): ColorScheme {
         val themeColor = observeThemeColor()
         val isDynamicColor = observeIsDynamicColor()
+        return buildColorScheme(context, isDarkTheme, themeColor, isDynamicColor)
+    }
 
+    fun colorSchemeFromPreferences(context: Context): ColorScheme {
+        return buildColorScheme(
+            context,
+            isDarkTheme(context),
+            DataStoreManager.read(KEY_THEME_COLOR, THEME_COLOR_DEFAULT),
+            DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, false),
+        )
+    }
+
+    private fun buildColorScheme(
+        context: Context,
+        isDarkTheme: Boolean,
+        themeColor: String,
+        isDynamicColor: Boolean,
+    ): ColorScheme {
         // Dynamic color is available on Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && isDynamicColor) {
             return if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
-                context
+                context,
             )
         }
 
@@ -118,6 +136,19 @@ object ThemeUtils {
         return if (isDarkTheme) preferredColor.darkColors() else preferredColor.lightColors()
     }
 
+    /**
+     * Dark/light resolution aligned with [observeDarkTheme] (theme mode + system night).
+     */
+    fun isDarkTheme(context: Context): Boolean {
+        return when (getThemeMode()) {
+            THEME_MODE_LIGHT -> false
+            THEME_MODE_DARK -> true
+            else -> {
+                val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                uiMode == Configuration.UI_MODE_NIGHT_YES
+            }
+        }
+    }
 
     fun resolveThemeModeForDelegate(themeMode: String? = null): Int {
         return when (themeMode ?: getThemeMode()) {

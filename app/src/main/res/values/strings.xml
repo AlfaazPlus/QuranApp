@@ -134,6 +134,16 @@
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="downloadRecitations">Download Recitations</string>
+    <string name="recitationDownloadChapterSubtitle" formatted="false">Chapter %d</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d chapters</string>
+    <string name="recitationDownloadAllComplete">All chapters downloaded</string>
+    <string name="recitationDownloadConfirmTitle">Download recitations</string>
+    <string name="recitationDownloadConfirmMessage">Download all chapters for this reciter? This may use significant storage and data.</string>
+    <string name="recitationDownloadSomeFailed">Some chapters failed. Tap retry to queue missing chapters again.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Another reciter is already downloading. Wait for it to finish or cancel it before starting a new download.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d chapters downloaded</string>
+    <string name="recitationBulkEnqueueNotifTitle">Preparing recitation downloads</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — queued %2$d of %3$d</string>
     <string name="audioOption">Audio option</string>
     <string name="playbackSpeed">Playback speed</string>
     <string name="playbackCount">Playback count</string>

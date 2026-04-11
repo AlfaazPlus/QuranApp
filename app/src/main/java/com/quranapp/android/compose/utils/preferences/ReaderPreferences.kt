@@ -233,13 +233,7 @@ object ReaderPreferences {
     }
 
     fun getQuranScript(): String {
-        val s = DataStoreManager.read(KEY_SCRIPT)
-
-        if (!QuranScriptUtils.availableScripts().contains(s)) {
-            return QuranScriptUtils.SCRIPT_DEFAULT
-        }
-
-        return s
+        return QuranScriptUtils.validatePreferredScript(DataStoreManager.read(KEY_SCRIPT))
     }
 
     suspend fun setQuranScript(font: String?) {
@@ -249,11 +243,7 @@ object ReaderPreferences {
     fun quranScriptFlow(): Flow<String> {
         return DataStoreManager.flow(KEY_SCRIPT)
             .mapLatest {
-                if (!QuranScriptUtils.availableScripts().contains(it)) {
-                    return@mapLatest QuranScriptUtils.SCRIPT_DEFAULT
-                }
-
-                it
+                QuranScriptUtils.validatePreferredScript(it)
             }
     }
 

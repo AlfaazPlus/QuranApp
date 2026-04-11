@@ -16,6 +16,7 @@ import com.quranapp.android.utils.gesture.HoverPushOpacityEffect
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.setRequireOnboarding
 import com.quranapp.android.utils.simplified.SimpleTabSelectorListener
 
+// TODO
 class ActivityOnboarding : BaseActivity() {
     private lateinit var binding: ActivityOnboardBinding
     private lateinit var titles: Array<String>

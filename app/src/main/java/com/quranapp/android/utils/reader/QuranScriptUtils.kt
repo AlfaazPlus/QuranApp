@@ -124,6 +124,14 @@ object QuranScriptUtils {
         ),
     )
 
+    fun validatePreferredScript(scriptCode: String): String {
+        if (!QuranScriptUtils.availableScripts().contains(scriptCode)) {
+            return QuranScriptUtils.SCRIPT_DEFAULT
+        }
+
+        return scriptCode
+    }
+
     data class DownloadedFontsInfo(
         val totalFonts: Int,
         val downloaded: Int,

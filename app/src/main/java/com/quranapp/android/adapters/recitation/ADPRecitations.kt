@@ -3,7 +3,6 @@
  */
 package com.quranapp.android.adapters.recitation
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.quranapp.android.adapters.recitation.ADPRecitations.VHRecitation
 import com.quranapp.android.api.models.recitation.RecitationInfoModel
 import com.quranapp.android.databinding.LytSettingsRecitationItemBinding
-import com.quranapp.android.frags.settings.recitations.FragSettingsRecitationsBase
-import com.quranapp.android.frags.settings.recitations.manage.FragSettingsManageAudioReciter
 import com.quranapp.android.utils.sharedPrefs.SPReader
 
-class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerView.Adapter<VHRecitation>() {
+class ADPRecitations() : RecyclerView.Adapter<VHRecitation>() {
     private var models: List<RecitationInfoModel> = ArrayList()
     private var selectedPos = -1
     var isManageAudio = false
@@ -81,15 +78,9 @@ class ADPRecitations(private val frag: FragSettingsRecitationsBase?) : RecyclerV
             }
 
             binding.root.setOnClickListener { v: View ->
-                if (isManageAudio) {
-                    frag?.launchFrag(FragSettingsManageAudioReciter::class.java, Bundle().apply {
-                        putSerializable(FragSettingsManageAudioReciter.KEY_RECITATION_INFO_MODEL, model)
-                    })
-                } else {
-                    select(bindingAdapterPosition)
-                    binding.radio.isChecked = true
-                    SPReader.setSavedRecitationSlug(v.context, model.slug)
-                }
+                select(bindingAdapterPosition)
+                binding.radio.isChecked = true
+                SPReader.setSavedRecitationSlug(v.context, model.slug)
             }
         }
 

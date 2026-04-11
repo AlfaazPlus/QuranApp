@@ -26,6 +26,6 @@ object SettingRoutes {
     const val TRANSLATIONS_DOWNLOAD = "settings.translations_download"
     const val TAFSIR = "settings.tafsir"
     const val SCRIPT = "settings.script"
-    const val RECITATION = "settings.recitation"
+    const val RECITATION_DOWNLOAD = "settings.recitation_download"
     const val APP_LOGS = "settings.app_logs"
 }

@@ -10,27 +10,35 @@ import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
 import com.quranapp.android.utils.app.AppActions.checkForResourcesVersions
 import com.quranapp.android.utils.app.AppActions.scheduleActions
+import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.getRequireOnboarding
 import com.quranapp.android.views.reader.updateAllVotdWidgets
 
 class MainActivity : BaseActivity() {
+    private var mUpdateManager: UpdateManager? = null
+
     override fun getLayoutResource() = 0
 
-    /*override fun onPause() {
-        if (mUpdateManager != null) {
-            mUpdateManager!!.onPause()
-        }
+    override fun onPause() {
+        mUpdateManager?.onPause()
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        if (mUpdateManager != null) {
-            mUpdateManager!!.onResume()
-        }
-    }*/
+        mUpdateManager?.onResume()
+    }
 
     override fun initCreate(savedInstanceState: Bundle?) {
+
+
+        mUpdateManager = UpdateManager(this)
+        mUpdateManager!!.refreshAppUpdatesJson()
+
+        if (mUpdateManager!!.check4CriticalUpdate()) {
+            return
+        }
+
         if (this.isOnboardingRequired) {
             initOnboarding()
             return

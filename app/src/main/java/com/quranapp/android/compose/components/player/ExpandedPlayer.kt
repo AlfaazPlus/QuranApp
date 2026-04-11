@@ -221,7 +221,13 @@ private fun ExpandedPlayerSpotlightSection(
     Box(
         modifier = modifier
             .pointerInput(Unit) {
-                detectTapGestures { bumpChrome() }
+                detectTapGestures {
+                    if (chromeVisible) {
+                        chromeVisible = false
+                    } else {
+                        bumpChrome()
+                    }
+                }
             }
     ) {
         SpotlightVersePanel(
