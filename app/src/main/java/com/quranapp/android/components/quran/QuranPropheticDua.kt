@@ -11,17 +11,27 @@ class QuranPropheticDua(val prophets: List<Prophet>) {
     companion object {
         private val INSTANCE_REF = AtomicReference<QuranPropheticDua>()
 
-
-        fun prepareInstance(context: Context, quranMeta: QuranMeta, readyCallback: (QuranPropheticDua) -> Unit) {
+        fun prepareInstance(
+            context: Context,
+            readyCallback: (QuranPropheticDua) -> Unit
+        ) {
             if (INSTANCE_REF.get() == null) {
-                synchronized(QuranPropheticDua::class.java) { prepare(context, quranMeta, readyCallback) }
+                synchronized(QuranPropheticDua::class.java) {
+                    prepare(
+                        context,
+                        readyCallback
+                    )
+                }
             } else {
                 readyCallback(INSTANCE_REF.get())
             }
         }
 
-        private fun prepare(context: Context, quranMeta: QuranMeta, readyCallback: (QuranPropheticDua) -> Unit) {
-            QuranPropheticDuasParser.parseDua(context, quranMeta, INSTANCE_REF) { readyCallback(INSTANCE_REF.get()) }
+        private fun prepare(context: Context, readyCallback: (QuranPropheticDua) -> Unit) {
+            QuranPropheticDuasParser.parseDua(
+                context,
+                INSTANCE_REF
+            ) { readyCallback(INSTANCE_REF.get()) }
         }
     }
 

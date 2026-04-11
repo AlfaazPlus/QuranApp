@@ -1,8 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
-import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +49,6 @@ import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
-import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import verticalFadingEdge
@@ -426,7 +423,7 @@ private fun Word(
     isHighlighted: Boolean,
     controller: RecitationController
 ) {
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
     Text(
         text = word.text,
@@ -439,13 +436,13 @@ private fun Word(
                 if (isHighlighted) colorScheme.primary.alpha(0.4f)
                 else Color.Transparent
             )
-            .clickable {
-                if (word.isLastWordOfAyah) {
-                    MessageUtils.showRemovableToast(context, "LAST WORD", Toast.LENGTH_LONG)
-                } else {
-                    MessageUtils.showRemovableToast(context, word.text, Toast.LENGTH_LONG)
-                }
-            },
+        /*.clickable {
+            if (word.isLastWordOfAyah) {
+                MessageUtils.showRemovableToast(context, "LAST WORD", Toast.LENGTH_LONG)
+            } else {
+                MessageUtils.showRemovableToast(context, word.text, Toast.LENGTH_LONG)
+            }
+        },*/
     )
 }
 

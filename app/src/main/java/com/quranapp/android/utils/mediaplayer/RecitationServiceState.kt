@@ -22,8 +22,13 @@ data class PlayerSettings(
 
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
-    val isResolving: Boolean = false,
+    /** Helps in indiacating if the player is resolving and also for which chapter no */
+    val resolvingChapterNo: Int? = null,
+    /** 0–100 while chapter audio is downloading from the network; null otherwise. */
+    val downloadProgress: Int? = null,
     val pausedByHeadset: Boolean = false,
+    /** False when single-file chapter audio has no timing and no verse clip playlist is in use. */
+    val isVerseSyncAvailable: Boolean = true,
 
     val settings: PlayerSettings = PlayerSettings(),
 ) {
@@ -152,7 +157,9 @@ data class RecitationServiceState(
     fun toBundle(): Bundle = Bundle().apply {
         putInt(KEY_CURRENT_CHAPTER, currentVerse.chapterNo)
         putInt(KEY_CURRENT_VERSE, currentVerse.verseNo)
-        putBoolean(KEY_IS_RESOLVING, isResolving)
+        putInt(KEY_RESOLVING_CHAPTER_NO, resolvingChapterNo ?: -1)
+        putInt(KEY_AUDIO_DOWNLOAD_PROGRESS, downloadProgress ?: -1)
+        putBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, isVerseSyncAvailable)
         putBoolean(KEY_PAUSED_BY_HEADSET, pausedByHeadset)
         putString(KEY_CURRENT_RECITER, settings.reciter)
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
@@ -167,7 +174,9 @@ data class RecitationServiceState(
         private const val KEY_CURRENT_VERSE = "state_current_verse"
         private const val KEY_CURRENT_RECITER = "state_current_reciter"
         private const val KEY_CURRENT_TRANSLATION_RECITER = "state_current_translation_reciter"
-        private const val KEY_IS_RESOLVING = "state_is_resolving"
+        private const val KEY_RESOLVING_CHAPTER_NO = "state_resolving_chapter_no"
+        private const val KEY_AUDIO_DOWNLOAD_PROGRESS = "state_audio_download_progress"
+        private const val KEY_IS_VERSE_SYNC_AVAILABLE = "state_is_verse_sync_available"
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
         private const val KEY_REPEAT_COUNT = "state_repeat_count"
@@ -181,7 +190,11 @@ data class RecitationServiceState(
                     chapterNo = bundle.getInt(KEY_CURRENT_CHAPTER, -1),
                     verseNo = bundle.getInt(KEY_CURRENT_VERSE, -1),
                 ),
-                isResolving = bundle.getBoolean(KEY_IS_RESOLVING, false),
+                resolvingChapterNo = bundle.getInt(KEY_RESOLVING_CHAPTER_NO, -1)
+                    .takeIf { it != -1 },
+                downloadProgress = bundle.getInt(KEY_AUDIO_DOWNLOAD_PROGRESS, -1)
+                    .takeIf { it >= 0 },
+                isVerseSyncAvailable = bundle.getBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, true),
                 pausedByHeadset = bundle.getBoolean(KEY_PAUSED_BY_HEADSET, false),
                 settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),

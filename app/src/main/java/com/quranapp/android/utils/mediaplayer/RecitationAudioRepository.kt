@@ -108,7 +108,24 @@ class RecitationAudioRepository(private val context: Context) {
                 return@flow
             }
 
-            emit(ResolvedAudioResult.Downloading(0))
+            val progressByReciterChapter = mutableMapOf<String, Int>()
+
+            suspend fun emitCombinedDownloadProgress() {
+                emit(
+                    ResolvedAudioResult.Downloading(
+                        combineChapterDownloadProgress(
+                            progressByReciterChapter,
+                            chapterNo,
+                            quranNeedsDownload,
+                            translationNeedsDownload,
+                            quranModel?.id,
+                            translationModel?.id,
+                        ),
+                    ),
+                )
+            }
+
+            emitCombinedDownloadProgress()
 
             try {
                 if (quranNeedsDownload) {
@@ -122,6 +139,12 @@ class RecitationAudioRepository(private val context: Context) {
                         destinationFile = quranFile,
                         title = "Downloading recitation",
                         subtitle = quranModel.reciter,
+                        onProgress = { p ->
+                            progressByReciterChapter[
+                                downloadProgressKey(quranModel.id, chapterNo),
+                            ] = p
+                            emitCombinedDownloadProgress()
+                        },
                     )
                 }
 
@@ -136,6 +159,12 @@ class RecitationAudioRepository(private val context: Context) {
                         destinationFile = translationFile,
                         title = "Downloading recitation translation",
                         subtitle = translationModel.reciter,
+                        onProgress = { p ->
+                            progressByReciterChapter[
+                                downloadProgressKey(translationModel.id, chapterNo),
+                            ] = p
+                            emitCombinedDownloadProgress()
+                        },
                     )
                 }
             } catch (e: Exception) {
@@ -143,6 +172,8 @@ class RecitationAudioRepository(private val context: Context) {
                 emit(ResolvedAudioResult.Error(e))
                 return@flow
             }
+
+            emit(ResolvedAudioResult.Downloading(-1))
         }
 
         val (quranTiming, translationTiming) = coroutineScope {
@@ -203,6 +234,7 @@ class RecitationAudioRepository(private val context: Context) {
         destinationFile: File,
         title: String,
         subtitle: String?,
+        onProgress: suspend (Int) -> Unit,
     ) {
         val workName = RecitationAudioDownloadWorker.uniqueWorkName(reciterId, chapterNo)
         val request = OneTimeWorkRequestBuilder<RecitationAudioDownloadWorker>()
@@ -218,18 +250,22 @@ class RecitationAudioRepository(private val context: Context) {
             .build()
 
         workManager.enqueueUniqueWork(workName, ExistingWorkPolicy.KEEP, request)
-        awaitWorkCompletion(workName)
+        awaitWorkCompletion(workName, onProgress)
     }
 
-    private suspend fun awaitWorkCompletion(workName: String) {
+    private suspend fun awaitWorkCompletion(
+        workName: String,
+        onProgress: suspend (Int) -> Unit,
+    ) {
         workManager.getWorkInfosForUniqueWorkLiveData(workName).asFlow()
             .mapNotNull { infos -> infos.firstOrNull() }
             .first { info ->
-                when (info.state) {
-                    WorkInfo.State.ENQUEUED,
-                    WorkInfo.State.RUNNING,
-                    WorkInfo.State.BLOCKED -> false
+                val p = info.progress.getInt(RecitationAudioDownloadWorker.KEY_PROGRESS, -1)
+                if (p in 0..100) {
+                    onProgress(p)
+                }
 
+                when (info.state) {
                     WorkInfo.State.SUCCEEDED -> true
                     WorkInfo.State.FAILED -> {
                         val message =
@@ -241,8 +277,48 @@ class RecitationAudioRepository(private val context: Context) {
                     WorkInfo.State.CANCELLED -> {
                         throw IllegalStateException("Download cancelled")
                     }
+
+                    else -> false
                 }
             }
+    }
+
+
+    private fun downloadProgressKey(reciterId: String, chapterNo: Int) = "$reciterId:$chapterNo"
+
+    /**
+     * Merges per-reciter progress into one 0–100 value. When both Quran and translation download,
+     * each file fills half the range so the bar does not reset between workers.
+     */
+    private fun combineChapterDownloadProgress(
+        progressByKey: Map<String, Int>,
+        chapterNo: Int,
+        quranNeedsDownload: Boolean,
+        translationNeedsDownload: Boolean,
+        quranReciterId: String?,
+        translationReciterId: String?,
+    ): Int {
+        return when {
+            quranNeedsDownload && translationNeedsDownload -> {
+                val qid = quranReciterId ?: return 0
+                val tid = translationReciterId ?: return 0
+                val q = progressByKey[downloadProgressKey(qid, chapterNo)] ?: 0
+                val t = progressByKey[downloadProgressKey(tid, chapterNo)] ?: 0
+                (q + t) / 2
+            }
+
+            quranNeedsDownload -> {
+                val qid = quranReciterId ?: return 0
+                progressByKey[downloadProgressKey(qid, chapterNo)] ?: 0
+            }
+
+            translationNeedsDownload -> {
+                val tid = translationReciterId ?: return 0
+                progressByKey[downloadProgressKey(tid, chapterNo)] ?: 0
+            }
+
+            else -> 0
+        }
     }
 
     suspend fun resolveChapterTimingMetadata(

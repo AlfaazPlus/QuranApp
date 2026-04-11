@@ -25,10 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Log
@@ -53,6 +55,16 @@ fun TextSizeSheet(isOpen: Boolean, onDismiss: () -> Unit) {
         icon = R.drawable.icon_font_size,
         title = stringResource(R.string.textSizes),
     ) {
+        AlertCard(
+            modifier = Modifier.padding(horizontal = 12.dp),
+        ) {
+            Text(
+                stringResource(R.string.textSizeVerseByVerseOnly),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()

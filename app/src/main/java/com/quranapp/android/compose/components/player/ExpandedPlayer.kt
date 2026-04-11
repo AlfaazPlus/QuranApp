@@ -1,10 +1,16 @@
 package com.quranapp.android.compose.components.player
 
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -33,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,12 +52,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
 import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
@@ -60,7 +70,6 @@ import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -90,39 +99,33 @@ fun ExpandedPlayer(
     Background(
         modifier = modifier.fillMaxSize(),
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = onCollapse) {
-                    Icon(
-                        painterResource(R.drawable.dr_icon_chevron_down),
-                        contentDescription = "Collapse",
-                        modifier = Modifier.size(26.dp),
-                        tint = PlayerContentColor,
+        when (mode) {
+            ExpandedPlayerMode.Controls -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    ExpandedPlayerHeader(
+                        mode,
+                        onModeChange = { mode = it },
+                        onCollapse
                     )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                ModeTabs(
-                    selected = mode,
-                    onSelect = { mode = it },
-                )
-            }
 
-            when (mode) {
-                ExpandedPlayerMode.Controls -> {
                     ExtendedThumbnail(
                         verse = verse,
                     )
 
-                    Spacer(Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        PlayerMessages(
+                            state,
+                            isPlaying,
+                        )
+                    }
 
                     Configurations(
                         controller = controller
@@ -143,16 +146,217 @@ fun ExpandedPlayer(
                         continueRange = settings.continueRange,
                     )
                 }
-
-                ExpandedPlayerMode.Spotlight -> {
-                    SpotlightVersePanel(
-                        versePair = verse,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                    )
-                }
             }
+
+            ExpandedPlayerMode.Spotlight -> {
+                ExpandedPlayerSpotlightSection(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verse = verse,
+                    isPlaying = isPlaying,
+                    isLoading = isLoading,
+                    controller = controller,
+                    onCollapse = onCollapse,
+                    mode = mode,
+                    onModeChange = { mode = it },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ExpandedPlayerHeader(
+    mode: ExpandedPlayerMode,
+    onModeChange: (ExpandedPlayerMode) -> Unit,
+    onCollapse: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = onCollapse) {
+            Icon(
+                painterResource(R.drawable.dr_icon_chevron_down),
+                contentDescription = "Collapse",
+                modifier = Modifier.size(26.dp),
+                tint = PlayerContentColor,
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        ModeTabs(
+            selected = mode,
+            onSelect = onModeChange,
+        )
+    }
+}
+
+@Composable
+private fun ExpandedPlayerSpotlightSection(
+    modifier: Modifier = Modifier,
+    verse: ChapterVersePair,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
+    onCollapse: () -> Unit,
+    mode: ExpandedPlayerMode,
+    onModeChange: (ExpandedPlayerMode) -> Unit,
+) {
+    var chromeVisible by remember { mutableStateOf(true) }
+    var hideEpoch by remember { mutableIntStateOf(0) }
+
+    fun bumpChrome() {
+        chromeVisible = true
+        hideEpoch++
+    }
+
+    LaunchedEffect(hideEpoch) {
+        delay(3_000)
+        chromeVisible = false
+    }
+
+    Box(
+        modifier = modifier
+            .pointerInput(Unit) {
+                detectTapGestures { bumpChrome() }
+            }
+    ) {
+        SpotlightVersePanel(
+            versePair = verse,
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        AnimatedVisibility(
+            visible = chromeVisible,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            enter = fadeIn(tween(220)) + slideInVertically(
+                animationSpec = tween(280),
+                initialOffsetY = { -it / 2 },
+            ),
+            exit = fadeOut(tween(180)) + slideOutVertically(
+                animationSpec = tween(220),
+                targetOffsetY = { -it / 2 },
+            ),
+        ) {
+
+            ExpandedPlayerHeader(
+                mode,
+                onModeChange,
+                onCollapse
+            )
+        }
+
+        AnimatedVisibility(
+            visible = chromeVisible,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(bottom = 16.dp),
+            enter = fadeIn(tween(220)) + slideInVertically(
+                animationSpec = tween(280),
+                initialOffsetY = { it / 2 },
+            ),
+            exit = fadeOut(tween(180)) + slideOutVertically(
+                animationSpec = tween(220),
+                targetOffsetY = { it / 2 },
+            ),
+        ) {
+            SpotlightPlaybackBar(
+                isPlaying = isPlaying,
+                isLoading = isLoading,
+                controller = controller,
+            )
+        }
+    }
+}
+
+@Composable
+private fun SpotlightPlaybackBar(
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            onClick = {
+                controller.previousVerse()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_skip_back),
+                contentDescription = stringResource(R.string.strLabelPreviousVerse),
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(64.dp)
+                .shadow(
+                    elevation = 10.dp,
+                    shape = CircleShape,
+                    ambientColor = colorScheme.primary.copy(alpha = 0.35f),
+                    spotColor = colorScheme.primary.copy(alpha = 0.45f),
+                )
+                .clip(CircleShape)
+                .background(colorScheme.primary)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {
+                        controller.playPause()
+                    },
+                ),
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(38.dp),
+                    strokeWidth = 3.dp,
+                    color = colorScheme.onPrimary,
+                )
+            } else {
+                Icon(
+                    painterResource(
+                        if (isPlaying) R.drawable.ic_pause
+                        else R.drawable.ic_play,
+                    ),
+                    contentDescription = if (isPlaying) stringResource(R.string.strLabelPause)
+                    else stringResource(R.string.strLabelPlay),
+                    modifier = Modifier.size(32.dp),
+                    tint = colorScheme.onPrimary,
+                )
+            }
+        }
+
+        IconButton(
+            onClick = {
+                controller.nextVerse()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_skip_forward),
+                contentDescription = stringResource(R.string.strLabelNextVerse),
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
         }
     }
 }

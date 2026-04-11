@@ -37,7 +37,8 @@ data class TranslationDownloadUiState(
     val groups: List<TranslationGroupModel> = emptyList(),
     val error: DataLoadError? = null,
     val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
-    val isAnyDownloadCompleted: Boolean = false
+    val isAnyDownloadCompleted: Boolean = false,
+    val searchQuery: String = "",
 )
 
 
@@ -46,6 +47,7 @@ sealed interface TranslationDownloadEvent {
     data class ToggleGroup(val langCode: String) : TranslationDownloadEvent
     data class DownloadTranslation(val slug: String) : TranslationDownloadEvent
     data class CancelDownload(val slug: String) : TranslationDownloadEvent
+    data class Search(val query: String) : TranslationDownloadEvent
 }
 
 sealed interface TranslationDownloadUiEvent {
@@ -81,6 +83,7 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
             is TranslationDownloadEvent.ToggleGroup -> toggleGroup(event.langCode)
             is TranslationDownloadEvent.DownloadTranslation -> downloadTranslation(event.slug)
             is TranslationDownloadEvent.CancelDownload -> cancelDownload(event.slug)
+            is TranslationDownloadEvent.Search -> _uiState.update { it.copy(searchQuery = event.query) }
         }
     }
 

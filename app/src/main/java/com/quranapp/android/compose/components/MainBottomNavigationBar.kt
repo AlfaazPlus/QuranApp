@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +31,8 @@ import com.quranapp.android.activities.ActivityReaderIndexPage
 import com.quranapp.android.activities.ActivitySearch
 import com.quranapp.android.compose.theme.alpha
 
+val MainBottomNavBarHeight = 70.dp
+
 @Composable
 fun MainBottomNavigationBar() {
     val context = LocalContext.current
@@ -39,7 +40,7 @@ fun MainBottomNavigationBar() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
+            .height(MainBottomNavBarHeight)
             .background(colorScheme.surface)
     ) {
         Row(

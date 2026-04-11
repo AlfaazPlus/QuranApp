@@ -20,7 +20,6 @@ import com.quranapp.android.db.bookmark.BookmarkContractOld.BookmarkEntry._ID
 import com.quranapp.android.utils.univ.DBUtils
 import com.quranapp.android.utils.univ.DateUtils
 
-// TODO
 @Deprecated("to cleanup - moved to BookmarkContract")
 private object BookmarkContractOld {
 

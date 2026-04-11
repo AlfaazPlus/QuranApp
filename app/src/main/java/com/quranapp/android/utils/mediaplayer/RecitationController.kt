@@ -51,7 +51,7 @@ class RecitationController private constructor(private val appContext: Context) 
     // ==================== Convenience Getters ====================
 
     val isPlaying: Boolean get() = _isPlaying.value
-    val isLoading: Boolean get() = state.value.isResolving || _isBuffering.value
+    val isLoading: Boolean get() = state.value.resolvingChapterNo != null || _isBuffering.value
 
     /** Directly observes the service's state flow (same process). */
     val state: StateFlow<RecitationServiceState> = RecitationService.sharedState

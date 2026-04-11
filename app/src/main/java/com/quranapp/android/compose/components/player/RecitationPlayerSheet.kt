@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -51,6 +52,11 @@ import com.quranapp.android.viewModels.RecitationPlayerViewModel
 const val MINI_PLAYER_HEIGHT_DP = 72
 private val SPEED_OPTIONS = listOf(0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f)
 
+private val PlayerMotionSpring = spring<Dp>(
+    dampingRatio = 0.82f,
+    stiffness = Spring.StiffnessLow,
+)
+
 private val PlayerGradientTop = Color(0xFF25243A)
 private val PlayerGradientBottom = Color(0xFF060608)
 private val PlayerAccentOrange = Color(0xFFFF5F1F)
@@ -60,11 +66,17 @@ private val PlayerSubtitleBlue = Color(0xFF7EC8E3)
 private val PlayerBottomBarBg = Color(0xFF0C0C10)
 private val PlayerHeartSyncOn = Color(0xFF4DD0E1)
 
+/**
+ * @param collapsedBottomInset Extra space above the bottom edge when the player is collapsed
+ *   (e.g. main tab bar height). Animates to zero while expanding so the sheet reaches full height
+ *   without jumping.
+ */
 @Composable
 fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
-    isSyncing: Boolean,
-    onSyncRequest: () -> Unit,
+    collapsedBottomInset: Dp = 0.dp,
+    isSyncing: Boolean = false,
+    onSyncRequest: (() -> Unit)? = null,
 ) {
     val viewModel = viewModel<RecitationPlayerViewModel>()
     val context = LocalContext.current
@@ -101,6 +113,13 @@ fun RecitationPlayerSheet(
     val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp + navBarBottom
 
+    val targetBottomInset = if (expanded) 0.dp else collapsedBottomInset
+    val animatedBottomInset by animateDpAsState(
+        targetValue = targetBottomInset,
+        animationSpec = PlayerMotionSpring,
+        label = "playerBottomInset",
+    )
+
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val fullHeight = maxHeight
 
@@ -108,7 +127,9 @@ fun RecitationPlayerSheet(
             visible = isVisible,
             enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
             exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = animatedBottomInset.coerceAtLeast(0.dp)),
         ) {
             PlayerContainer(
                 expanded = expanded,
@@ -137,14 +158,14 @@ private fun PlayerContainer(
     isPlaying: Boolean,
     isLoading: Boolean,
     isSyncing: Boolean,
-    onSyncRequest: () -> Unit,
+    onSyncRequest: (() -> Unit)?,
     onExpand: () -> Unit,
     onCollapse: () -> Unit,
 ) {
     val targetHeight = if (expanded) fullHeight else miniPlayerTotalHeight
     val animatedHeight by animateDpAsState(
         targetValue = targetHeight,
-        animationSpec = spring(dampingRatio = 0.82f, stiffness = Spring.StiffnessLow),
+        animationSpec = PlayerMotionSpring,
         label = "playerHeight",
     )
 
@@ -161,8 +182,7 @@ private fun PlayerContainer(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(animatedHeight)
-            .shadow(elevation = if (expanded) 0.dp else 8.dp, shape = shape),
+            .height(animatedHeight.coerceAtLeast(0.dp)),
         shape = shape,
         color = if (expanded) Color.Transparent else MaterialTheme.colorScheme.surface,
         tonalElevation = if (expanded) 0.dp else 2.dp,

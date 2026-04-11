@@ -228,11 +228,11 @@ object ReaderItemsBuilder {
                                     styles = wbwStyles
                                 ) {
                                     // TODO
-                                    MessageUtils.showRemovableToast(
+                                    /*MessageUtils.showRemovableToast(
                                         params.context,
                                         word.text,
                                         Toast.LENGTH_LONG
-                                    )
+                                    )*/
                                 }
                             ) {
                                 append(word.text)

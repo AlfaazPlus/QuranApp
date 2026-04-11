@@ -30,7 +30,7 @@ class RecitationPlayerViewModel(application: Application) : AndroidViewModel(app
         controller.state,
         controller.isBufferingState,
     ) { currentState, isBuffering ->
-        currentState.isResolving || isBuffering
+        currentState.resolvingChapterNo != null || isBuffering
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

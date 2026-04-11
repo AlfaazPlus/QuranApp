@@ -3,8 +3,9 @@ package com.quranapp.android.utils.quran.parser
 import android.content.Context
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.components.quran.QuranPropheticDua.Prophet
 import com.quranapp.android.components.quran.QuranPropheticDua
+import com.quranapp.android.components.quran.QuranPropheticDua.Prophet
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
@@ -26,7 +27,6 @@ object QuranPropheticDuasParser {
 
     fun parseDua(
         context: Context,
-        quranMeta: QuranMeta,
         instanceRef: AtomicReference<QuranPropheticDua>,
         callback: () -> Unit
     ) {
@@ -34,7 +34,6 @@ object QuranPropheticDuasParser {
             try {
                 val parsedDuas = parseDuasInternal(
                     context,
-                    quranMeta,
                 )
 
                 instanceRef.set(parsedDuas)
@@ -47,10 +46,10 @@ object QuranPropheticDuasParser {
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun parseDuasInternal(
+    private suspend fun parseDuasInternal(
         context: Context,
-        quranMeta: QuranMeta,
     ): QuranPropheticDua {
+        val repository = DatabaseProvider.getQuranRepository(context)
         val parser = context.resources.getXml(R.xml.quran_prophetic_duas)
         val prophetList: MutableList<Prophet> = ArrayList()
 
@@ -94,7 +93,8 @@ object QuranPropheticDuasParser {
                         prophet.references?.let {
                             prophet.verses = prepareVersesList(it, true)
                             prophet.chapters = prepareChaptersList(prophet.verses)
-// fixme                            prophet.inChapters = prepareChapterText(context, quranMeta, prophet.chapters, 2)
+                            prophet.inChapters =
+                                prepareChapterText(context, repository, prophet.chapters, 2)
                         }
                     }
                 }

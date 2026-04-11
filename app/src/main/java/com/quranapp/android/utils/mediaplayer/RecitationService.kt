@@ -54,6 +54,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
@@ -109,8 +110,12 @@ class RecitationService : MediaSessionService() {
         DatabaseProvider.getQuranRepository(applicationContext)
     }
 
-    private var singleTrackTimingMetadata: ChapterTimingMetadata? = null
-    private var verseClipPlan: VerseClipPlan? = null
+    private var _singleTrackTimingMetadata = MutableStateFlow<ChapterTimingMetadata?>(null)
+    private var _verseClipPlan = MutableStateFlow<VerseClipPlan?>(null)
+
+    private val singleTrackTimingMetadata get() = _singleTrackTimingMetadata.value
+    private val verseClipPlan get() = _verseClipPlan.value
+
     private var verseTrackingJob: Job? = null
     private var latestPlaybackRequestId: Long = 0L
     private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
@@ -135,6 +140,17 @@ class RecitationService : MediaSessionService() {
 
         scoped {
             initializeStateFromPreferences()
+
+            combine(
+                _verseClipPlan,
+                _singleTrackTimingMetadata,
+            ) { plan, timing ->
+                plan != null || (timing != null && timing.hasVerseTiming)
+            }.collectLatest { isAvailable ->
+                if (state.value.isVerseSyncAvailable == isAvailable) return@collectLatest
+                updateState { copy(isVerseSyncAvailable = isAvailable) }
+            }
+
             state.collectLatest { newState ->
                 mediaSession?.setSessionExtras(newState.toBundle())
             }
@@ -224,8 +240,11 @@ class RecitationService : MediaSessionService() {
 
     // ==================== State helpers ====================
 
-    private fun setResolving(resolving: Boolean) {
-        _state.value = state.value.copy(isResolving = resolving)
+    private fun setResolving(chapterNo: Int?) {
+        _state.value = state.value.copy(
+            resolvingChapterNo = chapterNo,
+            downloadProgress = null,
+        )
     }
 
     private fun emitEvent(event: Any) {
@@ -268,15 +287,16 @@ class RecitationService : MediaSessionService() {
 
         stopTrackings()
 
-        singleTrackTimingMetadata = null
-        verseClipPlan = null
+        _singleTrackTimingMetadata.value = null
+        _verseClipPlan.value = null
+
         repeatRemainingPlaysForCurrentItem = 0
         chapterResolutionRequests.values.forEach { it.cancel() }
         chapterResolutionRequests.clear()
     }
 
     fun seek(amountOrDirection: Long) {
-        if (state.value.isResolving) return
+        if (state.value.resolvingChapterNo != null) return
 
         invalidateRepeatSchedule()
 
@@ -350,7 +370,7 @@ class RecitationService : MediaSessionService() {
 
     fun cancelLoading() {
         audioRepository.cancelAll()
-        setResolving(false)
+        setResolving(null)
     }
 
     // ==================== Chapter playback ====================
@@ -376,7 +396,7 @@ class RecitationService : MediaSessionService() {
 
         if (trySeekToVerseInLoadedChapter(chapterNo, fromVerse)) {
             if (requestId == latestPlaybackRequestId) {
-                setResolving(false)
+                setResolving(null)
             }
             return
         }
@@ -389,7 +409,7 @@ class RecitationService : MediaSessionService() {
     private suspend fun awaitChapterResolution(
         requestId: Long, chapterNo: Int, action: suspend (ResolvedAudioResult.Resoved) -> Unit
     ) {
-        setResolving(true)
+        setResolving(chapterNo)
 
         try {
             when (val result = resolveChapterAudio(chapterNo)) {
@@ -401,19 +421,19 @@ class RecitationService : MediaSessionService() {
                     emitEvent(ErrorEvent(result.error.message))
 
                     if (requestId != latestPlaybackRequestId) return
-                    setResolving(false)
+                    setResolving(null)
                 }
 
                 is ResolvedAudioResult.Resoved -> {
                     if (requestId != latestPlaybackRequestId) return
-                    setResolving(false)
+                    setResolving(null)
 
                     action(result)
                 }
             }
         } catch (e: Exception) {
             if (requestId != latestPlaybackRequestId) return
-            setResolving(false)
+            setResolving(null)
             Log.saveError(e, "RecitationService.loadChapterVerse")
             emitEvent(ErrorEvent(e.message))
         }
@@ -436,7 +456,18 @@ class RecitationService : MediaSessionService() {
 
                 audioRepository.resolveAudioUris(chapterNo).collect { result ->
                     when (result) {
-                        is ResolvedAudioResult.Downloading -> Unit
+                        is ResolvedAudioResult.Downloading -> {
+                            if (chapterNo == state.value.resolvingChapterNo) {
+                                if (result.progress in 0..100) {
+                                    updateState {
+                                        copy(downloadProgress = result.progress)
+                                    }
+                                } else {
+                                    updateState { copy(downloadProgress = null) }
+                                }
+                            }
+                        }
+
                         is ResolvedAudioResult.Error -> terminal = result
                         is ResolvedAudioResult.Resoved -> terminal = result
                     }
@@ -468,7 +499,7 @@ class RecitationService : MediaSessionService() {
         chapterNo: Int, verseNo: Int
     ): Boolean {
         if (
-            state.value.isResolving ||
+            state.value.resolvingChapterNo != null ||
             state.value.currentVerse.chapterNo != chapterNo ||
             player.mediaItemCount == 0 ||
             player.playbackState == Player.STATE_IDLE
@@ -500,7 +531,7 @@ class RecitationService : MediaSessionService() {
             settings = settings,
         )
 
-        verseClipPlan = plan
+        _verseClipPlan.value = plan
 
         val updatedSettings = settings.copy(
             reciter = result.quran?.reciterId,
@@ -513,7 +544,7 @@ class RecitationService : MediaSessionService() {
         if (plan != null) {
             // Multi-track clipped playlist: verse boundaries are encoded in the clips themselves,
             // so per-track timing metadata is not needed at the service level.
-            singleTrackTimingMetadata = null
+            _singleTrackTimingMetadata.value = null
             player.setMediaItems(plan.items)
             player.seekTo(plan.firstIndexForVerse(startVerse), 0L)
         } else {
@@ -524,7 +555,7 @@ class RecitationService : MediaSessionService() {
                 return
             }
 
-            singleTrackTimingMetadata = primary.timingMetadata
+            _singleTrackTimingMetadata.value = primary.timingMetadata
 
             player.setMediaItem(
                 buildFullChapterMediaItem(primary, chapterNo, startVerse),
@@ -769,7 +800,7 @@ class RecitationService : MediaSessionService() {
      * or clip construction, restoring the user's virtual position afterwards.
      */
     private suspend fun invalidateChapterPlayback() {
-        if (state.value.isResolving) return
+        if (state.value.resolvingChapterNo != null) return
         if (player.mediaItemCount == 0 || player.playbackState == Player.STATE_IDLE) return
 
         val current = state.value.currentVerse

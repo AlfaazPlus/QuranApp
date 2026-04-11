@@ -130,6 +130,8 @@ sealed class ResolvedAudioResult {
         val translation: RecitationAudioTrack?,
     ) : ResolvedAudioResult()
 
+    /** [progress] 0–100 from the download worker; negative values are internal signals (e.g. clear UI). */
     data class Downloading(val progress: Int) : ResolvedAudioResult()
+
     data class Error(val error: Throwable) : ResolvedAudioResult()
 }

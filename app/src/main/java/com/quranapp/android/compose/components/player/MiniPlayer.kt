@@ -67,7 +67,7 @@ fun MiniPlayer(
     isPlaying: Boolean,
     isLoading: Boolean,
     isSyncing: Boolean,
-    onSyncRequest: () -> Unit,
+    onSyncRequest: (() -> Unit)?,
     onExpand: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -137,30 +137,34 @@ fun MiniPlayer(
                 )
             }
 
-            SimpleTooltip(
-                text = if (isSyncing) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
-            ) {
-                IconButton(
-                    onClick = {
-                        onSyncRequest()
-
-                        MessageUtils.showRemovableToast(
-                            context,
-                            if (isSyncing) R.string.verseSyncOn else R.string.verseSyncOff,
-                            Toast.LENGTH_SHORT
-                        )
-                    },
-                    modifier = Modifier.size(48.dp),
+            if (onSyncRequest != null) {
+                SimpleTooltip(
+                    text = if (isSyncing) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
                 ) {
-                    Icon(
-                        painterResource(if (isSyncing) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
-                        contentDescription = stringResource(
-                            if (isSyncing) R.string.verseSyncOn else
-                                R.string.verseSyncOff
-                        ),
-                        modifier = Modifier.size(20.dp),
-                        tint = if (isSyncing) colorScheme.primary else PlayerContentColor.alpha(.7f),
-                    )
+                    IconButton(
+                        onClick = {
+                            onSyncRequest()
+
+                            MessageUtils.showRemovableToast(
+                                context,
+                                if (isSyncing) R.string.verseSyncOn else R.string.verseSyncOff,
+                                Toast.LENGTH_SHORT
+                            )
+                        },
+                        modifier = Modifier.size(48.dp),
+                    ) {
+                        Icon(
+                            painterResource(if (isSyncing) R.drawable.ic_lock_keyhole_closed else R.drawable.ic_lock_open),
+                            contentDescription = stringResource(
+                                if (isSyncing) R.string.verseSyncOn else
+                                    R.string.verseSyncOff
+                            ),
+                            modifier = Modifier.size(20.dp),
+                            tint = if (isSyncing) colorScheme.primary else PlayerContentColor.alpha(
+                                .7f
+                            ),
+                        )
+                    }
                 }
             }
 

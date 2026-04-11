@@ -56,7 +56,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.components.transls.TranslModel
@@ -107,8 +106,12 @@ fun TranslationSelectionScreen() {
         topBar = {
             AppBar(
                 stringResource(R.string.strTitleTranslations),
+                searchPlaceholder = stringResource(R.string.strHintSearch),
+                searchQuery = uiState.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(TranslationEvent.Search(it))
+                },
                 actions = {
-                    // todo: search
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh)
                     ) {

@@ -1,6 +1,5 @@
 package com.quranapp.android.activities.reference
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,20 +7,19 @@ import android.text.Editable
 import android.text.TextUtils
 import android.view.View
 import android.view.View.OnFocusChangeListener
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.quranapp.android.R
-import com.quranapp.android.activities.QuranMetaPossessingActivity
+import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.adapters.ADPPropheticDuas
 import com.quranapp.android.adapters.utility.TopicFilterSpinnerAdapter
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranPropheticDua
 import com.quranapp.android.components.utility.SpinnerItem
 import com.quranapp.android.databinding.ActivityTopicsBinding
@@ -33,7 +31,7 @@ import com.quranapp.android.views.helper.Spinner2
 import com.quranapp.android.views.helper.Spinner2.SimplerSpinnerItemSelectListener
 import java.util.regex.Pattern
 
-class ActivityPropheticDuas : QuranMetaPossessingActivity() {
+class ActivityPropheticDuas : BaseActivity() {
     private lateinit var binding: ActivityTopicsBinding
     private val searchHandler = Handler(Looper.getMainLooper())
     private var prophetsAdapter: ADPPropheticDuas? = null
@@ -44,12 +42,12 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
 
     override fun getLayoutResource() = R.layout.activity_topics
 
-    override fun preQuranMetaPrepare(activityView: View, intent: Intent, savedInstanceState: Bundle?) {
+    override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         binding = ActivityTopicsBinding.bind(activityView)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.header.searchContainer.root.visibility == View.VISIBLE) {
+                if (binding.header.searchContainer.root.isVisible) {
                     toggleSearchBox(binding.header, false)
                 } else {
                     this.isEnabled = false
@@ -57,15 +55,8 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
                 }
             }
         })
-    }
 
-    override fun onQuranMetaReady(
-        activityView: View,
-        intent: Intent,
-        savedInstanceState: Bundle?,
-        quranMeta: QuranMeta
-    ) {
-        QuranPropheticDua.prepareInstance(this, quranMeta, this::initContent)
+        QuranPropheticDua.prepareInstance(this, this::initContent)
     }
 
     private fun initContent(propheticDua: QuranPropheticDua) {
@@ -73,7 +64,10 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
         initHeader(binding.header, propheticDua)
     }
 
-    private fun initHeader(header: LytTopicsActivityHeaderBinding, propheticDua: QuranPropheticDua) {
+    private fun initHeader(
+        header: LytTopicsActivityHeaderBinding,
+        propheticDua: QuranPropheticDua
+    ) {
         header.searchContainer.root.setBackgroundColor(statusBarBG)
         header.topicTitle.text = intent.getStringExtra(Keys.KEY_EXTRA_TITLE)
         initProphetFilters(header.filter, propheticDua)
@@ -82,7 +76,9 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
         header.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         header.searchContainer.searchBox.let {
-            header.searchContainer.btnClear.setOnClickListener view@{ header.searchContainer.searchBox.text = null }
+            header.searchContainer.btnClear.setOnClickListener view@{
+                header.searchContainer.searchBox.text = null
+            }
             it.updatePadding(dp2px(5f))
             it.onFocusChangeListener = OnFocusChangeListener { v: View, hasFocus: Boolean ->
                 if (!hasFocus) {
@@ -92,7 +88,8 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
             }
             it.addTextChangedListener(object : SimpleTextWatcher() {
                 override fun afterTextChanged(s: Editable) {
-                    binding.header.searchContainer.btnClear.visibility = if (s.isEmpty()) View.GONE else View.VISIBLE
+                    binding.header.searchContainer.btnClear.visibility =
+                        if (s.isEmpty()) View.GONE else View.VISIBLE
                     searchHandler.removeCallbacksAndMessages(null)
                     searchHandler.postDelayed({ searchProphets(s.toString(), propheticDua) }, 150)
                 }
@@ -116,12 +113,21 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
         // running it twice before and after setting listener to prevent it to be invoked for the first time.
         spinner.setSelection(0)
         spinner.onItemSelectedListener = object : SimplerSpinnerItemSelectListener() {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 if (position == 0) {
                     resetAdapter(propheticDua.prophets.sortedBy { it.name })
                 } else if (position == 1) {
                     resetAdapter(propheticDua.prophets.sortedBy { it.order })
-                    Toast.makeText(this@ActivityPropheticDuas, R.string.strMsgProphetsOrder, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ActivityPropheticDuas,
+                        R.string.strMsgProphetsOrder,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -136,7 +142,8 @@ class ActivityPropheticDuas : QuranMetaPossessingActivity() {
             return
         }
 
-        val pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE or Pattern.LITERAL or Pattern.DOTALL)
+        val pattern =
+            Pattern.compile(query, Pattern.CASE_INSENSITIVE or Pattern.LITERAL or Pattern.DOTALL)
         val prophets = ArrayList<QuranPropheticDua.Prophet>()
 
         for (prophet in propheticDua.prophets) {

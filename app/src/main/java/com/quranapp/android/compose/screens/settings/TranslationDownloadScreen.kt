@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,13 +61,17 @@ import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationDownloadEvent
 import com.quranapp.android.viewModels.TranslationDownloadUiEvent
 import com.quranapp.android.viewModels.TranslationDownloadViewModel
+import com.quranapp.android.viewModels.TranslationEvent
+import java.util.regex.Pattern
 
 @Composable
 fun TranslationDownloadScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val viewModel = viewModel<TranslationDownloadViewModel>()
     val uiState = viewModel.uiState.collectAsState().value
 
@@ -78,7 +83,7 @@ fun TranslationDownloadScreen() {
                         context,
                         title = event.title,
                         msg = event.message,
-                        context.getString(R.string.strLabelClose),
+                        resources.getString(R.string.strLabelClose),
                         null
                     )
                 }
@@ -86,10 +91,40 @@ fun TranslationDownloadScreen() {
         }
     }
 
+    val visibleGroups = remember(uiState.groups, uiState.searchQuery) {
+        if (uiState.searchQuery.isBlank()) {
+            uiState.groups
+        } else {
+            uiState.groups.map { group ->
+                val filteredTransls = group.translations.filter { transl ->
+                    val pattern = Pattern.compile(
+                        StringUtils.escapeRegex(uiState.searchQuery),
+                        Pattern.CASE_INSENSITIVE or Pattern.DOTALL
+                    )
+
+
+                    val bookInfo = transl.bookInfo
+                    val bookName = bookInfo.bookName
+                    val authorName = bookInfo.authorName
+                    val langName = bookInfo.langName
+
+                    pattern.matcher(bookName + authorName + langName).find()
+                }
+
+                group.copy(translations = ArrayList(filteredTransls))
+            }.filter { it.translations.isNotEmpty() }
+        }
+    }
+
     Scaffold(
         topBar = {
             AppBar(
                 stringResource(R.string.strTitleDownloadTranslations),
+                searchPlaceholder = stringResource(R.string.strHintSearch),
+                searchQuery = uiState.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(TranslationDownloadEvent.Search(it))
+                },
                 actions = {
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh)
@@ -113,7 +148,7 @@ fun TranslationDownloadScreen() {
                 )
 
                 else -> TranslationsContent(
-                    groups = uiState.groups,
+                    groups = visibleGroups,
                     downloadStates = uiState.downloadStates,
                 )
             }
