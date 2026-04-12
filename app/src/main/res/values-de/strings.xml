@@ -78,9 +78,9 @@
     <string name="strTitleReaderChapters2">Suren</string>
     <string name="strTitleReaderVerses">Verse</string>
     <string name="strTitleReaderJumpToVerse">Springe zu Vers</string>
-    <string name="strTitleReaderJuz">Juz</string>
+    <string name="strTitleReaderJuz">Abschnitt</string>
     <string name="strTitleReaderJuz2">Abschnitt</string>
-    <string name="strTitleVerseOptions">Vers Einstellungen</string>
+    <string name="strTitleVerseOptions">Vers-Optionen</string>
     <string name="strTitleVerseRecitation">Vers Rezitation</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Sure %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Gehe zu Vers %d</string>
@@ -124,7 +124,7 @@
     <string name="strTitleFeaturedProphets">Propheten im Koran</string>
     <string name="strTitlePrivacyPolicy">Datenschutzbestimmungen</string>
     <string name="strTitleFailed">Fehlgeschlagen</string>
-    <string name="strTitleFeaturedDuas">Gebete im Koran</string>
+    <string name="strTitleFeaturedDuas">Bittgebete im Koran</string>
     <string name="strTitleThresholdReached">Schwellenwert erreicht</string>
     <string name="strTitleChapInfoChapterNo">Kapitelnummer</string>
     <string name="strTitleChapInfoVerses">Verse</string>
@@ -266,7 +266,7 @@
     <string name="msgDownloadingScript">Schriftsystem herunterladen</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
     <string name="msgFontsDonwloadProgress" formatted="false">%1$d von %2$d Schriftarten heruntergeladen</string>
-    <string name="strMsgReferenceDuas">Einige gesammlte Gebete aus dem Koran.</string>
+    <string name="strMsgReferenceDuas">Einige gesammlte Bittgebete aus dem Koran.</string>
     <string name="strSalam">Salem aleikum</string>
     <string name="msgDownloadingResource" formatted="false">Herunterladen %s</string>
     <string name="textDownloading">Wird heruntergeladen…</string>
@@ -407,12 +407,12 @@
     <string name="textTranslationReciterInfo">Sprache: %1$s
 \nBuch: %2$s</string>
     <string name="labelAdd">Hinzufügen</string>
-    <string name="strMsgDuaFor" formatted="false">Dua für %s</string>
+    <string name="strMsgDuaFor" formatted="false">Bittgebet für %s</string>
     <string name="titleAddToFavourites">Zu Favoriten hinzufügen</string>
     <string name="msgTafsirLoadFailed">Tafsir konnte nicht geladen werden</string>
     <string name="titleReaderTextSizeTafsir">Tafsir Text Größe</string>
-    <string name="strMsgDuaOf" formatted="false">Gebet von %s</string>
-    <string name="strMsgPropheticDuaInQuran" formatted="false">Gebet von %s im Koran</string>
+    <string name="strMsgDuaOf" formatted="false">Bittgebet von %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Bittgebet von %s im Koran</string>
     <string name="msgClearReadHistory">Leseverlauf löschen</string>
     <string name="titleResourceDownloadSource">Ressourcen-Download-Quelle</string>
     <string name="msgResourceDownloadSource">Verwende diese Option, um Koran-Daten aus einer anderen Quelle herunterzuladen, wenn eine nicht funktioniert</string>
@@ -447,4 +447,10 @@
     <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
     <string name="dlRecitations">Herunterladen &amp; Verwalten von Rezitationen</string>
     <string name="dlTafsirs">Herunterladen &amp; Verwalten von Erläuterungen</string>
+    <string name="favourites">Favoriten</string>
+    <string name="donate">Unterstützte uns</string>
+    <string name="quran_and_science">Koran und Wissenschaft</string>
+    <string name="about_this_page">Über diese Seite</string>
+    <string name="about_quran_science_msg">Die Inhalte auf dieser Seite stammen aus dem Buch \"Der Qur ́an und Modern Science: Kompatibel oder unverträglich\" von Dr. Zakir Naik .\n\nDie gezeigten Bilder dienen nur zum illustrativen Zweck.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d Verweise</string>
 </resources>
