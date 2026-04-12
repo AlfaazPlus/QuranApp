@@ -54,7 +54,7 @@ fun DailyReminderSheet(
     } else null
 
     val items = listOf(
-        Triple(true, R.string.strLabelOn, R.string.strMsgVOTDOn),
+        Triple(true, R.string.strLabelOn, R.string.dailyReminderMsg),
         Triple(false, R.string.strLabelOff, null),
     )
 

@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.screens.reader
+package com.quranapp.android.compose.components.reader.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -47,7 +47,7 @@ data class LocalRecitationStateData(
     val controller: RecitationController,
     val isAnyPlaying: Boolean,
     val playingVerse: ChapterVersePair,
-    val onVerseRecitationStarted: (() -> Unit) = {}
+    val onVerseRecitationStarted: (() -> Unit)? = null
 )
 
 val LocalRecitationState = staticCompositionLocalOf<LocalRecitationStateData> {
@@ -132,7 +132,7 @@ private fun VerseActionBar(
                     controller.pause()
                 } else {
                     controller.start(ChapterVersePair(verse))
-                    recitationState.onVerseRecitationStarted()
+                    recitationState.onVerseRecitationStarted?.invoke()
                 }
             }
 

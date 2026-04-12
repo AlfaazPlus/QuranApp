@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
-import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceParsedVerses
+import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -36,7 +36,7 @@ class QuickReferenceHost(
             quickRefData = QuickReferenceData(
                 slugs ?: ReaderPreferences.getTranslations(),
                 chapterNo,
-                parsedVerses = QuickReferenceParsedVerses.Range(fromVerse..toVerse),
+                parsedVerses = QuickReferenceVerses.Range(chapterNo, fromVerse..toVerse),
             )
         }
     }

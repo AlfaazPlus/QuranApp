@@ -15,12 +15,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +66,7 @@ private val PlayerHeartSyncOn = Color(0xFF4DD0E1)
 fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
     collapsedBottomInset: Dp = 0.dp,
+    barsCollapsedFraction: Float = 0f,
     isSyncing: Boolean = false,
     onSyncRequest: (() -> Unit)? = null,
 ) {
@@ -103,8 +102,7 @@ fun RecitationPlayerSheet(
         expanded = false
     }
 
-    val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp /*+ navBarBottom*/
+    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp
 
     val targetBottomInset = if (expanded) 0.dp else collapsedBottomInset
     val animatedBottomInset by animateDpAsState(
@@ -112,6 +110,9 @@ fun RecitationPlayerSheet(
         animationSpec = PlayerMotionSpring,
         label = "playerBottomInset",
     )
+
+    val hideOnScrollOffset =
+        if (expanded) 0.dp else MINI_PLAYER_HEIGHT_DP.dp * barsCollapsedFraction.coerceIn(0f, 1f)
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val fullHeight = maxHeight
@@ -122,7 +123,8 @@ fun RecitationPlayerSheet(
             exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = animatedBottomInset.coerceAtLeast(0.dp)),
+                .padding(bottom = animatedBottomInset.coerceAtLeast(0.dp))
+                .offset(y = hideOnScrollOffset),
         ) {
             PlayerContainer(
                 expanded = expanded,

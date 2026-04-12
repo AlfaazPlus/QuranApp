@@ -258,6 +258,7 @@
     <string name="strNotFound">Not found</string>
     <string name="strMsgThemeDark">Dark mode reduces power consumption.</string>
     <string name="strMsgThemeDefault">Adjust according to system settings.</string>
+    <string name="dailyReminderMsg">Get a daily reminder notification.</string>
     <string name="strMsgVOTDOn">Get a notification daily in the morning.</string>
     <string name="strMsgYouAreReadingVerses">You are reading verses:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d is not a valid Surah No.</string>

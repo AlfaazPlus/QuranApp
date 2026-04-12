@@ -1,17 +1,13 @@
 package com.quranapp.android.utils.reader
 
 import android.content.Context
-import android.widget.Toast
-import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
@@ -21,9 +17,9 @@ import com.quranapp.android.db.QuranRepository
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.univ.MessageUtils
 
 object ReaderItemsBuilder {
     suspend fun buildVersesForTranslationMode(
@@ -222,21 +218,20 @@ object ReaderItemsBuilder {
                 withStyle(paragraphStyle) {
                     withStyle(spanStyle) {
                         verse.words.forEachIndexed { index, word ->
-                            withLink(
+                            /*withLink(
                                 LinkAnnotation.Clickable(
                                     tag = "wbw",
                                     styles = wbwStyles
                                 ) {
-                                    // TODO
-                                    /*MessageUtils.showRemovableToast(
+                                    MessageUtils.showRemovableToast(
                                         params.context,
                                         word.text,
                                         Toast.LENGTH_LONG
-                                    )*/
+                                    )
                                 }
-                            ) {
-                                append(word.text)
-                            }
+                            ) {}*/
+
+                            append(word.text)
 
                             if (!word.isLastWordOfAyah) {
                                 append(" ")
@@ -382,7 +377,7 @@ object ReaderItemsBuilder {
                     withStyle(paragraphStyle) {
                         withStyle(spanStyle) {
                             verse.words.forEachIndexed { index, word ->
-                                withLink(
+                                /*withLink(
                                     LinkAnnotation.Clickable(
                                         tag = "wbw", styles = wbwStyles
                                     ) {
@@ -390,7 +385,9 @@ object ReaderItemsBuilder {
                                             params.context, word.text, Toast.LENGTH_LONG
                                         )
                                     }
-                                ) { append(word.text) }
+                                ) {}*/
+
+                                append(word.text)
 
                                 if (!word.isLastWordOfAyah) append(" ")
                             }

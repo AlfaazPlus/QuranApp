@@ -93,7 +93,6 @@ private fun ItemCard(
                 )
 
                 val intent = prepareReferenceVerseIntent(
-                    true,
                     title,
                     resources.getString(R.string.strMsgReferenceDuas),
                     arrayOf(),

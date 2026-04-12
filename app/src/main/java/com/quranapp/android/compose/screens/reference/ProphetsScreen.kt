@@ -198,7 +198,6 @@ private fun ProphetListItem(prophet: QuranProphet.Prophet) {
             )
 
             val intent = prepareReferenceVerseIntent(
-                true,
                 title,
                 desc,
                 arrayOf(),

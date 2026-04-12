@@ -15,7 +15,6 @@ import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.univ.Keys
-import com.quranapp.android.utils.univ.Keys.KEY_REFERENCE_VERSE_MODEL
 
 object ReaderFactory {
     fun startEmptyReader(context: Context) {
@@ -118,7 +117,6 @@ object ReaderFactory {
 
     fun startReferenceVerse(
         context: Context,
-        showChapterSugg: Boolean,
         title: String,
         desc: String?,
         translSlug: Array<String>,
@@ -126,7 +124,7 @@ object ReaderFactory {
         verses: List<String>
     ) {
         val intent = prepareReferenceVerseIntent(
-            showChapterSugg, title, desc, translSlug, chapters, verses
+            title, desc, translSlug, chapters, verses
         )
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
@@ -139,7 +137,6 @@ object ReaderFactory {
     }
 
     fun prepareReferenceVerseIntent(
-        showChapterSugg: Boolean,
         title: String,
         desc: String?,
         translSlug: Array<String>,
@@ -147,14 +144,14 @@ object ReaderFactory {
         verses: List<String>
     ): Intent {
         val referenceVerseModel = ReferenceVerseModel(
-            showChapterSugg, title, desc, translSlug, chapters, verses
+            title, desc, translSlug, chapters, verses
         )
         return prepareReferenceVerseIntent(referenceVerseModel)
     }
 
     fun prepareReferenceVerseIntent(referenceVerseModel: ReferenceVerseModel): Intent {
         return Intent().apply {
-            putExtra(KEY_REFERENCE_VERSE_MODEL, referenceVerseModel)
+            putExtras(referenceVerseModel.toBundle())
         }
     }
 

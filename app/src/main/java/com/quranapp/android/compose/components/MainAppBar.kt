@@ -46,6 +46,6 @@ fun MainAppBar() {
         actions = {
             IndexMenuButton()
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = colorScheme.surface),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = colorScheme.surfaceContainer),
     )
 }

@@ -59,8 +59,8 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
-import com.quranapp.android.compose.screens.reader.BookmarkViewerData
-import com.quranapp.android.compose.screens.reader.BookmarkViewerSheet
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.BookmarkEntity
 import com.quranapp.android.viewModels.BookmarksViewModel

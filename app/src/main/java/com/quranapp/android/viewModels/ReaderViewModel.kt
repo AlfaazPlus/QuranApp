@@ -7,7 +7,6 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
@@ -18,14 +17,11 @@ import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
-import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.QuranScript
 import com.quranapp.android.utils.reader.QuranScriptUtils
@@ -62,13 +58,7 @@ data class ReaderUiState(
     val currentPageNo: Int? = null,
 )
 
-class ReaderViewModel(application: Application) : AndroidViewModel(application) {
-    val controller = RecitationController.getInstance(application)
-    val bookmarksRepository = DatabaseProvider.getUserRepository(application)
-    val repository = DatabaseProvider.getQuranRepository(application)
-
-    val fontResolver = FontResolver.getInstance(application)
-
+class ReaderViewModel(application: Application) : ReaderProviderViewModel(application) {
     private val _uiState = MutableStateFlow(ReaderUiState())
     val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
 
@@ -413,7 +403,7 @@ class ReaderViewModel(application: Application) : AndroidViewModel(application) 
                 )
             }
 
-            bookmarksRepository.saveReadHistory(entity)
+            userRepository.saveReadHistory(entity)
             ShortcutUtils.pushLastVersesShortcut(context, entity)
         }
     }

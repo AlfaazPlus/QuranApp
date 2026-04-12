@@ -28,6 +28,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -98,6 +100,7 @@ private data class MushafPageMeasurementKey(
 fun ReaderLayoutPageMode(
     readerVm: ReaderViewModel,
     contentWidth: Dp,
+    nestedScrollConnection: NestedScrollConnection,
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val mushafLayoutKey by readerVm.mushafLayoutKey
@@ -213,6 +216,7 @@ fun ReaderLayoutPageMode(
             pageNo = page + 1,
             contentWidth,
             ruledPageDecoration,
+            nestedScrollConnection,
         )
     }
 }
@@ -223,6 +227,7 @@ private fun PageModePage(
     pageNo: Int,
     contentWidth: Dp,
     ruledPageDecoration: Boolean,
+    nestedScrollConnection: NestedScrollConnection,
 ) {
     val item = readerVm.pageItems[pageNo]
 
@@ -265,6 +270,7 @@ private fun PageModePage(
                 Column(
                     Modifier
                         .verticalScroll(scrollState)
+                        .nestedScroll(nestedScrollConnection)
                         .padding(top = 16.dp, bottom = 64.dp)
                         .then(
                             if (ruledPageDecoration) {

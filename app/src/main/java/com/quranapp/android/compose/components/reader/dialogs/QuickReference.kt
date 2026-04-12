@@ -23,12 +23,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,93 +42,90 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
-import com.quranapp.android.compose.components.reader.LocalRecitationState
-import com.quranapp.android.compose.components.reader.LocalRecitationStateData
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
+import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.extensions.bottomBorder
-import com.quranapp.android.compose.screens.reader.BookmarkViewerData
-import com.quranapp.android.compose.screens.reader.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.UserRepository
-import com.quranapp.android.db.relations.VerseWithDetails
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
-import com.quranapp.android.utils.reader.VerseActions
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.RegexPattern
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class QuickReferenceData(
     val slugs: Set<String>,
     val chapterNo: Int,
     val verses: String? = null,
-    val parsedVerses: QuickReferenceParsedVerses? = null
+    val parsedVerses: QuickReferenceVerses? = null
 )
 
-sealed class QuickReferenceParsedVerses {
-    data class Range(val range: IntRange) : QuickReferenceParsedVerses()
-    data class Discrete(val verseNos: List<Int>) : QuickReferenceParsedVerses()
-    data object ChapterOnly : QuickReferenceParsedVerses()
+sealed class QuickReferenceVerses(open val chapterNo: Int) {
+    data class Range(override val chapterNo: Int, val range: IntRange) :
+        QuickReferenceVerses(chapterNo)
+
+    data class Discrete(override val chapterNo: Int, val verseNos: List<Int>) :
+        QuickReferenceVerses(chapterNo)
+
+    data class ChapterOnly(override val chapterNo: Int) : QuickReferenceVerses(chapterNo)
 }
 
-private fun parseVerses(versesStr: String): QuickReferenceParsedVerses {
-    if (versesStr.isBlank()) return QuickReferenceParsedVerses.ChapterOnly
+fun parseVerses(chapterNo: Int, versesStr: String): QuickReferenceVerses {
+    if (versesStr.isBlank()) return QuickReferenceVerses.ChapterOnly(chapterNo)
 
     val parts = versesStr.split(",")
     if (parts.size > 1) {
         val ints = parts.mapNotNull { it.trim().toIntOrNull() }.sorted()
-        return QuickReferenceParsedVerses.Discrete(ints)
+        return QuickReferenceVerses.Discrete(chapterNo, ints)
     }
 
     val matcher = RegexPattern.VERSE_RANGE_PATTERN.matcher(versesStr)
     if (matcher.find() && matcher.groupCount() >= 2) {
         val from = matcher.group(1)!!.toInt()
         val to = matcher.group(2)!!.toInt()
-        return QuickReferenceParsedVerses.Range(from..to)
+        return QuickReferenceVerses.Range(chapterNo, from..to)
     }
 
     val single = versesStr.trim().toIntOrNull()
-    return if (single != null) QuickReferenceParsedVerses.Range(single..single)
-    else QuickReferenceParsedVerses.ChapterOnly
+
+    return if (single != null) QuickReferenceVerses.Range(chapterNo, single..single)
+    else QuickReferenceVerses.ChapterOnly(chapterNo)
 }
 
-private fun parsedVersesToList(parsed: QuickReferenceParsedVerses): List<Int> = when (parsed) {
-    is QuickReferenceParsedVerses.Range -> parsed.range.toList()
-    is QuickReferenceParsedVerses.Discrete -> parsed.verseNos
-    is QuickReferenceParsedVerses.ChapterOnly -> emptyList()
+private fun parsedVersesToList(parsed: QuickReferenceVerses): List<Int> = when (parsed) {
+    is QuickReferenceVerses.Range -> parsed.range.toList()
+    is QuickReferenceVerses.Discrete -> parsed.verseNos
+    is QuickReferenceVerses.ChapterOnly -> emptyList()
 }
 
-private fun parsedVersesToIntRange(parsed: QuickReferenceParsedVerses): IntRange? = when (parsed) {
-    is QuickReferenceParsedVerses.Range -> parsed.range
-    is QuickReferenceParsedVerses.Discrete -> {
+private fun parsedVersesToIntRange(parsed: QuickReferenceVerses): IntRange? = when (parsed) {
+    is QuickReferenceVerses.Range -> parsed.range
+    is QuickReferenceVerses.Discrete -> {
         if (parsed.verseNos.isNotEmpty()) parsed.verseNos.min()..parsed.verseNos.max()
         else null
     }
 
-    is QuickReferenceParsedVerses.ChapterOnly -> null
+    is QuickReferenceVerses.ChapterOnly -> null
 }
 
-private fun formatTitle(chapterNo: Int, parsed: QuickReferenceParsedVerses): String {
+private fun formatTitle(chapterNo: Int, parsed: QuickReferenceVerses): String {
     val prefix = "Quran $chapterNo:"
     return when (parsed) {
-        is QuickReferenceParsedVerses.Range -> {
+        is QuickReferenceVerses.Range -> {
             if (parsed.range.first == parsed.range.last) "$prefix${parsed.range.first}"
             else "$prefix${parsed.range.first}-${parsed.range.last}"
         }
 
-        is QuickReferenceParsedVerses.Discrete -> {
+        is QuickReferenceVerses.Discrete -> {
             prefix + parsed.verseNos.joinToString(", ")
         }
 
-        is QuickReferenceParsedVerses.ChapterOnly -> "Quran $chapterNo"
+        is QuickReferenceVerses.ChapterOnly -> "Quran $chapterNo"
     }
 }
 
@@ -147,7 +142,7 @@ fun QuickReference(
         if (data.parsedVerses != null) {
             data.parsedVerses
         } else if (data.verses != null) {
-            parseVerses(data.verses)
+            parseVerses(data.chapterNo, data.verses)
         } else {
             null
         }
@@ -157,7 +152,7 @@ fun QuickReference(
         return
     }
 
-    if (parsed is QuickReferenceParsedVerses.ChapterOnly) {
+    if (parsed is QuickReferenceVerses.ChapterOnly) {
         ChapterOnlyDialog(
             chapterNo = data.chapterNo,
             slugs = data.slugs,
@@ -170,62 +165,9 @@ fun QuickReference(
         return
     }
 
-    val context = LocalContext.current
-    val controller = RecitationController.remember() ?: return
-    val recitationState by controller.state.collectAsStateWithLifecycle()
-    val isPlaying by controller.isPlayingState.collectAsStateWithLifecycle()
-
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
 
-    var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
-    var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
-    var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
-    var quickReferenceStack by remember { mutableStateOf<QuickReferenceData?>(null) }
-
-    CompositionLocalProvider(
-        LocalVerseActions provides VerseActions(
-            onReferenceClick = { slugs, chapterNo, verses ->
-                quickReferenceStack = QuickReferenceData(slugs, chapterNo, verses)
-            },
-            onVerseOption = { verse -> verseOptionsVerse = verse },
-            onFootnoteClick = { verse, footnote ->
-                footnotePresenterData = FootnotePresenterData(
-                    verse,
-                    footnote
-                )
-            },
-            onBookmarkRequest = { chapterNo, verseRange ->
-                coroutineScope.launch {
-                    val repo = DatabaseProvider.getUserRepository(context)
-
-                    if (repo.isBookmarked(
-                            chapterNo,
-                            verseRange,
-                        )
-                    ) {
-                        bookmarkViewerData = BookmarkViewerData(
-                            chapterNo = chapterNo,
-                            fromVerse = verseRange.first,
-                            toVerse = verseRange.last,
-                            showOpenInReaderButton = false,
-                        )
-                    } else {
-                        repo.addToBookmark(
-                            chapterNo = chapterNo,
-                            verseRange,
-                            note = null
-                        )
-                    }
-                }
-            }
-        ),
-        LocalRecitationState provides LocalRecitationStateData(
-            controller = controller,
-            isAnyPlaying = isPlaying,
-            playingVerse = recitationState.currentVerse,
-        )
-    ) {
+    ReaderProvider {
         ModalBottomSheet(
             onDismissRequest = onClose,
             sheetState = sheetState,
@@ -241,40 +183,13 @@ fun QuickReference(
                 onClose = onClose,
             )
         }
-
-        VerseOptionsSheet(
-            vwd = verseOptionsVerse,
-            onFootnotes = { v ->
-                verseOptionsVerse = null
-                footnotePresenterData = FootnotePresenterData(v, null)
-            },
-        ) { verseOptionsVerse = null }
-
-        FootnotePresenter(footnotePresenterData) {
-            footnotePresenterData = null
-        }
-
-        BookmarkViewerSheet(bookmarkViewerData) {
-            bookmarkViewerData = null
-        }
     }
-
-    QuickReference(
-        data = quickReferenceStack,
-        onOpenInReader = { chapterNo, range ->
-            quickReferenceStack = null
-            ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
-        },
-        onClose = {
-            quickReferenceStack = null
-        },
-    )
 }
 
 @Composable
 private fun QuickReferenceContent(
     data: QuickReferenceData,
-    parsed: QuickReferenceParsedVerses,
+    parsed: QuickReferenceVerses,
     onOpenInReader: (Int, IntRange) -> Unit,
     onClose: () -> Unit,
 ) {

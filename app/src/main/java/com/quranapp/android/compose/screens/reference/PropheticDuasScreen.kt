@@ -196,7 +196,6 @@ private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
                 MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific),
             )
             val intent = prepareReferenceVerseIntent(
-                true,
                 refTitle,
                 resources.getString(R.string.strMsgReferenceDuas),
                 arrayOf(),

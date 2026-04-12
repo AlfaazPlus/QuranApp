@@ -18,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.coerceAtMost
@@ -70,6 +72,7 @@ sealed class ReaderLayoutItem() {
 @Composable
 fun ReaderLayout(
     readerVm: ReaderViewModel,
+    nestedScrollConnection: NestedScrollConnection,
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
@@ -102,12 +105,13 @@ fun ReaderLayout(
                 ReaderLayoutPageMode(
                     readerVm,
                     contentWidth,
+                    nestedScrollConnection,
                 )
             }
         }
 
         ReaderMode.Translation -> {}
-        else -> ReaderLayoutVerseMode(readerVm, uiState)
+        else -> ReaderLayoutVerseMode(readerVm, uiState, nestedScrollConnection)
     }
 }
 
@@ -116,10 +120,11 @@ fun ReaderLayout(
 private fun ReaderLayoutVerseMode(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
+    nestedScrollConnection: NestedScrollConnection,
 ) {
     val listState = rememberLazyListState()
     val items by readerVm.verseByVerseItems.collectAsStateWithLifecycle()
-    val allBookmarks by readerVm.bookmarksRepository.getBookmarksFlow()
+    val allBookmarks by readerVm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
     // Build only the keys that exist in the current list
@@ -218,6 +223,7 @@ private fun ReaderLayoutVerseMode(
         state = listState,
         modifier = Modifier
             .fillMaxSize()
+            .nestedScroll(nestedScrollConnection)
             .pointerInput(autoScrollSpeed) {
                 awaitPointerEventScope {
                     while (true) {

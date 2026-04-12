@@ -12,8 +12,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,9 +48,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -71,6 +75,12 @@ import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
 import kotlinx.coroutines.launch
 
+private val ReaderAppBarHeight = 86.dp
+private val ReaderHeaderHeight = 52.dp
+private val ReaderDividerHeight = 1.dp
+internal val ReaderAppBarExpandedHeight =
+    ReaderAppBarHeight + ReaderHeaderHeight + ReaderDividerHeight
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReaderAppBar(
@@ -85,12 +95,25 @@ fun ReaderAppBar(
     var showNavigatorSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(true)
 
+    val density = LocalDensity.current
+    val heightOffset = scrollBehavior.state.heightOffset
+    val visibleHeight = with(density) {
+        (ReaderAppBarExpandedHeight.toPx() + heightOffset).coerceAtLeast(0f).toDp()
+    }
+
     Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(visibleHeight)
+            .clipToBounds(),
         shadowElevation = 4.dp,
     ) {
-        Column() {
+        Column(
+            modifier = Modifier
+                .requiredHeight(ReaderAppBarExpandedHeight)
+        ) {
             CenterAlignedTopAppBar(
-                scrollBehavior = scrollBehavior,
+                modifier = Modifier.height(ReaderAppBarHeight),
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface,
@@ -127,21 +150,28 @@ fun ReaderAppBar(
             )
 
             HorizontalDivider(
+                thickness = ReaderDividerHeight,
                 color = colorScheme.outlineVariant.alpha(0.5f)
             )
 
-            when (readerMode) {
-                ReaderMode.Reading -> {
-                    StickyHeaderModeMushaf(readerVm, uiState) {
-                        showNavigatorSheet = true
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(ReaderHeaderHeight)
+            ) {
+                when (readerMode) {
+                    ReaderMode.Reading -> {
+                        StickyHeaderModeMushaf(readerVm, uiState) {
+                            showNavigatorSheet = true
+                        }
                     }
-                }
 
-                ReaderMode.Translation -> {}
+                    ReaderMode.Translation -> {}
 
-                else -> {
-                    StickyHeaderModeVbV(readerVm, uiState) {
-                        showNavigatorSheet = true
+                    else -> {
+                        StickyHeaderModeVbV(readerVm, uiState) {
+                            showNavigatorSheet = true
+                        }
                     }
                 }
             }

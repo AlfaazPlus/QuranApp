@@ -100,7 +100,6 @@ private fun ItemCard(
 
                 ReaderFactory.startReferenceVerse(
                     context,
-                    true,
                     nameTitle,
                     description,
                     arrayOf(),

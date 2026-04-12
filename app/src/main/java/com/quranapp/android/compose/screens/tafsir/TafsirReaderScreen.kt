@@ -38,7 +38,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,8 +49,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -64,7 +61,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
-import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.Keys
@@ -185,9 +182,8 @@ private fun TafsirTopBar(viewModel: TafsirReaderViewModel) {
     val chapterNo = uiState.chapterNo
     val verseNo = uiState.verseNo
 
-    TopAppBar(
-        modifier = Modifier.shadow(4.dp),
-        title = {
+    AppBar(
+        titleContent = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -212,20 +208,6 @@ private fun TafsirTopBar(viewModel: TafsirReaderViewModel) {
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center
                 )
-            }
-        },
-        navigationIcon = {
-            SimpleTooltip(
-                text = stringResource(R.string.strLabelBack)
-            ) {
-                IconButton(
-                    onClick = { backDispatcher?.onBackPressed() },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.dr_icon_arrow_left),
-                        contentDescription = stringResource(R.string.strLabelBack),
-                    )
-                }
             }
         },
         actions = {
@@ -475,7 +457,10 @@ private fun TafsirBottomNavigation() {
     val verseNo = uiState.verseNo
     val hasNext = verseNo < totalVerses
 
-    Surface(color = colorScheme.surface, shadowElevation = 12.dp) {
+    Surface(
+        color = colorScheme.surfaceContainer,
+        shadowElevation = 12.dp,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

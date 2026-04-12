@@ -51,7 +51,7 @@ fun MainBottomNavigationBar() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colorScheme.surface)
+            .background(colorScheme.surfaceContainer)
             .windowInsetsPadding(WindowInsets.navigationBars)
     ) {
         Row(

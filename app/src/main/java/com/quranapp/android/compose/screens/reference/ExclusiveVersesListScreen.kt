@@ -247,7 +247,6 @@ private fun DuaListItem(verse: ExclusiveVerse) {
                 )
                 ReaderFactory.startReferenceVerse(
                     context,
-                    true,
                     nameTitle,
                     description,
                     arrayOf(),
@@ -347,7 +346,6 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
         onClick = {
             ReaderFactory.startReferenceVerse(
                 context,
-                true,
                 verse.title,
                 verse.description,
                 arrayOf(),
@@ -416,7 +414,6 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
             )
             ReaderFactory.startReferenceVerse(
                 context,
-                true,
                 nameTitle,
                 description,
                 arrayOf(),

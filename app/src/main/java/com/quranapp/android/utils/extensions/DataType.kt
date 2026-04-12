@@ -137,5 +137,8 @@ val IntRange.normalized: IntRange
 val IntRange.asPair: Pair<Int, Int>
     get() = Pair(first, last)
 
+val IntRange.isSingleValue: Boolean
+    get() = first == last
+
 val Pair<Int, Int>.asIntRange: IntRange
     get() = IntRange(first, second)

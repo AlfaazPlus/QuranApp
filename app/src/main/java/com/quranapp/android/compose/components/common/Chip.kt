@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.components.common
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -17,7 +17,7 @@ fun Chip(
     onClick: () -> Unit
 ) {
     FilterChip(
-        modifier = modifier.padding(end = 8.dp, bottom = 8.dp),
+        modifier = modifier,
         selected = selected,
         enabled = enabled,
         onClick = onClick,

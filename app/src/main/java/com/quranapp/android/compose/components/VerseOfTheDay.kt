@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -45,14 +44,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.compose.components.common.Loader
-import com.quranapp.android.compose.screens.reader.BookmarkViewerData
-import com.quranapp.android.compose.screens.reader.BookmarkViewerSheet
+import com.quranapp.android.compose.components.settings.DailyReminderSheet
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.FontResolver
@@ -85,17 +87,40 @@ fun VerseOfTheDay(
     val type = typography
 
     val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
-    val userRepository = remember(context) { DatabaseProvider.getUserRepository(context) }
     val translationFactory = QuranTranslationFactory.remember(context)
     val fontResolver = FontResolver.remember()
 
-    val arabicEnabled = ReaderPreferences.observeArabicTextEnabled()
-    val arabicTextMultiplier = ReaderPreferences.observeArabicTextSizeMultiplier()
-    val translationTextMultiplier = ReaderPreferences.observeTranlationTextSizeMultiplier()
-    val scriptCode = ReaderPreferences.observeQuranScript()
-    val translationSlugs = ReaderPreferences.observeTranslations()
+    val prefs by DataStoreManager.flowMultiple(
+        ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
+        ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
+        ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
+        ReaderPreferences.KEY_SCRIPT,
+        ReaderPreferences.KEY_TRANSLATIONS,
+        VersePreferences.KEY_VOTD_REMINDER_ENABLED,
+    ).collectAsStateWithLifecycle(null)
+
+    val preferences = prefs ?: return
+
+    val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
+    val arabicTextMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
+    val translationTextMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
+    val scriptCode = preferences.get(ReaderPreferences.KEY_SCRIPT)
+    val translationSlugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
+    val votdEnabled = preferences.get(VersePreferences.KEY_VOTD_REMINDER_ENABLED)
 
     var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
+    var showDailyReminderSheet by remember { mutableStateOf(false) }
+
+    BookmarkViewerSheet(bookmarkViewerData) {
+        bookmarkViewerData = null
+    }
+
+    DailyReminderSheet(
+        isOpen = showDailyReminderSheet,
+        onClose = {
+            showDailyReminderSheet = false
+        },
+    )
 
     val state by produceState<VerseOfTheDayState?>(
         initialValue = null,
@@ -129,16 +154,13 @@ fun VerseOfTheDay(
         }
     }
 
-    BookmarkViewerSheet(bookmarkViewerData) {
-        bookmarkViewerData = null
-    }
-
     val votdState = state
     if (fontResolver == null || votdState == null) {
         VerseOfTheDayLoading(modifier)
         return
     }
 
+    val userRepository = remember(context) { DatabaseProvider.getUserRepository(context) }
     val verse = votdState.verse
     val isBookmarked by userRepository.isBookmarkedFlow(
         verse.chapterNo,
@@ -390,7 +412,24 @@ fun VerseOfTheDay(
                             contentDescription = null,
                             modifier = Modifier.size(23.dp),
                             tint = if (isBookmarked) colorScheme.primary else {
-                                Color.White.alpha(0.8f)
+                                Color.White.alpha(0.7f)
+                            },
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            showDailyReminderSheet = true
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp),
+                            tint = if (votdEnabled) colorScheme.primary else {
+                                Color.White.alpha(0.7f)
                             },
                         )
                     }

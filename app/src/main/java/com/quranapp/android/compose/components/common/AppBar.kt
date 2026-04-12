@@ -41,7 +41,8 @@ import com.quranapp.android.compose.theme.alpha
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(
-    title: String,
+    title: String? = null,
+    titleContent: (@Composable () -> Unit)? = null,
     bgColor: Color? = null,
     color: Color? = null,
     searchQuery: String = "",
@@ -70,10 +71,11 @@ fun AppBar(
     TopAppBar(
         modifier = Modifier.shadow(4.dp),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = bgColor ?: Color.Unspecified,
-            navigationIconContentColor = color ?: Color.Unspecified,
-            titleContentColor = color ?: Color.Unspecified,
-            actionIconContentColor = color ?: Color.Unspecified,
+            containerColor = bgColor ?: colorScheme.surfaceContainer,
+            scrolledContainerColor = bgColor ?: colorScheme.surfaceContainer,
+            navigationIconContentColor = color ?: colorScheme.onSurface,
+            titleContentColor = color ?: colorScheme.onSurface,
+            actionIconContentColor = color ?: colorScheme.onSurface,
         ),
         title = {
             val contentColor = LocalContentColor.current
@@ -85,7 +87,9 @@ fun AppBar(
                     contentColor = contentColor,
                     modifier = Modifier.focusRequester(searchFocusRequester),
                 )
-            } else {
+            } else if (titleContent !=null) {
+                titleContent()
+            } else if(title != null){
                 Text(text = title)
             }
         },
