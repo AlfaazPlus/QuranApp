@@ -15,9 +15,10 @@ import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.univ.FileUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -55,12 +56,14 @@ class RecitationModelManager private constructor(
     private val translationLoadLock = Mutex()
 
     fun migrateLegacyData() {
-        // There is nothing to migrate as the new implementation is completely different
-        // and does not rely on the old data structure. We can simply delete the old data
-        // to free up space.
-        val legacyDir = File(DIR_NAME_LEGACY)
-        if (legacyDir.exists()) {
-            legacyDir.deleteRecursively()
+        CoroutineScope(Dispatchers.IO).launch {
+            // There is nothing to migrate as the new implementation is completely different
+            // and does not rely on the old data structure. We can simply delete the old data
+            // to free up space.
+            val legacyDir = File(DIR_NAME_LEGACY)
+            if (legacyDir.exists()) {
+                legacyDir.deleteRecursively()
+            }
         }
     }
 
@@ -280,6 +283,39 @@ class RecitationModelManager private constructor(
         }
 
     private fun getRecitationsDir() = FileUtils.makeAndGetAppResourceDir(DIR_NAME)
+
+    /**
+     * Counts non-empty `.mp3` files under per-reciter dirs and how many reciter dirs have at least one
+     * (excludes `timing_metadata` and manifest JSON files).
+     */
+    fun getDownloadedAudioStats(): Pair<Int, Int> {
+        val root = getRecitationsDir()
+        var mp3Count = 0
+        var recitersWithAudio = 0
+        root.listFiles()?.filter { it.isDirectory && it.name != "timing_metadata" }?.forEach { dir ->
+            var hasMp3 = false
+            dir.walkTopDown().forEach { f ->
+                if (f.isFile && f.length() > 0L && f.name.endsWith(".mp3", ignoreCase = true)) {
+                    mp3Count++
+                    hasMp3 = true
+                }
+            }
+            if (hasMp3) recitersWithAudio++
+        }
+        return mp3Count to recitersWithAudio
+    }
+
+    /** Removes all downloaded chapter audio (and any other files) for this reciter id. */
+    fun deleteReciterAudioDirectory(reciterId: String) {
+        val dir = File(getRecitationsDir(), reciterId)
+        if (dir.exists()) {
+            dir.deleteRecursively()
+        }
+        val timing = getRecitationTimingFile(reciterId)
+        if (timing.exists()) {
+            timing.delete()
+        }
+    }
 
     fun getRecitationAudioFile(reciterId: String, chapterNo: Int): File {
         val filename = String.format(

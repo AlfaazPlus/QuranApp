@@ -11,7 +11,7 @@ import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
 import com.quranapp.android.utils.app.AppActions.checkForResourcesVersions
 import com.quranapp.android.utils.app.AppActions.scheduleActions
 import com.quranapp.android.utils.app.UpdateManager
-import com.quranapp.android.utils.sharedPrefs.SPAppActions.getRequireOnboarding
+import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.views.reader.updateAllVotdWidgets
 
 class MainActivity : BaseActivity() {
@@ -30,8 +30,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initCreate(savedInstanceState: Bundle?) {
-
-
         mUpdateManager = UpdateManager(this)
         mUpdateManager!!.refreshAppUpdatesJson()
 
@@ -72,7 +70,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    private val isOnboardingRequired get() = getRequireOnboarding(this)
+    private val isOnboardingRequired get() = SPAppActions.getRequireOnboarding(this)
 
     private fun initOnboarding() {
         launchActivity(ActivityOnboarding::class.java)

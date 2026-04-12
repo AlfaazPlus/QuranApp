@@ -424,6 +424,7 @@
     <string name="onboardDescTheme">You can always change this later.</string>
     <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
     <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
+    <string name="onboardDescTafsir">Select a commentary to read alongside verses. You can download and manage tafsirs in settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
     <string name="favourites">Favourites</string>

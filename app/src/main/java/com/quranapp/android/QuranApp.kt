@@ -12,6 +12,7 @@ import com.quranapp.android.db.bookmark.UserDataMigrationManager
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
+import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.viewModels.ReaderIndexViewModel
 
@@ -43,10 +44,11 @@ class QuranApp : Application() {
 
         // Handler for uncaught exceptions
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
-        ReaderIndexViewModel.migrateFavourites(this)
+
+        // Migrations
         ReaderPreferences.migrateFromLegacyIfNeeded(this)
-        val migrationManager = UserDataMigrationManager(this)
-        migrationManager.migrateBookmarksIfNeeded()
-        migrationManager.migrateReadHistoryIfNeeded()
+        RecitationModelManager.get(this).migrateLegacyData()
+        ReaderIndexViewModel.migrateFavourites(this)
+        UserDataMigrationManager(this).migrate()
     }
 }

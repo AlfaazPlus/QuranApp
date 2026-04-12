@@ -24,7 +24,7 @@ class UserDataMigrationManager(
         private const val KEY_READ_HISTORY_MIGRATED = "read_history_migrated"
     }
 
-    fun migrateBookmarksIfNeeded() {
+    private fun migrateBookmarksIfNeeded() {
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
             val alreadyMigrated = prefs.getBoolean(KEY_BOOKMARKS_MIGRATED, false)
@@ -64,7 +64,7 @@ class UserDataMigrationManager(
         }
     }
 
-    fun migrateReadHistoryIfNeeded() {
+    private fun migrateReadHistoryIfNeeded() {
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
@@ -81,5 +81,10 @@ class UserDataMigrationManager(
                 putBoolean(KEY_READ_HISTORY_MIGRATED, true)
             }
         }
+    }
+
+    fun migrate() {
+        migrateBookmarksIfNeeded()
+        migrateReadHistoryIfNeeded()
     }
 }
