@@ -112,7 +112,11 @@ fun RecitationPlayerSheet(
     )
 
     val hideOnScrollOffset =
-        if (expanded) 0.dp else MINI_PLAYER_HEIGHT_DP.dp * barsCollapsedFraction.coerceIn(0f, 1f)
+        if (expanded) {
+            0.dp
+        } else {
+            (MINI_PLAYER_HEIGHT_DP.dp + collapsedBottomInset) * barsCollapsedFraction.coerceIn(0f, 1f)
+        }
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val fullHeight = maxHeight
