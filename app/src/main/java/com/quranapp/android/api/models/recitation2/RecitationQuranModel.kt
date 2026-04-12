@@ -1,7 +1,7 @@
 package com.quranapp.android.api.models.recitation2
 
+import com.quranapp.android.compose.utils.appLocale
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 data class RecitationQuranModel(
@@ -9,7 +9,10 @@ data class RecitationQuranModel(
     val styleTranslations: Map<String, String> = mapOf(),
 ) : RecitationModelBase() {
     fun getStyleName(): String? {
-        return styleTranslations[Locale.getDefault().toLanguageTag()] ?: this.style
+        val locale = appLocale()
+        return styleTranslations[locale.toLanguageTag()]
+            ?: styleTranslations[locale.language]
+            ?: this.style
     }
 
     override fun toString(): String {

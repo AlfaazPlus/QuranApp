@@ -44,10 +44,10 @@ import com.quranapp.android.activities.ActivityChapInfo
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.quran.RevelationType
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.Locale
 
 @Composable
 fun ChapterInfoCard(chapterNo: Int) {
@@ -132,7 +132,7 @@ fun ChapterInfoCard(chapterNo: Int) {
                         .clickable {
                             val intent = Intent(context, ActivityChapInfo::class.java).apply {
                                 putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-                                putExtra(Keys.KEY_LANGUAGE, Locale.getDefault().toLanguageTag())
+                                putExtra(Keys.KEY_LANGUAGE, appLocale().toLanguageTag())
                             }
                             context.startActivity(intent)
                         }

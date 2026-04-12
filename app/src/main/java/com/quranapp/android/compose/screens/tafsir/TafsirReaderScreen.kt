@@ -50,6 +50,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -184,6 +186,7 @@ private fun TafsirTopBar(viewModel: TafsirReaderViewModel) {
     val verseNo = uiState.verseNo
 
     TopAppBar(
+        modifier = Modifier.shadow(4.dp),
         title = {
             Column(
                 modifier = Modifier
@@ -472,7 +475,7 @@ private fun TafsirBottomNavigation() {
     val verseNo = uiState.verseNo
     val hasNext = verseNo < totalVerses
 
-    Surface(color = colorScheme.surface, shadowElevation = 5.dp) {
+    Surface(color = colorScheme.surface, shadowElevation = 12.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

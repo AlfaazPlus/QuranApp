@@ -41,6 +41,8 @@ object Keys {
 
     const val KEY_EXTRA_TITLE = "title"
 
+    const val KEY_EXCLUSIVE_VERSES_KIND = "exclusive_verses.kind"
+
     const val FAVOURITE_CHAPTERS = "favourite_chapters"
 
     const val NAV_DESTINATION = "nav_destination"

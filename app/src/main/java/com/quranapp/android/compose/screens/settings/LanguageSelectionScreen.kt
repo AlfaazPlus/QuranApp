@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
-import androidx.activity.compose.LocalActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -31,17 +31,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import com.quranapp.android.R
-import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.utils.normalizedLanguageTag
 import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 
 @Composable
 fun LanguageSelectionScreen() {
     val context = LocalContext.current
-    val activity = LocalActivity.current
     val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
     val availableLocaleNames = context.getStringArray(R.array.availableLocalesNames)
 
@@ -50,7 +50,9 @@ fun LanguageSelectionScreen() {
 
     fun save(locale: String) {
         SPAppConfigs.setLocale(context, locale)
-        (activity as? BaseActivity)?.restartMainActivity()
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(locale.normalizedLanguageTag())
+        )
     }
 
     Scaffold(

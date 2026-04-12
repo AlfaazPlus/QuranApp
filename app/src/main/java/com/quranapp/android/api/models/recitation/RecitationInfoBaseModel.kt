@@ -1,8 +1,8 @@
 package com.quranapp.android.api.models.recitation
 
+import com.quranapp.android.compose.utils.appLocale
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.Locale
 
 @Serializable
 open class RecitationInfoBaseModel : java.io.Serializable {
@@ -20,7 +20,10 @@ open class RecitationInfoBaseModel : java.io.Serializable {
 
 
     fun getReciterName(): String {
-        return translations[Locale.getDefault().toLanguageTag()] ?: this.reciter
+        val locale = appLocale()
+        return translations[locale.toLanguageTag()]
+            ?: translations[locale.language]
+            ?: this.reciter
     }
 
     override fun equals(other: Any?): Boolean {

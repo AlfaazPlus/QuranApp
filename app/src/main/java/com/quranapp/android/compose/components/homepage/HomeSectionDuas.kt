@@ -20,22 +20,21 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.activities.reference.ActivityDua
+import com.quranapp.android.activities.reference.ActivityExclusiveVerses
 import com.quranapp.android.activities.reference.ActivityPropheticDuas
 import com.quranapp.android.components.quran.ExclusiveVerse
-import com.quranapp.android.components.quran.QuranDua
+import com.quranapp.android.components.quran.ExclusiveVersesDataset
+import com.quranapp.android.components.quran.QuranExclusiveVerses
+import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.Keys
@@ -43,9 +42,7 @@ import com.quranapp.android.utils.univ.Keys
 @Composable
 fun HomeSectionDuas() {
     val context = LocalContext.current
-    val verses by produceState<List<ExclusiveVerse>?>(null, context) {
-        value = QuranDua.get(context).subList(0, 6)
-    }
+    val verses = QuranExclusiveVerses.observe(ExclusiveVersesDataset.Dua, 0..6)
 
     if (verses == null) return
 
@@ -59,7 +56,9 @@ fun HomeSectionDuas() {
             icon = R.drawable.dr_icon_rabbana,
             title = R.string.strTitleFeaturedDuas,
             onViewAllClick = {
-                context.startActivity(Intent(context, ActivityDua::class.java))
+                context.startActivity(
+                    ActivityExclusiveVerses.intent(context, ExclusiveVersesScreenKind.Dua),
+                )
             }
         )
 

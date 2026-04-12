@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +34,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
@@ -66,11 +64,6 @@ private val PlayerSubtitleBlue = Color(0xFF7EC8E3)
 private val PlayerBottomBarBg = Color(0xFF0C0C10)
 private val PlayerHeartSyncOn = Color(0xFF4DD0E1)
 
-/**
- * @param collapsedBottomInset Extra space above the bottom edge when the player is collapsed
- *   (e.g. main tab bar height). Animates to zero while expanding so the sheet reaches full height
- *   without jumping.
- */
 @Composable
 fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
@@ -111,7 +104,7 @@ fun RecitationPlayerSheet(
     }
 
     val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp + navBarBottom
+    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp /*+ navBarBottom*/
 
     val targetBottomInset = if (expanded) 0.dp else collapsedBottomInset
     val animatedBottomInset by animateDpAsState(
@@ -196,7 +189,6 @@ private fun PlayerContainer(
         ) { isExpanded ->
             if (isExpanded) {
                 ExpandedPlayer(
-                    modifier = Modifier.navigationBarsPadding(),
                     state = state,
                     isPlaying = isPlaying,
                     isLoading = isLoading,
@@ -205,7 +197,6 @@ private fun PlayerContainer(
                 )
             } else {
                 MiniPlayer(
-                    modifier = Modifier.navigationBarsPadding(),
                     state = state,
                     controller = controller,
                     isPlaying = isPlaying,

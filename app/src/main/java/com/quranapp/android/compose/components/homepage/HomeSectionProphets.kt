@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,17 +20,15 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
@@ -43,11 +42,7 @@ import java.text.MessageFormat
 @Composable
 fun HomeSectionProphets() {
     val context = LocalContext.current
-    val verses by produceState<List<QuranProphet.Prophet>?>(null, context) {
-        QuranProphet.prepareInstance(context) {
-            value = it.prophets.subList(0, 6)
-        }
-    }
+    val verses = QuranProphet.observe(0..6)
 
     if (verses == null) return
 
@@ -70,7 +65,7 @@ fun HomeSectionProphets() {
             contentPadding = PaddingValues(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items(verses!!, key = { it.name }) {
+            items(verses, key = { it.name }) {
                 ItemCard(it)
             }
         }
@@ -88,6 +83,7 @@ private fun ItemCard(
     Surface(
         modifier = Modifier
             .width(280.dp)
+            .height(96.dp)
             .clip(shape = shapes.medium)
             .border(1.dp, colorScheme.outline.alpha(0.3f), shapes.medium)
             .clickable {
@@ -120,7 +116,7 @@ private fun ItemCard(
                 painter = painterResource(id = prophet.iconRes),
                 contentDescription = prophet.name,
                 modifier = Modifier
-                    .size(72.dp),
+                    .size(64.dp),
                 contentScale = ContentScale.Fit
             )
 
@@ -132,21 +128,15 @@ private fun ItemCard(
                 Text(
                     text = "${prophet.name} (${prophet.honorific})",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
 
                 Text(
                     text = "English: ${prophet.nameEn}",
                     fontSize = 14.sp
                 )
-
-                prophet.inChapters?.let {
-                    Text(
-                        text = it,
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                }
             }
         }
     }

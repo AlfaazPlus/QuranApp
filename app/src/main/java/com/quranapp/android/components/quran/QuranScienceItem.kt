@@ -1,7 +1,7 @@
 package com.quranapp.android.components.quran
 
+import com.quranapp.android.compose.utils.appLocale
 import java.io.Serializable
-import java.util.Locale
 
 data class QuranScienceItem(
     private val title: String,
@@ -11,7 +11,7 @@ data class QuranScienceItem(
     val translations: Map<String, String>
 ) : Serializable {
     fun getTitle(): String {
-        val locale = Locale.getDefault()
+        val locale = appLocale()
         val langCode1 = with(locale.language) {
             // Hosted weblate uses "id" for Indonesian but Android uses "in"
             if (this == "in") "id" else this

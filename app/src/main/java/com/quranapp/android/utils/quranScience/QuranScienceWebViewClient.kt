@@ -12,12 +12,12 @@ import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
 import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
-import java.util.Locale
 
 
 open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceContent) :
@@ -44,7 +44,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         val host = uri.host ?: return null
         val ctx = view.context
         var data: InputStream? = null
-        val uriStr = uri.toString().lowercase(Locale.getDefault())
+        val uriStr = uri.toString().lowercase(appLocale())
         when (host) {
             "assets-file" -> data =
                 ctx.assets.open(uri.toString().substring("https://assets-file/".length))

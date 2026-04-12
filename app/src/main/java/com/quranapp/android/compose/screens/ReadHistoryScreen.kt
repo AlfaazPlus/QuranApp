@@ -307,7 +307,7 @@ private fun HistoryDeleteDialog(
 @Composable
 fun ReadHistoryEntity.titleLabel(chapterName: String): String {
     if (readerMode == ReaderMode.Reading.value) {
-        return pageNo?.let { stringResource(R.string.strLabelPageNo, pageNo) } ?: ""
+        return pageNo?.let { stringResource(R.string.strLabelPageNo, pageNo) } ?: "-"
     } else {
         return when (ReadType.fromValue(readType)) {
             ReadType.Chapter -> stringResource(
@@ -330,7 +330,7 @@ fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
 
     }
     if (readerMode == ReaderMode.Reading.value) {
-        return mushafCode?.getQuranScriptName()
+        return mushafCode?.getQuranScriptName() ?: "-"
     } else {
         return when (ReadType.fromValue(readType)) {
             ReadType.Chapter -> verseLabel

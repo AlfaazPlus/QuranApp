@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -67,6 +68,7 @@ fun AppBar(
     }
 
     TopAppBar(
+        modifier = Modifier.shadow(4.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = bgColor ?: Color.Unspecified,
             navigationIconContentColor = color ?: Color.Unspecified,

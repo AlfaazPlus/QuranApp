@@ -13,6 +13,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.toArgb
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.compose.components.QuickReferenceHost
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -28,7 +29,6 @@ import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 class ActivityQuranScienceContent : BaseActivity() {
     private lateinit var binding: ActivityChapterInfoBinding
@@ -136,10 +136,11 @@ class ActivityQuranScienceContent : BaseActivity() {
 
 
         val fallbackLangCode = "en"
-        val currentLangCode = with(Locale.getDefault().language) {
+        val locale = appLocale()
+        val currentLangCode = with(locale.language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }
-        val currentCountry = Locale.getDefault().country
+        val currentCountry = locale.country
 
         val fullPath0 = "science/topics/$currentLangCode-r$currentCountry"
         val fullPath1 = "science/topics/$currentLangCode"

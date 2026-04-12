@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.homepage
 
-import android.content.Intent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +20,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -35,18 +32,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.activities.reference.ActivitySolutionVerses
+import com.quranapp.android.activities.reference.ActivityExclusiveVerses
 import com.quranapp.android.components.quran.ExclusiveVerse
-import com.quranapp.android.components.quran.QuranSolutions
+import com.quranapp.android.components.quran.ExclusiveVersesDataset
+import com.quranapp.android.components.quran.QuranExclusiveVerses
+import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 @Composable
 fun HomeSectionSolutions() {
     val context = LocalContext.current
-    val verses by produceState<List<ExclusiveVerse>?>(null, context) {
-        value = QuranSolutions.get(context).subList(0, 6)
-    }
+    val verses = QuranExclusiveVerses.observe(ExclusiveVersesDataset.Solution, 0..6)
 
     if (verses == null) return
 
@@ -60,7 +57,9 @@ fun HomeSectionSolutions() {
             icon = R.drawable.dr_icon_read_quran,
             title = R.string.titleSolutionVerses,
             onViewAllClick = {
-                context.startActivity(Intent(context, ActivitySolutionVerses::class.java))
+                context.startActivity(
+                    ActivityExclusiveVerses.intent(context, ExclusiveVersesScreenKind.Solution),
+                )
             }
         )
 

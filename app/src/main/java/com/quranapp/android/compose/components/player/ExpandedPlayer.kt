@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.player
 
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -38,6 +39,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -54,10 +56,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
@@ -66,6 +70,7 @@ import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
 import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
 import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
@@ -73,7 +78,6 @@ import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import java.util.Locale
 
 val PlayerBgColor = Color(0xFF14141C)
 val PlayerContentColor = Color.White
@@ -90,14 +94,35 @@ fun ExpandedPlayer(
     isLoading: Boolean,
     controller: RecitationController,
     onCollapse: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val verse = state.currentVerse
     val settings = state.settings
     var mode by remember { mutableStateOf(ExpandedPlayerMode.Controls) }
 
+    val view = LocalView.current
+
+    if (!view.isInEditMode) {
+        DisposableEffect(Unit) {
+            val window = (view.context as Activity).window
+            val controller = WindowCompat.getInsetsController(window, view)
+
+            val previousLightNav = controller.isAppearanceLightNavigationBars
+            val previousLightStatus = controller.isAppearanceLightStatusBars
+
+            controller.isAppearanceLightNavigationBars = false
+            controller.isAppearanceLightStatusBars = false
+
+            onDispose {
+                controller.isAppearanceLightNavigationBars = previousLightNav
+                controller.isAppearanceLightStatusBars = previousLightStatus
+            }
+        }
+    }
+
     Background(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier
+            .navigationBarsPadding()
+            .fillMaxSize(),
     ) {
         when (mode) {
             ExpandedPlayerMode.Controls -> {
@@ -496,7 +521,7 @@ private fun Configurations(
 
             PlayerConfigButton(
                 text = stringResource(R.string.playbackSpeed),
-                subtext = String.format(Locale.getDefault(), "%.1fx", speed),
+                subtext = String.format(appLocale(), "%.1fx", speed),
                 icon = painterResource(R.drawable.icon_playback_speed),
                 onClick = {
                     showPlaybackSpeedOptions = true

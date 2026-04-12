@@ -10,6 +10,7 @@ import com.quranapp.android.api.models.recitation.RecitationTranslationInfoModel
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.sharedPrefs.SPReader
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -204,7 +205,7 @@ object RecitationManager {
                     reciterModel.urlHost = model.urlInfo.commonHost
                 }
                 reciterModel.langName =
-                    Locale(reciterModel.langCode).getDisplayName(Locale.getDefault())
+                    Locale(reciterModel.langCode).getDisplayName(appLocale())
                 reciterModel.isChecked = reciterModel.slug == savedSlug
             }
 

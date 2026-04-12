@@ -1,9 +1,9 @@
 package com.quranapp.android.components.quran.subcomponents
 
 import android.content.Context
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.verse.VerseUtils
 import java.io.Serializable
-import java.util.Locale
 
 
 @Deprecated("migrate to QuranRepository")
@@ -78,7 +78,7 @@ class Verse : Serializable {
 
     override fun toString(): String {
         return String.format(
-            Locale.getDefault(),
+            appLocale(),
             "VERSE: ChapterNo - %d, VerseNo - %d\n",
             chapterNo,
             verseNo

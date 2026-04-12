@@ -2,47 +2,50 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranPropheticDua
 import com.quranapp.android.components.quran.QuranPropheticDua.Prophet
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareVersesList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
-import java.util.concurrent.atomic.AtomicReference
 
 object QuranPropheticDuasParser {
+    private data class CachedPropheticDuas(
+        val localeTag: String,
+        val quranPropheticDua: QuranPropheticDua,
+    )
+
+    private val cacheLock = Any()
+    private var cached: CachedPropheticDuas? = null
+
     private const val PROPHETS_TAG_PROPHET = "prophet"
     private const val PROPHETS_ATTR_ORDER = "order"
     private const val PROPHETS_ATTR_NAME = "name"
     private const val PROPHETS_ATTR_ICON_RES = "drawable"
 
-    fun parseDua(
-        context: Context,
-        instanceRef: AtomicReference<QuranPropheticDua>,
-        callback: () -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val parsedDuas = parseDuasInternal(
-                    context,
-                )
+    /**
+     * Parsed strings and chapter labels depend on [appLocale]. Cached per locale tag.
+     */
+    suspend fun parsePropheticDuas(context: Context): QuranPropheticDua {
+        val localeTag = appLocale().toLanguageTag()
 
-                instanceRef.set(parsedDuas)
-            } catch (e: Exception) {
-                Log.saveError(e, "QuranPropheticDuasParser.parseDua")
+        synchronized(cacheLock) {
+            cached?.takeIf { it.localeTag == localeTag }?.let {
+                return it.quranPropheticDua
             }
-
-            withContext(Dispatchers.Main) { callback() }
         }
+
+        val parsed = parseDuasInternal(context)
+
+        synchronized(cacheLock) {
+            cached = CachedPropheticDuas(localeTag, parsed)
+        }
+
+        return parsed
     }
 
     @Throws(XmlPullParserException::class, IOException::class)

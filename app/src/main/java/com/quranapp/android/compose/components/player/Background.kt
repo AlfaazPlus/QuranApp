@@ -18,9 +18,10 @@ fun Background(
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF09090F))
+            .then(modifier)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val w = size.width

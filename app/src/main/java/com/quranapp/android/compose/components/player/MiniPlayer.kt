@@ -61,7 +61,6 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun MiniPlayer(
-    modifier: Modifier = Modifier,
     controller: RecitationController,
     state: RecitationServiceState,
     isPlaying: Boolean,
@@ -87,7 +86,7 @@ fun MiniPlayer(
     val (positionMs, durationMs) = rememberTimestamp(isPlaying, controller)
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(PlayerBgColor)
             .clickable(

@@ -35,11 +35,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.QuranRepository
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import java.util.Locale
 
 private data class FeaturedQuranModel(
     val chapterNo: Int,
@@ -157,7 +157,7 @@ private fun getFeaturedQuranModels(): State<List<FeaturedQuranModel>?> {
         val miniInfoFormat = resources.getString(R.string.strLabelVerseWithChapNameWithBar)
         val miniInfoChapFormat = resources.getString(R.string.strLabelFeatureQuranMiniInfo)
 
-        val locale = Locale.getDefault()
+        val locale = appLocale()
 
         val models = List(itemsArray.length()) { i ->
             val raw = itemsArray.getString(i)!!

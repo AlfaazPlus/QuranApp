@@ -1,6 +1,7 @@
 package com.quranapp.android.db
 
 import android.content.Context
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
@@ -17,7 +18,6 @@ import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import java.util.Locale
 
 class QuranRepository(
     @Suppress("UNUSED_PARAMETER") context: Context,
@@ -517,9 +517,10 @@ class QuranRepository(
     suspend fun getChapterName(chapterNo: Int): String {
         if (chapterNo <= 0) return ""
 
-        val langCode = Locale.getDefault().language
+        val locale = appLocale()
 
-        return surahDao.getLocalization(chapterNo, langCode)?.name?.takeIf { it.isNotBlank() }
+        return surahDao.getLocalization(chapterNo, locale.toLanguageTag())?.name?.takeIf { it.isNotBlank() }
+            ?: surahDao.getLocalization(chapterNo, locale.language)?.name?.takeIf { it.isNotBlank() }
             ?: surahDao.getLocalization(chapterNo, "en")?.name.orEmpty()
     }
 

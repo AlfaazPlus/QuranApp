@@ -4,8 +4,6 @@
 
 package com.quranapp.android.activities.base;
 
-import static com.quranapp.android.utils.sharedPrefs.SPAppConfigs.LOCALE_DEFAULT;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,7 +25,6 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.annotation.StyleRes;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedListener;
@@ -41,9 +38,6 @@ import com.quranapp.android.activities.MainActivity;
 import com.quranapp.android.interfaceUtils.ActivityResultStarter;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver;
 import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs;
-
-import java.util.Locale;
 
 public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener,
     ActivityResultStarter {
@@ -61,67 +55,7 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
 
     private Context initBeforeBaseAttach(Context base) {
         adjustFontScale(base);
-        return updateBaseContextLocale(base);
-    }
-
-    private Context updateBaseContextLocale(Context context) {
-        String language = SPAppConfigs.getLocale(context);
-
-        if (LOCALE_DEFAULT.equals(language)) {
-            return context;
-        }
-
-        Locale locale;
-
-        if (language.contains("-r")) {
-            String[] parts = language.split("-r");
-            locale = new Locale(parts[0], parts[1]);
-        } else {
-            locale = new Locale(language);
-        }
-
-        Locale.setDefault(locale);
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            return updateResourcesLocale(context, locale);
-        }
-        return updateResourcesLocaleLegacy(context, locale);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private Context updateResourcesLocale(Context context, Locale locale) {
-        Configuration configuration = new Configuration(context.getResources().getConfiguration());
-        configuration.setLocale(locale);
-        return context.createConfigurationContext(configuration);
-    }
-
-    private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
-        Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        return context;
-    }
-
-    @Override
-    public void applyOverrideConfiguration(Configuration overrideConfiguration) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
-            setLocale(overrideConfiguration.locale);
-        }
-        super.applyOverrideConfiguration(overrideConfiguration);
-    }
-
-    protected void setLocale(Locale locale) {
-        SPAppConfigs.setLocale(this, locale.toLanguageTag());
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-            resources.updateConfiguration(configuration, displayMetrics);
-        }
+        return base;
     }
 
     private void adjustFontScale(Context context) {
@@ -134,16 +68,6 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
             wm.getDefaultDisplay().getMetrics(metrics);
             metrics.scaledDensity = configuration.fontScale * metrics.density;
             resources.updateConfiguration(configuration, metrics);
-        }
-    }
-
-    public void hideSoftKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isAcceptingText()) {
-            View currentFocus = getCurrentFocus();
-            if (currentFocus != null) {
-                imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-            }
         }
     }
 

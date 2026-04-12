@@ -68,7 +68,6 @@ fun TextSizeSheet(isOpen: Boolean, onDismiss: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.85f)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
@@ -88,8 +87,6 @@ private fun ArabicTextSizeSlider() {
     val max = TEXT_SIZE_MAX_PROGRESS.toFloat()
     val steps = max.toInt() - min.toInt()
     val progress = textSizeMult * 100
-
-    Log.d(min, max, steps)
 
     ListItemCategoryLabel(stringResource(R.string.strTitleReaderTextSizeArabic))
 

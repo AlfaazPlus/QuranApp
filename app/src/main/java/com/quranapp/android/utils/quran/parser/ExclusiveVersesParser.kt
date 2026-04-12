@@ -2,14 +2,49 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.ExclusiveVerse
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.db.DatabaseProvider
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
-import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 
 object ExclusiveVersesParser {
+
+    private data class CachedVerses(
+        val localeTag: String,
+        val verses: List<ExclusiveVerse>,
+    )
+
+    private val cache = ConcurrentHashMap<String, CachedVerses>()
+    private val locks = ConcurrentHashMap<String, Mutex>()
+
+    private fun lockFor(filename: String): Mutex = locks.getOrPut(filename) { Mutex() }
+
     suspend fun parseFromAssets(
         context: Context,
-        filename: String
+        filename: String,
+    ): List<ExclusiveVerse> {
+        val localeTag = appLocale().toLanguageTag()
+        val mutex = lockFor(filename)
+
+        return mutex.withLock {
+            val existing = cache[filename]
+            if (existing != null && existing.localeTag == localeTag) {
+                return@withLock existing.verses
+            }
+
+            val verses = parseFromAssetsUncached(context, filename)
+
+            cache[filename] = CachedVerses(localeTag, verses)
+
+            verses
+        }
+    }
+
+    private suspend fun parseFromAssetsUncached(
+        context: Context,
+        filename: String,
     ): List<ExclusiveVerse> {
         val assets = context.assets
 
@@ -18,10 +53,11 @@ object ExclusiveVersesParser {
         }
 
         val fallbackLangCode = "en"
-        val currentLangCode = with(Locale.getDefault().language) {
+        val locale = appLocale()
+        val currentLangCode = with(locale.language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }
-        val currentCountry = Locale.getDefault().country
+        val currentCountry = locale.country
 
         val fullPath0 = "verses/$filename/$currentLangCode-r$currentCountry"
         val fullPath1 = "verses/$filename/$currentLangCode"

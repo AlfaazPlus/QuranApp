@@ -510,4 +510,7 @@
     <string name="dynamic_color">Dynamic Color</string>
     <string name="dynamic_color_description">Change theme color based on the system colors</string>
     <string name="textSizeVerseByVerseOnly">This setting is not applied in mushaf mode.</string>
+    <string name="sortBy">Sort by</string>
+    <string name="alphabetically">Alphabetical</string>
+    <string name="chronological">Chronological Order</string>
 </resources>

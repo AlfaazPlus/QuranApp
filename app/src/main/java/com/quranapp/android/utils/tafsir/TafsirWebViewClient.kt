@@ -5,10 +5,10 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.appLocale
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
-import java.util.Locale
 
 /**
  * WebViewClient for Tafsir content that handles:
@@ -46,7 +46,7 @@ class TafsirWebViewClient(
         val host = uri.host ?: return null
         val ctx = view.context
         var data: InputStream? = null
-        val uriStr = uri.toString().lowercase(Locale.getDefault())
+        val uriStr = uri.toString().lowercase(appLocale())
 
         when (host) {
             "assets-file" -> {
