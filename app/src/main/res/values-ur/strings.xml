@@ -1,65 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strTitleAppVersion">ایپ ورژن</string>
-    <string name="strVersion" formatted="false">ورژن %s</string>
-    <string name="strTitleLicenses">لائسنس</string>
     <string name="strLabelClose">بند کریں</string>
-    <string name="strLabelOkay">ٹھیک ہے</string>
     <string name="strLabelGotIt">سمجھ گیے</string>
     <string name="strLabelCancel">منسوخ کریں</string>
     <string name="strLabelApply">لاگو کریں</string>
-    <string name="strLabelSend">بھیجیں</string>
     <string name="strLabelRemove">ہٹائیں</string>
     <string name="strLabelDelete">ہٹائیں</string>
     <string name="strLabelRemoveAll">سبھی ہٹائیں</string>
     <string name="strLabelCopy">کاپی کریں</string>
     <string name="strLabelBack">پیچھے</string>
     <string name="strLabelTop">اوپر</string>
-    <string name="strLabelReset">ری سیٹ کریں</string>
     <string name="strLabelRetry">دوبارہ کوشش کریں</string>
-    <string name="strLabelRefresh">تازہ کریں</string>
-    <string name="strLabelDismiss">برخاست کریں</string>
-    <string name="strLabelDiscard">مسترد کریں</string>
-    <string name="strLabelHide">چھپائیں</string>
     <string name="strLabelEdit">ترمیم کریں</string>
     <string name="strLabelDone">مکمل کریں</string>
-    <string name="strLabelView">دیکھیں</string>
-    <string name="strLabelRestart">دوبارہ شروع کریں</string>
     <string name="strLabelOpen">کھولے</string>
     <string name="strLabelOpenInReader">ریڈر میں کھولیں</string>
     <string name="strLabelRead">پڑھیں »</string>
     <string name="strLabelViewAll">سب دیکھیں</string>
-    <string name="strLabelChangeNRestart">تبدیل اور شروع کریں</string>
-    <string name="strLabelAdvertisement">اشتہار</string>
     <string name="strLabelSkip">چھوڑ دیں</string>
-    <string name="strLabelNotNow">ابھی نہیں</string>
-    <string name="strLabelPrevious">پچھلا</string>
     <string name="strLabelNext">اگلا</string>
     <string name="strLabelStart">شروع کریں</string>
-    <string name="strLabelUpdateQuranApp">QuranApp اپ ڈیٹ کریں</string>
-    <string name="strLabelDownloadNow">ڈاؤن لوڈ کریں</string>
     <string name="strLabelUpdate">اپ ڈیٹ کریں</string>
-    <string name="strLabelInstall">انسٹال کریں</string>
-    <string name="strLabelNew">نئی</string>
-    <string name="strLabelPremium">پریمیم</string>
     <string name="strLabelOn">آن</string>
     <string name="strLabelOff">بند</string>
     <string name="strLabelThemeDark">تاریک</string>
     <string name="strLabelThemeLight">روشن</string>
     <string name="strLabelSystemDefault">سسٹم ڈیفالٹ</string>
-    <string name="strLabelPreviousChapter">پچھلی سورہ</string>
-    <string name="strLabelNextChapter">اگلی سورہ</string>
-    <string name="strLabelNoPreviousChapter">کوئی پچھلا سورہ نہیں</string>
-    <string name="strLabelNoNextChapter">کوئی اگلا سورہ نہیں</string>
-    <string name="strLabelPreviousJuz">پچھلا پارہ</string>
-    <string name="strLabelNextJuz">اگلا پارہ</string>
-    <string name="strLabelNoPreviousJuz">کوئی پچھلا پارہ نہیں ہے</string>
-    <string name="strLabelNoNextJuz">کوئی اگلا پارہ نہیں</string>
-    <string name="strLabelFullChapter">مکمل سورہ پڑھیں</string>
-    <string name="strLabelContinueChapter">سورہ جاری رکھیں</string>
     <string name="strLabelPreviousVerse">پچھلی آیت</string>
     <string name="strLabelNextVerse">اگلی آیت</string>
-    <string name="strLabelVersesText">آیات</string>
     <string name="strLabelSurah" formatted="false">سورہ %s</string>
     <string name="strLabelPageNo" formatted="false">صفحہ %d</string>
     <string name="strLabelJuzNo" formatted="false">پارہ %d</string>
@@ -67,16 +36,12 @@
     <string name="strLabelVerses" formatted="false">آیات %1$d سے %2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">آیت : %d</string>
     <string name="strLabelVersesWithColon" formatted="false">آیات : %1$d سے %2$d</string>
-    <string name="strLabelVerseCountWithColon" formatted="false">آیات: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d سے %2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">آیت %1$d:%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورہ %1$s %2$d: آیت %3$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورہ %1$s │ آیت %2$d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورہ %1$s : آیت %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">باب نمبر %1$d │ آیات %2$d–%3$d</string>
-    <string name="strTitleAppUser">QuranApp استعمال کنندہ</string>
     <string name="strTitleHolyQuran">قرآن کریم</string>
     <string name="strTitleQuran">قرآن</string>
     <string name="strTitleMakki">مکی</string>
@@ -85,16 +50,11 @@
     <string name="strTitleFootnotes">حاشیہ</string>
     <string name="strTitleReaderChapters">سورتیں</string>
     <string name="strTitleReaderJuz">پارە (حصے)</string>
-    <string name="strTitleReaderChapters2">سورتیں</string>
-    <string name="strTitleReaderJuz2">پارہ</string>
-    <string name="strTitleReaderVerses">آیات</string>
-    <string name="strTitleReaderJumpToVerse">آیت پر جائیں</string>
     <string name="strTitleVerseOptions">آیت کے اختیارات</string>
     <string name="strTitleVerseRecitation">آیت کی تلاوت</string>
     <string name="strTitleReaderVerseInformation" formatted="false">سورہ %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">آیت %d پر جائیں</string>
     <string name="strTitleReadVerseRange" formatted="false">آیات %1$d - %2$d پڑھیں</string>
-    <string name="strTitleReaderLayoutStyle">قرآنی نظارے کا انداز</string>
     <string name="strTitleReaderTextSizeArabic">عربی حرف کا سائز</string>
     <string name="strTitleReaderTextSizeTransl">ترجمہ کے حرف کا سائز</string>
     <string name="strTitleSettings">ترتیبات</string>
@@ -113,31 +73,18 @@
     <string name="strTitleTranslations">ترجمے</string>
     <string name="strTitleDownloadTranslations">ڈاؤن لوڈ کریں</string>
     <string name="strTitleSelectReciter">قاری منتخب کریں</string>
-    <string name="strTitleSelectScripts">فونٹ منتخب کریں</string>
     <string name="strTitleBookmarkDeleteAll">تمام بک مارکس ہٹائیں؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d بک مارکس ہٹائیں؟</string>
     <string name="strTitleTranslDelete">ترجمہ حذف کریں؟</string>
-    <string name="strTitleResetReaderSettings">ریڈر کی ترتیبات کو ری سیٹ کریں؟</string>
-    <string name="strTitleHideAd">اشتہار چھپائیں</string>
-    <string name="strTitleRecitationOptions">اختیارات</string>
-    <string name="strTitleRepeatVerse">آیت کو دہرائیں</string>
-    <string name="strTitleAutoPlayNext">تلاوت جاری رکھیں</string>
     <string name="strTitleShareVerse">آیت شیئر کریں</string>
-    <string name="strTitleReportVerse">آیت کی رپورٹ کریں</string>
-    <string name="strTitleSelectReason">وجہ منتخب کریں</string>
-    <string name="strTitleExplainIssue">مسئلہ کی وضاحت کریں</string>
     <string name="strTitleFeaturedQuran">نمایاں</string>
     <string name="strTitleVOTD">دن کی آیت</string>
-    <string name="strTitleTopics">موضوعات</string>
-    <string name="strTitleDuas">قرآنی دعائیں</string>
     <string name="strTitleProphets">انبیاء</string>
-    <string name="strTitleFeaturedTopics">قرآنی موضوعات</string>
     <string name="strTitleFeaturedDuas">قرآنی دعائیں</string>
     <string name="strTitleFeaturedProphets">قرآنی انبیاء</string>
     <string name="strTitlePrivacyPolicy">رازداری کی پالیسی</string>
     <string name="strTitleFailed">ناکام</string>
     <string name="strTitleSuccess">کامیاب</string>
-    <string name="strTitleThresholdReached">حد تک پہنچ گئی</string>
     <string name="strChapInfoSeeMore">مزید معلومات دیکھیں ›</string>
     <string name="strTitleChapInfoChapterNo">سورہ نمبر</string>
     <string name="strTitleChapInfoJuzNo">پارہ نمبر</string>
@@ -150,24 +97,18 @@
     <string name="strTitleAppSettings">ایپ کی ترتیبات</string>
     <string name="strTitleReaderSettings">ریڈر کی ترتیبات</string>
     <string name="strTitleAppLanguage">ایپ کی زبان</string>
-    <string name="strTitleChangeLanguage">زبان تبدیل کریں؟</string>
     <string name="strTitleTheme">تھیم</string>
     <string name="strTitleNoInternet">انٹرنیٹ نہیں ہے</string>
     <string name="strLabelPlay">چلائیں</string>
     <string name="strLabelPause">روکیں</string>
     <string name="strLabelBookmark">بک مارک کریں</string>
     <string name="strLabelRemoveBookmark">بک مارک ہٹایں</string>
-    <string name="strLabelBookmarked">بک مارک کیا گیا</string>
-    <string name="strLabelRemoveAds">اشتہارات ہٹایں</string>
     <string name="strLabelShare">شیئر کریں</string>
     <string name="strLabelReport">رپورٹ</string>
     <string name="strLabelContinueReading">پڑھنا جاری رکھیں »</string>
-    <string name="strLabelReading">پڑھنا</string>
-    <string name="strLabelMostPlaces">زیادہ ذکر</string>
     <string name="strLabelOrder">ترتیب</string>
     <string name="strLabelSelectedCount" formatted="false">%d منتخب کیا گیا</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d مزید ترجمے</string>
-    <string name="strLabelAdvanceSharing">اعلی شیئرنگ</string>
     <string name="strLabelSelectVerse">آیات منتخب کریں</string>
     <string name="strLabelCurrentVerse">موجودہ آیت</string>
     <string name="strLabelVerseRange">آیت کی رینج</string>
@@ -178,38 +119,20 @@
     <string name="strLabelIncludeFootnotes">حاشیہ شامل کریں</string>
     <string name="strHintSearch">تلاش کریں</string>
     <string name="strHintSearchQuran">قرآن میں تلاش کریں</string>
-    <string name="strHintSearchTopic">موضوع تلاش کریں</string>
-    <string name="strHintSearchTopicAlphabet">\"%s\" میں موضوع تلاش کریں</string>
     <string name="strHintSearchProphet">نبی تلاش کریں</string>
     <string name="strHintSearchChapter">سورہ تلاش کریں</string>
-    <string name="strHintSearchVerse">آیت تلاش کریں</string>
-    <string name="strHintSearchJuz">پارہ تلاش کریں</string>
-    <string name="strHintSearchTranslation">ترجمہ تلاش کریں</string>
-    <string name="strHintSearchReciter">قَارِئ تلاش کریں</string>
-    <string name="strHintSearchScript">فونٹ تلاش کریں</string>
-    <string name="strHintSearchLanguage">زبان تلاش کریں</string>
     <string name="strHintFromVerse">آیت سے</string>
     <string name="strHintToVerse">آیت تک</string>
-    <string name="strHintFeedback">اپنی رائے یہاں لکھیں…</string>
-    <string name="strHintFeedbackEmail">ای میل</string>
-    <string name="strHintFeedbackMessage">پیغام</string>
     <string name="strHintBookmarkViewerNote">یہاں اس بک مارک پر ایک اضافی نوٹ لکھیں…</string>
-    <string name="strNotFound">کچھ نہیں ملا</string>
     <string name="strMsgThemeDark">تاریک موڈ بیٹری کی کھپت کو کم کرتا ہے۔</string>
     <string name="strMsgThemeDefault">سسٹم کی ترتیبات کے مطابق ایڈجسٹ کریں۔</string>
-    <string name="strMsgVOTDOn">روزانہ صبح ایک اطلاع حاصل کریں۔</string>
-    <string name="strMsgYouAreReadingVerses">آپ پڑھ رہے ہیں آیات:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d درست سورہ نمبر نہیں ہے</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%1$d سورہ نمبر %2$d کے لیے صحیح آیت نمبر نہیں ہے</string>
-    <string name="strMsgInvalidVersesRange">درست آیت کی حد نہیں</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d سورہ نمبر %3$d کے لیے صحیح آیت کی حد نہیں ہے</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ایک درست پارہ نمبر نہیں ہے</string>
     <string name="strMsgBookmarkAdded">آیت بک مارک کی گئی</string>
     <string name="strMsgBookmarkAddFailed">آیت بک مارک کرنے میں ناکام ہوگئ</string>
     <string name="strMsgBookmarkAddedAlready">آیت پہلے ہی بک مارک ہے</string>
     <string name="strMsgBookmarkRemoved">آیت بُک مارکس سے ہٹا دی گئی</string>
     <string name="strMsgBookmarkRemoveFailed">آیت بک مارکس سے ہٹانے میں ناکام رہی</string>
-    <string name="strMsgBookmarkRemovedAlready">آیت بک مارکس میں نہیں ہے</string>
     <string name="strMsgBookmarkNoItems">کوئی بک مارک نہیں</string>
     <string name="strMsgBookmarkDeleteSelected">منتخب بک مارکس کو ہٹا دیا جائے گا۔</string>
     <string name="strMsgBookmarkDeleteAll">تمام بک مارکس کو ہٹا دیا جائے گا۔</string>
@@ -224,101 +147,53 @@
     <string name="strMsgSearchNoResultsFoundAbsolute">کوئی نتیجہ نہیں. براہ کرم سرچ فلٹرز چیک کریں۔</string>
     <string name="strMsgSearchWordPart">لفظ کا حصہ بھی تلاش کریں</string>
     <string name="strMsgSearchWordPartExample">مثال: \'انسانیت\' میں \'انسان\'</string>
-    <string name="strMsgSearchArabic">عربی میں بھی تلاش کریں</string>
-    <string name="strMsgChangeLanguage">زبان تبدیل کرنے کے لیے ایپ کو دوبارہ شروع کیا جائے گا۔</string>
-    <string name="strMsgResetReaderSettings">تمام ریڈر سیٹنگز کو ڈیفالٹ پر سیٹ کریں۔</string>
-    <string name="strMsgProphetsOrder">تاریخ کے لحاظ سے پیغمبروں کو دکھایا جا رہا ہے</string>
     <string name="strMsgShareRange" formatted="false">%1$d–%2$d کے درمیان رینج درج کریں</string>
     <string name="strMsgEnterValidRange">براہ کرم ایک درست رینج درج کریں</string>
-    <string name="strMsgTranslLoadFailed">ترجمے لوڈ نہیں کیے جا سکے۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
-    <string name="strMsgTranslNoDownloads">کوئی ترجمہ ڈاؤن لوڈ نہیں ہے</string>
-    <string name="strMsgTranslNoDownloadsAvailable">کوئی ڈاؤن لوڈ دستیاب نہیں ہے</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ڈاؤن لوڈ ہونے میں ناکام رہا۔</string>
     <string name="strMsgTranslDownloaded" formatted="false">ڈاؤن لوڈ کیا گیا: \"%s\"۔</string>
     <string name="strMsgTranslNoneSelected">کوئی ترجمہ منتخب نہیں ہے۔ ترجمے تلاش کرنے کے لیے ترتیبات پر جائیں۔</string>
     <string name="strDescAddToBookmarks">بک مارک کیرن</string>
     <string name="strDescGoBack">واپس جائے</string>
     <string name="strDescClose">بند کریں</string>
-    <string name="strDescVerseNo" formatted="false">آیت نمبر %d۔</string>
     <string name="strDescVerseNoWithChapter" formatted="false">سورہ نمبر %1$s، آیت نمبر %2$d۔</string>
     <string name="strMsgNoInternet">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں۔</string>
     <string name="strMsgNoInternetLong">انٹرنیٹ کنکشن نہیں ہے۔ یقینی بنائیں کہ Wi-Fi یا سیلولر ڈیٹا آن ہے، پھر دوبارہ کوشش کریں۔</string>
     <string name="strMsgSomethingWrong">کچھ غلط ہو گیا!</string>
-    <string name="strMsgSomethingWrongFixing">کچھ غلط ہو گیا! ہم اسے ٹھیک کرنے کے لیے کام کر رہے ہیں۔</string>
-    <string name="strMsgVerseCredsInvalid">آیت کی تفصیلات درست نہیں ہیں۔</string>
     <string name="strMsgTryLater">براہ کرم بعد میں دوبارہ کوشش کریں۔</string>
-    <string name="strMsgReportUs">براہ کرم ہمیں اطلاع دیں۔</string>
     <string name="strMsgCouldNotOpenPage">صفحہ نہیں کھول سکا۔</string>
     <string name="strLabelNavHome">ہوم</string>
     <string name="strLabelNavSearch">تلاش کریں</string>
-    <string name="strTextPreparing">تیار کیا جا رہا ہے…</string>
     <string name="strTextPleaseWait">انتظار کریں…</string>
-    <string name="strTextSending">بھیجا جا رہا ہے…</string>
     <string name="strAyatulKursi">اية الكرسي</string>
-    <string name="strTitleError">غلطی!</string>
     <string name="strTitleInfo">معلومات!</string>
     <string name="strTitleOops">افسوس!</string>
-    <string name="strLabelProceed">آگے بڑھیں</string>
-    <string name="strTextUpdating">اپ ڈیٹ ہو رہا ہے…</string>
-    <string name="strTextInstalling">انسٹال ہو رہا ہے…</string>
-    <string name="strTextLoading">لوڈ ہو رہا ہے…</string>
     <string name="strMsgUpdateAvailable">اپ ڈیٹ دستیاب ہے! تازہ ترین خصوصیات حاصل کرنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="strMsgUpdateAvailable4Dialog">اپ ڈیٹ دستیاب ہے!
 \nبراہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="strMsgUpdateAvailable2Continue">اپ ڈیٹ کی ضرورت ہے!
 \nجاری رکھنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
-    <string name="strMsgUpdateDownloaded">اپ ڈیٹ ڈاؤن لوڈ کیا گیا! اپ ڈیٹ مکمل کرنے کے لیے براہ کرم انسٹال کریں۔</string>
-    <string name="strSalam">السلام علیکم</string>
-    <string name="strSalamShort">سلام</string>
     <string name="strLabelAllChapters">تمام سورہ</string>
-    <string name="strTitleAlphaBG">بیکگراؤنڈ دھندلاپن</string>
-    <string name="strTitleImageSavedWithName" formatted="false">تصویر محفوظ کی گئی: %s</string>
-    <string name="strLabelIncludeReference">حوالہ شامل کریں</string>
     <string name="strLabelQuickLinks">فوری رابطے</string>
     <string name="strLabelLater">بعد میں</string>
-    <string name="strLabelIncludeTranslation">ترجمہ شامل کریں</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">ایک ساتھ زیادہ سے زیادہ %d ترجمے منتخب کیے جا سکتے ہیں۔ براہ کرم دوسرے کو منتخب کرنے سے پہلے ایک کو غیر منتخب کریں۔ یہ کارکردگی میں کمی سے بچنے کے لئے ہے۔</string>
-    <string name="strMsgRecitationsLoadFailed">سرور سے تلاوتیں لوڈ نہیں کی جا سکیں۔ براہ کرم کچھ دیر بعد کوشش کریں۔</string>
-    <string name="strMsgRecitationsNoAvailable">کوئی تلاوت دستیاب نہیں ہے</string>
     <string name="strTitleAddNote">نوٹ شامل کریں</string>
     <string name="strTitleBookmarkDeleteThis">اس بک مارک کو ہٹائیں؟</string>
-    <string name="strMsgEditShareTransl">صرف ترتیبات سے منتخب کردہ ترجمے یہاں دکھائے گئے ہیں۔</string>
-    <string name="strMsgEditShareLongTransl">ترجمہ بہت لمبا ہے، ہو سکتا ہے یہ ٹھیک سے فٹ نہ ہو۔</string>
-    <string name="strTitleQuickEdit">کوئیک ایڈٹ</string>
-    <string name="strLabelDownloadImage">تصویر ڈاؤن لوڈ کریں</string>
-    <string name="strLabelShareImage">تصویر شیئر کریں</string>
     <string name="strTitleReadHistory">حال ہی میں پڑھا</string>
     <string name="strMsgReadShowupHere">حال ہی میں پڑھا ہوا یہاں ظاہر ہوگا۔</string>
     <string name="strMsgReadHistoryNoItems">کوئی پڑھی ہوئی سرگزشت نہیں</string>
-    <string name="strMsgReadHistoryRemovedAlready">سرگزشت پہلے ہی ہٹا دی گئی ہے۔</string>
-    <string name="strMsgReadHistoryRemoveFailed">سرگزشت کو ہٹانے میں ناکام رہا۔</string>
-    <string name="strMsgReadHistoryRemoved">سرگزشت کو کامیابی سے ہٹا دیا گیا۔</string>
-    <string name="strMsgReadHistoryDeleteSelected">منتخب کردہ سرگزشت ہٹا دی جائے گی۔</string>
     <string name="strMsgReadHistoryDeleteAll">تمام پڑھی ہوئی سرگزشت ہٹا دی جائے گی۔</string>
     <string name="strMsgReferenceInQuran" formatted="false">قرآن میں %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s سے متعلق آیات کل %2$d جگہوں پر پائی گئیں۔</string>
     <string name="strMsgReferenceDuas">قرآن سے چند دعائیں جمع کی ہیں۔</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">ترجمہ</string>
-    <string name="strTitleReaderLayoutStylePageView">صفحہ</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%2$d فونٹس میں سے %1$d ڈاؤن لوڈ</string>
     <string name="labelDownload">ڈاؤن لوڈ کریں</string>
     <string name="titleDownloadScriptResources">اس فونٹ کے لیے وسائل ڈاؤن لوڈ کریں؟</string>
     <string name="msgDownloadKFQPCResources">اس فونٹ کو استعمال کرنے سے پہلے درج ذیل وسائل کو ڈاؤن لوڈ کرنے کی ضرورت ہے:</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">فونٹ: %s (~1MB)</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فونٹس: ~%dMB</string>
-    <string name="msgDownloadFailed">ڈاؤن لوڈ ناکام ہو گیا</string>
     <string name="msgDownloadingFonts">فونٹ ڈاؤن لوڈ ہو رہا ہے</string>
-    <string name="msgDownloadingScript">اسکرپٹ ڈاؤن لوڈ ہو رہا ہے</string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false">%2$d میں سے %1$d</string>
-    <string name="msgDownloadingResource" formatted="false">%s ڈاؤن لوڈ ہو رہا ہے</string>
-    <string name="msgAnotherDownloadInProgress">ایک اور ڈاؤن لوڈ جاری ہے۔</string>
     <string name="strTitleRecitations">تلاوتیں</string>
     <string name="github">GitHub</string>
     <string name="copiedToClipboard">کلپ بورڈ پر کاپی ہو گیا۔</string>
-    <string name="msgScriptFontsDownloaded">اسکرپٹ اور فونٹس کامیابی کے ساتھ ڈاؤن لوڈ ہو گئے۔</string>
     <string name="textDownloading">ڈاؤن لوڈ ہو رہا ہے…</string>
-    <string name="textPercentage" formatted="false">%d%%</string>
-    <string name="labelBackgroundDownload">پس منظر ڈاؤن لوڈ</string>
     <string name="lastCrashLog">آخری کریش لاگ</string>
     <string name="translationCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کیے گئے ترجمے خالی کیے جا سکتے ہیں۔</string>
     <string name="createIssue">مسئلہ بنائیں</string>
@@ -328,9 +203,7 @@
 \n
 \nدرج ذیل وسائل کو خالی کیا جا سکتا ہے:</string>
     <string name="strTitleScripts">فونٹ</string>
-    <string name="msgAlarmManagerNotAvailable">الارم مینیجر اس ڈیوائس پر دستیاب نہیں ہے۔</string>
     <string name="msgVerseReminderNotifPermission">آیت کی یاد دہانی کو فعال کرنے کے لیے نوٹیفکیشن کی اجازت درکار ہے۔</string>
-    <string name="msgVerseReminderAlarmPermission">آیت کی یاد دہانی کو فعال کرنے کے لیے الارم کی اجازت درکار ہے۔</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d قاری کی %1$d ذخیرہ شدہ تلاوت کی فائلیں خالی کی جا سکتی ہیں۔</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n%2$s
@@ -338,9 +211,7 @@
 \nآپ کو اسے دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
     <string name="labelFreeUpSpace">جگہ خالی کریں</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کردہ اسکرپٹس اور ان کے فونٹس کو خالی کیا جا سکتا ہے۔</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">%d محفوظ شدہ باب کی معلومات کو صاف کیا جا سکتا ہے۔</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
-    <string name="titleChapterInfo">باب کی معلومات</string>
     <string name="nothingToCleanup">صاف کرنے کے لیے کچھ نہیں ہے۔</string>
     <string name="nItem" formatted="false">%d آئٹم</string>
     <string name="nItems" formatted="false">%d آئٹم</string>
@@ -349,8 +220,6 @@
     <string name="strPreviewTextTransl">شروع کرتا ہوں اللہ تعالیٰ کے نام سے جو بڑا مہربان نہایت رحم واﻻ ہے</string>
     <string name="titleRecitationCleanup">تلاوت حذف کریں؟</string>
     <string name="titleScriptCleanup">اسکرپٹ حذف کریں؟</string>
-    <string name="titleChapterInfoCleanup">صاف کریں معلومات سوره؟</string>
-    <string name="msgChapterInfoCleanup">تمام معلومات سوره محفوظ شدہ حذف کردی جائیں گی۔</string>
     <string name="nFiles" formatted="false">%d فائل</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکرپٹ اور %2$d فونٹ</string>
     <string name="msgRecitationCleanup" formatted="false">%s کی تمام ذخیرہ شدہ تلاوتیں حذف کر دی جائیں گی۔انفرادی طور پر سورہ کی تلاوت کو حذف کرنے کے لیے، \"آڈیو کا انتظام\" کی ترتیبات پر جائیں۔</string>
@@ -360,38 +229,23 @@
     <string name="onboardDescLanguage">ایپ کو اپنی زبان میں ذاتی بنائیں۔ آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</string>
     <string name="onboardDescTheme">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔</string>
     <string name="onboardDescTranslations">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات سے مزید ترجمے ڈاؤن لوڈ کر سکتے ہیں۔</string>
-    <string name="onboardDescReciter">آپ اسے بعد میں کبھی بھی تبدیل کر سکتے ہیں۔ آپ ترتیبات میں مزید قاری تلاش کر سکتے ہیں۔</string>
     <string name="noFootnotesForThisVerse">اس آیت کے لیے کوئی حاشیہ نہیں ہے۔</string>
     <string name="strTitleSelectTafsir">تفسیر منتخب کریں</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">آیت %d کی تفسیر پڑھیں</string>
-    <string name="titleTafsirCleanup">تفسیر کو حذف کریں؟</string>
-    <string name="msgTafsirCleanup" formatted="false">%s کے تمام ذخیرہ شدہ تفسیر کو حذف کر دیا جائے گا۔</string>
-    <string name="strMsgTafsirsNoAvailable">کوئی تفسیر دستیاب نہیں</string>
-    <string name="labelAdd">شامل کریں</string>
-    <string name="msgAddedToFavourites">پسندیدہ میں شامل کیا گیا</string>
     <string name="msgChapterAddedToFavourites">سورہ کو پسندیدہ میں شامل کیا گیا۔</string>
     <string name="msgChapterRemovedFromFavourites">سورہ کو پسندیدہ سے ہٹا دیا گیا۔</string>
     <string name="titleReaderTextSizeTafsir">تفسیر متن کا سائز</string>
     <string name="downloadRecitations">تلاوت ڈاؤن لوڈ کریں</string>
     <string name="titleOtherSettings">دیگر ترتیبات</string>
-    <string name="textDownloaded">ڈاؤن لوڈ کیا گیا</string>
     <string name="crashLogs">کریش لاگز</string>
     <string name="appLogs">ایپ لاگز</string>
     <string name="suppressedLogs">دبائے گئے لاگز</string>
     <string name="msgNoFavouriteChapters">یہاں دیکھنے کے لیے پسندیدہ میں ایک سورہ شامل کریں۔</string>
-    <string name="textTranslationReciterInfo">زبان: %1$s
-\nکتاب: %2$s</string>
-    <string name="msgRecitaionFailedToDownload" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" ڈاؤن لوڈ کرنے میں ناکام۔</string>
-    <string name="msgRecitaionDownloaded" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" ڈاؤن لوڈ کیا گیا۔</string>
-    <string name="msgRecitaionDeleleSurah" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" کی تمام تلاوتیں حذف کر دی جائیں گی۔</string>
     <string name="textNoLogsFound">کوئی لاگ نہیں ملے</string>
     <string name="noItems">کوئی آئٹمز نہیں</string>
     <string name="labelArabic">عربی</string>
     <string name="labelTranslation">ترجمہ</string>
-    <string name="titleAddToFavourites">پسندیدہ میں شامل کریں</string>
     <string name="titleRemoveFromFavourites">پسندیدہ سے ہٹا دیں</string>
-    <string name="msgRemovedFromFavourites">پسندیدہ سے ہٹا دیا گیا</string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false">قاری \"%2$s\" کے لیے \"%1$s\" کی تلاوت حذف کر دی گئی۔</string>
     <string name="playbackSpeed">پلے بیک کی رفتار</string>
     <string name="audioOnlyTranslation">صرف ترجمہ کی تلاوت کریں</string>
     <string name="audioOption">آڈیو آپشن</string>
@@ -404,9 +258,7 @@
     <string name="labelPreviousTafsir">پچھلی تفسیر</string>
     <string name="labelNextTafsir">اگلی تفسیر</string>
     <string name="titleSolutionVerses">قرآن سے حل</string>
-    <string name="msgInvalidParams">غلط پیرامیٹرز</string>
     <string name="titleEtiquetteVerses">قرآن میں آداب</string>
-    <string name="msgTafsirLoadFailed">تفسیر لوڈ کرنے میں ناکام</string>
     <string name="strMsgShareApp" formatted="false">QuranApp ترجمے کے ساتھ قرآن کریم کو پڑھنے اور دریافت کرنے کے لیے ایک مفت اور اوپن سورس ایپ ہے۔ اس ایپ میں تفسیر، تلاوت، یاد دہانی اور بہت ساری خصوصیات کے ساتھ ایک اچھا اور صاف انٹرفیس ہے۔
 \n
 \nابھی ڈاؤن لوڈ کریں:
@@ -429,15 +281,11 @@
     <string name="labelImportExportSettings">ترتیبات درآمد/برآمد کریں</string>
     <string name="warnImportSettings">انتباہ: ترتیبات کو درآمد کرنا آپ کی موجودہ ترتیبات کو اوور رائیڈ کر دے گا۔</string>
     <string name="msgExportImportBookmarks">نوٹ کے ساتھ اپنے بُک مارکس کو برآمد یا درآمد کریں۔</string>
-    <string name="msgExportEmpty">برآمد کرنے کے لیے کوئی بک مارکس نہیں ہیں</string>
     <string name="msgExportSuccess">کامیابی کے ساتھ برآمد کیا گیا</string>
-    <string name="msgImportFailed">درآمد کرنے میں ناکام۔ غیر تعاون یافتہ فائل۔</string>
-    <string name="msgImportSuccess">کامیابی کے ساتھ درآمد ہو گیا</string>
     <string name="desc_votd_widget">ہر روز ایک نئی آیت حاصل کریں</string>
     <string name="autoScroll">خودکار سکرول</string>
     <string name="startAutoScroll">خودکار اسکرول شروع کریں</string>
     <string name="autoScrollSpeed">رفتار سیٹ کریں</string>
-    <string name="strMsgCannotAutoScrollWhileReciting">تلاوت کے چلتے وقت خودکار طور پر اسکرول نہیں ہو سکتا۔</string>
     <string name="titleCancelDownload">ڈاؤن لوڈ منسوخ کریں؟</string>
     <string name="yesCancelDownload">ہاں، منسوخ کریں</string>
     <string name="noContinueDownload">نہیں، جاری رکھیں</string>

@@ -2,9 +2,9 @@ package com.quranapp.android.db.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
-import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.db.interfaces.SurahMethods
 
 data class SurahWithLocalizations(
@@ -18,24 +18,16 @@ data class SurahWithLocalizations(
     val localizations: List<SurahLocalizationEntity>
 ) : SurahMethods by surah {
     fun getCurrentName(): String {
-        val locale = appLocale()
-        val tag = locale.toLanguageTag()
-        val lang = locale.language
-        val localization = localizations.firstOrNull { it.langCode == tag }
-            ?: localizations.firstOrNull { it.langCode == lang }
-            ?: localizations.firstOrNull { it.langCode == "en" }
-
-        return localization?.name ?: ""
+        return appFallbackLanguageCodes()
+            .firstNotNullOfOrNull { code ->
+                localizations.firstOrNull { it.langCode == code && !it.name.isNullOrBlank() }
+            }?.name.orEmpty()
     }
 
     fun getCurrentMeaning(): String {
-        val locale = appLocale()
-        val tag = locale.toLanguageTag()
-        val lang = locale.language
-        val localization = localizations.firstOrNull { it.langCode == tag }
-            ?: localizations.firstOrNull { it.langCode == lang }
-            ?: localizations.firstOrNull { it.langCode == "en" }
-
-        return localization?.meaning ?: ""
+        return appFallbackLanguageCodes()
+            .firstNotNullOfOrNull { code ->
+                localizations.firstOrNull { it.langCode == code && !it.meaning.isNullOrBlank() }
+            }?.meaning.orEmpty()
     }
 }

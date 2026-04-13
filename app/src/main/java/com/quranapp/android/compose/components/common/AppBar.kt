@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
@@ -48,6 +49,7 @@ fun AppBar(
     searchQuery: String = "",
     onSearchQueryChange: ((String) -> Unit)? = null,
     searchPlaceholder: String? = null,
+    shadowElevation: Dp = 4.dp,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
@@ -69,7 +71,7 @@ fun AppBar(
     }
 
     TopAppBar(
-        modifier = Modifier.shadow(4.dp),
+        modifier = Modifier.shadow(shadowElevation),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = bgColor ?: colorScheme.surfaceContainer,
             scrolledContainerColor = bgColor ?: colorScheme.surfaceContainer,
@@ -87,9 +89,9 @@ fun AppBar(
                     contentColor = contentColor,
                     modifier = Modifier.focusRequester(searchFocusRequester),
                 )
-            } else if (titleContent !=null) {
+            } else if (titleContent != null) {
                 titleContent()
-            } else if(title != null){
+            } else if (title != null) {
                 Text(text = title)
             }
         },

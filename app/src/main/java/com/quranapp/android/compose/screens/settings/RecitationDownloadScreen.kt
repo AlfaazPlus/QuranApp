@@ -108,6 +108,7 @@ fun RecitationDownloadScreen() {
         topBar = {
             AppBar(
                 stringResource(R.string.downloadRecitations),
+                shadowElevation = 0.dp,
                 actions = {
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh),

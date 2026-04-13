@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.DimenRes
 import androidx.compose.runtime.Composable
 import com.quranapp.android.R
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.reader.QuranScriptUtils.SCRIPT_NAMES
@@ -172,7 +172,7 @@ fun String.isKFQPCScript(): Boolean = when (this) {
 
 /**
  * When true, page mode draws a thin frame around the mushaf text block and horizontal rules between
- * lines. Purely visual (drawBehind); does not change measure or text fitting.
+ * lines.
  */
 fun String.mushafShowsRuledPageDecoration(): Boolean = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> true
@@ -181,9 +181,9 @@ fun String.mushafShowsRuledPageDecoration(): Boolean = when (this) {
 
 fun String.getQuranScriptName(): String {
     val mapToQuery = SCRIPT_NAMES(this)
-    val locale = appLocale()
-
-    return mapToQuery[locale.toLanguageTag()] ?: mapToQuery[locale.language] ?: mapToQuery["en"] ?: ""
+    return appFallbackLanguageCodes()
+        .firstNotNullOfOrNull { mapToQuery[it] }
+        ?: ""
 }
 
 fun String.getScriptPreviewText(): String = when (this) {
@@ -258,9 +258,9 @@ fun rememberQuranMushafId(): Int {
 
 fun QuranScriptVariant.getQuranScriptVariantName(): String {
     val mapToQuery = VARIANT_NAMES[this] ?: return ""
-    val locale = appLocale()
-
-    return mapToQuery[locale.toLanguageTag()] ?: mapToQuery[locale.language] ?: mapToQuery["en"] ?: ""
+    return appFallbackLanguageCodes()
+        .firstNotNullOfOrNull { mapToQuery[it] }
+        ?: ""
 }
 
 fun Int.toKFQPCFontFilename(): String {

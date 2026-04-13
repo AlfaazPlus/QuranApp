@@ -3,7 +3,7 @@
  */
 package com.quranapp.android.api.models.recitation
 
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,9 +12,8 @@ data class RecitationInfoModel(
     val styleTranslations: Map<String, String> = mapOf(),
 ) : RecitationInfoBaseModel() {
     fun getStyleName(): String? {
-        val locale = appLocale()
-        return styleTranslations[locale.toLanguageTag()]
-            ?: styleTranslations[locale.language]
-            ?: this.style
+        return appFallbackLanguageCodes()
+            .firstNotNullOfOrNull { styleTranslations[it] }
+            ?: this.reciter
     }
 }

@@ -4,132 +4,83 @@
     <string name="strTitleQuran">القرآن</string>
     <string name="strTitleMadani">مدنية</string>
     <string name="strTitleMakki">مكية</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d إلى %2$d</string>
     <string name="strLabelVerseNo" formatted="false">آية %d</string>
     <string name="strLabelVersesWithColon" formatted="false">الآيات : من %1$d إلى %2$d</string>
-    <string name="strLabelVerseCountWithColon" formatted="false">آيات : %d</string>
     <string name="strLabelVerses" formatted="false">الآيات من %1$d إلى %2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">آية %1$d : %2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
-    <string name="strSalam">السلام عليكم</string>
-    <string name="strSalamShort">سلام</string>
     <string name="strAyatulKursi">آية الكرسي</string>
-    <string name="strLabelVersesText">الآيات</string>
     <string name="strLabelSurah" formatted="false">سورة %s</string>
     <string name="strLabelPageNo" formatted="false">صفحة %d</string>
     <string name="strLabelJuzNo" formatted="false">جزء %d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">الآية : %d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">سورة %1$s %2$d : آية %3$d</string>
-    <string name="strTitleLicenses">التراخيص</string>
     <string name="strTitleAppVersion">إصدار التطبيق</string>
-    <string name="strVersion" formatted="false">النسخة %s</string>
     <string name="strLabelClose">إغلاق</string>
-    <string name="strLabelOkay">حسنًا</string>
     <string name="strLabelGotIt">فهمتها</string>
     <string name="strLabelCancel">إلغاء</string>
     <string name="strLabelApply">تطبيق</string>
-    <string name="strLabelSend">إرسال</string>
     <string name="strLabelRemove">إزالة</string>
     <string name="strLabelDelete">حذف</string>
     <string name="strLabelRemoveAll">إزالة الكل</string>
     <string name="strLabelCopy">نسخ</string>
     <string name="strLabelBack">العودة</string>
     <string name="strLabelTop">للأعلى</string>
-    <string name="strLabelReset">إعادة الضبط</string>
     <string name="strLabelRetry">إعادة المحاولة</string>
-    <string name="strLabelRefresh">ریفریش کریں</string>
-    <string name="strLabelDismiss">رفض</string>
-    <string name="strLabelHide">إخفاء</string>
-    <string name="strLabelRestart">إعادة التشغيل</string>
-    <string name="strLabelDiscard">تجاهل</string>
     <string name="strLabelEdit">تعديل</string>
     <string name="strLabelDone">تم</string>
-    <string name="strLabelView">عرض</string>
     <string name="strLabelOpen">فتح</string>
     <string name="strLabelOpenInReader">فتح في المصحف</string>
     <string name="strLabelRead">إقرأ »</string>
     <string name="strLabelViewAll">عرض الكل</string>
-    <string name="strLabelChangeNRestart">تغير وإعادة التشغيل</string>
-    <string name="strLabelAdvertisement">إعلان</string>
     <string name="strLabelSkip">تخطي</string>
-    <string name="strLabelDownloadNow">التحميل الآن</string>
     <string name="strLabelUpdate">تحديث</string>
-    <string name="strLabelNotNow">ليس الآن</string>
-    <string name="strLabelPrevious">السابق</string>
     <string name="strLabelNext">التالي</string>
     <string name="strLabelStart">البدء</string>
     <string name="strLabelThemeLight">فاتح</string>
-    <string name="strLabelNextJuz">الجزء التالي</string>
     <string name="strLabelPreviousVerse">الآية السابقة</string>
     <string name="strTitleFootnotes">الهوامش</string>
     <string name="strTitleReaderChapters">السور</string>
     <string name="strTitleFootnote">الهامش</string>
     <string name="strTitleReaderJuz">الأجزاء</string>
-    <string name="strTitleReaderChapters2">السور</string>
     <string name="strTitleTranslations">الترجمات</string>
     <string name="strTitleDownloadTranslations">تنزيل</string>
     <string name="strTitleScripts">الخطوط</string>
-    <string name="strTitleResetReaderSettings">إعادة ضبط إعدادات المصحف؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">إزالة عدد %d من الإشارات المرجعية؟</string>
     <string name="strTitleTranslDelete">حذف الترجمة؟</string>
-    <string name="strLabelUpdateQuranApp">تحديث التطبيق</string>
-    <string name="strTitleAppUser">مستخدم تطبيق QuranApp</string>
-    <string name="strLabelNextChapter">السورة التالية</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">سورة رقم %1$d | الآية%2$d–%3$d</string>
     <string name="strLabelOff">متوقف</string>
-    <string name="strTitleReaderVerses">الآيات</string>
-    <string name="strLabelFullChapter">قراءة السورة كاملة</string>
     <string name="strTitleReaderTextSizeArabic">حجم خط القرآن</string>
     <string name="labelDownload">تنزيل</string>
     <string name="strLabelThemeDark">داكن</string>
     <string name="strLabelSystemDefault">الوضع الافتراضي للنظام</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">عرض الترجمات</string>
     <string name="strTitleMenu">القائمة</string>
-    <string name="strTitleHideAd">إخفاء الإعلان</string>
-    <string name="strLabelNoPreviousJuz">لا يوجد جزء سابق</string>
-    <string name="strLabelNoNextJuz">لا يوجد جزء تالي</string>
     <string name="strLabelNextVerse">الآية التالية</string>
-    <string name="strTitleReaderJumpToVerse">إذهب إلى الآية</string>
     <string name="strTitleVerseOptions">خيارات الآية</string>
-    <string name="strLabelNoNextChapter">لا توجد سور تالية</string>
-    <string name="strLabelPreviousJuz">الجزء السابق</string>
     <string name="strTitleVerseRecitation">تلاوة الآية</string>
     <string name="strTitleGotoVerseNo" formatted="false">الذهاب إلى الآية %d</string>
     <string name="strTitleSendFeedback">شاركنا رأيك</string>
     <string name="strTitleAboutUs">معلومات عنا</string>
     <string name="strTitleRateApp">قيم التطبيق</string>
     <string name="strTitleReaderTextSizeTransl">حجم خط الترجمة</string>
-    <string name="strLabelInstall">تثبيت</string>
-    <string name="strLabelNew">الجديد</string>
     <string name="strLabelOn">مفعل</string>
-    <string name="strLabelNoPreviousChapter">لا توجد سور سابقة</string>
-    <string name="strLabelContinueChapter">أكمل السورة</string>
-    <string name="strTitleReaderLayoutStyle">أسلوب عرض القرآن</string>
-    <string name="strTitleReaderLayoutStylePageView">عرض المصحف</string>
     <string name="strTitleSettings">الإعدادات</string>
     <string name="strTitleBookmark">إشارة مرجعية</string>
     <string name="strTitleShareApp">شارك التطبيق</string>
     <string name="strTitleAddNote">إضافة ملاحظة</string>
     <string name="strTitleNote">ملاحظة</string>
     <string name="strTitleTafsir">التفسير</string>
-    <string name="strLabelPreviousChapter">السورة السابقة</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">سورة %1$s | الآية %2$d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">سورة %1$s : آية %2$d</string>
     <string name="strTitleHelpSupport">المساعدة</string>
     <string name="strTitleBookmarks">الإشارات المرجعية</string>
     <string name="strTitleAboutSurah">عن السورة</string>
-    <string name="strTitleReaderJuz2">الجزء</string>
     <string name="strTitleReaderVerseInformation" formatted="false">ال‮‮‭‮سور %1$s:%2$d</string>
     <string name="strTitleReadVerseRange" formatted="false">قراءة الآية %1$d ‐ %2$d</string>
     <string name="strTitleRecitations">التلاوات</string>
     <string name="strTitleSelectReciter">اختيار القارئ</string>
-    <string name="strTitleSelectScripts">اختيار الخط</string>
     <string name="strTitleBookmarkDeleteThis">إزالة هذه الإشارة المرجعية؟</string>
     <string name="strTitleBookmarkDeleteAll">إزالة جميع الإشارات المرجعية؟</string>
-    <string name="strTitleRecitationOptions">الخيارات</string>
-    <string name="strTitleRepeatVerse">تكرار الآية</string>
-    <string name="strTitleThresholdReached">الحد الأدنى</string>
     <string name="strChapInfoSeeMore">رؤية المزيد من المعلومات ›</string>
     <string name="strTitleChapInfoChapterNo">ترتيبها المصحفي</string>
     <string name="strTitleChapInfoRevOrder">ترتيب نزولها</string>
@@ -137,26 +88,15 @@
     <string name="strTitleNoInternet">لا يوجد إتصال بالانترنت</string>
     <string name="strLabelPlay">تشغيل</string>
     <string name="strTitleAppLanguage">لغة التطبيق</string>
-    <string name="strTitleChangeLanguage">تغير اللغة؟</string>
     <string name="strLabelPause">توقف</string>
-    <string name="strLabelRemoveAds">إزالة الإعلانات</string>
     <string name="strLabelOrder">الترتيب</string>
     <string name="strLabelReport">إبلاغ</string>
     <string name="strLabelShare">شارك</string>
     <string name="strLabelContinueReading">متابعة القراءة »</string>
     <string name="strTitleFailed">فشل</string>
-    <string name="strLabelReading">قراءة</string>
-    <string name="strTitleAutoPlayNext">تشغيل الآيات التالية تلقائياً</string>
-    <string name="strTitleQuickEdit">تعديل سريع</string>
     <string name="strTitleShareVerse">شارك الآية</string>
-    <string name="strTitleReportVerse">بلغ عن الآية</string>
-    <string name="strTitleSelectReason">إختار السبب</string>
-    <string name="strTitleExplainIssue">إشرح المشكلة</string>
     <string name="strTitleVOTD">آية اليوم</string>
-    <string name="strTitleTopics">المواضيع</string>
-    <string name="strTitleDuas">أدعية قرآنية</string>
     <string name="strTitleProphets">الأنبياء</string>
-    <string name="strTitleFeaturedTopics">مواضيع القرآن</string>
     <string name="strTitleFeaturedDuas">الأدعية القرآنية</string>
     <string name="strTitleFeaturedProphets">الأنبياء في القرآن</string>
     <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
@@ -168,72 +108,43 @@
     <string name="strMsgChapInfoFailedLoad">فشل في تحميل معلومات السورة. فضلاً حاول مرة اخرى لاحقاً.</string>
     <string name="strTitleAppSettings">إعدادات التطبيق</string>
     <string name="strTitleReaderSettings">إعدادات المصحف</string>
-    <string name="strMsgResetReaderSettings">إستعادة جميع الإعدادات الافتراضية.</string>
     <string name="strLabelIncludeFootnotes">تضمين الهواميش</string>
-    <string name="strLabelIncludeTranslation">تضمين الترجمة</string>
     <string name="strLabelLater">لاحقًا</string>
     <string name="strHintSearch">بحث</string>
-    <string name="strHintSearchTopic">البحث عن المواضيع</string>
     <string name="strHintSearchChapter">البحث عن سورة</string>
-    <string name="strHintSearchVerse">البحث عن آية</string>
-    <string name="strHintSearchJuz">البحث عن جزء</string>
-    <string name="strHintSearchTranslation">البحث عن ترجمة</string>
-    <string name="strHintSearchReciter">البحث عن قارئ</string>
-    <string name="strHintSearchScript">البحث عن خط</string>
-    <string name="strHintSearchLanguage">البحث عن لغة</string>
     <string name="strHintFromVerse">من الآية</string>
-    <string name="strHintFeedback">اكتب ملاحظاتك هنا…</string>
-    <string name="strHintFeedbackEmail">البريد الإلكتروني</string>
-    <string name="strMsgVOTDOn">إرسال إشعار يومياً في الصباح.</string>
     <string name="strHintToVerse">إلى الآية</string>
-    <string name="strLabelIncludeReference">تضمين المراجع</string>
     <string name="strHintSearchProphet">البحث عن الأنبياء</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">البحث عن موضوع بحرف الـ\"%s\"</string>
-    <string name="strHintFeedbackMessage">الرسالة</string>
     <string name="strHintBookmarkViewerNote">اكتب ملاحظة إضافية على هذه الإشارة المرجعية هنا …</string>
-    <string name="strNotFound">لم يتم العثور عليه</string>
     <string name="strMsgThemeDark">الوضع الداكن يقلل من استهلاك الطاقة.</string>
     <string name="strMsgThemeDefault">الضبط وفقًا لإعدادات النظام.</string>
     <string name="strLabelWhatsappStyling">تنسيق الواتساب</string>
     <string name="strLabelQuickLinks">روابط سريعة</string>
-    <string name="strLabelPremium">بريميوم</string>
     <string name="strTitleFilters">تصفية</string>
     <string name="strTitleChapInfoJuzNo">جزء رقم.</string>
     <string name="strLabelRemoveBookmark">إزالة الإشارة المرجعية</string>
-    <string name="strLabelBookmarked">تمت الإشارة</string>
     <string name="strLabelBookmark">الإشارة المرجعية</string>
-    <string name="strLabelMostPlaces">الأكثر ذكراً</string>
     <string name="strLabelSelectedCount" formatted="false">%d تم تحديد</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d المزيد من الترجمات</string>
-    <string name="strLabelAdvanceSharing">المشاركة المتقدمة</string>
     <string name="strLabelCurrentVerse">الآية الحالية</string>
     <string name="strLabelVerseRange">نطاق الآية</string>
     <string name="strLabelSelectVerse">اختيار الآيات</string>
     <string name="strLabelSelectTranslations">اختيار الترجمات</string>
     <string name="strLabelSelectTranslation">اختيار الترجمة</string>
     <string name="strLabelIncludeArabic">تضمين النص القرآني</string>
-    <string name="strMsgYouAreReadingVerses">الآية الحالية:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">لا يوجد سورة رقم %d</string>
     <string name="inPlaces">في %s</string>
     <string name="inPlacesMore">في %1$s و %2$d أخرى</string>
-    <string name="strMsgTafsirsNoAvailable">لا يوجد تفاسير متاحة</string>
     <string name="strDescAddToBookmarks">إضافة إلى الإشارات المرجعية</string>
     <string name="strDescClose">إغلاق</string>
-    <string name="strMsgProphetsOrder">عرض الأنبياء بالترتيب الزمني</string>
     <string name="strMsgShareRange" formatted="false">أدخل النطاق بين %1$d - %2$d</string>
     <string name="strMsgTranslDownloaded" formatted="false">تم التنزيل: \"%s\".</string>
     <string name="strMsgTranslNoneSelected">لم يتم تحديد أي ترجمة. انتقل إلى الإعدادات للعثور على الترجمات.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">يمكن تحديد الحد الأقصى للترجمات %d مرة واحدة. الرجاء إلغاء تحديد واحد قبل اختيار آخر. هذا لتجنب فقدان الأداء.</string>
-    <string name="strMsgRecitationsLoadFailed">تعذر تنزيل التلاوات من الخادم. يرجى إعادة المحاولة لاحقا.</string>
     <string name="strDescGoBack">الرجوع</string>
     <string name="strDescVerseNoWithChapter" formatted="false">سورة %1$s, الآية رقم %2$d.</string>
-    <string name="strMsgRecitationsNoAvailable">لا توجد تلاوات متاحة</string>
-    <string name="strMsgTranslLoadFailed">تعذر تحميل الترجمات من الخادم. يرجى إعادة المحاولة لاحقاً.</string>
-    <string name="strMsgTranslNoDownloads">لا توجد ترجمات تم تنزيلها متاحة</string>
-    <string name="strMsgTranslNoDownloadsAvailable">لا توجد تنزيلات متاحة</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">فشل تنزيل \"%s\".</string>
     <string name="strMsgEnterValidRange">الرجاء إدخال نطاق صحيح</string>
-    <string name="strDescVerseNo" formatted="false">رقم الآية %d.</string>
     <string name="strMsgTryLater">يرجى إعادة المحاولة لاحقًا.</string>
     <string name="strTitleSelectTafsir">اختيار تفسير</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">قراءة تفسير الآية %d</string>
@@ -244,28 +155,15 @@
     <string name="strTitleInfo">معلومات!</string>
     <string name="titleScriptCleanup">هل تريد حذف الخط؟</string>
     <string name="strMsgNoInternet">الرجاء التحقق من اتصالك بالإنترنت.</string>
-    <string name="textPercentage" formatted="false">%d%</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s في القرآن</string>
-    <string name="strLabelProceed">يتم التنفيذ</string>
-    <string name="strTextUpdating">جارٍ التحديث …</string>
-    <string name="strTextSending">إرسال…</string>
-    <string name="strMsgVerseCredsInvalid">تفاصيل الآية غير صحيحة.</string>
     <string name="strLabelNavSearch">البحث</string>
-    <string name="strMsgSomethingWrongFixing">حدث خطأ ما! نحن نعمل لإصلاحه.</string>
-    <string name="strTextPreparing">التحضير…</string>
     <string name="strMsgBookmarkRemoved">تمت إزالة الآية من الإشارات المرجعية</string>
-    <string name="strMsgReadHistoryRemovedAlready">تمت إزالة سجل القراءة مسبقًا.</string>
-    <string name="strMsgReadHistoryRemoveFailed">فشل إزالة سجل القراءة.</string>
     <string name="strMsgHistoryRemoved" formatted="false">تمت إزالة \"%s\" من السجل</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">إجمالي النتائج التي تم العثور عليها في %1$s:%2$d</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">لم يتم العثور على نتائج في %s. يرجى التحقق من عوامل تصفية البحث أو البحث في ترجمة أخرى.</string>
     <string name="strMsgBookmarkAdded">تمت إضافة الآية إلى الإشارات المرجعية</string>
     <string name="strMsgBookmarkRemoveFailed">فشل إزالة الآية من الإشارات المرجعية</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s في %2$s</string>
-    <string name="strLabelDownloadImage">تنزيل الصورة</string>
-    <string name="strLabelShareImage">مشاركة الصورة</string>
-    <string name="strMsgInvalidVersesRange">نطاق الآية غير موجود</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d‐%2$d نطاق غير موجود للسورة رقم %3$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">الجزء %d غير موجود</string>
     <string name="strMsgBookmarkNoItems">لا توجد إشارات مرجعية</string>
     <string name="strMsgBookmarkDeleteSelected">ستتم إزالة الإشارات المرجعية المحددة.</string>
@@ -273,42 +171,28 @@
     <string name="strMsgBookmarkDateToday" formatted="false">اليوم في %s</string>
     <string name="strMsgSearchWordPart">البحث عن جزء الكلمة</string>
     <string name="strMsgSearchWordPartExample">على سبيل المثال: \"الإنسان\" في \"الإنسانية\"</string>
-    <string name="strMsgSearchArabic">البحث في المصحف</string>
-    <string name="strMsgChangeLanguage">سيتم إعادة تشغيل التطبيق لتغير اللغة.</string>
     <string name="strMsgNoInternetLong">لا يوجد اتصال بالإنترنت. تأكد من تشغيل Wi-Fi أو البيانات الخلوية، ثم حاول مرة أخرى.</string>
     <string name="strMsgSomethingWrong">حدث خطأ ما!</string>
-    <string name="strMsgReportUs">الرجاء إبلاغنا.</string>
     <string name="strTextPleaseWait">الرجاء الإنتظار…</string>
-    <string name="strTextInstalling">جارٍ التثبيت …</string>
-    <string name="strTextLoading">تحميل…</string>
     <string name="strMsgUpdateAvailable4Dialog">تحديث متاح!
 \nيرجى تحديث التطبيق.</string>
     <string name="strMsgUpdateAvailable2Continue">مطلوب التحديث!
 \nيرجى تحديث التطبيق للإستمرار.</string>
     <string name="strLabelAllChapters">كل السور</string>
-    <string name="strTitleImageSavedWithName" formatted="false">تم حفظ الصورة بالاسم: %s</string>
-    <string name="strMsgEditShareLongTransl">الترجمة طويلة جداً، وقد لا تتناسب بشكل صحيح.</string>
     <string name="strTitleReadHistory">سجل القراءة</string>
     <string name="strMsgReferenceDuas">بعض من الأدعية القرآنية.</string>
     <string name="titleDownloadScriptResources">تنزيل المصادر لهذا الخط؟</string>
     <string name="msgDownloadKFQPCResources">يجب تنزيل المصادر التالية قبل أن تتمكن من استخدام هذا الخط:</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">رسم %s ( ~1مب)</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">الخطوط: ~%dMB</string>
     <string name="msgDownloadingFonts">يتم تنزيل الخطوط</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d من %2$d الخطوط تم تنزيلها</string>
-    <string name="msgDownloadingResource" formatted="false">جار تنزيل %s</string>
-    <string name="msgScriptFontsDownloaded">تم تنزيل الخطوط.</string>
     <string name="textDownloading">جار التنزيل…</string>
     <string name="createIssue">إنشاء مشكلة</string>
-    <string name="msgAlarmManagerNotAvailable">مدير المنبهات غير متوفر في هذا الجهاز.</string>
     <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تنبيه الآيات.</string>
-    <string name="msgVerseReminderAlarmPermission">صلاحية المنبه مطلوبة لتفعيل تنبيه الآيات.</string>
     <string name="titleStorageCleanup">تنظيف مساحة التخزين</string>
     <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات.
 \n
 \nيمكن تحرير المصادر التالية:</string>
     <string name="recitationCanBeFreedUp" formatted="false">تم تخزين %1$d من التلاوات لعدد %2$d من القراء التي يمكن حذفها.</string>
-    <string name="titleChapterInfo">معلومات السور</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n%2$s
 \n
@@ -316,49 +200,30 @@
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
     <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها. لحذفها بشكل فردي اذهب إلى إدارة إعدادات الصوتيات.</string>
     <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
-    <string name="titleChapterInfoCleanup">هل تريد حذف معلومات السور؟</string>
-    <string name="msgChapterInfoCleanup">سيتم حذف كل معلومات السور المخزنة.</string>
-    <string name="titleTafsirCleanup">هل تريد حذف التفسير؟</string>
-    <string name="msgTafsirCleanup" formatted="false">سيتم حذف كل التفاسير من%s.</string>
     <string name="nothingToCleanup">لا يوجد شيء لتنظيف مساحة التخزين.</string>
     <string name="onboardDescTheme">يمكنك تغيرها فيما بعد.</string>
-    <string name="onboardDescReciter">يمكنك تغيير القراء فيما بعد. وأيضاً يمكنك العثور على المزيد من القراء في الإعدادات.</string>
-    <string name="strMsgReadHistoryRemoved">تمت إزالة سجل القراءة.</string>
-    <string name="strTitleError">خطأ!</string>
-    <string name="strMsgEditShareTransl">الترجمات المحددة من الإعدادات يتم عرضها هنا.</string>
     <string name="strMsgReadShowupHere">هنا سيعرض سجل قراءتك.</string>
     <string name="strMsgSearchNoResultsFound">لم يتم العثور على نتائج. يرجى التحقق من عوامل تصفية البحث أو البحث في ترجمة أخرى.</string>
     <string name="strMsgUpdateAvailable">تحديث متاح! يرجى تحديث التطبيق للحصول على أحدث الميزات.</string>
-    <string name="strMsgUpdateDownloaded">تم تنزيل التحديث! يرجى التثبيت لإكمال التحديث.</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">لا توجد آية بالرقم %1$d في السورة رقم %2$d</string>
-    <string name="strMsgBookmarkRemovedAlready">الآية ليست موجودة في الإشارات المرجعية</string>
     <string name="strMsgBookmarkAddFailed">فشلت إضافة الآية إلى الإشارات المرجعية</string>
     <string name="strMsgBookmarkAddedAlready">الآية موجودة مسبقًا في الإشارات المرجعية</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">لم يتم العثور على نتائج. يرجى التحقق من عوامل تصفية البحث.</string>
     <string name="strMsgReadHistoryNoItems">لا يوجد سجل قراءة</string>
-    <string name="strMsgReadHistoryDeleteSelected">ستتم إزالة سجلات القراءة المحددة.</string>
     <string name="strMsgReadHistoryDeleteAll">ستتم إزالة جميع سجلات القراءة.</string>
     <string name="strMsgHistoryRemove">هل تريد إزالة هذا السجل؟</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">تم العثور على نتيجة واحدة فقط في %s</string>
     <string name="strMsgCouldNotOpenPage">تعذر فتح الصفحة.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">تم حفظ عدد %d من التفاسير التي يمكن حذفها.</string>
     <string name="strPreviewTextTransl">بسم الله الرحمن الرحيم</string>
-    <string name="msgDownloadFailed">فشل التنزيل</string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d من %2$d</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">عدد المواضع التي تم العثور عن آيات متعلقة بـ%1$s هي: %2$d.</string>
-    <string name="labelBackgroundDownload">التنزيل في الخلفية</string>
-    <string name="msgDownloadingScript">يتم تنزيل الخط</string>
     <string name="translationCanBeFreedUp" formatted="false">تم تنزيل %d من الترجمات التي يمكن حذفها.</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">تم حفظ عدد %d من معلومات السور التي يمكن حذفها.</string>
     <string name="nFiles" formatted="false">%d ملفات</string>
-    <string name="msgAnotherDownloadInProgress">تنزيل اخرى قيد التقدم</string>
     <string name="lastCrashLog">تقرير الأعطال الأخيرة</string>
     <string name="copiedToClipboard">تم النسخ.</string>
     <string name="github">GitHub</string>
     <string name="pasteCrashLogGithubIssue">تم نسخ تقرير العطل. الرجاء وضعها في GitHub.</string>
     <string name="onboardDescLanguage">غير التطبيق للغتك. يمكنك تغييرها فيما بعد.</string>
     <string name="onboardDescTranslations">يمكنك تغيرها فيما بعد. وأيضاً يمكنك تنزيل المزيد من الترجمات من الإعدادات.</string>
-    <string name="labelAdd">إضافة</string>
     <string name="labelFreeUpSpace">إخلاء مساحة تخزنية</string>
     <string name="noItems">لا توجد عناصر</string>
     <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
@@ -372,18 +237,9 @@
     <string name="audioOnlyArabic">تشغيل القرآن فقط</string>
     <string name="logRemoved">تم إزالة السجل</string>
     <string name="labelTranslation">الترجمة</string>
-    <string name="titleAddToFavourites">إضافة إلى المفضلة</string>
-    <string name="msgAddedToFavourites">تم الإضافة إلى المفضلة</string>
     <string name="titleRemoveFromFavourites">إزالة من المفضلة</string>
-    <string name="msgRemovedFromFavourites">تم الإزالة من المفضلة</string>
     <string name="msgNoFavouriteChapters">أضف السورة إلى المفضلة لرؤيتها هنا.</string>
-    <string name="textTranslationReciterInfo">اللغة : %1$s
-\nالكتاب: %2$s</string>
     <string name="textNoLogsFound">لا توجد سجلات</string>
-    <string name="msgRecitaionFailedToDownload" formatted="false">فشل تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
-    <string name="msgRecitaionDownloaded" formatted="false">تم تنزيل \"%1$s\" للقارئ \"%2$s\".</string>
-    <string name="msgRecitaionDeleleSurah" formatted="false">سيتم حذف كل التلاوات من \"%1$s\" للقارئ \"%2$s\".</string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false">تم حذف تلاوات \"%1$s\" للقارئ \"%2$s\".</string>
     <string name="suppressedLogs">سجلات التوقف</string>
     <string name="appLogs">سجلات التطبيق</string>
     <string name="crashLogs">سجلات الأعطال</string>
@@ -391,9 +247,7 @@
     <string name="audioOnlyTranslation">تشغيل الترجمات فقط</string>
     <string name="titleOtherSettings">إعدادات اخرى</string>
     <string name="audioBothArabicTranslation">تشغيل القرآن والترجمات</string>
-    <string name="textDownloaded">تم التنزيل</string>
     <string name="strHintSearchQuran">ابحث باسم السورة أو الرقم</string>
-    <string name="strTitleAlphaBG">خلفية الفا</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d من الرسم و%2$d من الخطوط</string>
     <string name="verseSyncOn">متابعة الآية: مفعل</string>
     <string name="strTitleFeaturedQuran">قراءة مختارة</string>
@@ -403,8 +257,6 @@
     <string name="labelNextTafsir">التفسير التالي</string>
     <string name="labelPreviousTafsir">التفسير السابق</string>
     <string name="titleSolutionVerses">حلول من القرآن</string>
-    <string name="msgTafsirLoadFailed">فشل تحميل التفسير</string>
-    <string name="msgInvalidParams">المعلومات غير دقيقة</string>
     <string name="place" formatted="false">موضع %d</string>
     <string name="titleEtiquetteVerses">الأخلاق في القرآن</string>
     <string name="strMsgShareApp" formatted="false">تطبيق قرآن، تطبيق مجاني ومفتوح المصدر لقراءة وتصفح القرآن الكريم مع الترجمات بمختلف اللغات. للتطبيق واجهة سهلة وسلسة مع مميزات مثل التفسير والتلاوة والتنبه والمزيد.
@@ -421,17 +273,13 @@
     <string name="msgArabicTextToggle">سيؤدي تعطيل هذه الميزة إلى إخفاء نص الآية باللغة العربية من التطبيق.</string>
     <string name="titleExportData">التصدير والاستيراد</string>
     <string name="labelImport">استيراد</string>
-    <string name="msgExportEmpty">لا توجد إشارات مرجعية للتصدير</string>
     <string name="msgExportSuccess">تم التصدير بنجاح</string>
-    <string name="msgImportFailed">فشل الاستيراد. الملف غير مدعوم.</string>
-    <string name="msgImportSuccess">تم الاستيراد بنجاح</string>
     <string name="labelExport">تصدير</string>
     <string name="msgExportImportBookmarks">قم بتصدير أو استيراد إشاراتك المرجعية مع الملاحظات.</string>
     <string name="desc_votd_widget">احصل على آية جديدة كل يوم</string>
     <string name="autoScroll">التمرير التلقائي</string>
     <string name="startAutoScroll">بدء التمرير التلقائي</string>
     <string name="autoScrollSpeed">ضبط السرعة</string>
-    <string name="strMsgCannotAutoScrollWhileReciting">لا يمكن التمرير التلقائي أثناء تشغيل التلاوة.</string>
     <string name="msgExtractingFonts">استخراج الخطوط</string>
     <string name="strTitleDeleteTafsir">حذف التفسير؟</string>
     <string name="strMsgDeleteTafsir" formatted="false">هل أنت متأكد أنك تريد حذف \"%s\"؟ سيؤدي هذا إلى إزالة بيانات التفسير التي تم تنزيلها من جهازك.</string>
@@ -443,8 +291,6 @@
     <string name="yesCancelDownload">نعم إلغاء</string>
     <string name="noContinueDownload">لا، استمر</string>
     <string name="readingTafsirMultiVerses">قراءة التفسير لآيات متعددة:</string>
-    <string name="dlRecitations">تنزيل وإدارة التلاوات</string>
     <string name="strLabelDownloaded">تحميل</string>
     <string name="labelImportExportBookmarks">استيراد/تصدير الإشارات المرجعية</string>
-    <string name="dlTafsirs">تنزيل وإدارة التفاسير</string>
 </resources>

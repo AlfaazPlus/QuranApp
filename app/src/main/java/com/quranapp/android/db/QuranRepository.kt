@@ -1,7 +1,7 @@
 package com.quranapp.android.db
 
 import android.content.Context
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
@@ -115,7 +115,8 @@ class QuranRepository(
 
         val idsForPage = ayahs.filter { it.ayahNo > 1 }.map { it.ayahId }
         val pageByAyahId = if (mushafId > 0 && idsForPage.isNotEmpty()) {
-            mushafDao.getPagesForAyahIds(mushafId, idsForPage).associate { it.ayahId to it.pageNumber }
+            mushafDao.getPagesForAyahIds(mushafId, idsForPage)
+                .associate { it.ayahId to it.pageNumber }
         } else {
             emptyMap()
         }
@@ -172,7 +173,8 @@ class QuranRepository(
 
         val idsForPage = ayahs.filter { it.ayahNo > 1 }.map { it.ayahId }
         val pageByAyahId = if (mushafId > 0 && idsForPage.isNotEmpty()) {
-            mushafDao.getPagesForAyahIds(mushafId, idsForPage).associate { it.ayahId to it.pageNumber }
+            mushafDao.getPagesForAyahIds(mushafId, idsForPage)
+                .associate { it.ayahId to it.pageNumber }
         } else {
             emptyMap()
         }
@@ -419,7 +421,8 @@ class QuranRepository(
         pageNumbers: List<Int>,
     ): Map<Int, Int> {
         if (mushafId <= 0 || pageNumbers.isEmpty()) return emptyMap()
-        return mushafDao.getJuzForPages(mushafId, pageNumbers).associate { it.pageNumber to it.juzNo }
+        return mushafDao.getJuzForPages(mushafId, pageNumbers)
+            .associate { it.pageNumber to it.juzNo }
     }
 
     /**
@@ -517,11 +520,13 @@ class QuranRepository(
     suspend fun getChapterName(chapterNo: Int): String {
         if (chapterNo <= 0) return ""
 
-        val locale = appLocale()
-
-        return surahDao.getLocalization(chapterNo, locale.toLanguageTag())?.name?.takeIf { it.isNotBlank() }
-            ?: surahDao.getLocalization(chapterNo, locale.language)?.name?.takeIf { it.isNotBlank() }
-            ?: surahDao.getLocalization(chapterNo, "en")?.name.orEmpty()
+        return appFallbackLanguageCodes()
+            .firstNotNullOfOrNull { code ->
+                surahDao.getLocalization(chapterNo, code)
+                    ?.name
+                    ?.takeIf { it.isNotBlank() }
+            }
+            .orEmpty()
     }
 
     suspend fun getFirstPageOfChapter(chapterNo: Int, scriptCode: String? = null): Int? {
