@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
@@ -37,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
@@ -52,6 +52,7 @@ import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import verticalFadingEdge
 
 @Composable
 fun SpotlightVersePanel(
@@ -85,116 +86,96 @@ fun SpotlightVersePanel(
     val fontResolver = FontResolver.remember()
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 8.dp),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         if (fontResolver == null) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(40.dp),
-                    color = colorScheme.primary,
-                    strokeWidth = 3.dp,
-                )
-            }
+            Loader(true)
         } else {
-            Box(
+            AnimatedContent<ChapterVersePair>(
                 modifier = Modifier.fillMaxSize(),
+                targetState = versePair,
+                transitionSpec = {
+                    fadeIn(
+                        animationSpec = tween(
+                            durationMillis = 1000,
+                            delayMillis = 500,
+                            easing = FastOutSlowInEasing,
+                        ),
+                    ) togetherWith fadeOut(
+                        animationSpec = tween(1000, easing = FastOutSlowInEasing),
+                    )
+                },
                 contentAlignment = Alignment.Center,
-            ) {
-                AnimatedContent<ChapterVersePair>(
-                    modifier = Modifier.fillMaxSize(),
-                    targetState = versePair,
-                    transitionSpec = {
-                        fadeIn(
-                            animationSpec = tween(
-                                durationMillis = 1000,
-                                delayMillis = 500,
-                                easing = FastOutSlowInEasing,
-                            ),
-                        ) togetherWith fadeOut(
-                            animationSpec = tween(1000, easing = FastOutSlowInEasing),
-                        )
-                    },
-                    contentAlignment = Alignment.Center,
-                    label = "spotlightVerse",
-                ) { pair ->
-                    if (!pair.isValid) {
-                        Box(modifier = Modifier.fillMaxSize())
-                    } else {
-                        val chapterNo = pair.chapterNo
-                        val verseNo = pair.verseNo
+                label = "spotlightVerse",
+            ) { pair ->
+                if (!pair.isValid) {
+                    Box(modifier = Modifier.fillMaxSize())
+                } else {
+                    val chapterNo = pair.chapterNo
+                    val verseNo = pair.verseNo
 
-                        val verse by produceState<VerseWithDetails?>(
-                            initialValue = null,
-                            repository,
-                            factory,
-                            chapterNo,
-                            verseNo,
-                            scriptCode,
-                            slugs,
-                        ) {
-                            value = withContext(Dispatchers.IO) {
-                                val vwd =
-                                    repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
-                                        ?: return@withContext null
-                                val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
-                                vwd.apply {
-                                    translations = factory.getTranslationsSingleVerse(
-                                        setOf(aSlug),
-                                        chapterNo,
-                                        verseNo,
-                                    )
-                                }
+                    val verse by produceState<VerseWithDetails?>(
+                        initialValue = null,
+                        repository,
+                        factory,
+                        chapterNo,
+                        verseNo,
+                        scriptCode,
+                        slugs,
+                    ) {
+                        value = withContext(Dispatchers.IO) {
+                            val vwd =
+                                repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
+                                    ?: return@withContext null
+                            val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
+                            vwd.apply {
+                                translations = factory.getTranslationsSingleVerse(
+                                    setOf(aSlug),
+                                    chapterNo,
+                                    verseNo,
+                                )
                             }
                         }
+                    }
 
-                        val scroll = rememberScrollState()
-                        LaunchedEffect(pair) {
-                            scroll.scrollTo(0)
-                        }
+                    val scrollState = rememberScrollState()
 
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center,
+                    LaunchedEffect(pair) {
+                        scrollState.scrollTo(0)
+                    }
+
+                    when (val v = verse) {
+                        null -> Loader(true)
+                        else -> Box(
+                            Modifier
+                                .padding(
+                                    horizontal = 24.dp,
+                                    vertical = 96.dp
+                                )
+                                .navigationBarsPadding()
+                                .verticalFadingEdge(scrollState, color = PlayerBgColor),
+                            contentAlignment = Alignment.Center
                         ) {
-                            when (val v = verse) {
-                                null -> Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(40.dp),
-                                        color = colorScheme.primary,
-                                        strokeWidth = 3.dp,
-                                    )
-                                }
-
-                                else -> Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(scroll),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    SpotlightQuranText(
-                                        vwd = v,
-                                        arabicEnabled = arabicEnabled,
-                                        fontResolver = fontResolver,
-                                        scriptCode = scriptCode,
-                                        arabicMultiplier = arabicMultiplier,
-                                    )
-                                    SpotlightTranslationText(
-                                        vwd = v,
-                                        factory = factory,
-                                        translationMultiplier = translationMultiplier,
-                                    )
-                                }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(scrollState),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                SpotlightQuranText(
+                                    vwd = v,
+                                    arabicEnabled = arabicEnabled,
+                                    fontResolver = fontResolver,
+                                    scriptCode = scriptCode,
+                                    arabicMultiplier = arabicMultiplier,
+                                )
+                                SpotlightTranslationText(
+                                    vwd = v,
+                                    factory = factory,
+                                    translationMultiplier = translationMultiplier,
+                                )
                             }
                         }
                     }

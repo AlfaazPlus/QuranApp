@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
@@ -30,6 +31,9 @@ object RecitationPreferences {
     private val KEY_AUDIO_OPTION = stringPreferencesKey(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)
     private val KEY_VERSE_GROUP_SIZE =
         intPreferencesKey("key.recitation.verse_group_size")
+
+    private val KEY_LAST_PLAYED_CHAPTER = intPreferencesKey("recitation_last_played_chapter")
+    private val KEY_LAST_PLAYED_VERSE = intPreferencesKey("recitation_last_played_verse")
 
     const val RECITATION_DEFAULT_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_VERSE_GROUP_SIZE = 1
@@ -146,5 +150,19 @@ object RecitationPreferences {
 
     suspend fun setVerseGroupSize(size: Int) {
         DataStoreManager.write(KEY_VERSE_GROUP_SIZE, size.coerceAtLeast(1))
+    }
+
+    fun getLastPlayedVerse(): ChapterVersePair? {
+        val chapter = DataStoreManager.read(KEY_LAST_PLAYED_CHAPTER, -1)
+        val verse = DataStoreManager.read(KEY_LAST_PLAYED_VERSE, -1)
+
+        if (chapter == -1 || verse == -1) return null
+
+        return ChapterVersePair(chapter, verse)
+    }
+
+    suspend fun setLastPlayedVerse(chapterNo: Int, verseNo: Int) {
+        DataStoreManager.write(KEY_LAST_PLAYED_CHAPTER, chapterNo)
+        DataStoreManager.write(KEY_LAST_PLAYED_VERSE, verseNo)
     }
 }

@@ -257,7 +257,6 @@ private fun ExpandedPlayerSpotlightSection(
     ) {
         SpotlightVersePanel(
             versePair = verse,
-            modifier = Modifier.fillMaxSize(),
         )
 
         AnimatedVisibility(

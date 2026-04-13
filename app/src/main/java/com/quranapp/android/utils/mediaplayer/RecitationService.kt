@@ -55,19 +55,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-/**
- * RecitationService - Media playback service for Quran recitation.
- *
- * This service is completely decoupled from the UI:
- * - Extends MediaSessionService for automatic notification handling
- * - Uses MediaSession for system media controls integration
- * - Communicates state via session extras (controllers observe changes)
- * - UI connects via MediaController and sends commands
- * - Can run independently without any UI binding
- */
 @OptIn(UnstableApi::class)
 class RecitationService : MediaSessionService() {
 
@@ -141,18 +133,35 @@ class RecitationService : MediaSessionService() {
         scoped {
             initializeStateFromPreferences()
 
-            combine(
-                _verseClipPlan,
-                _singleTrackTimingMetadata,
-            ) { plan, timing ->
-                plan != null || (timing != null && timing.hasVerseTiming)
-            }.collectLatest { isAvailable ->
-                if (state.value.isVerseSyncAvailable == isAvailable) return@collectLatest
-                updateState { copy(isVerseSyncAvailable = isAvailable) }
+            launch {
+                combine(
+                    _verseClipPlan,
+                    _singleTrackTimingMetadata,
+                ) { plan, timing ->
+                    plan != null || (timing != null && timing.hasVerseTiming)
+                }.collectLatest { isAvailable ->
+                    if (state.value.isVerseSyncAvailable == isAvailable) return@collectLatest
+                    updateState { copy(isVerseSyncAvailable = isAvailable) }
+                }
             }
 
-            state.collectLatest { newState ->
-                mediaSession?.setSessionExtras(newState.toBundle())
+            launch {
+                state.map { it.currentVerse }
+                    .distinctUntilChanged()
+                    .collectLatest { verse ->
+                        if (verse.isValid) {
+                            RecitationPreferences.setLastPlayedVerse(
+                                verse.chapterNo,
+                                verse.verseNo,
+                            )
+                        }
+                    }
+            }
+
+            launch {
+                state.collectLatest { newState ->
+                    mediaSession?.setSessionExtras(newState.toBundle())
+                }
             }
         }
     }
@@ -233,7 +242,9 @@ class RecitationService : MediaSessionService() {
             translationReciter = RecitationPreferences.getTranslationReciterId(),
         )
 
-        updateState { copy(settings = initialSettings) }
+        val lastVerse = RecitationPreferences.getLastPlayedVerse() ?: ChapterVersePair(1, 1)
+
+        updateState { copy(settings = initialSettings, currentVerse = lastVerse) }
         player.setPlaybackSpeed(initialSettings.speed)
         invalidateRepeatSchedule()
     }
@@ -1049,8 +1060,8 @@ class RecitationService : MediaSessionService() {
     private fun <T : BasePlayerCommand> reduce(cmd: T) = scoped {
         when (cmd) {
             is StartCommand -> {
-                // TODO: restore any save state if incoming verse is null, for now using default
-                playVerse(cmd.verse?.chapterNo ?: 1, cmd.verse?.verseNo ?: 1)
+                val verse = cmd.verse ?: state.value.currentVerse
+                playVerse(verse.chapterNo, verse.verseNo)
             }
 
             is SetAudioOptionCommand -> {

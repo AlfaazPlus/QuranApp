@@ -55,36 +55,43 @@ fun StorageCleanupRecitationScreen(
     val context = LocalContext.current
     val modelManager = remember(context) { RecitationModelManager.get(context) }
 
-    val rows = remember(uiState.quranReciters, uiState.translationReciters, uiState.downloadStates) {
-        buildList {
-            uiState.quranReciters.forEach { m ->
-                val st = uiState.downloadStates[RecitationDownloadViewModel.stateKey(RecitationAudioKind.QURAN, m.id)]
-                if ((st?.downloadedCount ?: 0) > 0) {
-                    add(
-                        ReciterCleanupRow(
-                            kind = RecitationAudioKind.QURAN,
-                            id = m.id,
-                            name = m.getReciterName(),
-                            downloadedCount = st!!.downloadedCount,
-                        ),
-                    )
+    val rows =
+        remember(uiState.quranReciters, uiState.translationReciters, uiState.downloadStates) {
+            buildList {
+                uiState.quranReciters.forEach { m ->
+                    val st = uiState.downloadStates[RecitationDownloadViewModel.stateKey(
+                        RecitationAudioKind.QURAN,
+                        m.id
+                    )]
+                    if ((st?.downloadedCount ?: 0) > 0) {
+                        add(
+                            ReciterCleanupRow(
+                                kind = RecitationAudioKind.QURAN,
+                                id = m.id,
+                                name = m.getReciterName(),
+                                downloadedCount = st!!.downloadedCount,
+                            ),
+                        )
+                    }
                 }
-            }
-            uiState.translationReciters.forEach { m ->
-                val st = uiState.downloadStates[RecitationDownloadViewModel.stateKey(RecitationAudioKind.TRANSLATION, m.id)]
-                if ((st?.downloadedCount ?: 0) > 0) {
-                    add(
-                        ReciterCleanupRow(
-                            kind = RecitationAudioKind.TRANSLATION,
-                            id = m.id,
-                            name = m.getReciterName(),
-                            downloadedCount = st!!.downloadedCount,
-                        ),
-                    )
+                uiState.translationReciters.forEach { m ->
+                    val st = uiState.downloadStates[RecitationDownloadViewModel.stateKey(
+                        RecitationAudioKind.TRANSLATION,
+                        m.id
+                    )]
+                    if ((st?.downloadedCount ?: 0) > 0) {
+                        add(
+                            ReciterCleanupRow(
+                                kind = RecitationAudioKind.TRANSLATION,
+                                id = m.id,
+                                name = m.getReciterName(),
+                                downloadedCount = st!!.downloadedCount,
+                            ),
+                        )
+                    }
                 }
             }
         }
-    }
 
     var pendingDelete by remember { mutableStateOf<ReciterCleanupRow?>(null) }
 
@@ -142,7 +149,7 @@ fun StorageCleanupRecitationScreen(
                                 style = MaterialTheme.typography.titleSmall,
                             )
                             Text(
-                                text = stringResource(R.string.nFiles, row.downloadedCount),
+                                text = stringResource(R.string.nItems, row.downloadedCount),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                             )
