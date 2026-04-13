@@ -13,7 +13,7 @@
     <string name="strTitleAppVersion">Versione dell\'app</string>
     <string name="strLabelSkip">Saltare</string>
     <string name="strLabelNext">Prossimo</string>
-    <string name="strLabelThemeDark">Buio</string>
+    <string name="strLabelThemeDark">Scuro</string>
     <string name="strLabelSystemDefault">Default del sistema</string>
     <string name="strLabelNextVerse">Verso successivo</string>
     <string name="strLabelVerses" formatted="false">Versi %1$d–%2$d</string>
@@ -41,7 +41,7 @@
     <string name="strTitleBookmarkDeleteAll">Rimuovere tutti i segnalibri\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Rimuovere %d segnalibri\?</string>
     <string name="strTitleShareVerse">Condividi Versetto</string>
-    <string name="strTitleFeaturedQuran">lettura in primo piano</string>
+    <string name="strTitleFeaturedQuran">Lettura in primo piano</string>
     <string name="strTitleVOTD">Versetto del giorno</string>
     <string name="strTitleFailed">Fallito</string>
     <string name="strLabelPlay">Suonare</string>
@@ -68,7 +68,7 @@
     <string name="strLabelUpdate">Aggiornamento</string>
     <string name="strLabelOn">Su</string>
     <string name="strLabelOff">Spento</string>
-    <string name="strLabelThemeLight">Leggero</string>
+    <string name="strLabelThemeLight">Chiaro</string>
     <string name="strLabelPreviousVerse">Verso precedente</string>
     <string name="strLabelJuzNo" formatted="false">Juz %d</string>
     <string name="strLabelVerseNo" formatted="false">Verso %d</string>
@@ -127,7 +127,7 @@
     <string name="strLabelVersesWithColon" formatted="false">Versi : %1$d–%2$d</string>
     <string name="strLabelOpen">Apri</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d non è una sura n. valida.</string>
-    <string name="strMsgThemeDefault">Regolare in base alle impostazioni di sistema.</string>
+    <string name="strMsgThemeDefault">Aderisce alle impostazioni di sistema.</string>
     <string name="strMsgBookmarkAddFailed">Versetto non è stato aggiunto ai segnalibri</string>
     <string name="strMsgBookmarkAdded">Versetto aggiunto con successo ai segnalibri</string>
     <string name="strTitleReadHistory">Sfoglia la cronologia</string>
@@ -163,10 +163,10 @@
     <string name="strMsgUpdateAvailable">AGGIORNAMENTO DISPONIBILE! Aggiorna l\'app per ottenere le funzionalità più recenti.</string>
     <string name="strLabelAllChapters">Tutti i capitoli</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s nel Corano</string>
-    <string name="strMsgReferenceDuas">Raccolto alcuni duas dal Corano.</string>
+    <string name="strMsgReferenceDuas">Sono stati raccolti alcuni dua presi dal corano.</string>
     <string name="strHintToVerse">Al verso</string>
     <string name="strHintBookmarkViewerNote">Scrivi una nota aggiuntiva su questo segnalibro qui…</string>
-    <string name="strMsgThemeDark">La modalità oscura riduce il consumo energetico.</string>
+    <string name="strMsgThemeDark">La modalità scura riduce il consumo energetico.</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d non è un Juz N. valido.</string>
     <string name="strMsgBookmarkNoItems">Nessun segnalibro</string>
     <string name="strMsgBookmarkDeleteSelected">I segnalibri selezionati verranno rimossi.</string>
@@ -266,4 +266,11 @@
     <string name="recitationCanBeFreedUp" formatted="false">È possibile liberare %1$d file di recitazione memorizzati da %2$d recitatori.</string>
     <string name="msgRecitationCleanup" formatted="false">Tutte le recitazioni memorizzate da %s verranno eliminate.</string>
     <string name="nFiles" formatted="false">%d files</string>
+    <string name="msgScriptCleanup" formatted="false">Lo script %s e tutti i suoi font verranno eliminati. Per continuare a usarli dopo averli eliminati, dovrai scaricarli di nuovo.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d fonti</string>
+    <string name="about_quran_science_msg">I contenuti di questa pagina sono stati presi dal libro \"The Quran and Modern Science: Compatible or Incompatibe\" scritto da Dr. Zakir Naik\n\nLe immagini presenti sono mostrate solo a scopo illustrativo.</string>
+    <string name="about_this_page">Informazioni riguardo questa pagina</string>
+    <string name="quran_and_science">Il corano e la scienza</string>
+    <string name="donate">Donaci</string>
+    <string name="msgArabicTextToggle">Disattivare questa funzione nasconderà il testo arabo in ogni parte dell\'app.</string>
 </resources>

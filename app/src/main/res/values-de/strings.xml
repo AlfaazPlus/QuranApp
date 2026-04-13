@@ -47,8 +47,8 @@
     <string name="strTitleFootnote">Fußnote</string>
     <string name="strTitleFootnotes">Fußnoten</string>
     <string name="strTitleReaderChapters">Suren</string>
-    <string name="strTitleReaderJuz">Juz</string>
-    <string name="strTitleVerseOptions">Vers Einstellungen</string>
+    <string name="strTitleReaderJuz">Abschnitt</string>
+    <string name="strTitleVerseOptions">Vers-Optionen</string>
     <string name="strTitleVerseRecitation">Vers Rezitation</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Sure %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Gehe zu Vers %d</string>
@@ -79,7 +79,7 @@
     <string name="strTitleFeaturedProphets">Propheten im Koran</string>
     <string name="strTitlePrivacyPolicy">Datenschutzbestimmungen</string>
     <string name="strTitleFailed">Fehlgeschlagen</string>
-    <string name="strTitleFeaturedDuas">Gebete im Koran</string>
+    <string name="strTitleFeaturedDuas">Bittgebete im Koran</string>
     <string name="strTitleChapInfoChapterNo">Kapitelnummer</string>
     <string name="strTitleChapInfoVerses">Verse</string>
     <string name="strTitleChapInfoPages">Seiten</string>
@@ -163,7 +163,7 @@
     <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: ~%dMB</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
-    <string name="strMsgReferenceDuas">Einige gesammlte Gebete aus dem Koran.</string>
+    <string name="strMsgReferenceDuas">Einige gesammlte Bittgebete aus dem Koran.</string>
     <string name="textDownloading">Wird heruntergeladen…</string>
     <string name="lastCrashLog">Letztes Absturzprotokoll</string>
     <string name="createIssue">Problem erstellen</string>
@@ -261,10 +261,10 @@
     <string name="msgChapterRemovedFromFavourites">Sura aus den Favoriten entfernt.</string>
     <string name="textNoLogsFound">Keine Protokolle gefunden</string>
     <string name="msgNoFavouriteChapters">Füge ein Kapitel zu den Favoriten hinzu, um es hier zu sehen.</string>
-    <string name="strMsgDuaFor" formatted="false">Dua für %s</string>
+    <string name="strMsgDuaFor" formatted="false">Bittgebet für %s</string>
     <string name="titleReaderTextSizeTafsir">Tafsir Text Größe</string>
-    <string name="strMsgDuaOf" formatted="false">Gebet von %s</string>
-    <string name="strMsgPropheticDuaInQuran" formatted="false">Gebet von %s im Koran</string>
+    <string name="strMsgDuaOf" formatted="false">Bittgebet von %s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Bittgebet von %s im Koran</string>
     <string name="msgClearReadHistory">Leseverlauf löschen</string>
     <string name="titleResourceDownloadSource">Ressourcen-Download-Quelle</string>
     <string name="msgResourceDownloadSource">Verwende diese Option, um Koran-Daten aus einer anderen Quelle herunterzuladen, wenn eine nicht funktioniert</string>

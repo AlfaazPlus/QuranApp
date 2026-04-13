@@ -118,17 +118,17 @@
     <string name="strTextPleaseWait">Сураныч, күтө туруңуз…</string>
     <string name="strAyatulKursi">Аят ал-Курсий</string>
     <string name="strTitleOops">Ой!</string>
-    <string name="strMsgUpdateAvailable">Жаңыртуу жеткиликтүү! Акыркы функцияларды алуу үчүн тиркемени жаңыртыңыз.</string>
-    <string name="strMsgUpdateAvailable2Continue">Жаңыртуу зарыл! Улантуу үчүн тиркемени жаңыртыңыз.</string>
+    <string name="strMsgUpdateAvailable">ЖАҢЫРТУУ ЖЕТКИЛИКТҮҮ! Акыркы функцияларды алуу үчүн тиркемени жаңыртыңыз.</string>
+    <string name="strMsgUpdateAvailable2Continue">Жаңыртуу зарыл!\nУлантуу үчүн тиркемени жаңыртыңыз.</string>
     <string name="strLabelAllChapters">Бардык бөлүмдөр</string>
-    <string name="strMsgDuaFor" formatted="false">%s үчүн дуба</string>
+    <string name="strMsgDuaFor" formatted="false">%s үчүн</string>
     <string name="strMsgDuaOf" formatted="false">%s дубасы</string>
     <string name="strMsgReferenceInQuran" formatted="false">Куранда %s</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s менен байланышкан аяттар %2$d жерден табылды.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s темасы менен байланышкан аяттар %2$d жерден табылды.</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Курандагы %s дубасы</string>
     <string name="strMsgReferenceDuas">Курандан дубалар чогултулду.</string>
     <string name="titleDownloadScriptResources">Шрифт ресурстарын жүктөйсүңбү?</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттер: %1$d/%2$d жүктөлдү (~%3$dМБ калды)</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттин көлөмү: %dМБ</string>
     <string name="msgDownloadingFonts">Шрифттер жүктөлүүдө</string>
     <string name="msgExtractingFonts">Шрифттерди чыгарып алуу</string>
     <string name="lastCrashLog">Соңку ката журналы</string>
@@ -136,7 +136,7 @@
     <string name="crashLogs">Ката журналдары</string>
     <string name="suppressedLogs">Жашырылган журналдар</string>
     <string name="createIssue">Көйгөйдү каттоо</string>
-    <string name="copiedToClipboard">Алмашуу буферине көчүрүлдү</string>
+    <string name="copiedToClipboard">Алмашуу буферине көчүрүлдү.</string>
     <string name="github">GitHub</string>
     <string name="discord">Discord</string>
     <string name="msgVerseReminderNotifPermission">Билдирүү уруксатын бериңиз.</string>
@@ -159,20 +159,20 @@
     <string name="places" formatted="false">%d жерде</string>
     <string name="inPlaces" formatted="false">%s сүрөсүндө</string>
     <string name="inPlacesMore" formatted="false">%1$s жана %2$d жерде</string>
-    <string name="onboardDescTheme">Бул жөндөөнү кийинчерээк өзгөртө аласыз</string>
-    <string name="labelArabic">Арабча</string>
+    <string name="onboardDescTheme">Бул жөндөөнү кийинчерээк өзгөртсөңүз болот.</string>
+    <string name="labelArabic">Курани Карим</string>
     <string name="labelTranslation">Котормо</string>
     <string name="favourites">Тандалмалар</string>
     <string name="titleRemoveFromFavourites">Сүйүктүүлөрдөн өчүрүү</string>
-    <string name="msgNoFavouriteChapters">Сүйүктүүлөрүңүз жок</string>
-    <string name="msgChapterAddedToFavourites">Сүрө сүйүктүүлөргө кошулду</string>
+    <string name="msgNoFavouriteChapters">Сүйүктүүлөрүңүз жок.</string>
+    <string name="msgChapterAddedToFavourites">Сүрө сүйүктүүлөргө кошулду.</string>
     <string name="textNoLogsFound">Журналдар табылган жок</string>
     <string name="strPreviewTextTransl">Мээримдүү, Ырайымдуу Аллахтын аты менен баштайм</string>
     <string name="msgClearReadHistory">Окуу тарыхын тазалоо</string>
     <string name="msgClearSearchHistory">Издөө тарыхын тазалоо</string>
     <string name="titleResourceDownloadSource">Ресурстарды жүктөө булагы</string>
     <string name="titleArabicTextToggle">Арабча аятты көрсөтүү</string>
-    <string name="msgArabicTextToggle">Бул функция арабча аяттарды жашырат</string>
+    <string name="msgArabicTextToggle">Бул функция арабча аяттарды жашырат.</string>
     <string name="labelExport">Экспорт</string>
     <string name="labelImport">Импорт</string>
     <string name="msgExportSuccess">Экспорт ийгиликтүү</string>
@@ -182,7 +182,7 @@
     <string name="autoScrollSpeed">Ылдамдыкты орнотуу</string>
     <string name="strLabelSurah" formatted="false">%s сүрөсү</string>
     <string name="strTitleAppVersion">Тиркеме нускасы</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp – бул Куранды окуу жана изилдөө үчүн акысыз жана ачык булактуу колдонмо. Азыр жүктөп алыңыз:\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp – бул Куранды окуу жана изилдөө үчүн акысыз жана ачык булактуу колдонмо. \n\nАЗЫР ЖҮКТӨП АЛЫҢЫЗ:\n%s</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strTitleMadani">Мадиналык</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">%1$d-сүрө │ %2$d–%3$d - аяттар</string>
@@ -207,8 +207,8 @@
     <string name="strTitleProphets">Пайгамбарлар</string>
     <string name="strTitleInfo">Маалымат!</string>
     <string name="strMsgNoInternetLong">Интернет жок. Wi-Fi же мобилдик дайындарды күйгүзүңүз жана кайра аракет кылыңыз.</string>
-    <string name="msgDownloadKFQPCResources">Бул шрифт үчүн керектүү ресурстар жүктөлөт:</string>
-    <string name="strMsgUpdateAvailable4Dialog">Жаңыртуу жеткиликтүү! Тиркемени жаңыртыңыз.</string>
+    <string name="msgDownloadKFQPCResources">Бул шрифтти колдоуу үчүн ага керектүү ресурстарды жүктөшүңуз керек:</string>
+    <string name="strMsgUpdateAvailable4Dialog">ЖАҢЫРТУУ ЖЕТКИЛИКТҮҮ!\nТиркемени жаңыртыңыз.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Эң көп %d котормо тандала алат. Өндүрүмдүүлүктү сактоо үчүн мурунку котормону өчүрүңүз.</string>
     <string name="strMsgTranslNoneSelected">Котормо тандалган жок. Жөндөөлөрдөн тандаңыз.</string>
     <string name="logRemoved">Журнал өчүрүлдү</string>
@@ -260,10 +260,10 @@
     <string name="strMsgBookmarkDateToday" formatted="false">Бүгүн саат %s де</string>
     <string name="strMsgHistoryRemove">Бул тарыхты өчүрөсүзбү?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" тарыхтан өчүрүлдү</string>
-    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s: %2$d ичинен табылган жалпы натыйжалар</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">\"%1$s\" китебинен %2$d натыйжа табылды</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d - жүз(пара) номери туура эмес.</string>
-    <string name="strMsgSearchOneResultFoundIn" formatted="false">%s ичинен бир гана натыйжа табылды</string>
-    <string name="strMsgSearchNoResultsFoundIn" formatted="false">\"%s\" китебинин ичинен натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">\"%s\" китебинен бир эле натыйжа табылды</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">\"%s\" китебинен эч нерсе табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
     <string name="strMsgSearchNoResultsFound">Натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Натыйжа табылбады. Издөө фильтрлерин карап көрүңүз.</string>
     <string name="strMsgSearchWordPart">Сөздүн бир бөлүгүн издөө</string>
@@ -285,9 +285,9 @@
     <string name="yesCancelDownload">Ооба, токтот</string>
     <string name="noContinueDownload">Жок, уланта бер</string>
     <string name="readingTafsirMultiVerses">Бир нече аят үчүн тафсир окуу:</string>
-
     <string name="quran_and_science">Куран жана илим</string>
-    <string name="about_this_page">БУЛ БАРАКЧА ЖӨНҮНДӨ</string>
+    <string name="about_this_page">Бул баракча жөнүндө</string>
     <string name="about_quran_science_msg">Бул баракчадагы маалыматтар доктор Закир Найктин \"Куран жана заманбап илим: Шайкешпи же карама-каршыбы\" аттуу китебинен алынды.\n\nКөрсөтүлгөн сүрөттөр иллюстрациялык максатта гана берилген.</string>
     <string name="strLabelScienceReferences">%d шилтеме</string>
+    <string name="donate">Колдоо көрсөтүңүз</string>
 </resources>
