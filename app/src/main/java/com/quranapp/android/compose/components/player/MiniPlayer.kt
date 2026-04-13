@@ -2,7 +2,9 @@ package com.quranapp.android.compose.components.player
 
 
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +61,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MiniPlayer(
     controller: RecitationController,
@@ -129,10 +132,15 @@ fun MiniPlayer(
 
                 Text(
                     text = reciterNames,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(
+                            initialDelayMillis = 900,
+                            repeatDelayMillis = 1_200,
+                        ),
                     style = MaterialTheme.typography.bodySmall,
                     color = PlayerContentColor.alpha(0.7f),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
                 )
             }
 
@@ -302,10 +310,12 @@ fun rememberTimestamp(
     isPlaying: Boolean,
     controller: RecitationController,
 ): Pair<Long, Long> {
-    var positionMs by remember { mutableLongStateOf(0L) }
-    var durationMs by remember { mutableLongStateOf(0L) }
+    var positionMs by remember { mutableLongStateOf(controller.currentPositionMs) }
+    var durationMs by remember { mutableLongStateOf(controller.durationMs) }
 
     LaunchedEffect(isPlaying) {
+        positionMs = controller.currentPositionMs
+        durationMs = controller.durationMs
         while (isPlaying && isActive) {
             positionMs = controller.currentPositionMs
             durationMs = controller.durationMs

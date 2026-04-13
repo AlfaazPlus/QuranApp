@@ -29,6 +29,7 @@
     },
     {
       "id": "as_sudais",
+      "is_default": true,
       "reciter": "Abdur-Rahman as-Sudais",
       "style": null,
       "url_template": "https://download.quranicaudio.com/qdc/abdurrahmaan_as_sudais/murattal/{chapNo:%01d}.mp3",

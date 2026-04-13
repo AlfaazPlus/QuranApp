@@ -216,7 +216,7 @@
     <string name="strTitleReadTafsirOfVerse" formatted="false">Ler o tafsir do versículo %d</string>
     <string name="strTitleSelectTafsir">Selecionar Tafsir</string>
     <string name="labelFreeUpSpace">Libertar espaço</string>
-    <string name="msgRecitationCleanup" formatted="false">Todas as recitações guardadas de %s serão apagadas. Para eliminar individualmente as recitações por Surah, vá para as definições de gestão de áudio.</string>
+    <string name="msgRecitationCleanup" formatted="false">Todas as recitações guardadas de %s serão apagadas.</string>
     <string name="titleScriptCleanup">Eliminar o script?</string>
     <string name="msgScriptCleanup" formatted="false">O script %s e todas as suas fontes armazenadas serão eliminados. Terá de voltar a descarregar para as utilizar.</string>
     <string name="titleReaderTextSizeTafsir">Tamanho do texto do Tafsir</string>

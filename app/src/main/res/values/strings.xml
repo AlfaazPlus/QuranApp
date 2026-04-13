@@ -266,7 +266,7 @@
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
     <string name="titleRecitationCleanup">Delete recitation\?</string>
-    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted. To individually delete recitations by Surah, go to the manage audio settings.</string>
+    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
     <string name="titleScriptCleanup">Delete script\?</string>
     <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
     <string name="nFiles" formatted="false">%d files</string>

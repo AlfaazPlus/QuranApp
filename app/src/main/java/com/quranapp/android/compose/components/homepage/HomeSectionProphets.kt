@@ -88,13 +88,19 @@ private fun ItemCard(
             .border(1.dp, colorScheme.outline.alpha(0.3f), shapes.medium)
             .clickable {
                 val title = resources.getString(
-                    R.string.strMsgPropheticDuaInQuran,
-                    MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific)
+                    R.string.strMsgReferenceInQuran,
+                    MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific),
+                )
+
+                val desc = resources.getString(
+                    R.string.strMsgReferenceFoundPlaces,
+                    title,
+                    prophet.verses.size,
                 )
 
                 val intent = prepareReferenceVerseIntent(
                     title,
-                    resources.getString(R.string.strMsgReferenceDuas),
+                    desc,
                     arrayOf(),
                     prophet.chapters,
                     prophet.verses

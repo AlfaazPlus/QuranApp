@@ -216,7 +216,7 @@
     <string name="titleRecitationCleanup">Rezitation löschen\?</string>
     <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
     <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie müssen sie erneut herunterladen, um sie wieder zu verwenden.</string>
-    <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht. Um einzelne Rezitationen nach Suren zu löschen, gehen Sie zu den Audioeinstellungen.</string>
+    <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht.</string>
     <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
     <string name="nItems">%d Objekte</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d Schriftsysteme und %2$d Schriftarten</string>

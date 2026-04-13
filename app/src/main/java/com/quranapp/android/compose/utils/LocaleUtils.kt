@@ -19,7 +19,7 @@ fun setAppLocale(context: Context, languageTag: String) {
 
 fun appFallbackLanguageCodes(default: String = "en"): Sequence<String> {
     val locale = appLocale()
-    return listOf(locale.toLanguageTag(), locale.language, default).asSequence()
+    return sequenceOf(locale.toLanguageTag(), locale.language, default)
 }
 
 fun appLocale(): Locale {

@@ -18,11 +18,14 @@ class VerseClipPlan private constructor(
 ) {
     val isEmpty: Boolean get() = items.isEmpty()
 
-    fun virtualPosition(player: ExoPlayer): Long {
-        val i = player.currentMediaItemIndex
+    fun virtualPositionAt(mediaItemIndex: Int, positionInClipMs: Long): Long {
+        val i = mediaItemIndex
         if (i !in cumulativeStartMs.indices) return 0L
-        return cumulativeStartMs[i] + player.currentPosition.coerceIn(0L, clipDurationMs[i])
+        return cumulativeStartMs[i] + positionInClipMs.coerceIn(0L, clipDurationMs[i])
     }
+
+    fun virtualPosition(player: ExoPlayer): Long =
+        virtualPositionAt(player.currentMediaItemIndex, player.currentPosition)
 
     fun seekToVirtualPosition(player: ExoPlayer, targetMs: Long) {
         if (isEmpty) return

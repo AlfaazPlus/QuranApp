@@ -167,7 +167,7 @@
     <string name="recitationCanBeFreedUp" formatted="false">%2$d વાચકોની %1$d સંગ્રહિત પઠન ફાઇલો ખાલી કરી શકાય છે.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ડાઉનલોડ કરેલ સ્ક્રિપ્ટો અને તેમના ફોન્ટ્સ મુક્ત કરી શકાય છે.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d સાચવેલી તફસીરો સાફ કરી શકાય છે.</string>
-    <string name="msgRecitationCleanup" formatted="false">%s ના બધા સંગ્રહિત પઠન કાઢી નાખવામાં આવશે. સૂરા દ્વારા પઠનને વ્યક્તિગત રીતે ડિલીટ કરવા માટે, ઓડિયો સેટિંગ્સ મેનેજ કરો.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s ના બધા સંગ્રહિત પઠન કાઢી નાખવામાં આવશે.</string>
     <string name="strTitleReaderTextSizeArabic">અરબી ટેક્સ્ટનું કદ</string>
     <string name="strTitleReaderTextSizeTransl">અનુવાદ ટેક્સ્ટનું કદ</string>
     <string name="titleReaderTextSizeTafsir">તફસીર ટેક્સ્ટનું કદ</string>

@@ -290,6 +290,8 @@ class RecitationService : MediaSessionService() {
         _singleTrackTimingMetadata.value = null
         _verseClipPlan.value = null
 
+        updateState { copy(clipPlan = null) }
+
         repeatRemainingPlaysForCurrentItem = 0
         chapterResolutionRequests.values.forEach { it.cancel() }
         chapterResolutionRequests.clear()
@@ -577,6 +579,7 @@ class RecitationService : MediaSessionService() {
                 settings = updatedSettings,
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
                 pausedByHeadset = false,
+                clipPlan = plan,
             )
         }
     }

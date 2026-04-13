@@ -2,6 +2,7 @@
   "reciters": [
     {
       "id": "ibrahim_walk",
+      "is_default": true,
       "lang_code": "en",
       "lang_name": "English",
       "reciter": "Ibrahim Walk",

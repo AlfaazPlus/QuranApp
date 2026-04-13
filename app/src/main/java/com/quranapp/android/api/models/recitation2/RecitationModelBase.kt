@@ -1,15 +1,16 @@
 package com.quranapp.android.api.models.recitation2
 
 import com.quranapp.android.compose.utils.appFallbackLanguageCodes
-import com.quranapp.android.compose.utils.appLocale
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.collections.get
 
 @Serializable
 open class RecitationModelBase {
     var id: String = ""
     var reciter: String = ""
+
+    @SerialName("is_default")
+    val isDefault: Boolean = false
 
     @SerialName("url_template")
     var urlTemplate: String = ""

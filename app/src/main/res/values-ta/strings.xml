@@ -230,7 +230,7 @@
     <string name="labelFreeUpSpace">இலவச இடம்</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n %2$s\n\n நீங்கள் அதை மீண்டும் பதிவிறக்கம் செய்ய வேண்டும்.</string>
     <string name="titleRecitationCleanup">பாராயணத்தை நீக்கவா?</string>
-    <string name="msgRecitationCleanup" formatted="false">%s இலிருந்து சேமிக்கப்பட்ட அனைத்து பாராயணங்களும் நீக்கப்படும். சூராவின் பாராயணங்களை தனித்தனியாக நீக்க, ஆடியோ அமைப்புகளை நிர்வகிக்கவும்.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s இலிருந்து சேமிக்கப்பட்ட அனைத்து பாராயணங்களும் நீக்கப்படும்.</string>
     <string name="titleScriptCleanup">ச்கிரிப்டை நீக்கவா?</string>
     <string name="msgScriptCleanup" formatted="false">%s ஸ்கிரிப்ட் மற்றும் அதன் சேமிக்கப்பட்ட அனைத்து எழுத்துருக்களும் நீக்கப்படும். அவற்றைப் பயன்படுத்த நீங்கள் மீண்டும் பதிவிறக்க வேண்டும்.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d ச்கிரிப்டுகள் மற்றும் %2$d எழுத்துருக்கள்</string>

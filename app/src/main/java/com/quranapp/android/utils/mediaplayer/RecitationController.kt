@@ -48,19 +48,22 @@ class RecitationController private constructor(private val appContext: Context) 
     private val _isBuffering = MutableStateFlow(false)
     val isBufferingState: StateFlow<Boolean> = _isBuffering.asStateFlow()
 
-    // ==================== Convenience Getters ====================
-
     val isPlaying: Boolean get() = _isPlaying.value
     val isLoading: Boolean get() = state.value.resolvingChapterNo != null || _isBuffering.value
 
-    /** Directly observes the service's state flow (same process). */
     val state: StateFlow<RecitationServiceState> = RecitationService.sharedState
 
-    /** Current playback position in ms. Query on UI frame for smooth progress. */
-    val currentPositionMs: Long get() = mediaController?.currentPosition ?: 0L
+    val currentPositionMs: Long get() {
+        val c = mediaController ?: return 0L
+        val plan = state.value.clipPlan ?: return c.currentPosition
+        return plan.virtualPositionAt(c.currentMediaItemIndex, c.currentPosition)
+    }
 
-    /** Total duration in ms. */
-    val durationMs: Long get() = mediaController?.duration ?: 0L
+    val durationMs: Long get() {
+        val c = mediaController ?: return 0L
+        val plan = state.value.clipPlan
+        return plan?.virtualDurationMs ?: c.duration
+    }
 
     // ==================== Connection ====================
 

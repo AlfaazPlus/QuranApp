@@ -529,6 +529,29 @@ class QuranRepository(
             .orEmpty()
     }
 
+    suspend fun getChapterNames(chapterNos: List<Int>): Map<Int, String> {
+        if (chapterNos.isEmpty()) return emptyMap()
+
+        val result = mutableMapOf<Int, String>()
+
+        for (code in appFallbackLanguageCodes()) {
+            val remaining = chapterNos.filter { it !in result.keys }
+            if (remaining.isEmpty()) break
+
+            val localizations = surahDao.getLocalizations(remaining, code)
+
+            localizations.forEach { entity ->
+                val name = entity.name
+
+                if (!name.isNullOrBlank()) {
+                    result[entity.surahNo] = name
+                }
+            }
+        }
+
+        return result
+    }
+
     suspend fun getFirstPageOfChapter(chapterNo: Int, scriptCode: String? = null): Int? {
         val mushafId = (scriptCode ?: ReaderPreferences.getQuranScript())
             .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())

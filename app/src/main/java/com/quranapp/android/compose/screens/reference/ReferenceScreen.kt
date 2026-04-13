@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -35,12 +38,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -59,6 +62,7 @@ import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -154,6 +158,10 @@ private fun ReferenceScreenContent(
         }.toHashSet()
     }
 
+    val chapterNames by produceState<Map<Int, String>?>(null, refModel.chapters) {
+        value = vm.repository.getChapterNames(refModel.chapters)
+    }
+
     val bookmarkedKeys = remember(allBookmarks, referenceBookmarkKeys) {
         allBookmarks.asSequence()
             .map { BookmarkKey(it.chapterNo, it.fromVerseNo, it.toVerseNo) }
@@ -198,190 +206,183 @@ private fun ReferenceScreenContent(
         }
     }
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopAppBar(
-                title = {
-                    if (showCollapsedTitle) {
-                        Text(
-                            text = refModel.title,
-                            style = typography.titleMedium,
-                            fontWeight = FontWeight.Black,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
-                },
-                navigationIcon = {
-                    val back = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-
-                    SimpleTooltip(stringResource(R.string.strLabelBack)) {
-                        IconButton(
-                            onClick = { back?.onBackPressed() },
-                            painter = painterResource(R.drawable.dr_icon_arrow_left),
-                            contentDescription = stringResource(R.string.strLabelBack),
-                            tint = colorScheme.onSurface,
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorScheme.surfaceContainer
-                )
-            )
-        },
-    ) { padding ->
-        Column(
+    Box {
+        Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
-        ) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .horizontalFadingEdge(chaptersGroupState, color = colorScheme.surface)
-            ) {
-                LazyRow(
-                    state = chaptersGroupState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colorScheme.surfaceContainer),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    item {
-                        Chip(
-                            selected = selectedChapterChip == 0,
-                            onClick = { onChapterChipChange(0) },
-                            label = { Text(stringResource(R.string.strLabelAllChapters)) },
-                        )
-                    }
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                TopAppBar(
+                    title = {
+                        if (showCollapsedTitle) {
+                            Text(
+                                text = refModel.title,
+                                style = typography.titleMedium,
+                                fontWeight = FontWeight.Black,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        val back =
+                            LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-                    items(refModel.chapters) {
-                        ChapterFilterChip(
-                            chapterNo = it,
-                            selected = selectedChapterChip == it,
-                            onClick = { onChapterChipChange(it) },
-                        )
-                    }
-                }
-            }
-
-            if (translationSlugs.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.strMsgTranslNoneSelected),
-                    color = colorScheme.error,
-                    style = typography.bodySmall,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colorScheme.surface)
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        SimpleTooltip(stringResource(R.string.strLabelBack)) {
+                            IconButton(
+                                onClick = { back?.onBackPressed() },
+                                painter = painterResource(R.drawable.dr_icon_arrow_left),
+                                contentDescription = stringResource(R.string.strLabelBack),
+                                tint = colorScheme.onSurface,
+                            )
+                        }
+                    },
+                    scrollBehavior = scrollBehavior,
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorScheme.surfaceContainer
+                    )
                 )
-            }
-
-            when {
-                loading -> {
-                    Loader(fill = true)
-                }
-
-                else -> {
-                    LazyColumn(
-                        state = listState,
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(bottom = 64.dp)
+            },
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+            ) {
+                if (chapterNames != null) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .horizontalFadingEdge(chaptersGroupState, color = colorScheme.surface)
                     ) {
-                        items(
-                            items = rows,
-                            key = { row ->
-                                when (row) {
-                                    is ReferenceRow.Description -> "desc"
-                                    is ReferenceRow.SectionTitle -> row.segmentKey
-                                    is ReferenceRow.VerseRow -> row.verseUi.key
-                                }
-                            },
-                        ) { row ->
-                            when (row) {
-                                is ReferenceRow.Description -> ReferenceDescription(
-                                    row.title,
-                                    row.desc
+                        LazyRow(
+                            state = chaptersGroupState,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(colorScheme.surfaceContainer),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            item {
+                                Chip(
+                                    selected = selectedChapterChip == 0,
+                                    onClick = { onChapterChipChange(0) },
+                                    label = { Text(stringResource(R.string.strLabelAllChapters)) },
                                 )
+                            }
 
-                                is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
-                                    row = row,
-                                    isBookmarked = bookmarkedKeys.contains(
-                                        BookmarkKey(
-                                            row.ref.chapterNo,
-                                            row.ref.range.first,
-                                            row.ref.range.last,
-                                        ),
-                                    ),
-                                    onOpenInReader = { chapterNo, range ->
-                                        val i = ReaderFactory.prepareVerseRangeIntent(
-                                            chapterNo,
-                                            range.first,
-                                            range.last
+                            items(refModel.chapters) {
+                                Chip(
+                                    selected = selectedChapterChip == it,
+                                    onClick = { onChapterChipChange(it) },
+                                    label = {
+                                        Text(
+                                            chapterNames!!.getOrDefault(it, it.toString()),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
                                         )
-                                            .setClass(context, ActivityReader::class.java)
-                                            .putExtra(
-                                                Keys.READER_KEY_TRANSL_SLUGS,
-                                                translationSlugs.toTypedArray()
-                                            )
-                                            .putExtra(Keys.READER_KEY_SAVE_TRANSL_CHANGES, false)
-
-                                        context.startActivity(i)
                                     },
                                 )
+                            }
+                        }
+                    }
+                }
 
-                                is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
-                                    verseUi = row.verseUi,
-                                    isBookmarked = bookmarkedKeys.contains(
-                                        BookmarkKey(
-                                            row.verseUi.verse.chapterNo,
-                                            row.verseUi.verse.verseNo,
-                                            row.verseUi.verse.verseNo,
+                if (translationSlugs.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.strMsgTranslNoneSelected),
+                        color = colorScheme.error,
+                        style = typography.bodySmall,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(colorScheme.surface)
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                }
+
+                when {
+                    loading -> {
+                        Loader(fill = true)
+                    }
+
+                    else -> {
+                        LazyColumn(
+                            state = listState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(bottom = 64.dp)
+                        ) {
+                            items(
+                                items = rows,
+                                key = { row ->
+                                    when (row) {
+                                        is ReferenceRow.Description -> "desc"
+                                        is ReferenceRow.SectionTitle -> row.segmentKey
+                                        is ReferenceRow.VerseRow -> row.verseUi.key
+                                    }
+                                },
+                            ) { row ->
+                                when (row) {
+                                    is ReferenceRow.Description -> ReferenceDescription(
+                                        row.title,
+                                        row.desc
+                                    )
+
+                                    is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
+                                        row = row,
+                                        isBookmarked = bookmarkedKeys.contains(
+                                            BookmarkKey(
+                                                row.ref.chapterNo,
+                                                row.ref.range.first,
+                                                row.ref.range.last,
+                                            ),
                                         ),
-                                    ),
-                                )
+                                        onOpenInReader = { chapterNo, range ->
+                                            val i = ReaderFactory.prepareVerseRangeIntent(
+                                                chapterNo,
+                                                range.first,
+                                                range.last
+                                            )
+                                                .setClass(context, ActivityReader::class.java)
+                                                .putExtra(
+                                                    Keys.READER_KEY_TRANSL_SLUGS,
+                                                    translationSlugs.toTypedArray()
+                                                )
+                                                .putExtra(
+                                                    Keys.READER_KEY_SAVE_TRANSL_CHANGES,
+                                                    false
+                                                )
+
+                                            context.startActivity(i)
+                                        },
+                                    )
+
+                                    is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
+                                        verseUi = row.verseUi,
+                                        isBookmarked = bookmarkedKeys.contains(
+                                            BookmarkKey(
+                                                row.verseUi.verse.chapterNo,
+                                                row.verseUi.verse.verseNo,
+                                                row.verseUi.verse.verseNo,
+                                            ),
+                                        ),
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        RecitationPlayerSheet(
+            collapsedBottomInset = WindowInsets.navigationBars.asPaddingValues()
+                .calculateBottomPadding(),
+            barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
+        )
     }
-}
-
-@Composable
-private fun ChapterFilterChip(
-    chapterNo: Int,
-    selected: Boolean,
-    onClick: () -> Unit,
-) {
-    val vm = LocalReaderViewModel.current
-
-    var chapterLabel by remember(chapterNo) { mutableStateOf("") }
-
-    LaunchedEffect(chapterNo) {
-        chapterLabel = vm.repository.getChapterName(chapterNo)
-    }
-
-    Chip(
-        selected = selected,
-        onClick = onClick,
-        label = {
-            Text(
-                chapterLabel.ifEmpty { chapterNo.toString() },
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-    )
 }
 
 @Composable

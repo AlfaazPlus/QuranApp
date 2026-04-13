@@ -346,9 +346,10 @@ private fun TranslationReciterList(
             val state = downloadStates[key] ?: RecitationBatchDownloadState(0, 0, 0)
             val downloadBlockedByOther =
                 busyDownloadKey != null && busyDownloadKey != key
+
             ReciterDownloadCard(
                 title = reciter.getReciterName(),
-                subtitle = reciter.langName,
+                subtitle = reciter.langName + if (reciter.book.isNullOrEmpty()) "" else " - ${reciter.book}",
                 state = state,
                 downloadBlockedByOther = downloadBlockedByOther,
                 onDownload = {

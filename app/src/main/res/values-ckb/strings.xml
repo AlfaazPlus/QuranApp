@@ -221,7 +221,7 @@
     <string name="verseSyncOff">هاوکاتکردنی ئایەت : نا چالاک</string>
     <string name="strPreviewTextTransl">بەناوی خوای بەخشندەی میهرەبان</string>
     <string name="titleScriptCleanup">سڕینەوەی سکریپت؟</string>
-    <string name="msgRecitationCleanup" formatted="false">سەرجەم فایلە دەنگییەکانی %s دەسڕێتەوە، بۆ سڕینەوەی دەنگی قورئانخوێنەکان یەک بە یەک بۆ هەر سورەتێک، بچۆ بۆ بەڕێوەبردنی ڕێکخستنەکانی دەنگ.</string>
+    <string name="msgRecitationCleanup" formatted="false">سەرجەم فایلە دەنگییەکانی %s دەسڕێتەوە.</string>
     <string name="titleRecitationCleanup">سڕینەوەی قورئانخوێن؟</string>
     <string name="nFiles" formatted="false">%d لە فایلەکان</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d شێواز و %2$d فۆنت</string>

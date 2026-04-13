@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
@@ -26,7 +25,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
@@ -48,7 +46,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -104,9 +101,9 @@ fun ReaderAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(visibleHeight)
-            .clipToBounds(),
+            .height(visibleHeight),
         shadowElevation = 4.dp,
+        color = colorScheme.surfaceContainer
     ) {
         Column(
             modifier = Modifier
@@ -115,8 +112,8 @@ fun ReaderAppBar(
             CenterAlignedTopAppBar(
                 modifier = Modifier.height(ReaderAppBarHeight),
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    scrolledContainerColor = MaterialTheme.colorScheme.surface,
+                    containerColor = colorScheme.surfaceContainer,
+                    scrolledContainerColor = colorScheme.surfaceContainer,
                 ),
                 title = {
                     ModeTabs(readerVm, readerMode)
@@ -393,8 +390,7 @@ private fun StickyHeaderModeMushaf(
     }
 
     Row(
-        modifier = Modifier
-            .padding(8.dp),
+        modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

@@ -2,13 +2,20 @@ package com.alfaazplus.sunnah.ui.utils.shared_preference
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.runBlocking
 
 
@@ -33,6 +40,16 @@ object DataStoreManager {
 
     fun init(context: Context) {
         appContext = context.applicationContext
+    }
+
+    private val dataFlow by lazy {
+        appContext.dataStore.data
+            .distinctUntilChanged()
+            .shareIn(
+                scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+                started = SharingStarted.WhileSubscribed(5000),
+                replay = 1
+            )
     }
 
     fun <T> read(prefKey: PrefKey<T>): T {
@@ -84,22 +101,24 @@ object DataStoreManager {
         return flow(prefKey.key, prefKey.default)
     }
 
-    fun <T> flow(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
-        val dValue = read(key, defaultValue)
-
-        return appContext.dataStore.data.map { preferences ->
-            preferences[key] ?: dValue
-        }
+    fun <T> flow(
+        key: Preferences.Key<T>,
+        defaultValue: T
+    ): Flow<T> {
+        return dataFlow
+            .map { it[key] ?: defaultValue }
+            .distinctUntilChanged()
     }
 
     fun flowMultiple(vararg keys: PrefKey<*>): Flow<PrefResult> {
-        return appContext.dataStore.data.map { preferences ->
-            val map = keys.associateWith { prefKey ->
-                preferences[prefKey.key] ?: prefKey.default
+        return dataFlow
+            .map { preferences ->
+                val map = keys.associateWith { prefKey ->
+                    preferences[prefKey.key] ?: prefKey.default
+                }
+                PrefResult(map)
             }
-
-            PrefResult(map)
-        }
+            .distinctUntilChanged()
     }
 
     @Composable
@@ -108,16 +127,16 @@ object DataStoreManager {
     }
 
     @Composable
-    fun <T> observe(key: Preferences.Key<T>, defaultValue: T): T {
-        return flow(key, defaultValue)
-            .collectAsStateWithLifecycle(defaultValue)
-            .value
-    }
-
-    suspend fun <T> observeWithCallback(key: Preferences.Key<T>, onChange: (T) -> Unit) {
-        appContext.dataStore.data.collect { preferences ->
-            val value = preferences[key]
-            value?.let { onChange(it) }
+    fun <T> observe(
+        key: Preferences.Key<T>,
+        defaultValue: T
+    ): T {
+        val flow = remember(key) {
+            dataFlow
+                .map { it[key] ?: defaultValue }
+                .distinctUntilChanged()
         }
+
+        return flow.collectAsStateWithLifecycle(initialValue = defaultValue).value
     }
 }

@@ -30,6 +30,7 @@ data class RecitationServiceState(
     /** False when single-file chapter audio has no timing and no verse clip playlist is in use. */
     val isVerseSyncAvailable: Boolean = true,
 
+    val clipPlan: VerseClipPlan? = null,
     val settings: PlayerSettings = PlayerSettings(),
 ) {
     fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {

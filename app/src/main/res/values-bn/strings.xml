@@ -256,7 +256,7 @@
 \n%2$s
 \n
 \nআপনাকে এটি আবার ডাউনলোড করতে হবে।</string>
-    <string name="msgRecitationCleanup" formatted="false">%s থেকে সমস্ত সঞ্চিত তেলাওয়াত মুছে ফেলা হবে। পৃথকভাবে সূরা দ্বারা তেলাওয়াত মুছে ফেলার জন্য, অডিও পরিচালনা সেটিংসে যান।</string>
+    <string name="msgRecitationCleanup" formatted="false">%s থেকে সমস্ত সঞ্চিত তেলাওয়াত মুছে ফেলা হবে।</string>
     <string name="titleScriptCleanup">স্ক্রিপ্ট মুছে ফেলতে চান\?</string>
     <string name="labelTranslation">অনুবাদ</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল বাদ দেওয়া যেতে পারে।</string>

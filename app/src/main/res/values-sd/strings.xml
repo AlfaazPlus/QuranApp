@@ -244,7 +244,7 @@
     <string name="verseSyncOn">آيت جي هم وقت سازي: کوليو</string>
     <string name="onboardDescTranslations">توهان ڪڏهن به هن کي بعد ۾ تبديل ڪري سگهو ٿا. توهان سيٽنگز مان وڌيڪ ترجما ڊائون لوڊ ڪري سگهو ٿا.</string>
     <string name="downloadRecitations">تلاوتون ڊائونلوڊ ڪريو</string>
-    <string name="msgRecitationCleanup" formatted="false">%s کان سڀئي ذخيرو ٿيل تلاوتون ختم ٿي وينديون. هر اڪيلي سورة جي تلاوت کي ختم ڪرڻ لاءِ آڊيو سيٽنگز ڏانهن وڃو.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s کان سڀئي ذخيرو ٿيل تلاوتون ختم ٿي وينديون.</string>
     <string name="strTitleFootnotes">حاشيہ</string>
     <string name="verseSyncOff">آيت جي هم وقت سازي: بند ڪريو</string>
     <string name="strPreviewTextTransl">الله ٻاجهاري مھربان جي نالي سان ( شروع )</string>

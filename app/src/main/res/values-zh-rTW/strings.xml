@@ -232,7 +232,7 @@
     <string name="labelFreeUpSpace">釋放空間</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\n您需要重新下載。</string>
     <string name="titleRecitationCleanup">刪除朗誦？</string>
-    <string name="msgRecitationCleanup" formatted="false">將刪除 %s 中儲存的所有朗誦。要按經文單獨刪除朗誦，請轉到音訊管理設定。</string>
+    <string name="msgRecitationCleanup" formatted="false">將刪除 %s 中儲存的所有朗誦。</string>
     <string name="titleScriptCleanup">刪除版本？</string>
     <string name="msgScriptCleanup" formatted="false">%s 個版本及其儲存的所有字型將被刪除。您需要重新下載才能使用它們。</string>
     <string name="nFiles" formatted="false">%d 個檔案</string>

@@ -220,7 +220,7 @@
     <string name="storageCleanupMessage">Сакталбаган ресурстар өчүрүлөт. Чөп каттар калыбында калат.\nТөмөнкү ресурстарды тазалоого болот:</string>
     <string name="onboardDescTranslations">Бир нече котормону тандасаңыз да болот.</string>
     <string name="verseSyncOff">Аят синхрон: өчүрүлгөн</string>
-    <string name="msgRecitationCleanup" formatted="false">%s окуулары өчүрүлөт. Жеке өчүрүү үчүн аудио орнотууларга өтүңүз.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s окуулары өчүрүлөт.</string>
     <string name="nFiles" formatted="false">%d файл</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d шрифт жана %2$d жазуу тиби</string>
     <string name="msgResourceDownloadSource">Куран маалыматтарын башка булагынан жүктөө үчүн колдонуңуз.</string>

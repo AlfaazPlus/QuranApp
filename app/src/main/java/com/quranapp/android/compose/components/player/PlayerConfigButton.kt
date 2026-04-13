@@ -2,6 +2,7 @@ package com.quranapp.android.compose.components.player
 
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 
@@ -70,13 +70,18 @@ fun PlayerConfigButton(
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1
                 )
+
                 if (!subtext.isNullOrBlank()) {
                     Text(
                         text = subtext,
                         color = Color.White.copy(alpha = 0.70f),
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        modifier = Modifier
+                            .basicMarquee(
+                                initialDelayMillis = 900,
+                                repeatDelayMillis = 1_200,
+                            ),
                     )
                 }
             }

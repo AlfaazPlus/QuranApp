@@ -264,9 +264,7 @@ private fun ExpandedPlayerSpotlightSection(
             visible = chromeVisible,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .fillMaxWidth(),
             enter = fadeIn(tween(220)) + slideInVertically(
                 animationSpec = tween(280),
                 initialOffsetY = { -it / 2 },
@@ -276,7 +274,6 @@ private fun ExpandedPlayerSpotlightSection(
                 targetOffsetY = { -it / 2 },
             ),
         ) {
-
             ExpandedPlayerHeader(
                 mode,
                 onModeChange,
@@ -290,7 +287,7 @@ private fun ExpandedPlayerSpotlightSection(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 24.dp),
             enter = fadeIn(tween(220)) + slideInVertically(
                 animationSpec = tween(280),
                 initialOffsetY = { it / 2 },
@@ -567,10 +564,12 @@ private fun ProgressSeekBar(
     isLoading: Boolean,
     controller: RecitationController,
 ) {
-    var positionMs by remember { mutableLongStateOf(0L) }
-    var durationMs by remember { mutableLongStateOf(0L) }
+    var positionMs by remember { mutableLongStateOf(controller.currentPositionMs) }
+    var durationMs by remember { mutableLongStateOf(controller.durationMs) }
 
     LaunchedEffect(isPlaying) {
+        positionMs = controller.currentPositionMs
+        durationMs = controller.durationMs
         while (isPlaying && isActive) {
             positionMs = controller.currentPositionMs
             durationMs = controller.durationMs
@@ -584,7 +583,6 @@ private fun ProgressSeekBar(
     }
 
     val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
-
     val animatedProgress by animateFloatAsState(
         targetValue = progress, animationSpec = tween(300), label = ""
     )
@@ -595,11 +593,13 @@ private fun ProgressSeekBar(
             .padding(horizontal = 24.dp)
     ) {
         Slider(
-            value = animatedProgress, onValueChange = {
+            value = animatedProgress,
+            onValueChange = {
                 val seekPosition = (it * durationMs).toLong()
                 controller.seekTo(seekPosition)
                 positionMs = seekPosition
-            }, modifier = Modifier
+            },
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(28.dp),
 

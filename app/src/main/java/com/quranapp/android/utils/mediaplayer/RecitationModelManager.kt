@@ -12,6 +12,7 @@ import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
@@ -79,16 +80,35 @@ class RecitationModelManager private constructor(
         )
     }
 
-    suspend fun getSelectedQuranModel(
-    ): RecitationQuranModel? {
+    suspend fun getSelectedQuranModel(): RecitationQuranModel? {
         val id = RecitationPreferences.getReciterId()
+
+        if (id.isNullOrBlank()) {
+            val reciters = getAllQuranModel()?.reciters
+            if (reciters.isNullOrEmpty()) return null
+
+            val chosen = reciters.firstOrNull { it.isDefault } ?: reciters.first()
+
+            RecitationPreferences.setReciterId(chosen.id)
+
+            return chosen
+        }
 
         return getQuranModel(id)
     }
 
-    suspend fun getSelectedTranslationModel(
-    ): RecitationTranslationModel? {
+    suspend fun getSelectedTranslationModel(): RecitationTranslationModel? {
         val id = RecitationPreferences.getTranslationReciterId()
+
+        if (id.isNullOrBlank()) {
+            val reciters = getAllTranslationModel()?.reciters ?: return null
+
+            val chosen = reciters.selectTranslationByLocaleWithFallback() ?: return null
+
+            RecitationPreferences.setTranslationReciterId(chosen.id)
+
+            return chosen
+        }
 
         return getTranslationModel(id)
     }
@@ -102,8 +122,6 @@ class RecitationModelManager private constructor(
     suspend fun getTranslationModel(
         id: String?
     ): RecitationTranslationModel? {
-        val id = RecitationPreferences.getTranslationReciterId()
-
         return getAllTranslationModel()?.reciters?.selectById(id)
     }
 
@@ -292,16 +310,17 @@ class RecitationModelManager private constructor(
         val root = getRecitationsDir()
         var mp3Count = 0
         var recitersWithAudio = 0
-        root.listFiles()?.filter { it.isDirectory && it.name != "timing_metadata" }?.forEach { dir ->
-            var hasMp3 = false
-            dir.walkTopDown().forEach { f ->
-                if (f.isFile && f.length() > 0L && f.name.endsWith(".mp3", ignoreCase = true)) {
-                    mp3Count++
-                    hasMp3 = true
+        root.listFiles()?.filter { it.isDirectory && it.name != "timing_metadata" }
+            ?.forEach { dir ->
+                var hasMp3 = false
+                dir.walkTopDown().forEach { f ->
+                    if (f.isFile && f.length() > 0L && f.name.endsWith(".mp3", ignoreCase = true)) {
+                        mp3Count++
+                        hasMp3 = true
+                    }
                 }
+                if (hasMp3) recitersWithAudio++
             }
-            if (hasMp3) recitersWithAudio++
-        }
         return mp3Count to recitersWithAudio
     }
 
@@ -359,6 +378,23 @@ class RecitationModelManager private constructor(
         if (isEmpty()) return null
         if (id.isNullOrBlank()) return firstOrNull()
         return firstOrNull { it.id == id } ?: firstOrNull()
+    }
+
+    private fun List<RecitationTranslationModel>.selectTranslationByLocaleWithFallback(): RecitationTranslationModel? {
+        if (isEmpty()) return null
+
+        val candidates = appFallbackLanguageCodes()
+            .map { it.lowercase(Locale.ROOT) }
+            .flatMap { sequenceOf(it, it.substringBefore('-')) }
+            .distinct()
+
+        return candidates
+            .mapNotNull { candidate ->
+                firstOrNull { it.langCode.equals(candidate, ignoreCase = true) }
+            }
+            .firstOrNull()
+            ?: firstOrNull { it.langCode.equals("en", ignoreCase = true) }
+            ?: firstOrNull()
     }
 
     companion object {

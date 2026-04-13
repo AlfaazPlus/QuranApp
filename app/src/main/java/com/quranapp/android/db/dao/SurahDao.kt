@@ -37,4 +37,15 @@ interface SurahDao {
         surahNo: Int,
         langCode: String
     ): SurahLocalizationEntity?
+
+    @Query(
+        """
+    SELECT * FROM surah_localizations
+    WHERE surah_no IN (:surahNos) AND lang_code = :langCode
+    """
+    )
+    suspend fun getLocalizations(
+        surahNos: List<Int>,
+        langCode: String
+    ): List<SurahLocalizationEntity>
 }

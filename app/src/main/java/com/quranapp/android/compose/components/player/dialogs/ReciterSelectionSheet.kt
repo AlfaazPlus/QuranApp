@@ -254,7 +254,7 @@ private fun TranslationReciters(
 
             RadioItem(
                 titleStr = reciter.getReciterName(),
-                subtitleStr = reciter.langName,
+                subtitleStr = reciter.langName + if (reciter.book.isNullOrEmpty()) "" else " - ${reciter.book}",
                 selected = reciter.id == selectedTranslationReciter,
                 onClick = {
                     if (reciter.id != selectedTranslationReciter) {
