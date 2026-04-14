@@ -56,7 +56,10 @@ class FontResolver private constructor(val context: Context) {
             }
         } else {
             scriptFontCache.getOrPut(script) {
-                context.getFont(script.getQuranScriptFontRes())!!.asFontFamily()
+                context
+                    .getFont(script.getQuranScriptFontRes())
+                    ?.asFontFamily()
+                    ?: FontFamily.Default
             }
         }
     }
@@ -64,7 +67,10 @@ class FontResolver private constructor(val context: Context) {
     fun prefetch(script: String, pages: List<Int>) {
         if (!script.isKFQPCScript()) {
             scriptFontCache.getOrPut(script) {
-                context.getFont(script.getQuranScriptFontRes())?.asFontFamily()
+                context
+                    .getFont(script.getQuranScriptFontRes())
+                    ?.asFontFamily()
+                    ?: FontFamily.Default
             }
             return
         }

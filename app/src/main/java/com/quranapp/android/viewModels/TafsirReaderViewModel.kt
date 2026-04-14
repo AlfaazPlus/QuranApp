@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
@@ -14,18 +13,21 @@ import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.tafsir.TafsirUtils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 sealed interface TafsirContentState {
     object Loading : TafsirContentState
-    data class Success(val tafsir: TafsirModel, val fromCache: Boolean) : TafsirContentState
+    data class Success(val tafsir: TafsirModel) : TafsirContentState
     data class Error(val message: String, val canRetry: Boolean) : TafsirContentState
     object NoInternet : TafsirContentState
 }
@@ -59,11 +61,13 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     private val context get() = getApplication<Application>()
     private val repository = DatabaseProvider.getQuranRepository(context)
 
+    private var contentLoadJob: Job? = null
+
     init {
         viewModelScope.launch {
-            ReaderPreferences.tafsirIdFlow().collectLatest {
-                onEvent(TafsirReaderEvent.ChangeTafsir(it))
-            }
+            ReaderPreferences.tafsirIdFlow()
+                .distinctUntilChanged()
+                .collectLatest { onEvent(TafsirReaderEvent.ChangeTafsir(it)) }
         }
     }
 
@@ -115,7 +119,26 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun changeTafsir(tafsirKey: String) {
+        val snapshot = _uiState.value
+
+        if (snapshot.chapterNo >= 1 &&
+            snapshot.verseNo >= 1 &&
+            snapshot.tafsirKey == tafsirKey
+        ) {
+            return
+        }
+
         val tafsirInfo = TafsirManager.getModel(tafsirKey)
+
+        if (snapshot.chapterNo < 1 || snapshot.verseNo < 1) {
+            _uiState.update {
+                it.copy(
+                    tafsirKey = tafsirKey,
+                    tafsirInfo = tafsirInfo,
+                )
+            }
+            return
+        }
 
         _uiState.update {
             it.copy(
@@ -151,88 +174,86 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
 
     private fun loadTafsirContent() {
         val state = _uiState.value
+        if (state.tafsirKey.isBlank() || state.chapterNo < 1 || state.verseNo < 1) {
+            return
+        }
 
-        viewModelScope.launch {
+        val tafsirKey = state.tafsirKey
+        val chapterNo = state.chapterNo
+        val verseNo = state.verseNo
+        val verseKey = "$chapterNo:$verseNo"
+
+        contentLoadJob?.cancel()
+        contentLoadJob = viewModelScope.launch {
             _uiState.update { it.copy(contentState = TafsirContentState.Loading) }
 
-            val cachedTafsir = withContext(Dispatchers.IO) {
-                val dbHelper = QuranTafsirDBHelper(context)
-                try {
-                    dbHelper.getTafsirByVerse(state.tafsirKey, state.chapterNo, state.verseNo)
-                } finally {
-                    dbHelper.close()
-                }
-            }
-
-            if (cachedTafsir != null) {
-                _uiState.update {
-                    it.copy(
-                        contentState = TafsirContentState.Success(
-                            cachedTafsir,
-                            fromCache = true
-                        )
-                    )
-                }
-                return@launch
-            }
-
-            if (!NetworkStateReceiver.isNetworkConnected(context)) {
-                _uiState.update { it.copy(contentState = TafsirContentState.NoInternet) }
-                return@launch
-            }
-
-            try {
-                val verseKey = "${state.chapterNo}:${state.verseNo}"
-                val response = withContext(Dispatchers.IO) {
-                    RetrofitInstance.alfaazplus.getTafsirsByVerse(state.tafsirKey, verseKey)
-                }
-
-                var tafsirToShow: TafsirModel? = null
-
+            val outcome = try {
                 withContext(Dispatchers.IO) {
                     val dbHelper = QuranTafsirDBHelper(context)
 
                     try {
+                        dbHelper.getTafsirByVerse(tafsirKey, chapterNo, verseNo)?.let {
+                            return@withContext LoadOutcome.Success(it)
+                        }
+
+                        if (!NetworkStateReceiver.isNetworkConnected(context)) {
+                            return@withContext LoadOutcome.NoNetwork
+                        }
+
+                        val response = RetrofitInstance.alfaazplus.getTafsirsByVerse(
+                            tafsirKey, verseKey
+                        )
+
                         dbHelper.storeTafsirs(
                             response.tafsirs,
                             response.version,
                             response.timestamp1
                         )
 
-                        for (tafsir in response.tafsirs) {
-                            if (tafsir.verseKey == verseKey || tafsir.verses.contains(verseKey)) {
-                                tafsirToShow = tafsir
-                            }
+                        val match = response.tafsirs.firstOrNull { t ->
+                            t.verseKey == verseKey || t.verses.contains(verseKey)
                         }
+
+                        if (match != null) LoadOutcome.Success(match)
+                        else LoadOutcome.NotFound
                     } finally {
                         dbHelper.close()
                     }
                 }
-
-                if (tafsirToShow != null) {
-                    _uiState.update {
-                        it.copy(
-                            contentState = TafsirContentState.Success(
-                                tafsirToShow,
-                                fromCache = false
-                            )
-                        )
-                    }
-                } else {
-                    _uiState.update {
-                        it.copy(contentState = TafsirContentState.Error("Tafsir not found", true))
-                    }
-                }
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
                 e.printStackTrace()
-                _uiState.update {
+                LoadOutcome.Failed(e.message ?: "Failed to load tafsir")
+            }
+
+            when (outcome) {
+                is LoadOutcome.Success -> _uiState.update {
                     it.copy(
-                        contentState = TafsirContentState.Error(
-                            e.message ?: "Failed to load tafsir", true
-                        )
+                        contentState = TafsirContentState.Success(outcome.model)
+                    )
+                }
+
+                LoadOutcome.NotFound -> _uiState.update {
+                    it.copy(contentState = TafsirContentState.Error("Tafsir not found", true))
+                }
+
+                LoadOutcome.NoNetwork -> _uiState.update {
+                    it.copy(contentState = TafsirContentState.NoInternet)
+                }
+
+                is LoadOutcome.Failed -> _uiState.update {
+                    it.copy(
+                        contentState = TafsirContentState.Error(outcome.message, true)
                     )
                 }
             }
         }
+    }
+
+    private sealed interface LoadOutcome {
+        data class Success(val model: TafsirModel) : LoadOutcome
+        object NotFound : LoadOutcome
+        object NoNetwork : LoadOutcome
+        data class Failed(val message: String) : LoadOutcome
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
@@ -48,6 +50,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun ExtendedThumbnail(
     verse: ChapterVersePair,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val headerShape = RoundedCornerShape(32.dp)
@@ -61,11 +64,8 @@ fun ExtendedThumbnail(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-            .height(340.dp)
+    BoxWithConstraints(
+        modifier = modifier
             .clip(headerShape)
             .background(Color(0xFF10151C))
             .border(
@@ -123,10 +123,52 @@ fun ExtendedThumbnail(
                 )
         )
 
+        val smallestAxis = minOf(maxWidth, maxHeight)
+        val compact = smallestAxis <= 190.dp
+        val medium = smallestAxis <= 250.dp
+
+        val horizontalPadding: Dp = when {
+            compact -> 14.dp
+            medium -> 18.dp
+            else -> 24.dp
+        }
+        val verticalPadding: Dp = when {
+            compact -> 14.dp
+            medium -> 18.dp
+            else -> 28.dp
+        }
+        val chapterIconInset: Dp = when {
+            compact -> 10.dp
+            medium -> 16.dp
+            else -> 24.dp
+        }
+        val chapterIconBottomInset: Dp = when {
+            compact -> 4.dp
+            else -> 8.dp
+        }
+
+        val chapterIconSize = (smallestAxis.value * 0.2f)
+            .coerceIn(44f, 72f)
+            .sp
+
+        val titleStyle = when {
+            compact -> MaterialTheme.typography.titleMedium
+            medium -> MaterialTheme.typography.titleLarge
+            else -> MaterialTheme.typography.headlineSmall
+        }
+        val titleToBadgeGap: Dp = if (compact) 4.dp else 6.dp
+        val iconToTitleGap: Dp = when {
+            compact -> 10.dp
+            medium -> 14.dp
+            else -> 22.dp
+        }
+        val badgeHorizontalPadding: Dp = if (compact) 10.dp else 14.dp
+        val badgeVerticalPadding: Dp = if (compact) 4.dp else 6.dp
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 28.dp),
+                .padding(horizontal = horizontalPadding, vertical = verticalPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -138,19 +180,23 @@ fun ExtendedThumbnail(
                     .border(1.dp, Color.White.copy(alpha = 0.10f), headerShape)
             ) {
                 ChapterIcon(
-                    modifier = Modifier
-                        .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(
+                        start = chapterIconInset,
+                        end = chapterIconInset,
+                        top = chapterIconInset,
+                        bottom = chapterIconBottomInset,
+                    ),
                     chapterNo = verse.chapterNo,
-                    fontSize = 72.sp,
+                    fontSize = chapterIconSize,
                     color = PlayerContentColor,
                 )
             }
 
-            Spacer(Modifier.height(22.dp))
+            Spacer(Modifier.height(iconToTitleGap))
 
             Text(
                 text = stringResource(R.string.strLabelSurah, chapterName),
-                style = MaterialTheme.typography.headlineSmall,
+                style = titleStyle,
                 fontWeight = FontWeight.Bold,
                 color = PlayerContentColor,
                 textAlign = TextAlign.Center,
@@ -158,7 +204,7 @@ fun ExtendedThumbnail(
                 overflow = TextOverflow.Ellipsis,
             )
 
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(titleToBadgeGap))
 
             Surface(
                 shape = RoundedCornerShape(999.dp),
@@ -169,7 +215,10 @@ fun ExtendedThumbnail(
             ) {
                 Text(
                     text = stringResource(R.string.strLabelVerseNo, verse.verseNo),
-                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
+                    modifier = Modifier.padding(
+                        horizontal = badgeHorizontalPadding,
+                        vertical = badgeVerticalPadding,
+                    ),
                     color = Color.White.copy(alpha = 0.88f),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold

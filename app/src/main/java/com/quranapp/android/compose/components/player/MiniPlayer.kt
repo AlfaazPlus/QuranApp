@@ -1,7 +1,6 @@
 package com.quranapp.android.compose.components.player
 
 
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -54,7 +53,6 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
-import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -149,15 +147,7 @@ fun MiniPlayer(
                     text = if (isSyncing) stringResource(R.string.verseSyncOn) else stringResource(R.string.verseSyncOff)
                 ) {
                     IconButton(
-                        onClick = {
-                            onSyncRequest()
-
-                            MessageUtils.showRemovableToast(
-                                context,
-                                if (isSyncing) R.string.verseSyncOn else R.string.verseSyncOff,
-                                Toast.LENGTH_SHORT
-                            )
-                        },
+                        onClick = onSyncRequest,
                         modifier = Modifier.size(48.dp),
                     ) {
                         Icon(

@@ -2,19 +2,15 @@ package com.quranapp.android.compose.components.player
 
 
 import android.app.Activity
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +23,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,10 +40,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,16 +52,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.quranapp.android.R
-import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
 import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
@@ -78,8 +76,9 @@ import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
-val PlayerBgColor = Color(0xFF14141C)
+val PlayerBgColor = Color(0xFF000000)
 val PlayerContentColor = Color.White
 
 private enum class ExpandedPlayerMode {
@@ -87,6 +86,7 @@ private enum class ExpandedPlayerMode {
     Spotlight,
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExpandedPlayer(
     state: RecitationServiceState,
@@ -97,7 +97,33 @@ fun ExpandedPlayer(
 ) {
     val verse = state.currentVerse
     val settings = state.settings
+
     var mode by remember { mutableStateOf(ExpandedPlayerMode.Controls) }
+
+    val pagerState = rememberPagerState(
+        initialPage = mode.ordinal,
+        pageCount = { ExpandedPlayerMode.entries.size }
+    )
+    val scope = rememberCoroutineScope()
+    var spotlightHeaderVisible by remember { mutableStateOf(true) }
+    val headerVisibilityProgress by animateFloatAsState(
+        targetValue = if (mode == ExpandedPlayerMode.Spotlight && !spotlightHeaderVisible) 0f else 1f,
+        animationSpec = tween(220),
+        label = "expanded_player_header_visibility"
+    )
+
+    LaunchedEffect(pagerState.currentPage) {
+        mode = ExpandedPlayerMode.entries[pagerState.currentPage]
+    }
+
+    LaunchedEffect(mode) {
+        if (pagerState.currentPage != mode.ordinal) {
+            pagerState.animateScrollToPage(mode.ordinal)
+        }
+        if (mode != ExpandedPlayerMode.Spotlight) {
+            spotlightHeaderVisible = true
+        }
+    }
 
     val view = LocalView.current
 
@@ -124,67 +150,163 @@ fun ExpandedPlayer(
             .navigationBarsPadding()
             .fillMaxSize(),
     ) {
-        when (mode) {
-            ExpandedPlayerMode.Controls -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    ExpandedPlayerHeader(
-                        mode,
-                        onModeChange = { mode = it },
-                        onCollapse
-                    )
-
-                    ExtendedThumbnail(
-                        verse = verse,
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        PlayerMessages(
-                            state,
-                            isPlaying,
-                        )
-                    }
-
-                    Configurations(
-                        controller = controller
-                    )
-
-                    ProgressSeekBar(
-                        isPlaying = isPlaying,
-                        isLoading = isLoading,
-                        controller = controller,
-                    )
-
-                    Spacer(Modifier.height(20.dp))
-
-                    ExpandedTransportControls(
-                        isPlaying = isPlaying,
-                        isLoading = isLoading,
-                        controller = controller,
-                        continueRange = settings.continueRange,
-                    )
-                }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .graphicsLayer {
+                        alpha = headerVisibilityProgress
+                        translationY = -size.height * (1f - headerVisibilityProgress) * 0.5f
+                    },
+            ) {
+                ExpandedPlayerHeader(
+                    mode = mode,
+                    onModeChange = { selectedMode ->
+                        scope.launch { pagerState.animateScrollToPage(selectedMode.ordinal) }
+                    },
+                    onCollapse = onCollapse,
+                )
             }
 
-            ExpandedPlayerMode.Spotlight -> {
-                ExpandedPlayerSpotlightSection(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verse = verse,
-                    isPlaying = isPlaying,
-                    isLoading = isLoading,
-                    controller = controller,
-                    onCollapse = onCollapse,
-                    mode = mode,
-                    onModeChange = { mode = it },
-                )
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f),
+            ) { page ->
+                val currentMode = ExpandedPlayerMode.entries[page]
+                when (currentMode) {
+                    ExpandedPlayerMode.Controls -> {
+                        BoxWithConstraints(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            val isWideLayout = maxWidth >= 600.dp
+
+                            if (isWideLayout) {
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .fillMaxWidth(),
+                                    ) {
+                                        ExtendedThumbnail(
+                                            verse = verse,
+                                            modifier = Modifier
+                                                .weight(0.4f)
+                                                .fillMaxHeight()
+                                                .padding(16.dp),
+                                        )
+
+                                        Column(
+                                            modifier = Modifier
+                                                .weight(0.6f)
+                                                .fillMaxHeight(),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Center,
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .fillMaxWidth(),
+                                                contentAlignment = Alignment.Center,
+                                            ) {
+                                                PlayerMessages(
+                                                    state,
+                                                    isPlaying,
+                                                )
+                                            }
+
+                                            Configurations(
+                                                controller = controller
+                                            )
+
+                                            ExpandedTransportControls(
+                                                isPlaying = isPlaying,
+                                                isLoading = isLoading,
+                                                controller = controller,
+                                                continueRange = settings.continueRange,
+                                                bottomPadding = 8.dp,
+                                            )
+                                        }
+                                    }
+
+                                    ProgressSeekBar(
+                                        isPlaying = isPlaying,
+                                        isLoading = isLoading,
+                                        controller = controller,
+                                    )
+
+                                    Spacer(Modifier.height(12.dp))
+                                }
+                            } else {
+                                val thumbnailHeight: Dp =
+                                    (maxHeight * 0.32f).coerceIn(150.dp, 340.dp)
+
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Box(
+                                        Modifier.weight(1f),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        ExtendedThumbnail(
+                                            verse = verse,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(
+                                                    start = 16.dp,
+                                                    end = 16.dp,
+                                                    bottom = 16.dp
+                                                )
+                                                .height(thumbnailHeight),
+                                        )
+                                    }
+
+                                    PlayerMessages(
+                                        state,
+                                        isPlaying,
+                                    )
+
+                                    Configurations(
+                                        controller = controller
+                                    )
+
+                                    ProgressSeekBar(
+                                        isPlaying = isPlaying,
+                                        isLoading = isLoading,
+                                        controller = controller,
+                                    )
+
+                                    Spacer(Modifier.height(20.dp))
+
+                                    ExpandedTransportControls(
+                                        isPlaying = isPlaying,
+                                        isLoading = isLoading,
+                                        controller = controller,
+                                        continueRange = settings.continueRange,
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    ExpandedPlayerMode.Spotlight -> {
+                        ExpandedPlayerSpotlightSection(
+                            modifier = Modifier.fillMaxSize(),
+                            verse = verse,
+                            isPlaying = isPlaying,
+                            isLoading = isLoading,
+                            controller = controller,
+                            chromeVisible = spotlightHeaderVisible,
+                            onChromeVisibilityChanged = { spotlightHeaderVisible = it },
+                        )
+                    }
+                }
             }
         }
     }
@@ -219,174 +341,6 @@ private fun ExpandedPlayerHeader(
     }
 }
 
-@Composable
-private fun ExpandedPlayerSpotlightSection(
-    modifier: Modifier = Modifier,
-    verse: ChapterVersePair,
-    isPlaying: Boolean,
-    isLoading: Boolean,
-    controller: RecitationController,
-    onCollapse: () -> Unit,
-    mode: ExpandedPlayerMode,
-    onModeChange: (ExpandedPlayerMode) -> Unit,
-) {
-    var chromeVisible by remember { mutableStateOf(true) }
-    var hideEpoch by remember { mutableIntStateOf(0) }
-
-    fun bumpChrome() {
-        chromeVisible = true
-        hideEpoch++
-    }
-
-    LaunchedEffect(hideEpoch) {
-        delay(3_000)
-        chromeVisible = false
-    }
-
-    Box(
-        modifier = modifier
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    if (chromeVisible) {
-                        chromeVisible = false
-                    } else {
-                        bumpChrome()
-                    }
-                }
-            }
-    ) {
-        SpotlightVersePanel(
-            versePair = verse,
-        )
-
-        AnimatedVisibility(
-            visible = chromeVisible,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth(),
-            enter = fadeIn(tween(220)) + slideInVertically(
-                animationSpec = tween(280),
-                initialOffsetY = { -it / 2 },
-            ),
-            exit = fadeOut(tween(180)) + slideOutVertically(
-                animationSpec = tween(220),
-                targetOffsetY = { -it / 2 },
-            ),
-        ) {
-            ExpandedPlayerHeader(
-                mode,
-                onModeChange,
-                onCollapse
-            )
-        }
-
-        AnimatedVisibility(
-            visible = chromeVisible,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .navigationBarsPadding()
-                .padding(bottom = 24.dp),
-            enter = fadeIn(tween(220)) + slideInVertically(
-                animationSpec = tween(280),
-                initialOffsetY = { it / 2 },
-            ),
-            exit = fadeOut(tween(180)) + slideOutVertically(
-                animationSpec = tween(220),
-                targetOffsetY = { it / 2 },
-            ),
-        ) {
-            SpotlightPlaybackBar(
-                isPlaying = isPlaying,
-                isLoading = isLoading,
-                controller = controller,
-            )
-        }
-    }
-}
-
-@Composable
-private fun SpotlightPlaybackBar(
-    isPlaying: Boolean,
-    isLoading: Boolean,
-    controller: RecitationController,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        IconButton(
-            onClick = {
-                controller.previousVerse()
-            },
-            modifier = Modifier.size(48.dp),
-        ) {
-            Icon(
-                painterResource(R.drawable.ic_skip_back),
-                contentDescription = stringResource(R.string.strLabelPreviousVerse),
-                modifier = Modifier.size(30.dp),
-                tint = PlayerContentColor.alpha(.7f),
-            )
-        }
-
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(64.dp)
-                .shadow(
-                    elevation = 10.dp,
-                    shape = CircleShape,
-                    ambientColor = colorScheme.primary.copy(alpha = 0.35f),
-                    spotColor = colorScheme.primary.copy(alpha = 0.45f),
-                )
-                .clip(CircleShape)
-                .background(colorScheme.primary)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = {
-                        controller.playPause()
-                    },
-                ),
-        ) {
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(38.dp),
-                    strokeWidth = 3.dp,
-                    color = colorScheme.onPrimary,
-                )
-            } else {
-                Icon(
-                    painterResource(
-                        if (isPlaying) R.drawable.ic_pause
-                        else R.drawable.ic_play,
-                    ),
-                    contentDescription = if (isPlaying) stringResource(R.string.strLabelPause)
-                    else stringResource(R.string.strLabelPlay),
-                    modifier = Modifier.size(32.dp),
-                    tint = colorScheme.onPrimary,
-                )
-            }
-        }
-
-        IconButton(
-            onClick = {
-                controller.nextVerse()
-            },
-            modifier = Modifier.size(48.dp),
-        ) {
-            Icon(
-                painterResource(R.drawable.ic_skip_forward),
-                contentDescription = stringResource(R.string.strLabelNextVerse),
-                modifier = Modifier.size(30.dp),
-                tint = PlayerContentColor.alpha(.7f),
-            )
-        }
-    }
-}
 
 @Composable
 private fun ModeTabs(
@@ -666,11 +620,12 @@ private fun ExpandedTransportControls(
     isLoading: Boolean,
     controller: RecitationController,
     continueRange: Boolean,
+    bottomPadding: Dp = 48.dp,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, bottom = 48.dp),
+            .padding(start = 8.dp, end = 8.dp, bottom = bottomPadding),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -686,18 +641,6 @@ private fun ExpandedTransportControls(
             )
         }
 
-        /*IconButton(
-            onClick = { controller.seekLeft() },
-            modifier = Modifier.size(48.dp),
-        ) {
-            Icon(
-                painterResource(R.drawable.dr_icon_backward_5),
-                contentDescription = stringResource(R.string.strLabelPreviousVerse),
-                modifier = Modifier.size(30.dp),
-                tint = PlayerContentColor.alpha(.7f),
-            )
-        }*/
-
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -711,9 +654,9 @@ private fun ExpandedTransportControls(
                 .clip(CircleShape)
                 .background(colorScheme.primary)
                 .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = { controller.playPause() },
+                    onClick = {
+                        controller.playPause()
+                    },
                 ),
         ) {
             if (isLoading) {
@@ -735,18 +678,6 @@ private fun ExpandedTransportControls(
                 )
             }
         }
-
-        /*IconButton(
-            onClick = { controller.seekRight() },
-            modifier = Modifier.size(48.dp),
-        ) {
-            Icon(
-                painterResource(R.drawable.dr_icon_forward_5),
-                contentDescription = stringResource(R.string.strLabelNextVerse),
-                modifier = Modifier.size(30.dp),
-                tint = PlayerContentColor.alpha(.7f),
-            )
-        }*/
 
         IconButton(
             onClick = { controller.nextVerse() },

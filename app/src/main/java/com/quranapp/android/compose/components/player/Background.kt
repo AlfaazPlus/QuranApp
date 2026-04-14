@@ -20,7 +20,7 @@ fun Background(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF09090F))
+            .background(PlayerBgColor)
             .then(modifier)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -31,9 +31,9 @@ fun Background(
             drawRect(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF0A0A12),
+                        PlayerBgColor,
                         Color(0xFF101020),
-                        Color(0xFF050507)
+                        PlayerBgColor
                     )
                 )
             )
@@ -91,7 +91,7 @@ fun Background(
                 brush = Brush.radialGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color.Black.copy(alpha = 0.38f)
+                        PlayerBgColor.copy(alpha = 0.38f)
                     ),
                     radius = w * 0.9f,
                     center = Offset(w / 2f, h / 2f)
@@ -103,9 +103,9 @@ fun Background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color.Black.copy(alpha = 0.18f),
-                        Color.Black.copy(alpha = 0.45f),
-                        Color.Black.copy(alpha = 0.72f)
+                        PlayerBgColor.copy(alpha = 0.18f),
+                        PlayerBgColor.copy(alpha = 0.45f),
+                        PlayerBgColor.copy(alpha = 0.72f)
                     ),
                     startY = h * 0.45f,
                     endY = h

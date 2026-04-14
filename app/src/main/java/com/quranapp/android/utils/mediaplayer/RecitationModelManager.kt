@@ -24,7 +24,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.decodeFromStream
 import java.io.File
 import java.util.Locale
 
@@ -245,9 +244,9 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                file.inputStream().buffered().use {
-                    JsonHelper.json.decodeFromStream<AvailableRecitationsModel>(it)
-                }
+                JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
+                    file.readText(Charsets.UTF_8)
+                )
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadQuranFromLocal")
                 null
@@ -263,9 +262,9 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                file.inputStream().buffered().use {
-                    JsonHelper.json.decodeFromStream<AvailableRecitationTranslationsModel>(it)
-                }
+                JsonHelper.json.decodeFromString<AvailableRecitationTranslationsModel>(
+                    file.readText(Charsets.UTF_8)
+                )
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadTranslationFromLocal")
                 null
@@ -364,11 +363,22 @@ class RecitationModelManager private constructor(
     private fun downloadManifest(file: File, body: okhttp3.ResponseBody) {
         val fileUtils = FileUtils.newInstance(appContext)
 
-        if (fileUtils.createFile(file)) {
-            body.byteStream().use { input ->
-                file.outputStream().buffered().use { output ->
-                    input.copyTo(output)
-                    output.flush()
+        val tempFile = File(file.parentFile, "${file.name}.tmp")
+        if (fileUtils.createFile(tempFile)) {
+            try {
+                body.byteStream().use { input ->
+                    tempFile.outputStream().buffered().use { output ->
+                        input.copyTo(output)
+                        output.flush()
+                    }
+                }
+                if (file.exists()) {
+                    file.delete()
+                }
+                tempFile.renameTo(file)
+            } finally {
+                if (tempFile.exists() && tempFile.name != file.name) {
+                    tempFile.delete()
                 }
             }
         }

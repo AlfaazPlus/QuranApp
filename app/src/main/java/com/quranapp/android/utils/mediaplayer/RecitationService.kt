@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -37,6 +38,7 @@ import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.univ.ErrorEvent
@@ -112,7 +114,7 @@ class RecitationService : MediaSessionService() {
     private var latestPlaybackRequestId: Long = 0L
     private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
 
-    private var repeatJob: Job? = null
+    private var repeatMessage: androidx.media3.exoplayer.PlayerMessage? = null
     private var repeatRemainingPlaysForCurrentItem: Int = 0
     private var repeatScheduleGeneration: Long = 0L
 
@@ -789,9 +791,8 @@ class RecitationService : MediaSessionService() {
                         updateState { copy(currentVerse = newVerse) }
                         updateNotificationMetadata(timing.chapterNo, vt.verseNo)
                         invalidateRepeatSchedule()
+                        scheduleRepeatForVerse(vt.startMs, vt.endMs)
                     }
-
-                    scheduleRepeatForVerse(vt.startMs, vt.endMs)
                 }
 
                 delay(200)
@@ -804,8 +805,8 @@ class RecitationService : MediaSessionService() {
         verseTrackingJob = null
 
         // only cancel the job without resetting state of repeat schedule
-        repeatJob?.cancel()
-        repeatJob = null
+        repeatMessage?.cancel()
+        repeatMessage = null
     }
 
 
@@ -836,38 +837,21 @@ class RecitationService : MediaSessionService() {
 
     private fun invalidateRepeatSchedule() {
         repeatScheduleGeneration++
-        repeatJob?.cancel()
-        repeatJob = null
-        repeatRemainingPlaysForCurrentItem = state.value.settings.repeatCount.coerceAtLeast(0)
+        repeatMessage?.cancel()
+        repeatMessage = null
+        repeatRemainingPlaysForCurrentItem =
+            state.value.settings.repeatCount.coerceAtLeast(RECITATION_MIN_REPEAT_COUNT)
     }
 
     private fun scheduleRepeatForVerse(startMs: Long, endMs: Long) {
-        repeatJob?.cancel()
+        repeatMessage?.cancel()
 
         if (!isSingleTrackRepeatEligible()) return
 
         val myGeneration = repeatScheduleGeneration
 
-        val playbackSpeed = player.playbackParameters.speed.coerceAtLeast(0.1f)
-        val remainingMediaMs = endMs - player.currentPosition
-        val adjustedDelayMs = (remainingMediaMs / playbackSpeed).toLong()
-        val finalDelay = adjustedDelayMs.coerceAtLeast(0L)
-
-        repeatJob = serviceScope.launch {
-            delay((finalDelay - 100L).coerceAtLeast(0))
-
-            // fine-grained wait for exact player position
-            while (isActive &&
-                myGeneration == repeatScheduleGeneration &&
-                isSingleTrackRepeatEligible() &&
-                player.currentPosition < endMs - 10
-            ) {
-                delay(2)
-            }
-
-
-            // double-check conditions
-            if (!isActive || myGeneration != repeatScheduleGeneration || !isSingleTrackRepeatEligible()) return@launch
+        val message = player.createMessage { _, _ ->
+            if (myGeneration != repeatScheduleGeneration || !isSingleTrackRepeatEligible()) return@createMessage
 
             repeatRemainingPlaysForCurrentItem--
 
@@ -876,6 +860,16 @@ class RecitationService : MediaSessionService() {
             // reschedule for next repeat
             scheduleRepeatForVerse(startMs, endMs)
         }
+
+        // Offset by 100ms to account for thread-hopping and audio-sink buffer
+        // which prevents bleeding of the next verse.
+        message
+            .setPosition((endMs - 100).coerceAtLeast(0))
+            .setLooper(Looper.getMainLooper())
+            .setDeleteAfterDelivery(true)
+            .send()
+
+        repeatMessage = message
     }
 
     private fun rescheduleRepeatForCurrentPosition() {
@@ -1088,6 +1082,7 @@ class RecitationService : MediaSessionService() {
 
                 player.repeatMode = Player.REPEAT_MODE_OFF
                 invalidateRepeatSchedule()
+                rescheduleRepeatForCurrentPosition()
             }
 
             is SetContinuePlayingCommand -> {

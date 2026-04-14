@@ -73,6 +73,7 @@ sealed class ReaderLayoutItem() {
 fun ReaderLayout(
     readerVm: ReaderViewModel,
     nestedScrollConnection: NestedScrollConnection,
+    onSyncStateChanged: (Boolean) -> Unit = {},
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
@@ -106,12 +107,18 @@ fun ReaderLayout(
                     readerVm,
                     contentWidth,
                     nestedScrollConnection,
+                    onSyncStateChanged,
                 )
             }
         }
 
         ReaderMode.Translation -> {}
-        else -> ReaderLayoutVerseMode(readerVm, uiState, nestedScrollConnection)
+        else -> ReaderLayoutVerseMode(
+            readerVm,
+            uiState,
+            nestedScrollConnection,
+            onSyncStateChanged,
+        )
     }
 }
 
@@ -121,6 +128,7 @@ private fun ReaderLayoutVerseMode(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
     nestedScrollConnection: NestedScrollConnection,
+    onSyncStateChanged: (Boolean) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val items by readerVm.verseByVerseItems.collectAsStateWithLifecycle()
@@ -182,17 +190,35 @@ private fun ReaderLayoutVerseMode(
     val playingVerse = playerState.playingVerse
 
     LaunchedEffect(listState, autoScrollSpeed, playerVerseSync, isPlaying, playingVerse, items) {
-        if (autoScrollSpeed == null && playerVerseSync && isPlaying) {
+        if (autoScrollSpeed == null && playerVerseSync && isPlaying && playingVerse.isValid) {
             val currentPlayingIndex = items.indexOfFirst { item ->
                 item is ReaderLayoutItem.VerseUI &&
                         item.verse.chapterNo == playingVerse.chapterNo &&
                         item.verse.verseNo == playingVerse.verseNo
             }
 
-            if (currentPlayingIndex > 0) {
+            if (currentPlayingIndex >= 0) {
                 listState.animateScrollToItem(currentPlayingIndex)
             }
         }
+    }
+
+    LaunchedEffect(listState, items, playingVerse) {
+        snapshotFlow {
+            if (!playingVerse.isValid) return@snapshotFlow false
+
+            val idx = items.indexOfFirst { item ->
+                item is ReaderLayoutItem.VerseUI &&
+                        item.verse.chapterNo == playingVerse.chapterNo &&
+                        item.verse.verseNo == playingVerse.verseNo
+            }
+
+            if (idx < 0) return@snapshotFlow false
+
+            return@snapshotFlow true
+        }
+            .distinctUntilChanged()
+            .collect { onSyncStateChanged(it) }
     }
 
     val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()

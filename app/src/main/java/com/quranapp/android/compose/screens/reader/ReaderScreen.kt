@@ -31,7 +31,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT_DP
+import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -59,12 +59,18 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     val type = MaterialTheme.typography
     val isDark = isSystemInDarkTheme()
 
-    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT_DP.dp
+    val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT
     val coroutineScope = rememberCoroutineScope()
 
-    var isSyncing by readerVm.playerVerseSync
+    var playerVerseSyncPref by readerVm.playerVerseSync
+    var isSyncing by remember { mutableStateOf(false) }
+    val syncIndicatorLocked = playerVerseSyncPref && isSyncing
 
     var lastInitParams by remember { mutableStateOf<ReaderLaunchParams?>(null) }
+
+    LaunchedEffect(params) {
+        isSyncing = false
+    }
 
     ReaderProvider(
         onVerseRecitationStarted = {
@@ -102,6 +108,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                     containerColor = if (isDark) colorScheme.background else colorScheme.surface
                 ) { padding ->
                     val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
+
                     Column(
                         Modifier
                             .padding(padding)
@@ -112,6 +119,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                         ReaderLayout(
                             readerVm = readerVm,
                             nestedScrollConnection = scrollBehavior.nestedScrollConnection,
+                            onSyncStateChanged = { isSyncing = it },
                         )
                     }
                 }
@@ -120,10 +128,10 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                     collapsedBottomInset = WindowInsets.navigationBars.asPaddingValues()
                         .calculateBottomPadding(),
                     barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
-                    isSyncing = isSyncing,
+                    isSyncing = syncIndicatorLocked,
                     onSyncRequest = {
-                        val willSync = !isSyncing
-                        isSyncing = willSync
+                        val willSync = !playerVerseSyncPref
+                        playerVerseSyncPref = willSync
 
                         if (willSync) {
                             coroutineScope.launch { readerVm.syncToPlayingVerse() }

@@ -22,6 +22,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.utils.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,17 +54,19 @@ class RecitationController private constructor(private val appContext: Context) 
 
     val state: StateFlow<RecitationServiceState> = RecitationService.sharedState
 
-    val currentPositionMs: Long get() {
-        val c = mediaController ?: return 0L
-        val plan = state.value.clipPlan ?: return c.currentPosition
-        return plan.virtualPositionAt(c.currentMediaItemIndex, c.currentPosition)
-    }
+    val currentPositionMs: Long
+        get() {
+            val c = mediaController ?: return 0L
+            val plan = state.value.clipPlan ?: return c.currentPosition
+            return plan.virtualPositionAt(c.currentMediaItemIndex, c.currentPosition)
+        }
 
-    val durationMs: Long get() {
-        val c = mediaController ?: return 0L
-        val plan = state.value.clipPlan
-        return plan?.virtualDurationMs ?: c.duration
-    }
+    val durationMs: Long
+        get() {
+            val c = mediaController ?: return 0L
+            val plan = state.value.clipPlan
+            return plan?.virtualDurationMs ?: c.duration
+        }
 
     // ==================== Connection ====================
 
@@ -280,7 +283,7 @@ class RecitationController private constructor(private val appContext: Context) 
 
     fun setRepeatCount(repeatCount: Int) {
         ensureConnectedAndSend(
-            SetRepeatCommand(repeatCount = repeatCount.coerceAtLeast(1))
+            SetRepeatCommand(repeatCount = repeatCount.coerceAtLeast(RECITATION_MIN_REPEAT_COUNT))
         )
     }
 

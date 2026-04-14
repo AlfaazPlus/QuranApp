@@ -510,7 +510,6 @@ private fun ReciterDownloadCard(
                                     painter = painterResource(R.drawable.dr_icon_close),
                                     contentDescription = stringResource(R.string.strLabelCancel),
                                     onClick = onCancel,
-                                    small = true
                                 )
                             }
                         }

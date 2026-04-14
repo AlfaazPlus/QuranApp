@@ -21,20 +21,23 @@ import com.quranapp.android.compose.components.homepage.HomeSectionProphets
 import com.quranapp.android.compose.components.homepage.HomeSectionQuranScience
 import com.quranapp.android.compose.components.homepage.HomeSectionReadHistory
 import com.quranapp.android.compose.components.homepage.HomeSectionSolutions
+import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.viewModels.HomeViewModel
 
 private const val HOME_HISTORY_LIMIT = 10
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier,
     homeVm: HomeViewModel = viewModel(),
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
-            .padding(bottom = 64.dp),
+            .padding(bottom = 64.dp)
+            .padding(bottom = MINI_PLAYER_HEIGHT),
     ) {
         AppUpdateBanner()
         VerseOfTheDay()

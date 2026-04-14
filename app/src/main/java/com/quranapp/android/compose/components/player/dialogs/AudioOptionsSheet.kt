@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -69,7 +71,11 @@ fun AudioOptionsSheet(
         title = stringResource(R.string.audioOption),
     ) {
         Column(
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 48.dp)
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 48.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                ),
         ) {
             items.forEach { (option, title) ->
                 RadioItem(

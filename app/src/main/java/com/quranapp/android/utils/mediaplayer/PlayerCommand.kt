@@ -4,6 +4,8 @@ import android.os.Bundle
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_DEFAULT_REPEAT_COUNT
+import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 
 
 sealed class BasePlayerCommand(
@@ -99,8 +101,9 @@ data class SetRepeatCommand(
         const val ACTION = "SET_REPEAT_VERSE"
 
         fun fromBundle(bundle: Bundle): SetRepeatCommand? {
-            val repeatCount = bundle.getInt("repeatCount", 1)
-            if (repeatCount < 1) return null
+            val repeatCount =
+                bundle.getInt("repeatCount", RECITATION_DEFAULT_REPEAT_COUNT)
+            if (repeatCount < RECITATION_MIN_REPEAT_COUNT) return null
 
             return SetRepeatCommand(repeatCount)
         }

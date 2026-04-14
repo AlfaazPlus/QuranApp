@@ -35,6 +35,7 @@ object RecitationPreferences {
     private val KEY_LAST_PLAYED_CHAPTER = intPreferencesKey("recitation_last_played_chapter")
     private val KEY_LAST_PLAYED_VERSE = intPreferencesKey("recitation_last_played_verse")
 
+    const val RECITATION_MIN_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_VERSE_GROUP_SIZE = 1
 
