@@ -345,11 +345,11 @@ object ReaderItemsBuilder {
                 fontFamily = fontUrdu,
             )
 
-            val wbwStyles = TextLinkStyles(
+            /*val wbwStyles = TextLinkStyles(
                 focusedStyle = SpanStyle(color = params.colors.primary),
                 pressedStyle = SpanStyle(color = params.colors.primary),
                 hoveredStyle = SpanStyle(color = params.colors.primary),
-            )
+            )*/
 
             for ((idx, verseNo) in verseNos.withIndex()) {
                 val ayah = batch.ayahByVerseNo[verseNo] ?: continue

@@ -47,7 +47,6 @@ private const val RECITER_STATS_PARALLELISM = 4
 data class RecitationBatchDownloadState(
     val downloadedCount: Int,
     val inProgressCount: Int,
-    val failedCount: Int,
     val totalChapters: Int = QuranMeta.chapterRange.last,
 ) {
     val isComplete: Boolean get() = downloadedCount >= totalChapters
@@ -265,12 +264,9 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
                     it.state == WorkInfo.State.BLOCKED
         }
 
-        val failed = myWorks.count { it.state == WorkInfo.State.FAILED }
-
         RecitationBatchDownloadState(
             downloadedCount = downloaded,
             inProgressCount = inProgress,
-            failedCount = failed,
         )
     }
 

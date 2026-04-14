@@ -355,8 +355,8 @@ private fun QuickReferenceHeader(
             IconButton(onClick = onBookmark) {
                 Icon(
                     painter = painterResource(
-                        if (isBookmarked) R.drawable.dr_icon_bookmark_added
-                        else R.drawable.dr_icon_bookmark_outlined
+                        if (isBookmarked) R.drawable.ic_bookmark_added
+                        else R.drawable.ic_bookmark
                     ),
                     contentDescription = stringResource(R.string.strLabelBookmark),
                     tint = bookmarkTint,

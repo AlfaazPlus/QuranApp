@@ -71,7 +71,8 @@ fun ListItemContent(
     modifier: Modifier
 ) {
     val titleText = titleStr ?: if (title != null) stringResource(title) else null
-    val subtitleText = subtitleStr ?: if (subtitle != null) stringResource(subtitle) else null
+    val subtitleText = subtitleStr.takeIf { !it.isNullOrEmpty() }
+        ?: if (subtitle != null) stringResource(subtitle) else null
 
     Column(modifier = modifier) {
         if (titleText != null) {

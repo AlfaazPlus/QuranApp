@@ -379,10 +379,6 @@ class RecitationService : MediaSessionService() {
         }
     }
 
-    fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
-        return state.value.isCurrentVerse(chapterNo, verseNo) && player.isPlaying
-    }
-
     fun cancelLoading() {
         audioRepository.cancelAll()
         setResolving(null)

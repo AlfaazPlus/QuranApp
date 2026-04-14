@@ -8,10 +8,11 @@ import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.views.reader.updateAllVotdWidgets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +53,7 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
     private val context get() = getApplication<Application>()
 
     init {
-        val initialSlugs = SPReader.getSavedTranslations(context)
+        val initialSlugs = ReaderPreferences.getTranslations()
         _uiState.update { it.copy(selectedSlugs = initialSlugs) }
         loadTranslations()
     }
@@ -102,8 +103,15 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
             newSlugs,
             translation,
             isSelected,
-            state.saveTranslationChanges
         )
+
+        if (succeed && state.saveTranslationChanges) {
+            viewModelScope.launch {
+                ReaderPreferences.setTranslations(newSlugs)
+            }
+            
+            updateAllVotdWidgets(context)
+        }
 
         if (succeed) {
             val selectedSlugs = newSlugs.toSet()

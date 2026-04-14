@@ -40,10 +40,14 @@ class QuranRepository(
         return mushafDao.getPageLines(mushafId, pageNo)
     }
 
-    /** Juz for this mushaf page from ayah metadata; `-1` if no ayah line maps (same sentinel as [com.quranapp.android.components.quran.QuranMeta.getJuzForPage]). */
     suspend fun getJuzForMushafPage(mushafId: Int, pageNo: Int): Int {
         if (mushafId <= 0 || pageNo <= 0) return -1
         return mushafDao.getJuzForPage(mushafId, pageNo) ?: -1
+    }
+
+    suspend fun getHizbForMushafPage(mushafId: Int, pageNo: Int): Int {
+        if (mushafId <= 0 || pageNo <= 0) return -1
+        return mushafDao.getHizbForPage(mushafId, pageNo) ?: -1
     }
 
     suspend fun getSurah(

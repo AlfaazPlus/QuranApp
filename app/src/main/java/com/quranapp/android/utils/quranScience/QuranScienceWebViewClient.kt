@@ -6,13 +6,13 @@ import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
+import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.toKFQPCFontFilename
 import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
-import com.quranapp.android.utils.sharedPrefs.SPReader
-import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
 import java.io.IOException
@@ -51,7 +51,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
 
             "assets-font" -> {
                 if (uriStr.contains("quran-arabic")) {
-                    val savedScript = SPReader.getSavedScript(view.context)
+                    val savedScript = ReaderPreferences.getQuranScript()
                     val fileUtils = FileUtils.newInstance(ctx)
                     if (savedScript.isKFQPCScript()) {
                         val lastSeg = uri.lastPathSegment ?: return null

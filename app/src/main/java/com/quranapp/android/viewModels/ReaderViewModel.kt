@@ -228,8 +228,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         val state = ReaderUiState().resolveIntent(data)
         _uiState.update { state }
 
-        Log.d(readerMode.value)
-
         // Try to navigate to initial verse (works in both mode)
         if (data.initialVerse != null) {
             requestVerseNavigation(data.initialVerse!!.chapterNo, data.initialVerse!!.verseNo)

@@ -10,14 +10,7 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
-/**
- * Recitation settings for Compose UI, stored in DataStore via [com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager].
- *
- * Legacy reader, services, and [com.quranapp.android.utils.sharedPrefs.SPReader] keep using
- * SharedPreferences (`sp_reader_recitation_options`); that path is unchanged.
- */
 object RecitationPreferences {
-
     private val KEY_RECITER = stringPreferencesKey(RecitationUtils.KEY_RECITATION_RECITER)
     private val KEY_TRANSLATION_RECITER =
         stringPreferencesKey(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER)

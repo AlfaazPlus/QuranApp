@@ -32,7 +32,6 @@ val LocalReaderViewModel = staticCompositionLocalOf<ReaderProviderViewModel> {
 
 @Composable
 fun ReaderProvider(
-    onVerseRecitationStarted: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val viewModel = viewModel<ReaderProviderViewModel>()
@@ -91,7 +90,6 @@ fun ReaderProvider(
             controller = controller,
             isAnyPlaying = isPlaying,
             playingVerse = recitationState.currentVerse,
-            onVerseRecitationStarted = onVerseRecitationStarted
         )
     ) {
         content()

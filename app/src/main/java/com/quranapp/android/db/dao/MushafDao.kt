@@ -36,6 +36,21 @@ interface MushafDao {
     )
     suspend fun getJuzForPage(mushafId: Int, pageNumber: Int): Int?
 
+    /**
+     * Hizb of the first ayah line on this mushaf page (ordered by line number), from [ayahs].
+     */
+    @Query(
+        """
+        SELECT a.hizb_no FROM mushaf_map AS m
+        INNER JOIN ayahs AS a ON m.start_ayah_id = a.ayah_id
+        WHERE m.mushaf_id = :mushafId AND m.page_number = :pageNumber
+          AND m.start_ayah_id IS NOT NULL
+        ORDER BY m.line_number ASC
+        LIMIT 1
+        """
+    )
+    suspend fun getHizbForPage(mushafId: Int, pageNumber: Int): Int?
+
     @Query(
         """
         SELECT MIN(m.page_number) FROM mushaf_map AS m

@@ -33,9 +33,9 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -157,8 +157,9 @@ fun StorageCleanupScriptsScreen(
                 onClick = {
                     toDelete?.let { row ->
                         scope.launch(Dispatchers.IO) {
-                            if (SPReader.getSavedScript(context) == row.scriptKey) {
-                                SPReader.setSavedScript(context, QuranScriptUtils.SCRIPT_DEFAULT)
+                            if (ReaderPreferences.getQuranScript() == row.scriptKey) {
+                                ReaderPreferences.setQuranScript(QuranScriptUtils.SCRIPT_DEFAULT)
+                                ReaderPreferences.setQuranScriptVariant(null)
                             }
                             fileUtils.getScriptFile(row.scriptKey).delete()
                             fileUtils.getKFQPCScriptFontDir(row.scriptKey).deleteRecursively()

@@ -6,6 +6,7 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_DEFAULT_REPEAT_COUNT
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
+import com.quranapp.android.utils.extensions.serializableExtra
 
 
 sealed class BasePlayerCommand(
@@ -27,7 +28,7 @@ data class StartCommand(
         const val ACTION = "START"
 
         fun fromBundle(bundle: Bundle): StartCommand? {
-            val verse = bundle.getSerializable("verse", ChapterVersePair::class.java)
+            val verse = bundle.serializableExtra<ChapterVersePair>("verse")
             return StartCommand(verse)
         }
     }
@@ -142,9 +143,8 @@ data class SetReciterCommand(
 
         fun fromBundle(bundle: Bundle): SetReciterCommand? {
             val reciter = bundle.getString("reciter") ?: return null
-            val kind = bundle.getSerializable(
+            val kind = bundle.serializableExtra<RecitationAudioKind>(
                 "kind",
-                RecitationAudioKind::class.java,
             ) ?: return null
 
             return SetReciterCommand(reciter, kind)

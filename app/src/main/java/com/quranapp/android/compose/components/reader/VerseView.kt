@@ -34,10 +34,10 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -47,7 +47,6 @@ data class LocalRecitationStateData(
     val controller: RecitationController,
     val isAnyPlaying: Boolean,
     val playingVerse: ChapterVersePair,
-    val onVerseRecitationStarted: (() -> Unit)? = null
 )
 
 val LocalRecitationState = staticCompositionLocalOf<LocalRecitationStateData> {
@@ -128,12 +127,7 @@ private fun VerseActionBar(
                 contentDescription = stringResource(R.string.strTitleVerseRecitation),
                 tint = if (isVersePlaying) colorScheme.primary else iconTint
             ) {
-                if (isVersePlaying) {
-                    controller.pause()
-                } else {
-                    controller.start(ChapterVersePair(verse))
-                    recitationState.onVerseRecitationStarted?.invoke()
-                }
+                controller.playControl(ChapterVersePair(verse))
             }
 
             VerseActionIconButton(
@@ -144,8 +138,8 @@ private fun VerseActionBar(
 
             VerseActionIconButton(
                 painter = painterResource(
-                    if (isBookmarked) R.drawable.dr_icon_bookmark_added
-                    else R.drawable.dr_icon_bookmark_outlined
+                    if (isBookmarked) R.drawable.ic_bookmark_added
+                    else R.drawable.ic_bookmark
                 ),
                 contentDescription = stringResource(R.string.strLabelBookmark),
                 tint = bookmarkTint,

@@ -33,10 +33,6 @@ data class RecitationServiceState(
     val clipPlan: VerseClipPlan? = null,
     val settings: PlayerSettings = PlayerSettings(),
 ) {
-    fun isCurrentVerse(chapterNo: Int, verseNo: Int): Boolean {
-        return currentVerse.chapterNo == chapterNo && currentVerse.verseNo == verseNo
-    }
-
     suspend fun getPreviousVerse(repository: QuranRepository): ChapterVersePair? {
         if (!currentVerse.isValid) return null
 

@@ -58,7 +58,10 @@ object ReaderPreferences {
         )
 
     val KEY_TRANSLATIONS =
-        PrefKey(stringSetPreferencesKey(TranslUtils.KEY_TRANSLATIONS), emptySet<String>())
+        PrefKey(
+            stringSetPreferencesKey(TranslUtils.KEY_TRANSLATIONS),
+            TranslUtils.defaultTranslationSlugs()
+        )
 
     val KEY_SCRIPT =
         PrefKey(stringPreferencesKey(QuranScriptUtils.KEY_SCRIPT), QuranScriptUtils.SCRIPT_DEFAULT)

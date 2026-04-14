@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -154,7 +156,8 @@ fun ReaderAppBar(
             Box(
                 Modifier
                     .fillMaxWidth()
-                    .height(ReaderHeaderHeight)
+                    .height(ReaderHeaderHeight),
+                contentAlignment = Alignment.Center
             ) {
                 when (readerMode) {
                     ReaderMode.Reading -> {
@@ -363,6 +366,7 @@ private fun StickyHeaderModeMushaf(
     uiState: ReaderUiState,
     onNavigatorRequest: () -> Unit
 ) {
+    val resources = LocalResources.current
     val currentPageNo = uiState.currentPageNo
     val scriptCode = ReaderPreferences.observeQuranScript()
     val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
@@ -389,41 +393,96 @@ private fun StickyHeaderModeMushaf(
         )
     }
 
+    val pageDivisionLabel by produceState(
+        initialValue = "",
+        currentPageNo,
+        scriptCode,
+        scriptVariant,
+    ) {
+        val pageNo = currentPageNo
+
+        if (pageNo == null || pageNo <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        val mushafId = scriptCode.toQuranMushafId(scriptVariant)
+
+        if (mushafId <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        val juzNo = readerVm.repository.getJuzForMushafPage(mushafId, pageNo)
+        val hizbNo = readerVm.repository.getHizbForMushafPage(mushafId, pageNo)
+
+        value = buildString {
+            if (juzNo > 0) {
+                append(resources.getString(R.string.strLabelJuzNo, juzNo))
+            }
+
+            if (hizbNo > 0) {
+                if (isNotEmpty()) append(" \u2022 ")
+                append(resources.getString(R.string.labelHizbNo, hizbNo))
+            }
+        }
+    }
+
     Row(
-        modifier = Modifier,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             chaptersOfPage,
             style = typography.labelMedium,
-            modifier = Modifier.widthIn(max = 120.dp),
+            modifier = Modifier.weight(0.4f),
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            color = colorScheme.onSurface.alpha(0.85f)
         )
 
 
-        Spacer(Modifier.weight(1f))
-
-        TextButton(
-            modifier = Modifier.height(28.dp),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = colorScheme.onSurface
-            ),
-            onClick = onNavigatorRequest,
+        Box(
+            Modifier.weight(0.6f),
+            contentAlignment = Alignment.CenterEnd
         ) {
-            if (currentPageNo != null) {
-                Text(
-                    stringResource(R.string.strLabelPageNo, currentPageNo),
-                    style = typography.titleMedium,
-                    color = colorScheme.primary,
+            TextButton(
+                modifier = Modifier.height(36.dp),
+                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = colorScheme.onSurface
+                ),
+                onClick = onNavigatorRequest,
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    if (currentPageNo != null) {
+                        Text(
+                            stringResource(R.string.strLabelPageNo, currentPageNo),
+                            style = typography.titleSmall,
+                            color = colorScheme.primary,
+                        )
+                    }
+
+                    if (pageDivisionLabel.isNotBlank()) {
+                        Text(
+                            text = pageDivisionLabel,
+                            style = typography.labelSmall,
+                            color = colorScheme.onSurface.alpha(0.85f)
+                        )
+                    }
+                }
+
+                Icon(
+                    painterResource(R.drawable.dr_icon_chevron_down),
+                    contentDescription = null
                 )
             }
-            Icon(
-                painterResource(R.drawable.dr_icon_chevron_down),
-                contentDescription = null
-            )
         }
     }
 }

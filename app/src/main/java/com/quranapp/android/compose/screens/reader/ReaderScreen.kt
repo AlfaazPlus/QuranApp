@@ -72,11 +72,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
         isSyncing = false
     }
 
-    ReaderProvider(
-        onVerseRecitationStarted = {
-            readerVm.playerVerseSync.value = true
-        }
-    ) {
+    ReaderProvider {
         val verseActions = LocalVerseActions.current
 
         LaunchedEffect(params, lifecycleOwner, context, colors, type, verseActions) {

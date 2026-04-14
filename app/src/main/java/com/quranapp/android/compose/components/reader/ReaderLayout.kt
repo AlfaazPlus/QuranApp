@@ -135,32 +135,14 @@ private fun ReaderLayoutVerseMode(
     val allBookmarks by readerVm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
-    // Build only the keys that exist in the current list
-    val visibleVerseKeys = remember(items) {
-        items.asSequence()
-            .filterIsInstance<ReaderLayoutItem.VerseUI>()
-            .map {
-                BookmarkKey(
-                    chapterNo = it.verse.chapterNo,
-                    fromVerse = it.verse.verseNo,
-                    toVerse = it.verse.verseNo
-                )
-            }
-            .toHashSet()
-    }
-
-    val bookmarkedVerseKeys = remember(allBookmarks, visibleVerseKeys) {
-        allBookmarks.asSequence()
-            .map {
-                BookmarkKey(
-                    chapterNo = it.chapterNo,
-                    fromVerse = it.fromVerseNo,
-                    toVerse = it.toVerseNo
-                )
-            }
-            .filterNotNull()
-            .filter { it in visibleVerseKeys }
-            .toHashSet()
+    val bookmarkedVerseKeys = remember(allBookmarks) {
+        allBookmarks.map {
+            BookmarkKey(
+                chapterNo = it.chapterNo,
+                fromVerse = it.fromVerseNo,
+                toVerse = it.toVerseNo
+            )
+        }.toHashSet()
     }
 
     LaunchedEffect(listState) {

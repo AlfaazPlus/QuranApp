@@ -41,7 +41,7 @@ object QuranScriptUtils {
     fun SCRIPT_NAMES(scriptCode: String): Map<String, String> {
         return when (scriptCode) {
             SCRIPT_DK_INDOPAK -> mapOf(
-                "en" to "IndoPak",
+                "en" to "IndoPak (Beta)",
                 "ar" to "نستعليق",
                 "bn" to "ইন্দোপাক",
                 "ckb" to "هیندوپاک",
@@ -221,13 +221,6 @@ fun String.getQuranScriptFontRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_v1_page_1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.font.qpc_v2_page_604
     else -> R.font.uthmanic_hafs
-}
-
-fun String.getQuranScriptResPath(): String = when (this) {
-    QuranScriptUtils.SCRIPT_DK_INDOPAK -> "scripts/script_dk_indopak.json"
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> "scripts/script_qpc_v1.json"
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> "scripts/script_qpc_v2.json"
-    else -> "scripts/script_uthmani.json"
 }
 
 fun String.toQuranMushafId(

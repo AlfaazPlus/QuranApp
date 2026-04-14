@@ -399,7 +399,7 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
             PeaceBottomSheetMenu dialog = new PeaceBottomSheetMenu();
             dialog.getParams().setHeaderTitle(model.chapterName + " " + model.verseSerial);
 
-            int[] icons = {R.drawable.dr_icon_open, isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_add};
+            int[] icons = {R.drawable.dr_icon_open, isBookmarked ? R.drawable.ic_bookmark_added : R.drawable.ic_bookmark_add};
             int[] labels = {R.string.strLabelOpen, isBookmarked ? R.string.strLabelRemoveBookmark : R.string.strDescAddToBookmarks};
             int[] descs = {R.string.strLabelOpenInReader, 0};
 

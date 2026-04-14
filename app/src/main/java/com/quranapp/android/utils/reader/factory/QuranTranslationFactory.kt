@@ -25,7 +25,6 @@ import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslIn
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.search.SearchFilters
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import org.json.JSONArray
 import java.io.Closeable
 import java.util.Collections
@@ -236,7 +235,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         toVerse: Int
     ): List<List<Translation>> {
         return getTranslationsVerseRange(
-            SPReader.getSavedTranslations(context),
+            ReaderPreferences.getTranslations(),
             chapNo,
             fromVerse,
             toVerse
@@ -287,7 +286,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     * */
     fun getTranslationsDistinctVerses(chapNo: Int, vararg verses: Int): List<List<Translation>> {
         return getTranslationsDistinctVerses(
-            SPReader.getSavedTranslations(context),
+            ReaderPreferences.getTranslations(),
             chapNo,
             *verses
         )

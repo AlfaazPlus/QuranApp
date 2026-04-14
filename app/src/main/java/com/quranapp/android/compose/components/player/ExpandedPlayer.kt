@@ -70,6 +70,7 @@ import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
@@ -181,7 +182,9 @@ fun ExpandedPlayer(
                         BoxWithConstraints(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            val isWideLayout = maxWidth >= 600.dp
+                            val isWideLayout = maxWidth >= 600.dp && maxWidth > maxHeight
+
+                            Log.d(maxWidth, this.constraints)
 
                             if (isWideLayout) {
                                 Column(

@@ -206,6 +206,21 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     // ==================== Playback Commands ====================
+    fun playControl(verse: ChapterVersePair) {
+        val controller = mediaController
+
+        if (
+            controller == null ||
+            controller.playbackState == Player.STATE_IDLE ||
+            !state.value.currentVerse.doesEqual(verse.chapterNo, verse.verseNo)
+        ) {
+            start(verse)
+            return
+        }
+
+        playPause()
+    }
+
     fun start(verse: ChapterVersePair? = null) {
         ensureConnectedAndSend(
             StartCommand(verse)
@@ -332,12 +347,6 @@ class RecitationController private constructor(private val appContext: Context) 
         } else {
             ensureServiceStarted { action() }
         }
-    }
-
-    // ==================== Query ====================
-
-    fun isReciting(chapterNo: Int, verseNo: Int): Boolean {
-        return state.value.isCurrentVerse(chapterNo, verseNo) && isPlaying
     }
 
     // ==================== Internal ====================

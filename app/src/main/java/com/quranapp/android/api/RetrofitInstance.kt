@@ -4,15 +4,23 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.utils.Logger
 import kotlinx.serialization.ExperimentalSerializationApi
-import okhttp3.MediaType
+import okhttp3.ConnectionSpec
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 @OptIn(ExperimentalSerializationApi::class)
 object RetrofitInstance {
     private val client: OkHttpClient = OkHttpClient.Builder()
+        .connectionSpecs(
+            listOf(
+                ConnectionSpec.MODERN_TLS,
+                ConnectionSpec.COMPATIBLE_TLS,
+                ConnectionSpec.CLEARTEXT
+            )
+        )
         .addInterceptor { chain ->
-            Logger.print(chain.request().url())
+            Logger.print(chain.request().url)
 
             val newRequest = chain.request().newBuilder()
                 .addHeader("X-QuranApp-Version", BuildConfig.VERSION_CODE.toString())
@@ -34,7 +42,7 @@ object RetrofitInstance {
                 githubApi = Retrofit.Builder()
                     .baseUrl(githubProxyBaseUrl)
                     .addConverterFactory(
-                        JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                        JsonHelper.json.asConverterFactory("application/json".toMediaType())
                     )
                     .client(client)
                     .build()
@@ -50,7 +58,7 @@ object RetrofitInstance {
                 githubLikeApi = Retrofit.Builder()
                     .baseUrl(githubLikeProxyBaseUrl)
                     .addConverterFactory(
-                        JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                        JsonHelper.json.asConverterFactory("application/json".toMediaType())
                     )
                     .client(client)
                     .build()
@@ -64,7 +72,7 @@ object RetrofitInstance {
         Retrofit.Builder()
             .baseUrl("https://example.com")
             .addConverterFactory(
-                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                JsonHelper.json.asConverterFactory("application/json".toMediaType())
             )
             .client(client)
             .build()
@@ -76,7 +84,7 @@ object RetrofitInstance {
         Retrofit.Builder()
             .baseUrl(ApiConfig.ALFAAZPLUS_API_ROOT_URL)
             .addConverterFactory(
-                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                JsonHelper.json.asConverterFactory("application/json".toMediaType())
             )
             .client(client)
             .build()

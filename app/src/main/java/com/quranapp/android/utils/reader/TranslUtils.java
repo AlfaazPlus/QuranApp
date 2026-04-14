@@ -1,9 +1,8 @@
 package com.quranapp.android.utils.reader;
 
-import static com.quranapp.android.views.reader.VotdWidgetKt.updateAllVotdWidgets;
-
 import android.content.Context;
 import android.util.Pair;
+
 import androidx.annotation.Nullable;
 
 import com.quranapp.android.R;
@@ -12,7 +11,6 @@ import com.quranapp.android.components.transls.TranslModel;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
-import com.quranapp.android.utils.sharedPrefs.SPReader;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.MessageUtils;
 
@@ -288,7 +286,7 @@ public class TranslUtils {
         return new Pair<>(bookInfo, translFile);
     }
 
-    public static boolean resolveSelectionChange(Context ctx, Set<String> slugSet, TranslModel model, boolean isSelected, boolean saveToSP) {
+    public static boolean resolveSelectionChange(Context ctx, Set<String> slugSet, TranslModel model, boolean isSelected) {
         String slug = model.getBookInfo().getSlug();
         if (isSelected) {
             if (slugSet.size() >= TRANSL_MAX_SELECTION_LIMIT) {
@@ -300,11 +298,6 @@ public class TranslUtils {
             slugSet.add(slug);
         } else {
             slugSet.remove(slug);
-        }
-
-        if (saveToSP) {
-            SPReader.setSavedTranslations(ctx, slugSet);
-            updateAllVotdWidgets(ctx);
         }
 
         return true;

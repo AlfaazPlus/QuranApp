@@ -376,7 +376,6 @@ private fun ReciterDownloadCard(
     val progress = if (total > 0) state.downloadedCount.toFloat() / total else 0f
     val hasActive = state.hasActiveWork
     val isComplete = state.isComplete
-    val hasFailed = state.failedCount > 0 && !hasActive && !isComplete
     val canRequestNewDownload = !downloadBlockedByOther || hasActive
 
     Card(
@@ -445,14 +444,6 @@ private fun ReciterDownloadCard(
                             )
                         }
 
-                        hasFailed -> {
-                            Text(
-                                text = stringResource(R.string.recitationDownloadSomeFailed),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = colorScheme.error,
-                            )
-                        }
-
                         else -> {
                             Text(
                                 text = stringResource(
@@ -465,6 +456,7 @@ private fun ReciterDownloadCard(
                             )
                         }
                     }
+
                     if (hasActive || (!isComplete && state.downloadedCount > 0)) {
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -512,15 +504,6 @@ private fun ReciterDownloadCard(
                                     onClick = onCancel,
                                 )
                             }
-                        }
-
-                        hasFailed -> {
-                            IconButton(
-                                painter = painterResource(R.drawable.dr_icon_refresh),
-                                contentDescription = stringResource(R.string.strLabelRetry),
-                                onClick = onDownload,
-                                enabled = canRequestNewDownload,
-                            )
                         }
 
                         else -> {

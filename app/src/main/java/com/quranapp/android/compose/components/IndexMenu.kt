@@ -82,7 +82,7 @@ private fun getItems(): List<IndexMenuItemGroup> {
         IndexMenuItemGroup(
             listOf(
                 IndexMenuItem(
-                    R.drawable.dr_icon_bookmarks,
+                    R.drawable.ic_bookmarks,
                     R.string.strTitleBookmarks,
                     onClick = {
                         it.startActivity(Intent(it, ActivityBookmark::class.java))

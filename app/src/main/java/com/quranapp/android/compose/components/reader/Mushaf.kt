@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -112,8 +113,6 @@ fun ReaderLayoutPageMode(
         value = readerVm.mushafPageCount(mushafLayoutKey.toMushafId())
     }
 
-    Log.d(mushafLayoutKey, pageCount)
-
     val context = LocalContext.current
     val pagerState = rememberPagerState(
         initialPage = uiState.currentPageNo?.let { it - 1 } ?: 0,
@@ -134,14 +133,6 @@ fun ReaderLayoutPageMode(
         }
             .distinctUntilChanged()
             .collect { anchorPages ->
-                Log.d(
-                    "INSIDE",
-                    pageCount,
-                    mushafLayoutKey,
-                    anchorPages,
-                    pagerState.pageCount,
-                )
-
                 if (pageCount > 0) {
                     readerVm.fetchMushafPages(
                         context, anchorPages, pageCount, PageBuilderParams(
@@ -279,8 +270,6 @@ private fun PageModePage(
 ) {
     val item = readerVm.pageItems[pageNo]
 
-    Log.d(readerVm.pageItems)
-
     if (item == null) {
         return Loader(true)
     }
@@ -301,7 +290,6 @@ private fun PageModePage(
             .map { word -> word.ayahId to word.wordIndex }
             .toSet()
     }
-
 
     Box(
         modifier = Modifier

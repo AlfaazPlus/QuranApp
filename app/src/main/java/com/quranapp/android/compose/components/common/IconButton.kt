@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 fun IconButton(
     painter: Painter,
     contentDescription: String? = null,
-    tint: Color = LocalContentColor.current,
+    tint: Color? = LocalContentColor.current,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = Color.Transparent,
-        contentColor = tint,
+        contentColor = tint ?: LocalContentColor.current,
         disabledContainerColor = Color.Transparent
     ),
     shape: RoundedCornerShape = RoundedCornerShape(100),
@@ -40,12 +40,24 @@ fun IconButton(
         enabled = enabled,
         colors = colors,
     ) {
-        Icon(
-            painter = painter,
-            contentDescription = contentDescription,
-            modifier = Modifier.size(
-                if (small) 20.dp else 24.dp,
-            ),
-        )
+        if (tint == null) {
+            Icon(
+                painter = painter,
+                contentDescription = contentDescription,
+                modifier = Modifier.size(
+                    if (small) 20.dp else 24.dp,
+                ),
+                tint = null
+            )
+        } else {
+            Icon(
+                painter = painter,
+                contentDescription = contentDescription,
+                modifier = Modifier.size(
+                    if (small) 20.dp else 24.dp,
+                ),
+                tint = tint
+            )
+        }
     }
 }

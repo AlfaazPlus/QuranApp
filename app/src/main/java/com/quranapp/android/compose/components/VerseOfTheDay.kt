@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -39,36 +39,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation
+import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.LocalRecitationState
+import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
-import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
-import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
-import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
+import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
+import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 private data class VerseOfTheDayState(
@@ -78,17 +82,21 @@ private data class VerseOfTheDayState(
 )
 
 @Composable
-fun VerseOfTheDay(
-    modifier: Modifier = Modifier,
-) {
+fun VerseOfTheDay() {
+    ReaderProvider {
+        VotdContent()
+    }
+}
+
+@Composable
+private fun VotdContent() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val colors = colorScheme
     val type = typography
 
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
-    val translationFactory = QuranTranslationFactory.remember(context)
-    val fontResolver = FontResolver.remember()
+    val vm = viewModel<ReaderViewModel>()
+    val verseActions = LocalVerseActions.current
 
     val prefs by DataStoreManager.flowMultiple(
         ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
@@ -108,12 +116,7 @@ fun VerseOfTheDay(
     val translationSlugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
     val votdEnabled = preferences.get(VersePreferences.KEY_VOTD_REMINDER_ENABLED)
 
-    var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var showDailyReminderSheet by remember { mutableStateOf(false) }
-
-    BookmarkViewerSheet(bookmarkViewerData) {
-        bookmarkViewerData = null
-    }
 
     DailyReminderSheet(
         isOpen = showDailyReminderSheet,
@@ -124,13 +127,12 @@ fun VerseOfTheDay(
 
     val state by produceState<VerseOfTheDayState?>(
         initialValue = null,
-        repository,
-        translationFactory,
         scriptCode,
         translationSlugs,
     ) {
+        val translationFactory = QuranTranslationFactory(context)
         value = withContext(Dispatchers.IO) {
-            val verse = VerseUtils.getVOTD(context, repository)
+            val verse = VerseUtils.getVOTD(context, vm.repository)
                 ?: return@withContext null
 
             val optimalSlug = translationSlugs.firstOrNull { !TranslUtils.isTransliteration(it) }
@@ -155,8 +157,9 @@ fun VerseOfTheDay(
     }
 
     val votdState = state
-    if (fontResolver == null || votdState == null) {
-        VerseOfTheDayLoading(modifier)
+
+    if (votdState == null) {
+        VerseOfTheDayLoading()
         return
     }
 
@@ -171,7 +174,6 @@ fun VerseOfTheDay(
         context,
         colors,
         type,
-        fontResolver,
         scriptCode,
         verse.pageNo,
         arabicTextMultiplier
@@ -179,7 +181,7 @@ fun VerseOfTheDay(
         getQuranTextStyle(
             QuranTextStyleParams(
                 context = context,
-                fontResolver = fontResolver,
+                fontResolver = vm.fontResolver,
                 colors = colors,
                 type = type,
                 pageNo = verse.pageNo,
@@ -206,12 +208,16 @@ fun VerseOfTheDay(
         verse.words.joinToString(" ") { it.text }
     }
 
-    val translationText = remember(votdState.translation?.text) {
-        votdState.translation?.text?.let { StringUtils.removeHTML(it, false) }.orEmpty()
-    }
+    val translationText = remember(votdState.translation?.text, verseActions) {
+        if (votdState.translation == null) {
+            return@remember buildAnnotatedString { }
+        }
 
-    val translationAuthor = remember(votdState.translationBook) {
-        votdState.translationBook?.getDisplayName(true)?.takeIf { it.isNotBlank() }
+        return@remember buildTranslationAnnotatedString(
+            translation = votdState.translation,
+            colorScheme = colors,
+            actions = verseActions
+        )
     }
 
     val gradient = remember(colors) {
@@ -223,8 +229,13 @@ fun VerseOfTheDay(
         )
     }
 
+    val iconTint = Color.White.alpha(0.7f)
+
+    val recState = LocalRecitationState.current
+    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp),
     ) {
@@ -249,7 +260,7 @@ fun VerseOfTheDay(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Surface(
@@ -275,23 +286,6 @@ fun VerseOfTheDay(
                             )
                         }
                     }
-
-                    FilledTonalButton(
-                        modifier = Modifier.height(28.dp),
-                        onClick = {
-                            ReaderFactory.startVerse(
-                                context,
-                                verse.chapterNo,
-                                verse.verseNo
-                            )
-                        },
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
-                    ) {
-                        Text(
-                            stringResource(R.string.strLabelRead),
-                            style = type.labelMedium
-                        )
-                    }
                 }
 
                 if (arabicEnabled && arabicText.isNotBlank()) {
@@ -313,7 +307,7 @@ fun VerseOfTheDay(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
@@ -324,17 +318,20 @@ fun VerseOfTheDay(
                                 textAlign = TextAlign.Center,
                             )
 
-                            if (!translationAuthor.isNullOrBlank()) {
-                                Text(
-                                    text = "${StringUtils.HYPHEN} $translationAuthor",
-                                    style = translationTextStyle.copy(
-                                        fontStyle = FontStyle.Italic,
-                                        fontSize = type.labelMedium.fontSize
-                                    ),
-                                    color = Color.White.alpha(0.6f),
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
+                            Text(
+                                text = stringResource(
+                                    R.string.strLabelVerseSerialWithChapter,
+                                    votdState.verse.chapter.getCurrentName(),
+                                    verse.chapterNo,
+                                    verse.verseNo
+                                ),
+                                style = translationTextStyle.copy(
+                                    fontStyle = FontStyle.Italic,
+                                    fontSize = type.labelMedium.fontSize
+                                ),
+                                color = Color.White.alpha(0.6f),
+                                textAlign = TextAlign.Center,
+                            )
                         }
                     }
                 }
@@ -347,90 +344,66 @@ fun VerseOfTheDay(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                        .padding(start = 6.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    Text(
-                        text = stringResource(
-                            R.string.strLabelVerseSerialWithChapter,
-                            votdState.verse.chapter.getCurrentName(),
-                            verse.chapterNo,
-                            verse.verseNo
-                        ),
-                        modifier = Modifier.weight(1f),
-                        style = typography.labelMedium.copy(
-                            color = Color.White.alpha(0.75f),
-                            fontWeight = FontWeight.Normal
-                        ),
-                    )
+                    IconButton(
+                        painter = if (isVersePlaying) painterResource(R.drawable.ic_pause)
+                        else painterResource(R.drawable.ic_play),
+                        contentDescription = if (isVersePlaying) stringResource(R.string.strLabelPause)
+                        else stringResource(R.string.strLabelPlay),
+                        tint = if (isVersePlaying) colorScheme.primary else iconTint,
+                        small = true,
+                    ) {
+                        recState.controller.playControl(ChapterVersePair(verse))
+                    }
 
                     IconButton(
+                        painter = painterResource(
+                            if (isBookmarked) {
+                                R.drawable.ic_bookmark_added
+                            } else {
+                                R.drawable.ic_bookmark
+                            }
+                        ),
+                        contentDescription = null,
+                        tint = if (isBookmarked) colorScheme.primary else iconTint,
+                        small = true,
+                    ) {
+                        verseActions.onBookmarkRequest?.invoke(
+                            votdState.verse.chapterNo,
+                            votdState.verse.verseNo..votdState.verse.verseNo
+                        )
+                    }
+
+                    IconButton(
+                        painter = painterResource(
+                            if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell
+                        ),
+                        contentDescription = null,
+                        tint = if (votdEnabled) colorScheme.primary else iconTint,
+                        small = true,
+                    ) {
+                        showDailyReminderSheet = true
+                    }
+
+                    Spacer(Modifier.weight(1f))
+
+                    FilledTonalButton(
+                        modifier = Modifier.height(28.dp),
                         onClick = {
-                            ReaderFactory.startTafsir(
+                            ReaderFactory.startVerse(
                                 context,
                                 verse.chapterNo,
                                 verse.verseNo
                             )
-                        }
+                        },
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
                     ) {
-                        Icon(
-                            painter = painterResource(R.drawable.dr_icon_tafsir),
-                            contentDescription = stringResource(R.string.strTitleTafsir),
-                            modifier = Modifier.size(22.dp),
-                            tint = null,
-                        )
-                    }
-
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                if (!isBookmarked) {
-                                    userRepository.addToBookmark(
-                                        chapterNo = verse.chapterNo,
-                                        verseRange = verse.verseNo..verse.verseNo,
-                                        note = null,
-                                    )
-                                }
-
-                                bookmarkViewerData = BookmarkViewerData(
-                                    chapterNo = verse.chapterNo,
-                                    fromVerse = verse.verseNo,
-                                    toVerse = verse.verseNo,
-                                    startInEditMode = !isBookmarked,
-                                )
-                            }
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                if (isBookmarked) {
-                                    R.drawable.dr_icon_bookmark_added
-                                } else {
-                                    R.drawable.dr_icon_bookmark_outlined
-                                }
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier.size(23.dp),
-                            tint = if (isBookmarked) colorScheme.primary else {
-                                Color.White.alpha(0.7f)
-                            },
-                        )
-                    }
-
-                    IconButton(
-                        onClick = {
-                            showDailyReminderSheet = true
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp),
-                            tint = if (votdEnabled) colorScheme.primary else {
-                                Color.White.alpha(0.7f)
-                            },
+                        Text(
+                            stringResource(R.string.strLabelRead),
+                            style = type.labelMedium
                         )
                     }
                 }
@@ -440,11 +413,9 @@ fun VerseOfTheDay(
 }
 
 @Composable
-private fun VerseOfTheDayLoading(
-    modifier: Modifier = Modifier,
-) {
+private fun VerseOfTheDayLoading() {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 6.dp),
         shape = RoundedCornerShape(18.dp),
