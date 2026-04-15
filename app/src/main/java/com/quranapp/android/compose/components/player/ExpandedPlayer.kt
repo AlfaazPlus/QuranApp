@@ -177,6 +177,7 @@ fun ExpandedPlayer(
                 modifier = Modifier.weight(1f),
             ) { page ->
                 val currentMode = ExpandedPlayerMode.entries[page]
+
                 when (currentMode) {
                     ExpandedPlayerMode.Controls -> {
                         BoxWithConstraints(

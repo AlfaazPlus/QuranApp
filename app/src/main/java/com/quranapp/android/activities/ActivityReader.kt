@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -29,6 +30,13 @@ class ActivityReader : BaseActivity() {
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         enableEdgeToEdge()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(isTaskRoot) {
+            override fun handleOnBackPressed() {
+                launchMainActivity()
+                finish()
+            }
+        })
 
         intentFlow.value = intent
 

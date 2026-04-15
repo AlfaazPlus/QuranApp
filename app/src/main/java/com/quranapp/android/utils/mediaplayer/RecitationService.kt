@@ -2,7 +2,6 @@ package com.quranapp.android.utils.mediaplayer
 
 import android.app.PendingIntent
 import android.content.ContentResolver
-import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
@@ -41,10 +40,10 @@ import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.ErrorEvent
 import com.quranapp.android.utils.univ.EventBus
 import com.quranapp.android.utils.univ.FileUtils
-import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -152,6 +151,7 @@ class RecitationService : MediaSessionService() {
                     .distinctUntilChanged()
                     .collectLatest { verse ->
                         if (verse.isValid) {
+                            updateSessionActivity(verse)
                             RecitationPreferences.setLastPlayedVerse(
                                 verse.chapterNo,
                                 verse.verseNo,
@@ -204,21 +204,33 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun initializeMediaSession() {
-        val intent = Intent(this, ActivityReader::class.java).apply {
-            putExtra(Keys.KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION, true)
+        mediaSession = MediaSession.Builder(this, player)
+            .setId("RecitationService")
+            .setSessionActivity(buildReaderPendingIntent(state.value.currentVerse))
+            .setCallback(mediaSessionCallback)
+            .build()
+    }
+
+    private fun updateSessionActivity(verse: ChapterVersePair) {
+        mediaSession?.setSessionActivity(buildReaderPendingIntent(verse))
+    }
+
+    private fun buildReaderPendingIntent(verse: ChapterVersePair): PendingIntent {
+        val launchIntent = if (verse.isValid) {
+            ReaderFactory.prepareSingleVerseIntent(verse.chapterNo, verse.verseNo)
+        } else {
+            ReaderFactory.prepareChapterIntent(1)
+        }.apply {
+            setClass(this@RecitationService, ActivityReader::class.java)
         }
+
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         } else {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
-        val sessionActivityIntent = PendingIntent.getActivity(this, 0, intent, flags)
 
-        mediaSession = MediaSession.Builder(this, player)
-            .setId("RecitationService")
-            .setSessionActivity(sessionActivityIntent)
-            .setCallback(mediaSessionCallback)
-            .build()
+        return PendingIntent.getActivity(this, 0, launchIntent, flags)
     }
 
     private fun registerHeadsetReceiver() {
