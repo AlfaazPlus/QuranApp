@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formatted
 import com.quranapp.android.db.relations.SurahWithLocalizations
 
 
@@ -78,7 +79,7 @@ fun ChapterCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = surah.surah.surahNo.toString(),
+                    text = surah.surah.surahNo.formatted(),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Normal,
                     color = colorScheme.onSurface

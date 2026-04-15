@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formatted
 import com.quranapp.android.db.relations.NavigationUnit
 
 
@@ -104,7 +105,7 @@ fun JuzCard(
 
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "${firstSurah?.surah?.surah?.surahNo}:${firstSurah?.startAyah} - ${lastSurah?.surah?.surah?.surahNo}:${lastSurah?.endAyah}",
+                    text = "${firstSurah?.surah?.surah?.surahNo?.formatted()}:${firstSurah?.startAyah?.formatted()} - ${lastSurah?.surah?.surah?.surahNo?.formatted()}:${lastSurah?.endAyah?.formatted()}",
                     style = MaterialTheme.typography.bodySmall,
                     color = colorScheme.onSurface.alpha(0.7f),
                     maxLines = 2,

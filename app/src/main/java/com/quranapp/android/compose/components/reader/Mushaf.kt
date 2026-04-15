@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -242,21 +241,22 @@ fun ReaderLayoutPageMode(
             }
     }
 
-    HorizontalPager(
-        state = pagerState,
-        beyondViewportPageCount = 1,
-        reverseLayout = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-    ) { page ->
-        PageModePage(
-            readerVm = readerVm,
-            pageNo = page + 1,
-            contentWidth,
-            ruledPageDecoration,
-            nestedScrollConnection,
-        )
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        HorizontalPager(
+            state = pagerState,
+            beyondViewportPageCount = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) { page ->
+            PageModePage(
+                readerVm = readerVm,
+                pageNo = page + 1,
+                contentWidth,
+                ruledPageDecoration,
+                nestedScrollConnection,
+            )
+        }
     }
 }
 
