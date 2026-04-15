@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dmnAppBarHeight"
         android:background="@color/colorBGPage">
@@ -58,5 +59,13 @@
                 android:layout_height="@dimen/dmnProgressBarSize"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_quick_reference"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

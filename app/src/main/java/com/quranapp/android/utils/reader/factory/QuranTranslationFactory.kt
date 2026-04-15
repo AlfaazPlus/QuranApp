@@ -8,26 +8,48 @@ package com.quranapp.android.utils.reader.factory
 
 import android.content.Context
 import android.database.Cursor
-import com.quranapp.android.components.quran.subcomponents.Footnote
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.core.database.sqlite.transaction
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.*
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_FOOTNOTES
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
+import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
 import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.search.SearchFilters
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import org.json.JSONArray
 import java.io.Closeable
-import java.util.*
-import androidx.core.database.sqlite.transaction
+import java.util.Collections
 
 /**
  * This factory prepares contents of translations for the requesters.
  * The content may be [TranslationBookInfoModel] or the actual translation contents.
  * */
 class QuranTranslationFactory(private val context: Context) : Closeable {
+    companion object {
+        @Composable
+        fun remember(context: Context): QuranTranslationFactory {
+            val factory = remember(context) {
+                QuranTranslationFactory(context)
+            }
+
+            DisposableEffect(Unit) {
+                onDispose {
+                    factory.close()
+                }
+            }
+
+            return factory
+        }
+    }
 
     val dbHelper = QuranTranslDBHelper(context)
 
@@ -69,7 +91,8 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
      * @param slug The slug of the book.
      * */
     fun getTranslationBookInfo(slug: String): TranslationBookInfoModel {
-        return getTranslationBooksInfo(Collections.singleton(slug))[slug] ?: TranslationBookInfoModel("")
+        return getTranslationBooksInfo(Collections.singleton(slug))[slug]
+            ?: TranslationBookInfoModel("")
     }
 
     /**
@@ -173,7 +196,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     }
 
     fun getTranslationsSingleVerse(chapNo: Int, verseNo: Int): List<Translation> {
-        return getTranslationsSingleVerse(SPReader.getSavedTranslations(context), chapNo, verseNo)
+        return getTranslationsSingleVerse(ReaderPreferences.getTranslations(), chapNo, verseNo)
     }
 
     fun getTranslationsSingleSlugVerse(slug: String, chapNo: Int, verseNo: Int): Translation {
@@ -184,7 +207,11 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
      *      example:
      *      [<Transl-of-Slug1>, <Transl-of-Slug2>, <Transl-of-Slug3>] -> verse 1:1
      * */
-    fun getTranslationsSingleVerse(slugs: Set<String>, chapNo: Int, verseNo: Int): List<Translation> {
+    fun getTranslationsSingleVerse(
+        slugs: Set<String>,
+        chapNo: Int,
+        verseNo: Int
+    ): List<Translation> {
         val nSlugs = sortTranslationSlugs(validatePremierShip(slugs))
 
         val transls = ArrayList<Translation>()
@@ -202,9 +229,13 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         return transls
     }
 
-    fun getTranslationsVerseRange(chapNo: Int, fromVerse: Int, toVerse: Int): List<List<Translation>> {
+    fun getTranslationsVerseRange(
+        chapNo: Int,
+        fromVerse: Int,
+        toVerse: Int
+    ): List<List<Translation>> {
         return getTranslationsVerseRange(
-            SPReader.getSavedTranslations(context),
+            ReaderPreferences.getTranslations(),
             chapNo,
             fromVerse,
             toVerse
@@ -255,7 +286,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     * */
     fun getTranslationsDistinctVerses(chapNo: Int, vararg verses: Int): List<List<Translation>> {
         return getTranslationsDistinctVerses(
-            SPReader.getSavedTranslations(context),
+            ReaderPreferences.getTranslations(),
             chapNo,
             *verses
         )
@@ -264,7 +295,11 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     /*
     * The returned verses will be sorted by verse number regardless of order of the passed verse numbers..
     * */
-    fun getTranslationsDistinctVerses(slugs: Set<String>, chapNo: Int, vararg verses: Int): List<List<Translation>> {
+    fun getTranslationsDistinctVerses(
+        slugs: Set<String>,
+        chapNo: Int,
+        vararg verses: Int
+    ): List<List<Translation>> {
         val translationGroups = List(verses.size) {
             ArrayList<Translation>()
         }.toMutableList()

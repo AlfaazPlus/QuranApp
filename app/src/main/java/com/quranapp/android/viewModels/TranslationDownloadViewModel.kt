@@ -12,8 +12,8 @@ import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
-import com.quranapp.android.utils.maangers.TranslationDownloadManager
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -37,7 +37,8 @@ data class TranslationDownloadUiState(
     val groups: List<TranslationGroupModel> = emptyList(),
     val error: DataLoadError? = null,
     val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
-    val isAnyDownloadCompleted: Boolean = false
+    val isAnyDownloadCompleted: Boolean = false,
+    val searchQuery: String = "",
 )
 
 
@@ -46,6 +47,7 @@ sealed interface TranslationDownloadEvent {
     data class ToggleGroup(val langCode: String) : TranslationDownloadEvent
     data class DownloadTranslation(val slug: String) : TranslationDownloadEvent
     data class CancelDownload(val slug: String) : TranslationDownloadEvent
+    data class Search(val query: String) : TranslationDownloadEvent
 }
 
 sealed interface TranslationDownloadUiEvent {
@@ -81,6 +83,7 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
             is TranslationDownloadEvent.ToggleGroup -> toggleGroup(event.langCode)
             is TranslationDownloadEvent.DownloadTranslation -> downloadTranslation(event.slug)
             is TranslationDownloadEvent.CancelDownload -> cancelDownload(event.slug)
+            is TranslationDownloadEvent.Search -> _uiState.update { it.copy(searchQuery = event.query) }
         }
     }
 

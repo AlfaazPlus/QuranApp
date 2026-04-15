@@ -9,12 +9,12 @@ import com.quranapp.android.R;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.quran.QuranUtils;
 import com.quranapp.android.utils.quran.parser.QuranMetaParserJSON;
+import com.quranapp.android.compose.utils.LocaleUtilsKt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Pair;
 
+@Deprecated
 public class QuranMeta implements Serializable {
     private static final AtomicReference<QuranMeta> sQuranMetaRef = new AtomicReference<>();
     private SparseArray<ChapterMeta> chapterMetaMap = new SparseArray<>();
@@ -334,7 +335,7 @@ public class QuranMeta implements Serializable {
         }
 
         public String getName() {
-            return getName(Locale.getDefault().getLanguage());
+            return getName(LocaleUtilsKt.appLocale().toLanguageTag());
         }
 
         public String getName(String langCode) {
@@ -354,7 +355,7 @@ public class QuranMeta implements Serializable {
         }
 
         public String getNameTranslation() {
-            return getNameTranslation(Locale.getDefault().getLanguage());
+            return getNameTranslation(LocaleUtilsKt.appLocale().toLanguageTag());
         }
 
         public String getNameTranslation(String langCode) {

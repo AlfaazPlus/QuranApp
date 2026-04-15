@@ -1,7 +1,8 @@
 package com.quranapp.android.db.translation;
 
 public final class QuranTranslInfoContract {
-    private QuranTranslInfoContract() {}
+    private QuranTranslInfoContract() {
+    }
 
     public static class QuranTranslInfoEntry {
         public static final String TABLE_NAME = "QuranTranslationBookInfo";

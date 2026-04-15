@@ -7,7 +7,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,6 +32,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -55,18 +56,22 @@ import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
-import com.quranapp.android.compose.components.ErrorMessageCard
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.ErrorMessageCard
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationDownloadEvent
 import com.quranapp.android.viewModels.TranslationDownloadUiEvent
 import com.quranapp.android.viewModels.TranslationDownloadViewModel
+import java.util.regex.Pattern
 
 @Composable
-fun TranslationDownloadScreen(
-    modifier: Modifier = Modifier
-) {
+fun TranslationDownloadScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val viewModel = viewModel<TranslationDownloadViewModel>()
     val uiState = viewModel.uiState.collectAsState().value
 
@@ -78,7 +83,7 @@ fun TranslationDownloadScreen(
                         context,
                         title = event.title,
                         msg = event.message,
-                        context.getString(R.string.strLabelClose),
+                        resources.getString(R.string.strLabelClose),
                         null
                     )
                 }
@@ -86,37 +91,68 @@ fun TranslationDownloadScreen(
         }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
-    ) {
-        when {
-            uiState.isLoading -> LoadingState()
-            uiState.error != null -> ErrorMessageCard(
-                error = uiState.error,
-                onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
-            )
+    val visibleGroups = remember(uiState.groups, uiState.searchQuery) {
+        if (uiState.searchQuery.isBlank()) {
+            uiState.groups
+        } else {
+            uiState.groups.map { group ->
+                val filteredTransls = group.translations.filter { transl ->
+                    val pattern = Pattern.compile(
+                        StringUtils.escapeRegex(uiState.searchQuery),
+                        Pattern.CASE_INSENSITIVE or Pattern.DOTALL
+                    )
 
-            else -> TranslationsContent(
-                groups = uiState.groups,
-                downloadStates = uiState.downloadStates,
-            )
+
+                    val bookInfo = transl.bookInfo
+                    val bookName = bookInfo.bookName
+                    val authorName = bookInfo.authorName
+                    val langName = bookInfo.langName
+
+                    pattern.matcher(bookName + authorName + langName).find()
+                }
+
+                group.copy(translations = ArrayList(filteredTransls))
+            }.filter { it.translations.isNotEmpty() }
         }
     }
-}
 
-@Composable
-private fun LoadingState() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Scaffold(
+        topBar = {
+            AppBar(
+                stringResource(R.string.strTitleDownloadTranslations),
+                searchPlaceholder = stringResource(R.string.strHintSearch),
+                searchQuery = uiState.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(TranslationDownloadEvent.Search(it))
+                },
+                actions = {
+                    IconButton(
+                        painterResource(R.drawable.dr_icon_refresh)
+                    ) {
+                        viewModel.onEvent(TranslationDownloadEvent.Refresh)
+                    }
+                }
+            )
+        }
     ) {
-        CircularProgressIndicator(
-            color = colorScheme.primary,
-            modifier = Modifier.size(36.dp),
-            strokeWidth = 3.dp
-        )
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            when {
+                uiState.isLoading -> Loader(true)
+                uiState.error != null -> ErrorMessageCard(
+                    error = uiState.error,
+                    onRetry = { viewModel.onEvent(TranslationDownloadEvent.Refresh) }
+                )
+
+                else -> TranslationsContent(
+                    groups = visibleGroups,
+                    downloadStates = uiState.downloadStates,
+                )
+            }
+        }
     }
 }
 

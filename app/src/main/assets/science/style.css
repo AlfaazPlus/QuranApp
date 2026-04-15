@@ -1,12 +1,12 @@
 html,
 html.light {
-    background-color: transparent;
-    color: #000;
+    background-color: var(--background);
+    color: var(--on-background);
 }
 
 html.dark {
-    background-color: #151515 !important;
-    color: #BBBBBB;
+    background-color: var(--background) !important;
+    color: var(--on-background);
 }
 
 body {
@@ -25,7 +25,7 @@ p {
 
 h1 {
     font-size: 1.7em;
-    color: #008B5B;
+    color: var(--primary);
     margin-bottom: 0px;
 }
 
@@ -58,7 +58,7 @@ html.dark hr {
 }
 
 a {
-    color: #008B5B;
+    color: var(--primary);
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -141,18 +141,13 @@ html.dark .reference .footer span {
 }
 
 .reference .footer a {
-    background-color: rgba(0, 139, 21, .20);
-    color: inherit;
+    background-color: var(--primary);
+    color: var(--on-primary);
     font-size: 14px;
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
-}
-
-.reference .footer a:active {
-    background-color: rgba(0, 139, 21, .30);
-    color: inherit;
 }
 
 .toc,

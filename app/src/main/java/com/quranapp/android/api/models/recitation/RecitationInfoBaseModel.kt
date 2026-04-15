@@ -1,8 +1,8 @@
 package com.quranapp.android.api.models.recitation
 
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 open class RecitationInfoBaseModel : java.io.Serializable {
@@ -14,12 +14,15 @@ open class RecitationInfoBaseModel : java.io.Serializable {
 
     @SerialName("url-path")
     var urlPath: String = ""
+
     val translations: Map<String, String> = mapOf()
     var isChecked: Boolean = false
 
 
     fun getReciterName(): String {
-        return translations[Locale.getDefault().toLanguageTag()] ?: this.reciter
+        return appFallbackLanguageCodes()
+            .firstNotNullOfOrNull { translations[it] }
+            ?: this.reciter
     }
 
     override fun equals(other: Any?): Boolean {

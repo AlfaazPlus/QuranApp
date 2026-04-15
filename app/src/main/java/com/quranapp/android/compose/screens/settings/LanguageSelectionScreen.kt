@@ -3,8 +3,6 @@ package com.quranapp.android.compose.screens.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -27,30 +26,53 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.utils.setAppLocale
 import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 
 @Composable
-fun LanguageSelectionScreen(
-    onLocaleSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun LanguageSelectionScreen() {
     val context = LocalContext.current
     val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
     val availableLocaleNames = context.getStringArray(R.array.availableLocalesNames)
 
-    var selectedLocale by remember { mutableStateOf(SPAppConfigs.getLocale(context)) }
+    val initialLocale = remember { SPAppConfigs.getLocale(context) }
+    var selectedLocale by remember { mutableStateOf(initialLocale) }
 
-    Box(
-        modifier = modifier
+    fun save(locale: String) {
+        setAppLocale(context, locale)
+    }
+
+    Scaffold(
+        modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background),
+        topBar = {
+            AppBar(
+                stringResource(R.string.strTitleAppLanguage),
+                actions = {
+                    IconButton(
+                        painterResource(R.drawable.dr_icon_check),
+                        enabled = selectedLocale != initialLocale
+                    ) {
+
+                        save(selectedLocale)
+                    }
+                }
+            )
+        },
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             contentPadding = PaddingValues(
                 start = 12.dp,
                 end = 12.dp,
@@ -68,7 +90,6 @@ fun LanguageSelectionScreen(
                     isSelected = localeValue == selectedLocale,
                     onSelect = {
                         selectedLocale = localeValue
-                        onLocaleSelected(localeValue)
                     }
                 )
             }

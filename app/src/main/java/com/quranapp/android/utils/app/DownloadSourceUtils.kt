@@ -1,54 +1,65 @@
 package com.quranapp.android.utils.app
 
 import android.content.Context
-import com.quranapp.android.R
+import androidx.compose.runtime.Composable
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 
+enum class ResourceDownloadProxy(val value: String) {
+    ALFAAZ_PLUS("alfaazplus"),
+    GITHUB("github"),
+    JSDELIVR("jsdelivr");
+
+    companion object {
+        val DEFAULT = ALFAAZ_PLUS
+
+        fun fromValue(value: String): ResourceDownloadProxy {
+            return ResourceDownloadProxy.entries.firstOrNull { it.value == value } ?: ALFAAZ_PLUS
+        }
+    }
+}
+
 object DownloadSourceUtils {
-    const val DOWNLOAD_SRC_ALFAAZ_PLUS = "alfaazplus"
-    const val DOWNLOAD_SRC_GITHUB = "github"
-    const val DOWNLOAD_SRC_JSDELIVR = "jsdelivr"
-    const val DOWNLOAD_SRC_DEFAULT = DOWNLOAD_SRC_ALFAAZ_PLUS
+    @Composable
+    fun observeCurrentSourceName(): String {
+        return getDownloadSourceName(AppPreferences.observeResourceDownloadProxy())
+    }
 
-    @JvmStatic
-    fun getCurrentSourceName(context: Context): String {
-        return when (SPAppConfigs.getResourceDownloadSrc(context)) {
-            DOWNLOAD_SRC_ALFAAZ_PLUS -> "gh-proxy.alfaazplus.com"
-            DOWNLOAD_SRC_GITHUB -> "raw.githubusercontent.com"
-            DOWNLOAD_SRC_JSDELIVR -> "cdn.jsdelivr.net"
-            else -> ""
+    fun getDownloadSourceName(src: ResourceDownloadProxy): String {
+        return when (src) {
+            ResourceDownloadProxy.ALFAAZ_PLUS -> "gh-proxy.alfaazplus.com"
+            ResourceDownloadProxy.GITHUB -> "raw.githubusercontent.com"
+            ResourceDownloadProxy.JSDELIVR -> "cdn.jsdelivr.net"
         }
     }
 
-    @JvmStatic
-    fun getDownloadSourceBaseUrl(context: Context): String {
-        return when (SPAppConfigs.getResourceDownloadSrc(context)) {
-            DOWNLOAD_SRC_ALFAAZ_PLUS -> ApiConfig.GH_PROXY_ROOT_URL
-            DOWNLOAD_SRC_GITHUB -> ApiConfig.GITHUB_ROOT_URL
-            DOWNLOAD_SRC_JSDELIVR -> ApiConfig.JS_DELIVR_ROOT_URL
-            else -> ApiConfig.GH_PROXY_ROOT_URL
+    fun getDownloadSourceRoot(): String {
+        return when (AppPreferences.getResourceDownloadProxy()) {
+            ResourceDownloadProxy.ALFAAZ_PLUS -> ApiConfig.GH_PROXY_ROOT
+            ResourceDownloadProxy.GITHUB -> ApiConfig.GH_RAW_ROOT
+            ResourceDownloadProxy.JSDELIVR -> ApiConfig.JS_DELIVR_ROOT
         }
     }
 
-    @JvmStatic
-    fun getDownloadSourceId(context: Context): Int {
-        return when (SPAppConfigs.getResourceDownloadSrc(context)) {
-            DOWNLOAD_SRC_ALFAAZ_PLUS -> R.id.srcAlfaazPlus
-            DOWNLOAD_SRC_GITHUB -> R.id.srcGithub
-            DOWNLOAD_SRC_JSDELIVR -> R.id.srcJsDelivr
-            else -> R.id.srcAlfaazPlus
+    fun getDownloadSourceBaseUrl(): String {
+        return when (AppPreferences.getResourceDownloadProxy()) {
+            ResourceDownloadProxy.ALFAAZ_PLUS -> ApiConfig.GH_PROXY_BASE_URL
+            ResourceDownloadProxy.GITHUB -> ApiConfig.GH_RAW_BASE_URL
+            ResourceDownloadProxy.JSDELIVR -> ApiConfig.JS_DELIVR_BASE_URL
         }
     }
 
-    @JvmStatic
-    fun resetDownloadSourceBaseUrl(ctx: Context) {
-        val downloadSrcUrl = getDownloadSourceBaseUrl(ctx)
+    suspend fun setDownloadSource(downloadSrc: ResourceDownloadProxy) {
+        AppPreferences.setResourceDownloadProxy(downloadSrc)
+        resetDownloadSourceBaseUrl()
+    }
 
-        if (RetrofitInstance.githubResDownloadUrl != downloadSrcUrl) {
-            RetrofitInstance.githubResDownloadUrl = downloadSrcUrl
-            RetrofitInstance.resetGithubApi()
-        }
+    @JvmStatic
+    fun resetDownloadSourceBaseUrl() {
+        RetrofitInstance.githubProxyBaseUrl = getDownloadSourceBaseUrl()
+        RetrofitInstance.githubLikeProxyBaseUrl = getDownloadSourceRoot()
+        RetrofitInstance.resetGithubApi()
     }
 }

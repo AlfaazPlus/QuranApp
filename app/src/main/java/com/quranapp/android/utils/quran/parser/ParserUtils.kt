@@ -5,7 +5,7 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.db.QuranRepository
 
 object ParserUtils {
     @JvmStatic
@@ -50,15 +50,19 @@ object ParserUtils {
         return chapters
     }
 
-    @JvmStatic
-    fun prepareChapterText(ctx: Context, quranMeta: QuranMeta, chapters: List<Int>, limit: Int): String {
+    suspend fun prepareChapterText(
+        ctx: Context,
+        repository: QuranRepository,
+        chapters: List<Int>,
+        limit: Int
+    ): String {
         val count = chapters.size
         if (count == 0) return ""
 
         val firstNChapters = chapters.subList(0, minOf(count, limit))
-        val inChapters = firstNChapters.joinToString(", ") {
-            quranMeta.getChapterName(ctx, it) ?: ""
-        }
+        val inChapters = firstNChapters
+            .map { repository.getChapterName(it) }
+            .joinToString(", ")
 
         return if (count > 2) {
             ctx.getString(R.string.inPlacesMore, inChapters, count - limit)

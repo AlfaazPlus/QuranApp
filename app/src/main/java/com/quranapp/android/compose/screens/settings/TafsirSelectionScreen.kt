@@ -37,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.ripple
@@ -53,44 +54,58 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
-import com.quranapp.android.compose.components.ErrorMessageCard
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.ErrorMessageCard
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TafsirEvent
-import com.quranapp.android.viewModels.TafsirUiState
 import com.quranapp.android.viewModels.TafsirViewModel
 
 @Composable
-fun TafsirSelectionScreen(
-    uiState: TafsirUiState,
-    modifier: Modifier = Modifier
-) {
+fun TafsirSelectionScreen() {
     val viewModel = viewModel<TafsirViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+    Scaffold(
+        topBar = {
+            AppBar(
+                stringResource(R.string.strTitleTafsir),
+                actions = {
+                    IconButton(
+                        painterResource(R.drawable.dr_icon_refresh)
+                    ) {
+                        viewModel.onEvent(TafsirEvent.Refresh)
+                    }
+                }
+            )
+        }
     ) {
-        when {
-            uiState.isLoading -> LoadingState()
-            uiState.error != null -> ErrorMessageCard(
-                error = uiState.error,
-                onRetry = { viewModel.onEvent(TafsirEvent.Refresh) }
-            )
+        Box(
+            modifier = Modifier
+                .padding(it)
+        ) {
+            when {
+                uiState.isLoading -> LoadingState()
+                uiState.error != null -> ErrorMessageCard(
+                    error = uiState.error!!,
+                    onRetry = { viewModel.onEvent(TafsirEvent.Refresh) }
+                )
 
-            else -> TafsirContent(
-                groups = uiState.tafsirGroups,
-                selectedKey = uiState.selectedTafsirKey,
-                downloadStates = uiState.downloadStates,
-                downloadedTafsirKeys = uiState.downloadedTafsirKeys
-            )
+                else -> TafsirContent(
+                    groups = uiState.tafsirGroups,
+                    selectedKey = uiState.selectedTafsirKey,
+                    downloadStates = uiState.downloadStates,
+                    downloadedTafsirKeys = uiState.downloadedTafsirKeys
+                )
+            }
         }
     }
 }

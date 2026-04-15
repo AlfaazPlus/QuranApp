@@ -3,17 +3,16 @@ package com.quranapp.android.utils.reader.tafsir
 import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import java.io.IOException
 
 object TafsirManager {
@@ -92,7 +91,7 @@ object TafsirManager {
         callback: (AvailableTafsirsModel?) -> Unit
     ) {
         SPAppActions.setFetchTafsirsForce(ctx, false)
-        val savedTafsirKey = SPReader.getSavedTafsirKey(ctx)
+        val savedTafsirKey = ReaderPreferences.getTafsirId()
 
         try {
             val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(

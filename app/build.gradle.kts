@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.quranapp.android"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 35
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
@@ -28,6 +28,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.generatedDensities()
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas", "room.incremental" to "true"
+                )
+            }
+        }
     }
 
     buildFeatures {
@@ -116,9 +124,9 @@ dependencies {
     implementation(libs.androidx.activityCompose)
     implementation(libs.androidx.fragmentKtx)
 
-    implementation(libs.exoplayerCore)
-    implementation(libs.exoplayerUI)
-    implementation(libs.extensionMediasession)
+    implementation(libs.media3ExoPlayer)
+    implementation(libs.media3Session)
+    implementation(libs.media3UI)
 
     coreLibraryDesugaring(libs.desugaring)
     implementation(libs.material)
@@ -143,4 +151,20 @@ dependencies {
     implementation(libs.commonsCompress)
     implementation(libs.workManager)
     implementation(libs.dataStore)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.paging)
+    implementation(libs.pagingCompose)
+    implementation(libs.roomPaging)
+
+
+    implementation(libs.compose.navigation)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
+
+    implementation(libs.accompanist.permissions)
 }

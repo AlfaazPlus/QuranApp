@@ -4,15 +4,23 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.quranapp.android.BuildConfig
 import com.quranapp.android.utils.Logger
 import kotlinx.serialization.ExperimentalSerializationApi
-import okhttp3.MediaType
+import okhttp3.ConnectionSpec
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 @OptIn(ExperimentalSerializationApi::class)
 object RetrofitInstance {
     private val client: OkHttpClient = OkHttpClient.Builder()
+        .connectionSpecs(
+            listOf(
+                ConnectionSpec.MODERN_TLS,
+                ConnectionSpec.COMPATIBLE_TLS,
+                ConnectionSpec.CLEARTEXT
+            )
+        )
         .addInterceptor { chain ->
-            Logger.print(chain.request().url())
+            Logger.print(chain.request().url)
 
             val newRequest = chain.request().newBuilder()
                 .addHeader("X-QuranApp-Version", BuildConfig.VERSION_CODE.toString())
@@ -24,15 +32,17 @@ object RetrofitInstance {
         .build()
 
     private var githubApi: GithubApi? = null
-    var githubResDownloadUrl: String = ApiConfig.GH_PROXY_ROOT_URL
+    private var githubLikeApi: GithubLikeApi? = null
+    var githubProxyBaseUrl: String = ApiConfig.GH_PROXY_BASE_URL
+    var githubLikeProxyBaseUrl: String = ApiConfig.GH_PROXY_ROOT
 
     val github: GithubApi
         get() {
             if (githubApi == null) {
                 githubApi = Retrofit.Builder()
-                    .baseUrl(githubResDownloadUrl)
+                    .baseUrl(githubProxyBaseUrl)
                     .addConverterFactory(
-                        JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                        JsonHelper.json.asConverterFactory("application/json".toMediaType())
                     )
                     .client(client)
                     .build()
@@ -42,12 +52,39 @@ object RetrofitInstance {
             return githubApi!!
         }
 
+    val githubLike: GithubLikeApi
+        get() {
+            if (githubLikeApi == null) {
+                githubLikeApi = Retrofit.Builder()
+                    .baseUrl(githubLikeProxyBaseUrl)
+                    .addConverterFactory(
+                        JsonHelper.json.asConverterFactory("application/json".toMediaType())
+                    )
+                    .client(client)
+                    .build()
+                    .create(GithubLikeApi::class.java)
+            }
+
+            return githubLikeApi!!
+        }
+
+    val any: AnyApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://example.com")
+            .addConverterFactory(
+                JsonHelper.json.asConverterFactory("application/json".toMediaType())
+            )
+            .client(client)
+            .build()
+            .create(AnyApi::class.java)
+    }
+
 
     val alfaazplus: AlfaazPlusApi by lazy {
         Retrofit.Builder()
             .baseUrl(ApiConfig.ALFAAZPLUS_API_ROOT_URL)
             .addConverterFactory(
-                JsonHelper.json.asConverterFactory(MediaType.get("application/json"))
+                JsonHelper.json.asConverterFactory("application/json".toMediaType())
             )
             .client(client)
             .build()
@@ -56,5 +93,6 @@ object RetrofitInstance {
 
     fun resetGithubApi() {
         githubApi = null
+        githubLikeApi = null
     }
 }

@@ -1,12 +1,5 @@
 package com.quranapp.android.db.readHistory;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import androidx.annotation.NonNull;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_CHAPTER_NO;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_DATETIME;
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry.COL_FROM_VERSE_NO;
@@ -18,6 +11,15 @@ import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistor
 import static com.quranapp.android.db.readHistory.ReadHistoryContract.ReadHistoryEntry._ID;
 import static java.lang.String.valueOf;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.NonNull;
+
 import com.quranapp.android.components.readHistory.ReadHistoryModel;
 import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.univ.DBUtils;
@@ -27,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadHistoryDBHelper extends SQLiteOpenHelper {
+    public static final int DB_VERSION = 1;
     private static final int HISTORY_LIMIT = 40;
     private static final String DB_NAME = "ReadHistory.db";
-    public static final int DB_VERSION = 1;
 
     public ReadHistoryDBHelper(@NonNull Context context) {
         super(context, DB_NAME, null, DB_VERSION);

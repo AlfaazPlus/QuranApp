@@ -2,26 +2,43 @@ package com.quranapp.android.components.quran
 
 import android.content.Context
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.quran.parser.QuranProphetParser
 import java.io.Serializable
 import java.text.MessageFormat
-import java.util.concurrent.atomic.AtomicReference
 
 class QuranProphet(val prophets: List<Prophet>) {
     companion object {
-        private val INSTANCE_REF = AtomicReference<QuranProphet>()
+        suspend fun load(context: Context): QuranProphet =
+            QuranProphetParser.parseProphets(context)
 
+        @Composable
+        fun observe(range: IntRange? = null): List<Prophet>? {
+            val context = LocalContext.current
+            val configuration = LocalConfiguration.current
 
-        fun prepareInstance(context: Context, quranMeta: QuranMeta, readyCallback: (QuranProphet) -> Unit) {
-            if (INSTANCE_REF.get() == null) {
-                synchronized(QuranProphet::class.java) { prepare(context, quranMeta, readyCallback) }
-            } else {
-                readyCallback(INSTANCE_REF.get())
+            val prophets by produceState<List<Prophet>?>(
+                null,
+                context,
+                configuration,
+                appLocale(),
+            ) {
+                val q = load(context)
+
+                if (range == null) {
+                    value = q.prophets
+                } else {
+                    value = q.prophets.subList(range.first, range.last)
+                }
             }
-        }
 
-        private fun prepare(context: Context, quranMeta: QuranMeta, readyCallback: (QuranProphet) -> Unit) {
-            QuranProphetParser.parseProphet(context, quranMeta, INSTANCE_REF) { readyCallback(INSTANCE_REF.get()) }
+            return prophets
+
         }
     }
 
@@ -31,7 +48,7 @@ class QuranProphet(val prophets: List<Prophet>) {
         val nameEn: String,
         val name: String,
         val honorific: String,
-        @DrawableRes val iconRes: Int = 0
+        @param:DrawableRes val iconRes: Int = 0
     ) : Serializable {
         var references: String? = null
 

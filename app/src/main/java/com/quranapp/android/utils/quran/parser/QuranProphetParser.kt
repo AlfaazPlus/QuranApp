@@ -2,23 +2,27 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.components.quran.QuranMeta
 import com.quranapp.android.components.quran.QuranProphet
 import com.quranapp.android.components.quran.QuranProphet.Prophet
-import com.quranapp.android.utils.Log
+import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareVersesList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
-import java.util.concurrent.atomic.AtomicReference
 
 object QuranProphetParser {
+
+    private data class CachedProphets(
+        val localeTag: String,
+        val quranProphet: QuranProphet,
+    )
+
+    private val cacheLock = Any()
+    private var cached: CachedProphets? = null
+
     private const val PROPHETS_TAG_PROPHET = "prophet"
     private const val PROPHETS_ATTR_ORDER = "order"
     private const val PROPHETS_ATTR_NAME_AR = "name-ar"
@@ -26,33 +30,28 @@ object QuranProphetParser {
     private const val PROPHETS_ATTR_NAME = "name"
     private const val PROPHETS_ATTR_ICON_RES = "drawable"
 
-    fun parseProphet(
-        context: Context,
-        quranMeta: QuranMeta,
-        instanceRef: AtomicReference<QuranProphet>,
-        callback: () -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val parsedQuranProphets = parseProphetsInternal(
-                    context,
-                    quranMeta,
-                )
-
-                instanceRef.set(parsedQuranProphets)
-            } catch (e: Exception) {
-                Log.saveError(e, "QuranProphetParser.parseProphet")
+    /**
+     * Parsed strings and chapter labels depend on [appLocale]. Cached per locale tag.
+     */
+    suspend fun parseProphets(context: Context): QuranProphet {
+        val localeTag = appLocale().toLanguageTag()
+        synchronized(cacheLock) {
+            cached?.takeIf { it.localeTag == localeTag }?.let {
+                return it.quranProphet
             }
-
-            withContext(Dispatchers.Main) { callback() }
         }
+        val parsed = parseProphetsInternal(context)
+        synchronized(cacheLock) {
+            cached = CachedProphets(localeTag, parsed)
+        }
+        return parsed
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun parseProphetsInternal(
+    private suspend fun parseProphetsInternal(
         context: Context,
-        quranMeta: QuranMeta,
     ): QuranProphet {
+        val repository = DatabaseProvider.getQuranRepository(context)
         val parser = context.resources.getXml(R.xml.quran_prophets_reference)
         val prophetList: MutableList<Prophet> = ArrayList()
 
@@ -98,7 +97,8 @@ object QuranProphetParser {
                         prophet.references?.let {
                             prophet.verses = prepareVersesList(it, true)
                             prophet.chapters = prepareChaptersList(prophet.verses)
-                            prophet.inChapters = prepareChapterText(context, quranMeta, prophet.chapters, 2)
+                            prophet.inChapters =
+                                prepareChapterText(context, repository, prophet.chapters, 1)
                         }
                     }
                 }

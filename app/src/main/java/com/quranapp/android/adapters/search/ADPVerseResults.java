@@ -1,5 +1,17 @@
 package com.quranapp.android.adapters.search;
 
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.TAFSIR_JUMPER;
+import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
+import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,21 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.CHAPTER_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.JUZ_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.RESULT_COUNT;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.TAFSIR_JUMPER;
-import static com.quranapp.android.activities.ActivitySearch.SearchResultViewType.VERSE_JUMPER;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_SAVE_TRANSL_CHANGES;
-import static com.quranapp.android.utils.univ.Keys.READER_KEY_TRANSL_SLUGS;
-import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import com.peacedesign.android.utils.Dimen;
 import com.peacedesign.android.utils.span.TypefaceSpan2;
@@ -46,7 +48,7 @@ import com.quranapp.android.components.search.VerseResultCountModel;
 import com.quranapp.android.components.search.VerseResultModel;
 import com.quranapp.android.databinding.LytReaderJuzSpinnerItemBinding;
 import com.quranapp.android.databinding.LytSearchResultItemBinding;
-import com.quranapp.android.db.bookmark.BookmarkDBHelper;
+import com.quranapp.android.db.UserRepository;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.extensions.ContextKt;
@@ -67,6 +69,8 @@ import com.quranapp.android.widgets.list.base.BaseListItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kotlin.ranges.IntRange;
 
 public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> implements Destroyable {
     private final FragmentManager mFm;
@@ -389,13 +393,13 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
 
 
         private void openItemMenu(Context context, VerseResultModel model) {
-            BookmarkDBHelper dbHelper = mActivity.mBookmarkDBHelper;
-            final boolean isBookmarked = dbHelper.isBookmarked(model.chapterNo, model.verseNo, model.verseNo);
+            UserRepository userRepository = mActivity.userRepository;
+            final boolean isBookmarked = userRepository.isBookmarkedBlocking(model.chapterNo, new IntRange(model.verseNo, model.verseNo));
 
             PeaceBottomSheetMenu dialog = new PeaceBottomSheetMenu();
             dialog.getParams().setHeaderTitle(model.chapterName + " " + model.verseSerial);
 
-            int[] icons = {R.drawable.dr_icon_open, isBookmarked ? R.drawable.dr_icon_bookmark_added : R.drawable.dr_icon_bookmark_add};
+            int[] icons = {R.drawable.dr_icon_open, isBookmarked ? R.drawable.ic_bookmark_added : R.drawable.ic_bookmark_add};
             int[] labels = {R.string.strLabelOpen, isBookmarked ? R.string.strLabelRemoveBookmark : R.string.strDescAddToBookmarks};
             int[] descs = {R.string.strLabelOpenInReader, 0};
 
@@ -414,12 +418,13 @@ public class ADPVerseResults extends RecyclerView.Adapter<VHSearchResultBase> im
                 switch (item.getId()) {
                     case 0: {
                         openItem(context, model);
-                    } break;
+                    }
+                    break;
                     case 1: {
                         if (isBookmarked) {
-                            dbHelper.removeFromBookmark(model.chapterNo, model.verseNo, model.verseNo, null);
+                            userRepository.removeFromBookmarkBlocking(model.chapterNo, model.verseNo, model.verseNo);
                         } else {
-                            dbHelper.addToBookmark(model.chapterNo, model.verseNo, model.verseNo, null, null);
+                            userRepository.addToBookmarkBlocking(model.chapterNo, new IntRange(model.verseNo, model.verseNo), null);
                         }
                         break;
                     }

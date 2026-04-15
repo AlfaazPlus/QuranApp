@@ -5,10 +5,8 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,48 +21,42 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.PrimaryScrollableTabRow
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,6 +72,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -89,44 +82,58 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
-import com.quranapp.android.components.quran.QuranMeta
-import com.quranapp.android.compose.components.ChapterCard
-import com.quranapp.android.interfaceUtils.OnResultReadyCallback
+import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.navigator.ChapterCard
+import com.quranapp.android.compose.components.reader.navigator.FilterField
+import com.quranapp.android.compose.components.reader.navigator.HizbCard
+import com.quranapp.android.compose.components.reader.navigator.JuzCard
+import com.quranapp.android.db.relations.NavigationUnit
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.MessageUtils
-import com.quranapp.android.viewModels.FavChaptersViewModel
+import com.quranapp.android.viewModels.ReaderIndexViewModel
 import kotlinx.coroutines.launch
 
 private val ReaderIndexExpandedHeaderHeight = 220.dp
 private val ReaderIndexCollapsedHeaderHeight = 84.dp
+private val ReaderIndexTabHeight = 48.dp
+
+private enum class ReaderIndexTab {
+    chapters,
+    juz,
+    hizb,
+    favourites
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReaderIndexScreen(
-) {
-    val context = LocalContext.current
+fun ReaderIndexScreen() {
     val density = LocalDensity.current
+    val viewModel = viewModel<ReaderIndexViewModel>()
 
-    var quranMeta by remember { mutableStateOf<QuranMeta?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
+    val surahs by viewModel.surahs.collectAsState()
+    val juzs by viewModel.juzs.collectAsState()
+    val hizbs by viewModel.hizbs.collectAsState()
 
-    LaunchedEffect(Unit) {
-        QuranMeta.prepareInstance(context, object : OnResultReadyCallback<QuranMeta> {
-            override fun onReady(r: QuranMeta) {
-                quranMeta = r
-                isLoading = false
-            }
-        })
+    val tabs = remember {
+        listOf(
+            ReaderIndexTab.chapters,
+            ReaderIndexTab.juz,
+            ReaderIndexTab.hizb,
+            ReaderIndexTab.favourites,
+        )
     }
 
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
-    var chaptersReversed by remember { mutableStateOf(false) }
-    var juzReversed by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { tabs.size })
+    val listReversed = remember { mutableStateMapOf<ReaderIndexTab, Boolean>() }
 
     val chaptersListState = rememberLazyGridState()
-    val juzListState = rememberLazyListState()
+    val juzListState = rememberLazyGridState()
+    val hizbListState = rememberLazyGridState()
     val favListState = rememberLazyGridState()
+
     val scope = rememberCoroutineScope()
+
     val topAppBarState = rememberTopAppBarState(
         initialHeightOffsetLimit = with(density) {
             -(ReaderIndexExpandedHeaderHeight - ReaderIndexCollapsedHeaderHeight).toPx()
@@ -137,22 +144,7 @@ fun ReaderIndexScreen(
         snapAnimationSpec = null
     )
 
-    val selectedTab = pagerState.currentPage
-
-    LaunchedEffect(chaptersReversed) {
-        chaptersListState.scrollToItem(0)
-    }
-
-    LaunchedEffect(juzReversed) {
-        juzListState.scrollToItem(0)
-    }
-
-    if (isLoading || quranMeta == null) {
-        ReaderIndexLoading()
-        return
-    }
-
-    val meta = quranMeta ?: return
+    val selectedTab = tabs[pagerState.currentPage]
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -162,21 +154,21 @@ fun ReaderIndexScreen(
         },
         floatingActionButton = {
             ReaderIndexSortFab(
-                visible = !isLoading && quranMeta != null && selectedTab != 2,
+                visible = selectedTab != ReaderIndexTab.favourites,
                 onClick = {
-                    when (selectedTab) {
-                        0 -> chaptersReversed = !chaptersReversed
-                        1 -> juzReversed = !juzReversed
-                    }
+                    listReversed[selectedTab] =
+                        !listReversed.getOrDefault(selectedTab, false)
+
                     scope.launch {
                         when (selectedTab) {
-                            0 -> chaptersListState.animateScrollToItem(0)
-                            1 -> juzListState.animateScrollToItem(0)
+                            ReaderIndexTab.chapters -> chaptersListState.scrollToItem(0)
+                            ReaderIndexTab.juz -> juzListState.scrollToItem(0)
+                            ReaderIndexTab.hizb -> hizbListState.scrollToItem(0)
+                            else -> {}
                         }
                     }
                 },
-                modifier = Modifier
-                    .padding(16.dp)
+                modifier = Modifier.padding(16.dp)
             )
         }
     ) { paddingValues ->
@@ -185,8 +177,6 @@ fun ReaderIndexScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-
-
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -198,21 +188,32 @@ fun ReaderIndexScreen(
                 ) { page ->
                     when (page) {
                         0 -> ReaderIndexChaptersList(
-                            quranMeta = meta,
-                            reversed = chaptersReversed,
+                            viewModel = viewModel,
+                            surahs = surahs,
+                            reversed = listReversed.getOrDefault(ReaderIndexTab.chapters, false),
                             listState = chaptersListState,
                             nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
 
                         1 -> ReaderIndexJuzList(
-                            quranMeta = meta,
-                            reversed = juzReversed,
+                            viewModel = viewModel,
+                            juzs = juzs,
+                            reversed = listReversed.getOrDefault(ReaderIndexTab.juz, false),
                             listState = juzListState,
                             nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
 
-                        2 -> ReaderIndexFavChaptersList(
-                            quranMeta = meta,
+                        2 -> ReaderIndexHizbList(
+                            viewModel = viewModel,
+                            hizbs = hizbs,
+                            reversed = listReversed.getOrDefault(ReaderIndexTab.hizb, false),
+                            listState = hizbListState,
+                            nestedScrollConnection = scrollBehavior.nestedScrollConnection
+                        )
+
+                        3 -> ReaderIndexFavChaptersList(
+                            viewModel = viewModel,
+                            surahs = surahs,
                             listState = favListState,
                             nestedScrollConnection = scrollBehavior.nestedScrollConnection
                         )
@@ -221,14 +222,15 @@ fun ReaderIndexScreen(
 
                 ReaderIndexTabs(
                     modifier = Modifier.align(Alignment.TopCenter),
-                    selectedTab = selectedTab,
+                    selectedTabIndex = pagerState.currentPage,
                     onTabSelected = { index ->
-                        if (index == selectedTab) {
+                        if (index == pagerState.currentPage) {
                             scope.launch {
                                 when (index) {
                                     0 -> chaptersListState.animateScrollToItem(0)
                                     1 -> juzListState.animateScrollToItem(0)
-                                    2 -> favListState.animateScrollToItem(0)
+                                    2 -> hizbListState.animateScrollToItem(0)
+                                    3 -> favListState.animateScrollToItem(0)
                                 }
                             }
                         } else {
@@ -240,7 +242,6 @@ fun ReaderIndexScreen(
                 )
             }
         }
-
     }
 }
 
@@ -315,7 +316,6 @@ private fun ReaderIndexTopBar(
                             ActivitySearch::class.java
                         )
                     )
-
                 },
                 modifier = Modifier
                     .size(40.dp)
@@ -361,18 +361,17 @@ private fun ReaderIndexHeader(
     }
 }
 
-private val ReaderIndexTabHeight = 48.dp
-
 @Composable
 private fun ReaderIndexTabs(
     modifier: Modifier = Modifier,
-    selectedTab: Int,
+    selectedTabIndex: Int,
     onTabSelected: (Int) -> Unit,
 ) {
     val tabs = listOf(
-        Pair(R.string.strTitleReaderChapters, 0),
-        Pair(R.string.strTitleReaderJuz, 0),
-        Pair(R.string.favourites, 0),
+        R.string.strTitleReaderChapters,
+        R.string.strTitleReaderJuz,
+        R.string.strTitleReaderHizb,
+        R.string.favourites,
     )
     val borderColor = colorScheme.outlineVariant
 
@@ -392,18 +391,11 @@ private fun ReaderIndexTabs(
             },
         shadowElevation = 2.dp,
     ) {
-        TabRow(
-            selectedTabIndex = selectedTab,
-            indicator = { tabPositions ->
-                TabRowDefaults.SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
-                    color = colorScheme.primary,
-                )
-            },
-            divider = {}
+        SecondaryTabRow (
+            selectedTabIndex = selectedTabIndex,
         ) {
-            tabs.forEachIndexed { index, (titleRes, iconRes) ->
-                val isSelected = selectedTab == index
+            tabs.forEachIndexed { index, titleRes ->
+                val isSelected = selectedTabIndex == index
 
                 Tab(
                     selected = isSelected,
@@ -411,27 +403,13 @@ private fun ReaderIndexTabs(
                     unselectedContentColor = colorScheme.onSurfaceVariant,
                     onClick = { onTabSelected(index) },
                     text = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                        ) {
-                            if (iconRes != 0) {
-                                Icon(
-                                    painter = painterResource(iconRes),
-                                    contentDescription = null,
-                                )
-                            }
-
-                            if (titleRes != 0) {
-                                Text(
-                                    text = stringResource(titleRes),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
-                            }
-                        }
+                        Text(
+                            text = stringResource(titleRes),
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
                 )
             }
@@ -439,10 +417,10 @@ private fun ReaderIndexTabs(
     }
 }
 
-
 @Composable
 private fun ReaderIndexChaptersList(
-    quranMeta: QuranMeta,
+    viewModel: ReaderIndexViewModel,
+    surahs: List<SurahWithLocalizations>,
     reversed: Boolean,
     listState: LazyGridState,
     nestedScrollConnection: NestedScrollConnection,
@@ -450,15 +428,23 @@ private fun ReaderIndexChaptersList(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val favChaptersViewModel = viewModel<FavChaptersViewModel>()
-    val favChapters = favChaptersViewModel.getFavouriteChapters()
-    val chapterNumbers = remember(quranMeta, reversed) {
-        if (!reversed) {
-            (1..QuranMeta.totalChapters()).toList()
+    val favChapters = viewModel.getFavouriteChapters()
+
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    var filteredSurahs by remember { mutableStateOf(surahs) }
+
+    LaunchedEffect(searchQuery, surahs, reversed) {
+        val query = searchQuery.lowercase().trim()
+        val base = if (query.isEmpty()) {
+            surahs
         } else {
-            (QuranMeta.totalChapters() downTo 1).toList()
+            val surahNos = viewModel.repository.searchSurahNos(query)
+            surahs.filter { it.surah.surahNo in surahNos }
         }
+        filteredSurahs = if (reversed) base.reversed() else base
     }
+
+    if (surahs.isEmpty()) return Loader(true)
 
     BoxWithConstraints {
         LazyVerticalGrid(
@@ -471,34 +457,41 @@ private fun ReaderIndexChaptersList(
                 start = 16.dp,
                 end = 16.dp,
                 top = ReaderIndexTabHeight + 16.dp,
-                bottom = 16.dp
+                bottom = 128.dp
             ),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(chapterNumbers, key = { it }) { chapterNo ->
-                val isFav = favChapters.contains(chapterNo)
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                FilterField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    hint = stringResource(R.string.strHintSearchChapter),
+                    keyboardType = KeyboardType.Text,
+                )
+            }
+
+            items(filteredSurahs, key = { it.surah.surahNo }) { surah ->
+                val isFav = favChapters.contains(surah.surah.surahNo)
 
                 ChapterCard(
-                    chapterNo = chapterNo,
-                    chapterName = quranMeta.getChapterName(context, chapterNo),
-                    chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                    surah = surah,
                     isFavourite = isFav,
                     onClick = {
-                        ReaderFactory.startChapter(context, chapterNo)
+                        ReaderFactory.startChapter(context, surah.surah.surahNo)
                     },
                     onToggleFavourite = {
                         scope.launch {
                             if (isFav) {
-                                favChaptersViewModel.removeFromFavourites(
+                                viewModel.removeFromFavourites(
                                     context,
-                                    chapterNo,
+                                    surah.surah.surahNo,
                                     favChapters
                                 )
                             } else {
-                                favChaptersViewModel.addToFavourites(
+                                viewModel.addToFavourites(
                                     context,
-                                    chapterNo,
+                                    surah.surah.surahNo,
                                     favChapters
                                 )
                             }
@@ -510,212 +503,135 @@ private fun ReaderIndexChaptersList(
     }
 }
 
-private data class JuzItem(
-    val juzNo: Int,
-    val chapterMetas: List<QuranMeta.ChapterMeta>
-)
-
 @Composable
 private fun ReaderIndexJuzList(
-    quranMeta: QuranMeta,
+    viewModel: ReaderIndexViewModel,
+    juzs: List<NavigationUnit>,
     reversed: Boolean,
-    listState: LazyListState,
+    listState: LazyGridState,
     nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
-    val juzItems = remember(quranMeta, reversed) {
-        val items = mutableListOf<JuzItem>()
-        val from = if (reversed) QuranMeta.totalJuzs() else 1
-        val to = if (reversed) 1 else QuranMeta.totalJuzs()
-        var juzNo = from
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    var filteredJuzs by remember { mutableStateOf(juzs) }
 
-        while (true) {
-            val chaptersRange = quranMeta.getChaptersInJuz(juzNo)
-            val chapterMetas = (chaptersRange.first..chaptersRange.second)
-                .mapNotNull { quranMeta.getChapterMeta(it) }
-
-            items += JuzItem(juzNo, chapterMetas)
-
-            if (reversed) {
-                juzNo--
-                if (juzNo < to) break
-            } else {
-                juzNo++
-                if (juzNo > to) break
+    LaunchedEffect(searchQuery, juzs, reversed) {
+        val query = searchQuery.lowercase().trim()
+        val base = if (query.isEmpty()) {
+            juzs
+        } else {
+            val surahNos = viewModel.repository.searchSurahNos(query)
+            juzs.filter { juz ->
+                juz.unitNo.toString().contains(query)
+                        || juz.ranges.any { it.surah.surah.surahNo in surahNos }
             }
         }
-        items
+        filteredJuzs = if (reversed) base.reversed() else base
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection),
-        contentPadding = PaddingValues(
-            start = 16.dp,
-            end = 16.dp,
-            top = ReaderIndexTabHeight + 16.dp,
-            bottom = 16.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(juzItems, key = { it.juzNo }) { item ->
-            JuzCard(
-                item = item,
-                quranMeta = quranMeta,
-                onOpenJuz = { ReaderFactory.startJuz(context, item.juzNo) },
-                onOpenVerseRange = { chapterNo, range ->
-                    ReaderFactory.startVerseRange(context, chapterNo, range)
-                }
-            )
+    if (juzs.isEmpty()) return Loader(true)
+
+    BoxWithConstraints {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (maxWidth < 600.dp) 1 else 2),
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                top = ReaderIndexTabHeight + 16.dp,
+                bottom = 128.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                FilterField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    hint = stringResource(R.string.strHintSearchBy),
+                    keyboardType = KeyboardType.Text,
+                )
+            }
+
+            items(filteredJuzs, key = { it.unitNo }) { juz ->
+                JuzCard(
+                    juz = juz,
+                    onClick = {
+                        ReaderFactory.startJuz(context, juz.unitNo)
+                    },
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun JuzCard(
-    item: JuzItem,
-    quranMeta: QuranMeta,
-    onOpenJuz: () -> Unit,
-    onOpenVerseRange: (Int, Pair<Int, Int>) -> Unit
+private fun ReaderIndexHizbList(
+    viewModel: ReaderIndexViewModel,
+    hizbs: List<NavigationUnit>,
+    reversed: Boolean,
+    listState: LazyGridState,
+    nestedScrollConnection: NestedScrollConnection,
+    modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = colorScheme.outlineVariant.copy(alpha = 0.4f)
-        )
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
+    val context = LocalContext.current
+
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    var filteredHizbs by remember { mutableStateOf(hizbs) }
+
+    LaunchedEffect(searchQuery, hizbs, reversed) {
+        val query = searchQuery.lowercase().trim()
+        val base = if (query.isEmpty()) {
+            hizbs
+        } else {
+            val surahNos = viewModel.repository.searchSurahNos(query)
+            hizbs.filter { hizb ->
+                hizb.unitNo.toString().contains(query)
+                        || hizb.ranges.any { it.surah.surah.surahNo in surahNos }
+            }
+        }
+        filteredHizbs = if (reversed) base.reversed() else base
+    }
+
+    if (hizbs.isEmpty()) return Loader(true)
+
+    BoxWithConstraints {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (maxWidth < 300.dp) 1 else 2),
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                top = ReaderIndexTabHeight + 16.dp,
+                bottom = 128.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onOpenJuz)
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.strLabelJuzNo, item.juzNo),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Icon(
-                    painter = painterResource(R.drawable.dr_icon_chevron_right),
-                    contentDescription = null,
-                    tint = colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                FilterField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    hint = stringResource(R.string.strHintSearchHizb),
+                    keyboardType = KeyboardType.Text,
                 )
             }
 
-            HorizontalDivider(
-                color = colorScheme.outlineVariant.copy(alpha = 0.4f)
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) {
-
-                item.chapterMetas.forEach { chapterMeta ->
-                    val versesInJuz =
-                        remember(
-                            item.juzNo,
-                            chapterMeta.chapterNo
-                        ) {
-                            quranMeta.getVerseRangeOfChapterInJuz(
-                                item.juzNo,
-                                chapterMeta.chapterNo
-                            )
-                        }
-
-                    if (versesInJuz != null) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    onOpenVerseRange(chapterMeta.chapterNo, versesInJuz)
-                                }
-                                .padding(horizontal = 10.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(36.dp)
-                                    .background(
-                                        color = colorScheme.surfaceVariant.copy(alpha = 0.4f),
-                                        shape = CircleShape
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = chapterMeta.chapterNo.toString(),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Normal,
-                                    color = colorScheme.onSurface
-                                )
-                            }
-
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Column(
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text(
-                                    text = chapterMeta.name,
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold,
-                                    color = colorScheme.onSurface,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-
-                                val translation = chapterMeta.nameTranslation
-                                if (!translation.isNullOrEmpty()) {
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Text(
-                                        text = translation,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = colorScheme.onSurfaceVariant,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                }
-                            }
-
-                            Column(
-                                horizontalAlignment = Alignment.End
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.strLabelVersesText) + ":",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Normal,
-                                )
-                                Text(
-                                    text = "${versesInJuz.first}-${versesInJuz.second}",
-                                    style = MaterialTheme.typography.labelLarge,
-                                    fontWeight = FontWeight.SemiBold,
-                                )
-                            }
-                        }
+            items(filteredHizbs, key = { it.unitNo }) { hizb ->
+                HizbCard(
+                    hizb = hizb,
+                    onClick = {
+                        ReaderFactory.startHizb(context, hizb.unitNo)
                     }
-                }
+                )
             }
         }
     }
@@ -723,15 +639,21 @@ private fun JuzCard(
 
 @Composable
 private fun ReaderIndexFavChaptersList(
-    quranMeta: QuranMeta,
+    viewModel: ReaderIndexViewModel,
+    surahs: List<SurahWithLocalizations>,
     listState: LazyGridState,
     nestedScrollConnection: NestedScrollConnection,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val favChaptersViewModel = viewModel<FavChaptersViewModel>()
-    val favChapters = favChaptersViewModel.getFavouriteChapters()
+    val favChapters = viewModel.getFavouriteChapters()
+
+    val favSurahs = remember(surahs, favChapters) {
+        favChapters.mapNotNull { chapterNo ->
+            surahs.find { it.surah.surahNo == chapterNo }
+        }
+    }
 
     when {
         favChapters.isEmpty() -> {
@@ -742,9 +664,7 @@ private fun ReaderIndexFavChaptersList(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(32.dp),
-                    verticalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                    )
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.icon_star_outlined),
@@ -776,30 +696,28 @@ private fun ReaderIndexFavChaptersList(
                         top = ReaderIndexTabHeight + 16.dp,
                         bottom = 16.dp
                     ),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(favChapters, key = { it }) { chapterNo ->
+                    items(favSurahs, key = { it.surah.surahNo }) { surah ->
                         ChapterCard(
-                            chapterNo = chapterNo,
-                            chapterName = quranMeta.getChapterName(context, chapterNo),
-                            chapterTrans = quranMeta.getChapterNameTranslation(chapterNo),
+                            surah = surah,
                             isFavourite = true,
                             onClick = {
-                                ReaderFactory.startChapter(context, chapterNo)
+                                ReaderFactory.startChapter(context, surah.surah.surahNo)
                             },
                             onToggleFavourite = {
                                 MessageUtils.showConfirmationDialog(
                                     context,
                                     title = context.getString(R.string.titleRemoveFromFavourites),
-                                    msg = quranMeta.getChapterName(context, chapterNo),
+                                    msg = surah.getCurrentName(),
                                     btn = context.getString(R.string.strLabelRemove),
                                     btnColor = ColorUtils.DANGER,
                                     action = Runnable {
                                         scope.launch {
-                                            favChaptersViewModel.removeFromFavourites(
+                                            viewModel.removeFromFavourites(
                                                 context,
-                                                chapterNo,
+                                                surah.surah.surahNo,
                                                 favChapters
                                             )
                                         }
@@ -839,18 +757,5 @@ private fun ReaderIndexSortFab(
                 modifier = Modifier.size(24.dp)
             )
         }
-    }
-}
-
-@Composable
-private fun ReaderIndexLoading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = colorScheme.primary,
-            strokeWidth = 3.dp
-        )
     }
 }

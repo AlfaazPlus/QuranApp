@@ -14,6 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.peacedesign.R
+import java.io.File
 
 fun Context.getPackageNameRelease(): String {
     return packageName.replace(".debug", "")
@@ -56,6 +57,23 @@ fun Context.colorStateList(@ColorRes colorResId: Int): ColorStateList? =
 fun Context.getFont(@FontRes fontResId: Int): Typeface? {
     return try {
         ResourcesCompat.getFont(this, fontResId)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        loadTypefaceFromResourceFile(fontResId)
+    }
+}
+
+private fun Context.loadTypefaceFromResourceFile(@FontRes fontResId: Int): Typeface? {
+    val tempFile = File(cacheDir, "font_res_$fontResId.tmp")
+
+    return try {
+        resources.openRawResource(fontResId).use { input ->
+            tempFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        Typeface.createFromFile(tempFile)
     } catch (e: Exception) {
         e.printStackTrace()
         null

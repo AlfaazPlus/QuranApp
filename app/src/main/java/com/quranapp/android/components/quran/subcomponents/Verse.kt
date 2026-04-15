@@ -1,10 +1,12 @@
 package com.quranapp.android.components.quran.subcomponents
 
 import android.content.Context
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.verse.VerseUtils
 import java.io.Serializable
-import java.util.*
 
+
+@Deprecated("migrate to QuranRepository")
 class Verse : Serializable {
     val id: Int
 
@@ -18,27 +20,38 @@ class Verse : Serializable {
     val verseNo: Int
 
     @JvmField
-    val arabicText: String
+    val arabicText: String = ""
+
+    var segments: List<String> = emptyList()
 
     @JvmField
     val endText: String
     var translations: List<Translation> = ArrayList()
     var includeChapterNameInSerial = false
 
+    @Deprecated("")
     @Transient
     @JvmField
     var arabicTextSpannable: CharSequence? = null
 
+    @Deprecated("")
     @Transient
     @JvmField
     var translTextSpannable: CharSequence? = null
 
-    constructor(id: Int, chapterNo: Int, verseNo: Int, pageNo: Int, arabicText: String, endText: String) {
+    constructor(
+        id: Int,
+        chapterNo: Int,
+        verseNo: Int,
+        pageNo: Int,
+        segments: List<String>,
+        endText: String,
+    ) {
         this.id = id
         this.chapterNo = chapterNo
         this.verseNo = verseNo
         this.pageNo = pageNo
-        this.arabicText = arabicText
+        this.segments = segments
         this.endText = endText
     }
 
@@ -47,8 +60,9 @@ class Verse : Serializable {
         chapterNo = verse.chapterNo
         verseNo = verse.verseNo
         pageNo = verse.pageNo
-        arabicText = verse.arabicText
+        segments = verse.segments
         endText = verse.endText
+
         // not copying
         translations = verse.translations
         includeChapterNameInSerial = verse.includeChapterNameInSerial
@@ -56,13 +70,18 @@ class Verse : Serializable {
 
     fun getTranslationCount() = translations.size
 
-    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(ctx, chapterNo, verseNo)
+    fun isVOTD(ctx: Context) = VerseUtils.isVOTD(chapterNo, verseNo)
 
     fun isIdealForVOTD() = arabicText.length in 6..300
 
     fun copy() = Verse(this)
 
     override fun toString(): String {
-        return String.format(Locale.getDefault(), "VERSE: ChapterNo - %d, VerseNo - %d\n", chapterNo, verseNo)
+        return String.format(
+            appLocale(),
+            "VERSE: ChapterNo - %d, VerseNo - %d\n",
+            chapterNo,
+            verseNo
+        )
     }
 }

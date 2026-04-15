@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.theme
 
-import ThemeUtilsV2
+import ThemeUtils
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,8 +18,8 @@ fun QuranAppTheme(
     val view = LocalView.current
     val context = LocalContext.current
 
-    val isDarkTheme = ThemeUtilsV2.isDarkTheme()
-    val colorScheme = ThemeUtilsV2.getColorScheme(context, isDarkTheme)
+    val isDarkTheme = ThemeUtils.observeDarkTheme()
+    val colorScheme = ThemeUtils.observeColorScheme(context, isDarkTheme)
 
     if (!view.isInEditMode) {
         SideEffect {

@@ -9,12 +9,7 @@ import android.animation.*
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
@@ -22,26 +17,29 @@ import com.quranapp.android.R
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.components.AppUpdateInfo
-import com.quranapp.android.databinding.LytUpdateAppBinding
 import com.quranapp.android.databinding.LytUpdateAppDialogBinding
 import com.quranapp.android.utils.Logger
-import com.quranapp.android.utils.extensions.dp2px
-import com.quranapp.android.utils.extensions.removeView
-import com.quranapp.android.utils.extensions.updateMargins
-import com.quranapp.android.utils.extensions.visible
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlin.math.pow
 
-class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
+data class UpdateBannerDecision(
+    val priority: Int,
+    val showCriticalDialog: Boolean,
+    val showMajorDialog: Boolean,
+    val showInlineBanner: Boolean,
+)
+
+class UpdateManager(private val ctx: Context) {
     private val mIconAnimationHandler = Handler(Looper.getMainLooper())
     private var mIconAnimators = ArrayList<ObjectAnimator>()
 
-    fun refreshAppUpdatesJson() {
-        CoroutineScope(Dispatchers.IO).launch {
+    suspend fun fetchAndSaveUpdates() {
+        withContext(Dispatchers.IO) {
             try {
                 val updates = RetrofitInstance.github.getAppUpdates()
                 val updatesString = JsonHelper.json.encodeToString(updates)
@@ -49,7 +47,6 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
 
                 FileUtils.newInstance(ctx).apply {
                     val updatesFile = appUpdatesFile
-
                     if (createFile(updatesFile)) {
                         updatesFile.writeText(updatesString)
                     }
@@ -60,11 +57,13 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
         }
     }
 
-    /**
-     * Returns true if there is an update available
-     */
+    fun refreshAppUpdatesJson() {
+        CoroutineScope(Dispatchers.IO).launch { fetchAndSaveUpdates() }
+    }
+
     fun check4CriticalUpdate(): Boolean {
-        if (AppUpdateInfo(ctx).getMostImportantUpdate().priority == AppUpdateInfo.CRITICAL) {
+        val decision = getBannerDecision()
+        if (decision.showCriticalDialog) {
             Logger.print("UpdateManager:", "Critical update available")
             showUpdateAvailableDialog(true)
             return true
@@ -72,34 +71,32 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
         return false
     }
 
-    /**
-     * Returns true if there is an update available
-     */
-    fun check4Update(): Boolean {
-        val priority = AppUpdateInfo(ctx).getMostImportantUpdate().priority
-        Logger.print("Update priority = $priority")
-
-        when (priority) {
-            AppUpdateInfo.NONE -> {
-                return false
-            }
-
-            AppUpdateInfo.CRITICAL -> {
-                showUpdateAvailableDialog(true)
-            }
-            AppUpdateInfo.MAJOR -> {
-                showUpdateAvailableDialog(false) { updateAvailable() }
-            }
-            else -> {
-                updateAvailable()
-            }
+    fun showUpdateDialogsIfNeeded() {
+        val decision = getBannerDecision()
+        Logger.print("Update priority = ${decision.priority}")
+        when {
+            decision.showCriticalDialog -> showUpdateAvailableDialog(true)
+            decision.showMajorDialog -> showUpdateAvailableDialog(false)
         }
+    }
 
-        return priority == AppUpdateInfo.CRITICAL
+    fun getBannerDecision(): UpdateBannerDecision {
+        val priority = AppUpdateInfo(ctx).getMostImportantUpdate().priority
+
+        return UpdateBannerDecision(
+            priority = priority,
+            showCriticalDialog = priority == AppUpdateInfo.CRITICAL,
+            showMajorDialog = priority == AppUpdateInfo.MAJOR,
+            showInlineBanner = priority in AppUpdateInfo.MAJOR downTo AppUpdateInfo.COSMETIC,
+        )
+    }
+
+    fun openPlayStore() {
+        AppBridge.newOpener(ctx).openPlayStore(null)
     }
 
     private fun showUpdateAvailableDialog(isCritical: Boolean, runOnDismiss: Runnable? = null) {
-        val binding = LytUpdateAppDialogBinding.inflate(LayoutInflater.from(ctx))
+        val binding = LytUpdateAppDialogBinding.inflate(android.view.LayoutInflater.from(ctx))
         binding.txt.setText(
             if (isCritical) R.string.strMsgUpdateAvailable2Continue else R.string.strMsgUpdateAvailable4Dialog
         )
@@ -110,7 +107,7 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
         builder.setCancelable(false)
         builder.setOnDismissListener { runOnDismiss?.run() }
         builder.setPositiveButton(R.string.strLabelUpdate, ColorUtils.DANGER) { _, _ ->
-            AppBridge.newOpener(ctx).openPlayStore(null)
+            openPlayStore()
         }
         builder.setDismissOnPositive(!isCritical)
 
@@ -119,37 +116,6 @@ class UpdateManager(private val ctx: Context, private val parent: ViewGroup?) {
         }
 
         builder.show()
-    }
-
-    private fun updateAvailable() {
-        if (parent == null) return
-
-        val mUpdateBinding = LytUpdateAppBinding.inflate(LayoutInflater.from(ctx), parent, false)
-
-        mUpdateBinding.let {
-            it.root.id = R.id.appUpdateLayout
-            it.txt.visibility = View.VISIBLE
-            it.button.visibility = View.VISIBLE
-            it.icon.visibility = View.VISIBLE
-            it.txt.setText(R.string.strMsgUpdateAvailable)
-            it.button.setText(R.string.strLabelUpdate)
-            it.button.setOnClickListener {
-                AppBridge.newOpener(ctx).openPlayStore(null)
-            }
-
-            mIconAnimators.add(animateUpdateIcon(mUpdateBinding.icon))
-
-            it.root.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                this.updateMargins(ctx.dp2px(5f))
-            }
-
-            if (it.root.parent == null) {
-                it.root.removeView()
-                parent.addView(it.root)
-            }
-
-            parent.visible()
-        }
     }
 
     private fun animateUpdateIcon(iconView: View): ObjectAnimator {

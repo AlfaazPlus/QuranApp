@@ -18,11 +18,14 @@ import androidx.annotation.Nullable;
 
 import com.peacedesign.android.utils.WindowUtils;
 import com.quranapp.android.R;
+import com.quranapp.android.activities.base.BaseActivity;
 import com.quranapp.android.components.quran.QuranMeta;
 import com.quranapp.android.databinding.ActivityChapterInfoBinding;
+import com.quranapp.android.interfaceUtils.OnResultReadyCallback;
 import com.quranapp.android.utils.Log;
 import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoJSInterface;
+import com.quranapp.android.compose.components.QuickReferenceHost;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils;
 import com.quranapp.android.utils.chapterInfo.ChapterInfoWebViewClient;
 import com.quranapp.android.utils.exceptions.NoInternetException;
@@ -45,8 +48,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class ActivityChapInfo extends ReaderPossessingActivity {
+public class ActivityChapInfo extends BaseActivity {
     private final CallableTaskRunner<String> mTaskRunner = new CallableTaskRunner<>();
     private ActivityChapterInfoBinding mBinding;
     public QuranMeta mQuranMeta;
@@ -54,6 +56,7 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
     private FileUtils fileUtils;
     public String mLanguage;
     private PageAlert mPageAlert;
+    private QuickReferenceHost mQuickRefHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +74,21 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
     }
 
     @Override
-    protected void preReaderReady(@NonNull View activityView, @NonNull Intent intent, @Nullable Bundle savedInstanceState) {
+    protected void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState) {
         fileUtils = FileUtils.newInstance(this);
 
         mBinding = ActivityChapterInfoBinding.bind(activityView);
         initThis();
-    }
 
-    @Override
-    protected void onReaderReady(@NonNull Intent intent, @Nullable Bundle savedInstanceState) {
-        mQuranMeta = mQuranMetaRef.get();
+        mQuickRefHost = new QuickReferenceHost(this, mBinding.composeQuickReference);
 
-        initContent(intent);
+        QuranMeta.prepareInstance(this, new OnResultReadyCallback<QuranMeta>() {
+            @Override
+            public void onReady(QuranMeta quranMeta) {
+                mQuranMeta = quranMeta;
+                initContent(getIntent());
+            }
+        });
     }
 
     @Override
@@ -150,6 +156,12 @@ public class ActivityChapInfo extends ReaderPossessingActivity {
     private void initThis() {
         mBinding.title.setText(R.string.strTitleAboutSurah);
         mBinding.back.setOnClickListener(v -> finish());
+    }
+
+    public void showChapterQuickReference(int chapterNo, int fromVerse, int toVerse) {
+        if (mQuickRefHost != null) {
+            mQuickRefHost.show(chapterNo, fromVerse, toVerse);
+        }
     }
 
     private void initPageAlert() {

@@ -1,87 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="strLabelOkay">ശരി</string>
-    <string name="strTitleLicenses">ലൈസൻസ്</string>
     <string name="strLabelTop">മുകളിൽ</string>
     <string name="strTitleAppVersion">അപ്ലിക്കേഷൻ പതിപ്പ്</string>
-    <string name="strVersion" formatted="false">പതിപ്പ് %s</string>
     <string name="strLabelRemove">നീക്കം ചെയ്യുക</string>
     <string name="strLabelCancel">റദ്ദാക്കുക</string>
     <string name="strLabelGotIt">മനസ്സിലായി</string>
     <string name="strLabelApply">അപ്ലയ് ചെയ്യുക</string>
-    <string name="strLabelSend">അയക്കുക</string>
     <string name="strLabelDelete">ഡിലീറ്റ് ചെയ്യുക</string>
     <string name="strLabelRemoveAll">എല്ലാം നീക്കം ചെയ്യുക</string>
     <string name="strLabelCopy">പകർത്തുക</string>
     <string name="strLabelBack">പുറകെ</string>
-    <string name="strLabelView">കാണുക</string>
     <string name="strLabelOpenInReader">റീഡറിൽ തുറക്കുക</string>
-    <string name="strLabelReset">പുനഃസജ്ജമാക്കുക</string>
     <string name="strLabelRetry">വീണ്ടും ശ്രമിക്കുക</string>
-    <string name="strLabelRefresh">പുതുക്കുക</string>
-    <string name="strLabelDismiss">നിരസിക്കുക</string>
     <string name="strLabelEdit">തിരുത്തുക</string>
-    <string name="strLabelHide">മറച്ചുവയ്‌ക്കുക</string>
-    <string name="strLabelRestart">പുനരാരംഭിക്കുക</string>
-    <string name="strLabelDiscard">ഒഴിവാക്കുക</string>
     <string name="strLabelDone">ചെയ്തു കഴിഞ്ഞു</string>
-    <string name="strLabelUpdateQuranApp">QuranApp അപ്ഡേറ്റ് ചെയ്യുക</string>
     <string name="strLabelOpen">തുറക്കുക</string>
     <string name="strLabelSkip">ഒഴിവാക്കുക</string>
     <string name="strLabelViewAll">എല്ലാം കാണുക</string>
-    <string name="strLabelAdvertisement">പരസ്യം</string>
-    <string name="strLabelChangeNRestart">മാറ്റുക &amp; പുനരാരംഭിക്കുക</string>
     <string name="strLabelRead">വായിക്കുക »</string>
-    <string name="strLabelNew">പുതിയത്</string>
     <string name="strLabelNext">അടുത്തത്</string>
-    <string name="strLabelNotNow">ഇപ്പോള്‍ വേണ്ട</string>
     <string name="strLabelStart">ആരംഭിക്കുക</string>
-    <string name="strLabelPrevious">മുൻപത്തേത്</string>
-    <string name="strLabelDownloadNow">ഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="strLabelUpdate">അപ്ഡേറ്റ് ചെയ്യുക</string>
-    <string name="strLabelInstall">ഇൻസ്റ്റാൾ ചെയ്യുക</string>
     <string name="strLabelClose">ക്ലോസ് ചെയ്യുക</string>
-    <string name="strTitleReaderLayoutStylePageView">പേജ് കാഴ്ച</string>
-    <string name="strTitleReaderLayoutStyle">ഖുർആൻ വീക്ഷണ ശൈലി</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">വിവർത്തനം കാഴ്ച</string>
     <string name="strTitleReaderTextSizeArabic">അറബിക് ടെക്സ്റ്റ് വലിപ്പം</string>
-    <string name="strLabelNoNextChapter">അടുത്ത അധ്യായം ഇല്ല</string>
     <string name="strLabelOff">ഓഫ് ആക്കുക</string>
     <string name="strLabelOn">ഓൺ ആക്കുക</string>
-    <string name="strLabelPremium">പ്രീമിയം</string>
-    <string name="strLabelPreviousJuz">മുമ്പത്തെ ജുസുഅ്</string>
     <string name="strLabelThemeDark">ഇരുണ്ടത്</string>
     <string name="strLabelSystemDefault">സിസ്റ്റത്തിനനുസരിച്ച്</string>
     <string name="strLabelThemeLight">വെളുത്തത്</string>
-    <string name="strLabelPreviousChapter">മുൻ അധ്യായം</string>
-    <string name="strLabelNoPreviousChapter">മുൻ അധ്യായം ഇല്ല</string>
-    <string name="strLabelNextChapter">അടുത്ത അധ്യായം</string>
-    <string name="strLabelNoPreviousJuz">മുമ്പത്തെ ജുസുഅ് ഇല്ല</string>
-    <string name="strLabelNoNextJuz">അടുത്ത ജുസുഅ് ഇല്ല</string>
-    <string name="strLabelNextJuz">അടുത്ത് ജുസുഅ്</string>
-    <string name="strLabelFullChapter">മുഴുവൻ അധ്യായവും വായിക്കുക</string>
     <string name="strLabelJuzNo" formatted="false">ജുസുഅ് %d</string>
-    <string name="strLabelContinueChapter">അദ്ധ്യായം തുടരുക</string>
     <string name="strLabelPreviousVerse">മുൻ വാക്യം</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">സൂറത്ത് %1$s │വാക്യം %2$d</string>
     <string name="strLabelSurah" formatted="false">സൂറത്ത് %s</string>
     <string name="strLabelPageNo" formatted="false">പേജ് %d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">വാക്യം : %d</string>
     <string name="strLabelVersesWithColon" formatted="false">വാക്യങ്ങൾ : %1$d–%2$d</string>
-    <string name="strLabelVerseCountWithColon" formatted="false">വാക്യങ്ങൾ : %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">വാക്യം %1$d:%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">സൂറത്ത് %1$s %2$d: വാക്യം %3$d</string>
     <string name="strTitleReaderTextSizeTransl">വിവർത്തന ടെക്സ്റ്റ് വലുപ്പം</string>
     <string name="strLabelNextVerse">അടുത്ത വാക്യം</string>
-    <string name="strLabelVersesText">വാക്യങ്ങൾ</string>
     <string name="strLabelVerses" formatted="false">വാക്യങ്ങൾ %1$d–%2$d</string>
     <string name="strLabelVerseNo" formatted="false">വാക്യം %d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">സൂറത്ത് %1$s : വാക്യം %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">അധ്യായം നമ്പർ. %1$d│വാക്യങ്ങൾ %2$d–%3$d</string>
-    <string name="strTitleAppUser">QuranApp ഉപയോക്താവ്</string>
     <string name="strTitleHolyQuran">വിശുദ്ധ ഖുർആൻ</string>
     <string name="strTitleQuran">ഖുർആൻ</string>
     <string name="strTitleMakki">മെക്കൻ</string>
@@ -90,10 +52,6 @@
     <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
     <string name="strTitleReaderChapters">സൂറത്തുകൾ</string>
     <string name="strTitleReaderJuz">ജുസുഅ്</string>
-    <string name="strTitleReaderChapters2">സൂറത്തുകൾ</string>
-    <string name="strTitleReaderJuz2">ജുസുഅ്</string>
-    <string name="strTitleReaderVerses">വാക്യങ്ങൾ</string>
-    <string name="strTitleReaderJumpToVerse">വാക്യത്തിലേക്ക് പോകുക</string>
     <string name="strTitleVerseOptions">വാക്യ ഓപ്ഷനുകൾ</string>
     <string name="strTitleVerseRecitation">വാക്യപാരായണം</string>
     <string name="strTitleReaderVerseInformation" formatted="false">സൂറത്ത് %1$s : %2$d</string>
@@ -110,17 +68,10 @@
     <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
     <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
     <string name="strTitleSelectReciter">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
-    <string name="strTitleSelectScripts">സ്ക്രിപ്റ്റ് തിരഞ്ഞെടുക്കുക</string>
     <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d ബുക്ക്‌മാർക്കുകൾ നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleTranslDelete">വിവർത്തനം ഇല്ലാതാക്കണോ?</string>
-    <string name="strTitleHideAd">പരസ്യം മറയ്ക്കുക</string>
-    <string name="strTitleRecitationOptions">ഓപ്ഷനുകൾ</string>
-    <string name="strTitleRepeatVerse">വാക്യം ആവർത്തിക്കുക</string>
-    <string name="strTitleAutoPlayNext">അടുത്തത് സ്വയമേവ പ്ലേ ചെയ്യുക</string>
-    <string name="strTitleQuickEdit">പെട്ടെന്നുള്ള തിരുത്തൽ</string>
-    <string name="strTitleResetReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ പുനഃസജ്ജമാക്കണോ?</string>
     <string name="strTitleBookmark">ബുക്ക്മാർക്ക്</string>
     <string name="strTitleAboutUs">ഞങ്ങളേക്കുറിച്ച്</string>
     <string name="strTitleSendFeedback">ഫീഡ്ബാക്ക് അയയ്ക്കുക</string>
@@ -128,19 +79,12 @@
     <string name="strTitleBookmarks">ബുക്ക്മാർക്കുകൾ</string>
     <string name="strTitleShareApp">ആപ്പ് പങ്കിടുക</string>
     <string name="strTitleShareVerse">വാക്യം പങ്കിടുക</string>
-    <string name="strTitleReportVerse">വാക്യം റിപ്പോർട്ട് ചെയ്യുക</string>
-    <string name="strTitleSelectReason">കാരണം തിരഞ്ഞെടുക്കുക</string>
-    <string name="strTitleExplainIssue">പ്രശ്നം വിശദീകരിക്കുക</string>
     <string name="strTitleFeaturedQuran">ഫീച്ചർ ചെയ്ത റീഡിംഗ്</string>
-    <string name="strTitleTopics">വിഷയങ്ങൾ</string>
-    <string name="strTitleDuas">ഖുർആനിക ദുആകൾ</string>
     <string name="strTitleProphets">പ്രവാചകന്മാർ</string>
-    <string name="strTitleFeaturedTopics">ഖുർആനിലെ വിഷയങ്ങൾ</string>
     <string name="strTitleFeaturedDuas">ഖുർആനിലെ ദുആകൾ</string>
     <string name="strTitlePrivacyPolicy">സ്വകാര്യതാ നയം</string>
     <string name="strTitleFailed">തെറ്റി</string>
     <string name="strTitleSuccess">ശെരിയായി</string>
-    <string name="strTitleThresholdReached">പരിധി എത്തി</string>
     <string name="strChapInfoSeeMore">കൂടുതൽ വിവരങ്ങൾ കാണുക ›</string>
     <string name="strTitleChapInfoChapterNo">അധ്യായം നമ്പർ</string>
     <string name="strTitleChapInfoJuzNo">ജുസുഅ് നമ്പർ.</string>
@@ -153,7 +97,6 @@
     <string name="strTitleVOTD">ഇന്നത്തെ വാക്യം</string>
     <string name="strTitleAppSettings">ആപ്പ് ക്രമീകരണങ്ങൾ</string>
     <string name="strTitleReaderSettings">റീഡർ ക്രമീകരണങ്ങൾ</string>
-    <string name="strTitleChangeLanguage">ഭാഷ മാറ്റുക?</string>
     <string name="strTitleTheme">തീം</string>
     <string name="strTitleNoInternet">ഇന്റർനെറ്റ് ഇല്ല</string>
     <string name="strMsgChapInfoFailedLoad">സൂറത്തിന്റെ വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
@@ -161,39 +104,23 @@
     <string name="strLabelPlay">പ്ലേ ചെയ്യുക</string>
     <string name="strLabelPause">പോസ് ചെയ്യുക</string>
     <string name="strLabelBookmark">ബുക്ക്മാർക്ക്</string>
-    <string name="strLabelBookmarked">ബുക്ക്മാർക്ക് ചെയ്തു</string>
-    <string name="strLabelRemoveAds">പരസ്യങ്ങൾ നീക്കം ചെയ്യുക</string>
     <string name="strLabelShare">പങ്കിടുക</string>
     <string name="strLabelReport">റിപ്പോർട്ട് ചെയ്യുക</string>
     <string name="strLabelRemoveBookmark">ബുക്ക്മാർക്ക് നീക്കം ചെയ്യുക</string>
     <string name="strLabelContinueReading">വായിക്കുന്നത് തുടരുക »</string>
-    <string name="strLabelReading">വായിക്കുന്നു</string>
-    <string name="strMsgRecitationsLoadFailed">സെർവറിൽ നിന്ന് പാരായണങ്ങൾ ലോഡ് ചെയ്യാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
-    <string name="strMsgRecitationsNoAvailable">പാരായണങ്ങളൊന്നും ലഭ്യമല്ല</string>
     <string name="strMsgNoInternetLong">ഇന്റർനെറ്റ് കണക്ഷനില്ല. Wi-Fi അല്ലെങ്കിൽ സെല്ലുലാർ ഡാറ്റ ഓണാക്കിയിട്ടുണ്ടെന്ന് ഉറപ്പുവരുത്തുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
-    <string name="strMsgReportUs">ദയവായി ഞങ്ങളെ അറിയിക്കുക.</string>
     <string name="strLabelNavHome">ഹോം</string>
     <string name="strTextPleaseWait">കാത്തിരിക്കൂ…</string>
-    <string name="strTextSending">അയയ്ക്കുന്നു…</string>
-    <string name="strTextLoading">ലോഡിംഗ്…</string>
-    <string name="strLabelMostPlaces">മിക്ക പരാമർശങ്ങളും</string>
     <string name="strLabelOrder">ക്രമം</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d കൂടുതൽ വിവർത്തനങ്ങൾ</string>
-    <string name="strLabelAdvanceSharing">വിപുലമായി പങ്കിടുക</string>
     <string name="strLabelLater">പിന്നീട്</string>
     <string name="strHintSearch">തിരയുക</string>
     <string name="strHintSearchQuran">ഒരു പദം ടൈപ്പ് ചെയ്യുക ഉദാ., \"ജീവിതം\"</string>
-    <string name="strHintSearchTopic">വിഷയം തിരയുക</string>
     <string name="strHintSearchProphet">പ്രവാചകനെ തിരയുക</string>
     <string name="strHintSearchChapter">സൂറത്ത് തിരയുക</string>
     <string name="strMsgThemeDefault">സിസ്റ്റം ക്രമീകരണങ്ങൾക്ക് അനുസരിച്ച് ക്രമീകരിക്കുക.</string>
-    <string name="strMsgVOTDOn">ദിവസവും രാവിലെ അറിയിപ്പ് ലഭിക്കുക.</string>
-    <string name="strMsgYouAreReadingVerses">നിങ്ങൾ വായിക്കുന്ന വാക്യങ്ങൾ :</string>
     <string name="strTitleReadHistory">ഹിസ്റ്ററി വായിക്കുക</string>
-    <string name="strMsgReadHistoryRemoved">വായന ഹിസ്റ്ററി നീക്കം ചെയ്തു.</string>
-    <string name="strMsgReadHistoryRemoveFailed">റീഡ് ഹിസ്റ്ററി നീക്കം ചെയ്യാനായില്ല.</string>
     <string name="strMsgReadHistoryNoItems">വായന ഹിസ്റ്ററി ഇല്ല</string>
-    <string name="strMsgReadHistoryDeleteSelected">തിരഞ്ഞെടുത്ത വായന ഹിസ്റ്ററി നീക്കം ചെയ്യപ്പെടും.</string>
     <string name="strMsgBookmarkDate" formatted="false">%2$sൽ %1$s</string>
     <string name="strMsgBookmarkDateToday" formatted="false">ഇന്ന് %sൽ</string>
     <string name="strMsgHistoryRemove">ഈ ഹിസ്റ്ററി നീക്കം ചെയ്യണോ?</string>
@@ -202,49 +129,28 @@
     <string name="strMsgSearchNoResultsFound">ഒരു ഫലവും കണ്ടെത്താനായില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക അല്ലെങ്കിൽ മറ്റൊരു വിവർത്തനത്തിൽ തിരയുക.</string>
     <string name="strMsgSearchWordPart">പദഭാഗത്തിനായി തിരയുക</string>
     <string name="strMsgSearchWordPartExample">ഉദാഹരണത്തിന്: \'മനുഷ്യരാശി\'യിലെ \'മനുഷ്യൻ\'</string>
-    <string name="strMsgSearchArabic">അറബി വാചകത്തിൽ തിരയുക</string>
-    <string name="strMsgChangeLanguage">ഭാഷാ മാറ്റത്തെ ബാധിക്കാൻ ആപ്പ് പുനരാരംഭിക്കും.</string>
-    <string name="strMsgResetReaderSettings">എല്ലാ ക്രമീകരണങ്ങളും ഡിഫോൾട്ടിലേക്ക് പുനഃസജ്ജമാക്കുക.</string>
-    <string name="strMsgProphetsOrder">കാലക്രമത്തിൽ പ്രവാചകന്മാരെ കാണിക്കുന്നു</string>
     <string name="strMsgEnterValidRange">സാധുവായ ഒരു ശ്രേണി നൽകുക</string>
-    <string name="strMsgTranslNoDownloadsAvailable">ഡൗൺലോഡുകളൊന്നും ലഭ്യമല്ല</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" ഡൗൺലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു.</string>
     <string name="strMsgTranslDownloaded" formatted="false">ഡൗൺലോഡ് ചെയ്‌തത്: \"%s\".</string>
-    <string name="strDescVerseNo" formatted="false">വാക്യം നമ്പർ %d.</string>
     <string name="strDescVerseNoWithChapter" formatted="false">സൂറത്ത് %1$s, വാക്യ നമ്പർ %2$d.</string>
     <string name="strDescAddToBookmarks">ബുക്ക്മാർക്കുകളിലേക്ക് ചേർക്കുക</string>
     <string name="strMsgNoInternet">നിങ്ങളുടെ ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കുക.</string>
     <string name="strDescGoBack">മടങ്ങിപ്പോവുക</string>
     <string name="strDescClose">അടയ്ക്കുക</string>
     <string name="strMsgSomethingWrong">എന്തോ കുഴപ്പം സംഭവിച്ചു!</string>
-    <string name="strMsgSomethingWrongFixing">എന്തോ കുഴപ്പം സംഭവിച്ചു! ഇത് പരിഹരിക്കാൻ ഞങ്ങൾ പ്രവർത്തിക്കുന്നു.</string>
-    <string name="strMsgVerseCredsInvalid">വാക്യ ക്രെഡൻഷ്യലുകൾ സാധുവല്ല.</string>
     <string name="strMsgTryLater">ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
-    <string name="strTitleError">പിശക്!</string>
     <string name="strTitleInfo">വിവരം!</string>
     <string name="strTitleOops">ശ്ശോ!</string>
-    <string name="strLabelProceed">തുടരുക</string>
-    <string name="strTextUpdating">അപ്ഡേറ്റ് ചെയ്യുന്നു…</string>
-    <string name="strTextInstalling">ഇൻസ്റ്റാൾ ചെയ്യുന്നു…</string>
-    <string name="strSalam">അസ്സലാമു അലൈക്കും</string>
-    <string name="strSalamShort">സലാം</string>
     <string name="strLabelNavSearch">തിരയുക</string>
-    <string name="strTextPreparing">തയ്യാറെടുക്കുന്നു…</string>
     <string name="strLabelSelectedCount" formatted="false">%d തിരഞ്ഞെടുത്തു</string>
-    <string name="strLabelIncludeReference">റഫറൻസ് ഉൾപ്പെടുത്തുക</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">\"%s\" എന്നതിൽ വിഷയം തിരയുക</string>
-    <string name="strHintSearchScript">സ്ക്രിപ്റ്റ് തിരയുക</string>
     <string name="strMsgThemeDark">ഇരുണ്ട മോഡ് ചാർജ് ഉപയോഗം കുറക്കും.</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d സാധുവായ സൂറത്ത് നമ്പർ അല്ല.</string>
     <string name="strMsgReadShowupHere">നിങ്ങളുടെ വായന ഹിസ്റ്ററി ഇവിടെ കാണിക്കും.</string>
-    <string name="strMsgReadHistoryRemovedAlready">വായന ചരിത്രം മുമ്പ് നീക്കം ചെയ്‌തിരിക്കുന്നു.</string>
     <string name="strMsgReadHistoryDeleteAll">എല്ലാ വായന ഹിസ്റ്ററിയും നീക്കം ചെയ്യപ്പെടും.</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">ആകെ ഫലങ്ങൾ %1$s: %2$dൽ കണ്ടെത്തി</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">ഫലങ്ങളൊന്നും %sൽ കണ്ടെത്തിയില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക അല്ലെങ്കിൽ മറ്റൊരു വിവർത്തനത്തിൽ തിരയുക.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">ഒരു ഫലവും കണ്ടെത്താനായില്ല. തിരയൽ ഫിൽട്ടറുകൾ പരിശോധിക്കുക.</string>
     <string name="strMsgShareRange" formatted="false">%1$d–%2$d ഇടയിലുള്ള ശ്രേണി നൽകുക</string>
-    <string name="strMsgTranslLoadFailed">സെർവറിൽ നിന്ന് വിവർത്തനങ്ങൾ ലോഡ് ചെയ്യാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
-    <string name="strMsgTranslNoDownloads">ഡൗൺലോഡ് ചെയ്‌ത വിവർത്തനങ്ങളൊന്നും ലഭ്യമല്ല</string>
     <string name="strMsgTranslNoneSelected">വിവർത്തനമൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല. വിവർത്തനങ്ങൾ കണ്ടെത്താൻ ക്രമീകരണങ്ങളിലേക്ക് പോകുക.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">പരമാവധി %d വിവർത്തനങ്ങൾ ഒറ്റയടിക്ക് തിരഞ്ഞെടുക്കാം. മറ്റൊന്ന് തിരഞ്ഞെടുക്കുന്നതിന് മുമ്പ് ഒന്ന് തിരഞ്ഞെടുത്തത് മാറ്റുക. പ്രകടന നഷ്ടം ഒഴിവാക്കാനാണിത്.</string>
     <string name="strMsgCouldNotOpenPage">പേജ് തുറക്കാൻ കഴിഞ്ഞില്ല.</string>
@@ -257,27 +163,13 @@
     <string name="strLabelSelectTranslations">വിവർത്തനങ്ങൾ തിരഞ്ഞെടുക്കുക</string>
     <string name="strLabelSelectTranslation">വിവർത്തനങ്ങൾ തിരഞ്ഞെടുക്കുക</string>
     <string name="strLabelIncludeFootnotes">അടിക്കുറിപ്പുകൾ ഉൾപ്പെടുത്തുക</string>
-    <string name="strLabelIncludeTranslation">വിവർത്തനം ഉൾപ്പെടുത്തുക</string>
     <string name="strLabelQuickLinks">ദ്രുത ലിങ്കുകൾ</string>
-    <string name="strHintSearchVerse">വാക്യം തിരയുക</string>
-    <string name="strHintSearchTranslation">വിവർത്തനം തിരയുക</string>
-    <string name="strHintSearchJuz">ജുസുഅ് തിരയുക</string>
-    <string name="strHintSearchReciter">പാരായണം ചെയ്യുന്നവരെ തിരയുക</string>
-    <string name="strHintSearchLanguage">ഭാഷ തിരയുക</string>
     <string name="strHintFromVerse">വാക്യത്തിൽ നിന്ന്</string>
-    <string name="strHintFeedbackEmail">ഇമെയിൽ</string>
     <string name="strHintToVerse">വാക്യത്തിലേക്ക്</string>
-    <string name="strHintFeedbackMessage">സന്ദേശം</string>
     <string name="strHintBookmarkViewerNote">ഈ ബുക്ക്‌മാർക്കിനെക്കുറിച്ച് ഒരു അധിക കുറിപ്പ് ഇവിടെ എഴുതുക…</string>
-    <string name="strHintFeedback">നിങ്ങളുടെ അഭിപ്രായം ഇവിടെ എഴുതുക…</string>
-    <string name="strNotFound">കണ്ടെത്തിയില്ല</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">സൂറത്ത് നമ്പർ. %2$dന് സാധുവായ വാക്യ നമ്പർ അല്ല %1$d</string>
-    <string name="strMsgInvalidVersesRange">സാധുവായ വാക്യ ശ്രേണിയല്ല</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">സൂറത്ത് നമ്പർ %3$dന് സാധുവായ വാക്യ ശ്രേണി അല്ല %1$d-%2$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d ഒരു സാധുവായ ജുസുഅ് (പാര) നമ്പർ അല്ല.</string>
     <string name="strMsgBookmarkAddFailed">വാക്യം ബുക്ക്‌മാർക്കുകളിലേക്ക് ചേർക്കാൻ കഴിഞ്ഞില്ല</string>
     <string name="strMsgBookmarkAdded">വാക്യം ബുക്ക്‌മാർക്കുകളിലേക്ക് ചേർത്തു</string>
-    <string name="strMsgBookmarkRemovedAlready">വാക്യം ബുക്ക്‌മാർക്കിൽ ഇല്ല</string>
     <string name="strMsgBookmarkNoItems">ബുക്ക്‌മാർക്കുകളൊന്നുമില്ല</string>
     <string name="strMsgBookmarkAddedAlready">വാക്യം മുമ്പേ ബുക്ക്‌മാർക്കുകളിൽ ചേർത്തിട്ടുണ്ട്</string>
     <string name="strMsgBookmarkRemoveFailed">ബുക്ക്‌മാർക്കുകളിൽ നിന്ന് വാക്യം നീക്കം ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
@@ -287,62 +179,39 @@
     <string name="strMsgUpdateAvailable4Dialog">അപ്ഡേറ്റ് ലഭ്യമാണ്! \nആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="strMsgUpdateAvailable2Continue">അപ്ഡേറ്റ് ആവശ്യമാണ്! \nതുടരാൻ ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="strMsgUpdateAvailable">അപ്ഡേറ്റ് ലഭ്യമാണ്! ഏറ്റവും പുതിയ ഫീച്ചറുകൾ ലഭിക്കാൻ ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
-    <string name="strMsgEditShareTransl">ക്രമീകരണങ്ങളിൽ നിന്ന് തിരഞ്ഞെടുത്ത വിവർത്തനങ്ങൾ, ഇവിടെ മാത്രം കാണിക്കുന്നു.</string>
-    <string name="strMsgEditShareLongTransl">വിവർത്തനം വളരെ ദൈർഘ്യമേറിയതാണ്, അത് ശരിയായി യോജിക്കണമെന്നില്ല.</string>
     <string name="strMsgReferenceInQuran" formatted="false">ഖുറാനിൽ %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">ആകെ %2$d സ്ഥലങ്ങളിൽ %1$s എന്നതുമായി ബന്ധപ്പെട്ട വാക്യങ്ങൾ കണ്ടെത്തി.</string>
     <string name="strMsgReferenceDuas">ഖുർആനിൽ നിന്ന് കുറച്ച് ദുആകൾ ശേഖരിച്ചു.</string>
-    <string name="strMsgUpdateDownloaded">അപ്ഡേറ്റ് ഡൗൺലോഡ് ചെയ്തു! അപ്‌ഡേറ്റ് പൂർത്തിയാക്കാൻ ദയവായി ഇൻസ്റ്റാൾ ചെയ്യുക.</string>
     <string name="strLabelAllChapters">എല്ലാ അധ്യായങ്ങളും</string>
-    <string name="strLabelDownloadImage">ചിത്രം ഡൗൺലോഡ് ചെയ്യുക</string>
-    <string name="strLabelShareImage">ചിത്രം പങ്കിടുക</string>
-    <string name="strTitleImageSavedWithName" formatted="false">പേരിനൊപ്പം ചിത്രം സംരക്ഷിച്ചു: %s</string>
-    <string name="strTitleAlphaBG">ആൽഫ പശ്ചാത്തലം</string>
     <string name="labelDownload">ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="strTitleRecitations">പാരായണങ്ങൾ</string>
     <string name="strTitleScripts">സ്ക്രിപ്റ്റുകൾ</string>
     <string name="msgDownloadKFQPCResources">നിങ്ങൾക്ക് ഈ സ്ക്രിപ്റ്റ് ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഈപ്പറയുന്ന റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്:</string>
     <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ\?</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">സ്ക്രിപ്റ്റ്: %s (~1MB)</string>
     <string name="nItem">%d ഇനം</string>
     <string name="nItems">%d ഇനങ്ങൾ</string>
     <string name="verseSyncOff">വാക്യ സമന്വയം: ഓഫാണ്</string>
     <string name="verseSyncOn">വാക്യ സമന്വയം: ഓൺ</string>
     <string name="strPreviewTextTransl">പരമകാരുണികനും കരുണാനിധിയുമായ അല്ലാഹുവിന്റെ തിരുനാമത്തില്‍</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ഡൗൺലോഡ് ചെയ്ത സ്ക്രിപ്റ്റുകളും അവയുടെ ഫോണ്ടുകളും ഇല്ലാതാക്കാം.</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d ന്റെ %2$d ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്തു</string>
-    <string name="msgDownloadFailed">ഡൗൺലോഡ് പരാജയപ്പെട്ടു</string>
     <string name="msgDownloadingFonts">ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്യുന്നു</string>
-    <string name="msgDownloadingScript">സ്ക്രിപ്റ്റ് ഡൗൺലോഡ് ചെയ്യുന്നു</string>
-    <string name="msgDownloadingResource" formatted="false">%s ഡൗൺലോഡ് ചെയ്യുന്നു</string>
-    <string name="labelBackgroundDownload">ബാക്ക്ഗ്രൗണ്ട് ഡൗൺലോഡ്</string>
-    <string name="msgAnotherDownloadInProgress">മറ്റൊരു ഡൗൺലോഡ് പുരോഗമിക്കുകയാണ്.</string>
-    <string name="msgScriptFontsDownloaded">സ്ക്രിപ്റ്റുകളും ഫോണ്ടുകളും വിജയകരമായി ഡൗൺലോഡ് ചെയ്തു.</string>
     <string name="textDownloading">ഡൗൺലോഡ് ചെയ്യുന്നു…</string>
-    <string name="textPercentage" formatted="false">%d%%</string>
     <string name="storageCleanupMessage">ഡൗൺലോഡ് ചെയ്ത ഉപയോഗിക്കാത്ത റിസോഴ്സ്സുകൾ ഡിലീറ്റ് ചെയ്ത് സ്പേസ് ഉണ്ടാക്കുക. ഇത് ബുക്ക്‌മാർക്കുകളോ ക്രമീകരണങ്ങളോ ഇല്ലാതാക്കില്ല.
 \n
 \nഇനിപ്പറയുന്ന റിസോഴ്സ്സുകൾ ഇല്ലാതാക്കാം:</string>
     <string name="translationCanBeFreedUp" formatted="false">ഡൗൺലോഡ് ചെയ്ത %d വിവർത്തനങ്ങൾ ഇല്ലാതാക്കാം.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d റിസൈറ്റേർസ് ഇല്ലാതാക്കാം %1$d സ്റ്റോർ ചെയ്ത പാരായണം ഫയലുകളിൽ നിന്നും.</string>
-    <string name="msgAlarmManagerNotAvailable">ഈ ഡിവൈസിൽ അലാറം മാനേജർ ലഭ്യമല്ല.</string>
     <string name="msgVerseReminderNotifPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ നോട്ടിഫിക്കേഷൻ അനുമതി ആവശ്യമാണ്.</string>
-    <string name="msgVerseReminderAlarmPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ അലാറം അനുമതി ആവശ്യമാണ്.</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത അധ്യായ വിവരങ്ങൾ ഇല്ലാതാക്കാം.</string>
     <string name="createIssue">ഇഷ്യൂ സൃഷ്ടിക്കുക</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ഫോണ്ടുകൾ : ~%dMB</string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d ന്റെ %2$d</string>
     <string name="pasteCrashLogGithubIssue">ക്രാഷ് ലോഗ് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി. ദയവായി ഇത് ഗിറ്റ്ഹബ് ഇഷ്യൂയിൽ പേസ്റ്റ് ചെയ്യുക.</string>
     <string name="lastCrashLog">അവസാന ക്രാഷ് ലോഗ്</string>
     <string name="titleStorageCleanup">സ്റ്റോറേജ് ക്ലീൻ ആക്കൽ</string>
     <string name="copiedToClipboard">ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി.</string>
-    <string name="titleChapterInfoCleanup">അധ്യായ വിവരം മായ്‌ക്കണോ\?</string>
-    <string name="msgChapterInfoCleanup">സംരക്ഷിച്ച എല്ലാ അധ്യായ വിവരങ്ങളും ഇല്ലാതാക്കപ്പെടും.</string>
     <string name="nFiles" formatted="false">%d ഫയലുകൾ</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d സ്ക്രിപ്റ്റുകളും %2$d ഫോണ്ടുകളും</string>
     <string name="nothingToCleanup">ഇല്ലാതാക്കാൻ ഒന്നുമില്ല.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത തഫ്സീറുകൾ ഇല്ലാതാക്കാം.</string>
-    <string name="titleChapterInfo">അധ്യായ വിവരം</string>
     <string name="labelFreeUpSpace">സ്പേസ് ഉണ്ടാക്കുക</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
 \n%2$s
@@ -355,7 +224,6 @@
     <string name="github">ഗിറ്റ്ഹബ്</string>
     <string name="inPlaces">%sൽ</string>
     <string name="inPlacesMore">%1$s ലും %2$dലും കൂടാതെ മറ്റുള്ളതിലും</string>
-    <string name="labelAdd">ചേർക്കുക</string>
     <string name="noFootnotesForThisVerse">ഈ വാക്യത്തിന് അടിക്കുറിപ്പുകളൊന്നുമില്ല.</string>
     <string name="strMsgShareApp" formatted="false">വിവർത്തനങ്ങളോടൊപ്പം പരിശുദ്ധ ഖുർആൻ വായിക്കാനും പര്യവേക്ഷണം ചെയ്യാനും കഴിയുന്ന സൗജന്യവും ഓപ്പൺ സോഴ്‌സും ആയ ആപ്പാണ് QuranApp. തഫ്‌സിർ, പാരായണം, ഓർമ്മപ്പെടുത്തൽ എന്നിവയും അതിലേറെയും, അതുപോലുള്ളതുമായ സവിശേഷതകളുള്ള നല്ല വൃത്തിയുള്ളതുമായ ഇൻ്റർഫേസ് ഈ ആപ്പിനുണ്ട്.\n\nഇപ്പോൾ തന്നെ ഡൗൺലോഡ് ചെയ്യുക:\n%s</string>
 </resources>

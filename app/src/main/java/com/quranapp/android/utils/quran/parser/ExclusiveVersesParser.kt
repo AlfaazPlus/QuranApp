@@ -2,15 +2,49 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.ExclusiveVerse
-import com.quranapp.android.components.quran.QuranMeta
+import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.db.DatabaseProvider
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
-import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 
-open class ExclusiveVersesParser {
-    protected fun parseFromAssets(
+object ExclusiveVersesParser {
+
+    private data class CachedVerses(
+        val localeTag: String,
+        val verses: List<ExclusiveVerse>,
+    )
+
+    private val cache = ConcurrentHashMap<String, CachedVerses>()
+    private val locks = ConcurrentHashMap<String, Mutex>()
+
+    private fun lockFor(filename: String): Mutex = locks.getOrPut(filename) { Mutex() }
+
+    suspend fun parseFromAssets(
         context: Context,
-        quranMeta: QuranMeta,
-        filename: String
+        filename: String,
+    ): List<ExclusiveVerse> {
+        val localeTag = appLocale().toLanguageTag()
+        val mutex = lockFor(filename)
+
+        return mutex.withLock {
+            val existing = cache[filename]
+            if (existing != null && existing.localeTag == localeTag) {
+                return@withLock existing.verses
+            }
+
+            val verses = parseFromAssetsUncached(context, filename)
+
+            cache[filename] = CachedVerses(localeTag, verses)
+
+            verses
+        }
+    }
+
+    private suspend fun parseFromAssetsUncached(
+        context: Context,
+        filename: String,
     ): List<ExclusiveVerse> {
         val assets = context.assets
 
@@ -19,10 +53,11 @@ open class ExclusiveVersesParser {
         }
 
         val fallbackLangCode = "en"
-        val currentLangCode = with(Locale.getDefault().language) {
+        val locale = appLocale()
+        val currentLangCode = with(locale.language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }
-        val currentCountry = Locale.getDefault().country
+        val currentCountry = locale.country
 
         val fullPath0 = "verses/$filename/$currentLangCode-r$currentCountry"
         val fullPath1 = "verses/$filename/$currentLangCode"
@@ -54,23 +89,25 @@ open class ExclusiveVersesParser {
             map,
             localeTexts ?: fallbackTexts,
             fallbackTexts,
-            quranMeta
         )
     }
 
-    private fun parseVersesInternal(
+    private suspend fun parseVersesInternal(
         context: Context,
         mapStr: String,
         localeTexts: String,
         fallbackTexts: String,
-        quranMeta: QuranMeta
     ): List<ExclusiveVerse> {
+        val repository = DatabaseProvider.getQuranRepository(context)
         val map = JSONObject(mapStr)
         val localeValues = JSONObject(localeTexts)
         val fallbackValues = JSONObject(fallbackTexts)
-        val duas = ArrayList<ExclusiveVerse>()
+        val exclusiveVerses = ArrayList<ExclusiveVerse>()
 
-        map.keys().forEachRemaining { key ->
+        val keys = map.keys()
+
+        while (keys.hasNext()) {
+            val key = keys.next()
             val versesStr = map.getString(key)
 
             val (title, description) = resolveValues(
@@ -106,12 +143,13 @@ open class ExclusiveVersesParser {
                 }
                 comp
             }
+
             val chapters = ArrayList<Int>()
             verses.forEach { if (!chapters.contains(it.first)) chapters.add(it.first) }
 
-            val inChapters = ParserUtils.prepareChapterText(context, quranMeta, chapters, 2)
+            val inChapters = ParserUtils.prepareChapterText(context, repository, chapters, 1)
 
-            duas.add(
+            exclusiveVerses.add(
                 ExclusiveVerse(
                     id = key.toInt(),
                     title = title,
@@ -124,7 +162,7 @@ open class ExclusiveVersesParser {
             )
         }
 
-        return duas
+        return exclusiveVerses
     }
 
     private fun resolveValues(

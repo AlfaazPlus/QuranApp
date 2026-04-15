@@ -1,62 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strTitleAppVersion">Bersyon ng App</string>
-    <string name="strVersion" formatted="false">Bersyon%s</string>
     <string name="strMsgShareApp" formatted="false">QuranApp ay isang libre at open-source na app para basahin at tuklasin ang Noble Qur\'an na may mga pagsasalin. Ang app na ito ay may maganda at malinis na interface na may mga tampok tulad ng tafsir, pagbigkas, paalala at marami pa.
 \n
 \nI-DOWNLOAD NA NGAYON:
 \n%s</string>
-    <string name="strTitleLicenses">Mga Lisensya</string>
     <string name="strLabelClose">Isarado</string>
     <string name="strLabelGotIt">Naintidihan ko</string>
-    <string name="strLabelOkay">Sige</string>
     <string name="strLabelCancel">I-kansel</string>
-    <string name="strLabelSend">Ipadala</string>
-    <string name="labelAdd">I-dagdag</string>
     <string name="strLabelRemove">Alisin</string>
     <string name="strLabelDelete">Tanggalin</string>
     <string name="strLabelRemoveAll">Alisin lahat</string>
     <string name="strLabelCopy">Kopyahin</string>
     <string name="strLabelBack">Bumalik</string>
     <string name="strLabelTop">I-taas</string>
-    <string name="strLabelReset">I-reset</string>
     <string name="strLabelRetry">Ulitin</string>
-    <string name="strLabelDismiss">I-dismiss</string>
-    <string name="strLabelDiscard">Tanggihan</string>
     <string name="strLabelUpdate">Update</string>
-    <string name="strLabelInstall">I-install</string>
-    <string name="strLabelNew">Bago</string>
-    <string name="strLabelPremium">Premium</string>
     <string name="strLabelOn">Naka-On</string>
     <string name="strLabelOff">Naka-Off</string>
     <string name="strLabelThemeDark">Madilim</string>
     <string name="strLabelSystemDefault">System Default</string>
-    <string name="strLabelPreviousChapter">Nakaraang Kabanata</string>
-    <string name="strLabelNextChapter">Susunod na kabanata</string>
-    <string name="strLabelNoPreviousChapter">Walang nakaraang chapter</string>
-    <string name="strLabelNoNextChapter">Walang susunod na chapter</string>
-    <string name="strLabelPreviousJuz">Nakaraang juz</string>
-    <string name="strLabelNextJuz">Susunod na juz</string>
-    <string name="strLabelNoNextJuz">Walang susunod na juz</string>
-    <string name="strLabelContinueChapter">Ipagpatuloy ang kabanata</string>
     <string name="strLabelPreviousVerse">Nakaraang taludtod</string>
     <string name="strLabelNextVerse">Susunod na taludtod</string>
     <string name="labelPreviousTafsir">Nakaraang tafsir</string>
-    <string name="strLabelVersesText">Mga Taludtod</string>
     <string name="strLabelPageNo" formatted="false">Pahina %d</string>
     <string name="strLabelSurah" formatted="false">Surat %s</string>
     <string name="strLabelVerseNo" formatted="false">Taludtod %d</string>
     <string name="strLabelVerses" formatted="false">Mga taludtod %1$d-%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Taludtod : %d</string>
     <string name="strLabelJuzNo" formatted="false">Juz%d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">Taludtod %1$d:%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surat %1$s %2$d: Taludtod %3$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surat %1$s │ Taludtod %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Kabanata No. %1$d │ Taludtod %2$d–%3$d</string>
-    <string name="strTitleAppUser">Gumagamit ng QuranApp</string>
     <string name="strTitleQuran">Koran</string>
     <string name="strTitleHolyQuran">Ang Banal na Koran</string>
     <string name="strTitleMakki">Meccan</string>
@@ -65,8 +43,6 @@
     <string name="strTitleFootnotes">Mga Talababa</string>
     <string name="strTitleReaderChapters">Mga Surat (Mga Kabanata)</string>
     <string name="strTitleReaderJuz">Juz (Para)</string>
-    <string name="strTitleReaderChapters2">Mga Surat</string>
-    <string name="strTitleReaderJuz2">Juz</string>
     <string name="strTitleReaderTextSizeArabic">Laki ng tekstong Arabic</string>
     <string name="strTitleReaderTextSizeTransl">Laki ng tekstong Translation</string>
     <string name="strTitleHelpSupport">Tulong at suporta</string>
@@ -80,18 +56,8 @@
     <string name="strTitleDownloadTranslations">I-Download</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Aalisin ang %d na mga bookmarks\?</string>
     <string name="strTitleTranslDelete">Tatanggalin ang translation\?</string>
-    <string name="strTitleResetReaderSettings">I-reset ang mga settings ng reader\?</string>
-    <string name="strTitleHideAd">Itago ang Patalastas</string>
-    <string name="strTitleRecitationOptions">Mga option</string>
-    <string name="strTitleAutoPlayNext">I-Autoplay ang susunod</string>
-    <string name="strTitleQuickEdit">Mabilis na Pag-edit</string>
     <string name="strTitleShareVerse">I-share ang taludtod</string>
-    <string name="strTitleReportVerse">I-Report ang Taludtod</string>
-    <string name="strTitleSelectReason">Piliin ang dahilan</string>
-    <string name="strTitleExplainIssue">Ipaliwanag ang Issue</string>
     <string name="strTitleVOTD">Taludtod ng Araw</string>
-    <string name="strTitleTopics">Mga paksa</string>
-    <string name="strTitleDuas">Mga Quranic Duas</string>
     <string name="strTitleProphets">Mga Prophet</string>
     <string name="strTitleFeaturedDuas">Mga Dua sa Quran</string>
     <string name="titleSolutionVerses">Mga Solusyon na galing sa Quran</string>
@@ -106,19 +72,14 @@
     <string name="strTitleReaderSettings">Mga Settings ng Mambabasa</string>
     <string name="titleOtherSettings">Iba pang mga settings</string>
     <string name="strTitleAppLanguage">Wika ng App</string>
-    <string name="strTitleChangeLanguage">Baguhin ang wika\?</string>
     <string name="strTitleNoInternet">Walang internet</string>
     <string name="strLabelPlay">I-play</string>
     <string name="strLabelPause">Itigil</string>
     <string name="strLabelBookmark">I-bookmark</string>
     <string name="strLabelRemoveBookmark">Alisin ang Bookmark</string>
-    <string name="strLabelBookmarked">Naka bookmark</string>
     <string name="strLabelContinueReading">Ipagpatuloy ang pagbabasa »</string>
-    <string name="strLabelReading">Nagbabasa</string>
-    <string name="strLabelMostPlaces">Karamihan sa mga pagbanggit</string>
     <string name="strLabelSelectedCount" formatted="false">%d ang napili</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d pang pagsasalin</string>
-    <string name="strLabelAdvanceSharing">Paunang Pagbabahagi</string>
     <string name="strLabelSelectVerse">Piliin ang Mga Taludtod</string>
     <string name="strLabelCurrentVerse">Kasalukuyang taludtod</string>
     <string name="strLabelSelectTranslations">Piliin ang Translations</string>
@@ -126,75 +87,41 @@
     <string name="strLabelWhatsappStyling">Pag-istilo ng Whatsapp</string>
     <string name="strLabelIncludeArabic">Isama ang arabic</string>
     <string name="strLabelIncludeFootnotes">Isama ang mga talababa</string>
-    <string name="strLabelIncludeTranslation">isama ang translation</string>
-    <string name="strLabelIncludeReference">Isama ang mga sanggunian</string>
     <string name="strHintSearch">Hanapin</string>
     <string name="strHintSearchQuran">Mag-type ng termino e.g., \"Buhay\"</string>
-    <string name="strHintSearchTopic">Hanapin Ang Paksa</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">Hanapin ang paksa sa \"%s\"</string>
     <string name="strHintSearchProphet">Hanapin ang prophet</string>
     <string name="strHintSearchChapter">Hanapin ang surat</string>
-    <string name="strHintSearchVerse">Hanapin ang taludtod</string>
-    <string name="strHintSearchJuz">Hanapin ang juz</string>
-    <string name="strHintSearchTranslation">Hanapin ang translation</string>
-    <string name="strHintSearchReciter">Hanapin ang reciter</string>
-    <string name="strHintSearchScript">Hanapin ang script</string>
-    <string name="strHintSearchLanguage">Hanapin ang wika/lengguwahe</string>
     <string name="strHintFromVerse">Mula sa taludtod</string>
     <string name="strHintToVerse">Sa taludtod</string>
-    <string name="strHintFeedbackEmail">Email</string>
-    <string name="strHintFeedbackMessage">Mensahe</string>
-    <string name="strNotFound">Hindi mahanap</string>
     <string name="strLabelApply">I-apply</string>
-    <string name="strLabelRefresh">I-refresh</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">Tignan ang mga translations</string>
-    <string name="strTitleReaderLayoutStylePageView">Tignan ang Pahina</string>
     <string name="strTitleBookmark">Bookmark</string>
     <string name="titleReaderTextSizeTafsir">Laki ng tekstong Tafsir</string>
     <string name="strTitleSettings">Mga Setting</string>
-    <string name="strLabelHide">Itago</string>
     <string name="strLabelEdit">I-edit</string>
     <string name="strLabelDone">Tapos na</string>
-    <string name="strLabelRestart">I-restart</string>
-    <string name="strLabelView">Tignan</string>
     <string name="strLabelOpen">Buksan</string>
     <string name="strLabelOpenInReader">Buksan sa Mambabasa</string>
     <string name="strLabelRead">Basahin »</string>
     <string name="strLabelViewAll">Tignan lahat</string>
     <string name="strLabelSkip">Laktawan</string>
-    <string name="strLabelNotNow">Wag ngayon</string>
-    <string name="strLabelChangeNRestart">Baguhin at I-restart</string>
-    <string name="strLabelAdvertisement">Patalastas</string>
-    <string name="strLabelPrevious">Nakaraan</string>
     <string name="strLabelNext">Susunod</string>
     <string name="strLabelStart">Magsimula</string>
-    <string name="strLabelUpdateQuranApp">I-update ang QuranApp</string>
     <string name="labelDownload">I-Download</string>
-    <string name="strLabelDownloadNow">I-download Ngayon</string>
     <string name="strLabelThemeLight">Maliwanag</string>
-    <string name="strLabelNoPreviousJuz">Walang nakaraang juz</string>
-    <string name="strLabelFullChapter">Basahin ang buong kabanata</string>
     <string name="labelNextTafsir">Susunod na tafsir</string>
     <string name="strLabelVersesWithColon" formatted="false">Mga taludtod : %1$d–%2$d</string>
-    <string name="strTitleReaderJumpToVerse">Tumalon sa taludtod</string>
-    <string name="strLabelVerseCountWithColon" formatted="false">Mga Taludtod: %d</string>
-    <string name="strTitleReaderVerses">Mga Taludtod</string>
     <string name="strTitleVerseOptions">Mga pagpipilian sa taludtod</string>
     <string name="strTitleVerseRecitation">Pagbigkas ng Taludtod</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Surat %1$s : Taludtod %2$d</string>
     <string name="noFootnotesForThisVerse">Walang mga talababa para sa talatang ito.</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Surat %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Pumunta sa Taludtod %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Basahin ang mga Taludtod %1$d - %2$d</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Basahin ang Tafsir ng Taludtod %d</string>
-    <string name="strTitleReaderLayoutStyle">Tignan ang style ng Quran</string>
-    <string name="strLabelRemoveAds">Alisin ang Ads</string>
     <string name="strLabelShare">I-share</string>
     <string name="strLabelReport">I-report</string>
     <string name="strLabelVerseRange">Saklaw ng taludtod</string>
     <string name="strLabelQuickLinks">Mabilis na mga link</string>
     <string name="strLabelLater">Mamaya</string>
-    <string name="strHintFeedback">Isulat ang iyong feedback dito…</string>
     <string name="strHintBookmarkViewerNote">Sumulat ng karagdagang tala sa bookmark na ito dito…</string>
     <string name="strTitleSendFeedback">Magbigay ng feedback</string>
     <string name="strTitleAddNote">Maglagay ng note</string>
@@ -211,13 +138,9 @@
     <string name="strTitleScripts">Mga script</string>
     <string name="audioOption">Opsyon sa Audio</string>
     <string name="playbackSpeed">Bilis ng Playback</string>
-    <string name="strTitleSelectScripts">I-select ang Script</string>
     <string name="strTitleBookmarkDeleteAll">Aalisin lahat ng bookmarks\?</string>
     <string name="strTitleBookmarkDeleteThis">Aalisin ang bookmark na to\?</string>
-    <string name="strTitleRepeatVerse">Ulitin ang taludtod</string>
     <string name="strTitleFeaturedQuran">Itinatampok na Pagbasa</string>
-    <string name="strTitleFeaturedTopics">Paksa sa Quran</string>
-    <string name="strTitleThresholdReached">Naabot na ang Threshold</string>
     <string name="strChapInfoSeeMore">Tingnan ang higit pang impormasyon ›</string>
     <string name="strTitleChapInfoChapterNo">Numero ng Kabanata</string>
     <string name="strTitleChapInfoJuzNo">Numero ng Juz.</string>
@@ -229,19 +152,13 @@
     <string name="strTitleTheme">Tema</string>
     <string name="strMsgThemeDark">Binabawasan ng dark mode ang pagkonsumo ng kuryente.</string>
     <string name="strMsgThemeDefault">Isaayos ayon sa mga setting ng sistema.</string>
-    <string name="strMsgVOTDOn">\"Tumanggap ng abiso araw-araw sa umaga.</string>
-    <string name="strMsgYouAreReadingVerses">Binabasa mo ang mga taludtod:</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d hindi isang wastong bilang ng Surah.</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%1$d hindi wastong bilang ng taludtod para sa Surah No. %2$d</string>
-    <string name="strMsgInvalidVersesRange">Hindi wastong saklaw ng taludtod</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d hindi wastong saklaw ng taludtod para sa Surah No. %3$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d hindi wastong bilang ng Juz (Para).</string>
     <string name="strMsgBookmarkAdded">Matagumpay na naidagdag ang taludtod sa mga bookmark</string>
     <string name="strMsgBookmarkAddFailed">Hindi naidagdag ang taludtod sa mga bookmarks</string>
     <string name="strMsgBookmarkAddedAlready">Ang taludtod ay naidagdag na sa mga bookmark</string>
     <string name="strMsgBookmarkRemoved">Matagumpay na naalis ang taludtod sa mga bookmarks</string>
     <string name="strMsgBookmarkRemoveFailed">Nabigong alisin ang taludtod mula sa mga bookmarks</string>
-    <string name="strMsgBookmarkRemovedAlready">Ang taludtod ay wala sa mga bookmark</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Kabuuang mga resulta na natagpuan sa %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">1 resulta lang ang nakita sa %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Walang nakitang resulta sa %s. Pakisuri ang mga filter ng paghahanap o maghanap sa ibang pagsasalin.</string>
@@ -249,57 +166,33 @@
     <string name="strMsgSearchNoResultsFoundAbsolute">Walang nakitang resulta. Pakisuri ang mga filter ng paghahanap.</string>
     <string name="strMsgSearchWordPart">Maghanap ng bahagi ng salita</string>
     <string name="strMsgSearchWordPartExample">Halimbawa: \'tao\' sa \'sangkatauhan\'</string>
-    <string name="strMsgSearchArabic">Maghanap sa Arabic na teksto</string>
-    <string name="strMsgChangeLanguage">Ire-restart ang app upang maapektuhan ang pagbabago ng wika.</string>
-    <string name="strMsgResetReaderSettings">I-reset ang lahat ng mga setting sa default.</string>
-    <string name="strMsgProphetsOrder">Pagpapakita ng mga propeta sa sunud-sunod na pagkakasunud-sunod</string>
     <string name="strMsgShareRange" formatted="false">Ipasok ang saklaw sa pagitan ng %1$d–%2$d</string>
-    <string name="strMsgTranslLoadFailed">Hindi ma-load ang mga pagsasalin mula sa server. Pakisubukang muli mamaya.</string>
-    <string name="strMsgTranslNoDownloads">Walang magagamit na mga nai-download na pagsasalin</string>
-    <string name="strMsgTranslNoDownloadsAvailable">Walang available na mga download</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Nabigong i-download ang \"%s\".</string>
     <string name="strMsgTranslDownloaded" formatted="false">Na-download: \"%s\".</string>
-    <string name="strMsgRecitationsLoadFailed">Hindi ma-load ang mga pagbigkas mula sa server. Pakisubukang muli mamaya.</string>
-    <string name="strMsgRecitationsNoAvailable">Walang magagamit na mga pagbigkas</string>
-    <string name="strMsgTafsirsNoAvailable">Walang magagamit na mga tafsir</string>
     <string name="strDescAddToBookmarks">Idagdag sa mga bookmark</string>
     <string name="strDescGoBack">Bumalik ka</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, numero ng taludtod %2$d.</string>
     <string name="strMsgNoInternet">Pakisuri ang iyong koneksyon sa internet.</string>
     <string name="strMsgNoInternetLong">Walang koneksyon sa internet. Tiyaking naka-on ang Wi-Fi o cellular data, pagkatapos ay subukang muli.</string>
     <string name="strLabelNavHome">Bahay</string>
-    <string name="strTextPreparing">Inihahanda…</string>
     <string name="strTextPleaseWait">Mangyaring maghintay…</string>
-    <string name="strTextSending">Ipinapadala…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>
-    <string name="strTitleError">Error!</string>
     <string name="strTitleInfo">Impormasyon!</string>
     <string name="strTitleOops">Oops!</string>
-    <string name="strLabelProceed">MAGPATULOY</string>
-    <string name="strTextUpdating">Ina-update…</string>
-    <string name="strTextInstalling">Ini-install…</string>
-    <string name="strTextLoading">Naglo-load…</string>
     <string name="strMsgUpdateAvailable">MAGAGAMIT ANG UPDATE! Mangyaring i-update ang app upang makuha ang pinakabagong mga tampok.</string>
     <string name="strMsgUpdateAvailable4Dialog">MAGAGAMIT ANG UPDATE!\nPaki-update ang app.</string>
     <string name="strLabelAllChapters">Lahat ng Kabanata</string>
-    <string name="strLabelDownloadImage">Mag-download ng larawan</string>
     <string name="strMsgTryLater">Pakisubukang muli mamaya.</string>
-    <string name="strMsgSomethingWrongFixing">Nagkaproblema! Nagsusumikap kaming ayusin ito.</string>
     <string name="strDescClose">Isara</string>
     <string name="strMsgCouldNotOpenPage">Hindi mabuksan ang pahina.</string>
     <string name="strMsgEnterValidRange">Mangyaring magpasok ng wastong hanay</string>
     <string name="strLabelNavSearch">Maghanap</string>
     <string name="strMsgTranslNoneSelected">Walang napiling pagsasalin. Pumunta sa mga setting para maghanap ng mga pagsasalin.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Ang maximum na %d na pagsasalin ay maaaring piliin nang sabay-sabay. Mangyaring alisin sa pagkakapili ang isa bago pumili ng isa pa. Ito ay upang maiwasan ang pagkawala ng pagganap.</string>
-    <string name="strDescVerseNo" formatted="false">Numero ng taludtod %d.</string>
     <string name="strMsgSomethingWrong">Nagkaproblema!</string>
-    <string name="strMsgReportUs">Mangyaring iulat sa amin.</string>
-    <string name="strMsgUpdateDownloaded">NA-DOWNLOAD NA ANG UPDATE! Mangyaring i-install upang makumpleto ang pag-update.</string>
-    <string name="strMsgVerseCredsInvalid">Ang mga kredensyal ng taludtod ay hindi wasto.</string>
     <string name="strMsgUpdateAvailable2Continue">KINAKAILANGAN ANG UPDATE!\nPaki-update ang app para magpatuloy.</string>
     <string name="desc_votd_widget">Kumuha ng bagong taludtod araw-araw</string>
     <string name="autoScroll">Auto scroll</string>
-    <string name="strMsgCannotAutoScrollWhileReciting">Hindi makapag-auto scroll habang nagpe-play ang recitation.</string>
     <string name="msgClearReadHistory">I-clear ang kasaysayan ng pagbasa</string>
     <string name="titleResourceDownloadSource">Pinagmulan ng pag-download ng mapagkukunan</string>
     <string name="msgResourceDownloadSource">Gamitin ang opsyong ito upang mag-download ng data ng Quran mula sa ibang pinagmulan kung hindi gumagana ang isa</string>
@@ -309,12 +202,7 @@
     <string name="strMsgBookmarkDeleteAll">Ang lahat ng mga bookmark ay aalisin.</string>
     <string name="strTitleReadHistory">Basahin ang Kasaysayan</string>
     <string name="strMsgReadShowupHere">Lalabas dito ang iyong nabasang history.</string>
-    <string name="strMsgReadHistoryRemoveFailed">Nabigong alisin ang kasaysayan ng pagbabasa.</string>
-    <string name="strMsgReadHistoryRemovedAlready">Inalis na ang kasaysayan ng pagbabasa.</string>
     <string name="strMsgReadHistoryNoItems">Walang nabasang kasaysayan</string>
-    <string name="strMsgReadHistoryDeleteSelected">Aalisin ang mga piling nabasang kasaysayan.</string>
-    <string name="titleTafsirCleanup">Nagbigay ka ba ng paliwanag?</string>
-    <string name="msgTafsirCleanup" formatted="false">Ang lahat ng nakaimbak na tafsir mula sa %s ay tatanggalin.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nothingToCleanup">Walang dapat linisin.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d script and %2$d font</string>
@@ -322,12 +210,8 @@
     <string name="onboardDescLanguage">I-personalize ang app sa iyong wika. Maaari mong baguhin ito palagi sa ibang pagkakataon.</string>
     <string name="msgChapterAddedToFavourites">Idinagdag ang Surah sa mga paborito.</string>
     <string name="msgChapterRemovedFromFavourites">Inalis ang Surah sa mga paborito.</string>
-    <string name="textTranslationReciterInfo">Wika: %1$s \nAklat: %2$s</string>
     <string name="textNoLogsFound">Walang nakitang mga log</string>
-    <string name="msgRemovedFromFavourites">Inalis sa mga paborito</string>
     <string name="msgScriptCleanup" formatted="false">%s script at lahat ng nakaimbak nitong font ay tatanggalin. Kakailanganin mong muling i-download upang magamit ang mga ito.</string>
-    <string name="titleChapterInfoCleanup">I-clear ang impormasyon ng kabanata?</string>
-    <string name="msgChapterInfoCleanup">Ang lahat ng naka-save na impormasyon ng kabanata ay tatanggalin.</string>
     <string name="nItems" formatted="false">%d items</string>
     <string name="noItems">Walang item</string>
     <string name="verseSyncOn">Pag-sync ng taludtod : NAKA-ON</string>
@@ -340,18 +224,8 @@
     <string name="onboardDescTranslations">Maaari mong baguhin ito palagi sa ibang pagkakataon. Maaari kang mag-download ng higit pang mga pagsasalin mula sa mga setting.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Pagsasalin</string>
-    <string name="titleAddToFavourites">Idagdag sa mga paborito</string>
-    <string name="msgAddedToFavourites">Idinagdag sa mga paborito</string>
     <string name="titleRemoveFromFavourites">Alisin sa mga paborito</string>
     <string name="msgNoFavouriteChapters">Magdagdag ng isang kabanata sa mga paborito upang makita dito.</string>
-    <string name="msgRecitaionFailedToDownload" formatted="false">Nabigong i-download ang \"%1$s\" para sa reciter na \"%2$s\".</string>
-    <string name="msgExportEmpty">Walang mga bookmark na ie-export</string>
-    <string name="msgImportFailed">Nabigong mag-import. Hindi sinusuportahang file.</string>
-    <string name="msgImportSuccess">Matagumpay na na-import</string>
-    <string name="msgRecitaionDeleleSurah" formatted="false">Ang lahat ng pagbigkas ng \"%1$s\" para sa reciter na \"%2$s\" ay tatanggalin.</string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false">Tinanggal ang mga pagbigkas ng \"%1$s\" para sa reciter na \"%2$s\".</string>
-    <string name="msgInvalidParams">Di-wastong mga param</string>
-    <string name="msgTafsirLoadFailed">Nabigong i-load ang tafsir</string>
     <string name="strPreviewTextTransl">Sa Ngalan ng Allâh, ang Pinakamaawain, ang Pinakamaawain</string>
     <string name="msgClearSearchHistory">I-clear ang kasaysayan ng paghahanap</string>
     <string name="msgArabicTextToggle">Ang pag-disable sa feature na ito ay magtatago ng Arabic verse text mula sa buong app.</string>
@@ -359,13 +233,10 @@
     <string name="labelImport">Mag-import</string>
     <string name="msgExportImportBookmarks">I-export o i-import ang iyong mga bookmark kasama ng mga tala.</string>
     <string name="msgExportSuccess">Matagumpay na na-export</string>
-    <string name="msgRecitaionDownloaded" formatted="false">Na-download ang \"%1$s\" para sa reciter na \"%2$s\".</string>
     <string name="labelImportExportEverything">Lahat</string>
     <string name="warnImportSettings">BABALA: I-override ng pag-import ng mga setting ang iyong kasalukuyang mga setting.</string>
     <string name="startAutoScroll">Simulan ang auto scroll</string>
     <string name="autoScrollSpeed">Itakda ang bilis</string>
     <string name="labelImportExportBookmarks">Mga Bookmark lang</string>
-    <string name="onboardDescReciter">Maaari mong baguhin ito palagi sa ibang pagkakataon. Makakahanap ka ng higit pang mga reciter sa mga setting.</string>
-    <string name="strMsgReadHistoryRemoved">Matagumpay na naalis ang kasaysayan ng pagbabasa.</string>
     <string name="labelImportExportSettings">Mga Setting lang</string>
 </resources>

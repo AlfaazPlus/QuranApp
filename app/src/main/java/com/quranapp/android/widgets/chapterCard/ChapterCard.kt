@@ -28,8 +28,8 @@ import com.quranapp.android.utils.extensions.setTextSizePx
 import com.quranapp.android.utils.extensions.updateMarginHorizontal
 import com.quranapp.android.utils.extensions.updatePaddings
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.views.reader.ChapterIcon
-import java.util.Locale
 
 open class ChapterCard @JvmOverloads constructor(
     context: Context,
@@ -181,7 +181,7 @@ open class ChapterCard @JvmOverloads constructor(
 
     private fun updateChapterNumber(chapterNo: Int) {
         findViewById<TextView>(R.id.chapterCardSerial)?.let {
-            it.text = String.format(Locale.getDefault(), "%d", chapterNo)
+            it.text = String.format(appLocale(), "%d", chapterNo)
         }
 
         findViewById<ChapterIcon?>(R.id.chapterCardIcon)?.setChapterNumber(chapterNo)

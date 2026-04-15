@@ -1,0 +1,101 @@
+{
+  "reciters": [
+    {
+      "id": "ibrahim_walk",
+      "is_default": true,
+      "lang_code": "en",
+      "lang_name": "English",
+      "reciter": "Ibrahim Walk",
+      "book": "Sahih International",
+      "url_template": "https://github.com/dabatase/en_ibrahim_walk/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ibrahim_walk.json.gz",
+      "timing_version": 1,
+      "translations": {}
+    },
+    {
+      "id": "fooladvand_hedayatfar",
+      "lang_code": "fa",
+      "lang_name": "فارسی",
+      "reciter": "Fooladvand Hedayatfar",
+      "url_template": "https://github.com/dabatase/fa_fooladvand_hedayatfar/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/fooladvand_hedayatfar.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "fa": "فولادوند - هدایتفر"
+      }
+    },
+    {
+      "id": "shamshad_ali_khan",
+      "lang_code": "ur",
+      "lang_name": "اردو",
+      "reciter": "Shamshad Ali Khan",
+      "book": "Fateh Muhammad Jalandhari",
+      "url_template": "https://github.com/dabatase/ur_shamshad_ali_khan/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/shamshad_ali_khan.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "ur": "شمشاد علی خان"
+      }
+    },
+    {
+      "id": "bengali",
+      "lang_code": "bn",
+      "lang_name": "বাংলা",
+      "reciter": "Bengali Quran translation audio",
+      "url_template": "https://github.com/dabatase/bn_bengali/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/bengali.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "bn": "বাংলা কোরআন অনুবাদের অডিও"
+      }
+    },
+    {
+      "id": "russian",
+      "lang_code": "ru",
+      "lang_name": "русский",
+      "reciter": "Russian Quran translation audio",
+      "url_template": "https://github.com/dabatase/ru_russian/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/russian.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "ru": "Аудиоперевод Корана на русский язык"
+      }
+    },
+    {
+      "id": "chinese",
+      "lang_code": "zh",
+      "lang_name": "简体中文",
+      "reciter": "Chinese Quran translation audio",
+      "url_template": "https://github.com/dabatase/zh_chinese/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/chinese.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "zh": "中文《古兰经》译本音频"
+      }
+    },
+    {
+      "id": "german",
+      "lang_code": "de",
+      "lang_name": "Deutsch",
+      "reciter": "German Quran translation audio",
+      "url_template": "https://github.com/dabatase/de_german/releases/download/v2/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/german.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "de": "Deutsche Koran Übersetzung Audio"
+      }
+    },
+    {
+      "id": "french",
+      "lang_code": "fr",
+      "lang_name": "Français",
+      "reciter": "French Quran translation audio",
+      "url_template": "https://github.com/dabatase/fr_french/releases/download/v2/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/french.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "fr": "Traduction audio du Coran en français"
+      }
+    }
+  ]
+}

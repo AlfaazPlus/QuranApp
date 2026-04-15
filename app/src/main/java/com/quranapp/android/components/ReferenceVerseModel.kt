@@ -1,23 +1,38 @@
-/*
- * Created by Faisal Khan on (c) 13/8/2021.
- */
 package com.quranapp.android.components
 
-import java.io.Serializable
+import android.os.Bundle
 
-class ReferenceVerseModel(
-    private val showChaptersSugg: Boolean = false,
+data class ReferenceVerseModel(
     val title: String,
     val desc: String?,
     val translSlugs: Array<String>,
     val chapters: List<Int>,
-    val verses: List<String>
-) : Serializable {
-    fun showChaptersSugg(): Boolean {
-        return showChaptersSugg
+    val verses: List<String>,
+) {
+
+    fun toBundle(): Bundle {
+        return Bundle().apply {
+            putString("title", title)
+            putString("desc", desc)
+            putStringArray("translSlugs", translSlugs)
+            putIntegerArrayList("chapters", ArrayList(chapters))
+            putStringArrayList("verses", ArrayList(verses))
+        }
     }
 
-    override fun toString(): String {
-        return "showChaptersSugg:$showChaptersSugg, title: $title, desc: $desc, desc: $translSlugs, chapters: $chapters, verses: $verses"
+    companion object {
+        fun fromBundle(bundle: Bundle?): ReferenceVerseModel? {
+            if (bundle == null) {
+                return null
+            }
+
+            return ReferenceVerseModel(
+                title = bundle.getString("title") ?: "",
+                desc = bundle.getString("desc"),
+                translSlugs = bundle.getStringArray("translSlugs") ?: emptyArray(),
+                chapters = bundle.getIntegerArrayList("chapters") ?: emptyList(),
+                verses = bundle.getStringArrayList("verses") ?: emptyList(),
+            )
+        }
     }
 }

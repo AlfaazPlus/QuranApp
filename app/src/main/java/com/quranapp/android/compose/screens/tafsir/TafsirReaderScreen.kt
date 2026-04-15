@@ -1,10 +1,10 @@
 package com.quranapp.android.compose.screens.tafsir
 
-import ThemeUtilsV2
+import ThemeUtils
+import android.content.Intent
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -23,22 +23,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -57,165 +56,141 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivitySettings
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils.isRtlLanguage
 import com.quranapp.android.viewModels.TafsirContentState
 import com.quranapp.android.viewModels.TafsirReaderEvent
+import com.quranapp.android.viewModels.TafsirReaderUiState
 import com.quranapp.android.viewModels.TafsirReaderViewModel
 
 @Composable
 fun TafsirReaderScreen(
     showFontSizeDialog: () -> Unit,
-    onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val viewModel = viewModel<TafsirReaderViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var webViewScrollY by remember { mutableIntStateOf(0) }
     var webViewRef by remember { mutableStateOf<WebView?>(null) }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    val onEvent = viewModel::onEvent
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
             TafsirTopBar(
-                onOpenSettings = onOpenSettings
+                uiState = uiState,
             )
-
-            // Content
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
+        },
+        bottomBar = {
+            TafsirBottomNavigation(
+                uiState = uiState,
+                onEvent = onEvent,
+            )
+        },
+        floatingActionButton = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                when (val contentState = uiState.contentState) {
-                    is TafsirContentState.Loading -> {
-                        LoadingContent()
-                    }
-
-                    is TafsirContentState.Success -> {
-                        TafsirWebViewContent(
-                            text = contentState.tafsir.text,
-                            verses = contentState.tafsir.verses,
-                            onWebViewCreated = { webViewRef = it },
-                            onScrollChanged = { scrollY -> webViewScrollY = scrollY },
-                            onGoToTop = { webViewRef?.scrollTo(0, 0) },
-                        )
-                    }
-
-                    is TafsirContentState.Error -> {
-                        ErrorContent(
-                            message = contentState.message,
-                            canRetry = contentState.canRetry,
-                            onRetry = { viewModel.onEvent(TafsirReaderEvent.Retry) }
-                        )
-                    }
-
-                    is TafsirContentState.NoInternet -> {
-                        NoInternetContent(
-                            onRetry = { viewModel.onEvent(TafsirReaderEvent.Retry) }
-                        )
-                    }
-                }
-
-                // FABs
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp)
-                        .navigationBarsPadding(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                AnimatedVisibility(
+                    visible = webViewScrollY > 400,
+                    enter = fadeIn() + slideInVertically { it },
+                    exit = fadeOut() + slideOutVertically { it }
                 ) {
-                    AnimatedVisibility(
-                        visible = webViewScrollY > 400,
-                        enter = fadeIn() + slideInVertically { it },
-                        exit = fadeOut() + slideOutVertically { it }
-                    ) {
-                        FloatingActionButton(
-                            onClick = { webViewRef?.scrollTo(0, 0) },
-                            containerColor = colorScheme.primaryContainer,
-                            contentColor = colorScheme.onPrimaryContainer,
-                            elevation = FloatingActionButtonDefaults.elevation(2.dp),
-                            modifier = Modifier.size(48.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_chevron_left),
-                                contentDescription = stringResource(R.string.strLabelTop),
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .rotate(90f)
-                            )
-                        }
-                    }
-
                     FloatingActionButton(
-                        onClick = showFontSizeDialog,
+                        onClick = { webViewRef?.scrollTo(0, 0) },
                         containerColor = colorScheme.primaryContainer,
                         contentColor = colorScheme.onPrimaryContainer,
                         elevation = FloatingActionButtonDefaults.elevation(2.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.icon_font_size),
-                            contentDescription = stringResource(R.string.titleReaderTextSizeTafsir),
-                            modifier = Modifier.size(24.dp)
+                            painter = painterResource(R.drawable.dr_icon_chevron_left),
+                            contentDescription = stringResource(R.string.strLabelTop),
+                            modifier = Modifier
+                                .size(24.dp)
+                                .rotate(90f)
                         )
                     }
                 }
-            }
 
-            TafsirBottomNavigation()
+                FloatingActionButton(
+                    onClick = showFontSizeDialog,
+                    containerColor = colorScheme.primaryContainer,
+                    contentColor = colorScheme.onPrimaryContainer,
+                    elevation = FloatingActionButtonDefaults.elevation(2.dp),
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.icon_font_size),
+                        contentDescription = stringResource(R.string.titleReaderTextSizeTafsir),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (val contentState = uiState.contentState) {
+                is TafsirContentState.Loading -> LoadingContent()
+
+                is TafsirContentState.Success -> {
+                    TafsirWebViewContent(
+                        text = contentState.tafsir.text,
+                        verses = contentState.tafsir.verses,
+                        tafsirKey = uiState.tafsirKey,
+                        textSizeMultiplier = uiState.textSizeMultiplier,
+                        langCode = uiState.tafsirInfo?.langCode,
+                        onWebViewCreated = { webViewRef = it },
+                        onScrollChanged = { scrollY -> webViewScrollY = scrollY },
+                    )
+                }
+
+                is TafsirContentState.Error -> {
+                    ErrorContent(
+                        message = contentState.message,
+                        canRetry = contentState.canRetry,
+                        onRetry = { onEvent(TafsirReaderEvent.Retry) }
+                    )
+                }
+
+                is TafsirContentState.NoInternet -> {
+                    NoInternetContent(
+                        onRetry = { onEvent(TafsirReaderEvent.Retry) }
+                    )
+                }
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TafsirTopBar(
-    onOpenSettings: () -> Unit
+    uiState: TafsirReaderUiState,
 ) {
-    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    val viewModel = viewModel<TafsirReaderViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
-
-    val chapterName = uiState.chapterMeta?.name ?: ""
+    val context = LocalContext.current
+    val chapterName = uiState.chapterMeta?.getCurrentName() ?: ""
     val chapterNo = uiState.chapterNo
     val verseNo = uiState.verseNo
 
-    Surface(
-        color = colorScheme.surfaceContainer,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .padding(horizontal = 12.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Back button
-            IconButton(
-                onClick = { backDispatcher?.onBackPressed() },
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.dr_icon_chevron_left),
-                    contentDescription = stringResource(R.string.strDescClose),
-                    tint = colorScheme.onSurface,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            // Title
+    AppBar(
+        titleContent = {
             Column(
                 modifier = Modifier
-                    .weight(1f)
+                    .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -238,57 +213,58 @@ private fun TafsirTopBar(
                     textAlign = TextAlign.Center
                 )
             }
-
-            // Settings button
+        },
+        actions = {
             IconButton(
-                onClick = onOpenSettings,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
+                onClick = {
+                    val intent = Intent(context, ActivitySettings::class.java).apply {
+                        putExtra(Keys.NAV_DESTINATION, SettingRoutes.TAFSIR)
+                    }
+                    context.startActivity(intent, null)
+                },
             ) {
                 Icon(
                     painter = painterResource(R.drawable.dr_icon_translations),
                     contentDescription = stringResource(R.string.strTitleSelectTafsir),
                     tint = colorScheme.onSurface,
-                    modifier = Modifier.size(24.dp)
                 )
             }
-        }
-    }
+        },
+    )
 }
 
 @Composable
 private fun TafsirWebViewContent(
     text: String,
     verses: List<String>,
+    tafsirKey: String,
+    textSizeMultiplier: Float,
+    langCode: String?,
     onWebViewCreated: (WebView) -> Unit,
     onScrollChanged: (Int) -> Unit,
-    onGoToTop: () -> Unit,
 ) {
-    val viewModel = viewModel<TafsirReaderViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
-
     val context = LocalContext.current
-    val isDarkTheme = ThemeUtilsV2.isDarkTheme()
+    val isDarkTheme = ThemeUtils.observeDarkTheme()
 
     val htmlContent = remember(
         text,
         verses,
-        uiState.textSizeMultiplier,
+        textSizeMultiplier,
         isDarkTheme,
-        uiState.tafsirInfo?.langCode
+        langCode,
     ) {
         buildTafsirHtml(
             context = context,
             content = text,
             verses = verses,
-            fontSizePercent = (uiState.textSizeMultiplier * 100).toInt(),
+            fontSizePercent = (textSizeMultiplier * 100).toInt(),
             isDark = isDarkTheme,
-            langCode = uiState.tafsirInfo?.langCode ?: "en"
+            langCode = langCode ?: "en"
         )
     }
 
     var isLoading by remember { mutableStateOf(true) }
+    var lastLoad by remember { mutableStateOf<Pair<String, String>?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
@@ -297,33 +273,35 @@ private fun TafsirWebViewContent(
                     setBackgroundColor(0x00000000)
                     settings.javaScriptEnabled = true
                     overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
-
                     webChromeClient = WebChromeClient()
-                    webViewClient = TafsirWebViewClient(
-                        tafsirKey = uiState.tafsirKey,
-                        onPageFinished = { isLoading = false }
-                    )
-
                     setOnScrollChangeListener { _, _, scrollY, _, _ ->
                         onScrollChanged(scrollY)
                     }
-
                     onWebViewCreated(this)
                 }
             },
             update = { webView ->
-                webView.loadDataWithBaseURL(
-                    null,
-                    htmlContent,
-                    "text/html; charset=UTF-8",
-                    "utf-8",
-                    null
+                webView.webViewClient = TafsirWebViewClient(
+                    tafsirKey = tafsirKey,
+                    onPageFinished = { isLoading = false }
                 )
+                val signature = htmlContent to tafsirKey
+                
+                if (lastLoad != signature) {
+                    lastLoad = signature
+                    isLoading = true
+                    webView.loadDataWithBaseURL(
+                        null,
+                        htmlContent,
+                        "text/html; charset=UTF-8",
+                        "utf-8",
+                        null
+                    )
+                }
             },
             modifier = Modifier.fillMaxSize()
         )
 
-        // Loading overlay
         AnimatedVisibility(
             visible = isLoading,
             enter = fadeIn(),
@@ -459,7 +437,7 @@ private fun NoInternetContent(onRetry: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Please check your connection and try again",
+                text = stringResource(R.string.strMsgNoInternetLong),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -476,16 +454,19 @@ private fun NoInternetContent(onRetry: () -> Unit) {
 }
 
 @Composable
-private fun TafsirBottomNavigation() {
-    val viewModel = viewModel<TafsirReaderViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
-
+private fun TafsirBottomNavigation(
+    uiState: TafsirReaderUiState,
+    onEvent: (TafsirReaderEvent) -> Unit,
+) {
     val hasPrevious = uiState.verseNo > 1
-    val totalVerses = uiState.chapterMeta?.verseCount ?: 0
+    val totalVerses = uiState.chapterMeta?.surah?.ayahCount ?: 0
     val verseNo = uiState.verseNo
     val hasNext = verseNo < totalVerses
 
-    Surface(color = colorScheme.surface, shadowElevation = 5.dp) {
+    Surface(
+        color = colorScheme.surfaceContainer,
+        shadowElevation = 12.dp,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -495,20 +476,15 @@ private fun TafsirBottomNavigation() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             NavigationButton(
-                onClick = {
-                    viewModel.onEvent(TafsirReaderEvent.PreviousVerse)
-                },
+                onClick = { onEvent(TafsirReaderEvent.PreviousVerse) },
                 enabled = hasPrevious,
                 label = stringResource(R.string.labelPreviousTafsir),
                 isNext = false,
                 modifier = Modifier.weight(1f)
             )
 
-
             NavigationButton(
-                onClick = {
-                    viewModel.onEvent(TafsirReaderEvent.NextVerse)
-                },
+                onClick = { onEvent(TafsirReaderEvent.NextVerse) },
                 enabled = hasNext,
                 label = stringResource(R.string.labelNextTafsir),
                 isNext = true,

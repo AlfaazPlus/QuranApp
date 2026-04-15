@@ -43,4 +43,8 @@ public class TypefaceSpan2 extends MetricAffectingSpan {
 
         paint.setTypeface(typeface);
     }
+
+    public Typeface getTypeface() {
+        return typeface;
+    }
 }

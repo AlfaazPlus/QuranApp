@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
-import com.quranapp.android.utils.maangers.ResourceDownloadStatus
-import com.quranapp.android.utils.maangers.TafsirDownloadManager
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.utils.sharedPrefs.SPReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +52,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private var initialTafsirKey: String? = null
 
     init {
-        initialTafsirKey = SPReader.getSavedTafsirKey(context)
+        initialTafsirKey = ReaderPreferences.getTafsirId()
         TafsirDownloadManager.initialize(context)
         loadDownloadedTafsirKeys()
         loadTafsirs(force = SPAppActions.getFetchTafsirsForce(context))
@@ -94,10 +94,6 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun hasTafsirSelectionChanged(): Boolean {
-        return SPReader.getSavedTafsirKey(context) != initialTafsirKey
-    }
-
     private fun loadTafsirs(force: Boolean) {
         if (force && !NetworkStateReceiver.isNetworkConnected(context)) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
@@ -111,7 +107,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
                 val models = TafsirManager.getModels()
 
                 if (!models.isNullOrEmpty()) {
-                    val savedKey = SPReader.getSavedTafsirKey(context)
+                    val savedKey = ReaderPreferences.getTafsirId()
                     val groups = parseAvailableTafsirs(models)
                     _uiState.update {
                         it.copy(
@@ -131,7 +127,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun parseAvailableTafsirs(tafsirs: Map<String, List<TafsirInfoModel>>): List<TafsirGroupModel> {
-        val savedTafsirKey = SPReader.getSavedTafsirKey(context)
+        val savedTafsirKey = ReaderPreferences.getTafsirId()
         val tafsirGroups = LinkedList<TafsirGroupModel>()
 
         for (langCode in tafsirs.keys) {
@@ -176,7 +172,9 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun selectTafsir(key: String) {
-        SPReader.setSavedTafsirKey(context, key)
+        viewModelScope.launch {
+            ReaderPreferences.setTafsirId(key)
+        }
 
         _uiState.update { state ->
             val updatedGroups = state.tafsirGroups.map { group ->

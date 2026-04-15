@@ -1,9 +1,8 @@
 package com.quranapp.android.utils.sharedPrefs
 
-import ThemeUtilsV2
+import ThemeUtils
 import android.content.Context
 import androidx.core.content.edit
-import com.quranapp.android.utils.app.DownloadSourceUtils.DOWNLOAD_SRC_DEFAULT
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,13 +16,8 @@ object SPAppConfigs {
     private const val KEY_RECITATIONS_VERSION = "key.versions.recitations"
     private const val KEY_RECITATION_TRANSLATIONS_VERSION = "key.versions.recitation_translations"
     private const val KEY_TAFSIRS_VERSION = "key.versions.tafsirs"
-    private const val KEY_RESOURCE_DOWNLOAD_SRC = "key.resource.download_src"
 
     const val LOCALE_DEFAULT = "default"
-    const val THEME_MODE_DEFAULT = "app.theme.default"
-    const val THEME_MODE_LIGHT = "app.theme.light"
-    const val THEME_MODE_DARK = "app.theme.dark"
-
 
     private fun sp(context: Context) = context.getSharedPreferences(
         SP_APP_CONFIGS,
@@ -37,12 +31,13 @@ object SPAppConfigs {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            ThemeUtilsV2.setThemeMode(themeMode)
+            ThemeUtils.setThemeMode(themeMode)
         }
     }
 
     fun getThemeMode(ctx: Context): String =
-        sp(ctx).getString(KEY_APP_THEME, THEME_MODE_DEFAULT) ?: THEME_MODE_DEFAULT
+        sp(ctx).getString(KEY_APP_THEME, ThemeUtils.THEME_MODE_DEFAULT)
+            ?: ThemeUtils.THEME_MODE_DEFAULT
 
     @JvmStatic
     fun setLocale(ctx: Context, locale: String?) {
@@ -93,21 +88,6 @@ object SPAppConfigs {
     fun setTafsirsVersion(ctx: Context, version: Long) {
         sp(ctx).edit() {
             putLong(KEY_TAFSIRS_VERSION, version)
-        }
-    }
-
-    @JvmStatic
-    fun getResourceDownloadSrc(ctx: Context): String {
-        return sp(ctx).getString(
-            KEY_RESOURCE_DOWNLOAD_SRC,
-            DOWNLOAD_SRC_DEFAULT
-        ) ?: DOWNLOAD_SRC_DEFAULT
-    }
-
-    @JvmStatic
-    fun setResourceDownloadSrc(ctx: Context, src: String?) {
-        sp(ctx).edit(commit = true) {
-            putString(KEY_RESOURCE_DOWNLOAD_SRC, src)
         }
     }
 }

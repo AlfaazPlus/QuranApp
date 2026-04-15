@@ -1,5 +1,10 @@
 package com.quranapp.android.db.search;
 
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.COL_DATE;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.COL_TEXT;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.TABLE_NAME;
+import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry._ID;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,11 +12,8 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
-import static com.quranapp.android.db.bookmark.BookmarkContract.BookmarkEntry.COL_DATETIME;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.COL_TEXT;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry.TABLE_NAME;
-import static com.quranapp.android.db.search.SearchHistoryContract.SearchEntry._ID;
 
 import com.quranapp.android.components.search.SearchHistoryModel;
 import com.quranapp.android.components.search.SearchResultModelBase;
@@ -20,8 +22,8 @@ import com.quranapp.android.utils.univ.DateUtils;
 import java.util.ArrayList;
 
 public class SearchHistoryDBHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "SearchHistory.db";
     public static final int DB_VERSION = 1;
+    private static final String DB_NAME = "SearchHistory.db";
 
 
     public SearchHistoryDBHelper(@NonNull Context context) {
@@ -62,7 +64,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COL_TEXT, text);
-        values.put(COL_DATETIME, DateUtils.getDateTimeNow());
+        values.put(COL_DATE, DateUtils.getDateTimeNow());
 
         long rowId = db.insert(TABLE_NAME, null, values);
         boolean inserted = rowId != -1;
@@ -109,7 +111,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         String[] whereArgs = {text.toLowerCase()};
 
         ContentValues values = new ContentValues();
-        values.put(COL_DATETIME, DateUtils.getDateTimeNow());
+        values.put(COL_DATE, DateUtils.getDateTimeNow());
 
         long rowsAffected = db.update(TABLE_NAME, values, whereClause, whereArgs);
         return rowsAffected > 0;
@@ -118,7 +120,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
     public ArrayList<SearchResultModelBase> getHistories(String query) {
         SQLiteDatabase db = getReadableDatabase();
 
-        String sortOrder = COL_DATETIME + " DESC";
+        String sortOrder = COL_DATE + " DESC";
 
         final String selection;
         final String[] selectionArgs;
@@ -137,7 +139,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
             String text = cursor.getString(cursor.getColumnIndexOrThrow(COL_TEXT));
-            String date = cursor.getString(cursor.getColumnIndexOrThrow(COL_DATETIME));
+            String date = cursor.getString(cursor.getColumnIndexOrThrow(COL_DATE));
 
             SearchHistoryModel historyModel = new SearchHistoryModel(id, text, date);
             histories.add(historyModel);

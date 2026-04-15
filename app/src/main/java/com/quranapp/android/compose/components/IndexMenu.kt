@@ -31,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -55,8 +56,9 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityAbout
 import com.quranapp.android.activities.ActivityBookmark
 import com.quranapp.android.activities.ActivityExportImport
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.activities.ActivityStorageCleanup
-import com.quranapp.android.activities.readerSettings.ActivitySettings
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.app.InfoUtils
 import verticalFadingEdge
@@ -80,7 +82,7 @@ private fun getItems(): List<IndexMenuItemGroup> {
         IndexMenuItemGroup(
             listOf(
                 IndexMenuItem(
-                    R.drawable.dr_icon_bookmarks,
+                    R.drawable.ic_bookmarks,
                     R.string.strTitleBookmarks,
                     onClick = {
                         it.startActivity(Intent(it, ActivityBookmark::class.java))
@@ -163,19 +165,21 @@ fun IndexMenuButton() {
     val sheetMaxWidth = config.screenWidthDp.dp * .95f
     val sheetWidthDiff = (config.screenWidthDp.dp - sheetMaxWidth) / 2
 
-    IconButton(
-        modifier = Modifier.size(40.dp),
-        onClick = {
-            showMenu = true
+    SimpleTooltip(text = stringResource(R.string.strTitleMenu)) {
+        IconButton(
+            modifier = Modifier.size(40.dp),
+            onClick = {
+                showMenu = true
+            }
+        ) {
+            Icon(
+                painter = painterResource(
+                    R.drawable.dr_icon_hamburger
+                ),
+                contentDescription = stringResource(R.string.strTitleMenu),
+                tint = colorScheme.onSurface
+            )
         }
-    ) {
-        Icon(
-            painter = painterResource(
-                R.drawable.dr_icon_hamburger
-            ),
-            contentDescription = stringResource(R.string.strTitleMenu),
-            tint = colorScheme.onSurface
-        )
     }
 
 
@@ -192,6 +196,7 @@ fun IndexMenuButton() {
         sheetState = sheetState,
         containerColor = Color.Transparent,
         contentColor = colorScheme.onSurface,
+        shape = shapes.large,
         scrimColor = Color.Black.alpha(0.5f),
         dragHandle = null,
         sheetMaxWidth = sheetMaxWidth,
@@ -277,7 +282,7 @@ fun IndexMenuContent(
             ) {
                 items.forEachIndexed { groupIndex, group ->
                     group.items.forEachIndexed { _, item ->
-                        IndexMenuItemRow(item)
+                        IndexMenuItemRow(item, onClose)
                     }
 
                     if (groupIndex < items.lastIndex) {
@@ -295,7 +300,8 @@ fun IndexMenuContent(
 
 @Composable
 private fun IndexMenuItemRow(
-    item: IndexMenuItem
+    item: IndexMenuItem,
+    onClose: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -304,6 +310,7 @@ private fun IndexMenuItemRow(
             .fillMaxWidth()
             .clickable(onClick = {
                 item.onClick(context)
+                onClose()
             })
             .padding(horizontal = 20.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically

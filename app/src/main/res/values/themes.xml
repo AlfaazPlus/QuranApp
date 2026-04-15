@@ -40,15 +40,4 @@
         <item name="android:navigationBarColor">@color/colorBGPage</item>
     </style>
 
-    <style name="Theme.QuranApp.Reader">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.QuranApp.ComposeActivity">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
 </resources>

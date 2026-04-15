@@ -3,7 +3,8 @@ package com.quranapp.android.db.search;
 import android.provider.BaseColumns;
 
 public final class SearchHistoryContract {
-    private SearchHistoryContract() {}
+    private SearchHistoryContract() {
+    }
 
     public static class SearchEntry implements BaseColumns {
         public static final String TABLE_NAME = "SearchHistory";

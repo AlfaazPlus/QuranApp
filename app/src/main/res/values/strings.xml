@@ -1,74 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strTitleAppVersion">App version</string>
-    <string name="strVersion" formatted="false">Version %s</string>
     <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
     <string name="strTitleDownloadSunnahApp" translatable="false">Download SunnahApp</string>
-    <string name="strTitleLicenses">Licenses</string>
     <string name="strLabelClose">Close</string>
-    <string name="strLabelOkay">Okay</string>
     <string name="strLabelGotIt">Got it</string>
     <string name="strLabelCancel">Cancel</string>
     <string name="strLabelApply">Apply</string>
-    <string name="strLabelSend">Send</string>
-    <string name="labelAdd">Add</string>
     <string name="strLabelRemove">Remove</string>
     <string name="strLabelDelete">Delete</string>
     <string name="strLabelDownloaded">Downloaded</string>
     <string name="strTitleDeleteTafsir">Delete Tafsir?</string>
-    <string name="strMsgDeleteTafsir" formatted="false">Are you sure you want to delete \"%s\"? This will remove the downloaded tafsir data from your device.</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Are you sure you want to delete “%s”? This will remove the downloaded tafsir data from your device.</string>
     <string name="strLabelRemoveAll">Remove all</string>
     <string name="strLabelCopy">Copy</string>
     <string name="strLabelBack">Back</string>
     <string name="strLabelTop">Top</string>
-    <string name="strLabelReset">Reset</string>
     <string name="strLabelRetry">Retry</string>
-    <string name="strLabelRefresh">Refresh</string>
-    <string name="strLabelDismiss">Dismiss</string>
-    <string name="strLabelDiscard">Discard</string>
-    <string name="strLabelHide">Hide</string>
     <string name="strLabelEdit">Edit</string>
     <string name="strLabelDone">Done</string>
-    <string name="strLabelRestart">Restart</string>
-    <string name="strLabelView">View</string>
     <string name="strLabelOpen">Open</string>
     <string name="strLabelOpenInReader">Open in Reader</string>
     <string name="strLabelRead">Read »</string>
     <string name="strLabelViewAll">View all</string>
-    <string name="strLabelChangeNRestart">Change &amp; Restart</string>
-    <string name="strLabelAdvertisement">Advertisement</string>
     <string name="strLabelSkip">Skip</string>
-    <string name="strLabelNotNow">Not now</string>
-    <string name="strLabelPrevious">Previous</string>
     <string name="strLabelNext">Next</string>
     <string name="strLabelStart">Start</string>
-    <string name="strLabelUpdateQuranApp">Update QuranApp</string>
     <string name="labelDownload">Download</string>
-    <string name="strLabelDownloadNow">DOWNLOAD NOW</string>
     <string name="strLabelUpdate">Update</string>
-    <string name="strLabelInstall">Install</string>
-    <string name="strLabelNew">New</string>
-    <string name="strLabelPremium">Premium</string>
     <string name="strLabelOn">On</string>
     <string name="strLabelOff">Off</string>
     <string name="strLabelThemeDark">Dark</string>
     <string name="strLabelThemeLight">Light</string>
     <string name="strLabelSystemDefault">System Default</string>
-    <string name="strLabelPreviousChapter">Previous chapter</string>
-    <string name="strLabelNextChapter">Next chapter</string>
-    <string name="strLabelNoPreviousChapter">No previous chapter</string>
-    <string name="strLabelNoNextChapter">No next chapter</string>
-    <string name="strLabelPreviousJuz">Previous juz</string>
-    <string name="strLabelNextJuz">Next juz</string>
-    <string name="strLabelNoPreviousJuz">No previous juz</string>
-    <string name="strLabelNoNextJuz">No next juz</string>
-    <string name="strLabelFullChapter">Read full chapter</string>
-    <string name="strLabelContinueChapter">Continue chapter</string>
     <string name="strLabelPreviousVerse">Previous verse</string>
     <string name="strLabelNextVerse">Next verse</string>
     <string name="labelPreviousTafsir">Previous tafsir</string>
     <string name="labelNextTafsir">Next tafsir</string>
-    <string name="strLabelVersesText">Verses</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
     <string name="strLabelPageNo" formatted="false">Page %d</string>
     <string name="strLabelJuzNo" formatted="false">Juz %d</string>
@@ -76,16 +44,12 @@
     <string name="strLabelVerses" formatted="false">Verses %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Verse : %d</string>
     <string name="strLabelVersesWithColon" formatted="false">Verses : %1$d–%2$d</string>
-    <string name="strLabelVerseCountWithColon" formatted="false">Verses: %d</string>
-    <string name="strLabelVerseNoRange" formatted="false">%1$d–%2$d</string>
     <string name="strLabelVerseWithChapNo" formatted="false">Verse %1$d:%2$d</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surah %1$s %2$d: Verse %3$d</string>
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surah %1$s │ Verse %2$d</string>
-    <string name="strLabelVerseWithChapNameWithColon" formatted="false">Surah %1$s : Verse %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Chapter No. %1$d │ Verses %2$d–%3$d</string>
-    <string name="strTitleAppUser">QuranApp user</string>
     <string name="strTitleHolyQuran">The Holy Quran</string>
     <string name="strTitleQuran">Quran</string>
     <string name="strTitleMakki">Meccan</string>
@@ -95,19 +59,15 @@
     <string name="noFootnotesForThisVerse">There are no footnotes for this verse.</string>
     <string name="strTitleReaderChapters">Chapters</string>
     <string name="strTitleReaderJuz">Juz</string>
-    <string name="strTitleReaderChapters2">Surahs</string>
-    <string name="strTitleReaderJuz2">Juz</string>
-    <string name="strTitleReaderVerses">Verses</string>
-    <string name="strTitleReaderJumpToVerse">Jump to verse</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %d</string>
     <string name="strTitleVerseOptions">Verse options</string>
     <string name="strTitleVerseRecitation">Verse Recitation</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Surah %1$s : %2$d</string>
     <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Read Verses %1$d - %2$d</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Read tafsir of verse %d</string>
-    <string name="strTitleReaderLayoutStyle">Quran view style</string>
-    <string name="strTitleReaderLayoutStyleTranslationsView">Translations view</string>
-    <string name="strTitleReaderLayoutStylePageView">Page view</string>
+    <string name="textSizes">Text sizes</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
     <string name="titleReaderTextSizeTafsir">Tafsir text Size</string>
@@ -131,33 +91,35 @@
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="downloadRecitations">Download Recitations</string>
+    <string name="recitationDownloadChapterSubtitle" formatted="false">Chapter %d</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d chapters</string>
+    <string name="recitationDownloadAllComplete">All chapters downloaded</string>
+    <string name="recitationDownloadConfirmTitle">Download recitations</string>
+    <string name="recitationDownloadConfirmMessage">Download all chapters for this reciter? This may use significant storage and data.</string>
+    <string name="recitationDownloadSomeFailed">Some chapters failed. Tap retry to queue missing chapters again.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Another reciter is already downloading. Wait for it to finish or cancel it before starting a new download.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d chapters downloaded</string>
+    <string name="recitationBulkEnqueueNotifTitle">Preparing recitation downloads</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — queued %2$d of %3$d</string>
     <string name="audioOption">Audio option</string>
     <string name="playbackSpeed">Playback speed</string>
-    <string name="audioOnlyArabic">Play only Arabic</string>
+    <string name="playbackCount">Playback count</string>
+    <string name="audioOnlyArabic">Play only Quran</string>
     <string name="audioOnlyTranslation">Play only translation</string>
-    <string name="audioBothArabicTranslation">Play both Arabic and translation</string>
+    <string name="audioBothArabicTranslation">Play both Quran and translation</string>
+    <string name="titleRecitationGroupSize">Quran Verse Group Size</string>
+    <string name="msgRecitationGroupSize">
+        Choose how many Quran verses play before translation starts. Example: if you select 3, it plays 3 Quran verses followed by their translations.
+    </string>
     <string name="strTitleScripts">Scripts</string>
-    <string name="strTitleSelectScripts">Select Script</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
     <string name="strTitleBookmarkDeleteAll">Remove all bookmarks?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Remove %d bookmarks?</string>
     <string name="strTitleTranslDelete">Delete Translation?</string>
-    <string name="strTitleResetReaderSettings">Reset Reader Settings?</string>
-    <string name="strTitleHideAd">Hide Ad</string>
-    <string name="strTitleRecitationOptions">Options</string>
-    <string name="strTitleRepeatVerse">Repeat verse</string>
-    <string name="strTitleAutoPlayNext">Autoplay next</string>
-    <string name="strTitleQuickEdit">Quick Edit</string>
     <string name="strTitleShareVerse">Share Verse</string>
-    <string name="strTitleReportVerse">Report Verse</string>
-    <string name="strTitleSelectReason">Select Reason</string>
-    <string name="strTitleExplainIssue">Explain the issue</string>
     <string name="strTitleFeaturedQuran">Featured Reading</string>
     <string name="strTitleVOTD">Verse of The Day</string>
-    <string name="strTitleTopics">Topics</string>
-    <string name="strTitleDuas">Quranic Duas</string>
     <string name="strTitleProphets">Prophets</string>
-    <string name="strTitleFeaturedTopics">Topics in Quran</string>
     <string name="strTitleFeaturedDuas">Duas in Quran</string>
     <string name="titleSolutionVerses">Solutions from Quran</string>
     <string name="titleEtiquetteVerses">Etiquette in Quran</string>
@@ -166,7 +128,6 @@
     <string name="strTitlePrivacyPolicy">Privacy Policy</string>
     <string name="strTitleFailed">Failed</string>
     <string name="strTitleSuccess">Success</string>
-    <string name="strTitleThresholdReached">Threshold Reached</string>
     <string name="strChapInfoSeeMore">See more info ›</string>
     <string name="strTitleChapInfoChapterNo">Chapter Number</string>
     <string name="strTitleChapInfoJuzNo">Juz No.</string>
@@ -180,24 +141,20 @@
     <string name="strTitleReaderSettings">Reader Settings</string>
     <string name="titleOtherSettings">Other Settings</string>
     <string name="strTitleAppLanguage">App Language</string>
-    <string name="strTitleChangeLanguage">Change language?</string>
     <string name="strTitleTheme">Theme</string>
     <string name="strTitleNoInternet">No Internet</string>
     <string name="strLabelPlay">Play</string>
     <string name="strLabelPause">Pause</string>
     <string name="strLabelBookmark">Bookmark</string>
     <string name="strLabelRemoveBookmark">Remove Bookmark</string>
-    <string name="strLabelBookmarked">Bookmarked</string>
-    <string name="strLabelRemoveAds">Remove Ads</string>
     <string name="strLabelShare">Share</string>
     <string name="strLabelReport">Report</string>
     <string name="strLabelContinueReading">Continue Reading »</string>
-    <string name="strLabelReading">Reading</string>
-    <string name="strLabelMostPlaces">Most mentions</string>
+    <string name="modeVerseByVerse">Verse by verse mode</string>
+    <string name="modeMushaf">Mushaf mode</string>
     <string name="strLabelOrder">Order</string>
     <string name="strLabelSelectedCount" formatted="false">%d selected</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d more translations</string>
-    <string name="strLabelAdvanceSharing">Advanced Sharing</string>
     <string name="strLabelSelectVerse">Select Verses</string>
     <string name="strLabelCurrentVerse">Current verse</string>
     <string name="strLabelVerseRange">Verse range</string>
@@ -206,60 +163,40 @@
     <string name="strLabelWhatsappStyling">Whatsapp styling</string>
     <string name="strLabelIncludeArabic">Include arabic</string>
     <string name="strLabelIncludeFootnotes">Include footnotes</string>
-    <string name="strLabelIncludeTranslation">Include translation</string>
-    <string name="strLabelIncludeReference">Include reference</string>
     <string name="strLabelQuickLinks">Quick links</string>
     <string name="strLabelLater">Later</string>
     <string name="strHintSearch">Search</string>
-    <string name="strHintSearchQuran">Type a term e.g., \"Life\"</string>
-    <string name="strHintSearchTopic">Search topic</string>
-    <string name="strHintSearchTopicAlphabet" formatted="false">Search topic in \"%s\"</string>
+    <string name="strHintSearchQuran">Type a term e.g., “Life”</string>
     <string name="strHintSearchProphet">Search prophet</string>
     <string name="strHintSearchChapter">Search surah</string>
-    <string name="strHintSearchVerse">Search verse</string>
-    <string name="strHintSearchJuz">Search juz</string>
-    <string name="strHintSearchTranslation">Search translation</string>
-    <string name="strHintSearchReciter">Search reciter</string>
-    <string name="strHintSearchScript">Search script</string>
-    <string name="strHintSearchLanguage">Search language</string>
+    <string name="strHintSearchBy">Search juz or surah</string>
+    <string name="strHintSearchHizb">Search hizb or surah</string>
+    <string name="strHintSearchPage">Search page</string>
     <string name="strHintFromVerse">From verse</string>
     <string name="strHintToVerse">To verse</string>
-    <string name="strHintFeedback">Write your feedback here…</string>
-    <string name="strHintFeedbackEmail">Email</string>
-    <string name="strHintFeedbackMessage">Message</string>
     <string name="strHintBookmarkViewerNote">Write an additional note on this bookmark here…</string>
-    <string name="strNotFound">Not found</string>
-    <string name="strBismillahEntity" translatable="false">﷽</string>
+    <string name="noNoteProvided">No note provided…</string>
     <string name="strMsgThemeDark">Dark mode reduces power consumption.</string>
     <string name="strMsgThemeDefault">Adjust according to system settings.</string>
-    <string name="strMsgVOTDOn">Get a notification daily in the morning.</string>
-    <string name="strMsgYouAreReadingVerses">You are reading verses:</string>
+    <string name="dailyReminderMsg">Get a daily reminder notification.</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d is not a valid Surah No.</string>
-    <string name="strMsgInvalidVerseNo" formatted="false">%1$d is not a valid Verse No. for Surah No. %2$d</string>
-    <string name="strMsgInvalidVersesRange">Not a valid verse range</string>
-    <string name="strMsgInvalidVersesRange2" formatted="false">%1$d-%2$d is not a valid verse range for Surah No. %3$d</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d is not a valid Juz (Para) No.</string>
     <string name="strMsgBookmarkAdded">Verse successfully added to bookmarks</string>
     <string name="strMsgBookmarkAddFailed">Verse failed to add to bookmarks</string>
     <string name="strMsgBookmarkAddedAlready">Verse is already added to bookmarks</string>
     <string name="strMsgBookmarkRemoved">Verse successfully removed from bookmarks</string>
     <string name="strMsgBookmarkRemoveFailed">Verse failed to remove from bookmarks</string>
-    <string name="strMsgBookmarkRemovedAlready">Verse is not in the bookmarks</string>
     <string name="strMsgBookmarkNoItems">No bookmarks</string>
     <string name="strMsgBookmarkDeleteSelected">Selected bookmarks will be removed.</string>
     <string name="strMsgBookmarkDeleteAll">All bookmarks will be removed.</string>
     <string name="strTitleReadHistory">Read History</string>
     <string name="strMsgReadShowupHere">Your read history will show up here.</string>
-    <string name="strMsgReadHistoryRemoved">Read history successfully removed.</string>
-    <string name="strMsgReadHistoryRemoveFailed">Read history failed to remove.</string>
-    <string name="strMsgReadHistoryRemovedAlready">Read history is already removed.</string>
     <string name="strMsgReadHistoryNoItems">No read history</string>
-    <string name="strMsgReadHistoryDeleteSelected">Selected read histories will be removed.</string>
     <string name="strMsgReadHistoryDeleteAll">All read histories will be removed.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s at %2$s</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Today at %s</string>
     <string name="strMsgHistoryRemove">Remove this history?</string>
-    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" removed from history</string>
+    <string name="strMsgHistoryRemoved" formatted="false">“%s” removed from history</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Total results found in %1$s: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Only 1 result found in %s</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No results found in %s. Please check the search filters or search in another translation.</string>
@@ -267,84 +204,44 @@
     <string name="strMsgSearchNoResultsFoundAbsolute">No results found. Please check the search filters.</string>
     <string name="strMsgSearchWordPart">Search for word part</string>
     <string name="strMsgSearchWordPartExample">For example: \'man\' in \'mankind\'</string>
-    <string name="strMsgSearchArabic">Search in Arabic text</string>
-    <string name="strMsgChangeLanguage">The app will be restarted to affect language change.</string>
-    <string name="strMsgResetReaderSettings">Reset all settings to the default.</string>
-    <string name="strMsgProphetsOrder">Showing prophets in chronological order</string>
     <string name="strMsgShareRange" formatted="false">Enter range between %1$d–%2$d</string>
     <string name="strMsgEnterValidRange">Please enter a valid range</string>
-    <string name="strMsgTranslLoadFailed">Could not load translations from the server. Please try again later.</string>
-    <string name="strMsgTranslNoDownloads">No downloaded translations available</string>
-    <string name="strMsgTranslNoDownloadsAvailable">No downloads available</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">Failed to download \"%s\".</string>
-    <string name="strMsgTranslDownloaded" formatted="false">Downloaded: \"%s\".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Failed to download “%s”.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Downloaded: “%s”.</string>
     <string name="strMsgTranslNoneSelected">No translation is selected. Go to settings to find translations.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Maximum %d translations can be selected at once. Please unselect one before selecting another. This is to avoid performance loss.</string>
-    <string name="strMsgRecitationsLoadFailed">Could not load recitations from the server. Please try again later.</string>
-    <string name="strMsgRecitationsNoAvailable">No recitations available</string>
-    <string name="strMsgTafsirsNoAvailable">No tafsirs available</string>
     <string name="strDescAddToBookmarks">Add to bookmarks</string>
     <string name="strDescGoBack">Go back</string>
     <string name="strDescClose">Close</string>
-    <string name="strDescVerseNo" formatted="false">Verse number %d.</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, verse number %2$d.</string>
     <string name="strMsgNoInternet">Please check your internet connection.</string>
     <string name="strMsgNoInternetLong">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.</string>
     <string name="strMsgSomethingWrong">Something went wrong!</string>
-    <string name="strMsgSomethingWrongFixing">Something went wrong! We are working to fix this.</string>
-    <string name="strMsgVerseCredsInvalid">Verse credentials are not valid.</string>
+    <string name="strMsgNoVerseTiming">Playing full chapter audio without verse sync</string>
     <string name="strMsgTryLater">Please try again later.</string>
-    <string name="strMsgReportUs">Please report us.</string>
     <string name="strMsgCouldNotOpenPage">Could not open the page.</string>
     <string name="strLabelNavHome">Home</string>
     <string name="strLabelNavSearch">Search</string>
-    <string name="strTextPreparing">Preparing…</string>
     <string name="strTextPleaseWait">Please wait…</string>
-    <string name="strTextSending">Sending…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>
-    <string name="strTitleError">Error!</string>
     <string name="strTitleInfo">Info!</string>
     <string name="strTitleOops">Oops!</string>
-    <string name="strLabelProceed">PROCEED</string>
-    <string name="strTextUpdating">Updating…</string>
-    <string name="strTextInstalling">Installing…</string>
-    <string name="strTextLoading">Loading…</string>
     <string name="strMsgUpdateAvailable">UPDATE AVAILABLE! Please update the app to get the latest features.</string>
     <string name="strMsgUpdateAvailable4Dialog">UPDATE AVAILABLE!\nPlease update the app.</string>
     <string name="strMsgUpdateAvailable2Continue">UPDATE REQUIRED!\nPlease update the app to continue.</string>
-    <string name="strMsgUpdateDownloaded">UPDATE DOWNLOADED! Please install to complete the update.</string>
     <string name="strLabelAllChapters">All Chapters</string>
-    <string name="strLabelDownloadImage">Download image</string>
-    <string name="strLabelShareImage">Share image</string>
-    <string name="strTitleImageSavedWithName" formatted="false">Image saved with name: %s</string>
-    <string name="strTitleAlphaBG">Alpha background</string>
-    <string name="strMsgEditShareTransl">Translations selected from the settings, are only shown here.</string>
-    <string name="strMsgEditShareLongTransl">Translation is very long, it may not fit properly.</string>
     <string name="strMsgDuaFor" formatted="false">Dua for %s</string>
     <string name="strMsgDuaOf" formatted="false">Dua of %s</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s in Quran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Found verses related to %1$s at total %2$d places.</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua of %s in Quran</string>
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
-    <string name="strSalam">Assalam Alaikum</string>
-    <string name="strSalamShort">Salam</string>
     <string name="titleDownloadScriptResources">Download resources for this script\?</string>
     <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
-    <string name="msgDownloadKFQPCResourcesScript" formatted="false">Script: %s (~1MB)</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: ~%dMB</string>
-    <string name="msgDownloadFailed">Download failed</string>
-    <string name="msgDownloadingScript">Downloading script</string>
     <string name="msgDownloadingFonts">Downloading fonts</string>
     <string name="msgExtractingFonts">Extracting fonts</string>
-    <string name="msgFontsDonwloadProgress" formatted="false">%1$d of %2$d fonts downloaded</string>
-    <string name="msgFontsDonwloadProgressShort" formatted="false">%1$d of %2$d</string>
-    <string name="msgDownloadingResource" formatted="false">Downloading %s</string>
-    <string name="msgScriptFontsDownloaded">Scripts and fonts downloaded successfully.</string>
     <string name="textDownloading">Downloading…</string>
-    <string name="textDownloaded">Downloaded</string>
-    <string name="textPercentage" formatted="false">%d%%</string>
-    <string name="labelBackgroundDownload">Background download</string>
-    <string name="msgAnotherDownloadInProgress">Another download is in progress.</string>
     <string name="lastCrashLog">Last crash log</string>
     <string name="appLogs">App logs</string>
     <string name="crashLogs">Crash logs</string>
@@ -355,28 +252,23 @@
     <string name="pasteCrashLogGithubIssue">Log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
     <string name="discord" translatable="false">Discord</string>
-    <string name="msgAlarmManagerNotAvailable">Alarm manager is not available on this device.</string>
+    <string name="notification_permission">
+        Notification Permission
+    </string>
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
-    <string name="msgVerseReminderAlarmPermission">Alarm permission is required to enable verse reminder.</string>
     <string name="titleStorageCleanup">Storage cleanup</string>
     <string name="titleExportData">Export &amp; Import</string>
     <string name="storageCleanupMessage">Free up space by deleting unused downloaded resources. This will not delete any bookmarks or settings.\n\nFollowing resources can be freed up:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d downloaded translations can be freed up.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d stored recitation files from %2$d reciters can be freed up.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d downloaded scripts and their fonts can be freed up.</string>
-    <string name="chapterInfoCanBeFreedUp" formatted="false">%d saved chapter information can be cleaned up.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d saved tafsirs can be cleaned up.</string>
-    <string name="titleChapterInfo">Chapter info</string>
     <string name="labelFreeUpSpace">Free up space</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nYou will need to download it again.</string>
     <string name="titleRecitationCleanup">Delete recitation\?</string>
-    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted. To individually delete recitations by Surah, go to the manage audio settings.</string>
+    <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
     <string name="titleScriptCleanup">Delete script\?</string>
     <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
-    <string name="titleChapterInfoCleanup">Clear chapter info\?</string>
-    <string name="msgChapterInfoCleanup">All the saved chapter info will be deleted.</string>
-    <string name="titleTafsirCleanup">Delete tafsir\?</string>
-    <string name="msgTafsirCleanup" formatted="false">All the stored tafsir from %s will be deleted.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>
@@ -392,26 +284,15 @@
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
     <string name="onboardDescTheme">You can always change this later.</string>
     <string name="onboardDescTranslations">You can always change this later. You can download more translations from the settings.</string>
-    <string name="onboardDescReciter">You can always change this later. You can find more reciters in the settings.</string>
+    <string name="onboardDescTafsir">Select a commentary to read alongside verses. You can download and manage tafsirs in settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
     <string name="favourites">Favourites</string>
-    <string name="titleAddToFavourites">Add to favourites</string>
-    <string name="msgAddedToFavourites">Added to favourites</string>
     <string name="titleRemoveFromFavourites">Remove from favourites</string>
-    <string name="msgRemovedFromFavourites">Removed from favourites</string>
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
     <string name="msgChapterAddedToFavourites">Surah added to favourites.</string>
     <string name="msgChapterRemovedFromFavourites">Surah removed from favourites.</string>
-    <string name="textTranslationReciterInfo">Language: %1$s
-\nBook: %2$s</string>
     <string name="textNoLogsFound">No logs found</string>
-    <string name="msgRecitaionFailedToDownload" formatted="false">Failed to download \"%1$s\" for reciter \"%2$s\".</string>
-    <string name="msgRecitaionDownloaded" formatted="false">Downloaded \"%1$s\" for reciter \"%2$s\".</string>
-    <string name="msgRecitaionDeleleSurah" formatted="false">All recitations of \"%1$s\" for reciter \"%2$s\" will be deleted.</string>
-    <string name="msgRecitaionDeleletedSurah" formatted="false">Deleted recitations of \"%1$s\" for reciter \"%2$s\".</string>
-    <string name="msgInvalidParams">Invalid params</string>
-    <string name="msgTafsirLoadFailed">Failed to load tafsir</string>
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="msgClearReadHistory">Clear read history</string>
     <string name="msgClearSearchHistory">Clear search history</string>
@@ -426,32 +307,51 @@
     <string name="labelImportExportSettings">Import/Export Settings</string>
     <string name="warnImportSettings">WARNING: Importing settings will override your current settings.</string>
     <string name="msgExportImportBookmarks">Export or import your bookmarks along with notes.</string>
-    <string name="msgExportEmpty">No bookmarks to export</string>
     <string name="msgExportSuccess">Exported successfully</string>
-    <string name="msgImportFailed">Failed to import. Unsupported file.</string>
-    <string name="msgImportSuccess">Imported successfully</string>
     <string name="desc_votd_widget">Get a new verse every day</string>
     <string name="autoScroll">Auto scroll</string>
     <string name="startAutoScroll">Start auto scroll</string>
+    <string name="stopAutoScroll">Stop auto scroll</string>
     <string name="autoScrollSpeed">Set speed</string>
-    <string name="strMsgCannotAutoScrollWhileReciting">Cannot auto scroll while the recitation is playing.</string>
     <string name="titleCancelDownload">Cancel download?</string>
     <string name="yesCancelDownload">Yes, cancel</string>
     <string name="noContinueDownload">No, continue</string>
     <string name="readingTafsirMultiVerses">
         Reading tafsir for multiple verses:
     </string>
-    <string name="dlRecitations">
-        Download &amp; Manage Recitations
-    </string>
-    <string name="dlTafsirs">
-        Download &amp; Manage Tafsirs
-    </string>
     <string name="donate">
         Donate to Us
     </string>
     <string name="quran_and_science">Quran and Science</string>
     <string name="about_this_page">About this page</string>
-    <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called \"The Quran and Modern Science: Compatible or Incompatible\"\n\nThe images shown are for illustrative purpose only.</string>
+    <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called “The Quran and Modern Science: Compatible or Incompatible”\n\nThe images shown are for illustrative purpose only.</string>
     <string name="strLabelScienceReferences" formatted="false">%d references</string>
+    <string name="once">Once</string>
+    <string name="twice">Twice</string>
+    <string name="nTimes" formatted="false">%d times</string>
+    <string name="msgRepeat">
+        Set how many times each verse should play before moving to the next. Available only when “Play only Quran” is enabled in Audio Options.
+    </string>
+    <string name="notSupported">Not supported</string>
+    <string name="missingTimingData" formatted="false">
+        Missing timing data for %s — cannot play.
+    </string>
+    <string name="expandedPlayerModeControls">Controls</string>
+    <string name="expandedPlayerModeSpotlight">Spotlight</string>
+
+    <string name="theme_default">Default</string>
+    <string name="theme_blue">Blue</string>
+    <string name="theme_red">Red</string>
+    <string name="theme_purple">Purple</string>
+    <string name="theme_violet">Violet</string>
+    <string name="theme_yellow">Yellow</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_colors">Theme Colors</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="dynamic_color">Dynamic Color</string>
+    <string name="dynamic_color_description">Change theme color based on the system colors</string>
+    <string name="textSizeVerseByVerseOnly">This setting is not applied in mushaf mode.</string>
+    <string name="sortBy">Sort by</string>
+    <string name="alphabetically">Alphabetical</string>
+    <string name="chronological">Chronological Order</string>
 </resources>

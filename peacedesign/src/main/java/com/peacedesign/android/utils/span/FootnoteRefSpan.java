@@ -46,5 +46,13 @@ public class FootnoteRefSpan extends ReplacementSpan {
         scaledPaint.setTextSize(paint.getTextSize() * mSizeScale);
         return scaledPaint;
     }
+
+    public int getSpanTextColor() {
+        return mTextColor;
+    }
+
+    public float getSizeScale() {
+        return mSizeScale;
+    }
 }
 

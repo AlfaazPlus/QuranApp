@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.screens
 
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.activities.ExportKeys
-import com.quranapp.android.compose.components.AppBar
+import com.quranapp.android.compose.components.common.AppBar
 
 @Composable
 fun ExportImportScreen(

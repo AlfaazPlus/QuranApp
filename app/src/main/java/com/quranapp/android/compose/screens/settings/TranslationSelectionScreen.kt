@@ -1,7 +1,5 @@
 package com.quranapp.android.compose.screens.settings
 
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -56,27 +54,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
-import com.quranapp.android.compose.components.ErrorMessageCard
+import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.ErrorMessageCard
+import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationEvent
-import com.quranapp.android.viewModels.TranslationUiState
 import com.quranapp.android.viewModels.TranslationViewModel
 import java.util.regex.Pattern
 
 @Composable
-fun TranslationSelectionScreen(
-    onNavigateToDownload: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun TranslationSelectionScreen() {
     val viewModel = viewModel<TranslationViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -87,7 +84,7 @@ fun TranslationSelectionScreen(
             uiState.translationGroups.map { group ->
                 val filteredTransls = group.translations.filter { transl ->
                     val pattern = Pattern.compile(
-                        StringUtils.escapeRegex(uiState.searchQuery.toString()),
+                        StringUtils.escapeRegex(uiState.searchQuery),
                         Pattern.CASE_INSENSITIVE or Pattern.DOTALL
                     )
 
@@ -106,13 +103,29 @@ fun TranslationSelectionScreen(
     }
 
     Scaffold(
-        containerColor = colorScheme.background,
+        topBar = {
+            AppBar(
+                stringResource(R.string.strTitleTranslations),
+                searchPlaceholder = stringResource(R.string.strHintSearch),
+                searchQuery = uiState.searchQuery,
+                onSearchQueryChange = {
+                    viewModel.onEvent(TranslationEvent.Search(it))
+                },
+                actions = {
+                    IconButton(
+                        painterResource(R.drawable.dr_icon_refresh)
+                    ) {
+                        viewModel.onEvent(TranslationEvent.Refresh)
+                    }
+                }
+            )
+        },
         floatingActionButton = {
-            DownloadTranslationsButton(onNavigateToDownload = onNavigateToDownload)
+            DownloadTranslationsButton()
         }
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(it),
         ) {
@@ -398,13 +411,17 @@ private fun TranslationRow(
 }
 
 @Composable
-private fun DownloadTranslationsButton(
-    onNavigateToDownload: () -> Unit
-) {
+private fun DownloadTranslationsButton() {
+    val navController = LocalSettingsNavHostController.current
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(24.dp))
-            .clickable(onClick = onNavigateToDownload)
+            .clickable {
+                navController.navigate(
+                    route = SettingRoutes.TRANSLATIONS_DOWNLOAD
+                )
+            }
             .background(colorScheme.primary)
             .padding(vertical = 12.dp, horizontal = 16.dp),
         contentAlignment = Alignment.Center

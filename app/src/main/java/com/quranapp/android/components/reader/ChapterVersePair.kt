@@ -1,10 +1,27 @@
 package com.quranapp.android.components.reader
 
-import com.quranapp.android.components.quran.subcomponents.Verse
+import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.quran.QuranUtils
 import java.io.Serializable
 
 data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable {
-    constructor(verse: Verse) : this(verse.chapterNo, verse.verseNo)
+    constructor(verse: VerseWithDetails) : this(verse.chapterNo, verse.verseNo)
+
+    val isValid: Boolean get() = chapterNo > 0 && verseNo > 0
+
+    fun doesEqual(verse: VerseWithDetails): Boolean {
+        return doesEqual(verse.chapterNo, verse.verseNo)
+    }
+
+    fun doesEqual(ayahId: Int): Boolean {
+        val pair = QuranUtils.getVerseNo(ayahId)
+
+        return doesEqual(pair.first, pair.second)
+    }
+
+    fun doesEqual(chapterNo: Int, verseNo: Int): Boolean {
+        return chapterNo == this.chapterNo && verseNo == this.verseNo
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -21,5 +38,12 @@ data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable
         var result = chapterNo
         result = 31 * result + verseNo
         return result
+    }
+
+    companion object {
+        val NONE = ChapterVersePair(
+            chapterNo = -1,
+            verseNo = -1
+        )
     }
 }
