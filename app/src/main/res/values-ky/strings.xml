@@ -41,9 +41,9 @@
     <string name="strTitleHolyQuran">Ыйык Куран</string>
     <string name="strTitleQuran">Куран</string>
     <string name="strTitleMakki">Меккелик</string>
-    <string name="strTitleFootnote">Кыстырма</string>
-    <string name="strTitleFootnotes">Кыстырмалар</string>
-    <string name="noFootnotesForThisVerse">Бул аятта кыстырма жок.</string>
+    <string name="strTitleFootnote">Шилтеме</string>
+    <string name="strTitleFootnotes">Шилтемелер</string>
+    <string name="noFootnotesForThisVerse">Бул аят үчүн шилтемелер жок.</string>
     <string name="strTitleReaderChapters">Сүрөлөр</string>
     <string name="strTitleReaderJuz">Жүз</string>
     <string name="strTitleVerseOptions">Аяттар параметрлери</string>
@@ -57,7 +57,7 @@
     <string name="strTitleSendFeedback">Пикир жөнөтүү</string>
     <string name="strTitleHelpSupport">Жардам жана Колдоо</string>
     <string name="strTitleAboutUs">Биз тууралуу</string>
-    <string name="strTitleBookmarks">Чөп каттар</string>
+    <string name="strTitleBookmarks">Кыстырмалар</string>
     <string name="strTitleShareApp">Колдонмону бөлүшүү</string>
     <string name="strTitleAddNote">Эскертме кошуу</string>
     <string name="strTitleRateApp">Баалоо</string>
@@ -172,10 +172,10 @@
     <string name="msgClearSearchHistory">Издөө тарыхын тазалоо</string>
     <string name="titleResourceDownloadSource">Ресурстарды жүктөө булагы</string>
     <string name="titleArabicTextToggle">Арабча аятты көрсөтүү</string>
-    <string name="msgArabicTextToggle">Бул функция арабча аяттарды жашырат.</string>
+    <string name="msgArabicTextToggle">Бул функцияны өчүрүү колдонмодогу бардык арабча аяттарды жашырат.</string>
     <string name="labelExport">Экспорт</string>
     <string name="labelImport">Импорт</string>
-    <string name="msgExportSuccess">Экспорт ийгиликтүү</string>
+    <string name="msgExportSuccess">Ийгиликтүү экспорттолду</string>
     <string name="desc_votd_widget">Күндүн аятын күн сайын алыңыз</string>
     <string name="autoScroll">Авто жылдыруу</string>
     <string name="startAutoScroll">Авто жылдырууну баштоо</string>
@@ -192,7 +192,7 @@
     <string name="strTitleReaderTextSizeTransl">Котормо текст</string>
     <string name="strTitleSettings">Жөндөөлөр</string>
     <string name="strTitleTafsir">Тафсир</string>
-    <string name="strTitleBookmarkDeleteAll">Бардык чөп каттарды өчүрөсүзбү?</string>
+    <string name="strTitleBookmarkDeleteAll">Бардык кыстармалар өчүрүлсүнбү?</string>
     <string name="strTitleTranslDelete">Котормону өчүрөсүзбү?</string>
     <string name="downloadRecitations">Куран окууларды жүктөө</string>
     <string name="strTitleShareVerse">Аятты бөлүшүү</string>
@@ -203,7 +203,7 @@
     <string name="strLabelStart">Баштоо</string>
     <string name="strTitleFeaturedProphets">Пайгамбарлар</string>
     <string name="strTitleChapInfoChapterNo">Бөлүм номери</string>
-    <string name="strLabelBookmark">Чөп кат</string>
+    <string name="strLabelBookmark">Кыстарма</string>
     <string name="strTitleProphets">Пайгамбарлар</string>
     <string name="strTitleInfo">Маалымат!</string>
     <string name="strMsgNoInternetLong">Интернет жок. Wi-Fi же мобилдик дайындарды күйгүзүңүз жана кайра аракет кылыңыз.</string>
@@ -235,7 +235,7 @@
     <string name="strLabelSelectTranslation">Котормону тандаңыз</string>
     <string name="strLabelWhatsappStyling">WhatsApp стили</string>
     <string name="strLabelIncludeArabic">Арабча текстти кошуу</string>
-    <string name="strLabelIncludeFootnotes">Төмөнкү(кыстырма) жазууларды камтуу</string>
+    <string name="strLabelIncludeFootnotes">Шилтемелерди камтуу</string>
     <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
     <string name="strLabelLater">Кийинчерээк</string>
     <string name="strHintSearch">Издөө</string>
@@ -244,7 +244,7 @@
     <string name="strMsgInvalidChapterNo" formatted="false">%d туура эмес сүрө номери.</string>
     <string name="strHintFromVerse">Аяттан баштап</string>
     <string name="strHintToVerse">Аятка чейин</string>
-    <string name="strHintBookmarkViewerNote">Бул чөп кат үчүн кошумча эскертмени бул жерге жазыңыз…</string>
+    <string name="strHintBookmarkViewerNote">Бул кыстырма үчүн кыскача эскертмени бул жерге жазыңыз…</string>
     <string name="strHintSearchChapter">Сүрөнү издөө</string>
     <string name="strMsgBookmarkAdded">Аят ийгиликтүү чөп каттарга кошулду</string>
     <string name="strMsgBookmarkAddFailed">Аятты чөп каттарга кошуу ишке ашпады</string>
@@ -263,7 +263,7 @@
     <string name="strMsgSearchMultResultsFound" formatted="false">\"%1$s\" китебинен %2$d натыйжа табылды</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d - жүз(пара) номери туура эмес.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">\"%s\" китебинен бир эле натыйжа табылды</string>
-    <string name="strMsgSearchNoResultsFoundIn" formatted="false">\"%s\" китебинен эч нерсе табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s ичинен эч нерсе табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеп көрүңүз.</string>
     <string name="strMsgSearchNoResultsFound">Натыйжа табылган жок. Издөө чыпкаларын текшериңиз же башка котормодон издеңиз.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Натыйжа табылбады. Издөө фильтрлерин карап көрүңүз.</string>
     <string name="strMsgSearchWordPart">Сөздүн бир бөлүгүн издөө</string>
@@ -272,11 +272,11 @@
     <string name="strMsgEnterValidRange">Жарактуу диапазонду киргизиңиз</string>
     <string name="strMsgThemeDark">Караңгы режим энергия коротууну азайтат.</string>
     <string name="strMsgThemeDefault">Система орнотууларына ылайык жөндөө.</string>
-    <string name="strMsgBookmarkRemoveFailed">Аятты чөп каттардан алып салуу ишке ашпады</string>
+    <string name="strMsgBookmarkRemoveFailed">Аят кыстармалардан өчүрүлгөн жок</string>
     <string name="strMsgReadShowupHere">Сиздин окуу тарыхыңыз бул жерде көрсөтүлөт.</string>
     <string name="labelImportExportSettings">Бир гана жөндөөлөрдү</string>
-    <string name="labelImportExportBookmarks">Бир гана чөп каттарды</string>
-    <string name="warnImportSettings">ЭСКЕРТҮҮ: Жөндөөлөрдү сиздин азыркы жөндөөлөрүңүздү жокко чыгарып, жаңылары менен алмаштырат.</string>
+    <string name="labelImportExportBookmarks">Кыстырмаларды импорттоо жана экспорттоо</string>
+    <string name="warnImportSettings">ЭСКЕРТҮҮ: Жөндөөлөрдү импорттоо учурдагы жөндөөлөрүңүздү алмаштырат.</string>
     <string name="labelImportExportEverything">Баарын</string>
     <string name="strTitleDeleteTafsir">Тафсирди өчүрүү керекпи?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Сиз чын эле \"%s\" тафсирин өчүрүүнү каалайсызбы? Бул сиздин түзмөгүңүзгө жүктөлгөн тафсир маалыматтарын жок кылат.</string>
