@@ -50,8 +50,8 @@
     <string name="strTitleMadani">मदनी</string>
     <string name="strTitleFootnote">फुटनोट</string>
     <string name="strTitleFootnotes">फुटनोट</string>
-    <string name="strTitleReaderChapters">सूरह</string>
-    <string name="strTitleReaderJuz">जुज़ (पारा)</string>
+    <string name="strTitleReaderChapters">अध्याय</string>
+    <string name="strTitleReaderJuz">पारा</string>
     <string name="strTitleVerseOptions">आयत विकल्प</string>
     <string name="strTitleVerseRecitation">आयत की तिलावत</string>
     <string name="strTitleReaderVerseInformation" formatted="false">सूरह %1$s : %2$d</string>
@@ -142,7 +142,7 @@
     <string name="strMsgBookmarkDate" formatted="false">%1$s %2$s बजे</string>
     <string name="strMsgBookmarkDateToday" formatted="false">आज %s बजे</string>
     <string name="strMsgHistoryRemove">हिस्ट्री से हटायें?</string>
-    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" को हिस्ट्री से हटाया गया</string>
+    <string name="strMsgHistoryRemoved" formatted="false">“%s” इतिहास से हटा दिया गया</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">%1$s मे कुल परिणाम मिलें: %2$d</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s मे सिर्फ एक परिणाम मिला</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s मे कोई परिणाम नहीं मिला। कृपया सर्च फिलटर्स की जांच करें या किसी अन्य अनुवाद में खोजें।</string>
@@ -152,8 +152,8 @@
     <string name="strMsgSearchWordPartExample">उदाहरण: \'इंसानियत\' में \'इंसान\'</string>
     <string name="strMsgShareRange" formatted="false">%1$d–%2$d के बीच का रेंज लिखे</string>
     <string name="strMsgEnterValidRange">कृपया एक मान्य रेंज दर्ज करें</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s\" डाउनलोड होने में विफल रहा।</string>
-    <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: \"%s\"।</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">“%s” डाउनलोड करने में विफल।</string>
+    <string name="strMsgTranslDownloaded" formatted="false">डाउनलोड किया गया: “%s”।</string>
     <string name="strMsgTranslNoneSelected">कोई अनुवाद नहीं चुना गया है। अनुवाद ढूंढने के लिए सेटिंग में जाएं।</string>
     <string name="strDescAddToBookmarks">बुकमार्क्स में जोड़ें</string>
     <string name="strDescGoBack">पीछे जाएं</string>
@@ -241,12 +241,12 @@
     <string name="titleOtherSettings">अन्य सेटिंग</string>
     <string name="appLogs">ऐप लॉग</string>
     <string name="suppressedLogs">दबा हुआ लॉग</string>
-    <string name="audioBothArabicTranslation">अरबी और अनुवाद दोनों चलायें</string>
+    <string name="audioBothArabicTranslation">क़ुरान और अनुवाद, दोनों चलायें</string>
     <string name="crashLogs">क्रैश लॉग</string>
     <string name="logRemoved">लॉग हटा दिया गया</string>
     <string name="downloadRecitations">तिलावत डाउनलोड करें</string>
     <string name="audioOption">ऑडियो का विकल्प</string>
-    <string name="audioOnlyArabic">केवल अरबी चलायें</string>
+    <string name="audioOnlyArabic">केवल कुरान चलायें</string>
     <string name="msgChapterRemovedFromFavourites">सूरत को पसंदीदा से हटा दिया गया।</string>
     <string name="titleRemoveFromFavourites">पसंदीदा से हटाएं</string>
     <string name="msgNoFavouriteChapters">यहां देखने के लिए पसंदीदा में कोई सूरत जोड़ें।</string>
@@ -290,4 +290,63 @@
     <string name="yesCancelDownload">हाँ, रद्द करें</string>
     <string name="noContinueDownload">नहीं, जारी रखें</string>
     <string name="readingTafsirMultiVerses">आप कई आयतों की तफ़सीर पढ़ रहे हैं:</string>
+    <string name="strLabelDownloaded">डाउनलोड किया गया</string>
+    <string name="strTitleDeleteTafsir">तफ़सीर डिलीट करें?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">क्या आप वाकई “%s” को हटाना चाहते हैं? इससे आपके डिवाइस से डाउनलोड किया गया तफ़सीर डेटा हट जाएगा।</string>
+    <string name="strTitleReaderHizb">हिज़्ब</string>
+    <string name="labelHizbNo" formatted="false">हिज़्ब %d</string>
+    <string name="textSizes">टेक्स्ट के आकार</string>
+    <string name="recitationDownloadChapterSubtitle" formatted="false">अध्याय %d</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d अध्याय</string>
+    <string name="recitationDownloadAllComplete">सभी अध्याय डाउनलोड हो गए</string>
+    <string name="recitationDownloadConfirmTitle">तिलावत डाउनलोड करें</string>
+    <string name="recitationDownloadConfirmMessage">क्या आप इस कारी के सभी अध्याय डाउनलोड करना चाहते हैं? इसमें काफी स्टोरेज और डेटा इस्तेमाल हो सकता है।</string>
+    <string name="recitationDownloadSomeFailed">कुछ चैप्टर फ़ेल हो गए। छूटे हुए चैप्टर को फिर से लाइन में लगाने के लिए \'रिट्राई\' पर टैप करें।</string>
+    <string name="recitationDownloadWaitForOtherReciter">एक दूसरा कारी पहले से ही डाउनलोड हो रहा है। नया डाउनलोड शुरू करने से पहले, उसके पूरा होने का इंतज़ार करें या उसे रद्द कर दें।</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d अध्याय डाउनलोड किए गए</string>
+    <string name="recitationBulkEnqueueNotifTitle">तिलावत की डाउनलोडिंग तैयार किए जा रहे हैं</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — %3$d में से %2$d कतार में</string>
+    <string name="playbackCount">प्लेबैक गिनती</string>
+    <string name="titleRecitationGroupSize">कुरान की आयतों के समूह का आकार</string>
+    <string name="msgRecitationGroupSize">चुनें कि अनुवाद शुरू होने से पहले कुरान की कितनी आयतें चलेंगी। उदाहरण: यदि आप 3 चुनते हैं, तो कुरान की 3 आयतें बजेंगी, और उसके बाद उनका अनुवाद होगा।</string>
+    <string name="modeVerseByVerse">आयत-दर-आयत मोड</string>
+    <string name="modeMushaf">पृष्ठ मोड</string>
+    <string name="strHintSearchBy">पारा या सूरह खोजें</string>
+    <string name="strHintSearchHizb">हिज़्ब या सूरह खोजें</string>
+    <string name="strHintSearchPage">पृष्ठ खोजें</string>
+    <string name="noNoteProvided">कोई नोट नहीं दिया गया…</string>
+    <string name="dailyReminderMsg">रोज़ाना रिमाइंडर नोटिफिकेशन पाएं।</string>
+    <string name="strMsgNoVerseTiming">पूरे अध्याय का ऑडियो बिना आयत सिंक के चल रहा है</string>
+    <string name="notification_permission">नोटिफ़िकेशन की अनुमति</string>
+    <string name="onboardDescTafsir">आयतों के साथ पढ़ने के लिए एक तफ़सीर चुनें। आप सेटिंग्स में जाकर तफ़सीर डाउनलोड और मैनेज कर सकते हैं।</string>
+    <string name="favourites">पसंदीदा</string>
+    <string name="stopAutoScroll">ऑटो स्क्रॉल रोकें</string>
+    <string name="donate">हमें दान दें</string>
+    <string name="quran_and_science">कुरान और विज्ञान</string>
+    <string name="about_this_page">इस पेज के बारे में</string>
+    <string name="about_quran_science_msg">इस पेज का कंटेंट डॉ. ज़ाकिर नाइक की किताब “द कुरान एंड मॉडर्न साइंस: कम्पैटिबल ऑर इनकम्पैटिबल” से लिया गया है।\n\nदिखाई गई तस्वीरें सिर्फ़ उदाहरण के लिए हैं।</string>
+    <string name="strLabelScienceReferences" formatted="false">%d संदर्भ</string>
+    <string name="once">एक बार</string>
+    <string name="twice">दो बार</string>
+    <string name="nTimes" formatted="false">%d बार</string>
+    <string name="msgRepeat">अगले आयत पर जाने से पहले हर आयत को कितनी बार चलाना है, यह सेट करें। यह विकल्प केवल तभी उपलब्ध होता है, जब ऑडियो ऑप्शन में “सिर्फ़ कुरान चलाएँ” चालू हो।</string>
+    <string name="notSupported">असमर्थित</string>
+    <string name="missingTimingData" formatted="false">%s के लिए टाइमिंग डेटा मौजूद नहीं है — चलाया नहीं जा सकता।</string>
+    <string name="expandedPlayerModeControls">नियंत्रण</string>
+    <string name="expandedPlayerModeSpotlight">स्पॉटलाइट</string>
+    <string name="theme_default">डिफ़ॉल्ट</string>
+    <string name="theme_blue">नीला</string>
+    <string name="theme_red">लाल</string>
+    <string name="theme_purple">बैंगनी</string>
+    <string name="theme_violet">वायलेट</string>
+    <string name="theme_yellow">पीला</string>
+    <string name="theme_mono">मोनो</string>
+    <string name="theme_colors">थीम के रंग</string>
+    <string name="theme_mode">थीम मोड</string>
+    <string name="dynamic_color">गतिशील रंग</string>
+    <string name="dynamic_color_description">सिस्टम के रंगों के आधार पर थीम का रंग बदलें</string>
+    <string name="textSizeVerseByVerseOnly">यह सेटिंग पेज मोड में लागू नहीं होती।</string>
+    <string name="sortBy">इसके अनुसार क्रमबद्ध करें</string>
+    <string name="alphabetically">अंग्रेज़ी वर्णमाला</string>
+    <string name="chronological">कालानुक्रमिक क्रम में</string>
 </resources>
