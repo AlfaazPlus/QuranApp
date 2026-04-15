@@ -314,7 +314,7 @@ private fun BookmarkItemCard(
                         if (bookmark.fromVerseNo == bookmark.toVerseNo) chapterName + ": " + stringResource(
                             R.string.strLabelVerseNo, bookmark.fromVerseNo
                         )
-                        else stringResource(R.string.strLabelSurah) + ": " + stringResource(
+                        else chapterName + ": " + stringResource(
                             R.string.strLabelVerses, bookmark.fromVerseNo, bookmark.toVerseNo
                         ),
                         style = MaterialTheme.typography.titleSmall,
