@@ -441,4 +441,13 @@
     <string name="readingTafsirMultiVerses">Birden fazla ayet için tefsir okunuyor:</string>
     <string name="strLabelDownloaded">İndirildi</string>
     <string name="strTitleDeleteTafsir">Tefsiri Silmek istiyormusunuz?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">\"%s\"\'i silmek istediğinize emin misiniz? Bu indirilen tefsir verilerini cihazınızdan kaldıracaktır.</string>
+    <string name="favourites">Favoriler</string>
+    <string name="dlRecitations">Kıraatleri İndirin ve Yönetin</string>
+    <string name="dlTafsirs">Tefsirleri İndirin ve Yönetin</string>
+    <string name="donate">Bize bağış yapın</string>
+    <string name="quran_and_science">Kur\'an ve Bilim</string>
+    <string name="about_this_page">Bu sayfa hakkında</string>
+    <string name="about_quran_science_msg">Bu sayfadaki içerikler Dr. Zakir Naik\'in \'The Quran and Modern Science: Compatible or Incompatible\' adlı kitabından alınmıştır.\n\nGösterilen resimler yalnızca açıklama amaçlıdır.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d referanslar</string>
 </resources>
