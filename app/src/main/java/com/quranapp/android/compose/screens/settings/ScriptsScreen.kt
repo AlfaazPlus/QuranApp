@@ -238,7 +238,10 @@ private fun ScriptItem(
                 }
 
                 if (isSelected && variants.isNotEmpty()) {
-                    FlowRow() {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
                         variants.forEach { variant ->
                             Chip(
                                 label = {
