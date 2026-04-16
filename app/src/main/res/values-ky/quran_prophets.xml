@@ -1,4 +1,5 @@
 <resources>
+    <string name="honorificMuhammad">ﷺ</string>
 <string name="honorificProphet">алейхиссалам</string>
 <string name="prophetAdam">Адам</string>
 <string name="prophetAlyasaa">Алйаса</string>

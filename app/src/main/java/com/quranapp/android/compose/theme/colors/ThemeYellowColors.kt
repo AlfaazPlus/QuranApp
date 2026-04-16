@@ -33,8 +33,8 @@ class ThemeYellowColors : BaseColors() {
             inverseOnSurface = Color(0xFFF7F0E7),
             inverseSurface = Color(0xFF33302A),
             inversePrimary = Color(0xFFEBC248),
-            surfaceContainer = Color(0xFF1E1B16),
-            surfaceContainerLow = Color(0xFF1E1B16),
+            surfaceContainer = Color(0xFFFFFBFF),
+            surfaceContainerLow = Color(0xFFFFFBFF),
         )
     }
 
