@@ -50,7 +50,7 @@ import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.UserRepository
+import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.extensions.orMinusOne
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory

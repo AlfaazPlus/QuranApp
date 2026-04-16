@@ -48,7 +48,7 @@ import com.quranapp.android.components.search.VerseResultCountModel;
 import com.quranapp.android.components.search.VerseResultModel;
 import com.quranapp.android.databinding.LytReaderJuzSpinnerItemBinding;
 import com.quranapp.android.databinding.LytSearchResultItemBinding;
-import com.quranapp.android.db.UserRepository;
+import com.quranapp.android.repository.UserRepository;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.interfaceUtils.Destroyable;
 import com.quranapp.android.utils.extensions.ContextKt;

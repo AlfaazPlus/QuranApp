@@ -49,7 +49,7 @@ import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.UserRepository
+import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder

@@ -71,7 +71,7 @@ import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVers
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.utils.extensions.isSingleValue
 import com.quranapp.android.utils.reader.LocalVerseActions

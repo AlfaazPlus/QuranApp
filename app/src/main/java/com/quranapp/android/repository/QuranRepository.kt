@@ -1,8 +1,10 @@
-package com.quranapp.android.db
+package com.quranapp.android.repository
 
-import android.content.Context
 import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.ChapterVerseBatch
+import com.quranapp.android.db.ExternalQuranDatabase
+import com.quranapp.android.db.QuranDatabase
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
@@ -20,8 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
 class QuranRepository(
-    @Suppress("UNUSED_PARAMETER") context: Context,
-    private val database: QuranDatabase
+    private val database: QuranDatabase,
+    private val extDatabase: ExternalQuranDatabase
 ) {
     private val mushafDao get() = database.mushafDao()
     private val ayahDao get() = database.ayahDao()

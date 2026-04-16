@@ -2,14 +2,13 @@ package com.quranapp.android.db
 
 import android.content.Context
 import androidx.room.Room
+import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.repository.UserRepository
 
 object DatabaseProvider {
 
     @Volatile
     private var userDatabase: UserDatabase? = null
-
-    @Volatile
-    private var quranDatabase: QuranDatabase? = null
 
     @Volatile
     private var userRepository: UserRepository? = null
@@ -40,25 +39,32 @@ object DatabaseProvider {
         }
     }
 
-    fun getQuranDatabase(context: Context): QuranDatabase {
-        return quranDatabase ?: synchronized(this) {
-            quranDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
-                QuranDatabase::class.java,
-                "quranapp"
-            )
-                .createFromAsset("db/quranapp.db")
-                .fallbackToDestructiveMigration(true)
-                .build()
-                .also { quranDatabase = it }
-        }
+    private fun getQuranDatabase(context: Context): QuranDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            QuranDatabase::class.java,
+            "quranapp"
+        )
+            .createFromAsset("db/quranapp.db")
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    private fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            ExternalQuranDatabase::class.java,
+            "quranapp_external"
+        )
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
 
     fun getQuranRepository(context: Context): QuranRepository {
         return quranRepository ?: synchronized(this) {
             quranRepository ?: QuranRepository(
-                context.applicationContext,
-                getQuranDatabase(context)
+                getQuranDatabase(context),
+                getExternalQuranDatabase(context)
             ).also { quranRepository = it }
         }
     }

@@ -3,7 +3,7 @@ package com.quranapp.android.utils.verse
 import android.content.Context
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta

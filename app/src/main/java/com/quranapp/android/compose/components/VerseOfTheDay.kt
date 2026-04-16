@@ -91,7 +91,6 @@ fun VerseOfTheDay() {
 @Composable
 private fun VotdContent() {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
     val colors = colorScheme
     val type = typography
 
@@ -163,9 +162,8 @@ private fun VotdContent() {
         return
     }
 
-    val userRepository = remember(context) { DatabaseProvider.getUserRepository(context) }
     val verse = votdState.verse
-    val isBookmarked by userRepository.isBookmarkedFlow(
+    val isBookmarked by vm.userRepository.isBookmarkedFlow(
         verse.chapterNo,
         verse.verseNo..verse.verseNo
     ).collectAsStateWithLifecycle(false)

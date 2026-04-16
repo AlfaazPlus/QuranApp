@@ -22,7 +22,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getFont

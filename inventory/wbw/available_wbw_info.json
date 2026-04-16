@@ -1,0 +1,76 @@
+{
+  "wbw": [
+    {
+      "id": "wbw_en",
+      "lang_code": "en",
+      "lang_name": "English",
+      "has_translation": true,
+      "has_transliteration": true,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_en.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_bn",
+      "lang_code": "bn",
+      "lang_name": "বাংলা",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_bn.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_fa",
+      "lang_code": "fa",
+      "lang_name": "فارسی",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_fa.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_fr",
+      "lang_code": "fr",
+      "lang_name": "Français",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_fr.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_hi",
+      "lang_code": "hi",
+      "lang_name": "हिंदी",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_hi.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_id",
+      "lang_code": "id",
+      "lang_name": "Bahasa Indonesia",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_id.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_tr",
+      "lang_code": "tr",
+      "lang_name": "Türkçe",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_tr.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_ur",
+      "lang_code": "ur",
+      "lang_name": "اردو",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_ur.json.gz",
+      "version": 1
+    }
+  ]
+}

@@ -44,7 +44,7 @@ import com.quranapp.android.components.search.VerseJumpModel;
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences;
 import com.quranapp.android.databinding.ActivitySearchBinding;
 import com.quranapp.android.db.DatabaseProvider;
-import com.quranapp.android.db.UserRepository;
+import com.quranapp.android.repository.UserRepository;
 import com.quranapp.android.db.search.SearchHistoryDBHelper;
 import com.quranapp.android.frags.search.FragSearchResult;
 import com.quranapp.android.frags.search.FragSearchSuggestions;

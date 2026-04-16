@@ -3,7 +3,7 @@ package com.quranapp.android.utils.mediaplayer
 import android.os.Bundle
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
 
 enum class PlayerInterationSource {

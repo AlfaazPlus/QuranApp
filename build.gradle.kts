@@ -1,4 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+plugins {
+}
+
 buildscript {
     extra["kotlin_version"] = "2.2.21"
 

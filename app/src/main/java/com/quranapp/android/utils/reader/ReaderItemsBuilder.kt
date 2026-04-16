@@ -13,7 +13,7 @@ import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity

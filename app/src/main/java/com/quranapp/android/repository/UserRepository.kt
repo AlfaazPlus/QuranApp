@@ -1,4 +1,4 @@
-package com.quranapp.android.db
+package com.quranapp.android.repository
 
 import android.content.Context
 import android.widget.Toast
@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.quranapp.android.R
+import com.quranapp.android.db.UserDatabase
 import com.quranapp.android.db.entities.BookmarkEntity
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi

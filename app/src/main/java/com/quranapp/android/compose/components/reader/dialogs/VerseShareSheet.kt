@@ -46,7 +46,7 @@ import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
