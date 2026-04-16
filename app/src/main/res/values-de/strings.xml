@@ -30,7 +30,7 @@
     <string name="strLabelNextVerse">Nächster Vers</string>
     <string name="strLabelSurah" formatted="false">Sure %s</string>
     <string name="strLabelPageNo" formatted="false">Seite %d</string>
-    <string name="strLabelJuzNo" formatted="false">Abschnitt %d</string>
+    <string name="strLabelJuzNo" formatted="false">Teil %d</string>
     <string name="strLabelVerses" formatted="false">Verse %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Vers : %d</string>
     <string name="strLabelVersesWithColon" formatted="false">Verse : %1$d–%2$d</string>
@@ -47,7 +47,7 @@
     <string name="strTitleFootnote">Fußnote</string>
     <string name="strTitleFootnotes">Fußnoten</string>
     <string name="strTitleReaderChapters">Suren</string>
-    <string name="strTitleReaderJuz">Abschnitt</string>
+    <string name="strTitleReaderJuz">Teil</string>
     <string name="strTitleVerseOptions">Vers-Optionen</string>
     <string name="strTitleVerseRecitation">Vers Rezitation</string>
     <string name="strTitleReaderVerseInformation" formatted="false">Sure %1$s : %2$d</string>
@@ -99,7 +99,7 @@
     <string name="strLabelSelectedCount" formatted="false">%d ausgewählt</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d weitere Übersetzungen</string>
     <string name="strLabelSelectVerse">Verse auswählen</string>
-    <string name="strTitleChapInfoJuzNo">Abschnitt Nr.</string>
+    <string name="strTitleChapInfoJuzNo">Teil Nr.</string>
     <string name="strTitleChapInfoRukus">Gruppen</string>
     <string name="strTitleChapInfoRevOrder">Reihenfolge der Offenbarungen</string>
     <string name="strLabelOrder">Reihenfolge</string>
@@ -122,7 +122,7 @@
     <string name="strMsgThemeDefault">Entsprechend den Systemeinstellungen anpassen.</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d ist keine gültige Sure Nr.</string>
     <string name="strMsgBookmarkAdded">Vers erfolgreich zu Lesezeichen hinzugefügt</string>
-    <string name="strMsgInvalidJuzNo" formatted="false">%d ist keine gültige Juz (Abschnitt) Nr.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%d ist keine gültige Teil Nr.</string>
     <string name="strMsgBookmarkRemoved">Vers erfolgreich aus Lesezeichen entfernt</string>
     <string name="strMsgBookmarkNoItems">Keine Lesezeichen</string>
     <string name="strMsgBookmarkDeleteSelected">Ausgewählte Lesezeichen werden entfernt.</string>
@@ -293,4 +293,19 @@
     <string name="strLabelDownloaded">Heruntergeladen</string>
     <string name="strTitleDeleteTafsir">Erläuterung löschen?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
+    <string name="strTitleReaderHizb">Abschnitt</string>
+    <string name="strHintSearchBy">Suche Teil oder Sure</string>
+    <string name="labelHizbNo" formatted="false">Abschnitt %d</string>
+    <string name="strHintSearchHizb">Suche Abschnitt oder Sure</string>
+    <string name="textSizes">Textgrößen</string>
+    <string name="recitationDownloadChapterSubtitle" formatted="false">Kapitel %d</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d Kapitel</string>
+    <string name="recitationDownloadAllComplete">Alle Kapitel heruntergeladen</string>
+    <string name="recitationDownloadConfirmTitle">Rezitationen herunterladen</string>
+    <string name="recitationDownloadConfirmMessage">Alle Kapitel für diesen Rezitator herunterladen? Dies kann erhebliche Speicher- und Datenmengen beanspruchen.</string>
+    <string name="recitationDownloadSomeFailed">Einige Kapitel sind fehlgeschlagen. Tippe auf „Wiederholen“, um fehlende Kapitel erneut in die Warteschlange zu stellen.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Ein anderer Rezitator lädt bereits herunter. Warte bis der Vorgang abgeschlossen ist, oder breche ihn ab bevor ein neuer Download gestartet wird.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d Kapitel heruntergeladen</string>
+    <string name="recitationBulkEnqueueNotifTitle">Rezitations-Downloads vorbereiten</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s – %2$d von %3$d in die Warteschlange gestellt</string>
 </resources>
