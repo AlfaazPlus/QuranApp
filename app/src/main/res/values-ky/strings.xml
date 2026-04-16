@@ -340,4 +340,10 @@
     <string name="theme_purple">Саргылт</string>
     <string name="theme_violet">Кочкул кызыл</string>
     <string name="theme_yellow">Сары</string>
+    <string name="translationHelp">
+        Тилиңизди көрбөй жатасызбы? Аны которууга же жакшыртууга жардам бериңиз жана аны көбүрөөк адамдар үчүн жеткиликтүү кылыңыз!
+    </string>
+    <string name="learnMore">
+        Көбүрөөк билүү
+    </string>
 </resources>

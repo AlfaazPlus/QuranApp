@@ -354,4 +354,10 @@
     <string name="sortBy">Sort by</string>
     <string name="alphabetically">Alphabetical</string>
     <string name="chronological">Chronological Order</string>
+    <string name="translationHelp">
+        Don’t see your language? Help translate or improve it and make it accessible to more people!
+    </string>
+    <string name="learnMore">
+        Learn more
+    </string>
 </resources>

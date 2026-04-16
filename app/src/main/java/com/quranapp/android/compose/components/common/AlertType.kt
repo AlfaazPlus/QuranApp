@@ -57,7 +57,7 @@ fun AlertCard(
         contentColor = getColorForAlertType(type),
         shape = shape,
         border = BorderStroke(1.dp, getColorForAlertType(type).copy(alpha = 0.1f)),
-        tonalElevation = 1.dp,
+        tonalElevation = 2.dp,
     ) {
         Box(
             modifier = Modifier
