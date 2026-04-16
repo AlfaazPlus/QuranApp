@@ -60,8 +60,6 @@ height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 - Contribute
     - [Contributing](#contributing)
     - [Contributors](/CONTRIBUTORS.md)
-- [Wiki](https://github.com/AlfaazPlus/QuranApp/wiki)
-- [Roadmap](https://github.com/AlfaazPlus/QuranApp/wiki/Roadmap)
 - [License](/LICENSE)
 </details>
 
@@ -79,35 +77,33 @@ height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 
 ## Features
 
-| Salient Features               |     |
-|--------------------------------|-----|
-| 🚫 No Ads or Purchases         | ✅   |
-| 🛡️ No permission required *     | ✅   |
-| 📙 Multiple Translations       | ✅   |
-| 🎙️ Multiple Recitations       | ✅   |
-| 🎨 Multiple Quran Fonts        | ✅   |
-| ❤️ Verse Reminder               | ✅   |
-| 🔗 Advanced Verse Interlinking | ✅   |
-| ⚡ Many more...                 | ✅   |
+| Salient Features                           |     |
+|--------------------------------------------|-----|
+| 🚫 No Ads or Purchases                     | ✅   |
+| 🛡️ No permission required *               | ✅   |
+| 📙 Multiple Translations and Tafsirs       | ✅   |
+| 🎙️ Multiple Recitations with Translations | ✅   |
+| 🔤 Multiple Quran Fonts                    | ✅   |
+| 📄 Mushaf Mode                             | ✅   |
+| 🎨 Material Colors                         | ✅   |
+| ❤️ Verse Reminder                          | ✅   |
+| ⚡ [Many more...](/FEATURES.md)             | ✅   |
 
 <sub>_* Permissions that affect your privacy such as storage, gps, camera etc. are not required._</sub>
 
-See an overview of all the features [here](/FEATURES.md). If you want help with using the QuranApp, please take a look at [WiKi](https://github.com/AlfaazPlus/QuranApp/wiki).
+See an overview of all the features [here](/FEATURES.md).
 
 ## Credits
-Data:
+
 - [QuranEnc](https://quranenc.com/en/home)
 - [Tanzil](https://tanzil.net/)
 - [quran.com](https://quran.com/)
 - [quran-data-noorehuda](https://codeberg.org/Luciogi/quran-data-noorehuda)
-
-Fonts:
-- [KFQPC font](https://github.com/mustafa0x/qpc-fonts) belongs to [King Fahd Quran Complex](https://qurancomplex.gov.sa/)
 - [Noorehuda](http://www.noorehidayat.org/)
-
-Quran recitations:
+- [qurandb.com](https://qurandb.com)
+- [tarteel.ai](https://tarteel.ai)
+- [quranicaudio.com](https://quranicaudio.com)
 - [everyayah.com](https://everyayah.com/)
-- [quran.com](https://quran.com/)
 
 See [this page](/CONTRIBUTORS.md) to know about the contributors.
 

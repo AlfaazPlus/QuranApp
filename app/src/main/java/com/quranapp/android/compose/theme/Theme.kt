@@ -8,7 +8,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.alfaazplus.sunnah.ui.theme.Typography
+import com.alfaazplus.sunnah.ui.theme.getAppTypography
 
 
 @Composable
@@ -35,7 +35,7 @@ fun QuranAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = getAppTypography(),
         content = content
     )
 

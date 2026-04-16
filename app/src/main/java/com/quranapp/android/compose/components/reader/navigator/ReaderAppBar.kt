@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -449,7 +448,6 @@ private fun StickyHeaderModeMushaf(
             contentAlignment = Alignment.CenterEnd
         ) {
             TextButton(
-                modifier = Modifier.height(36.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
@@ -459,7 +457,6 @@ private fun StickyHeaderModeMushaf(
             ) {
                 Column(
                     horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     if (currentPageNo != null) {
                         Text(

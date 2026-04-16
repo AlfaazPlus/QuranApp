@@ -11,53 +11,51 @@ The following features are the reason why you should use the QuranApp.
 - No data collection or sharing
 
 ### 📙 Translations
-- 33+ Translations
+- 40+ translations in 20+ languages
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
 - Fully offline once downloaded
 
 ### 🎙️ Recitations
-- 18+ Recitations
-- 7+ Translation Recitations
+- 15+ recitations
+- 7+ translation audios
   - Play only Quran
   - Play only translation
   - Play both Quran and translation
-- Repeat single verse
-- Play verse range
-- Play recitation continuously
+- Custom repeat
 - Automatic scroll to match current verse
 - Playback speed control
-- Download recitations for offline use
+- Spotlight mode
+- Background player
+- Fully offline once downloaded
 
 ### 📖️ Tafsir
-- 10+ Tafsirs
-- Tafsirs cached for offline use
+- 10+ tafsirs in 5+ langauges
+- Fully offline once downloaded
 
 ### 🎨 Fonts
 - Multiple fonts
   - Uthmani Hafs
-  - Noorehuda
-  - KFQPC
+  - Indopak
+  - KFQPC (v1 and v2)
 - Customize Arabic text size
 - Customise translation text size
 
 ### ⚙ Layout
-- Reading in translation mode
-- Reading in page mode
-- Read Qur'an in different translation modes (single verse, verse range, full chapter, full juz)
+- Verse-by-verse mode
+- Mushaf mode with variable lines
+- Read Qur'an in different views (chapter, juz, hizb)
 
 ### ➡️ Navigation
-- Convenient navigation in single verse mode
-- Quickly jump to any verse
-- Quickly jump to any chapter
-- Quickly jump to any juz
+- Quickly jump to any verse, chapter, juz, hizb or page
 
-### ❤️ Contents from the Qur'an
-- Duas from the Qur'an
-- Solutions from the Qur'an
-- Prophets mentioned in the Qur'an
-- Etiquette from the Qur'an
+### ❤️ Contents from the Quran
+- Duas from the Quran
+- Solutions from the Quran
+- Prophets mentioned in the Quran
+- Etiquette from the Quran
+- Major sins in Quran
 - Quran and Science
 
 ### 🔍 Search
@@ -77,5 +75,5 @@ The following features are the reason why you should use the QuranApp.
 ### 🔥 Other Features
 - Verse of the Day Reminder
 - Advanced sharing
-- Dark and light themes
-- App is available in 15+ languages
+- Dark and light themes. 5+ material colors with dynamic support.
+- App is available in 22 languages
