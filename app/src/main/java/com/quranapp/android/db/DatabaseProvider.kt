@@ -50,7 +50,7 @@ object DatabaseProvider {
             .build()
     }
 
-    private fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
+    fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
             ExternalQuranDatabase::class.java,

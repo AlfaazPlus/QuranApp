@@ -50,6 +50,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,13 +67,14 @@ import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
+import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.extensions.isSingleValue
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
@@ -87,6 +89,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.collections.buildMap
 
 private sealed class ReferenceRow {
     data class Description(val title: String, val desc: String?) : ReferenceRow()
@@ -96,7 +99,10 @@ private sealed class ReferenceRow {
         val titleText: String,
     ) : ReferenceRow()
 
-    data class VerseRow(val verseUi: ReaderLayoutItem.VerseUI) : ReferenceRow()
+    data class VerseRow(
+        val verseUi: ReaderLayoutItem.VerseUI,
+        val quranTextStyle: TextStyle? = null,
+    ) : ReferenceRow()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -303,72 +309,84 @@ private fun ReferenceScreenContent(
                     )
                 }
 
+                val referencePageTextStyles = remember(rows) {
+                    buildMap {
+                        for (row in rows) {
+                            if (row is ReferenceRow.VerseRow) {
+                                row.quranTextStyle?.let { put(row.verseUi.verse.pageNo, it) }
+                            }
+                        }
+                    }
+                }
+
                 when {
                     loading -> {
                         Loader(fill = true)
                     }
 
                     else -> {
-                        LazyColumn(
-                            state = listState,
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(bottom = 64.dp)
-                        ) {
-                            items(
-                                items = rows,
-                                key = { row ->
+                        TextStyleProvider(referencePageTextStyles) {
+                            LazyColumn(
+                                state = listState,
+                                modifier = Modifier.fillMaxSize(),
+                                contentPadding = PaddingValues(bottom = 64.dp)
+                            ) {
+                                items(
+                                    items = rows,
+                                    key = { row ->
+                                        when (row) {
+                                            is ReferenceRow.Description -> "desc"
+                                            is ReferenceRow.SectionTitle -> row.segmentKey
+                                            is ReferenceRow.VerseRow -> row.verseUi.key
+                                        }
+                                    },
+                                ) { row ->
                                     when (row) {
-                                        is ReferenceRow.Description -> "desc"
-                                        is ReferenceRow.SectionTitle -> row.segmentKey
-                                        is ReferenceRow.VerseRow -> row.verseUi.key
+                                        is ReferenceRow.Description -> ReferenceDescription(
+                                            row.title,
+                                            row.desc
+                                        )
+
+                                        is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
+                                            row = row,
+                                            isBookmarked = bookmarkedKeys.contains(
+                                                BookmarkKey(
+                                                    row.ref.chapterNo,
+                                                    row.ref.range.first,
+                                                    row.ref.range.last,
+                                                ),
+                                            ),
+                                            onOpenInReader = { chapterNo, range ->
+                                                val i = ReaderFactory.prepareVerseRangeIntent(
+                                                    chapterNo,
+                                                    range.first,
+                                                    range.last
+                                                )
+                                                    .setClass(context, ActivityReader::class.java)
+                                                    .putExtra(
+                                                        Keys.READER_KEY_TRANSL_SLUGS,
+                                                        translationSlugs.toTypedArray()
+                                                    )
+                                                    .putExtra(
+                                                        Keys.READER_KEY_SAVE_TRANSL_CHANGES,
+                                                        false
+                                                    )
+
+                                                context.startActivity(i)
+                                            },
+                                        )
+
+                                        is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
+                                            verseUi = row.verseUi,
+                                            isBookmarked = bookmarkedKeys.contains(
+                                                BookmarkKey(
+                                                    row.verseUi.verse.chapterNo,
+                                                    row.verseUi.verse.verseNo,
+                                                    row.verseUi.verse.verseNo,
+                                                ),
+                                            ),
+                                        )
                                     }
-                                },
-                            ) { row ->
-                                when (row) {
-                                    is ReferenceRow.Description -> ReferenceDescription(
-                                        row.title,
-                                        row.desc
-                                    )
-
-                                    is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
-                                        row = row,
-                                        isBookmarked = bookmarkedKeys.contains(
-                                            BookmarkKey(
-                                                row.ref.chapterNo,
-                                                row.ref.range.first,
-                                                row.ref.range.last,
-                                            ),
-                                        ),
-                                        onOpenInReader = { chapterNo, range ->
-                                            val i = ReaderFactory.prepareVerseRangeIntent(
-                                                chapterNo,
-                                                range.first,
-                                                range.last
-                                            )
-                                                .setClass(context, ActivityReader::class.java)
-                                                .putExtra(
-                                                    Keys.READER_KEY_TRANSL_SLUGS,
-                                                    translationSlugs.toTypedArray()
-                                                )
-                                                .putExtra(
-                                                    Keys.READER_KEY_SAVE_TRANSL_CHANGES,
-                                                    false
-                                                )
-
-                                            context.startActivity(i)
-                                        },
-                                    )
-
-                                    is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
-                                        verseUi = row.verseUi,
-                                        isBookmarked = bookmarkedKeys.contains(
-                                            BookmarkKey(
-                                                row.verseUi.verse.chapterNo,
-                                                row.verseUi.verse.verseNo,
-                                                row.verseUi.verse.verseNo,
-                                            ),
-                                        ),
-                                    )
                                 }
                             }
                         }
@@ -572,19 +590,19 @@ private suspend fun buildReferenceRows(
     val built = segments.map { seg ->
         async {
             val verseNos = seg.ref.range.toList()
-            val items = ReaderItemsBuilder.buildQuickReferenceItems(
+            val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
                 context,
                 params,
                 repository,
                 seg.chapterNo,
                 verseNos,
-            )
-            val verseUis = items.filterIsInstance<ReaderLayoutItem.VerseUI>()
-            seg to verseUis
+            ) ?: return@async Triple(seg, emptyList<ReaderLayoutItem.VerseUI>(), emptyMap())
+            val verseUis = prepared.items.filterIsInstance<ReaderLayoutItem.VerseUI>()
+            Triple(seg, verseUis, prepared.textStyles)
         }
     }.awaitAll()
 
-    for ((seg, verseUis) in built) {
+    for ((seg, verseUis, textStyles) in built) {
         val titleText = if (seg.ref.range.isSingleValue) {
             "${seg.chapterName} ${seg.chapterNo}:${seg.ref.range.first}"
         } else {
@@ -602,10 +620,11 @@ private suspend fun buildReferenceRows(
         for ((i, v) in verseUis.withIndex()) {
             out.add(
                 ReferenceRow.VerseRow(
-                    v.copy(
+                    verseUi = v.copy(
                         key = "ref-${seg.segmentIndex}-${v.key}",
                         isLastInGroup = i == verseUis.lastIndex,
                     ),
+                    quranTextStyle = textStyles[v.verse.pageNo],
                 ),
             )
         }

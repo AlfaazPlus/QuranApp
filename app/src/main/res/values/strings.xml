@@ -360,4 +360,22 @@
     <string name="learnMore">
         Learn more
     </string>
+    <string name="wordByWord">
+        Word by Word
+    </string>
+    <string name="selectWbwLanguage">
+        Select language
+    </string>
+    <string name="wbwShowTranslation">Show translation</string>
+    <string name="wbwShowTransliteration">Show transliteration</string>
+    <string name="wbwShowTransliterationMgs">When available for the selected language</string>
+    <string name="wbwRecitation">Recitation</string>
+    <string name="wbwRecitationMsg">Play audio when a word is clicked</string>
+    <string name="wbwTextSize">Text size</string>
+    <string name="noWbwAvailable">
+        Download a language pack below to turn on word-by-word features.
+    </string>
+    <string name="deleteData">
+        Delete data?
+    </string>
 </resources>

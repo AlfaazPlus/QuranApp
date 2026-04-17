@@ -1,0 +1,67 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1509d1159d73e7c5d7d0599bf134c6a3",
+    "entities": [
+      {
+        "tableName": "wbw_words",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ayah_id` INTEGER NOT NULL, `word_index` INTEGER NOT NULL, `wbw_id` TEXT NOT NULL, `translation` TEXT, `transliteration` TEXT, PRIMARY KEY(`wbw_id`, `ayah_id`, `word_index`))",
+        "fields": [
+          {
+            "fieldPath": "ayahId",
+            "columnName": "ayah_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wordIndex",
+            "columnName": "word_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wbwId",
+            "columnName": "wbw_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "translation",
+            "columnName": "translation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "transliteration",
+            "columnName": "transliteration",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "wbw_id",
+            "ayah_id",
+            "word_index"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_wbw_words_ayah_wbw",
+            "unique": false,
+            "columnNames": [
+              "ayah_id",
+              "wbw_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_wbw_words_ayah_wbw` ON `${TABLE_NAME}` (`ayah_id`, `wbw_id`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1509d1159d73e7c5d7d0599bf134c6a3')"
+    ]
+  }
+}

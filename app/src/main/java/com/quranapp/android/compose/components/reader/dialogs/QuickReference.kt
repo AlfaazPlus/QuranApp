@@ -43,7 +43,9 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
+import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.ReaderProvider
+import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
@@ -207,7 +209,7 @@ private fun QuickReferenceContent(
     val verseRange = remember(parsed) { parsedVersesToIntRange(parsed) }
     val title = remember(data.chapterNo, parsed) { formatTitle(data.chapterNo, parsed) }
 
-    var items by remember { mutableStateOf<List<ReaderLayoutItem>>(emptyList()) }
+    var prepared by remember { mutableStateOf<ReaderPreparedData?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     val isBookmarked by if (verseRange != null) {
         bookmarksRepo
@@ -234,7 +236,7 @@ private fun QuickReferenceContent(
                 slugs = ReaderPreferences.getTranslations(),
             )
 
-            items = ReaderItemsBuilder.buildQuickReferenceItems(
+            prepared = ReaderItemsBuilder.buildQuickReferenceItems(
                 context, params, repository, data.chapterNo, verseNos
             )
         }
@@ -277,20 +279,24 @@ private fun QuickReferenceContent(
                 CircularProgressIndicator()
             }
         } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-            ) {
-                itemsIndexed(
-                    items.filterIsInstance<ReaderLayoutItem.VerseUI>(),
-                    key = { _, item -> item.key }
-                ) { index, verseUi ->
-                    VerseViewWrapped(
-                        bookmarksRepo,
-                        verseUi = verseUi,
-                        showDivier = index < items.size - 1,
-                    )
+            val verseRows = prepared?.items.orEmpty().filterIsInstance<ReaderLayoutItem.VerseUI>()
+
+            TextStyleProvider(prepared?.textStyles ?: emptyMap()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                ) {
+                    itemsIndexed(
+                        verseRows,
+                        key = { _, item -> item.key }
+                    ) { index, verseUi ->
+                        VerseViewWrapped(
+                            bookmarksRepo,
+                            verseUi = verseUi,
+                            showDivier = index < verseRows.lastIndex,
+                        )
+                    }
                 }
             }
         }

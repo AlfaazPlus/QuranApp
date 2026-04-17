@@ -41,6 +41,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -143,15 +144,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinxSerialization)
     implementation(libs.kotlinxRetrofit)
-
-    /* SmoothRefreshLayout */
-    implementation(libs.srlCore)
-    implementation(libs.srlExtClassics)
-    implementation(libs.srlExtMaterial)
-    implementation(libs.srlExtDynamicRebound)
-    implementation(libs.srlExtHorizontal)
-    implementation(libs.srlExtTwoLevel)
-    implementation(libs.srlExtUtil)
 
     implementation(libs.commonsCompress)
     implementation(libs.workManager)

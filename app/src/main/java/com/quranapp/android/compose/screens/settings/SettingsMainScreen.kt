@@ -181,6 +181,13 @@ fun SettingsMainScreen(
             }
 
             SettingsItem(
+                title = R.string.wordByWord,
+                icon = R.drawable.dr_icon_quran_script,
+            ) {
+                navController.navigate(SettingRoutes.WWB)
+            }
+
+            SettingsItem(
                 title = R.string.downloadRecitations,
                 icon = R.drawable.dr_icon_download,
             ) {

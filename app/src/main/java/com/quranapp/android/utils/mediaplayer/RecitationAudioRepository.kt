@@ -491,7 +491,7 @@ class RecitationAudioRepository(private val context: Context) {
         timingUrl: String,
     ) = withContext(Dispatchers.IO) {
         val response = if (timingUrl.startsWith("ghraw://")) {
-            RetrofitInstance.githubLike.getRecitationTimingMetadata(
+            RetrofitInstance.githubLike.getRawContent(
                 timingUrl.removePrefix("ghraw://").trimStart('/')
             )
         } else {

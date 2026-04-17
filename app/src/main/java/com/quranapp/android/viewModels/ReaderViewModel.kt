@@ -16,6 +16,7 @@ import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.Log
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -104,9 +106,21 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     private val _navigateToVerse = MutableStateFlow<ChapterVersePair?>(null)
     val navigateToVerse: StateFlow<ChapterVersePair?> = _navigateToVerse.asStateFlow()
 
-    private val _verseByVerseItems = MutableStateFlow<List<ReaderLayoutItem>>(emptyList())
+    private val _verseByVersePrepared = MutableStateFlow(
+        ReaderPreparedData(emptyList(), emptyMap()),
+    )
+
+    val verseByVersePrepared: StateFlow<ReaderPreparedData> =
+        _verseByVersePrepared.asStateFlow()
+
     val verseByVerseItems: StateFlow<List<ReaderLayoutItem>> =
-        _verseByVerseItems.asStateFlow()
+        _verseByVersePrepared
+            .map { it.items }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList(),
+            )
 
     val pageItems = mutableStateMapOf<Int, QuranPageItem>()
     val pageCounts = mutableStateMapOf<Int, Int>()
@@ -157,6 +171,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
                 ReaderPreferences.KEY_TRANSLATIONS,
                 ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
+                ReaderPreferences.KEY_WBW,
+                ReaderPreferences.KEY_WBW_CONTENT_EPOCH,
             ),
             readerMode,
         ) { uiState, prefs, readerMode ->
@@ -323,7 +339,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
 
     fun updateLastKnownVerseFromItems(firstVisibleIndex: Int) {
-        val items = _verseByVerseItems.value
+        val items = verseByVerseItems.value
+
         for (i in firstVisibleIndex until items.size) {
             val item = items[i]
             if (item is ReaderLayoutItem.VerseUI) {
@@ -475,7 +492,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
 
             ReaderMode.VerseByVerse -> {
-                val isInView = _verseByVerseItems.value.any { item ->
+                val isInView = verseByVerseItems.value.any { item ->
                     item is ReaderLayoutItem.VerseUI &&
                             item.verse.chapterNo == chapterNo &&
                             item.verse.verseNo == verseNo
@@ -500,7 +517,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         state: ReaderUiState,
         readerMode: ReaderMode,
     ) {
-        _verseByVerseItems.value = withContext(Dispatchers.IO) {
+        _verseByVersePrepared.value = withContext(Dispatchers.IO) {
             when (val vt = state.viewType) {
                 is ReaderViewType.Juz -> ReaderItemsBuilder.buildJuzVersesForTranslationMode(
                     context, params, repository, vt.juzNo
@@ -514,9 +531,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                     context, params, repository, vt.chapterNo,
                 )
 
-                null -> emptyList()
+                null -> ReaderPreparedData(emptyList(), emptyMap())
             }
-        }
+        } ?: ReaderPreparedData(emptyList(), emptyMap())
     }
 
     suspend fun resolvePageNo(chapterNo: Int, verseNo: Int = 1, mushafCode: String? = null) =

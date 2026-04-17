@@ -99,8 +99,7 @@ private fun PresentSheetContent(data: FootnotePresenterData) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(.9f),
+            .fillMaxWidth(),
     ) {
         Header(translFactory, verse, singleFootnote)
 

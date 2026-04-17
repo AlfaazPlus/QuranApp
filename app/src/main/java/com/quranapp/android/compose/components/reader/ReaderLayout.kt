@@ -22,11 +22,13 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
 import com.quranapp.android.viewModels.ReaderUiState
@@ -61,12 +63,18 @@ sealed class ReaderLayoutItem() {
     data class ChapterTitle(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
     data class VerseUI(
         val verse: VerseWithDetails,
-        val parsedQuranText: AnnotatedString? = null,
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
+        val wbwByWordIndex: Map<Int, WbwWordEntity>? = null,
         val isLastInGroup: Boolean = false,
         override val key: String
     ) : ReaderLayoutItem()
 }
+
+data class ReaderPreparedData(
+    val items: List<ReaderLayoutItem>,
+    /** Quran text style per mushaf page for Arabic in this reader session. */
+    val textStyles: Map<Int, TextStyle> = emptyMap(),
+)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -131,7 +139,9 @@ private fun ReaderLayoutVerseMode(
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
     val listState = rememberLazyListState()
-    val items by readerVm.verseByVerseItems.collectAsStateWithLifecycle()
+    val prepared by readerVm.verseByVersePrepared.collectAsStateWithLifecycle()
+    val items = prepared.items
+
     val allBookmarks by readerVm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
@@ -151,7 +161,7 @@ private fun ReaderLayoutVerseMode(
             .collect { readerVm.updateLastKnownVerseFromItems(it) }
     }
 
-    LaunchedEffect(items) {
+    LaunchedEffect(prepared) {
         if (items.isNotEmpty()) {
             readerVm.updateLastKnownVerseFromItems(listState.firstVisibleItemIndex)
         }
@@ -166,7 +176,7 @@ private fun ReaderLayoutVerseMode(
     var autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
 
-    val playerState = LocalRecitationState.current
+    val playerState = LocalRecitation.current
 
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
@@ -227,28 +237,30 @@ private fun ReaderLayoutVerseMode(
         }
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-            .pointerInput(autoScrollSpeed) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        if (event.changes.any { it.pressed }) {
-                            autoScrollSpeed = null
+    TextStyleProvider(prepared.textStyles) {
+        LazyColumn(
+            state = listState,
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
+                .pointerInput(autoScrollSpeed) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            if (event.changes.any { it.pressed }) {
+                                autoScrollSpeed = null
+                            }
                         }
                     }
-                }
-            },
-        contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
-    ) {
-        items(
-            items = items,
-            key = { item -> item.key },
-        ) { item ->
-            TranslationRow(readerVm, item, bookmarkedVerseKeys)
+                },
+            contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
+        ) {
+            items(
+                items = items,
+                key = { item -> item.key },
+            ) { item ->
+                TranslationRow(readerVm, item, bookmarkedVerseKeys)
+            }
         }
     }
 }
@@ -257,7 +269,7 @@ private fun ReaderLayoutVerseMode(
 private fun TranslationRow(
     readerVm: ReaderViewModel,
     item: ReaderLayoutItem,
-    bookmarkedVerseKeys: Set<BookmarkKey>
+    bookmarkedVerseKeys: Set<BookmarkKey>,
 ) {
     when (item) {
         is ReaderLayoutItem.Bismillah -> Bismillah()

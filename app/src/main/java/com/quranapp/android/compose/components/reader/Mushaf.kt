@@ -195,7 +195,7 @@ fun ReaderLayoutPageMode(
         readerVm.requestPageNavigation(targetPage)
     }
 
-    val playerState = LocalRecitationState.current
+    val playerState = LocalRecitation.current
     val isPlayingMushaf = playerState.isAnyPlaying
     val playingVerseMushaf = playerState.playingVerse
     var playerVerseSync by readerVm.playerVerseSync
@@ -276,7 +276,7 @@ private fun PageModePage(
 
     val scrollState = rememberScrollState()
 
-    val playerState = LocalRecitationState.current
+    val playerState = LocalRecitation.current
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
 

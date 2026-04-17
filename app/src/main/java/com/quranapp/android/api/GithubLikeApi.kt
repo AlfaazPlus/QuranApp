@@ -10,7 +10,7 @@ import retrofit2.http.Streaming
 interface GithubLikeApi {
     @GET("{path}")
     @Streaming
-    suspend fun getRecitationTimingMetadata(
+    suspend fun getRawContent(
         @Path(value = "path", encoded = true) path: String,
     ): Response<ResponseBody>
 }

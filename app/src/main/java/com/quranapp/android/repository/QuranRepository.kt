@@ -11,6 +11,7 @@ import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
 import com.quranapp.android.db.entities.quran.NavigationType
 import com.quranapp.android.db.entities.quran.SurahEntity
+import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.db.relations.NavigationUnitRange
 import com.quranapp.android.db.relations.SurahWithLocalizations
@@ -31,6 +32,7 @@ class QuranRepository(
     private val surahDao get() = database.surahDao()
     private val surahSearchDao get() = database.surahSearchDao()
     private val navigationDao get() = database.navigationDao()
+    private val wbwDao get() = extDatabase.wbwDao()
 
     suspend fun getNumberOfPages(mushafId: Int): Int {
         if (mushafId <= 0) return 0
@@ -238,11 +240,25 @@ class QuranRepository(
         }
     }
 
-    /**
-     * Resolves [MushafMapEntity] ayah line to ordered word texts for [scriptCode]
-     * (must match [com.quranapp.android.db.entities.quran.ScriptEntity.code]).
-     * When [wordCache] is provided (full ayah word lists), avoids DB reads.
-     */
+    suspend fun getWbwWordsForAyahs(
+        wbwId: String,
+        ayahIds: List<Int>,
+    ): Map<Int, Map<Int, WbwWordEntity>> {
+        if (wbwId.isBlank() || ayahIds.isEmpty()) return emptyMap()
+
+        val rows = wbwDao.getWordsForAyahs(wbwId, ayahIds.distinct())
+
+        if (rows.isEmpty()) return emptyMap()
+
+        val byAyah = LinkedHashMap<Int, MutableMap<Int, WbwWordEntity>>()
+
+        for (row in rows) {
+            byAyah.getOrPut(row.ayahId) { LinkedHashMap() }[row.wordIndex] = row
+        }
+
+        return byAyah.mapValues { it.value.toMap() }
+    }
+
     suspend fun resolveMushafLineWords(
         row: MushafMapEntity,
         scriptCode: String,

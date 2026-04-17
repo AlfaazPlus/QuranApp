@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
@@ -73,6 +74,27 @@ object ReaderPreferences {
 
     val KEY_TAFSIR =
         PrefKey(stringPreferencesKey(TafsirUtils.KEY_TAFSIR), "")
+
+    val KEY_WBW =
+        PrefKey(stringPreferencesKey("key.wbw"), "")
+
+    val KEY_WBW_CONTENT_EPOCH =
+        PrefKey(longPreferencesKey("reader.wbw.content_epoch"), 0L)
+
+    val KEY_WBW_SHOW_TRANSLATION =
+        PrefKey(booleanPreferencesKey("reader.wbw.show_translation"), false)
+
+    val KEY_WBW_SHOW_TRANSLITERATION =
+        PrefKey(booleanPreferencesKey("reader.wbw.show_transliteration"), false)
+
+    val KEY_WBW_RECITATION =
+        PrefKey(booleanPreferencesKey("reader.wbw.recitation"), true)
+
+    val KEY_TEXT_SIZE_MULT_WBW =
+        PrefKey(
+            floatPreferencesKey(ReaderTextSizeUtils.KEY_TEXT_SIZE_MULT_WBW),
+            ReaderTextSizeUtils.TEXT_SIZE_MULT_WBW_DEFAULT
+        )
 
     val KEY_LEGACY_MIGRATED =
         PrefKey(booleanPreferencesKey("reader.prefs.legacy_migrated_v1"), false)
@@ -319,5 +341,118 @@ object ReaderPreferences {
     fun observeTafsirId(): String? {
         val raw = DataStoreManager.observe(KEY_TAFSIR)
         return raw.ifEmpty { null }
+    }
+
+    fun getWbwId(): String? {
+        return DataStoreManager.read(KEY_WBW).takeIf { it.isNotEmpty() }
+    }
+
+    suspend fun setWbwId(id: String) {
+        DataStoreManager.write(KEY_WBW, id)
+    }
+
+    fun wbwIdFlow(): Flow<String> {
+        return DataStoreManager.flow(KEY_WBW)
+    }
+
+    @Composable
+    fun observeWbwId(): String {
+        return DataStoreManager.observe(KEY_WBW)
+    }
+
+    fun getWbwContentEpoch(): Long {
+        return DataStoreManager.read(KEY_WBW_CONTENT_EPOCH)
+    }
+
+    suspend fun bumpWbwContentEpoch() {
+        val next = DataStoreManager.read(KEY_WBW_CONTENT_EPOCH) + 1L
+        DataStoreManager.write(KEY_WBW_CONTENT_EPOCH, next)
+    }
+
+    fun getWbwShowTranslation(): Boolean {
+        return DataStoreManager.read(KEY_WBW_SHOW_TRANSLATION)
+    }
+
+    suspend fun setWbwShowTranslation(show: Boolean) {
+        DataStoreManager.write(KEY_WBW_SHOW_TRANSLATION, show)
+    }
+
+    @Composable
+    fun observeWbwShowTranslation(): Boolean {
+        return DataStoreManager.observe(KEY_WBW_SHOW_TRANSLATION)
+    }
+
+    fun wbwShowTranslationFlow(): Flow<Boolean> {
+        return DataStoreManager.flow(KEY_WBW_SHOW_TRANSLATION)
+    }
+
+    fun getWbwShowTransliteration(): Boolean {
+        return DataStoreManager.read(KEY_WBW_SHOW_TRANSLITERATION)
+    }
+
+    suspend fun setWbwShowTransliteration(show: Boolean) {
+        DataStoreManager.write(KEY_WBW_SHOW_TRANSLITERATION, show)
+    }
+
+    @Composable
+    fun observeWbwShowTransliteration(): Boolean {
+        return DataStoreManager.observe(KEY_WBW_SHOW_TRANSLITERATION)
+    }
+
+    fun wbwShowTransliterationFlow(): Flow<Boolean> {
+        return DataStoreManager.flow(KEY_WBW_SHOW_TRANSLITERATION)
+    }
+
+    fun getWbwRecitationEnabled(): Boolean {
+        return DataStoreManager.read(KEY_WBW_RECITATION)
+    }
+
+    suspend fun setWbwRecitationEnabled(enabled: Boolean) {
+        DataStoreManager.write(KEY_WBW_RECITATION, enabled)
+    }
+
+    @Composable
+    fun observeWbwRecitationEnabled(): Boolean {
+        return DataStoreManager.observe(KEY_WBW_RECITATION)
+    }
+
+    fun wbwRecitationEnabledFlow(): Flow<Boolean> {
+        return DataStoreManager.flow(KEY_WBW_RECITATION)
+    }
+
+    fun getWbwTextSizeMultiplier(): Float {
+        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_WBW)
+    }
+
+    suspend fun setWbwTextSizeMultiplier(sizeMult: Float) {
+        DataStoreManager.write(KEY_TEXT_SIZE_MULT_WBW, sizeMult)
+    }
+
+    @Composable
+    fun observeWbwTextSizeMultiplier(): Float {
+        return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_WBW)
+    }
+
+    fun wbwTextSizeMultiplierFlow(): Flow<Float> {
+        return DataStoreManager.flow(KEY_TEXT_SIZE_MULT_WBW)
+    }
+
+    fun validateWbwId(
+        id: String?,
+        availableIds: Set<String>,
+        fallback: String? = null,
+    ): String? {
+        val normalizedId = id?.takeIf { it.isNotBlank() }
+        val normalizedFallback = fallback?.takeIf { it.isNotBlank() }
+
+        if (normalizedId != null && availableIds.contains(normalizedId)) {
+            return normalizedId
+        }
+
+        if (normalizedFallback != null && availableIds.contains(normalizedFallback)) {
+            return normalizedFallback
+        }
+
+        return null
     }
 }
