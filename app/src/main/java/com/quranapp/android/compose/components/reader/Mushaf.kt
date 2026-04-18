@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -32,11 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -52,7 +56,6 @@ import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
@@ -122,10 +125,46 @@ fun ReaderLayoutPageMode(
         initialPage = uiState.currentPageNo?.let { it - 1 } ?: 0,
         pageCount = { pageCount },
     )
+
+    // After script/mushaf change, [pageItems] is cleared while the pager can still be on an old
+    // index; only realign when the layout key changes so we don't fight user swipes.
+    var previousMushafKey by remember { mutableStateOf(mushafLayoutKey) }
+
+    LaunchedEffect(mushafLayoutKey, pageCount, uiState.currentPageNo) {
+        val layoutJustChanged = previousMushafKey != mushafLayoutKey
+
+        if (!layoutJustChanged) return@LaunchedEffect
+
+        if (pageCount <= 0) return@LaunchedEffect
+
+        val p = uiState.currentPageNo ?: return@LaunchedEffect
+
+        val idx = p.coerceIn(1, pageCount) - 1
+
+        if (pagerState.currentPage != idx) {
+            pagerState.scrollToPage(idx)
+        }
+
+        previousMushafKey = mushafLayoutKey
+    }
+
     val textMeasurer = rememberTextMeasurer(cacheSize = 2048)
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     val density = LocalDensity.current
+
+    val pageBuilderParams = remember(colors, typography, textMeasurer, density, contentWidth) {
+        PageBuilderParams(
+            context = context,
+            colors = colors,
+            type = typography,
+            textMeasurer = textMeasurer,
+            density = density,
+            contentWidthPx = with(density) {
+                (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
+            }
+        )
+    }
 
     LaunchedEffect(pagerState, pageCount, mushafLayoutKey) {
         snapshotFlow {
@@ -139,19 +178,20 @@ fun ReaderLayoutPageMode(
             .collect { anchorPages ->
                 if (pageCount > 0) {
                     readerVm.fetchMushafPages(
-                        context, anchorPages, pageCount, PageBuilderParams(
-                            context = context,
-                            colors = colors,
-                            type = typography,
-                            textMeasurer = textMeasurer,
-                            density = density,
-                            contentWidthPx = with(density) {
-                                (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
-                            }
-                        )
+                        context, anchorPages, pageCount, pageBuilderParams
                     )
                 }
             }
+    }
+
+    // Pager anchors can lag [currentPageNo] while programmatic navigation is pending; always
+    // prefetch the page the ViewModel is trying to show.
+    LaunchedEffect(uiState.currentPageNo, pageCount, mushafLayoutKey, pageBuilderParams) {
+        val vmPage = uiState.currentPageNo ?: return@LaunchedEffect
+
+        readerVm.fetchMushafPages(
+            context, listOf(vmPage), pageCount, pageBuilderParams
+        )
     }
 
     val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
@@ -182,10 +222,19 @@ fun ReaderLayoutPageMode(
 
     LaunchedEffect(navigateToPage, pageCount) {
         val targetPage = navigateToPage ?: return@LaunchedEffect
-        if (targetPage in 1..pageCount) {
-            pagerState.scrollToPage(targetPage - 1)
+
+        if (pageCount <= 0) return@LaunchedEffect
+
+        val clamped = targetPage.coerceIn(1, pageCount)
+
+        try {
+            pagerState.scrollToPage(clamped - 1)
+
+            if (clamped != targetPage) {
+                readerVm.updateState { it.copy(currentPageNo = clamped) }
+            }
+        } finally {
             readerVm.consumePageNavigation()
-            Log.d("scrollToPage", targetPage)
         }
     }
 
@@ -194,8 +243,6 @@ fun ReaderLayoutPageMode(
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: return@LaunchedEffect
-
-        Log.d("requestPageNavigation", targetPage)
 
         readerVm.requestPageNavigation(targetPage)
     }
@@ -264,23 +311,25 @@ fun ReaderLayoutPageMode(
                     .fillMaxWidth()
                     .fillMaxHeight()
             ) { page ->
-                PageModePage(
-                    readerVm = readerVm,
-                    pageNo = page + 1,
-                    contentWidth,
-                    ruledPageDecoration,
-                    nestedScrollConnection,
-                    onMushafWordClick = { word ->
-                        val pair = QuranUtils.getVerseNoFromAyahId(word.ayahId)
+                key(mushafLayoutKey, page) {
+                    PageModePage(
+                        readerVm = readerVm,
+                        pageNo = page + 1,
+                        contentWidth,
+                        ruledPageDecoration,
+                        nestedScrollConnection,
+                        onMushafWordClick = { word ->
+                            val pair = QuranUtils.getVerseNoFromAyahId(word.ayahId)
 
-                        wbwSheetData = WbwSheetData(
-                            chapterNo = pair.first,
-                            verseNo = pair.second,
-                            wordIndex = word.wordIndex
-                        )
-                    },
-                    mushafWordTapEnabled = mushafWordTapEnabled,
-                )
+                            wbwSheetData = WbwSheetData(
+                                chapterNo = pair.first,
+                                verseNo = pair.second,
+                                wordIndex = word.wordIndex
+                            )
+                        },
+                        mushafWordTapEnabled = mushafWordTapEnabled,
+                    )
+                }
             }
 
         }
@@ -302,8 +351,11 @@ private fun PageModePage(
     onMushafWordClick: (AyahWordEntity) -> Unit,
     mushafWordTapEnabled: Boolean,
 ) {
-    val item = readerVm.pageItems[pageNo]
+    val i by remember(pageNo) {
+        derivedStateOf { readerVm.pageItems[pageNo] }
+    }
 
+    val item = i
     if (item == null) {
         return Loader(true)
     }
@@ -462,43 +514,78 @@ private fun MushafLineText(
 
     if (textLine.centered) {
         Box(Modifier.fillMaxWidth()) {
-            Row(
-                modifier = Modifier.align(Alignment.Center),
+            MushafWordsRow(
+                words = words,
+                fittedStyle = fittedStyle,
+                playingWordKeys = playingWordKeys,
                 horizontalArrangement = Arrangement.spacedBy(
                     centeredGap, Alignment.CenterHorizontally
                 ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                for (word in words) {
-                    Word(
-                        word,
-                        fittedStyle,
-                        isHighlighted = (word.ayahId to word.wordIndex) in playingWordKeys,
-                        mushafWordTapEnabled = mushafWordTapEnabled,
-                        onClick = {
-                            onMushafWordClick(word)
-                        },
-                    )
-                }
-            }
+                modifier = Modifier.align(Alignment.Center),
+                onMushafWordClick = onMushafWordClick,
+                mushafWordTapEnabled = mushafWordTapEnabled,
+            )
         }
     } else {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
+        MushafWordsRow(
+            words = words,
+            fittedStyle = fittedStyle,
+            playingWordKeys = playingWordKeys,
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            for (word in words) {
-                Word(
-                    word,
-                    fittedStyle,
-                    isHighlighted = (word.ayahId to word.wordIndex) in playingWordKeys,
-                    mushafWordTapEnabled = mushafWordTapEnabled,
-                    onClick = {
-                        onMushafWordClick(word)
-                    },
+            modifier = Modifier.fillMaxWidth(),
+            onMushafWordClick = onMushafWordClick,
+            mushafWordTapEnabled = mushafWordTapEnabled,
+        )
+    }
+}
+
+@Composable
+private fun MushafWordsRow(
+    words: List<AyahWordEntity>,
+    fittedStyle: TextStyle,
+    playingWordKeys: Set<Pair<Int, Int>>,
+    horizontalArrangement: Arrangement.Horizontal,
+    modifier: Modifier = Modifier,
+    onMushafWordClick: (AyahWordEntity) -> Unit,
+    mushafWordTapEnabled: Boolean,
+) {
+    val wordRects = remember(words) {
+        mutableStateListOf<Rect?>().apply { repeat(words.size) { add(null) } }
+    }
+
+    val highlightRects = mergedMushafHighlightRects(words, wordRects, playingWordKeys)
+    val highlightColor = colorScheme.primary.alpha(0.3f)
+
+    Row(
+        modifier = modifier.drawBehind {
+            for (rect in highlightRects) {
+                drawRoundRect(
+                    color = highlightColor,
+                    topLeft = Offset(rect.left, rect.top),
+                    size = Size(rect.width, rect.height),
                 )
             }
+        },
+        horizontalArrangement = horizontalArrangement,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        words.forEachIndexed { index, word ->
+            Word(
+                word = word,
+                fittedStyle = fittedStyle,
+                mushafWordTapEnabled = mushafWordTapEnabled,
+                onClick = { onMushafWordClick(word) },
+                modifier = Modifier.onGloballyPositioned { coordinates ->
+                    val pos = coordinates.positionInParent()
+                    val sz = coordinates.size
+                    wordRects[index] = Rect(
+                        pos.x,
+                        pos.y,
+                        pos.x + sz.width,
+                        pos.y + sz.height,
+                    )
+                },
+            )
         }
     }
 }
@@ -507,9 +594,9 @@ private fun MushafLineText(
 private fun Word(
     word: AyahWordEntity,
     fittedStyle: TextStyle,
-    isHighlighted: Boolean,
     onClick: () -> Unit,
     mushafWordTapEnabled: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = word.text,
@@ -517,19 +604,65 @@ private fun Word(
         style = fittedStyle,
         maxLines = 1,
         softWrap = false,
-        modifier = Modifier
-            .background(
-                if (isHighlighted) colorScheme.primary.alpha(0.4f)
-                else Color.Transparent
-            )
-            .then(
-                if (mushafWordTapEnabled) {
-                    Modifier.clickable { onClick() }
-                } else {
-                    Modifier
-                }
-            )
+        modifier = modifier.then(
+            if (mushafWordTapEnabled) {
+                Modifier.clickable { onClick() }
+            } else {
+                Modifier
+            }
+        )
     )
+}
+
+private fun mergedMushafHighlightRects(
+    words: List<AyahWordEntity>,
+    wordRects: List<Rect?>,
+    playingWordKeys: Set<Pair<Int, Int>>,
+): List<Rect> {
+    if (words.isEmpty()) return emptyList()
+
+    val result = mutableListOf<Rect>()
+    var i = 0
+
+    while (i < words.size) {
+        val w = words[i]
+        val highlighted = (w.ayahId to w.wordIndex) in playingWordKeys
+
+        if (!highlighted) {
+            i++
+            continue
+        }
+
+        var rect = wordRects.getOrNull(i) ?: run {
+            i++
+            continue
+        }
+
+        val ayahId = w.ayahId
+
+        var j = i + 1
+
+        while (j < words.size) {
+            val w2 = words[j]
+            if ((w2.ayahId to w2.wordIndex) !in playingWordKeys || w2.ayahId != ayahId) {
+                break
+            }
+            val r2 = wordRects.getOrNull(j) ?: break
+            rect = Rect(
+                minOf(rect.left, r2.left),
+                minOf(rect.top, r2.top),
+                maxOf(rect.right, r2.right),
+                maxOf(rect.bottom, r2.bottom),
+            )
+            j++
+        }
+
+        result.add(rect)
+
+        i = j
+    }
+
+    return result
 }
 
 private fun Modifier.mushafHorizontalRuleBelow(

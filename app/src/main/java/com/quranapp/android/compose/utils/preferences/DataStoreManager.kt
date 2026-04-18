@@ -3,6 +3,7 @@ package com.alfaazplus.sunnah.ui.utils.shared_preference
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -73,6 +74,12 @@ object DataStoreManager {
         }
     }
 
+    /**
+     * Single DataStore transaction — observers (e.g. [flowMultiple]) emit once with all keys updated.
+     */
+    suspend fun edit(transform: suspend MutablePreferences.() -> Unit) {
+        appContext.dataStore.edit { it.transform() }
+    }
 
     suspend fun <T> remove(prefKey: PrefKey<T>) {
         remove(prefKey.key)

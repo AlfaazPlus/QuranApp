@@ -1,18 +1,19 @@
 package com.quranapp.android.utils.reader
 
 import android.content.Context
-import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.R
 import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.ChapterVerseBatch
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
@@ -20,6 +21,13 @@ import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+
+private data class SectionSnapshot(
+    val page: Int,
+    val ruku: Int,
+    val rub: Int,
+    val manzil: Int,
+)
 
 object ReaderItemsBuilder {
     suspend fun buildVersesForTranslationMode(
@@ -47,7 +55,7 @@ object ReaderItemsBuilder {
         }
 
         translationFactory.use {
-            buildVerses(
+            buildReaderVerses(
                 params,
                 out,
                 textStyles,
@@ -121,7 +129,7 @@ object ReaderItemsBuilder {
                     }
                 }
 
-                buildVerses(
+                buildReaderVerses(
                     params, out, textStyles, it, quranRepository,
                     chapterNo, verseRange.first, verseRange.last,
                 )
@@ -131,7 +139,7 @@ object ReaderItemsBuilder {
         return ReaderPreparedData(out, textStyles)
     }
 
-    private suspend fun buildVerses(
+    private suspend fun buildReaderVerses(
         params: TextBuilderParams,
         out: ArrayList<ReaderLayoutItem>,
         textStyles: MutableMap<Int, TextStyle>,
@@ -146,7 +154,9 @@ object ReaderItemsBuilder {
         val wbwId = ReaderPreferences.getWbwId()
 
         val scriptCode = ReaderPreferences.getQuranScript()
-        val batch = quranRepository.loadChapterVerseBatch(chapterNo, fromVerse, toVerse, scriptCode)
+        val chapterVerseCount = quranRepository.getChapterVerseCount(chapterNo)
+        val batchHi = minOf(toVerse + 1, chapterVerseCount)
+        val batch = quranRepository.loadChapterVerseBatch(chapterNo, fromVerse, batchHi, scriptCode)
             ?: return
         val surah = batch.surah
 
@@ -203,16 +213,27 @@ object ReaderItemsBuilder {
                 else quranRepository.getWbwWordsForAyahs(wbwId, ids)
             } else emptyMap()
 
+        var prevSection: SectionSnapshot? = null
+
         for (verseNo in fromVerse..toVerse) {
             val translations =
                 translationsByVerseIndex.getOrElse(verseNo - fromVerse) { emptyList() }
 
             val ayah = batch.ayahByVerseNo[verseNo] ?: continue
             val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
+            val pageNo = batch.pageByVerseNo[verseNo] ?: -1
+            val cur = SectionSnapshot(
+                page = pageNo,
+                ruku = ayah.rukuNo,
+                rub = ayah.rubNo,
+                manzil = ayah.manzilNo,
+            )
+
+            out.addSectionMarker(params.context, chapterNo, verseNo, cur, prevSection)
+            prevSection = cur
 
             if (words.isEmpty()) continue
 
-            val pageNo = batch.pageByVerseNo[verseNo] ?: -1
             ensureQuranTextStyleForPage(pageNo)
 
             val verse = VerseWithDetails(
@@ -272,11 +293,21 @@ object ReaderItemsBuilder {
                     verse = verse,
                     parsedTranslationTexts = parsedTranslationTexts,
                     wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
-                    isLastInGroup = verseNo == toVerse,
+                    showDivider = verseNo != toVerse,
                     key = "verse-$chapterNo:${verse.verseNo}${params.toKey()}"
                 )
             )
         }
+
+        out.addSectionMarkerAtRangeEnd(
+            params.context,
+            quranRepository,
+            scriptCode,
+            chapterNo = chapterNo,
+            toVerse = toVerse,
+            verseCount = chapterVerseCount,
+            batch = batch,
+        )
     }
 
     suspend fun buildQuickReferenceItems(
@@ -401,7 +432,7 @@ object ReaderItemsBuilder {
                         verse = verse,
                         parsedTranslationTexts = parsedTranslationTexts,
                         wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
-                        isLastInGroup = idx == verseNos.lastIndex,
+                        showDivider = idx != verseNos.lastIndex,
                         key = "qref-$chapterNo:$verseNo${params.toKey()}"
                     )
                 )
@@ -514,6 +545,172 @@ object ReaderItemsBuilder {
                     layout = layout
                 )
             }
+        }
+    }
+
+    private fun ArrayList<ReaderLayoutItem>.addSectionMarker(
+        context: Context,
+        chapterNo: Int,
+        verseNo: Int,
+        cur: SectionSnapshot,
+        prev: SectionSnapshot?,
+    ) {
+        val pageEnded = prev != null && cur.page > 0 && cur.page != prev.page
+        val rukuEnded = prev != null && cur.ruku > 0 && cur.ruku != prev.ruku
+        val rubEnded = prev != null && cur.rub > 0 && cur.rub != prev.rub
+        val manzilEnded = prev != null && cur.manzil > 0 && cur.manzil != prev.manzil
+
+        if (!pageEnded && !rukuEnded && !rubEnded && !manzilEnded) {
+            return
+        }
+
+        val prevSnap = checkNotNull(prev)
+
+        val pageNo = prevSnap.page.takeIf { pageEnded }
+        val rukuNo = prevSnap.ruku.takeIf { rukuEnded }
+        val rubNo = prevSnap.rub.takeIf { rubEnded }
+        val manzilNo = prevSnap.manzil.takeIf { manzilEnded }
+
+        val text = context.formatSectionMarkerLabel(pageNo, rukuNo, rubNo, manzilNo)
+        if (text.isEmpty()) return
+
+        add(
+            ReaderLayoutItem.SectionMarker(
+                text = text,
+                key = buildString {
+                    append("section-$chapterNo:after:${verseNo - 1}")
+                    if (pageEnded) append("-p${prevSnap.page}")
+                    if (rukuEnded) append("-r${prevSnap.ruku}")
+                    if (rubEnded) append("-rb${prevSnap.rub}")
+                    if (manzilEnded) append("-mz${prevSnap.manzil}")
+                },
+            )
+        )
+
+        clearDividerBeforeMarker(verseNo = verseNo)
+    }
+
+    private suspend fun ArrayList<ReaderLayoutItem>.addSectionMarkerAtRangeEnd(
+        context: Context,
+        quranRepository: QuranRepository,
+        scriptCode: String,
+        chapterNo: Int,
+        toVerse: Int,
+        verseCount: Int,
+        batch: ChapterVerseBatch,
+    ) {
+        val lastAyah = batch.ayahByVerseNo[toVerse] ?: return
+        val lastPage = batch.pageByVerseNo[toVerse] ?: -1
+        val lastRuku = lastAyah.rukuNo
+        val lastRub = lastAyah.rubNo
+        val lastManzil = lastAyah.manzilNo
+        val isLastVerseOfChapter = toVerse == verseCount
+
+        val nextAyahInChapter = batch.ayahByVerseNo[toVerse + 1]
+            ?: quranRepository.getAyah(chapterNo, toVerse + 1).takeIf { !isLastVerseOfChapter }
+
+        val rukuEnded = isLastVerseOfChapter ||
+                (nextAyahInChapter != null && nextAyahInChapter.rukuNo != lastRuku)
+
+        val nextAyahAfterRange = when {
+            !isLastVerseOfChapter ->
+                batch.ayahByVerseNo[toVerse + 1]
+                    ?: quranRepository.getAyah(chapterNo, toVerse + 1)
+
+            QuranMeta.isChapterValid(chapterNo + 1) ->
+                quranRepository.getAyah(chapterNo + 1, 1)
+
+            else -> null
+        }
+
+        val nextPage: Int? = when {
+            !isLastVerseOfChapter -> {
+                val p = batch.pageByVerseNo[toVerse + 1]
+                if (p != null && p > 0) p
+                else quranRepository.getPageForVerse(chapterNo, toVerse + 1, scriptCode)
+            }
+
+            QuranMeta.isChapterValid(chapterNo + 1) ->
+                quranRepository.getPageForVerse(chapterNo + 1, 1, scriptCode)
+
+            else -> null
+        }
+
+        val pageEnded = lastPage > 0 &&
+                nextPage != null &&
+                nextPage > 0 &&
+                lastPage != nextPage
+
+        val nextRub = nextAyahAfterRange?.rubNo
+        val nextManzil = nextAyahAfterRange?.manzilNo
+        val rubEnded = lastRub > 0 && nextRub != null && nextRub > 0 && lastRub != nextRub
+        val manzilEnded =
+            lastManzil > 0 && nextManzil != null && nextManzil > 0 && lastManzil != nextManzil
+
+        val pageForMarker = lastPage.takeIf { pageEnded }
+        val rukuForMarker = lastRuku.takeIf { rukuEnded && lastRuku > 0 }
+        val rubForMarker = lastRub.takeIf { rubEnded && lastRub > 0 }
+        val manzilForMarker = lastManzil.takeIf { manzilEnded && lastManzil > 0 }
+
+        if (pageForMarker == null && rukuForMarker == null && rubForMarker == null &&
+            manzilForMarker == null
+        ) {
+            return
+        }
+
+        val text = context.formatSectionMarkerLabel(
+            pageForMarker,
+            rukuForMarker,
+            rubForMarker,
+            manzilForMarker,
+        )
+        if (text.isEmpty()) return
+
+        add(
+            ReaderLayoutItem.SectionMarker(
+                text = text,
+                key = buildString {
+                    append("section-$chapterNo:after:$toVerse-end")
+                    pageForMarker?.let { append("-p$it") }
+                    rukuForMarker?.let { append("-r$it") }
+                    rubForMarker?.let { append("-rb$it") }
+                    manzilForMarker?.let { append("-mz$it") }
+                },
+            )
+        )
+
+        clearDividerBeforeMarker(verseNo = toVerse + 1)
+    }
+
+    private fun ArrayList<ReaderLayoutItem>.clearDividerBeforeMarker(verseNo: Int) {
+        val clearFrom = verseNo - 1
+        if (clearFrom < 1) return
+        for (i in lastIndex downTo 0) {
+            val item = get(i)
+            if (item is ReaderLayoutItem.VerseUI && item.verse.verseNo == clearFrom) {
+                if (item.showDivider) {
+                    set(i, item.copy(showDivider = false))
+                }
+                break
+            }
+        }
+    }
+
+    private fun Context.formatSectionMarkerLabel(
+        pageNo: Int?,
+        rukuNo: Int?,
+        rubNo: Int?,
+        manzilNo: Int?,
+    ): String {
+        val parts = buildList {
+            pageNo?.takeIf { it > 0 }?.let { add(getString(R.string.endOfPageNo, it)) }
+            rukuNo?.takeIf { it > 0 }?.let { add(getString(R.string.endOfRukuNo, it)) }
+            rubNo?.takeIf { it > 0 }?.let { add(getString(R.string.endOfRubNo, it)) }
+            manzilNo?.takeIf { it > 0 }?.let { add(getString(R.string.endOfManzilNo, it)) }
+        }
+
+        return parts.chunked(2).joinToString("\n") { chunk ->
+            chunk.joinToString(" · ")
         }
     }
 }

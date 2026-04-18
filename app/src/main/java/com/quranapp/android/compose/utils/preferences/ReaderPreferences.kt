@@ -265,6 +265,16 @@ object ReaderPreferences {
         DataStoreManager.write(KEY_SCRIPT, font ?: QuranScriptUtils.SCRIPT_DEFAULT)
     }
 
+    suspend fun setQuranScriptWithVariant(
+        font: String?,
+        variant: QuranScriptVariant?,
+    ) {
+        DataStoreManager.edit {
+            this[KEY_SCRIPT.key] = font ?: QuranScriptUtils.SCRIPT_DEFAULT
+            this[KEY_SCRIPT_VARIANT.key] = variant?.value ?: ""
+        }
+    }
+
     fun quranScriptFlow(): Flow<String> {
         return DataStoreManager.flow(KEY_SCRIPT)
             .mapLatest {

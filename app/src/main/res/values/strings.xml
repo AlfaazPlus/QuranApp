@@ -39,7 +39,12 @@
     <string name="labelNextTafsir">Next tafsir</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
     <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelRukuNo" formatted="false">Ruku %d</string>
     <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="endOfPageNo" formatted="false">End of Page %d</string>
+    <string name="endOfRukuNo" formatted="false">End of Ruku %d</string>
+    <string name="endOfRubNo" formatted="false">End of Rub %d</string>
+    <string name="endOfManzilNo" formatted="false">End of Manzil %d</string>
     <string name="strLabelVerseNo" formatted="false">Verse %d</string>
     <string name="strLabelVerses" formatted="false">Verses %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Verse : %d</string>

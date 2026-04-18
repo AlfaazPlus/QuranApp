@@ -4,11 +4,18 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -61,12 +69,18 @@ sealed class ReaderLayoutItem() {
     data class Bismillah(override val key: String) : ReaderLayoutItem()
     data class IsVotd(override val key: String) : ReaderLayoutItem()
     data class ChapterTitle(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
+
     data class VerseUI(
         val verse: VerseWithDetails,
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
         val wbwByWordIndex: Map<Int, WbwWordEntity>? = null,
-        val isLastInGroup: Boolean = false,
+        val showDivider: Boolean = true,
         override val key: String
+    ) : ReaderLayoutItem()
+
+    data class SectionMarker(
+        val text: String,
+        override val key: String,
     ) : ReaderLayoutItem()
 }
 
@@ -276,6 +290,7 @@ private fun TranslationRow(
         is ReaderLayoutItem.IsVotd -> IsVotd()
         is ReaderLayoutItem.ChapterInfo -> ChapterInfoCard(item.chapterNo)
         is ReaderLayoutItem.ChapterTitle -> ChapterTitle(item.chapterNo)
+        is ReaderLayoutItem.SectionMarker -> SectionMarkerRow(item)
         is ReaderLayoutItem.VerseUI -> {
             val isBookmarked = BookmarkKey(
                 chapterNo = item.verse.chapterNo,
@@ -286,8 +301,41 @@ private fun TranslationRow(
             VerseView(
                 verseUi = item,
                 isBookmarked = isBookmarked,
-                showDivider = !item.isLastInGroup,
+                showDivider = item.showDivider,
             )
         }
+    }
+}
+
+@Composable
+private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
+    if (marker.text.isEmpty()) return
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .widthIn(min = 100.dp),
+            color = MaterialTheme.colorScheme.outlineVariant,
+        )
+
+        Text(
+            text = marker.text,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 10.dp),
+        )
+
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .widthIn(min = 100.dp),
+            color = MaterialTheme.colorScheme.outlineVariant,
+        )
     }
 }

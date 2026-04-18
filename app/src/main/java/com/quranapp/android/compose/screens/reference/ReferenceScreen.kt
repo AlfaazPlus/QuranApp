@@ -516,7 +516,7 @@ private fun ReferenceVerseViewWrapped(
         VerseView(
             verseUi = verseUi,
             isBookmarked = isBookmarked,
-            showDivider = !verseUi.isLastInGroup,
+            showDivider = verseUi.showDivider,
         )
     }
 }
@@ -622,7 +622,7 @@ private suspend fun buildReferenceRows(
                 ReferenceRow.VerseRow(
                     verseUi = v.copy(
                         key = "ref-${seg.segmentIndex}-${v.key}",
-                        isLastInGroup = i == verseUis.lastIndex,
+                        showDivider = i != verseUis.lastIndex,
                     ),
                     quranTextStyle = textStyles[v.verse.pageNo],
                 ),

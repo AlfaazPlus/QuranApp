@@ -19,6 +19,7 @@ import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
@@ -205,11 +206,23 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
                             mushafPagesInFlight.clear()
                             pageItems.clear()
-                            mushafLayoutKey.value = newLayoutKey
 
                             pageRestoreOnMushafChangeJob?.cancel()
+
+                            val previousKey = oldLayoutKey
+
                             pageRestoreOnMushafChangeJob = viewModelScope.launch {
-                                restorePageOnMushafChange(oldLayoutKey, pageInPreviousMushaf)
+                                try {
+                                    restorePageOnMushafChange(previousKey, pageInPreviousMushaf)
+                                } finally {
+                                    // Apply new layout only after [currentPageNo] / navigation target match the
+                                    // new mushaf; otherwise the pager keeps the old index while [pageItems] is
+                                    // empty → visible slot never gets rebuilt.
+                                    mushafLayoutKey.value = QuranScript(
+                                        ReaderPreferences.getQuranScript(),
+                                        ReaderPreferences.getQuranScriptVariant(),
+                                    )
+                                }
                             }
                         }
                     }
@@ -277,8 +290,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         ReaderPreferences.setReaderMode(ReaderMode.Reading)
 
         if (data.mushafCode != null) {
-            ReaderPreferences.setQuranScript(data.mushafCode)
-            ReaderPreferences.setQuranScriptVariant(data.mushafVariant)
+            ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
 
             // Keep in sync with DataStore so [observeChanges] does not treat this as a layout
             // change and run [restorePageOnMushafChange] (which can override the intended page).
@@ -551,8 +563,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         anchorPages: Collection<Int>,
         totalPages: Int,
         params: PageBuilderParams
-    ) = withContext(Dispatchers.IO) {
-        if (totalPages <= 0) return@withContext
+    ) {
+        Log.d("BUILDING", anchorPages)
+
+        if (totalPages <= 0) return
 
         val targets = linkedSetOf<Int>()
         for (anchorPage in anchorPages) {
@@ -566,22 +580,26 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
         }
 
-        if (targets.isEmpty()) return@withContext
+        if (targets.isEmpty()) return
 
-        val missing = targets.filter { page ->
-            !pageItems.containsKey(page) && mushafPagesInFlight.add(page)
+        val missing = withContext(Dispatchers.Main) {
+            targets.filter { page ->
+                !pageItems.containsKey(page) && mushafPagesInFlight.add(page)
+            }
         }
-        if (missing.isEmpty()) return@withContext
+        if (missing.isEmpty()) return
 
         try {
-            fontResolver.prefetch(ReaderPreferences.getQuranScript(), missing)
+            val built = withContext(Dispatchers.IO) {
+                fontResolver.prefetch(ReaderPreferences.getQuranScript(), missing)
 
-            val built = ReaderItemsBuilder.buildMushafPages(
-                repository,
-                fontResolver,
-                missing,
-                params
-            )
+                ReaderItemsBuilder.buildMushafPages(
+                    repository,
+                    fontResolver,
+                    missing,
+                    params
+                )
+            }
 
             withContext(Dispatchers.Main) {
                 for (page in missing) {
@@ -589,7 +607,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 }
             }
         } finally {
-            mushafPagesInFlight.removeAll(missing.toSet())
+            withContext(Dispatchers.Main) {
+                mushafPagesInFlight.removeAll(missing.toSet())
+            }
         }
     }
 
@@ -605,6 +625,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             lastKnownVerse?.takeIf { it.isValid }
         }
 
+        Log.d("TRYING RESTORE", verseFromMemory)
+
         val versePair = verseFromMemory ?: run {
             val oldMushafId = oldLayoutKey.scriptCode.toQuranMushafId(oldLayoutKey.variant)
             val currentPage = pageInPreviousMushaf
@@ -617,9 +639,13 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             ChapterVersePair(c, v)
         }
 
+        Log.d("TRYING RESTORE", versePair)
+
         val newPage = withContext(Dispatchers.IO) {
             repository.getPageForVerse(versePair.chapterNo, versePair.verseNo)
         } ?: return
+
+        Log.d("TRYING RESTORE", newPage)
 
         withContext(Dispatchers.Main) {
             lastKnownVerse = versePair
