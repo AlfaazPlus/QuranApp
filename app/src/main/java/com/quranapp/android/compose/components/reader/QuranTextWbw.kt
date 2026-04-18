@@ -24,15 +24,32 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 
 @Composable
-fun QuranTextWbw(verseUi: ReaderLayoutItem.VerseUI) {
+fun QuranTextWbw(
+    verseUi: ReaderLayoutItem.VerseUI,
+    onWordClick: ((AyahWordEntity) -> Unit)?
+) {
     val wbwMap = verseUi.wbwByWordIndex ?: emptyMap()
     val textStyles = LocalQuranTextStyle.current
     val recitation = LocalRecitation.current
 
     val arabicStyle = textStyles.quran(verseUi.verse.pageNo) ?: TextStyle.Default
     val dividerColor = colorScheme.outlineVariant
+
+    fun handleWordClick(word: AyahWordEntity) {
+        if (onWordClick != null) {
+            onWordClick(word)
+        } else if (ReaderPreferences.getWbwRecitationEnabled() && !word.isLastWordOfAyah) {
+            recitation.playWord(
+                verseUi.verse.chapterNo,
+                verseUi.verse.verseNo,
+                word.wordIndex
+            )
+        }
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         FlowRow(
@@ -47,6 +64,10 @@ fun QuranTextWbw(verseUi: ReaderLayoutItem.VerseUI) {
                     Text(
                         text = word.text,
                         style = arabicStyle,
+                        modifier = Modifier
+                            .clickable {
+                                handleWordClick(word)
+                            },
                     )
                 } else {
                     val wbw = wbwMap[word.wordIndex]
@@ -60,11 +81,7 @@ fun QuranTextWbw(verseUi: ReaderLayoutItem.VerseUI) {
                         modifier = Modifier
                             .wrapContentWidth(Alignment.CenterHorizontally)
                             .clickable {
-                                recitation.playWord(
-                                    verseUi.verse.chapterNo,
-                                    verseUi.verse.verseNo,
-                                    word.wordIndex
-                                )
+                                handleWordClick(word)
                             },
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(2.dp),

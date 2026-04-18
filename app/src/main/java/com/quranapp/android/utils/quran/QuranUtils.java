@@ -11,7 +11,7 @@ public abstract class QuranUtils {
         return chapterNo * 1000 + verseNo;
     }
 
-    public static Pair<Integer, Integer> getVerseNo(int ayahId) {
+    public static Pair<Integer, Integer> getVerseNoFromAyahId(int ayahId) {
         int chapterNo = ayahId / 1000;
         int ayahNo = ayahId % 1000;
 

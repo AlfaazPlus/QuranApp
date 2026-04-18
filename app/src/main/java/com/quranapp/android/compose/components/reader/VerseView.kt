@@ -36,6 +36,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -46,6 +47,7 @@ fun VerseView(
     verseUi: ReaderLayoutItem.VerseUI,
     isBookmarked: Boolean,
     showDivider: Boolean = false,
+    onWordClick: ((AyahWordEntity) -> Unit)? = null
 ) {
     val verse = verseUi.verse
 
@@ -65,6 +67,7 @@ fun VerseView(
 
             QuranTextWbw(
                 verseUi,
+                onWordClick
             )
 
             TranslationText(verseUi = verseUi)

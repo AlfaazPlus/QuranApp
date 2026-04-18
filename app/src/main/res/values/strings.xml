@@ -287,6 +287,7 @@
     <string name="onboardDescTafsir">Select a commentary to read alongside verses. You can download and manage tafsirs in settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
+    <string name="labelTransliteration">Transliteration</string>
     <string name="favourites">Favourites</string>
     <string name="titleRemoveFromFavourites">Remove from favourites</string>
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
@@ -378,4 +379,8 @@
     <string name="deleteData">
         Delete data?
     </string>
+    <string name="wordNo" formatted="false">Word %d</string>
+    <string name="playWord">Play word</string>
+    <string name="previousWord">Previous word</string>
+    <string name="nextWord">Next word</string>
 </resources>

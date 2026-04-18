@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,10 +47,13 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.dialogs.WbwSheet
+import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
@@ -241,23 +246,50 @@ fun ReaderLayoutPageMode(
             }
     }
 
+    var wbwSheetData by remember { mutableStateOf<WbwSheetData?>(null) }
+    val wbwIdRaw = ReaderPreferences.observeWbwId()
+    val wbwRecitationOn = ReaderPreferences.observeWbwRecitationEnabled()
+    val mushafWordTapEnabled = wbwIdRaw.isNotBlank() || wbwRecitationOn
+
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        HorizontalPager(
-            state = pagerState,
-            beyondViewportPageCount = 1,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-        ) { page ->
-            PageModePage(
-                readerVm = readerVm,
-                pageNo = page + 1,
-                contentWidth,
-                ruledPageDecoration,
-                nestedScrollConnection,
-            )
+                .fillMaxHeight(),
+        ) {
+            HorizontalPager(
+                state = pagerState,
+                beyondViewportPageCount = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            ) { page ->
+                PageModePage(
+                    readerVm = readerVm,
+                    pageNo = page + 1,
+                    contentWidth,
+                    ruledPageDecoration,
+                    nestedScrollConnection,
+                    onMushafWordClick = { word ->
+                        val pair = QuranUtils.getVerseNoFromAyahId(word.ayahId)
+
+                        wbwSheetData = WbwSheetData(
+                            chapterNo = pair.first,
+                            verseNo = pair.second,
+                            wordIndex = word.wordIndex
+                        )
+                    },
+                    mushafWordTapEnabled = mushafWordTapEnabled,
+                )
+            }
+
         }
     }
+
+    WbwSheet(
+        data = wbwSheetData,
+        onDismiss = { wbwSheetData = null },
+    )
 }
 
 @Composable
@@ -267,6 +299,8 @@ private fun PageModePage(
     contentWidth: Dp,
     ruledPageDecoration: Boolean,
     nestedScrollConnection: NestedScrollConnection,
+    onMushafWordClick: (AyahWordEntity) -> Unit,
+    mushafWordTapEnabled: Boolean,
 ) {
     val item = readerVm.pageItems[pageNo]
 
@@ -368,16 +402,18 @@ private fun PageModePage(
                                                 MushafLineContent(
                                                     line = line,
                                                     playingWordKeys = playingWordKeys,
-                                                    controller = playerState.controller,
-                                                    ruledPageDecoration
+                                                    ruledPageDecoration = ruledPageDecoration,
+                                                    onMushafWordClick = onMushafWordClick,
+                                                    mushafWordTapEnabled = mushafWordTapEnabled,
                                                 )
                                             }
                                         } else {
                                             MushafLineContent(
                                                 line = line,
                                                 playingWordKeys = playingWordKeys,
-                                                controller = playerState.controller,
                                                 ruledPageDecoration = ruledPageDecoration,
+                                                onMushafWordClick = onMushafWordClick,
+                                                mushafWordTapEnabled = mushafWordTapEnabled,
                                             )
                                         }
                                     }
@@ -395,8 +431,9 @@ private fun PageModePage(
 private fun MushafLineContent(
     line: QuranPageLineItem,
     playingWordKeys: Set<Pair<Int, Int>>,
-    controller: RecitationController,
     ruledPageDecoration: Boolean,
+    onMushafWordClick: (AyahWordEntity) -> Unit,
+    mushafWordTapEnabled: Boolean,
 ) {
     when (line) {
         is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo, ruledPageDecoration)
@@ -405,7 +442,8 @@ private fun MushafLineContent(
             textLine = line,
             layout = line.layout,
             playingWordKeys = playingWordKeys,
-            controller = controller,
+            onMushafWordClick = onMushafWordClick,
+            mushafWordTapEnabled = mushafWordTapEnabled,
         )
     }
 }
@@ -415,7 +453,8 @@ private fun MushafLineText(
     textLine: QuranPageLineItem.Text,
     layout: MushafLineLayout,
     playingWordKeys: Set<Pair<Int, Int>>,
-    controller: RecitationController,
+    onMushafWordClick: (AyahWordEntity) -> Unit,
+    mushafWordTapEnabled: Boolean,
 ) {
     val words = textLine.words
     val fittedStyle = layout.fittedStyle
@@ -435,7 +474,10 @@ private fun MushafLineText(
                         word,
                         fittedStyle,
                         isHighlighted = (word.ayahId to word.wordIndex) in playingWordKeys,
-                        controller
+                        mushafWordTapEnabled = mushafWordTapEnabled,
+                        onClick = {
+                            onMushafWordClick(word)
+                        },
                     )
                 }
             }
@@ -451,7 +493,10 @@ private fun MushafLineText(
                     word,
                     fittedStyle,
                     isHighlighted = (word.ayahId to word.wordIndex) in playingWordKeys,
-                    controller
+                    mushafWordTapEnabled = mushafWordTapEnabled,
+                    onClick = {
+                        onMushafWordClick(word)
+                    },
                 )
             }
         }
@@ -463,10 +508,9 @@ private fun Word(
     word: AyahWordEntity,
     fittedStyle: TextStyle,
     isHighlighted: Boolean,
-    controller: RecitationController
+    onClick: () -> Unit,
+    mushafWordTapEnabled: Boolean,
 ) {
-//    val context = LocalContext.current
-
     Text(
         text = word.text,
         color = colorScheme.onBackground,
@@ -478,13 +522,13 @@ private fun Word(
                 if (isHighlighted) colorScheme.primary.alpha(0.4f)
                 else Color.Transparent
             )
-        /*.clickable {
-            if (word.isLastWordOfAyah) {
-                MessageUtils.showRemovableToast(context, "LAST WORD", Toast.LENGTH_LONG)
-            } else {
-                MessageUtils.showRemovableToast(context, word.text, Toast.LENGTH_LONG)
-            }
-        },*/
+            .then(
+                if (mushafWordTapEnabled) {
+                    Modifier.clickable { onClick() }
+                } else {
+                    Modifier
+                }
+            )
     )
 }
 

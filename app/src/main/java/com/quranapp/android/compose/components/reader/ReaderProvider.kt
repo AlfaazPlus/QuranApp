@@ -64,7 +64,6 @@ fun ReaderProvider(
     var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceData by remember { mutableStateOf<QuickReferenceData?>(null) }
 
-    val wbwRecitationEnabled = ReaderPreferences.observeWbwRecitationEnabled()
     var wbwWordLoadingKey by remember { mutableStateOf<String?>(null) }
 
     CompositionLocalProvider(
@@ -109,22 +108,20 @@ fun ReaderProvider(
             isAnyPlaying = isPlaying,
             playingVerse = recitationState.currentVerse,
             playWord = { chapterNo, verseNo, wordIndex ->
-                if (wbwRecitationEnabled) {
-                    coroutineScope.launch {
-                        val key = "$chapterNo:$verseNo:$wordIndex"
-                        wbwWordLoadingKey = key
+                coroutineScope.launch {
+                    val key = "$chapterNo:$verseNo:$wordIndex"
+                    wbwWordLoadingKey = key
 
-                        try {
-                            WbwAudioPlayer.play(
-                                context,
-                                chapterNo,
-                                verseNo,
-                                wordIndex,
-                            )
-                        } finally {
-                            if (wbwWordLoadingKey == key) {
-                                wbwWordLoadingKey = null
-                            }
+                    try {
+                        WbwAudioPlayer.play(
+                            context,
+                            chapterNo,
+                            verseNo,
+                            wordIndex,
+                        )
+                    } finally {
+                        if (wbwWordLoadingKey == key) {
+                            wbwWordLoadingKey = null
                         }
                     }
                 }

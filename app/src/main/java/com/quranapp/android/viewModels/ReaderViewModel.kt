@@ -19,7 +19,6 @@ import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
@@ -202,7 +201,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                         val oldLayoutKey = mushafLayoutKey.value
 
                         if (oldLayoutKey != newLayoutKey) {
-                            Log.d("CLEARING ITEMS", mushafLayoutKey)
+                            val pageInPreviousMushaf = _uiState.value.currentPageNo
 
                             mushafPagesInFlight.clear()
                             pageItems.clear()
@@ -210,7 +209,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
                             pageRestoreOnMushafChangeJob?.cancel()
                             pageRestoreOnMushafChangeJob = viewModelScope.launch {
-                                restorePageOnMushafChange(oldLayoutKey)
+                                restorePageOnMushafChange(oldLayoutKey, pageInPreviousMushaf)
                             }
                         }
                     }
@@ -357,7 +356,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 .filterIsInstance<QuranPageLineItem.Text>()
                 .firstOrNull()?.words?.firstOrNull()
             if (firstWord != null) {
-                lastKnownVerse = QuranUtils.getVerseNo(firstWord.ayahId).let {
+                lastKnownVerse = QuranUtils.getVerseNoFromAyahId(firstWord.ayahId).let {
                     ChapterVersePair(it.first, it.second)
                 }
                 return
@@ -365,7 +364,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
         viewModelScope.launch(Dispatchers.IO) {
             val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-            lastKnownVerse = QuranUtils.getVerseNo(ayahId).let {
+            lastKnownVerse = QuranUtils.getVerseNoFromAyahId(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }
         }
@@ -598,19 +597,22 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
      * Resolves reading position after script/mushaf change: [lastKnownVerse] if valid, else first ayah
      * on the current page using the **previous** mushaf layout, then maps that verse to a page in the new mushaf.
      */
-    private suspend fun restorePageOnMushafChange(oldLayoutKey: QuranScript) {
+    private suspend fun restorePageOnMushafChange(
+        oldLayoutKey: QuranScript,
+        pageInPreviousMushaf: Int?,
+    ) {
         val verseFromMemory = withContext(Dispatchers.Main) {
             lastKnownVerse?.takeIf { it.isValid }
         }
 
         val versePair = verseFromMemory ?: run {
             val oldMushafId = oldLayoutKey.scriptCode.toQuranMushafId(oldLayoutKey.variant)
-            val currentPage = _uiState.value.currentPageNo
+            val currentPage = pageInPreviousMushaf
 
             if (currentPage == null || currentPage <= 0 || oldMushafId <= 0) return
 
             val ayahId = repository.getFirstAyahIdOnPage(oldMushafId, currentPage) ?: return
-            val (c, v) = QuranUtils.getVerseNo(ayahId)
+            val (c, v) = QuranUtils.getVerseNoFromAyahId(ayahId)
 
             ChapterVersePair(c, v)
         }
