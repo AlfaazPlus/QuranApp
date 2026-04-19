@@ -300,12 +300,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         // Check if explicitly requested mushaf mode
         if (data is ReaderIntentData.MushafPage) {
             initMushafPage(data, params.readerMode)
-            if (data.initialVerse != null) {
-                requestVerseNavigation(
-                    data.initialVerse.chapterNo,
-                    data.initialVerse.verseNo,
-                )
-            }
             return
         }
 
@@ -367,6 +361,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 )
             }
             requestPageNavigation(data.pageNo)
+            // explicit mushaf page wins over [initialVerse] for positioning; verse is only for
+            // history/sync — do not call [requestVerseNavigation] or translation/mushaf UI will
+            // resolve the verse to a (possibly different) page after scroll.
+            data.initialVerse?.takeIf { it.isValid }?.let { lastKnownVerse = it }
         } else if (QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0) {
             val page = resolvePageNo(data.fallbackChapterNo, data.fallbackVerseNo, data.mushafCode)
 
@@ -377,9 +375,14 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 )
             }
             if (page != null) requestPageNavigation(page)
+            lastKnownVerse = data.initialVerse?.takeIf { it.isValid }
+                ?: ChapterVersePair(data.fallbackChapterNo, data.fallbackVerseNo)
         } else {
             _uiState.update {
                 ReaderUiState(viewType = ReaderViewType.Chapter(1))
+            }
+            data.initialVerse?.takeIf { it.isValid }?.let {
+                requestVerseNavigation(it.chapterNo, it.verseNo)
             }
         }
     }

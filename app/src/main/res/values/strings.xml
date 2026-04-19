@@ -87,6 +87,16 @@
     <string name="strTitleNote">Note</string>
     <string name="strTitleRateApp">Rate App</string>
     <string name="strTitleFilters">Filters</string>
+    <string name="sajda">Sajda</string>
+    <string name="filterSectionLength">Chapter length</string>
+    <string name="any">Any</string>
+    <string name="withSajda">With sajda</string>
+    <string name="withoutSajda">Without sajda</string>
+    <string name="chapterFilterLengthShort">Short (≤100 verses)</string>
+    <string name="chapterFilterLengthMedium">Medium (101–200 verses)</string>
+    <string name="chapterFilterLengthLong">Long (201+ verses)</string>
+    <string name="clearFilters">Clear filters</string>
+    <string name="chapterFilters">Chapter filters</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleTafsir">Tafsir</string>
     <string name="strTitleSelectTafsir">Select Tafsir</string>

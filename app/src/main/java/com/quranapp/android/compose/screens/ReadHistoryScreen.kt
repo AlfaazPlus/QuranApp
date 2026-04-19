@@ -197,6 +197,7 @@ private fun ReadHistoryCard(
                             painter = painterResource(
                                 when (ReaderMode.fromValue(history.readerMode)) {
                                     ReaderMode.Reading -> R.drawable.ic_mode_mushaf
+                                    ReaderMode.Translation -> R.drawable.ic_mode_translation
                                     else -> R.drawable.ic_mode_verse
                                 }
                             ),
@@ -306,7 +307,7 @@ private fun HistoryDeleteDialog(
 
 @Composable
 fun ReadHistoryEntity.titleLabel(chapterName: String): String {
-    if (readerMode == ReaderMode.Reading.value) {
+    if (readerMode == ReaderMode.Reading.value || readerMode == ReaderMode.Translation.value) {
         return pageNo?.let { stringResource(R.string.strLabelPageNo, pageNo) } ?: "-"
     } else {
         return when (ReadType.fromValue(readType)) {
@@ -329,7 +330,7 @@ fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
         stringResource(R.string.strLabelVerses, fromVerseNo, toVerseNo)
 
     }
-    if (readerMode == ReaderMode.Reading.value) {
+    if (readerMode == ReaderMode.Reading.value || readerMode == ReaderMode.Translation.value) {
         return mushafCode?.getQuranScriptName() ?: "-"
     } else {
         return when (ReadType.fromValue(readType)) {

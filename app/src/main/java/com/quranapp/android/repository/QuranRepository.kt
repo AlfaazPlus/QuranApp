@@ -508,6 +508,10 @@ class QuranRepository(
         return surahDao.getAllSurahsWithLocalizations()
     }
 
+    suspend fun getSurahNosWithSajdah(): Set<Int> {
+        return ayahDao.getDistinctSurahNosWithSajdah().toSet()
+    }
+
     fun getJuzs() = getRangesResolved(NavigationType.juz)
 
     fun getHizbs() = getRangesResolved(NavigationType.hizb)

@@ -212,10 +212,15 @@ fun ReaderLayoutTranslationPageMode(
 
     LaunchedEffect(navigateToVerse, pageCount) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
+        if (pageCount <= 0) return@LaunchedEffect
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
-            ?: return@LaunchedEffect
+            ?: run {
+                readerVm.consumeVerseNavigation()
+                return@LaunchedEffect
+            }
 
+        readerVm.consumeVerseNavigation()
         readerVm.requestPageNavigation(targetPage)
     }
 

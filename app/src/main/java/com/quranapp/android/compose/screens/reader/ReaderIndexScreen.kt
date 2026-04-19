@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -30,7 +32,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -38,13 +44,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.PrimaryScrollableTabRow
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
@@ -69,6 +74,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -82,14 +88,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
+import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.compose.components.reader.navigator.ChapterCard
 import com.quranapp.android.compose.components.reader.navigator.FilterField
 import com.quranapp.android.compose.components.reader.navigator.HizbCard
 import com.quranapp.android.compose.components.reader.navigator.JuzCard
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.utils.reader.ReaderChapterIndexFilters
+import com.quranapp.android.utils.reader.ReaderChapterLengthFilter
+import com.quranapp.android.utils.reader.ReaderChapterRevelationFilter
+import com.quranapp.android.utils.reader.ReaderChapterSajdaFilter
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.filteredByChapterIndex
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderIndexViewModel
 import kotlinx.coroutines.launch
@@ -391,8 +404,9 @@ private fun ReaderIndexTabs(
             },
         shadowElevation = 2.dp,
     ) {
-        SecondaryTabRow (
+        SecondaryTabRow(
             selectedTabIndex = selectedTabIndex,
+            containerColor = colorScheme.surfaceContainer
         ) {
             tabs.forEachIndexed { index, titleRes ->
                 val isSelected = selectedTabIndex == index
@@ -417,6 +431,7 @@ private fun ReaderIndexTabs(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ReaderIndexChaptersList(
     viewModel: ReaderIndexViewModel,
@@ -430,74 +445,265 @@ private fun ReaderIndexChaptersList(
     val scope = rememberCoroutineScope()
     val favChapters = viewModel.getFavouriteChapters()
 
+    val chapterFilters by viewModel.chapterIndexFilters.collectAsState()
+    val surahNosWithSajdah by viewModel.surahNosWithSajdah.collectAsState()
+
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var filteredSurahs by remember { mutableStateOf(surahs) }
+    var filterSheetOpen by remember { mutableStateOf(false) }
 
-    LaunchedEffect(searchQuery, surahs, reversed) {
+    LaunchedEffect(
+        searchQuery,
+        surahs,
+        reversed,
+        chapterFilters,
+        surahNosWithSajdah,
+    ) {
         val query = searchQuery.lowercase().trim()
-        val base = if (query.isEmpty()) {
+        val searched = if (query.isEmpty()) {
             surahs
         } else {
             val surahNos = viewModel.repository.searchSurahNos(query)
             surahs.filter { it.surah.surahNo in surahNos }
         }
-        filteredSurahs = if (reversed) base.reversed() else base
+        val filtered = searched.filteredByChapterIndex(chapterFilters, surahNosWithSajdah)
+        filteredSurahs = if (reversed) filtered.reversed() else filtered
     }
 
     if (surahs.isEmpty()) return Loader(true)
 
+    val isFilterApplied = !chapterFilters.isDefault()
+
     BoxWithConstraints {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(if (maxWidth < 600.dp) 1 else 2),
-            state = listState,
-            modifier = modifier
-                .fillMaxSize()
-                .nestedScroll(nestedScrollConnection),
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                top = ReaderIndexTabHeight + 16.dp,
-                bottom = 128.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                FilterField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    hint = stringResource(R.string.strHintSearchChapter),
-                    keyboardType = KeyboardType.Text,
-                )
-            }
+        val cellCount = if (maxWidth < 600.dp) 1 else 2
 
-            items(filteredSurahs, key = { it.surah.surahNo }) { surah ->
-                val isFav = favChapters.contains(surah.surah.surahNo)
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(cellCount),
+                state = listState,
+                modifier = modifier
+                    .fillMaxSize()
+                    .nestedScroll(nestedScrollConnection),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = ReaderIndexTabHeight + 16.dp,
+                    bottom = 128.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        FilterField(
+                            modifier = Modifier.weight(1f),
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            hint = stringResource(R.string.strHintSearchChapter),
+                            keyboardType = KeyboardType.Text,
+                        )
 
-                ChapterCard(
-                    surah = surah,
-                    isFavourite = isFav,
-                    onClick = {
-                        ReaderFactory.startChapter(context, surah.surah.surahNo)
-                    },
-                    onToggleFavourite = {
-                        scope.launch {
-                            if (isFav) {
-                                viewModel.removeFromFavourites(
-                                    context,
-                                    surah.surah.surahNo,
-                                    favChapters
-                                )
-                            } else {
-                                viewModel.addToFavourites(
-                                    context,
-                                    surah.surah.surahNo,
-                                    favChapters
+                        BadgedBox(
+                            badge = {
+                                if (isFilterApplied) {
+                                    Badge()
+                                }
+                            }
+                        ) {
+                            IconButton(
+                                onClick = { filterSheetOpen = true },
+                                modifier = Modifier.size(48.dp),
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.dr_icon_filter),
+                                    contentDescription = stringResource(R.string.chapterFilters),
+                                    tint = if (isFilterApplied) colorScheme.primary else colorScheme.onBackground
                                 )
                             }
                         }
                     }
+                }
+
+                items(filteredSurahs, key = { it.surah.surahNo }) { surah ->
+                    val isFav = favChapters.contains(surah.surah.surahNo)
+
+                    ChapterCard(
+                        surah = surah,
+                        isFavourite = isFav,
+                        onClick = {
+                            ReaderFactory.startChapter(context, surah.surah.surahNo)
+                        },
+                        onToggleFavourite = {
+                            scope.launch {
+                                if (isFav) {
+                                    viewModel.removeFromFavourites(
+                                        context,
+                                        surah.surah.surahNo,
+                                        favChapters
+                                    )
+                                } else {
+                                    viewModel.addToFavourites(
+                                        context,
+                                        surah.surah.surahNo,
+                                        favChapters
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+
+            ReaderIndexChapterFiltersSheet(
+                isOpen = filterSheetOpen,
+                onDismiss = { filterSheetOpen = false },
+                filters = chapterFilters,
+                onSetFilters = { viewModel.setChapterIndexFilters(it) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun ReaderIndexChapterFiltersSheet(
+    isOpen: Boolean,
+    onDismiss: () -> Unit,
+    filters: ReaderChapterIndexFilters,
+    onSetFilters: (ReaderChapterIndexFilters) -> Unit,
+) {
+    BottomSheet(
+        isOpen = isOpen,
+        onDismiss = onDismiss,
+        icon = R.drawable.dr_icon_filter,
+        title = stringResource(R.string.strTitleFilters),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.strTitleChapInfoRevType),
+                style = MaterialTheme.typography.titleSmall,
+                color = colorScheme.onSurface
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Chip(
+                    selected = filters.revelation == ReaderChapterRevelationFilter.any,
+                    onClick = {
+                        onSetFilters(filters.copy(revelation = ReaderChapterRevelationFilter.any))
+                    },
+                    label = { Text(stringResource(R.string.any)) },
                 )
+                Chip(
+                    selected = filters.revelation == ReaderChapterRevelationFilter.meccan,
+                    onClick = {
+                        onSetFilters(filters.copy(revelation = ReaderChapterRevelationFilter.meccan))
+                    },
+                    label = { Text(stringResource(R.string.strTitleMakki)) },
+                )
+                Chip(
+                    selected = filters.revelation == ReaderChapterRevelationFilter.medinan,
+                    onClick = {
+                        onSetFilters(filters.copy(revelation = ReaderChapterRevelationFilter.medinan))
+                    },
+                    label = { Text(stringResource(R.string.strTitleMadani)) },
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.sajda),
+                style = MaterialTheme.typography.titleSmall,
+                color = colorScheme.onSurface
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Chip(
+                    selected = filters.sajda == ReaderChapterSajdaFilter.any,
+                    onClick = {
+                        onSetFilters(filters.copy(sajda = ReaderChapterSajdaFilter.any))
+                    },
+                    label = { Text(stringResource(R.string.any)) },
+                )
+                Chip(
+                    selected = filters.sajda == ReaderChapterSajdaFilter.withSajda,
+                    onClick = {
+                        onSetFilters(filters.copy(sajda = ReaderChapterSajdaFilter.withSajda))
+                    },
+                    label = { Text(stringResource(R.string.withSajda)) },
+                )
+                Chip(
+                    selected = filters.sajda == ReaderChapterSajdaFilter.withoutSajda,
+                    onClick = {
+                        onSetFilters(filters.copy(sajda = ReaderChapterSajdaFilter.withoutSajda))
+                    },
+                    label = { Text(stringResource(R.string.withoutSajda)) },
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.filterSectionLength),
+                style = MaterialTheme.typography.titleSmall,
+                color = colorScheme.onSurface
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Chip(
+                    selected = filters.length == ReaderChapterLengthFilter.any,
+                    onClick = {
+                        onSetFilters(filters.copy(length = ReaderChapterLengthFilter.any))
+                    },
+                    label = { Text(stringResource(R.string.any)) },
+                )
+                Chip(
+                    selected = filters.length == ReaderChapterLengthFilter.short,
+                    onClick = {
+                        onSetFilters(filters.copy(length = ReaderChapterLengthFilter.short))
+                    },
+                    label = { Text(stringResource(R.string.chapterFilterLengthShort)) },
+                )
+                Chip(
+                    selected = filters.length == ReaderChapterLengthFilter.medium,
+                    onClick = {
+                        onSetFilters(filters.copy(length = ReaderChapterLengthFilter.medium))
+                    },
+                    label = { Text(stringResource(R.string.chapterFilterLengthMedium)) },
+                )
+                Chip(
+                    selected = filters.length == ReaderChapterLengthFilter.long,
+                    onClick = {
+                        onSetFilters(filters.copy(length = ReaderChapterLengthFilter.long))
+                    },
+                    label = { Text(stringResource(R.string.chapterFilterLengthLong)) },
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(
+                    onClick = { onSetFilters(ReaderChapterIndexFilters.Default) }
+                ) {
+                    Text(stringResource(R.string.clearFilters))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextButton(onClick = onDismiss) {
+                    Text(stringResource(R.string.strLabelDone))
+                }
             }
         }
     }
@@ -551,6 +757,9 @@ private fun ReaderIndexJuzList(
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 FilterField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 6.dp),
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
                     hint = stringResource(R.string.strHintSearchBy),
@@ -618,6 +827,9 @@ private fun ReaderIndexHizbList(
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 FilterField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 6.dp),
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
                     hint = stringResource(R.string.strHintSearchHizb),
@@ -646,6 +858,7 @@ private fun ReaderIndexFavChaptersList(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val scope = rememberCoroutineScope()
     val favChapters = viewModel.getFavouriteChapters()
 
@@ -709,9 +922,9 @@ private fun ReaderIndexFavChaptersList(
                             onToggleFavourite = {
                                 MessageUtils.showConfirmationDialog(
                                     context,
-                                    title = context.getString(R.string.titleRemoveFromFavourites),
+                                    title = resources.getString(R.string.titleRemoveFromFavourites),
                                     msg = surah.getCurrentName(),
-                                    btn = context.getString(R.string.strLabelRemove),
+                                    btn = resources.getString(R.string.strLabelRemove),
                                     btnColor = ColorUtils.DANGER,
                                     action = Runnable {
                                         scope.launch {
