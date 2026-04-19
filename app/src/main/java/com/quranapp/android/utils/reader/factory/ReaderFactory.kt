@@ -186,7 +186,9 @@ object ReaderFactory {
         val readerMode = ReaderMode.fromValue(entity.readerMode)
         val pageNo = entity.pageNo
 
-        if (readerMode == ReaderMode.Reading && pageNo != null && pageNo > 0 && entity.mushafCode != null) {
+        if ((readerMode == ReaderMode.Reading || readerMode == ReaderMode.Translation) &&
+            pageNo != null && pageNo > 0 && entity.mushafCode != null
+        ) {
             return ReaderLaunchParams(
                 data = ReaderIntentData.MushafPage(
                     mushafCode = entity.mushafCode,

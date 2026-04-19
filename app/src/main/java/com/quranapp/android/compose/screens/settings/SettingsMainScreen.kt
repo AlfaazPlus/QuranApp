@@ -182,7 +182,7 @@ fun SettingsMainScreen(
 
             SettingsItem(
                 title = R.string.wordByWord,
-                icon = R.drawable.dr_icon_quran_script,
+                icon = R.drawable.ic_verse_end,
             ) {
                 navController.navigate(SettingRoutes.WWB)
             }

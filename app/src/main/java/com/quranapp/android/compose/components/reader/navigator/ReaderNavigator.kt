@@ -54,7 +54,7 @@ fun ReaderNavigator(
     fun navigateChapter(chapterNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = readerVm.resolvePageNo(chapterNo, 1)
                     if (page != null) readerVm.requestPageNavigation(page)
                 }
@@ -71,7 +71,7 @@ fun ReaderNavigator(
     fun navigateVerse(chapterNo: Int, verseNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = readerVm.resolvePageNo(chapterNo, verseNo)
                     if (page != null) readerVm.requestPageNavigation(page)
                 }
@@ -105,7 +105,7 @@ fun ReaderNavigator(
     fun navigateJuz(juzNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = withContext(Dispatchers.IO) {
                         readerVm.repository.getFirstPageOfJuz(juzNo)
                     }
@@ -124,7 +124,7 @@ fun ReaderNavigator(
     fun navigateHizb(hizbNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = withContext(Dispatchers.IO) {
                         readerVm.repository.getFirstPageOfHizb(hizbNo)
                     }

@@ -244,6 +244,19 @@ object ReaderPreferences {
         return DataStoreManager.read(KEY_TRANSLATIONS)
     }
 
+    fun primaryTranslationSlug(): String {
+        val saved = getTranslations()
+        return saved.firstOrNull { !TranslUtils.isTransliteration(it) }
+            ?: TranslUtils.TRANSL_SLUG_DEFAULT
+    }
+
+    @Composable
+    fun observePrimaryTranslationSlug(): String {
+        val saved = observeTranslations()
+        return saved.firstOrNull { !TranslUtils.isTransliteration(it) }
+            ?: TranslUtils.TRANSL_SLUG_DEFAULT
+    }
+
     suspend fun setTranslations(translSlugsSet: Set<String>) {
         DataStoreManager.write(KEY_TRANSLATIONS, HashSet(translSlugsSet))
     }

@@ -31,6 +31,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -134,7 +135,14 @@ fun ReaderLayout(
             }
         }
 
-        ReaderMode.Translation -> {}
+        ReaderMode.Translation -> {
+            ReaderLayoutTranslationPageMode(
+                readerVm,
+                nestedScrollConnection,
+                onSyncStateChanged,
+            )
+        }
+
         else -> ReaderLayoutVerseMode(
             readerVm,
             uiState,
@@ -329,6 +337,7 @@ private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 10.dp),
+            textAlign = TextAlign.Center
         )
 
         HorizontalDivider(

@@ -48,6 +48,14 @@ data class PageBuilderParams(
     val contentWidthPx: Int,
 )
 
+data class TranslationPageBuilderParams(
+    val context: Context,
+    val colors: ColorScheme,
+    val type: Typography,
+    val verseActions: VerseActions,
+    val translationSizeMultiplier: Float,
+)
+
 data class TranslationTextStyleParams(
     val slug: String,
     val sizeMultiplier: Float
@@ -65,7 +73,8 @@ data class QuranTextStyleParams(
 )
 
 fun getTranslationTextStyle(
-    params: TranslationTextStyleParams
+    params: TranslationTextStyleParams,
+    baseLineHeightMultiplier: Float = 1.5f
 ): TextStyle {
     val isUrdu = TranslUtils.isUrdu(params.slug)
     val resolvedFontSize = 16.sp * params.sizeMultiplier
@@ -77,7 +86,7 @@ fun getTranslationTextStyle(
             includeFontPadding = true
         ),
         fontSize = resolvedFontSize,
-        lineHeight = if (isUrdu) resolvedFontSize * 2.5f else resolvedFontSize * 1.5,
+        lineHeight = if (isUrdu) resolvedFontSize * 2.5f else resolvedFontSize * baseLineHeightMultiplier,
     )
 }
 

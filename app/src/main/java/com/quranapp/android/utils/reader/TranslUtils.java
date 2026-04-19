@@ -189,6 +189,10 @@ public class TranslUtils {
         return Objects.equals(slug.split("_")[0], "ur");
     }
 
+    public static boolean isRtl(String slug) {
+        return isUrdu(slug);
+    }
+
     public static boolean isTransliteration(String slug) {
         return slug.contains(TRANSL_TRANSLITERATION_SLUG_PART);
     }

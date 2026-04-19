@@ -1,16 +1,28 @@
 package com.quranapp.android.utils.reader
 
 import android.content.Context
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
+import com.quranapp.android.compose.components.reader.TranslationPageItem
+import com.quranapp.android.compose.components.reader.TranslationPageVerse
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ChapterVerseBatch
@@ -22,12 +34,74 @@ import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 
+
 private data class SectionSnapshot(
     val page: Int,
     val ruku: Int,
     val rub: Int,
     val manzil: Int,
 )
+
+private data class TranslationVerseDraft(
+    val chapterNo: Int,
+    val verseNo: Int,
+    val ayahId: Int,
+    val annotatedText: AnnotatedString
+)
+
+private fun mutedTranslatorLabelStyles(
+    colors: ColorScheme,
+    type: Typography
+): Pair<SpanStyle, SpanStyle> {
+    val nonUrdu = SpanStyle(
+        color = colors.onBackground.alpha(0.6f),
+        fontSize = type.labelMedium.fontSize,
+    )
+    val urdu = SpanStyle(
+        color = colors.onBackground.alpha(0.6f),
+        fontSize = type.labelMedium.fontSize,
+        fontFamily = fontUrdu,
+    )
+    return urdu to nonUrdu
+}
+
+private fun buildAnnotatedTranslationWithTranslatorLine(
+    translation: Translation,
+    verse: VerseWithDetails,
+    colors: ColorScheme,
+    paragraphStyle: ParagraphStyle,
+    translationSpanStyle: SpanStyle,
+    labelMutedUrdu: SpanStyle,
+    labelMutedNonUrdu: SpanStyle,
+    bookInfo: TranslationBookInfoModel,
+    verseActions: VerseActions,
+): AnnotatedString = buildAnnotatedString {
+    withStyle(paragraphStyle) {
+        withStyle(translationSpanStyle) {
+            append(
+                buildTranslationAnnotatedString(
+                    translation,
+                    colors,
+                    actions = VerseActions(
+                        verseActions.onReferenceClick,
+                        onFootnoteClickRaw = { _, footnoteNo ->
+                            verseActions.onFootnoteClick?.invoke(
+                                verse,
+                                translation.footnotes[footnoteNo]
+                            )
+                        }
+                    )
+                )
+            )
+        }
+
+        append("\n")
+
+        withStyle(if (bookInfo.isUrdu) labelMutedUrdu else labelMutedNonUrdu) {
+            append(bookInfo.getDisplayName(false))
+        }
+    }
+}
 
 object ReaderItemsBuilder {
     suspend fun buildVersesForTranslationMode(
@@ -194,15 +268,9 @@ object ReaderItemsBuilder {
             ts.toParagraphStyle() to ts.toSpanStyle()
         }
 
-        val labelMutedNonUrdu = SpanStyle(
-            color = params.colors.onBackground.alpha(0.6f),
-            fontSize = params.type.labelMedium.fontSize,
-        )
-
-        val labelMutedUrdu = SpanStyle(
-            color = params.colors.onBackground.alpha(0.6f),
-            fontSize = params.type.labelMedium.fontSize,
-            fontFamily = fontUrdu,
+        val (labelMutedUrdu, labelMutedNonUrdu) = mutedTranslatorLabelStyles(
+            params.colors,
+            params.type
         )
 
         val wbwByAyah =
@@ -255,37 +323,20 @@ object ReaderItemsBuilder {
                 val (paragraphStyle, translationSpanStyle) =
                     translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
 
-                val annotatedString = buildAnnotatedString {
-                    withStyle(paragraphStyle) {
-                        withStyle(translationSpanStyle) {
-                            append(
-                                buildTranslationAnnotatedString(
-                                    translation,
-                                    params.colors,
-                                    actions = VerseActions(
-                                        params.verseActions.onReferenceClick,
-                                        onFootnoteClickRaw = { slug, footnoteNo ->
-                                            params.verseActions.onFootnoteClick?.invoke(
-                                                verse,
-                                                translation.footnotes[footnoteNo]
-                                            )
-                                        }
-                                    )
-                                )
-                            )
-                        }
-
-                        append("\n")
-
-                        withStyle(
-                            if (bookInfo.isUrdu) labelMutedUrdu else labelMutedNonUrdu
-                        ) {
-                            append(bookInfo.getDisplayName(false))
-                        }
-                    }
-                }
-
-                Pair(translation.bookSlug, annotatedString)
+                Pair(
+                    translation.bookSlug,
+                    buildAnnotatedTranslationWithTranslatorLine(
+                        translation = translation,
+                        verse = verse,
+                        colors = params.colors,
+                        paragraphStyle = paragraphStyle,
+                        translationSpanStyle = translationSpanStyle,
+                        labelMutedUrdu = labelMutedUrdu,
+                        labelMutedNonUrdu = labelMutedNonUrdu,
+                        bookInfo = bookInfo,
+                        verseActions = params.verseActions,
+                    ),
+                )
             }
 
             out.add(
@@ -357,14 +408,9 @@ object ReaderItemsBuilder {
                 ts.toParagraphStyle() to ts.toSpanStyle()
             }
 
-            val labelMutedNonUrdu = SpanStyle(
-                color = params.colors.onBackground.alpha(0.6f),
-                fontSize = params.type.labelMedium.fontSize,
-            )
-            val labelMutedUrdu = SpanStyle(
-                color = params.colors.onBackground.alpha(0.6f),
-                fontSize = params.type.labelMedium.fontSize,
-                fontFamily = fontUrdu,
+            val (labelMutedUrdu, labelMutedNonUrdu) = mutedTranslatorLabelStyles(
+                params.colors,
+                params.type
             )
 
             val wbwByAyah =
@@ -401,30 +447,20 @@ object ReaderItemsBuilder {
                     val (paragraphStyle, translationSpanStyle) =
                         translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
 
-                    val annotatedString = buildAnnotatedString {
-                        withStyle(paragraphStyle) {
-                            withStyle(translationSpanStyle) {
-                                append(
-                                    buildTranslationAnnotatedString(
-                                        translation, params.colors,
-                                        actions = VerseActions(
-                                            params.verseActions.onReferenceClick,
-                                            onFootnoteClickRaw = { slug, footnoteNo ->
-                                                params.verseActions.onFootnoteClick?.invoke(
-                                                    verse, translation.footnotes[footnoteNo]
-                                                )
-                                            }
-                                        )
-                                    )
-                                )
-                            }
-                            append("\n")
-                            withStyle(
-                                if (bookInfo.isUrdu) labelMutedUrdu else labelMutedNonUrdu
-                            ) { append(bookInfo.getDisplayName(false)) }
-                        }
-                    }
-                    Pair(translation.bookSlug, annotatedString)
+                    Pair(
+                        translation.bookSlug,
+                        buildAnnotatedTranslationWithTranslatorLine(
+                            translation = translation,
+                            verse = verse,
+                            colors = params.colors,
+                            paragraphStyle = paragraphStyle,
+                            translationSpanStyle = translationSpanStyle,
+                            labelMutedUrdu = labelMutedUrdu,
+                            labelMutedNonUrdu = labelMutedNonUrdu,
+                            bookInfo = bookInfo,
+                            verseActions = params.verseActions,
+                        ),
+                    )
                 }
 
                 out.add(
@@ -504,6 +540,170 @@ object ReaderItemsBuilder {
                 juzNo = juzByPage[pageNo] ?: -1,
                 lines = lines,
             )
+        }
+
+        return out
+    }
+
+    /**
+     * Mushaf pages with a single translation per verse. Verses are ordered by mushaf appearance
+     * on the page; text uses the same annotated pipeline as verse-by-verse (footnotes, refs).
+     */
+    suspend fun buildTranslationPages(
+        context: Context,
+        quranRepository: QuranRepository,
+        pageNumbers: Collection<Int>,
+        translationSlug: String,
+        params: TranslationPageBuilderParams,
+    ): Map<Int, TranslationPageItem> {
+        val distinct = pageNumbers.filter { it > 0 }.distinct().sorted()
+        if (distinct.isEmpty()) return emptyMap()
+
+        val scriptCode = ReaderPreferences.getQuranScript()
+        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        if (mushafId <= 0) return emptyMap()
+
+        val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
+        val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
+        val out = LinkedHashMap<Int, TranslationPageItem>(distinct.size)
+
+        QuranTranslationFactory(context).use { factory ->
+            val slugSet = setOf(translationSlug)
+
+            val ts = getTranslationTextStyle(
+                TranslationTextStyleParams(
+                    translationSlug,
+                    params.translationSizeMultiplier,
+                ),
+                baseLineHeightMultiplier = 1.75f
+            )
+
+            val translationSpanStyle = ts.toSpanStyle()
+            val translationSpanPressedStyle = translationSpanStyle.copy(
+                color = params.colors.primary
+            )
+            val paragraphStyle = ts.toParagraphStyle()
+
+            for (pageNo in distinct) {
+                val rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber }
+                val drafts = ArrayList<TranslationVerseDraft>()
+                val seenAyahIds = mutableSetOf<Int>()
+
+                for (row in rows) {
+                    if (row.lineType != MushafLineType.ayah) continue
+
+                    val ayahIds = quranRepository.ayahIdsForMushafAyahLine(row)
+
+                    for (ayahId in ayahIds) {
+                        if (!seenAyahIds.add(ayahId)) continue
+
+                        val ayah = quranRepository.getAyahById(ayahId) ?: continue
+
+                        val verseDetails = quranRepository.getVerseWithDetails(
+                            ayah.surahNo,
+                            ayah.ayahNo,
+                            scriptCode,
+                        ) ?: continue
+
+                        val transl = factory.getTranslationsSingleVerse(
+                            slugSet,
+                            ayah.surahNo,
+                            ayah.ayahNo,
+                        ).firstOrNull() ?: continue
+
+                        val annotated = buildAnnotatedString {
+                            withLink(
+                                LinkAnnotation.Clickable(
+                                    tag = "${ayah.surahNo}:${ayah.ayahNo}",
+                                    styles = TextLinkStyles(
+                                        style = translationSpanStyle,
+                                        pressedStyle = translationSpanPressedStyle,
+                                        hoveredStyle = translationSpanPressedStyle,
+                                        focusedStyle = translationSpanPressedStyle,
+                                    )
+                                ) {
+                                    params.verseActions.onReferenceClick(
+                                        slugSet,
+                                        ayah.surahNo,
+                                        ayah.ayahNo.toString(),
+                                    )
+                                }
+                            ) {
+                                withStyle(
+                                    style = SpanStyle(
+                                        color = params.colors.onSurface.alpha(0.6f),
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                ) {
+                                    append("\u200F﴿${ayah.ayahNo}﴾\u200F ")
+                                }
+
+                                append(
+                                    buildTranslationAnnotatedString(
+                                        transl,
+                                        params.colors,
+                                        actions = VerseActions(
+                                            params.verseActions.onReferenceClick,
+                                            onFootnoteClickRaw = { _, footnoteNo ->
+                                                params.verseActions.onFootnoteClick?.invoke(
+                                                    verseDetails,
+                                                    transl.footnotes[footnoteNo]
+                                                )
+                                            }
+                                        )
+                                    )
+                                )
+                            }
+                        }
+
+                        drafts.add(
+                            TranslationVerseDraft(
+                                chapterNo = ayah.surahNo,
+                                verseNo = ayah.ayahNo,
+                                ayahId = ayahId,
+                                annotatedText = annotated,
+                            )
+                        )
+                    }
+                }
+
+                val verses = ArrayList<TranslationPageVerse>(drafts.size)
+                val annotatedText = buildAnnotatedString {
+                    withStyle(paragraphStyle) {
+                        drafts.forEachIndexed { index, d ->
+                            if (index > 0) append("  ")
+
+                            val start = length
+
+                            append(d.annotatedText)
+
+                            val end = length
+
+                            verses.add(
+                                TranslationPageVerse(
+                                    chapterNo = d.chapterNo,
+                                    verseNo = d.verseNo,
+                                    rangeStart = start,
+                                    rangeEnd = end,
+                                )
+                            )
+                        }
+                    }
+                }
+
+                val hizbNo = quranRepository.getHizbForMushafPage(mushafId, pageNo)
+                val chapterNames = quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
+
+                out[pageNo] = TranslationPageItem(
+                    pageNo = pageNo,
+                    juzNo = juzByPage[pageNo] ?: -1,
+                    hizbNo = hizbNo,
+                    chapterNames = chapterNames,
+                    translationSlug = translationSlug,
+                    annotatedText = annotatedText,
+                    verses = verses,
+                )
+            }
         }
 
         return out

@@ -73,6 +73,8 @@ class QuranRepository(
         return ayahDao.getAyah(chapterNo, verseNo)
     }
 
+    suspend fun getAyahById(ayahId: Int): AyahEntity? = ayahDao.getAyahById(ayahId)
+
     suspend fun getVerseWithDetails(
         chapterNo: Int,
         verseNo: Int,
@@ -436,6 +438,31 @@ class QuranRepository(
         if (mushafId <= 0 || pageNumbers.isEmpty()) return emptyMap()
         val rows = mushafDao.getPageLinesForPages(mushafId, pageNumbers)
         return rows.groupBy { it.pageNumber }
+    }
+
+    /**
+     * Ayah ids covered by a mushaf ayah line, in canonical order (matches preload semantics).
+     */
+    suspend fun ayahIdsForMushafAyahLine(row: MushafMapEntity): List<Int> {
+        if (row.lineType != MushafLineType.ayah) return emptyList()
+        val startAyah = row.startAyahId ?: return emptyList()
+        val endAyah = row.endAyahId ?: return emptyList()
+        if (row.startWordIndex == null || row.endWordIndex == null) return emptyList()
+        if (startAyah > endAyah) return emptyList()
+        return if (startAyah == endAyah) {
+            listOf(startAyah)
+        } else {
+            buildList {
+                add(startAyah)
+                if (endAyah - startAyah > 1) {
+                    val middle = ayahDao.getAyahsStrictlyBetween(startAyah, endAyah)
+                    for (ayah in middle) {
+                        add(ayah.ayahId)
+                    }
+                }
+                add(endAyah)
+            }
+        }
     }
 
     suspend fun getJuzForMushafPages(

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -66,6 +68,7 @@ import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.ReaderUiState
@@ -165,7 +168,11 @@ fun ReaderAppBar(
                         }
                     }
 
-                    ReaderMode.Translation -> {}
+                    ReaderMode.Translation -> {
+                        StickyHeaderModeTranslation(readerVm, uiState) {
+                            showNavigatorSheet = true
+                        }
+                    }
 
                     else -> {
                         StickyHeaderModeVbV(readerVm, uiState) {
@@ -211,6 +218,7 @@ private fun ModeTabs(
         listOf(
             ReaderMode.VerseByVerse,
             ReaderMode.Reading,
+            ReaderMode.Translation,
         ).forEach { mode ->
             val isSelected = mode == readerMode
             val label = stringResource(
@@ -477,9 +485,108 @@ private fun StickyHeaderModeMushaf(
 
                 Icon(
                     painterResource(R.drawable.dr_icon_chevron_down),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = colorScheme.primary,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun StickyHeaderModeTranslation(
+    readerVm: ReaderViewModel,
+    uiState: ReaderUiState,
+    onNavigatorRequest: () -> Unit
+) {
+    val context = LocalContext.current
+    val currentPageNo = uiState.currentPageNo
+    val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
+    val bookName by produceState("", translationSlug) {
+        value = QuranTranslationFactory(context).use {
+            it.getTranslationBookInfo(translationSlug).displayName
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            Modifier
+                .background(colorScheme.background, shapes.extraLarge)
+                .clip(shapes.extraLarge)
+                .clickable(
+                    onClick = {
+                        openReaderSetting(
+                            context,
+                            SettingRoutes.TRANSLATIONS
+                        )
+                    }
+                )
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.dr_icon_translations),
+                contentDescription = stringResource(R.string.strLabelSelectTranslations),
+                tint = colorScheme.onSurface.alpha(0.75f),
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(18.dp)
+            )
+
+            Text(
+                bookName,
+                style = typography.labelLarge,
+                color = colorScheme.onSurface.alpha(0.75f),
+                maxLines = 1,
+                modifier = Modifier
+                    .basicMarquee(
+                        initialDelayMillis = 900,
+                        repeatDelayMillis = 1_200,
+                    )
+            )
+
+            Icon(
+                painterResource(R.drawable.dr_icon_chevron_right),
+                contentDescription = null,
+                tint = colorScheme.onSurface.alpha(0.75f),
+                modifier = Modifier.size(18.dp)
+            )
+        }
+
+        Spacer(
+            Modifier.weight(1f)
+        )
+
+        TextButton(
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = colorScheme.onSurface
+            ),
+            onClick = onNavigatorRequest,
+        ) {
+            Column(
+                horizontalAlignment = Alignment.End,
+            ) {
+                if (currentPageNo != null) {
+                    Text(
+                        stringResource(R.string.strLabelPageNo, currentPageNo),
+                        style = typography.titleSmall,
+                        color = colorScheme.primary,
+                    )
+                }
+            }
+
+            Icon(
+                painterResource(R.drawable.dr_icon_chevron_down),
+                contentDescription = null,
+                tint = colorScheme.primary,
+            )
         }
     }
 }

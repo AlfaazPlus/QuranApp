@@ -17,6 +17,7 @@ import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
+import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.Log
@@ -31,6 +32,7 @@ import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TextBuilderParams
+import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.Dispatchers
@@ -122,8 +124,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 initialValue = emptyList(),
             )
 
-    val pageItems = mutableStateMapOf<Int, QuranPageItem>()
     val pageCounts = mutableStateMapOf<Int, Int>()
+
+    val pageItems = mutableStateMapOf<Int, QuranPageItem>()
     private val mushafPagesInFlight = mutableSetOf<Int>()
 
     var mushafLayoutKey = mutableStateOf(
@@ -134,6 +137,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     )
 
     private var pageRestoreOnMushafChangeJob: Job? = null
+
+    val translationPageItems = mutableStateMapOf<Int, TranslationPageItem>()
+    private val translationPagesInFlight = mutableSetOf<Int>()
+    private var lastTranslationReaderContentKey: String? = null
 
     private val context get() = application
 
@@ -227,7 +234,50 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                         }
                     }
 
-                    else -> {}
+                    ReaderMode.Translation -> {
+                        val newLayoutKey = QuranScript.fromRawValues(script, scriptVariant)
+                        val oldLayoutKey = mushafLayoutKey.value
+
+                        if (oldLayoutKey != newLayoutKey) {
+                            val pageInPreviousMushaf = _uiState.value.currentPageNo
+
+                            mushafPagesInFlight.clear()
+                            pageItems.clear()
+                            translationPagesInFlight.clear()
+                            translationPageItems.clear()
+                            lastTranslationReaderContentKey = null
+
+                            pageRestoreOnMushafChangeJob?.cancel()
+
+                            val previousKey = oldLayoutKey
+
+                            pageRestoreOnMushafChangeJob = viewModelScope.launch {
+                                try {
+                                    restorePageOnMushafChange(previousKey, pageInPreviousMushaf)
+                                } finally {
+                                    mushafLayoutKey.value = QuranScript(
+                                        ReaderPreferences.getQuranScript(),
+                                        ReaderPreferences.getQuranScriptVariant(),
+                                    )
+                                }
+                            }
+                        }
+
+                        val contentKey =
+                            "$script-$scriptVariant-${ReaderPreferences.primaryTranslationSlug()}-${
+                                prefs.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
+                            }"
+
+                        if (lastTranslationReaderContentKey != contentKey) {
+                            translationPageItems.clear()
+                            translationPagesInFlight.clear()
+                            lastTranslationReaderContentKey = contentKey
+                        }
+                    }
+
+                    else -> {
+                        lastTranslationReaderContentKey = null
+                    }
                 }
             }
     }
@@ -249,7 +299,13 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         // Check if explicitly requested mushaf mode
         if (data is ReaderIntentData.MushafPage) {
-            initMushafPage(data)
+            initMushafPage(data, params.readerMode)
+            if (data.initialVerse != null) {
+                requestVerseNavigation(
+                    data.initialVerse.chapterNo,
+                    data.initialVerse.verseNo,
+                )
+            }
             return
         }
 
@@ -286,8 +342,11 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
     }
 
-    private suspend fun initMushafPage(data: ReaderIntentData.MushafPage) {
-        ReaderPreferences.setReaderMode(ReaderMode.Reading)
+    private suspend fun initMushafPage(
+        data: ReaderIntentData.MushafPage,
+        readerMode: ReaderMode?,
+    ) {
+        ReaderPreferences.setReaderMode(readerMode ?: ReaderMode.Reading)
 
         if (data.mushafCode != null) {
             ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
@@ -382,6 +441,27 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
     }
 
+    fun updateLastKnownVerseFromTranslationPage(pageNo: Int) {
+        val page = translationPageItems[pageNo]
+
+        if (page != null) {
+            val firstVerse = page.verses.firstOrNull()
+
+            if (firstVerse != null) {
+                lastKnownVerse = ChapterVersePair(firstVerse.chapterNo, firstVerse.verseNo)
+                return
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
+            
+            lastKnownVerse = QuranUtils.getVerseNoFromAyahId(ayahId).let {
+                ChapterVersePair(it.first, it.second)
+            }
+        }
+    }
+
     fun saveReadHistory() {
         val state = _uiState.value
         val viewType = state.viewType ?: return
@@ -443,7 +523,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         consumeVerseNavigation()
 
         when (to) {
-            ReaderMode.Reading -> {
+            ReaderMode.Reading, ReaderMode.Translation -> {
                 val page = resolvePageNo(chapterNo, verseNo)
 
                 if (page != null) {
@@ -468,8 +548,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
                 requestVerseNavigation(chapterNo, verseNo)
             }
-
-            else -> {}
         }
     }
 
@@ -497,7 +575,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         val (chapterNo, verseNo) = verse
 
         when (mode) {
-            ReaderMode.Reading -> {
+            ReaderMode.Reading, ReaderMode.Translation -> {
                 val page = resolvePageNo(chapterNo, verseNo)
                 if (page != null) requestPageNavigation(page)
             }
@@ -518,8 +596,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 }
                 requestVerseNavigation(chapterNo, verseNo)
             }
-
-            else -> {}
         }
     }
 
@@ -564,22 +640,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         totalPages: Int,
         params: PageBuilderParams
     ) {
-        Log.d("BUILDING", anchorPages)
-
-        if (totalPages <= 0) return
-
-        val targets = linkedSetOf<Int>()
-        for (anchorPage in anchorPages) {
-            if (anchorPage !in 1..totalPages) continue
-
-            for (d in -MUSHAF_PREFETCH_RADIUS..MUSHAF_PREFETCH_RADIUS) {
-                val page = anchorPage + d
-                if (page in 1..totalPages) {
-                    targets += page
-                }
-            }
-        }
-
+        val targets = mushafPrefetchTargets(anchorPages, totalPages)
         if (targets.isEmpty()) return
 
         val missing = withContext(Dispatchers.Main) {
@@ -609,6 +670,53 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         } finally {
             withContext(Dispatchers.Main) {
                 mushafPagesInFlight.removeAll(missing.toSet())
+            }
+        }
+    }
+
+    fun clearTranslationPageCache() {
+        translationPageItems.clear()
+        translationPagesInFlight.clear()
+    }
+
+    suspend fun fetchTranslationPages(
+        context: Context,
+        anchorPages: Collection<Int>,
+        totalPages: Int,
+        buildParams: TranslationPageBuilderParams,
+    ) {
+        val targets = mushafPrefetchTargets(anchorPages, totalPages)
+        if (targets.isEmpty()) return
+
+        val missing = withContext(Dispatchers.Main) {
+            targets.filter { page ->
+                !translationPageItems.containsKey(page) && translationPagesInFlight.add(page)
+            }
+        }
+
+        if (missing.isEmpty()) return
+
+        val slug = ReaderPreferences.primaryTranslationSlug()
+
+        try {
+            val built = withContext(Dispatchers.IO) {
+                ReaderItemsBuilder.buildTranslationPages(
+                    context,
+                    repository,
+                    missing,
+                    slug,
+                    buildParams,
+                )
+            }
+
+            withContext(Dispatchers.Main) {
+                for (page in missing) {
+                    built[page]?.let { translationPageItems[page] = it }
+                }
+            }
+        } finally {
+            withContext(Dispatchers.Main) {
+                translationPagesInFlight.removeAll(missing.toSet())
             }
         }
     }
@@ -657,6 +765,19 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 }
 
 const val MUSHAF_PREFETCH_RADIUS = 4
+
+private fun mushafPrefetchTargets(anchorPages: Collection<Int>, totalPages: Int): Set<Int> {
+    if (totalPages <= 0) return emptySet()
+    val targets = linkedSetOf<Int>()
+    for (anchorPage in anchorPages) {
+        if (anchorPage !in 1..totalPages) continue
+        for (d in -MUSHAF_PREFETCH_RADIUS..MUSHAF_PREFETCH_RADIUS) {
+            val page = anchorPage + d
+            if (page in 1..totalPages) targets += page
+        }
+    }
+    return targets
+}
 
 private fun ReaderUiState.rebuildEquals(other: ReaderUiState): Boolean =
     viewType == other.viewType &&
