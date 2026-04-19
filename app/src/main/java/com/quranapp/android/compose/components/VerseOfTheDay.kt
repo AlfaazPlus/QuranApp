@@ -363,7 +363,7 @@ private fun VotdContent() {
                                 R.drawable.ic_bookmark
                             }
                         ),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.strLabelBookmark),
                         tint = if (isBookmarked) colorScheme.primary else iconTint,
                         small = true,
                     ) {
@@ -377,11 +377,20 @@ private fun VotdContent() {
                         painter = painterResource(
                             if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell
                         ),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.dailyReminderMsg),
                         tint = if (votdEnabled) colorScheme.primary else iconTint,
                         small = true,
                     ) {
                         showDailyReminderSheet = true
+                    }
+
+                    IconButton(
+                        painter = painterResource(R.drawable.dr_icon_tafsir),
+                        contentDescription = stringResource(R.string.strTitleTafsir),
+                        tint = null,
+                        small = true,
+                    ) {
+                        ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo)
                     }
 
                     Spacer(Modifier.weight(1f))

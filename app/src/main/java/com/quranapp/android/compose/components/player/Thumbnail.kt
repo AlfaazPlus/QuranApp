@@ -1,23 +1,23 @@
 package com.quranapp.android.compose.components.player
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,7 +31,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,10 +39,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.ChapterIcon
-import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
+import com.quranapp.android.viewModels.RecitationPlayerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -52,15 +53,15 @@ fun ExtendedThumbnail(
     verse: ChapterVersePair,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val headerShape = RoundedCornerShape(32.dp)
+    val viewModel = viewModel<RecitationPlayerViewModel>()
 
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    var showChapterVerseNavigator by remember { mutableStateOf(false) }
     var chapterName by remember { mutableStateOf("") }
 
     LaunchedEffect(verse.chapterNo) {
         chapterName = withContext(Dispatchers.IO) {
-            repository.getChapterName(verse.chapterNo)
+            viewModel.repository.getChapterName(verse.chapterNo)
         }
     }
 
@@ -162,8 +163,6 @@ fun ExtendedThumbnail(
             medium -> 14.dp
             else -> 22.dp
         }
-        val badgeHorizontalPadding: Dp = if (compact) 10.dp else 14.dp
-        val badgeVerticalPadding: Dp = if (compact) 4.dp else 6.dp
 
         Column(
             modifier = Modifier
@@ -206,26 +205,50 @@ fun ExtendedThumbnail(
 
             Spacer(Modifier.height(titleToBadgeGap))
 
-            Surface(
-                shape = RoundedCornerShape(999.dp),
-                color = Color.White.copy(alpha = 0.1f),
-                tonalElevation = 0.dp,
-                shadowElevation = 0.dp,
-                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.08f))
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(999.dp))
+                    .background(Color.White.copy(alpha = 0.1f))
+                    .border(1.dp, Color.White.copy(alpha = 0.08f), RoundedCornerShape(999.dp))
+                    .clickable {
+                        showChapterVerseNavigator = true
+                    }
+                    .padding(
+                        horizontal = 10.dp,
+                        vertical = 6.dp,
+                    )
             ) {
-                Text(
-                    text = stringResource(R.string.strLabelVerseNo, verse.verseNo),
-                    modifier = Modifier.padding(
-                        horizontal = badgeHorizontalPadding,
-                        vertical = badgeVerticalPadding,
-                    ),
-                    color = Color.White.copy(alpha = 0.88f),
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Bold
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.strLabelVerseNo, verse.verseNo),
+                        color = Color.White.copy(alpha = 0.88f),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Icon(
+                        painterResource(R.drawable.dr_icon_chevron_down),
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
             }
         }
     }
+
+    ChapterVerseNavigator(
+        isOpen = showChapterVerseNavigator,
+        onDismiss = { showChapterVerseNavigator = false },
+        selectedChapterNo = verse.chapterNo,
+        selectedVerseNos = setOf(verse.verseNo),
+        onVerseSelected = { chapterNo, verseNo ->
+            viewModel.controller.start(ChapterVersePair(chapterNo, verseNo))
+        },
+    )
 }
 
 

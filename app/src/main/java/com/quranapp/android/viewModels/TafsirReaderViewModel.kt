@@ -61,7 +61,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     val uiState: StateFlow<TafsirReaderUiState> = _uiState.asStateFlow()
 
     private val context get() = getApplication<Application>()
-    private val repository = DatabaseProvider.getQuranRepository(context)
+    val repository = DatabaseProvider.getQuranRepository(context)
 
     private var contentLoadJob: Job? = null
 
