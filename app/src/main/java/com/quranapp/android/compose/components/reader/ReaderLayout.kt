@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -90,6 +92,7 @@ data class ReaderPreparedData(
     /** Quran text style per mushaf page for Arabic in this reader session. */
     val textStyles: Map<Int, TextStyle> = emptyMap(),
 )
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -160,6 +163,7 @@ private fun ReaderLayoutVerseMode(
     nestedScrollConnection: NestedScrollConnection,
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
+    val density = LocalDensity.current
     val listState = rememberLazyListState()
     val prepared by readerVm.verseByVersePrepared.collectAsStateWithLifecycle()
     val items = prepared.items
@@ -283,9 +287,20 @@ private fun ReaderLayoutVerseMode(
             ) { item ->
                 TranslationRow(readerVm, item, bookmarkedVerseKeys)
             }
+
+            if (uiState.viewType != null && items.isNotEmpty()) {
+                item(key = "verse_reader_nav_footer") {
+                    ReaderFooterNavigator(
+                        readerVm = readerVm,
+                        viewType = uiState.viewType,
+                        listState = listState,
+                    )
+                }
+            }
         }
     }
 }
+
 
 @Composable
 private fun TranslationRow(

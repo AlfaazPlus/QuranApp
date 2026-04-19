@@ -25,6 +25,7 @@
     <string name="strLabelViewAll">View all</string>
     <string name="strLabelSkip">Skip</string>
     <string name="strLabelNext">Next</string>
+    <string name="strLabelPrevious">Previous</string>
     <string name="strLabelStart">Start</string>
     <string name="labelDownload">Download</string>
     <string name="strLabelUpdate">Update</string>
@@ -37,6 +38,12 @@
     <string name="strLabelNextVerse">Next verse</string>
     <string name="labelPreviousTafsir">Previous tafsir</string>
     <string name="labelNextTafsir">Next tafsir</string>
+    <string name="nextChapter">Next chapter</string>
+    <string name="previousChapter">Previous chapter</string>
+    <string name="nextJuz">Next juz</string>
+    <string name="previousJuz">Previous chapter</string>
+    <string name="nextHizb">Next hizb</string>
+    <string name="previousHizb">Previous hizb</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
     <string name="strLabelPageNo" formatted="false">Page %d</string>
     <string name="strLabelRukuNo" formatted="false">Ruku %d</string>

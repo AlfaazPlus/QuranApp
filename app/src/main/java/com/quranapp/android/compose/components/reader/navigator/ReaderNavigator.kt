@@ -21,6 +21,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -77,7 +78,7 @@ fun ReaderNavigator(
                 }
 
                 else -> {
-                    val isInCurrentView = readerVm.verseByVerseItems.value.any { item ->
+                    val isInCurrentView = readerVm.verseByVersePrepared.value.items.any { item ->
                         item is ReaderLayoutItem.VerseUI &&
                                 item.verse.chapterNo == chapterNo &&
                                 item.verse.verseNo == verseNo

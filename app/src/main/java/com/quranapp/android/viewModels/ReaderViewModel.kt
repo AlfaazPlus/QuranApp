@@ -115,15 +115,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     val verseByVersePrepared: StateFlow<ReaderPreparedData> =
         _verseByVersePrepared.asStateFlow()
 
-    val verseByVerseItems: StateFlow<List<ReaderLayoutItem>> =
-        _verseByVersePrepared
-            .map { it.items }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = emptyList(),
-            )
-
     val pageCounts = mutableStateMapOf<Int, Int>()
 
     val pageItems = mutableStateMapOf<Int, QuranPageItem>()
