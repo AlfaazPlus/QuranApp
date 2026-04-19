@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.tafsir.TafsirUtils
@@ -82,8 +84,8 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
             }
 
             is TafsirReaderEvent.ChangeTafsir -> changeTafsir(event.tafsirKey)
-            is TafsirReaderEvent.NextVerse -> navigateVerse(1)
-            is TafsirReaderEvent.PreviousVerse -> navigateVerse(-1)
+            is TafsirReaderEvent.NextVerse -> navigateByTafsirGroup(1)
+            is TafsirReaderEvent.PreviousVerse -> navigateByTafsirGroup(-1)
             is TafsirReaderEvent.Retry -> loadTafsirContent()
             is TafsirReaderEvent.UpdateTextSize -> updateTextSize(event.multiplier)
         }
@@ -151,20 +153,99 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         loadTafsirContent()
     }
 
-    private fun navigateVerse(delta: Int) {
+    /**
+     * Moves by whole tafsir blocks: next goes to the first ayah after the current block;
+     * previous goes to the first ayah of the block before the current one.
+     */
+    private fun navigateByTafsirGroup(delta: Int) {
         val state = _uiState.value
-        val newVerseNo = state.verseNo + delta
+        if (state.chapterNo < 1 || state.verseNo < 1) return
 
-        if (newVerseNo < 1 || newVerseNo > (state.chapterMeta?.surah?.ayahCount ?: 0)) return
+        viewModelScope.launch {
+            val coord = withContext(Dispatchers.IO) {
+                resolveGroupNavigationTarget(state, delta)
+            } ?: return@launch
 
-        _uiState.update {
-            it.copy(
-                verseNo = newVerseNo,
-                contentState = TafsirContentState.Loading
-            )
+            val newMeta = if (coord.chapterNo != state.chapterNo) {
+                withContext(Dispatchers.IO) {
+                    repository.getSurahWithLocalizations(coord.chapterNo)
+                }
+            } else {
+                state.chapterMeta
+            }
+
+            _uiState.update {
+                it.copy(
+                    chapterNo = coord.chapterNo,
+                    verseNo = coord.verseNo,
+                    chapterMeta = newMeta ?: it.chapterMeta,
+                    contentState = TafsirContentState.Loading
+                )
+            }
+
+            loadTafsirContent()
         }
+    }
 
-        loadTafsirContent()
+    private suspend fun resolveGroupNavigationTarget(
+        state: TafsirReaderUiState,
+        delta: Int,
+    ): ChapterVersePair? {
+        val tafsirKey = state.tafsirKey
+        val chapterNo = state.chapterNo
+        val verseNo = state.verseNo
+
+        val totalVerses = repository.getSurahWithLocalizations(chapterNo)?.surah?.ayahCount
+            ?: return null
+        if (totalVerses < 1) return null
+
+        val lastChapter = QuranMeta.chapterRange.last
+
+        val dbHelper = QuranTafsirDBHelper(context)
+        try {
+            val currentModel: TafsirModel? = when (val c = state.contentState) {
+                is TafsirContentState.Success -> c.tafsir
+                else -> dbHelper.getTafsirByVerse(tafsirKey, chapterNo, verseNo)
+            }
+
+            val range = currentModel?.let { TafsirUtils.tafsirVerseRangeInChapter(it, chapterNo) }
+                ?: (verseNo..verseNo)
+
+            return when (delta) {
+                1 -> {
+                    val next = range.last + 1
+                    when {
+                        next <= totalVerses -> ChapterVersePair(chapterNo, next)
+                        chapterNo < lastChapter -> ChapterVersePair(chapterNo + 1, 1)
+                        else -> null
+                    }
+                }
+
+                -1 -> {
+                    val first = range.first
+
+                    if (first > 1) {
+                        val beforeCurrentGroup = first - 1
+                        ChapterVersePair(chapterNo, beforeCurrentGroup)
+                    } else if (chapterNo > 1) {
+                        val prevChapter = chapterNo - 1
+                        val prevTotal = repository.getSurahWithLocalizations(prevChapter)
+                            ?.surah?.ayahCount
+                            ?: return null
+
+                        if (prevTotal < 1) return null
+
+                        ChapterVersePair(prevChapter, prevTotal)
+                    } else {
+                        null
+                    }
+                }
+
+                else -> null
+            }
+        } finally {
+            dbHelper.close()
+        }
     }
 
     private fun updateTextSize(multiplier: Float) {

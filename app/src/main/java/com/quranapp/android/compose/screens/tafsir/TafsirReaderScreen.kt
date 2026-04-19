@@ -62,6 +62,8 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.ResUtils
@@ -286,7 +288,7 @@ private fun TafsirWebViewContent(
                     onPageFinished = { isLoading = false }
                 )
                 val signature = htmlContent to tafsirKey
-                
+
                 if (lastLoad != signature) {
                     lastLoad = signature
                     isLoading = true
@@ -336,9 +338,15 @@ private fun buildTafsirHtml(
 
     val multiVerseAlert = if (verses.size > 1) {
         val alertMsg = context.getString(R.string.readingTafsirMultiVerses)
+        val versesSorted = verses.sortedWith(
+            compareBy(
+                { it.substringBefore(':').toIntOrNull() ?: 0 },
+                { it.substringAfter(':').toIntOrNull() ?: 0 }
+            )
+        )
         """
         <div class="multiple-verse-alert">
-            <strong>$alertMsg</strong> ${verses.joinToString(", ")}
+            <strong>$alertMsg</strong> ${versesSorted.joinToString(", ")}
         </div>
         """.trimIndent()
     } else ""
@@ -458,10 +466,22 @@ private fun TafsirBottomNavigation(
     uiState: TafsirReaderUiState,
     onEvent: (TafsirReaderEvent) -> Unit,
 ) {
-    val hasPrevious = uiState.verseNo > 1
     val totalVerses = uiState.chapterMeta?.surah?.ayahCount ?: 0
-    val verseNo = uiState.verseNo
-    val hasNext = verseNo < totalVerses
+    val lastChapter = QuranMeta.chapterRange.last
+    val range = when (val c = uiState.contentState) {
+        is TafsirContentState.Success ->
+            TafsirUtils.tafsirVerseRangeInChapter(c.tafsir, uiState.chapterNo)
+
+        else -> null
+    }
+
+    val groupFirst = range?.first ?: uiState.verseNo
+    val groupLast = range?.last ?: uiState.verseNo
+
+    val hasPrevious = uiState.chapterNo > 1 || groupFirst > 1
+    val hasNext = totalVerses > 0 &&
+        (groupLast < totalVerses ||
+            (uiState.chapterNo < lastChapter && groupLast >= totalVerses))
 
     Surface(
         color = colorScheme.surfaceContainer,

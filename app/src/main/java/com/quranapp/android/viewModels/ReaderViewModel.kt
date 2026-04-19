@@ -412,7 +412,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
 
     fun updateLastKnownVerseFromItems(firstVisibleIndex: Int) {
-        val items = verseByVerseItems.value
+        val items = _verseByVersePrepared.value.items
 
         for (i in firstVisibleIndex until items.size) {
             val item = items[i]
@@ -584,7 +584,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
 
             ReaderMode.VerseByVerse -> {
-                val isInView = verseByVerseItems.value.any { item ->
+                val isInView = _verseByVersePrepared.value.items.any { item ->
                     item is ReaderLayoutItem.VerseUI &&
                             item.verse.chapterNo == chapterNo &&
                             item.verse.verseNo == verseNo
@@ -736,8 +736,6 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             lastKnownVerse?.takeIf { it.isValid }
         }
 
-        Log.d("TRYING RESTORE", verseFromMemory)
-
         val versePair = verseFromMemory ?: run {
             val oldMushafId = oldLayoutKey.scriptCode.toQuranMushafId(oldLayoutKey.variant)
             val currentPage = pageInPreviousMushaf
@@ -750,13 +748,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             ChapterVersePair(c, v)
         }
 
-        Log.d("TRYING RESTORE", versePair)
-
         val newPage = withContext(Dispatchers.IO) {
             repository.getPageForVerse(versePair.chapterNo, versePair.verseNo)
         } ?: return
-
-        Log.d("TRYING RESTORE", newPage)
 
         withContext(Dispatchers.Main) {
             lastKnownVerse = versePair

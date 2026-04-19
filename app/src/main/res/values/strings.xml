@@ -105,6 +105,7 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
+    <string name="strMsgReciterDownloadHint">Download recitation audio for offline listening and smoother playback.</string>
     <string name="downloadRecitations">Download Recitations</string>
     <string name="recitationDownloadChapterSubtitle" formatted="false">Chapter %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d chapters</string>
@@ -257,6 +258,7 @@
     <string name="msgDownloadingFonts">Downloading fonts</string>
     <string name="msgExtractingFonts">Extracting fonts</string>
     <string name="textDownloading">Downloading…</string>
+    <string name="textPreparingAudio">Preparing audio…</string>
     <string name="lastCrashLog">Last crash log</string>
     <string name="appLogs">App logs</string>
     <string name="crashLogs">Crash logs</string>

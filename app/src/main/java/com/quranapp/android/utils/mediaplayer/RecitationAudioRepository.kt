@@ -1,10 +1,8 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.content.Context
+import android.net.Uri
 import androidx.core.net.toUri
-import androidx.lifecycle.asFlow
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
@@ -27,10 +25,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.intOrNull
@@ -83,11 +79,18 @@ class RecitationAudioRepository(private val context: Context) {
     }
 
     /**
-     * Resolves chapter audio and timing. Each resource is handled on its own:
-     * - Audio: uses local file if present; otherwise downloads (requires network).
-     * - Timing: uses cache if valid; otherwise downloads when online (timingMetadata may be null).
+     * Resolves chapter audio URIs and timing for playback.
      *
-     * Missing audio still fails the flow when that track is required; missing timing never fails.
+     * Audio URIs
+     * - If the chapter file under the reciter directory exists and is non-empty, `RecitationAudioTrack.audioUri`
+     *   is a `file://` URI (explicit / bulk download). This always wins.
+     * - Otherwise, when the device is online, `audioUri` is the prepared HTTPS URL for that chapter.
+     *   Playback buffers via ExoPlayer; bytes are not written to the reciter folder by this call.
+     *   Repeat plays use ExoPlayer `SimpleCache` (see `RecitationService`), not `RecitationAudioDownloadWorker`.
+     * - Offline with an empty placeholder file fails with `NoInternetException`.
+     *
+     * Timing: cache if valid; otherwise fetch when online (ChapterTimingMetadata may be null).
+     * Missing audio for a required track fails; missing timing does not fail the flow.
      */
     fun resolveAudioUris(
         chapterNo: Int,
@@ -117,8 +120,9 @@ class RecitationAudioRepository(private val context: Context) {
             modelManager.getRecitationAudioFile(it.id, chapterNo)
         }
 
-        val quranNeedsDownload = shouldPlayArabic && quranFile != null && quranFile.length() == 0L
-        val translationNeedsDownload =
+        val quranNeedsStream =
+            shouldPlayArabic && quranFile != null && quranFile.length() == 0L
+        val translationNeedsStream =
             shouldPlayTranslation && translationFile != null && translationFile.length() == 0L
 
         try {
@@ -131,73 +135,10 @@ class RecitationAudioRepository(private val context: Context) {
                     translationModel?.let { resolveChapterTimingMetadata(it, chapterNo) }
                 }
 
-                if (quranNeedsDownload || translationNeedsDownload) {
+                if (quranNeedsStream || translationNeedsStream) {
                     if (!NetworkStateReceiver.isNetworkConnected(context)) {
                         throw NoInternetException()
                     }
-
-                    val progressByReciterChapter = mutableMapOf<String, Int>()
-
-                    suspend fun emitCombinedDownloadProgress() {
-                        emit(
-                            ResolvedAudioResult.Downloading(
-                                combineChapterDownloadProgress(
-                                    progressByReciterChapter,
-                                    chapterNo,
-                                    quranNeedsDownload,
-                                    translationNeedsDownload,
-                                    quranModel?.id,
-                                    translationModel?.id,
-                                ),
-                            ),
-                        )
-                    }
-
-                    emitCombinedDownloadProgress()
-
-                    if (quranNeedsDownload) {
-                        val url = prepareAudioUrl(quranModel.urlTemplate, chapterNo)
-                            ?: throw IllegalStateException("Failed to prepare audio URL")
-
-                        downloadAudioWithWorker(
-                            reciterId = quranModel.id,
-                            chapterNo = chapterNo,
-                            url = url,
-                            destinationFile = quranFile,
-                            title = "Downloading recitation",
-                            subtitle = quranModel.reciter,
-                            audioKind = RecitationAudioKind.QURAN,
-                            onProgress = { p ->
-                                progressByReciterChapter[
-                                    downloadProgressKey(quranModel.id, chapterNo),
-                                ] = p
-                                emitCombinedDownloadProgress()
-                            },
-                        )
-                    }
-
-                    if (translationNeedsDownload) {
-                        val url = prepareAudioUrl(translationModel.urlTemplate, chapterNo)
-                            ?: throw IllegalStateException("Failed to prepare translation audio URL")
-
-                        downloadAudioWithWorker(
-                            reciterId = translationModel.id,
-                            chapterNo = chapterNo,
-                            url = url,
-                            destinationFile = translationFile,
-                            title = "Downloading recitation translation",
-                            subtitle = translationModel.reciter,
-                            audioKind = RecitationAudioKind.TRANSLATION,
-                            onProgress = { p ->
-                                progressByReciterChapter[
-                                    downloadProgressKey(translationModel.id, chapterNo),
-                                ] = p
-                                emitCombinedDownloadProgress()
-                            },
-                        )
-                    }
-
-                    emit(ResolvedAudioResult.Downloading(-1))
                 }
 
                 val quranTiming = quranTimingDeferred.await()
@@ -208,26 +149,57 @@ class RecitationAudioRepository(private val context: Context) {
                     "Resolved timings for chapter $chapterNo - quran: $quranTiming, translation: $translationTiming"
                 )
 
+                fun resolveTrackUri(
+                    needsStream: Boolean,
+                    file: File?,
+                    urlTemplate: String,
+                ): Uri {
+                    if (file == null) {
+                        throw IllegalStateException("Missing audio file path")
+                    }
+
+                    if (!needsStream) {
+                        return file.toUri()
+                    }
+
+                    val url = prepareAudioUrl(urlTemplate, chapterNo)
+                        ?: throw IllegalStateException("Failed to prepare audio URL")
+
+                    return url.toUri()
+                }
+
                 emit(
                     ResolvedAudioResult.Resoved(
                         chapter = chapterNo,
-                        quran = quranFile?.let { file ->
+                        quran = if (shouldPlayArabic && quranModel != null && quranFile != null) {
                             RecitationAudioTrack(
                                 kind = RecitationAudioKind.QURAN,
                                 chapterNo = chapterNo,
                                 reciterId = quranModel.id,
-                                audioUri = file.toUri(),
+                                audioUri = resolveTrackUri(
+                                    needsStream = quranNeedsStream,
+                                    file = quranFile,
+                                    urlTemplate = quranModel.urlTemplate,
+                                ),
                                 timingMetadata = quranTiming,
                             )
+                        } else {
+                            null
                         },
-                        translation = translationFile?.let { file ->
+                        translation = if (shouldPlayTranslation && translationModel != null && translationFile != null) {
                             RecitationAudioTrack(
                                 kind = RecitationAudioKind.TRANSLATION,
                                 chapterNo = chapterNo,
                                 reciterId = translationModel.id,
-                                audioUri = file.toUri(),
+                                audioUri = resolveTrackUri(
+                                    needsStream = translationNeedsStream,
+                                    file = translationFile,
+                                    urlTemplate = translationModel.urlTemplate,
+                                ),
                                 timingMetadata = translationTiming,
                             )
+                        } else {
+                            null
                         },
                     ),
                 )
@@ -237,103 +209,6 @@ class RecitationAudioRepository(private val context: Context) {
             emit(ResolvedAudioResult.Error(e))
         }
     }.flowOn(Dispatchers.IO)
-
-    private suspend fun downloadAudioWithWorker(
-        reciterId: String,
-        chapterNo: Int,
-        url: String,
-        destinationFile: File,
-        title: String,
-        subtitle: String?,
-        audioKind: RecitationAudioKind,
-        onProgress: suspend (Int) -> Unit,
-    ) {
-        val workName = RecitationAudioDownloadWorker.uniqueWorkName(reciterId, chapterNo)
-
-        workManager.enqueueUniqueWork(
-            workName,
-            ExistingWorkPolicy.KEEP,
-            RecitationAudioDownloadWorker.oneTimeRequest(
-                url = url,
-                outputPath = destinationFile.absolutePath,
-                title = title,
-                subtitle = subtitle,
-                isBulkChild = false,
-                reciterId = reciterId,
-                audioKind = audioKind,
-            )
-        )
-
-        awaitWorkCompletion(workName, onProgress)
-    }
-
-    private suspend fun awaitWorkCompletion(
-        workName: String,
-        onProgress: suspend (Int) -> Unit,
-    ) {
-        workManager.getWorkInfosForUniqueWorkLiveData(workName).asFlow()
-            .mapNotNull { infos -> infos.firstOrNull() }
-            .first { info ->
-                val p = info.progress.getInt(RecitationAudioDownloadWorker.KEY_PROGRESS, -1)
-                if (p in 0..100) {
-                    onProgress(p)
-                }
-
-                when (info.state) {
-                    WorkInfo.State.SUCCEEDED -> true
-                    WorkInfo.State.FAILED -> {
-                        val message =
-                            info.outputData.getString(RecitationAudioDownloadWorker.KEY_ERROR)
-                                ?: "Download failed"
-                        throw IllegalStateException(message)
-                    }
-
-                    WorkInfo.State.CANCELLED -> {
-                        throw IllegalStateException("Download cancelled")
-                    }
-
-                    else -> false
-                }
-            }
-    }
-
-
-    private fun downloadProgressKey(reciterId: String, chapterNo: Int) = "$reciterId:$chapterNo"
-
-    /**
-     * Merges per-reciter progress into one 0–100 value. When both Quran and translation download,
-     * each file fills half the range so the bar does not reset between workers.
-     */
-    private fun combineChapterDownloadProgress(
-        progressByKey: Map<String, Int>,
-        chapterNo: Int,
-        quranNeedsDownload: Boolean,
-        translationNeedsDownload: Boolean,
-        quranReciterId: String?,
-        translationReciterId: String?,
-    ): Int {
-        return when {
-            quranNeedsDownload && translationNeedsDownload -> {
-                val qid = quranReciterId ?: return 0
-                val tid = translationReciterId ?: return 0
-                val q = progressByKey[downloadProgressKey(qid, chapterNo)] ?: 0
-                val t = progressByKey[downloadProgressKey(tid, chapterNo)] ?: 0
-                (q + t) / 2
-            }
-
-            quranNeedsDownload -> {
-                val qid = quranReciterId ?: return 0
-                progressByKey[downloadProgressKey(qid, chapterNo)] ?: 0
-            }
-
-            translationNeedsDownload -> {
-                val tid = translationReciterId ?: return 0
-                progressByKey[downloadProgressKey(tid, chapterNo)] ?: 0
-            }
-
-            else -> 0
-        }
-    }
 
     suspend fun resolveChapterTimingMetadata(
         model: RecitationModelBase,

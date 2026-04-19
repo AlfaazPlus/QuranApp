@@ -131,6 +131,8 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
 
     implementation(libs.media3ExoPlayer)
+    implementation(libs.media3Datasource)
+    implementation(libs.media3Database)
     implementation(libs.media3Session)
     implementation(libs.media3UI)
 

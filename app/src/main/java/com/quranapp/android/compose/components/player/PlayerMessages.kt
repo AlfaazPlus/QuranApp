@@ -27,6 +27,24 @@ fun PlayerMessages(state: RecitationServiceState, isPlaying: Boolean) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.padding(horizontal = 16.dp),
     ) {
+        if (state.resolvingChapterNo != null && state.downloadProgress == null) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = PlayerContentColor.alpha(0.9f),
+                )
+                Text(
+                    text = stringResource(R.string.textPreparingAudio),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = PlayerContentColor.alpha(0.9f),
+                )
+            }
+        }
+
         state.downloadProgress?.let { progress ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
