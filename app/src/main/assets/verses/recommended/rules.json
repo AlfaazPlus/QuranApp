@@ -1,0 +1,47 @@
+{
+  "schema": 2,
+  "defaults": {
+    "timeZone": "local"
+  },
+  "rules": [
+    {
+      "id": "friday_kahf",
+      "priority": 100,
+      "when": {
+        "clauses": [
+          {
+            "weekdays": [5],
+            "hourRanges": [[4, 18]]
+          }
+        ]
+      },
+      "ref": {
+        "segments": ["18"]
+      }
+    },
+    {
+      "id": "night",
+      "priority": 90,
+      "when": {
+        "clauses": [
+          {
+            "weekdays": [1, 2, 3, 4, 5, 6, 7],
+            "hourRanges": [[20, 1]]
+          }
+        ]
+      },
+      "ref": {
+        "segments": [
+          {
+            "verseRef": "2:285-286,112:1-4,113:1-5,114:1-6",
+            "langKey": "night_three_quls"
+          },
+          {
+            "verseRef": "67",
+            "langKey": "night_mulk"
+          }
+        ]
+      }
+    }
+  ]
+}
