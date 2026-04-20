@@ -115,7 +115,7 @@
       "style": null,
       "url_template": "https://github.com/dabatase/al_hudhaify/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_hudhaify.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "ar": "علي بن عبد الرحمن الحذيفي",
         "bn": "আলী বিন আবদুর রহমান আল হুজায়ফী",
