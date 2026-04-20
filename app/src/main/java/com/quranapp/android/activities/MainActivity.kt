@@ -8,7 +8,6 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.screens.MainScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
-import com.quranapp.android.utils.app.AppActions.checkForResourcesVersions
 import com.quranapp.android.utils.app.AppActions.scheduleActions
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -19,21 +18,8 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutResource() = 0
 
-    override fun onPause() {
-        mUpdateManager?.onPause()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mUpdateManager?.onResume()
-    }
-
     override fun initCreate(savedInstanceState: Bundle?) {
-        mUpdateManager = UpdateManager(this)
-        mUpdateManager!!.refreshAppUpdatesJson()
-
-        if (mUpdateManager!!.check4CriticalUpdate()) {
+        if (UpdateManager.getInstance(this).check4CriticalUpdate()) {
             return
         }
 
@@ -64,7 +50,6 @@ class MainActivity : BaseActivity() {
 
 
     private fun initActions() {
-        checkForResourcesVersions(this)
         scheduleActions(this)
         checkForCrashLogs(this)
     }

@@ -4,17 +4,14 @@ import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.AppUrls
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.utils.sharedPrefs.SPAppActions.addToPendingAction
-import com.quranapp.android.utils.sharedPrefs.SPAppActions.setFetchUrlsForce
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import java.io.File
 import java.io.IOException
@@ -40,6 +37,26 @@ class UrlsManager(private val ctx: Context) {
     private val mFileUtils = FileUtils.newInstance(ctx)
     private var mCancelled = false
 
+    private fun getUrlsFile(): File {
+        val dir = FileUtils.makeAndGetAppResourceDir(DIR_NAME_4_URLS)
+        return File(dir, URLS_FILE_NAME)
+    }
+
+    suspend fun refresh(): AppUrls = withContext(Dispatchers.IO) {
+        try {
+            val urls = RetrofitInstance.github.getAppUrls()
+            val urlsFile = getUrlsFile()
+            if (mFileUtils.createFile(urlsFile)) {
+                urlsFile.writeText(JsonHelper.json.encodeToString(urls))
+                sAppUrls = urls
+            }
+            urls
+        } catch (e: Exception) {
+            Log.saveError(e, "UrlsManager.refresh")
+            throw e
+        }
+    }
+
     fun getUrlsJson(
         readyCallback: (AppUrls) -> Unit,
         failedCallback: ((Exception) -> Unit)?
@@ -49,38 +66,29 @@ class UrlsManager(private val ctx: Context) {
             return
         }
 
-        val urlsFile = File(FileUtils.makeAndGetAppResourceDir(DIR_NAME_4_URLS), URLS_FILE_NAME)
-        val forceUrlsDownload = SPAppActions.getFetchUrlsForce(ctx)
+        val urlsFile = getUrlsFile()
 
-        if (!forceUrlsDownload && urlsFile.exists() && urlsFile.length() > 0) {
+        if (urlsFile.exists() && urlsFile.length() > 0) {
             try {
                 val urlsData = urlsFile.readText()
                 sAppUrls = JsonHelper.json.decodeFromString(urlsData)
                 readyCallback(sAppUrls!!)
-                setFetchUrlsForce(ctx, false)
             } catch (e: Exception) {
-                addToPendingAction(ctx, AppActions.APP_ACTION_URLS_UPDATE, null)
                 failedCallback?.invoke(e)
             }
         } else {
-            if (!urlsFile.exists() && !mFileUtils.createFile(urlsFile)) {
-                failedCallback?.invoke(IOException("Could not create urlsFile."))
-                return
-            }
-
             if (!NetworkStateReceiver.canProceed(ctx)) {
+                failedCallback?.invoke(IOException("No network connection to fetch URLs."))
                 return
             }
 
             val failureListener = { e: Exception ->
-                addToPendingAction(ctx, AppActions.APP_ACTION_URLS_UPDATE, null)
                 failedCallback?.invoke(e)
             }
 
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    sAppUrls = RetrofitInstance.github.getAppUrls()
-                    urlsFile.writeText(JsonHelper.json.encodeToString(sAppUrls!!))
+                    val urls = refresh()
 
                     withContext(Dispatchers.Main) {
                         if (mCancelled) {
@@ -88,7 +96,8 @@ class UrlsManager(private val ctx: Context) {
                             failureListener(CancellationException("Canceled by the user."))
                             return@withContext
                         }
-                        readyCallback(sAppUrls!!)
+
+                        readyCallback(urls)
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {

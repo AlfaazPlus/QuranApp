@@ -188,6 +188,10 @@ class RecitationModelManager private constructor(
         }
     }
 
+    suspend fun refreshManifests() {
+        loadQuranFromNetwork()
+        loadTranslationFromNetwork()
+    }
 
     suspend fun getCurrentReciterNameForAudioOption(): String {
         val audioAudio = RecitationPreferences.getAudioOption()

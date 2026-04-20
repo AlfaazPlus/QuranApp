@@ -147,6 +147,10 @@ public final class FileUtils {
         return new File(getOtherDirectory(), "app_updates.json");
     }
 
+    public File getResourcesVersionsFile() {
+        return new File(getOtherDirectory(), "resources_versions.json");
+    }
+
     public static File makeAndGetAppResourceDir(String resourceDirName) {
         File file = new File(appFilesDir, resourceDirName);
         if (file.exists()) return file;

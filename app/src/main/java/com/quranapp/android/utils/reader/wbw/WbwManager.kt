@@ -4,7 +4,6 @@ import android.content.Context
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.wbw.AvailableWbwInfoModel
-import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.univ.FileUtils
@@ -73,26 +72,6 @@ object WbwManager {
         }
     }
 
-    suspend fun getStaleResources(
-        context: Context,
-        forceManifestRefresh: Boolean = false
-    ): List<WbwLanguageInfo> {
-        val available = getAvailable(context, forceManifestRefresh) ?: return emptyList()
-        val store = WbwVersionStore(context)
-        return available.wbw.filter { item ->
-            item.version > store.getItemVersion(item.id)
-        }
-    }
-
-    suspend fun isManifestUpdated(
-        context: Context,
-        forceManifestRefresh: Boolean = false
-    ): Boolean {
-        val available = getAvailable(context, forceManifestRefresh) ?: return false
-        val localVersion = WbwVersionStore(context).getManifestVersion()
-        return (available.version ?: 1) > localVersion
-    }
-
     fun markResourceVersion(
         context: Context,
         id: String,
@@ -135,12 +114,6 @@ object WbwManager {
         val file = getManifestFile(context)
         file.parentFile?.mkdirs()
         file.writeText(JsonHelper.json.encodeToString(manifest))
-
-        val store = WbwVersionStore(context)
-
-        if ((manifest.version ?: 1) > store.getManifestVersion()) {
-            store.setManifestVersion(manifest.version)
-        }
 
         manifest
     }

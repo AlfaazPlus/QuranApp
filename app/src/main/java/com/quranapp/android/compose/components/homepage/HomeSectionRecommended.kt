@@ -124,21 +124,6 @@ private fun RecommendationCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Color.White.copy(alpha = 0.1f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.dr_icon_feature),
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -163,7 +148,7 @@ private fun RecommendationCard(
                 if (recommendation.description.isNotBlank()) {
                     Text(
                         text = recommendation.description,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.6f)
                     )
                 }
@@ -173,7 +158,7 @@ private fun RecommendationCard(
                 painter = painterResource(R.drawable.dr_icon_chevron_right),
                 contentDescription = null,
                 tint = Color.White.copy(alpha = 0.4f),
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(24.dp)
             )
         }
     }

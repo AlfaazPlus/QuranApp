@@ -44,7 +44,7 @@ object Recommended {
             .sortedByDescending { it.priority }
             .flatMap { rule ->
                 rule.toRecommendations(strings)
-            }
+            }.take(3)
     }
 
     private fun loadDocument(context: Context): RecommendedRulesDoc? = try {
@@ -115,9 +115,9 @@ private fun Clause.matches(zdt: ZonedDateTime): Boolean {
             is JsonPrimitive -> el.content == "*"
             is JsonArray -> el.any { range ->
                 val r = range.jsonArray
-                
+
                 if (r.size < 2) return@any false
-                
+
                 val start = r[0].jsonPrimitive.intOrNull ?: 0
                 val end = r[1].jsonPrimitive.intOrNull ?: 0
 
