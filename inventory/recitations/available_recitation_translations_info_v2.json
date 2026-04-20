@@ -9,7 +9,7 @@
       "book": "Sahih International",
       "url_template": "https://github.com/dabatase/en_ibrahim_walk/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ibrahim_walk.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {}
     },
     {
@@ -19,7 +19,7 @@
       "reciter": "Fooladvand Hedayatfar",
       "url_template": "https://github.com/dabatase/fa_fooladvand_hedayatfar/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/fooladvand_hedayatfar.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "fa": "فولادوند - هدایتفر"
       }
@@ -32,7 +32,7 @@
       "book": "Fateh Muhammad Jalandhari",
       "url_template": "https://github.com/dabatase/ur_shamshad_ali_khan/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/shamshad_ali_khan.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "ur": "شمشاد علی خان"
       }
