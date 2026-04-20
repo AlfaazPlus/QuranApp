@@ -11,6 +11,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.app.NotificationUtils
@@ -29,6 +30,10 @@ class VerseOfTheDayWorker constructor(
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        if (!VersePreferences.getVOTDReminderEnabled()) {
+            return@withContext Result.success()
+        }
+
         val repository = DatabaseProvider.getQuranRepository(applicationContext)
         val votd = VerseUtils.getVOTD(applicationContext, repository)
             ?: return@withContext Result.failure()

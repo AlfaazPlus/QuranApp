@@ -10,6 +10,7 @@ import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
+import com.quranapp.android.compose.utils.RecommendedReminderScheduler
 import com.quranapp.android.compose.utils.VerseOfTheDayScheduler
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.Log
@@ -42,6 +43,7 @@ object AppActions {
     fun scheduleActions(ctx: Context) {
         if (VersePreferences.getVOTDReminderEnabled()) {
             VerseOfTheDayScheduler.scheduleDailyNotification(ctx)
+            RecommendedReminderScheduler.schedule(ctx)
         }
     }
 
