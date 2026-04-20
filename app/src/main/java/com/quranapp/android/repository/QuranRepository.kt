@@ -474,6 +474,56 @@ class QuranRepository(
             .associate { it.pageNumber to it.juzNo }
     }
 
+    suspend fun getHizbForMushafPages(
+        mushafId: Int,
+        pageNumbers: List<Int>,
+    ): Map<Int, Int> {
+        if (mushafId <= 0 || pageNumbers.isEmpty()) return emptyMap()
+        return mushafDao.getHizbForPages(mushafId, pageNumbers)
+            .associate { it.pageNumber to it.hizbNo }
+    }
+
+    suspend fun getSurahsWithLocalizationsByChapterNos(
+        chapterNos: List<Int>,
+    ): Map<Int, SurahWithLocalizations> {
+        if (chapterNos.isEmpty()) return emptyMap()
+        return surahDao.getSurahsWithLocalizationsByNos(chapterNos)
+            .associateBy { it.surah.surahNo }
+    }
+
+    suspend fun getAyahEntitiesForMushafAyahLines(rows: List<MushafMapEntity>): Map<Int, AyahEntity> {
+        val allIds = LinkedHashSet<Int>()
+        val intervals = mutableListOf<Pair<Int, Int>>()
+        for (row in rows) {
+            if (row.lineType != MushafLineType.ayah) continue
+            val start = row.startAyahId ?: continue
+            val end = row.endAyahId ?: continue
+            if (row.startWordIndex == null || row.endWordIndex == null) continue
+            if (start > end) continue
+            if (start == end) {
+                allIds.add(start)
+            } else {
+                allIds.add(start)
+                allIds.add(end)
+                intervals.add(start to end)
+            }
+        }
+        val byId = HashMap<Int, AyahEntity>()
+        if (allIds.isNotEmpty()) {
+            for (a in ayahDao.getAyahsByIds(allIds.toList())) {
+                byId[a.ayahId] = a
+            }
+        }
+        for ((s, e) in mergeAyahIdIntervals(intervals)) {
+            if (e - s > 1) {
+                for (a in ayahDao.getAyahsStrictlyBetween(s, e)) {
+                    byId[a.ayahId] = a
+                }
+            }
+        }
+        return byId
+    }
+
     /**
      * Preloads full-word lists for all ayahs touched by mushaf ayah lines (for a prefetch batch).
      */
@@ -482,6 +532,7 @@ class QuranRepository(
         scriptCode: String,
     ): Map<Int, List<AyahWordEntity>> {
         val ids = LinkedHashSet<Int>()
+
         for (row in ayahLineRows) {
             if (row.lineType != MushafLineType.ayah) continue
             val startAyah = row.startAyahId ?: continue
@@ -499,6 +550,7 @@ class QuranRepository(
                 }
             }
         }
+
         if (ids.isEmpty()) return emptyMap()
         val flat = ayahWordDao.getWordsForAyahs(ids.toList(), scriptCode)
         return groupWordsByAyahIdWithLastFlags(flat)
@@ -679,4 +731,24 @@ class QuranRepository(
     suspend fun isVerseValid4Chapter(chapterNo: Int, verseNo: Int): Boolean {
         return getSurah(chapterNo)?.isVerseValid(verseNo) == true
     }
+}
+
+private fun mergeAyahIdIntervals(intervals: List<Pair<Int, Int>>): List<Pair<Int, Int>> {
+    if (intervals.isEmpty()) return emptyList()
+    val sorted = intervals.sortedBy { it.first }
+    val out = mutableListOf<Pair<Int, Int>>()
+    var cs = sorted[0].first
+    var ce = sorted[0].second
+    for (i in 1 until sorted.size) {
+        val (s, e) = sorted[i]
+        if (s <= ce) {
+            ce = maxOf(ce, e)
+        } else {
+            out.add(cs to ce)
+            cs = s
+            ce = e
+        }
+    }
+    out.add(cs to ce)
+    return out
 }

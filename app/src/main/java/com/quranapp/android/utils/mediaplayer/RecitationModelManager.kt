@@ -67,15 +67,20 @@ class RecitationModelManager private constructor(
         }
     }
 
-    suspend fun resolveModels(): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
-        val audioOption = RecitationPreferences.getAudioOption()
-
+    suspend fun resolveModels(settings: PlayerSettings): Pair<RecitationQuranModel?, RecitationTranslationModel?> {
+        val audioOption = settings.audioOption
+        val reciterId = settings.reciter
+        val translationReciterId = settings.translationReciter
         val resolveQuran = audioOption != AudioOption.ONLY_TRANSLATION
         val resolveTranslation = audioOption != AudioOption.ONLY_QURAN
 
         return Pair(
-            if (resolveQuran) getSelectedQuranModel() else null,
-            if (resolveTranslation) getSelectedTranslationModel() else null
+            if (resolveQuran) (if (reciterId.isNullOrBlank()) getSelectedQuranModel() else getQuranModel(
+                reciterId
+            )) else null,
+            if (resolveTranslation) (if (translationReciterId.isNullOrBlank()) getSelectedTranslationModel() else getTranslationModel(
+                translationReciterId
+            )) else null
         )
     }
 

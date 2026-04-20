@@ -29,11 +29,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.reader.ReaderLayout
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBarExpandedHeight
@@ -65,6 +67,8 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     var playerVerseSyncPref by readerVm.playerVerseSync
     var isSyncing by remember { mutableStateOf(false) }
     val syncIndicatorLocked = playerVerseSyncPref && isSyncing
+
+    val readerMode by readerVm.readerMode.collectAsStateWithLifecycle()
 
     var lastInitParams by remember { mutableStateOf<ReaderLaunchParams?>(null) }
 
@@ -101,7 +105,8 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                             scrollBehavior = scrollBehavior,
                         )
                     },
-                    containerColor = if (isDark) colorScheme.background else colorScheme.surface
+                    containerColor = if (isDark || readerMode == ReaderMode.Translation) colorScheme.background
+                    else colorScheme.surface
                 ) { padding ->
                     val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
 

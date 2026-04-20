@@ -22,17 +22,24 @@ import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.TranslationPageItem
+import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.components.reader.TranslationPageVerse
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ChapterVerseBatch
+import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafLineType
 import com.quranapp.android.db.entities.quran.MushafMapEntity
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 
 private data class SectionSnapshot(
@@ -499,6 +506,7 @@ object ReaderItemsBuilder {
             .flatten()
             .filter { it.lineType == MushafLineType.ayah }
             .toList()
+
         val wordCacheFull = quranRepository.preloadMushafLineWordCache(ayahRows, scriptCode)
         val wordCache = wordCacheFull.takeIf { it.isNotEmpty() }
 
@@ -559,12 +567,37 @@ object ReaderItemsBuilder {
         val distinct = pageNumbers.filter { it > 0 }.distinct().sorted()
         if (distinct.isEmpty()) return emptyMap()
 
-        val scriptCode = ReaderPreferences.getQuranScript()
-        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        val mushafId = ReaderPreferences.getQuranScript()
+            .toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
         if (mushafId <= 0) return emptyMap()
 
         val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
         val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
+        val hizbByPage = quranRepository.getHizbForMushafPages(mushafId, distinct)
+
+        val ayahRows = distinct.flatMap { page ->
+            linesByPage[page].orEmpty().filter { it.lineType == MushafLineType.ayah }
+        }
+        val ayahById = quranRepository.getAyahEntitiesForMushafAyahLines(ayahRows)
+        val sortedAyahIds = ayahById.keys.sorted()
+
+        val chapterMinVerse = HashMap<Int, Int>()
+        val chapterMaxVerse = HashMap<Int, Int>()
+        for (entity in ayahById.values) {
+            val c = entity.surahNo
+            val v = entity.ayahNo
+            chapterMinVerse[c] = minOf(chapterMinVerse[c] ?: v, v)
+            chapterMaxVerse[c] = maxOf(chapterMaxVerse[c] ?: v, v)
+        }
+        val chapterNos = chapterMinVerse.keys.sorted()
+        val surahByNo = quranRepository.getSurahsWithLocalizationsByChapterNos(chapterNos)
+
+        val chapterNamesByPage = LinkedHashMap<Int, String>(distinct.size)
+        for (pageNo in distinct) {
+            chapterNamesByPage[pageNo] =
+                quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
+        }
+
         val out = LinkedHashMap<Int, TranslationPageItem>(distinct.size)
 
         QuranTranslationFactory(context).use { factory ->
@@ -584,32 +617,147 @@ object ReaderItemsBuilder {
             )
             val paragraphStyle = ts.toParagraphStyle()
 
-            for (pageNo in distinct) {
-                val rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber }
-                val drafts = ArrayList<TranslationVerseDraft>()
-                val seenAyahIds = mutableSetOf<Int>()
+            val translationByChapterVerse = HashMap<Pair<Int, Int>, Translation>(
+                ayahById.size
+            )
+            for (chap in chapterNos) {
+                val minV = chapterMinVerse[chap] ?: continue
+                val maxV = chapterMaxVerse[chap] ?: continue
+                val range = factory.getTranslationsVerseRange(slugSet, chap, minV, maxV)
+                for (v in minV..maxV) {
+                    val idx = v - minV
+                    val transl = range.getOrNull(idx)?.firstOrNull() ?: continue
+                    translationByChapterVerse[chap to v] = transl
+                }
+            }
 
-                for (row in rows) {
-                    if (row.lineType != MushafLineType.ayah) continue
+            coroutineScope {
+                distinct.map { pageNo ->
+                    async(Dispatchers.Default) {
+                        val item = buildOneTranslationPage(
+                            pageNo = pageNo,
+                            rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber },
+                            ayahById = ayahById,
+                            sortedAyahIds = sortedAyahIds,
+                            translationByChapterVerse = translationByChapterVerse,
+                            surahByNo = surahByNo,
+                            paragraphStyle = paragraphStyle,
+                            translationSpanStyle = translationSpanStyle,
+                            translationSpanPressedStyle = translationSpanPressedStyle,
+                            slugSet = slugSet,
+                            translationSlug = translationSlug,
+                            params = params,
+                            juzNo = juzByPage[pageNo] ?: -1,
+                            hizbNo = hizbByPage[pageNo] ?: -1,
+                            chapterNames = chapterNamesByPage[pageNo].orEmpty(),
+                        )
+                        pageNo to item
+                    }
+                }.awaitAll().forEach { (pageNo, item) ->
+                    out[pageNo] = item
+                }
+            }
+        }
 
-                    val ayahIds = quranRepository.ayahIdsForMushafAyahLine(row)
+        return out
+    }
+
+    private fun buildOneTranslationPage(
+        pageNo: Int,
+        rows: List<MushafMapEntity>,
+        ayahById: Map<Int, AyahEntity>,
+        sortedAyahIds: List<Int>,
+        translationByChapterVerse: Map<Pair<Int, Int>, Translation>,
+        surahByNo: Map<Int, SurahWithLocalizations>,
+        paragraphStyle: ParagraphStyle,
+        translationSpanStyle: SpanStyle,
+        translationSpanPressedStyle: SpanStyle,
+        slugSet: Set<String>,
+        translationSlug: String,
+        params: TranslationPageBuilderParams,
+        juzNo: Int,
+        hizbNo: Int,
+        chapterNames: String,
+    ): TranslationPageItem {
+        val sections = ArrayList<TranslationPageSection>()
+        val drafts = ArrayList<TranslationVerseDraft>()
+        val seenAyahIds = mutableSetOf<Int>()
+        var hasChapterTitleOnPage = false
+
+        fun flushDrafts() {
+            if (drafts.isEmpty()) return
+
+            val verses = ArrayList<TranslationPageVerse>(drafts.size)
+
+            val annotatedText = buildAnnotatedString {
+                withStyle(paragraphStyle) {
+                    drafts.forEachIndexed { index, d ->
+                        if (index > 0) append("  ")
+                        val start = length
+                        append(d.annotatedText)
+                        val end = length
+                        verses.add(
+                            TranslationPageVerse(
+                                chapterNo = d.chapterNo,
+                                verseNo = d.verseNo,
+                                rangeStart = start,
+                                rangeEnd = end,
+                            )
+                        )
+                    }
+                }
+            }
+
+            sections.add(
+                TranslationPageSection.Text(
+                    annotatedText = annotatedText,
+                    verses = verses,
+                )
+            )
+
+            drafts.clear()
+        }
+
+        for (row in rows) {
+            when (row.lineType) {
+                MushafLineType.surah_name -> {
+                    flushDrafts()
+                    val chapter = row.surahNo.takeIf { it != null && it > 0 } ?: continue
+
+                    surahByNo.get(chapter)?.let { swl ->
+                        if (hasChapterTitleOnPage) {
+                            sections.add(TranslationPageSection.Divider)
+                        }
+                        
+                        sections.add(TranslationPageSection.Title(swl))
+                        hasChapterTitleOnPage = true
+                    }
+                }
+
+                MushafLineType.basmallah -> {
+                    flushDrafts()
+                    sections.add(TranslationPageSection.Bismillah)
+                }
+
+                MushafLineType.ayah -> {
+                    val ayahIds = ayahIdsForMushafAyahLineCached(row, sortedAyahIds)
 
                     for (ayahId in ayahIds) {
                         if (!seenAyahIds.add(ayahId)) continue
 
-                        val ayah = quranRepository.getAyahById(ayahId) ?: continue
+                        val ayah = ayahById[ayahId] ?: continue
+                        val transl =
+                            translationByChapterVerse[ayah.surahNo to ayah.ayahNo] ?: continue
+                        val surah = surahByNo[ayah.surahNo] ?: continue
 
-                        val verseDetails = quranRepository.getVerseWithDetails(
-                            ayah.surahNo,
-                            ayah.ayahNo,
-                            scriptCode,
-                        ) ?: continue
-
-                        val transl = factory.getTranslationsSingleVerse(
-                            slugSet,
-                            ayah.surahNo,
-                            ayah.ayahNo,
-                        ).firstOrNull() ?: continue
+                        val verseDetails = VerseWithDetails(
+                            words = emptyList(),
+                            pageNo = 0,
+                            verse = ayah,
+                            chapter = surah,
+                        ).apply {
+                            translations = listOf(transl)
+                        }
 
                         val annotated = buildAnnotatedString {
                             withLink(
@@ -666,47 +814,64 @@ object ReaderItemsBuilder {
                         )
                     }
                 }
-
-                val verses = ArrayList<TranslationPageVerse>(drafts.size)
-                val annotatedText = buildAnnotatedString {
-                    withStyle(paragraphStyle) {
-                        drafts.forEachIndexed { index, d ->
-                            if (index > 0) append("  ")
-
-                            val start = length
-
-                            append(d.annotatedText)
-
-                            val end = length
-
-                            verses.add(
-                                TranslationPageVerse(
-                                    chapterNo = d.chapterNo,
-                                    verseNo = d.verseNo,
-                                    rangeStart = start,
-                                    rangeEnd = end,
-                                )
-                            )
-                        }
-                    }
-                }
-
-                val hizbNo = quranRepository.getHizbForMushafPage(mushafId, pageNo)
-                val chapterNames = quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
-
-                out[pageNo] = TranslationPageItem(
-                    pageNo = pageNo,
-                    juzNo = juzByPage[pageNo] ?: -1,
-                    hizbNo = hizbNo,
-                    chapterNames = chapterNames,
-                    translationSlug = translationSlug,
-                    annotatedText = annotatedText,
-                    verses = verses,
-                )
             }
         }
 
-        return out
+        flushDrafts()
+
+        return TranslationPageItem(
+            pageNo = pageNo,
+            juzNo = juzNo,
+            hizbNo = hizbNo,
+            chapterNames = chapterNames,
+            translationSlug = translationSlug,
+            sections = sections,
+        )
+    }
+
+    private fun ayahIdsForMushafAyahLineCached(
+        row: MushafMapEntity,
+        sortedAyahIds: List<Int>,
+    ): List<Int> {
+        if (row.lineType != MushafLineType.ayah) return emptyList()
+        val startAyah = row.startAyahId ?: return emptyList()
+        val endAyah = row.endAyahId ?: return emptyList()
+        if (row.startWordIndex == null || row.endWordIndex == null) return emptyList()
+        if (startAyah > endAyah) return emptyList()
+        if (startAyah == endAyah) return listOf(startAyah)
+        return buildList {
+            add(startAyah)
+            if (endAyah - startAyah > 1) {
+                val i0 = firstIndexStrictlyGreater(sortedAyahIds, startAyah)
+                val i1 = lastIndexStrictlyLess(sortedAyahIds, endAyah)
+                if (i0 <= i1) {
+                    for (i in i0..i1) {
+                        add(sortedAyahIds[i])
+                    }
+                }
+            }
+            add(endAyah)
+        }
+    }
+
+    private fun firstIndexStrictlyGreater(sorted: List<Int>, v: Int): Int {
+        var lo = 0
+        var hi = sorted.size
+        while (lo < hi) {
+            val mid = (lo + hi) ushr 1
+            if (sorted[mid] <= v) lo = mid + 1 else hi = mid
+        }
+        return lo
+    }
+
+    private fun lastIndexStrictlyLess(sorted: List<Int>, v: Int): Int {
+        var lo = -1
+        var hi = sorted.size - 1
+        while (lo < hi) {
+            val mid = (lo + hi + 1) ushr 1
+            if (sorted[mid] < v) lo = mid else hi = mid - 1
+        }
+        return lo
     }
 
     private suspend fun mapMushafRowToLineItem(

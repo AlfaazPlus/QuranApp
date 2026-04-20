@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.compose.utils.DataLoadError
-import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
@@ -147,38 +146,24 @@ class WbwSettingsViewModel(
     }
 
     private fun resolveSelectedId(rows: List<WbwUiModel>): String? {
-        val availableIds = rows.map { it.info.id }.toSet()
         val downloadedIds = rows.filter { it.isDownloaded }.map { it.info.id }.toSet()
         val preferred = ReaderPreferences.getWbwId()
-        val preferredByLocaleDownloaded = rows.findLocalePreferredId()
 
-        return if (downloadedIds.isNotEmpty()) {
-            ReaderPreferences.validateWbwId(preferred, downloadedIds, preferredByLocaleDownloaded)
-        } else {
-            ReaderPreferences.validateWbwId(preferred, availableIds, null)
-        }
+        return validateWbwId(preferred, downloadedIds)
     }
 
-    private fun List<WbwUiModel>.findLocalePreferredId(): String? {
-        if (isEmpty()) return null
+    private fun validateWbwId(
+        id: String?,
+        availableIds: Set<String>,
+        fallback: String? = null,
+    ): String? {
+        val normalizedId = id?.takeIf { it.isNotBlank() }
 
-        val candidates = appFallbackLanguageCodes().toList()
-        for (candidate in candidates) {
-            val normalized = candidate.lowercase()
-            val match = firstOrNull { row ->
-                (row.isDownloaded) &&
-                        row.info.langCode.lowercase() == normalized
-            } ?: firstOrNull { row ->
-                (row.isDownloaded) &&
-                        normalized.startsWith("${row.info.langCode.lowercase()}-")
-            }
-
-            if (match != null) {
-                return match.info.id
-            }
+        if (normalizedId != null && availableIds.contains(normalizedId)) {
+            return normalizedId
         }
 
-        return firstOrNull { it.isDownloaded }?.info?.id
+        return null
     }
 
     fun selectLanguage(id: String) {

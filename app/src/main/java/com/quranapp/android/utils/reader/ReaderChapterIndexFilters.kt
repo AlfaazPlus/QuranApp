@@ -67,13 +67,13 @@ fun List<SurahWithLocalizations>.filteredByChapterIndex(
 
     when (filters.length) {
         ReaderChapterLengthFilter.short ->
-            result = result.filter { it.surah.ayahCount <= 100 }
+            result = result.filter { it.surah.ayahCount < 50 }
 
         ReaderChapterLengthFilter.medium ->
-            result = result.filter { it.surah.ayahCount in 101..200 }
+            result = result.filter { it.surah.ayahCount in 50..150 }
 
         ReaderChapterLengthFilter.long ->
-            result = result.filter { it.surah.ayahCount >= 201 }
+            result = result.filter { it.surah.ayahCount > 150 }
 
         ReaderChapterLengthFilter.any -> Unit
     }

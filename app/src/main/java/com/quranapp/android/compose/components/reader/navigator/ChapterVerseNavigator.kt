@@ -26,7 +26,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -41,7 +40,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -152,7 +150,7 @@ private fun Content(
             if (showVerseSelector) {
                 val chapterNo = selectedChapterNo
                 if (chapterNo != null) {
-                    ChapterVerseMultiSelectList(
+                    VerseSelectList(
                         currentChapter = chapterNo.let { no -> surahs.getOrNull(no - 1)?.surah },
                         selectedVerseNos = selectedVerseNos,
                         onToggleVerse = { verseNo ->
@@ -237,7 +235,7 @@ private fun RowScope.ChapterOnlyList(
 }
 
 @Composable
-private fun ChapterVerseMultiSelectList(
+private fun VerseSelectList(
     currentChapter: SurahEntity?,
     selectedVerseNos: Set<Int>,
     onToggleVerse: (Int) -> Unit,
@@ -270,7 +268,7 @@ private fun ChapterVerseMultiSelectList(
         }
     }
 
-    Column(modifier = Modifier.width(100.dp)) {
+    Column(modifier = Modifier.width(110.dp)) {
         Box(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         ) {
@@ -316,9 +314,6 @@ private fun ChapterVerseMultiSelectList(
                             modifier = Modifier
                                 .clickable { onToggleVerse(verseNo) }
                                 .padding(10.dp),
-                            style = typography.bodyMedium.copy(
-                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-                            ),
                             color = if (selected) colorScheme.primary else colorScheme.onSurface,
                         )
                     }

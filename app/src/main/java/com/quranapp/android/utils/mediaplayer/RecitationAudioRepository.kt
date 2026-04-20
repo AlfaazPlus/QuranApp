@@ -94,10 +94,11 @@ class RecitationAudioRepository(private val context: Context) {
      */
     fun resolveAudioUris(
         chapterNo: Int,
+        settings: PlayerSettings
     ): Flow<ResolvedAudioResult> = flow {
-        val audioOption = RecitationPreferences.getAudioOption()
+        val (quranModel, translationModel) = modelManager.resolveModels(settings)
 
-        val (quranModel, translationModel) = modelManager.resolveModels()
+        val audioOption = settings.audioOption
 
         val shouldPlayArabic = audioOption != AudioOption.ONLY_TRANSLATION
         val shouldPlayTranslation = audioOption != AudioOption.ONLY_QURAN

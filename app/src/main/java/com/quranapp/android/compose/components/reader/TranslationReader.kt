@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,8 +29,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -43,10 +46,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -55,27 +61,22 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
-
-data class TranslationPageItem(
-    val pageNo: Int,
-    val juzNo: Int,
-    val hizbNo: Int,
-    val chapterNames: String,
-    val translationSlug: String,
-    val annotatedText: AnnotatedString,
-    val verses: List<TranslationPageVerse>,
-)
 
 data class TranslationPageVerse(
     val chapterNo: Int,
@@ -86,6 +87,26 @@ data class TranslationPageVerse(
     val rangeEnd: Int,
 )
 
+sealed class TranslationPageSection {
+    object Divider : TranslationPageSection()
+    data class Title(val swl: SurahWithLocalizations) : TranslationPageSection()
+    object Bismillah : TranslationPageSection()
+
+    data class Text(
+        val annotatedText: AnnotatedString,
+        var annotatedTextNormalized: AnnotatedString? = null,
+        val verses: List<TranslationPageVerse>,
+    ) : TranslationPageSection()
+}
+
+data class TranslationPageItem(
+    val pageNo: Int,
+    val juzNo: Int,
+    val hizbNo: Int,
+    val chapterNames: String,
+    val translationSlug: String,
+    val sections: List<TranslationPageSection>,
+)
 
 @Composable
 fun ReaderLayoutTranslationPageMode(
@@ -101,7 +122,7 @@ fun ReaderLayoutTranslationPageMode(
     }
 
     val context = LocalContext.current
-    val colors = MaterialTheme.colorScheme
+    val colors = colorScheme
     val typography = MaterialTheme.typography
     val verseActions = LocalVerseActions.current
     val translSizeMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
@@ -270,6 +291,9 @@ fun ReaderLayoutTranslationPageMode(
             }
     }
 
+
+    val bgPattern = ImageBitmap.imageResource(R.drawable.quran_page_bg)
+
     SelectionContainer {
         LazyColumn(
             state = listState,
@@ -290,6 +314,7 @@ fun ReaderLayoutTranslationPageMode(
                     TranslationModePage(
                         readerVm = readerVm,
                         pageNo = pageIndex + 1,
+                        bgPattern,
                     )
                 }
             }
@@ -301,6 +326,7 @@ fun ReaderLayoutTranslationPageMode(
 private fun TranslationModePage(
     readerVm: ReaderViewModel,
     pageNo: Int,
+    bgPattern: ImageBitmap,
 ) {
     val i by remember(pageNo) {
         derivedStateOf { readerVm.translationPageItems[pageNo] }
@@ -318,21 +344,27 @@ private fun TranslationModePage(
     val isRtl = TranslUtils.isRtl(item.translationSlug)
     val colors = colorScheme
 
-    val displayText = remember(item.annotatedText, item.verses, isPlaying, playingVerse, colors) {
-        buildAnnotatedString {
-            append(item.annotatedText)
+    val sections = remember(item.sections, isPlaying, playingVerse, colors) {
+        item.sections.map { section ->
+            if (section is TranslationPageSection.Text) {
+                section.annotatedTextNormalized = buildAnnotatedString {
+                    append(section.annotatedText)
 
-            if (!isPlaying || !playingVerse.isValid) return@buildAnnotatedString
+                    if (!isPlaying || !playingVerse.isValid) return@buildAnnotatedString
 
-            val v = item.verses.find {
-                it.chapterNo == playingVerse.chapterNo && it.verseNo == playingVerse.verseNo
-            } ?: return@buildAnnotatedString
+                    val v = section.verses.find {
+                        it.chapterNo == playingVerse.chapterNo && it.verseNo == playingVerse.verseNo
+                    } ?: return@buildAnnotatedString
 
-            addStyle(
-                SpanStyle(background = colors.primary.alpha(0.2f)),
-                v.rangeStart,
-                v.rangeEnd,
-            )
+                    addStyle(
+                        SpanStyle(background = colors.primary.alpha(0.2f)),
+                        v.rangeStart,
+                        v.rangeEnd,
+                    )
+                }
+            }
+
+            section
         }
     }
 
@@ -347,46 +379,83 @@ private fun TranslationModePage(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
-            shape = RoundedCornerShape(4.dp),
-            color = colorScheme.surfaceContainer,
+            shape = shapes.small,
+            color = colorScheme.surface,
             border = BorderStroke(
                 1.dp,
-                colorScheme.outlineVariant.copy(alpha = 0.45f),
+                colorScheme.outlineVariant,
             ),
+            shadowElevation = 1.dp
         ) {
-            Column() {
-                TranslationBookPageHeader(
-                    chapterNames = item.chapterNames,
-                    pageNo = item.pageNo,
-                    juzNo = item.juzNo,
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .drawBehind {
+                        val scale = 3f
 
-                HorizontalDivider(
-                    color = colorScheme.outlineVariant.copy(alpha = 0.55f),
-                )
+                        val tileW = (bgPattern.width * scale).toInt()
+                        val tileH = (bgPattern.height * scale).toInt()
 
-                Text(
-                    text = displayText,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(14.dp),
-                    style = TextStyle(textDirection = textDirection),
-                )
+                        var y = 0f
+                        while (y < size.height) {
+                            var x = 0f
+                            while (x < size.width) {
+
+                                drawImage(
+                                    image = bgPattern,
+                                    dstOffset = IntOffset(x.toInt(), y.toInt()),
+                                    dstSize = IntSize(tileW, tileH),
+                                )
+
+                                x += tileW
+                            }
+                            y += tileH
+                        }
+                    }
+            ) {
+                Column(Modifier.fillMaxWidth()) {
+                    TranslationBookPageHeader(item)
+
+                    HorizontalDivider(
+                        color = colorScheme.outlineVariant,
+                    )
+
+                    sections.forEach {
+                        when (it) {
+                            TranslationPageSection.Divider -> HorizontalDivider(
+                                modifier = Modifier.padding(vertical = 8.dp),
+                                color = colorScheme.outlineVariant,
+                            )
+
+                            is TranslationPageSection.Title -> TranslationReaderChapterTitle(it.swl)
+                            is TranslationPageSection.Bismillah -> Bismillah()
+                            is TranslationPageSection.Text -> {
+                                if (it.annotatedTextNormalized != null) {
+                                    Text(
+                                        text = it.annotatedTextNormalized!!,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(14.dp),
+                                        style = TextStyle(textDirection = textDirection),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun TranslationBookPageHeader(
-    chapterNames: String,
-    pageNo: Int,
-    juzNo: Int,
-) {
+private fun TranslationBookPageHeader(item: TranslationPageItem) {
     val typography = MaterialTheme.typography
     val scheme = colorScheme
     val juzLabel =
-        if (juzNo > 0) stringResource(R.string.strLabelJuzNo, juzNo) else ""
+        if (item.juzNo > 0) stringResource(R.string.strLabelJuzNo, item.juzNo) else ""
+    val hizbLabel =
+        if (item.hizbNo > 0) stringResource(R.string.labelHizbNo, item.hizbNo) else ""
 
     Row(
         modifier = Modifier
@@ -399,8 +468,8 @@ private fun TranslationBookPageHeader(
             contentAlignment = Alignment.CenterStart,
         ) {
             Text(
-                text = chapterNames.ifBlank { "—" },
-                style = typography.bodyMedium,
+                text = item.chapterNames,
+                style = typography.labelSmall,
                 color = scheme.onSurface.alpha(0.75f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -414,7 +483,7 @@ private fun TranslationBookPageHeader(
         }
 
         Text(
-            text = stringResource(R.string.strLabelPageNo, pageNo),
+            text = stringResource(R.string.strLabelPageNo, item.pageNo),
             style = typography.labelMedium,
             color = scheme.onBackground.alpha(0.75f),
             modifier = Modifier
@@ -429,8 +498,8 @@ private fun TranslationBookPageHeader(
             contentAlignment = Alignment.CenterEnd,
         ) {
             Text(
-                text = juzLabel.ifBlank { "—" },
-                style = typography.bodyMedium,
+                text = "${juzLabel}, ${hizbLabel}",
+                style = typography.labelSmall,
                 color = scheme.onSurface.alpha(0.75f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -443,7 +512,7 @@ private fun TranslationBookPageHeader(
 
 @Composable
 private fun TranslationPageLoadingSkeleton() {
-    val scheme = MaterialTheme.colorScheme
+    val scheme = colorScheme
     val transition = rememberInfiniteTransition(label = "translation_page_sk")
     val pulse by transition.animateFloat(
         initialValue = 0.1f,
@@ -521,3 +590,36 @@ private fun TranslationPageLoadingSkeleton() {
     }
 }
 
+@Composable
+fun TranslationReaderChapterTitle(
+    swl: SurahWithLocalizations,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Column(
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(stringResource(R.string.strLabelSurah, swl.getCurrentName()), style = typography.labelLarge)
+            Text(swl.getCurrentMeaning(), style = typography.bodyMedium, color = colorScheme.onSurface.alpha(0.75f))
+        }
+
+        VerticalDivider(
+            modifier = Modifier.height(32.dp),
+            color = colorScheme.onSurface
+        )
+
+        ChapterIcon(
+            swl.surah.surahNo,
+            fontSize = 36.sp,
+            modifier = Modifier.padding(top = 8.dp),
+            color = colorScheme.primary
+        )
+
+    }
+}

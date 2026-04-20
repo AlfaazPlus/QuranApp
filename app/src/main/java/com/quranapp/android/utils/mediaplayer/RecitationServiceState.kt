@@ -20,6 +20,9 @@ data class PlayerSettings(
     val translationReciter: String? = null
 )
 
+
+data class AudioResolutionRequest(val chapterNo: Int, val settings: PlayerSettings)
+
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
     /** Helps in indiacating if the player is resolving and also for which chapter no */
@@ -94,54 +97,6 @@ data class RecitationServiceState(
             } else {
                 nextVerseNo = -1
             }
-        }
-
-        if (nextChapterNo == -1 || nextVerseNo == -1) {
-            return null
-        }
-
-        return ChapterVersePair(nextChapterNo, nextVerseNo)
-    }
-
-    fun getPreviousChapter(
-        repository: QuranRepository
-    ): ChapterVersePair? {
-        val currentChapterNo = currentVerse.chapterNo
-
-        if (!QuranMeta.isChapterValid(currentChapterNo)) {
-            return null
-        }
-
-        var previousChapterNo = currentChapterNo
-        var previousVerseNo = -1
-
-        if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
-            previousChapterNo--
-            previousVerseNo = 1
-        }
-
-        if (previousChapterNo == -1 || previousVerseNo == -1) {
-            return null
-        }
-
-        return ChapterVersePair(previousChapterNo, previousVerseNo)
-    }
-
-    fun getNextChapter(
-        meta: QuranMeta
-    ): ChapterVersePair? {
-        val currentChapterNo = currentVerse.chapterNo
-
-        if (!QuranMeta.isChapterValid(currentChapterNo)) {
-            return null
-        }
-
-        var nextChapterNo = currentChapterNo
-        var nextVerseNo = -1
-
-        if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
-            nextChapterNo++
-            nextVerseNo = 1
         }
 
         if (nextChapterNo == -1 || nextVerseNo == -1) {

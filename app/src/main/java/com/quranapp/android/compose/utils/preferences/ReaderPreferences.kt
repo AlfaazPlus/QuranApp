@@ -459,23 +459,4 @@ object ReaderPreferences {
     fun wbwTextSizeMultiplierFlow(): Flow<Float> {
         return DataStoreManager.flow(KEY_TEXT_SIZE_MULT_WBW)
     }
-
-    fun validateWbwId(
-        id: String?,
-        availableIds: Set<String>,
-        fallback: String? = null,
-    ): String? {
-        val normalizedId = id?.takeIf { it.isNotBlank() }
-        val normalizedFallback = fallback?.takeIf { it.isNotBlank() }
-
-        if (normalizedId != null && availableIds.contains(normalizedId)) {
-            return normalizedId
-        }
-
-        if (normalizedFallback != null && availableIds.contains(normalizedFallback)) {
-            return normalizedFallback
-        }
-
-        return null
-    }
 }

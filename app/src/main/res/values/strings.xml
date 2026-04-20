@@ -99,9 +99,9 @@
     <string name="any">Any</string>
     <string name="withSajda">With sajda</string>
     <string name="withoutSajda">Without sajda</string>
-    <string name="chapterFilterLengthShort">Short (≤100 verses)</string>
-    <string name="chapterFilterLengthMedium">Medium (101–200 verses)</string>
-    <string name="chapterFilterLengthLong">Long (201+ verses)</string>
+    <string name="chapterFilterLengthShort">Short (&lt;50 verses)</string>
+    <string name="chapterFilterLengthMedium">Medium (50–150 verses)</string>
+    <string name="chapterFilterLengthLong">Long (150+ verses)</string>
     <string name="clearFilters">Clear filters</string>
     <string name="chapterFilters">Chapter filters</string>
     <string name="strTitleMenu">Menu</string>

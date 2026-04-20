@@ -150,7 +150,8 @@ class RecitationService : MediaSessionService() {
 
     private var verseTrackingJob: Job? = null
     private var latestPlaybackRequestId: Long = 0L
-    private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
+    private val chapterResolutionRequests =
+        mutableMapOf<AudioResolutionRequest, Deferred<ResolvedAudioResult>>()
 
     private var repeatMessage: androidx.media3.exoplayer.PlayerMessage? = null
     private var repeatRemainingPlaysForCurrentItem: Int = 0
@@ -521,7 +522,10 @@ class RecitationService : MediaSessionService() {
      * continue downloading in parallel.
      */
     private suspend fun resolveChapterAudio(chapterNo: Int): ResolvedAudioResult {
-        val inFlight = chapterResolutionRequests[chapterNo]
+        val settings = state.value.settings
+        val req = AudioResolutionRequest(chapterNo, settings)
+
+        val inFlight = chapterResolutionRequests[req]
         if (inFlight != null && inFlight.isActive) {
             return inFlight.await()
         }
@@ -530,7 +534,10 @@ class RecitationService : MediaSessionService() {
             try {
                 var terminal: ResolvedAudioResult? = null
 
-                audioRepository.resolveAudioUris(chapterNo).collect { result ->
+                audioRepository.resolveAudioUris(
+                    chapterNo = chapterNo,
+                    settings = settings
+                ).collect { result ->
                     when (result) {
                         is ResolvedAudioResult.Downloading -> {
                             // Playback resolution no longer emits this; bulk/explicit downloads use WorkManager UI.
@@ -549,13 +556,13 @@ class RecitationService : MediaSessionService() {
             }
         }
 
-        chapterResolutionRequests[chapterNo] = deferred
+        chapterResolutionRequests[req] = deferred
 
         return try {
             deferred.await()
         } finally {
-            if (chapterResolutionRequests[chapterNo] == deferred && deferred.isCompleted) {
-                chapterResolutionRequests.remove(chapterNo)
+            if (chapterResolutionRequests[req] == deferred && deferred.isCompleted) {
+                chapterResolutionRequests.remove(req)
             }
         }
     }
@@ -876,7 +883,12 @@ class RecitationService : MediaSessionService() {
         val chapterNo = current.chapterNo
         val verseNo = current.verseNo
 
+        if (player.isPlaying) {
+            player.pause()
+        }
+
         val shouldResumePlaying = player.isPlaying
+
         val requestId = ++latestPlaybackRequestId
 
         awaitChapterResolution(requestId, chapterNo) {
@@ -976,15 +988,10 @@ class RecitationService : MediaSessionService() {
         }
     }
 
-    private fun handlePlaybackEnded() {/*fixme: temporarily disable
+    private fun handlePlaybackEnded() {
         if (!state.value.settings.continueRange) return
 
-        scoped {
-            val meta = requestQuranMeta()
-            val next = state.value.getNextChapter(meta)
-            if (next != null) reciteVerse(next.chapterNo, next.verseNo)
-            else stopMedia()
-        }*/
+        reciteNextVerse()
     }
 
     // ==================== Session callback & command dispatch ====================

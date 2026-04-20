@@ -18,9 +18,9 @@ import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.TranslationPageItem
+import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
@@ -44,7 +44,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -439,7 +438,11 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         val page = translationPageItems[pageNo]
 
         if (page != null) {
-            val firstVerse = page.verses.firstOrNull()
+            val firstVerse = page.sections
+                .filterIsInstance<TranslationPageSection.Text>()
+                .firstOrNull()
+                ?.verses
+                ?.firstOrNull()
 
             if (firstVerse != null) {
                 lastKnownVerse = ChapterVersePair(firstVerse.chapterNo, firstVerse.verseNo)
@@ -449,7 +452,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         viewModelScope.launch(Dispatchers.IO) {
             val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-            
+
             lastKnownVerse = QuranUtils.getVerseNoFromAyahId(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }

@@ -80,7 +80,7 @@ private val ReaderAppBarHeight = 86.dp
 private val ReaderHeaderHeight = 52.dp
 private val ReaderDividerHeight = 1.dp
 internal val ReaderAppBarExpandedHeight =
-    ReaderAppBarHeight + ReaderHeaderHeight + ReaderDividerHeight
+    ReaderAppBarHeight + ReaderHeaderHeight + (ReaderDividerHeight * 2)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -181,6 +181,11 @@ fun ReaderAppBar(
                     }
                 }
             }
+
+            HorizontalDivider(
+                thickness = ReaderDividerHeight,
+                color = colorScheme.outlineVariant.alpha(0.5f)
+            )
         }
     }
 
@@ -526,7 +531,7 @@ private fun StickyHeaderModeTranslation(
                         )
                     }
                 )
-                .padding(8.dp),
+                .padding(horizontal = 10.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -540,7 +545,7 @@ private fun StickyHeaderModeTranslation(
 
             Text(
                 bookName,
-                style = typography.labelLarge,
+                style = typography.labelMedium,
                 color = colorScheme.onSurface.alpha(0.75f),
                 maxLines = 1,
                 modifier = Modifier
