@@ -44,7 +44,7 @@
       "reciter": "Bengali Quran translation audio",
       "url_template": "https://github.com/dabatase/bn_bengali/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/bengali.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "bn": "বাংলা কোরআন অনুবাদের অডিও"
       }
@@ -56,7 +56,7 @@
       "reciter": "Russian Quran translation audio",
       "url_template": "https://github.com/dabatase/ru_russian/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/russian.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "ru": "Аудиоперевод Корана на русский язык"
       }
@@ -68,7 +68,7 @@
       "reciter": "Chinese Quran translation audio",
       "url_template": "https://github.com/dabatase/zh_chinese/releases/download/v1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/chinese.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "zh": "中文《古兰经》译本音频"
       }
@@ -80,7 +80,7 @@
       "reciter": "German Quran translation audio",
       "url_template": "https://github.com/dabatase/de_german/releases/download/v2/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/german.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "de": "Deutsche Koran Übersetzung Audio"
       }
@@ -92,9 +92,33 @@
       "reciter": "French Quran translation audio",
       "url_template": "https://github.com/dabatase/fr_french/releases/download/v2/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/french.json.gz",
-      "timing_version": 1,
+      "timing_version": 2,
       "translations": {
         "fr": "Traduction audio du Coran en français"
+      }
+    },
+    {
+      "id": "spanish",
+      "lang_code": "es",
+      "lang_name": "Español",
+      "reciter": "Spanish Quran translation audio",
+      "url_template": "https://github.com/dabatase/es_spanish/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/spanish.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "es": "Audio de la traducción del Corán al español"
+      }
+    },
+    {
+      "id": "turkish",
+      "lang_code": "tr",
+      "lang_name": "Türkçe",
+      "reciter": "Turkish Quran translation audio",
+      "url_template": "https://github.com/dabatase/tr_turkish/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/turkish.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "tr": "Türkçe Kur'an çevirisi ses kaydı"
       }
     }
   ]
