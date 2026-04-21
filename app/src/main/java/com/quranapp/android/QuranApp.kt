@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
@@ -50,5 +51,7 @@ class QuranApp : Application() {
         RecitationModelManager.get(this).migrateLegacyData()
         ReaderIndexViewModel.migrateFavourites(this)
         UserDataMigrationManager(this).migrate()
+
+        SearchIndexScheduler.scheduleTranslationSearchIndexIfNeeded(applicationContext)
     }
 }

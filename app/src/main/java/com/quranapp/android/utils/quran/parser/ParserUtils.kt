@@ -5,7 +5,7 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 
 object ParserUtils {
     @JvmStatic

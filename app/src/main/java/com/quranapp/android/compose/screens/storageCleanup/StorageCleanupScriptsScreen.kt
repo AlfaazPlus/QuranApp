@@ -158,8 +158,10 @@ fun StorageCleanupScriptsScreen(
                     toDelete?.let { row ->
                         scope.launch(Dispatchers.IO) {
                             if (ReaderPreferences.getQuranScript() == row.scriptKey) {
-                                ReaderPreferences.setQuranScript(QuranScriptUtils.SCRIPT_DEFAULT)
-                                ReaderPreferences.setQuranScriptVariant(null)
+                                ReaderPreferences.setQuranScriptWithVariant(
+                                    QuranScriptUtils.SCRIPT_DEFAULT,
+                                    null,
+                                )
                             }
                             fileUtils.getScriptFile(row.scriptKey).delete()
                             fileUtils.getKFQPCScriptFontDir(row.scriptKey).deleteRecursively()

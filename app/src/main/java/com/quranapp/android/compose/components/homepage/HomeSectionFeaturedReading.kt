@@ -38,7 +38,7 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 private data class FeaturedQuranModel(

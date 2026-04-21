@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,31 +36,22 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-
-data class LocalRecitationStateData(
-    val controller: RecitationController,
-    val isAnyPlaying: Boolean,
-    val playingVerse: ChapterVersePair,
-)
-
-val LocalRecitationState = staticCompositionLocalOf<LocalRecitationStateData> {
-    error("LocalRecitationState not provided")
-}
 
 @Composable
 fun VerseView(
     verseUi: ReaderLayoutItem.VerseUI,
     isBookmarked: Boolean,
-    showDivider: Boolean = false
+    showDivider: Boolean = false,
+    onWordClick: ((AyahWordEntity) -> Unit)? = null
 ) {
     val verse = verseUi.verse
 
-    val recState = LocalRecitationState.current
+    val recState = LocalRecitation.current
     val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
 
     Box {
@@ -74,7 +64,12 @@ fun VerseView(
                 .padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
             VerseActionBar(verse = verse, isVersePlaying, isBookmarked)
-            QuranText(verseUi = verseUi)
+
+            QuranTextWbw(
+                verseUi,
+                onWordClick
+            )
+
             TranslationText(verseUi = verseUi)
         }
 
@@ -96,7 +91,7 @@ private fun VerseActionBar(
 ) {
     val context = LocalContext.current
     val verseActions = LocalVerseActions.current
-    val recitationState = LocalRecitationState.current
+    val recitationState = LocalRecitation.current
     val controller = recitationState.controller
 
     val iconTint = colorScheme.onBackground.alpha(0.7f)
@@ -216,14 +211,14 @@ private fun VerseSerial(verse: VerseWithDetails) {
         modifier = Modifier
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
-            .background(colorResource(R.color.colorBGLightGrey))
+            .background(colorScheme.surface)
             .clickable(
                 onClick = {
                     context.copyToClipboard(verse.id.toString())
                 },
             )
             .padding(horizontal = 8.dp, vertical = 4.dp),
-        color = colorResource(R.color.colorIcon),
+        color = colorScheme.onSurface,
         style = typography.labelLarge,
     )
 }

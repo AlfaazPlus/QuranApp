@@ -2,6 +2,9 @@ package com.quranapp.android.db
 
 import android.content.Context
 import androidx.room.Room
+import com.quranapp.android.db.searchindex.SearchIndexDatabase
+import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.repository.UserRepository
 
 object DatabaseProvider {
 
@@ -9,13 +12,13 @@ object DatabaseProvider {
     private var userDatabase: UserDatabase? = null
 
     @Volatile
-    private var quranDatabase: QuranDatabase? = null
-
-    @Volatile
     private var userRepository: UserRepository? = null
 
     @Volatile
     private var quranRepository: QuranRepository? = null
+
+    @Volatile
+    private var searchIndexDatabase: SearchIndexDatabase? = null
 
     fun getUserDatabase(context: Context): UserDatabase {
         return userDatabase ?: synchronized(this) {
@@ -40,26 +43,46 @@ object DatabaseProvider {
         }
     }
 
-    fun getQuranDatabase(context: Context): QuranDatabase {
-        return quranDatabase ?: synchronized(this) {
-            quranDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
-                QuranDatabase::class.java,
-                "quranapp"
-            )
-                .createFromAsset("db/quranapp.db")
-                .fallbackToDestructiveMigration(true)
-                .build()
-                .also { quranDatabase = it }
-        }
+    private fun getQuranDatabase(context: Context): QuranDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            QuranDatabase::class.java,
+            "quranapp"
+        )
+            .createFromAsset("db/quranapp.db")
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            ExternalQuranDatabase::class.java,
+            "quranapp_external"
+        )
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
 
     fun getQuranRepository(context: Context): QuranRepository {
         return quranRepository ?: synchronized(this) {
             quranRepository ?: QuranRepository(
-                context.applicationContext,
-                getQuranDatabase(context)
+                getQuranDatabase(context),
+                getExternalQuranDatabase(context)
             ).also { quranRepository = it }
+        }
+    }
+
+    fun getSearchIndexDatabase(context: Context): SearchIndexDatabase {
+        return searchIndexDatabase ?: synchronized(this) {
+            searchIndexDatabase ?: Room.databaseBuilder(
+                context.applicationContext,
+                SearchIndexDatabase::class.java,
+                "SearchIndex.db",
+            )
+                .fallbackToDestructiveMigration(true)
+                .build()
+                .also { searchIndexDatabase = it }
         }
     }
 }

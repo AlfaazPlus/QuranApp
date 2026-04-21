@@ -10,6 +10,7 @@ import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.views.reader.updateAllVotdWidgets
@@ -135,6 +136,7 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
     private fun deleteTranslation(slug: String) {
         QuranTranslationFactory(application).use {
             it.deleteTranslation(slug)
+            SearchIndexScheduler.enqueueRemoveSlug(application.applicationContext, slug)
 
             _uiState.update { current ->
                 val updatedGroups = current.translationGroups.map { group ->

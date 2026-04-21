@@ -4,11 +4,18 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,16 +24,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
 import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
 import com.quranapp.android.viewModels.ReaderUiState
@@ -59,14 +72,27 @@ sealed class ReaderLayoutItem() {
     data class Bismillah(override val key: String) : ReaderLayoutItem()
     data class IsVotd(override val key: String) : ReaderLayoutItem()
     data class ChapterTitle(val chapterNo: Int, override val key: String) : ReaderLayoutItem()
+
     data class VerseUI(
         val verse: VerseWithDetails,
-        val parsedQuranText: AnnotatedString? = null,
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
-        val isLastInGroup: Boolean = false,
+        val wbwByWordIndex: Map<Int, WbwWordEntity>? = null,
+        val showDivider: Boolean = true,
         override val key: String
     ) : ReaderLayoutItem()
+
+    data class SectionMarker(
+        val text: String,
+        override val key: String,
+    ) : ReaderLayoutItem()
 }
+
+data class ReaderPreparedData(
+    val items: List<ReaderLayoutItem>,
+    /** Quran text style per mushaf page for Arabic in this reader session. */
+    val textStyles: Map<Int, TextStyle> = emptyMap(),
+)
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -112,7 +138,14 @@ fun ReaderLayout(
             }
         }
 
-        ReaderMode.Translation -> {}
+        ReaderMode.Translation -> {
+            ReaderLayoutTranslationPageMode(
+                readerVm,
+                nestedScrollConnection,
+                onSyncStateChanged,
+            )
+        }
+
         else -> ReaderLayoutVerseMode(
             readerVm,
             uiState,
@@ -130,8 +163,11 @@ private fun ReaderLayoutVerseMode(
     nestedScrollConnection: NestedScrollConnection,
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
+    val density = LocalDensity.current
     val listState = rememberLazyListState()
-    val items by readerVm.verseByVerseItems.collectAsStateWithLifecycle()
+    val prepared by readerVm.verseByVersePrepared.collectAsStateWithLifecycle()
+    val items = prepared.items
+
     val allBookmarks by readerVm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
@@ -151,7 +187,7 @@ private fun ReaderLayoutVerseMode(
             .collect { readerVm.updateLastKnownVerseFromItems(it) }
     }
 
-    LaunchedEffect(items) {
+    LaunchedEffect(prepared) {
         if (items.isNotEmpty()) {
             readerVm.updateLastKnownVerseFromItems(listState.firstVisibleItemIndex)
         }
@@ -166,7 +202,7 @@ private fun ReaderLayoutVerseMode(
     var autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
 
-    val playerState = LocalRecitationState.current
+    val playerState = LocalRecitation.current
 
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
@@ -227,43 +263,57 @@ private fun ReaderLayoutVerseMode(
         }
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-            .pointerInput(autoScrollSpeed) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        if (event.changes.any { it.pressed }) {
-                            autoScrollSpeed = null
+    TextStyleProvider(prepared.textStyles) {
+        LazyColumn(
+            state = listState,
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
+                .pointerInput(autoScrollSpeed) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            if (event.changes.any { it.pressed }) {
+                                autoScrollSpeed = null
+                            }
                         }
                     }
+                },
+            contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
+        ) {
+            items(
+                items = items,
+                key = { item -> item.key },
+            ) { item ->
+                TranslationRow(readerVm, item, bookmarkedVerseKeys)
+            }
+
+            if (uiState.viewType != null && items.isNotEmpty()) {
+                item(key = "verse_reader_nav_footer") {
+                    ReaderFooterNavigator(
+                        readerVm = readerVm,
+                        viewType = uiState.viewType,
+                        listState = listState,
+                    )
                 }
-            },
-        contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
-    ) {
-        items(
-            items = items,
-            key = { item -> item.key },
-        ) { item ->
-            TranslationRow(readerVm, item, bookmarkedVerseKeys)
+            }
         }
     }
 }
+
 
 @Composable
 private fun TranslationRow(
     readerVm: ReaderViewModel,
     item: ReaderLayoutItem,
-    bookmarkedVerseKeys: Set<BookmarkKey>
+    bookmarkedVerseKeys: Set<BookmarkKey>,
 ) {
     when (item) {
         is ReaderLayoutItem.Bismillah -> Bismillah()
         is ReaderLayoutItem.IsVotd -> IsVotd()
         is ReaderLayoutItem.ChapterInfo -> ChapterInfoCard(item.chapterNo)
         is ReaderLayoutItem.ChapterTitle -> ChapterTitle(item.chapterNo)
+        is ReaderLayoutItem.SectionMarker -> SectionMarkerRow(item)
         is ReaderLayoutItem.VerseUI -> {
             val isBookmarked = BookmarkKey(
                 chapterNo = item.verse.chapterNo,
@@ -274,8 +324,42 @@ private fun TranslationRow(
             VerseView(
                 verseUi = item,
                 isBookmarked = isBookmarked,
-                showDivider = !item.isLastInGroup,
+                showDivider = item.showDivider,
             )
         }
+    }
+}
+
+@Composable
+private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
+    if (marker.text.isEmpty()) return
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .widthIn(min = 100.dp),
+            color = MaterialTheme.colorScheme.outlineVariant,
+        )
+
+        Text(
+            text = marker.text,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 10.dp),
+            textAlign = TextAlign.Center
+        )
+
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .widthIn(min = 100.dp),
+            color = MaterialTheme.colorScheme.outlineVariant,
+        )
     }
 }

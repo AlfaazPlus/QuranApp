@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.managers
 
-import TranslationDownloadWorker
+import com.quranapp.android.utils.workers.TranslationDownloadWorker
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer

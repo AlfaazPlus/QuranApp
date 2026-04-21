@@ -181,6 +181,13 @@ fun SettingsMainScreen(
             }
 
             SettingsItem(
+                title = R.string.wordByWord,
+                icon = R.drawable.ic_verse_end,
+            ) {
+                navController.navigate(SettingRoutes.WWB)
+            }
+
+            SettingsItem(
                 title = R.string.downloadRecitations,
                 icon = R.drawable.dr_icon_download,
             ) {

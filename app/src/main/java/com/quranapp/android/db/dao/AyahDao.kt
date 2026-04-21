@@ -90,4 +90,13 @@ interface AyahDao {
         """
     )
     suspend fun getAyahsByIds(ayahIds: List<Int>): List<AyahEntity>
+
+    @Query(
+        """
+        SELECT DISTINCT surah_no FROM ayahs
+        WHERE IFNULL(sajdah_type, 0) != 0
+        ORDER BY surah_no
+        """
+    )
+    suspend fun getDistinctSurahNosWithSajdah(): List<Int>
 }

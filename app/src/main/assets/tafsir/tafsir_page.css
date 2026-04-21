@@ -9,12 +9,6 @@
    src: url('https://assets-font/content') format("truetype");
 }
 
-* {
-   user-select: none;
-   -webkit-user-select: none;
-   -webkit-tap-highlight-color: transparent;
-}
-
 body {
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    margin: 0;

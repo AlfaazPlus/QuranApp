@@ -98,6 +98,7 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
                 route(SettingRoutes.TRANSLATIONS_DOWNLOAD) { TranslationDownloadScreen() }
                 route(SettingRoutes.TAFSIR) { TafsirSelectionScreen() }
                 route(SettingRoutes.SCRIPT) { ScriptsScreen() }
+                route(SettingRoutes.WWB) { SettingsWbwScreen() }
                 route(SettingRoutes.RECITATION_DOWNLOAD) { RecitationDownloadScreen() }
                 route(SettingRoutes.APP_LOGS) {
                     AppLogsScreen()

@@ -153,7 +153,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
             uiState.bookmarks.isEmpty() -> {
                 MessageCard(
                     icon = R.drawable.ic_bookmark,
-                    messageRes = R.string.strMsgBookmarkNoItems,
+                    message = stringResource(R.string.strMsgBookmarkNoItems),
                     modifier = Modifier.padding(paddingValues),
                 )
             }

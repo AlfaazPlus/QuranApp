@@ -4,6 +4,7 @@
     <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
     <string name="strTitleDownloadSunnahApp" translatable="false">Download SunnahApp</string>
     <string name="strLabelClose">Close</string>
+    <string name="clear">Clear</string>
     <string name="strLabelGotIt">Got it</string>
     <string name="strLabelCancel">Cancel</string>
     <string name="strLabelApply">Apply</string>
@@ -23,8 +24,10 @@
     <string name="strLabelOpenInReader">Open in Reader</string>
     <string name="strLabelRead">Read »</string>
     <string name="strLabelViewAll">View all</string>
+    <string name="strLabelAll">All</string>
     <string name="strLabelSkip">Skip</string>
     <string name="strLabelNext">Next</string>
+    <string name="strLabelPrevious">Previous</string>
     <string name="strLabelStart">Start</string>
     <string name="labelDownload">Download</string>
     <string name="strLabelUpdate">Update</string>
@@ -37,9 +40,20 @@
     <string name="strLabelNextVerse">Next verse</string>
     <string name="labelPreviousTafsir">Previous tafsir</string>
     <string name="labelNextTafsir">Next tafsir</string>
+    <string name="nextChapter">Next chapter</string>
+    <string name="previousChapter">Previous chapter</string>
+    <string name="nextJuz">Next juz</string>
+    <string name="previousJuz">Previous chapter</string>
+    <string name="nextHizb">Next hizb</string>
+    <string name="previousHizb">Previous hizb</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
     <string name="strLabelPageNo" formatted="false">Page %d</string>
+    <string name="strLabelRukuNo" formatted="false">Ruku %d</string>
     <string name="strLabelJuzNo" formatted="false">Juz %d</string>
+    <string name="endOfPageNo" formatted="false">End of Page %d</string>
+    <string name="endOfRukuNo" formatted="false">End of Ruku %d</string>
+    <string name="endOfRubNo" formatted="false">End of Rub %d</string>
+    <string name="endOfManzilNo" formatted="false">End of Manzil %d</string>
     <string name="strLabelVerseNo" formatted="false">Verse %d</string>
     <string name="strLabelVerses" formatted="false">Verses %1$d–%2$d</string>
     <string name="strLabelVerseNoWithColon" formatted="false">Verse : %d</string>
@@ -67,6 +81,7 @@
     <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Read Verses %1$d - %2$d</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Read tafsir of verse %d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir for verse %1$d:%2$d</string>
     <string name="textSizes">Text sizes</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
@@ -82,6 +97,16 @@
     <string name="strTitleNote">Note</string>
     <string name="strTitleRateApp">Rate App</string>
     <string name="strTitleFilters">Filters</string>
+    <string name="sajda">Sajda</string>
+    <string name="filterSectionLength">Chapter length</string>
+    <string name="any">Any</string>
+    <string name="withSajda">With sajda</string>
+    <string name="withoutSajda">Without sajda</string>
+    <string name="chapterFilterLengthShort">Short (&lt;50 verses)</string>
+    <string name="chapterFilterLengthMedium">Medium (50–150 verses)</string>
+    <string name="chapterFilterLengthLong">Long (150+ verses)</string>
+    <string name="clearFilters">Clear filters</string>
+    <string name="chapterFilters">Chapter filters</string>
     <string name="strTitleMenu">Menu</string>
     <string name="strTitleTafsir">Tafsir</string>
     <string name="strTitleSelectTafsir">Select Tafsir</string>
@@ -90,6 +115,7 @@
     <string name="strTitleDownloadTranslations">Download</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
+    <string name="strMsgReciterDownloadHint">Download recitation audio for offline listening and smoother playback.</string>
     <string name="downloadRecitations">Download Recitations</string>
     <string name="recitationDownloadChapterSubtitle" formatted="false">Chapter %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d chapters</string>
@@ -119,6 +145,7 @@
     <string name="strTitleShareVerse">Share Verse</string>
     <string name="strTitleFeaturedQuran">Featured Reading</string>
     <string name="strTitleVOTD">Verse of The Day</string>
+    <string name="labelRecommended">Recommended</string>
     <string name="strTitleProphets">Prophets</string>
     <string name="strTitleFeaturedDuas">Duas in Quran</string>
     <string name="titleSolutionVerses">Solutions from Quran</string>
@@ -165,6 +192,7 @@
     <string name="strLabelIncludeFootnotes">Include footnotes</string>
     <string name="strLabelQuickLinks">Quick links</string>
     <string name="strLabelLater">Later</string>
+    <string name="titleGlobalSearch">Global Search</string>
     <string name="strHintSearch">Search</string>
     <string name="strHintSearchQuran">Type a term e.g., “Life”</string>
     <string name="strHintSearchProphet">Search prophet</string>
@@ -242,6 +270,7 @@
     <string name="msgDownloadingFonts">Downloading fonts</string>
     <string name="msgExtractingFonts">Extracting fonts</string>
     <string name="textDownloading">Downloading…</string>
+    <string name="textPreparingAudio">Preparing audio…</string>
     <string name="lastCrashLog">Last crash log</string>
     <string name="appLogs">App logs</string>
     <string name="crashLogs">Crash logs</string>
@@ -275,6 +304,7 @@
     <string name="nItem" formatted="false">%d item</string>
     <string name="nItems" formatted="false">%d items</string>
     <string name="noItems">No items</string>
+    <string name="noResults">No results</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
     <string name="place" formatted="false">%d place</string>
@@ -287,6 +317,7 @@
     <string name="onboardDescTafsir">Select a commentary to read alongside verses. You can download and manage tafsirs in settings.</string>
     <string name="labelArabic">Arabic</string>
     <string name="labelTranslation">Translation</string>
+    <string name="labelTransliteration">Transliteration</string>
     <string name="favourites">Favourites</string>
     <string name="titleRemoveFromFavourites">Remove from favourites</string>
     <string name="msgNoFavouriteChapters">Add a chapter to favourites to see here.</string>
@@ -296,6 +327,7 @@
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="msgClearReadHistory">Clear read history</string>
     <string name="msgClearSearchHistory">Clear search history</string>
+    <string name="strMsgSearchHistoryDeleteAll">All search history will be removed.</string>
     <string name="titleResourceDownloadSource">Resource download source</string>
     <string name="msgResourceDownloadSource">Use this option to download Quran data from a different source if one is not working</string>
     <string name="titleArabicTextToggle">Show Arabic Verse Text</string>
@@ -360,4 +392,34 @@
     <string name="learnMore">
         Learn more
     </string>
+    <string name="wordByWord">
+        Word by Word
+    </string>
+    <string name="selectWbwLanguage">
+        Select language
+    </string>
+    <string name="wbwShowTranslation">Show translation</string>
+    <string name="wbwShowTransliteration">Show transliteration</string>
+    <string name="wbwShowTransliterationMgs">When available for the selected language</string>
+    <string name="wbwRecitation">Recitation</string>
+    <string name="wbwRecitationMsg">Play audio when a word is clicked</string>
+    <string name="wbwTextSize">Text size</string>
+    <string name="noWbwAvailable">
+        Download a language pack below to turn on word-by-word features.
+    </string>
+    <string name="deleteData">
+        Delete data?
+    </string>
+    <string name="wordNo" formatted="false">Word %d</string>
+    <string name="playWord">Play word</string>
+    <string name="previousWord">Previous word</string>
+    <string name="nextWord">Next word</string>
+    <string name="results">Results</string>
+    <string name="titleRecentSearches">Recent searches</string>
+    <string name="searchTipsTitle">Search tips</string>
+    <string name="searchTipDirectVerse">Read a verse or tafsir directly</string>
+    <string name="searchTipChapter">Search chapters</string>
+    <string name="searchTipDirectJuz">Jump to “Chapter 30”, “Juz 30” or “Hizb 30”</string>
+    <string name="searchTipTranslation">Search in the translations</string>
+    <string name="searchTipArabic">Search in the Quran text</string>
 </resources>

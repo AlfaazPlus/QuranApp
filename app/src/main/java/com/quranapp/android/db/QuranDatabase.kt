@@ -4,12 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.quranapp.android.db.converters.QuranConverters
+import com.quranapp.android.db.dao.ArabicSearchDao
 import com.quranapp.android.db.dao.AyahDao
 import com.quranapp.android.db.dao.AyahWordDao
 import com.quranapp.android.db.dao.MushafDao
 import com.quranapp.android.db.dao.NavigationDao
 import com.quranapp.android.db.dao.SurahDao
 import com.quranapp.android.db.dao.SurahSearchDao
+import com.quranapp.android.db.entities.quran.ArabicSearchFtsEntity
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.quran.MushafEntity
@@ -32,13 +34,15 @@ import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
         AyahWordEntity::class,
         NavigationRangeEntity::class,
         MushafEntity::class,
-        MushafMapEntity::class
+        MushafMapEntity::class,
+        ArabicSearchFtsEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(QuranConverters::class)
 abstract class QuranDatabase : RoomDatabase() {
+    abstract fun arabicSearchDao(): ArabicSearchDao
     abstract fun surahDao(): SurahDao
     abstract fun surahSearchDao(): SurahSearchDao
     abstract fun ayahDao(): AyahDao

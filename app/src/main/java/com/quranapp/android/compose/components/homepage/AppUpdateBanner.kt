@@ -22,11 +22,9 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -43,16 +41,10 @@ import kotlin.math.pow
 @Composable
 fun AppUpdateBanner() {
     val context = LocalContext.current
-    val updateManager = remember { UpdateManager(context) }
-    var showBanner by remember { mutableStateOf(false) }
+    val updateManager = remember { UpdateManager.getInstance(context) }
+    val bannerDecision by updateManager.bannerDecision.collectAsState()
 
-    LaunchedEffect(Unit) {
-        showBanner = updateManager.getBannerDecision().showInlineBanner
-        updateManager.fetchAndSaveUpdates()
-        showBanner = updateManager.getBannerDecision().showInlineBanner
-    }
-
-    if (!showBanner) return
+    if (!bannerDecision.showInlineBanner) return
 
     Card(
         modifier = Modifier

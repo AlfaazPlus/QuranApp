@@ -28,6 +28,11 @@ object NotificationUtils {
     private const val CHANNEL_NAME_VOTD = "Verse of The Day"
     private const val CHANNEL_DESC_VOTD = "Daily verse reminder notifications"
 
+    const val CHANNEL_ID_RECOMMENDED_REMINDER = "recommended_reminder"
+    private const val CHANNEL_NAME_RECOMMENDED_REMINDER = "Recommended reading"
+    private const val CHANNEL_DESC_RECOMMENDED_REMINDER =
+        "Curated reading suggestions based on time and day"
+
     const val CHANNEL_ID_RECITATION_PLAYER = "recitation_player"
     private const val CHANNEL_NAME_RECITATION_PLAYER = "Recitation Player"
     private const val CHANNEL_DESC_RECITATION_PLAYER = "Recitation Player notifications"
@@ -42,6 +47,7 @@ object NotificationUtils {
             ctx.getSystemService(NotificationManager::class.java).apply {
                 createNotificationChannel(createDefaultChannel())
                 createNotificationChannel(createVOTDChannel())
+                createNotificationChannel(createRecommendedReminderChannel())
                 createNotificationChannel(createDownloadsChannel())
                 createNotificationChannel(createRecitationChannel())
             }
@@ -82,6 +88,32 @@ object NotificationUtils {
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = CHANNEL_DESC_VOTD
+            lightColor = Color.GREEN
+            lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            vibrationPattern = longArrayOf(500, 500)
+
+            enableLights(true)
+            setShowBadge(true)
+            enableVibration(true)
+
+            setSound(
+                Settings.System.DEFAULT_NOTIFICATION_URI,
+                AudioAttributes.Builder().apply {
+                    setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                }.build()
+            )
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private fun createRecommendedReminderChannel(): NotificationChannel {
+        return NotificationChannel(
+            CHANNEL_ID_RECOMMENDED_REMINDER,
+            CHANNEL_NAME_RECOMMENDED_REMINDER,
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            description = CHANNEL_DESC_RECOMMENDED_REMINDER
             lightColor = Color.GREEN
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             vibrationPattern = longArrayOf(500, 500)

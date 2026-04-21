@@ -24,7 +24,6 @@ import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.search.SearchFilters
 import org.json.JSONArray
 import java.io.Closeable
 import java.util.Collections
@@ -459,75 +458,64 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         }
     }
 
-    fun prepareQuerySingle(
-        filters: SearchFilters,
-        query: String,
-        slug: String,
-        limit: Int,
-        offset: Int
-    ): String {
-        val nQuery = query.replace(Regex("'", RegexOption.LITERAL), "''")
-        val tableName = QuranTranslDBHelper.escapeTableName(slug)
-        val sqlQuery = StringBuilder(
-            "SELECT $COL_CHAPTER_NO, $COL_VERSE_NO, $COL_TEXT FROM $tableName"
-        )
-        sqlQuery.append(" WHERE")
-        if (filters.searchWordPart) {
-            sqlQuery.append(" $COL_TEXT LIKE '%$nQuery%'")
-        } else {
-            val likes = arrayOf(
-                "$nQuery %", "% $nQuery",
-                "% $nQuery %",
-                "% $nQuery.%",
-                "% $nQuery,%", "$nQuery,%",
-                "% $nQuery!%", "$nQuery!%",
-                "% $nQuery?%", "$nQuery?%",
-                "% $nQuery:%", "$nQuery:%",
-                "% $nQuery;%", "$nQuery;%",
-                "% $nQuery''%", "%''$nQuery''%",
-                "% $nQuery\"%", "%\"$nQuery\"%",
-                "% $nQuery`%", "%`$nQuery`%",
-                "% $nQuery)%", "%($nQuery)%",
-                "% $nQuery]%", "%[$nQuery]%",
-                "% $nQuery˺%", "%˹$nQuery˺%"
-            )
+    fun getTranslationsBulkForSearch(
+        slugs: Set<String>,
+        verseKeys: List<Pair<Int, Int>>
+    ): Map<String, Map<Pair<Int, Int>, Translation>> {
 
-            for ((index, like) in likes.withIndex()) {
-                if (index > 0) sqlQuery.append(" OR")
-                sqlQuery.append(" $COL_TEXT LIKE '$like'")
+        if (slugs.isEmpty() || verseKeys.isEmpty()) return emptyMap()
+
+        val ids = verseKeys.map { "${it.first}:${it.second}" }
+
+        val sql = buildString {
+            slugs.forEachIndexed { index, slug ->
+
+                if (index > 0) append(" UNION ALL ")
+
+                append(
+                    """
+                SELECT
+                    '$slug' AS slug,
+                    chapterNo,
+                    verseNo,
+                    text,
+                    footnotes
+                FROM `${slug}`
+                WHERE _ID IN (${ids.joinToString(",") { "?" }})
+                """.trimIndent()
+                )
+            }
+
+            append(" ORDER BY chapterNo, verseNo")
+        }
+
+        val args = Array(ids.size * slugs.size) { i ->
+            ids[i % ids.size]
+        }
+
+        val result =
+            mutableMapOf<String, MutableMap<Pair<Int, Int>, Translation>>()
+
+        dbHelper.readableDatabase.rawQuery(sql, args).use { cursor ->
+
+            while (cursor.moveToNext()) {
+
+                val slug = cursor.getString(0)
+                val surahNo = cursor.getInt(1)
+                val ayahNo = cursor.getInt(2)
+                val text = cursor.getString(3)
+
+                val map = result.getOrPut(slug) { mutableMapOf() }
+
+                map[surahNo to ayahNo] = Translation().apply {
+                    chapterNo = surahNo
+                    verseNo = ayahNo
+                    this.text = text
+                    bookSlug = slug
+                }
             }
         }
-//        sqlQuery.append(" limit $limit offset $offset")
-        return sqlQuery.toString()
-    }
 
-    /**
-     * WARNING: NOT WORKING PROPERLY
-     * */
-    fun prepareQuery(slugs: Set<String>): String {
-        val firstTableName = QuranTranslDBHelper.escapeTableName(slugs.first())
-        val sqlQuery = StringBuilder("SELECT ${getSearchColumns(slugs)} FROM $firstTableName")
-        for (slug in slugs.drop(1)) {
-            val tableName = QuranTranslDBHelper.escapeTableName(slug)
-            sqlQuery.append(" LEFT JOIN $tableName")
-            sqlQuery.append(" ON $tableName.$COL_CHAPTER_NO = $firstTableName.$COL_CHAPTER_NO")
-            sqlQuery.append(" AND $tableName.$COL_VERSE_NO = $firstTableName.$COL_VERSE_NO")
-            sqlQuery.append(" AND $tableName.$COL_TEXT LIKE ?")
-        }
-
-        sqlQuery.append(" WHERE $firstTableName.$COL_TEXT LIKE ?")
-//        sqlQuery.append(" limit 20")
-        return sqlQuery.toString()
-    }
-
-    private fun getSearchColumns(slugs: Set<String>): String {
-        val cols = ArrayList<String>()
-        for ((index, slug) in slugs.withIndex()) {
-            val tableName = QuranTranslDBHelper.escapeTableName(slug)
-            cols.add("$tableName.$COL_CHAPTER_NO AS $COL_CHAPTER_NO$index")
-            cols.add("$tableName.$COL_VERSE_NO AS $COL_VERSE_NO$index")
-            cols.add("$tableName.$COL_TEXT AS $COL_TEXT$index")
-        }
-        return cols.joinToString(",")
+        return result
     }
 }

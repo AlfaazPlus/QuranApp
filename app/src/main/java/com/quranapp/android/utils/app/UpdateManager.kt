@@ -5,7 +5,11 @@
  */
 package com.quranapp.android.utils.app
 
-import android.animation.*
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.TimeInterpolator
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -13,15 +17,19 @@ import android.view.View
 import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
+import com.quranapp.android.BuildConfig
 import com.quranapp.android.R
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.RetrofitInstance
-import com.quranapp.android.components.AppUpdateInfo
+import com.quranapp.android.api.models.AppUpdate
 import com.quranapp.android.databinding.LytUpdateAppDialogBinding
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -34,11 +42,41 @@ data class UpdateBannerDecision(
     val showInlineBanner: Boolean,
 )
 
-class UpdateManager(private val ctx: Context) {
+class UpdateManager private constructor(private val ctx: Context) {
+    companion object {
+        const val CRITICAL = 5
+        const val MAJOR = 4
+        const val MODERATE = 3
+        const val MINOR = 2
+        const val COSMETIC = 1
+        const val NONE = 0
+
+        private var INSTANCE: UpdateManager? = null
+
+        fun getInstance(context: Context): UpdateManager {
+            if (INSTANCE == null) {
+                INSTANCE = UpdateManager(context)
+            }
+
+            return INSTANCE!!
+        }
+    }
+
     private val mIconAnimationHandler = Handler(Looper.getMainLooper())
     private var mIconAnimators = ArrayList<ObjectAnimator>()
 
-    suspend fun fetchAndSaveUpdates() {
+    private val _bannerDecision = MutableStateFlow(getBannerDecision())
+    val bannerDecision: StateFlow<UpdateBannerDecision> = _bannerDecision.asStateFlow()
+
+    init {
+        refreshAppUpdatesJson()
+    }
+
+    fun refreshAppUpdatesJson() {
+        CoroutineScope(Dispatchers.IO).launch { fetchAndSaveUpdates() }
+    }
+
+    private suspend fun fetchAndSaveUpdates() {
         withContext(Dispatchers.IO) {
             try {
                 val updates = RetrofitInstance.github.getAppUpdates()
@@ -47,6 +85,7 @@ class UpdateManager(private val ctx: Context) {
 
                 FileUtils.newInstance(ctx).apply {
                     val updatesFile = appUpdatesFile
+
                     if (createFile(updatesFile)) {
                         updatesFile.writeText(updatesString)
                     }
@@ -55,19 +94,21 @@ class UpdateManager(private val ctx: Context) {
                 e.printStackTrace()
             }
         }
-    }
 
-    fun refreshAppUpdatesJson() {
-        CoroutineScope(Dispatchers.IO).launch { fetchAndSaveUpdates() }
+        _bannerDecision.value = getBannerDecision()
+
+        ResourceUpdateManager.getInstance(ctx).checkAndPerformUpdates()
     }
 
     fun check4CriticalUpdate(): Boolean {
         val decision = getBannerDecision()
+
         if (decision.showCriticalDialog) {
             Logger.print("UpdateManager:", "Critical update available")
             showUpdateAvailableDialog(true)
             return true
         }
+
         return false
     }
 
@@ -81,21 +122,46 @@ class UpdateManager(private val ctx: Context) {
     }
 
     fun getBannerDecision(): UpdateBannerDecision {
-        val priority = AppUpdateInfo(ctx).getMostImportantUpdate().priority
+        val priority = getMostImportantUpdate().priority
 
         return UpdateBannerDecision(
             priority = priority,
-            showCriticalDialog = priority == AppUpdateInfo.CRITICAL,
-            showMajorDialog = priority == AppUpdateInfo.MAJOR,
-            showInlineBanner = priority in AppUpdateInfo.MAJOR downTo AppUpdateInfo.COSMETIC,
+            showCriticalDialog = priority == CRITICAL,
+            showMajorDialog = priority == MAJOR,
+            showInlineBanner = priority in MAJOR downTo COSMETIC,
         )
+    }
+
+    private fun getMostImportantUpdate(): AppUpdate {
+        val currentAppVersion = BuildConfig.VERSION_CODE.toLong()
+
+        return getAvailableUpdates()
+            .filter { it.version > currentAppVersion }
+            .sortedByDescending { it.priority }
+            .firstOrNull() ?: AppUpdate(0, NONE)
+    }
+
+    private fun getAvailableUpdates(): List<AppUpdate> {
+        return try {
+            val fileUtils = FileUtils.newInstance(ctx)
+
+            val file = fileUtils.appUpdatesFile
+
+            if (file.exists()) {
+                JsonHelper.json.decodeFromString(file.readText())
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun openPlayStore() {
         AppBridge.newOpener(ctx).openPlayStore(null)
     }
 
-    private fun showUpdateAvailableDialog(isCritical: Boolean, runOnDismiss: Runnable? = null) {
+    private fun showUpdateAvailableDialog(isCritical: Boolean) {
         val binding = LytUpdateAppDialogBinding.inflate(android.view.LayoutInflater.from(ctx))
         binding.txt.setText(
             if (isCritical) R.string.strMsgUpdateAvailable2Continue else R.string.strMsgUpdateAvailable4Dialog
@@ -105,7 +171,10 @@ class UpdateManager(private val ctx: Context) {
         val builder = PeaceDialog.newBuilder(ctx)
         builder.setView(binding.root)
         builder.setCancelable(false)
-        builder.setOnDismissListener { runOnDismiss?.run() }
+        builder.setOnDismissListener {
+            mIconAnimators.forEach { it.cancel() }
+            mIconAnimationHandler.removeCallbacksAndMessages(null)
+        }
         builder.setPositiveButton(R.string.strLabelUpdate, ColorUtils.DANGER) { _, _ ->
             openPlayStore()
         }
@@ -130,18 +199,20 @@ class UpdateManager(private val ctx: Context) {
         )
         val pvhScaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 1.1f, .8f, 1.3f, 1.03f, 1f)
         val pvhScaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, .8f, 1.1f, 0.9f, 1f, 1f)
-        return ObjectAnimator.ofPropertyValuesHolder(iconView, pvhTransY, pvhScaleX, pvhScaleY).apply {
-            interpolator = TimeInterpolator { v -> (1.toFloat() - (1 - v).toDouble().pow(2.0)).toFloat() }
-            duration = 1000
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    if (iconView.isAttachedToWindow) {
-                        mIconAnimationHandler.postDelayed({ start() }, 1500)
+        return ObjectAnimator.ofPropertyValuesHolder(iconView, pvhTransY, pvhScaleX, pvhScaleY)
+            .apply {
+                interpolator =
+                    TimeInterpolator { v -> (1.toFloat() - (1 - v).toDouble().pow(2.0)).toFloat() }
+                duration = 1000
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (iconView.isAttachedToWindow) {
+                            mIconAnimationHandler.postDelayed({ start() }, 1500)
+                        }
                     }
-                }
-            })
-            start()
-        }
+                })
+                start()
+            }
     }
 
     fun onPause() {
