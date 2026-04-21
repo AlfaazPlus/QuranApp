@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.screens.tafsir
 
 import ThemeUtils
+import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.webkit.WebChromeClient
@@ -26,7 +27,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -56,12 +56,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
+import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.ResUtils
@@ -80,14 +86,24 @@ fun TafsirReaderScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var webViewScrollY by remember { mutableIntStateOf(0) }
     var webViewRef by remember { mutableStateOf<WebView?>(null) }
+    var showChapterVerseNavigator by remember { mutableStateOf(false) }
 
     val onEvent = viewModel::onEvent
+    val context = LocalContext.current
 
     Scaffold(
         modifier = modifier,
         topBar = {
             TafsirTopBar(
                 uiState = uiState,
+                onOpenChapterVerseNavigator = { showChapterVerseNavigator = true },
+                onShare = when (val s = uiState.contentState) {
+                    is TafsirContentState.Success -> {
+                        { shareTafsir(context, uiState, s.tafsir) }
+                    }
+
+                    else -> null
+                },
             )
         },
         bottomBar = {
@@ -174,12 +190,41 @@ fun TafsirReaderScreen(
             }
         }
     }
+
+    val initialVerseNos = remember(uiState.chapterNo, uiState.verseNo, uiState.contentState) {
+        when (val c = uiState.contentState) {
+            is TafsirContentState.Success -> {
+                TafsirUtils.tafsirVerseRangeInChapter(c.tafsir, uiState.chapterNo)
+                    ?.let { range -> (range.first..range.last).toSet() }
+                    ?: setOf(uiState.verseNo)
+            }
+
+            else -> setOf(uiState.verseNo)
+        }
+    }
+
+    ChapterVerseNavigator(
+        isOpen = showChapterVerseNavigator,
+        onDismiss = { showChapterVerseNavigator = false },
+        selectedChapterNo = uiState.chapterNo.takeIf { it >= 1 },
+        selectedVerseNos = initialVerseNos,
+        onVerseSelected = { chapterNo, verseNo ->
+            viewModel.onEvent(
+                TafsirReaderEvent.Init(
+                    uiState.tafsirKey.ifBlank { null },
+                    chapterNo,
+                    verseNo,
+                )
+            )
+        },
+    )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TafsirTopBar(
     uiState: TafsirReaderUiState,
+    onOpenChapterVerseNavigator: () -> Unit,
+    onShare: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val chapterName = uiState.chapterMeta?.getCurrentName() ?: ""
@@ -191,8 +236,8 @@ private fun TafsirTopBar(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable(onClick = onOpenChapterVerseNavigator)
                     .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = uiState.tafsirInfo?.name ?: "",
@@ -204,17 +249,33 @@ private fun TafsirTopBar(
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "$chapterName $chapterNo:$verseNo",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = colorScheme.primary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "$chapterName $chapterNo:$verseNo",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center
+                    )
+                    Icon(
+                        painterResource(R.drawable.dr_icon_chevron_down),
+                        contentDescription = null,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
             }
         },
         actions = {
+            if (onShare != null) {
+                IconButton(onClick = onShare) {
+                    Icon(
+                        painter = painterResource(R.drawable.dr_icon_share),
+                        contentDescription = stringResource(R.string.strLabelShare),
+                        tint = colorScheme.onSurface,
+                    )
+                }
+            }
             IconButton(
                 onClick = {
                     val intent = Intent(context, ActivitySettings::class.java).apply {
@@ -286,7 +347,7 @@ private fun TafsirWebViewContent(
                     onPageFinished = { isLoading = false }
                 )
                 val signature = htmlContent to tafsirKey
-                
+
                 if (lastLoad != signature) {
                     lastLoad = signature
                     isLoading = true
@@ -336,9 +397,15 @@ private fun buildTafsirHtml(
 
     val multiVerseAlert = if (verses.size > 1) {
         val alertMsg = context.getString(R.string.readingTafsirMultiVerses)
+        val versesSorted = verses.sortedWith(
+            compareBy(
+                { it.substringBefore(':').toIntOrNull() ?: 0 },
+                { it.substringAfter(':').toIntOrNull() ?: 0 }
+            )
+        )
         """
         <div class="multiple-verse-alert">
-            <strong>$alertMsg</strong> ${verses.joinToString(", ")}
+            <strong>$alertMsg</strong> ${versesSorted.joinToString(", ")}
         </div>
         """.trimIndent()
     } else ""
@@ -458,10 +525,22 @@ private fun TafsirBottomNavigation(
     uiState: TafsirReaderUiState,
     onEvent: (TafsirReaderEvent) -> Unit,
 ) {
-    val hasPrevious = uiState.verseNo > 1
     val totalVerses = uiState.chapterMeta?.surah?.ayahCount ?: 0
-    val verseNo = uiState.verseNo
-    val hasNext = verseNo < totalVerses
+    val lastChapter = QuranMeta.chapterRange.last
+    val range = when (val c = uiState.contentState) {
+        is TafsirContentState.Success ->
+            TafsirUtils.tafsirVerseRangeInChapter(c.tafsir, uiState.chapterNo)
+
+        else -> null
+    }
+
+    val groupFirst = range?.first ?: uiState.verseNo
+    val groupLast = range?.last ?: uiState.verseNo
+
+    val hasPrevious = uiState.chapterNo > 1 || groupFirst > 1
+    val hasNext = totalVerses > 0 &&
+            (groupLast < totalVerses ||
+                    (uiState.chapterNo < lastChapter && groupLast >= totalVerses))
 
     Surface(
         color = colorScheme.surfaceContainer,
@@ -563,4 +642,31 @@ private fun NavigationButton(
             }
         }
     }
+}
+
+
+private fun shareTafsir(
+    context: Context,
+    uiState: TafsirReaderUiState,
+    tafsir: TafsirModel,
+) {
+    val plain = HtmlCompat.fromHtml(tafsir.text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        .toString()
+        .replace('\u00A0', ' ')
+        .trim()
+    if (plain.isEmpty()) return
+
+    val chapterName = uiState.chapterMeta?.getCurrentName() ?: ""
+    val ref = "${uiState.chapterNo}:${uiState.verseNo}"
+    val text = buildString {
+        uiState.tafsirInfo?.name?.let { append(it).append('\n') }
+        append(chapterName).append(' ').append(ref).append("\n\n")
+        append(plain)
+    }
+
+    AppBridge.newSharer(context)
+        .setData(text)
+        .setChooserTitle(context.getString(R.string.strLabelShare))
+        .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
+        .share()
 }

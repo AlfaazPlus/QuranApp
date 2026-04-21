@@ -7,7 +7,6 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,6 +30,12 @@ android {
         }
     }
     namespace 'com.peacedesign'
+    lint {
+        targetSdk 34
+    }
+    testOptions {
+        targetSdk 34
+    }
 }
 
 dependencies {

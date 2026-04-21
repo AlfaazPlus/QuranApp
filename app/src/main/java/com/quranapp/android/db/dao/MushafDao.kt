@@ -5,6 +5,7 @@ import androidx.room.Query
 import com.quranapp.android.db.entities.quran.MushafEntity
 import com.quranapp.android.db.entities.quran.MushafMapEntity
 import com.quranapp.android.db.projections.AyahPageProjection
+import com.quranapp.android.db.projections.PageHizbProjection
 import com.quranapp.android.db.projections.PageJuzProjection
 
 @Dao
@@ -148,6 +149,28 @@ interface MushafDao {
         mushafId: Int,
         pageNumbers: List<Int>,
     ): List<PageJuzProjection>
+
+    /**
+     * Hizb from the first ayah line per page (by [MushafMapEntity.lineNumber]), matching [getHizbForPage].
+     */
+    @Query(
+        """
+        SELECT m.page_number, a.hizb_no
+        FROM mushaf_map m
+        INNER JOIN ayahs a ON m.start_ayah_id = a.ayah_id
+        WHERE m.mushaf_id = :mushafId AND m.page_number IN (:pageNumbers)
+          AND m.start_ayah_id IS NOT NULL
+          AND m.line_number = (
+            SELECT MIN(m2.line_number) FROM mushaf_map m2
+            WHERE m2.mushaf_id = :mushafId AND m2.page_number = m.page_number
+              AND m2.start_ayah_id IS NOT NULL
+          )
+        """
+    )
+    suspend fun getHizbForPages(
+        mushafId: Int,
+        pageNumbers: List<Int>,
+    ): List<PageHizbProjection>
 
     @Query(
         """

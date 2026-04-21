@@ -12,10 +12,6 @@ object SPAppConfigs {
     const val KEY_APP_THEME = "key.app.theme"
     private const val KEY_APP_LANGUAGE = "key.app.language"
     private const val KEY_URLS_VERSION = "key.versions.urls"
-    private const val KEY_TRANSLATIONS_VERSION = "key.versions.translations"
-    private const val KEY_RECITATIONS_VERSION = "key.versions.recitations"
-    private const val KEY_RECITATION_TRANSLATIONS_VERSION = "key.versions.recitation_translations"
-    private const val KEY_TAFSIRS_VERSION = "key.versions.tafsirs"
 
     const val LOCALE_DEFAULT = "default"
 
@@ -50,44 +46,4 @@ object SPAppConfigs {
     fun getLocale(ctx: Context): String =
         sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
 
-    fun getUrlsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_URLS_VERSION, 0)
-
-    fun setUrlsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit() {
-            putLong(KEY_URLS_VERSION, version)
-        }
-    }
-
-    fun getTranslationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_TRANSLATIONS_VERSION, 0)
-
-    fun setTranslationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit() {
-            putLong(KEY_TRANSLATIONS_VERSION, version)
-        }
-    }
-
-    fun getRecitationsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_RECITATIONS_VERSION, 0)
-
-    fun setRecitationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit() {
-            putLong(KEY_RECITATIONS_VERSION, version)
-        }
-    }
-
-    fun getRecitationTranslationsVersion(ctx: Context): Long =
-        sp(ctx).getLong(KEY_RECITATION_TRANSLATIONS_VERSION, 0)
-
-    fun setRecitationTranslationsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit() {
-            putLong(KEY_RECITATIONS_VERSION, version)
-        }
-    }
-
-    fun getTafsirsVersion(ctx: Context): Long = sp(ctx).getLong(KEY_TAFSIRS_VERSION, 0)
-
-    fun setTafsirsVersion(ctx: Context, version: Long) {
-        sp(ctx).edit() {
-            putLong(KEY_TAFSIRS_VERSION, version)
-        }
-    }
 }

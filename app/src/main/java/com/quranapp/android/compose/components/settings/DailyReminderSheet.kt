@@ -27,6 +27,7 @@ import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.compose.utils.NavigationHelper
+import com.quranapp.android.compose.utils.RecommendedReminderScheduler
 import com.quranapp.android.compose.utils.VerseOfTheDayScheduler
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import kotlinx.coroutines.launch
@@ -62,6 +63,7 @@ fun DailyReminderSheet(
         if (permissionState != null && !permissionState.status.isGranted) {
             VersePreferences.setVOTDReminderEnabled(false)
             VerseOfTheDayScheduler.cancelDailyNotification(context)
+            RecommendedReminderScheduler.cancel(context)
         }
     }
 
@@ -102,8 +104,10 @@ fun DailyReminderSheet(
 
                                 if (key == true) {
                                     VerseOfTheDayScheduler.scheduleDailyNotification(context)
+                                    RecommendedReminderScheduler.schedule(context)
                                 } else {
                                     VerseOfTheDayScheduler.cancelDailyNotification(context)
+                                    RecommendedReminderScheduler.cancel(context)
                                 }
                             }
                         }

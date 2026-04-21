@@ -1,6 +1,6 @@
 [versions]
 coreKtx = "1.15.0"
-gradle = "8.11.2"
+gradle = "9.1.0"
 kotlinGradlePlugin = "2.2.21"
 lifecycle = "2.8.7"
 desugaring = "2.1.4"
@@ -17,7 +17,6 @@ viewbinding = "8.8.0"
 browser = "1.8.0"
 exoplayer = "2.19.1"
 media3 = "1.5.1"
-swipeRefreshLayout = "1.7.2.4"
 retrofit = "3.0.0"
 kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
@@ -71,17 +70,10 @@ extensionMediasession = { module = "com.google.android.exoplayer:extension-media
 
 # AndroidX Media3
 media3ExoPlayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
+media3Datasource = { module = "androidx.media3:media3-datasource", version.ref = "media3" }
+media3Database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 media3Session = { module = "androidx.media3:media3-session", version.ref = "media3" }
 media3UI = { module = "androidx.media3:media3-ui", version.ref = "media3" }
-
-# SmoothRefreshLayout
-srlCore = { group = "com.github.dkzwm", name = 'srl-core', version.ref = "swipeRefreshLayout" }
-srlExtClassics = { group = "com.github.dkzwm", name = 'srl-ext-classics', version.ref = "swipeRefreshLayout" }
-srlExtMaterial = { group = "com.github.dkzwm", name = 'srl-ext-material', version.ref = "swipeRefreshLayout" }
-srlExtDynamicRebound = { group = "com.github.dkzwm", name = 'srl-ext-dynamic-rebound', version.ref = "swipeRefreshLayout" }
-srlExtHorizontal = { group = "com.github.dkzwm", name = 'srl-ext-horizontal', version.ref = "swipeRefreshLayout" }
-srlExtTwoLevel = { group = "com.github.dkzwm", name = 'srl-ext-two-level', version.ref = "swipeRefreshLayout" }
-srlExtUtil = { group = "com.github.dkzwm", name = 'srl-ext-util', version.ref = "swipeRefreshLayout" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }

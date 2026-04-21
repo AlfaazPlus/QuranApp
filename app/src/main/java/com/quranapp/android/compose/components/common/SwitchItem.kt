@@ -18,12 +18,15 @@ fun SwitchItem(
     title: Int,
     subtitle: Int? = null,
     checked: Boolean,
+    enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .clickable { onCheckedChange(!checked) }
+            .clickable(enabled = enabled) {
+                if (enabled) onCheckedChange(!checked)
+            }
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
     ) {
@@ -38,6 +41,7 @@ fun SwitchItem(
                 .height(24.dp),
             checked = checked,
             onCheckedChange = onCheckedChange,
+            enabled = enabled,
         )
     }
 }

@@ -21,6 +21,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -54,7 +55,7 @@ fun ReaderNavigator(
     fun navigateChapter(chapterNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = readerVm.resolvePageNo(chapterNo, 1)
                     if (page != null) readerVm.requestPageNavigation(page)
                 }
@@ -71,13 +72,13 @@ fun ReaderNavigator(
     fun navigateVerse(chapterNo: Int, verseNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = readerVm.resolvePageNo(chapterNo, verseNo)
                     if (page != null) readerVm.requestPageNavigation(page)
                 }
 
                 else -> {
-                    val isInCurrentView = readerVm.verseByVerseItems.value.any { item ->
+                    val isInCurrentView = readerVm.verseByVersePrepared.value.items.any { item ->
                         item is ReaderLayoutItem.VerseUI &&
                                 item.verse.chapterNo == chapterNo &&
                                 item.verse.verseNo == verseNo
@@ -105,7 +106,7 @@ fun ReaderNavigator(
     fun navigateJuz(juzNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = withContext(Dispatchers.IO) {
                         readerVm.repository.getFirstPageOfJuz(juzNo)
                     }
@@ -124,7 +125,7 @@ fun ReaderNavigator(
     fun navigateHizb(hizbNo: Int) {
         scope.launch {
             when (readerMode) {
-                ReaderMode.Reading -> {
+                ReaderMode.Reading, ReaderMode.Translation -> {
                     val page = withContext(Dispatchers.IO) {
                         readerVm.repository.getFirstPageOfHizb(hizbNo)
                     }

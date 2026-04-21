@@ -143,6 +143,7 @@ private fun ItemCard(
                             painter = painterResource(
                                 when (ReaderMode.fromValue(history.readerMode)) {
                                     ReaderMode.Reading -> R.drawable.ic_mode_mushaf
+                                    ReaderMode.Translation -> R.drawable.ic_mode_translation
                                     else -> R.drawable.ic_mode_verse
                                 }
                             ),

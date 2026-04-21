@@ -10,19 +10,14 @@ import com.peacedesign.android.utils.AppBridge
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
-import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.compose.utils.RecommendedReminderScheduler
 import com.quranapp.android.compose.utils.VerseOfTheDayScheduler
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.sharedPrefs.SPLog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 object AppActions {
     const val APP_ACTION_KEY = "app.action.key"
@@ -48,54 +43,7 @@ object AppActions {
     fun scheduleActions(ctx: Context) {
         if (VersePreferences.getVOTDReminderEnabled()) {
             VerseOfTheDayScheduler.scheduleDailyNotification(ctx)
-        }
-    }
-
-    /**
-     * Checks if there has been changes in the app resources on the server.
-     * If there has been changes, then the upcoming versions from the remote config will be greater than that of locally saved.
-     * */
-    @JvmStatic
-    fun checkForResourcesVersions(ctx: Context) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val (urlsVersion, translationsVersion, recitationsVersion, recitationsTranslationVersion, tafsirsVersion)
-                        = RetrofitInstance.github.getResourcesVersions()
-
-                val localUrlsVersion = SPAppConfigs.getUrlsVersion(ctx)
-                val localTranslationsVersion = SPAppConfigs.getTranslationsVersion(ctx)
-                val localRecitationsVersion = SPAppConfigs.getRecitationsVersion(ctx)
-                val localRecitationTranslationsVersion =
-                    SPAppConfigs.getRecitationTranslationsVersion(ctx)
-                val localTafsirsVersion = SPAppConfigs.getTafsirsVersion(ctx)
-
-                if (urlsVersion > localUrlsVersion) {
-                    SPAppActions.setFetchUrlsForce(ctx, true)
-                    SPAppConfigs.setUrlsVersion(ctx, urlsVersion)
-                }
-
-                if (translationsVersion > localTranslationsVersion) {
-                    SPAppActions.setFetchTranslationsForce(ctx, true)
-                    SPAppConfigs.setTranslationsVersion(ctx, translationsVersion)
-                }
-
-                if (recitationsVersion > localRecitationsVersion) {
-                    SPAppActions.setFetchRecitationsForce(ctx, true)
-                    SPAppConfigs.setRecitationsVersion(ctx, recitationsVersion)
-                }
-
-                if (recitationsTranslationVersion > localRecitationTranslationsVersion) {
-                    SPAppActions.setFetchRecitationTranslationsForce(ctx, true)
-                    SPAppConfigs.setRecitationTranslationsVersion(ctx, recitationsVersion)
-                }
-
-                if (tafsirsVersion > localTafsirsVersion) {
-                    SPAppActions.setFetchTafsirsForce(ctx, true)
-                    SPAppConfigs.setTafsirsVersion(ctx, tafsirsVersion)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            RecommendedReminderScheduler.schedule(ctx)
         }
     }
 

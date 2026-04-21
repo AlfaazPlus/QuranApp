@@ -15,13 +15,12 @@ android {
         applicationId = "com.quranapp.android"
         minSdk = 24
         targetSdk = 35
+
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         // now just incrementing from there
         versionCode = 23_11_11_134
         versionName = "2026.04.16.2"
-
-        setProperty("archivesBaseName", versionName)
 
         resValue("string", "app_name", "QuranApp")
 
@@ -42,6 +41,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -52,6 +52,7 @@ android {
 
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
+
             resValue("string", "app_name", "QuranApp Debug")
 
             /* ---------------------------------------------------------------- */
@@ -62,6 +63,7 @@ android {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -88,6 +90,10 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+base {
+    archivesName = android.defaultConfig.versionName
 }
 
 dependencies {
@@ -125,6 +131,8 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
 
     implementation(libs.media3ExoPlayer)
+    implementation(libs.media3Datasource)
+    implementation(libs.media3Database)
     implementation(libs.media3Session)
     implementation(libs.media3UI)
 
@@ -138,15 +146,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinxSerialization)
     implementation(libs.kotlinxRetrofit)
-
-    /* SmoothRefreshLayout */
-    implementation(libs.srlCore)
-    implementation(libs.srlExtClassics)
-    implementation(libs.srlExtMaterial)
-    implementation(libs.srlExtDynamicRebound)
-    implementation(libs.srlExtHorizontal)
-    implementation(libs.srlExtTwoLevel)
-    implementation(libs.srlExtUtil)
 
     implementation(libs.commonsCompress)
     implementation(libs.workManager)

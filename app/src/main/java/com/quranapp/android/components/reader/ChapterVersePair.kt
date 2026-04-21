@@ -14,7 +14,7 @@ data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable
     }
 
     fun doesEqual(ayahId: Int): Boolean {
-        val pair = QuranUtils.getVerseNo(ayahId)
+        val pair = QuranUtils.getVerseNoFromAyahId(ayahId)
 
         return doesEqual(pair.first, pair.second)
     }

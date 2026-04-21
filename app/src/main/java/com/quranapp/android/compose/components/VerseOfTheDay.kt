@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -29,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,13 +50,12 @@ import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
-import com.quranapp.android.compose.components.reader.LocalRecitationState
+import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
-import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
@@ -84,14 +80,22 @@ private data class VerseOfTheDayState(
 @Composable
 fun VerseOfTheDay() {
     ReaderProvider {
-        VotdContent()
+        HomePremiumBannerContainer {
+            VotdContent()
+        }
     }
 }
 
 @Composable
-private fun VotdContent() {
+internal fun VotdContent(
+    header: @Composable () -> Unit = {
+        HomePremiumHeaderPill(
+            icon = R.drawable.dr_icon_heart_filled,
+            title = stringResource(R.string.strTitleVOTD)
+        )
+    }
+) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
     val colors = colorScheme
     val type = typography
 
@@ -163,9 +167,8 @@ private fun VotdContent() {
         return
     }
 
-    val userRepository = remember(context) { DatabaseProvider.getUserRepository(context) }
     val verse = votdState.verse
-    val isBookmarked by userRepository.isBookmarkedFlow(
+    val isBookmarked by vm.userRepository.isBookmarkedFlow(
         verse.chapterNo,
         verse.verseNo..verse.verseNo
     ).collectAsStateWithLifecycle(false)
@@ -220,22 +223,153 @@ private fun VotdContent() {
         )
     }
 
+
+    val iconTint = Color.White.alpha(0.7f)
+
+    val recState = LocalRecitation.current
+    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            header()
+        }
+
+        if (arabicEnabled && arabicText.isNotBlank()) {
+            Text(
+                text = arabicText,
+                style = quranTextStyle.copy(color = Color.White),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+
+        if (translationText.isNotBlank()) {
+            SelectionContainer {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = translationText,
+                        style = translationTextStyle,
+                        color = Color.White,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                    )
+
+                    Text(
+                        text = stringResource(
+                            R.string.strLabelVerseSerialWithChapter,
+                            votdState.verse.chapter.getCurrentName(),
+                            verse.chapterNo,
+                            verse.verseNo
+                        ),
+                        style = translationTextStyle.copy(
+                            fontStyle = FontStyle.Italic,
+                            fontSize = typography.labelMedium.fontSize
+                        ),
+                        color = Color.White.alpha(0.6f),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+        }
+
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 16.dp),
+            color = Color.White.alpha(0.2f)
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 6.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            IconButton(
+                painter = if (isVersePlaying) painterResource(R.drawable.ic_pause)
+                else painterResource(R.drawable.ic_play),
+                contentDescription = if (isVersePlaying) stringResource(R.string.strLabelPause)
+                else stringResource(R.string.strLabelPlay),
+                tint = if (isVersePlaying) colorScheme.primary else iconTint,
+                small = true,
+                onClick = { recState.controller.playControl(ChapterVersePair(verse)) }
+            )
+
+            IconButton(
+                painter = painterResource(if (isBookmarked) R.drawable.ic_bookmark_added else R.drawable.ic_bookmark),
+                contentDescription = stringResource(R.string.strLabelBookmark),
+                tint = if (isBookmarked) colorScheme.primary else iconTint,
+                small = true,
+                onClick = {
+                    verseActions.onBookmarkRequest?.invoke(
+                        votdState.verse.chapterNo,
+                        votdState.verse.verseNo..votdState.verse.verseNo
+                    )
+                }
+            )
+
+            IconButton(
+                painter = painterResource(if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell),
+                contentDescription = stringResource(R.string.dailyReminderMsg),
+                tint = if (votdEnabled) colorScheme.primary else iconTint,
+                small = true,
+                onClick = { showDailyReminderSheet = true }
+            )
+
+            IconButton(
+                painter = painterResource(R.drawable.dr_icon_tafsir),
+                contentDescription = stringResource(R.string.strTitleTafsir),
+                tint = null,
+                small = true,
+                onClick = { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
+            )
+
+            Spacer(Modifier.weight(1f))
+
+            FilledTonalButton(
+                modifier = Modifier.height(28.dp),
+                onClick = { ReaderFactory.startVerse(context, verse.chapterNo, verse.verseNo) },
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+            ) {
+                Text(
+                    stringResource(R.string.strLabelRead),
+                    style = typography.labelMedium
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun HomePremiumBannerContainer(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    val colors = colorScheme
     val gradient = remember(colors) {
         Brush.linearGradient(
             colors = listOf(
+                Color.Black,
                 colors.primary,
                 Color.Black,
             )
         )
     }
 
-    val iconTint = Color.White.alpha(0.7f)
-
-    val recState = LocalRecitationState.current
-    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
-
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(12.dp),
     ) {
@@ -252,184 +386,64 @@ private fun VotdContent() {
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .background(Color.Black.alpha(0.5f))
+                    .background(Color.Black.alpha(0.8f))
             )
 
-            Column() {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Surface(
-                        shape = RoundedCornerShape(999.dp),
-                        color = Color.White.copy(alpha = 0.12f),
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_heart_filled),
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(16.dp),
-                            )
-                            Text(
-                                text = stringResource(R.string.strTitleVOTD),
-                                style = typography.labelMedium,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color.White,
-                            )
-                        }
-                    }
-                }
-
-                if (arabicEnabled && arabicText.isNotBlank()) {
-                    Text(
-                        text = arabicText,
-                        style = quranTextStyle.copy(
-                            color = Color.White
-                        ),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                    )
-                }
-
-                if (translationText.isNotBlank()) {
-                    SelectionContainer {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = translationText,
-                                style = translationTextStyle,
-                                color = Color.White,
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                            )
-
-                            Text(
-                                text = stringResource(
-                                    R.string.strLabelVerseSerialWithChapter,
-                                    votdState.verse.chapter.getCurrentName(),
-                                    verse.chapterNo,
-                                    verse.verseNo
-                                ),
-                                style = translationTextStyle.copy(
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = type.labelMedium.fontSize
-                                ),
-                                color = Color.White.alpha(0.6f),
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                    }
-                }
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = 16.dp),
-                    color = Color.White.alpha(0.2f)
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 6.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    IconButton(
-                        painter = if (isVersePlaying) painterResource(R.drawable.ic_pause)
-                        else painterResource(R.drawable.ic_play),
-                        contentDescription = if (isVersePlaying) stringResource(R.string.strLabelPause)
-                        else stringResource(R.string.strLabelPlay),
-                        tint = if (isVersePlaying) colorScheme.primary else iconTint,
-                        small = true,
-                    ) {
-                        recState.controller.playControl(ChapterVersePair(verse))
-                    }
-
-                    IconButton(
-                        painter = painterResource(
-                            if (isBookmarked) {
-                                R.drawable.ic_bookmark_added
-                            } else {
-                                R.drawable.ic_bookmark
-                            }
-                        ),
-                        contentDescription = null,
-                        tint = if (isBookmarked) colorScheme.primary else iconTint,
-                        small = true,
-                    ) {
-                        verseActions.onBookmarkRequest?.invoke(
-                            votdState.verse.chapterNo,
-                            votdState.verse.verseNo..votdState.verse.verseNo
-                        )
-                    }
-
-                    IconButton(
-                        painter = painterResource(
-                            if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell
-                        ),
-                        contentDescription = null,
-                        tint = if (votdEnabled) colorScheme.primary else iconTint,
-                        small = true,
-                    ) {
-                        showDailyReminderSheet = true
-                    }
-
-                    Spacer(Modifier.weight(1f))
-
-                    FilledTonalButton(
-                        modifier = Modifier.height(28.dp),
-                        onClick = {
-                            ReaderFactory.startVerse(
-                                context,
-                                verse.chapterNo,
-                                verse.verseNo
-                            )
-                        },
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
-                    ) {
-                        Text(
-                            stringResource(R.string.strLabelRead),
-                            style = type.labelMedium
-                        )
-                    }
-                }
-            }
+            content()
         }
     }
 }
 
 @Composable
+internal fun HomePremiumHeaderPill(
+    modifier: Modifier = Modifier,
+    icon: Int? = null,
+    title: String,
+    isSelected: Boolean = true,
+    onClick: (() -> Unit)? = null
+) {
+    val alpha = if (isSelected) 0.12f else 0f
+    val contentAlpha = if (isSelected) 1f else 0.6f
+
+    Surface(
+        modifier = modifier.clip(RoundedCornerShape(999.dp)),
+        shape = RoundedCornerShape(999.dp),
+        color = Color.White.copy(alpha = alpha),
+        onClick = onClick ?: {},
+        enabled = onClick != null
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    tint = Color.White.copy(alpha = contentAlpha),
+                    modifier = Modifier.size(16.dp),
+                )
+            }
+            Text(
+                text = title,
+                style = typography.labelMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White.copy(alpha = contentAlpha),
+            )
+        }
+    }
+}
+
+
+@Composable
 private fun VerseOfTheDayLoading() {
-    Card(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 6.dp),
-        shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = colorScheme.surfaceContainer,
-        ),
+            .padding(vertical = 28.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 28.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Loader()
-        }
+        Loader()
     }
 }

@@ -46,6 +46,7 @@ sealed class ReaderIntentData {
         val pageNo: Int,
         val fallbackChapterNo: Int = 0,
         val fallbackVerseNo: Int = 0,
+        override val initialVerse: ChapterVersePair? = null,
     ) : ReaderIntentData()
 }
 
@@ -92,6 +93,10 @@ data class ReaderLaunchParams(
                     putExtra(KEY_RESTORE_PAGE, d.pageNo)
                     putExtra(KEY_CHAPTER_NO, d.fallbackChapterNo)
                     putExtra(KEY_FALLBACK_VERSE, d.fallbackVerseNo)
+                    d.initialVerse?.let {
+                        putExtra(KEY_INITIAL_VERSE_CHAPTER, it.chapterNo)
+                        putExtra(KEY_INITIAL_VERSE_NO, it.verseNo)
+                    }
                 }
             }
 
@@ -127,6 +132,15 @@ data class ReaderLaunchParams(
             val restorePage = intent.getIntExtra(KEY_RESTORE_PAGE, -1)
 
             if (mushafCode != null && restorePage > 0) {
+                val mushafInitialChapter = intent.getIntExtra(KEY_INITIAL_VERSE_CHAPTER, -1)
+                val mushafInitialVerse = intent.getIntExtra(KEY_INITIAL_VERSE_NO, -1)
+                val mushafInitialVersePair =
+                    if (mushafInitialChapter > 0 && mushafInitialVerse > 0) {
+                        ChapterVersePair(mushafInitialChapter, mushafInitialVerse)
+                    } else {
+                        null
+                    }
+
                 return ReaderLaunchParams(
                     data = ReaderIntentData.MushafPage(
                         mushafCode = mushafCode,
@@ -134,6 +148,7 @@ data class ReaderLaunchParams(
                         pageNo = restorePage,
                         fallbackChapterNo = intent.getIntExtra(KEY_CHAPTER_NO, 1),
                         fallbackVerseNo = intent.getIntExtra(KEY_FALLBACK_VERSE, 1),
+                        initialVerse = mushafInitialVersePair,
                     ),
                     readerMode = intent.getStringExtra(KEY_READER_MODE)
                         ?.takeIf { it.isNotEmpty() }

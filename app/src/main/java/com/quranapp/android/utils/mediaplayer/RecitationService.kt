@@ -17,8 +17,15 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.database.StandaloneDatabaseProvider
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
+import androidx.media3.datasource.cache.SimpleCache
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.CommandButton
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -60,6 +67,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.io.File
 
 @OptIn(UnstableApi::class)
 class RecitationService : MediaSessionService() {
@@ -83,6 +91,37 @@ class RecitationService : MediaSessionService() {
         const val EXTRA_FROM_USER = "from_user"
 
         private const val SEEK_STEP_MS = 5000L
+
+        /** Max bytes for HTTP chapter audio in [SimpleCache] (LRU evicted when full). */
+        private const val RECITATION_CACHE_MAX_BYTES = 512L * 1024 * 1024
+
+        @Volatile
+        private var recitationSimpleCache: SimpleCache? = null
+
+        private val recitationCacheLock = Any()
+
+        /**
+         * Process-wide cache for streamed `https` chapter audio. Persists across [RecitationService]
+         * instances; not cleared on service destroy.
+         */
+        private fun recitationCache(context: android.content.Context): SimpleCache {
+            synchronized(recitationCacheLock) {
+                recitationSimpleCache?.let { return it }
+
+                val appCtx = context.applicationContext
+                val dir = File(appCtx.cacheDir, "exo_recitation_cache")
+
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
+
+                val evictor = LeastRecentlyUsedCacheEvictor(RECITATION_CACHE_MAX_BYTES)
+
+                val dbProvider = StandaloneDatabaseProvider(appCtx)
+
+                return SimpleCache(dir, evictor, dbProvider).also { recitationSimpleCache = it }
+            }
+        }
 
         val sharedState = MutableStateFlow(RecitationServiceState.EMPTY)
     }
@@ -111,7 +150,8 @@ class RecitationService : MediaSessionService() {
 
     private var verseTrackingJob: Job? = null
     private var latestPlaybackRequestId: Long = 0L
-    private val chapterResolutionRequests = mutableMapOf<Int, Deferred<ResolvedAudioResult>>()
+    private val chapterResolutionRequests =
+        mutableMapOf<AudioResolutionRequest, Deferred<ResolvedAudioResult>>()
 
     private var repeatMessage: androidx.media3.exoplayer.PlayerMessage? = null
     private var repeatRemainingPlaysForCurrentItem: Int = 0
@@ -185,13 +225,23 @@ class RecitationService : MediaSessionService() {
 
     private fun initializePlayer() {
         val loadControl = DefaultLoadControl.Builder().setBufferDurationsMs(
-            /* minBufferMs */ 15_000,
-            /* maxBufferMs */ 30_000,
-            /* bufferForPlaybackMs */ 1_500,
-            /* bufferForPlaybackAfterRebufferMs */ 3_000,
+            15_000,
+            30_000,
+            1_500,
+            3_000,
         ).build()
 
+        val cache = recitationCache(this)
+        val cacheDataSourceFactory = CacheDataSource.Factory()
+            .setCache(cache)
+            .setUpstreamDataSourceFactory(DefaultHttpDataSource.Factory())
+            .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
+
+        val dataSourceFactory = DefaultDataSource.Factory(this, cacheDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
         player = ExoPlayer.Builder(this)
+            .setMediaSourceFactory(mediaSourceFactory)
             .setLoadControl(loadControl)
             .build().apply {
                 setAudioAttributes(
@@ -391,6 +441,10 @@ class RecitationService : MediaSessionService() {
         }
     }
 
+    /**
+     * Cancels WorkManager chapter downloads (e.g. bulk or explicit saves). Does not clear ExoPlayer’s
+     * HTTP cache (SimpleCache) used for streamed playback.
+     */
     fun cancelLoading() {
         audioRepository.cancelAll()
         setResolving(null)
@@ -468,7 +522,10 @@ class RecitationService : MediaSessionService() {
      * continue downloading in parallel.
      */
     private suspend fun resolveChapterAudio(chapterNo: Int): ResolvedAudioResult {
-        val inFlight = chapterResolutionRequests[chapterNo]
+        val settings = state.value.settings
+        val req = AudioResolutionRequest(chapterNo, settings)
+
+        val inFlight = chapterResolutionRequests[req]
         if (inFlight != null && inFlight.isActive) {
             return inFlight.await()
         }
@@ -477,18 +534,13 @@ class RecitationService : MediaSessionService() {
             try {
                 var terminal: ResolvedAudioResult? = null
 
-                audioRepository.resolveAudioUris(chapterNo).collect { result ->
+                audioRepository.resolveAudioUris(
+                    chapterNo = chapterNo,
+                    settings = settings
+                ).collect { result ->
                     when (result) {
                         is ResolvedAudioResult.Downloading -> {
-                            if (chapterNo == state.value.resolvingChapterNo) {
-                                if (result.progress in 0..100) {
-                                    updateState {
-                                        copy(downloadProgress = result.progress)
-                                    }
-                                } else {
-                                    updateState { copy(downloadProgress = null) }
-                                }
-                            }
+                            // Playback resolution no longer emits this; bulk/explicit downloads use WorkManager UI.
                         }
 
                         is ResolvedAudioResult.Error -> terminal = result
@@ -504,13 +556,13 @@ class RecitationService : MediaSessionService() {
             }
         }
 
-        chapterResolutionRequests[chapterNo] = deferred
+        chapterResolutionRequests[req] = deferred
 
         return try {
             deferred.await()
         } finally {
-            if (chapterResolutionRequests[chapterNo] == deferred && deferred.isCompleted) {
-                chapterResolutionRequests.remove(chapterNo)
+            if (chapterResolutionRequests[req] == deferred && deferred.isCompleted) {
+                chapterResolutionRequests.remove(req)
             }
         }
     }
@@ -831,7 +883,12 @@ class RecitationService : MediaSessionService() {
         val chapterNo = current.chapterNo
         val verseNo = current.verseNo
 
+        if (player.isPlaying) {
+            player.pause()
+        }
+
         val shouldResumePlaying = player.isPlaying
+
         val requestId = ++latestPlaybackRequestId
 
         awaitChapterResolution(requestId, chapterNo) {
@@ -931,15 +988,10 @@ class RecitationService : MediaSessionService() {
         }
     }
 
-    private fun handlePlaybackEnded() {/*fixme: temporarily disable
+    private fun handlePlaybackEnded() {
         if (!state.value.settings.continueRange) return
 
-        scoped {
-            val meta = requestQuranMeta()
-            val next = state.value.getNextChapter(meta)
-            if (next != null) reciteVerse(next.chapterNo, next.verseNo)
-            else stopMedia()
-        }*/
+        reciteNextVerse()
     }
 
     // ==================== Session callback & command dispatch ====================
