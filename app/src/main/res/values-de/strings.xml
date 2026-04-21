@@ -87,7 +87,7 @@
     <string name="strTitleAppSettings">App-Einstellungen</string>
     <string name="strTitleReaderSettings">Reader-Einstellungen</string>
     <string name="strTitleAppLanguage">App-Sprache</string>
-    <string name="strTitleTheme">Theme</string>
+    <string name="strTitleTheme">Design</string>
     <string name="strTitleNoInternet">Kein Internet</string>
     <string name="strLabelPlay">Wiedergabe</string>
     <string name="strLabelPause">Pause</string>
@@ -113,7 +113,7 @@
     <string name="strLabelQuickLinks">Weiterführende Links</string>
     <string name="strLabelLater">Später</string>
     <string name="strHintSearch">Suche</string>
-    <string name="strHintSearchQuran">Geben Sie einen Begriff ein, z. B. \"Leben\"</string>
+    <string name="strHintSearchQuran">Gib einen Begriff ein, z. B. \"Leben\"</string>
     <string name="strHintSearchProphet">Prophet suchen</string>
     <string name="strHintSearchChapter">Sure suchen</string>
     <string name="strHintFromVerse">Aus Vers</string>
@@ -132,14 +132,14 @@
     <string name="strMsgReadHistoryDeleteAll">Alle Leseverläufe werden entfernt.</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Heute um %s</string>
     <string name="strMsgHistoryRemove">Diesen Verlauf entfernen\?</string>
-    <string name="strMsgHistoryRemoved" formatted="false">„%s“ aus dem Verlauf entfernt</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%s“ aus dem Verlauf entfernt</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Gesamtergebnisse gefunden in %1$s: %2$d</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Keine Ergebnisse in %s gefunden. Bitte prüfen Sie die Suchfilter oder suchen Sie in einer anderen Übersetzung.</string>
     <string name="strMsgSearchNoResultsFound">Keine Ergebnisse gefunden. Bitte überprüfen Sie die Suchfilter oder suchen Sie in einer anderen Übersetzung.</string>
     <string name="strMsgSearchWordPart">Suche nach Wortteil</string>
     <string name="strMsgSearchWordPartExample">Zum Beispiel: \"Mensch\" in \"Menschheit\"</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s um %2$s</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">„%s“ konnte nicht heruntergeladen werden.</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%s“ konnte nicht heruntergeladen werden.</string>
     <string name="strMsgTranslDownloaded" formatted="false">Heruntergeladen: \"%s\".</string>
     <string name="strMsgTranslNoneSelected">Es ist keine Übersetzung ausgewählt. Gehen Sie zu den Einstellungen, um Übersetzungen zu finden.</string>
     <string name="strDescAddToBookmarks">Zu Lesezeichen hinzufügen</string>
@@ -239,9 +239,9 @@
 \n%s</string>
     <string name="noItems">keine Einträge</string>
     <string name="titleRemoveFromFavourites">Aus Favoriten entfernen</string>
-    <string name="audioOnlyArabic">Nur Arabisch abspielen</string>
+    <string name="audioOnlyArabic">Nur Koran abspielen</string>
     <string name="audioOnlyTranslation">Nur Übersetzung abspielen</string>
-    <string name="audioBothArabicTranslation">Arabisch und Übersetzung abspielen</string>
+    <string name="audioBothArabicTranslation">Koran und Übersetzung abspielen</string>
     <string name="titleOtherSettings">Weitere Einstellungen</string>
     <string name="appLogs">App-Protokolle</string>
     <string name="logRemoved">Log entfernt</string>
@@ -292,7 +292,7 @@
     <string name="readingTafsirMultiVerses">Tafsir für mehrere Verse lesen:</string>
     <string name="strLabelDownloaded">Heruntergeladen</string>
     <string name="strTitleDeleteTafsir">Erläuterung löschen?</string>
-    <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Sind Sie sicher, dass Sie \"%s\" löschen möchten? Dies wird die heruntergeladenen Erläuterungs-Daten von Ihrem Gerät entfernen.</string>
     <string name="strTitleReaderHizb">Abschnitt</string>
     <string name="strHintSearchBy">Suche Teil oder Sure</string>
     <string name="labelHizbNo" formatted="false">Abschnitt %d</string>
@@ -308,4 +308,47 @@
     <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d Kapitel heruntergeladen</string>
     <string name="recitationBulkEnqueueNotifTitle">Rezitations-Downloads vorbereiten</string>
     <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s – %2$d von %3$d in die Warteschlange gestellt</string>
+    <string name="titleRecitationGroupSize">Größe der Koranversgruppe</string>
+    <string name="msgRecitationGroupSize">Wählen aus, wie viele Koranverse abgespielt werden sollen, bevor die Übersetzung beginnt. Beispiel: Wenn 3 ausgewählt, werden 3 Koranverse abgespielt, gefolgt von deren Übersetzungen.</string>
+    <string name="modeVerseByVerse">Vers für Vers Modus</string>
+    <string name="modeMushaf">Kodex Stil</string>
+    <string name="strHintSearchPage">Suchseite</string>
+    <string name="noNoteProvided">Keine Notiz vorhanden…</string>
+    <string name="dailyReminderMsg">Erhalte eine tägliche Erinnerungsbenachrichtigung.</string>
+    <string name="strMsgNoVerseTiming">Das gesamte Kapitel als Audio wiedergeben, ohne die Verse zu synchronisieren</string>
+    <string name="notification_permission">Benachrichtigungsberechtigung</string>
+    <string name="onboardDescTafsir">Wähle einen Kommentar aus, den du neben den Versen lesen möchtest. In den Einstellungen kannst du Tafsirs herunterladen und verwalten.</string>
+    <string name="favourites">Favoriten</string>
+    <string name="stopAutoScroll">Automatisches Scrollen deaktivieren</string>
+    <string name="donate">Unterstützte uns</string>
+    <string name="quran_and_science">Koran und Wissenschaft</string>
+    <string name="about_this_page">Über diese Seite</string>
+    <string name="about_quran_science_msg">Die Inhalte auf dieser Seite stammen aus dem Buch \"Der Qur ́an und Modern Science: Kompatibel oder unverträglich\" von Dr. Zakir Naik .\n\nDie gezeigten Bilder dienen nur zum illustrativen Zweck.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d Verweise</string>
+    <string name="once">Einmal</string>
+    <string name="twice">Zweimal</string>
+    <string name="nTimes" formatted="false">%d mal</string>
+    <string name="msgRepeat">Lege fest, wie oft jeder Vers abgespielt werden soll, bevor zum nächsten übergegangen wird. Diese Option ist nur verfügbar, wenn in den Audio-Optionen „Nur Koran abspielen“ aktiviert ist.</string>
+    <string name="notSupported">Nicht unterstützt</string>
+    <string name="missingTimingData" formatted="false">Es fehlen Timing-Daten für %s – die Wiedergabe ist nicht möglich.</string>
+    <string name="expandedPlayerModeControls">Bedienelemente</string>
+    <string name="expandedPlayerModeSpotlight">Rampenlicht</string>
+    <string name="theme_default">Vorgabe</string>
+    <string name="theme_blue">Blau</string>
+    <string name="theme_red">Rot</string>
+    <string name="theme_purple">Lila</string>
+    <string name="theme_violet">Violett</string>
+    <string name="theme_yellow">Gelb</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_colors">Design Farben</string>
+    <string name="theme_mode">Design Modus</string>
+    <string name="dynamic_color">Dynamische Farbe</string>
+    <string name="dynamic_color_description">Die Farbe des Designs an die Systemfarben anpassen</string>
+    <string name="textSizeVerseByVerseOnly">Diese Einstellung wird nicht im Kodex-Modus angewendet.</string>
+    <string name="sortBy">Sortieren nach</string>
+    <string name="alphabetically">Alphabetisch</string>
+    <string name="chronological">Chronologische Reihenfolge</string>
+    <string name="translationHelp">Ist deine Sprache nicht dabei? Hilf mit, den Text zu übersetzen oder zu verbessern, damit er für mehr Menschen zugänglich wird!</string>
+    <string name="learnMore">Mehr erfahren</string>
+    <string name="playbackCount">Anzahl der Wiedergabe</string>
 </resources>
