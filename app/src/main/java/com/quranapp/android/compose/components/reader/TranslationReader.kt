@@ -75,6 +75,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -341,7 +342,7 @@ private fun TranslationModePage(
     val playerState = LocalRecitation.current
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
-    val isRtl = TranslUtils.isRtl(item.translationSlug)
+    val isRtl = StringUtils.isRtlLanguage(item.translationSlug)
     val colors = colorScheme
 
     val sections = remember(item.sections, isPlaying, playingVerse, colors) {

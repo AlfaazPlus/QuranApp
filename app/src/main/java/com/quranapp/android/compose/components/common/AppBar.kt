@@ -158,7 +158,7 @@ private fun AppBarSearchField(
         },
         trailingIcon = if (query.isNotEmpty()) {
             {
-                SimpleTooltip(text = stringResource(R.string.strLabelClose)) {
+                SimpleTooltip(text = stringResource(R.string.clear)) {
                     IconButton(
                         onClick = { onQueryChange("") },
                     ) {

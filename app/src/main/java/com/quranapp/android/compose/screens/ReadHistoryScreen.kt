@@ -102,7 +102,7 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
             allHistories.itemCount == 0 -> {
                 MessageCard(
                     icon = R.drawable.dr_icon_history,
-                    messageRes = R.string.strMsgReadHistoryNoItems,
+                    message = stringResource(R.string.strMsgReadHistoryNoItems),
                     modifier = Modifier.padding(paddingValues),
                 )
             }

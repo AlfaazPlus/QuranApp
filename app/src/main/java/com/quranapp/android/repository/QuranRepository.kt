@@ -27,6 +27,7 @@ class QuranRepository(
     private val extDatabase: ExternalQuranDatabase
 ) {
     private val mushafDao get() = database.mushafDao()
+    private val arabicSearchDao get() = database.arabicSearchDao()
     private val ayahDao get() = database.ayahDao()
     private val ayahWordDao get() = database.ayahWordDao()
     private val surahDao get() = database.surahDao()
@@ -600,6 +601,12 @@ class QuranRepository(
                 .sortedWith(compareBy<NavigationUnit> { it.type.name }.thenBy { it.unitNo })
         }
     }
+
+    suspend fun arabicTextSearch(
+        ftsQuery: String,
+        limit: Int,
+        offset: Int,
+    ) = arabicSearchDao.pageMatchedAyahs(ftsQuery, limit, offset)
 
     suspend fun searchSurahNos(query: String): List<Int> {
         return surahSearchDao.searchSurahNos(

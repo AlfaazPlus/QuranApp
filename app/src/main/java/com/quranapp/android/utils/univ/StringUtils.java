@@ -159,11 +159,13 @@ public abstract class StringUtils {
 
     public static boolean isRtlLanguage(String langCode) {
         String[] rtlLangs = {"ar", "fa", "ur", "ps", "sd", "ug", "dv", "he", "yi", "ku", "syr", "az-Arab", "ckb"};
+
         for (String rtlLang : rtlLangs) {
             if (rtlLang.equalsIgnoreCase(langCode)) {
                 return true;
             }
         }
+
         return false;
     }
 }

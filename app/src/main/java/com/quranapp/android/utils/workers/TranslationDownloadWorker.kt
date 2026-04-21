@@ -1,3 +1,5 @@
+package com.quranapp.android.utils.workers
+
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -18,6 +20,7 @@ import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
 import com.quranapp.android.utils.univ.Keys
@@ -111,6 +114,8 @@ class TranslationDownloadWorker(
         QuranTranslationFactory(ctx).use {
             it.dbHelper.storeTranslation(bookInfo, tmpFile.readText())
         }
+
+        SearchIndexScheduler.enqueueSlug(ctx.applicationContext, bookInfo.slug)
 
         removeFromPendingAction(ctx, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
         val savedTranslations = ReaderPreferences.getTranslations().toMutableSet()

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.univ.StringUtils
 
 
 @Composable
@@ -38,7 +39,7 @@ fun TranslationText(
                     modifier = Modifier.fillMaxWidth(),
                     color = if (isDark) colorScheme.onBackground.alpha(0.8f) else colorScheme.onBackground,
                     style = TextStyle(
-                        textDirection = if (TranslUtils.isUrdu(it.first)) TextDirection.Rtl else TextDirection.Ltr,
+                        textDirection = if (StringUtils.isRtlLanguage(it.first)) TextDirection.Rtl else TextDirection.Ltr,
                     )
                 )
             }

@@ -211,14 +211,14 @@ private fun VerseSerial(verse: VerseWithDetails) {
         modifier = Modifier
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
-            .background(colorResource(R.color.colorBGLightGrey))
+            .background(colorScheme.surface)
             .clickable(
                 onClick = {
                     context.copyToClipboard(verse.id.toString())
                 },
             )
             .padding(horizontal = 8.dp, vertical = 4.dp),
-        color = colorResource(R.color.colorIcon),
+        color = colorScheme.onSurface,
         style = typography.labelLarge,
     )
 }

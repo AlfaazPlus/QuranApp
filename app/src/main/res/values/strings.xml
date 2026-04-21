@@ -4,6 +4,7 @@
     <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
     <string name="strTitleDownloadSunnahApp" translatable="false">Download SunnahApp</string>
     <string name="strLabelClose">Close</string>
+    <string name="clear">Clear</string>
     <string name="strLabelGotIt">Got it</string>
     <string name="strLabelCancel">Cancel</string>
     <string name="strLabelApply">Apply</string>
@@ -23,6 +24,7 @@
     <string name="strLabelOpenInReader">Open in Reader</string>
     <string name="strLabelRead">Read »</string>
     <string name="strLabelViewAll">View all</string>
+    <string name="strLabelAll">All</string>
     <string name="strLabelSkip">Skip</string>
     <string name="strLabelNext">Next</string>
     <string name="strLabelPrevious">Previous</string>
@@ -79,6 +81,7 @@
     <string name="strTitleGotoVerseNo" formatted="false">Go to Verse %d</string>
     <string name="strTitleReadVerseRange" formatted="false">Read Verses %1$d - %2$d</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Read tafsir of verse %d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir for verse %1$d:%2$d</string>
     <string name="textSizes">Text sizes</string>
     <string name="strTitleReaderTextSizeArabic">Arabic text size</string>
     <string name="strTitleReaderTextSizeTransl">Translation text size</string>
@@ -189,6 +192,7 @@
     <string name="strLabelIncludeFootnotes">Include footnotes</string>
     <string name="strLabelQuickLinks">Quick links</string>
     <string name="strLabelLater">Later</string>
+    <string name="titleGlobalSearch">Global Search</string>
     <string name="strHintSearch">Search</string>
     <string name="strHintSearchQuran">Type a term e.g., “Life”</string>
     <string name="strHintSearchProphet">Search prophet</string>
@@ -300,6 +304,7 @@
     <string name="nItem" formatted="false">%d item</string>
     <string name="nItems" formatted="false">%d items</string>
     <string name="noItems">No items</string>
+    <string name="noResults">No results</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
     <string name="place" formatted="false">%d place</string>
@@ -322,6 +327,7 @@
     <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Merciful</string>
     <string name="msgClearReadHistory">Clear read history</string>
     <string name="msgClearSearchHistory">Clear search history</string>
+    <string name="strMsgSearchHistoryDeleteAll">All search history will be removed.</string>
     <string name="titleResourceDownloadSource">Resource download source</string>
     <string name="msgResourceDownloadSource">Use this option to download Quran data from a different source if one is not working</string>
     <string name="titleArabicTextToggle">Show Arabic Verse Text</string>
@@ -408,4 +414,12 @@
     <string name="playWord">Play word</string>
     <string name="previousWord">Previous word</string>
     <string name="nextWord">Next word</string>
+    <string name="results">Results</string>
+    <string name="titleRecentSearches">Recent searches</string>
+    <string name="searchTipsTitle">Search tips</string>
+    <string name="searchTipDirectVerse">Read a verse or tafsir directly</string>
+    <string name="searchTipChapter">Search chapters</string>
+    <string name="searchTipDirectJuz">Jump to “Chapter 30”, “Juz 30” or “Hizb 30”</string>
+    <string name="searchTipTranslation">Search in the translations</string>
+    <string name="searchTipArabic">Search in the Quran text</string>
 </resources>

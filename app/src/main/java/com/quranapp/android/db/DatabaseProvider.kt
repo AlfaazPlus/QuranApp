@@ -2,6 +2,7 @@ package com.quranapp.android.db
 
 import android.content.Context
 import androidx.room.Room
+import com.quranapp.android.db.searchindex.SearchIndexDatabase
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.UserRepository
 
@@ -15,6 +16,9 @@ object DatabaseProvider {
 
     @Volatile
     private var quranRepository: QuranRepository? = null
+
+    @Volatile
+    private var searchIndexDatabase: SearchIndexDatabase? = null
 
     fun getUserDatabase(context: Context): UserDatabase {
         return userDatabase ?: synchronized(this) {
@@ -66,6 +70,19 @@ object DatabaseProvider {
                 getQuranDatabase(context),
                 getExternalQuranDatabase(context)
             ).also { quranRepository = it }
+        }
+    }
+
+    fun getSearchIndexDatabase(context: Context): SearchIndexDatabase {
+        return searchIndexDatabase ?: synchronized(this) {
+            searchIndexDatabase ?: Room.databaseBuilder(
+                context.applicationContext,
+                SearchIndexDatabase::class.java,
+                "SearchIndex.db",
+            )
+                .fallbackToDestructiveMigration(true)
+                .build()
+                .also { searchIndexDatabase = it }
         }
     }
 }

@@ -17,6 +17,7 @@ import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.compose.components.reader.MushafLineLayout
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.extensions.getDimension
+import com.quranapp.android.utils.univ.StringUtils
 
 data class TextBuilderParams(
     val context: Context,
@@ -76,11 +77,12 @@ fun getTranslationTextStyle(
     params: TranslationTextStyleParams,
     baseLineHeightMultiplier: Float = 1.5f
 ): TextStyle {
+    val isRtl = StringUtils.isRtlLanguage(params.slug)
     val isUrdu = TranslUtils.isUrdu(params.slug)
     val resolvedFontSize = 16.sp * params.sizeMultiplier
 
     return TextStyle(
-        textDirection = if (isUrdu) TextDirection.Rtl else TextDirection.Ltr,
+        textDirection = if (isRtl) TextDirection.Rtl else TextDirection.Ltr,
         fontFamily = if (isUrdu) fontUrdu else fontFamily,
         platformStyle = PlatformTextStyle(
             includeFontPadding = true
