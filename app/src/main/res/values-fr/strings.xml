@@ -276,7 +276,7 @@
     <string name="autoScrollSpeed">Régler la vitesse</string>
     <string name="msgExtractingFonts">Extraction des polices</string>
     <string name="strLabelDownloaded">Téléchargé</string>
-    <string name="strTitleDeleteTafsir">Supprimer le tafsir ?</string>
+    <string name="strTitleDeleteTafsir">Supprimer le tafsir ?</string>
     <string name="about_quran_science_msg"></string>
     <string name="searchTipsTitle"></string>
     <string name="strLabelScienceReferences" formatted="false"></string>
