@@ -152,7 +152,7 @@
     <string name="scriptCanBeFreedUp" formatted="false">Жүктөлгөн %d шрифт өчүрүлө алат</string>
     <string name="tafseerCanBeFreedUp" formatted="false">Сакталган %d тафсир тазаланат</string>
     <string name="labelFreeUpSpace">Орун бошотуу</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s  %2$s    Калыбына келтирүү үчүн кайра жүктөшүңүз керек.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s %2$s Калыбына келтирүү үчүн кайра жүктөшүңүз керек.</string>
     <string name="titleRecitationCleanup">Окуу файлын өчүрүңүзбү?</string>
     <string name="titleScriptCleanup">Шрифт өчүрүңүзбү?</string>
     <string name="msgScriptCleanup" formatted="false">%s шрифт өчүрүлөт, кайра жүктөшүңүз керек.</string>
@@ -377,11 +377,9 @@
     <string name="chapterFilterLengthMedium">Орто (50–150 аят)</string>
     <string name="chapterFilterLengthLong">Узун (150+ аят)</string>
     <string name="clearFilters">Чыпкаларды тазалоо</string>
-
     <string name="results">Натыйжалар</string>
     <string name="titleRecentSearches">Акыркы издөөлөр</string>
     <string name="previousWord">Мурунку сөз</string>
-
     <string name="wordByWord">Сөзмө-сөз котормо</string>
     <string name="wbwShowTranslation">Котормосун көрсөтүү</string>
     <string name="wbwShowTransliteration">Транслитерацияны көрсөтүү</string>
@@ -391,12 +389,10 @@
     <string name="wbwTextSize">Текст өлчөмү</string>
     <string name="selectWbwLanguage">Тилди тандаңыз</string>
     <string name="noWbwAvailable">Сөзмө-сөз функциясын иштетүү үчүн төмөндөгү тил топтомун жүктөп алыңыз.</string>
-
     <string name="deleteData">Маалыматтар өчүрүлсүнбү?</string>
     <string name="wordNo">Сөз %d</string>
     <string name="playWord">Сөздү ойнотуу</string>
     <string name="nextWord">Кийинки сөз</string>
-
     <string name="searchTipsTitle">Издөө боюнча кеңештер</string>
     <string name="searchTipDirectVerse">Түз өтүү</string>
     <string name="searchTipChapter">Сүрө аталышы боюнча издөө</string>
