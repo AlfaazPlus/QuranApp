@@ -33,6 +33,7 @@ sealed class SearchResultMatch {
 class SearchPagingSource(
     private val application: Application,
     private val query: String,
+    private val sourceQuran: Boolean
 ) : PagingSource<Int, SearchResult>() {
 
     override suspend fun load(
@@ -42,18 +43,7 @@ class SearchPagingSource(
             val offset = params.key ?: 0
             val limit = params.loadSize
 
-            val isArabic = query.any { ch ->
-                when (Character.UnicodeBlock.of(ch)) {
-                    Character.UnicodeBlock.ARABIC,
-                    Character.UnicodeBlock.ARABIC_SUPPLEMENT,
-                    Character.UnicodeBlock.ARABIC_EXTENDED_A,
-                    Character.UnicodeBlock.ARABIC_PRESENTATION_FORMS_A,
-                    Character.UnicodeBlock.ARABIC_PRESENTATION_FORMS_B -> true
-                    else -> false
-                }
-            }
-
-            if (isArabic) {
+            if (sourceQuran) {
                 val normalized = SearchNormalizer.normalize(
                     query,
                     ScriptType.ARABIC

@@ -21,7 +21,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,6 +72,7 @@ fun TextSearchResults(viewModel: QuranSearchViewModel, results: LazyPagingItems<
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
 
     LazyColumn(
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 20.dp, bottom = 120.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
@@ -88,7 +88,10 @@ fun TextSearchResults(viewModel: QuranSearchViewModel, results: LazyPagingItems<
             }
         ) {
             val result = results[it] ?: return@items
+
             TextSearchResultCard(result) {
+                viewModel.recordCurrentSearchQuery()
+
                 quickRefData = QuickReferenceData(
                     chapterNo = result.chapterNo,
                     verses = result.verseNo.toString(),
@@ -105,7 +108,6 @@ fun TextSearchResults(viewModel: QuranSearchViewModel, results: LazyPagingItems<
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            viewModel.recordCurrentSearchQuery()
             ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
         },
         onClose = { quickRefData = null },

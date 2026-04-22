@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +23,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -328,6 +328,7 @@ private fun ExpandedPlayerHeader(
             .statusBarsPadding()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         IconButton(onClick = onCollapse) {
             Icon(
@@ -337,7 +338,7 @@ private fun ExpandedPlayerHeader(
                 tint = PlayerContentColor,
             )
         }
-        Spacer(modifier = Modifier.weight(1f))
+
         ModeTabs(
             selected = mode,
             onSelect = onModeChange,
@@ -347,47 +348,53 @@ private fun ExpandedPlayerHeader(
 
 
 @Composable
-private fun ModeTabs(
+private fun RowScope.ModeTabs(
     selected: ExpandedPlayerMode,
     onSelect: (ExpandedPlayerMode) -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .widthIn(max = 220.dp)
-            .clip(RoundedCornerShape(999.dp))
-            .background(Color.White.copy(alpha = 0.08f))
-            .padding(3.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+    Box(
+        Modifier.weight(1f),
+        contentAlignment = Alignment.CenterEnd
     ) {
-        ExpandedPlayerMode.entries.forEach { tab ->
-            val isSelected = tab == selected
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(RoundedCornerShape(999.dp))
-                    .background(
-                        if (isSelected) Color.White.copy(alpha = 0.14f) else Color.Transparent,
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(999.dp))
+                .background(Color.White.copy(alpha = 0.08f))
+                .padding(3.dp),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            ExpandedPlayerMode.entries.forEach { tab ->
+                val isSelected = tab == selected
+
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(
+                            if (isSelected) Color.White.copy(alpha = 0.14f) else Color.Transparent,
+                        )
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = { onSelect(tab) },
+                        )
+                        .padding(horizontal = 10.dp, vertical = 7.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(
+                            when (tab) {
+                                ExpandedPlayerMode.Controls -> R.string.expandedPlayerModeControls
+                                ExpandedPlayerMode.Spotlight -> R.string.expandedPlayerModeSpotlight
+                            },
+                        ),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                        color = if (isSelected) PlayerContentColor else PlayerContentColor.alpha(
+                            0.55f
+                        ),
+                        maxLines = 1,
                     )
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = { onSelect(tab) },
-                    )
-                    .padding(horizontal = 10.dp, vertical = 7.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(
-                        when (tab) {
-                            ExpandedPlayerMode.Controls -> R.string.expandedPlayerModeControls
-                            ExpandedPlayerMode.Spotlight -> R.string.expandedPlayerModeSpotlight
-                        },
-                    ),
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
-                    color = if (isSelected) PlayerContentColor else PlayerContentColor.alpha(0.55f),
-                    maxLines = 1,
-                )
+                }
             }
         }
     }

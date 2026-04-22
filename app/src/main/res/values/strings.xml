@@ -416,6 +416,7 @@
     <string name="nextWord">Next word</string>
     <string name="results">Results</string>
     <string name="titleRecentSearches">Recent searches</string>
+    <string name="searchInQuran">Search in the Quran</string>
     <string name="searchTipsTitle">Search tips</string>
     <string name="searchTipDirectVerse">Read a verse or tafsir directly</string>
     <string name="searchTipChapter">Search chapters</string>
