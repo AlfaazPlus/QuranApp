@@ -178,8 +178,7 @@
     <string name="strMsgSomethingWrong">কিছু একটা সমস্যা হয়েছে!</string>
     <string name="strMsgTryLater">অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।</string>
     <string name="strMsgUpdateAvailable4Dialog">আপডেট উপলব্ধ! \nঅনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
-    <string name="strMsgUpdateAvailable2Continue">আপডেট প্রয়োজন!
-\nচালিয়ে যেতে অনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
+    <string name="strMsgUpdateAvailable2Continue">আপডেট প্রয়োজন! \nচালিয়ে যেতে অনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
     <string name="strLabelAllChapters">সকল সূরা</string>
     <string name="strMsgReferenceInQuran" formatted="false">কুরআনে %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">মোট %2$dটি স্থানে %1$s সম্পর্কিত আয়াত খুঁজে পাওয়া গেছে।</string>
@@ -207,7 +206,7 @@
     <string name="createIssue">ইস্যু তৈরি করুন</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%dটি সংরক্ষিত তাফসির পরিষ্কার করা যেতে পারে।</string>
     <string name="labelFreeUpSpace">জায়গা খালি করুন</string>
-    <string name="titleRecitationCleanup">তেলাওয়াত মুছে ফেলবেন\?</string>
+    <string name="titleRecitationCleanup">তেলাওয়াত মুছে ফেলবেন?</string>
     <string name="appLogs">অ্যাপ লগসমূহ</string>
     <string name="nScriptsAndFonts" formatted="false">%1$dটি স্ক্রিপ্ট এবং %2$dটি ফন্ট</string>
     <string name="nothingToCleanup">পরিষ্কার করার মতো কিছু নেই।</string>
@@ -246,17 +245,12 @@
     <string name="strMsgDuaFor" formatted="false">%s এর জন্য দুআ</string>
     <string name="msgDownloadKFQPCResources">এই স্ক্রিপ্টটি ব্যবহার করার আগে আপনাকে নিম্নলিখিত সংস্থানগুলি ডাউনলোড করতে হবে:</string>
     <string name="copiedToClipboard">ক্লিপবোর্ডে কপি করা হয়েছে।</string>
-    <string name="storageCleanupMessage">অব্যবহৃত ডাউনলোড করা সংস্থানগুলি মুছে স্থান খালি করুন৷ এটি কোনো বুকমার্ক বা সেটিংস মুছে ফেলবে না।
-\n
-\nনিম্নলিখিত সংস্থানগুলি খালি করা যেতে পারে:</string>
+    <string name="storageCleanupMessage">অব্যবহৃত ডাউনলোড করা সংস্থানগুলি মুছে স্থান খালি করুন৷ এটি কোনো বুকমার্ক বা সেটিংস মুছে ফেলবে না। \n \nনিম্নলিখিত সংস্থানগুলি খালি করা যেতে পারে:</string>
     <string name="msgVerseReminderNotifPermission">আয়াতের অনুস্মারক সক্রিয় করতে বিজ্ঞপ্তি অনুমতি প্রয়োজন।</string>
     <string name="scriptCanBeFreedUp" formatted="false">%dটি ডাউনলোড করা স্ক্রিপ্ট এবং তাদের ফন্টগুলি বাদ দেওয়া যেতে পারে।</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nআপনাকে এটি আবার ডাউনলোড করতে হবে।</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nআপনাকে এটি আবার ডাউনলোড করতে হবে।</string>
     <string name="msgRecitationCleanup" formatted="false">%s থেকে সমস্ত সঞ্চিত তেলাওয়াত মুছে ফেলা হবে।</string>
-    <string name="titleScriptCleanup">স্ক্রিপ্ট মুছে ফেলতে চান\?</string>
+    <string name="titleScriptCleanup">স্ক্রিপ্ট মুছে ফেলতে চান?</string>
     <string name="labelTranslation">অনুবাদ</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d তেলাওয়াতকারী থেকে %1$dটি সঞ্চিত তেলাওয়াত ফাইল বাদ দেওয়া যেতে পারে।</string>
     <string name="strMsgDuaOf" formatted="false">%s-এর দুআ</string>
