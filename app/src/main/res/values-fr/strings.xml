@@ -64,9 +64,9 @@
     <string name="strTitleTafsir">Tafsîr</string>
     <string name="strTitleAboutSurah">À propos de la sourate</string>
     <string name="strTitleDownloadTranslations">Télécharger</string>
-    <string name="strTitleBookmarkDeleteThis">Supprimer ce marque-page \?</string>
-    <string name="strTitleBookmarkDeleteAll">Supprimer tous les marques-pages \?</string>
-    <string name="strTitleTranslDelete">Supprimer la traduction \?</string>
+    <string name="strTitleBookmarkDeleteThis">Supprimer ce marque-page ?</string>
+    <string name="strTitleBookmarkDeleteAll">Supprimer tous les marques-pages ?</string>
+    <string name="strTitleTranslDelete">Supprimer la traduction ?</string>
     <string name="strTitleShareVerse">Partager le verset</string>
     <string name="strTitleFeaturedQuran">Lecture en vedette</string>
     <string name="strTitleProphets">Prophètes</string>
@@ -119,7 +119,7 @@
     <string name="strMsgReadShowupHere">Votre historique de lecture s\'affichera ici.</string>
     <string name="strMsgReadHistoryNoItems">Pas d\'historique de lecture</string>
     <string name="strMsgReadHistoryDeleteAll">Tous les historiques de lecture seront supprimés.</string>
-    <string name="strMsgHistoryRemove">Supprimer cet historique \?</string>
+    <string name="strMsgHistoryRemove">Supprimer cet historique ?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" supprimé de l\'historique</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Total des résultats trouvés dans %1$s : %2$d</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Aucun résultat trouvé dans %s. Veuillez vérifier les filtres de recherche ou rechercher dans une autre traduction.</string>
@@ -140,12 +140,11 @@
     <string name="strAyatulKursi">Âyatul Kursî</string>
     <string name="strTitleInfo">Info !</string>
     <string name="strMsgUpdateAvailable">MISE À JOUR DISPONIBLE ! Veuillez mettre à jour l\'application pour obtenir les dernières fonctionnalités.</string>
-    <string name="strMsgUpdateAvailable4Dialog">MISE A JOUR DISPONIBLE !
-\nVeuillez mettre à jour l\'application.</string>
+    <string name="strMsgUpdateAvailable4Dialog">MISE A JOUR DISPONIBLE ! \nVeuillez mettre à jour l\'application.</string>
     <string name="strLabelAllChapters">Tous les chapitres</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s dans Le Coran</string>
     <string name="strMsgReferenceDuas">Quelques invocations provenant du Coran.</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">Supprimer %d marques-pages \?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Supprimer %d marques-pages ?</string>
     <string name="strTitleVOTD">Verset du jour</string>
     <string name="strTitlePrivacyPolicy">Politique de confidentialité</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d traductions supplémentaires</string>
@@ -174,8 +173,7 @@
     <string name="strTitleTranslations">Traductions</string>
     <string name="strTitleFilters">Filtres</string>
     <string name="strTitleSelectReciter">Sélectionner le récitateur</string>
-    <string name="strMsgUpdateAvailable2Continue">MISE A JOUR REQUISE !
-\nVeuillez mettre à jour l\'application pour continuer.</string>
+    <string name="strMsgUpdateAvailable2Continue">MISE A JOUR REQUISE ! \nVeuillez mettre à jour l\'application pour continuer.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Un seul résultat trouvé dans %s</string>
     <string name="strMsgTranslNoneSelected">Aucune traduction n\'est sélectionnée. Accédez aux paramètres pour rechercher des traductions.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Un maximum de %d traductions peuvent être sélectionnés en même temps. Veuillez en désélectionner une avant d\'en sélectionner une autre. Ceci est fait afin d\'éviter une perte de performances.</string>
@@ -196,13 +194,11 @@
     <string name="createIssue">Créer un problème</string>
     <string name="pasteCrashLogGithubIssue">Rapport de plantage copié dans le presse-papiers. Veuillez le coller dans l\'onglet issue du GitHub.</string>
     <string name="github">GitHub</string>
-    <string name="titleDownloadScriptResources">Télécharger les ressources pour ce type d\'écriture \?</string>
+    <string name="titleDownloadScriptResources">Télécharger les ressources pour ce type d\'écriture ?</string>
     <string name="msgDownloadKFQPCResources">Les ressources suivantes doivent être téléchargées avant que vous puissiez utiliser ce type d\'écriture :</string>
     <string name="msgVerseReminderNotifPermission">La permission de notification est nécessaire pour activer le rappel de verset.</string>
     <string name="titleStorageCleanup">Libérer de l\'espace</string>
-    <string name="storageCleanupMessage">Libérez de l\'espace en supprimant des ressources téléchargées non utilisées. Ceci ne supprimera pas de marque-page ou paramètres.
-\n
-\nLes ressources suivantes peuvent être libérées :</string>
+    <string name="storageCleanupMessage">Libérez de l\'espace en supprimant des ressources téléchargées non utilisées. Ceci ne supprimera pas de marque-page ou paramètres. \n \nLes ressources suivantes peuvent être libérées :</string>
     <string name="translationCanBeFreedUp" formatted="false">%d traductions téléchargées peuvent être libérées.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d fichiers de récitations sauvegardées de %2$d récitateurs peuvent être libérés.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d types d\'écritures et leurs polices d\'écriture peuvent être libérés.</string>
@@ -213,14 +209,11 @@
     <string name="verseSyncOff">Synchronisation de verset : DESACTIVEE</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d tafsirs sauvegardés peuvent être libérés.</string>
     <string name="labelFreeUpSpace">Libérer de l\'espace</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nVous devrez le retélécharger.</string>
-    <string name="titleScriptCleanup">Supprimer le type d\'écriture \?</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nVous devrez le retélécharger.</string>
+    <string name="titleScriptCleanup">Supprimer le type d\'écriture ?</string>
     <string name="msgScriptCleanup" formatted="false">Le type d\'écriture %s et toutes ses polices d\'écriture sauvegardées seront supprimées. Vous devrez les retéléchargez pour les utiliser à nouveau.</string>
     <string name="msgRecitationCleanup" formatted="false">Toutes les récitations sauvegardées de %s seront supprimées.</string>
-    <string name="titleRecitationCleanup">Supprimer la récitation \?</string>
+    <string name="titleRecitationCleanup">Supprimer la récitation ?</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d types d\'écriture et %2$d polices d\'écriture</string>
     <string name="nothingToCleanup">Il n\'y a rien à effacer.</string>
     <string name="strPreviewTextTransl">Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux</string>
