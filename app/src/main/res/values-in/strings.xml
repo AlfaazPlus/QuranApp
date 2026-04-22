@@ -337,4 +337,9 @@
     <string name="textSizeVerseByVerseOnly">Pengaturan ini tidak diterapkan pada mode mushaf</string>
     <string name="chronological">Urutan Kronologis</string>
     <string name="recitationDownloadSomeFailed">Beberapa surah gagal. Ketuk ulangi untuk mengunduh surah yang gagal terunduh.</string>
+    <string name="searchTipArabic"></string>
+    <string name="wbwRecitation"></string>
+    <string name="searchTipChapter"></string>
+    <string name="searchInQuran"></string>
+    <string name="titleGlobalSearch"></string>
 </resources>
