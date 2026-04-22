@@ -188,12 +188,10 @@
     <string name="strTitleScripts">Scripts</string>
     <string name="labelDownload">Descargar</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fuentes: ~%dMB</string>
-    <string name="titleDownloadScriptResources">¿Descargar recursos para este script\?</string>
+    <string name="titleDownloadScriptResources">¿Descargar recursos para este script?</string>
     <string name="textDownloading">Descargando…</string>
     <string name="msgVerseReminderNotifPermission">El permiso de notificación es necesario para activar el recordatorio de verso.</string>
-    <string name="storageCleanupMessage">Libera espacio eliminando los recursos descargados que no utilices. Esto no borrará ningún marcador o configuración.
-\n
-\nSe pueden liberar los siguientes recursos:</string>
+    <string name="storageCleanupMessage">Libera espacio eliminando los recursos descargados que no utilices. Esto no borrará ningún marcador o configuración. \n \nSe pueden liberar los siguientes recursos:</string>
     <string name="translationCanBeFreedUp" formatted="false">Pueden liberarse %d traducciones descargadas.</string>
     <string name="recitationCanBeFreedUp" formatted="false">Se pueden liberar %1$d archivos de recitado almacenados de %2$d recitadores.</string>
     <string name="scriptCanBeFreedUp" formatted="false">Se pueden liberar %d scripts descargados y sus fuentes.</string>
@@ -206,18 +204,15 @@
     <string name="msgDownloadingFonts">Descargar las fuentes</string>
     <string name="copiedToClipboard">Copiado al portapapeles.</string>
     <string name="labelFreeUpSpace">Liberar espacio</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nDeberá descargarlo de nuevo.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nDeberá descargarlo de nuevo.</string>
     <string name="strPreviewTextTransl">En el nombre de Dios, el Compasivo con toda la creación, el Misericordioso con los creyentes</string>
     <string name="nItems">%d artículos</string>
     <string name="nItem">%d artículo</string>
     <string name="verseSyncOn">Sincronización de los versos : ON</string>
     <string name="verseSyncOff">Sincronización de los versos : OFF</string>
-    <string name="titleScriptCleanup">¿Borrar el script\?</string>
+    <string name="titleScriptCleanup">¿Borrar el script?</string>
     <string name="msgScriptCleanup" formatted="false">El script %s y todas sus fuentes almacenadas serán eliminadas. Deberá volver a descargarlo para poder utilizarlas.</string>
-    <string name="titleRecitationCleanup">¿Suprimir el recitado\?</string>
+    <string name="titleRecitationCleanup">¿Suprimir el recitado?</string>
     <string name="msgRecitationCleanup" formatted="false">Se borrarán todas las recitaciones almacenadas de %s.</string>
     <string name="nFiles" formatted="false">%d archivos</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts y %2$d fuentes</string>
@@ -256,10 +251,7 @@
     <string name="titleSolutionVerses">Soluciones del Corán</string>
     <string name="labelPreviousTafsir">interpretación (tafsir) anterior</string>
     <string name="labelNextTafsir">Interpretación (tafsir) siguiente</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp es una aplicación gratuita y de código abierto para leer y explorar el Noble Corán con traducciones. Esta aplicación tiene una interfaz agradable y limpio con características como tafsir, recitación, recordatorio y muchos más.
-\n
-\nDESCARGAR AHORA:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp es una aplicación gratuita y de código abierto para leer y explorar el Noble Corán con traducciones. Esta aplicación tiene una interfaz agradable y limpio con características como tafsir, recitación, recordatorio y muchos más. \n \nDESCARGAR AHORA: \n%s</string>
     <string name="titleEtiquetteVerses">Etiqueta en el Corán</string>
     <string name="strMsgDuaOf" formatted="false">Súplica de %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s en el Corán</string>
