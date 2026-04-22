@@ -251,10 +251,7 @@
     <string name="labelNextTafsir">Tafsir selanjutnya</string>
     <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
     <string name="titleSolutionVerses">Solusi dari Al Quran</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Alquran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, pengajian, pengingat, dan banyak lagi.
-\n
-\nUNDUH SEKARANG:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Alquran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, pengajian, pengingat, dan banyak lagi. \n \nUNDUH SEKARANG: \n%s</string>
     <string name="titleEtiquetteVerses">Adab dalam Al Quran</string>
     <string name="strMsgDuaOf" formatted="false">Dua dari %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %s di al-Quran</string>
