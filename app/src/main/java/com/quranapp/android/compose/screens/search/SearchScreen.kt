@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.search
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
@@ -16,10 +17,11 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -35,12 +37,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,8 +64,10 @@ import com.quranapp.android.compose.components.search.SearchHistorySuggestionStr
 import com.quranapp.android.compose.components.search.SurahSearchResults
 import com.quranapp.android.compose.components.search.TextSearchResults
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.QuranSearchViewModel
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @Composable
@@ -129,6 +136,8 @@ fun SearchScreen(
 
 @Composable
 private fun SearchBox(viewModel: QuranSearchViewModel) {
+    val context = LocalContext.current
+    val resources = LocalResources.current
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -136,6 +145,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
     val bgColor = colorScheme.background
 
     val query by viewModel.searchQuery.collectAsState()
+    val quranTextEnabled by viewModel.quranTextEnabled.collectAsState()
 
     OutlinedTextField(
         modifier = Modifier
@@ -175,21 +185,54 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
                 color = colorScheme.onBackground.alpha(0.6f)
             )
         },
-        trailingIcon = if (query.isNotEmpty()) {
-            {
-                SimpleTooltip(text = stringResource(R.string.clear)) {
+        trailingIcon = {
+            Row() {
+                if (query.isNotEmpty()) {
+                    SimpleTooltip(text = stringResource(R.string.clear)) {
+                        IconButton(
+                            onClick = { viewModel.onQueryChange("") },
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.dr_icon_close),
+                                contentDescription = stringResource(R.string.strLabelClose),
+                                modifier = Modifier.size(20.dp),
+                            )
+                        }
+                    }
+                }
+
+                SimpleTooltip(text = stringResource(R.string.searchTipArabic)) {
                     IconButton(
-                        onClick = { viewModel.onQueryChange("") },
+                        onClick = {
+                            viewModel.toggleQuranTextEnabled() {
+                                val stateResInt =
+                                    if (it) R.string.strLabelOn else R.string.strLabelOff
+
+                                MessageUtils.showRemovableToast(
+                                    context,
+                                    "${resources.getString(stateResInt)}: ${
+                                        resources.getString(
+                                            R.string.searchTipArabic
+                                        )
+                                    }",
+                                    Toast.LENGTH_LONG
+                                )
+                            }
+                        },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = if (quranTextEnabled) colorScheme.primary else LocalContentColor.current
+                        ),
+                        shape = shapes.medium
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.dr_icon_close),
-                            contentDescription = stringResource(R.string.strLabelClose),
+                            painter = painterResource(R.drawable.dr_icon_quran_script),
+                            contentDescription = stringResource(R.string.searchTipArabic),
                             modifier = Modifier.size(20.dp),
                         )
                     }
                 }
             }
-        } else null,
+        },
         value = query,
         onValueChange = viewModel::onQueryChange,
         textStyle = MaterialTheme.typography.titleSmall,
@@ -216,11 +259,21 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
     }
 
     val pagerState = rememberPagerState(
-        initialPage = 0, pageCount = { tabs.size })
+        initialPage = 0,
+        pageCount = { tabs.size },
+    )
 
     if (query.isBlank()) {
         SearchEmptyScrollContent(viewModel, Modifier.weight(1f))
         return
+    }
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }
+            .distinctUntilChanged()
+            .collect {
+                viewModel.recordCurrentSearchQuery()
+            }
     }
 
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
@@ -267,7 +320,8 @@ private fun SearchResultTabs(
         shadowElevation = 2.dp,
     ) {
         SecondaryTabRow(
-            selectedTabIndex = selectedTabIndex, containerColor = colorScheme.surfaceContainer
+            selectedTabIndex = selectedTabIndex,
+            containerColor = colorScheme.surfaceContainer,
         ) {
             tabs.forEachIndexed { index, tab ->
                 val isSelected = selectedTabIndex == index
@@ -306,7 +360,8 @@ private fun SearchResultTabs(
                                 }
                             }
                         }
-                    })
+                    },
+                )
             }
         }
     }

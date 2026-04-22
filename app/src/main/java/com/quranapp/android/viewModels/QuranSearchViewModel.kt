@@ -17,11 +17,11 @@ import com.quranapp.android.search.SearchQuickLinksParser
 import com.quranapp.android.search.SearchResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -38,6 +39,9 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
+
+    private val _quranTextEnabled = MutableStateFlow(false)
+    val quranTextEnabled: StateFlow<Boolean> = _quranTextEnabled
 
     private val _searchHistory = MutableStateFlow<List<SearchHistoryEntry>>(emptyList())
     val searchHistory: StateFlow<List<SearchHistoryEntry>> = _searchHistory
@@ -68,7 +72,10 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
         )
 
     val searchResults: Flow<PagingData<SearchResult>> = debouncedQuery
-        .flatMapLatest { query ->
+        .combine(quranTextEnabled) { query, sourceQuran ->
+            query to sourceQuran
+        }
+        .flatMapLatest { (query, sourceQuran) ->
             if (query.isBlank()) {
                 return@flatMapLatest flowOf(PagingData.empty())
             }
@@ -82,6 +89,7 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
                 SearchPagingSource(
                     application = getApplication(),
                     query = query,
+                    sourceQuran = sourceQuran,
                 )
             }.flow
         }
@@ -94,6 +102,13 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
 
     fun onQueryChange(value: String) {
         _searchQuery.value = value
+    }
+
+    fun toggleQuranTextEnabled(postRun: (Boolean) -> Unit) {
+        val newValue = !_quranTextEnabled.value
+        _quranTextEnabled.value = newValue
+
+        postRun(newValue)
     }
 
     fun refreshSearchHistory() {

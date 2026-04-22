@@ -22,7 +22,8 @@ import java.time.ZonedDateTime
 data class Recommendation(
     val title: String,
     val description: String,
-    val reference: RecommendationRef
+    val reference: RecommendationRef,
+    val notificationDedupeEpochDay: Long,
 )
 
 sealed class RecommendationRef {
@@ -39,11 +40,15 @@ object Recommended {
         val doc = loadDocument(context) ?: return emptyList()
         val strings = loadStrings(context)
 
+        val now = Instant.now()
+
         return doc.rules
-            .filter { it.enabled && it.matches(Instant.now(), doc.defaults?.timeZone) }
+            .filter { it.enabled && it.matches(now, doc.defaults?.timeZone) }
             .sortedByDescending { it.priority }
             .flatMap { rule ->
-                rule.toRecommendations(strings)
+                val dedupeEpochDay = rule.notificationDedupeEpochDay(now, doc.defaults?.timeZone)
+
+                rule.toRecommendations(strings, dedupeEpochDay)
             }.take(3)
     }
 
@@ -89,16 +94,86 @@ private data class Rule(
 private data class Schedule(val timeZone: String? = null, val clauses: List<Clause>)
 
 @Serializable
-private data class Clause(val weekdays: JsonElement? = null, val hourRanges: JsonElement? = null)
+private data class Clause(
+    val weekdays: JsonElement? = null,
+    val hourRanges: JsonElement? = null,
+) {
+    val hrRanges: HourRanges by lazy {
+        when (hourRanges) {
+            is JsonPrimitive ->
+                if (hourRanges.isString && hourRanges.content == "*") HourRanges.Wildcard
+                else HourRanges.Listed(emptyList())
+
+            is JsonArray ->
+                HourRanges.Listed(
+                    hourRanges.mapNotNull { item ->
+                        val r = item as? JsonArray ?: return@mapNotNull null
+                        if (r.size < 2) return@mapNotNull null
+                        HourRange(
+                            start = r[0].jsonPrimitive.intOrNull ?: 0,
+                            end = r[1].jsonPrimitive.intOrNull ?: 0,
+                        )
+                    },
+                )
+
+            else -> HourRanges.Listed(emptyList())
+        }
+    }
+}
+
+
+private sealed class HourRanges {
+    data object Wildcard : HourRanges()
+
+    data class Listed(val ranges: List<HourRange>) : HourRanges()
+}
+
+private data class HourRange(val start: Int, val end: Int) {
+    fun containsHour(hour: Int): Boolean =
+        if (start <= end) hour in start until end
+        else hour >= start || hour < end
+
+    fun dedupeEpochDay(zdt: ZonedDateTime): Long =
+        if (start > end) {
+            val date = zdt.toLocalDate()
+            if (zdt.hour < end) date.minusDays(1) else date
+        } else {
+            zdt.toLocalDate()
+        }.toEpochDay()
+}
 
 @Serializable
 private data class RuleCopy(val title: String, val description: String?)
 
 private fun Rule.matches(instant: Instant, defaultTz: String?): Boolean {
     val tz = schedule.timeZone ?: defaultTz ?: "local"
+
     val zoneId = if (tz.lowercase() == "local") ZoneId.systemDefault() else ZoneId.of(tz)
+
     val zdt = instant.atZone(zoneId)
+
     return schedule.clauses.any { it.matches(zdt) }
+}
+
+private fun Rule.notificationDedupeEpochDay(instant: Instant, defaultTz: String?): Long {
+    val tz = schedule.timeZone ?: defaultTz ?: "local"
+
+    val zoneId = if (tz.lowercase() == "local") ZoneId.systemDefault() else ZoneId.of(tz)
+
+    val zdt = instant.atZone(zoneId)
+
+    val clause = schedule.clauses.firstOrNull { it.matches(zdt) }
+        ?: return zdt.toLocalDate().toEpochDay()
+
+    // Epoch day for notification dedupe when this clause already matches [zdt]. For a wrapping
+    // hour range (start > end), hours after midnight belong to the calendar day when the range started.
+    return when (val hr = clause.hrRanges) {
+        HourRanges.Wildcard -> zdt.toLocalDate().toEpochDay()
+        is HourRanges.Listed -> {
+            hr.ranges.firstOrNull { it.containsHour(zdt.hour) }?.dedupeEpochDay(zdt)
+                ?: zdt.toLocalDate().toEpochDay()
+        }
+    }
 }
 
 private fun Clause.matches(zdt: ZonedDateTime): Boolean {
@@ -110,32 +185,19 @@ private fun Clause.matches(zdt: ZonedDateTime): Boolean {
         }
     } ?: true
 
-    val hourOk = hourRanges?.let { el ->
-        when (el) {
-            is JsonPrimitive -> el.content == "*"
-            is JsonArray -> el.any { range ->
-                val r = range.jsonArray
-
-                if (r.size < 2) return@any false
-
-                val start = r[0].jsonPrimitive.intOrNull ?: 0
-                val end = r[1].jsonPrimitive.intOrNull ?: 0
-
-                if (start <= end) {
-                    zdt.hour in start until end
-                } else {
-                    zdt.hour >= start || zdt.hour < end
-                }
-            }
-
-            else -> false
-        }
-    } ?: true
+    val hourOk = when (val hr = hrRanges) {
+        HourRanges.Wildcard -> true
+        is HourRanges.Listed -> hr.ranges.any { it.containsHour(zdt.hour) }
+    }
 
     return dayOk && hourOk
 }
 
-private fun Rule.toRecommendations(strings: Map<String, RuleCopy>): List<Recommendation> {
+
+private fun Rule.toRecommendations(
+    strings: Map<String, RuleCopy>,
+    notificationDedupeEpochDay: Long
+): List<Recommendation> {
     val segments = when (val el = ref) {
         is JsonPrimitive -> el.content.split(',').map { it.trim() }
             .filter { it.isNotBlank() }
@@ -156,25 +218,18 @@ private fun Rule.toRecommendations(strings: Map<String, RuleCopy>): List<Recomme
 
     return segments.map { segment ->
         val key = segment.langKey ?: id
-        buildRec(strings, key, segment.ref.toRecRef())
+
+        val copy = strings[key]
+
+        Recommendation(
+            title = copy?.title ?: key,
+            description = copy?.description.orEmpty(),
+            reference = segment.ref.toIntOrNull()?.let {
+                RecommendationRef.Chapter(it)
+            } ?: RecommendationRef.Verses(segment.ref),
+            notificationDedupeEpochDay = notificationDedupeEpochDay,
+        )
     }
 }
 
 private data class RawSegment(val ref: String, val langKey: String? = null)
-
-private fun String.toRecRef() = this.toIntOrNull()?.let { RecommendationRef.Chapter(it) }
-    ?: RecommendationRef.Verses(this)
-
-private fun buildRec(
-    strings: Map<String, RuleCopy>,
-    key: String,
-    ref: RecommendationRef
-): Recommendation {
-    val copy = strings[key]
-
-    return Recommendation(
-        title = copy?.title ?: key,
-        description = copy?.description.orEmpty(),
-        reference = ref
-    )
-}

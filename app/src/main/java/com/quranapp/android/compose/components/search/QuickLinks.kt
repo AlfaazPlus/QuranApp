@@ -56,6 +56,8 @@ fun QuickLinks(viewModel: QuranSearchViewModel) {
                     CompactQuickLinkCard(
                         item = item,
                         onClick = {
+                            viewModel.recordCurrentSearchQuery()
+
                             when (item) {
                                 is QuickLinkItem.Verse -> {
                                     quickRefData = QuickReferenceData(
@@ -66,22 +68,18 @@ fun QuickLinks(viewModel: QuranSearchViewModel) {
                                 }
 
                                 is QuickLinkItem.Tafsir -> {
-                                    viewModel.recordCurrentSearchQuery()
                                     ReaderFactory.startTafsir(context, item.chapterNo, item.verseNo)
                                 }
 
                                 is QuickLinkItem.Chapter -> {
-                                    viewModel.recordCurrentSearchQuery()
                                     ReaderFactory.startChapter(context, item.surah.surah.surahNo)
                                 }
 
                                 is QuickLinkItem.Juz -> {
-                                    viewModel.recordCurrentSearchQuery()
                                     ReaderFactory.startJuz(context, item.juzNo)
                                 }
 
                                 is QuickLinkItem.Hizb -> {
-                                    viewModel.recordCurrentSearchQuery()
                                     ReaderFactory.startHizb(context, item.hizbNo)
                                 }
                             }
@@ -96,7 +94,6 @@ fun QuickLinks(viewModel: QuranSearchViewModel) {
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            viewModel.recordCurrentSearchQuery()
             ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
         },
         onClose = { quickRefData = null },

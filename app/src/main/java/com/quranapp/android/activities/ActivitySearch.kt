@@ -10,9 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.screens.search.SearchScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.compose.utils.appLocale
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -59,15 +61,28 @@ class ActivitySearch : BaseActivity() {
                             voiceSearchFlow = voiceSearchFlow,
                             onVoiceSearchClick = {
                                 runCatching {
+                                    val locale = appLocale()
+
                                     val intent =
                                         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                                             putExtra(
                                                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                                RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH,
+                                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
                                             )
+
                                             putExtra(
                                                 RecognizerIntent.EXTRA_PROMPT,
-                                                "Search in Quran"
+                                                getString(R.string.searchInQuran)
+                                            )
+
+                                            putExtra(
+                                                RecognizerIntent.EXTRA_LANGUAGE,
+                                                locale.toLanguageTag()
+                                            )
+
+                                            putExtra(
+                                                RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
+                                                locale.toLanguageTag()
                                             )
                                         }
 
