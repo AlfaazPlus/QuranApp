@@ -331,7 +331,7 @@
     <string name="notSupported">Nicht unterstützt</string>
     <string name="missingTimingData" formatted="false">Es fehlen Timing-Daten für %s – die Wiedergabe ist nicht möglich.</string>
     <string name="expandedPlayerModeControls">Bedienelemente</string>
-    <string name="expandedPlayerModeSpotlight">Rampenlicht</string>
+    <string name="expandedPlayerModeSpotlight">Fokusiert</string>
     <string name="theme_default">Vorgabe</string>
     <string name="theme_blue">Blau</string>
     <string name="theme_red">Rot</string>
@@ -384,11 +384,11 @@
     <string name="selectWbwLanguage">Sprache auswählen</string>
     <string name="wbwShowTranslation">Übersetzung anzeigen</string>
     <string name="wbwShowTransliteration">Transkription anzeigen</string>
-    <string name="wbwShowTransliterationMgs">Wann verfügbar für die gewählte Sprache</string>
+    <string name="wbwShowTransliterationMgs">Sofern für die ausgewählte Sprache verfügbar</string>
     <string name="wbwRecitation">Rezitation</string>
     <string name="wbwRecitationMsg">Audio abspielen, wenn ein Wort angeklickt wird</string>
     <string name="wbwTextSize">Textgröße</string>
-    <string name="noWbwAvailable">Lade ein Sprachpaket herunter, um Word-by-Wort-Features einzuschalten.</string>
+    <string name="noWbwAvailable">Lade ein Sprachpaket herunter, um Wort-für-Wort-Funktion einzuschalten.</string>
     <string name="deleteData">Daten löschen?</string>
     <string name="wordNo" formatted="false">Wort %d</string>
     <string name="playWord">Spiel Wort</string>
