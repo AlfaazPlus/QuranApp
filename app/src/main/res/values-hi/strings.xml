@@ -76,7 +76,7 @@
     <string name="strTitleTranslations">अनुवाद</string>
     <string name="strTitleDownloadTranslations">डाउनलोड</string>
     <string name="strTitleSelectReciter">क़ारी चुनें</string>
-    <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें\?</string>
+    <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें?</string>
     <string name="strTitleTranslDelete">अनुवाद डिलीट करें?</string>
     <string name="strTitleShareVerse">आयत साझा करें</string>
