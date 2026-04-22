@@ -351,4 +351,59 @@
     <string name="translationHelp">Ist deine Sprache nicht dabei? Hilf mit, den Text zu übersetzen oder zu verbessern, damit er für mehr Menschen zugänglich wird!</string>
     <string name="learnMore">Mehr erfahren</string>
     <string name="playbackCount">Anzahl der Wiedergabe</string>
+    <string name="clear">löschen</string>
+    <string name="strLabelAll">Alle</string>
+    <string name="strLabelPrevious">Vorherige</string>
+    <string name="nextChapter">Nächste Sure</string>
+    <string name="previousChapter">Vorherige Sure</string>
+    <string name="nextJuz">Nächster Teil</string>
+    <string name="previousJuz">Vorheriger Teil</string>
+    <string name="nextHizb">Nächster Abschnitt</string>
+    <string name="previousHizb">Vorheriger Abschnitt</string>
+    <string name="strLabelRukuNo" formatted="false">Passage %d</string>
+    <string name="endOfPageNo" formatted="false">Ende von Seite %d</string>
+    <string name="endOfRukuNo" formatted="false">Ende von Passage %d</string>
+    <string name="endOfRubNo" formatted="false">Ende von Viertel %d</string>
+    <string name="endOfManzilNo" formatted="false">Ende von Station %d</string>
+    <string name="tafsirForVerse" formatted="false">Erläuterung für Vers %1$d:%2$d</string>
+    <string name="sajda">Niederwerfung</string>
+    <string name="withSajda">Mit Niederwerfung</string>
+    <string name="withoutSajda">Ohne Niederwerfung</string>
+    <string name="chapterFilterLengthShort">Kurz (&lt; 50 Verse)</string>
+    <string name="chapterFilterLengthMedium">Mittel (50–150 Verse)</string>
+    <string name="chapterFilterLengthLong">Lang (150+ Verse)</string>
+    <string name="clearFilters">Filter löschen</string>
+    <string name="chapterFilters">Kapitelfilter</string>
+    <string name="strMsgReciterDownloadHint">Lade Rezitations-Audio für Offline-Audio und flüssigerer Wiedergabe herunter.</string>
+    <string name="labelRecommended">Empfohlen</string>
+    <string name="titleGlobalSearch">Globale Suche</string>
+    <string name="textPreparingAudio">Audio wird vorbereitet…</string>
+    <string name="noResults">Keine Ergebnisse</string>
+    <string name="labelTransliteration">Transkription</string>
+    <string name="strMsgSearchHistoryDeleteAll">Gesamter Suchverlauf wird gelöscht</string>
+    <string name="wordByWord">Wort für Wort</string>
+    <string name="selectWbwLanguage">Sprache auswählen</string>
+    <string name="wbwShowTranslation">Übersetzung anzeigen</string>
+    <string name="wbwShowTransliteration">Transkription anzeigen</string>
+    <string name="wbwShowTransliterationMgs">Wann verfügbar für die gewählte Sprache</string>
+    <string name="wbwRecitation">Rezitation</string>
+    <string name="wbwRecitationMsg">Audio abspielen, wenn ein Wort angeklickt wird</string>
+    <string name="wbwTextSize">Textgröße</string>
+    <string name="noWbwAvailable">Lade ein Sprachpaket herunter, um Word-by-Wort-Features einzuschalten.</string>
+    <string name="deleteData">Daten löschen?</string>
+    <string name="wordNo" formatted="false">Wort %d</string>
+    <string name="playWord">Spiel Wort</string>
+    <string name="previousWord">Vorheriges Wort</string>
+    <string name="nextWord">Nächstes Wort</string>
+    <string name="results">Ergebnisse</string>
+    <string name="titleRecentSearches">Letzte Suchanfragen</string>
+    <string name="searchInQuran">Suche im Koran</string>
+    <string name="searchTipsTitle">Suchtipps</string>
+    <string name="searchTipDirectVerse">Lies einen Vers oder Erläuterung direkt</string>
+    <string name="searchTipChapter">Kapitel durchsuchen</string>
+    <string name="searchTipDirectJuz">Sprung zu “Kapitel 30”, “Teil 30” oder “Abschnitt 30”</string>
+    <string name="searchTipTranslation">Suche in den Übersetzungen</string>
+    <string name="searchTipArabic">Suche im Koran Text</string>
+    <string name="filterSectionLength">Kapitellänge</string>
+    <string name="any">Irgendein</string>
 </resources>
