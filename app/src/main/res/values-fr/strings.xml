@@ -402,4 +402,9 @@
     <string name="noWbwAvailable"></string>
     <string name="recitationDownloadSomeFailed"></string>
     <string name="strHintSearchPage"></string>
+    <string name="searchTipArabic"></string>
+    <string name="wbwRecitation"></string>
+    <string name="searchTipChapter"></string>
+    <string name="searchInQuran"></string>
+    <string name="titleGlobalSearch"></string>
 </resources>
