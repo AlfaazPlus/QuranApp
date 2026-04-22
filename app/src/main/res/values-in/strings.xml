@@ -63,9 +63,9 @@
     <string name="strTitleTranslations">Terjemahan</string>
     <string name="strTitleDownloadTranslations">Unduh</string>
     <string name="strTitleSelectReciter">Pilih Pembaca</string>
-    <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
-    <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">Hapus bookmark %d \?</string>
+    <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini?</string>
+    <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Hapus bookmark %d ?</string>
     <string name="strTitleShareVerse">Bagikan Ayat</string>
     <string name="strTitleProphets">Nabi dan Rasul</string>
     <string name="strTitleFeaturedProphets">Nabi dan Rasul dalam Al Quran</string>
@@ -75,7 +75,7 @@
     <string name="strTitleFootnotes">Catatan Kaki</string>
     <string name="strTitleSendFeedback">Beri Umpan Balik</string>
     <string name="strTitleFeaturedQuran">Bacaan Unggulan</string>
-    <string name="strTitleTranslDelete">Hapus terjemahan\?</string>
+    <string name="strTitleTranslDelete">Hapus terjemahan?</string>
     <string name="strTitleVOTD">Ayat Hari Ini</string>
     <string name="strTitleFeaturedDuas">Doa dalam Al Quran</string>
     <string name="strTitlePrivacyPolicy">Kebijakan Privasi</string>
@@ -145,7 +145,7 @@
     <string name="strMsgReadHistoryDeleteAll">Semua histori bacaan akan dihapus.</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Total hasil ditemukan dalam %1$s: %2$d</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" dihapus dari histori</string>
-    <string name="strMsgHistoryRemove">Hapus histori ini\?</string>
+    <string name="strMsgHistoryRemove">Hapus histori ini?</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Hari ini di %s</string>
     <string name="strMsgSearchNoResultsFound">Hasil tidak ditemukan. Mohon cek filter oencarian atau cari di terjemahan lain.</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Hasil tidak ditemukan dalam %s. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
@@ -175,10 +175,8 @@
     <string name="strTitleInfo">Informasi!</string>
     <string name="strAyatulKursi">Ayat Kursi</string>
     <string name="strMsgUpdateAvailable">UPDATE TERSEDIA! Tolong perbarui aplikasi untuk mendapatkan fitur terbaru.</string>
-    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA!
-\nTolong perbarui aplikasi.</string>
-    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN!
-\nTolong perbarui aplikasi untuk melanjutkan.</string>
+    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA! \nTolong perbarui aplikasi.</string>
+    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN! \nTolong perbarui aplikasi untuk melanjutkan.</string>
     <string name="strLabelAllChapters">Semua Surah</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
@@ -199,9 +197,7 @@
     <string name="strTitleScripts">Skrip</string>
     <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d Jenis penulisan dan jenis font nya yang terunduh bisa dibersihkan.</string>
-    <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan.
-\n
-\nSumber daya yang bisa dibersihkan:</string>
+    <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan. \n \nSumber daya yang bisa dibersihkan:</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d file murattal yang tersimpan %2$d qori murattal bisa dibersihkan.</string>
     <string name="translationCanBeFreedUp" formatted="false">%d terjemahan yang terunduh bisa dibersihkan.</string>
     <string name="msgVerseReminderNotifPermission">Izin notifikasi diperlukan untuk mengaktifkan pengingat ayat.</string>
@@ -213,9 +209,9 @@
     <string name="nItems">%d item</string>
     <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
     <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
-    <string name="titleScriptCleanup">Hapus jenis penulisan\?</string>
+    <string name="titleScriptCleanup">Hapus jenis penulisan?</string>
     <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus.</string>
-    <string name="titleRecitationCleanup">Hapus Murattal\?</string>
+    <string name="titleRecitationCleanup">Hapus Murattal?</string>
     <string name="strPreviewTextTransl">Dengan nama Allah Yang Maha Pengasih, Maha Penyayang</string>
     <string name="msgScriptCleanup" formatted="false">%s jenis penulisan dan semua font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya.</string>
     <string name="nFiles" formatted="false">%d file</string>
