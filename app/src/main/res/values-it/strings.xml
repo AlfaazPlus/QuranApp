@@ -38,8 +38,8 @@
     <string name="strTitleRateApp">Valuta l\'app</string>
     <string name="strTitleFilters">Filtri</string>
     <string name="strTitleMenu">Menù</string>
-    <string name="strTitleBookmarkDeleteAll">Rimuovere tutti i segnalibri\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">Rimuovere %d segnalibri\?</string>
+    <string name="strTitleBookmarkDeleteAll">Rimuovere tutti i segnalibri?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Rimuovere %d segnalibri?</string>
     <string name="strTitleShareVerse">Condividi Versetto</string>
     <string name="strTitleFeaturedQuran">Lettura in primo piano</string>
     <string name="strTitleVOTD">Versetto del giorno</string>
@@ -92,8 +92,8 @@
     <string name="strTitleTranslations">Traduzioni</string>
     <string name="strTitleDownloadTranslations">Scaricamento</string>
     <string name="strTitleSelectReciter">Seleziona Recitatore</string>
-    <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro\?</string>
-    <string name="strTitleTranslDelete">Elimina traduzione\?</string>
+    <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro?</string>
+    <string name="strTitleTranslDelete">Elimina traduzione?</string>
     <string name="strTitleProphets">Profeti</string>
     <string name="strTitleFeaturedDuas">Dua nel Corano</string>
     <string name="strTitlePrivacyPolicy">politica sulla riservatezza</string>
@@ -137,7 +137,7 @@
     <string name="strMsgBookmarkRemoveFailed">Verso non è stato rimosso dai segnalibri</string>
     <string name="strMsgReadHistoryNoItems">Nessuna cronologia di lettura</string>
     <string name="strMsgReadHistoryDeleteAll">Tutte le cronologie di lettura verranno rimosse.</string>
-    <string name="strMsgHistoryRemove">Rimuovere questa cronologia\?</string>
+    <string name="strMsgHistoryRemove">Rimuovere questa cronologia?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" rimosso dalla cronologia</string>
     <string name="strMsgSearchWordPart">Cerca la parte della parola</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Nessun risultato trovato in %s. Controlla i filtri di ricerca o cerca in un\'altra traduzione.</string>
@@ -176,8 +176,7 @@
     <string name="strMsgSearchWordPartExample">Ad esempio: \'uomo\' in \'umanità\'</string>
     <string name="strDescGoBack">Torna indietro</string>
     <string name="strMsgNoInternet">Per favore controlla la tua connessione Internet.</string>
-    <string name="strMsgUpdateAvailable4Dialog">AGGIORNAMENTO DISPONIBILE
-\nSi prega di aggiornare l\'app.</string>
+    <string name="strMsgUpdateAvailable4Dialog">AGGIORNAMENTO DISPONIBILE \nSi prega di aggiornare l\'app.</string>
     <string name="strMsgShareRange" formatted="false">Inserisci un intervallo compreso tra %1$d–%2$d</string>
     <string name="strDescVerseNoWithChapter" formatted="false">Sura %1$s, versetto numero %2$d.</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Sono stati trovati versi relativi a %1$s in %2$d posizioni totali.</string>
