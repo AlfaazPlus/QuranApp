@@ -75,6 +75,7 @@ sealed class ReaderLayoutItem() {
 
     data class VerseUI(
         val verse: VerseWithDetails,
+        // list of Pair<langCode, text>
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
         val wbwByWordIndex: Map<Int, WbwWordEntity>? = null,
         val showDivider: Boolean = true,

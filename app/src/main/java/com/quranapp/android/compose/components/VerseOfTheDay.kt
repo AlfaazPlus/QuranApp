@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -51,6 +52,7 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalRecitation
+import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
@@ -59,6 +61,7 @@ import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
+import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
@@ -81,19 +84,21 @@ private data class VerseOfTheDayState(
 fun VerseOfTheDay() {
     ReaderProvider {
         HomePremiumBannerContainer {
-            VotdContent()
+            VotdContent(
+                header = {
+                    HomePremiumHeaderPill(
+                        icon = R.drawable.dr_icon_heart_filled,
+                        title = stringResource(R.string.strTitleVOTD)
+                    )
+                }
+            )
         }
     }
 }
 
 @Composable
 internal fun VotdContent(
-    header: @Composable () -> Unit = {
-        HomePremiumHeaderPill(
-            icon = R.drawable.dr_icon_heart_filled,
-            title = stringResource(R.string.strTitleVOTD)
-        )
-    }
+    header: @Composable () -> Unit
 ) {
     val context = LocalContext.current
     val colors = colorScheme
@@ -211,15 +216,21 @@ internal fun VotdContent(
         verse.words.joinToString(" ") { it.text }
     }
 
-    val translationText = remember(votdState.translation?.text, verseActions) {
-        if (votdState.translation == null) {
-            return@remember buildAnnotatedString { }
-        }
+    val translationText = remember(votdState.translation, verse, verseActions, colors) {
+        val translation = votdState.translation ?: return@remember buildAnnotatedString { }
 
-        return@remember buildTranslationAnnotatedString(
-            translation = votdState.translation,
+        buildTranslationAnnotatedString(
+            translation = translation,
             colorScheme = colors,
-            actions = verseActions
+            actions = VerseActions(
+                onReferenceClick = verseActions.onReferenceClick,
+                onFootnoteClickRaw = { _, footnoteNo ->
+                    verseActions.onFootnoteClick?.invoke(
+                        verse,
+                        translation.footnotes[footnoteNo],
+                    )
+                },
+            ),
         )
     }
 
@@ -228,6 +239,10 @@ internal fun VotdContent(
 
     val recState = LocalRecitation.current
     val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+
+    LaunchedEffect(verse) {
+        recState.warmUpWord(verse.chapterNo, verse.verseNo, 0)
+    }
 
     Column {
         Box(

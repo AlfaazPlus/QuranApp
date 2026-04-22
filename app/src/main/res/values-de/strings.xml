@@ -298,7 +298,6 @@
     <string name="labelHizbNo" formatted="false">Abschnitt %d</string>
     <string name="strHintSearchHizb">Suche Abschnitt oder Sure</string>
     <string name="textSizes">Textgrößen</string>
-    <string name="recitationDownloadChapterSubtitle" formatted="false">Kapitel %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d Kapitel</string>
     <string name="recitationDownloadAllComplete">Alle Kapitel heruntergeladen</string>
     <string name="recitationDownloadConfirmTitle">Rezitationen herunterladen</string>

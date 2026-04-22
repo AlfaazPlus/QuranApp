@@ -66,7 +66,7 @@ fun HomeSectionDuas() {
             contentPadding = PaddingValues(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items(verses!!, key = { it.id }) {
+            items(verses, key = { it.id }) {
                 ItemCard(it)
             }
         }

@@ -17,10 +17,11 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.search.SearchIndexScheduler
+import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
 import com.quranapp.android.utils.univ.Keys
@@ -34,11 +35,18 @@ class TranslationDownloadWorker(
     val ctx: Context,
     params: WorkerParameters
 ) : CoroutineWorker(ctx, params) {
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val bookInfoJson = inputData.getString("bookInfo")
+            ?: return createForegroundInfoFallback(ctx)
+        val bookInfo = Json.decodeFromString<TranslationBookInfoModel>(bookInfoJson)
+
+
+        return createForegroundInfo(bookInfo, 0)
+    }
 
     override suspend fun doWork(): Result {
         val bookInfoJson = inputData.getString("bookInfo") ?: return Result.failure()
         val bookInfo = Json.decodeFromString<TranslationBookInfoModel>(bookInfoJson)
-
 
         setForeground(createForegroundInfo(bookInfo, 0))
 

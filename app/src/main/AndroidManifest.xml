@@ -169,10 +169,6 @@
             android:name=".utils.receivers.CrashReceiver"
             android:enabled="true" />
 
-        <receiver
-            android:name=".utils.mediaplayer.RecitationBulkDownloadNotificationHelper$CancelReceiver"
-            android:exported="false" />
-
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:exported="false"

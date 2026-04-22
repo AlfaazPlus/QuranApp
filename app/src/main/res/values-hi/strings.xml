@@ -296,7 +296,6 @@
     <string name="strTitleReaderHizb">हिज़्ब</string>
     <string name="labelHizbNo" formatted="false">हिज़्ब %d</string>
     <string name="textSizes">टेक्स्ट के आकार</string>
-    <string name="recitationDownloadChapterSubtitle" formatted="false">अध्याय %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d अध्याय</string>
     <string name="recitationDownloadAllComplete">सभी अध्याय डाउनलोड हो गए</string>
     <string name="recitationDownloadConfirmTitle">तिलावत डाउनलोड करें</string>

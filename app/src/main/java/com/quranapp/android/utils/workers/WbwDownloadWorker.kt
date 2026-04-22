@@ -20,6 +20,7 @@ import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
 import com.quranapp.android.utils.extensions.isGzip
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import com.quranapp.android.utils.univ.Keys
@@ -36,6 +37,14 @@ class WbwDownloadWorker(
     private val ctx: Context,
     params: WorkerParameters
 ) : CoroutineWorker(ctx, params) {
+
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val wbwInfoJson = inputData.getString("wbwInfo") ?: return createForegroundInfoFallback(ctx)
+        val info = Json.decodeFromString<WbwLanguageInfo>(wbwInfoJson)
+
+        return createForegroundInfo(info, 0)
+    }
 
     override suspend fun doWork(): Result {
         val wbwInfoJson = inputData.getString("wbwInfo") ?: return Result.failure()

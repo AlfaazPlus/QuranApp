@@ -82,6 +82,7 @@ class WbwSettingsViewModel(
 
         viewModelScope.launch {
             val manifest = WbwManager.getAvailable(context, forceRefresh = force)
+
             if (manifest == null) {
                 _uiState.update { it.copy(isLoading = false, error = DataLoadError.Failed) }
                 return@launch

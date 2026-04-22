@@ -60,9 +60,17 @@ object Recommended {
     }
 
     private fun loadStrings(context: Context): Map<String, RuleCopy> {
-        val text = appFallbackLanguageCodes().map { lang ->
-            ResUtils.readAssetsTextFile(context, "verses/recommended/lang_$lang.json")
-        }.firstOrNull { it.isNotBlank() } ?: ""
+        val text = appFallbackLanguageCodes().firstNotNullOfOrNull { lang ->
+            try {
+                context.assets.open("verses/recommended/lang_$lang.json")
+                    .bufferedReader()
+                    .use { it.readText() }
+                    .takeIf { it.isNotBlank() }
+            } catch (e: Exception) {
+                // noop
+                null
+            }
+        } ?: ""
 
         if (text.isBlank()) return emptyMap()
 

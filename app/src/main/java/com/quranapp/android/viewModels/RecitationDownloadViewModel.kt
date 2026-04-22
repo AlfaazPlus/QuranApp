@@ -15,7 +15,6 @@ import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
 import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.mediaplayer.RecitationBulkDownloadNotificationHelper
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
@@ -93,6 +92,7 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
         viewModelScope.launch {
             loadReciters(forceRefresh = false)
         }
+
         viewModelScope.launch {
             combine(
                 workManager.getWorkInfosByTagLiveData(RecitationAudioDownloadWorker.TAG).asFlow(),
@@ -187,6 +187,7 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
                             )
                         }
                     }
+
                     val transPairs = state.translationReciters.map { model ->
                         async(io) {
                             val key = stateKey(RecitationAudioKind.TRANSLATION, model.id)
@@ -199,14 +200,17 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
                     }
 
                     val newMap = mutableMapOf<String, RecitationBatchDownloadState>()
+
                     quranPairs.forEach { deferred ->
                         val (k, v) = deferred.await()
                         newMap[k] = v
                     }
+
                     transPairs.forEach { deferred ->
                         val (k, v) = deferred.await()
                         newMap[k] = v
                     }
+
                     _uiState.update { it.copy(downloadStates = newMap) }
                 }
             }
@@ -272,10 +276,12 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
 
     private fun countDownloadedChapters(reciterId: String): Int {
         var count = 0
+
         for (chapterNo in QuranMeta.chapterRange) {
             val f = modelManager.getRecitationAudioFile(reciterId, chapterNo)
             if (f.exists() && f.length() > 0L) count++
         }
+
         return count
     }
 
@@ -336,7 +342,25 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
     private fun cancelBatchDownload(kind: RecitationAudioKind, reciterId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                RecitationBulkDownloadNotificationHelper.cancelAllBulkWork(context, reciterId, kind)
+                workManager.cancelUniqueWork(
+                    RecitationBulkDownloadWorker.uniqueWorkName(
+                        reciterId,
+                        kind
+                    )
+                )
+                workManager.cancelAllWorkByTag(
+                    RecitationAudioDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
+                workManager.cancelAllWorkByTag(
+                    RecitationBulkDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
+
                 val audio = workManager
                     .getWorkInfosByTag(RecitationAudioDownloadWorker.TAG)
                     .await()

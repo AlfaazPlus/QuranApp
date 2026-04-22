@@ -19,8 +19,8 @@ import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenterD
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -39,6 +39,7 @@ data class LocalRecitationStateData(
     val isAnyPlaying: Boolean,
     val playingVerse: ChapterVersePair,
     val playWord: (Int, Int, Int) -> Unit,
+    val warmUpWord: (Int, Int, Int) -> Unit,
     val isWbwAudioLoading: (Int, Int, Int) -> Boolean,
 )
 
@@ -74,6 +75,7 @@ fun ReaderProvider(
             },
             onVerseOption = { verse -> verseOptionsVerse = verse },
             onFootnoteClick = { verse, footnote ->
+                Log.d("FOOTNOTE", verse, footnote)
                 footnotePresenterData = FootnotePresenterData(
                     verse,
                     footnote
@@ -124,6 +126,16 @@ fun ReaderProvider(
                             wbwWordLoadingKey = null
                         }
                     }
+                }
+            },
+            warmUpWord = { chapterNo, verseNo, wordIndex ->
+                coroutineScope.launch {
+                    WbwAudioPlayer.warmUp(
+                        context,
+                        chapterNo,
+                        verseNo,
+                        wordIndex,
+                    )
                 }
             },
             isWbwAudioLoading = { chapterNo, verseNo, wordIndex ->
