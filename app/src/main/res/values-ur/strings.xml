@@ -118,7 +118,7 @@
     <string name="strLabelIncludeArabic">عربی شامل کریں</string>
     <string name="strLabelIncludeFootnotes">حاشیہ شامل کریں</string>
     <string name="strHintSearch">تلاش کریں</string>
-    <string name="strHintSearchQuran">قرآن میں تلاش کریں</string>
+    <string name="strHintSearchQuran">ایک اصطلاح ٹائپ کریں جیسے، \"قیامت\"</string>
     <string name="strHintSearchProphet">نبی تلاش کریں</string>
     <string name="strHintSearchChapter">سورہ تلاش کریں</string>
     <string name="strHintFromVerse">آیت سے</string>
@@ -354,4 +354,59 @@
     <string name="learnMore">
         مزید جانیں
     </string>
+    <string name="clear">صاف کریں</string>
+    <string name="strLabelAll">تمام</string>
+    <string name="strLabelPrevious">پچھلا</string>
+    <string name="nextChapter">اگلی سورہ</string>
+    <string name="previousChapter">پچھلی سورت</string>
+    <string name="nextJuz">اگلا پارہ</string>
+    <string name="previousJuz">پچھلا پارہ</string>
+    <string name="nextHizb">اگلی حزب</string>
+    <string name="previousHizb">پچھلی حزب</string>
+    <string name="strLabelRukuNo" formatted="false">رکوع %d</string>
+    <string name="endOfPageNo" formatted="false">صفحہ %d کا اختتام</string>
+    <string name="endOfRukuNo" formatted="false">رکوع %d کا اختتام</string>
+    <string name="endOfRubNo" formatted="false">ربع %d کا اختتام</string>
+    <string name="endOfManzilNo" formatted="false">منزل %d کا اختتام</string>
+    <string name="tafsirForVerse" formatted="false">آیت %1$d:%2$d کے لیے تفسیر</string>
+    <string name="sajda">سجدہ</string>
+    <string name="filterSectionLength">سورہ کی لمبائی</string>
+    <string name="any">کوئی بھی</string>
+    <string name="withSajda">سجدے کے ساتھ</string>
+    <string name="withoutSajda">بغیر سجدے کے</string>
+    <string name="chapterFilterLengthShort">مختصر (50 آیات سے کم)</string>
+    <string name="chapterFilterLengthMedium">درمیانہ (50-150 آیات)</string>
+    <string name="chapterFilterLengthLong">طویل (150+ آیات)</string>
+    <string name="clearFilters">فلٹرز صاف کریں</string>
+    <string name="chapterFilters">سورہ فلٹرز</string>
+    <string name="strMsgReciterDownloadHint">آف لائن سننے اور ہموار پلے بیک کے لیے تلاوت آڈیو ڈاؤن لوڈ کریں۔</string>
+    <string name="labelRecommended">تجویز کردہ</string>
+    <string name="titleGlobalSearch">گلوبل تلاش</string>
+    <string name="textPreparingAudio">آڈیو تیار ہو رہا ہے…</string>
+    <string name="noResults">کوئی نتیجہ نہیں</string>
+    <string name="labelTransliteration">ٹرانسلیٹریشن</string>
+    <string name="strMsgSearchHistoryDeleteAll">تمام تلاش کی سرگزشت ہٹا دی جائے گی۔</string>
+    <string name="wordByWord">لفظ بہ لفظ</string>
+    <string name="selectWbwLanguage">زبان منتخب کریں</string>
+    <string name="wbwShowTranslation">ترجمہ دکھائیں</string>
+    <string name="wbwShowTransliteration">ٹرانسلیٹریشن دکھائیں</string>
+    <string name="wbwShowTransliterationMgs">جب منتخب زبان کے لیے دستیاب ہو</string>
+    <string name="wbwRecitation">تلاوت</string>
+    <string name="wbwRecitationMsg">جب کسی لفظ پر کلک کیا جائے تو آڈیو چلائیں</string>
+    <string name="wbwTextSize">ٹیکسٹ سائز</string>
+    <string name="noWbwAvailable">لفظ بہ لفظ خصوصیات کو آن کرنے کے لیے ذیل میں ایک لینگویج پیک ڈاؤن لوڈ کریں۔</string>
+    <string name="deleteData">ڈیٹا حذف کریں؟</string>
+    <string name="wordNo" formatted="false">لفظ %d</string>
+    <string name="playWord">لفظ آڈیو چلائیں</string>
+    <string name="previousWord">پچھلا لفظ</string>
+    <string name="nextWord">اگلا لفظ</string>
+    <string name="results">نتائج</string>
+    <string name="titleRecentSearches">‫حالیہ تلاشیں</string>
+    <string name="searchInQuran">قرآن میں تلاش کریں</string>
+    <string name="searchTipsTitle">تلاش کی تجاویز</string>
+    <string name="searchTipDirectVerse">کوئی آیت یا تفسیر براہ راست پڑھیں</string>
+    <string name="searchTipChapter">سورتیں تلاش کریں</string>
+    <string name="searchTipDirectJuz">\"سورہ 30\"، \"پارہ 30\" یا \"حزب 30\" پر جائیں</string>
+    <string name="searchTipTranslation">تراجم میں تلاش کریں</string>
+    <string name="searchTipArabic">قرآن کے متن میں تلاش کریں</string>
 </resources>
