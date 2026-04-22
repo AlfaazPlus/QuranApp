@@ -236,4 +236,159 @@
     <string name="autoScrollSpeed">Itakda ang bilis</string>
     <string name="labelImportExportBookmarks">Mga Bookmark lang</string>
     <string name="labelImportExportSettings">Mga Setting lang</string>
+    <string name="about_quran_science_msg"></string>
+    <string name="searchTipsTitle"></string>
+    <string name="strMsgHistoryRemoved" formatted="false"></string>
+    <string name="titleScriptCleanup"></string>
+    <string name="strLabelScienceReferences" formatted="false"></string>
+    <string name="appLogs"></string>
+    <string name="noNoteProvided"></string>
+    <string name="strTitleMajorSins"></string>
+    <string name="nTimes" formatted="false"></string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false"></string>
+    <string name="strMsgReadHistoryDeleteAll"></string>
+    <string name="expandedPlayerModeControls"></string>
+    <string name="missingTimingData" formatted="false"></string>
+    <string name="msgDeleteTranslation" formatted="false"></string>
+    <string name="any"></string>
+    <string name="strHintSearchBy"></string>
+    <string name="searchTipDirectJuz"></string>
+    <string name="theme_colors"></string>
+    <string name="recitationCanBeFreedUp" formatted="false"></string>
+    <string name="dynamic_color_description"></string>
+    <string name="tafsirForVerse" formatted="false"></string>
+    <string name="pasteCrashLogGithubIssue"></string>
+    <string name="yesCancelDownload"></string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false"></string>
+    <string name="textSizes"></string>
+    <string name="favourites"></string>
+    <string name="theme_mono"></string>
+    <string name="chapterFilterLengthShort"></string>
+    <string name="previousJuz"></string>
+    <string name="crashLogs"></string>
+    <string name="strHintSearchHizb"></string>
+    <string name="theme_blue"></string>
+    <string name="labelTransliteration"></string>
+    <string name="nextWord"></string>
+    <string name="playWord"></string>
+    <string name="discord" translatable="false"></string>
+    <string name="translationCanBeFreedUp" formatted="false"></string>
+    <string name="strLabelPrevious"></string>
+    <string name="chronological"></string>
+    <string name="chapterFilterLengthMedium"></string>
+    <string name="sortBy"></string>
+    <string name="msgRecitationCleanup" formatted="false"></string>
+    <string name="clear"></string>
+    <string name="storageCleanupMessage"></string>
+    <string name="suppressedLogs"></string>
+    <string name="stopAutoScroll"></string>
+    <string name="titleRecentSearches"></string>
+    <string name="strLabelDownloaded"></string>
+    <string name="once"></string>
+    <string name="github"></string>
+    <string name="strMsgReferenceInQuran" formatted="false"></string>
+    <string name="titleStorageCleanup"></string>
+    <string name="wbwShowTransliterationMgs"></string>
+    <string name="notification_permission"></string>
+    <string name="titleRecitationGroupSize"></string>
+    <string name="strTitleReaderHizb"></string>
+    <string name="strMsgDeleteTafsir" formatted="false"></string>
+    <string name="expandedPlayerModeSpotlight"></string>
+    <string name="msgVerseReminderNotifPermission"></string>
+    <string name="previousWord"></string>
+    <string name="theme_default"></string>
+    <string name="strMsgBookmarkDateToday" formatted="false"></string>
+    <string name="theme_violet"></string>
+    <string name="strMsgDuaOf" formatted="false"></string>
+    <string name="selectWbwLanguage"></string>
+    <string name="logRemoved"></string>
+    <string name="wordNo" formatted="false"></string>
+    <string name="wordByWord"></string>
+    <string name="strTitleDeleteTafsir"></string>
+    <string name="clearFilters"></string>
+    <string name="msgRecitationGroupSize"></string>
+    <string name="tafseerCanBeFreedUp" formatted="false"></string>
+    <string name="textPreparingAudio"></string>
+    <string name="searchTipTranslation"></string>
+    <string name="noContinueDownload"></string>
+    <string name="recitationDownloadWaitForOtherReciter"></string>
+    <string name="noResults"></string>
+    <string name="recitationDownloadChaptersProgress" formatted="false"></string>
+    <string name="wbwShowTranslation"></string>
+    <string name="titleExportData"></string>
+    <string name="quran_and_science"></string>
+    <string name="textDownloading"></string>
+    <string name="msgDownloadKFQPCResources"></string>
+    <string name="chapterFilters"></string>
+    <string name="endOfManzilNo" formatted="false"></string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false"></string>
+    <string name="titleCancelDownload"></string>
+    <string name="theme_yellow"></string>
+    <string name="msgRepeat"></string>
+    <string name="recitationDownloadConfirmTitle"></string>
+    <string name="alphabetically"></string>
+    <string name="recitationDownloadConfirmMessage"></string>
+    <string name="textSizeVerseByVerseOnly"></string>
+    <string name="scriptCanBeFreedUp" formatted="false"></string>
+    <string name="lastCrashLog"></string>
+    <string name="dynamic_color"></string>
+    <string name="chapterFilterLengthLong"></string>
+    <string name="msgDownloadingFonts"></string>
+    <string name="strMsgNoVerseTiming"></string>
+    <string name="playbackCount"></string>
+    <string name="labelFreeUpSpace"></string>
+    <string name="twice"></string>
+    <string name="deleteData"></string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false"></string>
+    <string name="strMsgDuaFor" formatted="false"></string>
+    <string name="previousChapter"></string>
+    <string name="strMsgHistoryRemove"></string>
+    <string name="labelHizbNo" formatted="false"></string>
+    <string name="copiedToClipboard"></string>
+    <string name="searchTipDirectVerse"></string>
+    <string name="readingTafsirMultiVerses"></string>
+    <string name="recitationBulkEnqueueNotifTitle"></string>
+    <string name="createIssue"></string>
+    <string name="learnMore"></string>
+    <string name="titleDownloadScriptResources"></string>
+    <string name="recitationDownloadAllComplete"></string>
+    <string name="translationHelp"></string>
+    <string name="strLabelRukuNo" formatted="false"></string>
+    <string name="nextHizb"></string>
+    <string name="titleRecitationCleanup"></string>
+    <string name="labelRecommended"></string>
+    <string name="filterSectionLength"></string>
+    <string name="results"></string>
+    <string name="dailyReminderMsg"></string>
+    <string name="donate"></string>
+    <string name="nextChapter"></string>
+    <string name="theme_red"></string>
+    <string name="strMsgBookmarkDate" formatted="false"></string>
+    <string name="onboardDescTafsir"></string>
+    <string name="sajda"></string>
+    <string name="strMsgReciterDownloadHint"></string>
+    <string name="strMsgReferenceDuas"></string>
+    <string name="modeVerseByVerse"></string>
+    <string name="endOfRukuNo" formatted="false"></string>
+    <string name="notSupported"></string>
+    <string name="wbwRecitationMsg"></string>
+    <string name="theme_purple"></string>
+    <string name="endOfRubNo" formatted="false"></string>
+    <string name="nextJuz"></string>
+    <string name="strTitleDownloadSunnahApp" translatable="false"></string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false"></string>
+    <string name="withoutSajda"></string>
+    <string name="wbwTextSize"></string>
+    <string name="strMsgSearchHistoryDeleteAll"></string>
+    <string name="modeMushaf"></string>
+    <string name="withSajda"></string>
+    <string name="strLabelAll"></string>
+    <string name="previousHizb"></string>
+    <string name="theme_mode"></string>
+    <string name="wbwShowTransliteration"></string>
+    <string name="endOfPageNo" formatted="false"></string>
+    <string name="about_this_page"></string>
+    <string name="noWbwAvailable"></string>
+    <string name="recitationDownloadSomeFailed"></string>
+    <string name="strHintSearchPage"></string>
 </resources>
