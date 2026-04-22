@@ -186,7 +186,13 @@ public class TranslUtils {
     }
 
     public static boolean isUrdu(String slug) {
-        return Objects.equals(slug.split("_")[0], "ur");
+        String[] parts = slug.split("[_-]");
+
+        if (parts.length == 0) {
+            return false;
+        }
+
+        return Objects.equals(parts[0], "ur");
     }
 
     public static boolean isTransliteration(String slug) {

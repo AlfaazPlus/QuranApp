@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Log
@@ -87,9 +87,7 @@ object WbwAudioPlayer {
         verseNo: Int,
         appWordIndex: Int,
     ) {
-        val urlWordIndex = appWordIndex + 1
-        val file = cacheFile(context.applicationContext, chapterNo, verseNo, urlWordIndex)
-        val url = buildUrl(chapterNo, verseNo, urlWordIndex)
+        val (file, url) = buildUrlAndFile(context, chapterNo, verseNo, appWordIndex)
 
         mutex.withLock {
             try {
@@ -106,5 +104,29 @@ object WbwAudioPlayer {
             p.prepare()
             p.playWhenReady = true
         }
+    }
+
+    suspend fun warmUp(
+        context: Context,
+        chapterNo: Int,
+        verseNo: Int,
+        appWordIndex: Int,
+    ) {
+        val (file, url) = buildUrlAndFile(context, chapterNo, verseNo, appWordIndex)
+
+        downloadIfMissing(file, url)
+    }
+
+    private fun buildUrlAndFile(
+        context: Context,
+        chapterNo: Int,
+        verseNo: Int,
+        appWordIndex: Int,
+    ): Pair<File, String> {
+        val urlWordIndex = appWordIndex + 1
+        val file = cacheFile(context.applicationContext, chapterNo, verseNo, urlWordIndex)
+        val url = buildUrl(chapterNo, verseNo, urlWordIndex)
+
+        return file to url
     }
 }

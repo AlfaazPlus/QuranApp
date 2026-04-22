@@ -82,9 +82,12 @@ class QuranRepository(
         scriptCode: String? = null
     ): VerseWithDetails? {
         val script = scriptCode ?: ReaderPreferences.getQuranScript()
-        val batch = loadChapterVerseBatch(chapterNo, verseNo, verseNo, script) ?: return null
+
+        val batch = loadVersesBatch(chapterNo, verseNo, verseNo, script) ?: return null
+
         val ayah = batch.ayahByVerseNo[verseNo] ?: return null
         val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
+
         return VerseWithDetails(
             words = words,
             pageNo = batch.pageByVerseNo[verseNo] ?: 0,
@@ -93,54 +96,45 @@ class QuranRepository(
         )
     }
 
-    /**
-     * Batched ayahs, words, and mushaf page numbers for [fromVerse]..[toVerse] (inclusive).
-     */
-    suspend fun loadChapterVerseBatch(
+    suspend fun loadVersesBatch(
         chapterNo: Int,
         fromVerse: Int,
         toVerse: Int,
         scriptCode: String,
     ): ChapterVerseBatch? {
-        val lo = minOf(fromVerse, toVerse)
-        val hi = maxOf(fromVerse, toVerse)
-        val ayahs = ayahDao.getAyahsInRange(chapterNo, lo, hi)
-        if (ayahs.isEmpty()) return null
         val surah = surahDao.getSurahWithLocalization(chapterNo) ?: return null
+
+        val lo = minOf(fromVerse, toVerse)
+        val hi = minOf(maxOf(fromVerse, toVerse), surah.surah.ayahCount)
+
+        val ayahs = ayahDao.getAyahsInRange(chapterNo, lo, hi)
+
+        if (ayahs.isEmpty()) return null
 
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
         val ayahByVerse = ayahs.associateBy { it.ayahNo }
-        val ids = ayahs.map { it.ayahId }
-        val wordsFlat = if (ids.isNotEmpty()) {
-            ayahWordDao.getWordsForAyahs(ids, scriptCode)
-        } else {
-            emptyList()
-        }
-        val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
+        val verseIds = ayahs.map { it.ayahId }
 
-        val firstPage = if (ayahs.any { it.ayahNo == 1 }) {
-            if (mushafId > 0) mushafDao.getFirstPageOfChapter(mushafId, chapterNo) else null
-        } else {
-            null
-        }
-
-        val idsForPage = ayahs.filter { it.ayahNo > 1 }.map { it.ayahId }
-        val pageByAyahId = if (mushafId > 0 && idsForPage.isNotEmpty()) {
-            mushafDao.getPagesForAyahIds(mushafId, idsForPage)
+        val pageByAyahId = if (verseIds.isNotEmpty()) {
+            mushafDao.getPagesForAyahIds(mushafId, verseIds)
                 .associate { it.ayahId to it.pageNumber }
         } else {
             emptyMap()
         }
 
         val pageByVerse = HashMap<Int, Int>(ayahs.size)
+
         for (a in ayahs) {
-            val p = when {
-                a.ayahNo == 1 -> firstPage
-                mushafId > 0 -> pageByAyahId[a.ayahId]
-                else -> null
-            }
-            pageByVerse[a.ayahNo] = p ?: -1
+            pageByVerse[a.ayahNo] = pageByAyahId[a.ayahId] ?: -1
         }
+
+        val wordsFlat = if (verseIds.isNotEmpty()) {
+            ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
+        } else {
+            emptyList()
+        }
+
+        val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
 
         val wordsByVerse = HashMap<Int, List<AyahWordEntity>>(ayahs.size)
         for (a in ayahs) {
@@ -158,49 +152,43 @@ class QuranRepository(
     /**
      * Batched load for an arbitrary set of verse numbers in one chapter (e.g. quick reference).
      */
-    suspend fun loadQuickReferenceBatch(
+    suspend fun loadArbitraryVersesBatch(
         chapterNo: Int,
         verseNos: List<Int>,
         scriptCode: String,
     ): ChapterVerseBatch? {
         val distinct = verseNos.distinct()
         if (distinct.isEmpty()) return null
+
         val ayahIds = distinct.map { QuranUtils.getAyahId(chapterNo, it) }
         val ayahs = ayahDao.getAyahsByIds(ayahIds)
+
         if (ayahs.isEmpty()) return null
+
         val surah = surahDao.getSurahWithLocalization(chapterNo) ?: return null
 
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
         val ayahByVerse = ayahs.associateBy { it.ayahNo }
-        val ids = ayahs.map { it.ayahId }
-        val wordsFlat = ayahWordDao.getWordsForAyahs(ids, scriptCode)
+        val verseIds = ayahs.map { it.ayahId }
+
+        val wordsFlat = ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
         val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
 
-        val firstPage = if (ayahs.any { it.ayahNo == 1 }) {
-            if (mushafId > 0) mushafDao.getFirstPageOfChapter(mushafId, chapterNo) else null
-        } else {
-            null
-        }
-
-        val idsForPage = ayahs.filter { it.ayahNo > 1 }.map { it.ayahId }
-        val pageByAyahId = if (mushafId > 0 && idsForPage.isNotEmpty()) {
-            mushafDao.getPagesForAyahIds(mushafId, idsForPage)
+        val pageByAyahId = if (verseIds.isNotEmpty()) {
+            mushafDao.getPagesForAyahIds(mushafId, verseIds)
                 .associate { it.ayahId to it.pageNumber }
         } else {
             emptyMap()
         }
 
         val pageByVerse = HashMap<Int, Int>(ayahs.size)
+
         for (a in ayahs) {
-            val p = when {
-                a.ayahNo == 1 -> firstPage
-                mushafId > 0 -> pageByAyahId[a.ayahId]
-                else -> null
-            }
-            pageByVerse[a.ayahNo] = p ?: -1
+            pageByVerse[a.ayahNo] = pageByAyahId[a.ayahId] ?: -1
         }
 
         val wordsByVerse = HashMap<Int, List<AyahWordEntity>>(ayahs.size)
+
         for (a in ayahs) {
             wordsByVerse[a.ayahNo] = wordsByAyahId[a.ayahId] ?: emptyList()
         }
@@ -273,6 +261,7 @@ class QuranRepository(
         val endAyah = row.endAyahId ?: return emptyList()
         val startWi = row.startWordIndex ?: return emptyList()
         val endWi = row.endWordIndex ?: return emptyList()
+
         if (startAyah > endAyah) return emptyList()
 
         if (startAyah == endAyah) {
@@ -282,6 +271,7 @@ class QuranRepository(
             } else {
                 ayahWordDao.getLastWordIndexForAyah(startAyah, scriptCode)
             }
+
             val words = if (wordCache != null) {
                 (wordCache[startAyah] ?: getWordsForAyahById(startAyah, scriptCode))
                     .asSequence()
@@ -322,6 +312,7 @@ class QuranRepository(
 
         if (endAyah - startAyah > 1) {
             val middle = ayahDao.getAyahsStrictlyBetween(startAyah, endAyah)
+
             if (wordCache != null) {
                 for (ayah in middle) {
                     (wordCache[ayah.ayahId] ?: getWordsForAyahById(ayah.ayahId, scriptCode))
@@ -360,8 +351,10 @@ class QuranRepository(
         flat: List<AyahWordEntity>,
     ): Map<Int, List<AyahWordEntity>> {
         if (flat.isEmpty()) return emptyMap()
+
         val grouped = flat.groupBy { it.ayahId }
         val out = HashMap<Int, List<AyahWordEntity>>(grouped.size)
+
         for ((ayahId, list) in grouped) {
             val sorted = list.sortedBy { it.wordIndex }
             val last = sorted.lastOrNull()?.wordIndex
@@ -371,6 +364,7 @@ class QuranRepository(
                 }
             }
         }
+
         return out
     }
 
@@ -393,17 +387,22 @@ class QuranRepository(
 
     suspend fun getOrderedSurahNosOnMushafPage(mushafId: Int, pageNo: Int): List<Int> {
         if (mushafId <= 0 || pageNo <= 0) return emptyList()
+
         val rows = getPageLines(mushafId, pageNo)
+
         val idsNeedingLookup = rows.mapNotNull { row ->
-            if (row.surahNo != null && row.surahNo!! > 0) null
+            if (row.surahNo != null && row.surahNo > 0) null
             else row.startAyahId?.takeIf { it > 0 }
         }.distinct()
+
         val ayahById = if (idsNeedingLookup.isNotEmpty()) {
             ayahDao.getAyahsByIds(idsNeedingLookup).associateBy { it.ayahId }
         } else {
             emptyMap()
         }
+
         val ordered = LinkedHashSet<Int>()
+
         for (row in rows) {
             val surahNo = row.surahNo?.takeIf { it > 0 }
                 ?: row.startAyahId?.let { ayahById[it]?.surahNo }
@@ -411,6 +410,7 @@ class QuranRepository(
                 ordered.add(surahNo)
             }
         }
+
         return ordered.toList()
     }
 
@@ -446,21 +446,27 @@ class QuranRepository(
      */
     suspend fun ayahIdsForMushafAyahLine(row: MushafMapEntity): List<Int> {
         if (row.lineType != MushafLineType.ayah) return emptyList()
+
         val startAyah = row.startAyahId ?: return emptyList()
         val endAyah = row.endAyahId ?: return emptyList()
+
         if (row.startWordIndex == null || row.endWordIndex == null) return emptyList()
+
         if (startAyah > endAyah) return emptyList()
+
         return if (startAyah == endAyah) {
             listOf(startAyah)
         } else {
             buildList {
                 add(startAyah)
+
                 if (endAyah - startAyah > 1) {
                     val middle = ayahDao.getAyahsStrictlyBetween(startAyah, endAyah)
                     for (ayah in middle) {
                         add(ayah.ayahId)
                     }
                 }
+
                 add(endAyah)
             }
         }
@@ -471,6 +477,7 @@ class QuranRepository(
         pageNumbers: List<Int>,
     ): Map<Int, Int> {
         if (mushafId <= 0 || pageNumbers.isEmpty()) return emptyMap()
+
         return mushafDao.getJuzForPages(mushafId, pageNumbers)
             .associate { it.pageNumber to it.juzNo }
     }
@@ -480,6 +487,7 @@ class QuranRepository(
         pageNumbers: List<Int>,
     ): Map<Int, Int> {
         if (mushafId <= 0 || pageNumbers.isEmpty()) return emptyMap()
+
         return mushafDao.getHizbForPages(mushafId, pageNumbers)
             .associate { it.pageNumber to it.hizbNo }
     }
@@ -488,6 +496,7 @@ class QuranRepository(
         chapterNos: List<Int>,
     ): Map<Int, SurahWithLocalizations> {
         if (chapterNos.isEmpty()) return emptyMap()
+
         return surahDao.getSurahsWithLocalizationsByNos(chapterNos)
             .associateBy { it.surah.surahNo }
     }

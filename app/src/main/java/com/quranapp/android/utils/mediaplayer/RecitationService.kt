@@ -442,8 +442,7 @@ class RecitationService : MediaSessionService() {
     }
 
     /**
-     * Cancels WorkManager chapter downloads (e.g. bulk or explicit saves). Does not clear ExoPlayer’s
-     * HTTP cache (SimpleCache) used for streamed playback.
+     * Cancels WorkManager chapter downloads
      */
     fun cancelLoading() {
         audioRepository.cancelAll()

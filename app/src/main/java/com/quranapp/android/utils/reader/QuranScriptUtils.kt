@@ -233,9 +233,10 @@ fun String.toQuranMushafId(
         }
     }
 
-    QuranScriptUtils.SCRIPT_KFQPC_V1,
     QuranScriptUtils.SCRIPT_KFQPC_V2,
     QuranScriptUtils.SCRIPT_UTHMANI -> 1
+
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> 5
 
     else -> 0
 }

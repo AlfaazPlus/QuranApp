@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -35,10 +36,12 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.dialogs.SimpleTooltipPosition
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
+import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
@@ -117,13 +120,7 @@ private fun VerseActionBar(
                 verseActions.onVerseOption?.invoke(verse)
             }
 
-            VerseActionIconButton(
-                painter = painterResource(if (isVersePlaying) R.drawable.ic_pause else R.drawable.ic_play),
-                contentDescription = stringResource(R.string.strTitleVerseRecitation),
-                tint = if (isVersePlaying) colorScheme.primary else iconTint
-            ) {
-                controller.playControl(ChapterVersePair(verse))
-            }
+            PlayControlButton(controller, isVersePlaying, iconTint, verse)
 
             VerseActionIconButton(
                 painter = painterResource(R.drawable.dr_icon_tafsir),
@@ -150,6 +147,43 @@ private fun VerseActionBar(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun PlayControlButton(
+    controller: RecitationController,
+    isVersePlaying: Boolean,
+    iconTint: Color,
+    verse: VerseWithDetails
+) {
+    val label = stringResource(R.string.strTitleVerseRecitation)
+
+    SimpleTooltip(
+        text = label,
+        position = SimpleTooltipPosition.Above
+    ) {
+        Box(
+            modifier = Modifier
+                .semantics {
+                    this.contentDescription = label
+                }
+                .size(32.dp)
+                .clip(CircleShape)
+                .clickable {
+                    controller.playControl(ChapterVersePair(verse))
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painter = painterResource(if (isVersePlaying) R.drawable.ic_pause else R.drawable.ic_play),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(6.dp),
+                tint = iconTint,
+            )
+        }
+    }
+}
+
 @Composable
 private fun VerseActionIconButton(
     painter: Painter,
@@ -159,7 +193,7 @@ private fun VerseActionIconButton(
     tint: Color,
     onClick: () -> Unit,
 ) {
-    SimpleTooltip(contentDescription) {
+    SimpleTooltip(contentDescription, position = SimpleTooltipPosition.Above) {
         Box(
             modifier = modifier
                 .semantics { this.contentDescription = contentDescription }

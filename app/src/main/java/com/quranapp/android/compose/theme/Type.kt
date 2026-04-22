@@ -11,8 +11,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 
-val fontFamilyTitle = FontFamily.Default
-val fontFamily = FontFamily.Default
+val appFontFamilyTitle = FontFamily.Default
+val appFontFamily = FontFamily.Default
+
 val fontUrdu by lazy {
     FontFamily(
         Font(
@@ -45,8 +46,8 @@ private val platformTextStyle = PlatformTextStyle(false)
 
 @Composable
 fun getAppTypography(): Typography {
-    val baseFont = fontFamily
-    val titleFont = fontFamilyTitle
+    val baseFont = appFontFamily
+    val titleFont = appFontFamilyTitle
 
     return Typography(
         bodyLarge = TextStyle(

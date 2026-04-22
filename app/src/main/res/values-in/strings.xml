@@ -313,7 +313,6 @@
     <string name="expandedPlayerModeControls">Kontrol</string>
     <string name="favourites">Favorit</string>
     <string name="noNoteProvided">Tidak ada catatan tersedia…</string>
-    <string name="recitationDownloadChapterSubtitle" formatted="false">Surah %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d /%2$d surah</string>
     <string name="alphabetically">Abjad</string>
     <string name="dynamic_color">Warna Dinamis</string>

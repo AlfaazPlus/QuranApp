@@ -42,3 +42,7 @@ private fun getNumberFormatter(): NumberFormat? {
 fun Number.formatted(): String {
     return getNumberFormatter()?.format(this) ?: toString()
 }
+
+fun String.isUrduLanguageCode(): Boolean {
+    return this == "ur"
+}
