@@ -175,10 +175,7 @@
     <string name="labelPreviousTafsir">Tafsir anterior</string>
     <string name="labelNextTafsir">Próximo tafsir</string>
     <string name="strTitleScripts">Scripts</string>
-    <string name="strMsgShareApp" formatted="false">A QuranApp é uma aplicação gratuita e de código aberto para ler e explorar o Nobre Alcorão com traduções. Esta aplicação tem uma interface agradável e limpa com funcionalidades como tafsir, recitação, lembrete e muito mais.
-\n
-\nDESCARREGUE AGORA:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">A QuranApp é uma aplicação gratuita e de código aberto para ler e explorar o Nobre Alcorão com traduções. Esta aplicação tem uma interface agradável e limpa com funcionalidades como tafsir, recitação, lembrete e muito mais. \n \nDESCARREGUE AGORA: \n%s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Encontrou versos relacionados com %1$s num total de %2$d locais.</string>
     <string name="strTitleInfo">Informação!</string>
     <string name="strMsgDuaOf" formatted="false">Dua de %s</string>
@@ -237,9 +234,7 @@
     <string name="copiedToClipboard">Copiado para a área de transferência.</string>
     <string name="msgDownloadingFonts">A transferir fontes</string>
     <string name="msgVerseReminderNotifPermission">A permissão de notificação é necessária para ativar o lembrete de versos.</string>
-    <string name="storageCleanupMessage">Liberte espaço eliminando os recursos descarregados não utilizados. Isto não eliminará quaisquer marcadores ou definições.
-\n
-\nOs seguintes recursos podem ser libertados:</string>
+    <string name="storageCleanupMessage">Liberte espaço eliminando os recursos descarregados não utilizados. Isto não eliminará quaisquer marcadores ou definições. \n \nOs seguintes recursos podem ser libertados:</string>
     <string name="strTitleFeaturedDuas">Duas em Alcorão</string>
     <string name="titleSolutionVerses">Soluções do Alcorão</string>
     <string name="strChapInfoSeeMore">Ver mais informações ›</string>
@@ -259,10 +254,7 @@
     <string name="msgChapterRemovedFromFavourites">Surah removida dos favoritos.</string>
     <string name="textNoLogsFound">Nenhum registo encontrado</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d tafsirs guardados podem ser limpos.</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nTerá de o transferir novamente.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nTerá de o transferir novamente.</string>
     <string name="nFiles" formatted="false">%d ficheiros</string>
     <string name="nItem" formatted="false">%d item</string>
     <string name="nItems" formatted="false">%d itens</string>
