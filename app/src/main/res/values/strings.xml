@@ -43,7 +43,7 @@
     <string name="nextChapter">Next chapter</string>
     <string name="previousChapter">Previous chapter</string>
     <string name="nextJuz">Next juz</string>
-    <string name="previousJuz">Previous chapter</string>
+    <string name="previousJuz">Previous juz</string>
     <string name="nextHizb">Next hizb</string>
     <string name="previousHizb">Previous hizb</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
