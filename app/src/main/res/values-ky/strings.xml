@@ -396,4 +396,5 @@
     <string name="searchTipTranslation">Котормолордун ичинен издөө</string>
     <string name="searchTipArabic">Арабча тексттен (түп нускадан) издөө</string>
     <string name="strTitleDownloadSunnahApp" translatable="false"></string>
+    <string name="searchInQuran"></string>
 </resources>
