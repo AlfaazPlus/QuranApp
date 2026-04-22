@@ -348,12 +348,8 @@
     <string name="sortBy">کے لحاظ سے ترتیب دیں</string>
     <string name="alphabetically">انگریزی حروف تہجی</string>
     <string name="chronological">زمانی ترتیب</string>
-    <string name="translationHelp">
-        آپ کی زبان نظر نہیں آتی؟ ترجمہ کرنے یا اسے بہتر بنانے میں مدد کریں اور اسے مزید لوگوں تک قابل رسائی بنائیں!
-    </string>
-    <string name="learnMore">
-        مزید جانیں
-    </string>
+    <string name="translationHelp">آپ کی زبان نظر نہیں آتی؟ ترجمہ کرنے یا اسے بہتر بنانے میں مدد کریں اور اسے مزید لوگوں تک قابل رسائی بنائیں!</string>
+    <string name="learnMore">مزید جانیں</string>
     <string name="clear">صاف کریں</string>
     <string name="strLabelAll">تمام</string>
     <string name="strLabelPrevious">پچھلا</string>
@@ -409,4 +405,6 @@
     <string name="searchTipDirectJuz">\"سورہ 30\"، \"پارہ 30\" یا \"حزب 30\" پر جائیں</string>
     <string name="searchTipTranslation">تراجم میں تلاش کریں</string>
     <string name="searchTipArabic">قرآن کے متن میں تلاش کریں</string>
+    <string name="discord" translatable="false"></string>
+    <string name="strTitleDownloadSunnahApp" translatable="false"></string>
 </resources>
