@@ -6,7 +6,7 @@
     <string name="strLabelApply">Колдон</string>
     <string name="strLabelRemove">Өчүрүү</string>
     <string name="strLabelDelete">Жок кылуу</string>
-    <string name="strLabelDownloaded">Жүктөлүп бүттү</string>
+    <string name="strLabelDownloaded">Жүктөлдү</string>
     <string name="strLabelRemoveAll">Баарын өчүрүү</string>
     <string name="strLabelCopy">Көчүрүү</string>
     <string name="strLabelBack">Артка</string>
@@ -249,7 +249,7 @@
     <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
     <string name="strLabelLater">Кийинчерээк</string>
     <string name="strHintSearch">Издөө</string>
-    <string name="strHintSearchQuran">Терминди териңиз, мисалы \"Өмүр\"</string>
+    <string name="strHintSearchQuran">Издөө, мисалы: «Орозо»</string>
     <string name="strHintSearchProphet">Пайгамбарды издөө</string>
     <string name="dailyReminderMsg">Күн сайын эскертме алып туруңуз.</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d туура эмес сүрө номери.</string>
@@ -346,4 +346,62 @@
     <string name="learnMore">
         Көбүрөөк билүү
     </string>
+    <string name="strMsgReciterDownloadHint">Оффлайн угуу жана үзгүлтүксүз ойнотуу үчүн кыраат аудиосун жүктөп алыңыз.</string>
+    <string name="previousHizb">Мурунку хизб</string>
+    <string name="strMsgSearchHistoryDeleteAll">Издөө тарыхынын баары өчүрүлөт.</string>
+    <string name="labelTransliteration">Транслитерация</string>
+    <string name="noResults">Натыйжа жок</string>
+    <string name="textPreparingAudio">Аудио даярдалууда…</string>
+    <string name="chapterFilters">Сүрө чыпкалары</string>
+    <string name="tafsirForVerse">%1$d:%2$d аяты үчүн тафсир</string>
+    <string name="strLabelRukuNo">Руку %d</string>
+    <string name="endOfManzilNo">%d-манзилдин аягы</string>
+    <string name="strLabelAll">Баары</string>
+    <string name="clear">Тазалоо</string>
+    <string name="titleGlobalSearch">Жалпы издөө</string>
+    <string name="labelRecommended">Сунушталгандар</string>
+    <string name="strLabelPrevious">Мурунку</string>
+    <string name="nextChapter">Кийинки сүрө</string>
+    <string name="previousChapter">Мурунку сүрө</string>
+    <string name="nextJuz">Кийинки жүз</string>
+    <string name="previousJuz">Мурунку жүз</string>
+    <string name="nextHizb">Кийинки хизб</string>
+    <string name="endOfPageNo">Барактын аягы %d</string>
+    <string name="endOfRukuNo">Рукунун аягы %d</string>
+    <string name="endOfRubNo">Рубдун аягы %d</string>
+    <string name="sajda">Сажда</string>
+    <string name="filterSectionLength">Сүрөнүн узундугу</string>
+    <string name="any">Баары</string>
+    <string name="withSajda">Саждасы бар</string>
+    <string name="withoutSajda">Саждасыз</string>
+    <string name="chapterFilterLengthShort">Кыска (&lt;50 аят)</string>
+    <string name="chapterFilterLengthMedium">Орто (50–150 аят)</string>
+    <string name="chapterFilterLengthLong">Узун (150+ аят)</string>
+    <string name="clearFilters">Чыпкаларды тазалоо</string>
+
+    <string name="results">Натыйжалар</string>
+    <string name="titleRecentSearches">Акыркы издөөлөр</string>
+    <string name="previousWord">Мурунку сөз</string>
+
+    <string name="wordByWord">Сөзмө-сөз котормо</string>
+    <string name="wbwShowTranslation">Котормосун көрсөтүү</string>
+    <string name="wbwShowTransliteration">Транслитерацияны көрсөтүү</string>
+    <string name="wbwShowTransliterationMgs">Тандалган тилде жеткиликтүү болгондо</string>
+    <string name="wbwRecitation">Кыраат</string>
+    <string name="wbwRecitationMsg">Сөздү басканда аудиону уктуруу</string>
+    <string name="wbwTextSize">Текст өлчөмү</string>
+    <string name="selectWbwLanguage">Тилди тандаңыз</string>
+    <string name="noWbwAvailable">Сөзмө-сөз функциясын иштетүү үчүн төмөндөгү тил топтомун жүктөп алыңыз.</string>
+
+    <string name="deleteData">Маалыматтар өчүрүлсүнбү?</string>
+    <string name="wordNo">Сөз %d</string>
+    <string name="playWord">Сөздү ойнотуу</string>
+    <string name="nextWord">Кийинки сөз</string>
+
+    <string name="searchTipsTitle">Издөө боюнча кеңештер</string>
+    <string name="searchTipDirectVerse">Түз өтүү</string>
+    <string name="searchTipChapter">Сүрө аталышы боюнча издөө</string>
+    <string name="searchTipDirectJuz">Жүз, хизб же сүрө номерине өтүү</string>
+    <string name="searchTipTranslation">Котормолордун ичинен издөө</string>
+    <string name="searchTipArabic">Арабча тексттен (түп нускадан) издөө</string>
 </resources>
