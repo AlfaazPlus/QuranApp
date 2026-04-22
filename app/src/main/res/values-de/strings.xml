@@ -332,7 +332,7 @@
     <string name="notSupported">Nicht unterstützt</string>
     <string name="missingTimingData" formatted="false">Es fehlen Timing-Daten für %s – die Wiedergabe ist nicht möglich.</string>
     <string name="expandedPlayerModeControls">Bedienelemente</string>
-    <string name="expandedPlayerModeSpotlight">Rampenlicht</string>
+    <string name="expandedPlayerModeSpotlight">Fokusiert</string>
     <string name="theme_default">Vorgabe</string>
     <string name="theme_blue">Blau</string>
     <string name="theme_red">Rot</string>
@@ -350,5 +350,5 @@
     <string name="chronological">Chronologische Reihenfolge</string>
     <string name="translationHelp">Ist deine Sprache nicht dabei? Hilf mit, den Text zu übersetzen oder zu verbessern, damit er für mehr Menschen zugänglich wird!</string>
     <string name="learnMore">Mehr erfahren</string>
-    <string name="playbackCount">Anzahl der Wiedergabe</string>
+    <string name="playbackCount">Anzahl der Wiederholungen</string>
 </resources>
