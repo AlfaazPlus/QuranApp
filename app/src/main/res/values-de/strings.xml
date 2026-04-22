@@ -158,7 +158,7 @@
     <string name="strMsgUpdateAvailable2Continue">AKTUALISIERUNG ERFORDERLICH! \nBitte aktualisieren Sie die App, um fortzufahren.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s im Koran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Gefundene Verse mit Bezug zu %1$s an insgesamt %2$d Stellen.</string>
-    <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
+    <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen?</string>
     <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: ~%dMB</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
@@ -206,8 +206,8 @@
     <string name="strMsgChapInfoFailedLoad">Informationen zur Sure konnten nicht geladen werden. Bitte versuchen Sie es später noch einmal.</string>
     <string name="strLabelSkip">Überspringen</string>
     <string name="strPreviewTextTransl">Im Namen Allahs, des Allerbarmers, des Barmherzigen</string>
-    <string name="titleRecitationCleanup">Rezitation löschen\?</string>
-    <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
+    <string name="titleRecitationCleanup">Rezitation löschen?</string>
+    <string name="titleScriptCleanup">Schriftsystem löschen?</string>
     <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle seine gespeicherten Schriftarten werden gelöscht. Sie müssen sie erneut herunterladen, um sie wieder zu verwenden.</string>
     <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht.</string>
     <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
