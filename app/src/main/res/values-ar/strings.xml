@@ -174,10 +174,8 @@
     <string name="strMsgNoInternetLong">لا يوجد اتصال بالإنترنت. تأكد من تشغيل Wi-Fi أو البيانات الخلوية، ثم حاول مرة أخرى.</string>
     <string name="strMsgSomethingWrong">حدث خطأ ما!</string>
     <string name="strTextPleaseWait">الرجاء الإنتظار…</string>
-    <string name="strMsgUpdateAvailable4Dialog">تحديث متاح!
-\nيرجى تحديث التطبيق.</string>
-    <string name="strMsgUpdateAvailable2Continue">مطلوب التحديث!
-\nيرجى تحديث التطبيق للإستمرار.</string>
+    <string name="strMsgUpdateAvailable4Dialog">تحديث متاح! \nيرجى تحديث التطبيق.</string>
+    <string name="strMsgUpdateAvailable2Continue">مطلوب التحديث! \nيرجى تحديث التطبيق للإستمرار.</string>
     <string name="strLabelAllChapters">كل السور</string>
     <string name="strTitleReadHistory">سجل القراءة</string>
     <string name="strMsgReferenceDuas">بعض من الأدعية القرآنية.</string>
@@ -193,10 +191,7 @@
 \n
 \nيمكن تحرير المصادر التالية:</string>
     <string name="recitationCanBeFreedUp" formatted="false">تم تخزين %1$d من التلاوات لعدد %2$d من القراء التي يمكن حذفها.</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nتحتاج إلى تنزيله مرة آخرى.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nتحتاج إلى تنزيله مرة آخرى.</string>
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
     <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها.</string>
     <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
