@@ -188,7 +188,7 @@
     <string name="tafseerCanBeFreedUp" formatted="false">%d Tafsir yang tersimpan bisa di bersihkan.</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nAnda harus mengunduh ulang lagi.</string>
     <string name="labelFreeUpSpace">Kosongkan ruang</string>
-    <string name="titleDownloadScriptResources">Unduh sumber daya untuk skrip ini\?</string>
+    <string name="titleDownloadScriptResources">Unduh sumber daya untuk skrip ini?</string>
     <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan skrip ini:</string>
     <string name="textDownloading">Mengunduh…</string>
     <string name="lastCrashLog">Log error terakhir</string>
