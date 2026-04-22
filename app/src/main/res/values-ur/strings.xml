@@ -168,10 +168,8 @@
     <string name="strTitleInfo">معلومات!</string>
     <string name="strTitleOops">افسوس!</string>
     <string name="strMsgUpdateAvailable">اپ ڈیٹ دستیاب ہے! تازہ ترین خصوصیات حاصل کرنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
-    <string name="strMsgUpdateAvailable4Dialog">اپ ڈیٹ دستیاب ہے!
-\nبراہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
-    <string name="strMsgUpdateAvailable2Continue">اپ ڈیٹ کی ضرورت ہے!
-\nجاری رکھنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
+    <string name="strMsgUpdateAvailable4Dialog">اپ ڈیٹ دستیاب ہے! \nبراہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
+    <string name="strMsgUpdateAvailable2Continue">اپ ڈیٹ کی ضرورت ہے! \nجاری رکھنے کے لیے براہ کرم ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="strLabelAllChapters">تمام سورہ</string>
     <string name="strLabelQuickLinks">فوری رابطے</string>
     <string name="strLabelLater">بعد میں</string>
@@ -199,16 +197,11 @@
     <string name="createIssue">مسئلہ بنائیں</string>
     <string name="pasteCrashLogGithubIssue">لاگ کو کلپ بورڈ پر کاپی کر دیا گیا ہے۔ براہ کرم اسے گٹ ہب کے مسئلے میں چسپاں کریں۔</string>
     <string name="titleStorageCleanup">اسٹوریج کی صفائی</string>
-    <string name="storageCleanupMessage">غیر استعمال شدہ ڈاؤن لوڈ کردہ وسائل کو حذف کرکے جگہ خالی کریں۔ اس سے کوئی بک مارکس یا سیٹنگز حذف نہیں ہوں گی۔
-\n
-\nدرج ذیل وسائل کو خالی کیا جا سکتا ہے:</string>
+    <string name="storageCleanupMessage">غیر استعمال شدہ ڈاؤن لوڈ کردہ وسائل کو حذف کرکے جگہ خالی کریں۔ اس سے کوئی بک مارکس یا سیٹنگز حذف نہیں ہوں گی۔ \n \nدرج ذیل وسائل کو خالی کیا جا سکتا ہے:</string>
     <string name="strTitleScripts">فونٹ</string>
     <string name="msgVerseReminderNotifPermission">آیت کی یاد دہانی کو فعال کرنے کے لیے نوٹیفکیشن کی اجازت درکار ہے۔</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d قاری کی %1$d ذخیرہ شدہ تلاوت کی فائلیں خالی کی جا سکتی ہیں۔</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nآپ کو اسے دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nآپ کو اسے دوبارہ ڈاؤن لوڈ کرنے کی ضرورت ہوگی۔</string>
     <string name="labelFreeUpSpace">جگہ خالی کریں</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کردہ اسکرپٹس اور ان کے فونٹس کو خالی کیا جا سکتا ہے۔</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
@@ -259,10 +252,7 @@
     <string name="labelNextTafsir">اگلی تفسیر</string>
     <string name="titleSolutionVerses">قرآن سے حل</string>
     <string name="titleEtiquetteVerses">قرآن میں آداب</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp ترجمے کے ساتھ قرآن کریم کو پڑھنے اور دریافت کرنے کے لیے ایک مفت اور اوپن سورس ایپ ہے۔ اس ایپ میں تفسیر، تلاوت، یاد دہانی اور بہت ساری خصوصیات کے ساتھ ایک اچھا اور صاف انٹرفیس ہے۔
-\n
-\nابھی ڈاؤن لوڈ کریں:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ترجمے کے ساتھ قرآن کریم کو پڑھنے اور دریافت کرنے کے لیے ایک مفت اور اوپن سورس ایپ ہے۔ اس ایپ میں تفسیر، تلاوت، یاد دہانی اور بہت ساری خصوصیات کے ساتھ ایک اچھا اور صاف انٹرفیس ہے۔ \n \nابھی ڈاؤن لوڈ کریں: \n%s</string>
     <string name="strMsgDuaOf" formatted="false">%s کی دعا</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">قرآن میں %s کی دعا</string>
     <string name="titleArabicTextToggle">قرآن کی آیت دکھائیں</string>
