@@ -107,8 +107,8 @@
     <string name="strLabelShare">Бөлүшүү</string>
     <string name="strLabelReport">Арыздануу</string>
     <string name="strLabelContinueReading">Окууну улантуу</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">"%s" жүктөө ийгиликсиз болду.</string>
-    <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: "%s".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">%s жүктөө ийгиликсиз болду.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: %s.</string>
     <string name="strDescAddToBookmarks">Кыстырмаларга кошуу</string>
     <string name="strDescGoBack">Артка кайтуу</string>
     <string name="strDescClose">Жабуу</string>
@@ -143,7 +143,7 @@
     <string name="createIssue">Көйгөйдү каттоо</string>
     <string name="copiedToClipboard">Алмашуу буферине көчүрүлдү.</string>
     <string name="github">GitHub</string>
-    <string name="discord">Discord</string>
+    <string name="discord" translatable="false">Discord</string>
     <string name="notification_permission">Билдирмелерге уруксат берүү</string>
     <string name="msgVerseReminderNotifPermission">Билдирүү уруксатын бериңиз.</string>
     <string name="titleStorageCleanup">Сактоо тазалоо</string>
@@ -339,12 +339,8 @@
     <string name="theme_purple">Саргылт</string>
     <string name="theme_violet">Кочкул кызыл</string>
     <string name="theme_yellow">Сары</string>
-    <string name="translationHelp">
-        Тилиңизди көрбөй жатасызбы? Аны которууга же жакшыртууга жардам бериңиз жана аны көбүрөөк адамдар үчүн жеткиликтүү кылыңыз!
-    </string>
-    <string name="learnMore">
-        Көбүрөөк билүү
-    </string>
+    <string name="translationHelp">Тилиңизди көрбөй жатасызбы? Аны которууга же жакшыртууга жардам бериңиз жана аны көбүрөөк адамдар үчүн жеткиликтүү кылыңыз!</string>
+    <string name="learnMore">Көбүрөөк билүү</string>
     <string name="strMsgReciterDownloadHint">Оффлайн угуу жана үзгүлтүксүз ойнотуу үчүн кыраат аудиосун жүктөп алыңыз.</string>
     <string name="previousHizb">Мурунку хизб</string>
     <string name="strMsgSearchHistoryDeleteAll">Издөө тарыхынын баары өчүрүлөт.</string>
@@ -399,4 +395,5 @@
     <string name="searchTipDirectJuz">Жүз, хизб же сүрө номерине өтүү</string>
     <string name="searchTipTranslation">Котормолордун ичинен издөө</string>
     <string name="searchTipArabic">Арабча тексттен (түп нускадан) издөө</string>
+    <string name="strTitleDownloadSunnahApp" translatable="false"></string>
 </resources>
