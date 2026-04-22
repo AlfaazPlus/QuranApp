@@ -354,4 +354,59 @@
     <string name="learnMore">
         और अधिक जानें
     </string>
+    <string name="clear">साफ़ करें</string>
+    <string name="strLabelAll">सभी</string>
+    <string name="strLabelPrevious">पिछला</string>
+    <string name="nextChapter">अगली सूरह</string>
+    <string name="previousChapter">पिछली सूरह</string>
+    <string name="nextJuz">अगला पारा</string>
+    <string name="previousJuz">पिछला पारा</string>
+    <string name="nextHizb">अगला हिज़्ब</string>
+    <string name="previousHizb">पिछला हिज़्ब</string>
+    <string name="strLabelRukuNo" formatted="false">रुकू %d</string>
+    <string name="endOfPageNo" formatted="false">पृष्ठ %d का अंत</string>
+    <string name="endOfRukuNo" formatted="false">रुकू %d का अंत</string>
+    <string name="endOfRubNo" formatted="false">रूब %d का अंत</string>
+    <string name="endOfManzilNo" formatted="false">मंज़िल %d का अंत</string>
+    <string name="tafsirForVerse" formatted="false">आयत %1$d:%2$d की तफ़्सीर</string>
+    <string name="sajda">सजदा</string>
+    <string name="filterSectionLength">सूरह की लंबाई</string>
+    <string name="any">कोई भी</string>
+    <string name="withSajda">सजदे के साथ</string>
+    <string name="withoutSajda">सजदे के बिना</string>
+    <string name="chapterFilterLengthShort">छोटा (&lt;50 आयतें)</string>
+    <string name="chapterFilterLengthMedium">मध्यम (50–150 आयतें)</string>
+    <string name="chapterFilterLengthLong">लंबा (150+ आयतें)</string>
+    <string name="clearFilters">फ़िल्टर साफ़ करें</string>
+    <string name="chapterFilters">सूरह फ़िल्टर</string>
+    <string name="strMsgReciterDownloadHint">ऑफ़लाइन सुनने और बेहतर प्लेबैक के लिए तिलावत का ऑडियो डाउनलोड करें।</string>
+    <string name="labelRecommended">सुझाए गए</string>
+    <string name="titleGlobalSearch">खोजें</string>
+    <string name="textPreparingAudio">ऑडियो तैयार हो रहा है…</string>
+    <string name="noResults">कोई परिणाम नहीं</string>
+    <string name="labelTransliteration">लिप्यंतरण</string>
+    <string name="strMsgSearchHistoryDeleteAll">सभी सर्च हिस्ट्री हटा दी जाएगी।</string>
+    <string name="wordByWord">शब्द-दर-शब्द</string>
+    <string name="selectWbwLanguage">भाषा चुने</string>
+    <string name="wbwShowTranslation">अनुवाद दिखाएँ</string>
+    <string name="wbwShowTransliteration">लिप्यंतरण दिखाएँ</string>
+    <string name="wbwShowTransliterationMgs">चुनी गई भाषा के लिए उपलब्ध होने पर</string>
+    <string name="wbwRecitation">तिलावत</string>
+    <string name="wbwRecitationMsg">शब्द पर क्लिक करने पर ऑडियो चलाएँ</string>
+    <string name="wbwTextSize">टेक्स्ट का साइज़</string>
+    <string name="noWbwAvailable">शब्द-दर-शब्द फ़ीचर चालू करने के लिए नीचे से एक भाषा पैक डाउनलोड करें।</string>
+    <string name="deleteData">डेटा मिटाएँ?</string>
+    <string name="wordNo" formatted="false">शब्द %d</string>
+    <string name="playWord">शब्द का ऑडियो चलाएँ</string>
+    <string name="previousWord">पिछला शब्द</string>
+    <string name="nextWord">अगला शब्द</string>
+    <string name="results">परिणाम</string>
+    <string name="titleRecentSearches">हाल की खोजें</string>
+    <string name="searchInQuran">कुरान में खोजें</string>
+    <string name="searchTipsTitle">खोजने के लिए सुझाव</string>
+    <string name="searchTipDirectVerse">सीधे कोई आयत या तफ़सीर पढ़ें</string>
+    <string name="searchTipChapter">सूरह खोजें</string>
+    <string name="searchTipDirectJuz">“सूरह 30”, “पारा 30” या “हिज़्ब 30” पर जाएँ</string>
+    <string name="searchTipTranslation">अनुवादों में खोजें</string>
+    <string name="searchTipArabic">कुरान में खोजें</string>
 </resources>
