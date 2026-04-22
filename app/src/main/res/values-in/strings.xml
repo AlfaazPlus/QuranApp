@@ -342,4 +342,62 @@
     <string name="searchTipChapter"></string>
     <string name="searchInQuran"></string>
     <string name="titleGlobalSearch"></string>
+    <string name="searchTipsTitle"></string>
+    <string name="strLabelScienceReferences" formatted="false"></string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false"></string>
+    <string name="missingTimingData" formatted="false"></string>
+    <string name="any"></string>
+    <string name="searchTipDirectJuz"></string>
+    <string name="tafsirForVerse" formatted="false"></string>
+    <string name="chapterFilterLengthShort"></string>
+    <string name="previousJuz"></string>
+    <string name="labelTransliteration"></string>
+    <string name="nextWord"></string>
+    <string name="playWord"></string>
+    <string name="discord" translatable="false"></string>
+    <string name="strLabelPrevious"></string>
+    <string name="chapterFilterLengthMedium"></string>
+    <string name="clear"></string>
+    <string name="titleRecentSearches"></string>
+    <string name="wbwShowTransliterationMgs"></string>
+    <string name="titleRecitationGroupSize"></string>
+    <string name="expandedPlayerModeSpotlight"></string>
+    <string name="previousWord"></string>
+    <string name="selectWbwLanguage"></string>
+    <string name="wordNo" formatted="false"></string>
+    <string name="wordByWord"></string>
+    <string name="clearFilters"></string>
+    <string name="textPreparingAudio"></string>
+    <string name="searchTipTranslation"></string>
+    <string name="noResults"></string>
+    <string name="wbwShowTranslation"></string>
+    <string name="chapterFilters"></string>
+    <string name="endOfManzilNo" formatted="false"></string>
+    <string name="recitationDownloadConfirmMessage"></string>
+    <string name="chapterFilterLengthLong"></string>
+    <string name="deleteData"></string>
+    <string name="previousChapter"></string>
+    <string name="searchTipDirectVerse"></string>
+    <string name="strLabelRukuNo" formatted="false"></string>
+    <string name="nextHizb"></string>
+    <string name="labelRecommended"></string>
+    <string name="filterSectionLength"></string>
+    <string name="results"></string>
+    <string name="nextChapter"></string>
+    <string name="sajda"></string>
+    <string name="strMsgReciterDownloadHint"></string>
+    <string name="endOfRukuNo" formatted="false"></string>
+    <string name="wbwRecitationMsg"></string>
+    <string name="endOfRubNo" formatted="false"></string>
+    <string name="nextJuz"></string>
+    <string name="strTitleDownloadSunnahApp" translatable="false"></string>
+    <string name="withoutSajda"></string>
+    <string name="wbwTextSize"></string>
+    <string name="strMsgSearchHistoryDeleteAll"></string>
+    <string name="withSajda"></string>
+    <string name="strLabelAll"></string>
+    <string name="previousHizb"></string>
+    <string name="wbwShowTransliteration"></string>
+    <string name="endOfPageNo" formatted="false"></string>
+    <string name="noWbwAvailable"></string>
 </resources>
