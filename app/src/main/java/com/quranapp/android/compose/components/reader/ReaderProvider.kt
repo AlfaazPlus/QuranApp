@@ -11,14 +11,18 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
+import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenter
 import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenterData
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
-import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
-import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -30,12 +34,25 @@ val LocalReaderViewModel = staticCompositionLocalOf<ReaderProviderViewModel> {
     error("ReaderProviderViewModel not provided")
 }
 
+data class LocalRecitationStateData(
+    val controller: RecitationController,
+    val isAnyPlaying: Boolean,
+    val playingVerse: ChapterVersePair,
+    val playWord: (Int, Int, Int) -> Unit,
+    val isWbwAudioLoading: (Int, Int, Int) -> Boolean,
+)
+
+val LocalRecitation = staticCompositionLocalOf<LocalRecitationStateData> {
+    error("LocalRecitationState not provided")
+}
+
 @Composable
 fun ReaderProvider(
     content: @Composable () -> Unit
 ) {
     val viewModel = viewModel<ReaderProviderViewModel>()
 
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     val controller = viewModel.controller
@@ -47,7 +64,7 @@ fun ReaderProvider(
     var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceData by remember { mutableStateOf<QuickReferenceData?>(null) }
 
-    val context = LocalContext.current
+    var wbwWordLoadingKey by remember { mutableStateOf<String?>(null) }
 
     CompositionLocalProvider(
         LocalReaderViewModel provides viewModel,
@@ -86,10 +103,32 @@ fun ReaderProvider(
 
             }
         ),
-        LocalRecitationState provides LocalRecitationStateData(
+        LocalRecitation provides LocalRecitationStateData(
             controller = controller,
             isAnyPlaying = isPlaying,
             playingVerse = recitationState.currentVerse,
+            playWord = { chapterNo, verseNo, wordIndex ->
+                coroutineScope.launch {
+                    val key = "$chapterNo:$verseNo:$wordIndex"
+                    wbwWordLoadingKey = key
+
+                    try {
+                        WbwAudioPlayer.play(
+                            context,
+                            chapterNo,
+                            verseNo,
+                            wordIndex,
+                        )
+                    } finally {
+                        if (wbwWordLoadingKey == key) {
+                            wbwWordLoadingKey = null
+                        }
+                    }
+                }
+            },
+            isWbwAudioLoading = { chapterNo, verseNo, wordIndex ->
+                wbwWordLoadingKey == "$chapterNo:$verseNo:$wordIndex"
+            }
         )
     ) {
         content()

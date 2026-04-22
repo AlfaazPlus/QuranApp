@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,19 +11,72 @@ import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.reader.ReaderChapterIndexFilters
 import com.quranapp.android.utils.sharedPrefs.SPFavouriteChapters
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class ReaderIndexViewModel(application: Application) : AndroidViewModel(application) {
     val repository = DatabaseProvider.getQuranRepository(application)
+
+    private val filtersJson = Json {
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+    }
+
+    private val chapterFiltersKey = stringPreferencesKey("reader_index_chapter_filters")
+    private val chapterFiltersDefaultJson =
+        filtersJson.encodeToString(ReaderChapterIndexFilters.Default)
+
+    val chapterIndexFilters: StateFlow<ReaderChapterIndexFilters> = DataStoreManager
+        .flow(chapterFiltersKey, chapterFiltersDefaultJson)
+        .map { raw ->
+            try {
+                filtersJson.decodeFromString<ReaderChapterIndexFilters>(raw)
+            } catch (e: Exception) {
+                Log.saveError(e, "chapterIndexFilters")
+                ReaderChapterIndexFilters.Default
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = ReaderChapterIndexFilters.Default
+        )
+
+    private val _surahNosWithSajdah = MutableStateFlow<Set<Int>>(emptySet())
+    val surahNosWithSajdah: StateFlow<Set<Int>> = _surahNosWithSajdah.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _surahNosWithSajdah.value = repository.getSurahNosWithSajdah()
+            } catch (e: Exception) {
+                Log.saveError(e, "surahNosWithSajdah")
+            }
+        }
+    }
+
+    fun setChapterIndexFilters(filters: ReaderChapterIndexFilters) {
+        viewModelScope.launch(Dispatchers.IO) {
+            DataStoreManager.write(
+                chapterFiltersKey,
+                filtersJson.encodeToString(filters)
+            )
+        }
+    }
 
     val surahs = repository.getAllSurahs()
         .stateIn(

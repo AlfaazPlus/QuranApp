@@ -119,8 +119,7 @@ fun ScriptsScreen() {
                     }
 
                     scope.launch {
-                        ReaderPreferences.setQuranScript(newScript)
-                        ReaderPreferences.setQuranScriptVariant(newVariant)
+                        ReaderPreferences.setQuranScriptWithVariant(newScript, newVariant)
                     }
                 }
             }

@@ -3,7 +3,7 @@ package com.quranapp.android.utils.mediaplayer
 import android.os.Bundle
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
-import com.quranapp.android.db.QuranRepository
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
 
 enum class PlayerInterationSource {
@@ -19,6 +19,9 @@ data class PlayerSettings(
     val reciter: String? = null,
     val translationReciter: String? = null
 )
+
+
+data class AudioResolutionRequest(val chapterNo: Int, val settings: PlayerSettings)
 
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(1, 1),
@@ -94,54 +97,6 @@ data class RecitationServiceState(
             } else {
                 nextVerseNo = -1
             }
-        }
-
-        if (nextChapterNo == -1 || nextVerseNo == -1) {
-            return null
-        }
-
-        return ChapterVersePair(nextChapterNo, nextVerseNo)
-    }
-
-    fun getPreviousChapter(
-        repository: QuranRepository
-    ): ChapterVersePair? {
-        val currentChapterNo = currentVerse.chapterNo
-
-        if (!QuranMeta.isChapterValid(currentChapterNo)) {
-            return null
-        }
-
-        var previousChapterNo = currentChapterNo
-        var previousVerseNo = -1
-
-        if (QuranMeta.isChapterValid(previousChapterNo - 1)) {
-            previousChapterNo--
-            previousVerseNo = 1
-        }
-
-        if (previousChapterNo == -1 || previousVerseNo == -1) {
-            return null
-        }
-
-        return ChapterVersePair(previousChapterNo, previousVerseNo)
-    }
-
-    fun getNextChapter(
-        meta: QuranMeta
-    ): ChapterVersePair? {
-        val currentChapterNo = currentVerse.chapterNo
-
-        if (!QuranMeta.isChapterValid(currentChapterNo)) {
-            return null
-        }
-
-        var nextChapterNo = currentChapterNo
-        var nextVerseNo = -1
-
-        if (QuranMeta.isChapterValid(nextChapterNo + 1)) {
-            nextChapterNo++
-            nextVerseNo = 1
         }
 
         if (nextChapterNo == -1 || nextVerseNo == -1) {

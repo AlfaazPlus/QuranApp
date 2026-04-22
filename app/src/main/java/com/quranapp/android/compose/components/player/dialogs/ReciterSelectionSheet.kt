@@ -1,6 +1,8 @@
 package com.quranapp.android.compose.components.player.dialogs
 
+import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +19,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -30,12 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
+import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.RadioItem
@@ -78,10 +83,8 @@ fun ReciterSelectorSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        top = 16.dp,
-                        bottom = 16.dp,
-                        start = 16.dp,
-                        end = 16.dp
+                        horizontal = 16.dp,
+                        vertical = 8.dp,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -101,11 +104,7 @@ fun ReciterSelectorSheet(
                 IconButton(
                     painter = painterResource(R.drawable.dr_icon_download)
                 ) {
-                    context.startActivity(
-                        Intent(context, ActivitySettings::class.java).apply {
-                            putExtra(Keys.NAV_DESTINATION, SettingRoutes.RECITATION_DOWNLOAD)
-                        },
-                    )
+                    openDownloadsScreen(context)
                 }
 
                 IconButton(
@@ -129,6 +128,30 @@ fun ReciterSelectorSheet(
                         },
                         text = { Text(stringResource(titleRes)) },
                         unselectedContentColor = colorScheme.onSurface.alpha(0.8f)
+                    )
+                }
+            }
+
+            AlertCard(
+                modifier = Modifier.padding(16.dp),
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.strMsgReciterDownloadHint),
+                        style = typography.bodyMedium
+                    )
+
+                    Text(
+                        stringResource(R.string.downloadRecitations),
+                        modifier = Modifier.clickable {
+                            openDownloadsScreen(context)
+                        },
+                        style = typography.bodyMedium.copy(
+                            fontWeight = FontWeight.Medium
+                        ),
+                        color = colorScheme.primary
                     )
                 }
             }
@@ -267,4 +290,12 @@ private fun TranslationReciters(
             )
         }
     }
+}
+
+private fun openDownloadsScreen(context: Context) {
+    context.startActivity(
+        Intent(context, ActivitySettings::class.java).apply {
+            putExtra(Keys.NAV_DESTINATION, SettingRoutes.RECITATION_DOWNLOAD)
+        },
+    )
 }

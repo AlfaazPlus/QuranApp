@@ -7,6 +7,7 @@ object ReaderTextSizeUtils {
     const val KEY_TEXT_SIZE_MULT_ARABIC: String = "key.textsize.mult.arabic"
     const val KEY_TEXT_SIZE_MULT_TRANSL: String = "key.textsize.mult.translation"
     const val KEY_TEXT_SIZE_MULT_TAFSIR: String = "key.textsize.mult.tafsir"
+    const val KEY_TEXT_SIZE_MULT_WBW: String = "key.textsize.mult.wbw"
 
     const val TEXT_SIZE_MIN_PROGRESS: Int = 50
     const val TEXT_SIZE_MAX_PROGRESS: Int = 200
@@ -14,6 +15,7 @@ object ReaderTextSizeUtils {
     const val TEXT_SIZE_MULT_AR_DEFAULT: Float = 1.0f
     const val TEXT_SIZE_MULT_TRANSL_DEFAULT: Float = 1.0f
     const val TEXT_SIZE_MULT_TAFSIR_DEFAULT: Float = 1.0f
+    const val TEXT_SIZE_MULT_WBW_DEFAULT: Float = 1.0f
 
     @JvmStatic
     val maxProgress: Int
@@ -25,10 +27,14 @@ object ReaderTextSizeUtils {
     }
 
     @JvmStatic
-    fun calculateMultiplier(progress: Int): Float {
+    fun calculateMultiplier(
+        progress: Int,
+        min: Int = TEXT_SIZE_MIN_PROGRESS,
+        max: Int = TEXT_SIZE_MAX_PROGRESS
+    ): Float {
         var progress = progress
-        progress = max(progress, TEXT_SIZE_MIN_PROGRESS)
-        progress = min(progress, TEXT_SIZE_MAX_PROGRESS)
+        progress = max(progress, min)
+        progress = min(progress, max)
 
         return progress.toFloat() / 100
     }

@@ -53,7 +53,17 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
 
 
     public void addToHistory(String text, Runnable runOnSucceed) {
-        if (updateHistory(text)) {
+        if (text == null) {
+            return;
+        }
+
+        final String trimmed = text.trim();
+
+        if (trimmed.isEmpty()) {
+            return;
+        }
+
+        if (updateHistory(trimmed)) {
             if (runOnSucceed != null) {
                 runOnSucceed.run();
             }
@@ -63,7 +73,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COL_TEXT, text);
+        values.put(COL_TEXT, trimmed);
         values.put(COL_DATE, DateUtils.getDateTimeNow());
 
         long rowId = db.insert(TABLE_NAME, null, values);
@@ -94,10 +104,14 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
     }
 
     public boolean isInHistory(String text) {
+        if (text == null) {
+            return false;
+        }
+
         SQLiteDatabase db = getReadableDatabase();
 
-        String selection = COL_TEXT + "=?";
-        String[] selectionArgs = {text.toLowerCase()};
+        String selection = "LOWER(" + COL_TEXT + ") = LOWER(?)";
+        String[] selectionArgs = {text.trim()};
 
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME, selection, selectionArgs);
 
@@ -107,8 +121,8 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
     public boolean updateHistory(String text) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String whereClause = COL_TEXT + "=?";
-        String[] whereArgs = {text.toLowerCase()};
+        String whereClause = "LOWER(" + COL_TEXT + ") = LOWER(?)";
+        String[] whereArgs = {text.trim()};
 
         ContentValues values = new ContentValues();
         values.put(COL_DATE, DateUtils.getDateTimeNow());

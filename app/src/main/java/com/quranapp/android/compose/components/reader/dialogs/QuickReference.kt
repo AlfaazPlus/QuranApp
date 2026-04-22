@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -38,23 +36,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
+import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.ReaderProvider
+import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.UserRepository
-import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.univ.RegexPattern
+import com.quranapp.android.viewModels.ReaderProviderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -194,10 +195,7 @@ private fun QuickReferenceContent(
     onClose: () -> Unit,
 ) {
     val context = LocalContext.current
-
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
-    val bookmarksRepo = remember(context) { DatabaseProvider.getUserRepository(context) }
-    val fontResolver = remember(context) { FontResolver.getInstance(context) }
+    val viewModel = viewModel<ReaderProviderViewModel>()
 
     val colors = MaterialTheme.colorScheme
     val type = MaterialTheme.typography
@@ -207,10 +205,10 @@ private fun QuickReferenceContent(
     val verseRange = remember(parsed) { parsedVersesToIntRange(parsed) }
     val title = remember(data.chapterNo, parsed) { formatTitle(data.chapterNo, parsed) }
 
-    var items by remember { mutableStateOf<List<ReaderLayoutItem>>(emptyList()) }
+    var prepared by remember { mutableStateOf<ReaderPreparedData?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     val isBookmarked by if (verseRange != null) {
-        bookmarksRepo
+        viewModel.userRepository
             .isBookmarkedFlow(data.chapterNo, verseRange)
             .collectAsStateWithLifecycle(false)
     } else {
@@ -223,7 +221,7 @@ private fun QuickReferenceContent(
         withContext(Dispatchers.IO) {
             val params = TextBuilderParams(
                 context = context,
-                fontResolver = fontResolver,
+                fontResolver = viewModel.fontResolver,
                 verseActions = verseActions,
                 colors = colors,
                 type = type,
@@ -231,11 +229,12 @@ private fun QuickReferenceContent(
                 script = ReaderPreferences.getQuranScript(),
                 arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
                 translationSizeMultiplier = ReaderPreferences.getTranslationTextSizeMultiplier(),
-                slugs = ReaderPreferences.getTranslations(),
+                slugs = data.slugs.takeIf { it.isNotEmpty() }
+                    ?: ReaderPreferences.getTranslations(),
             )
 
-            items = ReaderItemsBuilder.buildQuickReferenceItems(
-                context, params, repository, data.chapterNo, verseNos
+            prepared = ReaderItemsBuilder.buildQuickReferenceItems(
+                context, params, viewModel.repository, data.chapterNo, verseNos
             )
         }
         isLoading = false
@@ -263,9 +262,6 @@ private fun QuickReferenceContent(
             onClose = onClose,
         )
 
-        if (data.slugs.isEmpty()) {
-            TranslationWarning()
-        }
 
         if (isLoading) {
             Box(
@@ -277,20 +273,24 @@ private fun QuickReferenceContent(
                 CircularProgressIndicator()
             }
         } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-            ) {
-                itemsIndexed(
-                    items.filterIsInstance<ReaderLayoutItem.VerseUI>(),
-                    key = { _, item -> item.key }
-                ) { index, verseUi ->
-                    VerseViewWrapped(
-                        bookmarksRepo,
-                        verseUi = verseUi,
-                        showDivier = index < items.size - 1,
-                    )
+            val verseRows = prepared?.items.orEmpty().filterIsInstance<ReaderLayoutItem.VerseUI>()
+
+            TextStyleProvider(prepared?.textStyles ?: emptyMap()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                ) {
+                    itemsIndexed(
+                        verseRows,
+                        key = { _, item -> item.key }
+                    ) { index, verseUi ->
+                        VerseViewWrapped(
+                            viewModel.userRepository,
+                            verseUi = verseUi,
+                            showDivier = index < verseRows.lastIndex,
+                        )
+                    }
                 }
             }
         }
@@ -373,29 +373,6 @@ private fun QuickReferenceHeader(
         } else {
             Spacer(modifier = Modifier.width(48.dp))
         }
-    }
-}
-
-@Composable
-private fun TranslationWarning() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.dr_icon_info),
-            contentDescription = null,
-            modifier = Modifier.size(20.dp),
-            tint = colorScheme.error,
-        )
-        Text(
-            text = stringResource(R.string.strMsgTranslNoneSelected),
-            style = typography.bodySmall,
-            color = colorScheme.error,
-        )
     }
 }
 
