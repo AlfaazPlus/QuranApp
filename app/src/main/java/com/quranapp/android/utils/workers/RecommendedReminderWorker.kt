@@ -21,8 +21,6 @@ import com.quranapp.android.utils.recommended.Recommended
 import com.quranapp.android.utils.univ.Codes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
-import java.time.ZoneId
 
 class RecommendedReminderWorker(
     context: Context,
@@ -40,9 +38,7 @@ class RecommendedReminderWorker(
 
         val first = recs.first()
 
-        val zone = ZoneId.systemDefault()
-
-        val epochDay = LocalDate.now(zone).toEpochDay()
+        val epochDay = first.notificationDedupeEpochDay
         val sig = dedupeSignature(first)
 
         if (epochDay == VersePreferences.getRecommendedNotifDedupeEpochDay() &&
