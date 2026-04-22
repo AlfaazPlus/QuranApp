@@ -78,10 +78,10 @@
     <string name="strTitleReaderJuz">Cüz (Bölümler)</string>
     <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s suresi: %3$d. ayet</string>
     <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
-    <string name="strTitleBookmarkDeleteThis">Bu yer imi kaldırılsın mı\?</string>
-    <string name="strTitleBookmarkDeleteAll">Tüm yer imleri kaldırılsın mı\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d yer imi kaldırılsın mı\?</string>
-    <string name="strTitleTranslDelete">Meal silinsin mi\?</string>
+    <string name="strTitleBookmarkDeleteThis">Bu yer imi kaldırılsın mı?</string>
+    <string name="strTitleBookmarkDeleteAll">Tüm yer imleri kaldırılsın mı?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d yer imi kaldırılsın mı?</string>
+    <string name="strTitleTranslDelete">Meal silinsin mi?</string>
     <string name="strTitleShareVerse">Ayeti paylaş</string>
     <string name="strTitleFeaturedQuran">Öne çıkanlar</string>
     <string name="strTitleVOTD">Günün ayeti</string>
@@ -134,7 +134,7 @@
     <string name="strMsgReadHistoryDeleteAll">Tüm okuma geçmişi kaldırılacak.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s ,%2$s\'de</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Bugün %s\'de</string>
-    <string name="strMsgHistoryRemove">Bu geçmişi kaldır\?</string>
+    <string name="strMsgHistoryRemove">Bu geçmişi kaldır?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" geçmişten kaldırıldı</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s\'de sadece 1 sonuç bulundu</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin.</string>
@@ -154,13 +154,11 @@
     <string name="strAyatulKursi">Ayet-el Kürsi</string>
     <string name="strTitleOops">Eyvah!</string>
     <string name="strMsgUpdateAvailable">GÜNCELLEME MEVCUT! Lütfen en son özellikleri görmek için uygulamayı güncelleyin.</string>
-    <string name="strMsgUpdateAvailable4Dialog">GÜNCELLEME MEVCUT!
-\nLütfen uygulamayı güncelleyin.</string>
-    <string name="strMsgUpdateAvailable2Continue">GÜNCELLEME GEREKLİ!
-\nDevam etmek için lütfen uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable4Dialog">GÜNCELLEME MEVCUT! \nLütfen uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable2Continue">GÜNCELLEME GEREKLİ! \nDevam etmek için lütfen uygulamayı güncelleyin.</string>
     <string name="strLabelAllChapters">Tüm Bölümler</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s ile ilgili ayetler toplamda %2$d yerde bulundu.</string>
-    <string name="titleDownloadScriptResources">Bu hat için gerekli kaynaklar indirilsin mi\?</string>
+    <string name="titleDownloadScriptResources">Bu hat için gerekli kaynaklar indirilsin mi?</string>
     <string name="msgDownloadingFonts">Yazı tipleri indiriliyor</string>
     <string name="textDownloading">İndiriliyor…</string>
     <string name="lastCrashLog">Son çökme günlüğü</string>
@@ -168,18 +166,13 @@
     <string name="copiedToClipboard">Panoya kopyalandı.</string>
     <string name="pasteCrashLogGithubIssue">Günlük panoya kopyalandı. Lütfen kopyalanan metni GitHub\'daki ilgili alana yapıştırın.</string>
     <string name="titleStorageCleanup">Depolama temizleme</string>
-    <string name="storageCleanupMessage">İndirilmiş ama kullanılmayan kaynaklar silinerek yer açılabilir. Bu işlem yer imlerinizi veya ayarlarınızı etkilemez.
-\n
-\nAşağıdaki kaynaklar silinebilir:</string>
+    <string name="storageCleanupMessage">İndirilmiş ama kullanılmayan kaynaklar silinerek yer açılabilir. Bu işlem yer imlerinizi veya ayarlarınızı etkilemez. \n \nAşağıdaki kaynaklar silinebilir:</string>
     <string name="translationCanBeFreedUp" formatted="false">İndirilen %d meal silinebilir.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d hafızdan depolanan %1$d tilavet dosyası silinebilir.</string>
     <string name="scriptCanBeFreedUp" formatted="false">İndirilen %d hat ve hatta ait yazı tipleri silinebilir.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">Kaydedilen %d tefsir temizlenebilir.</string>
     <string name="labelFreeUpSpace">Yer aç</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nBunları tekrar indirmeniz gerekiyor.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nBunları tekrar indirmeniz gerekiyor.</string>
     <string name="strPreviewTextTransl">Rahman ve Rahim olan Allah\'ın adıyla</string>
     <string name="strMsgChapInfoFailedLoad">Sure bilgisi yüklenemedi. Lütfen daha sonra tekrar deneyin.</string>
     <string name="strTitleReaderSettings">Okuyucu ayarları</string>
@@ -214,7 +207,7 @@
     <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Yazı tipleri: ~%dMB</string>
     <string name="github">GitHub</string>
     <string name="msgVerseReminderNotifPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için bildirim izni gerekiyor.</string>
-    <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
+    <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi?</string>
     <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek.</string>
     <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
     <string name="nItem">%d öğe</string>
@@ -223,7 +216,7 @@
     <string name="verseSyncOff">Ayet takibi : KAPALI</string>
     <string name="nFiles" formatted="false">%d dosya</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d hat ve %2$d yazı tipi</string>
-    <string name="titleScriptCleanup">Hat silinsin mi\?</string>
+    <string name="titleScriptCleanup">Hat silinsin mi?</string>
     <string name="msgScriptCleanup" formatted="false">%s hattı ve beraberinde depolanmış bütün yazı tipleri silinecek. Bunları kullanmak isterseniz tekrar indirmeniz gerekecektir.</string>
     <string name="inPlaces">%s içinde</string>
     <string name="inPlacesMore">%1$s ve %2$d daha fazla</string>
