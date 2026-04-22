@@ -250,10 +250,7 @@
     <string name="place" formatted="false">%d endroit</string>
     <string name="labelPreviousTafsir">Tafsir précédent</string>
     <string name="labelNextTafsir">Tafsir suivant</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp est une application gratuite et open-source pour lire et explorer le Coran avec une interface pure et agréable et des fonctionnalités comme les traductions, le tafsir, les rappels et bien d\'autres.
-\n
-\nTélécharge dès maintenant :
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp est une application gratuite et open-source pour lire et explorer le Coran avec une interface pure et agréable et des fonctionnalités comme les traductions, le tafsir, les rappels et bien d\'autres. \n \nTélécharge dès maintenant : \n%s</string>
     <string name="titleSolutionVerses">Solutions du Coran</string>
     <string name="titleEtiquetteVerses">Étiquette dans le Coran</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">Invocation de %s dans le Coran</string>
