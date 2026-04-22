@@ -395,6 +395,4 @@
     <string name="searchTipArabic">Suche im Koran Text</string>
     <string name="filterSectionLength">Kapitellänge</string>
     <string name="any">Irgendein</string>
-    <string name="discord" translatable="false"></string>
-    <string name="strTitleDownloadSunnahApp" translatable="false"></string>
 </resources>
