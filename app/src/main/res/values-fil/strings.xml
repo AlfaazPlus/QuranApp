@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strTitleAppVersion">Bersyon ng App</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp ay isang libre at open-source na app para basahin at tuklasin ang Noble Qur\'an na may mga pagsasalin. Ang app na ito ay may maganda at malinis na interface na may mga tampok tulad ng tafsir, pagbigkas, paalala at marami pa.
-\n
-\nI-DOWNLOAD NA NGAYON:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ay isang libre at open-source na app para basahin at tuklasin ang Noble Qur\'an na may mga pagsasalin. Ang app na ito ay may maganda at malinis na interface na may mga tampok tulad ng tafsir, pagbigkas, paalala at marami pa. \n \nI-DOWNLOAD NA NGAYON: \n%s</string>
     <string name="strLabelClose">Isarado</string>
     <string name="strLabelGotIt">Naintidihan ko</string>
     <string name="strLabelCancel">I-kansel</string>
@@ -54,8 +51,8 @@
     <string name="strTitleAboutSurah">Tungkol sa Surat</string>
     <string name="strTitleTranslations">Mga Translation</string>
     <string name="strTitleDownloadTranslations">I-Download</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">Aalisin ang %d na mga bookmarks\?</string>
-    <string name="strTitleTranslDelete">Tatanggalin ang translation\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Aalisin ang %d na mga bookmarks?</string>
+    <string name="strTitleTranslDelete">Tatanggalin ang translation?</string>
     <string name="strTitleShareVerse">I-share ang taludtod</string>
     <string name="strTitleVOTD">Taludtod ng Araw</string>
     <string name="strTitleProphets">Mga Prophet</string>
@@ -138,8 +135,8 @@
     <string name="strTitleScripts">Mga script</string>
     <string name="audioOption">Opsyon sa Audio</string>
     <string name="playbackSpeed">Bilis ng Playback</string>
-    <string name="strTitleBookmarkDeleteAll">Aalisin lahat ng bookmarks\?</string>
-    <string name="strTitleBookmarkDeleteThis">Aalisin ang bookmark na to\?</string>
+    <string name="strTitleBookmarkDeleteAll">Aalisin lahat ng bookmarks?</string>
+    <string name="strTitleBookmarkDeleteThis">Aalisin ang bookmark na to?</string>
     <string name="strTitleFeaturedQuran">Itinatampok na Pagbasa</string>
     <string name="strChapInfoSeeMore">Tingnan ang higit pang impormasyon ›</string>
     <string name="strTitleChapInfoChapterNo">Numero ng Kabanata</string>
