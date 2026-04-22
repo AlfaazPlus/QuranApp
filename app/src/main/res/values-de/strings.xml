@@ -70,9 +70,9 @@
     <string name="strTitleRecitations">Rezitationen</string>
     <string name="strTitleSelectReciter">Rezitator auswählen</string>
     <string name="strTitleScripts">Schriftsysteme</string>
-    <string name="strTitleBookmarkDeleteThis">Lesezeichen entfernen\?</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">Lesezeichen %d entfernen\?</string>
-    <string name="strTitleTranslDelete">Übersetzung löschen\?</string>
+    <string name="strTitleBookmarkDeleteThis">Lesezeichen entfernen?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Lesezeichen %d entfernen?</string>
+    <string name="strTitleTranslDelete">Übersetzung löschen?</string>
     <string name="strTitleVOTD">Vers des Tages</string>
     <string name="strTitleFeaturedQuran">Leseempfehlung</string>
     <string name="strTitleProphets">Propheten</string>
@@ -131,7 +131,7 @@
     <string name="strMsgReadShowupHere">Ihr Leseverlauf wird hier angezeigt.</string>
     <string name="strMsgReadHistoryDeleteAll">Alle Leseverläufe werden entfernt.</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Heute um %s</string>
-    <string name="strMsgHistoryRemove">Diesen Verlauf entfernen\?</string>
+    <string name="strMsgHistoryRemove">Diesen Verlauf entfernen?</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s“ aus dem Verlauf entfernt</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Gesamtergebnisse gefunden in %1$s: %2$d</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Keine Ergebnisse in %s gefunden. Bitte prüfen Sie die Suchfilter oder suchen Sie in einer anderen Übersetzung.</string>
@@ -155,8 +155,7 @@
     <string name="strAyatulKursi">Ayatul Kurs</string>
     <string name="strTitleInfo">Info!</string>
     <string name="strTitleOops">Ups!</string>
-    <string name="strMsgUpdateAvailable2Continue">AKTUALISIERUNG ERFORDERLICH!
-\nBitte aktualisieren Sie die App, um fortzufahren.</string>
+    <string name="strMsgUpdateAvailable2Continue">AKTUALISIERUNG ERFORDERLICH! \nBitte aktualisieren Sie die App, um fortzufahren.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s im Koran</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Gefundene Verse mit Bezug zu %1$s an insgesamt %2$d Stellen.</string>
     <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
@@ -171,18 +170,13 @@
     <string name="pasteCrashLogGithubIssue">Das Protokoll wurde in die Zwischenablage kopiert. Bitte fügen Sie es in die GitHub-Ausgabe ein.</string>
     <string name="msgVerseReminderNotifPermission">Die Benachrichtigungsberechtigung ist erforderlich, um die Verserinnerung zu aktivieren.</string>
     <string name="titleStorageCleanup">Speicherbereinigung</string>
-    <string name="storageCleanupMessage">Geben Sie Speicherplatz frei, indem Sie ungenutzte heruntergeladene Ressourcen löschen. Dabei werden keine Lesezeichen oder Einstellungen gelöscht.
-\n
-\nFolgende Ressourcen können freigesetzt werden:</string>
+    <string name="storageCleanupMessage">Geben Sie Speicherplatz frei, indem Sie ungenutzte heruntergeladene Ressourcen löschen. Dabei werden keine Lesezeichen oder Einstellungen gelöscht. \n \nFolgende Ressourcen können freigesetzt werden:</string>
     <string name="translationCanBeFreedUp" formatted="false">%d heruntergeladene Übersetzungen können freigegeben werden.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d gespeicherte Rezitationsdateien von %2$d Rezitatoren können freigegeben werden.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d heruntergeladene Schriftsysteme und ihre Schriftarten können freigegeben werden.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d gespeicherte Erläuterungen können bereinigt werden.</string>
     <string name="labelFreeUpSpace">Speicherplatz freigeben</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nSie müssen es erneut herunterladen.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nSie müssen es erneut herunterladen.</string>
     <string name="strLabelPreviousVerse">Vorheriger Vers</string>
     <string name="strTitleMadani">Medina</string>
     <string name="strTitleReaderTextSizeArabic">Textgröße Arabisch</string>
@@ -190,7 +184,7 @@
     <string name="strTitleBookmark">Lesezeichen</string>
     <string name="strTitleSuccess">Erfolg</string>
     <string name="strTitleFilters">Filter</string>
-    <string name="strTitleBookmarkDeleteAll">Alle Lesezeichen entfernen\?</string>
+    <string name="strTitleBookmarkDeleteAll">Alle Lesezeichen entfernen?</string>
     <string name="strTitleShareVerse">Vers teilen</string>
     <string name="strChapInfoSeeMore">Weitere Informationen ›</string>
     <string name="strMsgBookmarkRemoveFailed">Vers konnte nicht aus Lesezeichen entfernt werden</string>
@@ -204,8 +198,7 @@
     <string name="strMsgShareRange" formatted="false">Bereich eingeben zwischen %1$d–%2$d</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Maximal %d Übersetzungen können auf einmal ausgewählt werden. Bitte heben Sie eine Auswahl auf, bevor Sie eine andere auswählen. Dies vermeidet Leistungsverluste.</string>
     <string name="strMsgUpdateAvailable">UPDATE VERFÜGBAR! Bitte aktualisieren Sie die App, um die neuesten Funktionen zu erhalten.</string>
-    <string name="strMsgUpdateAvailable4Dialog">UPDATE VERFÜGBAR!
-\nBitte aktualisieren Sie die App.</string>
+    <string name="strMsgUpdateAvailable4Dialog">UPDATE VERFÜGBAR! \nBitte aktualisieren Sie die App.</string>
     <string name="strMsgNoInternetLong">Keine Internetverbindung. Vergewissern Sie sich, dass WLAN oder mobile Daten aktiviert sind und versuchen Sie es erneut.</string>
     <string name="strTextPleaseWait">Bitte warten…</string>
     <string name="strLabelAllChapters">Alle Kapitel</string>
@@ -233,10 +226,7 @@
     <string name="strTitleReadTafsirOfVerse" formatted="false">Lesen Sie die Erläuterung des Verses %d</string>
     <string name="strTitleSelectTafsir">Erläuterung auswählen</string>
     <string name="places" formatted="false">%d Orte</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp ist eine kostenlose Open-Source-App zum Lesen und Erkunden des edlen Korans mit Übersetzungen. Diese App hat eine schöne und übersichtliche Benutzeroberfläche mit Funktionen wie Tafsir, Rezitation, Erinnerung und vielem mehr.
-\n
-\nJETZT HERUNTERLADEN:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp ist eine kostenlose Open-Source-App zum Lesen und Erkunden des edlen Korans mit Übersetzungen. Diese App hat eine schöne und übersichtliche Benutzeroberfläche mit Funktionen wie Tafsir, Rezitation, Erinnerung und vielem mehr. \n \nJETZT HERUNTERLADEN: \n%s</string>
     <string name="noItems">keine Einträge</string>
     <string name="titleRemoveFromFavourites">Aus Favoriten entfernen</string>
     <string name="audioOnlyArabic">Nur Koran abspielen</string>
