@@ -285,4 +285,124 @@
     <string name="autoScroll">Scroll automático</string>
     <string name="autoScrollSpeed">Definir velocidade</string>
     <string name="msgExtractingFonts">Extrair fontes</string>
+    <string name="clear">Limpar</string>
+    <string name="strLabelDownloaded">Descarregado</string>
+    <string name="strTitleDeleteTafsir">Eliminar Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Tem a certeza de que deseja eliminar “%s”? Isto removerá os dados do tafsir descarregados do seu dispositivo.</string>
+    <string name="strLabelAll">Tudo</string>
+    <string name="strLabelPrevious">Anterior</string>
+    <string name="nextChapter">Próximo capítulo</string>
+    <string name="previousChapter">Capítulo anterior</string>
+    <string name="nextJuz">Próximo juz</string>
+    <string name="previousJuz">Juz anterior</string>
+    <string name="nextHizb">Próximo hizb</string>
+    <string name="previousHizb">Hizb anterior</string>
+    <string name="strLabelRukuNo" formatted="false">Ruku %d</string>
+    <string name="endOfPageNo" formatted="false">Fim da página %d</string>
+    <string name="endOfRukuNo" formatted="false">Fim do Ruku %d</string>
+    <string name="endOfRubNo" formatted="false">Fim do Rub %d</string>
+    <string name="endOfManzilNo" formatted="false">Fim do Manzil %d</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir para o versículo %1$d:%2$d</string>
+    <string name="textSizes">Tamanhos de texto</string>
+    <string name="sajda">Prostração (Sajda)</string>
+    <string name="filterSectionLength">Extensão do capítulo</string>
+    <string name="any">Qualquer</string>
+    <string name="withSajda">Com sajda</string>
+    <string name="withoutSajda">Sem sajda</string>
+    <string name="chapterFilterLengthShort">Curto (&lt;50 versículos)</string>
+    <string name="chapterFilterLengthMedium">Médio (50–150 versículos)</string>
+    <string name="chapterFilterLengthLong">Longo (150+ versículos)</string>
+    <string name="clearFilters">Limpar filtros</string>
+    <string name="chapterFilters">Filtros de capítulo</string>
+    <string name="strMsgReciterDownloadHint">Descarregue o áudio da recitação para ouvir offline e ter uma reprodução mais suave.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d capítulos</string>
+    <string name="recitationDownloadAllComplete">Todos os capítulos descarregados</string>
+    <string name="recitationDownloadConfirmTitle">Descarregar recitações</string>
+    <string name="recitationDownloadConfirmMessage">Descarregar todos os capítulos deste recitador? Isto pode ocupar espaço e dados significativos.</string>
+    <string name="recitationDownloadSomeFailed">Falha nalguns capítulos. Toque em repetir para colocar novamente os capítulos em falta na fila.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Outro recitador já está a descarregar. Aguarde que termine ou cancele-o antes de iniciar um novo descarregamento.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d capítulos descarregados</string>
+    <string name="recitationBulkEnqueueNotifTitle">A preparar descarregamentos de recitação</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — %2$d de %3$d na fila</string>
+    <string name="playbackCount">Contagem de reprodução</string>
+    <string name="titleRecitationGroupSize">Tamanho do grupo de versículos do Alcorão</string>
+    <string name="msgRecitationGroupSize">Escolha quantos versículos do Alcorão são reproduzidos antes de a tradução começar. Exemplo: se selecionar 3, reproduz 3 versículos do Alcorão seguidos das suas traduções.</string>
+    <string name="labelRecommended">Recomendado</string>
+    <string name="strTitleMajorSins">Maiores Pecados no Alcorão</string>
+    <string name="modeVerseByVerse">Modo versículo por versículo</string>
+    <string name="modeMushaf">Modo Mushaf</string>
+    <string name="titleGlobalSearch">Pesquisa Global</string>
+    <string name="strHintSearchBy">Pesquisar juz ou surata</string>
+    <string name="strHintSearchHizb">Pesquisar hizb ou surata</string>
+    <string name="strHintSearchPage">Pesquisar página</string>
+    <string name="noNoteProvided">Nenhuma nota fornecida…</string>
+    <string name="dailyReminderMsg">Receba uma notificação de lembrete diário.</string>
+    <string name="strMsgNoVerseTiming">A reproduzir áudio do capítulo completo sem sincronização de versículos</string>
+    <string name="textPreparingAudio">A preparar áudio…</string>
+    <string name="notification_permission">Permissão de Notificação</string>
+    <string name="noResults">Sem resultados</string>
+    <string name="onboardDescTafsir">Selecione um comentário para ler ao lado dos versículos. Pode descarregar e gerir tafsirs nas definições.</string>
+    <string name="labelTransliteration">Transliteração</string>
+    <string name="favourites">Favoritos</string>
+    <string name="strMsgSearchHistoryDeleteAll">Todo o histórico de pesquisa será removido.</string>
+    <string name="stopAutoScroll">Parar deslocamento automático</string>
+    <string name="titleCancelDownload">Cancelar descarregamento?</string>
+    <string name="yesCancelDownload">Sim, cancelar</string>
+    <string name="noContinueDownload">Não, continuar</string>
+    <string name="readingTafsirMultiVerses">A ler tafsir para vários versículos:</string>
+    <string name="donate">Doar para Nós</string>
+    <string name="quran_and_science">Alcorão e Ciência</string>
+    <string name="about_this_page">Sobre esta página</string>
+    <string name="about_quran_science_msg">O conteúdo desta página foi retirado do livro do Dr. Zakir Naik chamado “The Quran and Modern Science: Compatible or Incompatible”\n\nAs imagens apresentadas são apenas para fins ilustrativos.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d referências</string>
+    <string name="once">Uma vez</string>
+    <string name="twice">Duas vezes</string>
+    <string name="nTimes" formatted="false">%d vezes</string>
+    <string name="msgRepeat">Defina quantas vezes cada versículo deve ser reproduzido antes de passar para o seguinte. Disponível apenas quando “Reproduzir apenas Alcorão” está ativado nas Opções de Áudio.</string>
+    <string name="notSupported">Não suportado</string>
+    <string name="missingTimingData" formatted="false">Dados de tempo em falta para %s — não é possível reproduzir.</string>
+    <string name="expandedPlayerModeControls">Controlos</string>
+    <string name="expandedPlayerModeSpotlight">Spotlight</string>
+    <string name="theme_default">Padrão</string>
+    <string name="theme_blue">Azul</string>
+    <string name="theme_red">Vermelho</string>
+    <string name="theme_purple">Roxo</string>
+    <string name="theme_violet">Violeta</string>
+    <string name="theme_yellow">Amarelo</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_colors">Cores do Tema</string>
+    <string name="theme_mode">Modo do Tema</string>
+    <string name="dynamic_color">Cor Dinâmica</string>
+    <string name="dynamic_color_description">Altera a cor do tema com base nas cores do sistema</string>
+    <string name="textSizeVerseByVerseOnly">Esta definição não é aplicada no modo mushaf.</string>
+    <string name="sortBy">Ordenar por</string>
+    <string name="alphabetically">Alfabética</string>
+    <string name="chronological">Ordem Cronológica</string>
+    <string name="translationHelp">Não vê o seu idioma? Ajude a traduzir ou a melhorar e torne-o acessível a mais pessoas!</string>
+    <string name="learnMore">Saiba mais</string>
+    <string name="wordByWord">Palavra por Palavra</string>
+    <string name="selectWbwLanguage">Selecionar idioma</string>
+    <string name="wbwShowTranslation">Mostrar tradução</string>
+    <string name="wbwShowTransliteration">Mostrar transliteração</string>
+    <string name="wbwShowTransliterationMgs">Quando disponível para o idioma selecionado</string>
+    <string name="wbwRecitation">Recitação</string>
+    <string name="wbwRecitationMsg">Reproduzir áudio quando uma palavra é clicada</string>
+    <string name="wbwTextSize">Tamanho do texto</string>
+    <string name="noWbwAvailable">Descarregue um pacote de idiomas abaixo para ativar as funcionalidades palavra por palavra.</string>
+    <string name="deleteData">Eliminar dados?</string>
+    <string name="wordNo" formatted="false">Palavra %d</string>
+    <string name="playWord">Reproduzir palavra</string>
+    <string name="previousWord">Palavra anterior</string>
+    <string name="nextWord">Próxima palavra</string>
+    <string name="results">Resultados</string>
+    <string name="titleRecentSearches">Pesquisas recentes</string>
+    <string name="searchInQuran">Pesquisar no Alcorão</string>
+    <string name="searchTipsTitle">Dicas de pesquisa</string>
+    <string name="searchTipDirectVerse">Leia um versículo ou tafsir diretamente</string>
+    <string name="searchTipChapter">Pesquisar capítulos</string>
+    <string name="searchTipDirectJuz">Salte para “Capítulo 30”, “Juz 30” ou “Hizb 30”</string>
+    <string name="searchTipTranslation">Pesquisar nas traduções</string>
+    <string name="searchTipArabic">Pesquisar no texto do Alcorão</string>
 </resources>

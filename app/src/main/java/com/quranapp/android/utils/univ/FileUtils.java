@@ -120,7 +120,7 @@ public final class FileUtils {
 
     public File getTafsirFileSingleVerse(String tafsirSlug, int chapterNo, int verseNo) {
         File tafsirDir = getTafsirDir();
-        return new File(tafsirDir, createPath(tafsirSlug, String.format("%d_%d.json", chapterNo, verseNo)));
+        return new File(tafsirDir, createPath(tafsirSlug, StringUtils.formatInvariant("%d_%d.json", chapterNo, verseNo)));
     }
 
     public File getScriptDir() {

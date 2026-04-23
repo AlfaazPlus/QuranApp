@@ -13,6 +13,7 @@ import com.quranapp.android.utils.Logger;
 import com.quranapp.android.utils.app.AppUtils;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.MessageUtils;
+import com.quranapp.android.utils.univ.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -210,7 +211,7 @@ public class TranslUtils {
 
     public static String prepareTranslPathForSpecificLangNSlug(int translId, String langCode, String translSlug) {
         String path2TranslDir = prepareTranslDirPathForSpecificLangNSlug(langCode, translSlug);
-        String filename = String.format(TRANSL_FILE_NAME_FORMAT, translId, langCode, translSlug);
+        String filename = StringUtils.formatInvariant(TRANSL_FILE_NAME_FORMAT, translId, langCode, translSlug);
         return FileUtils.createPath(path2TranslDir, filename);
     }
 

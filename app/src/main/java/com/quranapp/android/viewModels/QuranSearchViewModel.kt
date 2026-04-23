@@ -100,8 +100,12 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
             initialValue = PagingData.empty(),
         )
 
-    fun onQueryChange(value: String) {
+    fun onQueryChange(value: String, isQuranText: Boolean = false) {
         _searchQuery.value = value
+
+        if (isQuranText) {
+            _quranTextEnabled.value = true
+        }
     }
 
     fun toggleQuranTextEnabled(postRun: (Boolean) -> Unit) {

@@ -283,4 +283,116 @@
     <string name="strLabelDownloaded">已下載</string>
     <string name="strTitleDeleteTafsir">刪除經注？</string>
     <string name="strMsgDeleteTafsir" formatted="false">確定要刪除「%s」嗎？這將從裝置中刪除已下載的經注資料。</string>
+    <string name="clear">清除</string>
+    <string name="strLabelAll">全部</string>
+    <string name="strLabelPrevious">上一步</string>
+    <string name="nextChapter">下一章</string>
+    <string name="previousChapter">上一章</string>
+    <string name="nextJuz">下一個 Juz</string>
+    <string name="previousJuz">上一個 Juz</string>
+    <string name="nextHizb">下一個 Hizb</string>
+    <string name="previousHizb">上一個 Hizb</string>
+    <string name="strLabelRukuNo" formatted="false">第 %d 個 Ruku</string>
+    <string name="endOfPageNo" formatted="false">第 %d 頁結束</string>
+    <string name="endOfRukuNo" formatted="false">第 %d 個 Ruku 結束</string>
+    <string name="endOfRubNo" formatted="false">第 %d 個 Rub 結束</string>
+    <string name="endOfManzilNo" formatted="false">第 %d 個 Manzil 結束</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %d</string>
+    <string name="tafsirForVerse" formatted="false">第 %1$d:%2$d 節的經注 (Tafsir)</string>
+    <string name="textSizes">文本大小</string>
+    <string name="sajda">叩頭 (Sajda)</string>
+    <string name="filterSectionLength">章節長度</string>
+    <string name="any">任何</string>
+    <string name="withSajda">有叩頭</string>
+    <string name="withoutSajda">無叩頭</string>
+    <string name="chapterFilterLengthShort">短 (&lt;50 節)</string>
+    <string name="chapterFilterLengthMedium">中 (50–150 節)</string>
+    <string name="chapterFilterLengthLong">長 (150+ 節)</string>
+    <string name="clearFilters">清除過濾器</string>
+    <string name="chapterFilters">章節過濾器</string>
+    <string name="strMsgReciterDownloadHint">下載誦讀音訊以便離線收聽和更流暢地播放。</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d 章</string>
+    <string name="recitationDownloadAllComplete">所有章節已下載</string>
+    <string name="recitationDownloadConfirmTitle">下載誦讀</string>
+    <string name="recitationDownloadConfirmMessage">下載此誦讀者的所有章節？這可能會消耗大量的存儲空間和數據。</string>
+    <string name="recitationDownloadSomeFailed">部分章節下載失敗。點按重試以重新將缺失的章節加入隊列。</string>
+    <string name="recitationDownloadWaitForOtherReciter">另一個誦讀者正在下載。請等待其完成或取消後再開始新的下載。</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">已下載 %1$d / %2$d 章</string>
+    <string name="recitationBulkEnqueueNotifTitle">正在準備誦讀下載</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — 已加入隊列 %2$d/%3$d</string>
+    <string name="playbackCount">播放次數</string>
+    <string name="titleRecitationGroupSize">古蘭經節分組大小</string>
+    <string name="msgRecitationGroupSize">選擇在翻譯開始前播放多少節古蘭經經文。例如：如果您選擇 3，它將播放 3 節古蘭經經文，然後是它們的翻譯。</string>
+    <string name="labelRecommended">推薦</string>
+    <string name="modeVerseByVerse">逐節模式</string>
+    <string name="modeMushaf">穆斯哈夫模式</string>
+    <string name="titleGlobalSearch">全局搜索</string>
+    <string name="strHintSearchBy">搜索 juz 或蘇拉 (surah)</string>
+    <string name="strHintSearchHizb">搜索 hizb 或蘇拉 (surah)</string>
+    <string name="strHintSearchPage">搜索頁面</string>
+    <string name="noNoteProvided">未提供筆記…</string>
+    <string name="dailyReminderMsg">開啟每日提醒通知。</string>
+    <string name="strMsgNoVerseTiming">正在播放全章音訊（無章節同步）</string>
+    <string name="textPreparingAudio">正在準備音訊…</string>
+    <string name="notification_permission">通知權限</string>
+    <string name="noResults">無結果</string>
+    <string name="onboardDescTafsir">選擇一個注釋與經文一起閱讀。您可以在設置中下載和管理經注。</string>
+    <string name="labelTransliteration">音譯</string>
+    <string name="favourites">收藏</string>
+    <string name="strMsgSearchHistoryDeleteAll">所有搜索歷史記錄將被移除。</string>
+    <string name="stopAutoScroll">停止自動滾動</string>
+    <string name="donate">捐贈給我們</string>
+    <string name="quran_and_science">古蘭經與科學</string>
+    <string name="about_this_page">關於此頁面</string>
+    <string name="about_quran_science_msg">此頁面的內容摘自 Zakir Naik 博士的書籍《古蘭經與現代科學：相容還是不相容》\n\n顯示的圖像僅用於說明目的。</string>
+    <string name="strLabelScienceReferences" formatted="false">%d 個參考文獻</string>
+    <string name="once">一次</string>
+    <string name="twice">兩次</string>
+    <string name="nTimes" formatted="false">%d 次</string>
+    <string name="msgRepeat">設置每節經文在移動到下一節之前播放的次數。僅當音訊選項中啟用「僅播放古蘭經」時可用。</string>
+    <string name="notSupported">不支持</string>
+    <string name="missingTimingData" formatted="false">缺少 %s 的時間數據 — 無法播放。</string>
+    <string name="expandedPlayerModeControls">控制</string>
+    <string name="expandedPlayerModeSpotlight">聚光燈 (Spotlight)</string>
+    <string name="theme_default">默認</string>
+    <string name="theme_blue">藍色</string>
+    <string name="theme_red">紅色</string>
+    <string name="theme_purple">紫色</string>
+    <string name="theme_violet">紫羅蘭色</string>
+    <string name="theme_yellow">黃色</string>
+    <string name="theme_mono">單色</string>
+    <string name="theme_colors">主題顏色</string>
+    <string name="theme_mode">主題模式</string>
+    <string name="dynamic_color">動態顏色</string>
+    <string name="dynamic_color_description">根據系統顏色更改主題顏色</string>
+    <string name="textSizeVerseByVerseOnly">此設置不適用於穆斯哈夫模式。</string>
+    <string name="sortBy">排序方式</string>
+    <string name="alphabetically">按字母順序</string>
+    <string name="chronological">按時間順序</string>
+    <string name="translationHelp">沒看到您的語言？幫助翻譯或改進它，讓更多人可以使用！</string>
+    <string name="learnMore">了解更多</string>
+    <string name="wordByWord">逐字閱讀</string>
+    <string name="selectWbwLanguage">選擇語言</string>
+    <string name="wbwShowTranslation">顯示翻譯</string>
+    <string name="wbwShowTransliteration">顯示音譯</string>
+    <string name="wbwShowTransliterationMgs">當所選語言可用時</string>
+    <string name="wbwRecitation">誦讀</string>
+    <string name="wbwRecitationMsg">點擊單詞時播放音訊</string>
+    <string name="wbwTextSize">文本大小</string>
+    <string name="noWbwAvailable">在下方下載語言包以開啟逐字功能。</string>
+    <string name="deleteData">刪除數據？</string>
+    <string name="wordNo" formatted="false">第 %d 個單詞</string>
+    <string name="playWord">播放單詞</string>
+    <string name="previousWord">上一個單詞</string>
+    <string name="nextWord">下一個單詞</string>
+    <string name="results">結果</string>
+    <string name="titleRecentSearches">最近搜索</string>
+    <string name="searchInQuran">在古蘭經中搜索</string>
+    <string name="searchTipsTitle">搜索提示</string>
+    <string name="searchTipDirectVerse">直接閱讀經文或經注</string>
+    <string name="searchTipChapter">搜索章節</string>
+    <string name="searchTipDirectJuz">跳轉到「第 30 章」、「第 30 Juz」或「第 30 Hizb」</string>
+    <string name="searchTipTranslation">在翻譯中搜索</string>
+    <string name="searchTipArabic">在古蘭經正文中搜索</string>
 </resources>

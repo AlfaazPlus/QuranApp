@@ -293,4 +293,116 @@
     <string name="readingTafsirMultiVerses">قراءة التفسير لآيات متعددة:</string>
     <string name="strLabelDownloaded">تحميل</string>
     <string name="labelImportExportBookmarks">استيراد/تصدير الإشارات المرجعية</string>
+    <string name="clear">مسح</string>
+    <string name="strLabelAll">الكل</string>
+    <string name="strLabelPrevious">السابق</string>
+    <string name="nextChapter">السورة التالية</string>
+    <string name="previousChapter">السورة السابقة</string>
+    <string name="nextJuz">الجزء التالي</string>
+    <string name="previousJuz">الجزء السابق</string>
+    <string name="nextHizb">الحزب التالي</string>
+    <string name="previousHizb">الحزب السابق</string>
+    <string name="strLabelRukuNo" formatted="false">ركوع %d</string>
+    <string name="endOfPageNo" formatted="false">نهاية الصفحة %d</string>
+    <string name="endOfRukuNo" formatted="false">نهاية الركوع %d</string>
+    <string name="endOfRubNo" formatted="false">نهاية الربع %d</string>
+    <string name="endOfManzilNo" formatted="false">نهاية المنزل %d</string>
+    <string name="strTitleReaderHizb">حزب</string>
+    <string name="labelHizbNo" formatted="false">حزب %d</string>
+    <string name="tafsirForVerse" formatted="false">تفسير الآية %1$d:%2$d</string>
+    <string name="textSizes">أحجام النص</string>
+    <string name="sajda">سجدة</string>
+    <string name="filterSectionLength">طول السورة</string>
+    <string name="any">أي</string>
+    <string name="withSajda">مع سجدة</string>
+    <string name="withoutSajda">بدون سجدة</string>
+    <string name="chapterFilterLengthShort">قصيرة (&lt;50 آية)</string>
+    <string name="chapterFilterLengthMedium">متوسطة (50–150 آية)</string>
+    <string name="chapterFilterLengthLong">طويلة (150+ آية)</string>
+    <string name="clearFilters">مسح الفلاتر</string>
+    <string name="chapterFilters">فلاتر السور</string>
+    <string name="strMsgReciterDownloadHint">قم بتنزيل التلاوة للاستماع دون اتصال بالإنترنت ولتشغيل أكثر سلاسة.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d سورة</string>
+    <string name="recitationDownloadAllComplete">تم تنزيل جميع السور</string>
+    <string name="recitationDownloadConfirmTitle">تنزيل التلاوات</string>
+    <string name="recitationDownloadConfirmMessage">هل تريد تنزيل جميع السور لهذا القارئ؟ قد يستهلك هذا مساحة تخزين وبيانات كبيرة.</string>
+    <string name="recitationDownloadSomeFailed">فشل تنزيل بعض السور. اضغط على إعادة المحاولة لوضع السور المتبقية في قائمة الانتظار.</string>
+    <string name="recitationDownloadWaitForOtherReciter">هناك قارئ آخر قيد التنزيل حالياً. انتظر حتى ينتهي أو قم بإلغائه قبل بدء تنزيل جديد.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d سورة تم تنزيلها</string>
+    <string name="recitationBulkEnqueueNotifTitle">جاري تحضير تنزيلات التلاوة</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — تم وضع %2$d من %3$d في قائمة الانتظار</string>
+    <string name="playbackCount">عدد المرات</string>
+    <string name="titleRecitationGroupSize">حجم مجموعة الآيات</string>
+    <string name="msgRecitationGroupSize">اختر عدد الآيات التي يتم تشغيلها قبل بدء الترجمة. مثال: إذا اخترت 3، فسيتم تشغيل 3 آيات قرآنية متبوعة بتراجمها.</string>
+    <string name="labelRecommended">موصى به</string>
+    <string name="modeVerseByVerse">وضع آية بآية</string>
+    <string name="modeMushaf">وضع المصحف</string>
+    <string name="titleGlobalSearch">البحث العام</string>
+    <string name="strHintSearchBy">ابحث عن جزء أو سورة</string>
+    <string name="strHintSearchHizb">ابحث عن حزب أو سورة</string>
+    <string name="strHintSearchPage">ابحث عن صفحة</string>
+    <string name="noNoteProvided">لم يتم تقديم أي ملاحظة…</string>
+    <string name="dailyReminderMsg">احصل على تنبيه تذكير يومي.</string>
+    <string name="strMsgNoVerseTiming">تشغيل صوت السورة كاملة بدون مزامنة الآيات</string>
+    <string name="textPreparingAudio">جاري تحضير الصوت…</string>
+    <string name="notification_permission">إذن الإشعارات</string>
+    <string name="noResults">لا توجد نتائج</string>
+    <string name="onboardDescTafsir">اختر تفسيراً للقراءة بجانب الآيات. يمكنك تنزيل وإدارة التفاسير في الإعدادات.</string>
+    <string name="labelTransliteration">كتابة صوتية</string>
+    <string name="favourites">المفضلة</string>
+    <string name="strMsgSearchHistoryDeleteAll">سيتم حذف سجل البحث بالكامل.</string>
+    <string name="stopAutoScroll">إيقاف التمرير التلقائي</string>
+    <string name="donate">تبرع لنا</string>
+    <string name="quran_and_science">القرآن والعلم</string>
+    <string name="about_this_page">حول هذه الصفحة</string>
+    <string name="about_quran_science_msg">المحتويات في هذه الصفحة مأخوذة من كتاب الدكتور ذاكر نايك بعنوان "القرآن والعلم الحديث: متوافق أم غير متوافق"\n\nالصور المعروضة هي لأغراض توضيحية فقط.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d مراجع</string>
+    <string name="once">مرة واحدة</string>
+    <string name="twice">مرتين</string>
+    <string name="nTimes" formatted="false">%d مرات</string>
+    <string name="msgRepeat">حدد عدد مرات تشغيل كل آية قبل الانتقال إلى الآية التالية. متاح فقط عند تمكين "تشغيل القرآن فقط" في خيارات الصوت.</string>
+    <string name="notSupported">غير مدعوم</string>
+    <string name="missingTimingData" formatted="false">بيانات التوقيت مفقودة لـ %s — لا يمكن التشغيل.</string>
+    <string name="expandedPlayerModeControls">عناصر التحكم</string>
+    <string name="expandedPlayerModeSpotlight">وضع التركيز</string>
+    <string name="theme_default">الافتراضي</string>
+    <string name="theme_blue">أزرق</string>
+    <string name="theme_red">أحمر</string>
+    <string name="theme_purple">أرجواني</string>
+    <string name="theme_violet">بنفسجي</string>
+    <string name="theme_yellow">أصفر</string>
+    <string name="theme_mono">أحادي</string>
+    <string name="theme_colors">ألوان السمة</string>
+    <string name="theme_mode">وضع السمة</string>
+    <string name="dynamic_color">لون ديناميكي</string>
+    <string name="dynamic_color_description">تغيير لون السمة بناءً على ألوان النظام</string>
+    <string name="textSizeVerseByVerseOnly">لا يتم تطبيق هذا الإعداد في وضع المصحف.</string>
+    <string name="sortBy">فرز حسب</string>
+    <string name="alphabetically">أبجدياً</string>
+    <string name="chronological">الترتيب الزمني</string>
+    <string name="translationHelp">لا ترى لغتك؟ ساعد في ترجمتها أو تحسينها وجعلها متاحة لمزيد من الناس!</string>
+    <string name="learnMore">معرفة المزيد</string>
+    <string name="wordByWord">كلمة بكلمة</string>
+    <string name="selectWbwLanguage">اختر اللغة</string>
+    <string name="wbwShowTranslation">إظهار الترجمة</string>
+    <string name="wbwShowTransliteration">إظهار الكتابة الصوتية</string>
+    <string name="wbwShowTransliterationMgs">عندما تتوفر للغة المختارة</string>
+    <string name="wbwRecitation">التلاوة</string>
+    <string name="wbwRecitationMsg">تشغيل الصوت عند الضغط على كلمة</string>
+    <string name="wbwTextSize">حجم النص</string>
+    <string name="noWbwAvailable">قم بتنزيل حزمة لغة أدناه لتفعيل ميزات كلمة بكلمة.</string>
+    <string name="deleteData">حذف البيانات؟</string>
+    <string name="wordNo" formatted="false">كلمة %d</string>
+    <string name="playWord">تشغيل الكلمة</string>
+    <string name="previousWord">الكلمة السابقة</string>
+    <string name="nextWord">الكلمة التالية</string>
+    <string name="results">النتائج</string>
+    <string name="titleRecentSearches">عمليات البحث الأخيرة</string>
+    <string name="searchInQuran">بحث في القرآن</string>
+    <string name="searchTipsTitle">نصائح البحث</string>
+    <string name="searchTipDirectVerse">اقرأ آية أو تفسيراً مباشرة</string>
+    <string name="searchTipChapter">ابحث عن السور</string>
+    <string name="searchTipDirectJuz">انتقل إلى "سورة 30" أو "جزء 30" أو "حزب 30"</string>
+    <string name="searchTipTranslation">ابحث في التراجم</string>
+    <string name="searchTipArabic">ابحث في نص القرآن</string>
 </resources>
