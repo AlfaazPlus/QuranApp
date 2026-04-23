@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,14 +20,11 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,11 +38,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.common.SearchTextField
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
@@ -253,19 +249,10 @@ internal fun FilterField(
     keyboardType: KeyboardType = KeyboardType.Text,
     showLeading: Boolean = true
 ) {
-    OutlinedTextField(
+    SearchTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier
-            .height(48.dp)
-            .fillMaxWidth(),
-        placeholder = {
-            Text(
-                hint,
-                style = typography.bodyMedium,
-                color = colorScheme.onBackground.alpha(0.5f)
-            )
-        },
+        placeholder = hint,
         leadingIcon = if (showLeading) {
             {
                 Icon(
@@ -276,18 +263,6 @@ internal fun FilterField(
                 )
             }
         } else null,
-        singleLine = true,
-        textStyle = typography.bodyMedium,
-        shape = RoundedCornerShape(12.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = colorScheme.primary.alpha(0.5f),
-            unfocusedBorderColor = colorScheme.outlineVariant.alpha(0.5f),
-            focusedContainerColor = colorScheme.surfaceContainerLow,
-            unfocusedContainerColor = colorScheme.surfaceContainerLow,
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = ImeAction.Done,
-        ),
+        keyboardType = keyboardType,
     )
 }

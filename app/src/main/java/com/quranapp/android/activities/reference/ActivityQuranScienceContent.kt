@@ -26,6 +26,7 @@ import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.univ.StringUtils
+import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -174,7 +175,13 @@ class ActivityQuranScienceContent : BaseActivity() {
         val referenceMap = nameMatches.map {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verse) ->
-            "${repository.getChapterName(chapterNo)} $chapterNo:$verse"
+            String.format(
+                Locale.getDefault(),
+                $$"%1$s %2$d:%3$d",
+                repository.getChapterName(chapterNo),
+                chapterNo,
+                verse
+            )
         }
 
         val isKFQPC = scriptCode.isKFQPCScript()

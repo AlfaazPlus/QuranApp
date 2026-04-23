@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.theme.alpha
@@ -125,7 +126,7 @@ private fun FeaturedQuranCard(
                 text = model.name,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold
-                ),
+                ).merge(tightTextStyle),
                 color = Color.White,
                 maxLines = 2
             )
@@ -134,7 +135,7 @@ private fun FeaturedQuranCard(
 
             Text(
                 text = model.miniInfo,
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelSmall.merge(tightTextStyle),
                 color = Color.White.copy(alpha = 0.7f)
             )
         }

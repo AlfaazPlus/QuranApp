@@ -41,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityPropheticDuas
 import com.quranapp.android.components.quran.ExclusiveVerse
@@ -270,21 +271,21 @@ private fun DuaListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = duaName,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start,
             )
             placesLine?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.merge(tightTextStyle),
                     color = colorScheme.onSurface.copy(alpha = 0.85f),
                 )
             }
             inChaptersLine?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodySmall.merge(tightTextStyle),
                     color = colorResource(R.color.colorText2),
                 )
             }
@@ -323,13 +324,13 @@ private fun EtiquetteListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             if (verse.chapters.isNotEmpty() && verse.inChapters.isNotBlank()) {
                 Text(
                     text = verse.inChapters,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.merge(tightTextStyle),
                     color = colorResource(R.color.colorText2),
                 )
             }
@@ -368,20 +369,20 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             verse.description?.takeIf { it.isNotBlank() }?.let { desc ->
                 Text(
                     text = desc,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.merge(tightTextStyle),
                     color = colorScheme.onSurface.copy(alpha = 0.8f),
                 )
             }
             if (verse.inChapters.isNotBlank()) {
                 Text(
                     text = verse.inChapters,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodySmall.merge(tightTextStyle),
                     color = colorResource(R.color.colorText2),
                 )
             }
@@ -436,18 +437,18 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
                 text = placesLine,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium.merge(tightTextStyle),
                 color = colorScheme.onSurface.copy(alpha = 0.85f),
             )
             if (verse.inChapters.isNotBlank()) {
                 Text(
                     text = verse.inChapters,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodySmall.merge(tightTextStyle),
                     color = colorResource(R.color.colorText2),
                 )
             }

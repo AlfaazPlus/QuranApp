@@ -1,16 +1,11 @@
 package com.quranapp.android.compose.components.settings
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.ListItem
@@ -42,37 +37,6 @@ fun SettingsItem(
         subtitleStr = subtitleStr,
         onClick = onClick
     )
-}
-
-@Composable
-fun SettingsItemContent(
-    title: Int? = null,
-    titleStr: String? = null,
-    subtitle: Int? = null,
-    subtitleStr: String? = null,
-    modifier: Modifier
-) {
-    val titleText = titleStr ?: if (title != null) stringResource(title) else null
-    val subtitleText = subtitleStr ?: if (subtitle != null) stringResource(subtitle) else null
-
-    Column(modifier = modifier) {
-        if (titleText != null) {
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.titleSmall
-            )
-        }
-        if (subtitleText != null) {
-            Text(
-                text = subtitleText,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier
-                    .padding(top = 3.dp)
-                    .alpha(0.75f),
-            )
-        }
-    }
 }
 
 @Composable

@@ -83,6 +83,7 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.Keys
 import horizontalFadingEdge
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -604,9 +605,22 @@ private suspend fun buildReferenceRows(
 
     for ((seg, verseUis, textStyles) in built) {
         val titleText = if (seg.ref.range.isSingleValue) {
-            "${seg.chapterName} ${seg.chapterNo}:${seg.ref.range.first}"
+            String.format(
+                Locale.getDefault(),
+                $$"%1$s %2$d:%3$d",
+                seg.chapterName,
+                seg.chapterNo,
+                seg.ref.range.first
+            )
         } else {
-            "${seg.chapterName} ${seg.chapterNo}:${seg.ref.range.first}-${seg.ref.range.last}"
+            String.format(
+                Locale.getDefault(),
+                $$"%1$s %2$d:%3$d-%4$d",
+                seg.chapterName,
+                seg.chapterNo,
+                seg.ref.range.first,
+                seg.ref.range.last
+            )
         }
 
         out.add(

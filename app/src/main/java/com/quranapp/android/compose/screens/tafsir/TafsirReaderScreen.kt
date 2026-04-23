@@ -76,6 +76,7 @@ import com.quranapp.android.viewModels.TafsirContentState
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderUiState
 import com.quranapp.android.viewModels.TafsirReaderViewModel
+import java.util.Locale
 
 @Composable
 fun TafsirReaderScreen(
@@ -251,7 +252,13 @@ private fun TafsirTopBar(
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "$chapterName $chapterNo:$verseNo",
+                        text = String.format(
+                            Locale.getDefault(),
+                            $$"%1$s %2$d:%3$d",
+                            chapterName,
+                            chapterNo,
+                            verseNo
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colorScheme.primary,
                         maxLines = 1,

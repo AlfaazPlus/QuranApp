@@ -164,7 +164,6 @@ private fun ReaderLayoutVerseMode(
     nestedScrollConnection: NestedScrollConnection,
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
-    val density = LocalDensity.current
     val listState = rememberLazyListState()
     val prepared by readerVm.verseByVersePrepared.collectAsStateWithLifecycle()
     val items = prepared.items

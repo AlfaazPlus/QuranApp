@@ -228,7 +228,7 @@
     <string name="noItems">لا توجد عناصر</string>
     <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
     <string name="msgChapterAddedToFavourites">تم إضافة السورة إلى المفضلة.</string>
-    <string name="nItem" formatted="false">عنصر %d</string>
+    <string name="nItem" formatted="false">%d عنصر</string>
     <string name="nItems" formatted="false">%d عناصر</string>
     <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
     <string name="downloadRecitations">تنزيل التلاوات</string>

@@ -40,6 +40,7 @@ import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
+import java.util.Locale
 import kotlinx.coroutines.launch
 
 @Composable
@@ -137,15 +138,14 @@ fun SettingsMainScreen(
             SettingsItem(
                 title = R.string.textSizes,
                 icon = R.drawable.icon_font_size,
-                subtitleStr = "${stringResource(R.string.labelArabic)}: ${
-                    ReaderTextSizeUtils.calculateProgressText(
-                        arabicTextSizeMult
-                    )
-                }%, ${stringResource(R.string.labelTranslation)}: ${
-                    ReaderTextSizeUtils.calculateProgressText(
-                        translationTextSizeMult
-                    )
-                }%"
+                subtitleStr = String.format(
+                    Locale.getDefault(),
+                    $$"%1$s: %2$d%%, %3$s: %4$d%%",
+                    stringResource(R.string.labelArabic),
+                    ReaderTextSizeUtils.calculateProgressText(arabicTextSizeMult),
+                    stringResource(R.string.labelTranslation),
+                    ReaderTextSizeUtils.calculateProgressText(translationTextSizeMult)
+                )
             ) { showTextSizesSheet = true }
 
             SettingsItem(

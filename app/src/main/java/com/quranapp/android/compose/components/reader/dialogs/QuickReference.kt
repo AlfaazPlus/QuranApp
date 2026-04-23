@@ -325,8 +325,9 @@ private fun QuickReferenceHeader(
     onOpen: () -> Unit,
     onClose: () -> Unit,
 ) {
+    val iconTint = colorScheme.onSurface.alpha(0.7f)
     val bookmarkTint = if (isBookmarked) colorResource(R.color.colorPrimary)
-    else colorScheme.onSurface.alpha(0.7f)
+    else iconTint
 
     Row(
         modifier = Modifier
@@ -367,7 +368,7 @@ private fun QuickReferenceHeader(
                 Icon(
                     painter = painterResource(R.drawable.dr_icon_open),
                     contentDescription = stringResource(R.string.strLabelOpen),
-                    tint = colorScheme.onSurface,
+                    tint = iconTint,
                 )
             }
         } else {
