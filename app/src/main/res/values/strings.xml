@@ -133,9 +133,7 @@
     <string name="audioOnlyTranslation">Play only translation</string>
     <string name="audioBothArabicTranslation">Play both Quran and translation</string>
     <string name="titleRecitationGroupSize">Quran Verse Group Size</string>
-    <string name="msgRecitationGroupSize">
-        Choose how many Quran verses play before translation starts. Example: if you select 3, it plays 3 Quran verses followed by their translations.
-    </string>
+    <string name="msgRecitationGroupSize">Choose how many Quran verses play before translation starts. Example: if you select 3, it plays 3 Quran verses followed by their translations.</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="strTitleBookmarkDeleteThis">Remove this bookmark?</string>
     <string name="strTitleBookmarkDeleteAll">Remove all bookmarks?</string>
@@ -280,9 +278,7 @@
     <string name="pasteCrashLogGithubIssue">Log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
     <string name="discord" translatable="false">Discord</string>
-    <string name="notification_permission">
-        Notification Permission
-    </string>
+    <string name="notification_permission">Notification Permission</string>
     <string name="msgVerseReminderNotifPermission">Notification permission is required to enable verse reminder.</string>
     <string name="titleStorageCleanup">Storage cleanup</string>
     <string name="titleExportData">Export &amp; Import</string>
@@ -347,12 +343,8 @@
     <string name="titleCancelDownload">Cancel download?</string>
     <string name="yesCancelDownload">Yes, cancel</string>
     <string name="noContinueDownload">No, continue</string>
-    <string name="readingTafsirMultiVerses">
-        Reading tafsir for multiple verses:
-    </string>
-    <string name="donate">
-        Donate to Us
-    </string>
+    <string name="readingTafsirMultiVerses">Reading tafsir for multiple verses:</string>
+    <string name="donate">Donate to Us</string>
     <string name="quran_and_science">Quran and Science</string>
     <string name="about_this_page">About this page</string>
     <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called “The Quran and Modern Science: Compatible or Incompatible”\n\nThe images shown are for illustrative purpose only.</string>
@@ -360,13 +352,9 @@
     <string name="once">Once</string>
     <string name="twice">Twice</string>
     <string name="nTimes" formatted="false">%d times</string>
-    <string name="msgRepeat">
-        Set how many times each verse should play before moving to the next. Available only when “Play only Quran” is enabled in Audio Options.
-    </string>
+    <string name="msgRepeat">Set how many times each verse should play before moving to the next. Available only when “Play only Quran” is enabled in Audio Options.</string>
     <string name="notSupported">Not supported</string>
-    <string name="missingTimingData" formatted="false">
-        Missing timing data for %s — cannot play.
-    </string>
+    <string name="missingTimingData" formatted="false">Missing timing data for %s — cannot play.</string>
     <string name="expandedPlayerModeControls">Controls</string>
     <string name="expandedPlayerModeSpotlight">Spotlight</string>
     <string name="theme_default">Default</string>
@@ -384,30 +372,18 @@
     <string name="sortBy">Sort by</string>
     <string name="alphabetically">Alphabetical</string>
     <string name="chronological">Chronological Order</string>
-    <string name="translationHelp">
-        Don’t see your language? Help translate or improve it and make it accessible to more people!
-    </string>
-    <string name="learnMore">
-        Learn more
-    </string>
-    <string name="wordByWord">
-        Word by Word
-    </string>
-    <string name="selectWbwLanguage">
-        Select language
-    </string>
+    <string name="translationHelp">Don’t see your language? Help translate or improve it and make it accessible to more people!</string>
+    <string name="learnMore">Learn more</string>
+    <string name="wordByWord">Word by Word</string>
+    <string name="selectWbwLanguage">Select language</string>
     <string name="wbwShowTranslation">Show translation</string>
     <string name="wbwShowTransliteration">Show transliteration</string>
     <string name="wbwShowTransliterationMgs">When available for the selected language</string>
     <string name="wbwRecitation">Recitation</string>
     <string name="wbwRecitationMsg">Play audio when a word is clicked</string>
     <string name="wbwTextSize">Text size</string>
-    <string name="noWbwAvailable">
-        Download a language pack below to turn on word-by-word features.
-    </string>
-    <string name="deleteData">
-        Delete data?
-    </string>
+    <string name="noWbwAvailable">Download a language pack below to turn on word-by-word features.</string>
+    <string name="deleteData">Delete data?</string>
     <string name="wordNo" formatted="false">Word %d</string>
     <string name="playWord">Play word</string>
     <string name="previousWord">Previous word</string>
