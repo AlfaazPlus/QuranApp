@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -74,21 +75,34 @@ fun ListItemContent(
     val subtitleText = subtitleStr.takeIf { !it.isNullOrEmpty() }
         ?: if (subtitle != null) stringResource(subtitle) else null
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(3.dp)
+    ) {
         if (titleText != null) {
             Text(
                 text = titleText,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    lineHeightStyle = LineHeightStyle.Default.copy(
+                        mode = LineHeightStyle.Mode.Tight,
+                        alignment = LineHeightStyle.Alignment.Center,
+                    )
+                ),
                 color = colorScheme.onSurface
             )
         }
+
         if (subtitleText != null) {
             Text(
                 text = subtitleText,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    lineHeightStyle = LineHeightStyle.Default.copy(
+                        mode = LineHeightStyle.Mode.Tight,
+                        alignment = LineHeightStyle.Alignment.Center,
+                    )
+                ),
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier
-                    .padding(top = 3.dp)
                     .alpha(0.75f),
             )
         }

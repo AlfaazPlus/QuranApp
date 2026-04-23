@@ -26,6 +26,7 @@ import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.univ.StringUtils
+import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -174,7 +175,13 @@ class ActivityQuranScienceContent : BaseActivity() {
         val referenceMap = nameMatches.map {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verse) ->
-            "${repository.getChapterName(chapterNo)} $chapterNo:$verse"
+            String.format(
+                Locale.getDefault(),
+                $$"%1$s %2$d:%3$d",
+                repository.getChapterName(chapterNo),
+                chapterNo,
+                verse
+            )
         }
 
         val isKFQPC = scriptCode.isKFQPCScript()
@@ -215,12 +222,12 @@ class ActivityQuranScienceContent : BaseActivity() {
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            StringUtils.removeHTML(
-                translFactory.getTranslationsSingleVerse(
-                    chapterNo.toInt(),
-                    verse.toInt()
-                )[0].text, false
-            )
+            val translationText = translFactory.getTranslationsSingleVerse(
+                chapterNo.toInt(),
+                verse.toInt()
+            ).firstOrNull()?.text.orEmpty()
+
+            StringUtils.removeHTML(translationText, false)
         }
 
         document = regexName.replace(document) { matchResult ->
@@ -242,6 +249,6 @@ class ActivityQuranScienceContent : BaseActivity() {
     }
 
     private fun colorIntToCssHex(@ColorInt color: Int): String =
-        String.format("#%06X", 0xFFFFFF and color)
+        StringUtils.formatInvariant("#%06X", 0xFFFFFF and color)
 
 }

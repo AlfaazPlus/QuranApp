@@ -56,6 +56,7 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.viewModels.WbwSettingsUiState
 import com.quranapp.android.viewModels.WbwSettingsViewModel
 import com.quranapp.android.viewModels.WbwUiModel
+import java.util.Locale
 import kotlinx.coroutines.launch
 import com.quranapp.android.compose.components.common.IconButton as AppIconButton
 
@@ -234,7 +235,12 @@ private fun WbwRow(
             Spacer(modifier = Modifier.height(2.dp))
 
             val subtitle = when {
-                downloadStatus is ResourceDownloadStatus.InProgress -> "${stringResource(R.string.textDownloading)} ${downloadStatus.progress}%"
+                downloadStatus is ResourceDownloadStatus.InProgress -> String.format(
+                    Locale.getDefault(),
+                    $$"%1$s %2$d%%",
+                    stringResource(R.string.textDownloading),
+                    downloadStatus.progress
+                )
                 downloadStatus is ResourceDownloadStatus.Started -> stringResource(R.string.textDownloading)
                 row.isUpdateAvailable -> stringResource(R.string.strLabelUpdate)
                 isDownloaded -> stringResource(R.string.strLabelDownloaded)
@@ -388,7 +394,7 @@ private fun Configurations() {
                 steps = steps,
             )
             Text(
-                text = "${wbwProgress.toInt()}%",
+                text = String.format(Locale.getDefault(), "%d%%", wbwProgress.toInt()),
                 modifier = Modifier.padding(start = 10.dp),
                 style = MaterialTheme.typography.labelSmall,
             )

@@ -35,6 +35,7 @@ import com.quranapp.android.utils.thread.tasks.BaseCallableTask;
 import com.quranapp.android.utils.univ.FileUtils;
 import com.quranapp.android.utils.univ.Keys;
 import com.quranapp.android.utils.univ.ResUtils;
+import com.quranapp.android.utils.univ.StringUtils;
 import com.quranapp.android.widgets.PageAlert;
 
 import org.jetbrains.annotations.NotNull;
@@ -221,7 +222,7 @@ public class ActivityChapInfo extends BaseActivity {
         JSONObject jsonObject = new JSONObject(rawData);
         String data = jsonObject.getJSONObject("chapter_info").getString("text");
         String boilerPlateHTML = getBoilerPlateHTML();
-        data = String.format(boilerPlateHTML, resolveDarkMode(), data);
+        data = StringUtils.formatInvariant(boilerPlateHTML, resolveDarkMode(), data);
         mBinding.webView.loadDataWithBaseURL(null, data, "text/html; charset=UTF-8", "utf-8", null);
     }
 

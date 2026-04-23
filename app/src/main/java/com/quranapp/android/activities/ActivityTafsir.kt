@@ -22,6 +22,7 @@ import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderViewModel
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
+import java.util.Locale
 
 class ActivityTafsir : BaseActivity() {
 
@@ -84,7 +85,11 @@ class ActivityTafsir : BaseActivity() {
 
         val multiplier = ReaderPreferences.getTafsirTextSizeMultiplier()
 
-        val text = "${ReaderTextSizeUtils.calculateProgressText(multiplier)}%"
+        val text = String.format(
+            Locale.getDefault(),
+            "%d%%",
+            ReaderTextSizeUtils.calculateProgressText(multiplier)
+        )
         binding.progressText.text = text
 
         binding.seekBar.apply {
@@ -93,7 +98,7 @@ class ActivityTafsir : BaseActivity() {
             setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     val nProgress = ReaderTextSizeUtils.normalizeProgress(progress)
-                    val text = "$nProgress%"
+                    val text = String.format(Locale.getDefault(), "%d%%", nProgress)
                     binding.progressText.text = text
 
                     viewModel.onEvent(

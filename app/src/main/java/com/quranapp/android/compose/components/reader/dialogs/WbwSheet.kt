@@ -337,7 +337,7 @@ private fun VerseContextHeader(
 ) {
     val parts = buildList {
         if (chapterName.isNotBlank()) add(chapterName)
-        add("$chapterNo:$verseNo")
+        add(String.format($$"%1$d:%2$d", chapterNo, verseNo))
         add(stringResource(R.string.wordNo, word.wordIndex + 1))
     }
 

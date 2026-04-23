@@ -68,6 +68,7 @@ import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TafsirEvent
 import com.quranapp.android.viewModels.TafsirViewModel
+import java.util.Locale
 
 @Composable
 fun TafsirSelectionScreen() {
@@ -366,7 +367,12 @@ private fun TafsirRow(
                 when (downloadState) {
                     is ResourceDownloadStatus.InProgress -> {
                         Text(
-                            text = stringResource(R.string.textDownloading) + " ${downloadState.progress}%",
+                            text = String.format(
+                                Locale.getDefault(),
+                                $$"%1$s %2$d%%",
+                                stringResource(R.string.textDownloading),
+                                downloadState.progress
+                            ),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Normal,
                             color = MaterialTheme.colorScheme.primary,

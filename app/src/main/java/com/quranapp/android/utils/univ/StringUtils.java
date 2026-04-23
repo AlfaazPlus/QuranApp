@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.Normalizer;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 @SuppressWarnings({"unused", "SpellCheckingInspection"})
@@ -133,6 +134,11 @@ public abstract class StringUtils {
 
     public static String escapeRegex(String string) {
         return Pattern.quote(string);
+    }
+
+    @NonNull
+    public static String formatInvariant(@NonNull String format, Object... args) {
+        return String.format(Locale.US, format, args);
     }
 
     public static String readInputStream(InputStream inputStream) throws IOException {

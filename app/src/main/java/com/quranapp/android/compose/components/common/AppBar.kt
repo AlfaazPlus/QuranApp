@@ -2,20 +2,25 @@ package com.quranapp.android.compose.components.common
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -25,19 +30,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
-import com.quranapp.android.compose.theme.alpha
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,13 +88,11 @@ fun AppBar(
             actionIconContentColor = color ?: colorScheme.onSurface,
         ),
         title = {
-            val contentColor = LocalContentColor.current
             if (searchEnabled && searchExpanded) {
-                AppBarSearchField(
-                    query = searchQuery,
-                    onQueryChange = onSearch,
+                SearchTextField(
+                    value = searchQuery,
+                    onValueChange = onSearch,
                     placeholder = searchPlaceholder ?: stringResource(R.string.strHintSearch),
-                    contentColor = contentColor,
                     modifier = Modifier.focusRequester(searchFocusRequester),
                 )
             } else if (titleContent != null) {
@@ -136,56 +142,79 @@ fun AppBar(
 }
 
 @Composable
-private fun AppBarSearchField(
+fun AppBarSearchField(
     query: String,
     onQueryChange: (String) -> Unit,
     placeholder: String,
     contentColor: Color,
     modifier: Modifier = Modifier,
 ) {
-    OutlinedTextField(
+    val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
+
+    BasicTextField(
         value = query,
         onValueChange = onQueryChange,
+        interactionSource = interactionSource,
+        singleLine = true,
+        textStyle = typography.bodyMedium.copy(
+            color = contentColor,
+        ),
+        cursorBrush = SolidColor(colorScheme.primary),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Search
+        ),
         modifier = modifier
-            .height(48.dp)
-            .fillMaxWidth(),
-        placeholder = {
-            Text(
-                placeholder,
-                style = typography.bodyMedium,
-                color = contentColor.copy(alpha = 0.5f),
-            )
-        },
-        trailingIcon = if (query.isNotEmpty()) {
-            {
-                SimpleTooltip(text = stringResource(R.string.clear)) {
+            .fillMaxWidth()
+            .heightIn(min = 48.dp),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .border(
+                        width = 1.dp,
+                        color = if (isFocused) {
+                            colorScheme.primary.copy(alpha = 0.5f)
+                        } else {
+                            colorScheme.outlineVariant.copy(alpha = 0.5f)
+                        },
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .background(colorScheme.surfaceContainerLow)
+                    .padding(horizontal = 12.dp, vertical = 10.dp)
+            ) {
+
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (query.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            style = typography.bodyMedium.copy(
+                                color = contentColor.copy(alpha = 0.5f),
+                                lineHeight = 20.sp
+                            )
+                        )
+                    }
+
+                    innerTextField()
+                }
+
+                if (query.isNotEmpty()) {
                     IconButton(
                         onClick = { onQueryChange("") },
+                        modifier = Modifier.size(20.dp)
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.dr_icon_close),
                             contentDescription = stringResource(R.string.strLabelClose),
-                            modifier = Modifier.size(20.dp),
-                            tint = contentColor.copy(alpha = 0.7f),
+                            tint = contentColor.copy(alpha = 0.7f)
                         )
                     }
                 }
             }
-        } else null,
-        singleLine = true,
-        textStyle = typography.bodyMedium.copy(color = contentColor),
-        shape = RoundedCornerShape(12.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = contentColor,
-            unfocusedTextColor = contentColor,
-            cursorColor = colorScheme.primary,
-            focusedBorderColor = colorScheme.primary.alpha(0.5f),
-            unfocusedBorderColor = colorScheme.outlineVariant.alpha(0.5f),
-            focusedContainerColor = colorScheme.surfaceContainerLow,
-            unfocusedContainerColor = colorScheme.surfaceContainerLow,
-        ),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search,
-        ),
+        }
     )
 }

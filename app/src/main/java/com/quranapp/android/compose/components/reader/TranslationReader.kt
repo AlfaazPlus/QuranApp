@@ -46,13 +46,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -61,19 +58,17 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.reader.LocalVerseActions
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -293,8 +288,6 @@ fun ReaderLayoutTranslationPageMode(
     }
 
 
-    val bgPattern = ImageBitmap.imageResource(R.drawable.quran_page_bg)
-
     SelectionContainer {
         LazyColumn(
             state = listState,
@@ -315,7 +308,6 @@ fun ReaderLayoutTranslationPageMode(
                     TranslationModePage(
                         readerVm = readerVm,
                         pageNo = pageIndex + 1,
-                        bgPattern,
                     )
                 }
             }
@@ -327,7 +319,6 @@ fun ReaderLayoutTranslationPageMode(
 private fun TranslationModePage(
     readerVm: ReaderViewModel,
     pageNo: Int,
-    bgPattern: ImageBitmap,
 ) {
     val i by remember(pageNo) {
         derivedStateOf { readerVm.translationPageItems[pageNo] }
@@ -391,28 +382,6 @@ private fun TranslationModePage(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .drawBehind {
-                        val scale = 3f
-
-                        val tileW = (bgPattern.width * scale).toInt()
-                        val tileH = (bgPattern.height * scale).toInt()
-
-                        var y = 0f
-                        while (y < size.height) {
-                            var x = 0f
-                            while (x < size.width) {
-
-                                drawImage(
-                                    image = bgPattern,
-                                    dstOffset = IntOffset(x.toInt(), y.toInt()),
-                                    dstSize = IntSize(tileW, tileH),
-                                )
-
-                                x += tileW
-                            }
-                            y += tileH
-                        }
-                    }
             ) {
                 Column(Modifier.fillMaxWidth()) {
                     TranslationBookPageHeader(item)
@@ -470,7 +439,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
         ) {
             Text(
                 text = item.chapterNames,
-                style = typography.labelSmall,
+                style = typography.labelSmall.merge(tightTextStyle),
                 color = scheme.onSurface.alpha(0.75f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -485,7 +454,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
 
         Text(
             text = stringResource(R.string.strLabelPageNo, item.pageNo),
-            style = typography.labelMedium,
+            style = typography.labelMedium.merge(tightTextStyle),
             color = scheme.onBackground.alpha(0.75f),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
@@ -500,7 +469,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
         ) {
             Text(
                 text = "${juzLabel}, ${hizbLabel}",
-                style = typography.labelSmall,
+                style = typography.labelSmall.merge(tightTextStyle),
                 color = scheme.onSurface.alpha(0.75f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -606,8 +575,15 @@ fun TranslationReaderChapterTitle(
         Column(
             horizontalAlignment = Alignment.End
         ) {
-            Text(stringResource(R.string.strLabelSurah, swl.getCurrentName()), style = typography.labelLarge)
-            Text(swl.getCurrentMeaning(), style = typography.bodyMedium, color = colorScheme.onSurface.alpha(0.75f))
+            Text(
+                stringResource(R.string.strLabelSurah, swl.getCurrentName()),
+                style = typography.labelLarge
+            )
+            Text(
+                swl.getCurrentMeaning(),
+                style = typography.bodyMedium,
+                color = colorScheme.onSurface.alpha(0.75f)
+            )
         }
 
         VerticalDivider(

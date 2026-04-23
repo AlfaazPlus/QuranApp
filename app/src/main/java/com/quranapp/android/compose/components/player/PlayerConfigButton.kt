@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,12 +45,12 @@ fun PlayerConfigButton(
             width = 1.dp,
             color = Color.White.copy(alpha = 0.10f)
         ),
-        modifier = modifier.height(48.dp)
+        modifier = modifier.heightIn(min = 48.dp)
     ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 6.dp)
-                .fillMaxHeight(),
+                .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         ) {

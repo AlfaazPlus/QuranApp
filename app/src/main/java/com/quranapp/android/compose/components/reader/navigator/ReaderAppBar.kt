@@ -54,6 +54,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -448,7 +449,12 @@ private fun StickyHeaderModeMushaf(
     ) {
         Text(
             chaptersOfPage,
-            style = typography.labelMedium,
+            style = typography.labelMedium.copy(
+                lineHeightStyle = LineHeightStyle.Default.copy(
+                    mode = LineHeightStyle.Mode.Tight,
+                    alignment = LineHeightStyle.Alignment.Center,
+                )
+            ),
             modifier = Modifier.weight(0.4f),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -474,7 +480,12 @@ private fun StickyHeaderModeMushaf(
                     if (currentPageNo != null) {
                         Text(
                             stringResource(R.string.strLabelPageNo, currentPageNo),
-                            style = typography.titleSmall,
+                            style = typography.titleSmall.copy(
+                                lineHeightStyle = LineHeightStyle.Default.copy(
+                                    mode = LineHeightStyle.Mode.Tight,
+                                    alignment = LineHeightStyle.Alignment.Center,
+                                )
+                            ),
                             color = colorScheme.primary,
                         )
                     }
@@ -482,8 +493,13 @@ private fun StickyHeaderModeMushaf(
                     if (pageDivisionLabel.isNotBlank()) {
                         Text(
                             text = pageDivisionLabel,
-                            style = typography.labelSmall,
-                            color = colorScheme.onSurface.alpha(0.85f)
+                            style = typography.labelSmall.copy(
+                                lineHeightStyle = LineHeightStyle.Default.copy(
+                                    mode = LineHeightStyle.Mode.Tight,
+                                    alignment = LineHeightStyle.Alignment.Center,
+                                )
+                            ),
+                            color = colorScheme.onSurface.alpha(0.85f),
                         )
                     }
                 }

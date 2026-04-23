@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.compose.components.settings.SettingsItemContent
 
 @Composable
 fun SwitchItem(
@@ -30,7 +29,7 @@ fun SwitchItem(
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
     ) {
-        SettingsItemContent(
+        ListItemContent(
             title = title,
             subtitle = subtitle,
             modifier = Modifier.weight(1f)

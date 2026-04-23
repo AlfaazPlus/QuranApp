@@ -10,6 +10,7 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,7 +26,7 @@ object WbwAudioPlayer {
     private val mutex = Mutex()
     private var player: ExoPlayer? = null
 
-    private fun segment(n: Int): String = String.format("%03d", n)
+    private fun segment(n: Int): String = StringUtils.formatInvariant("%03d", n)
 
     private fun buildUrl(chapterNo: Int, verseNo: Int, urlWordIndex: Int): String =
         "$BASE${segment(chapterNo)}_${segment(verseNo)}_${segment(urlWordIndex)}.mp3"
@@ -40,18 +41,23 @@ object WbwAudioPlayer {
         val dir = file.parentFile ?: return
         dir.mkdirs()
         val tmp = File(dir, "${file.name}.tmp")
+
         withContext(Dispatchers.IO) {
             val response = RetrofitInstance.any.downloadStreaming(url)
+
             if (!response.isSuccessful) {
                 throw IOException("Wbw audio failed: HTTP ${response.code()}")
             }
+
             val body = response.body() ?: throw IOException("Wbw audio body is null")
+
             body.byteStream().use { input ->
                 tmp.outputStream().buffered().use { output ->
                     input.copyTo(output)
                 }
             }
         }
+
         if (!tmp.renameTo(file)) {
             tmp.delete()
             throw IOException("Wbw audio could not finalize cache file")
@@ -93,7 +99,7 @@ object WbwAudioPlayer {
             try {
                 downloadIfMissing(file, url)
             } catch (e: Exception) {
-                Log.saveError(e, "WbwWordAudioPlayer.download")
+                Log.saveError(e, "WbwWordAudioPlayer.play")
                 return
             }
 
@@ -114,7 +120,12 @@ object WbwAudioPlayer {
     ) {
         val (file, url) = buildUrlAndFile(context, chapterNo, verseNo, appWordIndex)
 
-        downloadIfMissing(file, url)
+        try {
+            downloadIfMissing(file, url)
+        } catch (e: Exception) {
+            Log.saveError(e, "WbwWordAudioPlayer.warmUp")
+            return
+        }
     }
 
     private fun buildUrlAndFile(

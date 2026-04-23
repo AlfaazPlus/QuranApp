@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
@@ -52,7 +53,6 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalRecitation
-import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
@@ -61,9 +61,9 @@ import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
-import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
+import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -440,9 +440,10 @@ internal fun HomePremiumHeaderPill(
                     modifier = Modifier.size(16.dp),
                 )
             }
+
             Text(
                 text = title,
-                style = typography.labelMedium,
+                style = typography.labelMedium.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White.copy(alpha = contentAlpha),
             )
