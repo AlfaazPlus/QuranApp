@@ -1,0 +1,29 @@
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">алейхис-салям</string>
+    <string name="prophetAdam">Адам</string>
+    <string name="prophetAlyasaa">Аль-Яса</string>
+    <string name="prophetAyyub">Айюб</string>
+    <string name="prophetDawud">Давуд</string>
+    <string name="prophetDhulkifl">Зуль-Кифль</string>
+    <string name="prophetHarun">Харун</string>
+    <string name="prophetHud">Худ</string>
+    <string name="prophetIbrahim">Ибрахим</string>
+    <string name="prophetIdrees">Идрис</string>
+    <string name="prophetIliyas">Ильяс</string>
+    <string name="prophetIsa">Иса</string>
+    <string name="prophetIshaq">Исхак</string>
+    <string name="prophetIsmail">Исмаил</string>
+    <string name="prophetLut">Лут</string>
+    <string name="prophetMuhammad">Мухаммад</string>
+    <string name="prophetMusa">Муса</string>
+    <string name="prophetNuh">Нух</string>
+    <string name="prophetSaleh">Салих</string>
+    <string name="prophetShuaib">Шуайб</string>
+    <string name="prophetSulayman">Сулейман</string>
+    <string name="prophetYahya">Яхья</string>
+    <string name="prophetYaqub">Якуб</string>
+    <string name="prophetYunus">Юнус</string>
+    <string name="prophetYusuf">Юсуф</string>
+    <string name="prophetZakariyya">Закария</string>
+</resources>
