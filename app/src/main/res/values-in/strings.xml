@@ -101,7 +101,7 @@
     <string name="strLabelSelectTranslations">Pilih terjemahan</string>
     <string name="strLabelSelectTranslation">Pilih terjemahan</string>
     <string name="strLabelWhatsappStyling">Gaya Whatsapp</string>
-    <string name="strLabelIncludeArabic">Sertakan Arabic</string>
+    <string name="strLabelIncludeArabic">Sertakan Bahasa Arab</string>
     <string name="strLabelIncludeFootnotes">Sertakan catatan kaki</string>
     <string name="strLabelQuickLinks">Tautan cepat</string>
     <string name="strLabelLater">Nanti</string>
@@ -124,7 +124,7 @@
     <string name="strLabelContinueReading">Lanjutkan membaca »</string>
     <string name="strLabelOrder">Urutan</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d lebih banyak terjemahan</string>
-    <string name="strLabelBookmark">Penanda Buku</string>
+    <string name="strLabelBookmark">Bookmark</string>
     <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
     <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Surah No. %1$d │ Ayat %2$d–%3$d</string>
@@ -140,20 +140,20 @@
     <string name="strMsgBookmarkDeleteSelected">Bookmark yang dipilih akan dihapus.</string>
     <string name="strMsgBookmarkNoItems">Tidak ada bookmark</string>
     <string name="strTitleReadHistory">Histori Bacaan</string>
-    <string name="strMsgReadShowupHere">Histori bacaan-mu akan muncul disini.</string>
+    <string name="strMsgReadShowupHere">Histori bacaan Anda akan muncul disini.</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s di %2$s</string>
     <string name="strMsgReadHistoryDeleteAll">Semua histori bacaan akan dihapus.</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">Total hasil ditemukan dalam %1$s: %2$d</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" dihapus dari histori</string>
     <string name="strMsgHistoryRemove">Hapus histori ini\?</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Hari ini di %s</string>
-    <string name="strMsgSearchNoResultsFound">Hasil tidak ditemukan. Mohon cek filter oencarian atau cari di terjemahan lain.</string>
+    <string name="strMsgSearchNoResultsFound">Hasil tidak ditemukan. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">Hasil tidak ditemukan dalam %s. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Hanya satu hasil ditemukan dalam %s</string>
     <string name="strMsgSearchWordPart">Cari bagian kata</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">Hasil tidak ditemukan. Mohon cek filter pencarian.</string>
     <string name="strMsgSearchWordPartExample">Contoh : \'manusia\' dalam \'umat manusia\'</string>
-    <string name="strMsgEnterValidRange">Tolong masukkan rentangan ayat yang valid</string>
+    <string name="strMsgEnterValidRange">Mohon masukkan rentang ayat yang valid</string>
     <string name="strMsgShareRange" formatted="false">Ketik rentangan ayat diantara %1$d–%2$d</string>
     <string name="strMsgTranslDownloaded" formatted="false">Terunduh: \"%s\".</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Gagal mengunduh \"%s\".</string>
@@ -174,15 +174,13 @@
     <string name="strTitleOops">Ups!</string>
     <string name="strTitleInfo">Informasi!</string>
     <string name="strAyatulKursi">Ayat Kursi</string>
-    <string name="strMsgUpdateAvailable">UPDATE TERSEDIA! Tolong perbarui aplikasi untuk mendapatkan fitur terbaru.</string>
-    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA!
-\nTolong perbarui aplikasi.</string>
-    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN!
-\nTolong perbarui aplikasi untuk melanjutkan.</string>
+    <string name="strMsgUpdateAvailable">PEMBARUAN TERSEDIA! Tolong perbarui aplikasi untuk mendapatkan fitur terbaru.</string>
+    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA!\nTolong perbarui aplikasi.</string>
+    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN!\nTolong perbarui aplikasi untuk melanjutkan.</string>
     <string name="strLabelAllChapters">Semua Surah</string>
-    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d.</string>
-    <string name="strMsgReferenceInQuran" formatted="false">%s di Quran</string>
-    <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Quran.</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d lokasi.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s di Al Quran</string>
+    <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Al Quran.</string>
     <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
     <string name="strMsgBookmarkDeleteAll">Semua bookmark akan dihapus.</string>
     <string name="strTitleRecitations">Murattal</string>
@@ -190,8 +188,8 @@
     <string name="tafseerCanBeFreedUp" formatted="false">%d Tafsir yang tersimpan bisa di bersihkan.</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nAnda harus mengunduh ulang lagi.</string>
     <string name="labelFreeUpSpace">Kosongkan ruang</string>
-    <string name="titleDownloadScriptResources">Unduh sumber daya untuk skrip ini\?</string>
-    <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan skrip ini:</string>
+    <string name="titleDownloadScriptResources">Unduh sumber daya untuk cetakan ini?</string>
+    <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan cetakan ini:</string>
     <string name="textDownloading">Mengunduh…</string>
     <string name="lastCrashLog">Log error terakhir</string>
     <string name="msgDownloadingFonts">Mengunduh font</string>
@@ -213,13 +211,13 @@
     <string name="nItems">%d item</string>
     <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
     <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
-    <string name="titleScriptCleanup">Hapus jenis penulisan\?</string>
+    <string name="titleScriptCleanup">Hapus jenis cetakan?</string>
     <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus.</string>
     <string name="titleRecitationCleanup">Hapus Murattal\?</string>
     <string name="strPreviewTextTransl">Dengan nama Allah Yang Maha Pengasih, Maha Penyayang</string>
-    <string name="msgScriptCleanup" formatted="false">%s jenis penulisan dan semua font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya.</string>
+    <string name="msgScriptCleanup" formatted="false">%s cetakan dan seluruh font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya kembali.</string>
     <string name="nFiles" formatted="false">%d file</string>
-    <string name="nScriptsAndFonts" formatted="false">%1$d jenis penulisan dan %2$d jenis font</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d cetakan dan %2$d font</string>
     <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
     <string name="inPlaces">dalam %s</string>
     <string name="inPlacesMore">di %1$s dan %2$d lainnya</string>
@@ -255,13 +253,10 @@
     <string name="labelNextTafsir">Tafsir selanjutnya</string>
     <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
     <string name="titleSolutionVerses">Solusi dari Al Quran</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Alquran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, pengajian, pengingat, dan banyak lagi.
-\n
-\nUNDUH SEKARANG:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Al Quran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, murattal, pengingat, dan banyak lagi. \n \nUNDUH SEKARANG: \n%s</string>
     <string name="titleEtiquetteVerses">Adab dalam Al Quran</string>
     <string name="strMsgDuaOf" formatted="false">Dua dari %s</string>
-    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %s di al-Quran</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %s di Al Quran</string>
     <string name="msgClearSearchHistory">Hapus riwayat pencarian</string>
     <string name="titleResourceDownloadSource">Sumber unduhan materi</string>
     <string name="msgResourceDownloadSource">Gunakan opsi ini untuk mengunduh data Al Quran dari sumber lain jika sumber yang satu tidak berfungsi</string>
@@ -282,10 +277,10 @@
     <string name="labelImportExportBookmarks">Impor/Ekspor Bookmark</string>
     <string name="labelImportExportSettings">Impor/Ekspor Pengaturan</string>
     <string name="warnImportSettings">PERINGATAN: Mengimpor pengaturan akan menggantikan pengaturan Anda saat ini.</string>
-    <string name="strLabelDownloaded">Diunduh</string>
+    <string name="strLabelDownloaded">Terunduh</string>
     <string name="strTitleDeleteTafsir">Hapus Tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Apakah Anda yakin ingin menghapus \"%s\"? Pilihan ini akan menghapus data tafsir yang diunduh dari perangkat Anda.</string>
-    <string name="strTitleMajorSins">Dosa Besar dalam Alquran</string>
+    <string name="strTitleMajorSins">Dosa Besar dalam Al Quran</string>
     <string name="titleCancelDownload">Batalkan unduhan?</string>
     <string name="yesCancelDownload">Ya, batalkan</string>
     <string name="noContinueDownload">Tidak, lanjutkan</string>
@@ -328,7 +323,7 @@
     <string name="strHintSearchHizb">Cari hizb atau surah</string>
     <string name="strMsgNoVerseTiming">Memutar seluruh audio surah tanpa sinkronisasi ayat</string>
     <string name="msgRecitationGroupSize">Pilih jumlah ayat Al Quran yang diputar sebelum terjemahan dimulai. Contoh: jika Anda memilih 3, maka 3 ayat Al Quran akan diputar kemudian dilanjut oleh terjemahannya.</string>
-    <string name="onboardDescTafsir">Pilih komentar untuk dibaca bersamaan dengan ayat. Anda dapat mengunduh dan mengelola tafsir di dalam pengaturan</string>
+    <string name="onboardDescTafsir">Pilih komentar untuk dibaca bersamaan dengan ayat. Anda dapat mengunduh dan mengelola tafsir di dalam pengaturan.</string>
     <string name="theme_default">Standar</string>
     <string name="translationHelp">Bahasa Anda tidak ada? Bantu terjemahkan atau kembangkan dan buat aplikasi ini mudah diakses untuk lebih banyak orang!</string>
     <string name="playbackCount">Jumlah pemutaran</string>
@@ -338,14 +333,14 @@
     <string name="about_this_page">Tentang halaman ini</string>
     <string name="about_quran_science_msg">Konten pada halaman ini diambil dari buku karya Dr. Zakir Naik berjudul \"The Quran and Modern Science: Compatible or Incompatible\"\n\nGambar yang ditampilkan hanya untuk tujuan ilustrasi.</string>
     <string name="msgRepeat">Atur berapa kali setiap ayat harus diputar sebelum beralih ke ayat berikutnya. Tersedia hanya jika \"Putar hanya Al-Qur\'an\" diaktifkan di Opsi Audio.</string>
-    <string name="textSizeVerseByVerseOnly">Pengaturan ini tidak diterapkan pada mode mushaf</string>
+    <string name="textSizeVerseByVerseOnly">Pengaturan ini tidak diterapkan pada mode mushaf.</string>
     <string name="chronological">Urutan Kronologis</string>
-    <string name="recitationDownloadSomeFailed">Beberapa surah gagal diunduh. Ketuk coba lagi untuk mengantrekan surah yang belum berhasil.</string>
+    <string name="recitationDownloadSomeFailed">Beberapa surah gagal diunduh. Ketuk ulangi untuk mengantrekan surah yang belum berhasil.</string>
     <string name="clear">Bersihkan</string>
     <string name="strLabelAll">Semua</string>
     <string name="strLabelPrevious">Sebelumnya</string>
-    <string name="nextChapter">Bab berikutnya</string>
-    <string name="previousChapter">Bab sebelumnya</string>
+    <string name="nextChapter">Surah berikutnya</string>
+    <string name="previousChapter">Surah sebelumnya</string>
     <string name="nextJuz">Juz berikutnya</string>
     <string name="previousJuz">Juz sebelumnya</string>
     <string name="nextHizb">Hizb berikutnya</string>
@@ -366,10 +361,10 @@
     <string name="chapterFilterLengthLong">Panjang (150+ ayat)</string>
     <string name="clearFilters">Hapus filter</string>
     <string name="chapterFilters">Filter surah</string>
-    <string name="strMsgReciterDownloadHint">Unduh audio tilawah untuk mendengarkan secara offline dan pemutaran yang lebih lancar.</string>
-    <string name="recitationDownloadConfirmMessage">Unduh semua surah untuk qari ini? Ini mungkin menggunakan penyimpanan dan data yang signifikan.</string>
+    <string name="strMsgReciterDownloadHint">Unduh audio murattal untuk mendengarkan secara offline dan pemutaran yang lebih lancar.</string>
+    <string name="recitationDownloadConfirmMessage">Unduh seluruh murattal oleh Qari ini? Ini mungkin menggunakan penyimpanan dan data yang signifikan.</string>
     <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — mengantrekan %2$d dari %3$d</string>
-    <string name="titleRecitationGroupSize">Ukuran Grup Ayat Al-Qur\'an</string>
+    <string name="titleRecitationGroupSize">Ukuran Grup Ayat Al Quran</string>
     <string name="labelRecommended">Disarankan</string>
     <string name="titleGlobalSearch">Pencarian Global</string>
     <string name="textPreparingAudio">Mempersiapkan audio…</string>
@@ -384,7 +379,7 @@
     <string name="wbwShowTranslation">Tampilkan terjemahan</string>
     <string name="wbwShowTransliteration">Tampilkan transliterasi</string>
     <string name="wbwShowTransliterationMgs">Jika tersedia untuk bahasa yang dipilih</string>
-    <string name="wbwRecitation">Tilawah</string>
+    <string name="wbwRecitation">Murattal</string>
     <string name="wbwRecitationMsg">Putar audio saat kata diklik</string>
     <string name="wbwTextSize">Ukuran teks</string>
     <string name="noWbwAvailable">Unduh paket bahasa di bawah ini untuk mengaktifkan fitur kata per kata.</string>
@@ -395,11 +390,11 @@
     <string name="nextWord">Kata berikutnya</string>
     <string name="results">Hasil</string>
     <string name="titleRecentSearches">Pencarian terkini</string>
-    <string name="searchInQuran">Cari dalam Al-Qur\'an</string>
+    <string name="searchInQuran">Cari dalam Al Quran</string>
     <string name="searchTipsTitle">Tips pencarian</string>
     <string name="searchTipDirectVerse">Baca ayat atau tafsir secara langsung</string>
     <string name="searchTipChapter">Cari surah</string>
     <string name="searchTipDirectJuz">Loncat ke \"Surah 30\", \"Juz 30\" atau \"Hizb 30\"</string>
     <string name="searchTipTranslation">Cari dalam terjemahan</string>
-    <string name="searchTipArabic">Cari dalam teks Al-Qur\'an</string>
+    <string name="searchTipArabic">Cari dalam teks Al Quran</string>
 </resources>
