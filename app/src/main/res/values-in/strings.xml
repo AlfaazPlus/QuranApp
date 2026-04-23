@@ -87,7 +87,7 @@
     <string name="strTitleChapInfoPages">Halaman</string>
     <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
     <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
-    <string name="strTitleReaderSettings">Qori Murattal</string>
+    <string name="strTitleReaderSettings">Pengaturan Pembaca</string>
     <string name="strTitleAppLanguage">Bahasa</string>
     <string name="strTitleTheme">Tema</string>
     <string name="strTitleNoInternet">Tidak ada internet</string>
@@ -336,9 +336,70 @@
     <string name="modeVerseByVerse">Mode ayat per ayat</string>
     <string name="donate">Donasi kepada kami</string>
     <string name="about_this_page">Tentang halaman ini</string>
-    <string name="about_quran_science_msg">The contents on this page are taken from the book by Dr. Zakir Naik called “The Quran and Modern Science: Compatible or Incompatible”\n\nThe images shown are for illustrative purpose only.</string>
-    <string name="msgRepeat">Atur berapa kali setiap ayat diputar sebelum lanjut ke ayat berikutnya. Fitur ini hanya tersedia apabila \"Hanya putar Al Quran\" diaktifkan pada Pengaturan Audio</string>
+    <string name="about_quran_science_msg">Konten pada halaman ini diambil dari buku karya Dr. Zakir Naik berjudul \"The Quran and Modern Science: Compatible or Incompatible\"\n\nGambar yang ditampilkan hanya untuk tujuan ilustrasi.</string>
+    <string name="msgRepeat">Atur berapa kali setiap ayat harus diputar sebelum beralih ke ayat berikutnya. Tersedia hanya jika \"Putar hanya Al-Qur\'an\" diaktifkan di Opsi Audio.</string>
     <string name="textSizeVerseByVerseOnly">Pengaturan ini tidak diterapkan pada mode mushaf</string>
     <string name="chronological">Urutan Kronologis</string>
-    <string name="recitationDownloadSomeFailed">Beberapa surah gagal. Ketuk ulangi untuk mengunduh surah yang gagal terunduh.</string>
+    <string name="recitationDownloadSomeFailed">Beberapa surah gagal diunduh. Ketuk coba lagi untuk mengantrekan surah yang belum berhasil.</string>
+    <string name="clear">Bersihkan</string>
+    <string name="strLabelAll">Semua</string>
+    <string name="strLabelPrevious">Sebelumnya</string>
+    <string name="nextChapter">Bab berikutnya</string>
+    <string name="previousChapter">Bab sebelumnya</string>
+    <string name="nextJuz">Juz berikutnya</string>
+    <string name="previousJuz">Juz sebelumnya</string>
+    <string name="nextHizb">Hizb berikutnya</string>
+    <string name="previousHizb">Hizb sebelumnya</string>
+    <string name="strLabelRukuNo" formatted="false">Rukuk %d</string>
+    <string name="endOfPageNo" formatted="false">Akhir Halaman %d</string>
+    <string name="endOfRukuNo" formatted="false">Akhir Rukuk %d</string>
+    <string name="endOfRubNo" formatted="false">Akhir Rub %d</string>
+    <string name="endOfManzilNo" formatted="false">Akhir Manzil %d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir ayat %1$d:%2$d</string>
+    <string name="sajda">Sajda</string>
+    <string name="filterSectionLength">Panjang surah</string>
+    <string name="any">Semua</string>
+    <string name="withSajda">Dengan sajda</string>
+    <string name="withoutSajda">Tanpa sajda</string>
+    <string name="chapterFilterLengthShort">Pendek (&lt;50 ayat)</string>
+    <string name="chapterFilterLengthMedium">Sedang (50–150 ayat)</string>
+    <string name="chapterFilterLengthLong">Panjang (150+ ayat)</string>
+    <string name="clearFilters">Hapus filter</string>
+    <string name="chapterFilters">Filter surah</string>
+    <string name="strMsgReciterDownloadHint">Unduh audio tilawah untuk mendengarkan secara offline dan pemutaran yang lebih lancar.</string>
+    <string name="recitationDownloadConfirmMessage">Unduh semua surah untuk qari ini? Ini mungkin menggunakan penyimpanan dan data yang signifikan.</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — mengantrekan %2$d dari %3$d</string>
+    <string name="titleRecitationGroupSize">Ukuran Grup Ayat Al-Qur\'an</string>
+    <string name="labelRecommended">Disarankan</string>
+    <string name="titleGlobalSearch">Pencarian Global</string>
+    <string name="textPreparingAudio">Mempersiapkan audio…</string>
+    <string name="noResults">Tidak ada hasil</string>
+    <string name="labelTransliteration">Transliterasi</string>
+    <string name="strMsgSearchHistoryDeleteAll">Semua riwayat pencarian akan dihapus.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d referensi</string>
+    <string name="missingTimingData" formatted="false">Data waktu untuk %s tidak tersedia — tidak dapat diputar.</string>
+    <string name="expandedPlayerModeSpotlight">Sorotan</string>
+    <string name="wordByWord">Kata per Kata</string>
+    <string name="selectWbwLanguage">Pilih bahasa</string>
+    <string name="wbwShowTranslation">Tampilkan terjemahan</string>
+    <string name="wbwShowTransliteration">Tampilkan transliterasi</string>
+    <string name="wbwShowTransliterationMgs">Jika tersedia untuk bahasa yang dipilih</string>
+    <string name="wbwRecitation">Tilawah</string>
+    <string name="wbwRecitationMsg">Putar audio saat kata diklik</string>
+    <string name="wbwTextSize">Ukuran teks</string>
+    <string name="noWbwAvailable">Unduh paket bahasa di bawah ini untuk mengaktifkan fitur kata per kata.</string>
+    <string name="deleteData">Hapus data?</string>
+    <string name="wordNo" formatted="false">Kata %d</string>
+    <string name="playWord">Putar kata</string>
+    <string name="previousWord">Kata sebelumnya</string>
+    <string name="nextWord">Kata berikutnya</string>
+    <string name="results">Hasil</string>
+    <string name="titleRecentSearches">Pencarian terkini</string>
+    <string name="searchInQuran">Cari dalam Al-Qur\'an</string>
+    <string name="searchTipsTitle">Tips pencarian</string>
+    <string name="searchTipDirectVerse">Baca ayat atau tafsir secara langsung</string>
+    <string name="searchTipChapter">Cari surah</string>
+    <string name="searchTipDirectJuz">Loncat ke \"Surah 30\", \"Juz 30\" atau \"Hizb 30\"</string>
+    <string name="searchTipTranslation">Cari dalam terjemahan</string>
+    <string name="searchTipArabic">Cari dalam teks Al-Qur\'an</string>
 </resources>
