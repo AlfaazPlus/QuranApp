@@ -233,7 +233,7 @@
     <string name="labelTranslation">Перевод</string>
     <string name="titleRemoveFromFavourites">Удалить из избранного</string>
     <string name="msgClearReadHistory">Очистить историю чтения</string>
-    <string name="msgClearSearchHistory">Очистить историю поиска</string>
+    <string name="msgClearSearchHistory">Очистить историю</string>
     <string name="onboardDescTheme">Вы всегда можете изменить это позже.</string>
     <string name="msgChapterAddedToFavourites">Сура добавлена в избранное.</string>
     <string name="msgChapterRemovedFromFavourites">Сура удалена из избранного.</string>
@@ -265,6 +265,7 @@
     <string name="nItem" formatted="false">%d предмет</string>
     <string name="nItems" formatted="false">%d предметов</string>
     <string name="noItems">Нет предметов</string>
+    <string name="noResults">Результатов не найдено</string>
     <string name="verseSyncOn">Синхронизация аятов : ВКЛ</string>
     <string name="place" formatted="false">%d место</string>
     <string name="places" formatted="false">%d мест</string>
@@ -279,6 +280,7 @@
     <string name="msgExportImportBookmarks">Экспорт или импорт ваших закладок вместе с заметками.</string>
     <string name="msgExportSuccess">Успешно экспортировано</string>
     <string name="autoScroll">Авто промотка</string>
+    <string name="stopAutoScroll">Остановить автопрокрутку</string>
     <string name="autoScrollSpeed">Установка скорости</string>
     <string name="labelImportExportEverything">Импорт/экспорт всего</string>
     <string name="labelImportExportSettings">Настройки импорта/экспорта</string>
@@ -293,4 +295,122 @@
     <string name="yesCancelDownload">Да, отменить</string>
     <string name="noContinueDownload">Нет, продолжить</string>
     <string name="readingTafsirMultiVerses">Чтение тафсира для нескольких строф:</string>
+    <string name="clear">Очистить</string>
+    <string name="strLabelAll">Все</string>
+    <string name="strLabelPrevious">Предыдущий</string>
+    <string name="nextChapter">Следующая сура</string>
+    <string name="previousChapter">Предыдущая сура</string>
+    <string name="nextJuz">Следующий джуз</string>
+    <string name="previousJuz">Предыдущий джуз</string>
+    <string name="nextHizb">Следующий хизб</string>
+    <string name="previousHizb">Предыдущий хизб</string>
+    <string name="strLabelRukuNo" formatted="false">Руку %d</string>
+    <string name="endOfPageNo" formatted="false">Конец страницы %d</string>
+    <string name="endOfRukuNo" formatted="false">Конец руку %d</string>
+    <string name="endOfRubNo" formatted="false">Конец руб %d</string>
+    <string name="endOfManzilNo" formatted="false">Конец манзиля %d</string>
+    <string name="tafsirForVerse" formatted="false">Тафсир к аяту %1$d:%2$d</string>
+    <string name="textSizes">Размеры текста</string>
+    <string name="strTitleReaderHizb">Хизб</string>
+    <string name="labelHizbNo" formatted="false">Хизб %d</string>
+    <string name="sajda">Саджда</string>
+    <string name="filterSectionLength">Длина суры</string>
+    <string name="any">Любая</string>
+    <string name="withSajda">С садждой</string>
+    <string name="withoutSajda">Без саджды</string>
+    <string name="chapterFilterLengthShort">Короткие (&lt;50 аятов)</string>
+    <string name="chapterFilterLengthMedium">Средние (50–150 аятов)</string>
+    <string name="chapterFilterLengthLong">Длинные (150+ аятов)</string>
+    <string name="clearFilters">Очистить фильтры</string>
+    <string name="chapterFilters">Фильтры сур</string>
+    <string name="strMsgReciterDownloadHint">Скачайте аудио чтеца для офлайн-прослушивания и более плавного воспроизведения.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d сур</string>
+    <string name="recitationDownloadAllComplete">Все суры скачаны</string>
+    <string name="recitationDownloadConfirmTitle">Скачать аудио</string>
+    <string name="recitationDownloadConfirmMessage">Скачать все суры этого чтеца? Это может занять значительный объем памяти и трафика.</string>
+    <string name="recitationDownloadSomeFailed">Не удалось скачать некоторые суры. Нажмите «Повторить», чтобы снова поставить их в очередь.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Уже идет загрузка другого чтеца. Дождитесь окончания или отмените её перед началом новой.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">Скачано сур: %1$d / %2$d</string>
+    <string name="recitationBulkEnqueueNotifTitle">Подготовка к загрузке аудио</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — в очереди %2$d из %3$d</string>
+    <string name="playbackCount">Количество повторов</string>
+    <string name="titleRecitationGroupSize">Размер группы аятов</string>
+    <string name="msgRecitationGroupSize">
+        Выберите, сколько аятов Корана будет воспроизводиться перед началом перевода. Например: если вы выберете 3, прозвучат 3 аята Корана, а затем их переводы.
+    </string>
+    <string name="labelRecommended">Рекомендуется</string>
+    <string name="modeVerseByVerse">Поаятный режим</string>
+    <string name="modeMushaf">Режим Мусхафа</string>
+    <string name="noNoteProvided">Заметка отсутствует…</string>
+    <string name="dailyReminderMsg">Получать ежедневное уведомление-напоминание.</string>
+    <string name="titleGlobalSearch">Глобальный поиск</string>
+    <string name="strHintSearchBy">Поиск джуза или суры</string>
+    <string name="strHintSearchHizb">Поиск хизба или суры</string>
+    <string name="strHintSearchPage">Поиск страницы</string>
+    <string name="strMsgNoVerseTiming">Воспроизведение всей суры без синхронизации аятов</string>
+    <string name="textPreparingAudio">Подготовка аудио…</string>
+    <string name="notification_permission">Разрешение на уведомления</string>
+    <string name="onboardDescTafsir">Выберите комментарий (тафсир) для чтения вместе с аятами. Вы можете скачивать и управлять тафсирами в настройках.</string>
+    <string name="labelTransliteration">Транслитерация</string>
+    <string name="favourites">Избранное</string>
+    <string name="strMsgSearchHistoryDeleteAll">Вся история поиска будет удалена.</string>
+    <string name="donate">Поддержать нас</string>
+    <string name="quran_and_science">Коран и наука</string>
+    <string name="about_this_page">Об этой странице</string>
+    <string name="about_quran_science_msg">Материалы на этой странице взяты из книги доктора Закира Найка «Коран и современная наука: совместимы или несовместимы»\n\nИзображения приведены только для иллюстрации.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d ссылок</string>
+    <string name="once">Один раз</string>
+    <string name="twice">Дважды</string>
+    <string name="nTimes" formatted="false">%d раз(а)</string>
+    <string name="msgRepeat">
+        Установите количество повторов каждого аята перед переходом к следующему. Доступно только при включенной опции «Только арабский» в настройках аудио.
+    </string>
+    <string name="notSupported">Не поддерживается</string>
+    <string name="missingTimingData" formatted="false">
+        Отсутствуют данные о времени для %s — воспроизведение невозможно.
+    </string>
+    <string name="expandedPlayerModeControls">Управление</string>
+    <string name="expandedPlayerModeSpotlight">Фокус</string>
+    <string name="theme_default">По умолчанию</string>
+    <string name="theme_blue">Синяя</string>
+    <string name="theme_red">Красная</string>
+    <string name="theme_purple">Пурпурная</string>
+    <string name="theme_violet">Фиолетовая</string>
+    <string name="theme_yellow">Желтая</string>
+    <string name="theme_mono">Монохромная</string>
+    <string name="theme_colors">Цвета темы</string>
+    <string name="theme_mode">Режим темы</string>
+    <string name="dynamic_color">Динамический цвет</string>
+    <string name="dynamic_color_description">Изменять цвет темы в зависимости от системных цветов</string>
+    <string name="textSizeVerseByVerseOnly">Эта настройка не применяется в режиме Мусхафа.</string>
+    <string name="sortBy">Сортировать по</string>
+    <string name="alphabetically">По алфавиту</string>
+    <string name="chronological">В хронологическом порядке</string>
+    <string name="translationHelp">
+        Не видите своего языка? Помогите перевести или улучшить его, чтобы сделать Коран доступным для большего числа людей!
+    </string>
+    <string name="learnMore">Узнать больше</string>
+    <string name="wordByWord">Пословно</string>
+    <string name="selectWbwLanguage">Выберите язык</string>
+    <string name="wbwShowTranslation">Показать перевод</string>
+    <string name="wbwShowTransliteration">Показать транслитерацию</string>
+    <string name="wbwShowTransliterationMgs">Если доступно для выбранного языка</string>
+    <string name="wbwRecitation">Чтение по словам</string>
+    <string name="wbwRecitationMsg">Проигрывать аудио при нажатии на слово</string>
+    <string name="wbwTextSize">Размер текста</string>
+    <string name="noWbwAvailable">Скачайте языковой пакет ниже, чтобы включить пословные функции.</string>
+    <string name="deleteData">Удалить данные?</string>
+    <string name="wordNo" formatted="false">Слово %d</string>
+    <string name="playWord">Прослушать слово</string>
+    <string name="previousWord">Предыдущее слово</string>
+    <string name="nextWord">Следующее слово</string>
+    <string name="results">Результаты</string>
+    <string name="titleRecentSearches">Последние поиски</string>
+    <string name="searchInQuran">Поиск в Коране</string>
+    <string name="searchTipsTitle">Советы по поиску</string>
+    <string name="searchTipDirectVerse">Перейти к аяту или тафсиру напрямую</string>
+    <string name="searchTipChapter">Поиск по сурам</string>
+    <string name="searchTipDirectJuz">Переходите к «Сура 30», «Джуз 30» или «Хизб 30»</string>
+    <string name="searchTipTranslation">Поиск в переводах</string>
+    <string name="searchTipArabic">Поиск в тексте Корана</string>
 </resources>
