@@ -8,6 +8,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 
@@ -41,6 +42,12 @@ val fontSurah by lazy {
     )
 }
 
+val tightTextStyle = TextStyle(
+    lineHeightStyle = LineHeightStyle.Default.copy(
+        mode = LineHeightStyle.Mode.Tight,
+        alignment = LineHeightStyle.Alignment.Center,
+    )
+)
 
 private val platformTextStyle = PlatformTextStyle(false)
 

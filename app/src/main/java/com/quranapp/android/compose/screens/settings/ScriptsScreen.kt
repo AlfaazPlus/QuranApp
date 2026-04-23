@@ -66,6 +66,7 @@ import com.quranapp.android.utils.reader.getScriptPreviewText
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.viewModels.ScriptEvent
 import com.quranapp.android.viewModels.ScriptsViewModel
+import java.util.Locale
 import kotlinx.coroutines.launch
 
 @Composable
@@ -223,9 +224,12 @@ private fun ScriptItem(
                 if (downloadState is ResourceDownloadStatus.InProgress) {
                     Text(
                         if (downloadState.progress <= 100)
-                            stringResource(
-                                R.string.msgDownloadingFonts
-                            ) + " (${downloadState.progress}%)"
+                            String.format(
+                                Locale.getDefault(),
+                                $$"%1$s (%2$d%%)",
+                                stringResource(R.string.msgDownloadingFonts),
+                                downloadState.progress
+                            )
                         else stringResource(
                             R.string.msgExtractingFonts
                         ),

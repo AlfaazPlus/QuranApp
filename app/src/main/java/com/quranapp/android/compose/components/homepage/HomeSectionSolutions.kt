@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityExclusiveVerses
 import com.quranapp.android.components.quran.ExclusiveVerse
@@ -138,7 +139,7 @@ private fun ItemCard(
                 text = model.title,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold
-                ),
+                ).merge(tightTextStyle),
                 color = Color.White,
                 maxLines = 2
             )
@@ -147,7 +148,7 @@ private fun ItemCard(
 
             Text(
                 text = model.inChapters,
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelSmall.merge(tightTextStyle),
                 color = Color.White.copy(alpha = 0.7f)
             )
         }

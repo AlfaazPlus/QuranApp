@@ -3,12 +3,12 @@ package com.quranapp.android.compose.components.reader.navigator
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.formatted
 import com.quranapp.android.db.relations.NavigationUnit
+import java.util.Locale
 
 
 @Composable
@@ -70,7 +70,8 @@ fun JuzCard(
                     bottom = 8.dp,
                     end = if (showFavouriteIcon) 0.dp else 16.dp
                 ),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Box(
                 modifier = Modifier
@@ -89,10 +90,9 @@ fun JuzCard(
                 )
             }
 
-            Spacer(modifier = Modifier.width(12.dp))
-
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(
                     text = stringResource(R.string.strLabelJuzNo, juz.unitNo),
@@ -103,9 +103,15 @@ fun JuzCard(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "${firstSurah?.surah?.surah?.surahNo?.formatted()}:${firstSurah?.startAyah?.formatted()} - ${lastSurah?.surah?.surah?.surahNo?.formatted()}:${lastSurah?.endAyah?.formatted()}",
+                    text = String.format(
+                        Locale.getDefault(),
+                        $$"%1$d:%2$d - %3$d:%4$d",
+                        firstSurah?.surah?.surah?.surahNo ?: 0,
+                        firstSurah?.startAyah ?: 0,
+                        lastSurah?.surah?.surah?.surahNo ?: 0,
+                        lastSurah?.endAyah ?: 0
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = colorScheme.onSurface.alpha(0.7f),
                     maxLines = 2,

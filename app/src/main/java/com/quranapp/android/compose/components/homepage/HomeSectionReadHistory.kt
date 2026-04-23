@@ -32,10 +32,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReadHistory
 import com.quranapp.android.activities.ActivityReader
@@ -157,7 +160,7 @@ private fun ItemCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = title,
-                        style = typography.titleSmall,
+                        style = typography.titleSmall.merge(tightTextStyle),
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -167,7 +170,7 @@ private fun ItemCard(
                     subtitle?.let {
                         Text(
                             text = it,
-                            style = typography.bodyMedium,
+                            style = typography.bodyMedium.merge(tightTextStyle),
                             color = colorScheme.onSurface.alpha(0.75f),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -183,7 +186,7 @@ private fun ItemCard(
                     ) {
                         Text(
                             text = stringResource(R.string.strLabelContinueReading),
-                            style = typography.labelMedium,
+                            style = typography.labelMedium.merge(tightTextStyle),
                             color = accentColor,
                             fontWeight = FontWeight.Medium,
                             maxLines = 1,

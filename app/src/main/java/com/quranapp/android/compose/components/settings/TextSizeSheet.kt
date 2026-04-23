@@ -40,6 +40,7 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGR
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.getScriptPreviewText
+import java.util.Locale
 import kotlinx.coroutines.launch
 
 private enum class PreviewType {
@@ -107,7 +108,7 @@ private fun ArabicTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = "${progress.toInt()}%",
+            text = String.format(Locale.getDefault(), "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )
@@ -181,7 +182,7 @@ private fun TranslationTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = "${progress.toInt()}%",
+            text = String.format(Locale.getDefault(), "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )
