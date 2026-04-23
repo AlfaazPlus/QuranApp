@@ -405,4 +405,6 @@
     <string name="searchTipDirectJuz">Salte para “Capítulo 30”, “Juz 30” ou “Hizb 30”</string>
     <string name="searchTipTranslation">Pesquisar nas traduções</string>
     <string name="searchTipArabic">Pesquisar no texto do Alcorão</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">Baixar SunnahApp</string>
 </resources>

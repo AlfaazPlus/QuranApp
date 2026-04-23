@@ -2,7 +2,7 @@
 <resources>
     <string name="strTitleAppVersion">App version</string>
     <string name="strMsgShareApp" formatted="false">QuranApp is a free and open-source app to read and explore the Noble Qur\'an with translations. This app has a nice and clean interface with features like tafsir, recitation, reminder and many more. \n\nDOWNLOAD NOW:\n%s</string>
-    <string name="strTitleDownloadSunnahApp" translatable="false">Download SunnahApp</string>
+    <string name="strTitleDownloadSunnahApp">Download SunnahApp</string>
     <string name="strLabelClose">Close</string>
     <string name="clear">Clear</string>
     <string name="strLabelGotIt">Got it</string>
@@ -279,7 +279,7 @@
     <string name="copiedToClipboard">Copied to clipboard.</string>
     <string name="pasteCrashLogGithubIssue">Log has been copied to clipboard. Please paste it in the GitHub issue.</string>
     <string name="github">GitHub</string>
-    <string name="discord" translatable="false">Discord</string>
+    <string name="discord">Discord</string>
     <string name="notification_permission">
         Notification Permission
     </string>

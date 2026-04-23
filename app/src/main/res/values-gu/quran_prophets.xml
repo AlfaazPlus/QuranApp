@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="honorificMuhammad">ﷺ</string>
-    <string name="honorificProphet">عليه السلام</string>
+    <string name="honorificProphet">અલૈહિસ્સલામ</string>
 
-    <string name="prophetAdam">Adam</string>
-    <string name="prophetAlyasaa">Al-Yasaa</string>
-    <string name="prophetAyyub">Ayyub</string>
-    <string name="prophetDawud">Dawud</string>
-    <string name="prophetDhulkifl">Dhul-Kifl</string>
-    <string name="prophetHarun">Harun</string>
-    <string name="prophetHud">Hud</string>
-    <string name="prophetIbrahim">Ibrahim</string>
-    <string name="prophetIdrees">Idrees</string>
-    <string name="prophetIliyas">Iliyas</string>
-    <string name="prophetIsa">Isa Ibn Maryam</string>
-    <string name="prophetIshaq">Ishaq</string>
-    <string name="prophetIsmail">Ismail</string>
-    <string name="prophetLut">Lut</string>
-    <string name="prophetMuhammad">Muhammad</string>
-    <string name="prophetMusa">Musa</string>
-    <string name="prophetNuh">Nuh</string>
-    <string name="prophetSaleh">Saleh</string>
-    <string name="prophetShuaib">Shu’aib</string>
-    <string name="prophetSulayman">Sulayman</string>
-    <string name="prophetYahya">Yahya</string>
-    <string name="prophetYaqub">Yaqub</string>
-    <string name="prophetYunus">Yunus</string>
-    <string name="prophetYusuf">Yusuf</string>
-    <string name="prophetZakariyya">Zakariyya</string>
+    <string name="prophetAdam">આદમ</string>
+    <string name="prophetAlyasaa">અલ-યસઅ</string>
+    <string name="prophetAyyub">અય્યૂબ</string>
+    <string name="prophetDawud">દાઉદ</string>
+    <string name="prophetDhulkifl">ઝુલ-કિફલ</string>
+    <string name="prophetHarun">હારૂન</string>
+    <string name="prophetHud">હૂદ</string>
+    <string name="prophetIbrahim">ઇબ્રાહીમ</string>
+    <string name="prophetIdrees">ઇદ્રીસ</string>
+    <string name="prophetIliyas">ઇલ્યાસ</string>
+    <string name="prophetIsa">ઇસા ઇબ્ને મરિયમ</string>
+    <string name="prophetIshaq">ઇશ્હાક</string>
+    <string name="prophetIsmail">ઇસ્માઇલ</string>
+    <string name="prophetLut">લૂત</string>
+    <string name="prophetMuhammad">મુહમ્મદ</string>
+    <string name="prophetMusa">મૂસા</string>
+    <string name="prophetNuh">નૂહ</string>
+    <string name="prophetSaleh">સાલેહ</string>
+    <string name="prophetShuaib">શુઅયબ</string>
+    <string name="prophetSulayman">સુલૈમાન</string>
+    <string name="prophetYahya">યહ્યા</string>
+    <string name="prophetYaqub">યાકૂબ</string>
+    <string name="prophetYunus">યૂનુસ</string>
+    <string name="prophetYusuf">યૂસુફ</string>
+    <string name="prophetZakariyya">ઝકરિયા</string>
 </resources>

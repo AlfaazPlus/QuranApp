@@ -409,4 +409,6 @@
     <string name="searchTipDirectJuz">\"سورہ 30\"، \"پارہ 30\" یا \"حزب 30\" پر جائیں</string>
     <string name="searchTipTranslation">تراجم میں تلاش کریں</string>
     <string name="searchTipArabic">قرآن کے متن میں تلاش کریں</string>
+    <string name="discord">ڈسکورڈ</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp ڈاؤن لوڈ کریں</string>
 </resources>
