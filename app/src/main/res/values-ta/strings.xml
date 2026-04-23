@@ -395,5 +395,7 @@
     <string name="searchTipDirectJuz">“அத்தியாயம் 30” அல்லது “ஜூஸ்உ 30”-க்குச் செல்</string>
     <string name="searchTipTranslation">மொழிபெயர்ப்புகளில் தேடு</string>
     <string name="searchTipArabic">அரபு வசனங்களில் தேடு</string>
+    <string name="discord">டிஸ்கார்ட்</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp-ஐ பதிவிறக்கவும்</string>
 </resources>
 

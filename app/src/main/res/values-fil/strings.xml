@@ -398,4 +398,6 @@
     <string name="searchTipDirectJuz">Tumalon sa “Kabanata 30”, “Juz 30” o “Hizb 30”</string>
     <string name="searchTipTranslation">Maghanap sa mga pagsasalin</string>
     <string name="searchTipArabic">Maghanap sa teksto ng Quran</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">I-download ang SunnahApp</string>
 </resources>

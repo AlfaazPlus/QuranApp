@@ -405,5 +405,7 @@
     <string name="searchTipDirectJuz">Aller à « Sourate 30 », « Juz 30 » ou « Hizb 30 »</string>
     <string name="searchTipTranslation">Rechercher dans les traductions</string>
     <string name="searchTipArabic">Rechercher dans le texte du Coran</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">Télécharger SunnahApp</string>
 </resources>
 

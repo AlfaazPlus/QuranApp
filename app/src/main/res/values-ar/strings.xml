@@ -405,4 +405,6 @@
     <string name="searchTipDirectJuz">انتقل إلى "سورة 30" أو "جزء 30" أو "حزب 30"</string>
     <string name="searchTipTranslation">ابحث في التراجم</string>
     <string name="searchTipArabic">ابحث في نص القرآن</string>
+    <string name="discord">ديسكورد</string>
+    <string name="strTitleDownloadSunnahApp">تحميل SunnahApp</string>
 </resources>

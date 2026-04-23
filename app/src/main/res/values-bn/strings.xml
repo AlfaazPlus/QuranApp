@@ -402,5 +402,7 @@
     <string name="searchTipDirectJuz">সরাসরি “সূরা ৩০”, “পারা ৩০” বা “হিযব ৩০”-এ যান</string>
     <string name="searchTipTranslation">অনুবাদগুলোতে অনুসন্ধান করুন</string>
     <string name="searchTipArabic">কুরআনের টেক্সটে অনুসন্ধান করুন</string>
+    <string name="discord">ডিসকর্ড</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp ডাউনলোড করুন</string>
 </resources>
 

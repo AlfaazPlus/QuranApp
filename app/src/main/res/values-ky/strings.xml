@@ -143,7 +143,6 @@
     <string name="createIssue">Көйгөйдү каттоо</string>
     <string name="copiedToClipboard">Алмашуу буферине көчүрүлдү.</string>
     <string name="github">GitHub</string>
-    <string name="discord">Discord</string>
     <string name="notification_permission">Билдирмелерге уруксат берүү</string>
     <string name="msgVerseReminderNotifPermission">Билдирүү уруксатын бериңиз.</string>
     <string name="titleStorageCleanup">Сактоо тазалоо</string>
@@ -399,4 +398,7 @@
     <string name="searchTipDirectJuz">Жүз, хизб же сүрө номерине өтүү</string>
     <string name="searchTipTranslation">Котормолордун ичинен издөө</string>
     <string name="searchTipArabic">Арабча тексттен (түп нускадан) издөө</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp жүктөп алуу</string>
+    <string name="searchInQuran">Курандан издөө</string>
 </resources>
