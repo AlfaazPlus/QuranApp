@@ -21,6 +21,7 @@ import com.quranapp.android.utils.reader.recitation.RecitationUtils.URL_CHAPTER_
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
+import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -69,6 +70,7 @@ class RecitationAudioRepository(private val context: Context) {
 
     fun cancelAll() {
         workManager.cancelAllWorkByTag(RecitationAudioDownloadWorker.TAG)
+        workManager.cancelAllWorkByTag(RecitationBulkDownloadWorker.TAG)
     }
 
 

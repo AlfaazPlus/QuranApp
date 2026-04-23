@@ -16,6 +16,7 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.work.ForegroundInfo
 import com.quranapp.android.R
 import com.quranapp.android.utils.receivers.CrashReceiver
 
@@ -151,7 +152,11 @@ object NotificationUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createChannel(channelId: String, channelName: String, desc: String): NotificationChannel {
+    private fun createChannel(
+        channelId: String,
+        channelName: String,
+        desc: String
+    ): NotificationChannel {
         return NotificationChannel(
             channelId,
             channelName,
@@ -167,13 +172,18 @@ object NotificationUtils {
         }
     }
 
-    @JvmStatic
     fun createEmptyNotif(ctx: Context, channelId: String): Notification {
         return NotificationCompat.Builder(ctx, channelId).apply {
             setContentTitle("")
             setSmallIcon(R.drawable.dr_logo)
             setContentText("")
         }.build()
+    }
+
+    fun createForegroundInfoFallback(
+        context: Context,
+    ): ForegroundInfo {
+        return ForegroundInfo(1, createEmptyNotif(context, CHANNEL_ID_DEFAULT))
     }
 
     fun showCrashNotification(ctx: Context, stackTraceString: String) {

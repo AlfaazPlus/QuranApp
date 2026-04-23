@@ -14,7 +14,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.StringUtils
 
 
@@ -34,12 +33,15 @@ fun TranslationText(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             texts.forEach {
+                val langCode = it.first
+                val text = it.second
+
                 Text(
-                    it.second,
+                    text,
                     modifier = Modifier.fillMaxWidth(),
                     color = if (isDark) colorScheme.onBackground.alpha(0.8f) else colorScheme.onBackground,
                     style = TextStyle(
-                        textDirection = if (StringUtils.isRtlLanguage(it.first)) TextDirection.Rtl else TextDirection.Ltr,
+                        textDirection = if (StringUtils.isRtlLanguage(langCode)) TextDirection.Rtl else TextDirection.Ltr,
                     )
                 )
             }

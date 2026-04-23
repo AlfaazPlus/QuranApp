@@ -1,8 +1,11 @@
 package com.quranapp.android.utils.workers
 
 import android.content.Context
+import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
+import com.quranapp.android.R
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.searchindex.SEARCH_INDEX_DB_VERSION
 import com.quranapp.android.db.searchindex.TranslationSearchContentEntity
@@ -11,6 +14,7 @@ import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
 import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.search.SearchNormalizer
+import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +30,20 @@ class TranslationSearchIndexWorker(
         const val MODE_SLUG = "slug"
         const val MODE_ALL = "all"
         const val MODE_REMOVE = "remove"
+    }
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val notification = NotificationCompat.Builder(
+            applicationContext,
+            NotificationUtils.CHANNEL_ID_DEFAULT
+        )
+            .setContentTitle("Indexing translations data")
+            .setContentText("Preparing...")
+            .setSmallIcon(R.drawable.dr_logo)
+            .setOngoing(true)
+            .build()
+
+        return ForegroundInfo(1001, notification)
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {

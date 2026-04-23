@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.alfaazplus.sunnah.ui.theme.appFontFamily
+import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
@@ -45,7 +47,9 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.SearchResultMatch
 import com.quranapp.android.utils.extensions.copyToClipboard
+import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.QuranSearchViewModel
 
 @Composable
@@ -166,23 +170,35 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
 
                 when (match) {
                     is SearchResultMatch.TranslationMatch -> {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(6.dp)
+                        CompositionLocalProvider(
+                            LocalLayoutDirection provides if (StringUtils.isRtlLanguage(
+                                    match.slug
+                                )
+                            ) LayoutDirection.Rtl else LayoutDirection.Ltr
                         ) {
-                            Text(
-                                text = match.displayName,
-                                style = typography.labelMedium,
-                                color = colorScheme.primary,
-                            )
+                            val isUrdu = TranslUtils.isUrdu(match.slug)
+                            val fontFamily = if (isUrdu) fontUrdu else appFontFamily
+                            val baseFontSize = typography.bodyMedium.fontSize
 
-                            Text(
-                                text = match.preview,
-                                style = typography.bodyMedium,
-                                color = colorScheme.onSurface,
-                                maxLines = 4,
-                                overflow = TextOverflow.Ellipsis,
-                            )
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                Text(
+                                    text = match.displayName,
+                                    style = typography.labelMedium,
+                                    color = colorScheme.primary,
+                                    fontFamily = fontFamily
+                                )
+
+                                Text(
+                                    text = match.preview,
+                                    style = typography.bodyMedium,
+                                    color = colorScheme.onSurface,
+                                    fontFamily = fontFamily,
+                                    lineHeight = if (isUrdu) baseFontSize * 2.5f else baseFontSize * 1.5,
+                                )
+                            }
                         }
                     }
 

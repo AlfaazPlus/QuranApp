@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
@@ -75,46 +74,29 @@ private fun RecommendationCard(
                     }
 
                     is RecommendationRef.Verses -> {
-                        // Simple parsing for "chapter:verse-verse" or "chapter:verse" or multi-spec
-                        if (ref.spec.contains(',')) {
-                            val ranges = ref.spec.split(',')
-                            val chapters = mutableListOf<Int>()
-                            val verseSpecs = mutableListOf<String>()
+                        val ranges = ref.spec.split(',')
+                        val chapters = mutableListOf<Int>()
+                        val verseSpecs = mutableListOf<String>()
 
-                            ranges.forEach { rangeSpec ->
-                                val trimmed = rangeSpec.trim()
-                                val chapterNo = trimmed.split(':')[0].toIntOrNull() ?: 0
-                                chapters.add(chapterNo)
-                                verseSpecs.add(trimmed)
-                            }
+                        ranges.forEach { rangeSpec ->
+                            val trimmed = rangeSpec.trim()
 
-                            ReaderFactory.startReferenceVerse(
-                                context = context,
-                                title = recommendation.title,
-                                desc = recommendation.description,
-                                translSlug = emptyArray(),
-                                chapters = chapters,
-                                verses = verseSpecs
-                            )
-                            return@clickable
+                            val chapterNo = trimmed.split(':')[0].toIntOrNull() ?: 0
+                            chapters.add(chapterNo)
+
+                            verseSpecs.add(trimmed)
                         }
 
-                        val parts = ref.spec.split(':')
+                        ReaderFactory.startReferenceVerse(
+                            context = context,
+                            title = recommendation.title,
+                            desc = recommendation.description,
+                            translSlug = emptyArray(),
+                            chapters = chapters.distinct(),
+                            verses = verseSpecs
+                        )
 
-                        if (parts.size == 2) {
-                            val chapterNo = parts[0].toIntOrNull() ?: return@clickable
-                            val versePart = parts[1]
-                            val rangeParts = versePart.split('-', '–')
-
-                            if (rangeParts.size == 2) {
-                                val from = rangeParts[0].toIntOrNull() ?: return@clickable
-                                val to = rangeParts[1].toIntOrNull() ?: return@clickable
-                                ReaderFactory.startVerseRange(context, chapterNo, from, to)
-                            } else {
-                                val verseNo = versePart.toIntOrNull() ?: return@clickable
-                                ReaderFactory.startVerse(context, chapterNo, verseNo)
-                            }
-                        }
+                        return@clickable
                     }
                 }
             }

@@ -304,7 +304,6 @@
     <string name="strLabelScienceReferences">%d шилтеме</string>
     <string name="donate">Колдоо көрсөтүңүз</string>
     <string name="strTitleReaderHizb">Хизб</string>
-    <string name="recitationDownloadChapterSubtitle">%d-сүрө (же Бөлүм %d)</string>
     <string name="recitationDownloadChaptersProgress">%1$d / %2$d сүрө</string>
     <string name="recitationDownloadAllComplete">Бардык сүрөлөр жүктөлдү</string>
     <string name="recitationDownloadConfirmTitle">Кырааттарды жүктөө</string>

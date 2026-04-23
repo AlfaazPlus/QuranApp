@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.ServiceInfo
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
@@ -12,37 +13,37 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
-import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.mediaplayer.RecitationBulkDownloadNotificationHelper
+import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileOutputStream
 
 class RecitationAudioDownloadWorker(
     private val ctx: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(ctx, params) {
+    private val cancelPendingIntent =
+        WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val title = inputData.getString(KEY_TITLE).orEmpty().ifBlank { "Recitation download" }
+        val subtitle = inputData.getString(KEY_SUBTITLE)
+
+        return createForegroundInfo(
+            title = title,
+            subtitle = subtitle,
+            progress = null,
+            indeterminateProgress = false,
+            cancelPendingIntent = cancelPendingIntent,
+        )
+    }
 
     override suspend fun doWork(): Result {
         val downloadUrl = inputData.getString(KEY_URL)
         val outputPath = inputData.getString(KEY_OUTPUT_PATH)
         val title = inputData.getString(KEY_TITLE).orEmpty().ifBlank { "Recitation download" }
         val subtitle = inputData.getString(KEY_SUBTITLE)
-        val isBulkChild = inputData.getBoolean(KEY_BULK_CHILD, false)
-        val bulkReciterId = inputData.getString(KEY_BULK_RECITER_ID)
-        val bulkKindName = inputData.getString(KEY_BULK_AUDIO_KIND)
-        val bulkKind = bulkKindName?.let {
-            try {
-                RecitationAudioKind.valueOf(it)
-            } catch (_: Exception) {
-                null
-            }
-        }
 
         if (downloadUrl == null || outputPath == null) {
             return Result.failure(workDataOf(KEY_ERROR to "Invalid input"))
@@ -55,56 +56,31 @@ class RecitationAudioDownloadWorker(
         }
 
         if (outputFile.exists() && outputFile.length() > 0L) {
-            if (isBulkChild && bulkReciterId != null && bulkKind != null) {
-                RecitationBulkDownloadNotificationHelper.updateOverall(
-                    applicationContext,
-                    bulkReciterId,
-                    bulkKind,
-                    title,
-                )
-            }
-
             return Result.success()
         }
 
-        val cancelPendingIntent =
-            WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
-
-        // Player / standalone: show per-chapter progress in the notification.
-        // Bulk queue: one indeterminate foreground; overall progress is shown by [RecitationBulkDownloadNotificationHelper].
         setForeground(
             createForegroundInfo(
                 title = title,
                 subtitle = subtitle,
                 progress = null,
-                indeterminateProgress = isBulkChild,
+                indeterminateProgress = false,
                 cancelPendingIntent = cancelPendingIntent,
             ),
         )
 
         return try {
-            downloadToFile(downloadUrl, outputFile) { progress ->
+            RecitationAudioFileDownloader.downloadToFile(downloadUrl, outputFile) { progress ->
                 setProgress(workDataOf(KEY_PROGRESS to progress))
 
-                if (!isBulkChild) {
-                    setForeground(
-                        createForegroundInfo(
-                            title = title,
-                            subtitle = subtitle,
-                            progress = progress,
-                            indeterminateProgress = false,
-                            cancelPendingIntent = cancelPendingIntent,
-                        ),
-                    )
-                }
-            }
-
-            if (isBulkChild && bulkReciterId != null && bulkKind != null) {
-                RecitationBulkDownloadNotificationHelper.updateOverall(
-                    applicationContext,
-                    bulkReciterId,
-                    bulkKind,
-                    title,
+                setForeground(
+                    createForegroundInfo(
+                        title = title,
+                        subtitle = subtitle,
+                        progress = progress,
+                        indeterminateProgress = false,
+                        cancelPendingIntent = cancelPendingIntent,
+                    ),
                 )
             }
             Result.success()
@@ -112,91 +88,7 @@ class RecitationAudioDownloadWorker(
             throw e
         } catch (e: Exception) {
             outputFile.delete()
-            if (isBulkChild && bulkReciterId != null && bulkKind != null) {
-                RecitationBulkDownloadNotificationHelper.updateOverall(
-                    applicationContext,
-                    bulkReciterId,
-                    bulkKind,
-                    title,
-                )
-            }
             Result.failure(workDataOf(KEY_ERROR to (e.message ?: "Download failed")))
-        }
-    }
-
-    private suspend fun downloadToFile(
-        urlStr: String,
-        finalFile: File,
-        onProgress: suspend (Int) -> Unit,
-    ) = withContext(Dispatchers.IO) {
-        val parent = finalFile.parentFile
-            ?: throw IllegalStateException("Output path has no parent directory")
-
-        val tempFile = File(parent, "${finalFile.name}.part")
-
-        if (tempFile.exists()) {
-            tempFile.delete()
-        }
-
-        try {
-            val response = RetrofitInstance.any.downloadStreaming(urlStr)
-
-            if (response.code() == 404) {
-                throw IllegalStateException("Audio file not found")
-            }
-
-            if (!response.isSuccessful) {
-                throw IllegalStateException("Download failed: HTTP ${response.code()}")
-            }
-
-            val body = response.body()
-                ?: throw IllegalStateException("Download response body is null")
-
-            val totalLength = body.contentLength()
-
-            body.use { responseBody ->
-                responseBody.byteStream().buffered(DOWNLOAD_BUFFER_SIZE).use { input ->
-                    FileOutputStream(tempFile).buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
-                        val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
-                        var totalConsumed = 0L
-                        while (true) {
-                            ensureActive()
-                            val bytes = input.read(buffer)
-                            if (bytes <= 0) break
-                            output.write(buffer, 0, bytes)
-                            totalConsumed += bytes
-                            if (totalLength > 0L) {
-                                onProgress((totalConsumed * 100 / totalLength).toInt())
-                            }
-                        }
-                        output.flush()
-                    }
-                }
-            }
-
-            commitTempFile(tempFile, finalFile)
-        } catch (e: Exception) {
-            tempFile.delete()
-            throw e
-        }
-    }
-
-    /**
-     * Replace [finalFile] with fully downloaded [tempFile].
-     */
-    private fun commitTempFile(tempFile: File, finalFile: File) {
-        if (tempFile.renameTo(finalFile)) return
-
-        try {
-            tempFile.copyTo(finalFile, overwrite = true)
-        } catch (e: Exception) {
-            finalFile.delete()
-            throw e
-        }
-
-        if (!tempFile.delete()) {
-            finalFile.delete()
-            throw IllegalStateException("Could not finalize download file")
         }
     }
 
@@ -243,7 +135,6 @@ class RecitationAudioDownloadWorker(
     }
 
     companion object {
-        private const val DOWNLOAD_BUFFER_SIZE = 4096
         const val TAG = "recitation_audio_download"
         private const val KEY_URL = "url"
         private const val KEY_OUTPUT_PATH = "output_path"
@@ -251,9 +142,6 @@ class RecitationAudioDownloadWorker(
         private const val KEY_SUBTITLE = "subtitle"
         const val KEY_PROGRESS = "progress"
         const val KEY_ERROR = "error"
-        private const val KEY_BULK_CHILD = "bulk_child"
-        private const val KEY_BULK_RECITER_ID = "bulk_reciter_id"
-        private const val KEY_BULK_AUDIO_KIND = "bulk_audio_kind"
 
         fun uniqueWorkName(reciterId: String, chapterNo: Int): String {
             return "recitation-audio:$reciterId:$chapterNo"
@@ -271,19 +159,13 @@ class RecitationAudioDownloadWorker(
             subtitle: String?,
             reciterId: String,
             audioKind: RecitationAudioKind?,
-            isBulkChild: Boolean
         ): OneTimeWorkRequest {
-            val builder = androidx.work.Data.Builder()
+            val inputData = Data.Builder()
                 .putString(KEY_URL, url)
                 .putString(KEY_OUTPUT_PATH, outputPath)
                 .putString(KEY_TITLE, title)
                 .putString(KEY_SUBTITLE, subtitle)
-                .putBoolean(KEY_BULK_CHILD, isBulkChild)
-                .putString(KEY_BULK_RECITER_ID, reciterId)
-
-            if (audioKind != null) builder.putString(KEY_BULK_AUDIO_KIND, audioKind.name)
-
-            val inputData = builder.build()
+                .build()
 
             val requestBuilder = OneTimeWorkRequestBuilder<RecitationAudioDownloadWorker>()
                 .setInputData(inputData)

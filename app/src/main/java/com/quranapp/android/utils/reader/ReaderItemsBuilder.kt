@@ -235,10 +235,11 @@ object ReaderItemsBuilder {
         val wbwId = ReaderPreferences.getWbwId()
 
         val scriptCode = ReaderPreferences.getQuranScript()
-        val chapterVerseCount = quranRepository.getChapterVerseCount(chapterNo)
-        val batchHi = minOf(toVerse + 1, chapterVerseCount)
-        val batch = quranRepository.loadChapterVerseBatch(chapterNo, fromVerse, batchHi, scriptCode)
-            ?: return
+
+        val batch =
+            quranRepository.loadVersesBatch(chapterNo, fromVerse, toVerse + 1, scriptCode)
+                ?: return
+
         val surah = batch.surah
 
         val booksInfo = factory.getTranslationBooksInfoValidated(params.slugs)
@@ -297,6 +298,7 @@ object ReaderItemsBuilder {
             val ayah = batch.ayahByVerseNo[verseNo] ?: continue
             val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
             val pageNo = batch.pageByVerseNo[verseNo] ?: -1
+
             val cur = SectionSnapshot(
                 page = pageNo,
                 ruku = ayah.rukuNo,
@@ -331,7 +333,7 @@ object ReaderItemsBuilder {
                     translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
 
                 Pair(
-                    translation.bookSlug,
+                    bookInfo.langCode,
                     buildAnnotatedTranslationWithTranslatorLine(
                         translation = translation,
                         verse = verse,
@@ -363,7 +365,7 @@ object ReaderItemsBuilder {
             scriptCode,
             chapterNo = chapterNo,
             toVerse = toVerse,
-            verseCount = chapterVerseCount,
+            verseCount = surah.surah.ayahCount,
             batch = batch,
         )
     }
@@ -380,7 +382,7 @@ object ReaderItemsBuilder {
         val wbwId = ReaderPreferences.getWbwId()
         val scriptCode = ReaderPreferences.getQuranScript()
 
-        val batch = repository.loadQuickReferenceBatch(chapterNo, verseNos, scriptCode)
+        val batch = repository.loadArbitraryVersesBatch(chapterNo, verseNos, scriptCode)
             ?: return null
         val surah = batch.surah
 
@@ -455,7 +457,7 @@ object ReaderItemsBuilder {
                         translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
 
                     Pair(
-                        translation.bookSlug,
+                        bookInfo.langCode,
                         buildAnnotatedTranslationWithTranslatorLine(
                             translation = translation,
                             verse = verse,
@@ -728,7 +730,7 @@ object ReaderItemsBuilder {
                         if (hasChapterTitleOnPage) {
                             sections.add(TranslationPageSection.Divider)
                         }
-                        
+
                         sections.add(TranslationPageSection.Title(swl))
                         hasChapterTitleOnPage = true
                     }

@@ -152,16 +152,24 @@ public abstract class StringUtils {
     public static boolean isRTL(char c) {
         byte d = Character.getDirectionality(c);
         return d == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING ||
-                d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE;
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC ||
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING ||
+            d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE;
     }
 
     public static boolean isRtlLanguage(String langCode) {
         String[] rtlLangs = {"ar", "fa", "ur", "ps", "sd", "ug", "dv", "he", "yi", "ku", "syr", "az-Arab", "ckb"};
 
+        String[] parts = langCode.split("[_-]");
+
+        if (parts.length == 0) {
+            return false;
+        }
+
+        String code = parts[0];
+
         for (String rtlLang : rtlLangs) {
-            if (rtlLang.equalsIgnoreCase(langCode)) {
+            if (rtlLang.equalsIgnoreCase(code)) {
                 return true;
             }
         }

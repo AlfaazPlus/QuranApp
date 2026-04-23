@@ -18,6 +18,7 @@ import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.univ.FileUtils
@@ -34,6 +35,13 @@ class ScriptFontsDownloadWorker(
     companion object {
         const val KEY_SCRIPT = "script_key"
         const val KEY_PROGRESS = "progress"
+    }
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val scriptKey = inputData.getString(KEY_SCRIPT)
+            ?: return createForegroundInfoFallback(ctx)
+
+        return createForegroundInfo(scriptKey, 0, false)
     }
 
     override suspend fun doWork(): Result {

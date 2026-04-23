@@ -18,6 +18,7 @@ import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,13 @@ class TafsirDownloadWorker(
     val ctx: Context,
     params: WorkerParameters
 ) : CoroutineWorker(ctx, params) {
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        val bookInfoJson = inputData.getString("bookInfo")
+            ?: return createForegroundInfoFallback(ctx)
+        val tafsirInfo = Json.decodeFromString<TafsirInfoModel>(bookInfoJson)
+
+        return createForegroundInfo(tafsirInfo, 0)
+    }
 
     override suspend fun doWork(): Result {
         val bookInfoJson = inputData.getString("bookInfo") ?: return Result.failure()

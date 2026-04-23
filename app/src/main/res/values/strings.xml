@@ -43,7 +43,7 @@
     <string name="nextChapter">Next chapter</string>
     <string name="previousChapter">Previous chapter</string>
     <string name="nextJuz">Next juz</string>
-    <string name="previousJuz">Previous chapter</string>
+    <string name="previousJuz">Previous juz</string>
     <string name="nextHizb">Next hizb</string>
     <string name="previousHizb">Previous hizb</string>
     <string name="strLabelSurah" formatted="false">Surah %s</string>
@@ -117,7 +117,6 @@
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="strMsgReciterDownloadHint">Download recitation audio for offline listening and smoother playback.</string>
     <string name="downloadRecitations">Download Recitations</string>
-    <string name="recitationDownloadChapterSubtitle" formatted="false">Chapter %d</string>
     <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d chapters</string>
     <string name="recitationDownloadAllComplete">All chapters downloaded</string>
     <string name="recitationDownloadConfirmTitle">Download recitations</string>

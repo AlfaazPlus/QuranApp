@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alfaazplus.sunnah.ui.theme.fontFamily
+import com.alfaazplus.sunnah.ui.theme.appFontFamily
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.compose.components.reader.MushafLineLayout
 import com.quranapp.android.db.entities.quran.AyahWordEntity
@@ -83,7 +83,7 @@ fun getTranslationTextStyle(
 
     return TextStyle(
         textDirection = if (isRtl) TextDirection.Rtl else TextDirection.Ltr,
-        fontFamily = if (isUrdu) fontUrdu else fontFamily,
+        fontFamily = if (isUrdu) fontUrdu else appFontFamily,
         platformStyle = PlatformTextStyle(
             includeFontPadding = true
         ),
