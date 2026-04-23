@@ -309,16 +309,16 @@
     },
     "ky": {
       "ky_sadybakas_doolov": {
-        "book": "Курани Карим кыргызча мааниси менен",
-        "author": "Садибакас Доолов, Абдышукур Исмаилов, Дүйшөн Абдылдаев, Садык Гавай",
-        "displayName": "Курани Карим кыргызча мааниси менен",
+        "book": "Ыйык Куран маанилеринин кыргызча котормосу менен",
+        "author": "С.Доолов, А.Исмаилов, Д.Абдылдаев, С.Гавай",
+        "displayName": "Ыйык Куран",
         "langCode": "ky",
         "langName": "Кыргызча",
         "lastUpdated": 1774293143000,
         "downloadPath": "inventory/translations/ky/ky_sadybakas_doolov.json"
       },
       "ky_shamsudin-hakimov": {
-        "book": "Ыйык Куран кыргызча котормосу",
+        "book": "Ыйык Кураан кыргызча",
         "author": "Шамсудин Хакимов",
         "displayName": "Ыйык Куран кыргызча котормосу",
         "langCode": "ky",
