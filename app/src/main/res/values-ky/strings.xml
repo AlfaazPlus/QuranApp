@@ -107,8 +107,8 @@
     <string name="strLabelShare">Бөлүшүү</string>
     <string name="strLabelReport">Арыздануу</string>
     <string name="strLabelContinueReading">Окууну улантуу</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">"%s" жүктөө ийгиликсиз болду.</string>
-    <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: "%s".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">%s жүктөө ийгиликсиз болду.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: %s.</string>
     <string name="strDescAddToBookmarks">Кыстырмаларга кошуу</string>
     <string name="strDescGoBack">Артка кайтуу</string>
     <string name="strDescClose">Жабуу</string>
