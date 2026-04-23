@@ -162,7 +162,7 @@
     <string name="strTitleChapInfoPages">Pages</string>
     <string name="strTitleChapInfoRevOrder">Revelation Order</string>
     <string name="strTitleChapInfoRevType">Revelation Type</string>
-    <string name="strMsgChapInfoFailedLoad">Failed to load surah information. Please try again later.</string>
+    <string name="strMsgChapInfoFailedLoad">Failed to load chapter information. Please try again later.</string>
     <string name="strTitleAppSettings">App Settings</string>
     <string name="strTitleReaderSettings">Reader Settings</string>
     <string name="titleOtherSettings">Other Settings</string>
@@ -296,7 +296,7 @@
     <string name="titleRecitationCleanup">Delete recitation\?</string>
     <string name="msgRecitationCleanup" formatted="false">All the stored recitation from %s will be deleted.</string>
     <string name="titleScriptCleanup">Delete script\?</string>
-    <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them.</string>
+    <string name="msgScriptCleanup" formatted="false">%s script and all its stored fonts will be deleted. You will need to re-download to use them again.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>
@@ -369,7 +369,6 @@
     </string>
     <string name="expandedPlayerModeControls">Controls</string>
     <string name="expandedPlayerModeSpotlight">Spotlight</string>
-
     <string name="theme_default">Default</string>
     <string name="theme_blue">Blue</string>
     <string name="theme_red">Red</string>
