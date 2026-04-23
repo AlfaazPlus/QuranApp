@@ -403,12 +403,8 @@
     <string name="wbwRecitation">Recitation</string>
     <string name="wbwRecitationMsg">Play audio when a word is clicked</string>
     <string name="wbwTextSize">Text size</string>
-    <string name="noWbwAvailable">
-        Download a language pack below to turn on word-by-word features.
-    </string>
-    <string name="deleteData">
-        Delete data?
-    </string>
+    <string name="noWbwAvailable">"         Download a language pack below to turn on word-by-word features.     "</string>
+    <string name="deleteData">"         Delete data?     "</string>
     <string name="wordNo" formatted="false">Word %d</string>
     <string name="playWord">Play word</string>
     <string name="previousWord">Previous word</string>
