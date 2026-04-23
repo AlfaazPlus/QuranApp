@@ -215,12 +215,12 @@ class ActivityQuranScienceContent : BaseActivity() {
             val chapterNo = matchResult.groupValues[1]
             val verse = matchResult.groupValues[2]
 
-            StringUtils.removeHTML(
-                translFactory.getTranslationsSingleVerse(
-                    chapterNo.toInt(),
-                    verse.toInt()
-                )[0].text, false
-            )
+            val translationText = translFactory.getTranslationsSingleVerse(
+                chapterNo.toInt(),
+                verse.toInt()
+            ).firstOrNull()?.text.orEmpty()
+
+            StringUtils.removeHTML(translationText, false)
         }
 
         document = regexName.replace(document) { matchResult ->
@@ -242,6 +242,6 @@ class ActivityQuranScienceContent : BaseActivity() {
     }
 
     private fun colorIntToCssHex(@ColorInt color: Int): String =
-        String.format("#%06X", 0xFFFFFF and color)
+        StringUtils.formatInvariant("#%06X", 0xFFFFFF and color)
 
 }

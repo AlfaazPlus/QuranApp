@@ -101,6 +101,7 @@ fun SearchScreen(
                         }
                     }
                 },
+                shadowElevation = 0.dp
             )
         },
     ) { padding ->

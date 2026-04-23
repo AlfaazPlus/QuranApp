@@ -291,7 +291,7 @@ fun SearchTipsCard(
                 }
                 TipRow("الرحيم", stringResource(R.string.searchTipArabic)) { example ->
                     viewModel.recordSearchQuery(example)
-                    viewModel.onQueryChange(example)
+                    viewModel.onQueryChange(example, true)
                 }
             }
         }

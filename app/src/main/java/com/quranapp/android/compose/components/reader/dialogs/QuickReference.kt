@@ -243,7 +243,7 @@ private fun QuickReferenceContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.9f),
+            .fillMaxHeight(0.85f),
     ) {
         QuickReferenceHeader(
             title = title,

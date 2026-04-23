@@ -239,4 +239,163 @@
     <string name="autoScrollSpeed">Itakda ang bilis</string>
     <string name="labelImportExportBookmarks">Mga Bookmark lang</string>
     <string name="labelImportExportSettings">Mga Setting lang</string>
+    <string name="clear">I-clear</string>
+    <string name="strLabelDownloaded">Na-download na</string>
+    <string name="strTitleDeleteTafsir">I-delete ang Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Sigurado ka bang gusto mong i-delete ang “%s”? Maaalis nito ang na-download na data ng tafsir mula sa iyong device.</string>
+    <string name="strLabelAll">Lahat</string>
+    <string name="strLabelPrevious">Nakaraan</string>
+    <string name="nextChapter">Susunod na kabanata</string>
+    <string name="previousChapter">Nakaraang kabanata</string>
+    <string name="nextJuz">Susunod na juz</string>
+    <string name="previousJuz">Nakaraang juz</string>
+    <string name="nextHizb">Susunod na hizb</string>
+    <string name="previousHizb">Nakaraang hizb</string>
+    <string name="strLabelRukuNo" formatted="false">Ruku %d</string>
+    <string name="endOfPageNo" formatted="false">Dulo ng Pahina %d</string>
+    <string name="endOfRukuNo" formatted="false">Dulo ng Ruku %d</string>
+    <string name="endOfRubNo" formatted="false">Dulo ng Rub %d</string>
+    <string name="endOfManzilNo" formatted="false">Dulo ng Manzil %d</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir para sa bersikulo %1$d:%2$d</string>
+    <string name="textSizes">Mga sukat ng teksto</string>
+    <string name="sajda">Sajda</string>
+    <string name="filterSectionLength">Haba ng kabanata</string>
+    <string name="any">Kahit ano</string>
+    <string name="withSajda">May sajda</string>
+    <string name="withoutSajda">Walang sajda</string>
+    <string name="chapterFilterLengthShort">Maikli (&lt;50 bersikulo)</string>
+    <string name="chapterFilterLengthMedium">Katamtaman (50–150 bersikulo)</string>
+    <string name="chapterFilterLengthLong">Mahaba (150+ bersikulo)</string>
+    <string name="clearFilters">I-clear ang mga filter</string>
+    <string name="chapterFilters">Mga filter ng kabanata</string>
+    <string name="strMsgReciterDownloadHint">I-download ang audio ng pagbigkas para sa offline na pakikinig at mas maayos na pag-playback.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d kabanata</string>
+    <string name="recitationDownloadAllComplete">Lahat ng kabanata ay na-download na</string>
+    <string name="recitationDownloadConfirmTitle">I-download ang mga pagbigkas</string>
+    <string name="recitationDownloadConfirmMessage">I-download ang lahat ng kabanata para sa reciter na ito? Maaari itong gumamit ng malaking storage at data.</string>
+    <string name="recitationDownloadSomeFailed">May ilang kabanata na nabigo. I-tap ang retry para ilagay muli sa queue ang mga nawawalang kabanata.</string>
+    <string name="recitationDownloadWaitForOtherReciter">May isa pang reciter na kasalukuyang nag-o-download. Maghintay hanggang matapos ito o i-cancel ito bago magsimula ng bagong download.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d kabanata na ang na-download</string>
+    <string name="recitationBulkEnqueueNotifTitle">Inihahanda ang mga download ng pagbigkas</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — naka-queue %2$d ng %3$d</string>
+    <string name="playbackCount">Bilang ng pag-playback</string>
+    <string name="titleRecitationGroupSize">Sukat ng Grupo ng Bersikulo ng Quran</string>
+    <string name="msgRecitationGroupSize">Piliin kung gaano karaming bersikulo ng Quran ang tutugtog bago magsimula ang pagsasalin. Halimbawa: kung pipiliin mo ang 3, tutugtog ito ng 3 bersikulo ng Quran na susundan ng kanilang mga pagsasalin.</string>
+    <string name="labelRecommended">Inirerekomenda</string>
+    <string name="strTitleMajorSins">Mga Pangunahing Kasalanan sa Quran</string>
+    <string name="modeVerseByVerse">Bersikulo-por-bersikulo na mode</string>
+    <string name="modeMushaf">Mushaf mode</string>
+    <string name="titleGlobalSearch">Pandaigdigang Paghahanap</string>
+    <string name="strHintSearchBy">Maghanap ng juz o surah</string>
+    <string name="strHintSearchHizb">Maghanap ng hizb o surah</string>
+    <string name="strHintSearchPage">Maghanap ng pahina</string>
+    <string name="noNoteProvided">Walang ibinigay na nota…</string>
+    <string name="dailyReminderMsg">Kumuha ng pang-araw-araw na abiso ng paalala.</string>
+    <string name="strMsgReadHistoryDeleteAll">Lahat ng kasaysayan ng pagbabasa ay aalisin.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s sa ganap na %2$s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Ngayon sa ganap na %s</string>
+    <string name="strMsgHistoryRemove">Alisin ang kasaysayang ito?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">Inalis ang “%s” sa kasaysayan</string>
+    <string name="strMsgNoVerseTiming">Patutugtugin ang buong audio ng kabanata nang walang verse sync</string>
+    <string name="strMsgDuaFor" formatted="false">Dua para sa %s</string>
+    <string name="strMsgDuaOf" formatted="false">Dua ng %s</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%s sa Quran</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Nakahanap ng mga bersikulo na may kaugnayan sa %1$s sa kabuuang %2$d na lugar.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua ni %s sa Quran</string>
+    <string name="strMsgReferenceDuas">Nagtipon ng ilang mga dua mula sa Quran.</string>
+    <string name="titleDownloadScriptResources">I-download ang mga resources para sa script na ito?</string>
+    <string name="msgDownloadKFQPCResources">Ang mga sumusunod na resources ay kailangang i-download bago mo magamit ang script na ito:</string>
+    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Mga Font: ~%dMB</string>
+    <string name="msgDownloadingFonts">Dina-download ang mga font</string>
+    <string name="msgExtractingFonts">Ine-extract ang mga font</string>
+    <string name="textDownloading">Dina-download…</string>
+    <string name="textPreparingAudio">Inihahanda ang audio…</string>
+    <string name="lastCrashLog">Huling crash log</string>
+    <string name="appLogs">Mga log ng app</string>
+    <string name="crashLogs">Mga log ng crash</string>
+    <string name="suppressedLogs">Mga pinatahimik na log</string>
+    <string name="logRemoved">Inalis ang log</string>
+    <string name="createIssue">Gumawa ng issue</string>
+    <string name="copiedToClipboard">Nakopya sa clipboard.</string>
+    <string name="pasteCrashLogGithubIssue">Ang log ay nakopya na sa clipboard. Pakibahagi ito sa GitHub issue.</string>
+    <string name="github">GitHub</string>
+    <string name="notification_permission">Permiso sa Abiso</string>
+    <string name="msgVerseReminderNotifPermission">Kinakailangan ang permiso sa abiso upang ma-enable ang paalala sa bersikulo.</string>
+    <string name="titleStorageCleanup">Paglilinis ng storage</string>
+    <string name="titleExportData">I-export at I-import</string>
+    <string name="storageCleanupMessage">Magbakante ng espasyo sa pamamagitan ng pag-delete ng mga hindi ginagamit na na-download na resources. Hindi nito ide-delete ang anumang mga bookmark o setting.\n\nAng mga sumusunod na resources ay maaaring bakantehin:</string>
+    <string name="translationCanBeFreedUp" formatted="false">%d na na-download na pagsasalin ang maaaring bakantehin.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d na nakaimbak na mga file ng pagbigkas mula sa %2$d na reciter ang maaaring bakantehin.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%d na na-download na script at ang kanilang mga font ang maaaring bakantehin.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%d na na-save na tafsir ang maaaring linisin.</string>
+    <string name="labelFreeUpSpace">Magbakante ng espasyo</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nKailangan mong i-download itong muli.</string>
+    <string name="titleRecitationCleanup">I-delete ang pagbigkas?</string>
+    <string name="msgRecitationCleanup" formatted="false">Lahat ng nakaimbak na pagbigkas mula sa %s ay ide-delete.</string>
+    <string name="titleScriptCleanup">I-delete ang script?</string>
+    <string name="noResults">Walang resulta</string>
+    <string name="onboardDescTafsir">Pumili ng komentaryo na babasahin kasabay ng mga bersikulo. Maaari kang mag-download at mag-ayos ng mga tafsir sa mga setting.</string>
+    <string name="labelTransliteration">Transliterasyon</string>
+    <string name="favourites">Mga Paborito</string>
+    <string name="strMsgSearchHistoryDeleteAll">Lahat ng kasaysayan ng paghahanap ay aalisin.</string>
+    <string name="stopAutoScroll">Itigil ang auto scroll</string>
+    <string name="titleCancelDownload">I-cancel ang download?</string>
+    <string name="yesCancelDownload">Oo, i-cancel</string>
+    <string name="noContinueDownload">Hindi, ituloy</string>
+    <string name="readingTafsirMultiVerses">Binabasa ang tafsir para sa maraming bersikulo:</string>
+    <string name="donate">Mag-donate sa Amin</string>
+    <string name="quran_and_science">Quran at Agham</string>
+    <string name="about_this_page">Tungkol sa pahinang ito</string>
+    <string name="about_quran_science_msg">Ang mga nilalaman sa pahinang ito ay kinuha mula sa aklat ni Dr. Zakir Naik na may pamagat na “The Quran and Modern Science: Compatible or Incompatible”\n\nAng mga larawang ipinapakita ay para sa layuning ilustrasyon lamang.</string>
+    <string name="strLabelScienceReferences" formatted="false">%d na mga sanggunian</string>
+    <string name="once">Minsan</string>
+    <string name="twice">Dalawang beses</string>
+    <string name="nTimes" formatted="false">%d beses</string>
+    <string name="msgRepeat">Itakda kung gaano karaming beses tutugtog ang bawat bersikulo bago lumipat sa susunod. Magagamit lamang kapag ang “I-play lamang ang Quran” ay enabled sa Audio Options.</string>
+    <string name="notSupported">Hindi suportado</string>
+    <string name="missingTimingData" formatted="false">Nawawalang timing data para sa %s — hindi matutugtog.</string>
+    <string name="expandedPlayerModeControls">Mga Kontrol</string>
+    <string name="expandedPlayerModeSpotlight">Spotlight</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_blue">Asul</string>
+    <string name="theme_red">Pula</string>
+    <string name="theme_purple">Lila</string>
+    <string name="theme_violet">Bayolet</string>
+    <string name="theme_yellow">Dilaw</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_colors">Mga Kulay ng Tema</string>
+    <string name="theme_mode">Mode ng Tema</string>
+    <string name="dynamic_color">Dynamic na Kulay</string>
+    <string name="dynamic_color_description">Baguhin ang kulay ng tema batay sa mga kulay ng system</string>
+    <string name="textSizeVerseByVerseOnly">Ang setting na ito ay hindi ginagamit sa mushaf mode.</string>
+    <string name="sortBy">I-sort ayon sa</string>
+    <string name="alphabetically">Alpabetiko</string>
+    <string name="chronological">Kronolohikal na Pagkakasunod-sunod</string>
+    <string name="translationHelp">Hindi mo makita ang iyong wika? Tumulong sa pagsasalin o pagpapabuti nito at gawin itong accessible sa mas maraming tao!</string>
+    <string name="learnMore">Matuto pa</string>
+    <string name="wordByWord">Salita por Salita</string>
+    <string name="selectWbwLanguage">Pumili ng wika</string>
+    <string name="wbwShowTranslation">Ipakita ang pagsasalin</string>
+    <string name="wbwShowTransliteration">Ipakita ang transliterasyon</string>
+    <string name="wbwShowTransliterationMgs">Kapag available para sa napiling wika</string>
+    <string name="wbwRecitation">Pagbigkas</string>
+    <string name="wbwRecitationMsg">Patugtugin ang audio kapag ang isang salita ay na-click</string>
+    <string name="wbwTextSize">Sukat ng teksto</string>
+    <string name="noWbwAvailable">Mag-download ng language pack sa ibaba upang i-turn on ang mga feature na word-by-word.</string>
+    <string name="deleteData">I-delete ang data?</string>
+    <string name="wordNo" formatted="false">Salita %d</string>
+    <string name="playWord">Patugtugin ang salita</string>
+    <string name="previousWord">Nakaraang salita</string>
+    <string name="nextWord">Susunod na salita</string>
+    <string name="results">Mga Resulta</string>
+    <string name="titleRecentSearches">Mga kamakailang paghahanap</string>
+    <string name="searchInQuran">Maghanap sa Quran</string>
+    <string name="searchTipsTitle">Mga tip sa paghahanap</string>
+    <string name="searchTipDirectVerse">Basahin ang isang bersikulo o tafsir nang direkta</string>
+    <string name="searchTipChapter">Maghanap ng mga kabanata</string>
+    <string name="searchTipDirectJuz">Tumalon sa “Kabanata 30”, “Juz 30” o “Hizb 30”</string>
+    <string name="searchTipTranslation">Maghanap sa mga pagsasalin</string>
+    <string name="searchTipArabic">Maghanap sa teksto ng Quran</string>
 </resources>
