@@ -134,7 +134,13 @@ private fun Content(data: WbwSheetData) {
             val theWord = words[currentData.wordIndex]
 
             val wbwRow = wbwId?.let {
-                val map = vm.repository.getWbwWordsForAyahs(wbwId, listOf(theWord.ayahId))
+                val map =
+                    vm.repository.getWbwWordsForAyahs(
+                        wbwId = wbwId,
+                        ayahIds = listOf(theWord.ayahId),
+                        wbwTranslation = true,
+                        wbwTransliteration = true,
+                    )
                 map[theWord.ayahId]?.get(theWord.wordIndex)
             }
 

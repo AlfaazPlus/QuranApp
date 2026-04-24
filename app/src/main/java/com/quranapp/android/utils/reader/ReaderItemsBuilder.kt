@@ -286,7 +286,12 @@ object ReaderItemsBuilder {
                 val ids =
                     (fromVerse..toVerse).mapNotNull { vn -> batch.ayahByVerseNo[vn]?.ayahId }
                 if (ids.isEmpty()) emptyMap()
-                else quranRepository.getWbwWordsForAyahs(wbwId, ids)
+                else quranRepository.getWbwWordsForAyahs(
+                    wbwId = wbwId,
+                    ayahIds = ids,
+                    wbwTranslation = wbwTranslationEnabled,
+                    wbwTransliteration = wbwTransliterationEnabled,
+                )
             } else emptyMap()
 
         var prevSection: SectionSnapshot? = null
@@ -426,7 +431,12 @@ object ReaderItemsBuilder {
                 if (wbwId != null && (wbwTranslationEnabled || wbwTransliterationEnabled)) {
                     val ids = verseNos.mapNotNull { batch.ayahByVerseNo[it]?.ayahId }
                     if (ids.isEmpty()) emptyMap()
-                    else repository.getWbwWordsForAyahs(wbwId, ids)
+                    else repository.getWbwWordsForAyahs(
+                        wbwId = wbwId,
+                        ayahIds = ids,
+                        wbwTranslation = wbwTranslationEnabled,
+                        wbwTransliteration = wbwTransliterationEnabled,
+                    )
                 } else emptyMap()
 
             for ((idx, verseNo) in verseNos.withIndex()) {

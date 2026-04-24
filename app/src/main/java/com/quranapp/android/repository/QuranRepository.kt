@@ -234,6 +234,8 @@ class QuranRepository(
     suspend fun getWbwWordsForAyahs(
         wbwId: String,
         ayahIds: List<Int>,
+        wbwTranslation: Boolean,
+        wbwTransliteration: Boolean,
     ): Map<Int, Map<Int, WbwWordEntity>> {
         if (wbwId.isBlank() || ayahIds.isEmpty()) return emptyMap()
 
@@ -244,7 +246,10 @@ class QuranRepository(
         val byAyah = LinkedHashMap<Int, MutableMap<Int, WbwWordEntity>>()
 
         for (row in rows) {
-            byAyah.getOrPut(row.ayahId) { LinkedHashMap() }[row.wordIndex] = row
+            byAyah.getOrPut(row.ayahId) { LinkedHashMap() }[row.wordIndex] = row.copy(
+                translation = if (wbwTranslation) row.translation else null,
+                transliteration = if (wbwTransliteration) row.transliteration else null,
+            )
         }
 
         return byAyah.mapValues { it.value.toMap() }
