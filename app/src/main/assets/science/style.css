@@ -116,7 +116,7 @@ html.dark .reference {
     border-top: 1px solid #c2c2c2;
     padding: 8px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
