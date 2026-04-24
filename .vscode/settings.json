@@ -1,3 +1,13 @@
 {
-    "java.configuration.updateBuildConfiguration": "disabled"
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "chat.tools.terminal.autoApprove": {
+        "cp": true,
+        "/home/mario/Github/QuranApp/.venv/bin/python": true,
+        "/^cd /home/mario/Github/QuranApp/app/src/main/assets/science/topics/de && perl -i -pe '\ns/So they took all the data given in the Holy Qur\\.an dealing with <b>\\.Embryology\\.<\\\\/b>, and presented it to Professor\\\\s\\+Keith Moore\\\\\\. Professor Keith Moore is the head and chairman of the department of Anatomy, in the University of\\\\s\\+Toronto in Canada, and is one of the leading authorities in the world in the field of Embryology\\\\\\./Also nahmen sie alle Daten aus dem Heiligen Qur'\"'\"'an, die sich mit <b>'\"'\"'Embryologie\\.'\"'\"'<\\\\/b> befassen, und präsentierten sie Professor Keith Moore\\. Professor Keith Moore ist der Leiter und Vorsitzender der Abteilung für Anatomie an der Universität von Toronto in Kanada und ist einer der führenden Autoritäten der Welt im Bereich der Embryologie\\./gs;\n' embryology\\.html && echo \"✓ Done\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/home/mario/Github/QuranApp/.venv/bin/python3": true,
+        "uniq": true
+    }
 }
