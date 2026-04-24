@@ -66,14 +66,17 @@ height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 ## Screenshots
 
 <div style="width:100%;">
-      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_1.jpg" alt='Screenshot 1' width='19%' />
-      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_2.jpg" alt='Screenshot 2' width='19%' />
-      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_3.jpg" alt='Screenshot 3' width='19%' />
-      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_4.jpg" alt='Screenshot 4' width='19%' />
-      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_5.jpg" alt='Screenshot 5' width='19%' />
-
-- View more [screenshots](https://github.com/AlfaazPlus/QuranApp/blob/master/SCREEN_SHOT.md)
-  </div>
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_1.png" alt='Screenshot 1' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_2.png" alt='Screenshot 2' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_3.png" alt='Screenshot 3' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_4.png" alt='Screenshot 4' width='24%' />
+</div>
+<div style="width:100%;">
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_5.png" alt='Screenshot 5' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_6.png" alt='Screenshot 6' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_7.png" alt='Screenshot 7' width='24%' />
+      <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Screenshot_8.png" alt='Screenshot 8' width='24%' />
+</div>
 
 ## Features
 
