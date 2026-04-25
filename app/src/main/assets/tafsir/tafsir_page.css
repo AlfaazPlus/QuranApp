@@ -11,10 +11,22 @@
 
 body {
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   line-height: 1.5;
    margin: 0;
    padding: 10px 20px;
    padding-bottom: 280px;
    transition: font-size 0.3s;
+}
+
+:lang(ar),
+:lang(fa),
+:lang(ku),
+:lang(ckb) {
+  line-height: 2;
+}
+
+:lang(ur) {
+  line-height: 2.5;
 }
 
 html,
@@ -67,15 +79,9 @@ html.dark hr {
 
 .arabic {
    direction: rtl;
-   padding: 5px 10px;
    border-radius: 10px;
    margin: 5px 0;
-   background-color: #F0F0F0;
    text-align: right;
-}
-
-html.dark .arabic {
-   background-color: #202020 !important;
 }
 
 .text_uthmani,
@@ -141,7 +147,6 @@ html.dark .navigator .btn-action:active {
 
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   line-height: 1.5;
 }
 
 .multiple-verse-alert {

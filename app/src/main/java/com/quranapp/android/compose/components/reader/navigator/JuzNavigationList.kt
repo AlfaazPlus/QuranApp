@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -54,10 +55,30 @@ fun JuzNavigationList(
     val juzs by readerVm.juzs.collectAsState()
     val juzViewState = readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Juz
 
+    val mushafSession by readerVm.mushafSession.collectAsState()
+    val currentPageNo = mushafSession.currentPageNo
+    val currentMushafId = mushafSession.layout.toMushafId()
+
+    val activeJuzNo by produceState<Int?>(juzViewState?.juzNo, currentPageNo, currentMushafId) {
+        value = when {
+            juzViewState?.juzNo != null -> juzViewState.juzNo
+
+            currentPageNo != null && currentMushafId > 0 -> {
+                readerVm.repository.getJuzForMushafPages(
+                    currentMushafId,
+                    listOf(currentPageNo)
+                )[currentPageNo]
+                    ?.takeIf { it > 0 }
+            }
+
+            else -> null
+        }
+    }
+
     if (juzs.isEmpty()) return Loader(true)
 
-    val ayahs = remember<List<ChapterVersePair>>(juzs, juzViewState) {
-        val currentJuzRange = juzViewState?.juzNo?.let { juzs.get(it - 1) }?.ranges
+    val ayahs = remember<List<ChapterVersePair>>(juzs, activeJuzNo) {
+        val currentJuzRange = activeJuzNo?.let { juzs.getOrNull(it - 1) }?.ranges
         if (currentJuzRange == null) return@remember emptyList()
 
         currentJuzRange.flatMap { range ->
@@ -74,7 +95,7 @@ fun JuzNavigationList(
         JuzList(
             readerVm,
             juzs,
-            juzViewState,
+            activeJuzNo,
             onJuzSelected,
         )
         NavigationVerseList(
@@ -89,11 +110,11 @@ fun JuzNavigationList(
 private fun RowScope.JuzList(
     readerVm: ReaderViewModel,
     juzs: List<NavigationUnit>,
-    juzViewState: ReaderViewType.Juz?,
+    activeJuzNo: Int?,
     onJuzSelected: (Int) -> Unit
 ) {
     val gridState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = juzViewState?.juzNo?.let { it - 1 } ?: 0,
+        initialFirstVisibleItemIndex = activeJuzNo?.let { it - 1 } ?: 0,
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -110,7 +131,7 @@ private fun RowScope.JuzList(
 
             filteredJuzs = juzs.filter { juz ->
                 juz.unitNo.toString().contains(query)
-                    || juz.ranges.any { it.surah.surah.surahNo in surahNos }
+                        || juz.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
             gridState.requestScrollToItem(0)
@@ -150,7 +171,7 @@ private fun RowScope.JuzList(
                 items(filteredJuzs, key = { it.unitNo }) { juz ->
                     JuzCard(
                         juz,
-                        isCurrent = juzViewState?.juzNo == juz.unitNo,
+                        isCurrent = activeJuzNo == juz.unitNo,
                         onClick = {
                             onJuzSelected(juz.unitNo)
                         }
@@ -163,7 +184,10 @@ private fun RowScope.JuzList(
 
 
 @Composable
-internal fun NavigationVerseList(ayahs: List<ChapterVersePair>, onVerseSelected: (Int, Int) -> Unit) {
+internal fun NavigationVerseList(
+    ayahs: List<ChapterVersePair>,
+    onVerseSelected: (Int, Int) -> Unit
+) {
     if (ayahs.isEmpty()) return
 
     val state = rememberLazyListState()

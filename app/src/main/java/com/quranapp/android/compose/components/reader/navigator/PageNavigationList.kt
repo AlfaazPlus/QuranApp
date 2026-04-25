@@ -40,8 +40,7 @@ fun PageNavigationList(
     readerVm: ReaderViewModel,
     onPageSelected: (Int) -> Unit,
 ) {
-    val currentPageNo = readerVm.uiState.collectAsState().value.currentPageNo
-
+    val currentPageNo = readerVm.mushafSession.collectAsState().value.currentPageNo
 
     val mushafId = rememberQuranMushafId()
     val pageCount by produceState(0, mushafId) {
