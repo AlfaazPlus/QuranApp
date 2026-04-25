@@ -560,6 +560,7 @@ object ReaderItemsBuilder {
                 pageNo = pageNo,
                 juzNo = juzByPage[pageNo] ?: -1,
                 lines = lines,
+                cacheKey = params.toKey()
             )
         }
 

@@ -421,4 +421,6 @@
     <string name="searchTipDirectJuz">Jump to “Chapter 30”, “Juz 30” or “Hizb 30”</string>
     <string name="searchTipTranslation">Search in the translations</string>
     <string name="searchTipArabic">Search in the Quran text</string>
+    <string name="enterFullscreen">Enter fullscreen</string>
+    <string name="exitFullscreen">Exit fullscreen</string>
 </resources>

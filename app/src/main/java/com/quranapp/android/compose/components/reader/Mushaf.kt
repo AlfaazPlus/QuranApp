@@ -40,6 +40,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -93,6 +94,7 @@ data class QuranPageItem(
     val pageNo: Int,
     val juzNo: Int,
     val lines: List<QuranPageLineItem>,
+    val cacheKey: String,
 )
 
 private data class MushafPageMeasurementKey(
@@ -351,7 +353,7 @@ private fun PageModePage(
             modifier = Modifier
                 .fillMaxHeight()
                 .widthIn(max = contentWidth)
-                .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 48.dp),
+                .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 24.dp),
         ) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 Column(

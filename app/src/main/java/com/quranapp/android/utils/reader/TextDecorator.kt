@@ -47,7 +47,11 @@ data class PageBuilderParams(
     val type: Typography,
     val density: Density,
     val contentWidthPx: Int,
-)
+) {
+    fun toKey(): String {
+        return "$contentWidthPx:${density.density}"
+    }
+}
 
 data class TranslationPageBuilderParams(
     val context: Context,
@@ -226,7 +230,7 @@ const val MUSHAF_FONT_WIDTH_DP_MAX = 720f
 
 val MUSHAF_PAGE_HORIZONTAL_PADDING = 12.dp
 private const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.85f
-private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1f
+private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 2f
 
 /** Inter-word gap as a fraction of font size for centered mushaf lines. */
 private const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f
