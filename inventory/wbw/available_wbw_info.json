@@ -20,6 +20,15 @@
       "version": 1
     },
     {
+      "id": "wbw_de",
+      "lang_code": "de",
+      "lang_name": "Deutsch",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_de.json.gz",
+      "version": 1
+    },
+    {
       "id": "wbw_fa",
       "lang_code": "fa",
       "lang_name": "فارسی",
@@ -56,6 +65,42 @@
       "version": 1
     },
     {
+      "id": "wbw_ml",
+      "lang_code": "ml",
+      "lang_name": "മലയാളം",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_ml.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_ru",
+      "lang_code": "ru",
+      "lang_name": "русский",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_ru.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_sd",
+      "lang_code": "sd",
+      "lang_name": "سِنڌِي",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_sd.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_ta",
+      "lang_code": "ta",
+      "lang_name": "தமிழ்",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_ta.json.gz",
+      "version": 1
+    },
+    {
       "id": "wbw_tr",
       "lang_code": "tr",
       "lang_name": "Türkçe",
@@ -71,6 +116,15 @@
       "has_translation": true,
       "has_transliteration": false,
       "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_ur.json.gz",
+      "version": 1
+    },
+    {
+      "id": "wbw_zh",
+      "lang_code": "zh",
+      "lang_name": "简体中文",
+      "has_translation": true,
+      "has_transliteration": false,
+      "url": "ghraw://AlfaazPlus/QuranAppInventory/master/wbw/wbw_zh.json.gz",
       "version": 1
     }
   ]
