@@ -338,6 +338,26 @@
         "downloadPath": "inventory/translations/sd/sd_taj-mehmood-amroti.json"
       }
     },
+    "ta": {
+      "ta_omar-sharif": {
+        "book": "ஷேக் உமர் ஷெரீப் பின் அப்துல் சலாம்",
+        "author": "ஷேக் உமர் ஷெரீப் பின் அப்துல் சலாம்",
+        "displayName": "உமர் ஷரீஃப்",
+        "langCode": "ta",
+        "langName": "தமிழ்",
+        "lastUpdated": 1777149575149,
+        "downloadPath": "inventory/translations/ta/ta_omar-sharif.json"
+      },
+      "ta_baqavi": {
+        "book": "அப்துல் ஹமீத் பாகவி",
+        "author": "அப்துல் ஹமீத் பாகவி",
+        "displayName": "அப்துல் ஹமீத் பாகவி",
+        "langCode": "ta",
+        "langName": "தமிழ்",
+        "lastUpdated": 1777149575149,
+        "downloadPath": "inventory/translations/ta/ta_baqavi.json"
+      }
+    },
     "tg": {
       "tg_khawaja": {
         "book": "Khoja Mirov Khoja Mir",
