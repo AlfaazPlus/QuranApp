@@ -69,42 +69,44 @@ fun ReaderProvider(
 
     CompositionLocalProvider(
         LocalReaderViewModel provides viewModel,
-        LocalVerseActions provides VerseActions(
-            onReferenceClick = { slugs, chapterNo, verses ->
-                quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
-            },
-            onVerseOption = { verse -> verseOptionsVerse = verse },
-            onFootnoteClick = { verse, footnote ->
-                Log.d("FOOTNOTE", verse, footnote)
-                footnotePresenterData = FootnotePresenterData(
-                    verse,
-                    footnote
-                )
-            },
-            onBookmarkRequest = { chapterNo, verseRange ->
-                coroutineScope.launch {
-                    if (viewModel.userRepository.isBookmarked(
-                            chapterNo,
-                            verseRange
-                        )
-                    ) {
-                        bookmarkViewerData = BookmarkViewerData(
-                            chapterNo = chapterNo,
-                            fromVerse = verseRange.first,
-                            toVerse = verseRange.last,
-                            showOpenInReaderButton = false,
-                        )
-                    } else {
-                        viewModel.userRepository.addToBookmark(
-                            chapterNo = chapterNo,
-                            verseRange,
-                            note = null
-                        )
+        LocalVerseActions provides remember {
+            VerseActions(
+                onReferenceClick = { slugs, chapterNo, verses ->
+                    quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
+                },
+                onVerseOption = { verse -> verseOptionsVerse = verse },
+                onFootnoteClick = { verse, footnote ->
+                    Log.d("FOOTNOTE", verse, footnote)
+                    footnotePresenterData = FootnotePresenterData(
+                        verse,
+                        footnote
+                    )
+                },
+                onBookmarkRequest = { chapterNo, verseRange ->
+                    coroutineScope.launch {
+                        if (viewModel.userRepository.isBookmarked(
+                                chapterNo,
+                                verseRange
+                            )
+                        ) {
+                            bookmarkViewerData = BookmarkViewerData(
+                                chapterNo = chapterNo,
+                                fromVerse = verseRange.first,
+                                toVerse = verseRange.last,
+                                showOpenInReaderButton = false,
+                            )
+                        } else {
+                            viewModel.userRepository.addToBookmark(
+                                chapterNo = chapterNo,
+                                verseRange,
+                                note = null
+                            )
+                        }
                     }
-                }
 
-            }
-        ),
+                }
+            )
+        },
         LocalRecitation provides LocalRecitationStateData(
             controller = controller,
             isAnyPlaying = isPlaying,

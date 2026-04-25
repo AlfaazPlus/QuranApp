@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -55,10 +56,13 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     )
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(readerTopBarState)
+
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val colors = MaterialTheme.colorScheme
-    val type = MaterialTheme.typography
+
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val type by rememberUpdatedState(MaterialTheme.typography)
+
     val isDark = isSystemInDarkTheme()
 
     val miniPlayerTotalHeight = MINI_PLAYER_HEIGHT
@@ -74,17 +78,17 @@ fun ReaderScreen(params: ReaderLaunchParams) {
 
     LaunchedEffect(params) {
         isSyncing = false
+
+        if (lastInitParams != params) {
+            readerVm.initReader(params)
+            lastInitParams = params
+        }
     }
 
     ReaderProvider {
         val verseActions = LocalVerseActions.current
 
-        LaunchedEffect(params, lifecycleOwner, context, colors, type, verseActions) {
-            if (lastInitParams != params) {
-                readerVm.initReader(params)
-                lastInitParams = params
-            }
-
+        LaunchedEffect(lifecycleOwner) {
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 readerVm.observeChanges(context, colors, type, verseActions)
             }

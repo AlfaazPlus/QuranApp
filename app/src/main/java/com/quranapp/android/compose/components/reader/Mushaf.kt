@@ -20,12 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -62,6 +61,7 @@ import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onStart
 import verticalFadingEdge
 
 
@@ -112,41 +112,18 @@ fun ReaderLayoutPageMode(
     nestedScrollConnection: NestedScrollConnection,
     onSyncStateChanged: (Boolean) -> Unit = {},
 ) {
-    val uiState by readerVm.uiState.collectAsStateWithLifecycle()
-    val mushafLayoutKey by readerVm.mushafLayoutKey
-    val ruledPageDecoration = mushafLayoutKey.scriptCode.mushafShowsRuledPageDecoration()
+    val mushafSession by readerVm.mushafSession.collectAsState()
+    val pageItems by readerVm.pageItems.collectAsState()
 
-    val pageCount by produceState(0, mushafLayoutKey) {
-        value = readerVm.mushafPageCount(mushafLayoutKey.toMushafId())
-    }
+    val sessionLayout = mushafSession.layout
+    val pageCount = mushafSession.pageCount
+    val ruledPageDecoration = mushafSession.layout.scriptCode.mushafShowsRuledPageDecoration()
 
     val context = LocalContext.current
     val pagerState = rememberPagerState(
-        initialPage = uiState.currentPageNo?.let { it - 1 } ?: 0,
+        initialPage = mushafSession.currentPageNo?.let { it - 1 } ?: 0,
         pageCount = { pageCount },
     )
-
-    // After script/mushaf change, [pageItems] is cleared while the pager can still be on an old
-    // index; only realign when the layout key changes so we don't fight user swipes.
-    var previousMushafKey by remember { mutableStateOf(mushafLayoutKey) }
-
-    LaunchedEffect(mushafLayoutKey, pageCount, uiState.currentPageNo) {
-        val layoutJustChanged = previousMushafKey != mushafLayoutKey
-
-        if (!layoutJustChanged) return@LaunchedEffect
-
-        if (pageCount <= 0) return@LaunchedEffect
-
-        val p = uiState.currentPageNo ?: return@LaunchedEffect
-
-        val idx = p.coerceIn(1, pageCount) - 1
-
-        if (pagerState.currentPage != idx) {
-            pagerState.scrollToPage(idx)
-        }
-
-        previousMushafKey = mushafLayoutKey
-    }
 
     val textMeasurer = rememberTextMeasurer(cacheSize = 2048)
     val colors = MaterialTheme.colorScheme
@@ -166,7 +143,7 @@ fun ReaderLayoutPageMode(
         )
     }
 
-    LaunchedEffect(pagerState, pageCount, mushafLayoutKey) {
+    LaunchedEffect(pagerState, pageBuilderParams, mushafSession.version) {
         snapshotFlow {
             listOf(
                 pagerState.currentPage + 1,
@@ -174,24 +151,17 @@ fun ReaderLayoutPageMode(
                 pagerState.settledPage + 1,
             )
         }
+            .onStart {
+                emit(
+                    listOf(mushafSession.currentPageNo ?: 1)
+                )
+            }
             .distinctUntilChanged()
             .collect { anchorPages ->
-                if (pageCount > 0) {
-                    readerVm.fetchMushafPages(
-                        context, anchorPages, pageCount, pageBuilderParams
-                    )
-                }
+                readerVm.fetchMushafPages(
+                    context, anchorPages, pageBuilderParams
+                )
             }
-    }
-
-    // Pager anchors can lag [currentPageNo] while programmatic navigation is pending; always
-    // prefetch the page the ViewModel is trying to show.
-    LaunchedEffect(uiState.currentPageNo, pageCount, mushafLayoutKey, pageBuilderParams) {
-        val vmPage = uiState.currentPageNo ?: return@LaunchedEffect
-
-        readerVm.fetchMushafPages(
-            context, listOf(vmPage), pageCount, pageBuilderParams
-        )
     }
 
     val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
@@ -206,11 +176,7 @@ fun ReaderLayoutPageMode(
 
                 val currentPageNo = currentPage + 1
 
-                readerVm.updateState {
-                    it.copy(
-                        currentPageNo = if (pageCount > 0) currentPageNo else null
-                    )
-                }
+                readerVm.updateCurrentPageNo(currentPageNo)
 
                 if (pageCount > 0) {
                     readerVm.updateLastKnownVerseFromPage(currentPageNo)
@@ -229,10 +195,8 @@ fun ReaderLayoutPageMode(
 
         try {
             pagerState.scrollToPage(clamped - 1)
+            readerVm.updateCurrentPageNo(clamped)
 
-            if (clamped != targetPage) {
-                readerVm.updateState { it.copy(currentPageNo = clamped) }
-            }
         } finally {
             readerVm.consumePageNavigation()
         }
@@ -314,12 +278,14 @@ fun ReaderLayoutPageMode(
                 beyondViewportPageCount = 1,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
             ) { page ->
-                key(mushafLayoutKey, page) {
+                val pageNo = page + 1
+                val item = pageItems[pageNo]
+
+                key(sessionLayout, page) {
                     PageModePage(
-                        readerVm = readerVm,
-                        pageNo = page + 1,
+                        item = item,
                         contentWidth,
                         ruledPageDecoration,
                         nestedScrollConnection,
@@ -348,19 +314,13 @@ fun ReaderLayoutPageMode(
 
 @Composable
 private fun PageModePage(
-    readerVm: ReaderViewModel,
-    pageNo: Int,
+    item: QuranPageItem?,
     contentWidth: Dp,
     ruledPageDecoration: Boolean,
     nestedScrollConnection: NestedScrollConnection,
     onMushafWordClick: (AyahWordEntity) -> Unit,
     mushafWordTapEnabled: Boolean,
 ) {
-    val i by remember(pageNo) {
-        derivedStateOf { readerVm.pageItems[pageNo] }
-    }
-
-    val item = i
     if (item == null) {
         return Loader(true)
     }
