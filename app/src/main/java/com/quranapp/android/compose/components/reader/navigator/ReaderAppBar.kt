@@ -26,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -55,6 +56,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -164,13 +166,13 @@ fun ReaderAppBar(
             ) {
                 when (readerMode) {
                     ReaderMode.Reading -> {
-                        StickyHeaderModeMushaf(readerVm, uiState) {
+                        StickyHeaderModeMushaf(readerVm) {
                             showNavigatorSheet = true
                         }
                     }
 
                     ReaderMode.Translation -> {
-                        StickyHeaderModeTranslation(readerVm, uiState) {
+                        StickyHeaderModeTranslation(readerVm) {
                             showNavigatorSheet = true
                         }
                     }
@@ -376,11 +378,11 @@ private fun StickyHeaderModeVbV(
 @Composable
 private fun StickyHeaderModeMushaf(
     readerVm: ReaderViewModel,
-    uiState: ReaderUiState,
     onNavigatorRequest: () -> Unit
 ) {
+    val mushafSession by readerVm.mushafSession.collectAsState()
     val resources = LocalResources.current
-    val currentPageNo = uiState.currentPageNo
+    val currentPageNo = mushafSession.currentPageNo
     val scriptCode = ReaderPreferences.observeQuranScript()
     val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
 
@@ -426,17 +428,24 @@ private fun StickyHeaderModeMushaf(
             return@produceState
         }
 
-        val juzNo = readerVm.repository.getJuzForMushafPage(mushafId, pageNo)
-        val hizbNo = readerVm.repository.getHizbForMushafPage(mushafId, pageNo)
+        val juzNo = readerVm.repository.getJuzForMushafPages(mushafId, listOf(pageNo))[pageNo]
+            ?: 0
+        val hizbNos = readerVm.repository.getHizbForMushafPages(mushafId, listOf(pageNo))[pageNo]
+            .orEmpty()
+            .filter { it > 0 }
+            .distinct()
+            .sorted()
 
         value = buildString {
             if (juzNo > 0) {
                 append(resources.getString(R.string.strLabelJuzNo, juzNo))
             }
 
-            if (hizbNo > 0) {
+            if (hizbNos.isNotEmpty()) {
                 if (isNotEmpty()) append(" \u2022 ")
-                append(resources.getString(R.string.labelHizbNo, hizbNo))
+                append(resources.getString(R.string.strTitleReaderHizb))
+                append(" ")
+                append(hizbNos.joinToString(" / "))
             }
         }
     }
@@ -517,11 +526,11 @@ private fun StickyHeaderModeMushaf(
 @Composable
 private fun StickyHeaderModeTranslation(
     readerVm: ReaderViewModel,
-    uiState: ReaderUiState,
     onNavigatorRequest: () -> Unit
 ) {
+    val mushafSession by readerVm.mushafSession.collectAsState()
     val context = LocalContext.current
-    val currentPageNo = uiState.currentPageNo
+    val currentPageNo = mushafSession.currentPageNo
     val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
     val bookName by produceState("", translationSlug) {
         value = QuranTranslationFactory(context).use {
@@ -609,6 +618,125 @@ private fun StickyHeaderModeTranslation(
                 tint = colorScheme.primary,
             )
         }
+    }
+}
+
+@Composable
+fun FullscreenMushafHeader(
+    modifier: Modifier = Modifier,
+    readerVm: ReaderViewModel,
+) {
+    val mushafSession by readerVm.mushafSession.collectAsState()
+    val resources = LocalResources.current
+    val currentPageNo = mushafSession.currentPageNo
+    val scriptCode = ReaderPreferences.observeQuranScript()
+    val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
+
+    val chapterName by produceState(
+        initialValue = "",
+        currentPageNo,
+        scriptCode,
+        scriptVariant,
+    ) {
+        val pageNo = currentPageNo
+        if (pageNo == null || pageNo <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        val mushafId = scriptCode.toQuranMushafId(scriptVariant)
+        if (mushafId <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        value = readerVm.repository.getChapterNamesOnMushafPage(mushafId, pageNo)
+    }
+
+    val juzHizb by produceState(
+        initialValue = "",
+        currentPageNo,
+        scriptCode,
+        scriptVariant,
+    ) {
+        val pageNo = currentPageNo
+        if (pageNo == null || pageNo <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        val mushafId = scriptCode.toQuranMushafId(scriptVariant)
+        if (mushafId <= 0) {
+            value = ""
+            return@produceState
+        }
+
+        val juzNo = readerVm.repository.getJuzForMushafPages(mushafId, listOf(pageNo))[pageNo] ?: 0
+        val hizbNos = readerVm.repository.getHizbForMushafPages(mushafId, listOf(pageNo))[pageNo]
+            .orEmpty()
+            .filter { it > 0 }
+            .distinct()
+            .sorted()
+
+        value = buildString {
+            if (juzNo > 0) {
+                append(resources.getString(R.string.strLabelJuzNo, juzNo))
+            }
+
+            if (hizbNos.isNotEmpty()) {
+                if (isNotEmpty()) append(" • ")
+                append(resources.getString(R.string.strTitleReaderHizb))
+                append(" ")
+                append(hizbNos.joinToString(" / "))
+            }
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = chapterName,
+            modifier = Modifier
+                .weight(1f)
+                .basicMarquee(
+                    initialDelayMillis = 900,
+                    repeatDelayMillis = 1_200,
+                ),
+            style = MaterialTheme.typography.labelSmall,
+            color = colorScheme.onSurface.alpha(0.9f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Start,
+        )
+
+        Text(
+            text = currentPageNo?.let { stringResource(R.string.strLabelPageNo, it) }.orEmpty(),
+            modifier = Modifier.weight(1f),
+            style = MaterialTheme.typography.titleSmall,
+            color = colorScheme.primary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+        )
+
+        Text(
+            text = juzHizb,
+            modifier = Modifier
+                .weight(1f)
+                .basicMarquee(
+                    initialDelayMillis = 900,
+                    repeatDelayMillis = 1_200,
+                ),
+            style = MaterialTheme.typography.labelSmall,
+            color = colorScheme.onSurface.alpha(0.9f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.End,
+        )
     }
 }
 

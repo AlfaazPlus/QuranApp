@@ -402,6 +402,10 @@
     <string name="searchTipDirectJuz">پرش به «سوره ۳۰»، «جزء ۳۰» یا «حزب ۳۰»</string>
     <string name="searchTipTranslation">جستجو در ترجمه‌ها</string>
     <string name="searchTipArabic">جستجو در متن قرآن</string>
+    <string name="enterFullscreen">تمام‌صفحه</string>
+    <string name="exitFullscreen">خروج از تمام‌صفحه</string>
+    <string name="belowWord">زیر کلمه</string>
+    <string name="inTooltip">در راهنمای شناور</string>
     <string name="discord">دیسکورد</string>
     <string name="strTitleDownloadSunnahApp">دانلود SunnahApp</string>
 </resources>

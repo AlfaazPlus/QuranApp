@@ -19,10 +19,15 @@ import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenterD
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
+import com.quranapp.android.compose.components.reader.dialogs.WbwSheet
+import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
+import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -38,13 +43,25 @@ data class LocalRecitationStateData(
     val controller: RecitationController,
     val isAnyPlaying: Boolean,
     val playingVerse: ChapterVersePair,
-    val playWord: (Int, Int, Int) -> Unit,
-    val warmUpWord: (Int, Int, Int) -> Unit,
-    val isWbwAudioLoading: (Int, Int, Int) -> Boolean,
 )
 
 val LocalRecitation = staticCompositionLocalOf<LocalRecitationStateData> {
     error("LocalRecitationState not provided")
+}
+
+data class LocalWbwStateData(
+    val activeTooltipWord: AyahWordEntity?,
+    val onDismissTooltip: () -> Unit,
+    val onForcePlay: (AyahWordEntity) -> Unit,
+    val onWordClick: (AyahWordEntity) -> Unit,
+    val warmUpWord: (Int, Int, Int) -> Unit,
+    val isWbwAudioLoading: (Int, Int, Int) -> Boolean,
+    val toggleWbwSheet: (WbwSheetData?) -> Unit,
+    val isWbwSheetOpen: Boolean,
+)
+
+val LocalWbwState = staticCompositionLocalOf<LocalWbwStateData> {
+    error("LocalWbwState not provided")
 }
 
 @Composable
@@ -64,70 +81,80 @@ fun ReaderProvider(
     var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
     var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceData by remember { mutableStateOf<QuickReferenceData?>(null) }
+    var wbwSheetData by remember { mutableStateOf<WbwSheetData?>(null) }
 
     var wbwWordLoadingKey by remember { mutableStateOf<String?>(null) }
 
+    var activeTooltipWord by remember { mutableStateOf<AyahWordEntity?>(null) }
+
+    fun playWord(word: AyahWordEntity) {
+        val (chapterNo, verseNo) = QuranUtils.getVerseNoFromAyahId(word.ayahId)
+
+        coroutineScope.launch {
+            val key = "$chapterNo:$verseNo:${word.wordIndex}"
+            wbwWordLoadingKey = key
+
+            try {
+                WbwAudioPlayer.play(
+                    context,
+                    chapterNo,
+                    verseNo,
+                    word.wordIndex,
+                )
+            } finally {
+                if (wbwWordLoadingKey == key) {
+                    wbwWordLoadingKey = null
+                }
+            }
+        }
+    }
+
     CompositionLocalProvider(
         LocalReaderViewModel provides viewModel,
-        LocalVerseActions provides VerseActions(
-            onReferenceClick = { slugs, chapterNo, verses ->
-                quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
-            },
-            onVerseOption = { verse -> verseOptionsVerse = verse },
-            onFootnoteClick = { verse, footnote ->
-                Log.d("FOOTNOTE", verse, footnote)
-                footnotePresenterData = FootnotePresenterData(
-                    verse,
-                    footnote
-                )
-            },
-            onBookmarkRequest = { chapterNo, verseRange ->
-                coroutineScope.launch {
-                    if (viewModel.userRepository.isBookmarked(
-                            chapterNo,
-                            verseRange
-                        )
-                    ) {
-                        bookmarkViewerData = BookmarkViewerData(
-                            chapterNo = chapterNo,
-                            fromVerse = verseRange.first,
-                            toVerse = verseRange.last,
-                            showOpenInReaderButton = false,
-                        )
-                    } else {
-                        viewModel.userRepository.addToBookmark(
-                            chapterNo = chapterNo,
-                            verseRange,
-                            note = null
-                        )
+        LocalVerseActions provides remember {
+            VerseActions(
+                onReferenceClick = { slugs, chapterNo, verses ->
+                    quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
+                },
+                onVerseOption = { verse -> verseOptionsVerse = verse },
+                onFootnoteClick = { verse, footnote ->
+                    Log.d("FOOTNOTE", verse, footnote)
+                    footnotePresenterData = FootnotePresenterData(
+                        verse,
+                        footnote
+                    )
+                },
+                onBookmarkRequest = { chapterNo, verseRange ->
+                    coroutineScope.launch {
+                        if (viewModel.userRepository.isBookmarked(
+                                chapterNo,
+                                verseRange
+                            )
+                        ) {
+                            bookmarkViewerData = BookmarkViewerData(
+                                chapterNo = chapterNo,
+                                fromVerse = verseRange.first,
+                                toVerse = verseRange.last,
+                                showOpenInReaderButton = false,
+                            )
+                        } else {
+                            viewModel.userRepository.addToBookmark(
+                                chapterNo = chapterNo,
+                                verseRange,
+                                note = null
+                            )
+                        }
                     }
-                }
 
-            }
-        ),
+                }
+            )
+        },
         LocalRecitation provides LocalRecitationStateData(
             controller = controller,
             isAnyPlaying = isPlaying,
             playingVerse = recitationState.currentVerse,
-            playWord = { chapterNo, verseNo, wordIndex ->
-                coroutineScope.launch {
-                    val key = "$chapterNo:$verseNo:$wordIndex"
-                    wbwWordLoadingKey = key
-
-                    try {
-                        WbwAudioPlayer.play(
-                            context,
-                            chapterNo,
-                            verseNo,
-                            wordIndex,
-                        )
-                    } finally {
-                        if (wbwWordLoadingKey == key) {
-                            wbwWordLoadingKey = null
-                        }
-                    }
-                }
-            },
+        ),
+        LocalWbwState provides LocalWbwStateData(
             warmUpWord = { chapterNo, verseNo, wordIndex ->
                 coroutineScope.launch {
                     WbwAudioPlayer.warmUp(
@@ -140,7 +167,30 @@ fun ReaderProvider(
             },
             isWbwAudioLoading = { chapterNo, verseNo, wordIndex ->
                 wbwWordLoadingKey == "$chapterNo:$verseNo:$wordIndex"
-            }
+            },
+            activeTooltipWord = activeTooltipWord,
+            onDismissTooltip = { activeTooltipWord = null },
+            onForcePlay = ::playWord,
+            onWordClick = { word ->
+                val shouldPlay = ReaderPreferences.getWbwRecitationEnabled()
+
+                if (shouldPlay) {
+                    playWord(word)
+                }
+
+                val tooltipEnabled = ReaderPreferences.getWbwTooltipShowTranslation() ||
+                        ReaderPreferences.getWbwTooltipShowTransliteration()
+
+                activeTooltipWord = if (tooltipEnabled) {
+                    word
+                } else {
+                    null
+                }
+            },
+            toggleWbwSheet = { data ->
+                wbwSheetData = data
+            },
+            isWbwSheetOpen = wbwSheetData != null,
         )
     ) {
         content()
@@ -160,6 +210,11 @@ fun ReaderProvider(
         BookmarkViewerSheet(bookmarkViewerData) {
             bookmarkViewerData = null
         }
+
+        WbwSheet(
+            data = wbwSheetData,
+            onDismiss = { wbwSheetData = null },
+        )
     }
 
     // Should stay outside the composition provider

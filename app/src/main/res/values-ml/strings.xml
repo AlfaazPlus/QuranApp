@@ -400,6 +400,10 @@
     <string name="searchTipDirectJuz">“അധ്യായം 30”, “ജുസ്അ് 30”</string>
     <string name="searchTipTranslation">പരിഭാഷകളിൽ തിരയുക</string>
     <string name="searchTipArabic">ഖുർആൻ വചനങ്ങളിൽ തിരയുക</string>
+    <string name="enterFullscreen">നിറഞ്ഞ സ്ക്രീൻ</string>
+    <string name="exitFullscreen">നിറഞ്ഞ സ്ക്രീനിൽ നിന്ന് പുറത്തുകടക്കുക</string>
+    <string name="belowWord">വാക്കിന് താഴെ</string>
+    <string name="inTooltip">ടൂൾടിപ്പിൽ</string>
     <string name="discord">ഡിസ്‌കോർഡ്</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ഡൗൺലോഡ് ചെയ്യുക</string>
 </resources>

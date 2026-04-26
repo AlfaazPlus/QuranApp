@@ -235,6 +235,7 @@ object ReaderItemsBuilder {
         val wbwId = ReaderPreferences.getWbwId()
 
         val scriptCode = ReaderPreferences.getQuranScript()
+        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         val batch =
             quranRepository.loadVersesBatch(chapterNo, fromVerse, toVerse + 1, scriptCode)
@@ -367,7 +368,7 @@ object ReaderItemsBuilder {
         out.addSectionMarkerAtRangeEnd(
             params.context,
             quranRepository,
-            scriptCode,
+            mushafId,
             chapterNo = chapterNo,
             toVerse = toVerse,
             verseCount = surah.surah.ayahCount,
@@ -540,7 +541,24 @@ object ReaderItemsBuilder {
             )
 
             val contentWidthDp = with(params.density) { params.contentWidthPx.toDp().value }
-            val cappedBaseStyle = mushafCappedBaseStyle(baseStyle, contentWidthDp)
+            val ayahWordsByLineNo = LinkedHashMap<Int, List<AyahWordEntity>>()
+            for (row in rows) {
+                if (row.lineType != MushafLineType.ayah) continue
+                ayahWordsByLineNo[row.lineNumber] = quranRepository.resolveMushafLineWords(
+                    row,
+                    scriptCode,
+                    wordCache
+                )
+            }
+
+            val pageScale = computeMushafPageScale(
+                rows = rows,
+                wordsByLineNo = ayahWordsByLineNo,
+                baseStyle = baseStyle,
+                params = params,
+                fallbackScale = mushafScaleForWidth(contentWidthDp),
+            )
+            val cappedBaseStyle = mushafCappedBaseStyleForScale(baseStyle, pageScale)
 
             for (row in rows) {
                 mapMushafRowToLineItem(
@@ -550,6 +568,7 @@ object ReaderItemsBuilder {
                     cappedBaseStyle,
                     params,
                     wordCache,
+                    ayahWordsByLineNo[row.lineNumber],
                 )?.let {
                     lines.add(it)
                 }
@@ -559,6 +578,7 @@ object ReaderItemsBuilder {
                 pageNo = pageNo,
                 juzNo = juzByPage[pageNo] ?: -1,
                 lines = lines,
+                cacheKey = params.toKey()
             )
         }
 
@@ -660,7 +680,7 @@ object ReaderItemsBuilder {
                             translationSlug = translationSlug,
                             params = params,
                             juzNo = juzByPage[pageNo] ?: -1,
-                            hizbNo = hizbByPage[pageNo] ?: -1,
+                            hizbNos = hizbByPage[pageNo].orEmpty(),
                             chapterNames = chapterNamesByPage[pageNo].orEmpty(),
                         )
                         pageNo to item
@@ -688,7 +708,7 @@ object ReaderItemsBuilder {
         translationSlug: String,
         params: TranslationPageBuilderParams,
         juzNo: Int,
-        hizbNo: Int,
+        hizbNos: List<Int>,
         chapterNames: String,
     ): TranslationPageItem {
         val sections = ArrayList<TranslationPageSection>()
@@ -834,7 +854,7 @@ object ReaderItemsBuilder {
         return TranslationPageItem(
             pageNo = pageNo,
             juzNo = juzNo,
-            hizbNo = hizbNo,
+            hizbNos = hizbNos,
             chapterNames = chapterNames,
             translationSlug = translationSlug,
             sections = sections,
@@ -893,6 +913,7 @@ object ReaderItemsBuilder {
         cappedBaseStyle: TextStyle,
         params: PageBuilderParams,
         wordCache: Map<Int, List<AyahWordEntity>>?,
+        resolvedWords: List<AyahWordEntity>?,
     ): QuranPageLineItem? {
         return when (row.lineType) {
             MushafLineType.surah_name -> {
@@ -903,7 +924,8 @@ object ReaderItemsBuilder {
             MushafLineType.basmallah -> QuranPageLineItem.Bismillah(row.lineNumber)
 
             MushafLineType.ayah -> {
-                val words = quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
+                val words = resolvedWords
+                    ?: quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
 
                 val layout = fitMushafLineLayout(
                     words = words,
@@ -923,6 +945,55 @@ object ReaderItemsBuilder {
                 )
             }
         }
+    }
+
+    private fun computeMushafPageScale(
+        rows: List<MushafMapEntity>,
+        wordsByLineNo: Map<Int, List<AyahWordEntity>>,
+        baseStyle: TextStyle,
+        params: PageBuilderParams,
+        fallbackScale: Float,
+    ): Float {
+        val contentWidthPx = params.contentWidthPx.toFloat().coerceAtLeast(1f)
+        val centeredGapPx =
+            with(params.density) { baseStyle.fontSize.toPx() * MUSHAF_CENTERED_GAP_FRACTION }
+        val minInterWordGapPx =
+            with(params.density) { baseStyle.fontSize.toPx() * MUSHAF_MIN_INTER_WORD_GAP_FRACTION }
+
+        val wideLineRatios = ArrayList<Float>(rows.size)
+        for (row in rows) {
+            if (row.lineType != MushafLineType.ayah) continue
+            val words = wordsByLineNo[row.lineNumber].orEmpty()
+            if (words.isEmpty()) continue
+
+            val measuredWidth = measureMushafLineWidthForStyle(
+                words = words,
+                centered = row.isCentered,
+                textMeasurer = params.textMeasurer,
+                style = baseStyle,
+                centeredGapPx = centeredGapPx,
+                minInterWordGapPx = minInterWordGapPx,
+            ).coerceAtLeast(1f)
+
+            val fillRatio = measuredWidth / contentWidthPx
+
+            if (!row.isCentered && fillRatio >= 0.82f) {
+                wideLineRatios.add((contentWidthPx / measuredWidth).coerceAtLeast(0f))
+            }
+        }
+
+        if (wideLineRatios.isEmpty()) return fallbackScale
+
+        val sorted = wideLineRatios.sorted()
+        val middle = sorted.size / 2
+        val median = if (sorted.size % 2 == 0) {
+            (sorted[middle - 1] + sorted[middle]) / 2f
+        } else {
+            sorted[middle]
+        }
+
+        val conservativeCap = minOf(fallbackScale, MUSHAF_FONT_SCALE_AT_MAX_WIDTH)
+        return median.coerceIn(MUSHAF_FONT_SCALE_AT_MIN_WIDTH, conservativeCap)
     }
 
     private fun ArrayList<ReaderLayoutItem>.addSectionMarker(
@@ -970,7 +1041,7 @@ object ReaderItemsBuilder {
     private suspend fun ArrayList<ReaderLayoutItem>.addSectionMarkerAtRangeEnd(
         context: Context,
         quranRepository: QuranRepository,
-        scriptCode: String,
+        mushafId: Int,
         chapterNo: Int,
         toVerse: Int,
         verseCount: Int,
@@ -1004,11 +1075,11 @@ object ReaderItemsBuilder {
             !isLastVerseOfChapter -> {
                 val p = batch.pageByVerseNo[toVerse + 1]
                 if (p != null && p > 0) p
-                else quranRepository.getPageForVerse(chapterNo, toVerse + 1, scriptCode)
+                else quranRepository.getPageForVerse(chapterNo, toVerse + 1, mushafId)
             }
 
             QuranMeta.isChapterValid(chapterNo + 1) ->
-                quranRepository.getPageForVerse(chapterNo + 1, 1, scriptCode)
+                quranRepository.getPageForVerse(chapterNo + 1, 1, mushafId)
 
             else -> null
         }

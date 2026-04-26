@@ -65,6 +65,7 @@ fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
     collapsedBottomInset: Dp = 0.dp,
     barsCollapsedFraction: Float = 0f,
+    showPlayer: Boolean = true,
     isSyncing: Boolean = false,
     onSyncRequest: (() -> Unit)? = null,
 ) {
@@ -74,7 +75,7 @@ fun RecitationPlayerSheet(
     val state by viewModel.state.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val isVisible = isPlaying || isLoading || state.currentVerse.isValid
+    val isVisible = showPlayer && (isPlaying || isLoading || state.currentVerse.isValid)
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
@@ -96,7 +97,11 @@ fun RecitationPlayerSheet(
         if (!isVisible) expanded = false
     }
 
-    BackHandler(enabled = expanded) {
+    LaunchedEffect(showPlayer) {
+        if (!showPlayer) expanded = false
+    }
+
+    BackHandler(enabled = expanded && showPlayer) {
         expanded = false
     }
 

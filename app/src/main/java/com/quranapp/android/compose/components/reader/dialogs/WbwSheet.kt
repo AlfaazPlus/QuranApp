@@ -44,7 +44,7 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
-import com.quranapp.android.compose.components.reader.LocalRecitation
+import com.quranapp.android.compose.components.reader.LocalWbwState
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
@@ -247,16 +247,17 @@ private fun WordContent(
     val chapterNo = verseUi.verse.chapterNo
     val verseNo = verseUi.verse.verseNo
 
-    val recitation = LocalRecitation.current
     val wbwRecitationEnabled = ReaderPreferences.observeWbwRecitationEnabled()
     val copyScope = rememberCoroutineScope()
     val context = LocalContext.current
     val resources = LocalResources.current
 
-    LaunchedEffect(word.ayahId, word.wordIndex, wbwRecitationEnabled) {
-        if (!wbwRecitationEnabled || word.isLastWordOfAyah) return@LaunchedEffect
+    val wbwState = LocalWbwState.current
 
-        recitation.playWord(chapterNo, verseNo, word.wordIndex)
+    LaunchedEffect(word.ayahId, word.wordIndex, wbwRecitationEnabled) {
+        if (word.isLastWordOfAyah) return@LaunchedEffect
+
+        wbwState.onWordClick(word)
     }
 
 
@@ -291,7 +292,7 @@ private fun WordContent(
                 }
             },
             onPlayWord = {
-                recitation.playWord(chapterNo, verseNo, word.wordIndex)
+                wbwState.onForcePlay(word)
             }
         )
 

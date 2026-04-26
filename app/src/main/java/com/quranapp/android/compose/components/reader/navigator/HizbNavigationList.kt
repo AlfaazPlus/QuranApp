@@ -8,39 +8,27 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
-import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
@@ -55,10 +43,30 @@ fun HizbNavigationList(
     val hizbs by readerVm.hizbs.collectAsState()
     val hizbViewState = readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Hizb
 
+    val mushafSession by readerVm.mushafSession.collectAsState()
+    val currentPageNo = mushafSession.currentPageNo
+    val currentMushafId = mushafSession.layout.toMushafId()
+    val activeHizbNo by produceState<Int?>(hizbViewState?.hizbNo, currentPageNo, currentMushafId) {
+        value = when {
+            hizbViewState?.hizbNo != null -> hizbViewState.hizbNo
+
+            currentPageNo != null && currentMushafId > 0 -> {
+                readerVm.repository.getHizbForMushafPages(
+                    currentMushafId,
+                    listOf(currentPageNo)
+                )[currentPageNo]
+                    ?.lastOrNull()
+                    ?.takeIf { it > 0 }
+            }
+
+            else -> null
+        }
+    }
+
     if (hizbs.isEmpty()) return Loader(true)
 
-    val ayahs = remember<List<ChapterVersePair>>(hizbs, hizbViewState) {
-        val currentHizbRange = hizbViewState?.hizbNo?.let { hizbs.getOrNull(it - 1) }?.ranges
+    val ayahs = remember<List<ChapterVersePair>>(hizbs, activeHizbNo) {
+        val currentHizbRange = activeHizbNo?.let { hizbs.getOrNull(it - 1) }?.ranges
             ?: return@remember emptyList()
 
         currentHizbRange.flatMap { range ->
@@ -75,7 +83,7 @@ fun HizbNavigationList(
         HizbGrid(
             readerVm,
             hizbs,
-            hizbViewState,
+            activeHizbNo,
             onHizbSelected,
         )
         NavigationVerseList(
@@ -89,11 +97,11 @@ fun HizbNavigationList(
 private fun RowScope.HizbGrid(
     readerVm: ReaderViewModel,
     hizbs: List<NavigationUnit>,
-    hizbViewState: ReaderViewType.Hizb?,
+    activeHizbNo: Int?,
     onHizbSelected: (Int) -> Unit
 ) {
     val gridState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = hizbViewState?.hizbNo?.let { it - 1 } ?: 0,
+        initialFirstVisibleItemIndex = activeHizbNo?.let { it - 1 } ?: 0,
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -110,7 +118,7 @@ private fun RowScope.HizbGrid(
 
             filteredHizbs = hizbs.filter { hizb ->
                 hizb.unitNo.toString().contains(query)
-                    || hizb.ranges.any { it.surah.surah.surahNo in surahNos }
+                        || hizb.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
             gridState.requestScrollToItem(0)
@@ -138,8 +146,8 @@ private fun RowScope.HizbGrid(
                 columns = GridCells.Fixed(
                     when {
                         maxWidth >= 600.dp -> 2
-                        maxWidth >= 300.dp && hizbViewState?.hizbNo == null -> 2
-                        else ->1
+                        maxWidth >= 300.dp && activeHizbNo == null -> 2
+                        else -> 1
                     }
                 ),
                 modifier = Modifier.fillMaxWidth(),
@@ -156,7 +164,7 @@ private fun RowScope.HizbGrid(
                 items(filteredHizbs, key = { it.unitNo }) { hizb ->
                     HizbCard(
                         hizb,
-                        isCurrent = hizbViewState?.hizbNo == hizb.unitNo,
+                        isCurrent = activeHizbNo == hizb.unitNo,
                         onClick = {
                             onHizbSelected(hizb.unitNo)
                         }
