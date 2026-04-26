@@ -47,7 +47,11 @@ data class PageBuilderParams(
     val type: Typography,
     val density: Density,
     val contentWidthPx: Int,
-)
+) {
+    fun toKey(): String {
+        return "$contentWidthPx:${density.density}"
+    }
+}
 
 data class TranslationPageBuilderParams(
     val context: Context,
@@ -119,6 +123,14 @@ fun getQuranTextStyle(
 
 fun mushafCappedBaseStyle(base: TextStyle, lineInnerWidthDp: Float): TextStyle {
     val cap = mushafScreenMaxFontScale(lineInnerWidthDp)
+    return mushafCappedBaseStyleForScale(base, cap)
+}
+
+fun mushafCappedBaseStyleForScale(base: TextStyle, pageScale: Float): TextStyle {
+    val cap = pageScale.coerceIn(
+        MUSHAF_FONT_SCALE_AT_MIN_WIDTH,
+        MUSHAF_FONT_SCALE_AT_MAX_WIDTH
+    )
     val scaled = (base.fontSize.value * cap).sp
     return base.copy(
         fontSize = scaled,
@@ -136,6 +148,10 @@ private fun mushafScreenMaxFontScale(lineInnerWidthDp: Float): Float {
         MUSHAF_FONT_SCALE_AT_MIN_WIDTH,
         MUSHAF_FONT_SCALE_AT_MAX_WIDTH
     )
+}
+
+fun mushafScaleForWidth(lineInnerWidthDp: Float): Float {
+    return mushafScreenMaxFontScale(lineInnerWidthDp)
 }
 
 
@@ -219,20 +235,38 @@ private fun measureMushafLineWidth(
     return sum
 }
 
+fun measureMushafLineWidthForStyle(
+    words: List<AyahWordEntity>,
+    centered: Boolean,
+    textMeasurer: TextMeasurer,
+    style: TextStyle,
+    centeredGapPx: Float,
+    minInterWordGapPx: Float,
+): Float {
+    return measureMushafLineWidth(
+        words = words,
+        centered = centered,
+        textMeasurer = textMeasurer,
+        style = style,
+        centeredGapPx = centeredGapPx,
+        minInterWordGapPx = minInterWordGapPx,
+    )
+}
+
 
 private const val MUSHAF_LINE_HEIGHT_MULT = 1.8f
 private const val MUSHAF_FONT_WIDTH_DP_MIN = 260f
 const val MUSHAF_FONT_WIDTH_DP_MAX = 720f
 
 val MUSHAF_PAGE_HORIZONTAL_PADDING = 12.dp
-private const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.85f
-private const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1f
+const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.85f
+const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 2f
 
 /** Inter-word gap as a fraction of font size for centered mushaf lines. */
-private const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f
+const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f
 
 /** Minimum gap between adjacent words (all lines), as a fraction of font size — avoids overlap when justified. */
-private const val MUSHAF_MIN_INTER_WORD_GAP_FRACTION = 0.1f
+const val MUSHAF_MIN_INTER_WORD_GAP_FRACTION = 0.1f
 
 /** When shrinking to fit, do not go below this fraction of the (screen-capped) base size. */
 private const val MUSHAF_LINE_SHRINK_MIN = 0.16f

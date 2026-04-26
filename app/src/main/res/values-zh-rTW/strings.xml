@@ -395,6 +395,10 @@
     <string name="searchTipDirectJuz">跳轉到「第 30 章」、「第 30 Juz」或「第 30 Hizb」</string>
     <string name="searchTipTranslation">在翻譯中搜索</string>
     <string name="searchTipArabic">在古蘭經正文中搜索</string>
+    <string name="enterFullscreen">進入全螢幕</string>
+    <string name="exitFullscreen">離開全螢幕</string>
+    <string name="belowWord">字詞下方</string>
+    <string name="inTooltip">在提示框中</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">下載 SunnahApp</string>
 </resources>

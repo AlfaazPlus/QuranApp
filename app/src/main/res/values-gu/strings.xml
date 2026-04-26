@@ -405,6 +405,10 @@
     <string name="searchTipDirectJuz">“સુરાહ 30”, “જુઝ 30” પર જાઓ</string>
     <string name="searchTipTranslation">અનુવાદોમાં શોધો</string>
     <string name="searchTipArabic">કુરાન લખાણમાં શોધો</string>
+    <string name="enterFullscreen">પૂર્ણ સ્ક્રીન</string>
+    <string name="exitFullscreen">પૂર્ણ સ્ક્રીનમાંથી બહાર નીકળો</string>
+    <string name="belowWord">શબ્દ નીચે</string>
+    <string name="inTooltip">ટૂલટિપમાં</string>
     <string name="discord">ડિસ્કોર્ડ</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ડાઉનલોડ કરો</string>
 </resources>

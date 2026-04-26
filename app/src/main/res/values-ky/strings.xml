@@ -398,6 +398,10 @@
     <string name="searchTipDirectJuz">Жүз, хизб же сүрө номерине өтүү</string>
     <string name="searchTipTranslation">Котормолордун ичинен издөө</string>
     <string name="searchTipArabic">Арабча тексттен (түп нускадан) издөө</string>
+    <string name="enterFullscreen">Толук экран</string>
+    <string name="exitFullscreen">Толук экрандан чыгуу</string>
+    <string name="belowWord">Сөздүн астында</string>
+    <string name="inTooltip">Эскертүү терезесинде</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp жүктөп алуу</string>
     <string name="searchInQuran">Курандан издөө</string>
