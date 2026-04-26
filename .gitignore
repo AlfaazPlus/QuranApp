@@ -16,3 +16,12 @@
 local.properties
 /keys
 ktlint.jar
+translator_helper.py
+translate_6_15.py
+texts_to_translate.json
+full_translate_job.py
+extract_texts.py
+download_chapters.py
+batch_translate.py
+apply_translations_helper.py
+apply_translations_batch.py
