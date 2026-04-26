@@ -161,7 +161,7 @@
     <string name="strMsgReferenceFoundPlaces" formatted="false">Gefundene Verse mit Bezug zu %1$s an insgesamt %2$d Stellen.</string>
     <string name="titleDownloadScriptResources">Ressourcen für dieses Schriftsystem herunterladen\?</string>
     <string name="msgDownloadKFQPCResources">Folgende Ressourcen müssen heruntergeladen werden, bevor Sie dieses Schriftsystem verwenden können:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Schriftarten: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Downloadgröße: ~%1$dMB\nNach dem Download nutzt die App etwa ~%2$dMB.</string>
     <string name="msgDownloadingFonts">Schriftarten herunterladen</string>
     <string name="strMsgReferenceDuas">Einige gesammlte Bittgebete aus dem Koran.</string>
     <string name="textDownloading">Wird heruntergeladen…</string>
@@ -411,4 +411,5 @@
     <string name="any">Irgendein</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp herunterladen</string>
+    <string name="tajweedColors">Die Farben des Tajweed</string>
 </resources>

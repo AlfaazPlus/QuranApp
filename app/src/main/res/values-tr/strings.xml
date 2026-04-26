@@ -211,7 +211,7 @@
     <string name="strMsgReferenceInQuran" formatted="false">Kur\'an\'da %s</string>
     <string name="strMsgReferenceDuas">Kur\'an\'dan bazı dualar bir araya getirildi.</string>
     <string name="msgDownloadKFQPCResources">Bu hattı kullanabilmek için öncelikle gerekli olan şu kaynaklar indirilmeli:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Yazı tipleri: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">İndirme boyutu: ~%1$dMB\nİndirmeden sonra uygulama yaklaşık ~%2$dMB kullanacak.</string>
     <string name="github">GitHub</string>
     <string name="msgVerseReminderNotifPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için bildirim izni gerekiyor.</string>
     <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
@@ -408,5 +408,6 @@
     <string name="inTooltip">İpuçunda</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp İndir</string>
+    <string name="tajweedColors">Tecvid renkleri</string>
 </resources>
 

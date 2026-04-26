@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">ادغام</string>
+    <string name="tajweed_normal_madd">مد طبعی (2 حرکات)</string>
+    <string name="tajweed_separated_madd">مد جائز منفصل (2 یا 4 یا 6 حرکات)</string>
+    <string name="tajweed_connected_madd">مد واجب متصل (4 یا 5 حرکات)</string>
+    <string name="tajweed_necessary_madd">مد لازم (6 حرکات)</string>
+    <string name="tajweed_ghunna">اخفاء اور غنہ</string>
+    <string name="tajweed_qalqala">قلقلہ</string>
+    <string name="tajweed_tafkhim">تفخیم</string>
+</resources>

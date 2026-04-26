@@ -213,7 +213,7 @@
     <string name="storageCleanupMessage">خاوێنکردنەوەی بیرگەی زیاتر بە سڕینەوەی فایلە داگیراوە نا پێویستەکان. ئەمە هیچ لە نیشانەکراوەکان یان ڕێکخستنەکان ناسڕێتەوە.
 \n
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فۆنتەکان: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">قەبارەی داگرتن: ~%1$dMB\nدوای داگرتن، ئەپەکە نزیکەی ~%2$dMB بەکاردێنێت.</string>
     <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە.</string>
     <string name="nItem" formatted="false">%d بابەت</string>
     <string name="nItems" formatted="false">%d لە بابەتەکان</string>
@@ -408,5 +408,6 @@
     <string name="inTooltip">لە زانیاریی دەربارەدا</string>
     <string name="discord">دیسکۆرد</string>
     <string name="strTitleDownloadSunnahApp">دابەزاندنی SunnahApp</string>
+    <string name="tajweedColors">ڕەنگەکانی تەجوید</string>
 </resources>
 

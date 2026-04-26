@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">Idghaam</string>
+    <string name="tajweed_normal_madd">Maad 2 secondi</string>
+    <string name="tajweed_separated_madd">Maad consentito 2 o 4 o 6 secondi</string>
+    <string name="tajweed_connected_madd">Necessario Maad 4 o 5 secondi</string>
+    <string name="tajweed_necessary_madd">Necessario Maad 6 secondi</string>
+    <string name="tajweed_ghunna">Ikhfa e Ghunna</string>
+    <string name="tajweed_qalqala">Qalqala</string>
+    <string name="tajweed_tafkhim">Tafkhim</string>
+</resources>

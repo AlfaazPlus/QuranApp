@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">Letra silenciada</string>
+    <string name="tajweed_normal_madd">Madd normal (2)</string>
+    <string name="tajweed_separated_madd">Madd separada (2/4/6)</string>
+    <string name="tajweed_connected_madd">Madd conectada (4/5)</string>
+    <string name="tajweed_necessary_madd">Madd necesaria (6)</string>
+    <string name="tajweed_ghunna">Ghuna/ikhfa´</string>
+    <string name="tajweed_qalqala">Qalqala (eco)</string>
+    <string name="tajweed_tafkhim">Tafkhim (pesada)</string>
+</resources>

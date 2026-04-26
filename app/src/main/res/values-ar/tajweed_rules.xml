@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">الحرف الساكن</string>
+    <string name="tajweed_normal_madd">مدّ حركتان</string>
+    <string name="tajweed_separated_madd">المد المنفصل (2 / 4 / 6 حركات)</string>
+    <string name="tajweed_connected_madd">المد المتصل (4 أو 5 حركات)</string>
+    <string name="tajweed_necessary_madd">المد اللازم (6 حركات)</string>
+    <string name="tajweed_ghunna">غنة / إخفاء</string>
+    <string name="tajweed_qalqala">قلقلة</string>
+    <string name="tajweed_tafkhim">تفخيم الصوت</string>
+</resources>

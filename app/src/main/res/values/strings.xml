@@ -265,7 +265,7 @@
     <string name="strMsgReferenceDuas">Gathered some duas from the Quran.</string>
     <string name="titleDownloadScriptResources">Download resources for this script\?</string>
     <string name="msgDownloadKFQPCResources">Following resources need downloading before you can use this script:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Download size: ~%1$dMB\nAfter download, the app will use ~%2$dMB.</string>
     <string name="msgDownloadingFonts">Downloading fonts</string>
     <string name="msgExtractingFonts">Extracting fonts</string>
     <string name="textDownloading">Downloading…</string>
@@ -425,4 +425,5 @@
     <string name="exitFullscreen">Exit fullscreen</string>
     <string name="belowWord">Below word</string>
     <string name="inTooltip">In tooltip</string>
+    <string name="tajweedColors">Tajweed colors</string>
 </resources>

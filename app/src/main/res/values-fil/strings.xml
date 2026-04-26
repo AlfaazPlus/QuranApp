@@ -307,7 +307,7 @@
     <string name="strMsgReferenceDuas">Nagtipon ng ilang mga dua mula sa Quran.</string>
     <string name="titleDownloadScriptResources">I-download ang mga resources para sa script na ito?</string>
     <string name="msgDownloadKFQPCResources">Ang mga sumusunod na resources ay kailangang i-download bago mo magamit ang script na ito:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Mga Font: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Laki ng download: ~%1$dMB\nPagkatapos ma-download, gagamit ang app ng humigit-kumulang ~%2$dMB.</string>
     <string name="msgDownloadingFonts">Dina-download ang mga font</string>
     <string name="msgExtractingFonts">Ine-extract ang mga font</string>
     <string name="textDownloading">Dina-download…</string>
@@ -404,4 +404,5 @@
     <string name="inTooltip">Sa tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">I-download ang SunnahApp</string>
+    <string name="tajweedColors">mga kulay ng tajweed</string>
 </resources>

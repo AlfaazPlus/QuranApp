@@ -7,6 +7,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
@@ -47,9 +48,10 @@ data class PageBuilderParams(
     val type: Typography,
     val density: Density,
     val contentWidthPx: Int,
+    val isDark: Boolean,
 ) {
     fun toKey(): String {
-        return "$contentWidthPx:${density.density}"
+        return "$contentWidthPx:${density.density}:$isDark"
     }
 }
 
@@ -74,7 +76,8 @@ data class QuranTextStyleParams(
     val pageNo: Int,
     val script: String,
     val sizeMultiplier: Float,
-    val useSmallSize: Boolean = false
+    val useSmallSize: Boolean = false,
+    val isDark: Boolean,
 )
 
 fun getTranslationTextStyle(
@@ -113,17 +116,17 @@ fun getQuranTextStyle(
     val fontSize = with(density) { (basePx * params.sizeMultiplier).toSp() }
 
     return params.type.headlineSmall.copy(
-        fontFamily = params.fontResolver.fontFamily(params.script, params.pageNo),
+        fontFamily = params.fontResolver.fontFamily(params.script, params.pageNo, params.isDark),
         fontSize = fontSize,
         color = params.colors.onBackground,
         textDirection = TextDirection.Rtl,
-        lineHeight = fontSize * 1.8f
+        lineHeight = fontSize * 1.8f,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.Both,
+            mode = LineHeightStyle.Mode.Tight
+        )
     )
-}
-
-fun mushafCappedBaseStyle(base: TextStyle, lineInnerWidthDp: Float): TextStyle {
-    val cap = mushafScreenMaxFontScale(lineInnerWidthDp)
-    return mushafCappedBaseStyleForScale(base, cap)
 }
 
 fun mushafCappedBaseStyleForScale(base: TextStyle, pageScale: Float): TextStyle {
@@ -254,7 +257,7 @@ fun measureMushafLineWidthForStyle(
 }
 
 
-private const val MUSHAF_LINE_HEIGHT_MULT = 1.8f
+private const val MUSHAF_LINE_HEIGHT_MULT = 2f
 private const val MUSHAF_FONT_WIDTH_DP_MIN = 260f
 const val MUSHAF_FONT_WIDTH_DP_MAX = 720f
 

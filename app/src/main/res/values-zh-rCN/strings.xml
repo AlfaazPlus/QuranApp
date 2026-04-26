@@ -208,7 +208,7 @@
     <string name="strMsgReferenceDuas">古兰经中的祈祷的摘要。</string>
     <string name="titleDownloadScriptResources">下载该版本的资源？</string>
     <string name="msgDownloadKFQPCResources">在使用此版本前需下载以下资源：</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">字体：~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">下载大小：约 %1$dMB\n下载后，应用将占用约 %2$dMB。</string>
     <string name="msgDownloadingFonts">字体下载中</string>
     <string name="msgExtractingFonts">字体解压中</string>
     <string name="textDownloading">下载中……</string>
@@ -401,4 +401,5 @@
     <string name="inTooltip">在提示气泡中</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">下载 SunnahApp</string>
+    <string name="tajweedColors">塔吉威德色彩</string>
 </resources>

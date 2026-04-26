@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">Идгам</string>
+    <string name="tajweed_normal_madd">Маад 2 секунды</string>
+    <string name="tajweed_separated_madd">Разрешенный маад 2 или 4 или 6 секунд</string>
+    <string name="tajweed_connected_madd">Необходимо Маад 4 или 5 секунд</string>
+    <string name="tajweed_necessary_madd">Необходимо Маад 6 секунд</string>
+    <string name="tajweed_ghunna">Ихфа и Гунна</string>
+    <string name="tajweed_qalqala">Калькала</string>
+    <string name="tajweed_tafkhim">Тафхим</string>
+</resources>

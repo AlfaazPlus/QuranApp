@@ -209,7 +209,7 @@
     <string name="strMsgReferenceDuas">குர்ஆனில் இருந்து சில துவாக்களை சேகரித்தார்.</string>
     <string name="titleDownloadScriptResources">இந்த ச்கிரிப்டுக்கான ஆதாரங்களைப் பதிவிறக்கவா?</string>
     <string name="msgDownloadKFQPCResources">இந்த ச்கிரிப்டைப் பயன்படுத்துவதற்கு முன்பு பின்வரும் ஆதாரங்கள் பதிவிறக்க வேண்டும்:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">எழுத்துருக்கள்: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">பதிவிறக்க அளவு: ~%1$dMB\nபதிவிறக்கத்திற்குப் பிறகு, செயலி சுமார் ~%2$dMB பயன்படுத்தும்.</string>
     <string name="msgDownloadingFonts">எழுத்துருக்களைப் பதிவிறக்குகிறது</string>
     <string name="textDownloading">பதிவிறக்கம்…</string>
     <string name="lastCrashLog">கடைசி செயலிழப்பு பதிவு</string>
@@ -401,5 +401,6 @@
     <string name="inTooltip">குறிப்புப் பெட்டியில்</string>
     <string name="discord">டிஸ்கார்ட்</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp-ஐ பதிவிறக்கவும்</string>
+    <string name="tajweedColors">தஜ்வீதின் நிறங்கள்</string>
 </resources>
 

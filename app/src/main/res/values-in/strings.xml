@@ -193,7 +193,7 @@
     <string name="textDownloading">Mengunduh…</string>
     <string name="lastCrashLog">Log error terakhir</string>
     <string name="msgDownloadingFonts">Mengunduh font</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Font: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Ukuran unduhan: ~%1$dMB\nSetelah diunduh, aplikasi akan menggunakan sekitar ~%2$dMB.</string>
     <string name="strTitleScripts">Skrip</string>
     <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d Jenis penulisan dan jenis font nya yang terunduh bisa dibersihkan.</string>
@@ -403,4 +403,5 @@
     <string name="inTooltip">Di tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Unduh SunnahApp</string>
+    <string name="tajweedColors">Warna Tajwid</string>
 </resources>

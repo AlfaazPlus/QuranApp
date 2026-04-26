@@ -188,7 +188,7 @@
     <string name="labelDownload">ڈاؤن لوڈ کریں</string>
     <string name="titleDownloadScriptResources">اس فونٹ کے لیے وسائل ڈاؤن لوڈ کریں؟</string>
     <string name="msgDownloadKFQPCResources">اس فونٹ کو استعمال کرنے سے پہلے درج ذیل وسائل کو ڈاؤن لوڈ کرنے کی ضرورت ہے:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فونٹس: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">ڈاؤن لوڈ سائز: ~%1$dMB\nڈاؤن لوڈ کے بعد، ایپ تقریباً ~%2$dMB استعمال کرے گی۔</string>
     <string name="msgDownloadingFonts">فونٹ ڈاؤن لوڈ ہو رہا ہے</string>
     <string name="strTitleRecitations">تلاوتیں</string>
     <string name="github">GitHub</string>
@@ -415,4 +415,5 @@
     <string name="inTooltip">ٹول ٹپ میں</string>
     <string name="discord">ڈسکورڈ</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ڈاؤن لوڈ کریں</string>
+    <string name="tajweedColors">تجوید کے رنگ</string>
 </resources>

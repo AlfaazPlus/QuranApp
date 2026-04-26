@@ -189,7 +189,7 @@
     <string name="inPlacesMore">در %1$s و %2$d دیگر</string>
     <string name="titleDownloadScriptResources">دانلود منابع برای این اسکریپت؟</string>
     <string name="onboardDescLanguage">برنامه را به زبان خود شخصی سازی کنید. همیشه می توانید بعداً این را تغییر دهید.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">قلم‌ها: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">حجم دانلود: ~%1$dMB\nپس از دانلود، برنامه حدود ~%2$dMB استفاده خواهد کرد.</string>
     <string name="copiedToClipboard">در کلیپ بورد کپی شد.</string>
     <string name="textDownloading">در حال بارگیری …</string>
     <string name="createIssue">ایجاد موضوع</string>
@@ -408,5 +408,6 @@
     <string name="inTooltip">در راهنمای شناور</string>
     <string name="discord">دیسکورد</string>
     <string name="strTitleDownloadSunnahApp">دانلود SunnahApp</string>
+    <string name="tajweedColors">رنگ های تجوید</string>
 </resources>
 

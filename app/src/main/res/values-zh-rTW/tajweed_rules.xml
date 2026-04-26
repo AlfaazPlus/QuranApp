@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">伊德加姆</string>
+    <string name="tajweed_normal_madd">瑪德 2秒</string>
+    <string name="tajweed_separated_madd">允許瑪德 2、4 或 6 秒</string>
+    <string name="tajweed_connected_madd">需要瑪德 4 或 5 秒</string>
+    <string name="tajweed_necessary_madd">需要瑪德 6 秒</string>
+    <string name="tajweed_ghunna">伊克法和古納</string>
+    <string name="tajweed_qalqala">卡爾卡拉</string>
+    <string name="tajweed_tafkhim">塔夫金</string>
+</resources>

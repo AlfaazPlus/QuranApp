@@ -203,7 +203,7 @@
     <string name="recitationCanBeFreedUp" formatted="false">%2$d റിസൈറ്റേർസ് ഇല്ലാതാക്കാം %1$d സ്റ്റോർ ചെയ്ത പാരായണം ഫയലുകളിൽ നിന്നും.</string>
     <string name="msgVerseReminderNotifPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ നോട്ടിഫിക്കേഷൻ അനുമതി ആവശ്യമാണ്.</string>
     <string name="createIssue">ഇഷ്യൂ സൃഷ്ടിക്കുക</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ഫോണ്ടുകൾ : ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">ഡൗൺലോഡ് വലുപ്പം: ~%1$dMB\nഡൗൺലോഡ് കഴിഞ്ഞാൽ, ആപ്പ് ഏകദേശം ~%2$dMB ഉപയോഗിക്കും.</string>
     <string name="pasteCrashLogGithubIssue">ക്രാഷ് ലോഗ് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി. ദയവായി ഇത് ഗിറ്റ്ഹബ് ഇഷ്യൂയിൽ പേസ്റ്റ് ചെയ്യുക.</string>
     <string name="lastCrashLog">അവസാന ക്രാഷ് ലോഗ്</string>
     <string name="titleStorageCleanup">സ്റ്റോറേജ് ക്ലീൻ ആക്കൽ</string>
@@ -406,5 +406,6 @@
     <string name="inTooltip">ടൂൾടിപ്പിൽ</string>
     <string name="discord">ഡിസ്‌കോർഡ്</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ഡൗൺലോഡ് ചെയ്യുക</string>
+    <string name="tajweedColors">താജ്‌വീദിന്റെ നിറങ്ങൾ</string>
 </resources>
 

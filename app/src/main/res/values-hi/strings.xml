@@ -188,7 +188,7 @@
     <string name="strTitleRecitations">तिलावत</string>
     <string name="titleDownloadScriptResources">इस स्क्रिप्ट के लिए संसाधन डाउनलोड करें\?</string>
     <string name="msgDownloadKFQPCResources">इस स्क्रिप्ट का उपयोग करने से पहले निम्नलिखित संसाधनों को डाउनलोड करने की आवश्यकता है:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">फोंट: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">डाउनलोड आकार: ~%1$dMB\nडाउनलोड के बाद, ऐप लगभग ~%2$dMB उपयोग करेगा।</string>
     <string name="msgDownloadingFonts">फोंट्स डाउनलोड हो रही है</string>
     <string name="textDownloading">डाउनलोड हो रही है…</string>
     <string name="lastCrashLog">अंतिम क्रैश लॉग</string>
@@ -415,4 +415,5 @@
     <string name="inTooltip">टूलटिप में</string>
     <string name="discord">डिस्कॉर्ड</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp डाउनलोड करें</string>
+    <string name="tajweedColors">तजवीद के रंग</string>
 </resources>

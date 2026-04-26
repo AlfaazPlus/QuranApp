@@ -236,7 +236,7 @@
     <string name="pasteCrashLogGithubIssue">লগটি ক্লিপবোর্ডে অনুলিপি করা হয়েছে। দয়া করে GitHub ইস্যুতে এটি পেস্ট করুন।</string>
     <string name="titleRemoveFromFavourites">পছন্দের তালিকা থেকে বাদ দিন</string>
     <string name="textNoLogsFound">কোন লগ খুঁজে পাওয়া যায়নি</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ফন্ট: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">ডাউনলোড সাইজ: ~%1$dMB\nডাউনলোডের পরে, অ্যাপ প্রায় ~%2$dMB ব্যবহার করবে।</string>
     <string name="github">GitHub</string>
     <string name="nFiles" formatted="false">%dটি ফাইল</string>
     <string name="onboardDescTheme">আপনি সর্বদা এটি পরে পরিবর্তন করতে পারবেন।</string>
@@ -408,5 +408,6 @@
     <string name="inTooltip">টুলটিপে</string>
     <string name="discord">ডিসকর্ড</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ডাউনলোড করুন</string>
+    <string name="tajweedColors">তাজউইদের রং</string>
 </resources>
 

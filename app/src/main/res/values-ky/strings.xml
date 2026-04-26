@@ -133,7 +133,7 @@
     <string name="strMsgPropheticDuaInQuran" formatted="false">Курандагы %s дубасы</string>
     <string name="strMsgReferenceDuas">Курандан дубалар чогултулду.</string>
     <string name="titleDownloadScriptResources">Шрифт ресурстарын жүктөйсүңбү?</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифттин көлөмү: %dМБ</string>
+    <string name="msgDownloadFontsSize" formatted="false">Жүктөп алуу көлөмү: ~%1$dMB\nЖүктөлгөндөн кийин, колдонмо болжол менен ~%2$dMB колдонот.</string>
     <string name="msgDownloadingFonts">Шрифттер жүктөлүүдө</string>
     <string name="msgExtractingFonts">Шрифттерди чыгарып алуу</string>
     <string name="lastCrashLog">Соңку ката журналы</string>
@@ -405,4 +405,5 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp жүктөп алуу</string>
     <string name="searchInQuran">Курандан издөө</string>
+    <string name="tajweedColors">тажвиддин түстөрү</string>
 </resources>

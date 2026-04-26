@@ -105,6 +105,37 @@ data class ReaderLaunchParams(
         }
     }
 
+    fun toInitSignature(): String {
+        val slugsPart = slugs
+            ?.toList()
+            ?.sorted()
+            ?.joinToString(separator = ",")
+            ?: "-"
+
+        val modePart = readerMode?.value ?: "-"
+
+        val dataPart = when (val d = data) {
+            is ReaderIntentData.FullChapter -> {
+                "chapter:${d.toString()}"
+            }
+
+            is ReaderIntentData.FullJuz -> {
+                "juz:${d.toString()}"
+            }
+
+            is ReaderIntentData.FullHizb -> {
+                "hizb:${d.toString()}"
+            }
+
+            is ReaderIntentData.MushafPage -> {
+                "mushaf:${d.toString()}"
+            }
+        }
+
+        return "$dataPart|mode:$modePart|slugs:$slugsPart"
+    }
+
+
     companion object {
         private const val KEY_READ_TYPE = "reader.read_type"
         private const val KEY_CHAPTER_NO = "reader.chapter_no"

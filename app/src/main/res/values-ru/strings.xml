@@ -242,7 +242,7 @@
     <string name="strMsgDuaOf" formatted="false">Дуа для %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">Найдены аяты, относящиеся к %1$s, в %2$d местах.</string>
     <string name="msgDownloadKFQPCResources">Перед использованием этого шрифта необходимо загрузить следующие ресурсы:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Шрифты: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Размер загрузки: ~%1$dMB\nПосле загрузки приложение будет использовать ~%2$dMB.</string>
     <string name="msgDownloadingFonts">Шрифты загружаются</string>
     <string name="textDownloading">Загрузка…</string>
     <string name="lastCrashLog">Последний журнал сбоев</string>
@@ -419,4 +419,5 @@
     <string name="inTooltip">В подсказке</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Скачать SunnahApp</string>
+    <string name="tajweedColors">Цвета таджвида</string>
 </resources>

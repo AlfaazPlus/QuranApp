@@ -185,7 +185,7 @@ internal fun VotdContent(
         type,
         scriptCode,
         verse.pageNo,
-        arabicTextMultiplier
+        arabicTextMultiplier,
     ) {
         getQuranTextStyle(
             QuranTextStyleParams(
@@ -197,6 +197,7 @@ internal fun VotdContent(
                 script = scriptCode,
                 sizeMultiplier = arabicTextMultiplier,
                 useSmallSize = true,
+                isDark = true
             )
         )
     }

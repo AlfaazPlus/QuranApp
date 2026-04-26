@@ -189,7 +189,7 @@
     <string name="strTitleRecitations">Recitales</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="labelDownload">Descargar</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fuentes: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Tamaño de descarga: ~%1$dMB\nDespués de descargar, la app usará ~%2$dMB.</string>
     <string name="titleDownloadScriptResources">¿Descargar recursos para este script\?</string>
     <string name="textDownloading">Descargando…</string>
     <string name="msgVerseReminderNotifPermission">El permiso de notificación es necesario para activar el recordatorio de verso.</string>
@@ -411,5 +411,6 @@
     <string name="inTooltip">En el tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Descargar SunnahApp</string>
+    <string name="tajweedColors">Colores de Tajweed.</string>
 </resources>
 

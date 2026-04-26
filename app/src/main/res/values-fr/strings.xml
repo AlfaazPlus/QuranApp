@@ -186,7 +186,7 @@
     <string name="strTextPleaseWait">Veuillez patienter…</string>
     <string name="strTitleOops">Oups !</string>
     <string name="strTitleScripts">Types d\'écriture</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Polices d\'écritures : ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Taille du téléchargement : ~%1$dMB\nAprès le téléchargement, l\'application utilisera ~%2$dMB.</string>
     <string name="copiedToClipboard">Copié dans le presse-papiers.</string>
     <string name="labelDownload">Téléchargement</string>
     <string name="strTitleRecitations">Récitations</string>
@@ -411,5 +411,6 @@
     <string name="inTooltip">Dans l\'infobulle</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Télécharger SunnahApp</string>
+    <string name="tajweedColors">Couleurs du Tajwid</string>
 </resources>
 

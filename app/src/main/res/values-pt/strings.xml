@@ -187,7 +187,7 @@
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua de %s no Alcorão</string>
     <string name="strMsgReferenceDuas">Recolhi algumas duas do Alcorão.</string>
     <string name="titleDownloadScriptResources">Descarregar recursos para este script?</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fontes: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Tamanho do download: ~%1$dMB\nApós o download, o app usará ~%2$dMB.</string>
     <string name="textDownloading">Transferindo…</string>
     <string name="titleStorageCleanup">Limpeza do armazenamento</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d ficheiros de recitação armazenados de %2$d recitadores podem ser libertados.</string>
@@ -411,4 +411,5 @@
     <string name="inTooltip">Na sugestão</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Baixar SunnahApp</string>
+    <string name="tajweedColors">Cores de Tajweed</string>
 </resources>

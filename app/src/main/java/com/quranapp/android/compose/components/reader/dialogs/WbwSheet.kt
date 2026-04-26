@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.LocalQuranTextStyle
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.LocalWbwState
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
@@ -128,7 +131,8 @@ private fun Content(data: WbwSheetData) {
 
             val words = vm.repository.getWordsForAyah(
                 currentData.chapterNo,
-                currentData.verseNo, script
+                currentData.verseNo,
+                script
             )
 
             val theWord = words[currentData.wordIndex]
@@ -394,6 +398,7 @@ private fun ArabicWordCard(
 ) {
     val transliteration = wbwRow?.transliteration?.takeIf { !it.isNullOrBlank() }
     val translation = wbwRow?.translation?.takeIf { !it.isNullOrBlank() }
+    val textStyles = LocalQuranTextStyle.current
 
     Box(
         modifier = Modifier
@@ -406,7 +411,7 @@ private fun ArabicWordCard(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             CompositionLocalProvider(
                 LocalLayoutDirection provides LayoutDirection.Rtl
@@ -447,19 +452,21 @@ private fun ArabicWordCard(
                 }
             }
 
+            if (translation != null || transliteration != null) {
+                Spacer(Modifier.height(16.dp))
+            }
+
             if (transliteration != null) {
                 Text(
                     transliteration,
-                    style = typography.bodyMedium.copy(
-                        color = colorScheme.onSurface.alpha(0.65f)
-                    )
+                    style = textStyles.wbwTrltStyle ?: TextStyle.Default
                 )
             }
 
             if (translation != null) {
                 Text(
                     translation,
-                    style = typography.bodyMedium
+                    style = textStyles.wbwTrStyle ?: TextStyle.Default
                 )
             }
         }

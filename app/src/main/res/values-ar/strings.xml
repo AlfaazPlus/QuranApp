@@ -183,7 +183,7 @@
     <string name="strMsgReferenceDuas">بعض من الأدعية القرآنية.</string>
     <string name="titleDownloadScriptResources">تنزيل المصادر لهذا الخط؟</string>
     <string name="msgDownloadKFQPCResources">يجب تنزيل المصادر التالية قبل أن تتمكن من استخدام هذا الخط:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">الخطوط: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">حجم التنزيل: ~%1$dMB\nبعد التنزيل، سيستخدم التطبيق حوالي ~%2$dMB.</string>
     <string name="msgDownloadingFonts">يتم تنزيل الخطوط</string>
     <string name="textDownloading">جار التنزيل…</string>
     <string name="createIssue">إنشاء مشكلة</string>
@@ -411,4 +411,5 @@
     <string name="inTooltip">في التلميح</string>
     <string name="discord">ديسكورد</string>
     <string name="strTitleDownloadSunnahApp">تحميل SunnahApp</string>
+    <string name="tajweedColors">ألوان التجويد</string>
 </resources>

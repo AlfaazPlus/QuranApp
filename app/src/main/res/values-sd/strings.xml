@@ -181,7 +181,7 @@
     <string name="strMsgReferenceFoundPlaces" formatted="false">ڪُل %2$d هنڌن تي %1$s سان لاڳاپيل آيتون مليون.</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">قرآن ۾ %s جي دعا</string>
     <string name="strMsgReferenceDuas">قرآن مان ڪجھ دعائون گڏ ڪيون ويون.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">فانٽ: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">ڊائون لوڊ سائيز: ~%1$dMB\nڊائون لوڊ کان پوءِ، ايپ تقريباً ~%2$dMB استعمال ڪندي.</string>
     <string name="msgDownloadingFonts">فونٽ ڊائون لوڊ ڪرڻ</string>
     <string name="msgExtractingFonts">فونٽ ڪڍڻ</string>
     <string name="createIssue">اشو جوڙيو</string>
@@ -401,4 +401,5 @@
     <string name="wordByWord">ورڊ بائي ورڊ (لفظ به لفظ)</string>
     <string name="wordNo">لفظ %d</string>
     <string name="yesCancelDownload">ها، رد ڪريو</string>
+    <string name="tajweedColors">تاجويد جا رنگ</string>
 </resources>

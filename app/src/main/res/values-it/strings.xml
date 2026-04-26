@@ -223,7 +223,7 @@
     <string name="strMsgPropheticDuaInQuran" formatted="false">Dua di %s nel Corano</string>
     <string name="titleDownloadScriptResources">Scaricare le risorse per questo script?</string>
     <string name="msgDownloadKFQPCResources">Le risorse seguenti hanno bisogno di essere scaricate prima di poter usare questo script:</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">Fonts: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">Dimensione download: ~%1$dMB\nDopo il download, l\'app userà ~%2$dMB.</string>
     <string name="strTitleScripts">Scripts</string>
     <string name="appLogs">Log dell\'App</string>
     <string name="crashLogs">Registri di crash</string>
@@ -402,4 +402,5 @@
     <string name="inTooltip">Nel tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Scarica SunnahApp</string>
+    <string name="tajweedColors">Colori del Tajweed</string>
 </resources>

@@ -152,7 +152,7 @@
     <string name="strLabelNavHome">ઘર</string>
     <string name="strLabelAllChapters">બધા સૂરહ</string>
     <string name="strMsgReferenceDuas">કુરાનમાંથી કેટલીક દુઆઓ એકઠી કરી.</string>
-    <string name="msgDownloadKFQPCResourcesFonts" formatted="false">ફોન્ટ્સ: ~%dMB</string>
+    <string name="msgDownloadFontsSize" formatted="false">ડાઉનલોડ કદ: ~%1$dMB\nડાઉનલોડ પછી, એપ અંદાજે ~%2$dMB વાપરશે.</string>
     <string name="msgDownloadKFQPCResources">તમે આ સ્ક્રિપ્ટનો ઉપયોગ કરી શકો તે પહેલાં નીચેના સંસાધનોને ડાઉનલોડ કરવાની જરૂર છે:</string>
     <string name="appLogs">એપ્લિકેશન લૉગ્સ</string>
     <string name="suppressedLogs">દબાયેલ લોગ</string>
@@ -411,5 +411,6 @@
     <string name="inTooltip">ટૂલટિપમાં</string>
     <string name="discord">ડિસ્કોર્ડ</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ડાઉનલોડ કરો</string>
+    <string name="tajweedColors">તાજવીદના રંગો</string>
 </resources>
 

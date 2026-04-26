@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tajweed_silent_letter">ইদগাম</string>
+    <string name="tajweed_normal_madd">মাদ 2 সেকেন্ড</string>
+    <string name="tajweed_separated_madd">অনুমোদিত মাদ 2 বা 4 বা 6 সেকেন্ড</string>
+    <string name="tajweed_connected_madd">প্রয়োজনীয় মাদ ৪ বা ৫ সেকেন্ড</string>
+    <string name="tajweed_necessary_madd">প্রয়োজনীয় মাদ ৬ সেকেন্ড</string>
+    <string name="tajweed_ghunna">ইখফা ও ঘুন্না</string>
+    <string name="tajweed_qalqala">কলকালা</string>
+    <string name="tajweed_tafkhim">তাফখিম</string>
+</resources>
