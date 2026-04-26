@@ -396,6 +396,10 @@
     <string name="searchTipDirectJuz">Passa a "Capitolo 30", "Juz 30" o "Hizb 30"</string>
     <string name="searchTipTranslation">Cerca nelle traduzioni</string>
     <string name="searchTipArabic">Cerca nel testo del Corano</string>
+    <string name="enterFullscreen">Schermo intero</string>
+    <string name="exitFullscreen">Esci da schermo intero</string>
+    <string name="belowWord">Sotto la parola</string>
+    <string name="inTooltip">Nel tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Scarica SunnahApp</string>
 </resources>

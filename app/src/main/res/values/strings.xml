@@ -423,4 +423,6 @@
     <string name="searchTipArabic">Search in the Quran text</string>
     <string name="enterFullscreen">Enter fullscreen</string>
     <string name="exitFullscreen">Exit fullscreen</string>
+    <string name="belowWord">Below word</string>
+    <string name="inTooltip">In tooltip</string>
 </resources>

@@ -161,21 +161,6 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                     }
                 }
 
-                RecitationPlayerSheet(
-                    collapsedBottomInset = navBarBottomInset,
-                    barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
-                    showPlayer = !isFullscreen,
-                    isSyncing = syncIndicatorLocked,
-                    onSyncRequest = {
-                        val willSync = !playerVerseSyncPref
-                        playerVerseSyncPref = willSync
-
-                        if (willSync) {
-                            coroutineScope.launch { readerVm.syncToPlayingVerse() }
-                        }
-                    }
-                )
-
                 val fullscreenButtonAlpha = if (isFullscreen) 0.38f
                 else (1f - chromeCollapsedFraction).coerceIn(0f, 1f)
 
@@ -211,6 +196,21 @@ fun ReaderScreen(params: ReaderLaunchParams) {
                         }
                     }
                 }
+
+                RecitationPlayerSheet(
+                    collapsedBottomInset = navBarBottomInset,
+                    barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
+                    showPlayer = !isFullscreen,
+                    isSyncing = syncIndicatorLocked,
+                    onSyncRequest = {
+                        val willSync = !playerVerseSyncPref
+                        playerVerseSyncPref = willSync
+
+                        if (willSync) {
+                            coroutineScope.launch { readerVm.syncToPlayingVerse() }
+                        }
+                    }
+                )
             }
         }
     }

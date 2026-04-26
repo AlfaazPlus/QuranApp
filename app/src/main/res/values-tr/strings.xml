@@ -402,6 +402,10 @@
     <string name="searchTipDirectJuz">“Sure 30”, “Cüz 30” veya “Hizb 30”a atlayın</string>
     <string name="searchTipTranslation">Çevirilerde ara</string>
     <string name="searchTipArabic">Kur\'an metninde ara</string>
+    <string name="enterFullscreen">Tam ekran</string>
+    <string name="exitFullscreen">Tam ekrandan çık</string>
+    <string name="belowWord">Kelimenin altında</string>
+    <string name="inTooltip">İpuçunda</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp İndir</string>
 </resources>

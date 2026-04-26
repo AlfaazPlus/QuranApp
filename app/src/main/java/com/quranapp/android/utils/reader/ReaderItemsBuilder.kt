@@ -541,7 +541,24 @@ object ReaderItemsBuilder {
             )
 
             val contentWidthDp = with(params.density) { params.contentWidthPx.toDp().value }
-            val cappedBaseStyle = mushafCappedBaseStyle(baseStyle, contentWidthDp)
+            val ayahWordsByLineNo = LinkedHashMap<Int, List<AyahWordEntity>>()
+            for (row in rows) {
+                if (row.lineType != MushafLineType.ayah) continue
+                ayahWordsByLineNo[row.lineNumber] = quranRepository.resolveMushafLineWords(
+                    row,
+                    scriptCode,
+                    wordCache
+                )
+            }
+
+            val pageScale = computeMushafPageScale(
+                rows = rows,
+                wordsByLineNo = ayahWordsByLineNo,
+                baseStyle = baseStyle,
+                params = params,
+                fallbackScale = mushafScaleForWidth(contentWidthDp),
+            )
+            val cappedBaseStyle = mushafCappedBaseStyleForScale(baseStyle, pageScale)
 
             for (row in rows) {
                 mapMushafRowToLineItem(
@@ -551,6 +568,7 @@ object ReaderItemsBuilder {
                     cappedBaseStyle,
                     params,
                     wordCache,
+                    ayahWordsByLineNo[row.lineNumber],
                 )?.let {
                     lines.add(it)
                 }
@@ -895,6 +913,7 @@ object ReaderItemsBuilder {
         cappedBaseStyle: TextStyle,
         params: PageBuilderParams,
         wordCache: Map<Int, List<AyahWordEntity>>?,
+        resolvedWords: List<AyahWordEntity>?,
     ): QuranPageLineItem? {
         return when (row.lineType) {
             MushafLineType.surah_name -> {
@@ -905,7 +924,8 @@ object ReaderItemsBuilder {
             MushafLineType.basmallah -> QuranPageLineItem.Bismillah(row.lineNumber)
 
             MushafLineType.ayah -> {
-                val words = quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
+                val words = resolvedWords
+                    ?: quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
 
                 val layout = fitMushafLineLayout(
                     words = words,
@@ -925,6 +945,55 @@ object ReaderItemsBuilder {
                 )
             }
         }
+    }
+
+    private fun computeMushafPageScale(
+        rows: List<MushafMapEntity>,
+        wordsByLineNo: Map<Int, List<AyahWordEntity>>,
+        baseStyle: TextStyle,
+        params: PageBuilderParams,
+        fallbackScale: Float,
+    ): Float {
+        val contentWidthPx = params.contentWidthPx.toFloat().coerceAtLeast(1f)
+        val centeredGapPx =
+            with(params.density) { baseStyle.fontSize.toPx() * MUSHAF_CENTERED_GAP_FRACTION }
+        val minInterWordGapPx =
+            with(params.density) { baseStyle.fontSize.toPx() * MUSHAF_MIN_INTER_WORD_GAP_FRACTION }
+
+        val wideLineRatios = ArrayList<Float>(rows.size)
+        for (row in rows) {
+            if (row.lineType != MushafLineType.ayah) continue
+            val words = wordsByLineNo[row.lineNumber].orEmpty()
+            if (words.isEmpty()) continue
+
+            val measuredWidth = measureMushafLineWidthForStyle(
+                words = words,
+                centered = row.isCentered,
+                textMeasurer = params.textMeasurer,
+                style = baseStyle,
+                centeredGapPx = centeredGapPx,
+                minInterWordGapPx = minInterWordGapPx,
+            ).coerceAtLeast(1f)
+
+            val fillRatio = measuredWidth / contentWidthPx
+
+            if (!row.isCentered && fillRatio >= 0.82f) {
+                wideLineRatios.add((contentWidthPx / measuredWidth).coerceAtLeast(0f))
+            }
+        }
+
+        if (wideLineRatios.isEmpty()) return fallbackScale
+
+        val sorted = wideLineRatios.sorted()
+        val middle = sorted.size / 2
+        val median = if (sorted.size % 2 == 0) {
+            (sorted[middle - 1] + sorted[middle]) / 2f
+        } else {
+            sorted[middle]
+        }
+
+        val conservativeCap = minOf(fallbackScale, MUSHAF_FONT_SCALE_AT_MAX_WIDTH)
+        return median.coerceIn(MUSHAF_FONT_SCALE_AT_MIN_WIDTH, conservativeCap)
     }
 
     private fun ArrayList<ReaderLayoutItem>.addSectionMarker(

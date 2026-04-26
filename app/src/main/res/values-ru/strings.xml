@@ -413,6 +413,10 @@
     <string name="searchTipDirectJuz">Переходите к «Сура 30», «Джуз 30» или «Хизб 30»</string>
     <string name="searchTipTranslation">Поиск в переводах</string>
     <string name="searchTipArabic">Поиск в тексте Корана</string>
+    <string name="enterFullscreen">Полный экран</string>
+    <string name="exitFullscreen">Выйти из полного экрана</string>
+    <string name="belowWord">Под словом</string>
+    <string name="inTooltip">В подсказке</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Скачать SunnahApp</string>
 </resources>

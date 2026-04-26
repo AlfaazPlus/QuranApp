@@ -87,6 +87,13 @@ object ReaderPreferences {
     val KEY_WBW_SHOW_TRANSLITERATION =
         PrefKey(booleanPreferencesKey("reader.wbw.show_transliteration"), false)
 
+
+    val KEY_WBW_TOOLTIP_SHOW_TRANSLATION =
+        PrefKey(booleanPreferencesKey("reader.wbw_tooltip.show_translation"), true)
+
+    val KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION =
+        PrefKey(booleanPreferencesKey("reader.wbw_tooltip.show_transliteration"), true)
+
     val KEY_WBW_RECITATION =
         PrefKey(booleanPreferencesKey("reader.wbw.recitation"), true)
 
@@ -425,6 +432,33 @@ object ReaderPreferences {
     fun wbwShowTransliterationFlow(): Flow<Boolean> {
         return DataStoreManager.flow(KEY_WBW_SHOW_TRANSLITERATION)
     }
+
+    fun getWbwTooltipShowTranslation(): Boolean {
+        return DataStoreManager.read(KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
+    }
+
+    suspend fun setWbwTooltipShowTranslation(show: Boolean) {
+        DataStoreManager.write(KEY_WBW_TOOLTIP_SHOW_TRANSLATION, show)
+    }
+
+    @Composable
+    fun observeWbwTooltipShowTranslation(): Boolean {
+        return DataStoreManager.observe(KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
+    }
+
+    fun getWbwTooltipShowTransliteration(): Boolean {
+        return DataStoreManager.read(KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION)
+    }
+
+    suspend fun setWbwTooltipShowTransliteration(show: Boolean) {
+        DataStoreManager.write(KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION, show)
+    }
+
+    @Composable
+    fun observeWbwTooltipShowTransliteration(): Boolean {
+        return DataStoreManager.observe(KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION)
+    }
+
 
     fun getWbwRecitationEnabled(): Boolean {
         return DataStoreManager.read(KEY_WBW_RECITATION)
