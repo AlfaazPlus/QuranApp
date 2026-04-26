@@ -403,6 +403,10 @@
     <string name="searchTipDirectJuz">Sprung zu “Kapitel 30”, “Teil 30” oder “Abschnitt 30”</string>
     <string name="searchTipTranslation">Suche in den Übersetzungen</string>
     <string name="searchTipArabic">Suche im Koran Text</string>
+    <string name="enterFullscreen">Vollbild</string>
+    <string name="exitFullscreen">Vollbild beenden</string>
+    <string name="belowWord">Unter dem Wort</string>
+    <string name="inTooltip">Im Tooltip</string>
     <string name="filterSectionLength">Kapitellänge</string>
     <string name="any">Irgendein</string>
     <string name="discord">Discord</string>

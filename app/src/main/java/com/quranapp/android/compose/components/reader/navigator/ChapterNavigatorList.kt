@@ -282,5 +282,6 @@ internal fun FilterField(
             }
         } else null,
         keyboardType = keyboardType,
+        modifier = modifier
     )
 }

@@ -56,8 +56,8 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.viewModels.WbwSettingsUiState
 import com.quranapp.android.viewModels.WbwSettingsViewModel
 import com.quranapp.android.viewModels.WbwUiModel
-import java.util.Locale
 import kotlinx.coroutines.launch
+import java.util.Locale
 import com.quranapp.android.compose.components.common.IconButton as AppIconButton
 
 @Composable
@@ -241,6 +241,7 @@ private fun WbwRow(
                     stringResource(R.string.textDownloading),
                     downloadStatus.progress
                 )
+
                 downloadStatus is ResourceDownloadStatus.Started -> stringResource(R.string.textDownloading)
                 row.isUpdateAvailable -> stringResource(R.string.strLabelUpdate)
                 isDownloaded -> stringResource(R.string.strLabelDownloaded)
@@ -329,6 +330,8 @@ private fun Configurations() {
     val coroutineScope = rememberCoroutineScope()
     val showTranslation = ReaderPreferences.observeWbwShowTranslation()
     val showTransliteration = ReaderPreferences.observeWbwShowTransliteration()
+    val showTooltipTranslation = ReaderPreferences.observeWbwTooltipShowTranslation()
+    val showTooltipTransliteration = ReaderPreferences.observeWbwTooltipShowTransliteration()
     val recitation = ReaderPreferences.observeWbwRecitationEnabled()
     val wbwTextMult = ReaderPreferences.observeWbwTextSizeMultiplier()
 
@@ -338,6 +341,46 @@ private fun Configurations() {
     val wbwProgress = wbwTextMult * 100
 
     Column(modifier = Modifier.fillMaxWidth()) {
+        SwitchItem(
+            title = R.string.wbwRecitation,
+            subtitle = R.string.wbwRecitationMsg,
+            checked = recitation,
+            onCheckedChange = { checked ->
+                coroutineScope.launch {
+                    ReaderPreferences.setWbwRecitationEnabled(checked)
+                }
+            },
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        ListItemCategoryLabel(stringResource(R.string.inTooltip))
+
+        SwitchItem(
+            title = R.string.wbwShowTranslation,
+            checked = showTooltipTranslation,
+            onCheckedChange = { checked ->
+                coroutineScope.launch {
+                    ReaderPreferences.setWbwTooltipShowTranslation(checked)
+                }
+            },
+        )
+
+        SwitchItem(
+            title = R.string.wbwShowTransliteration,
+            subtitle = R.string.wbwShowTransliterationMgs,
+            checked = showTooltipTransliteration,
+            onCheckedChange = { checked ->
+                coroutineScope.launch {
+                    ReaderPreferences.setWbwTooltipShowTransliteration(checked)
+                }
+            },
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        ListItemCategoryLabel(stringResource(R.string.belowWord))
+
         SwitchItem(
             title = R.string.wbwShowTranslation,
             checked = showTranslation,
@@ -355,17 +398,6 @@ private fun Configurations() {
             onCheckedChange = { checked ->
                 coroutineScope.launch {
                     ReaderPreferences.setWbwShowTransliteration(checked)
-                }
-            },
-        )
-
-        SwitchItem(
-            title = R.string.wbwRecitation,
-            subtitle = R.string.wbwRecitationMsg,
-            checked = recitation,
-            onCheckedChange = { checked ->
-                coroutineScope.launch {
-                    ReaderPreferences.setWbwRecitationEnabled(checked)
                 }
             },
         )

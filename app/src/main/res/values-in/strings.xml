@@ -397,6 +397,10 @@
     <string name="searchTipDirectJuz">Loncat ke \"Surah 30\", \"Juz 30\" atau \"Hizb 30\"</string>
     <string name="searchTipTranslation">Cari dalam terjemahan</string>
     <string name="searchTipArabic">Cari dalam teks Al Quran</string>
+    <string name="enterFullscreen">Layar penuh</string>
+    <string name="exitFullscreen">Keluar layar penuh</string>
+    <string name="belowWord">Di bawah kata</string>
+    <string name="inTooltip">Di tooltip</string>
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Unduh SunnahApp</string>
 </resources>

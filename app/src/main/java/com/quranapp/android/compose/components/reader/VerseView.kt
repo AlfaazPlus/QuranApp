@@ -50,7 +50,7 @@ fun VerseView(
     verseUi: ReaderLayoutItem.VerseUI,
     isBookmarked: Boolean,
     showDivider: Boolean = false,
-    onWordClick: ((AyahWordEntity) -> Unit)? = null
+    onWordClick: ((AyahWordEntity) -> Unit)? = null,
 ) {
     val verse = verseUi.verse
 

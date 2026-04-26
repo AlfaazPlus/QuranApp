@@ -402,6 +402,10 @@
     <string name="searchTipDirectJuz">بازدان بۆ \"سورەتی ٣٠\"، \"جوزئی ٣٠\" یان \"حیزبی ٣٠\"</string>
     <string name="searchTipTranslation">گەڕان لە وەرگێڕانەکاندا</string>
     <string name="searchTipArabic">گەڕان لە دەقی قورئاندا</string>
+    <string name="enterFullscreen">پڕ بە شاشە</string>
+    <string name="exitFullscreen">دەرچوون لە پڕ بە شاشە</string>
+    <string name="belowWord">ژێر وشە</string>
+    <string name="inTooltip">لە زانیاریی دەربارەدا</string>
     <string name="discord">دیسکۆرد</string>
     <string name="strTitleDownloadSunnahApp">دابەزاندنی SunnahApp</string>
 </resources>

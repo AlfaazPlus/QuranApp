@@ -343,6 +343,10 @@
     <string name="sajda">سجده</string>
     <string name="searchInQuran">قرآن ۾ ڳولا ڪريو</string>
     <string name="searchTipArabic">قرآني متن ۾ ڳولا ڪريو</string>
+    <string name="enterFullscreen">مڪمل اسڪرين</string>
+    <string name="exitFullscreen">مڪمل اسڪرين مان نڪريو</string>
+    <string name="belowWord">لفظ جي هيٺان</string>
+    <string name="inTooltip">ٽول ٽپ ۾</string>
     <string name="searchTipChapter">سورتون ڳوليو</string>
     <string name="searchTipDirectJuz">وڃو \"سورت 30\"، \"جُز 30\" يا \"حزب 30\"</string>
     <string name="searchTipDirectVerse">هڪ آيت يا تفسير سڌو سنئون پڙهو</string>
