@@ -161,11 +161,13 @@ object QuranScriptUtils {
 
         for (pageNo in 1..totalPages) {
             val lightFile = File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilename(false))
+
             val darkFile = if (kfqpcScriptSlug.getQuranScriptFontHasDark()) {
                 File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilename(true))
             } else {
                 null
             }
+
             val fontFileOld = File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilenameOld())
 
             if (
@@ -251,13 +253,12 @@ fun String.getQuranScriptFontRes(isDark: Boolean): Int = when (this) {
 }
 
 /**
- * Download size -> KFQPC V1: ~45MB, KFQPC V2: ~115MB, KFQPC V4: ~90MB
- * Uncompressed size -> KFQPC V1: ~90MB, KFQPC V2: ~200MB, KFQPC V4: ~320MB
+ * Download size -> Uncompressed size
  */
 fun String.getQuranScriptFontPackSizeMb(): Pair<Int, Int> = when (this) {
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> Pair(45, 90)
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> Pair(115, 200)
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> Pair(90, 320)
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> Pair(52, 90)
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> Pair(129, 200)
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> Pair(132, 320)
     else -> Pair(0, 0)
 }
 

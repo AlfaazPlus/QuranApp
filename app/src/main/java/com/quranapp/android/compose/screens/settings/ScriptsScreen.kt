@@ -23,6 +23,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -109,7 +110,10 @@ fun ScriptsScreen() {
                     variants = uiState.scripts.getOrDefault(script, emptyList()),
                     selectedScript = selectedScript,
                     selectedVariant = selectedVariant,
-                    downloadStates = uiState.downloadStates
+                    downloadStates = uiState.downloadStates,
+                    onCancelDownload = { key ->
+                        viewModel.onEvent(ScriptEvent.CancelDownload(key))
+                    }
                 ) { newScript, newVariant ->
                     if (script.isKFQPCScript()) {
                         val fontDownloadedCount =
@@ -144,6 +148,7 @@ private fun ScriptItem(
     selectedScript: String,
     selectedVariant: QuranScriptVariant?,
     downloadStates: Map<String, ResourceDownloadStatus>,
+    onCancelDownload: (String) -> Unit,
     onSelect: (String, QuranScriptVariant?) -> Unit,
 ) {
     val context = LocalContext.current
@@ -224,23 +229,37 @@ private fun ScriptItem(
                     )
                 }
 
-                if (downloadState is ResourceDownloadStatus.InProgress) {
-                    Text(
-                        if (downloadState.progress <= 100)
-                            String.format(
-                                Locale.getDefault(),
-                                $$"%1$s (%2$d%%)",
-                                stringResource(R.string.msgDownloadingFonts),
-                                downloadState.progress
-                            )
-                        else stringResource(
-                            R.string.msgExtractingFonts
-                        ),
-                        style = typography.bodyMedium.copy(
-                            color = colorScheme.onSurface.alpha(0.75f),
-                            fontStyle = FontStyle.Italic
-                        ),
-                    )
+                if (isDownloading) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = when (downloadState) {
+                                is ResourceDownloadStatus.InProgress -> if (downloadState.progress <= 100) {
+                                    String.format(
+                                        Locale.getDefault(),
+                                        $$"%1$s (%2$d%%)",
+                                        stringResource(R.string.msgDownloadingFonts),
+                                        downloadState.progress
+                                    )
+                                } else {
+                                    stringResource(R.string.msgExtractingFonts)
+                                }
+
+                                else -> stringResource(R.string.textDownloading)
+                            },
+                            modifier = Modifier.weight(1f),
+                            style = typography.bodyMedium.copy(
+                                color = colorScheme.onSurface.alpha(0.75f),
+                                fontStyle = FontStyle.Italic
+                            ),
+                        )
+                        TextButton(onClick = { onCancelDownload(script) }) {
+                            Text(stringResource(R.string.strLabelCancel))
+                        }
+                    }
                 }
 
                 if (isSelected && variants.isNotEmpty()) {

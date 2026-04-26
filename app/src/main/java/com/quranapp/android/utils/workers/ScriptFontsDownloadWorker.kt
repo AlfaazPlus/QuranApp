@@ -26,8 +26,8 @@ import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream
 import java.io.File
+import java.util.zip.GZIPInputStream
 
 class ScriptFontsDownloadWorker(
     private val ctx: Context, params: WorkerParameters
@@ -75,9 +75,9 @@ class ScriptFontsDownloadWorker(
 
     private suspend fun downloadAndExtract(scriptKey: String) = withContext(Dispatchers.IO) {
         val fileName = when (scriptKey) {
-            QuranScriptUtils.SCRIPT_KFQPC_V1 -> "qpc_v1_by_page.tar.bz2"
-            QuranScriptUtils.SCRIPT_KFQPC_V2 -> "qpc_v2_by_page.tar.bz2"
-            QuranScriptUtils.SCRIPT_KFQPC_V4 -> "qpc_v4_tajweed_by_page.tar.bz2"
+            QuranScriptUtils.SCRIPT_KFQPC_V1 -> "qpc_v1_by_page.tar.gz"
+            QuranScriptUtils.SCRIPT_KFQPC_V2 -> "qpc_v2_by_page.tar.gz"
+            QuranScriptUtils.SCRIPT_KFQPC_V4 -> "qpc_v4_tajweed_by_page.tar.gz"
             else -> throw IllegalArgumentException("Unknown script key: $scriptKey")
         }
 
@@ -137,7 +137,7 @@ class ScriptFontsDownloadWorker(
         }
 
         val inputStream = tempFile.inputStream().buffered()
-        val tarIn = TarArchiveInputStream(BZip2CompressorInputStream(inputStream))
+        val tarIn = TarArchiveInputStream(GZIPInputStream(inputStream))
 
         var entry = tarIn.nextEntry
         while (entry != null) {
