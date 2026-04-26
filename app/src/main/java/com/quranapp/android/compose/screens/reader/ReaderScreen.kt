@@ -88,19 +88,13 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     val readerMode by readerVm.readerMode.collectAsStateWithLifecycle()
     var isFullscreen by rememberSaveable { mutableStateOf(false) }
 
-    var lastInitParams by remember { mutableStateOf<ReaderLaunchParams?>(null) }
-
     BackHandler(enabled = isFullscreen) {
         isFullscreen = false
     }
 
     LaunchedEffect(params) {
         isSyncing = false
-
-        if (lastInitParams != params) {
-            readerVm.initReader(params)
-            lastInitParams = params
-        }
+        readerVm.initReaderIfNeeded(params)
     }
 
     ReaderProvider {

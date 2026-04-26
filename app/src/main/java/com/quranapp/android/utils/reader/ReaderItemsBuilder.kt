@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.reader
 
+import ThemeUtils
 import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
@@ -233,6 +234,7 @@ object ReaderItemsBuilder {
         val wbwTranslationEnabled = ReaderPreferences.getWbwShowTranslation()
         val wbwTransliterationEnabled = ReaderPreferences.getWbwShowTransliteration()
         val wbwId = ReaderPreferences.getWbwId()
+        val isDarkThem = ThemeUtils.isDarkTheme(params.context)
 
         val scriptCode = ReaderPreferences.getQuranScript()
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
@@ -262,6 +264,7 @@ object ReaderItemsBuilder {
                         script = params.script,
                         pageNo = pageNo,
                         sizeMultiplier = params.arabicSizeMultiplier,
+                        isDark = isDarkThem
                     )
                 )
             }
@@ -387,6 +390,7 @@ object ReaderItemsBuilder {
         val wbwTransliterationEnabled = ReaderPreferences.getWbwShowTransliteration()
         val wbwId = ReaderPreferences.getWbwId()
         val scriptCode = ReaderPreferences.getQuranScript()
+        val isDarkThem = ThemeUtils.isDarkTheme(params.context)
 
         val batch = repository.loadArbitraryVersesBatch(chapterNo, verseNos, scriptCode)
             ?: return null
@@ -411,6 +415,7 @@ object ReaderItemsBuilder {
                             script = params.script,
                             pageNo = pageNo,
                             sizeMultiplier = params.arabicSizeMultiplier,
+                            isDark = isDarkThem
                         )
                     )
                 }
@@ -537,6 +542,7 @@ object ReaderItemsBuilder {
                     pageNo = pageNo,
                     script = scriptCode,
                     sizeMultiplier = 1f,
+                    isDark = params.isDark
                 )
             )
 

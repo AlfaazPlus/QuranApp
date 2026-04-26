@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
+import ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -129,19 +130,22 @@ fun ReaderLayoutPageMode(
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     val density = LocalDensity.current
+    val isDark = ThemeUtils.observeDarkTheme()
 
-    val pageBuilderParams = remember(colors, typography, textMeasurer, density, contentWidth) {
-        PageBuilderParams(
-            context = context,
-            colors = colors,
-            type = typography,
-            textMeasurer = textMeasurer,
-            density = density,
-            contentWidthPx = with(density) {
-                (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
-            }
-        )
-    }
+    val pageBuilderParams =
+        remember(colors, typography, textMeasurer, density, contentWidth, isDark) {
+            PageBuilderParams(
+                context = context,
+                colors = colors,
+                type = typography,
+                textMeasurer = textMeasurer,
+                density = density,
+                contentWidthPx = with(density) {
+                    (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
+                },
+                isDark = isDark
+            )
+        }
 
     LaunchedEffect(pagerState, pageBuilderParams, mushafSession.version) {
         snapshotFlow {
@@ -369,6 +373,7 @@ private fun PageModePage(
                                     key(line.lineNo) {
                                         val showLineRuleBelow =
                                             ruledPageDecoration && index < item.lines.lastIndex
+
                                         Box(
                                             modifier = Modifier
                                                 .fillMaxWidth()

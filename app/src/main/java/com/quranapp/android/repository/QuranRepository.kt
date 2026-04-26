@@ -18,6 +18,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.reader.toDbScriptCode
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -114,8 +115,10 @@ class QuranRepository(
         chapterNo: Int,
         fromVerse: Int,
         toVerse: Int,
-        scriptCode: String,
+        script: String,
     ): ChapterVerseBatch? {
+        val scriptCode = script.toDbScriptCode()
+
         val surah = surahDao.getSurahWithLocalization(chapterNo) ?: return null
 
         val lo = minOf(fromVerse, toVerse)
@@ -143,7 +146,7 @@ class QuranRepository(
         }
 
         val wordsFlat = if (verseIds.isNotEmpty()) {
-            ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
+            ayahWordDao.getWordsForAyahs(verseIds, scriptCode.toDbScriptCode())
         } else {
             emptyList()
         }
@@ -169,8 +172,10 @@ class QuranRepository(
     suspend fun loadArbitraryVersesBatch(
         chapterNo: Int,
         verseNos: List<Int>,
-        scriptCode: String,
+        script: String,
     ): ChapterVerseBatch? {
+        val scriptCode = script.toDbScriptCode()
+
         val distinct = verseNos.distinct()
         if (distinct.isEmpty()) return null
 
@@ -185,7 +190,7 @@ class QuranRepository(
         val ayahByVerse = ayahs.associateBy { it.ayahNo }
         val verseIds = ayahs.map { it.ayahId }
 
-        val wordsFlat = ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
+        val wordsFlat = ayahWordDao.getWordsForAyahs(verseIds, scriptCode.toDbScriptCode())
         val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
 
         val pageByAyahId = if (verseIds.isNotEmpty()) {
@@ -271,10 +276,11 @@ class QuranRepository(
 
     suspend fun resolveMushafLineWords(
         row: MushafMapEntity,
-        scriptCode: String,
+        script: String,
         wordCache: Map<Int, List<AyahWordEntity>>? = null,
     ): List<AyahWordEntity> {
         if (row.lineType != MushafLineType.ayah) return emptyList()
+        val scriptCode = script.toDbScriptCode()
 
         val startAyah = row.startAyahId ?: return emptyList()
         val endAyah = row.endAyahId ?: return emptyList()
@@ -340,7 +346,7 @@ class QuranRepository(
             } else {
                 val middleIds = middle.map { it.ayahId }
                 if (middleIds.isNotEmpty()) {
-                    val flat = ayahWordDao.getWordsForAyahs(middleIds, scriptCode)
+                    val flat = ayahWordDao.getWordsForAyahs(middleIds, scriptCode.toDbScriptCode())
                     val byId = groupWordsByAyahIdWithLastFlags(flat)
                     for (ayah in middle) {
                         byId[ayah.ayahId]?.mapTo(out) { it }
@@ -538,8 +544,10 @@ class QuranRepository(
      */
     suspend fun preloadMushafLineWordCache(
         ayahLineRows: List<MushafMapEntity>,
-        scriptCode: String,
+        script: String,
     ): Map<Int, List<AyahWordEntity>> {
+        val scriptCode = script.toDbScriptCode()
+
         val ids = LinkedHashSet<Int>()
 
         for (row in ayahLineRows) {
@@ -561,7 +569,7 @@ class QuranRepository(
         }
 
         if (ids.isEmpty()) return emptyMap()
-        val flat = ayahWordDao.getWordsForAyahs(ids.toList(), scriptCode)
+        val flat = ayahWordDao.getWordsForAyahs(ids.toList(), scriptCode.toDbScriptCode())
         return groupWordsByAyahIdWithLastFlags(flat)
     }
 

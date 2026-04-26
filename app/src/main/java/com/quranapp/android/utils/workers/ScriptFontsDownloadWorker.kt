@@ -74,14 +74,14 @@ class ScriptFontsDownloadWorker(
     }
 
     private suspend fun downloadAndExtract(scriptKey: String) = withContext(Dispatchers.IO) {
-        val urlPath = if (scriptKey == QuranScriptUtils.SCRIPT_KFQPC_V1) "qpc_v1" else "qpc_v2"
-        val fileName = if (scriptKey == QuranScriptUtils.SCRIPT_KFQPC_V1) {
-            "qpc_v1_by_page.tar.bz2"
-        } else {
-            "qpc_v2_by_page.tar.bz2"
+        val fileName = when (scriptKey) {
+            QuranScriptUtils.SCRIPT_KFQPC_V1 -> "qpc_v1_by_page.tar.bz2"
+            QuranScriptUtils.SCRIPT_KFQPC_V2 -> "qpc_v2_by_page.tar.bz2"
+            QuranScriptUtils.SCRIPT_KFQPC_V4 -> "qpc_v4_tajweed_by_page.tar.bz2"
+            else -> throw IllegalArgumentException("Unknown script key: $scriptKey")
         }
 
-        val url = "https://github.com/dabatase/qpc_fonts/releases/download/$urlPath/$fileName"
+        val url = "https://github.com/AlfaazPlus/QuranAppInventory/releases/download/qpc/$fileName"
         val tempFile = File.createTempFile("tmp", fileName, ctx.filesDir)
 
 
