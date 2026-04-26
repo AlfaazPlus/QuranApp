@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
+import ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -58,6 +59,7 @@ import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
+import com.quranapp.android.utils.reader.getQuranScriptFontPackSizeMb
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
@@ -66,8 +68,8 @@ import com.quranapp.android.utils.reader.getScriptPreviewText
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.viewModels.ScriptEvent
 import com.quranapp.android.viewModels.ScriptsViewModel
-import java.util.Locale
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun ScriptsScreen() {
@@ -146,9 +148,10 @@ private fun ScriptItem(
 ) {
     val context = LocalContext.current
     val density = LocalDensity.current
+    val isDark = ThemeUtils.observeDarkTheme()
 
     val previewStyle = TextStyle(
-        fontFamily = FontFamily(Font(script.getQuranScriptFontRes())),
+        fontFamily = FontFamily(Font(script.getQuranScriptFontRes(isDark))),
         fontSize = with(density) {
             context.getDimenPx(script.getQuranScriptVerseTextSizeMediumRes()).toSp()
         }
@@ -288,17 +291,14 @@ private fun ScriptDownloadRequestAlert(
         if (info == null) return@AlertDialog
 
         val msg = StringBuilder(stringResource(R.string.msgDownloadKFQPCResources)).append("\n")
-        val downloadSize = if (info.first == QuranScriptUtils.SCRIPT_KFQPC_V1) {
-            45
-        } else {
-            115
-        }
+        val downloadSize = info.first.getQuranScriptFontPackSizeMb()
 
         if (info.second.remaining > 0) {
             msg.append("\n").append(
                 stringResource(
-                    R.string.msgDownloadKFQPCResourcesFonts,
-                    downloadSize
+                    R.string.msgDownloadFontsSize,
+                    downloadSize.first,
+                    downloadSize.second
                 )
             )
         }

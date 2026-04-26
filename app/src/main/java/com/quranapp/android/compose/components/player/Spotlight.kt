@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.player
 
+import ThemeUtils
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -292,6 +293,7 @@ private fun SpotlightQuranText(
     val context = LocalContext.current
     val colors = MaterialTheme.colorScheme
     val type = MaterialTheme.typography
+    val isDarkTheme = ThemeUtils.observeDarkTheme()
 
     val style = remember(
         vwd.pageNo,
@@ -300,6 +302,7 @@ private fun SpotlightQuranText(
         fontResolver,
         colors,
         type,
+        isDarkTheme
     ) {
         getQuranTextStyle(
             QuranTextStyleParams(
@@ -311,6 +314,7 @@ private fun SpotlightQuranText(
                 script = scriptCode,
                 sizeMultiplier = arabicMultiplier,
                 useSmallSize = false,
+                isDark = isDarkTheme
             ),
         ).copy(color = PlayerContentColor)
     }

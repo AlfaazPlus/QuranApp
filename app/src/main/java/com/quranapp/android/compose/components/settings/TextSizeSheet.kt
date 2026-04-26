@@ -1,10 +1,10 @@
 package com.quranapp.android.compose.components.settings
 
+import ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -33,15 +33,14 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MIN_PROGRESS
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.getScriptPreviewText
-import java.util.Locale
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 private enum class PreviewType {
     Arabic,
@@ -127,6 +126,7 @@ private fun ArabicTextSizeSlider() {
 @Composable
 private fun ArabicTextPreview(textSizeMult: Float) {
     val script = ReaderPreferences.observeQuranScript()
+    val isDark = ThemeUtils.observeDarkTheme()
     val density = LocalDensity.current
 
     val sizeRes = script.getQuranScriptVerseTextSizeMediumRes()
@@ -143,7 +143,7 @@ private fun ArabicTextPreview(textSizeMult: Float) {
             lineHeight = fontSize * 1.8,
             fontFamily = FontFamily(
                 Font(
-                    script.getQuranScriptFontRes(),
+                    script.getQuranScriptFontRes(isDark),
                     FontWeight.Normal
                 )
             ),

@@ -30,11 +30,13 @@ object QuranScriptUtils {
     const val SCRIPT_DK_INDOPAK = "dk_indopak"
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
     const val SCRIPT_KFQPC_V2 = "kfqpc_v2"
+    const val SCRIPT_KFQPC_V4 = "kfqpc_v4_tajweed"
 
     const val PREVIEW_TEXT_DK_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ \u06DD"
     const val PREVIEW_TEXT_UTHMANI = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١"
     const val PREVIEW_TEXT_KFQPC_V1 = "ﭑ ﭒ ﭓ ﭔ ﭕ"
     const val PREVIEW_TEXT_KFQPC_V2 = "ﱰ ﱱ ﱲ ﱳ ﱴ"
+    const val PREVIEW_TEXT_KFQPC_V4 = "ﱗ ﱘ ﱙ ﱚ"
 
     const val SCRIPT_DEFAULT = SCRIPT_UTHMANI
 
@@ -79,26 +81,32 @@ object QuranScriptUtils {
             )
 
             SCRIPT_KFQPC_V1,
-            SCRIPT_KFQPC_V2 -> {
-                val v = if (scriptCode == SCRIPT_KFQPC_V2) 2 else 1
+            SCRIPT_KFQPC_V2,
+            SCRIPT_KFQPC_V4 -> {
+                val suffix = when {
+                    scriptCode == SCRIPT_KFQPC_V1 -> "V1"
+                    scriptCode == SCRIPT_KFQPC_V2 -> "V2"
+                    scriptCode == SCRIPT_KFQPC_V4 -> "V4 (Tajweed)"
+                    else -> ""
+                }
 
                 mapOf(
-                    "en" to "King Fahd Complex V$v",
-                    "ar" to "مجمع الملك فهد الإصدار $v",
-                    "bn" to "কিং ফাহাদ কমপ্লেক্স V$v",
-                    "ckb" to "لێکدراوی پاشا فەهد v$v",
-                    "de" to "König Fahd Komplex V$v",
-                    "es" to "Rey Fahd Complex V$v",
-                    "fa" to "مجتمع شاه فهد V$v",
-                    "fr" to "Complexe Roi Fahad V$v",
-                    "gu" to "કિંગ ફહદ કોમ્પ્લેક્સ V$v",
-                    "hi" to "राजा फहद कॉम्प्लेक्स v$v",
-                    "in" to "Kompleks Raja Fahad V$v",
-                    "it" to "Complesso di Re Fahad V$v",
-                    "ml" to "കിംഗ് ഫഹദ് സമുച്ചയം v$v",
-                    "pt" to "Complexo King Fahad V$v",
-                    "tr" to "Kral Fehd Kompleksi V$v",
-                    "ur" to "کنگ فہد کمپلیکس V$v",
+                    "en" to "King Fahd Complex $suffix",
+                    "ar" to "مجمع الملك فهد الإصدار $suffix",
+                    "bn" to "কিং ফাহাদ কমপ্লেক্স $suffix",
+                    "ckb" to "لێکدراوی پاشا فەهد v$suffix",
+                    "de" to "König Fahd Komplex $suffix",
+                    "es" to "Rey Fahd Complex $suffix",
+                    "fa" to "مجتمع شاه فهد $suffix",
+                    "fr" to "Complexe Roi Fahad $suffix",
+                    "gu" to "કિંગ ફહદ કોમ્પ્લેક્સ $suffix",
+                    "hi" to "राजा फहद कॉम्प्लेक्स $suffix",
+                    "in" to "Kompleks Raja Fahad $suffix",
+                    "it" to "Complesso di Re Fahad $suffix",
+                    "ml" to "കിംഗ് ഫഹദ് സമുച്ചയം $suffix",
+                    "pt" to "Complexo King Fahad $suffix",
+                    "tr" to "Kral Fehd Kompleksi $suffix",
+                    "ur" to "کنگ فہد کمپلیکس $suffix",
                 )
             }
 
@@ -119,6 +127,7 @@ object QuranScriptUtils {
         SCRIPT_UTHMANI to listOf(),
         SCRIPT_KFQPC_V1 to listOf(),
         SCRIPT_KFQPC_V2 to listOf(),
+        SCRIPT_KFQPC_V4 to listOf(),
         SCRIPT_DK_INDOPAK to listOf(
             QuranScriptVariant.INDOPAK_15,
             QuranScriptVariant.INDOPAK_16
@@ -151,10 +160,19 @@ object QuranScriptUtils {
         var downloaded = 0
 
         for (pageNo in 1..totalPages) {
-            val fontFile = File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilename())
+            val lightFile = File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilename(false))
+            val darkFile = if (kfqpcScriptSlug.getQuranScriptFontHasDark()) {
+                File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilename(true))
+            } else {
+                null
+            }
             val fontFileOld = File(kfqpcScriptFontDir, pageNo.toKFQPCFontFilenameOld())
 
-            if (fontFile.length() > 0L || fontFileOld.length() > 0L) {
+            if (
+                lightFile.length() > 0L ||
+                (darkFile != null && darkFile.length() > 0L) ||
+                fontFileOld.length() > 0L
+            ) {
                 downloaded++
             }
         }
@@ -165,7 +183,8 @@ object QuranScriptUtils {
 
 fun String.isKFQPCScript(): Boolean = when (this) {
     QuranScriptUtils.SCRIPT_KFQPC_V1,
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> true
+    QuranScriptUtils.SCRIPT_KFQPC_V2,
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> true
 
     else -> false
 }
@@ -190,6 +209,7 @@ fun String.getScriptPreviewText(): String = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_DK_INDOPAK
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V2
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V4
     else -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
 }
 
@@ -197,14 +217,18 @@ fun String.getScriptPreviewText(): String = when (this) {
 fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakSmall
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Small
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.dimen.dmnReaderTextSizeArQpcV2Small
+    QuranScriptUtils.SCRIPT_KFQPC_V2,
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> R.dimen.dmnReaderTextSizeArQpcV2Small
+
     else -> R.dimen.dmnReaderTextSizeArUthmaniSmall
 }
 
 fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> 21f
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> 20f
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> 15f
+    QuranScriptUtils.SCRIPT_KFQPC_V2,
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> 15f
+
     else -> 21f
 }
 
@@ -212,15 +236,34 @@ fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
 fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakMedium
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Medium
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.dimen.dmnReaderTextSizeArQpcV2Medium
+    QuranScriptUtils.SCRIPT_KFQPC_V2,
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> R.dimen.dmnReaderTextSizeArQpcV2Medium
+
     else -> R.dimen.dmnReaderTextSizeArUthmaniMedium
 }
 
-fun String.getQuranScriptFontRes(): Int = when (this) {
+fun String.getQuranScriptFontRes(isDark: Boolean): Int = when (this) {
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.font.digital_khatt_indopak
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_v1_page_1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.font.qpc_v2_page_604
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> if (isDark) R.font.qpc_v4_page_001_dark else R.font.qpc_v4_page_001
     else -> R.font.uthmanic_hafs
+}
+
+/**
+ * Download size -> KFQPC V1: ~45MB, KFQPC V2: ~115MB, KFQPC V4: ~90MB
+ * Uncompressed size -> KFQPC V1: ~90MB, KFQPC V2: ~200MB, KFQPC V4: ~320MB
+ */
+fun String.getQuranScriptFontPackSizeMb(): Pair<Int, Int> = when (this) {
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> Pair(45, 90)
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> Pair(115, 200)
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> Pair(90, 320)
+    else -> Pair(0, 0)
+}
+
+fun String.getQuranScriptFontHasDark(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> true
+    else -> false
 }
 
 fun String.toQuranMushafId(
@@ -234,11 +277,17 @@ fun String.toQuranMushafId(
     }
 
     QuranScriptUtils.SCRIPT_KFQPC_V2,
+    QuranScriptUtils.SCRIPT_KFQPC_V4,
     QuranScriptUtils.SCRIPT_UTHMANI -> 1
 
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> 5
 
     else -> 0
+}
+
+fun String.toDbScriptCode(): String = when (this) {
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> QuranScriptUtils.SCRIPT_KFQPC_V2
+    else -> this
 }
 
 @Composable
@@ -257,8 +306,9 @@ fun QuranScriptVariant.getQuranScriptVariantName(): String {
         ?: ""
 }
 
-fun Int.toKFQPCFontFilename(): String {
-    return "qpc_page_%03d.ttf".format(Locale.ENGLISH, this)
+fun Int.toKFQPCFontFilename(isDark: Boolean): String {
+    val format = if (isDark) "qpc_page_%03d_dark.ttf" else "qpc_page_%03d.ttf"
+    return format.format(Locale.ENGLISH, this)
 }
 
 /**

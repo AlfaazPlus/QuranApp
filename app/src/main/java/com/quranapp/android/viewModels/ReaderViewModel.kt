@@ -19,6 +19,7 @@ import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
@@ -148,6 +149,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     private var lastTranslationReaderContentKey: String? = null
 
     private val pagesLoadingMutex = Mutex()
+    private val initReaderMutex = Mutex()
+    private var lastInitReaderSignature: String? = null
 
     private val context get() = application
 
@@ -185,6 +188,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                     ) { action, _ ->
                         action
                     }
+
                     ReaderMode.Reading -> ReaderChangeManager.mushafModeFlow()
                     ReaderMode.Translation -> ReaderChangeManager.translationModeFlow()
                 }
@@ -243,7 +247,34 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
     }
 
+    suspend fun initReaderIfNeeded(params: ReaderLaunchParams) {
+        val signature = params.toInitSignature()
+        var shouldInit = false
+
+        initReaderMutex.withLock {
+            if (lastInitReaderSignature != signature) {
+                lastInitReaderSignature = signature
+                shouldInit = true
+            }
+        }
+
+        if (!shouldInit) return
+
+
+        try {
+            initReader(params)
+        } catch (t: Throwable) {
+            initReaderMutex.withLock {
+                if (lastInitReaderSignature == signature) {
+                    lastInitReaderSignature = null
+                }
+            }
+            throw t
+        }
+    }
+
     suspend fun initReader(params: ReaderLaunchParams) {
+        Log.d("INIT Reader with params: $params")
         playerVerseSync.value = true
 
         params.readerMode?.let { ReaderPreferences.setReaderMode(it) }
@@ -640,7 +671,11 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         if (missing.isEmpty()) return
 
         val built = withContext(Dispatchers.IO) {
-            fontResolver.prefetch(session.layout.scriptCode, missing)
+            fontResolver.prefetch(
+                session.layout.scriptCode,
+                missing,
+                params.isDark,
+            )
 
             ReaderItemsBuilder.buildMushafPages(
                 repository,
