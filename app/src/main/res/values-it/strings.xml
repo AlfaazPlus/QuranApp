@@ -271,6 +271,7 @@
     <string name="about_quran_science_msg">I contenuti di questa pagina sono stati presi dal libro \"The Quran and Modern Science: Compatible or Incompatibe\" scritto da Dr. Zakir Naik\n\nLe immagini presenti sono mostrate solo a scopo illustrativo.</string>
     <string name="about_this_page">Informazioni riguardo questa pagina</string>
     <string name="quran_and_science">Il corano e la scienza</string>
+    <string name="topics">Argomenti</string>
     <string name="donate">Donaci</string>
     <string name="msgArabicTextToggle">Disattivare questa funzione nasconderà il testo arabo in ogni parte dell\'app.</string>
     <string name="clear">Cancella</string>

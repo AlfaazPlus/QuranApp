@@ -354,6 +354,7 @@
     <string name="stopAutoScroll">إيقاف التمرير التلقائي</string>
     <string name="donate">تبرع لنا</string>
     <string name="quran_and_science">القرآن والعلم</string>
+    <string name="topics">المواضيع</string>
     <string name="about_this_page">حول هذه الصفحة</string>
     <string name="about_quran_science_msg">المحتويات في هذه الصفحة مأخوذة من كتاب الدكتور ذاكر نايك بعنوان "القرآن والعلم الحديث: متوافق أم غير متوافق"\n\nالصور المعروضة هي لأغراض توضيحية فقط.</string>
     <string name="strLabelScienceReferences" formatted="false">%d مراجع</string>

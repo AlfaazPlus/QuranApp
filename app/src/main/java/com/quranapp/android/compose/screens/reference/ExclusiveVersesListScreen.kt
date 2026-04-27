@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.screens.reference
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,14 +42,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
-import com.quranapp.android.activities.reference.ActivityPropheticDuas
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.components.quran.QuranExclusiveVerses
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.utils.reader.ExclusiveVerseNavigator
 import kotlinx.coroutines.delay
 
 enum class ExclusiveVersesScreenKind(
@@ -229,32 +226,7 @@ private fun DuaListItem(verse: ExclusiveVerse) {
 
     Card(
         onClick = {
-            if (verse.id == 1) {
-                context.startActivity(
-                    Intent(context, ActivityPropheticDuas::class.java).apply {
-                        putExtra(Keys.KEY_EXTRA_TITLE, verse.title)
-                    },
-                )
-            } else {
-                val nameTitle = if (!excluded) {
-                    resources.getString(R.string.strMsgDuaFor, verse.title)
-                } else {
-                    resources.getString(R.string.strMsgReferenceInQuran, "\"" + verse.title + "\"")
-                }
-                val description = resources.getString(
-                    R.string.strMsgReferenceFoundPlaces,
-                    if (excluded) nameTitle else "\"" + nameTitle + "\"",
-                    verse.verses.size,
-                )
-                ReaderFactory.startReferenceVerse(
-                    context,
-                    nameTitle,
-                    description,
-                    arrayOf(),
-                    verse.chapters,
-                    verse.versesRaw,
-                )
-            }
+            ExclusiveVerseNavigator.open(context, ExclusiveVersesDataset.Dua, verse)
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -300,14 +272,7 @@ private fun EtiquetteListItem(verse: ExclusiveVerse) {
 
     Card(
         onClick = {
-            verse.verses.firstOrNull()?.let { reference ->
-                ReaderFactory.startVerseRange(
-                    context,
-                    reference.first,
-                    reference.second,
-                    reference.third,
-                )
-            }
+            ExclusiveVerseNavigator.open(context, ExclusiveVersesDataset.Etiquette, verse)
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -345,14 +310,7 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
 
     Card(
         onClick = {
-            ReaderFactory.startReferenceVerse(
-                context,
-                verse.title,
-                verse.description,
-                arrayOf(),
-                verse.chapters,
-                verse.versesRaw,
-            )
+            ExclusiveVerseNavigator.open(context, ExclusiveVersesDataset.MajorSins, verse)
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -394,7 +352,6 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
 @Composable
 private fun SolutionListItem(verse: ExclusiveVerse) {
     val context = LocalContext.current
-    val resources = LocalResources.current
     val count = verse.verses.size
     val placesLine = if (count > 1) {
         stringResource(R.string.places, count)
@@ -404,23 +361,7 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
 
     Card(
         onClick = {
-            val nameTitle = resources.getString(
-                R.string.strMsgReferenceInQuran,
-                "\"" + verse.title + "\"",
-            )
-            val description = resources.getString(
-                R.string.strMsgReferenceFoundPlaces,
-                "\"" + verse.title + "\"",
-                verse.verses.size,
-            )
-            ReaderFactory.startReferenceVerse(
-                context,
-                nameTitle,
-                description,
-                arrayOf(),
-                verse.chapters,
-                verse.versesRaw,
-            )
+            ExclusiveVerseNavigator.open(context, ExclusiveVersesDataset.Solution, verse)
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),

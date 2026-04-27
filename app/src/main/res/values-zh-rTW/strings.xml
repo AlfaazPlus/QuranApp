@@ -344,6 +344,7 @@
     <string name="stopAutoScroll">停止自動滾動</string>
     <string name="donate">捐贈給我們</string>
     <string name="quran_and_science">古蘭經與科學</string>
+    <string name="topics">主題</string>
     <string name="about_this_page">關於此頁面</string>
     <string name="about_quran_science_msg">此頁面的內容摘自 Zakir Naik 博士的書籍《古蘭經與現代科學：相容還是不相容》\n\n顯示的圖像僅用於說明目的。</string>
     <string name="strLabelScienceReferences" formatted="false">%d 個參考文獻</string>

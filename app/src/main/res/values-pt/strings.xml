@@ -354,6 +354,7 @@
     <string name="readingTafsirMultiVerses">A ler tafsir para vários versículos:</string>
     <string name="donate">Doar para Nós</string>
     <string name="quran_and_science">Alcorão e Ciência</string>
+    <string name="topics">Tópicos</string>
     <string name="about_this_page">Sobre esta página</string>
     <string name="about_quran_science_msg">O conteúdo desta página foi retirado do livro do Dr. Zakir Naik chamado “The Quran and Modern Science: Compatible or Incompatible”\n\nAs imagens apresentadas são apenas para fins ilustrativos.</string>
     <string name="strLabelScienceReferences" formatted="false">%d referências</string>

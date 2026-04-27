@@ -344,6 +344,7 @@
     <string name="readingTafsirMultiVerses">பல வசனங்களுக்கான விரிவுரையைப் படிக்கவும்:</string>
     <string name="donate">எங்களுக்கு நன்கொடை அளிக்கவும்</string>
     <string name="quran_and_science">குர்ஆனும் அறிவியலும்</string>
+    <string name="topics">தலைப்புகள்</string>
     <string name="about_this_page">இந்தப் பக்கத்தைப் பற்றி</string>
     <string name="about_quran_science_msg">இந்தப் பக்கத்தின் உள்ளடக்கங்கள் டாக்டர் ஜாகிர் நாயக்கின் புத்தகத்திலிருந்து எடுக்கப்பட்டவை.\n\nகாட்டப்பட்டுள்ள படங்கள் விளக்கத்திற்காக மட்டுமே.</string>
     <string name="strLabelScienceReferences">%d ஆதாரங்கள்</string>

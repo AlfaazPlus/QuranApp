@@ -356,6 +356,7 @@
     <string name="strMsgSearchHistoryDeleteAll">Вся история поиска будет удалена.</string>
     <string name="donate">Поддержать нас</string>
     <string name="quran_and_science">Коран и наука</string>
+    <string name="topics">Темы</string>
     <string name="about_this_page">Об этой странице</string>
     <string name="about_quran_science_msg">Материалы на этой странице взяты из книги доктора Закира Найка «Коран и современная наука: совместимы или несовместимы»\n\nИзображения приведены только для иллюстрации.</string>
     <string name="strLabelScienceReferences" formatted="false">%d ссылок</string>

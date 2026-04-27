@@ -344,6 +344,7 @@
     <string name="stopAutoScroll">停止自动滚动</string>
     <string name="donate">捐赠给我们</string>
     <string name="quran_and_science">古兰经与科学</string>
+    <string name="topics">主题</string>
     <string name="about_this_page">关于此页面</string>
     <string name="about_quran_science_msg">此页面的内容摘自 Zakir Naik 博士的书籍《古兰经与现代科学：相容还是不相容》\n\n显示的图像仅用于说明目的。</string>
     <string name="strLabelScienceReferences" formatted="false">%d 个参考文献</string>

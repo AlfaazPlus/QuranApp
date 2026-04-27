@@ -329,6 +329,7 @@
     <string name="previousJuz">پوئون جُز</string>
     <string name="previousWord">پوئون لفظ</string>
     <string name="quran_and_science">قرآن ۽ سائنس</string>
+    <string name="topics">موضوع</string>
     <string name="readingTafsirMultiVerses">ڪيترن ئي آيتن لاءِ تفسير پڙهي رهيا آهيون:</string>
     <string name="recitationBulkDownloadNotifProgress">%1$d / %2$d سورتون ڊائون لوڊ ٿيون</string>
     <string name="recitationBulkEnqueueNotifText">%1$s – قطار ۾ لڳايو ويو %2$d مان %3$d</string>

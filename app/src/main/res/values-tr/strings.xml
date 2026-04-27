@@ -293,6 +293,7 @@
     <string name="favourites">Favoriler</string>
     <string name="donate">Bize bağış yapın</string>
     <string name="quran_and_science">Kur\'an ve Bilim</string>
+    <string name="topics">Konular</string>
     <string name="about_this_page">Bu sayfa hakkında</string>
     <string name="about_quran_science_msg">Bu sayfadaki içerikler Dr. Zakir Naik\'in \'The Quran and Modern Science: Compatible or Incompatible\' adlı kitabından alınmıştır.\n\nGösterilen resimler yalnızca açıklama amaçlıdır.</string>
     <string name="strLabelScienceReferences" formatted="false">%d referanslar</string>

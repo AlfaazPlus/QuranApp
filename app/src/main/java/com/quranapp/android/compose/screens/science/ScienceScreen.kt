@@ -58,7 +58,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-private fun getDrawableRes(id: String): Int {
+private fun getQuranScienceDrawableRes(id: String): Int {
     return when (id) {
         "astronomy" -> R.drawable.ic_science_astronomy
         "physics" -> R.drawable.ic_science_physics
@@ -76,6 +76,31 @@ private fun getDrawableRes(id: String): Int {
     }
 }
 
+fun loadScienceItems(context: android.content.Context): List<QuranScienceItem> {
+    val items = mutableListOf<QuranScienceItem>()
+
+    context.assets.open("science/index.json").use { inputStream ->
+        val json = inputStream.bufferedReader().use { it.readText() }
+        val jsonArray = Json.parseToJsonElement(json).jsonArray
+
+        jsonArray.forEach {
+            val item = it.jsonObject
+
+            items.add(
+                QuranScienceItem(
+                    item.safeString("title", ""),
+                    item.safeInt("referencesCount", 0),
+                    item.safeString("path", ""),
+                    getQuranScienceDrawableRes(item.safeString("id", "")),
+                    item.safeJsonObject("translations")?.toStringMap() ?: mapOf()
+                )
+            )
+        }
+    }
+
+    return items
+}
+
 
 @Composable
 fun ScienceScreen() {
@@ -83,28 +108,7 @@ fun ScienceScreen() {
     var infoDialogShown by remember { mutableStateOf(false) }
 
     val scienceItems = remember {
-        val _items = mutableListOf<QuranScienceItem>()
-
-        context.assets.open("science/index.json").use { inputStream ->
-            val json = inputStream.bufferedReader().use { it.readText() }
-            val jsonArray = Json.parseToJsonElement(json).jsonArray
-
-            jsonArray.forEach {
-                val item = it.jsonObject
-
-                _items.add(
-                    QuranScienceItem(
-                        item.safeString("title", ""),
-                        item.safeInt("referencesCount", 0),
-                        item.safeString("path", ""),
-                        getDrawableRes(item.safeString("id", "")),
-                        item.safeJsonObject("translations")?.toStringMap() ?: mapOf()
-                    )
-                )
-            }
-        }
-
-        _items
+        loadScienceItems(context)
     }
 
     Scaffold(

@@ -321,6 +321,7 @@
     <string name="stopAutoScroll">Automatisches Scrollen deaktivieren</string>
     <string name="donate">Unterstützte uns</string>
     <string name="quran_and_science">Koran und Wissenschaft</string>
+    <string name="topics">Themen</string>
     <string name="about_this_page">Über diese Seite</string>
     <string name="about_quran_science_msg">Die Inhalte auf dieser Seite stammen aus dem Buch \"Der Qur ́an und Modern Science: Kompatibel oder unverträglich\" von Dr. Zakir Naik .\n\nDie gezeigten Bilder dienen nur zum illustrativen Zweck.</string>
     <string name="strLabelScienceReferences" formatted="false">%d Verweise</string>

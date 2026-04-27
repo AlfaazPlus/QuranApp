@@ -25,7 +25,7 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -58,6 +58,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.search.ExclusiveSearchResults
 import com.quranapp.android.compose.components.search.QuickLinks
 import com.quranapp.android.compose.components.search.SearchEmptyScrollContent
 import com.quranapp.android.compose.components.search.SearchHistorySuggestionStrip
@@ -243,7 +244,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
 }
 
 private enum class SearchResultTab {
-    results, chapters,
+    results, chapters, topics,
 }
 
 @Composable
@@ -256,6 +257,7 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
         listOf(
             SearchResultTab.results,
             SearchResultTab.chapters,
+            SearchResultTab.topics,
         )
     }
 
@@ -279,12 +281,14 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
 
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
     val surahResults by viewModel.surahResults.collectAsState()
+    val exclusiveResults by viewModel.topicResults.collectAsState()
 
     SearchResultTabs(
         tabs,
         counts = mapOf(
             SearchResultTab.results to if (searchResults.loadState.refresh is LoadState.Loading) null else searchResults.itemCount,
             SearchResultTab.chapters to surahResults?.size,
+            SearchResultTab.topics to exclusiveResults.size,
         ),
         selectedTabIndex = pagerState.currentPage,
     ) {
@@ -302,6 +306,7 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
         when (page) {
             0 -> TextSearchResults(viewModel, searchResults)
             1 -> SurahSearchResults(viewModel, surahResults)
+            2 -> ExclusiveSearchResults(viewModel, exclusiveResults)
         }
     }
 }
@@ -320,7 +325,7 @@ private fun SearchResultTabs(
             .background(colorScheme.surfaceContainer),
         shadowElevation = 2.dp,
     ) {
-        SecondaryTabRow(
+        SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = colorScheme.surfaceContainer,
         ) {
@@ -342,6 +347,7 @@ private fun SearchResultTabs(
                                     when (tab) {
                                         SearchResultTab.results -> R.string.results
                                         SearchResultTab.chapters -> R.string.strTitleReaderChapters
+                                        SearchResultTab.topics -> R.string.topics
                                     }
                                 ),
                                 style = MaterialTheme.typography.labelMedium,

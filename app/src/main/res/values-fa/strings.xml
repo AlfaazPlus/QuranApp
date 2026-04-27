@@ -351,6 +351,7 @@
     <string name="readingTafsirMultiVerses">مطالعه تفسیر برای چندین آیه:</string>
     <string name="donate">حمایت مالی از ما</string>
     <string name="quran_and_science">قرآن و علم</string>
+    <string name="topics">موضوعات</string>
     <string name="about_this_page">درباره این صفحه</string>
     <string name="about_quran_science_msg">مطالب این صفحه از کتاب دکتر ذاکر نایک با عنوان «قرآن و علم مدرن: سازگار یا ناسازگار؟» گرفته شده است.\n\nتصاویر نمایش داده شده صرفاً جهت تصویرسازی هستند.</string>
     <string name="strLabelScienceReferences">%d منبع</string>

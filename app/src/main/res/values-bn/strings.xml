@@ -351,6 +351,7 @@
     <string name="readingTafsirMultiVerses">একাধিক আয়াতের তাফসীর পড়া হচ্ছে:</string>
     <string name="donate">আমাদের দান করুন</string>
     <string name="quran_and_science">কুরআন ও বিজ্ঞান</string>
+    <string name="topics">বিষয়সমূহ</string>
     <string name="about_this_page">এই পৃষ্ঠা সম্পর্কে</string>
     <string name="about_quran_science_msg">এই পৃষ্ঠার বিষয়বস্তু ডক্টর জাকির নায়েকের “দ্য কুরআন অ্যান্ড মডার্ন সায়েন্স: কম্প্যাটিবল অর ইনকমপ্যাটিবল” নামক বই থেকে নেওয়া হয়েছে\n\nপ্রদর্শিত ছবিগুলি শুধুমাত্র উদাহরণের জন্য।</string>
     <string name="strLabelScienceReferences">%d টি সূত্র</string>

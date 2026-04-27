@@ -11,6 +11,8 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.search.SearchHistoryEntry
 import com.quranapp.android.db.search.SearchHistoryStore
+import com.quranapp.android.search.CollectionSearchResult
+import com.quranapp.android.search.ExclusiveVersesSearchProvider
 import com.quranapp.android.search.QuickLinkItem
 import com.quranapp.android.search.SearchPagingSource
 import com.quranapp.android.search.SearchQuickLinksParser
@@ -69,6 +71,16 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
             viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = null,
+        )
+
+    val topicResults: StateFlow<List<CollectionSearchResult>> = debouncedQuery
+        .mapLatest { query ->
+            ExclusiveVersesSearchProvider.search(getApplication(), query)
+        }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList(),
         )
 
     val searchResults: Flow<PagingData<SearchResult>> = debouncedQuery

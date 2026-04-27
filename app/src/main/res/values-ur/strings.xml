@@ -322,6 +322,7 @@
     <string name="stopAutoScroll">آٹو اسکرول بند کریں</string>
     <string name="donate">ہمارے لیے عطیہ کریں</string>
     <string name="quran_and_science">قرآن اور سائنس</string>
+    <string name="topics">موضوعات</string>
     <string name="about_this_page">اس صفحہ کے بارے میں</string>
     <string name="about_quran_science_msg">اس صفحہ پر موجود مواد ڈاکٹر ذاکر نائیک کی کتاب سے لیا گیا ہے جس کا نام ہے \"قرآن اور جدید سائنس: مطابقت پذیر یا غیر مطابقت پذیر\"\n\nدکھائی گئی تصاویر صرف مثالی مقصد کے لیے ہیں۔</string>
     <string name="strLabelScienceReferences" formatted="false">%d حوالے</string>

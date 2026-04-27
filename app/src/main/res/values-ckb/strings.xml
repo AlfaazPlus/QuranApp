@@ -351,6 +351,7 @@
     <string name="stopAutoScroll">ڕاگرتنی جوڵانی خۆکار</string>
     <string name="donate">بەخشین بە ئێمە</string>
     <string name="quran_and_science">قورئان و زانست</string>
+    <string name="topics">بابەتەکان</string>
     <string name="about_this_page">دەربارەی ئەم لاپەڕەیە</string>
     <string name="about_quran_science_msg">ناوەڕۆکی ئەم لاپەڕەیە لە کتێبەکەی دکتۆر زاکیر نایک وەرگیراوە بە ناوی \"قورئان و زانستی نوێ: تەبا یان ناتەبا\"\n\nوێنەکان تەنها بۆ مەبەستی ڕوونکردنەوەن.</string>
     <string name="strLabelScienceReferences">%d سەرچاوە</string>

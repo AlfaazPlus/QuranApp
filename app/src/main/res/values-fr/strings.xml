@@ -354,6 +354,7 @@
     <string name="readingTafsirMultiVerses">Lecture du tafsir pour plusieurs versets :</string>
     <string name="donate">Faites un don</string>
     <string name="quran_and_science">Le Coran et la Science</string>
+    <string name="topics">Sujets</string>
     <string name="about_this_page">À propos de cette page</string>
     <string name="about_quran_science_msg">Le contenu de cette page est tiré du livre du Dr Zakir Naik intitulé « Le Coran et la science moderne : compatibles ou incompatibles ? »\n\nLes images sont fournies à titre indicatif uniquement.</string>
     <string name="strLabelScienceReferences">%d références</string>

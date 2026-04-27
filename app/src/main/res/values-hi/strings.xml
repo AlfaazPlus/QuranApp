@@ -322,6 +322,7 @@
     <string name="stopAutoScroll">ऑटो स्क्रॉल रोकें</string>
     <string name="donate">हमें दान दें</string>
     <string name="quran_and_science">कुरान और विज्ञान</string>
+    <string name="topics">विषय</string>
     <string name="about_this_page">इस पेज के बारे में</string>
     <string name="about_quran_science_msg">इस पेज का कंटेंट डॉ. ज़ाकिर नाइक की किताब “द कुरान एंड मॉडर्न साइंस: कम्पैटिबल ऑर इनकम्पैटिबल” से लिया गया है।\n\nदिखाई गई तस्वीरें सिर्फ़ उदाहरण के लिए हैं।</string>
     <string name="strLabelScienceReferences" formatted="false">%d संदर्भ</string>

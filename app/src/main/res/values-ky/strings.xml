@@ -298,6 +298,7 @@
     <string name="noContinueDownload">Жок, уланта бер</string>
     <string name="readingTafsirMultiVerses">Бир нече аят үчүн тафсир окуу:</string>
     <string name="quran_and_science">Куран жана илим</string>
+    <string name="topics">Темалар</string>
     <string name="about_this_page">Бул баракча жөнүндө</string>
     <string name="about_quran_science_msg">Бул баракчадагы маалыматтар доктор Закир Найктин \"Куран жана заманбап илим: Шайкешпи же карама-каршыбы\" аттуу китебинен алынды.\n\nКөрсөтүлгөн сүрөттөр иллюстрациялык максатта гана берилген.</string>
     <string name="strLabelScienceReferences">%d шилтеме</string>

@@ -296,6 +296,7 @@
     <string name="favourites">Favoritos</string>
     <string name="donate">Donación</string>
     <string name="quran_and_science">Corán y Ciencia</string>
+    <string name="topics">Temas</string>
     <string name="about_this_page">Acerca de esta página</string>
     <string name="strLabelScienceReferences" formatted="false">%d referencias</string>
     <string name="about_quran_science_msg">El contenido de esta página proviene del libro del Dr. Zakir Naik titulado \"El Corán y la ciencia moderna: ¿compatibles o incompatibles?\".\n\nLas imágenes mostradas son solo a título ilustrativo.</string>

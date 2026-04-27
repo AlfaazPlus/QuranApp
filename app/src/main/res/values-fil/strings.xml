@@ -347,6 +347,7 @@
     <string name="readingTafsirMultiVerses">Binabasa ang tafsir para sa maraming bersikulo:</string>
     <string name="donate">Mag-donate sa Amin</string>
     <string name="quran_and_science">Quran at Agham</string>
+    <string name="topics">Mga Paksa</string>
     <string name="about_this_page">Tungkol sa pahinang ito</string>
     <string name="about_quran_science_msg">Ang mga nilalaman sa pahinang ito ay kinuha mula sa aklat ni Dr. Zakir Naik na may pamagat na “The Quran and Modern Science: Compatible or Incompatible”\n\nAng mga larawang ipinapakita ay para sa layuning ilustrasyon lamang.</string>
     <string name="strLabelScienceReferences" formatted="false">%d na mga sanggunian</string>
