@@ -164,6 +164,10 @@ public abstract class StringUtils {
     }
 
     public static boolean isRtlLanguage(String langCode) {
+        if (langCode == null || langCode.isEmpty()) {
+            return false;
+        }
+
         String[] rtlLangs = {"ar", "fa", "ur", "ps", "sd", "ug", "dv", "he", "yi", "ku", "syr", "az-Arab", "ckb"};
 
         String[] parts = langCode.split("[_-]");

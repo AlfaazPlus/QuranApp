@@ -37,7 +37,7 @@ import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
         MushafMapEntity::class,
         ArabicSearchFtsEntity::class
     ],
-    version = 3,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(QuranConverters::class)

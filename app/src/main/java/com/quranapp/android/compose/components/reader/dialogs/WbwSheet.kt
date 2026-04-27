@@ -48,6 +48,7 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalQuranTextStyle
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.LocalWbwState
+import com.quranapp.android.compose.components.reader.LocalWbwStateData
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
@@ -301,6 +302,7 @@ private fun WordContent(
         )
 
         ArabicWordCard(
+            wbwState = wbwState,
             word = word,
             wbwRow = wbwRow,
             textStyle = content.textStyles.get(verseUi.verse.pageNo) ?: TextStyle.Default,
@@ -395,6 +397,7 @@ private fun ArabicWordCard(
     onNext: () -> Unit,
     textStyle: TextStyle,
     wbwRow: WbwWordEntity?,
+    wbwState: LocalWbwStateData,
 ) {
     val transliteration = wbwRow?.transliteration?.takeIf { !it.isNullOrBlank() }
     val translation = wbwRow?.translation?.takeIf { !it.isNullOrBlank() }
@@ -454,20 +457,22 @@ private fun ArabicWordCard(
 
             if (translation != null || transliteration != null) {
                 Spacer(Modifier.height(16.dp))
-            }
 
-            if (transliteration != null) {
-                Text(
-                    transliteration,
-                    style = textStyles.wbwTrltStyle ?: TextStyle.Default
-                )
-            }
+                CompositionLocalProvider(LocalLayoutDirection provides if (wbwState.isWbwRtl) LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                    if (transliteration != null) {
+                        Text(
+                            transliteration,
+                            style = textStyles.wbwTrltStyle ?: TextStyle.Default
+                        )
+                    }
 
-            if (translation != null) {
-                Text(
-                    translation,
-                    style = textStyles.wbwTrStyle ?: TextStyle.Default
-                )
+                    if (translation != null) {
+                        Text(
+                            translation,
+                            style = textStyles.wbwTrStyle ?: TextStyle.Default
+                        )
+                    }
+                }
             }
         }
     }

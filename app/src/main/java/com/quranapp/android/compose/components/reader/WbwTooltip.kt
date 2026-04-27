@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,15 +17,18 @@ import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
@@ -48,6 +50,7 @@ fun WbwTooltip(
     anchor: @Composable () -> Unit
 ) {
     val vm = LocalReaderViewModel.current
+    val wbwState = LocalWbwState.current
     val wbwIdRaw = ReaderPreferences.observeWbwId()
     val wbwId = wbwIdRaw.takeIf { it.isNotEmpty() }
 
@@ -114,25 +117,27 @@ fun WbwTooltip(
                         val hasTransliteration = !wbw.transliteration.isNullOrBlank()
                         val hasTranslation = !wbw.translation.isNullOrBlank()
 
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                            modifier = Modifier.padding(4.dp)
-                        ) {
-                            if (hasTransliteration) {
-                                Text(
-                                    text = wbw.transliteration,
-                                    style = textStyles.wbwTrltStyle ?: TextStyle.Default,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
+                        CompositionLocalProvider(LocalLayoutDirection provides if (wbwState.isWbwRtl) LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                                modifier = Modifier.padding(4.dp)
+                            ) {
+                                if (hasTransliteration) {
+                                    Text(
+                                        text = wbw.transliteration,
+                                        style = textStyles.wbwTrltStyle ?: TextStyle.Default,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                }
 
-                            if (hasTranslation) {
-                                Text(
-                                    text = wbw.translation,
-                                    style = textStyles.wbwTrStyle ?: TextStyle.Default,
-                                    textAlign = TextAlign.Center,
-                                )
+                                if (hasTranslation) {
+                                    Text(
+                                        text = wbw.translation,
+                                        style = textStyles.wbwTrStyle ?: TextStyle.Default,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                }
                             }
                         }
                     }

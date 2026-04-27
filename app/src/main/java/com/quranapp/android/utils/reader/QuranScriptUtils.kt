@@ -28,11 +28,13 @@ object QuranScriptUtils {
     const val SCRIPT_UTHMANI = "uthmani"
 
     const val SCRIPT_DK_INDOPAK = "dk_indopak"
+    const val SCRIPT_NASTALEEQ_INDOPAK = "nastaleeq_indopak"
     const val SCRIPT_KFQPC_V1 = "kfqpc_v1"
     const val SCRIPT_KFQPC_V2 = "kfqpc_v2"
     const val SCRIPT_KFQPC_V4 = "kfqpc_v4_tajweed"
 
     const val PREVIEW_TEXT_DK_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ \u06DD"
+    const val PREVIEW_TEXT_NASTALEEQ_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ۟\uF61E"
     const val PREVIEW_TEXT_UTHMANI = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١"
     const val PREVIEW_TEXT_KFQPC_V1 = "ﭑ ﭒ ﭓ ﭔ ﭕ"
     const val PREVIEW_TEXT_KFQPC_V2 = "ﱰ ﱱ ﱲ ﱳ ﱴ"
@@ -42,6 +44,7 @@ object QuranScriptUtils {
 
     fun SCRIPT_NAMES(scriptCode: String): Map<String, String> {
         return when (scriptCode) {
+            SCRIPT_NASTALEEQ_INDOPAK,
             SCRIPT_DK_INDOPAK -> mapOf(
                 "en" to "IndoPak (Beta)",
                 "ar" to "نستعليق",
@@ -196,7 +199,9 @@ fun String.isKFQPCScript(): Boolean = when (this) {
  * lines.
  */
 fun String.mushafShowsRuledPageDecoration(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> true
+
     else -> false
 }
 
@@ -208,6 +213,7 @@ fun String.getQuranScriptName(): String {
 }
 
 fun String.getScriptPreviewText(): String = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_NASTALEEQ_INDOPAK
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_DK_INDOPAK
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V2
@@ -217,7 +223,9 @@ fun String.getScriptPreviewText(): String = when (this) {
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakSmall
+
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Small
     QuranScriptUtils.SCRIPT_KFQPC_V2,
     QuranScriptUtils.SCRIPT_KFQPC_V4 -> R.dimen.dmnReaderTextSizeArQpcV2Small
@@ -226,7 +234,9 @@ fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
 }
 
 fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> 21f
+
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> 20f
     QuranScriptUtils.SCRIPT_KFQPC_V2,
     QuranScriptUtils.SCRIPT_KFQPC_V4 -> 15f
@@ -236,7 +246,9 @@ fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
 
 @DimenRes
 fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.dimen.dmnReaderTextSizeArIndoPakMedium
+
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.dimen.dmnReaderTextSizeArQpcV1Medium
     QuranScriptUtils.SCRIPT_KFQPC_V2,
     QuranScriptUtils.SCRIPT_KFQPC_V4 -> R.dimen.dmnReaderTextSizeArQpcV2Medium
@@ -245,6 +257,7 @@ fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
 }
 
 fun String.getQuranScriptFontRes(isDark: Boolean): Int = when (this) {
+//    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK -> R.font.nastaleeq_indopak
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.font.digital_khatt_indopak
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_v1_page_1
     QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.font.qpc_v2_page_604
@@ -270,6 +283,7 @@ fun String.getQuranScriptFontHasDark(): Boolean = when (this) {
 fun String.toQuranMushafId(
     variant: QuranScriptVariant?
 ): Int = when (this) {
+    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> {
         when (variant) {
             QuranScriptVariant.INDOPAK_15 -> 3
@@ -284,11 +298,6 @@ fun String.toQuranMushafId(
     QuranScriptUtils.SCRIPT_KFQPC_V1 -> 5
 
     else -> 0
-}
-
-fun String.toDbScriptCode(): String = when (this) {
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> QuranScriptUtils.SCRIPT_KFQPC_V2
-    else -> this
 }
 
 @Composable

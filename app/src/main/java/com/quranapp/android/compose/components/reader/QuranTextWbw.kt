@@ -172,23 +172,25 @@ private fun QuranTextWbwWordCell(
 
                 if (hasTranslation || hasTransliteration) {
                     Spacer(Modifier.height(3.dp))
-                }
 
-                if (hasTransliteration) {
-                    Text(
-                        text = wbw.transliteration,
-                        style = textStyles.wbwTrltStyle ?: TextStyle.Default,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                    CompositionLocalProvider(LocalLayoutDirection provides if (wbwState.isWbwRtl) LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                        if (hasTransliteration) {
+                            Text(
+                                text = wbw.transliteration,
+                                style = textStyles.wbwTrltStyle ?: TextStyle.Default,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
 
-                if (hasTranslation) {
-                    Text(
-                        text = wbw.translation,
-                        style = textStyles.wbwTrStyle ?: TextStyle.Default,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.widthIn(max = textStyles.wbwMaxWith),
-                    )
+                        if (hasTranslation) {
+                            Text(
+                                text = wbw.translation,
+                                style = textStyles.wbwTrStyle ?: TextStyle.Default,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.widthIn(max = textStyles.wbwMaxWith),
+                            )
+                        }
+                    }
                 }
             }
 

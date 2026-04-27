@@ -85,7 +85,7 @@ fun TextStyleProvider(
             quran = { pageTextStyles[it] },
             wbwTrltStyle = transliterationStyle,
             wbwTrStyle = translationStyle,
-            wbwMaxWith = (80 * wbwMult / 100).coerceAtLeast(80F).dp
+            wbwMaxWith = (90 * wbwMult / 100).coerceAtLeast(90F).dp
         )
     ) {
         content()

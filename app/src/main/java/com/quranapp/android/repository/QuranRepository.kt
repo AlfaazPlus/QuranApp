@@ -18,7 +18,6 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.QuranUtils
-import com.quranapp.android.utils.reader.toDbScriptCode
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -115,10 +114,8 @@ class QuranRepository(
         chapterNo: Int,
         fromVerse: Int,
         toVerse: Int,
-        script: String,
+        scriptCode: String,
     ): ChapterVerseBatch? {
-        val scriptCode = script.toDbScriptCode()
-
         val surah = surahDao.getSurahWithLocalization(chapterNo) ?: return null
 
         val lo = minOf(fromVerse, toVerse)
@@ -172,10 +169,8 @@ class QuranRepository(
     suspend fun loadArbitraryVersesBatch(
         chapterNo: Int,
         verseNos: List<Int>,
-        script: String,
+        scriptCode: String,
     ): ChapterVerseBatch? {
-        val scriptCode = script.toDbScriptCode()
-
         val distinct = verseNos.distinct()
         if (distinct.isEmpty()) return null
 
@@ -223,10 +218,8 @@ class QuranRepository(
     suspend fun getWordsForAyah(
         chapterNo: Int,
         verseNo: Int,
-        script: String
+        scriptCode: String
     ): List<AyahWordEntity> {
-        val scriptCode = script.toDbScriptCode()
-
         val words = ayahWordDao.getWordsForAyah(chapterNo, verseNo, scriptCode)
             .sortedBy { it.wordIndex }
 
@@ -239,9 +232,7 @@ class QuranRepository(
         }
     }
 
-    suspend fun getWordsForAyahById(ayahId: Int, script: String): List<AyahWordEntity> {
-        val scriptCode = script.toDbScriptCode()
-
+    suspend fun getWordsForAyahById(ayahId: Int, scriptCode: String): List<AyahWordEntity> {
         val words = ayahWordDao.getWordsForAyahById(ayahId, scriptCode)
             .sortedBy { it.wordIndex }
 
@@ -280,11 +271,10 @@ class QuranRepository(
 
     suspend fun resolveMushafLineWords(
         row: MushafMapEntity,
-        script: String,
+        scriptCode: String,
         wordCache: Map<Int, List<AyahWordEntity>>? = null,
     ): List<AyahWordEntity> {
         if (row.lineType != MushafLineType.ayah) return emptyList()
-        val scriptCode = script.toDbScriptCode()
 
         val startAyah = row.startAyahId ?: return emptyList()
         val endAyah = row.endAyahId ?: return emptyList()
@@ -548,10 +538,8 @@ class QuranRepository(
      */
     suspend fun preloadMushafLineWordCache(
         ayahLineRows: List<MushafMapEntity>,
-        script: String,
+        scriptCode: String,
     ): Map<Int, List<AyahWordEntity>> {
-        val scriptCode = script.toDbScriptCode()
-
         val ids = LinkedHashSet<Int>()
 
         for (row in ayahLineRows) {

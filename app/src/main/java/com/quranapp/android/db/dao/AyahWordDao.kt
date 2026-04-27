@@ -10,9 +10,14 @@ interface AyahWordDao {
         """
         SELECT aw.*
         FROM ayah_words aw
-        INNER JOIN scripts s ON aw.script_id = s.script_id
         INNER JOIN ayahs a ON a.surah_no = :chapterNo AND a.ayah_no = :verseNo
-        WHERE aw.ayah_id = a.ayah_id AND s.code = :scriptCode
+        WHERE aw.ayah_id = a.ayah_id
+          AND aw.script_id = (
+              SELECT COALESCE(s.parent, s.script_id)
+              FROM scripts s
+              WHERE s.code = :scriptCode
+              LIMIT 1
+          )
         ORDER BY aw.word_index
     """
     )
@@ -26,8 +31,13 @@ interface AyahWordDao {
         """
         SELECT aw.*
         FROM ayah_words aw
-        INNER JOIN scripts s ON aw.script_id = s.script_id
-        WHERE aw.ayah_id = :ayahId AND s.code = :scriptCode
+        WHERE aw.ayah_id = :ayahId
+          AND aw.script_id = (
+              SELECT COALESCE(s.parent, s.script_id)
+              FROM scripts s
+              WHERE s.code = :scriptCode
+              LIMIT 1
+          )
         ORDER BY aw.word_index
     """
     )
@@ -40,9 +50,13 @@ interface AyahWordDao {
         """
         SELECT aw.*
         FROM ayah_words aw
-        INNER JOIN scripts s ON aw.script_id = s.script_id
         WHERE aw.ayah_id = :ayahId
-          AND s.code = :scriptCode
+          AND aw.script_id = (
+              SELECT COALESCE(s.parent, s.script_id)
+              FROM scripts s
+              WHERE s.code = :scriptCode
+              LIMIT 1
+          )
           AND aw.word_index BETWEEN :startIndex AND :endIndex
         ORDER BY aw.word_index
     """
@@ -58,9 +72,13 @@ interface AyahWordDao {
         """
     SELECT MAX(aw.word_index)
     FROM ayah_words aw
-    INNER JOIN scripts s ON aw.script_id = s.script_id
     WHERE aw.ayah_id = :ayahId 
-      AND s.code = :scriptCode
+      AND aw.script_id = (
+          SELECT COALESCE(s.parent, s.script_id)
+          FROM scripts s
+          WHERE s.code = :scriptCode
+          LIMIT 1
+      )
     """
     )
     suspend fun getLastWordIndexForAyah(
@@ -72,8 +90,13 @@ interface AyahWordDao {
         """
         SELECT aw.*
         FROM ayah_words aw
-        INNER JOIN scripts s ON aw.script_id = s.script_id
-        WHERE aw.ayah_id IN (:ayahIds) AND s.code = :scriptCode
+        WHERE aw.ayah_id IN (:ayahIds)
+          AND aw.script_id = (
+              SELECT COALESCE(s.parent, s.script_id)
+              FROM scripts s
+              WHERE s.code = :scriptCode
+              LIMIT 1
+          )
         ORDER BY aw.ayah_id ASC, aw.word_index ASC
         """
     )

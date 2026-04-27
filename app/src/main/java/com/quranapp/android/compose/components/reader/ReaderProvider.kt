@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -31,6 +32,8 @@ import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.wbw.WbwManager
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderProviderViewModel
 import kotlinx.coroutines.launch
 
@@ -50,6 +53,7 @@ val LocalRecitation = staticCompositionLocalOf<LocalRecitationStateData> {
 }
 
 data class LocalWbwStateData(
+    val isWbwRtl: Boolean,
     val activeTooltipWord: AyahWordEntity?,
     val onDismissTooltip: () -> Unit,
     val onForcePlay: (AyahWordEntity) -> Unit,
@@ -86,6 +90,16 @@ fun ReaderProvider(
     var wbwWordLoadingKey by remember { mutableStateOf<String?>(null) }
 
     var activeTooltipWord by remember { mutableStateOf<AyahWordEntity?>(null) }
+
+    val wbwId = ReaderPreferences.observeWbwId()
+    val isWbwRtl by produceState<Boolean>(false, wbwId) {
+        val wbwInfo = WbwManager.getAvailable(context, false)?.wbw?.firstOrNull {
+            it.id == wbwId
+        }
+
+        value = StringUtils.isRtlLanguage(wbwInfo?.langCode)
+    }
+
 
     fun playWord(word: AyahWordEntity) {
         val (chapterNo, verseNo) = QuranUtils.getVerseNoFromAyahId(word.ayahId)
@@ -155,6 +169,7 @@ fun ReaderProvider(
             playingVerse = recitationState.currentVerse,
         ),
         LocalWbwState provides LocalWbwStateData(
+            isWbwRtl = isWbwRtl,
             warmUpWord = { chapterNo, verseNo, wordIndex ->
                 coroutineScope.launch {
                     WbwAudioPlayer.warmUp(
