@@ -1,7 +1,7 @@
 package com.quranapp.android.compose.components.homepage
 
 import android.content.Intent
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +17,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,15 +27,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alfaazplus.sunnah.ui.theme.tightTextStyle
@@ -124,11 +123,11 @@ private fun ItemCard(
         modifier = Modifier
             .height(100.dp)
             .width(280.dp)
-            .clip(MaterialTheme.shapes.medium)
+            .shadow(1.dp, shapes.medium)
+            .clip(shapes.medium)
+            .border(1.dp, colorScheme.outlineVariant.alpha(0.7f), shapes.medium)
             .clickable(onClick = onOpen),
-        shape = MaterialTheme.shapes.medium,
         color = colorScheme.surface,
-        border = BorderStroke(1.dp, accentColor.copy(alpha = 0.2f)),
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
@@ -187,7 +186,7 @@ private fun ItemCard(
                         Text(
                             text = stringResource(R.string.strLabelContinueReading),
                             style = typography.labelMedium.merge(tightTextStyle),
-                            color = accentColor,
+                            color = colorScheme.onSurface.alpha(0.65f),
                             fontWeight = FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
