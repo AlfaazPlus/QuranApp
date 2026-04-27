@@ -1,9 +1,7 @@
 package com.quranapp.android.compose.components.homepage
 
 import android.content.Intent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +32,7 @@ import com.quranapp.android.activities.reference.ActivityExclusiveVerses
 import com.quranapp.android.activities.reference.ActivityProphets
 import com.quranapp.android.activities.reference.ActivityQuranScience
 import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
+import com.quranapp.android.compose.theme.alpha
 
 @Composable
 fun HomeSectionVersesCollections() {
@@ -150,23 +149,12 @@ private fun CollectionCard(
         modifier = modifier.height(120.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorScheme.surfaceContainer
+            containerColor = colorScheme.surfaceContainer.alpha(0.75f)
         ),
-        border = BorderStroke(
-            1.dp,
-            colorScheme.outlineVariant.copy(alpha = 0.75f)
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 1.dp,
-            pressedElevation = 2.dp
-        )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    colorScheme.surface
-                )
                 .padding(14.dp)
         ) {
 

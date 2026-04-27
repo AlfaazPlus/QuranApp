@@ -391,13 +391,17 @@ class RecitationService : MediaSessionService() {
             }
             plan.seekToVirtualPosition(player, target)
         } else {
+            val d = player.duration
+            val upper = if (d == C.TIME_UNSET || d < 0) Long.MAX_VALUE else d
+
             val target = if (isRelative) {
                 val delta =
                     if (amountOrDirection == ACTION_SEEK_RIGHT) SEEK_STEP_MS else -SEEK_STEP_MS
-                (player.currentPosition + delta).coerceIn(0L, player.duration)
+                (player.currentPosition + delta).coerceIn(0L, upper)
             } else {
-                amountOrDirection.coerceIn(0L, player.duration)
+                amountOrDirection.coerceIn(0L, upper)
             }
+
             player.seekTo(target)
         }
     }

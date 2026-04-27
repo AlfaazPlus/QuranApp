@@ -255,26 +255,20 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     fun seekTo(positionMs: Long) {
-        sendCommand(
-            SeekToPositionCommand(
-                positionMs = positionMs
-            )
+        ensureConnectedAndSend(
+            SeekToPositionCommand(positionMs = positionMs)
         )
     }
 
     fun seekLeft() {
-        sendCommand(
-            SeekToPositionCommand(
-                positionMs = RecitationService.ACTION_SEEK_LEFT
-            )
+        ensureConnectedAndSend(
+            SeekToPositionCommand(positionMs = RecitationService.ACTION_SEEK_LEFT)
         )
     }
 
     fun seekRight() {
-        sendCommand(
-            SeekToPositionCommand(
-                positionMs = RecitationService.ACTION_SEEK_RIGHT
-            )
+        ensureConnectedAndSend(
+            SeekToPositionCommand(positionMs = RecitationService.ACTION_SEEK_RIGHT)
         )
     }
 

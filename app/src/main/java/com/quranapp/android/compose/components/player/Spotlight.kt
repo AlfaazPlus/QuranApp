@@ -405,6 +405,20 @@ private fun SpotlightPlaybackBar(
             )
         }
 
+        IconButton(
+            onClick = {
+                controller.seekLeft()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_replay_5),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -443,6 +457,18 @@ private fun SpotlightPlaybackBar(
                     tint = colorScheme.onPrimary,
                 )
             }
+        }
+
+        IconButton(
+            onClick = { controller.seekRight() },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_forward_5),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
         }
 
         IconButton(

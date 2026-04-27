@@ -163,10 +163,8 @@ data class SeekToPositionCommand(
         const val ACTION = "SEEK_TO_POSITION"
 
         fun fromBundle(bundle: Bundle): SeekToPositionCommand? {
-            val positionMs = bundle.getLong("positionMs", -1L)
-            if (positionMs < 0L) return null
-
-            return SeekToPositionCommand(positionMs)
+            if (!bundle.containsKey("positionMs")) return null
+            return SeekToPositionCommand(bundle.getLong("positionMs"))
         }
     }
 }

@@ -123,11 +123,10 @@ private fun ItemCard(
         modifier = Modifier
             .height(100.dp)
             .width(280.dp)
-            .shadow(1.dp, shapes.medium)
             .clip(shapes.medium)
-            .border(1.dp, colorScheme.outlineVariant.alpha(0.7f), shapes.medium)
+            .border(1.dp, colorScheme.outlineVariant.alpha(0.5f), shapes.medium)
             .clickable(onClick = onOpen),
-        color = colorScheme.surface,
+        color = colorScheme.surfaceContainer.alpha(0.75f),
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
