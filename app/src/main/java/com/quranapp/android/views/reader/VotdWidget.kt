@@ -22,27 +22,26 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeWidgetSP
 import com.quranapp.android.utils.reader.isKFQPCScript
-import com.quranapp.android.utils.reader.toKFQPCFontFilename
-import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
-import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 
+private const val PENDING_INTENT_REQ_VOTD_WIDGET = 0x8000
 
 class VotdWidget : AppWidgetProvider() {
     override fun onUpdate(
@@ -185,7 +184,10 @@ internal suspend fun onObtainVotd(
         }
 
         val pendingIntent = PendingIntent.getActivity(
-            context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            context,
+            PENDING_INTENT_REQ_VOTD_WIDGET + appWidgetId,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         views.setOnClickPendingIntent(R.id.votdWidgetContainer, pendingIntent)
@@ -206,14 +208,16 @@ internal fun prepareArabicTextBitmap(
     val verseTextSize = context.sp2px(txtSizeSp)
     var fontQuranText: Typeface?
 
+    // VOTD is always dark background, so we use the "dark" variant of KFQPC if available
     if (quranScript.isKFQPCScript()) {
-        val fontsDir = FileUtils.newInstance(context).getKFQPCScriptFontDir(quranScript)
-        val fontFile = File(fontsDir, pageNo.toKFQPCFontFilename(true))
-
-        fontQuranText = if (fontFile.length() > 0L) {
-            Typeface.createFromFile(fontFile)
-        } else {
-            Typeface.createFromFile(File(fontsDir, pageNo.toKFQPCFontFilenameOld()))
+        try {
+            val tf = FontResolver
+                .getInstance(context)
+                .getKfqpcTypeface(quranScript, pageNo, false)
+            fontQuranText = if (tf != Typeface.DEFAULT) tf else null
+        } catch (e: Exception) {
+            Log.saveError(e, "VotdWidget.loadFont")
+            fontQuranText = null
         }
     } else {
         fontQuranText = context.getFont(

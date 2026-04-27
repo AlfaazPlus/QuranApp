@@ -21,6 +21,12 @@ class FontResolver private constructor(val context: Context) {
 
     private val fileUtils by lazy { FileUtils.newInstance(context) }
 
+    fun getKfqpcTypeface(
+        script: String,
+        pageNo: Int,
+        isDark: Boolean,
+    ): Typeface = loadKfqpcTypeface(script, pageNo, isDark)
+
     private fun loadKfqpcTypeface(
         script: String,
         pageNo: Int,
