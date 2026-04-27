@@ -1,5 +1,6 @@
 package com.quranapp.android.api
 
+import com.quranapp.android.api.models.tafsir.ChapterInfoApiResponse
 import com.quranapp.android.api.models.tafsir.TafsirResponseModel
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -7,6 +8,13 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AlfaazPlusApi {
+    @GET("/quran/chapters/{chapter}/info")
+    suspend fun getChapterInfo(
+        @Path("chapter") chapterNo: Int,
+        @Query("language") language: String,
+        @Query("id") id: Int?,
+    ): ChapterInfoApiResponse
+
     @GET("/quran/tafsirs")
     suspend fun getAvailableTafsirs(): ResponseBody
 

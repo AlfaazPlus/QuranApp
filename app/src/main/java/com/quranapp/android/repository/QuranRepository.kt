@@ -573,6 +573,10 @@ class QuranRepository(
         return ayahDao.getDistinctSurahNosWithSajdah().toSet()
     }
 
+    suspend fun getJuzNosForChapter(chapterNo: Int): List<Int> {
+        return ayahDao.getDistinctJuzNosForSurah(chapterNo)
+    }
+
     fun getJuzs() = getRangesResolved(NavigationType.juz)
 
     fun getHizbs() = getRangesResolved(NavigationType.hizb)

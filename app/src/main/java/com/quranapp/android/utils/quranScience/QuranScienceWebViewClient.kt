@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.quranScience
 
+import ThemeUtils
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -117,6 +118,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         val host = uri.host ?: return true
 
         val pathSegments = uri.pathSegments
+
         if (pathSegments.size == 2 && host.contains("quranapp.verse")) {
             val chapterNo = pathSegments[0].toInt()
             val verses = pathSegments[1].split("-")

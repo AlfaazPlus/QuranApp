@@ -99,4 +99,13 @@ interface AyahDao {
         """
     )
     suspend fun getDistinctSurahNosWithSajdah(): List<Int>
+
+    @Query(
+        """
+        SELECT DISTINCT juz_no FROM ayahs
+        WHERE surah_no = :surahNo
+        ORDER BY juz_no
+        """
+    )
+    suspend fun getDistinctJuzNosForSurah(surahNo: Int): List<Int>
 }

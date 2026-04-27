@@ -1,15 +1,21 @@
 package com.quranapp.android.compose.theme
+
 import androidx.compose.ui.graphics.Color
-
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-
+import androidx.compose.ui.graphics.toArgb
+import com.quranapp.android.utils.univ.StringUtils
 
 fun Color.alpha(alpha: Float): Color {
     return copy(alpha = alpha)
+}
+
+
+fun Color.toCssHex(): String =
+    StringUtils.formatInvariant("#%06X", 0xFFFFFF and toArgb())
+
+fun Color.toCssRgba(): String {
+    val r = (red * 255f).toInt().coerceIn(0, 255)
+    val g = (green * 255f).toInt().coerceIn(0, 255)
+    val b = (blue * 255f).toInt().coerceIn(0, 255)
+
+    return "rgba($r,$g,$b,${alpha})"
 }

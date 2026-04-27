@@ -103,12 +103,11 @@ public final class FileUtils {
         return makeAndGetAppResourceDir(ChapterInfoUtils.DIR_NAME);
     }
 
-    public File getChapterInfoFile(String lang, int chapterNo) {
+    public File getChapterInfoFile(String langCode, int chapterNo) {
         File chapterInfoDir = getChapterInfoDir();
-        String chapterInfoSubPath = ChapterInfoUtils.prepareChapterInfoFilePath(lang, chapterNo);
+        String chapterInfoSubPath = ChapterInfoUtils.prepareChapterInfoFilePath(langCode, chapterNo);
         return new File(chapterInfoDir, chapterInfoSubPath);
     }
-
 
     public File getTafsirsManifestFile() {
         return new File(getTafsirDir(), TafsirUtils.AVAILABLE_TAFSIRS_FILENAME);

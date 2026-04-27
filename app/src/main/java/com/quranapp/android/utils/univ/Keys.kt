@@ -30,7 +30,6 @@ object Keys {
     @Deprecated("Replaced by ReaderIntentData.initialVerse; used only by legacy ActivityReader")
     const val READER_KEY_PENDING_SCROLL = "reader.pending_scroll"
 
-    const val KEY_LANGUAGE = "language"
     const val KEY_ACTIVITY_RESUMED_FROM_NOTIFICATION = "key.resumeFromPlayerNotification"
 
     const val KEY_VOTD_DATE = "votd_date"

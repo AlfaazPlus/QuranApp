@@ -24,11 +24,12 @@ body {
 html,
 html.light {
    background-color: transparent;
+   color: var(--color-on-surface, #2A211A);
 }
 
 html.dark {
-   background-color: #151515;
-   color: #BBBBBB;
+   background-color: var(--color-background, #151515);
+   color: var(--color-on-surface, #BBBBBB);
 }
 
 p {
@@ -43,14 +44,14 @@ a[href] {
    text-decoration: none;
    border-radius: 5px;
    padding: 1px 3px;
-   color: #008B5B;
+   color: var(--color-primary, #008B5B);
    font-weight: bold;
-   background-color: rgba(0, 139, 90, .20);
+   background-color: var(--color-link-bg, rgba(0, 139, 90, 0.2));
 }
 
 a[href]:active {
-   color: #006944;
-   background-color: rgba(0, 139, 90, .30);
+   color: var(--color-primary, #008B5B);
+   background-color: var(--color-link-bg-active, rgba(0, 139, 90, 0.3));
 }
 
 hr {
@@ -60,11 +61,11 @@ hr {
 }
 
 html.light hr {
-   border-color: #c4c4c4;
+   border-color: var(--color-outline-variant, #c4c4c4);
 }
 
 html.dark hr {
-   border-color: #575757;
+   border-color: var(--color-outline-variant, #575757);
 }
 
 
@@ -73,20 +74,21 @@ html.dark hr {
    flex-wrap: nowrap;
    align-items: center;
    justify-content: center;
+   gap: 5px;
+   margin: 5px 0;
 }
 
 .info-card {
    padding: 10px 15px;
    text-align: center;
-   background: linear-gradient(#e0e0e0, #f0f0f0);;
+   background-color: var(--color-surface-variant, #e0e0e0);
    border-radius: 10px;
    flex-grow: 1;
    overflow: hidden;
-   margin-top: 3px;
-   margin-bottom: 3px;
 }
+
 html.dark .info-card {
-   background: linear-gradient(#404040, #202020);
+   background-color: var(--color-surface-variant, #404040);
 }
 
 .info-card:first-child {
@@ -104,18 +106,19 @@ html.dark .info-card {
 
 .info-card .title {
    font-size: 12px;
-   color: #474747;
+   color: var(--color-on-surface-variant, #474747);
    white-space: nowrap;
 }
 
 html.dark .info-card .title {
-   color: #c5c5c5;
+   color: var(--color-on-surface-variant, #c5c5c5);
 }
 
 .info-card .value {
    font-size: 15px;
    font-weight: bold;
    white-space: nowrap;
+   color: var(--color-on-surface, inherit);
 }
 
 .big-title {
@@ -142,36 +145,39 @@ html.dark .info-card .title {
    font-family: surah-icon !important;
    font-size: 35px;
    margin-right: 10px;
-   color: #008B5B;
+   color: var(--color-primary, #008B5B);
 }
 
 .chapter-title-trans {
    font-size: 20px;
    font-weight: bold;
+   color: var(--color-on-surface, inherit);
 }
 
 .chapter-no {
    margin-top: 5px;
    font-size: 12px;
-   color: #474747;
+   color: var(--color-on-surface-variant, #474747);
 }
 
 html.dark .chapter-no {
-   color: #c5c5c5;
+   color: var(--color-on-surface-variant, #c5c5c5);
 }
 
 .content {
    font-family: content-font, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    text-align: justify;
+   color: var(--color-on-surface, inherit);
 }
 
 span.ar {
    direction: rtl;
    padding: 10px 15px;
    border-radius: 10px;
-   background-color: #F0F0F0;
+   background-color: var(--color-surface-container, #F0F0F0);
+   color: var(--color-on-surface, inherit);
 }
 
 html.dark span.ar {
-   background-color: #202020;
+   background-color: var(--color-surface-variant, #202020);
 }

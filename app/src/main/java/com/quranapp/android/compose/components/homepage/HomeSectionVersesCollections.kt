@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.homepage
 
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -151,6 +152,7 @@ private fun CollectionCard(
         colors = CardDefaults.cardColors(
             containerColor = colorScheme.surfaceContainer.alpha(0.75f)
         ),
+        border = BorderStroke(1.dp, colorScheme.outline.copy(alpha = 0.1f))
     ) {
         Box(
             modifier = Modifier

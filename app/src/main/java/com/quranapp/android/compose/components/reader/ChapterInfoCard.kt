@@ -132,7 +132,6 @@ fun ChapterInfoCard(chapterNo: Int) {
                         .clickable {
                             val intent = Intent(context, ActivityChapInfo::class.java).apply {
                                 putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-                                putExtra(Keys.KEY_LANGUAGE, appLocale().toLanguageTag())
                             }
                             context.startActivity(intent)
                         }
