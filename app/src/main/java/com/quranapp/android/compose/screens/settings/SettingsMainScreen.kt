@@ -40,8 +40,8 @@ import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import java.util.Locale
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun SettingsMainScreen(
@@ -187,15 +187,15 @@ fun SettingsMainScreen(
                 navController.navigate(SettingRoutes.WWB)
             }
 
-            SettingsItem(
-                title = R.string.downloadRecitations,
-                icon = R.drawable.dr_icon_download,
-            ) {
-                navController.navigate(SettingRoutes.RECITATION_DOWNLOAD)
-            }
-
             if (!showReaderSettingsOnly) {
                 ListItemCategoryLabel(title = stringResource(R.string.titleOtherSettings))
+
+                SettingsItem(
+                    title = R.string.downloadRecitations,
+                    icon = R.drawable.dr_icon_download,
+                ) {
+                    navController.navigate(SettingRoutes.RECITATION_DOWNLOAD)
+                }
 
                 SettingsItem(
                     title = R.string.titleResourceDownloadSource,

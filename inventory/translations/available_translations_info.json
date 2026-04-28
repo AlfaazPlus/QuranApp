@@ -325,7 +325,7 @@
         "langName": "Кыргызча",
         "lastUpdated": 1774293143000,
         "downloadPath": "inventory/translations/ky/ky_shamsudin-hakimov.json"
-        }
+      }
     },
     "sd": {
       "sd_taj-mehmood-amroti": {
@@ -376,6 +376,15 @@
         "langName": "Тоҷикӣ",
         "lastUpdated": 1767970786093,
         "downloadPath": "inventory/translations/tg/tg_rowwad.json"
+      },
+      "tg_tajik": {
+        "book": "Tajik",
+        "author": "Tajik",
+        "displayName": "Tajik",
+        "langCode": "tg",
+        "langName": "Тоҷикӣ",
+        "lastUpdated": 1777380274050,
+        "downloadPath": "inventory/translations/tg/tg_tajik.json"
       }
     },
     "tr": {
