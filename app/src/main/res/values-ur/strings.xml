@@ -417,4 +417,14 @@
     <string name="discord">ڈسکورڈ</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ڈاؤن لوڈ کریں</string>
     <string name="tajweedColors">تجوید کے رنگ</string>
+    <string name="similarVerses">مشابہ آیات</string>
+    <string name="noSimilarVerses">اس آیت کے لیے کوئی مشابہ آیت موجود نہیں ہے۔</string>
+    <string name="countSimilarVerses" formatted="false">%1$s میں %2$d مشابہ آیات ہیں</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% مطابقت · اسکور %2$d</string>
+    <string name="moreOptions">مزید اختیارات</string>
+    <string name="whenChapterEnds">جب سورت ختم ہو</string>
+    <string name="whenChapterEndsDesc">موجودہ سورت ختم ہونے کے بعد کیا ہونا چاہیے، منتخب کریں۔</string>
+    <string name="stopPlayback">پلے بیک روکیں</string>
+    <string name="playNextSurah">اگلی سورت چلائیں</string>
+    <string name="repeatCurrentSurah">موجودہ سورت دہرائیں</string>
 </resources>

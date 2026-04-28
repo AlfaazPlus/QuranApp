@@ -7,21 +7,19 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
 
 object RecitationPreferences {
-    private val KEY_RECITER = stringPreferencesKey(RecitationUtils.KEY_RECITATION_RECITER)
+    private val KEY_RECITER = stringPreferencesKey("key.recitation.reciter")
     private val KEY_TRANSLATION_RECITER =
-        stringPreferencesKey(RecitationUtils.KEY_RECITATION_TRANSLATION_RECITER)
-    private val KEY_SPEED = floatPreferencesKey(RecitationUtils.KEY_RECITATION_SPEED)
-    private val KEY_REPEAT = booleanPreferencesKey(RecitationUtils.KEY_RECITATION_REPEAT)
+        stringPreferencesKey("key.recitation_translation.reciter")
+    private val KEY_SPEED = floatPreferencesKey("key.recitation.speed")
+    private val KEY_REPEAT = booleanPreferencesKey("key.recitation.repeat")
     private val KEY_REPEAT_COUNT =
         intPreferencesKey("key.recitation.repeat_count")
-    private val KEY_CONTINUE_CHAPTER =
-        booleanPreferencesKey(RecitationUtils.KEY_RECITATION_CONTINUE_CHAPTER)
-    private val KEY_SCROLL_SYNC = booleanPreferencesKey(RecitationUtils.KEY_RECITATION_SCROLL_SYNC)
-    private val KEY_AUDIO_OPTION = stringPreferencesKey(RecitationUtils.KEY_RECITATION_AUDIO_OPTION)
+    private val KEY_AUDIO_OPTION = stringPreferencesKey("key.recitation.option_audio")
+    private val KEY_AUDIO_END_BEHAVIOUR = stringPreferencesKey("key.recitation.end_behaviour")
     private val KEY_VERSE_GROUP_SIZE =
         intPreferencesKey("key.recitation.verse_group_size")
 
@@ -31,6 +29,8 @@ object RecitationPreferences {
     const val RECITATION_MIN_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_REPEAT_COUNT = 0
     const val RECITATION_DEFAULT_VERSE_GROUP_SIZE = 1
+
+    const val RECITATION_DEFAULT_SPEED: Float = 1.0f
 
     @Composable
     fun observeReciterId(): String? {
@@ -64,12 +64,12 @@ object RecitationPreferences {
 
     @Composable
     fun observeSpeed(): Float {
-        return DataStoreManager.observe(KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED)
+        return DataStoreManager.observe(KEY_SPEED, RECITATION_DEFAULT_SPEED)
     }
 
     fun getSpeed(): Float {
         return DataStoreManager.read(
-            KEY_SPEED, RecitationUtils.RECITATION_DEFAULT_SPEED
+            KEY_SPEED, RECITATION_DEFAULT_SPEED
         ).coerceAtLeast(0.1f)
     }
 
@@ -95,22 +95,6 @@ object RecitationPreferences {
     }
 
     @Composable
-    fun observeContinueChapter(): Boolean {
-        return DataStoreManager.observe(
-            KEY_CONTINUE_CHAPTER,
-            RecitationUtils.RECITATION_DEFAULT_CONTINUE_CHAPTER
-        )
-    }
-
-    suspend fun setContinueChapter(continueChapter: Boolean) {
-        DataStoreManager.write(KEY_CONTINUE_CHAPTER, continueChapter)
-    }
-
-    fun getContinueChapter(): Boolean {
-        return DataStoreManager.read(KEY_CONTINUE_CHAPTER, true)
-    }
-
-    @Composable
     fun observeAudioOption(): AudioOption {
         return DataStoreManager.observe(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
             AudioOption.fromValue(it)
@@ -125,6 +109,24 @@ object RecitationPreferences {
 
     suspend fun setAudioOption(option: AudioOption) {
         DataStoreManager.write(KEY_AUDIO_OPTION, option.value)
+    }
+
+    @Composable
+    fun observeAudioEndBehaviour(): AudioEndBehaviour {
+        return DataStoreManager.observe(KEY_AUDIO_END_BEHAVIOUR, AudioEndBehaviour.DEFAULT.value)
+            .let {
+                AudioEndBehaviour.fromValue(it)
+            }
+    }
+
+    fun getAudioEndBehaviour(): AudioEndBehaviour {
+        return DataStoreManager.read(KEY_AUDIO_END_BEHAVIOUR, AudioEndBehaviour.DEFAULT.value).let {
+            AudioEndBehaviour.fromValue(it)
+        }
+    }
+
+    suspend fun setAudioEndBehaviour(option: AudioEndBehaviour) {
+        DataStoreManager.write(KEY_AUDIO_END_BEHAVIOUR, option.value)
     }
 
     @Composable

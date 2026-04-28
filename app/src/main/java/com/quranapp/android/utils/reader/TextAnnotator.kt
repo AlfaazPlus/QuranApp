@@ -2,6 +2,7 @@ package com.quranapp.android.utils.reader
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -13,8 +14,8 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.em
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranConstants
 
 typealias OnReferenceClick = (slugs: Set<String>, chapterNo: Int, verses: String) -> Unit
@@ -110,9 +111,11 @@ fun buildTranslationAnnotatedString(
                             tag = QuranConstants.FOOTNOTE_REF_TAG,
                             styles = TextLinkStyles(
                                 style = SpanStyle(
-                                    color = colorScheme.secondary.alpha(0.7f),
+                                    color = if (actions?.onFootnoteClickRaw == null) Color.Transparent else colorScheme.secondary.alpha(
+                                        0.7f
+                                    ),
                                     baselineShift = BaselineShift.Superscript,
-                                    fontSize = 0.8.em
+                                    fontSize = if (actions?.onFootnoteClickRaw == null) 0.2.em else 0.8.em
                                 ),
                             ),
                         ) {

@@ -42,6 +42,7 @@ import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
@@ -300,7 +301,7 @@ class RecitationService : MediaSessionService() {
         val initialSettings = PlayerSettings(
             speed = RecitationPreferences.getSpeed(),
             repeatCount = RecitationPreferences.getRepeatCount(),
-            continueRange = true,
+            audioEndBehaviour = RecitationPreferences.getAudioEndBehaviour(),
             audioOption = RecitationPreferences.getAudioOption(),
             reciter = RecitationPreferences.getReciterId(),
             translationReciter = RecitationPreferences.getTranslationReciterId(),
@@ -992,9 +993,24 @@ class RecitationService : MediaSessionService() {
     }
 
     private fun handlePlaybackEnded() {
-        if (!state.value.settings.continueRange) return
+        when (state.value.settings.audioEndBehaviour) {
+            AudioEndBehaviour.STOP_PLAYBACK -> {
+                // do nothing - playback has already ended, so just leave it at that.
+            }
 
-        reciteNextVerse()
+            AudioEndBehaviour.NEXT_CHAPTER -> scoped {
+                // next verse logic will handle chapter transitions as well, so just try to go to the next verse.
+                reciteNextVerse()
+            }
+
+            AudioEndBehaviour.REPEAT_CHAPTER -> scoped {
+                val currentChapterNo = state.value.currentVerse.chapterNo
+
+                if (repository().isVerseValid4Chapter(currentChapterNo, 1)) {
+                    playChapter(currentChapterNo, 1)
+                }
+            }
+        }
     }
 
     // ==================== Session callback & command dispatch ====================
@@ -1100,7 +1116,7 @@ class RecitationService : MediaSessionService() {
 
             SetRepeatCommand.ACTION -> SetRepeatCommand.fromBundle(args)?.let { reduce(it) }
 
-            SetContinuePlayingCommand.ACTION -> SetContinuePlayingCommand.fromBundle(args)
+            SetAudioEndBehaviourCommand.ACTION -> SetAudioEndBehaviourCommand.fromBundle(args)
                 ?.let { reduce(it) }
 
             SetReciterCommand.ACTION -> SetReciterCommand.fromBundle(args)?.let { reduce(it) }
@@ -1148,8 +1164,8 @@ class RecitationService : MediaSessionService() {
                 rescheduleRepeatForCurrentPosition()
             }
 
-            is SetContinuePlayingCommand -> {
-                updateState { copy(settings = settings.copy(continueRange = cmd.continuePlaying)) }
+            is SetAudioEndBehaviourCommand -> {
+                updateState { copy(settings = settings.copy(audioEndBehaviour = cmd.behaviour)) }
             }
 
             is SeekToPositionCommand -> seek(cmd.positionMs)

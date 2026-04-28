@@ -4,6 +4,7 @@ package com.quranapp.android.compose.components.player
 import android.app.Activity
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,11 +29,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -59,9 +63,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviourSheet
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.player.dialogs.AudioOptionsSheet
 import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
@@ -232,7 +239,6 @@ fun ExpandedPlayer(
                                                 isPlaying = isPlaying,
                                                 isLoading = isLoading,
                                                 controller = controller,
-                                                continueRange = settings.continueRange,
                                                 bottomPadding = 8.dp,
                                             )
                                         }
@@ -292,7 +298,6 @@ fun ExpandedPlayer(
                                         isPlaying = isPlaying,
                                         isLoading = isLoading,
                                         controller = controller,
-                                        continueRange = settings.continueRange,
                                     )
                                 }
                             }
@@ -407,6 +412,7 @@ private fun Configurations(
     val context = LocalContext.current
     val audioOption = RecitationPreferences.observeAudioOption();
     val speed = RecitationPreferences.observeSpeed();
+    val audioEndBehaviour = RecitationPreferences.observeAudioEndBehaviour()
     val repeatCount = RecitationPreferences.observeRepeatCount()
     val reciterNames =
         RecitationModelManager.get(context).rememberCurrentReciterNameForAudioOption()
@@ -418,11 +424,20 @@ private fun Configurations(
     }
 
     val repeatSupported = audioOption == AudioOption.ONLY_QURAN
+    val speedSubtext = String.format(appLocale(), "%.1fx", speed)
+    val audioEndBehaviourSubtextId = when (audioEndBehaviour) {
+        AudioEndBehaviour.STOP_PLAYBACK -> R.string.stopPlayback
+        AudioEndBehaviour.NEXT_CHAPTER -> R.string.playNextSurah
+        AudioEndBehaviour.REPEAT_CHAPTER -> R.string.repeatCurrentSurah
+    }
 
     var showReciterSelector by rememberSaveable { mutableStateOf(false) }
     var showAudioOptions by rememberSaveable { mutableStateOf(false) }
     var showRepeatOptions by rememberSaveable { mutableStateOf(false) }
+    var showMoreMenu by rememberSaveable { mutableStateOf(false) }
+
     var showPlaybackSpeedOptions by rememberSaveable { mutableStateOf(false) }
+    var showEndBehaviorOptions by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -480,15 +495,104 @@ private fun Configurations(
                 modifier = Modifier.weight(1f),
             )
 
-            PlayerConfigButton(
-                text = stringResource(R.string.playbackSpeed),
-                subtext = String.format(appLocale(), "%.1fx", speed),
-                icon = painterResource(R.drawable.icon_playback_speed),
-                onClick = {
-                    showPlaybackSpeedOptions = true
-                },
+            Box(
                 modifier = Modifier.weight(1f),
-            )
+            ) {
+                PlayerConfigButton(
+                    text = stringResource(R.string.moreOptions),
+                    icon = painterResource(R.drawable.dr_icon_menu),
+                    onClick = {
+                        showMoreMenu = true
+                    },
+                )
+
+                DropdownMenu(
+                    expanded = showMoreMenu,
+                    onDismissRequest = { showMoreMenu = false },
+                    shape = RoundedCornerShape(12.dp),
+                    offset = DpOffset(0.dp, 6.dp),
+                    containerColor = PlayerBgColor.alpha(0.8f),
+                    tonalElevation = 0.dp,
+                    shadowElevation = 0.dp,
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color.White.copy(alpha = 0.25f),
+                    ),
+                ) {
+                    DropdownMenuItem(
+                        leadingIcon = {
+                            Icon(
+                                painterResource(R.drawable.icon_playback_speed),
+                                contentDescription = stringResource(R.string.playbackSpeed),
+                                tint = Color.White,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        },
+                        text = {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.playbackSpeed),
+                                    color = PlayerContentColor,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                )
+                                Text(
+                                    text = speedSubtext,
+                                    color = PlayerContentColor.alpha(0.70f),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    maxLines = 1,
+                                )
+                            }
+                        },
+                        colors = MenuDefaults.itemColors(
+                            textColor = PlayerContentColor,
+                        ),
+                        onClick = {
+                            showMoreMenu = false
+                            showPlaybackSpeedOptions = true
+                        },
+                    )
+                    DropdownMenuItem(
+                        leadingIcon = {
+                            Icon(
+                                painterResource(R.drawable.dr_icon_settings),
+                                contentDescription = stringResource(R.string.whenChapterEnds),
+                                tint = Color.White,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        },
+                        text = {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.whenChapterEnds),
+                                    color = PlayerContentColor,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                )
+                                Text(
+                                    text = stringResource(audioEndBehaviourSubtextId),
+                                    color = PlayerContentColor.alpha(0.70f),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    maxLines = 1,
+                                )
+                            }
+                        },
+                        colors = MenuDefaults.itemColors(
+                            textColor = PlayerContentColor,
+                        ),
+                        onClick = {
+                            showMoreMenu = false
+                            showEndBehaviorOptions = true
+                        }
+                    )
+                }
+            }
         }
     }
 
@@ -518,6 +622,13 @@ private fun Configurations(
         isOpen = showPlaybackSpeedOptions,
     ) {
         showPlaybackSpeedOptions = false
+    }
+
+    AudioEndBehaviourSheet(
+        controller = controller,
+        isOpen = showEndBehaviorOptions,
+    ) {
+        showEndBehaviorOptions = false
     }
 }
 
@@ -630,7 +741,6 @@ private fun ExpandedTransportControls(
     isPlaying: Boolean,
     isLoading: Boolean,
     controller: RecitationController,
-    continueRange: Boolean,
     bottomPadding: Dp = 48.dp,
 ) {
     Row(

@@ -421,4 +421,14 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Скачать SunnahApp</string>
     <string name="tajweedColors">Цвета таджвида</string>
+    <string name="similarVerses">Похожие аяты</string>
+    <string name="noSimilarVerses">Для этого аята нет похожих аятов.</string>
+    <string name="countSimilarVerses" formatted="false">У %1$s есть %2$d похожих аятов</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% совпадение · оценка %2$d</string>
+    <string name="moreOptions">Другие параметры</string>
+    <string name="whenChapterEnds">Когда сура заканчивается</string>
+    <string name="whenChapterEndsDesc">Выберите, что делать после завершения воспроизведения текущей суры.</string>
+    <string name="stopPlayback">Остановить воспроизведение</string>
+    <string name="playNextSurah">Воспроизвести следующую суру</string>
+    <string name="repeatCurrentSurah">Повторять текущую суру</string>
 </resources>

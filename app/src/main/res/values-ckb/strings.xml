@@ -410,5 +410,15 @@
     <string name="discord">دیسکۆرد</string>
     <string name="strTitleDownloadSunnahApp">دابەزاندنی SunnahApp</string>
     <string name="tajweedColors">ڕەنگەکانی تەجوید</string>
+    <string name="similarVerses">ئایەتە هاوشێوەکان</string>
+    <string name="noSimilarVerses">بۆ ئەم ئایەتە هیچ ئایەتی هاوشێوە نییە.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s %2$d ئایەتی هاوشێوەی هەیە</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% هاوشێوەیی · سکۆری %2$d</string>
+    <string name="moreOptions">هەڵبژاردەی زیاتر</string>
+    <string name="whenChapterEnds">کاتێک سوورەت تەواو دەبێت</string>
+    <string name="whenChapterEndsDesc">هەڵبژێرە دوای تەواوبوونی لێدانی سوورەتی ئێستا چی ڕوودەدات.</string>
+    <string name="stopPlayback">وەستاندنی لێدان</string>
+    <string name="playNextSurah">لێدانی سوورەتی داهاتوو</string>
+    <string name="repeatCurrentSurah">دووبارەکردنەوەی سوورەتی ئێستا</string>
 </resources>
 

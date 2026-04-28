@@ -413,4 +413,14 @@
     <string name="discord">ديسكورد</string>
     <string name="strTitleDownloadSunnahApp">تحميل SunnahApp</string>
     <string name="tajweedColors">ألوان التجويد</string>
+    <string name="similarVerses">الآيات المتشابهة</string>
+    <string name="noSimilarVerses">لا توجد آيات متشابهة لهذه الآية.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s تحتوي على %2$d آيات متشابهة</string>
+    <string name="similarVerseRowMeta" formatted="false">تطابق %1$d%% · النتيجة %2$d</string>
+    <string name="moreOptions">خيارات إضافية</string>
+    <string name="whenChapterEnds">عند انتهاء السورة</string>
+    <string name="whenChapterEndsDesc">اختر ما يحدث بعد انتهاء تشغيل السورة الحالية.</string>
+    <string name="stopPlayback">إيقاف التشغيل</string>
+    <string name="playNextSurah">تشغيل السورة التالية</string>
+    <string name="repeatCurrentSurah">إعادة السورة الحالية</string>
 </resources>

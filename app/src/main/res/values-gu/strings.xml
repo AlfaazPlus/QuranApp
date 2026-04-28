@@ -413,5 +413,15 @@
     <string name="discord">ડિસ્કોર્ડ</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ડાઉનલોડ કરો</string>
     <string name="tajweedColors">તાજવીદના રંગો</string>
+    <string name="similarVerses">સમાન આયતો</string>
+    <string name="noSimilarVerses">આ આયત માટે કોઈ સમાન આયત નથી.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s માં %2$d સમાન આયતો છે</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% મેળ · સ્કોર %2$d</string>
+    <string name="moreOptions">વધુ વિકલ્પો</string>
+    <string name="whenChapterEnds">જ્યારે સૂરા પૂર્ણ થાય</string>
+    <string name="whenChapterEndsDesc">હાલની સૂરા પૂર્ણ થયા પછી શું થવું જોઈએ તે પસંદ કરો.</string>
+    <string name="stopPlayback">પ્લેબેક બંધ કરો</string>
+    <string name="playNextSurah">આગલી સૂરા ચલાવો</string>
+    <string name="repeatCurrentSurah">હાલની સૂરા પુનરાવર્તિત કરો</string>
 </resources>
 

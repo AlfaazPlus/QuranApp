@@ -403,4 +403,14 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">下載 SunnahApp</string>
     <string name="tajweedColors">塔吉威德色彩</string>
+    <string name="similarVerses">相似經文</string>
+    <string name="noSimilarVerses">此節經文沒有相似經文。</string>
+    <string name="countSimilarVerses" formatted="false">%1$s 有 %2$d 節相似經文</string>
+    <string name="similarVerseRowMeta" formatted="false">匹配度 %1$d%% · 分數 %2$d</string>
+    <string name="moreOptions">更多選項</string>
+    <string name="whenChapterEnds">當蘇拉結束時</string>
+    <string name="whenChapterEndsDesc">選擇目前蘇拉播放結束後的操作。</string>
+    <string name="stopPlayback">停止播放</string>
+    <string name="playNextSurah">播放下一章蘇拉</string>
+    <string name="repeatCurrentSurah">重複目前蘇拉</string>
 </resources>

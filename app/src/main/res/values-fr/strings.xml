@@ -413,5 +413,15 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Télécharger SunnahApp</string>
     <string name="tajweedColors">Couleurs du Tajwid</string>
+    <string name="similarVerses">Versets similaires</string>
+    <string name="noSimilarVerses">Il n’y a pas de versets similaires pour ce verset.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s a %2$d ayahs similaires</string>
+    <string name="similarVerseRowMeta" formatted="false">Correspondance de %1$d%% · score %2$d</string>
+    <string name="moreOptions">Plus d’options</string>
+    <string name="whenChapterEnds">À la fin de la sourate</string>
+    <string name="whenChapterEndsDesc">Choisissez ce qui se passe après la fin de lecture de la sourate actuelle.</string>
+    <string name="stopPlayback">Arrêter la lecture</string>
+    <string name="playNextSurah">Lire la sourate suivante</string>
+    <string name="repeatCurrentSurah">Répéter la sourate actuelle</string>
 </resources>
 

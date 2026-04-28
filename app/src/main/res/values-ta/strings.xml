@@ -403,5 +403,15 @@
     <string name="discord">டிஸ்கார்ட்</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp-ஐ பதிவிறக்கவும்</string>
     <string name="tajweedColors">தஜ்வீதின் நிறங்கள்</string>
+    <string name="similarVerses">ஒத்த ஆயத்துகள்</string>
+    <string name="noSimilarVerses">இந்த ஆயத்துக்கு ஒத்த ஆயத்துகள் இல்லை.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s-க்கு %2$d ஒத்த ஆயத்துகள் உள்ளன</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% பொருத்தம் · மதிப்பெண் %2$d</string>
+    <string name="moreOptions">மேலும் விருப்பங்கள்</string>
+    <string name="whenChapterEnds">ஸூரா முடியும் போது</string>
+    <string name="whenChapterEndsDesc">தற்போதைய ஸூரா ஒலிபரப்பு முடிந்த பின் என்ன நடக்க வேண்டும் என்பதை தேர்வு செய்யவும்.</string>
+    <string name="stopPlayback">இயக்கத்தை நிறுத்து</string>
+    <string name="playNextSurah">அடுத்த ஸூராவை இயக்கு</string>
+    <string name="repeatCurrentSurah">தற்போதைய ஸூராவை மீண்டும் இயக்கு</string>
 </resources>
 

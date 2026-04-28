@@ -408,5 +408,15 @@
     <string name="discord">ഡിസ്‌കോർഡ്</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ഡൗൺലോഡ് ചെയ്യുക</string>
     <string name="tajweedColors">താജ്‌വീദിന്റെ നിറങ്ങൾ</string>
+    <string name="similarVerses">സമാന ആയത്തുകൾ</string>
+    <string name="noSimilarVerses">ഈ ആയത്തിന് സമാനമായ ആയത്തുകൾ ഇല്ല.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s ന് %2$d സമാന ആയത്തുകൾ ഉണ്ട്</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% പൊരുത്തം · സ്കോർ %2$d</string>
+    <string name="moreOptions">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+    <string name="whenChapterEnds">സൂറത്ത് അവസാനിക്കുമ്പോൾ</string>
+    <string name="whenChapterEndsDesc">നിലവിലെ സൂറത്ത് പ്ലേ ചെയ്യുന്നത് അവസാനിച്ച ശേഷം എന്ത് സംഭവിക്കണമെന്ന് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="stopPlayback">പ്ലേബാക്ക് നിർത്തുക</string>
+    <string name="playNextSurah">അടുത്ത സൂറത്ത് പ്ലേ ചെയ്യുക</string>
+    <string name="repeatCurrentSurah">നിലവിലെ സൂറത്ത് ആവർത്തിക്കുക</string>
 </resources>
 

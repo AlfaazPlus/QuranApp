@@ -1,11 +1,11 @@
 package com.quranapp.android.compose.screens.reader
 
+import ThemeUtils
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -95,7 +95,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     val colors by rememberUpdatedState(MaterialTheme.colorScheme)
     val type by rememberUpdatedState(MaterialTheme.typography)
 
-    val isDark = isSystemInDarkTheme()
+    val isDark = ThemeUtils.observeDarkTheme()
 
     val coroutineScope = rememberCoroutineScope()
 

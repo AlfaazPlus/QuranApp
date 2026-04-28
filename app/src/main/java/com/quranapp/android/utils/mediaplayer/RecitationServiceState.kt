@@ -2,6 +2,7 @@ package com.quranapp.android.utils.mediaplayer
 
 import android.os.Bundle
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
@@ -14,7 +15,7 @@ enum class PlayerInterationSource {
 data class PlayerSettings(
     val speed: Float = 1.0f,
     val repeatCount: Int = 1,
-    val continueRange: Boolean = true,
+    val audioEndBehaviour: AudioEndBehaviour = AudioEndBehaviour.DEFAULT,
     val audioOption: AudioOption = AudioOption.DEFAULT,
     val reciter: String? = null,
     val translationReciter: String? = null
@@ -117,7 +118,7 @@ data class RecitationServiceState(
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
         putFloat(KEY_PLAYBACK_SPEED, settings.speed)
         putInt(KEY_REPEAT_COUNT, settings.repeatCount)
-        putBoolean(KEY_CONTINUE, settings.continueRange)
+        putString(KEY_AUDIO_END_BEHAVIOUR, settings.audioEndBehaviour.value)
         putString(KEY_AUDIO_OPTION, settings.audioOption.value)
     }
 
@@ -132,7 +133,7 @@ data class RecitationServiceState(
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
         private const val KEY_REPEAT_COUNT = "state_repeat_count"
-        private const val KEY_CONTINUE = "state_continue"
+        private const val KEY_AUDIO_END_BEHAVIOUR = "state_audio_end_behaviour"
         private const val KEY_AUDIO_OPTION = "state_audio_option"
         val EMPTY = RecitationServiceState()
 
@@ -151,7 +152,9 @@ data class RecitationServiceState(
                 settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),
                     repeatCount = bundle.getInt(KEY_REPEAT_COUNT, 1).coerceAtLeast(1),
-                    continueRange = bundle.getBoolean(KEY_CONTINUE, true),
+                    audioEndBehaviour = bundle.getString(
+                        KEY_AUDIO_END_BEHAVIOUR,
+                    )?.let { AudioEndBehaviour.fromValue(it) } ?: AudioEndBehaviour.DEFAULT,
                     audioOption = bundle.getString(
                         KEY_AUDIO_OPTION
                     )?.let { AudioOption.fromValue(it) } ?: AudioOption.DEFAULT,

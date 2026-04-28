@@ -410,5 +410,15 @@
     <string name="discord">ডিসকর্ড</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp ডাউনলোড করুন</string>
     <string name="tajweedColors">তাজউইদের রং</string>
+    <string name="similarVerses">সদৃশ আয়াতসমূহ</string>
+    <string name="noSimilarVerses">এই আয়াতের জন্য কোনো সদৃশ আয়াত নেই।</string>
+    <string name="countSimilarVerses" formatted="false">%1$s-এ %2$dটি সদৃশ আয়াত আছে</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% মিল · স্কোর %2$d</string>
+    <string name="moreOptions">আরও অপশন</string>
+    <string name="whenChapterEnds">সূরা শেষ হলে</string>
+    <string name="whenChapterEndsDesc">বর্তমান সূরা শেষ হলে এরপর কী হবে তা বেছে নিন।</string>
+    <string name="stopPlayback">প্লেব্যাক বন্ধ করুন</string>
+    <string name="playNextSurah">পরবর্তী সূরা চালান</string>
+    <string name="repeatCurrentSurah">বর্তমান সূরা পুনরাবৃত্তি করুন</string>
 </resources>
 

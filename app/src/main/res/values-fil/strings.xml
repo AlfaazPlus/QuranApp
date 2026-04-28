@@ -406,4 +406,14 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">I-download ang SunnahApp</string>
     <string name="tajweedColors">mga kulay ng tajweed</string>
+    <string name="similarVerses">Mga magkakatulad na talata</string>
+    <string name="noSimilarVerses">Walang magkakatulad na talata para sa talatang ito.</string>
+    <string name="countSimilarVerses" formatted="false">May %2$d magkakatulad na ayah ang %1$s</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% tugma · iskor %2$d</string>
+    <string name="moreOptions">Higit pang opsyon</string>
+    <string name="whenChapterEnds">Kapag natapos ang surah</string>
+    <string name="whenChapterEndsDesc">Piliin kung ano ang mangyayari pagkatapos tumugtog ang kasalukuyang surah.</string>
+    <string name="stopPlayback">Ihinto ang pag-playback</string>
+    <string name="playNextSurah">I-play ang susunod na surah</string>
+    <string name="repeatCurrentSurah">Ulitin ang kasalukuyang surah</string>
 </resources>

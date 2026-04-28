@@ -21,6 +21,7 @@ import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
 import com.quranapp.android.components.bookmark.BookmarkModel
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.screens.ExportImportScreen
@@ -244,6 +245,9 @@ class ActivityExportImport : BaseActivity() {
             RecitationPreferences.setAudioOption(AudioOption.fromValue(it))
         }
 
+        jsonObject.safeString(ExportKeys.RECITATION_AUDIO_END_BEHAVIOUR)?.let {
+            RecitationPreferences.setAudioEndBehaviour(AudioEndBehaviour.fromValue(it))
+        }
 
         jsonObject.safeFloat(ExportKeys.TEXT_SIZE_MULT_TAFSIR)?.let {
             ReaderPreferences.setTafsirTextSizeMultiplier(it)
@@ -345,8 +349,8 @@ class ActivityExportImport : BaseActivity() {
             RecitationPreferences.getAudioOption().value
         )
         settings.put(
-            ExportKeys.RECITATION_CONTINUE_CHAPTER,
-            RecitationPreferences.getContinueChapter()
+            ExportKeys.RECITATION_AUDIO_END_BEHAVIOUR,
+            RecitationPreferences.getAudioEndBehaviour()
         )
 
         settings.put(
@@ -415,7 +419,7 @@ class ExportKeys {
         const val RECITATION_RECITER = "rec.reciter"
         const val RECITATION_RECITER_TRANSLATION = "rec.reciter_translation"
         const val RECITATION_OPTION_AUDIO = "rec.option_audio"
-        const val RECITATION_CONTINUE_CHAPTER = "rec.continue_chapter"
+        const val RECITATION_AUDIO_END_BEHAVIOUR = "rec.audio_end_behaviour"
         const val TEXT_SIZE_MULT_TAFSIR = "text.size_mult_tafsir"
         const val TEXT_SIZE_MULT_TRANSLATION = "text.size_mult_translation"
         const val TEXT_SIZE_MULT_ARABIC = "text.size_mult_arabic"

@@ -410,5 +410,15 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">SunnahApp İndir</string>
     <string name="tajweedColors">Tecvid renkleri</string>
+    <string name="similarVerses">Benzer ayetler</string>
+    <string name="noSimilarVerses">Bu ayet için benzer ayet yok.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s için %2$d benzer ayet var</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% eşleşme · skor %2$d</string>
+    <string name="moreOptions">Daha fazla seçenek</string>
+    <string name="whenChapterEnds">Sure bittiğinde</string>
+    <string name="whenChapterEndsDesc">Geçerli sure çalmayı bitirdikten sonra ne olacağını seçin.</string>
+    <string name="stopPlayback">Çalmayı durdur</string>
+    <string name="playNextSurah">Sonraki sureyi çal</string>
+    <string name="repeatCurrentSurah">Geçerli sureyi tekrarla</string>
 </resources>
 

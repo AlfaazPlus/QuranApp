@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import ThemeUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,8 @@ fun TranslationText(
     if (texts.isEmpty()) {
         return
     }
-    val isDark = isSystemInDarkTheme()
+
+    val isDark = ThemeUtils.observeDarkTheme()
 
     SelectionContainer {
         Column(

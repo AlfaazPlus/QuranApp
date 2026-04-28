@@ -3,6 +3,7 @@ package com.quranapp.android.utils.mediaplayer
 import android.os.Bundle
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_DEFAULT_REPEAT_COUNT
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
@@ -111,24 +112,6 @@ data class SetRepeatCommand(
     }
 }
 
-data class SetContinuePlayingCommand(
-    val continuePlaying: Boolean
-) : BasePlayerCommand(ACTION) {
-    override fun toBundle(): Bundle = Bundle().apply {
-        putBoolean("continuePlaying", continuePlaying)
-    }
-
-    companion object {
-        const val ACTION = "SET_CONTINUE_PLAYING"
-
-        fun fromBundle(bundle: Bundle): SetContinuePlayingCommand? {
-            val continuePlaying = bundle.getBoolean("continuePlaying", false)
-
-            return SetContinuePlayingCommand(continuePlaying)
-        }
-    }
-}
-
 data class SetReciterCommand(
     val reciter: String,
     val kind: RecitationAudioKind
@@ -169,6 +152,25 @@ data class SeekToPositionCommand(
     }
 }
 
+data class SetAudioEndBehaviourCommand(
+    val behaviour: AudioEndBehaviour
+) : BasePlayerCommand(ACTION) {
+    override fun toBundle(): Bundle = Bundle().apply {
+        putString("audioEndBehaviour", behaviour.value)
+    }
+
+    companion object {
+        const val ACTION = "SET_AUDIO_END_BEHAVIOUR"
+
+        fun fromBundle(bundle: Bundle): SetAudioEndBehaviourCommand? {
+            val behaviour = bundle.getString("audioEndBehaviour")
+            if (behaviour == null) return null
+
+            return SetAudioEndBehaviourCommand(AudioEndBehaviour.fromValue(behaviour))
+        }
+    }
+}
+
 object StopCommand : BasePlayerCommand("STOP") {
     override fun toBundle(): Bundle = Bundle()
 }
@@ -188,7 +190,7 @@ val ALL_PLAYER_ACTIONS = arrayOf(
     SetPlaybackSpeedCommand.ACTION,
     SetVerseGroupSizeCommand.ACTION,
     SetRepeatCommand.ACTION,
-    SetContinuePlayingCommand.ACTION,
+    SetAudioEndBehaviourCommand.ACTION,
     SetReciterCommand.ACTION,
     SeekToPositionCommand.ACTION,
     StopCommand.ACTION,

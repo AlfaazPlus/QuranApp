@@ -410,5 +410,15 @@
     <string name="discord">دیسکورد</string>
     <string name="strTitleDownloadSunnahApp">دانلود SunnahApp</string>
     <string name="tajweedColors">رنگ های تجوید</string>
+    <string name="similarVerses">آیات مشابه</string>
+    <string name="noSimilarVerses">برای این آیه، آیه مشابهی وجود ندارد.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s دارای %2$d آیه مشابه است</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% تطابق · امتیاز %2$d</string>
+    <string name="moreOptions">گزینه‌های بیشتر</string>
+    <string name="whenChapterEnds">هنگام پایان سوره</string>
+    <string name="whenChapterEndsDesc">انتخاب کنید پس از پایان پخش سوره فعلی چه اتفاقی بیفتد.</string>
+    <string name="stopPlayback">توقف پخش</string>
+    <string name="playNextSurah">پخش سوره بعدی</string>
+    <string name="repeatCurrentSurah">تکرار سوره فعلی</string>
 </resources>
 

@@ -21,6 +21,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.utils.Log
@@ -296,9 +297,9 @@ class RecitationController private constructor(private val appContext: Context) 
         )
     }
 
-    fun setContinue(continuePlay: Boolean) {
+    fun setAudioEndBehaviour(behaviour: AudioEndBehaviour) {
         ensureConnectedAndSend(
-            SetContinuePlayingCommand(continuePlaying = continuePlay)
+            SetAudioEndBehaviourCommand(behaviour)
         )
     }
 

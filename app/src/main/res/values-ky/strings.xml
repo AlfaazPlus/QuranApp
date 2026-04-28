@@ -407,4 +407,14 @@
     <string name="strTitleDownloadSunnahApp">SunnahApp жүктөп алуу</string>
     <string name="searchInQuran">Курандан издөө</string>
     <string name="tajweedColors">тажвиддин түстөрү</string>
+    <string name="similarVerses">Окшош аяттар</string>
+    <string name="noSimilarVerses">Бул аят үчүн окшош аяттар жок.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s ичинде %2$d окшош аят бар</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% дал келүү · упай %2$d</string>
+    <string name="moreOptions">Дагы параметрлер</string>
+    <string name="whenChapterEnds">Сүрө аяктаганда</string>
+    <string name="whenChapterEndsDesc">Учурдагы сүрө бүткөндөн кийин эмне болорун тандаңыз.</string>
+    <string name="stopPlayback">Ойнотууну токтотуу</string>
+    <string name="playNextSurah">Кийинки сүрөнү ойнотуу</string>
+    <string name="repeatCurrentSurah">Учурдагы сүрөнү кайталоо</string>
 </resources>

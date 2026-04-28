@@ -34,6 +34,7 @@ class QuranRepository(
     private val surahSearchDao get() = database.surahSearchDao()
     private val navigationDao get() = database.navigationDao()
     private val wbwDao get() = extDatabase.wbwDao()
+    val extrasDao get() = database.extrasDao()
 
     suspend fun getNumberOfPages(mushafId: Int): Int {
         if (mushafId <= 0) return 0

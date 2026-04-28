@@ -1,12 +1,11 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
+import ThemeUtils
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,12 +37,12 @@ import androidx.compose.ui.unit.dp
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.subcomponents.Footnote
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.OnReferenceClick
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
@@ -259,7 +258,7 @@ fun FootnoteContent(
 ) {
     val scrollState = rememberScrollState()
     val textSizeMultiplier = ReaderPreferences.observeTranlationTextSizeMultiplier()
-    val isDark = isSystemInDarkTheme()
+    val isDark = ThemeUtils.observeDarkTheme()
 
     val footnotes = remember(selectedSlug, translFactory) {
         selectedSlug?.let {

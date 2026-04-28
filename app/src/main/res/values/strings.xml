@@ -427,4 +427,14 @@
     <string name="belowWord">Below word</string>
     <string name="inTooltip">In tooltip</string>
     <string name="tajweedColors">Tajweed colors</string>
+    <string name="similarVerses">Similar verses</string>
+    <string name="noSimilarVerses">There are no similar verses for this verse.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s has %2$d similar ayahs</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% match · score %2$d</string>
+    <string name="moreOptions">More options</string>
+    <string name="whenChapterEnds">When a surah ends</string>
+    <string name="whenChapterEndsDesc">Choose what happens after the current surah finishes playing.</string>
+    <string name="stopPlayback">Stop playback</string>
+    <string name="playNextSurah">Play next surah</string>
+    <string name="repeatCurrentSurah">Repeat current surah</string>
 </resources>

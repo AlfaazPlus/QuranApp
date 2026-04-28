@@ -405,4 +405,14 @@
     <string name="discord">Discord</string>
     <string name="strTitleDownloadSunnahApp">Unduh SunnahApp</string>
     <string name="tajweedColors">Warna Tajwid</string>
+    <string name="similarVerses">Ayat serupa</string>
+    <string name="noSimilarVerses">Tidak ada ayat serupa untuk ayat ini.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s memiliki %2$d ayat serupa</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% cocok · skor %2$d</string>
+    <string name="moreOptions">Opsi lainnya</string>
+    <string name="whenChapterEnds">Saat surah berakhir</string>
+    <string name="whenChapterEndsDesc">Pilih apa yang terjadi setelah surah saat ini selesai diputar.</string>
+    <string name="stopPlayback">Hentikan pemutaran</string>
+    <string name="playNextSurah">Putar surah berikutnya</string>
+    <string name="repeatCurrentSurah">Ulangi surah saat ini</string>
 </resources>

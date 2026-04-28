@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -127,8 +128,8 @@ fun ReaderLayoutPageMode(
     )
 
     val textMeasurer = rememberTextMeasurer(cacheSize = 2048)
-    val colors = MaterialTheme.colorScheme
-    val typography = MaterialTheme.typography
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val typography by rememberUpdatedState(MaterialTheme.typography)
     val density = LocalDensity.current
     val isDark = ThemeUtils.observeDarkTheme()
 

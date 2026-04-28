@@ -23,6 +23,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,9 +37,10 @@ import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
+import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.db.relations.VerseWithDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,10 +50,16 @@ fun VerseOptionsSheet(
     onClose: () -> Unit,
 ) {
     var shareSheetData by remember { mutableStateOf<VerseWithDetails?>(null) }
+    var similarVersesSheetData by remember { mutableStateOf<VerseWithDetails?>(null) }
 
     VerseShareSheet(
         vwd = shareSheetData,
         onDismiss = { shareSheetData = null },
+    )
+
+    SimilarVersesSheet(
+        sourceVerse = similarVersesSheetData,
+        onDismiss = { similarVersesSheetData = null },
     )
 
     val sheetState = rememberModalBottomSheetState(true)
@@ -71,6 +79,9 @@ fun VerseOptionsSheet(
             verse = vwd,
             onDismiss = onClose,
             onFootnotes = onFootnotes,
+            onSimilarVerses = {
+                similarVersesSheetData = it
+            },
             onShare = {
                 shareSheetData = vwd
                 onClose()
@@ -84,8 +95,10 @@ private fun VodSheetContent(
     verse: VerseWithDetails,
     onDismiss: () -> Unit,
     onFootnotes: (VerseWithDetails) -> Unit,
+    onSimilarVerses: (VerseWithDetails) -> Unit,
     onShare: () -> Unit,
 ) {
+    val repository = LocalReaderViewModel.current.repository
     val context = LocalContext.current
 
     val title = stringResource(
@@ -96,6 +109,10 @@ private fun VodSheetContent(
 
     val hasFootnotes = remember(verse) {
         verse.translations.any { it.getFootnotesCount() > 0 }
+    }
+
+    val hasSimilarVerses by produceState(false, verse.id) {
+        value = repository.extrasDao.countSimilarVerses(verse.id) > 0
     }
 
     Column(
@@ -127,7 +144,7 @@ private fun VodSheetContent(
                         Toast.makeText(
                             context,
                             R.string.noFootnotesForThisVerse,
-                            Toast.LENGTH_SHORT
+                            Toast.LENGTH_LONG
                         )
                             .show()
                     }
@@ -135,16 +152,33 @@ private fun VodSheetContent(
             )
 
             VodOptionItem(
+                iconRes = R.drawable.ic_book_copy,
+                labelRes = R.string.similarVerses,
+                enabled = hasSimilarVerses,
+                onClick = {
+                    if (hasSimilarVerses) {
+                        onDismiss()
+                        onSimilarVerses(verse)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            R.string.noSimilarVerses,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                }
+            )
+
+            VodOptionItem(
                 iconRes = R.drawable.dr_icon_share,
                 labelRes = R.string.strLabelShare,
-                enabled = true,
                 onClick = onShare,
             )
 
             VodOptionItem(
                 iconRes = R.drawable.dr_icon_report_problem,
                 labelRes = R.string.strLabelReport,
-                enabled = true,
                 onClick = {
                     onDismiss()
                     AppBridge.newOpener(context)
@@ -159,7 +193,7 @@ private fun VodSheetContent(
 private fun VodOptionItem(
     iconRes: Int,
     labelRes: Int,
-    enabled: Boolean,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     val alpha = if (enabled) 1f else 0.5f
