@@ -7,7 +7,7 @@
         "displayName": "Hilali & Khan",
         "langCode": "en",
         "langName": "English",
-        "lastUpdated": 1658517131580,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/en/en_hilali-khan.json"
       },
       "en_pickthall": {
@@ -70,7 +70,7 @@
         "displayName": "Tafhim-ul-Quran",
         "langCode": "en",
         "langName": "English",
-        "lastUpdated": 1658517131580,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/en/en_maududi.json"
       },
       "en_abdul-haleem": {
@@ -79,7 +79,7 @@
         "displayName": "Abdul Haleem",
         "langCode": "en",
         "langName": "English",
-        "lastUpdated": 1681409892464,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/en/en_abdul-haleem.json"
       }
     },
@@ -161,7 +161,7 @@
         "displayName": "Hamidullah",
         "langCode": "fr",
         "langName": "Français",
-        "lastUpdated": 1680108109569,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/fr/fr_hamidullah.json"
       },
       "fr_rashid": {
@@ -232,7 +232,7 @@
         "displayName": "Hamza Roberto Piccardo",
         "langCode": "it",
         "langName": "Italiano",
-        "lastUpdated": 1763890370852,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/it/it_piccardo.json"
       }
     },
@@ -433,7 +433,7 @@
         "displayName": "تفہيم القرآن",
         "langCode": "ur",
         "langName": "اردو",
-        "lastUpdated": 1658517131580,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/ur/ur_maududi.json"
       }
     },
@@ -455,7 +455,7 @@
         "displayName": "马坚译本",
         "langCode": "zh",
         "langName": "简体中文",
-        "lastUpdated": 1762959566114,
+        "lastUpdated": 1777403767704,
         "downloadPath": "inventory/translations/zh/zh_majian.json"
       }
     }
