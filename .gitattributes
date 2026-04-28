@@ -1,0 +1,15 @@
+# Default: all text files use LF
+* text=auto eol=lf
+
+# Gradle + Android
+*.gradle text eol=lf
+*.kt text eol=lf
+*.java text eol=lf
+*.xml text eol=lf
+*.properties text eol=lf
+
+# Scripts (VERY important)
+*.sh text eol=lf
+
+# Windows scripts stay CRLF
+*.bat text eol=crlf
