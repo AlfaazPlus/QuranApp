@@ -1,7 +1,7 @@
 package com.quranapp.android.components.reader
 
 import com.quranapp.android.db.relations.VerseWithDetails
-import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import java.io.Serializable
 
 data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable {
@@ -14,7 +14,7 @@ data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable
     }
 
     fun doesEqual(ayahId: Int): Boolean {
-        val pair = QuranUtils.getVerseNoFromAyahId(ayahId)
+        val pair = QuranMeta.getVerseNoFromAyahId(ayahId)
 
         return doesEqual(pair.first, pair.second)
     }

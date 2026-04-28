@@ -8,7 +8,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.StringUtils
 
@@ -69,7 +69,7 @@ class SearchPagingSource(
 
                 val data = arabicRows.map { row ->
                     val ayahId = row.ayahId
-                    val pair = QuranUtils.getVerseNoFromAyahId(ayahId)
+                    val pair = QuranMeta.getVerseNoFromAyahId(ayahId)
                     val surahNo = pair.first
                     val ayahNo = pair.second
 

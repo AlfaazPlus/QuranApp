@@ -60,7 +60,6 @@ import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
@@ -326,7 +325,7 @@ private fun WordContent(
             bookmarksRepo = vm.userRepository,
             verseUi = verseUi,
             onWordClick = {
-                val pair = QuranUtils.getVerseNoFromAyahId(it.ayahId)
+                val pair = QuranMeta.getVerseNoFromAyahId(it.ayahId)
                 onWordChange(
                     WbwSheetData(
                         pair.first,

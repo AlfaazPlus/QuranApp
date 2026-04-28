@@ -47,7 +47,7 @@ import com.quranapp.android.compose.components.common.SearchTextField
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
-import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
 import verticalFadingEdge
@@ -59,19 +59,25 @@ fun ChapterNavigatorList(
     onVerseSelected: (Int, Int) -> Unit,
 ) {
     val surahs by readerVm.surahs.collectAsState()
-    val chapterViewState = readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Chapter
+    val chapterViewState =
+        readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Chapter
 
     val mushafSession by readerVm.mushafSession.collectAsState()
     val currentMushafId = mushafSession.layout.toMushafId()
     val currentPageNo = mushafSession.currentPageNo
 
-    val activeChapterNo by produceState<Int?>(chapterViewState?.chapterNo, currentPageNo, currentMushafId) {
+    val activeChapterNo by produceState<Int?>(
+        chapterViewState?.chapterNo,
+        currentPageNo,
+        currentMushafId
+    ) {
         value = when {
             chapterViewState?.chapterNo != null -> chapterViewState.chapterNo
 
             currentPageNo != null && currentMushafId > 0 -> {
-                val firstAyahId = readerVm.repository.getFirstAyahIdOnPage(currentMushafId, currentPageNo)
-                firstAyahId?.let { QuranUtils.getVerseNoFromAyahId(it).first }
+                val firstAyahId =
+                    readerVm.repository.getFirstAyahIdOnPage(currentMushafId, currentPageNo)
+                firstAyahId?.let { QuranMeta.getVerseNoFromAyahId(it).first }
             }
 
             else -> null

@@ -22,7 +22,6 @@ import com.quranapp.android.db.entities.ReadHistoryEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.QuranScript
 import com.quranapp.android.utils.reader.ReadType
@@ -434,7 +433,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 .filterIsInstance<QuranPageLineItem.Text>()
                 .firstOrNull()?.words?.firstOrNull()
             if (firstWord != null) {
-                lastKnownVerse = QuranUtils.getVerseNoFromAyahId(firstWord.ayahId).let {
+                lastKnownVerse = QuranMeta.getVerseNoFromAyahId(firstWord.ayahId).let {
                     ChapterVersePair(it.first, it.second)
                 }
                 return
@@ -442,7 +441,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
         viewModelScope.launch(Dispatchers.IO) {
             val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-            lastKnownVerse = QuranUtils.getVerseNoFromAyahId(ayahId).let {
+            lastKnownVerse = QuranMeta.getVerseNoFromAyahId(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }
         }
@@ -467,7 +466,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         viewModelScope.launch(Dispatchers.IO) {
             val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
 
-            lastKnownVerse = QuranUtils.getVerseNoFromAyahId(ayahId).let {
+            lastKnownVerse = QuranMeta.getVerseNoFromAyahId(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }
         }
@@ -782,7 +781,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         val ayahId = repository.getFirstAyahIdOnPage(oldMushafId, currentPage) ?: return null
 
-        val (chapterNo, verseNo) = QuranUtils.getVerseNoFromAyahId(ayahId)
+        val (chapterNo, verseNo) = QuranMeta.getVerseNoFromAyahId(ayahId)
 
         return ChapterVersePair(chapterNo, verseNo)
     }

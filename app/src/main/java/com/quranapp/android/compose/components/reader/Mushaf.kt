@@ -56,7 +56,7 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.AyahWordEntity
-import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
@@ -526,7 +526,7 @@ private fun MushafWordsRow(
                     word = word,
                     onDismiss = { wbwState.onDismissTooltip() },
                     onOpenSheet = {
-                        val pair = QuranUtils.getVerseNoFromAyahId(word.ayahId)
+                        val pair = QuranMeta.getVerseNoFromAyahId(word.ayahId)
 
                         wbwState.toggleWbwSheet(
                             WbwSheetData(

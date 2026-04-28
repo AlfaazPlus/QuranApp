@@ -17,7 +17,6 @@ import com.quranapp.android.db.relations.NavigationUnitRange
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -175,7 +174,7 @@ class QuranRepository(
         val distinct = verseNos.distinct()
         if (distinct.isEmpty()) return null
 
-        val ayahIds = distinct.map { QuranUtils.getAyahId(chapterNo, it) }
+        val ayahIds = distinct.map { QuranMeta.getAyahId(chapterNo, it) }
         val ayahs = ayahDao.getAyahsByIds(ayahIds)
 
         if (ayahs.isEmpty()) return null
@@ -689,7 +688,7 @@ class QuranRepository(
     suspend fun getPageForVerse(surahNo: Int, ayahNo: Int, mushafId: Int): Int? {
         if (mushafId <= 0 || surahNo <= 0 || ayahNo <= 0) return null
 
-        return mushafDao.getPageForVerse(mushafId, ayahId = QuranUtils.getAyahId(surahNo, ayahNo))
+        return mushafDao.getPageForVerse(mushafId, ayahId = QuranMeta.getAyahId(surahNo, ayahNo))
     }
 
     suspend fun getFirstPageOfJuz(juzNo: Int, scriptCode: String? = null): Int? {

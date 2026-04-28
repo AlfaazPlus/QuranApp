@@ -28,7 +28,7 @@ import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
-import com.quranapp.android.utils.quran.QuranUtils
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -102,7 +102,7 @@ fun ReaderProvider(
 
 
     fun playWord(word: AyahWordEntity) {
-        val (chapterNo, verseNo) = QuranUtils.getVerseNoFromAyahId(word.ayahId)
+        val (chapterNo, verseNo) = QuranMeta.getVerseNoFromAyahId(word.ayahId)
 
         coroutineScope.launch {
             val key = "$chapterNo:$verseNo:${word.wordIndex}"

@@ -52,7 +52,6 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.extensions.orMinusOne
-import com.quranapp.android.utils.quran.QuranUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -247,8 +246,7 @@ fun BookmarkViewerSheet(
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(
-                    text = if (QuranUtils.doesRangeDenoteSingle(fromVerseNo, toVerseNo)
-                    ) stringResource(
+                    text = if (fromVerseNo == toVerseNo) stringResource(
                         R.string.strLabelVerseNoWithColon,
                         fromVerseNo
                     ) else stringResource(R.string.strLabelVersesWithColon, fromVerseNo, toVerseNo),
