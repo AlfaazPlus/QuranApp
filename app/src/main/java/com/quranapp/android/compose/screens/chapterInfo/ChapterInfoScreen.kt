@@ -277,9 +277,11 @@ private fun ChapterInfoWebViewContent(
                 }
 
                 val html = contentState.html
+
                 if (lastLoad != html) {
+                    isLoading = false
+
                     lastLoad = html
-                    isLoading = true
                     webView.loadDataWithBaseURL(
                         null,
                         html,

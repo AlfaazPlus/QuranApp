@@ -191,7 +191,7 @@ private fun RowScope.ChapterOnlyList(
                 surah.surah.surahNo in surahNos
             }
 
-            gridState.requestScrollToItem(0)
+            gridState.scrollToItem(0)
         }
     }
 
@@ -252,7 +252,7 @@ private fun VerseSelectList(
     var filteredAyahs by remember { mutableStateOf(ayahs) }
 
     LaunchedEffect(currentChapter) {
-        state.requestScrollToItem(selectedVerseNos.firstOrNull() ?: 0, -200)
+        state.scrollToItem(selectedVerseNos.firstOrNull() ?: 0, -200)
     }
 
     LaunchedEffect(ayahs, searchQuery) {
@@ -264,7 +264,7 @@ private fun VerseSelectList(
             filteredAyahs = ayahs.filter { ayahNo ->
                 ayahNo.toString().contains(query)
             }
-            state.requestScrollToItem(0)
+            state.scrollToItem(0)
         }
     }
 

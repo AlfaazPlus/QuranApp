@@ -134,7 +134,7 @@ private fun RowScope.JuzList(
                         || juz.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
-            gridState.requestScrollToItem(0)
+            gridState.scrollToItem(0)
         }
     }
 
@@ -208,7 +208,7 @@ internal fun NavigationVerseList(
                 it.verseNo.toString().contains(query)
             }
 
-            state.requestScrollToItem(0)
+            state.scrollToItem(0)
         }
     }
 
