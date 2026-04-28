@@ -85,6 +85,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
@@ -368,7 +369,7 @@ private fun ReaderIndexHeader(
 
         Text(
             text = stringResource(R.string.strTitleHolyQuran),
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.titleSmall.merge(tightTextStyle),
             color = colorScheme.onSurface
         )
     }

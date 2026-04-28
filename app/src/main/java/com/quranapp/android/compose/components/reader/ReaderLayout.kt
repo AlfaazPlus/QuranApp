@@ -29,12 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
@@ -243,13 +243,16 @@ private fun ReaderLayoutVerseMode(
 
     LaunchedEffect(navigateToVerse, items) {
         val (chapterNo, verseNo) = navigateToVerse ?: return@LaunchedEffect
+
         val idx = items.indexOfFirst { item ->
             item is ReaderLayoutItem.VerseUI &&
                     item.verse.chapterNo == chapterNo &&
                     item.verse.verseNo == verseNo
         }
+
         if (idx >= 0) {
-            listState.requestScrollToItem(idx)
+            val optimalIdx = items.findOptimalScrollIndex(idx)
+            listState.scrollToItem(optimalIdx)
             readerVm.consumeVerseNavigation()
         }
     }
@@ -362,4 +365,27 @@ private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
             color = MaterialTheme.colorScheme.outlineVariant,
         )
     }
+}
+
+private fun List<ReaderLayoutItem>.findOptimalScrollIndex(targetIndex: Int): Int {
+    if (targetIndex <= 0) return targetIndex.fastCoerceAtLeast(0)
+
+    var optimalIndex = targetIndex
+    var i = targetIndex - 1
+
+    while (i >= 0) {
+        when (this[i]) {
+            is ReaderLayoutItem.ChapterInfo,
+            is ReaderLayoutItem.Bismillah,
+            is ReaderLayoutItem.IsVotd,
+            is ReaderLayoutItem.ChapterTitle -> {
+                optimalIndex = i
+                i--
+            }
+
+            else -> break
+        }
+    }
+
+    return optimalIndex
 }

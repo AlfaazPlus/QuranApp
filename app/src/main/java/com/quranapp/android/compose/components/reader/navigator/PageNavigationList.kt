@@ -64,7 +64,7 @@ fun PageNavigationList(
             filteredPages = allPages
         } else {
             filteredPages = allPages.filter { it.toString().startsWith(query) }
-            gridState.requestScrollToItem(0)
+            gridState.scrollToItem(0)
         }
     }
 

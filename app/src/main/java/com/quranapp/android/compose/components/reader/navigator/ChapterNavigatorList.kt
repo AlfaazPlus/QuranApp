@@ -128,7 +128,7 @@ private fun RowScope.ChapterList(
                 surah.surah.surahNo in surahNos
             }
 
-            gridState.requestScrollToItem(0)
+            gridState.scrollToItem(0)
         }
     }
 
@@ -199,7 +199,7 @@ private fun ChapterVerseList(currentChapter: SurahEntity?, onVerseSelected: (Int
                 ayahNo.toString().contains(query)
             }
 
-            state.requestScrollToItem(0)
+            state.scrollToItem(0)
         }
     }
 

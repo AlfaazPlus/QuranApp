@@ -20,8 +20,13 @@ class VerseClipPlan private constructor(
 
     fun virtualPositionAt(mediaItemIndex: Int, positionInClipMs: Long): Long {
         val i = mediaItemIndex
+
         if (i !in cumulativeStartMs.indices) return 0L
-        return cumulativeStartMs[i] + positionInClipMs.coerceIn(0L, clipDurationMs[i])
+
+        val clipDuration = clipDurationMs[i].coerceAtLeast(0L)
+        val clampedPosition = positionInClipMs.coerceIn(0L, clipDuration)
+
+        return safeAddNonNegative(cumulativeStartMs[i].coerceAtLeast(0L), clampedPosition)
     }
 
     fun virtualPosition(player: ExoPlayer): Long =
@@ -29,15 +34,24 @@ class VerseClipPlan private constructor(
 
     fun seekToVirtualPosition(player: ExoPlayer, targetMs: Long) {
         if (isEmpty) return
-        val target = targetMs.coerceIn(0L, virtualDurationMs)
+
+        val maxDuration = virtualDurationMs.coerceAtLeast(0L)
+        val target = targetMs.coerceIn(0L, maxDuration)
+
         for (i in cumulativeStartMs.indices) {
-            val clipEnd = cumulativeStartMs[i] + clipDurationMs[i]
+            val clipEnd = safeAddNonNegative(
+                cumulativeStartMs[i].coerceAtLeast(0L),
+                clipDurationMs[i].coerceAtLeast(0L)
+            )
+
             if (target < clipEnd) {
                 player.seekTo(i, (target - cumulativeStartMs[i]).coerceAtLeast(0L))
                 return
             }
         }
+
         val last = cumulativeStartMs.lastIndex
+
         player.seekTo(last, clipDurationMs[last])
     }
 
@@ -52,17 +66,46 @@ class VerseClipPlan private constructor(
     }
 
     companion object {
+        private const val TIME_UNSET_MS = Long.MIN_VALUE + 1L
+
+        private fun safeAddNonNegative(a: Long, b: Long): Long {
+            if (a < 0L || b < 0L) return 0L
+
+            return if (a > Long.MAX_VALUE - b) Long.MAX_VALUE else a + b
+        }
+
         fun from(items: List<MediaItem>): VerseClipPlan {
             val starts = LongArray(items.size)
             val durs = LongArray(items.size)
             var acc = 0L
+
             for (i in items.indices) {
                 starts[i] = acc
+
                 val cfg = items[i].clippingConfiguration
-                val len = (cfg.endPositionMs - cfg.startPositionMs).coerceAtLeast(0L)
+                val start = cfg.startPositionMs
+                val end = cfg.endPositionMs
+
+                val len = if (
+                    start == TIME_UNSET_MS ||
+                    end == TIME_UNSET_MS ||
+                    start < 0L ||
+                    end < 0L ||
+                    end <= start
+                ) {
+                    0L
+                } else {
+                    try {
+                        Math.subtractExact(end, start)
+                    } catch (_: ArithmeticException) {
+                        0L
+                    }
+                }
+
                 durs[i] = len
-                acc += len
+                acc = safeAddNonNegative(acc, len)
             }
+
             return VerseClipPlan(items, starts, durs, acc)
         }
     }

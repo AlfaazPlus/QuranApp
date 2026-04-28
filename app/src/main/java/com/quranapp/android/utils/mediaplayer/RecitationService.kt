@@ -383,12 +383,13 @@ class RecitationService : MediaSessionService() {
 
         val plan = verseClipPlan
         if (plan != null && !plan.isEmpty) {
+            val maxDuration = plan.virtualDurationMs.coerceAtLeast(0L)
             val target = if (isRelative) {
                 val delta =
                     if (amountOrDirection == ACTION_SEEK_RIGHT) SEEK_STEP_MS else -SEEK_STEP_MS
-                (plan.virtualPosition(player) + delta).coerceIn(0L, plan.virtualDurationMs)
+                (plan.virtualPosition(player) + delta).coerceIn(0L, maxDuration)
             } else {
-                amountOrDirection.coerceIn(0L, plan.virtualDurationMs)
+                amountOrDirection.coerceIn(0L, maxDuration)
             }
             plan.seekToVirtualPosition(player, target)
         } else {
@@ -746,7 +747,7 @@ class RecitationService : MediaSessionService() {
             for (track in tracks) {
                 for (verseNo in startVerseNo..endVerseNo) {
                     val vt = track.timingMetadata!!.getVerseTiming(verseNo) ?: return null
-                    if (vt.durationMs <= 0L) continue
+                    if (!isValidTimingWindow(vt.startMs, vt.endMs)) continue
 
                     items.add(
                         MediaItem.Builder()
@@ -759,7 +760,8 @@ class RecitationService : MediaSessionService() {
                             )
                             .setClippingConfiguration(
                                 MediaItem.ClippingConfiguration.Builder()
-                                    .setStartPositionMs(vt.startMs).setEndPositionMs(vt.endMs)
+                                    .setStartPositionMs(vt.startMs)
+                                    .setEndPositionMs(vt.endMs)
                                     .build(),
                             )
                             .build(),
@@ -770,6 +772,22 @@ class RecitationService : MediaSessionService() {
         }
 
         return if (items.isEmpty()) null else VerseClipPlan.from(items)
+    }
+
+    private fun isValidTimingWindow(startMs: Long, endMs: Long): Boolean {
+        if (
+            startMs == C.TIME_UNSET ||
+            endMs == C.TIME_UNSET ||
+            startMs < 0L ||
+            endMs < 0L ||
+            endMs <= startMs
+        ) return false
+
+        return try {
+            Math.subtractExact(endMs, startMs) > 0L
+        } catch (_: ArithmeticException) {
+            false
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.quranapp.android.api.models.mediaplayer
 
 import android.net.Uri
+import androidx.media3.common.C
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -26,7 +27,22 @@ data class VerseTiming(
     @SerialName("segments")
     private val segments: List<List<Long>>? = null
 ) {
-    val durationMs: Long get() = endMs - startMs
+    val durationMs: Long
+        get() {
+            if (
+                startMs == C.TIME_UNSET ||
+                endMs == C.TIME_UNSET ||
+                startMs < 0L ||
+                endMs < 0L ||
+                endMs <= startMs
+            ) return 0L
+
+            return try {
+                Math.subtractExact(endMs, startMs)
+            } catch (_: ArithmeticException) {
+                0L
+            }
+        }
 
     val seg: List<VerseSegment> by lazy {
         segments?.map {
