@@ -121,7 +121,7 @@ private fun RowScope.HizbGrid(
                         || hizb.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
-            gridState.requestScrollToItem(0)
+            gridState.scrollToItem(0)
         }
     }
 

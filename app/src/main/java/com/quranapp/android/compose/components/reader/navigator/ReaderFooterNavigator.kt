@@ -129,9 +129,8 @@ fun ReaderFooterNavigator(
             subtitle = previousSubtitle,
             isNext = false,
         ) {
-            listState.requestScrollToItem(0)
-
             scope.launch {
+                listState.scrollToItem(0)
                 adjacentDivisionLaunchParams(viewType, -1)?.let { readerVm.initReader(it) }
             }
         }
@@ -143,7 +142,9 @@ fun ReaderFooterNavigator(
                 .clip(shapes.medium)
                 .background(colorScheme.surfaceContainer)
                 .clickable {
-                    listState.requestScrollToItem(0)
+                    scope.launch {
+                        listState.scrollToItem(0)
+                    }
                 },
             contentAlignment = Alignment.Center,
         ) {
@@ -201,7 +202,10 @@ private fun RowScope.NavigationButton(
             .background(backgroundColor)
             .clickable(enabled = enabled, onClick = onClick)
             .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp, if (isNext) Alignment.End else Alignment.Start),
+        horizontalArrangement = Arrangement.spacedBy(
+            4.dp,
+            if (isNext) Alignment.End else Alignment.Start
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (!isNext) {
