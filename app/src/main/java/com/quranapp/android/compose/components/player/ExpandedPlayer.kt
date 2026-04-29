@@ -43,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -58,6 +59,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -104,13 +106,12 @@ fun ExpandedPlayer(
     onCollapse: () -> Unit,
 ) {
     val verse = state.currentVerse
-    val settings = state.settings
 
     var mode by remember { mutableStateOf(ExpandedPlayerMode.Controls) }
 
     val pagerState = rememberPagerState(
         initialPage = mode.ordinal,
-        pageCount = { ExpandedPlayerMode.entries.size }
+        pageCount = { ExpandedPlayerMode.entries.size },
     )
     val scope = rememberCoroutineScope()
     var spotlightHeaderVisible by remember { mutableStateOf(true) }
@@ -151,6 +152,27 @@ fun ExpandedPlayer(
                 controller.isAppearanceLightStatusBars = previousLightStatus
             }
         }
+    }
+
+
+    val showReciterSelector = rememberSaveable { mutableStateOf(false) }
+    val showAudioOptions = rememberSaveable { mutableStateOf(false) }
+    val showRepeatOptions = rememberSaveable { mutableStateOf(false) }
+    val showMoreMenu = rememberSaveable { mutableStateOf(false) }
+
+    val showPlaybackSpeedOptions = rememberSaveable { mutableStateOf(false) }
+    val showEndBehaviorOptions = rememberSaveable { mutableStateOf(false) }
+
+    val configurations = @Composable {
+        Configurations(
+            controller,
+            showReciterSelector,
+            showAudioOptions,
+            showRepeatOptions,
+            showMoreMenu,
+            showPlaybackSpeedOptions,
+            showEndBehaviorOptions,
+        )
     }
 
     Background(
@@ -231,9 +253,7 @@ fun ExpandedPlayer(
                                                 )
                                             }
 
-                                            Configurations(
-                                                controller = controller
-                                            )
+                                            configurations()
 
                                             ExpandedTransportControls(
                                                 isPlaying = isPlaying,
@@ -262,16 +282,14 @@ fun ExpandedPlayer(
                                 ) {
                                     Box(
                                         Modifier.weight(1f),
-                                        contentAlignment = Alignment.Center
+                                        contentAlignment = Alignment.Center,
                                     ) {
                                         ExtendedThumbnail(
                                             verse = verse,
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .padding(
-                                                    start = 16.dp,
-                                                    end = 16.dp,
-                                                    bottom = 16.dp
+                                                    start = 16.dp, end = 16.dp, bottom = 16.dp
                                                 )
                                                 .height(thumbnailHeight),
                                         )
@@ -282,9 +300,7 @@ fun ExpandedPlayer(
                                         isPlaying,
                                     )
 
-                                    Configurations(
-                                        controller = controller
-                                    )
+                                    configurations()
 
                                     ProgressSeekBar(
                                         isPlaying = isPlaying,
@@ -323,9 +339,7 @@ fun ExpandedPlayer(
 
 @Composable
 private fun ExpandedPlayerHeader(
-    mode: ExpandedPlayerMode,
-    onModeChange: (ExpandedPlayerMode) -> Unit,
-    onCollapse: () -> Unit
+    mode: ExpandedPlayerMode, onModeChange: (ExpandedPlayerMode) -> Unit, onCollapse: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -359,7 +373,7 @@ private fun RowScope.ModeTabs(
 ) {
     Box(
         Modifier.weight(1f),
-        contentAlignment = Alignment.CenterEnd
+        contentAlignment = Alignment.CenterEnd,
     ) {
         Row(
             modifier = Modifier
@@ -408,6 +422,12 @@ private fun RowScope.ModeTabs(
 @Composable
 private fun Configurations(
     controller: RecitationController,
+    showReciterSelector: MutableState<Boolean>,
+    showAudioOptions: MutableState<Boolean>,
+    showRepeatOptions: MutableState<Boolean>,
+    showMoreMenu: MutableState<Boolean>,
+    showPlaybackSpeedOptions: MutableState<Boolean>,
+    showEndBehaviorOptions: MutableState<Boolean>,
 ) {
     val context = LocalContext.current
     val audioOption = RecitationPreferences.observeAudioOption();
@@ -424,20 +444,12 @@ private fun Configurations(
     }
 
     val repeatSupported = audioOption == AudioOption.ONLY_QURAN
-    val speedSubtext = String.format(appLocale(), "%.1fx", speed)
+    val speedSubtext = String.format(LocalLocale.current.platformLocale, "%.1fx", speed)
     val audioEndBehaviourSubtextId = when (audioEndBehaviour) {
         AudioEndBehaviour.STOP_PLAYBACK -> R.string.stopPlayback
         AudioEndBehaviour.NEXT_CHAPTER -> R.string.playNextSurah
         AudioEndBehaviour.REPEAT_CHAPTER -> R.string.repeatCurrentSurah
     }
-
-    var showReciterSelector by rememberSaveable { mutableStateOf(false) }
-    var showAudioOptions by rememberSaveable { mutableStateOf(false) }
-    var showRepeatOptions by rememberSaveable { mutableStateOf(false) }
-    var showMoreMenu by rememberSaveable { mutableStateOf(false) }
-
-    var showPlaybackSpeedOptions by rememberSaveable { mutableStateOf(false) }
-    var showEndBehaviorOptions by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -457,7 +469,7 @@ private fun Configurations(
                 icon = painterResource(R.drawable.ic_mic),
                 subtext = reciterNames,
                 onClick = {
-                    showReciterSelector = true
+                    showReciterSelector.value = true
                 },
                 modifier = Modifier.weight(1f),
             )
@@ -467,7 +479,7 @@ private fun Configurations(
                 subtext = stringResource(audioOptionTextId),
                 icon = painterResource(R.drawable.dr_icon_settings),
                 onClick = {
-                    showAudioOptions = true
+                    showAudioOptions.value = true
                 },
                 modifier = Modifier.weight(1f),
             )
@@ -490,7 +502,7 @@ private fun Configurations(
                     else -> stringResource(R.string.nTimes, repeatCount + 1)
                 },
                 onClick = {
-                    showRepeatOptions = true
+                    showRepeatOptions.value = true
                 },
                 modifier = Modifier.weight(1f),
             )
@@ -502,13 +514,13 @@ private fun Configurations(
                     text = stringResource(R.string.moreOptions),
                     icon = painterResource(R.drawable.dr_icon_menu),
                     onClick = {
-                        showMoreMenu = true
+                        showMoreMenu.value = true
                     },
                 )
 
                 DropdownMenu(
-                    expanded = showMoreMenu,
-                    onDismissRequest = { showMoreMenu = false },
+                    expanded = showMoreMenu.value,
+                    onDismissRequest = { showMoreMenu.value = false },
                     shape = RoundedCornerShape(12.dp),
                     offset = DpOffset(0.dp, 6.dp),
                     containerColor = PlayerBgColor.alpha(0.8f),
@@ -551,8 +563,8 @@ private fun Configurations(
                             textColor = PlayerContentColor,
                         ),
                         onClick = {
-                            showMoreMenu = false
-                            showPlaybackSpeedOptions = true
+                            showMoreMenu.value = false
+                            showPlaybackSpeedOptions.value = true
                         },
                     )
                     DropdownMenuItem(
@@ -563,8 +575,7 @@ private fun Configurations(
                                 tint = Color.White,
                                 modifier = Modifier.size(18.dp)
                             )
-                        },
-                        text = {
+                        }, text = {
                             Column(
                                 verticalArrangement = Arrangement.Center,
                             ) {
@@ -582,15 +593,12 @@ private fun Configurations(
                                     maxLines = 1,
                                 )
                             }
-                        },
-                        colors = MenuDefaults.itemColors(
+                        }, colors = MenuDefaults.itemColors(
                             textColor = PlayerContentColor,
-                        ),
-                        onClick = {
-                            showMoreMenu = false
-                            showEndBehaviorOptions = true
-                        }
-                    )
+                        ), onClick = {
+                            showMoreMenu.value = false
+                            showEndBehaviorOptions.value = true
+                        })
                 }
             }
         }
@@ -598,37 +606,37 @@ private fun Configurations(
 
     ReciterSelectorSheet(
         controller = controller,
-        isOpen = showReciterSelector,
+        isOpen = showReciterSelector.value,
     ) {
-        showReciterSelector = false
+        showReciterSelector.value = false
     }
 
     AudioOptionsSheet(
         controller = controller,
-        isOpen = showAudioOptions,
+        isOpen = showAudioOptions.value,
     ) {
-        showAudioOptions = false
+        showAudioOptions.value = false
     }
 
     RepeatOptionsSheet(
         controller = controller,
-        isOpen = showRepeatOptions,
+        isOpen = showRepeatOptions.value,
     ) {
-        showRepeatOptions = false
+        showRepeatOptions.value = false
     }
 
     PlaybackSpeedSheet(
         controller = controller,
-        isOpen = showPlaybackSpeedOptions,
+        isOpen = showPlaybackSpeedOptions.value,
     ) {
-        showPlaybackSpeedOptions = false
+        showPlaybackSpeedOptions.value = false
     }
 
     AudioEndBehaviourSheet(
         controller = controller,
-        isOpen = showEndBehaviorOptions,
+        isOpen = showEndBehaviorOptions.value,
     ) {
-        showEndBehaviorOptions = false
+        showEndBehaviorOptions.value = false
     }
 }
 
@@ -668,13 +676,11 @@ private fun ProgressSeekBar(
             .padding(horizontal = 24.dp)
     ) {
         Slider(
-            value = animatedProgress,
-            onValueChange = {
+            value = animatedProgress, onValueChange = {
                 val seekPosition = (it * durationMs).toLong()
                 controller.seekTo(seekPosition)
                 positionMs = seekPosition
-            },
-            modifier = Modifier
+            }, modifier = Modifier
                 .fillMaxWidth()
                 .height(28.dp),
 

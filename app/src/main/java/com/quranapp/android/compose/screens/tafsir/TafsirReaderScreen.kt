@@ -42,6 +42,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -85,9 +87,9 @@ fun TafsirReaderScreen(
 ) {
     val viewModel = viewModel<TafsirReaderViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var webViewScrollY by remember { mutableIntStateOf(0) }
+    var webViewScrollY by rememberSaveable { mutableIntStateOf(0) }
     var webViewRef by remember { mutableStateOf<WebView?>(null) }
-    var showChapterVerseNavigator by remember { mutableStateOf(false) }
+    var showChapterVerseNavigator by rememberSaveable { mutableStateOf(false) }
 
     val onEvent = viewModel::onEvent
     val context = LocalContext.current
@@ -253,7 +255,7 @@ private fun TafsirTopBar(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = String.format(
-                            Locale.getDefault(),
+                            LocalLocale.current.platformLocale,
                             $$"%1$s %2$d:%3$d",
                             chapterName,
                             chapterNo,

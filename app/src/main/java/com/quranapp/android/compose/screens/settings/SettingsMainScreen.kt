@@ -15,9 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -51,9 +53,9 @@ fun SettingsMainScreen(
     val navController = LocalSettingsNavHostController.current
     val coroutineScope = rememberCoroutineScope()
 
-    var showDailyReminderSheet by remember { mutableStateOf(false) }
-    var showTextSizesSheet by remember { mutableStateOf(false) }
-    var showResourceDownloadSrcSheet by remember { mutableStateOf(false) }
+    var showDailyReminderSheet by rememberSaveable { mutableStateOf(false) }
+    var showTextSizesSheet by rememberSaveable { mutableStateOf(false) }
+    var showResourceDownloadSrcSheet by rememberSaveable { mutableStateOf(false) }
 
     val selectedLanguage = remember(context) {
         val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
@@ -139,7 +141,7 @@ fun SettingsMainScreen(
                 title = R.string.textSizes,
                 icon = R.drawable.icon_font_size,
                 subtitleStr = String.format(
-                    Locale.getDefault(),
+                    LocalLocale.current.platformLocale,
                     $$"%1$s: %2$d%%, %3$s: %4$d%%",
                     stringResource(R.string.labelArabic),
                     ReaderTextSizeUtils.calculateProgressText(arabicTextSizeMult),

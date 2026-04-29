@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,7 +57,7 @@ fun ExtendedThumbnail(
     val headerShape = RoundedCornerShape(32.dp)
     val viewModel = viewModel<RecitationPlayerViewModel>()
 
-    var showChapterVerseNavigator by remember { mutableStateOf(false) }
+    var showChapterVerseNavigator by rememberSaveable { mutableStateOf(false) }
     var chapterName by remember { mutableStateOf("") }
 
     LaunchedEffect(verse.chapterNo) {

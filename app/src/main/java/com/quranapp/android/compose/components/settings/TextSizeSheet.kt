@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -40,7 +41,6 @@ import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.getScriptPreviewText
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 private enum class PreviewType {
     Arabic,
@@ -107,7 +107,7 @@ private fun ArabicTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = String.format(Locale.getDefault(), "%d%%", progress.toInt()),
+            text = String.format(LocalLocale.current.platformLocale, "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )
@@ -182,7 +182,7 @@ private fun TranslationTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = String.format(Locale.getDefault(), "%d%%", progress.toInt()),
+            text = String.format(LocalLocale.current.platformLocale, "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )

@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -126,7 +127,7 @@ internal fun VotdContent(
     val translationSlugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
     val votdEnabled = preferences.get(VersePreferences.KEY_VOTD_REMINDER_ENABLED)
 
-    var showDailyReminderSheet by remember { mutableStateOf(false) }
+    var showDailyReminderSheet by rememberSaveable { mutableStateOf(false) }
 
     DailyReminderSheet(
         isOpen = showDailyReminderSheet,

@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -33,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -102,6 +107,7 @@ fun WbwSheet(
         scrimColor = colorScheme.scrim.alpha(0.5f),
         containerColor = colorScheme.surface,
         contentColor = colorScheme.onSurface,
+        contentWindowInsets = { WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom) },
     ) {
         Content(data)
     }
@@ -349,7 +355,7 @@ private fun VerseContextHeader(
 ) {
     val parts = buildList {
         if (chapterName.isNotBlank()) add(chapterName)
-        add(String.format($$"%1$d:%2$d", chapterNo, verseNo))
+        add(String.format(LocalLocale.current.platformLocale, $$"%1$d:%2$d", chapterNo, verseNo))
         add(stringResource(R.string.wordNo, word.wordIndex + 1))
     }
 

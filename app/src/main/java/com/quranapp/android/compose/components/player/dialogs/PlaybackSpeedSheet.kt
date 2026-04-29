@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
@@ -42,7 +43,7 @@ fun PlaybackSpeedSheet(
                 val speed = speedOptions[index]
 
                 RadioItem(
-                    titleStr = String.format(appLocale(), "%.1fx", speed),
+                    titleStr = String.format(LocalLocale.current.platformLocale, "%.1fx", speed),
                     selected = speed == selectedSpeed,
                     onClick = {
                         if (speed == selectedSpeed) return@RadioItem

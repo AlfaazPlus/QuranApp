@@ -176,7 +176,7 @@ class ActivityQuranScienceContent : BaseActivity() {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verse) ->
             String.format(
-                Locale.getDefault(),
+                appLocale(),
                 $$"%1$s %2$d:%3$d",
                 repository.getChapterName(chapterNo),
                 chapterNo,

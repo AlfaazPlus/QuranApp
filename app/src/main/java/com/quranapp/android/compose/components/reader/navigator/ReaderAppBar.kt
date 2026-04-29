@@ -13,11 +13,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -96,7 +100,7 @@ fun ReaderAppBar(
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
-    var showNavigatorSheet by remember { mutableStateOf(false) }
+    var showNavigatorSheet by rememberSaveable { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(true)
 
     val density = LocalDensity.current
@@ -200,7 +204,8 @@ fun ReaderAppBar(
             containerColor = colorScheme.background,
             contentColor = colorScheme.onSurface,
             dragHandle = null,
-            sheetGesturesEnabled = false
+            sheetGesturesEnabled = false,
+            contentWindowInsets = { WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom) },
         ) {
             ReaderNavigator(
                 readerVm = readerVm,

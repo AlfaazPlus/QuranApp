@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -239,7 +240,7 @@ private fun ScriptItem(
                             text = when (downloadState) {
                                 is ResourceDownloadStatus.InProgress -> if (downloadState.progress <= 100) {
                                     String.format(
-                                        Locale.getDefault(),
+                                        LocalLocale.current.platformLocale,
                                         $$"%1$s (%2$d%%)",
                                         stringResource(R.string.msgDownloadingFonts),
                                         downloadState.progress

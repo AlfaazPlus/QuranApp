@@ -3,10 +3,14 @@ package com.quranapp.android.compose.components.reader.dialogs
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -44,13 +48,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
-import com.quranapp.android.components.bookmark.BookmarkModel
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.extensions.orMinusOne
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.Dispatchers
@@ -64,25 +66,6 @@ data class BookmarkViewerData(
     val showOpenInReaderButton: Boolean = true,
     val startInEditMode: Boolean = false,
 )
-
-private suspend fun persistBookmarkNoteIfChanged(
-    bookmark: BookmarkModel,
-    noteDraft: String,
-    initialNote: String?,
-    repo: UserRepository,
-): String? {
-    val newNote = noteDraft.trim().takeIf { it.isNotEmpty() }
-    if (newNote == initialNote) return null
-    withContext(Dispatchers.IO) {
-        repo.updateBookmark(
-            bookmark.chapterNo,
-            bookmark.fromVerseNo,
-            bookmark.toVerseNo,
-            newNote,
-        )
-    }
-    return newNote
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -161,7 +144,8 @@ fun BookmarkViewerSheet(
         scrimColor = colorScheme.scrim.alpha(0.5f),
         containerColor = colorScheme.surface,
         contentColor = colorScheme.onSurface,
-        dragHandle = null
+        dragHandle = null,
+        contentWindowInsets = { WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom) },
     ) {
         AlertDialog(
             isOpen = showDeleteConfirm,

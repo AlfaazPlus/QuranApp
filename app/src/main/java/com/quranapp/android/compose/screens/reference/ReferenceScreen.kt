@@ -72,6 +72,7 @@ import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.repository.QuranRepository
@@ -83,14 +84,12 @@ import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.Keys
 import horizontalFadingEdge
-import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.buildMap
 
 private sealed class ReferenceRow {
     data class Description(val title: String, val desc: String?) : ReferenceRow()
@@ -603,10 +602,12 @@ private suspend fun buildReferenceRows(
         }
     }.awaitAll()
 
+    val locale = appLocale()
+
     for ((seg, verseUis, textStyles) in built) {
         val titleText = if (seg.ref.range.isSingleValue) {
             String.format(
-                Locale.getDefault(),
+                locale,
                 $$"%1$s %2$d:%3$d",
                 seg.chapterName,
                 seg.chapterNo,
@@ -614,7 +615,7 @@ private suspend fun buildReferenceRows(
             )
         } else {
             String.format(
-                Locale.getDefault(),
+                locale,
                 $$"%1$s %2$d:%3$d-%4$d",
                 seg.chapterName,
                 seg.chapterNo,

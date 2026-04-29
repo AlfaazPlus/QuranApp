@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 
+import java.util.Locale;
 import java.util.Random;
 
 public abstract class ColorUtils {
@@ -39,7 +40,7 @@ public abstract class ColorUtils {
 
     @NonNull
     public static String colorIntToHex(int color, boolean withoutHash) {
-        String hex = String.format("#%06X", (0xFFFFFF & color));
+        String hex = String.format(Locale.ENGLISH, "#%06X", (0xFFFFFF & color));
         return withoutHash ? hex.substring(1) : hex;
     }
 

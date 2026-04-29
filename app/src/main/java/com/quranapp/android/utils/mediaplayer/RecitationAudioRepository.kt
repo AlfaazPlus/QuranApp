@@ -20,6 +20,7 @@ import com.quranapp.android.utils.extensions.isGzip
 import com.quranapp.android.utils.reader.recitation.RecitationUtils.URL_CHAPTER_PATTERN
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +52,7 @@ class RecitationAudioRepository(private val context: Context) {
                 while (matcher.find()) {
                     val group = matcher.group(1)
                     if (group != null) {
-                        url = matcher.replaceFirst(String.format(Locale.ENGLISH, group, chapterNo))
+                        url = matcher.replaceFirst(StringUtils.formatInvariant(group, chapterNo))
                         matcher.reset(url)
                     }
                 }

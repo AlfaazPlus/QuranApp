@@ -49,6 +49,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -413,7 +414,8 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
                 when (hizbs.size) {
                     0 -> ""
                     else -> "${stringResource(R.string.strTitleReaderHizb)} ${
-                        hizbs.map { String.format("%d", it) }.joinToString(" / ")
+                        hizbs.map { String.format(LocalLocale.current.platformLocale, "%d", it) }
+                            .joinToString(" / ")
                     }"
                 }
             }

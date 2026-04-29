@@ -33,6 +33,7 @@ import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 
 @Composable
@@ -80,7 +81,7 @@ fun ChapterCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = String.format(Locale.getDefault(), "%d", surah.surah.surahNo),
+                    text = String.format(LocalLocale.current.platformLocale, "%d", surah.surah.surahNo),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Normal,
                     color = colorScheme.onSurface

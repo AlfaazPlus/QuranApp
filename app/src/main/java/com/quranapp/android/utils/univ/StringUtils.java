@@ -138,7 +138,7 @@ public abstract class StringUtils {
 
     @NonNull
     public static String formatInvariant(@NonNull String format, Object... args) {
-        return String.format(Locale.US, format, args);
+        return String.format(Locale.ENGLISH, format, args);
     }
 
     public static String readInputStream(InputStream inputStream) throws IOException {

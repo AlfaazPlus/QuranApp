@@ -451,7 +451,7 @@ private fun ReaderIndexChaptersList(
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var filteredSurahs by remember { mutableStateOf(surahs) }
-    var filterSheetOpen by remember { mutableStateOf(false) }
+    var filterSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(
         searchQuery,

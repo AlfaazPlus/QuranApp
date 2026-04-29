@@ -30,10 +30,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -89,7 +91,7 @@ fun ChapterInfoScreen(
     }
 
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
-    var showChapterNavigator by remember { mutableStateOf(false) }
+    var showChapterNavigator by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier,
@@ -184,6 +186,7 @@ private fun ChapterInfoTopBar(
                         text = if (chapterNo >= 1) {
                             if (chapterName.isNotEmpty()) {
                                 String.format(
+                                    LocalLocale.current.platformLocale,
                                     $$"%1$d. %2$s",
                                     chapterNo,
                                     chapterName,

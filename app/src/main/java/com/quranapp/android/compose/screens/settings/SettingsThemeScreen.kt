@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -59,7 +60,7 @@ fun SettingsThemeScreen() {
     val themeMode = ThemeUtils.observeThemeMode()
     val themeColor = ThemeUtils.observeThemeColor()
     val isDynamicColor = ThemeUtils.observeIsDynamicColor()
-    var showThemeBottomSheet by remember { mutableStateOf(false) }
+    var showThemeBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     val span = 2
 

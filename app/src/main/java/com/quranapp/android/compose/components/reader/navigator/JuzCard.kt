@@ -35,6 +35,7 @@ import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.relations.NavigationUnit
 import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 
 @Composable
@@ -105,7 +106,7 @@ fun JuzCard(
 
                 Text(
                     text = String.format(
-                        Locale.getDefault(),
+                        LocalLocale.current.platformLocale,
                         $$"%1$d:%2$d - %3$d:%4$d",
                         firstSurah?.surah?.surah?.surahNo ?: 0,
                         firstSurah?.startAyah ?: 0,

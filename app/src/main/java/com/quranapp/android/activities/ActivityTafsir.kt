@@ -13,6 +13,7 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.screens.tafsir.TafsirReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.databinding.LytTafsirTextSizeBinding
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -75,6 +76,7 @@ class ActivityTafsir : BaseActivity() {
 
     private fun showFontSizeDialog() {
         val binding = LytTafsirTextSizeBinding.inflate(layoutInflater)
+        val locale = appLocale()
 
         PeaceBottomSheet().apply {
             params.apply {
@@ -86,7 +88,7 @@ class ActivityTafsir : BaseActivity() {
         val multiplier = ReaderPreferences.getTafsirTextSizeMultiplier()
 
         val text = String.format(
-            Locale.getDefault(),
+            locale,
             "%d%%",
             ReaderTextSizeUtils.calculateProgressText(multiplier)
         )
@@ -98,7 +100,7 @@ class ActivityTafsir : BaseActivity() {
             setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     val nProgress = ReaderTextSizeUtils.normalizeProgress(progress)
-                    val text = String.format(Locale.getDefault(), "%d%%", nProgress)
+                    val text = String.format(locale, "%d%%", nProgress)
                     binding.progressText.text = text
 
                     viewModel.onEvent(

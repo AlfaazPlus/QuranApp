@@ -17,6 +17,7 @@ import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.univ.FileUtils
+import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -345,8 +346,7 @@ class RecitationModelManager private constructor(
     }
 
     fun getRecitationAudioFile(reciterId: String, chapterNo: Int): File {
-        val filename = String.format(
-            Locale.ENGLISH,
+        val filename = StringUtils.formatInvariant(
             RECITATION_AUDIO_FILENAME_FORMAT_LOCAL,
             chapterNo,
         )

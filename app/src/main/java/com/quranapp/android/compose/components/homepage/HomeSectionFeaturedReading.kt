@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -146,8 +147,9 @@ private fun FeaturedQuranCard(
 private fun getFeaturedQuranModels(): State<List<FeaturedQuranModel>?> {
     val context = LocalContext.current
     val resources = LocalResources.current
+    val locale = LocalLocale.current.platformLocale
 
-    return produceState<List<FeaturedQuranModel>?>(null, context, resources) {
+    return produceState<List<FeaturedQuranModel>?>(null, context, resources, locale) {
         val repo = DatabaseProvider.getQuranRepository(context)
 
         val itemsArray = resources.obtainTypedArray(R.array.arrFeaturedQuranItems)
@@ -157,8 +159,6 @@ private fun getFeaturedQuranModels(): State<List<FeaturedQuranModel>?> {
         val versesFormat = resources.getString(R.string.strLabelVerses)
         val miniInfoFormat = resources.getString(R.string.strLabelVerseWithChapNameWithBar)
         val miniInfoChapFormat = resources.getString(R.string.strLabelFeatureQuranMiniInfo)
-
-        val locale = appLocale()
 
         val models = List(itemsArray.length()) { i ->
             val raw = itemsArray.getString(i)!!
