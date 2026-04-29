@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.components.settings
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

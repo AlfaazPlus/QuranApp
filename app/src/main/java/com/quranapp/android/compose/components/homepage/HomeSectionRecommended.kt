@@ -113,8 +113,7 @@ private fun RecommendationCard(
                 resolvedChapterName?.let { name ->
                     Text(
                         text = stringResource(R.string.strLabelSurah, name),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Black,
+                        style = MaterialTheme.typography.titleSmall,
                         color = Color.White
                     )
                 }
@@ -122,7 +121,7 @@ private fun RecommendationCard(
                 Text(
                     text = recommendation.title,
                     style = if (resolvedChapterName != null) MaterialTheme.typography.labelMedium
-                    else MaterialTheme.typography.titleMedium,
+                    else MaterialTheme.typography.titleSmall,
                     fontWeight = if (resolvedChapterName != null) FontWeight.Medium else FontWeight.Bold,
                     color = if (resolvedChapterName != null) Color.White.copy(alpha = 0.8f) else Color.White
                 )

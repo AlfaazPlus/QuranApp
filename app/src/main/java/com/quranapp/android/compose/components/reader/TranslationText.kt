@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

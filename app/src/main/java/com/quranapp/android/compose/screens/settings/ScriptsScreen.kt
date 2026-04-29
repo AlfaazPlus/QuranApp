@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

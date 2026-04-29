@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.tafsir
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.content.Context
 import android.content.Intent
 import android.view.View

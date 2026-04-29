@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.onboarding
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

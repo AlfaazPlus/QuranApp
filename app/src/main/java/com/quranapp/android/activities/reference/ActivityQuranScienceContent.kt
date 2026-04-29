@@ -1,9 +1,8 @@
 package com.quranapp.android.activities.reference
 
-import ThemeUtils
+
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
@@ -13,9 +12,10 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.toArgb
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.compose.components.QuickReferenceHost
+import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.databinding.ActivityChapterInfoBinding
 import com.quranapp.android.db.DatabaseProvider
@@ -26,7 +26,6 @@ import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.univ.StringUtils
-import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

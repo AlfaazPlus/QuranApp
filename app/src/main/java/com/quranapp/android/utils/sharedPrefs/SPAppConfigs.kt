@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.sharedPrefs
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.content.Context
 import androidx.core.content.edit
 import kotlinx.coroutines.CoroutineScope

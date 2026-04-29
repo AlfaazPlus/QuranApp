@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.reader
 
-import ThemeUtils
 import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
@@ -26,6 +25,7 @@ import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.components.reader.TranslationPageVerse
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ChapterVerseBatch
 import com.quranapp.android.db.entities.quran.AyahEntity
@@ -274,6 +274,7 @@ object ReaderItemsBuilder {
             val ts = getTranslationTextStyle(
                 TranslationTextStyleParams(
                     slug,
+                    params.type,
                     params.translationSizeMultiplier,
                 )
             )
@@ -423,7 +424,11 @@ object ReaderItemsBuilder {
 
             val translationWrapStyles = booksInfo.keys.associateWith { slug ->
                 val ts = getTranslationTextStyle(
-                    TranslationTextStyleParams(slug, params.translationSizeMultiplier)
+                    TranslationTextStyleParams(
+                        slug,
+                        params.type,
+                        params.translationSizeMultiplier,
+                    )
                 )
                 ts.toParagraphStyle() to ts.toSpanStyle()
             }
@@ -643,10 +648,11 @@ object ReaderItemsBuilder {
 
             val ts = getTranslationTextStyle(
                 TranslationTextStyleParams(
-                    translationSlug,
-                    params.translationSizeMultiplier,
+                    slug = translationSlug,
+                    sizeMultiplier = params.translationSizeMultiplier,
+                    type = params.type,
+                    baselineHeightMultiplier = 1.75f
                 ),
-                baseLineHeightMultiplier = 1.75f
             )
 
             val translationSpanStyle = ts.toSpanStyle()

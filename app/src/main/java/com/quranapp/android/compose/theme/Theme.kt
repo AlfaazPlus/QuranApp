@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.theme
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

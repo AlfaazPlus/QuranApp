@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.quranScience
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView

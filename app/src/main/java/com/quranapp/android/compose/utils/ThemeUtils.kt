@@ -1,3 +1,5 @@
+package com.quranapp.android.compose.utils
+
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
@@ -19,6 +21,7 @@ import com.alfaazplus.sunnah.ui.theme.colors.ThemeVioletColors
 import com.alfaazplus.sunnah.ui.theme.colors.ThemeYellowColors
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.ThemeUtils.observeDarkTheme
 
 object ThemeUtils {
     const val THEME_MODE_DEFAULT = "app.theme.default"
@@ -144,7 +147,8 @@ object ThemeUtils {
             THEME_MODE_LIGHT -> false
             THEME_MODE_DARK -> true
             else -> {
-                val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                val uiMode =
+                    context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                 uiMode == Configuration.UI_MODE_NIGHT_YES
             }
         }

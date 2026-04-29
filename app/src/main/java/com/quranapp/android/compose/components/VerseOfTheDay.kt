@@ -205,11 +205,13 @@ internal fun VotdContent(
 
     val translationTextStyle = remember(
         votdState.translation?.bookSlug,
-        translationTextMultiplier
+        translationTextMultiplier,
+        type
     ) {
         getTranslationTextStyle(
             TranslationTextStyleParams(
                 slug = votdState.translation?.bookSlug.orEmpty(),
+                type = type,
                 sizeMultiplier = translationTextMultiplier,
             )
         )

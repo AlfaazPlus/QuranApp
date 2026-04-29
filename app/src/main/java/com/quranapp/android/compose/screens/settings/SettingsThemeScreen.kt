@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding

@@ -1,6 +1,6 @@
 package com.quranapp.android
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.app.Application
 import android.content.Context
 import android.os.Build

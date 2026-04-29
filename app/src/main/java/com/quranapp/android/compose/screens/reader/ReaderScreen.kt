@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.reader
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke

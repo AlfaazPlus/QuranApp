@@ -1,7 +1,7 @@
 package com.quranapp.android.activities
 
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri

@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
-import ThemeUtils
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,6 +33,7 @@ import com.quranapp.android.compose.components.settings.SettingsItem
 import com.quranapp.android.compose.components.settings.TextSizeSheet
 import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.app.DownloadSourceUtils
@@ -43,7 +44,6 @@ import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @Composable
 fun SettingsMainScreen(

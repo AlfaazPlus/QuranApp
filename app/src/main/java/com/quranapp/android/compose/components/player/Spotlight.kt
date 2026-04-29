@@ -346,6 +346,8 @@ private fun SpotlightTranslationText(
     val translations = vwd.translations
     if (translations.isEmpty()) return
 
+    val type = MaterialTheme.typography
+
     SelectionContainer {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -355,7 +357,11 @@ private fun SpotlightTranslationText(
             translations.forEach { translation ->
                 val tStyle = remember(translation.bookSlug, translationMultiplier) {
                     getTranslationTextStyle(
-                        TranslationTextStyleParams(translation.bookSlug, translationMultiplier),
+                        TranslationTextStyleParams(
+                            translation.bookSlug,
+                            type,
+                            translationMultiplier
+                        ),
                     ).copy(color = PlayerContentColor.alpha(0.85f))
                 }
 

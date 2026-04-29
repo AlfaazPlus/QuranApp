@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
-import ThemeUtils
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,6 +43,7 @@ import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -305,7 +305,8 @@ fun FootnoteContent(
                         style = getTranslationTextStyle(
                             TranslationTextStyleParams(
                                 slug = singleFootnote.bookSlug,
-                                sizeMultiplier = textSizeMultiplier
+                                sizeMultiplier = textSizeMultiplier,
+                                type = typography
                             )
                         )
                     )
@@ -335,7 +336,8 @@ fun FootnoteContent(
                             style = getTranslationTextStyle(
                                 TranslationTextStyleParams(
                                     slug = selectedSlug ?: "",
-                                    sizeMultiplier = textSizeMultiplier
+                                    sizeMultiplier = textSizeMultiplier,
+                                    type = typography
                                 )
                             )
                         )

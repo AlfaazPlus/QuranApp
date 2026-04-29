@@ -1,6 +1,6 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -165,7 +165,7 @@ fun SimilarVersesSheet(
     }
 
     val colors by rememberUpdatedState(MaterialTheme.colorScheme)
-    val typography by rememberUpdatedState(MaterialTheme.typography)
+    val type by rememberUpdatedState(MaterialTheme.typography)
 
     val quranTextStyle = remember(
         sourceVerse,
@@ -180,7 +180,7 @@ fun SimilarVersesSheet(
                     context = context,
                     fontResolver = fontResolver,
                     colors = colors,
-                    type = typography,
+                    type = type,
                     pageNo = pageNo,
                     script = scriptCode,
                     sizeMultiplier = arabicMult,
@@ -198,6 +198,7 @@ fun SimilarVersesSheet(
         getTranslationTextStyle(
             TranslationTextStyleParams(
                 slug = primarySlug,
+                type = type,
                 sizeMultiplier = translMult,
             ),
         )

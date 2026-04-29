@@ -1,6 +1,6 @@
 package com.quranapp.android.viewModels
 
-import ThemeUtils
+import com.quranapp.android.compose.utils.ThemeUtils
 import android.app.Application
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.mutableStateOf
