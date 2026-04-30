@@ -158,7 +158,7 @@ private fun ItemCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = title,
-                        style = typography.titleSmall.merge(tightTextStyle),
+                        style = typography.labelLarge.merge(tightTextStyle),
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,

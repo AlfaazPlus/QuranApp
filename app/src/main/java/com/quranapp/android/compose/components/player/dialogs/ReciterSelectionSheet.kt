@@ -126,7 +126,7 @@ fun ReciterSelectorSheet(
                                 pagerState.animateScrollToPage(index)
                             }
                         },
-                        text = { Text(stringResource(titleRes)) },
+                        text = { Text(stringResource(titleRes), style = typography.labelLarge) },
                         unselectedContentColor = colorScheme.onSurface.alpha(0.8f)
                     )
                 }

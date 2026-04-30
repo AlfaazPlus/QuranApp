@@ -105,7 +105,6 @@ fun ChapterInfoCard(chapterNo: Int) {
                     Text(
                         text = title,
                         style = typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
                         color = colorScheme.onSurface,
                         modifier = Modifier.weight(1f, fill = false),
                     )

@@ -28,9 +28,6 @@
         <item name="android:dropDownListViewStyle">@style/ListView</item>
         <item name="android:colorEdgeEffect">@android:color/transparent</item>
 
-        <item name="chipGroupStyle">@style/ChipGroupStyle</item>
-        <item name="chipStyle">@style/ChipStyle</item>
-
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 

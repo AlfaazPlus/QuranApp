@@ -188,8 +188,7 @@ private fun CleanupHubCard(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.labelLarge,
                 color = colorScheme.onSurface,
             )
             Text(

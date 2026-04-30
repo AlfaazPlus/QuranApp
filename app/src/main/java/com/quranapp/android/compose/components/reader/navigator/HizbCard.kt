@@ -93,8 +93,7 @@ fun HizbCard(
             ) {
                 Text(
                     text = stringResource(R.string.labelHizbNo, hizb.unitNo),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleSmall,
                     color = colorScheme.onSurface,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis

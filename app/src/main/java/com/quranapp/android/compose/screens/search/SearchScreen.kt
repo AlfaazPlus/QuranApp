@@ -229,7 +229,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
         placeholder = {
             Text(
                 stringResource(if (quranTextEnabled) R.string.searchTipArabic else R.string.strHintSearchQuran),
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.labelLarge,
                 color = colorScheme.onBackground.alpha(0.6f)
             )
         },
@@ -283,7 +283,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
         },
         value = query,
         onValueChange = viewModel::onQueryChange,
-        textStyle = MaterialTheme.typography.titleSmall,
+        textStyle = MaterialTheme.typography.labelLarge,
         shape = MaterialTheme.shapes.medium,
         singleLine = true,
     )
@@ -404,7 +404,6 @@ private fun SearchResultTabs(
                                     }
                                 ),
                                 style = MaterialTheme.typography.labelMedium,
-                                fontWeight = FontWeight.SemiBold,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )

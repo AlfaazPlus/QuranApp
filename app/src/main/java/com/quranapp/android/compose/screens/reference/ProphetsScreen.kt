@@ -94,7 +94,6 @@ fun ProphetsScreen() {
         topBar = {
             AppBar(
                 title = stringResource(R.string.strTitleProphets),
-                bgColor = colorResource(R.color.colorBGHomePageItem),
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
                 searchPlaceholder = stringResource(R.string.strHintSearchProphet),
@@ -139,7 +138,7 @@ fun ProphetsScreen() {
                             top = 16.dp,
                             bottom = 64.dp,
                         ),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         items(
                             displayedProphets,
@@ -210,8 +209,7 @@ private fun ProphetListItem(prophet: QuranProphet.Prophet) {
         },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Row(
@@ -234,7 +232,7 @@ private fun ProphetListItem(prophet: QuranProphet.Prophet) {
                 val titleLine = MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific)
                 Text(
                     text = titleLine,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,

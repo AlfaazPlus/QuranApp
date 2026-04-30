@@ -1,13 +1,16 @@
 package com.quranapp.android.compose.components.reader
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,9 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +43,7 @@ import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
 import com.quranapp.android.db.entities.BookmarkKey
@@ -337,17 +345,21 @@ private fun TranslationRow(
 private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
     if (marker.text.isEmpty()) return
 
+    val decorationTint = MaterialTheme.colorScheme.primary
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f)
-                .widthIn(min = 100.dp),
-            color = MaterialTheme.colorScheme.outlineVariant,
+
+        Image(
+            painterResource(R.drawable.vector_1),
+            contentDescription = null,
+            modifier = Modifier.height(24.dp),
+            colorFilter = ColorFilter.tint(decorationTint)
         )
 
         Text(
@@ -358,11 +370,11 @@ private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
             textAlign = TextAlign.Center
         )
 
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f)
-                .widthIn(min = 100.dp),
-            color = MaterialTheme.colorScheme.outlineVariant,
+        Image(
+            painterResource(R.drawable.vector_1),
+            contentDescription = null,
+            modifier = Modifier.height(24.dp).scale(-1f, 1f),
+            colorFilter = ColorFilter.tint(decorationTint)
         )
     }
 }

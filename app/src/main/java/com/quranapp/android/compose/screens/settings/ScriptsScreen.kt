@@ -225,7 +225,7 @@ private fun ScriptItem(
                     Text(
                         script.getQuranScriptName(),
                         modifier = Modifier.weight(1f),
-                        style = typography.titleMedium,
+                        style = typography.labelLarge,
                         color = if (isSelected) colorScheme.primary else colorScheme.onSurface
                     )
                 }

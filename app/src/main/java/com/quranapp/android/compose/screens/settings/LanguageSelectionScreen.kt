@@ -198,10 +198,7 @@ private fun LanguageItem(
         ) {
             Text(
                 text = language.localizedName,
-                style = typography.titleMedium.copy(
-                    fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
-                    fontSize = 16.sp
-                ),
+                style = typography.labelLarge,
                 color = if (isSelected) colorScheme.primary else colorScheme.onSurface
             )
 

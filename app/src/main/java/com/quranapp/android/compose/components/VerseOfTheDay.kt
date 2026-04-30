@@ -267,7 +267,7 @@ internal fun VotdContent(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
             )
         }
 
@@ -276,7 +276,7 @@ internal fun VotdContent(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = 20.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -449,7 +449,7 @@ internal fun HomePremiumHeaderPill(
 
             Text(
                 text = title,
-                style = typography.labelMedium.merge(tightTextStyle),
+                style = typography.titleSmall.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White.copy(alpha = contentAlpha),
             )

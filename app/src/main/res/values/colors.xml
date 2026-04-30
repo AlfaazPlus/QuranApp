@@ -7,12 +7,7 @@
 
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorBGLightGrey">#F0F0F0</color>
-    <color name="colorBGOverHomePageItem">#F0F0F0</color>
-
     <color name="colorBGPage">@color/white</color>
-    <color name="colorBGPage1_5">#F0F0F0</color>
-    <color name="colorBGHomePageItem">@color/white</color>
 
     <color name="colorText">#FF000000</color>
     <color name="colorText2">#FF333333</color>
@@ -22,11 +17,8 @@
     <color name="colorDivider">#FFE0E0E0</color>
     <color name="colorDividerContrast">#BDBDBD</color>
     <color name="colorDividerVariable">@color/colorDivider</color>
-    <color name="colorDividerCardOnlyLight">@color/colorDivider</color>
 
     <color name="colorBGReaderChapterSerial">#E8E8E8</color>
-
-    <color name="colorBGCardVariable">@color/colorBGPage</color>
 
     <color name="colorLogoSecondary">#d4af37</color>
     <color name="colorSplashGradient1">#0D2C27</color>

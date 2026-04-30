@@ -94,7 +94,7 @@ fun AudioOptionsSheet(
 
             Text(
                 text = stringResource(R.string.titleRecitationGroupSize),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 12.dp)
                     .alpha(sizeOptionOpacity),

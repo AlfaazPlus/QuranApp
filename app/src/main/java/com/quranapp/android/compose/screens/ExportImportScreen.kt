@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.activities.ExportKeys
@@ -93,9 +92,9 @@ private fun ExportImportCard(
         ) {
             Text(
                 text = stringResource(title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.labelLarge,
             )
+
             Text(
                 text = stringResource(description),
                 style = MaterialTheme.typography.bodyMedium,

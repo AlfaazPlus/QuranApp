@@ -356,7 +356,7 @@ private fun StickyHeaderModeVbV(
 
                 is ReaderViewType.Hizb -> Text(
                     text = stringResource(R.string.labelHizbNo, vt.hizbNo),
-                    style = typography.titleMedium,
+                    style = typography.labelLarge,
                     color = colorScheme.primary,
                 )
 
@@ -494,7 +494,7 @@ private fun StickyHeaderModeMushaf(
                     if (currentPageNo != null) {
                         Text(
                             stringResource(R.string.strLabelPageNo, currentPageNo),
-                            style = typography.titleSmall.copy(
+                            style = typography.labelLarge.copy(
                                 lineHeightStyle = LineHeightStyle.Default.copy(
                                     mode = LineHeightStyle.Mode.Tight,
                                     alignment = LineHeightStyle.Alignment.Center,
@@ -611,7 +611,7 @@ private fun StickyHeaderModeTranslation(
                 if (currentPageNo != null) {
                     Text(
                         stringResource(R.string.strLabelPageNo, currentPageNo),
-                        style = typography.titleSmall,
+                        style = typography.labelLarge,
                         color = colorScheme.primary,
                     )
                 }

@@ -300,7 +300,7 @@ private fun BookmarkItemCard(
                     } else {
                         Text(
                             bookmark.chapterNo.toString(),
-                            style = MaterialTheme.typography.titleLarge.copy(
+                            style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Light
                             ),
                         )
@@ -317,7 +317,7 @@ private fun BookmarkItemCard(
                         else chapterName + ": " + stringResource(
                             R.string.strLabelVerses, bookmark.fromVerseNo, bookmark.toVerseNo
                         ),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelLarge,
                     )
 
                     Text(

@@ -35,9 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.quranapp.android.compose.components.dialogs.AlertDialog
-import com.quranapp.android.compose.components.dialogs.AlertDialogAction
-import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +43,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.dialogs.AlertDialog
+import com.quranapp.android.compose.components.dialogs.AlertDialogAction
+import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.search.SearchHistoryEntry
 import com.quranapp.android.viewModels.QuranSearchViewModel
@@ -145,10 +145,14 @@ fun SearchEmptyScrollContent(
                         style = MaterialTheme.typography.titleSmall,
                         color = colorScheme.onBackground.alpha(0.75f),
                     )
+
                     TextButton(
                         onClick = { showClearAllDialog = true },
                     ) {
-                        Text(stringResource(R.string.msgClearSearchHistory))
+                        Text(
+                            stringResource(R.string.clear),
+                            style = typography.labelMedium
+                        )
                     }
                 }
             }

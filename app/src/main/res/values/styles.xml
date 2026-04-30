@@ -56,25 +56,6 @@
         <item name="android:listSelector">@drawable/dr_bg_spinner_item</item>
     </style>
 
-    <style name="ChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
-        <item name="android:paddingStart">15dp</item>
-        <item name="android:paddingEnd">15dp</item>
-        <item name="singleSelection">true</item>
-        <item name="selectionRequired">true</item>
-    </style>
-
-    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="checkedIcon">@null</item>
-        <item name="chipBackgroundColor">@color/color_chip_bg</item>
-        <item name="chipStartPadding">5dp</item>
-        <item name="chipEndPadding">7dp</item>
-        <item name="android:textColor">@color/color_reader_spinner_item_label</item>
-        <item name="android:textSize">@dimen/dmnCommonSize2</item>
-        <item name="android:textAlignment">center</item>
-        <item name="singleLine">true</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
-
     <style name="PeaceBottomSheetTheme" parent="Theme.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/SheetDialogStyle</item>
         <item name="android:windowAnimationStyle">@style/PeaceBottomSheetAnimations</item>

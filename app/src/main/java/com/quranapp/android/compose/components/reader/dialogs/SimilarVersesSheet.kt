@@ -323,7 +323,7 @@ private fun SimilarVerseItem(
                         row.surahNo,
                         row.verseNo,
                     ),
-                    style = typography.titleSmall.merge(tightTextStyle),
+                    style = typography.labelLarge.merge(tightTextStyle),
                     color = colorScheme.primary,
                 )
 
@@ -333,7 +333,7 @@ private fun SimilarVerseItem(
                         row.entity.coverage,
                         row.entity.score,
                     ),
-                    style = typography.bodySmall.merge(tightTextStyle),
+                    style = typography.bodyMedium.merge(tightTextStyle),
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 2.dp),
                 )

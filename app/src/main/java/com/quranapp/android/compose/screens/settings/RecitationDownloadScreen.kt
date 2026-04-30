@@ -25,6 +25,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -251,7 +252,7 @@ private fun RecitationDownloadContent(
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    text = { Text(stringResource(titleRes)) },
+                    text = { Text(stringResource(titleRes), style = typography.labelLarge) },
                     unselectedContentColor = colorScheme.onSurface.alpha(0.8f),
                 )
             }
@@ -404,7 +405,7 @@ private fun ReciterDownloadCard(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelLarge,
                         color = colorScheme.primary,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 2,

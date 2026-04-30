@@ -96,7 +96,6 @@ fun PropheticDuasScreen(title: String? = null) {
         topBar = {
             AppBar(
                 title = barTitle,
-                bgColor = colorResource(R.color.colorBGHomePageItem),
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
                 searchPlaceholder = stringResource(R.string.strHintSearchProphet),
@@ -141,7 +140,7 @@ fun PropheticDuasScreen(title: String? = null) {
                             top = 16.dp,
                             bottom = 64.dp,
                         ),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         items(
                             displayedProphets,
@@ -208,8 +207,7 @@ private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
         },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Row(
@@ -231,7 +229,7 @@ private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
             ) {
                 Text(
                     text = primaryText,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,

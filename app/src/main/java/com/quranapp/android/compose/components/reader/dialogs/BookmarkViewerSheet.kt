@@ -239,7 +239,7 @@ fun BookmarkViewerSheet(
                 )
                 Text(
                     text = stringResource(R.string.strTitleNote),
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.labelLarge,
                     color = colorScheme.primary,
                     modifier = Modifier.padding(top = 20.dp, bottom = 8.dp),
                 )

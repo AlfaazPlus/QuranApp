@@ -94,8 +94,7 @@ fun ChapterCard(
             ) {
                 Text(
                     text = surah.getCurrentName(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleSmall,
                     color = colorScheme.onSurface,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis

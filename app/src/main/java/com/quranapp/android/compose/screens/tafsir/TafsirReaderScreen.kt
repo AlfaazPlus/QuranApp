@@ -245,7 +245,6 @@ private fun TafsirTopBar(
                 Text(
                     text = uiState.tafsirInfo?.name ?: "",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
                     color = colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

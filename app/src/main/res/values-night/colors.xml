@@ -3,13 +3,7 @@
     <!-- Comfort white -->
     <color name="white">#FFD9D9D9</color>
 
-    <color name="colorBGLightGrey">#FF252525</color>
-    <color name="colorBGOverHomePageItem">#FF303030</color>
-
     <color name="colorBGPage">#151515</color>
-    <color name="colorBGPage1_5">#202020</color>
-    <color name="colorBGHomePageItem">@color/colorBGPage1_5</color>
-
 
     <color name="colorText">@color/white</color>
     <color name="colorText2">#B0B0B0</color>
@@ -19,11 +13,8 @@
     <color name="colorDivider">#202020</color>
     <color name="colorDividerContrast">#3E3E3E</color>
     <color name="colorDividerVariable">#FF303030</color>
-    <color name="colorDividerCardOnlyLight">@color/colorBGCardVariable</color>
 
     <!--    <color name="colorBGReaderHeader">#FF151515</color>-->
     <color name="colorBGReaderChapterSerial">#FF333333</color>
-
-    <color name="colorBGCardVariable">@color/colorBGPage1_5</color>
 
 </resources>

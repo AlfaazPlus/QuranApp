@@ -223,7 +223,7 @@ private fun LanguageGroupCard(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = group.langName,
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.labelLarge,
                                 color = colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold,
                                 maxLines = 1,
@@ -442,7 +442,7 @@ private fun DownloadTranslationsButton() {
 
             Text(
                 text = stringResource(R.string.strTitleDownloadTranslations),
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Bold,
                 color = colorScheme.onPrimary
             )

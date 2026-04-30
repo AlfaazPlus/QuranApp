@@ -82,7 +82,7 @@ fun ListItemContent(
         if (titleText != null) {
             Text(
                 text = titleText,
-                style = MaterialTheme.typography.titleSmall.copy(
+                style = MaterialTheme.typography.labelLarge.copy(
                     lineHeightStyle = LineHeightStyle.Default.copy(
                         mode = LineHeightStyle.Mode.Tight,
                         alignment = LineHeightStyle.Alignment.Center,

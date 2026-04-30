@@ -218,7 +218,6 @@ fun ItemCard(item: QuranScienceItem) {
                 Text(
                     text = item.getTitle(),
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
                     color = colorResource(R.color.colorText),
                     textAlign = TextAlign.Center,
                     maxLines = 3,

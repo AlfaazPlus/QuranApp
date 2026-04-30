@@ -2,6 +2,7 @@ package com.quranapp.android.compose.components.homepage
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -51,14 +52,14 @@ fun HomeTabbedSection() {
                 Tab(
                     selected = selectedTabIndex == 0,
                     onClick = { selectedTabIndex = 0 },
-                    text = { Text(stringResource(R.string.labelRecommended)) },
+                    text = { Text(stringResource(R.string.labelRecommended), style = typography.labelLarge) },
                     selectedContentColor = Color.White,
                     unselectedContentColor = Color.White.copy(alpha = 0.6f)
                 )
                 Tab(
                     selected = selectedTabIndex == 1,
                     onClick = { selectedTabIndex = 1 },
-                    text = { Text(stringResource(R.string.strTitleVOTD)) },
+                    text = { Text(stringResource(R.string.strTitleVOTD), style = typography.labelLarge) },
                     selectedContentColor = Color.White,
                     unselectedContentColor = Color.White.copy(alpha = 0.6f)
                 )

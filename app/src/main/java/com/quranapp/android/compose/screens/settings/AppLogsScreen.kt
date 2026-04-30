@@ -88,7 +88,7 @@ fun AppLogsScreen() {
             ) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
-                        text = { Text(stringResource(title)) },
+                        text = { Text(stringResource(title), style = typography.labelLarge) },
                         selected = pagerState.currentPage == index,
                         onClick = {
                             coroutineScope.launch {

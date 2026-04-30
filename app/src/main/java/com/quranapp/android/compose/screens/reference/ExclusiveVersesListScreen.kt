@@ -91,7 +91,6 @@ fun ExclusiveVersesListScreen(kind: ExclusiveVersesScreenKind) {
         topBar = {
             AppBar(
                 title = stringResource(kind.titleRes),
-                bgColor = colorResource(R.color.colorBGHomePageItem),
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
                 searchPlaceholder = stringResource(R.string.strHintSearch),
@@ -156,7 +155,7 @@ fun ExclusiveVersesListScreen(kind: ExclusiveVersesScreenKind) {
                             top = 16.dp,
                             bottom = 64.dp,
                         ),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         items(
                             items = rows,
@@ -209,7 +208,6 @@ private fun ExclusiveVerseListItem(
 @Composable
 private fun DuaListItem(verse: ExclusiveVerse) {
     val context = LocalContext.current
-    val resources = LocalResources.current
     val excluded = verse.id in arrayOf(1, 2)
     val duaName = if (!excluded) {
         stringResource(R.string.strMsgDuaFor, verse.title)
@@ -230,8 +228,7 @@ private fun DuaListItem(verse: ExclusiveVerse) {
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Column(
@@ -243,7 +240,7 @@ private fun DuaListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = duaName,
-                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
+                style = MaterialTheme.typography.labelLarge.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start,
             )
@@ -276,8 +273,7 @@ private fun EtiquetteListItem(verse: ExclusiveVerse) {
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Column(
@@ -289,7 +285,7 @@ private fun EtiquetteListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
+                style = MaterialTheme.typography.labelLarge.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             if (verse.chapters.isNotEmpty() && verse.inChapters.isNotBlank()) {
@@ -314,8 +310,7 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Column(
@@ -327,7 +322,7 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
+                style = MaterialTheme.typography.labelLarge.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             verse.description?.takeIf { it.isNotBlank() }?.let { desc ->
@@ -365,8 +360,7 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
         },
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceContainer),
         border = BorderStroke(1.dp, colorScheme.outlineVariant.alpha(0.5f)),
     ) {
         Column(
@@ -378,7 +372,7 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
         ) {
             Text(
                 text = verse.title,
-                style = MaterialTheme.typography.titleMedium.merge(tightTextStyle),
+                style = MaterialTheme.typography.labelLarge.merge(tightTextStyle),
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
