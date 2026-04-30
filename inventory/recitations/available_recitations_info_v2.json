@@ -24,7 +24,13 @@
         "ru": "Абдуль-Басит Абдус-Самад",
         "tr": "Abdulbasit Abdussamed",
         "ur": "عبد الباسط بن عبد الصمد",
-        "ky": "Абдулбасит Абдуссамад"
+        "ky": "Абдулбасит Абдуссамад",
+        "en": "Abdul Basit Abdus-Samad",
+        "fil": "Abdul Basit Abdus-Samad",
+        "sd": "عبدالباسط عبدالصمد",
+        "ta": "அப்துல் பாசித் அப்துஸ் ஸமத்",
+        "zh-CN": "阿卜杜·巴塞特·阿卜杜斯·萨马德",
+        "zh-TW": "阿卜杜·巴塞特·阿卜杜斯·薩馬德"
       }
     },
     {
@@ -52,7 +58,13 @@
         "ru": "Абдуррахман ас-Судейс",
         "tr": "Abdurrahman Sudeysi",
         "ur": "عبدالرحمٰن السدیس",
-        "ky": "Абдуррахман ас-Судейс"
+        "ky": "Абдуррахман ас-Судейс",
+        "en": "Abdur-Rahman al-Sudais",
+        "fil": "Abdurrahman Al-Sudais",
+        "sd": "عبدالرحمٰن السديس",
+        "ta": "அப்துர் ரஹ்மான் அஸ்-சுதைஸ்",
+        "zh-CN": "阿卜杜勒·拉赫曼·苏代斯",
+        "zh-TW": "阿卜杜勒·拉赫曼·蘇代斯"
       }
     },
     {
@@ -71,7 +83,7 @@
         "fa": "ابوبکر الشاتری",
         "fr": "Abu Bakr al-Shatri",
         "gu": "અબુ બકર અલ-શાત્રી",
-        "hi": "अबू बक्र अल-शतरी",
+        "hi": "अबू बकर अल-शतरी",
         "in": "Abu Bakr al-Shatri",
         "it": "Abu Bakr al-Shatri",
         "ml": "അബൂബക്കർ അൽ-ശാത്രി",
@@ -79,7 +91,13 @@
         "ru": "Абу Бакр аль-Шатри",
         "tr": "Ebu Bekir eş-Şatri",
         "ur": "ابوبکر الشطری",
-        "ky": "Абу Бакр аш-Шатри"
+        "ky": "Абу Бакр аш-Шатри",
+        "en": "Abu Bakr al-Shatri",
+        "fil": "Abu Bakr Al-Shatri",
+        "sd": "ابوبکر الشطري",
+        "ta": "அபூபக்ர் அல்-ஷாத்ரி",
+        "zh-CN": "阿布·伯克尔·沙特里",
+        "zh-TW": "阿布·伯克爾·沙特里"
       }
     },
     {
@@ -97,7 +115,7 @@
         "es": "Ahmed bin Ali Al-Ajmi",
         "fa": "احمد بن علی العجمی",
         "fr": "Ahmed bin Ali Al-Ajmi",
-        "gu": "અહમદ બિન અલી અલ-આજમ",
+        "gu": "અહમદ બિન અલી અલ-અજ્મી",
         "hi": "अहमद बिन अली अल-अजमी",
         "in": "Ahmad bin Ali Al-Ajmi",
         "it": "Ahmed bin Ali Al-Ajmi",
@@ -106,7 +124,13 @@
         "ru": "Ахмад бин Али Аль-Аджми",
         "tr": "Ahmed bin Ali Al-Ajmi",
         "ur": "احمد بن علی العجمی",
-        "ky": "Ахмад бин Али ал-Ажми"
+        "ky": "Ахмад бин Али ал-Ажми",
+        "en": "Ahmad bin Ali al-Ajmi",
+        "fil": "Ahmad bin Ali Al-Ajmi",
+        "sd": "احمد بن علي العجمي",
+        "ta": "அஹ்மத் பின் அலி அல்-அஜ்மீ",
+        "zh-CN": "艾哈迈德·本·阿里·阿吉姆",
+        "zh-TW": "艾哈邁德·本·阿里·阿吉姆"
       }
     },
     {
@@ -133,7 +157,13 @@
         "ru": "аль-Худхайфи",
         "tr": "Al Hudhaify",
         "ur": "علی بن عبدالرحمٰن الحذیفی",
-        "ky": "Али ибн Абдуррахман ал-Хузайфи"
+        "ky": "Али ибн Абдуррахман ал-Хузайфи",
+        "en": "Ali ibn Abdur-Rahman al-Hudhaify",
+        "fil": "Ali ibn Abdur-Rahman Al-Hudhaify",
+        "sd": "علي بن عبدالرحمٰن الحذيفي",
+        "ta": "அலி இப்னு அப்துர் ரஹ்மான் அல்-ஹுதைஃபீ",
+        "zh-CN": "阿里·伊本·阿卜杜勒·拉赫曼·胡宰菲",
+        "zh-TW": "阿里·伊本·阿卜杜勒·拉赫曼·胡宰菲"
       }
     },
     {
@@ -149,7 +179,7 @@
         "ckb": "فارس عەباد",
         "de": "Fares Abbad",
         "es": "Fares Abbad",
-        "fa": "فارس آباد",
+        "fa": "فارس عباد",
         "fr": "Fares Abbad",
         "gu": "ફારીસ અબાદ",
         "hi": "फरेस अब्बाद",
@@ -159,8 +189,14 @@
         "pt": "Fares Abbad",
         "ru": "Фарес Аббад",
         "tr": "Fares Abbad",
-        "ur": "فارس آباد",
-        "ky": "Фарес Аббад"
+        "ur": "فارس عباد",
+        "ky": "Фарес Аббад",
+        "en": "Fares Abbad",
+        "fil": "Fares Abbad",
+        "sd": "فارس عباد",
+        "ta": "ஃபாரிஸ் அப்பாத்",
+        "zh-CN": "法里斯·阿巴德",
+        "zh-TW": "法里斯·阿巴德"
       }
     },
     {
@@ -187,7 +223,13 @@
         "ru": "Аль-Рифаи, Хани",
         "tr": "Hani Al-Rifai",
         "ur": "ہانی الرفاعی",
-        "ky": "Хани ар-Рифаи"
+        "ky": "Хани ар-Рифаи",
+        "en": "Hani al-Rifai",
+        "fil": "Hani Al-Rifai",
+        "sd": "هاني الرفاعي",
+        "ta": "ஹானி அர்-ரிஃபாஈ",
+        "zh-CN": "哈尼·里法伊",
+        "zh-TW": "哈尼·里法伊"
       }
     },
     {
@@ -214,7 +256,13 @@
         "ru": "Аль Тунайджи, Халифа",
         "tr": "Khalifa Al-Tunaiji",
         "ur": "خلیفہ التونیجی",
-        "ky": "Халифа ал-Тунайжи"
+        "ky": "Халифа ал-Тунайжи",
+        "en": "Khalifa Al Tunaiji",
+        "fil": "Khalifa Al Tunaiji",
+        "sd": "خليفة الطنيجي",
+        "ta": "கலீஃபா அல் துனைஜீ",
+        "zh-CN": "哈利法·图奈吉",
+        "zh-TW": "哈利法·圖奈吉"
       }
     },
     {
@@ -233,7 +281,7 @@
         "fa": "مشاری راشد العفاسی",
         "fr": "Mishary bin Rashid Alafasy",
         "gu": "મેશરી બિન રશીદ અલ-અફાસી",
-        "hi": "मिशारी बिन राशिد अल-अफासी",
+        "hi": "मिशारी बिन राशिद अल-अफासी",
         "in": "Misyari Rasyid Al-'Afasi",
         "it": "Mishari Rashid al-Afasy",
         "ml": "മിഷരി ബിൻ റാഷിദ് അൽ അഫാസി",
@@ -241,7 +289,13 @@
         "ru": "Аль-Афаси, Мишари Рашид",
         "tr": "Mishari Rashid al-Afasy",
         "ur": "مشاری راشد العفاسی",
-        "ky": "Мишари Рашид ал-Афаси"
+        "ky": "Мишари Рашид ал-Афаси",
+        "en": "Mishari Rashid al-Afasy",
+        "fil": "Mishari Rashid Al-Afasy",
+        "sd": "مشاري راشد العفاسي",
+        "ta": "மிஷாரி ராஷித் அல்-அஃபாஸி",
+        "zh-CN": "米沙里·拉希德·阿法西",
+        "zh-TW": "米沙里·拉希德·阿法西"
       }
     },
     {
@@ -268,7 +322,13 @@
         "ru": "Аль Катами, Насер",
         "tr": "Naser Al Katamy",
         "ur": "ناصر القطامی",
-        "ky": "Насер ал-Катами"
+        "ky": "Насер ал-Катами",
+        "en": "Nasser al-Qatami",
+        "fil": "Nasser Al Qatami",
+        "sd": "ناصر القطامي",
+        "ta": "நாசிர் அல் கதாமீ",
+        "zh-CN": "纳赛尔·卡塔米",
+        "zh-TW": "納賽爾·卡塔米"
       }
     },
     {
@@ -295,7 +355,13 @@
         "ru": "Аль-Гамди, Саад",
         "tr": "Saad Al-Ghamdi",
         "ur": "سعد الغامدی",
-        "ky": "Саад ал-Гамди"
+        "ky": "Саад ал-Гамди",
+        "en": "Saad al-Ghamdi",
+        "fil": "Saad Al-Ghamdi",
+        "sd": "سعد الغامدي",
+        "ta": "ஸாத் அல்-ஃகாம்தீ",
+        "zh-CN": "萨阿德·加姆迪",
+        "zh-TW": "薩阿德·加姆迪"
       }
     },
     {
@@ -319,10 +385,16 @@
         "it": "Sahl Yassin",
         "ml": "സഹൽ യാസിൻ",
         "pt": "Sahl Yassin",
-        "ru": "Sahl Yassin",
+        "ru": "Сахл Ясин",
         "tr": "Sahl Yassin",
         "ur": "سہل یاسین",
-        "ky": "Сахл Ясин"
+        "ky": "Сахл Ясин",
+        "en": "Sahl Yassin",
+        "fil": "Sahl Yassin",
+        "sd": "سهل ياسين",
+        "ta": "ஸஹ்ல் யாசீன்",
+        "zh-CN": "萨赫勒·亚辛",
+        "zh-TW": "薩赫勒·亞辛"
       }
     },
     {
@@ -340,7 +412,7 @@
         "es": "Saud Al Shuraim",
         "fa": "سعود الشوریم",
         "fr": "Saud Al-Shuraim",
-        "gu": "સઅ્દ અલ-શુરૈમ",
+        "gu": "સૌદ અલ-શુરૈમ",
         "hi": "सऊद अल-शुरैम",
         "in": "Saud Al-Shuraim",
         "it": "Saud Al-Shuraim",
@@ -349,7 +421,13 @@
         "ru": "Сауд аш-Шурейм",
         "tr": "Suud El-Şuraim",
         "ur": "سعود الشریم",
-        "ky": "Сауд аш-Шурейм"
+        "ky": "Сауд аш-Шурейм",
+        "en": "Saud al-Shuraim",
+        "fil": "Saud Al-Shuraim",
+        "sd": "سعود الشريم",
+        "ta": "ஸೌத் அஷ்-ஷுரைம்",
+        "zh-CN": "苏欧德·舒赖姆",
+        "zh-TW": "蘇歐德·舒賴姆"
       }
     },
     {
@@ -376,7 +454,13 @@
         "ru": "Ясир ад-Даусари",
         "tr": "Yasser ad-Dussary",
         "ur": "یاسر الدوسری",
-        "ky": "Ясир ад-Досари"
+        "ky": "Ясир ад-Досари",
+        "en": "Yasser al-Dussary",
+        "fil": "Yasser Ad-Dussary",
+        "sd": "ياسر الدوسري",
+        "ta": "யாசிர் அத்-துஸ்ஸாரி",
+        "zh-CN": "亚西尔·杜萨里",
+        "zh-TW": "亞西爾·杜薩里"
       }
     },
     {
@@ -403,7 +487,13 @@
         "ru": "Аль-Миншави, Мухаммад",
         "tr": "Muhammed Sıddık el-Minşavi",
         "ur": "قاری محمد صدیق منشاوی",
-        "ky": "Мухаммед Сиддик ал-Миншави"
+        "ky": "Мухаммед Сиддик ал-Миншави",
+        "en": "Muhammad Siddiq al-Minshawi",
+        "fil": "Muhammad Siddiq Al-Minshawi",
+        "sd": "محمد صديق المنشاوي",
+        "ta": "முஹம்மது சித்தீக் அல்-மின்ஷாவி",
+        "zh-CN": "穆罕默德·西迪克·明沙维",
+        "zh-TW": "穆罕默德·西迪克·明沙維"
       }
     },
     {
@@ -430,7 +520,13 @@
         "ru": "Аль-Хусари, Махмуд Халиль",
         "tr": "Mahmud Halil el-Husari",
         "ur": "محمود خليل الحصري",
-        "ky": "Махмуд Халил ал-Хусари"
+        "ky": "Махмуд Халил ал-Хусари",
+        "en": "Mahmoud Khalil al-Husary",
+        "fil": "Mahmoud Khalil Al-Husary",
+        "sd": "محمود خليل الحصري",
+        "ta": "மஹ்மூட் கலீல் அல்-ஹுசாரி",
+        "zh-CN": "马哈茂德·哈利勒·侯萨里",
+        "zh-TW": "馬哈茂德·哈利勒·侯薩里"
       }
     },
     {
@@ -457,7 +553,46 @@
         "ru": "Аль-Хусари, Махмуд Халиль",
         "tr": "Mahmud Halil el-Husari",
         "ur": "محمود خليل الحصري",
-        "ky": "Махмуд Халил ал-Хусари"
+        "ky": "Махмуд Халил ал-Хусари",
+        "en": "Mahmoud Khalil al-Husary",
+        "fil": "Mahmoud Khalil Al-Husary",
+        "sd": "محمود خليل الحصري",
+        "ta": "மஹ்மூட் கலீல் அல்-ஹுசாரி",
+        "zh-CN": "马哈茂德·哈利勒·侯萨里",
+        "zh-TW": "馬哈茂德·哈利勒·侯薩里"
+      }
+    },
+    {
+      "id": "muhammad_jibreel",
+      "reciter": "Muhammad Jibreel",
+      "style": null,
+      "url_template": "https://github.com/dabatase/muhammad_jibreel/releases/download/v1/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/muhammad_jibreel.json.gz",
+      "timing_version": 1,
+      "translations": {
+        "ar": "محمد جبريل",
+        "bn": "মুহাম্মদ জিবরীল",
+        "ckb": "محەممەد جیبرێل",
+        "de": "Muhammad Jibreel",
+        "es": "Muhammad Jibreel",
+        "fa": "محمد جبریل",
+        "fr": "Muhammad Jibril",
+        "gu": "મુહમ્મદ જિબ્રીલ",
+        "hi": "मुहम्मद जिब्रील",
+        "in": "Muhammad Jibreel",
+        "it": "Muhammad Jibreel",
+        "ml": "മുഹമ്മദ് ജിബ്രീൽ",
+        "pt": "Muhammad Jibreel",
+        "ru": "Мухаммад Джибриль",
+        "tr": "Muhammed Cibril",
+        "ur": "محمد جبرئیل",
+        "ky": "Мухаммад Жибрил",
+        "en": "Muhammad Jibreel",
+        "fil": "Muhammad Jibreel",
+        "sd": "محمد جبريل",
+        "ta": "முஹம்மது ஜிப்ரீல்",
+        "zh-CN": "穆罕默德·吉布里勒",
+        "zh-TW": "穆罕默德·吉布里勒"
       }
     }
   ]
