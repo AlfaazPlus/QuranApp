@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.compose.theme.alpha
 
 
 @Composable
@@ -23,7 +24,8 @@ fun IconButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = Color.Transparent,
         contentColor = tint ?: LocalContentColor.current,
-        disabledContainerColor = Color.Transparent
+        disabledContainerColor = Color.Transparent,
+        disabledContentColor = (tint ?: LocalContentColor.current).alpha(0.5f)
     ),
     shape: RoundedCornerShape = RoundedCornerShape(100),
     enabled: Boolean = true,
@@ -40,24 +42,12 @@ fun IconButton(
         enabled = enabled,
         colors = colors,
     ) {
-        if (tint == null) {
-            Icon(
-                painter = painter,
-                contentDescription = contentDescription,
-                modifier = Modifier.size(
-                    if (small) 20.dp else 24.dp,
-                ),
-                tint = null
-            )
-        } else {
-            Icon(
-                painter = painter,
-                contentDescription = contentDescription,
-                modifier = Modifier.size(
-                    if (small) 20.dp else 24.dp,
-                ),
-                tint = tint
-            )
-        }
+        Icon(
+            painter = painter,
+            contentDescription = contentDescription,
+            modifier = Modifier.size(
+                if (small) 20.dp else 24.dp,
+            ),
+        )
     }
 }
