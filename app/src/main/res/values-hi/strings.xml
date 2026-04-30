@@ -401,6 +401,7 @@
     <string name="playWord">शब्द का ऑडियो चलाएँ</string>
     <string name="previousWord">पिछला शब्द</string>
     <string name="nextWord">अगला शब्द</string>
+    <string name="wbwSelectLanguage">शब्द-दर-शब्द भाषा चुनें</string>
     <string name="results">परिणाम</string>
     <string name="titleRecentSearches">हाल की खोजें</string>
     <string name="searchInQuran">कुरान में खोजें</string>
@@ -427,4 +428,8 @@
     <string name="stopPlayback">प्लेबैक रोकें</string>
     <string name="playNextSurah">अगली सूरह चलाएं</string>
     <string name="repeatCurrentSurah">वर्तमान सूरह दोहराएं</string>
+    <string name="reset">रीसेट करें</string>
+    <string name="selectAll">सभी चुनें</string>
+    <string name="filterTranslationsDisabledNote">अरबी खोज चालू होने पर अनुवादों में खोज नहीं की जाती।</string>
+    <string name="filterTranslationsEmpty">अभी तक कोई अनुवाद डाउनलोड नहीं हुआ।</string>
 </resources>

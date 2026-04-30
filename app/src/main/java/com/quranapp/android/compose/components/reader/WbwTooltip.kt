@@ -140,6 +140,12 @@ fun WbwTooltip(
                                 }
                             }
                         }
+                    } else {
+                        Icon(
+                            painterResource(R.drawable.dr_icon_info),
+                            contentDescription = null,
+                            tint = colorScheme.error
+                        )
                     }
 
                     Icon(

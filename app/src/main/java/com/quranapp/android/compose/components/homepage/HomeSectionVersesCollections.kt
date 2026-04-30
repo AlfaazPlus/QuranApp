@@ -150,7 +150,7 @@ private fun CollectionCard(
         modifier = modifier.height(120.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorScheme.surfaceContainer.alpha(0.75f)
+            containerColor = colorScheme.surfaceContainer.alpha(0.9f)
         ),
         border = BorderStroke(1.dp, colorScheme.outline.copy(alpha = 0.1f))
     ) {

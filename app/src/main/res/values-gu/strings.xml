@@ -397,6 +397,7 @@
     <string name="playWord">શબ્દ વગાડો</string>
     <string name="previousWord">અગાઉનો શબ્દ</string>
     <string name="nextWord">આગલો શબ્દ</string>
+    <string name="wbwSelectLanguage">શબ્દદર શબ્દ ભાષા પસંદ કરો</string>
     <string name="results">પરિણામો</string>
     <string name="titleRecentSearches">તાજેતરની શોધો</string>
     <string name="searchInQuran">કુરાનમાં શોધો</string>
@@ -423,5 +424,9 @@
     <string name="stopPlayback">પ્લેબેક બંધ કરો</string>
     <string name="playNextSurah">આગલી સૂરા ચલાવો</string>
     <string name="repeatCurrentSurah">હાલની સૂરા પુનરાવર્તિત કરો</string>
+    <string name="reset">રીસેટ કરો</string>
+    <string name="selectAll">બધું પસંદ કરો</string>
+    <string name="filterTranslationsDisabledNote">અરબી શોધ ચાલુ હોય ત્યાં સુધી અનુવાદોમાં શોધ થતી નથી.</string>
+    <string name="filterTranslationsEmpty">હજુ સુધી કોઈ અનુવાદ ડાઉનલોડ થયું નથી.</string>
 </resources>
 

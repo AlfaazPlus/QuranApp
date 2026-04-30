@@ -45,6 +45,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -405,9 +406,10 @@ private fun ReaderIndexTabs(
             },
         shadowElevation = 2.dp,
     ) {
-        SecondaryTabRow(
+        SecondaryScrollableTabRow (
             selectedTabIndex = selectedTabIndex,
-            containerColor = colorScheme.surfaceContainer
+            containerColor = colorScheme.surfaceContainer,
+            edgePadding = 0.dp
         ) {
             tabs.forEachIndexed { index, titleRes ->
                 val isSelected = selectedTabIndex == index

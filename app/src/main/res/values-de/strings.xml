@@ -395,6 +395,7 @@
     <string name="playWord">Spiel Wort</string>
     <string name="previousWord">Vorheriges Wort</string>
     <string name="nextWord">Nächstes Wort</string>
+    <string name="wbwSelectLanguage">Wort-für-Wort-Sprache auswählen</string>
     <string name="results">Ergebnisse</string>
     <string name="titleRecentSearches">Letzte Suchanfragen</string>
     <string name="searchInQuran">Suche im Koran</string>
@@ -423,4 +424,8 @@
     <string name="stopPlayback">Wiedergabe stoppen</string>
     <string name="playNextSurah">Nächste Sure abspielen</string>
     <string name="repeatCurrentSurah">Aktuelle Sure wiederholen</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="selectAll">Alle auswählen</string>
+    <string name="filterTranslationsDisabledNote">Übersetzungen werden nicht durchsucht, solange die arabische Suche aktiv ist.</string>
+    <string name="filterTranslationsEmpty">Noch keine Übersetzungen heruntergeladen.</string>
 </resources>

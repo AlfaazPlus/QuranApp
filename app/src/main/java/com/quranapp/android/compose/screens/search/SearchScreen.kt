@@ -381,6 +381,7 @@ private fun SearchResultTabs(
         SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = colorScheme.surfaceContainer,
+            edgePadding = 0.dp
         ) {
             tabs.forEachIndexed { index, tab ->
                 val isSelected = selectedTabIndex == index

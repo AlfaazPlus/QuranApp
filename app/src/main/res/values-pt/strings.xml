@@ -397,6 +397,7 @@
     <string name="playWord">Reproduzir palavra</string>
     <string name="previousWord">Palavra anterior</string>
     <string name="nextWord">Próxima palavra</string>
+    <string name="wbwSelectLanguage">Selecionar idioma palavra por palavra</string>
     <string name="results">Resultados</string>
     <string name="titleRecentSearches">Pesquisas recentes</string>
     <string name="searchInQuran">Pesquisar no Alcorão</string>
@@ -423,4 +424,8 @@
     <string name="stopPlayback">Parar reprodução</string>
     <string name="playNextSurah">Tocar próxima surata</string>
     <string name="repeatCurrentSurah">Repetir surata atual</string>
+    <string name="reset">Redefinir</string>
+    <string name="selectAll">Selecionar tudo</string>
+    <string name="filterTranslationsDisabledNote">As traduções não são pesquisadas enquanto a pesquisa em árabe estiver ativa.</string>
+    <string name="filterTranslationsEmpty">Ainda não há traduções baixadas.</string>
 </resources>

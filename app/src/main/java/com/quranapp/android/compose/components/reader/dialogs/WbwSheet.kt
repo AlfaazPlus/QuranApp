@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,10 +19,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -48,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalQuranTextStyle
@@ -57,6 +61,7 @@ import com.quranapp.android.compose.components.reader.LocalWbwStateData
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
+import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
@@ -69,6 +74,7 @@ import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderProviderViewModel
 import kotlinx.coroutines.Dispatchers
@@ -404,6 +410,7 @@ private fun ArabicWordCard(
     wbwRow: WbwWordEntity?,
     wbwState: LocalWbwStateData,
 ) {
+    val context = LocalContext.current
     val transliteration = wbwRow?.transliteration?.takeIf { !it.isNullOrBlank() }
     val translation = wbwRow?.translation?.takeIf { !it.isNullOrBlank() }
     val textStyles = LocalQuranTextStyle.current
@@ -460,9 +467,9 @@ private fun ArabicWordCard(
                 }
             }
 
-            if (translation != null || transliteration != null) {
-                Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
+            if (translation != null || transliteration != null) {
                 CompositionLocalProvider(LocalLayoutDirection provides if (wbwState.isWbwRtl) LayoutDirection.Rtl else LayoutDirection.Ltr) {
                     if (transliteration != null) {
                         Text(
@@ -477,6 +484,29 @@ private fun ArabicWordCard(
                             style = textStyles.wbwTrStyle ?: TextStyle.Default
                         )
                     }
+                }
+            } else {
+                TextButton(
+                    onClick = {
+                        context.startActivity(
+                            Intent(context, ActivitySettings::class.java).apply {
+                                putExtra(Keys.NAV_DESTINATION, SettingRoutes.WWB)
+                            },
+                            null
+                        )
+                    }
+                ) {
+                    Icon(
+                        painterResource(R.drawable.dr_icon_info),
+                        contentDescription = null,
+                        tint = colorScheme.error
+                    )
+
+                    Text(
+                        stringResource(R.string.wbwSelectLanguage),
+                        modifier = Modifier.padding(start = 8.dp),
+                        color = colorScheme.onSurface
+                    )
                 }
             }
         }

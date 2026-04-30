@@ -405,6 +405,7 @@
     <string name="playWord">Прослушать слово</string>
     <string name="previousWord">Предыдущее слово</string>
     <string name="nextWord">Следующее слово</string>
+    <string name="wbwSelectLanguage">Выберите язык пословного отображения</string>
     <string name="results">Результаты</string>
     <string name="titleRecentSearches">Последние поиски</string>
     <string name="searchInQuran">Поиск в Коране</string>
@@ -431,4 +432,8 @@
     <string name="stopPlayback">Остановить воспроизведение</string>
     <string name="playNextSurah">Воспроизвести следующую суру</string>
     <string name="repeatCurrentSurah">Повторять текущую суру</string>
+    <string name="reset">Сбросить</string>
+    <string name="selectAll">Выбрать все</string>
+    <string name="filterTranslationsDisabledNote">Переводы не ищутся, пока включён поиск по арабскому тексту.</string>
+    <string name="filterTranslationsEmpty">Переводы ещё не загружены.</string>
 </resources>
