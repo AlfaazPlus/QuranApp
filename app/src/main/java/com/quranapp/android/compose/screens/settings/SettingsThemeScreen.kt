@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.screens.settings
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -34,18 +32,17 @@ import com.quranapp.android.compose.components.settings.SettingsItem
 import com.quranapp.android.compose.components.settings.SettingsThemeItem
 import com.quranapp.android.compose.components.settings.ThemeSelectorSheet
 import com.quranapp.android.compose.extensions.fullWidthColumn
+import com.quranapp.android.compose.utils.ThemeUtils
 import kotlinx.coroutines.launch
 
 data class ThemeItem(
     val id: String,
     val title: Int,
-    val color: BaseColors
+    val color: BaseColors,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SettingsThemeScreen() {
-    val themeItems = listOf(
+fun themeColorItems(): List<ThemeItem> {
+    return listOf(
         ThemeItem(ThemeUtils.THEME_COLOR_DEFAULT, R.string.theme_default, ThemeDefaultColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_BLUE, R.string.theme_blue, ThemeBlueColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_RED, R.string.theme_red, ThemeRedColors()),
@@ -54,6 +51,13 @@ fun SettingsThemeScreen() {
         ThemeItem(ThemeUtils.THEME_COLOR_YELLOW, R.string.theme_yellow, ThemeYellowColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_MONO, R.string.theme_mono, ThemeMonoColors()),
     )
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsThemeScreen() {
+    val themeItems = themeColorItems()
 
     val coroutineScope = rememberCoroutineScope()
     val isDarkTheme = ThemeUtils.observeDarkTheme()

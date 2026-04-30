@@ -21,24 +21,15 @@ object SearchNormalizer {
         }
     }
 
-    fun normalize(input: String, script: ScriptType): String {
-        var text = Normalizer.normalize(input, Normalizer.Form.NFKC)
-
-        text = text.replace("\\s+".toRegex(), " ").trim()
-
-        text = when (script) {
-            ScriptType.LATIN -> latinNormalize(text)
-            ScriptType.ARABIC -> arabicNormalize(text)
-            ScriptType.OTHER -> text
-        }
-
-        return text.replace("\\s+".toRegex(), " ").trim()
+    fun normalize(input: String): String {
+        return Normalizer.normalize(input, Normalizer.Form.NFKC)
+            .lowercase(Locale.ROOT)
+            .trim()
     }
 
     private fun latinNormalize(s: String): String {
         return s
             .lowercase(Locale.ROOT)
-            .replace("[\\p{Punct}]".toRegex(), " ")
     }
 
     private fun arabicNormalize(s: String): String {

@@ -17,12 +17,17 @@ fun String.normalizedLanguageTag(): String {
 fun setAppLocale(context: Context, languageTag: String) {
     SPAppConfigs.setLocale(context, languageTag)
 
-    val normalizedlangTag = languageTag.normalizedLanguageTag()
-    AppCompatDelegate.setApplicationLocales(
-        LocaleListCompat.forLanguageTags(normalizedlangTag)
-    )
+    if (languageTag == "default") {
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+        _localeFlow.value = Locale.getDefault()
+    } else {
+        val normalizedlangTag = languageTag.normalizedLanguageTag()
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(normalizedlangTag)
+        )
 
-    _localeFlow.value = Locale.forLanguageTag(normalizedlangTag)
+        _localeFlow.value = Locale.forLanguageTag(normalizedlangTag)
+    }
 }
 
 fun appFallbackLanguageCodes(default: String = "en"): Sequence<String> {
@@ -31,26 +36,19 @@ fun appFallbackLanguageCodes(default: String = "en"): Sequence<String> {
 }
 
 fun appLocale(): Locale {
-    val locale = AppCompatDelegate.getApplicationLocales()[0]
-    return locale ?: Locale.getDefault()
+    val locales = AppCompatDelegate.getApplicationLocales()
+
+    return if (locales.isEmpty) {
+        Locale.getDefault()
+    } else {
+        locales[0]!!
+    }
 }
 
 private val _localeFlow = MutableStateFlow(appLocale())
 val localeFlow: StateFlow<Locale> = _localeFlow
 
 private val formatters = ConcurrentHashMap<Locale, NumberFormat>()
-
-private fun getNumberFormatter(): NumberFormat? {
-    val appLocale = appLocale()
-
-    return formatters.getOrPut(appLocale) {
-        NumberFormat.getInstance(appLocale)
-    }
-}
-
-fun Number.formatted(): String {
-    return getNumberFormatter()?.format(this) ?: toString()
-}
 
 fun String.isUrduLanguageCode(): Boolean {
     return this == "ur"

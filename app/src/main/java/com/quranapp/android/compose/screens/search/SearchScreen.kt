@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,6 +38,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -61,6 +64,7 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.search.ExclusiveSearchResults
 import com.quranapp.android.compose.components.search.QuickLinks
 import com.quranapp.android.compose.components.search.SearchEmptyScrollContent
+import com.quranapp.android.compose.components.search.SearchFiltersSheet
 import com.quranapp.android.compose.components.search.SearchHistorySuggestionStrip
 import com.quranapp.android.compose.components.search.SurahSearchResults
 import com.quranapp.android.compose.components.search.TextSearchResults
@@ -75,9 +79,10 @@ import kotlinx.coroutines.launch
 fun SearchScreen(
     supportsVoiceSearch: Boolean,
     voiceSearchFlow: SharedFlow<String>,
-    onVoiceSearchClick: () -> Unit,
+    onVoiceSearchClick: (inQuranText: Boolean) -> Unit,
 ) {
     val viewModel = viewModel<QuranSearchViewModel>()
+    var showFilterSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.refreshSearchHistory()
@@ -94,11 +99,36 @@ fun SearchScreen(
                 title = stringResource(R.string.titleGlobalSearch),
                 actions = {
                     if (supportsVoiceSearch) {
-                        IconButton(onClick = onVoiceSearchClick) {
+                        IconButton(
+                            onClick = {
+                                onVoiceSearchClick(viewModel.quranTextEnabled.value)
+                            }
+                        ) {
                             Icon(
                                 painterResource(R.drawable.dr_icon_mic),
                                 contentDescription = stringResource(R.string.strHintSearch),
                             )
+                        }
+                    }
+
+                    val activeFilters by viewModel.currentFilters.collectAsState()
+
+                    IconButton(
+                        onClick = { showFilterSheet = true },
+                    ) {
+                        Box {
+                            Icon(
+                                painterResource(R.drawable.dr_icon_filter),
+                                contentDescription = stringResource(R.string.strTitleFilters),
+                            )
+                            if (!activeFilters.isEmpty) {
+                                Box(
+                                    modifier = Modifier
+                                        .align(Alignment.TopEnd)
+                                        .size(8.dp)
+                                        .background(colorScheme.primary, CircleShape)
+                                )
+                            }
                         }
                     }
                 },
@@ -134,6 +164,22 @@ fun SearchScreen(
             TabbedResults(viewModel)
         }
     }
+
+    val filtersState by viewModel.currentFilters.collectAsState()
+    val availableTranslations by viewModel.availableTranslations.collectAsState()
+    val quranTextEnabledState by viewModel.quranTextEnabled.collectAsState()
+
+    SearchFiltersSheet(
+        isOpen = showFilterSheet,
+        onDismiss = { showFilterSheet = false },
+        filters = filtersState,
+        availableTranslations = availableTranslations,
+        quranTextEnabled = quranTextEnabledState,
+        onApplyFilters = {
+            viewModel.setFilters(it)
+            showFilterSheet = false
+        }
+    )
 }
 
 @Composable
@@ -182,7 +228,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
         ),
         placeholder = {
             Text(
-                stringResource(R.string.strHintSearchQuran),
+                stringResource(if (quranTextEnabled) R.string.searchTipArabic else R.string.strHintSearchQuran),
                 style = MaterialTheme.typography.titleSmall,
                 color = colorScheme.onBackground.alpha(0.6f)
             )
@@ -280,6 +326,13 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
     }
 
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+    val filterState by viewModel.currentFilters.collectAsState()
+    val quranTextSearch by viewModel.quranTextEnabled.collectAsState()
+
+    LaunchedEffect(filterState, quranTextSearch) {
+        searchResults.refresh()
+    }
+
     val surahResults by viewModel.surahResults.collectAsState()
     val exclusiveResults by viewModel.topicResults.collectAsState()
 
@@ -304,7 +357,7 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
             .fillMaxSize(),
     ) { page ->
         when (page) {
-            0 -> TextSearchResults(viewModel, searchResults)
+            0 -> TextSearchResults(viewModel, searchResults, !filterState.isEmpty)
             1 -> SurahSearchResults(viewModel, surahResults)
             2 -> ExclusiveSearchResults(viewModel, exclusiveResults)
         }

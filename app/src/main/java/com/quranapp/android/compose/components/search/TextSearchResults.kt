@@ -53,7 +53,11 @@ import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.QuranSearchViewModel
 
 @Composable
-fun TextSearchResults(viewModel: QuranSearchViewModel, results: LazyPagingItems<SearchResult>) {
+fun TextSearchResults(
+    viewModel: QuranSearchViewModel,
+    results: LazyPagingItems<SearchResult>,
+    hasFilters: Boolean
+) {
     if (results.loadState.refresh is LoadState.Loading) {
         return Loader(true)
     }
@@ -64,7 +68,12 @@ fun TextSearchResults(viewModel: QuranSearchViewModel, results: LazyPagingItems<
             contentAlignment = Alignment.Center
         ) {
             Text(
-                stringResource(R.string.noResults),
+                stringResource(
+                    if (hasFilters)
+                        R.string.strMsgSearchNoResultsFoundAbsolute
+                    else
+                        R.string.noResults
+                ),
                 style = typography.labelLarge,
             )
         }

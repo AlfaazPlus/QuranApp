@@ -621,14 +621,18 @@ class QuranRepository(
     ) = arabicSearchDao.pageMatchedAyahs(ftsQuery, limit, offset)
 
     suspend fun searchSurahNos(query: String): List<Int> {
-        return surahSearchDao.searchSurahNos(
-            query
-                .trim()
-                .lowercase()
-                .split(Regex("\\s+"))
-                .filter { it.isNotBlank() }
-                .joinToString(" ") { "$it*" }
-        ).map { it.surahNo }
+        try {
+            return surahSearchDao.searchSurahNos(
+                query
+                    .trim()
+                    .lowercase()
+                    .split(Regex("\\s+"))
+                    .filter { it.isNotBlank() }
+                    .joinToString(" ") { "$it*" }
+            ).map { it.surahNo }
+        } catch (_: Exception) {
+            return emptyList()
+        }
     }
 
     suspend fun searchSurahs(query: String): List<SurahWithLocalizations> {

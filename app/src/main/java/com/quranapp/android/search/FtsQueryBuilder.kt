@@ -1,31 +1,43 @@
 package com.quranapp.android.search
 
-/**
- * Builds FTS4 MATCH strings from an already normalized query.
- * Uses AND of prefix terms: `word1* AND word2*`.
- */
 object FtsQueryBuilder {
-    fun toPrefixAndQuery(normalizedQuery: String): String? {
+
+    fun toTranslationTextQuery(rawQuery: String): String? {
+        val base = SearchNormalizer.normalize(rawQuery)
+
+        return toPrefixAndQuery(base, matchColumn = null)
+    }
+
+    fun toPrefixAndQuery(
+        normalizedQuery: String,
+        matchColumn: String? = null,
+    ): String? {
         val tokens = normalizedQuery.split(' ')
             .map { it.trim() }
             .filter { it.isNotBlank() }
+            .filter { it.isNotBlank() }
+            .filter { it.length >= 2 }
+            .filter { isValidToken(it) }
 
         if (tokens.isEmpty()) return null
 
-        return tokens.joinToString(" AND ") { token ->
-            val escaped = escapeFtsToken(token)
-
-            "${escaped}*"
+        return tokens.joinToString(" ") { token ->
+            val term = "${escapeFtsToken(token)}*"
+            if (matchColumn == null) term else "$matchColumn:$term"
         }
     }
 
+    private fun isValidToken(token: String): Boolean {
+        return token.any { it.isLetterOrDigit() }
+    }
+
     private fun escapeFtsToken(token: String): String {
-        var t = token.replace("\"", "\"\"")
+        val escaped = token.replace("\"", "\"\"")
 
-        if (t.any { it.isWhitespace() || it == '*' }) {
-            t = "\"$t\""
-        }
+        val isOperator = escaped.equals("OR", true)
+                || token.equals("AND", true)
+                || token.equals("NOT", true)
 
-        return t
+        return if (isOperator) "\"$escaped\"" else escaped
     }
 }

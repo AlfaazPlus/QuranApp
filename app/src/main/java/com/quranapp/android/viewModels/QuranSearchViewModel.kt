@@ -14,9 +14,14 @@ import com.quranapp.android.db.search.SearchHistoryStore
 import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.search.ExclusiveVersesSearchProvider
 import com.quranapp.android.search.QuickLinkItem
+import com.quranapp.android.search.SearchFilters
+import com.quranapp.android.search.SearchFiltersStore
 import com.quranapp.android.search.SearchPagingSource
 import com.quranapp.android.search.SearchQuickLinksParser
 import com.quranapp.android.search.SearchResult
+import com.quranapp.android.search.TranslationOption
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -32,6 +37,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -47,6 +53,16 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _searchHistory = MutableStateFlow<List<SearchHistoryEntry>>(emptyList())
     val searchHistory: StateFlow<List<SearchHistoryEntry>> = _searchHistory
+
+    private val _currentFilters = MutableStateFlow(SearchFiltersStore.read())
+    val currentFilters: StateFlow<SearchFilters> = _currentFilters
+
+    private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
+    val availableTranslations: StateFlow<List<TranslationOption>> = _availableTranslations
+
+    init {
+        loadAvailableTranslations()
+    }
 
     private val debouncedQuery = _searchQuery
         .debounce(200)
@@ -83,11 +99,14 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
             initialValue = emptyList(),
         )
 
-    val searchResults: Flow<PagingData<SearchResult>> = debouncedQuery
-        .combine(quranTextEnabled) { query, sourceQuran ->
-            query to sourceQuran
-        }
-        .flatMapLatest { (query, sourceQuran) ->
+    val searchResults: Flow<PagingData<SearchResult>> = combine(
+        debouncedQuery,
+        _quranTextEnabled,
+        _currentFilters,
+    ) { query, sourceQuran, filters ->
+        Triple(query, sourceQuran, filters)
+    }
+        .flatMapLatest { (query, sourceQuran, filters) ->
             if (query.isBlank()) {
                 return@flatMapLatest flowOf(PagingData.empty())
             }
@@ -102,15 +121,11 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
                     application = getApplication(),
                     query = query,
                     sourceQuran = sourceQuran,
+                    filters = filters,
                 )
             }.flow
         }
         .cachedIn(viewModelScope)
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = PagingData.empty(),
-        )
 
     fun onQueryChange(value: String, isQuranText: Boolean = false) {
         _searchQuery.value = value
@@ -125,6 +140,32 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
         _quranTextEnabled.value = newValue
 
         postRun(newValue)
+    }
+
+    fun setFilters(filters: SearchFilters) {
+        _currentFilters.value = filters
+        viewModelScope.launch {
+            SearchFiltersStore.write(filters)
+        }
+    }
+
+    private fun loadAvailableTranslations() {
+        viewModelScope.launch {
+            val options = withContext(Dispatchers.IO) {
+                QuranTranslationFactory(getApplication()).use { factory ->
+                    factory.getAvailableTranslationBooksInfo()
+                        .filterKeys { factory.isTranslationDownloaded(it) }
+                        .map { (slug, info) ->
+                            TranslationOption(
+                                slug = slug,
+                                displayName = info.displayName ?: slug,
+                            )
+                        }
+                        .sortedBy { it.displayName.lowercase() }
+                }
+            }
+            _availableTranslations.value = options
+        }
     }
 
     fun refreshSearchHistory() {

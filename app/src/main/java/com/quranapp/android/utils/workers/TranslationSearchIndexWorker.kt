@@ -100,7 +100,6 @@ class TranslationSearchIndexWorker(
                 }
 
                 val book = factory.getTranslationBookInfo(slug)
-                val script = SearchNormalizer.scriptForLang(book.langCode)
                 val rowCount = countRows(factory, slug)
                 val fingerprint = "${book.lastUpdated}|$rowCount|${SEARCH_INDEX_DB_VERSION}"
 
@@ -120,7 +119,7 @@ class TranslationSearchIndexWorker(
                         val raw = c.getString(2) ?: ""
                         val plain = StringUtils.removeHTML(raw, false)
 
-                        val norm = SearchNormalizer.normalize(plain, script)
+                        val norm = SearchNormalizer.normalize(plain)
                         if (norm.isBlank()) continue
 
                         rows.add(

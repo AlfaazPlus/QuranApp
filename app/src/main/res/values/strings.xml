@@ -437,4 +437,9 @@
     <string name="stopPlayback">Stop playback</string>
     <string name="playNextSurah">Play next surah</string>
     <string name="repeatCurrentSurah">Repeat current surah</string>
+
+    <string name="reset">Reset</string>
+    <string name="selectAll">Select all</string>
+    <string name="filterTranslationsDisabledNote">Translations aren\'t searched while Arabic search is on.</string>
+    <string name="filterTranslationsEmpty">No translations downloaded yet.</string>
 </resources>

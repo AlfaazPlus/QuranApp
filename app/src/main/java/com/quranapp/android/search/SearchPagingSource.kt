@@ -33,7 +33,8 @@ sealed class SearchResultMatch {
 class SearchPagingSource(
     private val application: Application,
     private val query: String,
-    private val sourceQuran: Boolean
+    private val sourceQuran: Boolean,
+    private val filters: SearchFilters = SearchFilters(),
 ) : PagingSource<Int, SearchResult>() {
 
     override suspend fun load(
@@ -46,7 +47,6 @@ class SearchPagingSource(
             if (sourceQuran) {
                 val normalized = SearchNormalizer.normalize(
                     query,
-                    ScriptType.ARABIC
                 )
 
                 val fts = FtsQueryBuilder.toPrefixAndQuery(normalized)
@@ -67,39 +67,35 @@ class SearchPagingSource(
                     )
                 }
 
-                val data = arabicRows.map { row ->
-                    val ayahId = row.ayahId
-                    val pair = QuranMeta.getVerseNoFromAyahId(ayahId)
-                    val surahNo = pair.first
-                    val ayahNo = pair.second
-
-                    SearchResult(
-                        chapterNo = surahNo,
-                        verseNo = ayahNo,
-                        matches = listOf(
-                            SearchResultMatch.QuranTextMatch(
-                                preview = highlightMatches(row.text, query)
+                val rawSize = arabicRows.size
+                val data = arabicRows
+                    .map { row ->
+                        val (surahNo, ayahNo) = QuranMeta.getVerseNoFromAyahId(row.ayahId)
+                        Triple(surahNo, ayahNo, row.text)
+                    }
+                    .map { (surahNo, ayahNo, text) ->
+                        SearchResult(
+                            chapterNo = surahNo,
+                            verseNo = ayahNo,
+                            matches = listOf(
+                                SearchResultMatch.QuranTextMatch(
+                                    preview = highlightMatches(text, query)
+                                )
                             )
                         )
-                    )
-                }
+                    }
 
                 return LoadResult.Page(
                     data = data,
                     prevKey = if (offset == 0) null
                     else maxOf(0, offset - limit),
                     nextKey =
-                        if (arabicRows.size < limit) null
-                        else offset + arabicRows.size
+                        if (rawSize < limit) null
+                        else offset + rawSize
                 )
             }
 
-            val normalized = SearchNormalizer.normalize(
-                query,
-                ScriptType.OTHER
-            )
-
-            val fts = FtsQueryBuilder.toPrefixAndQuery(normalized)
+            val fts = FtsQueryBuilder.toTranslationTextQuery(query)
                 ?: return LoadResult.Page(
                     data = emptyList(),
                     prevKey = null,
@@ -111,10 +107,14 @@ class SearchPagingSource(
                     .getSearchIndexDatabase(application)
                     .searchIndexDao()
 
-                val versePage = dao.pageMatchedVerses(
+                val slugFilter = filters.selectedSlugs?.takeIf { it.isNotEmpty() }
+
+                val versePage = dao.pageMatchedVersesFiltered(
                     ftsQuery = fts,
+                    slugs = slugFilter,
+                    surahNo = null,
                     limit = limit,
-                    offset = offset
+                    offset = offset,
                 )
 
                 if (versePage.isEmpty()) {
@@ -129,9 +129,10 @@ class SearchPagingSource(
                     it.surahNo to it.ayahNo
                 }
 
-                val rows = dao.rowsForPagedVerses(
+                val rows = dao.rowsForPagedVersesFiltered(
                     ftsQuery = fts,
-                    keys = verseKeys.map { "${it.first}:${it.second}" }
+                    keys = verseKeys.map { "${it.first}:${it.second}" },
+                    slugs = slugFilter,
                 )
 
                 val slugs = rows
@@ -174,7 +175,7 @@ class SearchPagingSource(
                                                 text,
                                                 false
                                             ),
-                                            query
+                                            query,
                                         )
                                     )
                                 }
@@ -236,6 +237,7 @@ class SearchPagingSource(
         for (token in tokens.sortedByDescending { it.length }) {
             val q = token.lowercase()
             var idx = 0
+
             while (idx < lower.length) {
                 val at = lower.indexOf(q, idx)
                 if (at < 0) break

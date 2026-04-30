@@ -18,12 +18,14 @@ import com.quranapp.android.compose.utils.appLocale
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import java.util.Locale
 
 class ActivitySearch : BaseActivity() {
     private val _voiceQueryFlow = MutableSharedFlow<String>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
+    private val voiceSearchFlow = _voiceQueryFlow.asSharedFlow()
 
     override fun getLayoutResource(): Int = 0
 
@@ -54,25 +56,26 @@ class ActivitySearch : BaseActivity() {
                             PackageManager.MATCH_DEFAULT_ONLY,
                         ).isNotEmpty()
 
-                        val voiceSearchFlow = _voiceQueryFlow.asSharedFlow()
 
                         SearchScreen(
                             supportsVoiceSearch = supportsVoice,
                             voiceSearchFlow = voiceSearchFlow,
-                            onVoiceSearchClick = {
+                            onVoiceSearchClick = { inQuranText ->
                                 runCatching {
-                                    val locale = appLocale()
+                                    val locale = if (!inQuranText) appLocale()
+                                    else Locale.forLanguageTag("ar-SA")
+
 
                                     val intent =
                                         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                                             putExtra(
                                                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
+                                                RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH,
                                             )
 
                                             putExtra(
                                                 RecognizerIntent.EXTRA_PROMPT,
-                                                getString(R.string.searchInQuran)
+                                                getString(if (inQuranText) R.string.searchTipArabic else R.string.searchInQuran)
                                             )
 
                                             putExtra(
@@ -83,6 +86,16 @@ class ActivitySearch : BaseActivity() {
                                             putExtra(
                                                 RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
                                                 locale.toLanguageTag()
+                                            )
+
+                                            putExtra(
+                                                RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,
+                                                1500
+                                            )
+
+                                            putExtra(
+                                                RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,
+                                                1000
                                             )
                                         }
 
