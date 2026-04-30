@@ -394,6 +394,7 @@
     <string name="playWord">پخش کلمه</string>
     <string name="previousWord">کلمه قبلی</string>
     <string name="nextWord">کلمه بعدی</string>
+    <string name="wbwSelectLanguage">انتخاب زبان کلمه‌به‌کلمه</string>
     <string name="results">نتایج</string>
     <string name="titleRecentSearches">جستجوهای اخیر</string>
     <string name="searchInQuran">جستجو در قرآن</string>
@@ -420,5 +421,9 @@
     <string name="stopPlayback">توقف پخش</string>
     <string name="playNextSurah">پخش سوره بعدی</string>
     <string name="repeatCurrentSurah">تکرار سوره فعلی</string>
+    <string name="reset">بازنشانی</string>
+    <string name="selectAll">انتخاب همه</string>
+    <string name="filterTranslationsDisabledNote">وقتی جستجوی عربی روشن است، در ترجمه‌ها جستجو نمی‌شود.</string>
+    <string name="filterTranslationsEmpty">هنوز ترجمه‌ای دانلود نشده است.</string>
 </resources>
 

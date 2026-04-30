@@ -393,6 +393,7 @@
     <string name="wordNo">Сөз %d</string>
     <string name="playWord">Сөздү ойнотуу</string>
     <string name="nextWord">Кийинки сөз</string>
+    <string name="wbwSelectLanguage">Сөздөн-сөз тилди тандаңыз</string>
     <string name="searchTipsTitle">Издөө боюнча кеңештер</string>
     <string name="searchTipDirectVerse">Түз өтүү</string>
     <string name="searchTipChapter">Сүрө аталышы боюнча издөө</string>
@@ -417,4 +418,8 @@
     <string name="stopPlayback">Ойнотууну токтотуу</string>
     <string name="playNextSurah">Кийинки сүрөнү ойнотуу</string>
     <string name="repeatCurrentSurah">Учурдагы сүрөнү кайталоо</string>
+    <string name="reset">Кайра коюу</string>
+    <string name="selectAll">Баарын тандаңыз</string>
+    <string name="filterTranslationsDisabledNote">Арабча издөө күйүк болгондо котормолор изделбейт.</string>
+    <string name="filterTranslationsEmpty">Азырынча котормолор жүктөлгөн эмес.</string>
 </resources>

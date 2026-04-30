@@ -41,9 +41,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.SearchTextField
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
@@ -59,6 +61,7 @@ fun ChapterNavigatorList(
     onVerseSelected: (Int, Int) -> Unit,
 ) {
     val surahs by readerVm.surahs.collectAsState()
+    val readerMode by readerVm.readerMode.collectAsState()
     val chapterViewState =
         readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Chapter
 
@@ -68,15 +71,18 @@ fun ChapterNavigatorList(
 
     val activeChapterNo by produceState<Int?>(
         chapterViewState?.chapterNo,
+        chapterViewState?.chapterNo,
         currentPageNo,
         currentMushafId
     ) {
         value = when {
-            chapterViewState?.chapterNo != null -> chapterViewState.chapterNo
+            chapterViewState?.chapterNo != null && readerMode == ReaderMode.VerseByVerse -> chapterViewState.chapterNo
 
-            currentPageNo != null && currentMushafId > 0 -> {
-                val firstAyahId =
-                    readerVm.repository.getFirstAyahIdOnPage(currentMushafId, currentPageNo)
+            currentPageNo != null -> {
+                val firstAyahId = readerVm.repository.getFirstAyahIdOnPage(
+                    currentMushafId, currentPageNo
+                )
+
                 firstAyahId?.let { QuranMeta.getVerseNoFromAyahId(it).first }
             }
 
@@ -94,6 +100,7 @@ fun ChapterNavigatorList(
             activeChapterNo,
             onChapterSelected,
         )
+
         ChapterVerseList(
             currentChapter = activeChapterNo?.let { surahs.getOrNull(it - 1) }?.surah,
             onVerseSelected = onVerseSelected
@@ -109,7 +116,7 @@ private fun RowScope.ChapterList(
     onChapterSelected: (Int) -> Unit
 ) {
     val gridState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = activeChapterNo?.let { it - 1 } ?: 0,
+        initialFirstVisibleItemIndex = ((activeChapterNo ?: 1) - 1).fastCoerceAtLeast(0),
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -130,6 +137,10 @@ private fun RowScope.ChapterList(
 
             gridState.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(activeChapterNo) {
+        gridState.scrollToItem(((activeChapterNo ?: 1) - 1).fastCoerceAtLeast(0))
     }
 
     Column(

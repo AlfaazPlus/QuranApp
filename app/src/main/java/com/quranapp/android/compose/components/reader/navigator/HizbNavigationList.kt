@@ -26,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
@@ -41,16 +43,22 @@ fun HizbNavigationList(
     onVerseSelected: (Int, Int) -> Unit,
 ) {
     val hizbs by readerVm.hizbs.collectAsState()
+    val readerMode by readerVm.readerMode.collectAsState()
     val hizbViewState = readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Hizb
 
     val mushafSession by readerVm.mushafSession.collectAsState()
     val currentPageNo = mushafSession.currentPageNo
     val currentMushafId = mushafSession.layout.toMushafId()
-    val activeHizbNo by produceState<Int?>(hizbViewState?.hizbNo, currentPageNo, currentMushafId) {
+    val activeHizbNo by produceState<Int?>(
+        hizbViewState?.hizbNo,
+        hizbViewState?.hizbNo,
+        currentPageNo,
+        currentMushafId
+    ) {
         value = when {
-            hizbViewState?.hizbNo != null -> hizbViewState.hizbNo
+            hizbViewState?.hizbNo != null && readerMode == ReaderMode.VerseByVerse -> hizbViewState.hizbNo
 
-            currentPageNo != null && currentMushafId > 0 -> {
+            currentPageNo != null -> {
                 readerVm.repository.getHizbForMushafPages(
                     currentMushafId,
                     listOf(currentPageNo)
@@ -101,7 +109,7 @@ private fun RowScope.HizbGrid(
     onHizbSelected: (Int) -> Unit
 ) {
     val gridState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = activeHizbNo?.let { it - 1 } ?: 0,
+        initialFirstVisibleItemIndex = ((activeHizbNo ?: 1) - 1).fastCoerceAtLeast(0),
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -123,6 +131,10 @@ private fun RowScope.HizbGrid(
 
             gridState.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(activeHizbNo) {
+        gridState.scrollToItem(((activeHizbNo ?: 1) - 1).fastCoerceAtLeast(0))
     }
 
     Column(

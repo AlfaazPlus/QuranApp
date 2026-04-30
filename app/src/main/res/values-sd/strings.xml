@@ -314,6 +314,7 @@
     <string name="nextHizb">اڳيون حزب</string>
     <string name="nextJuz">اڳيون جُز</string>
     <string name="nextWord">اڳيون لفظ</string>
+    <string name="wbwSelectLanguage">لفظ بعد لفظ ٻولي چونڊيو</string>
     <string name="noContinueDownload">نه، جاري رکو</string>
     <string name="noNoteProvided">ڪوبه نوٽ موجود ناهي…</string>
     <string name="noResults">ڪي به نتيجا ناهن</string>
@@ -413,4 +414,8 @@
     <string name="stopPlayback">تلاوت بند ڪريو</string>
     <string name="playNextSurah">ايندڙ سورت هلائو</string>
     <string name="repeatCurrentSurah">موجوده سورت ٻيهر هلائو</string>
+    <string name="reset">ري سيٽ</string>
+    <string name="selectAll">سڀ چونڊيو</string>
+    <string name="filterTranslationsDisabledNote">عربي ڳولا چالو هجي ته ترجمن ۾ نٿي ڳوليو وڃي.</string>
+    <string name="filterTranslationsEmpty">اڃان تائين ڪو به ترجمي ڊائون لوڊ ناهي.</string>
 </resources>

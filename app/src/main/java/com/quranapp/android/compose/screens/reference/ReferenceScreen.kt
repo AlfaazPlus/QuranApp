@@ -3,8 +3,10 @@ package com.quranapp.android.compose.screens.reference
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -32,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -44,6 +48,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -213,182 +219,192 @@ private fun ReferenceScreenContent(
     }
 
     Box {
-        Scaffold(
+        BoxWithConstraints(
             modifier = Modifier
-                .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                TopAppBar(
-                    title = {
-                        if (showCollapsedTitle) {
-                            Text(
-                                text = refModel.title,
-                                style = typography.titleMedium,
-                                fontWeight = FontWeight.Black,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                    },
-                    navigationIcon = {
-                        val back =
-                            LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+                .fillMaxSize(),
+        ) {
+            val isWideScreen = maxWidth >= 600.dp
 
-                        SimpleTooltip(stringResource(R.string.strLabelBack)) {
-                            IconButton(
-                                onClick = { back?.onBackPressed() },
-                                painter = painterResource(R.drawable.dr_icon_arrow_left),
-                                contentDescription = stringResource(R.string.strLabelBack),
-                                tint = colorScheme.onSurface,
-                            )
-                        }
-                    },
-                    scrollBehavior = scrollBehavior,
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = colorScheme.surfaceContainer
-                    )
-                )
-            },
-        ) { padding ->
-            Column(
+            Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
-            ) {
-                if (chapterNames != null) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .horizontalFadingEdge(chaptersGroupState, color = colorScheme.surface)
-                    ) {
-                        LazyRow(
-                            state = chaptersGroupState,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(colorScheme.surfaceContainer),
-                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            item {
-                                Chip(
-                                    selected = selectedChapterChip == 0,
-                                    onClick = { onChapterChipChange(0) },
-                                    label = { Text(stringResource(R.string.strLabelAllChapters)) },
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                topBar = {
+                    TopAppBar(
+                        modifier = Modifier.shadow(if (isWideScreen) 2.dp else 0.dp),
+                        title = {
+                            if (showCollapsedTitle) {
+                                Text(
+                                    text = refModel.title,
+                                    style = typography.titleMedium,
+                                    fontWeight = FontWeight.Black,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             }
+                        },
+                        navigationIcon = {
+                            val back =
+                                LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-                            items(refModel.chapters) {
-                                Chip(
-                                    selected = selectedChapterChip == it,
-                                    onClick = { onChapterChipChange(it) },
-                                    label = {
-                                        Text(
-                                            chapterNames!!.getOrDefault(it, it.toString()),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                        )
-                                    },
+                            SimpleTooltip(stringResource(R.string.strLabelBack)) {
+                                IconButton(
+                                    onClick = { back?.onBackPressed() },
+                                    painter = painterResource(R.drawable.dr_icon_arrow_left),
+                                    contentDescription = stringResource(R.string.strLabelBack),
+                                    tint = colorScheme.onSurface,
                                 )
                             }
-                        }
-                    }
-                }
-
-                if (translationSlugs.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.strMsgTranslNoneSelected),
-                        color = colorScheme.error,
-                        style = typography.bodySmall,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(colorScheme.surface)
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        },
+                        scrollBehavior = scrollBehavior,
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = colorScheme.surfaceContainer
+                        ),
                     )
-                }
-
-                val referencePageTextStyles = remember(rows) {
-                    buildMap {
-                        for (row in rows) {
-                            if (row is ReferenceRow.VerseRow) {
-                                row.quranTextStyle?.let { put(row.verseUi.verse.pageNo, it) }
+                },
+                containerColor = colorScheme.surfaceContainer
+            ) { padding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    val contentPane: @Composable (Modifier) -> Unit = { modifier ->
+                        Column(modifier = modifier) {
+                            if (translationSlugs.isEmpty()) {
+                                Text(
+                                    text = stringResource(R.string.strMsgTranslNoneSelected),
+                                    color = colorScheme.error,
+                                    style = typography.bodySmall,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(colorScheme.surface)
+                                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                                )
                             }
-                        }
-                    }
-                }
 
-                when {
-                    loading -> {
-                        Loader(fill = true)
-                    }
-
-                    else -> {
-                        TextStyleProvider(referencePageTextStyles) {
-                            LazyColumn(
-                                state = listState,
-                                modifier = Modifier.fillMaxSize(),
-                                contentPadding = PaddingValues(bottom = 64.dp)
-                            ) {
-                                items(
-                                    items = rows,
-                                    key = { row ->
-                                        when (row) {
-                                            is ReferenceRow.Description -> "desc"
-                                            is ReferenceRow.SectionTitle -> row.segmentKey
-                                            is ReferenceRow.VerseRow -> row.verseUi.key
-                                        }
-                                    },
-                                ) { row ->
-                                    when (row) {
-                                        is ReferenceRow.Description -> ReferenceDescription(
-                                            row.title,
-                                            row.desc
-                                        )
-
-                                        is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
-                                            row = row,
-                                            isBookmarked = bookmarkedKeys.contains(
-                                                BookmarkKey(
-                                                    row.ref.chapterNo,
-                                                    row.ref.range.first,
-                                                    row.ref.range.last,
-                                                ),
-                                            ),
-                                            onOpenInReader = { chapterNo, range ->
-                                                val i = ReaderFactory.prepareVerseRangeIntent(
-                                                    chapterNo,
-                                                    range.first,
-                                                    range.last
+                            val referencePageTextStyles = remember(rows) {
+                                buildMap {
+                                    for (row in rows) {
+                                        if (row is ReferenceRow.VerseRow) {
+                                            row.quranTextStyle?.let {
+                                                put(
+                                                    row.verseUi.verse.pageNo,
+                                                    it
                                                 )
-                                                    .setClass(context, ActivityReader::class.java)
-                                                    .putExtra(
-                                                        Keys.READER_KEY_TRANSL_SLUGS,
-                                                        translationSlugs.toTypedArray()
-                                                    )
-                                                    .putExtra(
-                                                        Keys.READER_KEY_SAVE_TRANSL_CHANGES,
-                                                        false
-                                                    )
-
-                                                context.startActivity(i)
-                                            },
-                                        )
-
-                                        is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
-                                            verseUi = row.verseUi,
-                                            isBookmarked = bookmarkedKeys.contains(
-                                                BookmarkKey(
-                                                    row.verseUi.verse.chapterNo,
-                                                    row.verseUi.verse.verseNo,
-                                                    row.verseUi.verse.verseNo,
-                                                ),
-                                            ),
-                                        )
+                                            }
+                                        }
                                     }
                                 }
                             }
+
+                            when {
+                                loading -> Loader(fill = true)
+                                else -> {
+                                    TextStyleProvider(referencePageTextStyles) {
+                                        LazyColumn(
+                                            state = listState,
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentPadding = PaddingValues(bottom = 64.dp)
+                                        ) {
+                                            items(
+                                                items = rows,
+                                                key = { row ->
+                                                    when (row) {
+                                                        is ReferenceRow.Description -> "desc"
+                                                        is ReferenceRow.SectionTitle -> row.segmentKey
+                                                        is ReferenceRow.VerseRow -> row.verseUi.key
+                                                    }
+                                                },
+                                            ) { row ->
+                                                when (row) {
+                                                    is ReferenceRow.Description -> ReferenceDescription(
+                                                        row.title,
+                                                        row.desc
+                                                    )
+
+                                                    is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
+                                                        row = row,
+                                                        isBookmarked = bookmarkedKeys.contains(
+                                                            BookmarkKey(
+                                                                row.ref.chapterNo,
+                                                                row.ref.range.first,
+                                                                row.ref.range.last,
+                                                            ),
+                                                        ),
+                                                        onOpenInReader = { chapterNo, range ->
+                                                            val i =
+                                                                ReaderFactory.prepareVerseRangeIntent(
+                                                                    chapterNo,
+                                                                    range.first,
+                                                                    range.last
+                                                                )
+                                                                    .setClass(
+                                                                        context,
+                                                                        ActivityReader::class.java
+                                                                    )
+                                                                    .putExtra(
+                                                                        Keys.READER_KEY_TRANSL_SLUGS,
+                                                                        translationSlugs.toTypedArray()
+                                                                    )
+                                                                    .putExtra(
+                                                                        Keys.READER_KEY_SAVE_TRANSL_CHANGES,
+                                                                        false
+                                                                    )
+
+                                                            context.startActivity(i)
+                                                        },
+                                                    )
+
+                                                    is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
+                                                        verseUi = row.verseUi,
+                                                        isBookmarked = bookmarkedKeys.contains(
+                                                            BookmarkKey(
+                                                                row.verseUi.verse.chapterNo,
+                                                                row.verseUi.verse.verseNo,
+                                                                row.verseUi.verse.verseNo,
+                                                            ),
+                                                        ),
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (isWideScreen) {
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            chapterNames?.let {
+                                ReferenceChapterChipsSidebar(
+                                    selectedChapterChip = selectedChapterChip,
+                                    chapterNames = it,
+                                    chapters = refModel.chapters,
+                                    onChapterChipChange = onChapterChipChange,
+                                    listState = chaptersGroupState,
+                                )
+                            }
+
+                            VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
+
+                            contentPane(Modifier.weight(1f))
+                        }
+                    } else {
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            chapterNames?.let {
+                                ReferenceChapterChipsTopBar(
+                                    selectedChapterChip = selectedChapterChip,
+                                    chapterNames = it,
+                                    chapters = refModel.chapters,
+                                    onChapterChipChange = onChapterChipChange,
+                                    listState = chaptersGroupState,
+                                )
+                            }
+                            contentPane(Modifier.weight(1f))
                         }
                     }
                 }
@@ -399,6 +415,117 @@ private fun ReferenceScreenContent(
             collapsedBottomInset = WindowInsets.navigationBars.asPaddingValues()
                 .calculateBottomPadding(),
             barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
+        )
+    }
+}
+
+@Composable
+private fun ReferenceChapterChipsTopBar(
+    selectedChapterChip: Int,
+    chapterNames: Map<Int, String>,
+    chapters: List<Int>,
+    onChapterChipChange: (Int) -> Unit,
+    listState: androidx.compose.foundation.lazy.LazyListState,
+) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .horizontalFadingEdge(listState, color = colorScheme.surface)
+    ) {
+        LazyRow(
+            state = listState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorScheme.surfaceContainer),
+            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            item {
+                Chip(
+                    selected = selectedChapterChip == 0,
+                    onClick = { onChapterChipChange(0) },
+                    label = { Text(stringResource(R.string.strLabelAllChapters)) },
+                )
+            }
+
+            items(chapters) {
+                Chip(
+                    selected = selectedChapterChip == it,
+                    onClick = { onChapterChipChange(it) },
+                    label = {
+                        Text(
+                            chapterNames.getOrDefault(it, it.toString()),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReferenceChapterChipsSidebar(
+    selectedChapterChip: Int,
+    chapterNames: Map<Int, String>,
+    chapters: List<Int>,
+    onChapterChipChange: (Int) -> Unit,
+    listState: androidx.compose.foundation.lazy.LazyListState,
+) {
+    val sidebarWidth = 220.dp
+
+    LazyColumn(
+        state = listState,
+        modifier = Modifier
+            .width(sidebarWidth)
+            .background(colorScheme.surfaceContainer),
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 64.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        item {
+            ReferenceSidebarItem(
+                selected = selectedChapterChip == 0,
+                onClick = { onChapterChipChange(0) },
+                text = stringResource(R.string.strLabelAllChapters),
+            )
+        }
+
+        items(chapters) {
+            ReferenceSidebarItem(
+                selected = selectedChapterChip == it,
+                onClick = { onChapterChipChange(it) },
+                text = chapterNames.getOrDefault(it, it.toString()),
+            )
+        }
+    }
+}
+
+@Composable
+private fun ReferenceSidebarItem(
+    selected: Boolean,
+    onClick: () -> Unit,
+    text: String,
+) {
+    val containerColor = if (selected) colorScheme.primary else Color.Transparent
+    val contentColor = if (selected) colorScheme.onPrimary else colorScheme.onSurface
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(shapes.small)
+            .background(containerColor)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = text,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = typography.bodyMedium,
+            color = contentColor,
         )
     }
 }

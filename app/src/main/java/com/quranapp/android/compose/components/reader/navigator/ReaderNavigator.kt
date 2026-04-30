@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.navigator
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +22,6 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -34,6 +34,7 @@ private enum class NavTab { Chapter, Juz, Hizb, Page }
 @Composable
 fun ReaderNavigator(
     readerVm: ReaderViewModel,
+    isInModal: Boolean,
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -151,13 +152,14 @@ fun ReaderNavigator(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.9f)
+            .fillMaxHeight(if (isInModal) 0.9f else 1f)
+            .then(if (!isInModal) Modifier.background(colorScheme.surfaceContainer) else Modifier)
     ) {
         SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = colorScheme.surface,
             contentColor = colorScheme.primary,
-            edgePadding = 16.dp,
+            edgePadding = 0.dp,
         ) {
             tabs.forEachIndexed { index, tab ->
                 Tab(

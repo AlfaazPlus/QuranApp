@@ -23,7 +23,7 @@ object SettingRoutes {
     const val LANGUAGE = "settings.language"
     const val THEME = "settings.theme"
     const val TRANSLATIONS = "settings.translations"
-    const val TRANSLATIONS_DOWNLOAD = "settings.translations_download"
+    const val TRANSLATIONS_DOWNLOAD = "settings.translations.download"
     const val TAFSIR = "settings.tafsir"
     const val SCRIPT = "settings.script"
     const val WWB = "settings.wbw"

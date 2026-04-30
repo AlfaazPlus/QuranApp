@@ -387,6 +387,7 @@
     <string name="playWord">播放單詞</string>
     <string name="previousWord">上一個單詞</string>
     <string name="nextWord">下一個單詞</string>
+    <string name="wbwSelectLanguage">選擇逐詞語言</string>
     <string name="results">結果</string>
     <string name="titleRecentSearches">最近搜索</string>
     <string name="searchInQuran">在古蘭經中搜索</string>
@@ -413,4 +414,8 @@
     <string name="stopPlayback">停止播放</string>
     <string name="playNextSurah">播放下一章蘇拉</string>
     <string name="repeatCurrentSurah">重複目前蘇拉</string>
+    <string name="reset">重設</string>
+    <string name="selectAll">全選</string>
+    <string name="filterTranslationsDisabledNote">開啟阿拉伯文搜尋時，不會搜尋譯本。</string>
+    <string name="filterTranslationsEmpty">尚未下載任何譯本。</string>
 </resources>

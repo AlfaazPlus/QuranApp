@@ -394,6 +394,7 @@
     <string name="playWord">Kelime oynat</string>
     <string name="previousWord">Önceki kelime</string>
     <string name="nextWord">Sonraki kelime</string>
+    <string name="wbwSelectLanguage">Kelime kelime dil seçin</string>
     <string name="results">Sonuçlar</string>
     <string name="titleRecentSearches">Son aramalar</string>
     <string name="searchInQuran">Kur\'an\'da ara</string>
@@ -420,5 +421,9 @@
     <string name="stopPlayback">Çalmayı durdur</string>
     <string name="playNextSurah">Sonraki sureyi çal</string>
     <string name="repeatCurrentSurah">Geçerli sureyi tekrarla</string>
+    <string name="reset">Sıfırla</string>
+    <string name="selectAll">Tümünü seç</string>
+    <string name="filterTranslationsDisabledNote">Arapça arama açıkken çevirilerde arama yapılmaz.</string>
+    <string name="filterTranslationsEmpty">Henüz indirilmiş çeviri yok.</string>
 </resources>
 

@@ -389,6 +389,7 @@
     <string name="playWord">Putar kata</string>
     <string name="previousWord">Kata sebelumnya</string>
     <string name="nextWord">Kata berikutnya</string>
+    <string name="wbwSelectLanguage">Pilih bahasa kata per kata</string>
     <string name="results">Hasil</string>
     <string name="titleRecentSearches">Pencarian terkini</string>
     <string name="searchInQuran">Cari dalam Al Quran</string>
@@ -415,4 +416,8 @@
     <string name="stopPlayback">Hentikan pemutaran</string>
     <string name="playNextSurah">Putar surah berikutnya</string>
     <string name="repeatCurrentSurah">Ulangi surah saat ini</string>
+    <string name="reset">Atur ulang</string>
+    <string name="selectAll">Pilih semua</string>
+    <string name="filterTranslationsDisabledNote">Terjemahan tidak dicari saat pencarian Arab diaktifkan.</string>
+    <string name="filterTranslationsEmpty">Belum ada terjemahan yang diunduh.</string>
 </resources>

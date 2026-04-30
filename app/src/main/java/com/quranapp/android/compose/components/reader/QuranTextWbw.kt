@@ -199,7 +199,7 @@ private fun QuranTextWbwWordCell(
                 LinearProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
-                        .widthIn(min = 10.dp, max = 40.dp)
+                        .widthIn(min = 2.dp, max = 40.dp)
                         .height(2.dp),
                     color = colorScheme.primary,
                     trackColor = colorScheme.surfaceVariant,

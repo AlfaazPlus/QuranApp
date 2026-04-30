@@ -75,7 +75,7 @@ fun LanguageSelectionScreen() {
     }
 
     val initialLocale = remember { SPAppConfigs.getLocale(context) }
-    var selectedLocale by remember { mutableStateOf(appLocale.language) }
+    var selectedLocale by remember { mutableStateOf(initialLocale) }
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredLanguages by remember(searchQuery, languages) {

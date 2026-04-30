@@ -394,6 +394,7 @@
     <string name="playWord">وشەکە لێبدە</string>
     <string name="previousWord">وشەی پێشوو</string>
     <string name="nextWord">وشەی دواتر</string>
+    <string name="wbwSelectLanguage">زمانی وشەبەوشە هەڵبژێرە</string>
     <string name="results">ئەنجامەکان</string>
     <string name="titleRecentSearches">گەڕانەکانی دوایی</string>
     <string name="searchInQuran">گەڕان لە قورئاندا</string>
@@ -420,5 +421,9 @@
     <string name="stopPlayback">وەستاندنی لێدان</string>
     <string name="playNextSurah">لێدانی سوورەتی داهاتوو</string>
     <string name="repeatCurrentSurah">دووبارەکردنەوەی سوورەتی ئێستا</string>
+    <string name="reset">ڕێکخستنەوە</string>
+    <string name="selectAll">هەموویان هەڵبژێرە</string>
+    <string name="filterTranslationsDisabledNote">کاتێک گەڕانی عەرەبی چالاکە، لە وەرگێڕانەکاندا نەگەڕێت.</string>
+    <string name="filterTranslationsEmpty">هێشتا هیچ وەرگێڕانێک دابەزێندراوە نییە.</string>
 </resources>
 

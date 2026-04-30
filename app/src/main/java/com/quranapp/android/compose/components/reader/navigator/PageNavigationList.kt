@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.R
 import com.quranapp.android.utils.reader.rememberQuranMushafId
 import com.quranapp.android.viewModels.ReaderViewModel
@@ -50,7 +51,7 @@ fun PageNavigationList(
     val allPages = remember(pageCount) { (1..pageCount).toList() }
 
     val gridState = rememberLazyGridState(
-        (currentPageNo ?: 1) - 1,
+        ((currentPageNo ?: 1) - 1).fastCoerceAtLeast(0),
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -66,6 +67,10 @@ fun PageNavigationList(
             filteredPages = allPages.filter { it.toString().startsWith(query) }
             gridState.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(currentPageNo) {
+        gridState.scrollToItem(((currentPageNo ?: 1) - 1).fastCoerceAtLeast(0))
     }
 
     Column {

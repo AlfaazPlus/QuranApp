@@ -102,21 +102,11 @@ fun AppBar(
             }
         },
         navigationIcon = {
-            val backLabel = stringResource(R.string.strLabelBack)
-            SimpleTooltip(text = backLabel) {
-                IconButton(
-                    onClick = {
-                        if (searchEnabled && searchExpanded) {
-                            searchExpanded = false
-                        } else {
-                            backPressedDispatcher?.onBackPressed()
-                        }
-                    },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.dr_icon_arrow_left),
-                        contentDescription = backLabel,
-                    )
+            BackButton() {
+                if (searchEnabled && searchExpanded) {
+                    searchExpanded = false
+                } else {
+                    backPressedDispatcher?.onBackPressed()
                 }
             }
         },
@@ -217,4 +207,29 @@ fun AppBarSearchField(
             }
         }
     )
+}
+
+@Composable
+fun BackButton(
+    onClick: (() -> Unit)? = null
+) {
+    val backLabel = stringResource(R.string.strDescGoBack)
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
+    fun handleClick() {
+        if (onClick != null) onClick()
+        else backPressedDispatcher?.onBackPressed()
+    }
+
+
+    SimpleTooltip(text = backLabel) {
+        IconButton(
+            onClick = ::handleClick,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.dr_icon_arrow_left),
+                contentDescription = backLabel,
+            )
+        }
+    }
 }

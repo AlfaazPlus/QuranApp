@@ -38,9 +38,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.relations.NavigationUnit
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
@@ -53,17 +55,23 @@ fun JuzNavigationList(
     onVerseSelected: (Int, Int) -> Unit,
 ) {
     val juzs by readerVm.juzs.collectAsState()
+    val readerMode by readerVm.readerMode.collectAsState()
     val juzViewState = readerVm.uiState.collectAsState().value.viewType as? ReaderViewType.Juz
 
     val mushafSession by readerVm.mushafSession.collectAsState()
     val currentPageNo = mushafSession.currentPageNo
     val currentMushafId = mushafSession.layout.toMushafId()
 
-    val activeJuzNo by produceState<Int?>(juzViewState?.juzNo, currentPageNo, currentMushafId) {
+    val activeJuzNo by produceState<Int?>(
+        juzViewState?.juzNo,
+        juzViewState?.juzNo,
+        currentPageNo,
+        currentMushafId
+    ) {
         value = when {
-            juzViewState?.juzNo != null -> juzViewState.juzNo
+            juzViewState?.juzNo != null && readerMode == ReaderMode.VerseByVerse -> juzViewState.juzNo
 
-            currentPageNo != null && currentMushafId > 0 -> {
+            currentPageNo != null -> {
                 readerVm.repository.getJuzForMushafPages(
                     currentMushafId,
                     listOf(currentPageNo)
@@ -114,7 +122,7 @@ private fun RowScope.JuzList(
     onJuzSelected: (Int) -> Unit
 ) {
     val gridState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = activeJuzNo?.let { it - 1 } ?: 0,
+        initialFirstVisibleItemIndex = ((activeJuzNo ?: 1) - 1).fastCoerceAtLeast(0),
         initialFirstVisibleItemScrollOffset = -100
     )
 
@@ -136,6 +144,10 @@ private fun RowScope.JuzList(
 
             gridState.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(activeJuzNo) {
+        gridState.scrollToItem(((activeJuzNo ?: 1) - 1).fastCoerceAtLeast(0))
     }
 
     Column(

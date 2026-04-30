@@ -394,6 +394,7 @@
     <string name="playWord">শব্দ বাজান</string>
     <string name="previousWord">পূর্ববর্তী শব্দ</string>
     <string name="nextWord">পরবর্তী শব্দ</string>
+    <string name="wbwSelectLanguage">শব্দে শব্দের ভাষা নির্বাচন করুন</string>
     <string name="results">ফলাফল</string>
     <string name="titleRecentSearches">সাম্প্রতিক অনুসন্ধান</string>
     <string name="searchInQuran">কুরআনে অনুসন্ধান করুন</string>
@@ -420,5 +421,9 @@
     <string name="stopPlayback">প্লেব্যাক বন্ধ করুন</string>
     <string name="playNextSurah">পরবর্তী সূরা চালান</string>
     <string name="repeatCurrentSurah">বর্তমান সূরা পুনরাবৃত্তি করুন</string>
+    <string name="reset">রিসেট</string>
+    <string name="selectAll">সব নির্বাচন করুন</string>
+    <string name="filterTranslationsDisabledNote">আরবি অনুসন্ধান চালু থাকলে অনুবাদে অনুসন্ধান করা হয় না।</string>
+    <string name="filterTranslationsEmpty">এখনও কোনো অনুবাদ ডাউনলোড হয়নি।</string>
 </resources>
 

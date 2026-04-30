@@ -397,6 +397,7 @@
     <string name="playWord">Lire le mot</string>
     <string name="previousWord">Mot précédent</string>
     <string name="nextWord">Mot suivant</string>
+    <string name="wbwSelectLanguage">Choisir la langue mot à mot</string>
     <string name="results">Résultats</string>
     <string name="titleRecentSearches">Recherches récentes</string>
     <string name="searchInQuran">Rechercher dans le Coran</string>
@@ -423,5 +424,9 @@
     <string name="stopPlayback">Arrêter la lecture</string>
     <string name="playNextSurah">Lire la sourate suivante</string>
     <string name="repeatCurrentSurah">Répéter la sourate actuelle</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="selectAll">Tout sélectionner</string>
+    <string name="filterTranslationsDisabledNote">Les traductions ne sont pas recherchées tant que la recherche en arabe est activée.</string>
+    <string name="filterTranslationsEmpty">Aucune traduction téléchargée pour le moment.</string>
 </resources>
 

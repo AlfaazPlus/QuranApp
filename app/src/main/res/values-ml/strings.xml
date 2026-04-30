@@ -392,6 +392,7 @@
     <string name="playWord">വാക്ക് കേൾപ്പിക്കുക</string>
     <string name="previousWord">മുമ്പത്തെ വാക്ക്</string>
     <string name="nextWord">അടുത്ത വാക്ക്</string>
+    <string name="wbwSelectLanguage">വേഡ്-ബൈ-വേഡ് ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="results">ഫലങ്ങൾ</string>
     <string name="titleRecentSearches">സമീപകാല തിരയലുകൾ</string>
     <string name="searchInQuran">ഖുർആനിൽ തിരയുക</string>
@@ -418,5 +419,9 @@
     <string name="stopPlayback">പ്ലേബാക്ക് നിർത്തുക</string>
     <string name="playNextSurah">അടുത്ത സൂറത്ത് പ്ലേ ചെയ്യുക</string>
     <string name="repeatCurrentSurah">നിലവിലെ സൂറത്ത് ആവർത്തിക്കുക</string>
+    <string name="reset">റീസെറ്റ് ചെയ്യുക</string>
+    <string name="selectAll">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
+    <string name="filterTranslationsDisabledNote">അറബി തിരയൽ ഓണായിരിക്കുമ്പോൾ വിവർത്തനങ്ങളിൽ തിരയുന്നില്ല.</string>
+    <string name="filterTranslationsEmpty">ഇതുവരെ വിവർത്തനങ്ങളൊന്നും ഡൗൺലോഡ് ചെയ്തിട്ടില്ല.</string>
 </resources>
 

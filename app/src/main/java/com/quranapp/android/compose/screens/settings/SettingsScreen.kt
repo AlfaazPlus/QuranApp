@@ -2,6 +2,8 @@ package com.quranapp.android.compose.screens.settings
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
@@ -86,6 +89,7 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
     CompositionLocalProvider(LocalSettingsNavHostController provides navController) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             NavHost(
+                modifier = Modifier.fillMaxSize(),
                 navController = navController,
                 startDestination = startDestination,
             ) {
@@ -106,9 +110,7 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
                 route(SettingRoutes.SCRIPT) { ScriptsScreen() }
                 route(SettingRoutes.WWB) { SettingsWbwScreen() }
                 route(SettingRoutes.RECITATION_DOWNLOAD) { RecitationDownloadScreen() }
-                route(SettingRoutes.APP_LOGS) {
-                    AppLogsScreen()
-                }
+                route(SettingRoutes.APP_LOGS) { AppLogsScreen() }
             }
         }
     }

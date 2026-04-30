@@ -62,6 +62,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -83,11 +84,36 @@ import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
 import kotlinx.coroutines.launch
 
-private val ReaderAppBarHeight = 86.dp
-private val ReaderHeaderHeight = 52.dp
-private val ReaderDividerHeight = 1.dp
-internal val ReaderAppBarExpandedHeight =
-    ReaderAppBarHeight + ReaderHeaderHeight + (ReaderDividerHeight * 2)
+internal data class ReaderAppBarDimensions(
+    val barHeight: Dp,
+    val headerHeight: Dp,
+    val dividerHeight: Dp,
+    val dividerCount: Int,
+) {
+    val expandedHeight: Dp
+        get() = barHeight + headerHeight + (dividerHeight * dividerCount)
+}
+
+@Composable
+internal fun rememberAppBarDimensions(isWideScreen: Boolean): ReaderAppBarDimensions {
+    return remember(isWideScreen) {
+        if (isWideScreen) {
+            ReaderAppBarDimensions(
+                barHeight = 86.dp,
+                headerHeight = 0.dp,
+                dividerHeight = 1.dp,
+                dividerCount = 1,
+            )
+        } else {
+            ReaderAppBarDimensions(
+                barHeight = 86.dp,
+                headerHeight = 52.dp,
+                dividerHeight = 1.dp,
+                dividerCount = 2,
+            )
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,6 +122,8 @@ fun ReaderAppBar(
     isWideScreen: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
+    val appBarDims = rememberAppBarDimensions(isWideScreen)
+
     val context = LocalContext.current
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
@@ -106,22 +134,22 @@ fun ReaderAppBar(
     val density = LocalDensity.current
     val heightOffset = scrollBehavior.state.heightOffset
     val visibleHeight = with(density) {
-        (ReaderAppBarExpandedHeight.toPx() + heightOffset).coerceAtLeast(0f).toDp()
+        (appBarDims.expandedHeight.toPx() + heightOffset).coerceAtLeast(0f).toDp()
     }
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(visibleHeight),
-        shadowElevation = 4.dp,
+        shadowElevation = if (isWideScreen) 4.dp else 0.dp,
         color = colorScheme.surfaceContainer
     ) {
         Column(
             modifier = Modifier
-                .requiredHeight(ReaderAppBarExpandedHeight)
+                .requiredHeight(appBarDims.expandedHeight)
         ) {
             CenterAlignedTopAppBar(
-                modifier = Modifier.height(ReaderAppBarHeight),
+                modifier = Modifier.height(appBarDims.barHeight),
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = colorScheme.surfaceContainer,
                     scrolledContainerColor = colorScheme.surfaceContainer,
@@ -144,6 +172,21 @@ fun ReaderAppBar(
                     }
                 },
                 actions = {
+                    if (isWideScreen) {
+                        when (readerMode) {
+                            ReaderMode.Reading -> {
+                            }
+
+                            ReaderMode.Translation -> {
+                                TranslationModeTranslationButton()
+                            }
+
+                            else -> {
+                                StickyHeaderModeVbV(readerVm, uiState, true) {}
+                            }
+                        }
+                    }
+
                     SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
                         IconButton(onClick = {
                             openReaderSetting(context, null)
@@ -158,45 +201,53 @@ fun ReaderAppBar(
             )
 
             HorizontalDivider(
-                thickness = ReaderDividerHeight,
+                thickness = appBarDims.dividerHeight,
                 color = colorScheme.outlineVariant.alpha(0.5f)
             )
 
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .height(ReaderHeaderHeight),
-                contentAlignment = Alignment.Center
-            ) {
-                when (readerMode) {
-                    ReaderMode.Reading -> {
-                        StickyHeaderModeMushaf(readerVm) {
-                            showNavigatorSheet = true
+            if (!isWideScreen) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(appBarDims.headerHeight),
+                    contentAlignment = Alignment.Center
+                ) {
+                    when (readerMode) {
+                        ReaderMode.Reading -> {
+                            StickyHeaderModeMushaf(readerVm) {
+                                if (!isWideScreen) {
+                                    showNavigatorSheet = true
+                                }
+                            }
                         }
-                    }
 
-                    ReaderMode.Translation -> {
-                        StickyHeaderModeTranslation(readerVm) {
-                            showNavigatorSheet = true
+                        ReaderMode.Translation -> {
+                            StickyHeaderModeTranslation(readerVm) {
+                                if (!isWideScreen) {
+                                    showNavigatorSheet = true
+                                }
+                            }
                         }
-                    }
 
-                    else -> {
-                        StickyHeaderModeVbV(readerVm, uiState) {
-                            showNavigatorSheet = true
+                        else -> {
+                            StickyHeaderModeVbV(readerVm, uiState, false) {
+                                if (!isWideScreen) {
+                                    showNavigatorSheet = true
+                                }
+                            }
                         }
                     }
                 }
-            }
 
-            HorizontalDivider(
-                thickness = ReaderDividerHeight,
-                color = colorScheme.outlineVariant.alpha(0.5f)
-            )
+                HorizontalDivider(
+                    thickness = appBarDims.dividerHeight,
+                    color = colorScheme.outlineVariant.alpha(0.5f)
+                )
+            }
         }
     }
 
-    if (showNavigatorSheet) {
+    if (showNavigatorSheet && !isWideScreen) {
         ModalBottomSheet(
             onDismissRequest = { showNavigatorSheet = false },
             sheetState = sheetState,
@@ -209,6 +260,7 @@ fun ReaderAppBar(
         ) {
             ReaderNavigator(
                 readerVm = readerVm,
+                isInModal = true,
             ) { showNavigatorSheet = false }
         }
     }
@@ -285,6 +337,7 @@ private fun ModeTabs(
 private fun StickyHeaderModeVbV(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
+    isWideScreen: Boolean,
     onNavigatorRequest: () -> Unit
 ) {
     val context = LocalContext.current
@@ -327,47 +380,49 @@ private fun StickyHeaderModeVbV(
             }
         }
 
-        Spacer(
-            Modifier.weight(1f)
-        )
-
-        TextButton(
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = colorScheme.primary
-            ),
-            onClick = onNavigatorRequest,
-        ) {
-            Icon(
-                painterResource(R.drawable.dr_icon_chevron_down),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(end = 6.dp)
-                    .size(18.dp)
+        if (!isWideScreen) {
+            Spacer(
+                Modifier.weight(1f)
             )
 
-            when (val vt = uiState.viewType) {
-                is ReaderViewType.Juz -> JuzIcon(
-                    juzNo = vt.juzNo,
-                    fontSize = 22.sp,
-                    color = colorScheme.primary
+            TextButton(
+                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = colorScheme.primary
+                ),
+                onClick = onNavigatorRequest,
+            ) {
+                Icon(
+                    painterResource(R.drawable.dr_icon_chevron_down),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 6.dp)
+                        .size(18.dp)
                 )
 
-                is ReaderViewType.Hizb -> Text(
-                    text = stringResource(R.string.labelHizbNo, vt.hizbNo),
-                    style = typography.labelLarge,
-                    color = colorScheme.primary,
-                )
+                when (val vt = uiState.viewType) {
+                    is ReaderViewType.Juz -> JuzIcon(
+                        juzNo = vt.juzNo,
+                        fontSize = 22.sp,
+                        color = colorScheme.primary
+                    )
 
-                is ReaderViewType.Chapter -> ChapterIcon(
-                    modifier = Modifier.padding(top = 8.dp),
-                    chapterNo = vt.chapterNo,
-                    fontSize = 32.sp,
-                    color = colorScheme.primary
-                )
+                    is ReaderViewType.Hizb -> Text(
+                        text = stringResource(R.string.labelHizbNo, vt.hizbNo),
+                        style = typography.labelLarge,
+                        color = colorScheme.primary,
+                    )
 
-                null -> {}
+                    is ReaderViewType.Chapter -> ChapterIcon(
+                        modifier = Modifier.padding(top = 8.dp),
+                        chapterNo = vt.chapterNo,
+                        fontSize = 32.sp,
+                        color = colorScheme.primary
+                    )
+
+                    null -> {}
+                }
             }
         }
     }
@@ -534,14 +589,8 @@ private fun StickyHeaderModeTranslation(
     onNavigatorRequest: () -> Unit
 ) {
     val mushafSession by readerVm.mushafSession.collectAsState()
-    val context = LocalContext.current
     val currentPageNo = mushafSession.currentPageNo
-    val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
-    val bookName by produceState("", translationSlug) {
-        value = QuranTranslationFactory(context).use {
-            it.getTranslationBookInfo(translationSlug).displayName
-        }
-    }
+
 
     Row(
         modifier = Modifier
@@ -549,49 +598,7 @@ private fun StickyHeaderModeTranslation(
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            Modifier
-                .background(colorScheme.background, shapes.extraLarge)
-                .clip(shapes.extraLarge)
-                .clickable(
-                    onClick = {
-                        openReaderSetting(
-                            context,
-                            SettingRoutes.TRANSLATIONS
-                        )
-                    }
-                )
-                .padding(horizontal = 10.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.dr_icon_translations),
-                contentDescription = stringResource(R.string.strLabelSelectTranslations),
-                tint = colorScheme.onSurface.alpha(0.75f),
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(18.dp)
-            )
-
-            Text(
-                bookName,
-                style = typography.labelMedium,
-                color = colorScheme.onSurface.alpha(0.75f),
-                maxLines = 1,
-                modifier = Modifier
-                    .basicMarquee(
-                        initialDelayMillis = 900,
-                        repeatDelayMillis = 1_200,
-                    )
-            )
-
-            Icon(
-                painterResource(R.drawable.dr_icon_chevron_right),
-                contentDescription = null,
-                tint = colorScheme.onSurface.alpha(0.75f),
-                modifier = Modifier.size(18.dp)
-            )
-        }
+        TranslationModeTranslationButton()
 
         Spacer(
             Modifier.weight(1f)
@@ -623,6 +630,62 @@ private fun StickyHeaderModeTranslation(
                 tint = colorScheme.primary,
             )
         }
+    }
+}
+
+@Composable
+fun TranslationModeTranslationButton() {
+    val context = LocalContext.current
+    val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
+
+    val bookName by produceState("", translationSlug) {
+        value = QuranTranslationFactory(context).use {
+            it.getTranslationBookInfo(translationSlug).displayName
+        }
+    }
+
+    Row(
+        Modifier
+            .background(colorScheme.background, shapes.extraLarge)
+            .clip(shapes.extraLarge)
+            .clickable(
+                onClick = {
+                    openReaderSetting(
+                        context,
+                        SettingRoutes.TRANSLATIONS
+                    )
+                }
+            )
+            .padding(horizontal = 10.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.dr_icon_translations),
+            contentDescription = stringResource(R.string.strLabelSelectTranslations),
+            tint = colorScheme.onSurface.alpha(0.75f),
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .size(18.dp)
+        )
+
+        Text(
+            bookName,
+            style = typography.labelMedium,
+            color = colorScheme.onSurface.alpha(0.75f),
+            maxLines = 1,
+            modifier = Modifier
+                .basicMarquee(
+                    initialDelayMillis = 900,
+                    repeatDelayMillis = 1_200,
+                )
+        )
+
+        Icon(
+            painterResource(R.drawable.dr_icon_chevron_right),
+            contentDescription = null,
+            tint = colorScheme.onSurface.alpha(0.75f),
+            modifier = Modifier.size(18.dp)
+        )
     }
 }
 
