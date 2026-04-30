@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager.flowMultiple
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +34,10 @@ class PrefResult(private val map: Map<PrefKey<*>, Any?>) {
     @Suppress("UNCHECKED_CAST")
     fun <T> get(key: PrefKey<T>): T {
         return map[key] as T
+    }
+
+    fun toKey(): String {
+        return map.values.joinToString("|") { it?.toString() ?: "" }
     }
 }
 

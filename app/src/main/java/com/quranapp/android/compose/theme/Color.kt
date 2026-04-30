@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toAndroidColorSpace
 import androidx.compose.ui.graphics.toArgb
 import com.quranapp.android.utils.univ.StringUtils
 
@@ -11,6 +12,9 @@ fun Color.alpha(alpha: Float): Color {
 
 fun Color.toCssHex(): String =
     StringUtils.formatInvariant("#%06X", 0xFFFFFF and toArgb())
+
+fun Color.toAndroidColor(): android.graphics.Color =
+    android.graphics.Color.valueOf(red, green, blue, alpha, colorSpace.toAndroidColorSpace())
 
 fun Color.toCssRgba(): String {
     val r = (red * 255f).toInt().coerceIn(0, 255)

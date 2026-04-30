@@ -3,6 +3,8 @@ package com.quranapp.android.compose.screens.settings
 import android.content.Intent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,16 +29,20 @@ import com.quranapp.android.utils.univ.Keys
 
 
 val enterTransition = slideInHorizontally(
-    initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(durationMillis = 100)
+    initialOffsetX = { fullWidth -> fullWidth },
+    animationSpec = tween(durationMillis = 100),
 )
 val exitTransition = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(durationMillis = 100)
+    targetOffsetX = { fullWidth -> -fullWidth },
+    animationSpec = tween(durationMillis = 100),
 )
 val popEnterTransition = slideInHorizontally(
-    initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(durationMillis = 100)
+    initialOffsetX = { fullWidth -> -fullWidth },
+    animationSpec = tween(durationMillis = 100),
 )
 val popExitTransition = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(durationMillis = 100)
+    targetOffsetX = { fullWidth -> fullWidth },
+    animationSpec = tween(durationMillis = 100),
 )
 
 private fun NavGraphBuilder.route(

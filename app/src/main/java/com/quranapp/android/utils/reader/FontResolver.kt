@@ -14,18 +14,12 @@ import java.util.concurrent.ConcurrentHashMap
 
 class FontResolver private constructor(val context: Context) {
     // non-KFQPC: one font per script
-    private val scriptFontCache = ConcurrentHashMap<String, FontFamily>()
+    private val scriptFontCache = ConcurrentHashMap<String, Typeface>()
 
     // KFQPC: one font per (script, pageNo, dark/light resolution for UI)
-    private val kfqpcFontCache = ConcurrentHashMap<Triple<String, Int, Boolean>, FontFamily>()
+    private val kfqpcFontCache = ConcurrentHashMap<Triple<String, Int, Boolean>, Typeface>()
 
     private val fileUtils by lazy { FileUtils.newInstance(context) }
-
-    fun getKfqpcTypeface(
-        script: String,
-        pageNo: Int,
-        isDark: Boolean,
-    ): Typeface = loadKfqpcTypeface(script, pageNo, isDark)
 
     private fun loadKfqpcTypeface(
         script: String,
@@ -65,16 +59,22 @@ class FontResolver private constructor(val context: Context) {
         pageNo: Int,
         isDark: Boolean,
     ): FontFamily {
+        return typeface(script, pageNo, isDark)?.asFontFamily() ?: FontFamily.Default
+    }
+
+    fun typeface(
+        script: String,
+        pageNo: Int,
+        isDark: Boolean,
+    ): Typeface? {
         return if (script.isKFQPCScript()) {
             kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                loadKfqpcTypeface(script, pageNo, isDark).asFontFamily()
+                loadKfqpcTypeface(script, pageNo, isDark)
             }
         } else {
             scriptFontCache.getOrPut(script) {
                 context
                     .getFont(script.getQuranScriptFontRes(isDark))
-                    ?.asFontFamily()
-                    ?: FontFamily.Default
             }
         }
     }
@@ -84,8 +84,6 @@ class FontResolver private constructor(val context: Context) {
             scriptFontCache.getOrPut(script) {
                 context
                     .getFont(script.getQuranScriptFontRes(isDark))
-                    ?.asFontFamily()
-                    ?: FontFamily.Default
             }
             return
         }
@@ -94,7 +92,7 @@ class FontResolver private constructor(val context: Context) {
             .distinct()
             .forEach { pageNo ->
                 kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                    loadKfqpcTypeface(script, pageNo, isDark).asFontFamily()
+                    loadKfqpcTypeface(script, pageNo, isDark)
                 }
             }
     }

@@ -174,4 +174,6 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
 
     implementation(libs.accompanist.permissions)
+    implementation(libs.glance)
+    implementation(libs.glance.appwidget)
 }

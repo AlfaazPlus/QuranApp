@@ -11,6 +11,9 @@ import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
 import com.quranapp.android.components.reader.ChapterVersePair
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 object VersePreferences {
     val KEY_VOTD_DATE = PrefKey(longPreferencesKey("votd_timestamp"), -1)
@@ -39,9 +42,25 @@ object VersePreferences {
         verseNo: Int,
         timestamp: Long
     ) {
-        DataStoreManager.write(KEY_VOTD_CHAPTER_NO, chapterNo)
-        DataStoreManager.write(KEY_VOTD_VERSE_NO, verseNo)
-        DataStoreManager.write(KEY_VOTD_DATE, timestamp)
+        DataStoreManager.edit {
+            this[KEY_VOTD_CHAPTER_NO.key] = chapterNo
+            this[KEY_VOTD_VERSE_NO.key] = verseNo
+            this[KEY_VOTD_DATE.key] = timestamp
+        }
+    }
+
+    fun votdStorageFlow(): Flow<Triple<Long, Int, Int>> {
+        return DataStoreManager.flowMultiple(
+            KEY_VOTD_DATE,
+            KEY_VOTD_CHAPTER_NO,
+            KEY_VOTD_VERSE_NO,
+        ).map { result ->
+            Triple(
+                result.get(KEY_VOTD_DATE),
+                result.get(KEY_VOTD_CHAPTER_NO),
+                result.get(KEY_VOTD_VERSE_NO),
+            )
+        }.distinctUntilChanged()
     }
 
     suspend fun removeVotd() {

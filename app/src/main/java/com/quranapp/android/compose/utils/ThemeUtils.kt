@@ -22,6 +22,9 @@ import com.alfaazplus.sunnah.ui.theme.colors.ThemeYellowColors
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.compose.utils.ThemeUtils.observeDarkTheme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 object ThemeUtils {
     const val THEME_MODE_DEFAULT = "app.theme.default"
@@ -39,6 +42,8 @@ object ThemeUtils {
     const val THEME_COLOR_MONO = "mono"
     const val THEME_COLOR_VIOLET = "violet"
     const val THEME_COLOR_YELLOW = "yellow"
+
+    const val DEFAULT_DYNAMIC_COLOR = false
 
     fun isDynamicColorSupported(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -87,7 +92,7 @@ object ThemeUtils {
 
     @Composable
     fun observeIsDynamicColor(): Boolean {
-        return DataStoreManager.observe(KEY_THEME_DYNAMIC_COLOR, false)
+        return DataStoreManager.observe(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR)
     }
 
     suspend fun setDynamicColor(isDynamicColor: Boolean) {
@@ -104,13 +109,23 @@ object ThemeUtils {
         return buildColorScheme(context, isDarkTheme, themeColor, isDynamicColor)
     }
 
-    fun colorSchemeFromPreferences(context: Context): ColorScheme {
+    fun colorSchemeFromPreferences(context: Context, isDark: Boolean? = null): ColorScheme {
         return buildColorScheme(
             context,
-            isDarkTheme(context),
+            isDark ?: isDarkTheme(context),
             DataStoreManager.read(KEY_THEME_COLOR, THEME_COLOR_DEFAULT),
-            DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, false),
+            DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR),
         )
+    }
+
+    fun widgetAppearancePreferencesFlow(): Flow<Triple<String, String, Boolean>> {
+        return combine(
+            DataStoreManager.flow(KEY_THEME_MODE, THEME_MODE_DEFAULT),
+            DataStoreManager.flow(KEY_THEME_COLOR, THEME_COLOR_DEFAULT),
+            DataStoreManager.flow(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR),
+        ) { mode, color, dynamicColor ->
+            Triple(mode, color, dynamicColor)
+        }.distinctUntilChanged()
     }
 
     private fun buildColorScheme(

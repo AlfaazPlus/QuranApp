@@ -34,9 +34,9 @@
         android:usesCleartextTraffic="@string/cleartextTrafficPermitted"
         tools:targetApi="s">
         <receiver
-            android:name=".views.reader.VotdWidget"
+            android:name=".views.reader.VotdWidgetReceiver"
             android:description="@string/desc_votd_widget"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/strTitleVOTD">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
