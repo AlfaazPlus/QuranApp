@@ -49,7 +49,7 @@ class ChapterInfoWebViewClient(
                     ctx.resources.openRawResource(R.font.suracon)
 
                 data.language == "ur" && uriStr.contains("content") ->
-                    ctx.resources.openRawResource(R.font.noto_nastaliq_urdu_variable)
+                    ctx.resources.openRawResource(R.font.noto_nastaliq_urdu_regular)
 
                 else -> null
             }

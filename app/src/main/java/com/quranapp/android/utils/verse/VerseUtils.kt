@@ -3,8 +3,8 @@ package com.quranapp.android.utils.verse
 import android.content.Context
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
-import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.TranslUtils
@@ -40,8 +40,8 @@ object VerseUtils {
             )
 
             if (existing != null) {
-                votdChapNo = savedVerse.chapterNo
-                votdVerseNo = savedVerse.verseNo
+                votdChapNo = existing.chapterNo
+                votdVerseNo = existing.verseNo
                 return@withContext existing
             } else {
                 // Stored verse is corrupted/invalid -> clear it so we can regenerate
@@ -88,7 +88,13 @@ object VerseUtils {
         if (!QuranMeta.isChapterValid(chapterNo)) return null
         if (!repository.isVerseValid4Chapter(chapterNo, verseNo)) return null
 
-        return repository.getVerseWithDetails(chapterNo, verseNo)
+        return repository.getVerseWithDetails(
+            chapterNo,
+            verseNo,
+            // Loads ayah words for optimal VOTD selection.
+            // But still hides in the UI
+            arabicEnabled = true,
+        )
     }
 
     private fun isExpired(timestamp: Long): Boolean {

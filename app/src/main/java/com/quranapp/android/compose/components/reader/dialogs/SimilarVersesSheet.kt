@@ -97,6 +97,7 @@ fun SimilarVersesSheet(
     val arabicMult = ReaderPreferences.observeArabicTextSizeMultiplier()
     val translMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
     val scriptCode = ReaderPreferences.observeQuranScript()
+    val arabicEnabled = ReaderPreferences.observeArabicTextEnabled()
     val isDark = ThemeUtils.observeDarkTheme()
     val primarySlug = ReaderPreferences.observePrimaryTranslationSlug()
 
@@ -124,7 +125,7 @@ fun SimilarVersesSheet(
                     val surah = repository.getSurahWithLocalizations(ayah.surahNo)
                         ?: return@mapNotNull null
 
-                    val vwd = repository.getVerseWithDetails(ayah.surahNo, ayah.ayahNo, scriptCode)
+                    val vwd = repository.getVerseWithDetails(ayah.surahNo, ayah.ayahNo, scriptCode, arabicEnabled)
                         ?: return@mapNotNull null
 
                     val translation = if (

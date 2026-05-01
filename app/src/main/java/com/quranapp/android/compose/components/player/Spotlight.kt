@@ -169,9 +169,11 @@ private fun SpotlightVersePanel(
 
     val preferences = prefs!!
     val slugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
+
     val scriptCode = QuranScriptUtils.validatePreferredScript(
         preferences.get(ReaderPreferences.KEY_SCRIPT)
     )
+
     val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
     val arabicMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
     val translationMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
@@ -225,7 +227,7 @@ private fun SpotlightVersePanel(
                 ) {
                     value = withContext(Dispatchers.IO) {
                         val vwd =
-                            repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
+                            repository.getVerseWithDetails(chapterNo, verseNo, scriptCode, arabicEnabled)
                                 ?: return@withContext null
                         val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
                         vwd.apply {

@@ -19,7 +19,7 @@ val appFontFamily = FontFamily.Default
 val fontUrdu by lazy {
     FontFamily(
         Font(
-            R.font.noto_nastaliq_urdu_variable,
+            R.font.noto_nastaliq_urdu_regular,
             weight = FontWeight.Normal,
         ),
     )

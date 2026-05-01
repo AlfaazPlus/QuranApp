@@ -155,6 +155,8 @@ class ActivityQuranScienceContent : BaseActivity() {
         }
 
         val scriptCode = ReaderPreferences.getQuranScript()
+        val arabicEnabled = ReaderPreferences.getArabicTextEnabled()
+
         var document = inputStream?.bufferedReader().use { it?.readText() ?: "" }
         document = base.replace("{{CONTENT}}", document)
 
@@ -168,7 +170,7 @@ class ActivityQuranScienceContent : BaseActivity() {
         val verseMap = verseMatches.map {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verseNo) ->
-            repository.getVerseWithDetails(chapterNo, verseNo, scriptCode)
+            repository.getVerseWithDetails(chapterNo, verseNo, scriptCode, arabicEnabled)
         }
 
         val referenceMap = nameMatches.map {

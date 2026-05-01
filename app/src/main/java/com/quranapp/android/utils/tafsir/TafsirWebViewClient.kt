@@ -59,7 +59,7 @@ class TafsirWebViewClient(
                 } else if (uriStr.contains("content")) {
                     data = when {
                         TafsirUtils.isUrdu(tafsirKey) -> {
-                            ctx.resources.openRawResource(R.font.noto_nastaliq_urdu_variable)
+                            ctx.resources.openRawResource(R.font.noto_nastaliq_urdu_regular)
                         }
                         TafsirUtils.isArabic(tafsirKey) -> {
                             ctx.resources.openRawResource(R.font.scheherazadenew_regular)

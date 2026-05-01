@@ -10,9 +10,12 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
+import android.os.Bundle
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
@@ -23,14 +26,15 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
-import androidx.glance.appwidget.updateAll
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -57,9 +61,9 @@ import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
-import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getDimenPx
+import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.FontResolver
@@ -77,27 +81,59 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private data class VotdWidgetUiState(
     val verseInfo: String,
-    val translationText: String,
     val backgroundBitmap: Bitmap,
     val arabicTextBitmap: Bitmap?,
+    val translationBitmap: Bitmap,
     val openReaderIntent: Intent,
+    val headerHeightDp: Float,
+    val footerHeightDp: Float,
+    val textPaddingDp: Float,
+    val textVerticalSpacingDp: Float,
+    val arabicHeightDp: Float,
+    val translationHeightDp: Float,
 )
 
 class VotdWidgetReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget = VotdGlanceWidget
+    override val glanceAppWidget: GlanceAppWidget = VotdGlanceWidget()
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+
+        val manager = GlanceAppWidgetManager(context)
+        val widget = VotdGlanceWidget()
+        val glanceId = manager.getGlanceIdBy(appWidgetId)
+
+        CoroutineScope(Dispatchers.Default).launch {
+            widget.update(context, glanceId)
+        }
+    }
 }
 
-private object VotdGlanceWidget : GlanceAppWidget() {
+private class VotdGlanceWidget : GlanceAppWidget() {
+    override val sizeMode = SizeMode.Exact
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val state = withContext(Dispatchers.Default) {
-            buildVotdWidgetState(context, id)
-        }
 
         provideContent {
+            val sizes = LocalSize.current
+
+            val state by produceState<VotdWidgetUiState?>(null, sizes) {
+                value = buildVotdWidgetState(
+                    context,
+                    id,
+                    sizes.width.value,
+                    sizes.height.value,
+                )
+            }
+
             VotdGlanceContent(context, state = state)
         }
     }
@@ -111,7 +147,7 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(ColorProvider(Color.Black))
-                .cornerRadius(99.dp)
+                .cornerRadius(16.dp)
         ) {
             Text(
                 text = context.getString(R.string.strTitleVOTD),
@@ -128,6 +164,7 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
     Box(
         modifier = GlanceModifier
             .clickable(onClick = actionStartActivity(state.openReaderIntent))
+            .cornerRadius(16.dp)
     ) {
         Image(
             provider = ImageProvider(state.backgroundBitmap),
@@ -137,12 +174,15 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
         )
 
         Column(
-            modifier = GlanceModifier.fillMaxSize().padding(10.dp),
+            modifier = GlanceModifier.fillMaxSize(),
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
             verticalAlignment = Alignment.Vertical.CenterVertically,
         ) {
             Row(
-                modifier = GlanceModifier.fillMaxWidth().padding(bottom = 8.dp),
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .height(state.headerHeightDp.dp)
+                    .padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.Vertical.CenterVertically,
             ) {
                 Text(
@@ -169,7 +209,8 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
 
             Column(
                 GlanceModifier
-                    .defaultWeight(),
+                    .defaultWeight()
+                    .padding(state.textPaddingDp.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -177,44 +218,192 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
                     Image(
                         provider = ImageProvider(arabicBitmap),
                         contentDescription = null,
-                        modifier = GlanceModifier
-                            .fillMaxWidth(),
+                        modifier = GlanceModifier.fillMaxWidth()
+                            .height(state.arabicHeightDp.dp),
                         contentScale = ContentScale.Fit
                     )
+
+                    Spacer(modifier = GlanceModifier.height(state.textVerticalSpacingDp.dp))
                 }
 
-                Text(
-                    text = state.translationText,
-                    modifier = GlanceModifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp, horizontal = 5.dp),
-                    style = TextStyle(
-                        color = ColorProvider(Color.White),
-                        textAlign = TextAlign.Center,
-                    ),
+                Image(
+                    provider = ImageProvider(state.translationBitmap),
+                    contentDescription = null,
+                    modifier = GlanceModifier.fillMaxWidth()
+                        .height(state.translationHeightDp.dp),
+                    contentScale = ContentScale.Fit
                 )
             }
 
             Box(
                 modifier = GlanceModifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
                     .height(1.dp)
                     .background(Color.White.alpha(0.15f))
             ) {}
 
-            Text(
-                text = state.verseInfo,
-                modifier = GlanceModifier.fillMaxWidth().padding(top = 10.dp),
-                style = TextStyle(
-                    color = ColorProvider(Color.White.alpha(0.75f)),
-                    textAlign = TextAlign.Center,
-                    fontSize = 12.sp,
-                ),
-            )
+            Box(
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .height((state.footerHeightDp - 1).dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = state.verseInfo,
+                    modifier = GlanceModifier
+                        .fillMaxWidth(),
+                    style = TextStyle(
+                        color = ColorProvider(Color.White.alpha(0.75f)),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                    ),
+                )
+            }
         }
     }
 }
+
+fun updateAllVotdWidgets(context: Context) {
+    val manager = GlanceAppWidgetManager(context)
+    val widget = VotdGlanceWidget()
+
+    CoroutineScope(Dispatchers.Default).launch {
+        val glanceIds = manager.getGlanceIds(widget.javaClass)
+
+        glanceIds.forEach { glanceId ->
+            widget.update(context, glanceId)
+        }
+    }
+}
+
+private val votdWidgetPrefsScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+@OptIn(FlowPreview::class)
+fun startVotdWidgetPreferenceObserver(context: Context) {
+    val app = context.applicationContext
+
+    votdWidgetPrefsScope.launch {
+        combine(
+            DataStoreManager.flowMultiple(
+                ReaderPreferences.KEY_SCRIPT,
+                ReaderPreferences.KEY_SCRIPT_VARIANT,
+                ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
+                ReaderPreferences.KEY_TRANSLATIONS,
+                ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
+            ),
+            ThemeUtils.widgetAppearancePreferencesFlow(),
+            VersePreferences.votdStorageFlow(),
+        ) { prefs, theme, votd ->
+            "${prefs.toKey()}|${theme.first}|${theme.second}|${theme.third}|${votd.first}|${votd.second}|${votd.third}"
+        }
+            .distinctUntilChanged()
+            .drop(1)
+            .debounce(250)
+            .collect {
+                updateAllVotdWidgets(app)
+            }
+    }
+}
+
+private suspend fun buildVotdWidgetState(
+    context: Context,
+    glanceId: GlanceId,
+    widgetWidthDp: Float,
+    widgetHeightDp: Float,
+): VotdWidgetUiState? {
+    val repository = DatabaseProvider.getQuranRepository(context)
+    val vwd = VerseUtils.getVOTD(context, repository) ?: return null
+
+    if (
+        !QuranMeta.isChapterValid(vwd.chapterNo) ||
+        !repository.isVerseValid4Chapter(vwd.chapterNo, vwd.verseNo)
+    ) {
+        return null
+    }
+
+    val showArabic = widgetHeightDp >= 203f
+    val hasArabic = showArabic && ReaderPreferences.getArabicTextEnabled()
+
+    val headerHeightDp = 42f
+    val footerHeightDp = 32f
+    val textVerticalSpacingDp = if (hasArabic) 8f else 0f
+    val textPaddingDp = 12f
+
+    val contentHeightDp =
+        widgetHeightDp - (headerHeightDp + footerHeightDp + textVerticalSpacingDp + textPaddingDp * 2)
+
+    val textMaxWidthPx = context.dp2px(widgetWidthDp - textPaddingDp * 2)
+
+    val arabicRatio = when {
+        !hasArabic -> 0f
+        else -> 0.45f
+    }
+
+    val translationRatio = 1f - arabicRatio
+
+    val arabicHeightDp = contentHeightDp * arabicRatio
+    val translationHeightDp = contentHeightDp * translationRatio
+
+    val arabicHeightPx = context.dp2px(arabicHeightDp)
+    val translationHeightPx = context.dp2px(translationHeightDp)
+
+    val arabicBitmap = if (hasArabic) {
+        prepareArabicTextBitmap(
+            context = context,
+            vwd = vwd,
+            maxWidth = textMaxWidthPx,
+            maxHeight = arabicHeightPx,
+        )
+    } else null
+
+    val chapterNo = vwd.chapterNo
+    val verseNo = vwd.verseNo
+
+    val translation = QuranTranslationFactory(context).use { factory ->
+        val bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd())
+        factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
+    }
+
+    val translationText = translation.text
+
+    val translationBitmap = createTextBitmap(
+        context = context,
+        text = StringUtils.removeHTML(translationText, false),
+        typeface = if (translation.isUrdu) context.getFont(R.font.noto_nastaliq_urdu_regular) else null,
+        textSize = context.sp2px(20f),
+        color = Color.White.toArgb(),
+        targetMaxWidth = textMaxWidthPx,
+        targetMaxHeight = translationHeightPx
+    )
+
+    val openIntent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
+        setClass(context, ActivityReader::class.java)
+    }
+
+    return VotdWidgetUiState(
+        verseInfo = context.getString(
+            R.string.strLabelVerseWithChapNameAndNo,
+            repository.getChapterName(chapterNo),
+            chapterNo,
+            verseNo
+        ),
+        backgroundBitmap = createWidgetBackgroundBitmap(
+            context,
+            context.dp2px(widgetWidthDp),
+            context.dp2px(widgetHeightDp),
+        ),
+        arabicTextBitmap = arabicBitmap,
+        translationBitmap = translationBitmap,
+        openReaderIntent = openIntent,
+        headerHeightDp = headerHeightDp,
+        footerHeightDp = footerHeightDp,
+        textPaddingDp = textPaddingDp,
+        textVerticalSpacingDp = textVerticalSpacingDp,
+        arabicHeightDp = arabicHeightDp,
+        translationHeightDp = translationHeightDp,
+    )
+}
+
 
 internal fun prepareArabicTextBitmap(
     context: Context,
@@ -250,6 +439,68 @@ internal fun prepareArabicTextBitmap(
 
     return bitmap
 }
+
+internal fun createTextBitmap(
+    context: Context,
+    text: String,
+    typeface: Typeface?,
+    textSize: Int,
+    color: Int,
+    targetMaxWidth: Int,
+    targetMaxHeight: Int,
+): Bitmap {
+    if (targetMaxWidth <= 0 || targetMaxHeight <= 0) {
+        return createBitmap(1, 1)
+    }
+
+    val minTextSizePx = context.sp2px(12f)
+    val maxTextSizePx = textSize.coerceAtLeast(minTextSizePx)
+
+    val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+        this.color = color
+        this.typeface = typeface
+    }
+
+    fun buildLayout(sizePx: Int): StaticLayout {
+        paint.textSize = sizePx.toFloat()
+
+        return StaticLayout.Builder
+            .obtain(text, 0, text.length, paint, targetMaxWidth)
+            .setAlignment(Layout.Alignment.ALIGN_CENTER)
+            .setLineSpacing(0f, 1f)
+            .setIncludePad(true)
+            .build()
+    }
+
+    var bestLayout = buildLayout(minTextSizePx)
+    var low = minTextSizePx
+    var high = maxTextSizePx
+
+    while (low <= high) {
+        val mid = (low + high) / 2
+        val candidate = buildLayout(mid)
+
+        if (candidate.height <= targetMaxHeight) {
+            bestLayout = candidate
+            low = mid + 1
+        } else {
+            high = mid - 1
+        }
+    }
+
+    val height = bestLayout.height
+    if (height <= 0) return createBitmap(1, 1)
+
+    val bitmap = createBitmap(targetMaxWidth, height)
+    val canvas = Canvas(bitmap)
+
+    canvas.withSave {
+        bestLayout.draw(this)
+    }
+
+    return bitmap
+}
+
 
 internal fun createWidgetBackgroundBitmap(
     context: Context,
@@ -290,183 +541,4 @@ internal fun createWidgetBackgroundBitmap(
     canvas.drawRoundRect(rect, cornerRadius, cornerRadius, overlayPaint)
 
     return bitmap
-}
-
-internal fun createTextBitmap(
-    context: Context,
-    text: String,
-    typeface: Typeface,
-    textSize: Int,
-    color: Int,
-    maxWidth: Int,
-    maxHeight: Int,
-): Bitmap {
-    if (maxWidth <= 0 || maxHeight <= 0) {
-        // return a 1x1 bitmap to avoid crash
-        return createBitmap(1, 1)
-    }
-
-    val horizontalPaddingPx = context.dp2px(20f) // 10.dp start + 10.dp end from parent Column
-    val width = (maxWidth - horizontalPaddingPx).coerceAtLeast(1)
-
-    val minTextSizePx = context.sp2px(14f)
-    val maxTextSizePx = textSize.coerceAtLeast(minTextSizePx)
-    val targetMaxHeight = (maxHeight * 0.42f).toInt().coerceAtLeast(context.dp2px(48f))
-
-    val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-        this.color = color
-        this.typeface = typeface
-    }
-
-    fun buildLayout(sizePx: Int): StaticLayout {
-        paint.textSize = sizePx.toFloat()
-
-        return StaticLayout.Builder
-            .obtain(text, 0, text.length, paint, width)
-            .setAlignment(Layout.Alignment.ALIGN_CENTER)
-            .setLineSpacing(0f, 0.9f)
-            .setIncludePad(false)
-            .build()
-    }
-
-    var bestLayout = buildLayout(minTextSizePx)
-    var low = minTextSizePx
-    var high = maxTextSizePx
-
-    while (low <= high) {
-        val mid = (low + high) / 2
-        val candidate = buildLayout(mid)
-
-        if (candidate.height <= targetMaxHeight) {
-            bestLayout = candidate
-            low = mid + 1
-        } else {
-            high = mid - 1
-        }
-    }
-
-    val staticLayout = bestLayout
-    val height = staticLayout.height
-    if (height <= 0) {
-        return createBitmap(1, 1)
-    }
-
-    // Create bitmap with calculated height
-    val bitmap = createBitmap(width, height)
-    val canvas = Canvas(bitmap)
-
-    canvas.withSave {
-        staticLayout.draw(this)
-    }
-
-    return bitmap
-}
-
-fun updateAllVotdWidgets(context: Context) {
-    CoroutineScope(Dispatchers.Default).launch {
-        VotdGlanceWidget.updateAll(context)
-    }
-}
-
-private val votdWidgetPrefsScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-@OptIn(FlowPreview::class)
-fun startVotdWidgetPreferenceObserver(context: Context) {
-    val app = context.applicationContext
-
-    votdWidgetPrefsScope.launch {
-        combine(
-            DataStoreManager.flowMultiple(
-                ReaderPreferences.KEY_SCRIPT,
-                ReaderPreferences.KEY_SCRIPT_VARIANT,
-                ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
-                ReaderPreferences.KEY_TRANSLATIONS,
-                ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
-            ),
-            ThemeUtils.widgetAppearancePreferencesFlow(),
-            VersePreferences.votdStorageFlow(),
-        ) { prefs, theme, votd ->
-            "${prefs.toKey()}|${theme.first}|${theme.second}|${theme.third}|${votd.first}|${votd.second}|${votd.third}"
-        }
-            .distinctUntilChanged()
-            .drop(1)
-            .debounce(250)
-            .collect {
-                updateAllVotdWidgets(app)
-            }
-    }
-}
-
-private suspend fun buildVotdWidgetState(context: Context, glanceId: GlanceId): VotdWidgetUiState? {
-    val appWidgetManager = AppWidgetManager.getInstance(context)
-    val appWidgetId = GlanceAppWidgetManager(context).getAppWidgetId(glanceId)
-    val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
-
-    val maxWidth =
-        context.dp2px(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat())
-            .takeIf { it > 0 } ?: context.dp2px(300f)
-    val maxHeight =
-        context.dp2px(options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).toFloat())
-            .takeIf { it > 0 } ?: context.dp2px(220f)
-
-    val repository = DatabaseProvider.getQuranRepository(context)
-    val verse = VerseUtils.getVOTD(context, repository) ?: return null
-
-    if (
-        !QuranMeta.isChapterValid(verse.chapterNo) ||
-        !repository.isVerseValid4Chapter(verse.chapterNo, verse.verseNo)
-    ) {
-        return null
-    }
-
-    val arabicBitmap = if (ReaderPreferences.getArabicTextEnabled()) {
-        prepareArabicTextBitmap(
-            context = context,
-            vwd = verse,
-            maxWidth = maxWidth,
-            maxHeight = maxHeight,
-        )
-    } else null
-
-    return buildVotdUiState(
-        context = context,
-        repository = repository,
-        vwd = verse,
-        arabicTextBitmap = arabicBitmap,
-        widgetWidth = maxWidth,
-        widgetHeight = maxHeight,
-    )
-}
-
-private suspend fun buildVotdUiState(
-    context: Context,
-    repository: QuranRepository,
-    vwd: VerseWithDetails,
-    arabicTextBitmap: Bitmap?,
-    widgetWidth: Int,
-    widgetHeight: Int,
-): VotdWidgetUiState {
-    val chapterNo = vwd.chapterNo
-    val verseNo = vwd.verseNo
-
-    QuranTranslationFactory(context).use { factory ->
-        val bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd())
-        val translation = factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
-        val openIntent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
-            setClass(context, ActivityReader::class.java)
-        }
-
-        return VotdWidgetUiState(
-            verseInfo = context.getString(
-                R.string.strLabelVerseWithChapNameAndNo,
-                repository.getChapterName(chapterNo),
-                chapterNo,
-                verseNo
-            ),
-            translationText = StringUtils.removeHTML(translation.text, false),
-            backgroundBitmap = createWidgetBackgroundBitmap(context, widgetWidth, widgetHeight),
-            arabicTextBitmap = arabicTextBitmap,
-            openReaderIntent = openIntent,
-        )
-    }
 }

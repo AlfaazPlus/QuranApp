@@ -240,7 +240,13 @@ object ReaderItemsBuilder {
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
 
         val batch =
-            quranRepository.loadVersesBatch(chapterNo, fromVerse, toVerse + 1, scriptCode)
+            quranRepository.loadVersesBatch(
+                chapterNo,
+                fromVerse,
+                toVerse + 1,
+                scriptCode,
+                params.arabicEnabled
+            )
                 ?: return
 
         val surah = batch.surah
@@ -319,9 +325,9 @@ object ReaderItemsBuilder {
             out.addSectionMarker(params.context, chapterNo, verseNo, cur, prevSection)
             prevSection = cur
 
-            if (words.isEmpty()) continue
-
-            ensureQuranTextStyleForPage(pageNo)
+            if (words.isNotEmpty()) {
+                ensureQuranTextStyleForPage(pageNo)
+            }
 
             val verse = VerseWithDetails(
                 words = words,
@@ -393,7 +399,12 @@ object ReaderItemsBuilder {
         val scriptCode = ReaderPreferences.getQuranScript()
         val isDarkThem = ThemeUtils.isDarkTheme(params.context)
 
-        val batch = repository.loadArbitraryVersesBatch(chapterNo, verseNos, scriptCode)
+        val batch = repository.loadArbitraryVersesBatch(
+            chapterNo,
+            verseNos,
+            scriptCode,
+            params.arabicEnabled
+        )
             ?: return null
         val surah = batch.surah
 
@@ -453,10 +464,11 @@ object ReaderItemsBuilder {
             for ((idx, verseNo) in verseNos.withIndex()) {
                 val ayah = batch.ayahByVerseNo[verseNo] ?: continue
                 val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
-                if (words.isEmpty()) continue
 
                 val pageNo = batch.pageByVerseNo[verseNo] ?: -1
-                ensureQuranTextStyleForPage(pageNo)
+                if (words.isNotEmpty()) {
+                    ensureQuranTextStyleForPage(pageNo)
+                }
 
                 val translations = factory.getTranslationsVerseRange(
                     params.slugs, chapterNo, verseNo, verseNo

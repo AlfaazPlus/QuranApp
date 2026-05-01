@@ -93,11 +93,12 @@ class QuranRepository(
     suspend fun getVerseWithDetails(
         chapterNo: Int,
         verseNo: Int,
-        scriptCode: String? = null
+        scriptCode: String? = null,
+        arabicEnabled: Boolean,
     ): VerseWithDetails? {
         val script = scriptCode ?: ReaderPreferences.getQuranScript()
 
-        val batch = loadVersesBatch(chapterNo, verseNo, verseNo, script) ?: return null
+        val batch = loadVersesBatch(chapterNo, verseNo, verseNo, script, arabicEnabled) ?: return null
 
         val ayah = batch.ayahByVerseNo[verseNo] ?: return null
         val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
@@ -115,6 +116,7 @@ class QuranRepository(
         fromVerse: Int,
         toVerse: Int,
         scriptCode: String,
+        arabicEnabled: Boolean,
     ): ChapterVerseBatch? {
         val surah = surahDao.getSurahWithLocalization(chapterNo) ?: return null
 
@@ -142,7 +144,7 @@ class QuranRepository(
             pageByVerse[a.ayahNo] = pageByAyahId[a.ayahId] ?: -1
         }
 
-        val wordsFlat = if (verseIds.isNotEmpty()) {
+        val wordsFlat = if (arabicEnabled && verseIds.isNotEmpty()) {
             ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
         } else {
             emptyList()
@@ -170,6 +172,7 @@ class QuranRepository(
         chapterNo: Int,
         verseNos: List<Int>,
         scriptCode: String,
+        arabicEnabled: Boolean,
     ): ChapterVerseBatch? {
         val distinct = verseNos.distinct()
         if (distinct.isEmpty()) return null
@@ -185,7 +188,9 @@ class QuranRepository(
         val ayahByVerse = ayahs.associateBy { it.ayahNo }
         val verseIds = ayahs.map { it.ayahId }
 
-        val wordsFlat = ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
+        val wordsFlat = if (arabicEnabled) ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
+        else emptyList()
+
         val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
 
         val pageByAyahId = if (verseIds.isNotEmpty()) {
