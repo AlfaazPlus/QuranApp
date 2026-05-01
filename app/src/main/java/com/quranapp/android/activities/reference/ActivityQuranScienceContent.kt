@@ -15,7 +15,8 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem
 import com.quranapp.android.compose.components.QuickReferenceHost
 import com.quranapp.android.compose.utils.ThemeUtils
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
+import com.quranapp.android.compose.utils.formatString
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.databinding.ActivityChapterInfoBinding
 import com.quranapp.android.db.DatabaseProvider
@@ -136,7 +137,7 @@ class ActivityQuranScienceContent : BaseActivity() {
 
 
         val fallbackLangCode = "en"
-        val locale = appLocale()
+        val locale = appPlatformLocale()
         val currentLangCode = with(locale.language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }
@@ -176,8 +177,8 @@ class ActivityQuranScienceContent : BaseActivity() {
         val referenceMap = nameMatches.map {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verse) ->
-            String.format(
-                appLocale(),
+            formatString(
+                this,
                 $$"%1$s %2$d:%3$d",
                 repository.getChapterName(chapterNo),
                 chapterNo,

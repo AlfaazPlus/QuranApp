@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.screens.tafsir
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -50,7 +49,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,6 +66,8 @@ import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
@@ -78,7 +78,6 @@ import com.quranapp.android.viewModels.TafsirContentState
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderUiState
 import com.quranapp.android.viewModels.TafsirReaderViewModel
-import java.util.Locale
 
 @Composable
 fun TafsirReaderScreen(
@@ -229,8 +228,9 @@ private fun TafsirTopBar(
     onOpenChapterVerseNavigator: () -> Unit,
     onShare: (() -> Unit)? = null,
 ) {
+    val appLocale = LocalAppLocale.current
     val context = LocalContext.current
-    val chapterName = uiState.chapterMeta?.getCurrentName() ?: ""
+    val chapterName = uiState.chapterMeta?.let { it.getCurrentName() } ?: ""
     val chapterNo = uiState.chapterNo
     val verseNo = uiState.verseNo
 
@@ -254,7 +254,7 @@ private fun TafsirTopBar(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = String.format(
-                            LocalLocale.current.platformLocale,
+                            appLocale.platformLocale,
                             $$"%1$s %2$d:%3$d",
                             chapterName,
                             chapterNo,
@@ -665,7 +665,7 @@ private fun shareTafsir(
         .trim()
     if (plain.isEmpty()) return
 
-    val chapterName = uiState.chapterMeta?.getCurrentName() ?: ""
+    val chapterName = uiState.chapterMeta?.let { it.getCurrentName() } ?: ""
     val ref = "${uiState.chapterNo}:${uiState.verseNo}"
     val text = buildString {
         uiState.tafsirInfo?.name?.let { append(it).append('\n') }

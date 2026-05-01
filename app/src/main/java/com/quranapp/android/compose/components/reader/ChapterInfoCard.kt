@@ -41,10 +41,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityChapInfo
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.quran.RevelationType
 import com.quranapp.android.db.relations.SurahWithLocalizations
-import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -52,6 +52,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun ChapterInfoCard(chapterNo: Int) {
     val context = LocalContext.current
+    val appLocale = LocalAppLocale.current
 
     val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
     var _swl by remember { mutableStateOf<SurahWithLocalizations?>(null) }
@@ -159,13 +160,28 @@ fun ChapterInfoCard(chapterNo: Int) {
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strTitleChapInfoVerses) + ": ${swl.surah.ayahCount}",
+                                text = stringResource(R.string.strTitleChapInfoVerses) + ": " +
+                                        String.format(
+                                            appLocale.platformLocale,
+                                            "%d",
+                                            swl.surah.ayahCount
+                                        ),
                             )
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strTitleChapInfoRukus) + ": ${swl.surah.rukusCount}",
+                                text = stringResource(R.string.strTitleChapInfoRukus) + ": " +
+                                        String.format(
+                                            appLocale.platformLocale,
+                                            "%d",
+                                            swl.surah.rukusCount
+                                        ),
                             )
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strLabelOrder) + ": ${swl.surah.revelationOrder}",
+                                text = stringResource(R.string.strLabelOrder) + ": " +
+                                        String.format(
+                                            appLocale.platformLocale,
+                                            "%d",
+                                            swl.surah.revelationOrder
+                                        ),
                             )
                         }
 

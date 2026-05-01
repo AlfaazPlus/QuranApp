@@ -79,7 +79,7 @@ import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.repository.QuranRepository
@@ -728,7 +728,7 @@ private suspend fun buildReferenceRows(
         }
     }.awaitAll()
 
-    val locale = appLocale()
+    val locale = readAppLocale(context).platformLocale
 
     for ((seg, verseUis, textStyles) in built) {
         val titleText = if (seg.ref.range.isSingleValue) {

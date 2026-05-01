@@ -44,7 +44,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -61,6 +60,7 @@ import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
@@ -341,6 +341,7 @@ private fun ItemRow(
     onDownload: () -> Unit,
     onCancelDownload: () -> Unit,
 ) {
+    val appLocale = LocalAppLocale.current
     val bookInfo = model.bookInfo
 
     Row(
@@ -385,7 +386,7 @@ private fun ItemRow(
                     is ResourceDownloadStatus.InProgress -> {
                         Text(
                             text = String.format(
-                                LocalLocale.current.platformLocale,
+                                appLocale.platformLocale,
                                 $$"%1$s %2$d%%",
                                 stringResource(R.string.textDownloading),
                                 downloadState.progress

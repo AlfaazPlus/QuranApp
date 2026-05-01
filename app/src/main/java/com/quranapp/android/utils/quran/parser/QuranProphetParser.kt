@@ -4,7 +4,7 @@ import android.content.Context
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.QuranProphet
 import com.quranapp.android.components.quran.QuranProphet.Prophet
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
@@ -31,10 +31,10 @@ object QuranProphetParser {
     private const val PROPHETS_ATTR_ICON_RES = "drawable"
 
     /**
-     * Parsed strings and chapter labels depend on [appLocale]. Cached per locale tag.
+     * Parsed strings and chapter labels depend on [appPlatformLocale]. Cached per locale tag.
      */
     suspend fun parseProphets(context: Context): QuranProphet {
-        val localeTag = appLocale().toLanguageTag()
+        val localeTag = appPlatformLocale().toLanguageTag()
         synchronized(cacheLock) {
             cached?.takeIf { it.localeTag == localeTag }?.let {
                 return it.quranProphet

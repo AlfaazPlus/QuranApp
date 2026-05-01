@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.ReaderMode
@@ -268,7 +269,7 @@ internal fun NavigationVerseList(
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     ) {
                         Text(
-                            stringResource(
+                            formattedStringResource(
                                 R.string.strLabelVerseWithChapNo,
                                 it.chapterNo,
                                 it.verseNo

@@ -45,6 +45,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.viewModels.RecitationPlayerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -224,7 +225,7 @@ fun ExtendedThumbnail(
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.strLabelVerseNo, verse.verseNo),
+                        text = formattedStringResource(R.string.strLabelVerseNo, verse.verseNo),
                         color = Color.White.copy(alpha = 0.88f),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold

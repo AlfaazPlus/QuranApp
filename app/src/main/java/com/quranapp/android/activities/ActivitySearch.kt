@@ -14,7 +14,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.screens.search.SearchScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -62,7 +62,7 @@ class ActivitySearch : BaseActivity() {
                             voiceSearchFlow = voiceSearchFlow,
                             onVoiceSearchClick = { inQuranText ->
                                 runCatching {
-                                    val locale = if (!inQuranText) appLocale()
+                                    val locale = if (!inQuranText) appPlatformLocale()
                                     else Locale.forLanguageTag("ar-SA")
 
 

@@ -44,6 +44,7 @@ import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.relations.VerseWithDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,7 +107,7 @@ private fun VodSheetContent(
     val repository = LocalReaderViewModel.current.repository
     val context = LocalContext.current
 
-    val title = stringResource(
+    val title = formattedStringResource(
         R.string.strTitleReaderVerseInformation,
         verse.chapter.getCurrentName(),
         verse.verseNo

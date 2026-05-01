@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +50,7 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.settings.ListItemCategoryLabel
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -183,6 +183,7 @@ private fun WbwRow(
     isAnyDownloading: Boolean,
     onDeleteRequest: () -> Unit
 ) {
+    val appLocale = LocalAppLocale.current
     val isDownloaded = row.isDownloaded
     val isSelected = row.info.id == uiState.selectedWbwId
 
@@ -236,7 +237,7 @@ private fun WbwRow(
 
             val subtitle = when {
                 downloadStatus is ResourceDownloadStatus.InProgress -> String.format(
-                    LocalLocale.current.platformLocale,
+                    appLocale.platformLocale,
                     $$"%1$s %2$d%%",
                     stringResource(R.string.textDownloading),
                     downloadStatus.progress
@@ -328,6 +329,7 @@ private fun WbwRow(
 @Composable
 private fun Configurations() {
     val coroutineScope = rememberCoroutineScope()
+    val appLocale = LocalAppLocale.current
     val showTranslation = ReaderPreferences.observeWbwShowTranslation()
     val showTransliteration = ReaderPreferences.observeWbwShowTransliteration()
     val showTooltipTranslation = ReaderPreferences.observeWbwTooltipShowTranslation()
@@ -427,7 +429,7 @@ private fun Configurations() {
             )
             Text(
                 text = String.format(
-                    LocalLocale.current.platformLocale,
+                    appLocale.platformLocale,
                     "%d%%",
                     wbwProgress.toInt(),
                 ),

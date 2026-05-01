@@ -11,9 +11,11 @@ object SPAppConfigs {
     const val SP_APP_CONFIGS = "sp_app_configs"
     const val KEY_APP_THEME = "key.app.theme"
     private const val KEY_APP_LANGUAGE = "key.app.language"
+    private const val KEY_NUMERAL_SYSTEM = "key.app.numeral_system"
     private const val KEY_URLS_VERSION = "key.versions.urls"
 
     const val LOCALE_DEFAULT = "default"
+    const val NUMERAL_SYSTEM_DEFAULT = "latn"
 
     private fun sp(context: Context) = context.getSharedPreferences(
         SP_APP_CONFIGS,
@@ -45,5 +47,16 @@ object SPAppConfigs {
     @JvmStatic
     fun getLocale(ctx: Context): String =
         sp(ctx).getString(KEY_APP_LANGUAGE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
+
+    @JvmStatic
+    fun setNumeralSystem(ctx: Context, systemKey: String?) {
+        sp(ctx).edit(commit = true) {
+            putString(KEY_NUMERAL_SYSTEM, systemKey)
+        }
+    }
+
+    @JvmStatic
+    fun getNumeralSystem(ctx: Context): String? =
+        sp(ctx).getString(KEY_NUMERAL_SYSTEM, null)
 
 }

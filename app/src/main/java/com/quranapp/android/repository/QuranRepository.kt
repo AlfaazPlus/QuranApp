@@ -98,7 +98,8 @@ class QuranRepository(
     ): VerseWithDetails? {
         val script = scriptCode ?: ReaderPreferences.getQuranScript()
 
-        val batch = loadVersesBatch(chapterNo, verseNo, verseNo, script, arabicEnabled) ?: return null
+        val batch =
+            loadVersesBatch(chapterNo, verseNo, verseNo, script, arabicEnabled) ?: return null
 
         val ayah = batch.ayahByVerseNo[verseNo] ?: return null
         val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
@@ -650,7 +651,9 @@ class QuranRepository(
         return surahNos.mapNotNull { byNo[it] }
     }
 
-    suspend fun getChapterName(chapterNo: Int): String {
+    suspend fun getChapterName(
+        chapterNo: Int,
+    ): String {
         if (chapterNo <= 0) return ""
 
         return appFallbackLanguageCodes()

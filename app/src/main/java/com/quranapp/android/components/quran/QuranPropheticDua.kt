@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.utils.quran.parser.QuranPropheticDuasParser
 import java.io.Serializable
 import java.text.MessageFormat
@@ -26,7 +26,7 @@ class QuranPropheticDua(val prophets: List<Prophet>) {
                 null,
                 context,
                 configuration,
-                appLocale(),
+                appPlatformLocale(),
             ) {
                 val q = load(context)
 

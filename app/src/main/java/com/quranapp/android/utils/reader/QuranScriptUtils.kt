@@ -207,6 +207,7 @@ fun String.mushafShowsRuledPageDecoration(): Boolean = when (this) {
 
 fun String.getQuranScriptName(): String {
     val mapToQuery = SCRIPT_NAMES(this)
+
     return appFallbackLanguageCodes()
         .firstNotNullOfOrNull { mapToQuery[it] }
         ?: ""
@@ -311,6 +312,7 @@ fun rememberQuranMushafId(): Int {
 
 fun QuranScriptVariant.getQuranScriptVariantName(): String {
     val mapToQuery = VARIANT_NAMES[this] ?: return ""
+
     return appFallbackLanguageCodes()
         .firstNotNullOfOrNull { mapToQuery[it] }
         ?: ""

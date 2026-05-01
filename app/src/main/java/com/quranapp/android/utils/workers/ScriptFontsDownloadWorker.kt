@@ -15,6 +15,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.NotificationUtils

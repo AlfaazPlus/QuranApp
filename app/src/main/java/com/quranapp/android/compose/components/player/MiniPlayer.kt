@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
@@ -115,7 +116,7 @@ fun MiniPlayer(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(
+                    text = formattedStringResource(
                         R.string.strLabelVerseSerialWithChapter,
                         chapterName,
                         verse.chapterNo,

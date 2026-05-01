@@ -58,6 +58,7 @@ import com.quranapp.android.compose.components.reader.LocalWbwState
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -289,7 +290,7 @@ internal fun VotdContent(
                     )
 
                     Text(
-                        text = stringResource(
+                        text = formattedStringResource(
                             R.string.strLabelVerseSerialWithChapter,
                             votdState.verse.chapter.getCurrentName(),
                             verse.chapterNo,

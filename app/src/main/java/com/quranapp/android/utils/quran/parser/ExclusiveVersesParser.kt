@@ -2,7 +2,7 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.ExclusiveVerse
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.db.DatabaseProvider
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,7 +25,7 @@ object ExclusiveVersesParser {
         context: Context,
         filename: String,
     ): List<ExclusiveVerse> {
-        val localeTag = appLocale().toLanguageTag()
+        val localeTag = appPlatformLocale().toLanguageTag()
         val mutex = lockFor(filename)
 
         return mutex.withLock {
@@ -53,7 +53,7 @@ object ExclusiveVersesParser {
         }
 
         val fallbackLangCode = "en"
-        val locale = appLocale()
+        val locale = appPlatformLocale()
         val currentLangCode = with(locale.language) {
             if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
         }

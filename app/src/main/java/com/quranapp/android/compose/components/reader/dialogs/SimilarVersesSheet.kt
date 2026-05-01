@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,6 +52,9 @@ import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.extras.SimilarVerseEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
@@ -90,6 +92,7 @@ fun SimilarVersesSheet(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val context = LocalContext.current
+    val appLocale = LocalAppLocale.current
     val viewModel = LocalReaderViewModel.current
     val fontResolver = viewModel.fontResolver
     val repository = viewModel.repository
@@ -104,7 +107,7 @@ fun SimilarVersesSheet(
     var rows by remember { mutableStateOf<List<SimilarVerseListRow>>(emptyList()) }
     var loading by remember { mutableStateOf(true) }
 
-    LaunchedEffect(sourceVerse, scriptCode, primarySlug) {
+    LaunchedEffect(sourceVerse, scriptCode, primarySlug, appLocale) {
         val v = sourceVerse
 
         if (v == null) {
@@ -125,7 +128,12 @@ fun SimilarVersesSheet(
                     val surah = repository.getSurahWithLocalizations(ayah.surahNo)
                         ?: return@mapNotNull null
 
-                    val vwd = repository.getVerseWithDetails(ayah.surahNo, ayah.ayahNo, scriptCode, arabicEnabled)
+                    val vwd = repository.getVerseWithDetails(
+                        ayah.surahNo,
+                        ayah.ayahNo,
+                        scriptCode,
+                        arabicEnabled
+                    )
                         ?: return@mapNotNull null
 
                     val translation = if (
@@ -318,7 +326,7 @@ private fun SimilarVerseItem(
                 Modifier.weight(1f)
             ) {
                 Text(
-                    text = stringResource(
+                    text = formattedStringResource(
                         R.string.strLabelVerseSerialWithChapter,
                         row.surahName,
                         row.surahNo,
@@ -329,7 +337,7 @@ private fun SimilarVerseItem(
                 )
 
                 Text(
-                    text = stringResource(
+                    text = formattedStringResource(
                         R.string.similarVerseRowMeta,
                         row.entity.coverage,
                         row.entity.score,

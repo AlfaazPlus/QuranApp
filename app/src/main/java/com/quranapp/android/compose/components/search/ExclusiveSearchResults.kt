@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.search.CollectionSearchResult
@@ -118,7 +119,7 @@ private fun ExclusiveSearchResultCard(
 
             if (result is CollectionSearchResult.ScienceTopicItem) {
                 Text(
-                    text = stringResource(
+                    text = formattedStringResource(
                         R.string.strLabelScienceReferences,
                         result.item.referencesCount
                     ),

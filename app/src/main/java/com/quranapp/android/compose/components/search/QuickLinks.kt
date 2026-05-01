@@ -28,6 +28,8 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.search.QuickLinkItem
 import com.quranapp.android.search.stableKey
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -106,27 +108,31 @@ private fun CompactQuickLinkCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val appLocale = LocalAppLocale.current
     val label = when (item) {
         is QuickLinkItem.Chapter -> {
             val name = stringResource(R.string.strLabelSurah, item.surah.getCurrentName())
-            listOf("${item.surah.surah.surahNo}.", name).joinToString(" ")
+            listOf(
+                String.format(appLocale.platformLocale, "%d.", item.surah.surah.surahNo),
+                name
+            ).joinToString(" ")
         }
 
         is QuickLinkItem.Verse ->
-            stringResource(R.string.strLabelVerseWithChapNo, item.chapterNo, item.verseNo)
+            formattedStringResource(R.string.strLabelVerseWithChapNo, item.chapterNo, item.verseNo)
 
         is QuickLinkItem.Tafsir ->
-            stringResource(
+            formattedStringResource(
                 R.string.tafsirForVerse,
                 item.chapterNo,
                 item.verseNo,
             )
 
         is QuickLinkItem.Juz ->
-            stringResource(R.string.strLabelJuzNo, item.juzNo)
+            formattedStringResource(R.string.strLabelJuzNo, item.juzNo)
 
         is QuickLinkItem.Hizb ->
-            stringResource(R.string.labelHizbNo, item.hizbNo)
+            formattedStringResource(R.string.labelHizbNo, item.hizbNo)
     }
 
     val shape = RoundedCornerShape(8.dp)

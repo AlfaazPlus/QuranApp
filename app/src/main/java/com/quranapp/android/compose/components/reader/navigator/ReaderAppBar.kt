@@ -75,6 +75,7 @@ import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.toQuranMushafId
@@ -409,7 +410,7 @@ private fun StickyHeaderModeVbV(
                     )
 
                     is ReaderViewType.Hizb -> Text(
-                        text = stringResource(R.string.labelHizbNo, vt.hizbNo),
+                        text = formattedStringResource(R.string.labelHizbNo, vt.hizbNo),
                         style = typography.labelLarge,
                         color = colorScheme.primary,
                     )
@@ -548,7 +549,7 @@ private fun StickyHeaderModeMushaf(
                 ) {
                     if (currentPageNo != null) {
                         Text(
-                            stringResource(R.string.strLabelPageNo, currentPageNo),
+                            formattedStringResource(R.string.strLabelPageNo, currentPageNo),
                             style = typography.labelLarge.copy(
                                 lineHeightStyle = LineHeightStyle.Default.copy(
                                     mode = LineHeightStyle.Mode.Tight,
@@ -617,7 +618,7 @@ private fun StickyHeaderModeTranslation(
             ) {
                 if (currentPageNo != null) {
                     Text(
-                        stringResource(R.string.strLabelPageNo, currentPageNo),
+                        formattedStringResource(R.string.strLabelPageNo, currentPageNo),
                         style = typography.labelLarge,
                         color = colorScheme.primary,
                     )
@@ -782,7 +783,7 @@ fun FullscreenMushafHeader(
         )
 
         Text(
-            text = currentPageNo?.let { stringResource(R.string.strLabelPageNo, it) }.orEmpty(),
+            text = currentPageNo?.let { formattedStringResource(R.string.strLabelPageNo, it) }.orEmpty(),
             modifier = Modifier.weight(1f),
             style = MaterialTheme.typography.titleSmall,
             color = colorScheme.primary,

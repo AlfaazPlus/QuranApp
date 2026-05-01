@@ -7,7 +7,7 @@ import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptFontHasDark
@@ -46,7 +46,7 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         val host = uri.host ?: return null
         val ctx = view.context
         var data: InputStream? = null
-        val uriStr = uri.toString().lowercase(appLocale())
+        val uriStr = uri.toString().lowercase(appPlatformLocale())
         when (host) {
             "assets-file" -> data =
                 ctx.assets.open(uri.toString().substring("https://assets-file/".length))

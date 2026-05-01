@@ -44,6 +44,7 @@ import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -188,7 +189,7 @@ private fun Header(
         Text(
             text = buildAnnotatedString {
                 append(
-                    stringResource(
+                    formattedStringResource(
                         R.string.strLabelVerseSerialWithChapter,
                         chapterName,
                         verse.chapterNo,

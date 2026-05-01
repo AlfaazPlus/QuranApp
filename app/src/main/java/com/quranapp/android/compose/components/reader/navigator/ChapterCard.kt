@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -31,9 +29,8 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.db.relations.SurahWithLocalizations
-import java.util.Locale
-import androidx.compose.ui.platform.LocalLocale
 
 
 @Composable
@@ -46,6 +43,7 @@ fun ChapterCard(
     onToggleFavourite: (() -> Unit)? = null,
 ) {
     val showFavouriteIcon = onToggleFavourite != null
+    val appLocale = LocalAppLocale.current
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -81,7 +79,7 @@ fun ChapterCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = String.format(LocalLocale.current.platformLocale, "%d", surah.surah.surahNo),
+                    text = String.format(appLocale.platformLocale, "%d", surah.surah.surahNo),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Normal,
                     color = colorScheme.onSurface

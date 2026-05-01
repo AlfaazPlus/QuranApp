@@ -13,7 +13,7 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.screens.tafsir.TafsirReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.databinding.LytTafsirTextSizeBinding
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -23,7 +23,6 @@ import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderViewModel
 import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
-import java.util.Locale
 
 class ActivityTafsir : BaseActivity() {
 
@@ -76,7 +75,7 @@ class ActivityTafsir : BaseActivity() {
 
     private fun showFontSizeDialog() {
         val binding = LytTafsirTextSizeBinding.inflate(layoutInflater)
-        val locale = appLocale()
+        val locale = readAppLocale(this).platformLocale
 
         PeaceBottomSheet().apply {
             params.apply {

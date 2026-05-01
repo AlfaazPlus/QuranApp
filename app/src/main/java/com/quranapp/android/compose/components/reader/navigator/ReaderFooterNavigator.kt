@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
@@ -94,9 +95,9 @@ fun ReaderFooterNavigator(
 
     val previousSubtitle: String? = when {
         !prevEnabled -> null
-        viewType is ReaderViewType.Juz -> stringResource(R.string.strLabelJuzNo, viewType.juzNo - 1)
+        viewType is ReaderViewType.Juz -> formattedStringResource(R.string.strLabelJuzNo, viewType.juzNo - 1)
 
-        viewType is ReaderViewType.Hizb -> stringResource(R.string.labelHizbNo, viewType.hizbNo - 1)
+        viewType is ReaderViewType.Hizb -> formattedStringResource(R.string.labelHizbNo, viewType.hizbNo - 1)
 
         viewType is ReaderViewType.Chapter -> previousChapterSubtitle
         else -> null
@@ -104,9 +105,9 @@ fun ReaderFooterNavigator(
 
     val nextSubtitle: String? = when {
         !nextEnabled -> null
-        viewType is ReaderViewType.Juz -> stringResource(R.string.strLabelJuzNo, viewType.juzNo + 1)
+        viewType is ReaderViewType.Juz -> formattedStringResource(R.string.strLabelJuzNo, viewType.juzNo + 1)
 
-        viewType is ReaderViewType.Hizb -> stringResource(R.string.labelHizbNo, viewType.hizbNo + 1)
+        viewType is ReaderViewType.Hizb -> formattedStringResource(R.string.labelHizbNo, viewType.hizbNo + 1)
 
         viewType is ReaderViewType.Chapter -> nextChapterSubtitle
         else -> null

@@ -52,6 +52,7 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.extensions.orMinusOne
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -233,7 +234,7 @@ fun BookmarkViewerSheet(
                     text = if (fromVerseNo == toVerseNo) stringResource(
                         R.string.strLabelVerseNoWithColon,
                         fromVerseNo
-                    ) else stringResource(R.string.strLabelVersesWithColon, fromVerseNo, toVerseNo),
+                    ) else formattedStringResource(R.string.strLabelVersesWithColon, fromVerseNo, toVerseNo),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorScheme.onSurfaceVariant,
                 )

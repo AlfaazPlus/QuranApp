@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.components.quran.QuranExclusiveVerses
@@ -217,8 +218,8 @@ private fun DuaListItem(verse: ExclusiveVerse) {
     val count = verse.verses.size
     val placesLine = when {
         verse.id == 1 -> null
-        count > 1 -> stringResource(R.string.places, count)
-        else -> stringResource(R.string.place, count)
+        count > 1 -> formattedStringResource(R.string.places, count)
+        else -> formattedStringResource(R.string.place, count)
     }
     val inChaptersLine = if (verse.id == 1) null else verse.inChapters.takeIf { it.isNotBlank() }
 
@@ -349,9 +350,9 @@ private fun SolutionListItem(verse: ExclusiveVerse) {
     val context = LocalContext.current
     val count = verse.verses.size
     val placesLine = if (count > 1) {
-        stringResource(R.string.places, count)
+        formattedStringResource(R.string.places, count)
     } else {
-        stringResource(R.string.place, count)
+        formattedStringResource(R.string.place, count)
     }
 
     Card(

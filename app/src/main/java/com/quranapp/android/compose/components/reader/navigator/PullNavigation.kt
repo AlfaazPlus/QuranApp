@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceIn
 import com.quranapp.android.R
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
@@ -118,8 +119,8 @@ private fun BoxScope.Indicator(
 
     val previousSubtitle: String? = when {
         !prevEnabled -> null
-        vt is ReaderViewType.Juz -> stringResource(R.string.strLabelJuzNo, vt.juzNo - 1)
-        vt is ReaderViewType.Hizb -> stringResource(R.string.labelHizbNo, vt.hizbNo - 1)
+        vt is ReaderViewType.Juz -> formattedStringResource(R.string.strLabelJuzNo, vt.juzNo - 1)
+        vt is ReaderViewType.Hizb -> formattedStringResource(R.string.labelHizbNo, vt.hizbNo - 1)
         vt is ReaderViewType.Chapter -> previousChapterSubtitle
         else -> null
     }

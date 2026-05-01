@@ -50,6 +50,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.repository.QuranRepository
@@ -315,7 +316,7 @@ private fun VerseSelectList(
                         ),
                     ) {
                         Text(
-                            stringResource(R.string.strLabelVerseNo, verseNo),
+                            formattedStringResource(R.string.strLabelVerseNo, verseNo),
                             modifier = Modifier
                                 .clickable { onToggleVerse(verseNo) }
                                 .padding(10.dp),

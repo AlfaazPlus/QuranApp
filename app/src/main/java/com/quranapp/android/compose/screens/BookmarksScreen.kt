@@ -62,6 +62,7 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.entities.BookmarkEntity
 import com.quranapp.android.viewModels.BookmarksViewModel
 import kotlinx.coroutines.launch
@@ -119,7 +120,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
         topBar = {
             AppBar(
                 title = if (selecting) {
-                    stringResource(R.string.strLabelSelectedCount, selectedIds.size)
+                    formattedStringResource(R.string.strLabelSelectedCount, selectedIds.size)
                 } else {
                     stringResource(R.string.strTitleBookmarks)
                 }, actions = {

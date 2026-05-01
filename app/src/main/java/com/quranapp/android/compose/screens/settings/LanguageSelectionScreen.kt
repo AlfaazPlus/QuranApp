@@ -3,7 +3,9 @@ package com.quranapp.android.compose.screens.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,27 +29,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.AppBar
-import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.NumeralSystem
+import com.quranapp.android.compose.utils.appLocaleForLanguageChange
 import com.quranapp.android.compose.utils.normalizedLanguageTag
+import com.quranapp.android.compose.utils.numeralSystemsForLanguage
+import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.compose.utils.setAppLocale
 import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import java.util.Locale
 
 data class LanguageModel(
-    val code: String,
+    val rawLanguageTag: String,
+    val language: String,
     val localizedName: String,
     val nativeName: String,
 )
@@ -55,27 +60,40 @@ data class LanguageModel(
 @Composable
 fun LanguageSelectionScreen() {
     val context = LocalContext.current
-    val appLocale = remember { appLocale() }
+    val platformLocale = LocalAppLocale.current.platformLocale
     val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
     val availableLocalesNames = context.getStringArray(R.array.availableLocalesNames)
 
-    val languages = remember(appLocale) {
-        availableLocalesValues.mapIndexed { index, code ->
+    val languages = remember(platformLocale) {
+        availableLocalesValues.mapIndexed { index, rawLanguageTag ->
             val nativeName = availableLocalesNames[index]!!
-
-            val localizedName = if (code == "default") {
-                nativeName
+            val locale = if (rawLanguageTag == "default") {
+                null
             } else {
-                val locale = Locale.forLanguageTag(code!!.normalizedLanguageTag())
-                locale.getDisplayName(appLocale).replaceFirstChar { it.uppercase() }
+                Locale.forLanguageTag(rawLanguageTag!!.normalizedLanguageTag())
             }
 
-            LanguageModel(code, localizedName, nativeName)
+            val localizedName =
+                locale?.getDisplayName(platformLocale)?.replaceFirstChar { it.uppercase() }
+                    ?: nativeName
+
+            LanguageModel(
+                rawLanguageTag,
+                locale?.language ?: "",
+                localizedName,
+                nativeName
+            )
         }
     }
 
-    val initialLocale = remember { SPAppConfigs.getLocale(context) }
-    var selectedLocale by remember { mutableStateOf(initialLocale) }
+
+    var committed by remember {
+        mutableStateOf(
+            SPAppConfigs.getLocale(context) to
+                    readAppLocale(context).numeralSystem
+        )
+    }
+
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredLanguages by remember(searchQuery, languages) {
@@ -87,15 +105,22 @@ fun LanguageSelectionScreen() {
                 languages.filter {
                     it.localizedName.lowercase().contains(query) ||
                             it.nativeName.lowercase().contains(query) ||
-                            it.code.lowercase().contains(query)
+                            it.rawLanguageTag.lowercase().contains(query)
                 }
             }
         }
     }
 
-    fun save(locale: String) {
-        setAppLocale(context, locale)
+    fun save(selectedTag: String, selectedNumeral: NumeralSystem?) {
+        val applied = appLocaleForLanguageChange(context, selectedTag, selectedNumeral)
+
+        setAppLocale(context, applied)
+
+        committed = applied.languageTag to applied.numeralSystem
     }
+
+    val selectedTag = committed.first
+    val selectedNumeral = committed.second
 
     Scaffold(
         modifier = Modifier
@@ -106,14 +131,6 @@ fun LanguageSelectionScreen() {
                 stringResource(R.string.strTitleAppLanguage),
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
-                actions = {
-                    IconButton(
-                        painterResource(R.drawable.dr_icon_check),
-                        enabled = selectedLocale != initialLocale
-                    ) {
-                        save(selectedLocale)
-                    }
-                }
             )
         },
     ) {
@@ -154,12 +171,35 @@ fun LanguageSelectionScreen() {
             }
 
             if (filteredLanguages.isNotEmpty()) {
-                items(filteredLanguages, key = { it.code }) { lang ->
-                    LanguageItem(
-                        language = lang,
-                        isSelected = lang.code == selectedLocale,
-                        onSelect = { selectedLocale = lang.code }
-                    )
+                items(filteredLanguages, key = { it.rawLanguageTag }) { model ->
+                    val isSelected = model.rawLanguageTag == selectedTag
+                    val numeralItems = numeralSystemsForLanguage(model.language)
+
+                    Column(Modifier.fillMaxWidth()) {
+                        LanguageItem(
+                            language = model,
+                            isSelected = isSelected,
+                            onSelect = {
+                                save(model.rawLanguageTag, numeralItems.firstOrNull()?.first)
+                            },
+                        )
+
+                        if (isSelected && numeralItems.isNotEmpty()) {
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 60.dp, end = 24.dp, bottom = 12.dp),
+                            ) {
+                                NumeralSystemChipRow(
+                                    numeralItems = numeralItems,
+                                    selected = selectedNumeral,
+                                    onSelect = {
+                                        save(selectedTag, it)
+                                    },
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -211,6 +251,27 @@ private fun LanguageItem(
                     fontWeight = FontWeight.Normal
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun NumeralSystemChipRow(
+    numeralItems: List<Pair<NumeralSystem, String>>,
+    selected: NumeralSystem?,
+    onSelect: (NumeralSystem) -> Unit,
+) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        numeralItems.forEach { (system, name) ->
+            Chip(
+                selected = selected == system,
+                label = { Text(name) },
+                onClick = { onSelect(system) },
+            )
         }
     }
 }

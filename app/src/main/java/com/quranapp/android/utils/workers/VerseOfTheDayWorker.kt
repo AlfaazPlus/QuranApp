@@ -10,6 +10,7 @@ import androidx.work.WorkerParameters
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.utils.formatStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
@@ -64,7 +65,8 @@ class VerseOfTheDayWorker constructor(
 
         val translationText = StringUtils.removeHTML(translations[0].text, false)
 
-        val verseReference = context.getString(
+        val verseReference = formatStringResource(
+            context,
             R.string.strLabelVerseSerialWithChapter,
             votd.chapter.getCurrentName(),
             votd.chapterNo,

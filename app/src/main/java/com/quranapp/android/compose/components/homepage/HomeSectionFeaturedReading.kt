@@ -29,16 +29,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
-import com.quranapp.android.compose.utils.appLocale
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -47,8 +47,8 @@ private data class FeaturedQuranModel(
     val chapterNo: Int,
     val verseRange: Pair<Int, Int>,
 ) {
-    var name: String = ""
-    var miniInfo: String = ""
+    var title: String = ""
+    var subtext: String = ""
 }
 
 @Composable
@@ -73,7 +73,7 @@ fun HomeSectionFeaturedReading() {
             contentPadding = PaddingValues(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items(featuredItems!!, key = { it.chapterNo.toString() + it.miniInfo }) {
+            items(featuredItems!!, key = { it.chapterNo.toString() + it.subtext }) {
                 FeaturedQuranCard(it)
             }
         }
@@ -124,7 +124,7 @@ private fun FeaturedQuranCard(
             verticalArrangement = Arrangement.Bottom
         ) {
             Text(
-                text = model.name,
+                text = model.title,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold
                 ).merge(tightTextStyle),
@@ -135,7 +135,7 @@ private fun FeaturedQuranCard(
             Spacer(modifier = Modifier.height(2.dp))
 
             Text(
-                text = model.miniInfo,
+                text = model.subtext,
                 style = MaterialTheme.typography.labelSmall.merge(tightTextStyle),
                 color = Color.White.copy(alpha = 0.7f)
             )
@@ -146,10 +146,19 @@ private fun FeaturedQuranCard(
 @Composable
 private fun getFeaturedQuranModels(): State<List<FeaturedQuranModel>?> {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val resources = LocalResources.current
-    val locale = LocalLocale.current.platformLocale
+    val appLocale = LocalAppLocale.current
+    val locale = appLocale.platformLocale
+    appLocale.fallbackLanguageCodes().toList()
 
-    return produceState<List<FeaturedQuranModel>?>(null, context, resources, locale) {
+    return produceState<List<FeaturedQuranModel>?>(
+        null,
+        context,
+        configuration,
+        resources,
+        appLocale,
+    ) {
         val repo = DatabaseProvider.getQuranRepository(context)
 
         val itemsArray = resources.obtainTypedArray(R.array.arrFeaturedQuranItems)
@@ -171,19 +180,19 @@ private fun getFeaturedQuranModels(): State<List<FeaturedQuranModel>?> {
                 start to end,
             ).apply {
                 if (start == 1 && end == repo.getChapterVerseCount(chapterNo) && !raw.contains(":")) {
-                    name = String.format(locale, chapNameFormat, chapterName)
-                    miniInfo = String.format(locale, miniInfoChapFormat, chapterNo, 1, end)
+                    title = String.format(locale, chapNameFormat, chapterName)
+                    subtext = String.format(locale, miniInfoChapFormat, chapterNo, 1, end)
                 } else if (start == end) {
                     if (chapterNo == 2 && start == 255) {
-                        name = resources.getString(R.string.strAyatulKursi)
-                        miniInfo = String.format(locale, miniInfoFormat, chapterName, 255)
+                        title = resources.getString(R.string.strAyatulKursi)
+                        subtext = String.format(locale, miniInfoFormat, chapterName, 255)
                     } else {
-                        name = String.format(locale, chapNameFormat, chapterName)
-                        miniInfo = String.format(locale, verseNoFormat, start)
+                        title = String.format(locale, chapNameFormat, chapterName)
+                        subtext = String.format(locale, verseNoFormat, start)
                     }
                 } else {
-                    name = String.format(locale, chapNameFormat, chapterName)
-                    miniInfo = String.format(locale, versesFormat, start, end)
+                    title = String.format(locale, chapNameFormat, chapterName)
+                    subtext = String.format(locale, versesFormat, start, end)
                 }
             }
         }

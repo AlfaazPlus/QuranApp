@@ -44,6 +44,7 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.SearchResultMatch
 import com.quranapp.android.utils.extensions.copyToClipboard
@@ -150,7 +151,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(
+                    text = formattedStringResource(
                         R.string.strLabelVerseSerial,
                         result.chapterNo,
                         result.verseNo

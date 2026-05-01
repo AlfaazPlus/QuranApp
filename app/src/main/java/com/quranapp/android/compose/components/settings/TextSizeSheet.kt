@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.dialogs.BottomSheet
+import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS
@@ -81,6 +81,7 @@ fun TextSizeSheet(isOpen: Boolean, onDismiss: () -> Unit) {
 @Composable
 private fun ArabicTextSizeSlider() {
     val coroutineScope = rememberCoroutineScope()
+    val appLocale = LocalAppLocale.current
     val textSizeMult = ReaderPreferences.observeArabicTextSizeMultiplier()
 
     val min = TEXT_SIZE_MIN_PROGRESS.toFloat()
@@ -107,7 +108,7 @@ private fun ArabicTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = String.format(LocalLocale.current.platformLocale, "%d%%", progress.toInt()),
+            text = String.format(appLocale.platformLocale, "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )
@@ -154,6 +155,7 @@ private fun ArabicTextPreview(textSizeMult: Float) {
 @Composable
 private fun TranslationTextSizeSlider() {
     val coroutineScope = rememberCoroutineScope()
+    val appLocale = LocalAppLocale.current
     val textSizeMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
 
     val min = TEXT_SIZE_MIN_PROGRESS.toFloat()
@@ -182,7 +184,7 @@ private fun TranslationTextSizeSlider() {
             steps = steps
         )
         Text(
-            text = String.format(LocalLocale.current.platformLocale, "%d%%", progress.toInt()),
+            text = String.format(appLocale.platformLocale, "%d%%", progress.toInt()),
             modifier = Modifier.padding(start = 10.dp),
             style = MaterialTheme.typography.labelSmall
         )

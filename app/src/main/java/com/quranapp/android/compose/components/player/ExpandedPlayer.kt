@@ -59,7 +59,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -77,7 +76,8 @@ import com.quranapp.android.compose.components.player.dialogs.PlaybackSpeedSheet
 import com.quranapp.android.compose.components.player.dialogs.ReciterSelectorSheet
 import com.quranapp.android.compose.components.player.dialogs.RepeatOptionsSheet
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -429,6 +429,7 @@ private fun Configurations(
     showPlaybackSpeedOptions: MutableState<Boolean>,
     showEndBehaviorOptions: MutableState<Boolean>,
 ) {
+    val appLocale = LocalAppLocale.current
     val context = LocalContext.current
     val audioOption = RecitationPreferences.observeAudioOption();
     val speed = RecitationPreferences.observeSpeed();
@@ -444,7 +445,7 @@ private fun Configurations(
     }
 
     val repeatSupported = audioOption == AudioOption.ONLY_QURAN
-    val speedSubtext = String.format(LocalLocale.current.platformLocale, "%.1fx", speed)
+    val speedSubtext = String.format(appLocale.platformLocale, "%.1fx", speed)
     val audioEndBehaviourSubtextId = when (audioEndBehaviour) {
         AudioEndBehaviour.STOP_PLAYBACK -> R.string.stopPlayback
         AudioEndBehaviour.NEXT_CHAPTER -> R.string.playNextSurah
@@ -499,7 +500,7 @@ private fun Configurations(
                     !repeatSupported -> stringResource(R.string.notSupported)
                     repeatCount == 0 -> stringResource(R.string.once)
                     repeatCount == 1 -> stringResource(R.string.twice)
-                    else -> stringResource(R.string.nTimes, repeatCount + 1)
+                    else -> formattedStringResource(R.string.nTimes, repeatCount + 1)
                 },
                 onClick = {
                     showRepeatOptions.value = true

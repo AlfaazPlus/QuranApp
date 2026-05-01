@@ -46,7 +46,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryScrollableTabRow
-import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -406,7 +405,7 @@ private fun ReaderIndexTabs(
             },
         shadowElevation = 2.dp,
     ) {
-        SecondaryScrollableTabRow (
+        SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = colorScheme.surfaceContainer,
             edgePadding = 0.dp

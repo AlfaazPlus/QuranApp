@@ -16,6 +16,7 @@ import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import kotlinx.coroutines.launch
@@ -68,7 +69,7 @@ fun RepeatOptionsSheet(
                     titleStr = when (repeatCount) {
                         0 -> stringResource(R.string.once)
                         1 -> stringResource(R.string.twice)
-                        else -> stringResource(R.string.nTimes, repeatCount + 1)
+                        else -> formattedStringResource(R.string.nTimes, repeatCount + 1)
                     },
                     enabled = repeatSupported,
                     selected = repeatCount == currentRepeatCount,

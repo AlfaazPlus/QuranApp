@@ -7,6 +7,7 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.refreshAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
 import com.quranapp.android.search.SearchIndexScheduler
@@ -35,6 +36,7 @@ class QuranApp : Application() {
     override fun onCreate() {
         super.onCreate()
         DataStoreManager.init(this)
+        refreshAppLocale(applicationContext)
         DownloadSourceUtils.resetDownloadSourceBaseUrl()
         NotificationUtils.createNotificationChannels(this)
         updateTheme()

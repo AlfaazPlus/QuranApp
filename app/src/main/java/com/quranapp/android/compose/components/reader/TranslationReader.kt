@@ -49,7 +49,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -66,6 +65,8 @@ import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -401,10 +402,11 @@ private fun TranslationModePage(
 
 @Composable
 private fun TranslationBookPageHeader(item: TranslationPageItem) {
+    val appLocale = LocalAppLocale.current
     val typography = MaterialTheme.typography
     val scheme = colorScheme
     val juzLabel =
-        if (item.juzNo > 0) stringResource(R.string.strLabelJuzNo, item.juzNo) else ""
+        if (item.juzNo > 0) formattedStringResource(R.string.strLabelJuzNo, item.juzNo) else ""
     val hizbLabel =
         item.hizbNos
             .filter { it > 0 }
@@ -414,7 +416,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
                 when (hizbs.size) {
                     0 -> ""
                     else -> "${stringResource(R.string.strTitleReaderHizb)} ${
-                        hizbs.map { String.format(LocalLocale.current.platformLocale, "%d", it) }
+                        hizbs.map { String.format(appLocale.platformLocale, "%d", it) }
                             .joinToString(" / ")
                     }"
                 }
@@ -447,7 +449,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
         }
 
         Text(
-            text = stringResource(R.string.strLabelPageNo, item.pageNo),
+            text = formattedStringResource(R.string.strLabelPageNo, item.pageNo),
             style = typography.labelMedium.merge(tightTextStyle),
             color = scheme.onBackground.alpha(0.75f),
             modifier = Modifier

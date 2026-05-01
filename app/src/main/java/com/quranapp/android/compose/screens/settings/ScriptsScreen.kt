@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.screens.settings
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -37,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -56,6 +54,8 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
@@ -71,7 +71,6 @@ import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.viewModels.ScriptEvent
 import com.quranapp.android.viewModels.ScriptsViewModel
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @Composable
 fun ScriptsScreen() {
@@ -152,6 +151,7 @@ private fun ScriptItem(
     onCancelDownload: (String) -> Unit,
     onSelect: (String, QuranScriptVariant?) -> Unit,
 ) {
+    val appLocale = LocalAppLocale.current
     val context = LocalContext.current
     val density = LocalDensity.current
     val isDark = ThemeUtils.observeDarkTheme()
@@ -240,7 +240,7 @@ private fun ScriptItem(
                             text = when (downloadState) {
                                 is ResourceDownloadStatus.InProgress -> if (downloadState.progress <= 100) {
                                     String.format(
-                                        LocalLocale.current.platformLocale,
+                                        appLocale.platformLocale,
                                         $$"%1$s (%2$d%%)",
                                         stringResource(R.string.msgDownloadingFonts),
                                         downloadState.progress

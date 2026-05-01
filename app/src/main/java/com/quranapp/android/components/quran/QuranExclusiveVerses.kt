@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import com.quranapp.android.compose.utils.appLocale
+import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.utils.quran.parser.ExclusiveVersesParser
 
 object QuranExclusiveVerses {
@@ -22,7 +22,7 @@ object QuranExclusiveVerses {
             null,
             context,
             configuration,
-            appLocale(),
+            appPlatformLocale(),
         ) {
             val v = get(context, dataset)
 

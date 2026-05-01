@@ -40,7 +40,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -63,6 +62,8 @@ import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
@@ -359,10 +360,11 @@ private fun VerseContextHeader(
     onCopyWord: () -> Unit,
     onPlayWord: () -> Unit,
 ) {
+    val appLocale = LocalAppLocale.current
     val parts = buildList {
         if (chapterName.isNotBlank()) add(chapterName)
-        add(String.format(LocalLocale.current.platformLocale, $$"%1$d:%2$d", chapterNo, verseNo))
-        add(stringResource(R.string.wordNo, word.wordIndex + 1))
+        add(String.format(appLocale.platformLocale, $$"%1$d:%2$d", chapterNo, verseNo))
+        add(formattedStringResource(R.string.wordNo, word.wordIndex + 1))
     }
 
     Row(

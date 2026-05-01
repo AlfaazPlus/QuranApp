@@ -38,6 +38,7 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.dialogs.SimpleTooltipPosition
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
@@ -223,7 +224,7 @@ private fun VerseSerial(verse: VerseWithDetails) {
     val verseNo = verse.verseNo
 
 
-    val contentDescription = stringResource(
+    val contentDescription = formattedStringResource(
         R.string.strDescVerseNoWithChapter,
         verse.chapter.getCurrentName(),
         verseNo
@@ -231,13 +232,13 @@ private fun VerseSerial(verse: VerseWithDetails) {
 
     Text(
         text = if (verse.includeChapterNameInSerial) {
-            stringResource(
+            formattedStringResource(
                 R.string.strLabelVerseSerialWithChapter,
                 verse.chapter.getCurrentName(),
                 chapterNo,
                 verseNo
             )
-        } else stringResource(
+        } else formattedStringResource(
             R.string.strLabelVerseSerial,
             chapterNo,
             verseNo

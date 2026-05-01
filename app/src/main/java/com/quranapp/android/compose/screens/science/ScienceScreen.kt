@@ -54,6 +54,7 @@ import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.formattedStringResource
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -225,7 +226,7 @@ fun ItemCard(item: QuranScienceItem) {
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = stringResource(R.string.strLabelScienceReferences, item.referencesCount),
+                    text = formattedStringResource(R.string.strLabelScienceReferences, item.referencesCount),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal
