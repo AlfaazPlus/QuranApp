@@ -68,6 +68,8 @@ import androidx.window.core.layout.WindowSizeClass
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
+import com.quranapp.android.compose.components.player.MiniPlayerVisibility
+import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -108,7 +110,15 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     var isFullscreen by rememberSaveable { mutableStateOf(false) }
     var tajweedBarVisible by rememberSaveable { mutableStateOf(false) }
 
-    val miniPlayerHeight = if (isFullscreen || tajweedBarVisible) 0.dp else MINI_PLAYER_HEIGHT
+    val playerVisibilityState = rememberMiniPlayerVisibilityState(
+        visibility = if (isFullscreen || tajweedBarVisible) {
+            MiniPlayerVisibility.HIDDEN
+        } else {
+            MiniPlayerVisibility.HIDDEN_BY_DEFAULT
+        }
+    )
+
+    val miniPlayerHeight = if (playerVisibilityState.isVisible) MINI_PLAYER_HEIGHT else 0.dp
 
     val showTwoPane = currentWindowAdaptiveInfo().windowSizeClass.isAtLeastBreakpoint(
         WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND,
@@ -218,7 +228,7 @@ fun ReaderScreen(params: ReaderLaunchParams) {
             RecitationPlayerSheet(
                 collapsedBottomInset = navBarBottomInset,
                 barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
-                showPlayer = !isFullscreen && !tajweedBarVisible,
+                playerVisibilityState = playerVisibilityState,
                 isSyncing = syncIndicatorLocked,
                 onSyncRequest = {
                     val willSync = !playerVerseSyncPref

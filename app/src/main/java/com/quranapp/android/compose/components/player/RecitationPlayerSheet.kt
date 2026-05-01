@@ -60,24 +60,71 @@ private val PlayerMotionSpring = spring<Dp>(
     stiffness = Spring.StiffnessLow,
 )
 
+enum class MiniPlayerVisibility {
+    HIDDEN,
+    HIDDEN_BY_DEFAULT,
+    ALWAYS_SHOWN
+}
+
+data class RecitationPlayerVisibilityState(
+    val visibility: MiniPlayerVisibility,
+    val isVisible: Boolean,
+    val onDismiss: () -> Unit
+)
+
+@Composable
+fun rememberMiniPlayerVisibilityState(
+    visibility: MiniPlayerVisibility = MiniPlayerVisibility.ALWAYS_SHOWN
+): RecitationPlayerVisibilityState {
+    val viewModel = viewModel<RecitationPlayerViewModel>()
+    val state by viewModel.state.collectAsState()
+
+    val isPlaying by viewModel.isPlaying.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val isRunning = isPlaying || isLoading
+
+    var playerActivated by rememberSaveable { mutableStateOf(isRunning) }
+
+    LaunchedEffect(isRunning) {
+        if (isRunning) playerActivated = true
+    }
+
+    val isVisible = when (visibility) {
+        MiniPlayerVisibility.HIDDEN -> false
+        MiniPlayerVisibility.HIDDEN_BY_DEFAULT -> {
+            isRunning || (state.currentVerse.isValid && playerActivated)
+        }
+
+        MiniPlayerVisibility.ALWAYS_SHOWN -> {
+            state.currentVerse.isValid
+        }
+    }
+
+    return remember(visibility, isVisible) {
+        RecitationPlayerVisibilityState(visibility, isVisible) { playerActivated = false }
+    }
+}
+
 @Composable
 fun RecitationPlayerSheet(
     modifier: Modifier = Modifier,
     collapsedBottomInset: Dp = 0.dp,
     barsCollapsedFraction: Float = 0f,
-    showPlayer: Boolean = true,
+    playerVisibilityState: RecitationPlayerVisibilityState = rememberMiniPlayerVisibilityState(
+        MiniPlayerVisibility.ALWAYS_SHOWN
+    ),
     isSyncing: Boolean = false,
     onSyncRequest: (() -> Unit)? = null,
 ) {
     val viewModel = viewModel<RecitationPlayerViewModel>()
     val context = LocalContext.current
 
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
     val state by viewModel.state.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val isVisible = showPlayer && (isPlaying || isLoading || state.currentVerse.isValid)
-
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    val isVisible = playerVisibilityState.isVisible
 
     LaunchedEffect(Unit) {
         EventBus.events.collect {
@@ -97,11 +144,7 @@ fun RecitationPlayerSheet(
         if (!isVisible) expanded = false
     }
 
-    LaunchedEffect(showPlayer) {
-        if (!showPlayer) expanded = false
-    }
-
-    BackHandler(enabled = expanded && showPlayer) {
+    BackHandler(enabled = expanded && isVisible) {
         expanded = false
     }
 
@@ -147,6 +190,8 @@ fun RecitationPlayerSheet(
                 isLoading = isLoading,
                 isSyncing = isSyncing,
                 onSyncRequest = onSyncRequest,
+                onDismiss = playerVisibilityState.onDismiss,
+                canDismiss = playerVisibilityState.visibility == MiniPlayerVisibility.HIDDEN_BY_DEFAULT,
             )
         }
     }
@@ -164,6 +209,8 @@ private fun PlayerContainer(
     isLoading: Boolean,
     isSyncing: Boolean,
     onSyncRequest: (() -> Unit)?,
+    onDismiss: () -> Unit,
+    canDismiss: Boolean,
 ) {
     val density = LocalDensity.current
     val targetFraction = if (expanded) 1f else 0f
@@ -182,8 +229,9 @@ private fun PlayerContainer(
 
     val fraction = fractionAnim.value
 
-    val animatedHeight = miniPlayerTotalHeight + (fullHeight - miniPlayerTotalHeight) * fraction
-    val clampedCorner = (16f * (1f - fraction)).coerceAtLeast(0f)
+    val animatedHeight =
+        miniPlayerTotalHeight + (fullHeight - miniPlayerTotalHeight) * fraction.coerceAtLeast(0f)
+    val clampedCorner = (16f * (1f - fraction.coerceIn(0f, 1f))).coerceAtLeast(0f)
     val shape = RoundedCornerShape(topStart = clampedCorner.dp, topEnd = clampedCorner.dp)
 
     val surfaceColor = if (fraction > 0.99f) Color.Transparent else Color.Black
@@ -197,7 +245,12 @@ private fun PlayerContainer(
     val draggableState = rememberDraggableState { delta ->
         val fractionChange = -(delta / maxDragDistPx)
         coroutineScope.launch {
-            fractionAnim.snapTo((fractionAnim.value + fractionChange).coerceIn(0f, 1f))
+            fractionAnim.snapTo(
+                (fractionAnim.value + fractionChange).coerceIn(
+                    if (canDismiss) -0.5f else 0f,
+                    1f
+                )
+            )
         }
     }
 
@@ -205,6 +258,7 @@ private fun PlayerContainer(
         modifier = Modifier
             .fillMaxWidth()
             .height(animatedHeight)
+            .offset(y = if (canDismiss && fraction < 0f) with(density) { (-fraction * maxDragDistPx).toDp() } else 0.dp)
             .draggable(
                 state = draggableState,
                 orientation = Orientation.Vertical,
@@ -213,27 +267,39 @@ private fun PlayerContainer(
                     isDragging = false
                     val isSwipingDown = velocity > 500f
                     val isSwipingUp = velocity < -500f
-                    val target = when {
-                        isSwipingDown -> 0f
-                        isSwipingUp -> 1f
-                        fractionAnim.value > 0.5f -> 1f
-                        else -> 0f
-                    }
 
-                    val newExpanded = target == 1f
+                    if (canDismiss && (fractionAnim.value < -0.1f || (fractionAnim.value < 0f && isSwipingDown))) {
+                        onDismiss()
 
-                    onExpandedChange(newExpanded)
-
-                    if (expanded == newExpanded) {
                         coroutineScope.launch {
                             fractionAnim.animateTo(
-                                targetValue = target,
-                                initialVelocity = -(velocity / maxDragDistPx),
-                                animationSpec = spring(
-                                    dampingRatio = 0.82f,
-                                    stiffness = Spring.StiffnessLow
-                                )
+                                0f,
+                                spring(dampingRatio = 0.82f, stiffness = Spring.StiffnessLow)
                             )
+                        }
+                    } else {
+                        val target = when {
+                            isSwipingDown -> 0f
+                            isSwipingUp -> 1f
+                            fractionAnim.value > 0.5f -> 1f
+                            else -> 0f
+                        }
+
+                        val newExpanded = target == 1f
+
+                        onExpandedChange(newExpanded)
+
+                        if (expanded == newExpanded) {
+                            coroutineScope.launch {
+                                fractionAnim.animateTo(
+                                    targetValue = target,
+                                    initialVelocity = -(velocity / maxDragDistPx),
+                                    animationSpec = spring(
+                                        dampingRatio = 0.82f,
+                                        stiffness = Spring.StiffnessLow
+                                    )
+                                )
+                            }
                         }
                     }
                 }
