@@ -70,7 +70,10 @@ import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
+import com.quranapp.android.compose.components.player.MiniPlayerVisibility
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
+import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -79,8 +82,8 @@ import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.extensions.isSingleValue
@@ -224,6 +227,15 @@ private fun ReferenceScreenContent(
         WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
     )
 
+    val playerVisibilityState = rememberMiniPlayerVisibilityState(
+        MiniPlayerVisibility.HIDDEN_BY_DEFAULT
+    )
+    val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
+
+    val dynamicBottomPadding =
+        navBarBottomInset + (if (playerVisibilityState.isVisible) MINI_PLAYER_HEIGHT else 0.dp) * (1f - chromeCollapsedFraction)
+
     Box {
         Scaffold(
             modifier = Modifier
@@ -307,7 +319,7 @@ private fun ReferenceScreenContent(
                                     LazyColumn(
                                         state = listState,
                                         modifier = Modifier.fillMaxSize(),
-                                        contentPadding = PaddingValues(bottom = 64.dp)
+                                        contentPadding = PaddingValues(bottom = dynamicBottomPadding + 64.dp)
                                     ) {
                                         items(
                                             items = rows,
@@ -411,9 +423,9 @@ private fun ReferenceScreenContent(
         }
 
         RecitationPlayerSheet(
-            collapsedBottomInset = WindowInsets.navigationBars.asPaddingValues()
-                .calculateBottomPadding(),
-            barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
+            collapsedBottomInset = navBarBottomInset,
+            barsCollapsedFraction = chromeCollapsedFraction,
+            playerVisibilityState = playerVisibilityState,
         )
     }
 }
