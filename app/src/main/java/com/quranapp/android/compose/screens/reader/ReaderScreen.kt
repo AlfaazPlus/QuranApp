@@ -149,7 +149,10 @@ fun ReaderScreen(params: ReaderLaunchParams) {
             Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .then(
+                        if (!isFullscreen) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+                        else Modifier
+                    ),
                 topBar = {
                     if (!isFullscreen) {
                         ReaderAppBar(
@@ -253,7 +256,7 @@ private fun ReaderContentColumn(
 
         ReaderLayout(
             readerVm = readerVm,
-            nestedScrollConnection = scrollBehavior.nestedScrollConnection,
+            nestedScrollConnection = if (!isFullscreen) scrollBehavior.nestedScrollConnection else null,
             onSyncStateChanged = onSyncStateChanged,
         )
     }

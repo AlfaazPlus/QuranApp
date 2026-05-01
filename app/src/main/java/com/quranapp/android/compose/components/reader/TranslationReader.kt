@@ -109,7 +109,7 @@ data class TranslationPageItem(
 @Composable
 fun ReaderLayoutTranslationPageMode(
     readerVm: ReaderViewModel,
-    nestedScrollConnection: NestedScrollConnection,
+    nestedScrollConnection: NestedScrollConnection?,
     onSyncStateChanged: (Boolean) -> Unit = {},
 ) {
     val mushafSession by readerVm.mushafSession.collectAsState()
@@ -279,7 +279,10 @@ fun ReaderLayoutTranslationPageMode(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(nestedScrollConnection),
+                .then(
+                    if (nestedScrollConnection == null) Modifier
+                    else Modifier.nestedScroll(nestedScrollConnection)
+                ),
             contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp),
         ) {
             items(

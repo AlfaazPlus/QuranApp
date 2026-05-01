@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.reader
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +54,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
@@ -111,7 +111,7 @@ private data class MushafPageMeasurementKey(
 fun ReaderLayoutPageMode(
     readerVm: ReaderViewModel,
     contentWidth: Dp,
-    nestedScrollConnection: NestedScrollConnection,
+    nestedScrollConnection: NestedScrollConnection?,
     onSyncStateChanged: (Boolean) -> Unit = {},
 ) {
     val mushafSession by readerVm.mushafSession.collectAsState()
@@ -302,7 +302,7 @@ private fun PageModePage(
     item: QuranPageItem?,
     contentWidth: Dp,
     ruledPageDecoration: Boolean,
-    nestedScrollConnection: NestedScrollConnection,
+    nestedScrollConnection: NestedScrollConnection?,
 ) {
     if (item == null) {
         return Loader(true)
@@ -341,8 +341,11 @@ private fun PageModePage(
                     Column(
                         Modifier
                             .verticalScroll(scrollState)
-                            .nestedScroll(nestedScrollConnection)
                             .padding(top = 16.dp, bottom = 64.dp)
+                            .then(
+                                if (nestedScrollConnection == null) Modifier
+                                else Modifier.nestedScroll(nestedScrollConnection)
+                            )
                             .then(
                                 if (ruledPageDecoration) {
                                     Modifier

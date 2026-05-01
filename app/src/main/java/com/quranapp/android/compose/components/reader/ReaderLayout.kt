@@ -107,7 +107,7 @@ data class ReaderPreparedData(
 @Composable
 fun ReaderLayout(
     readerVm: ReaderViewModel,
-    nestedScrollConnection: NestedScrollConnection,
+    nestedScrollConnection: NestedScrollConnection?,
     onSyncStateChanged: (Boolean) -> Unit = {},
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
@@ -169,7 +169,7 @@ fun ReaderLayout(
 private fun ReaderLayoutVerseMode(
     readerVm: ReaderViewModel,
     uiState: ReaderUiState,
-    nestedScrollConnection: NestedScrollConnection,
+    nestedScrollConnection: NestedScrollConnection?,
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
     val listState = rememberLazyListState()
@@ -279,7 +279,10 @@ private fun ReaderLayoutVerseMode(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(nestedScrollConnection)
+                .then(
+                    if (nestedScrollConnection == null) Modifier
+                    else Modifier.nestedScroll(nestedScrollConnection)
+                )
                 .pointerInput(autoScrollSpeed) {
                     awaitPointerEventScope {
                         while (true) {
