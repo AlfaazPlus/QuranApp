@@ -216,7 +216,7 @@
     <string name="titleRecitationCleanup">Rezitation löschen\?</string>
     <string name="titleScriptCleanup">Schriftsystem löschen\?</string>
     <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle gespeicherten Schriftarten werden gelöscht. Um diese wieder verwenden zu können müssen sie erneut heruntergeladen werden.</string>
-    <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht.</string>
+    <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht. Um Rezitationen einzeln nach Sura zu löschen, gehen Sie in die Einstellungen.</string>
     <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
     <string name="nItems">%d Objekte</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d Schriftsysteme und %2$d Schriftarten</string>

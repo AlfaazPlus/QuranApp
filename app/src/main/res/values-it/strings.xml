@@ -264,7 +264,7 @@
     <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
     <string name="recitationCanBeFreedUp" formatted="false">È possibile liberare %1$d file di recitazione memorizzati da %2$d recitatori.</string>
-    <string name="msgRecitationCleanup" formatted="false">Tutte le recitazioni memorizzate da %s verranno eliminate.</string>
+    <string name="msgRecitationCleanup" formatted="false">Tutte le recitazioni memorizzate da %s verranno eliminate. Per eliminare individualmente le recitazioni per sura, vai nelle impostazioni.</string>
     <string name="nFiles" formatted="false">%d files</string>
     <string name="msgScriptCleanup" formatted="false">Lo script %s e tutti i suoi font verranno eliminati. Per continuare a usarli dopo averli eliminati, dovrai scaricarli di nuovo.</string>
     <string name="strLabelScienceReferences" formatted="false">%d fonti</string>

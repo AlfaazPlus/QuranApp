@@ -228,7 +228,7 @@
     <string name="storageCleanupMessage">Керексиз жүктөлгөн файлдарды өчүрүп, эс тутумду бошотуңуз. Бул сиздин кыстармаларыңызга же жөндөөлөрүңүзгө таасир этпейт. Бошотула турган ресурстар:</string>
     <string name="onboardDescTranslations">Бир нече котормону тандасаңыз да болот.</string>
     <string name="verseSyncOff">Аят синхрон: өчүрүлгөн</string>
-    <string name="msgRecitationCleanup" formatted="false">%s окуулары өчүрүлөт.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s окуулары өчүрүлөт. Сүрөө боюнча окууларды өзүнчө өчүрүү үчүн жөндөөлөргө өтүңүз.</string>
     <string name="nFiles" formatted="false">%d файл</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d шрифт жана %2$d жазуу тиби</string>
     <string name="msgResourceDownloadSource">Эгер биринчи булак иштебей жатса, башка булакты тандап көрүңүз</string>

@@ -215,7 +215,7 @@
     <string name="github">GitHub</string>
     <string name="msgVerseReminderNotifPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için bildirim izni gerekiyor.</string>
     <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
-    <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek.</string>
+    <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek. Tilavetleri sure bazında tek tek silmek için ayarlara gidin.</string>
     <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
     <string name="nItem">%d öğe</string>
     <string name="nItems">%d öğeler</string>

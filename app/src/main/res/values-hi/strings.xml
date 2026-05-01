@@ -218,7 +218,7 @@
     <string name="verseSyncOn">आयत सिंक: चालू</string>
     <string name="verseSyncOff">आयत सिंक: बंद</string>
     <string name="msgScriptCleanup" formatted="false">%s स्क्रिप्ट और इसके सभी डाउनलोड किए गए फ़ॉन्ट हटा दिए जाएँगे। इनका उपयोग करने के लिए आपको पुनः डाउनलोड करना होगा।</string>
-    <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे।</string>
+    <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे। सूरह द्वारा व्यक्तिगत रूप से तिलावत को हटाने के लिए, सेटिंग्स में जाएं।</string>
     <string name="titleRecitationCleanup">तिलावत हटाना चाहते हैं\?</string>
     <string name="titleScriptCleanup">स्क्रिप्ट मिटाना चाहते हैं\?</string>
     <string name="nFiles" formatted="false">%d फ़ाइलें</string>

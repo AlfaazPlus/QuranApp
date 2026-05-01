@@ -212,7 +212,7 @@
     <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
     <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
     <string name="titleScriptCleanup">Hapus jenis cetakan?</string>
-    <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus.</string>
+    <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %s akan dihapus. Untuk menghapus Murattal satu per satu berdasarkan surah, buka pengaturan.</string>
     <string name="titleRecitationCleanup">Hapus Murattal\?</string>
     <string name="strPreviewTextTransl">Dengan nama Allah Yang Maha Pengasih, Maha Penyayang</string>
     <string name="msgScriptCleanup" formatted="false">%s cetakan dan seluruh font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya kembali.</string>

@@ -219,7 +219,7 @@
 \nVous devrez le retélécharger.</string>
     <string name="titleScriptCleanup">Supprimer le type d\'écriture \?</string>
     <string name="msgScriptCleanup" formatted="false">Le type d\'écriture %s et toutes ses polices d\'écriture sauvegardées seront supprimées. Vous devrez les retéléchargez pour les utiliser à nouveau.</string>
-    <string name="msgRecitationCleanup" formatted="false">Toutes les récitations sauvegardées de %s seront supprimées.</string>
+    <string name="msgRecitationCleanup" formatted="false">Toutes les récitations sauvegardées de %s seront supprimées. Pour supprimer individuellement des récitations par sourate, allez dans les paramètres.</string>
     <string name="titleRecitationCleanup">Supprimer la récitation \?</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d types d\'écriture et %2$d polices d\'écriture</string>
     <string name="nothingToCleanup">Il n\'y a rien à effacer.</string>

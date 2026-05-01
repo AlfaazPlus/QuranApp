@@ -198,7 +198,7 @@
 \n
 \nتحتاج إلى تنزيله مرة آخرى.</string>
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
-    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها.</string>
+    <string name="msgRecitationCleanup" formatted="false">كل التلاوات المخزنة من %s سيتم حذفها. لحذف التلاوات بشكل فردي حسب السورة، اذهب إلى الإعدادات.</string>
     <string name="msgScriptCleanup" formatted="false">سيتم حذف خط %s. ستحتاج إلى إعادة التنزيل لاستخدامها.</string>
     <string name="nothingToCleanup">لا يوجد شيء لتنظيف مساحة التخزين.</string>
     <string name="onboardDescTheme">يمكنك تغيرها فيما بعد.</string>

@@ -114,7 +114,7 @@
     <string name="storageCleanupMessage">Освободите место, удалив неиспользуемые ресурсы. Закладки и настройки удалены не будут.
 \n
 \nСледующие ресурсы могут быть очищены:</string>
-    <string name="msgRecitationCleanup" formatted="false">Все сохранённые чтения %s будут удалены.</string>
+    <string name="msgRecitationCleanup" formatted="false">Все сохранённые чтения %s будут удалены. Чтобы удалить чтения отдельно по сурам, перейдите в настройки.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d шрифтов и %2$d суб-шрифтов</string>
     <string name="msgNoFavouriteChapters">Избранные главы будут отображаться здесь.</string>
     <string name="strPreviewTextTransl">С Именем Аллаха, Милостивого, Милосердного</string>

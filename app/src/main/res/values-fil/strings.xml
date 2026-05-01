@@ -333,7 +333,7 @@
     <string name="labelFreeUpSpace">Magbakante ng espasyo</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\nKailangan mong i-download itong muli.</string>
     <string name="titleRecitationCleanup">I-delete ang pagbigkas?</string>
-    <string name="msgRecitationCleanup" formatted="false">Lahat ng nakaimbak na pagbigkas mula sa %s ay ide-delete.</string>
+    <string name="msgRecitationCleanup" formatted="false">Lahat ng nakaimbak na pagbigkas mula sa %s ay ide-delete. Upang isa-isang i-delete ang mga pagbigkas ayon sa surah, pumunta sa settings.</string>
     <string name="titleScriptCleanup">I-delete ang script?</string>
     <string name="noResults">Walang resulta</string>
     <string name="onboardDescTafsir">Pumili ng komentaryo na babasahin kasabay ng mga bersikulo. Maaari kang mag-download at mag-ayos ng mga tafsir sa mga setting.</string>

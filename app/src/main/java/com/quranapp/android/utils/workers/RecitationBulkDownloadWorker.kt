@@ -14,20 +14,21 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.R
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.RecitationAudioRepository
+import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.quran.QuranMeta
-import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.sync.Semaphore
-import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -71,7 +72,7 @@ class RecitationBulkDownloadWorker(
         val displayTitle = inputData.getString(KEY_DISPLAY_TITLE).orEmpty().ifBlank { "Recitation" }
 
         if (reciterId == null || kind == null || urlTemplate == null) {
-            return Result.failure(workDataOf(KEY_ERROR to "Invalid data"))
+            return Result.failure()
         }
 
         val modelManager = RecitationModelManager.get(applicationContext)
@@ -105,71 +106,73 @@ class RecitationBulkDownloadWorker(
         )
 
         val completed = AtomicInteger(0)
-        val semaphore = Semaphore(MAX_PARALLEL_DOWNLOADS)
+        val limitedDispatcher = Dispatchers.IO.limitedParallelism(MAX_PARALLEL_DOWNLOADS)
+        val notificationMutex = kotlinx.coroutines.sync.Mutex()
+        var lastNotificationTime = 0L
+
+        suspend fun updateForeground(done: Int) {
+            notificationMutex.withLock {
+                val now = System.currentTimeMillis()
+
+                if (now - lastNotificationTime >= 2000L || done == total) {
+                    lastNotificationTime = now
+                    setForeground(createEnqueueForegroundInfo(displayTitle, done, total))
+                }
+            }
+        }
 
         try {
-            coroutineScope {
+            withContext(limitedDispatcher) {
                 pendingChapters.map { pending ->
                     async {
-                        semaphore.withPermit {
-                            currentCoroutineContext().ensureActive()
+                        currentCoroutineContext().ensureActive()
 
-                            val outputFile = File(pending.outputPath)
-                            val parent = outputFile.parentFile
+                        val outputFile = File(pending.outputPath)
+                        val parent = outputFile.parentFile
 
-                            if (parent != null && !parent.exists() && !parent.mkdirs()) {
-                                val done = completed.incrementAndGet()
-
-                                setForeground(
-                                    createEnqueueForegroundInfo(
-                                        displayTitle,
-                                        done,
-                                        total,
-                                    ),
-                                )
-                                return@withPermit
-                            }
-
-                            try {
-                                RecitationAudioFileDownloader.downloadToFile(
-                                    pending.url,
-                                    outputFile,
-                                )
-                            } catch (e: CancellationException) {
-                                outputFile.delete()
-                            } catch (e: Exception) {
-                                throw e
-                            }
-
-                            val done = completed.incrementAndGet()
-
-                            setForeground(
-                                createEnqueueForegroundInfo(
-                                    displayTitle,
-                                    done,
-                                    total,
-                                ),
-                            )
+                        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+                            updateForeground(completed.incrementAndGet())
+                            return@async
                         }
+
+                        try {
+                            RecitationDownloadProgressBus.set(
+                                reciterId,
+                                pending.chapterNo,
+                                0L,
+                                -1L,
+                            )
+                            RecitationAudioFileDownloader.downloadToFile(
+                                pending.url,
+                                outputFile,
+                            ) { consumed, total ->
+                                RecitationDownloadProgressBus.set(
+                                    reciterId,
+                                    pending.chapterNo,
+                                    consumed,
+                                    total,
+                                )
+                            }
+                        } catch (e: Exception) {
+                            outputFile.delete()
+                            Log.saveError(e, "RecitationBulkDownload: ${pending.chapterNo}")
+                        } finally {
+                            RecitationDownloadProgressBus.clear(reciterId, pending.chapterNo)
+                        }
+
+                        updateForeground(completed.incrementAndGet())
                     }
                 }.awaitAll()
             }
 
-            setForeground(
-                createEnqueueForegroundInfo(
-                    displayTitle,
-                    completed.get(),
-                    total,
-                ),
-            )
+            updateForeground(completed.get())
 
             return Result.success()
-        } catch (e: CancellationException) {
-            throw e
         } catch (e: Exception) {
-            return Result.failure(workDataOf(KEY_ERROR to (e.message ?: "Bulk download failed")))
+            return Result.failure()
         }
     }
+
 
     private fun createEnqueueForegroundInfo(
         displayTitle: String,
@@ -218,6 +221,7 @@ class RecitationBulkDownloadWorker(
 
     companion object {
         const val TAG = "recitation_bulk_download"
+        private const val BULK_TAG_PREFIX = "recitation_bulk_reciter:"
 
         private const val MAX_PARALLEL_DOWNLOADS = 6
 
@@ -225,15 +229,35 @@ class RecitationBulkDownloadWorker(
         private const val KEY_KIND = "bulk_kind"
         private const val KEY_URL_TEMPLATE = "bulk_url_template"
         private const val KEY_DISPLAY_TITLE = "bulk_display_title"
-        private const val KEY_ERROR = "error"
+
+        const val KEY_BULK_PROGRESS_CHAPTER_NO = "bulk_progress_chapter_no"
+        const val KEY_BULK_PROGRESS_RECITER_ID = "bulk_progress_reciter_id"
 
         fun uniqueWorkName(reciterId: String, kind: RecitationAudioKind): String {
             return "recitation-bulk:$reciterId:${kind.name}"
         }
 
-        /** Tag for UI / WorkManager observation. */
         fun reciterTag(reciterId: String, kind: RecitationAudioKind): String {
-            return "recitation_bulk_reciter:${kind.name}:$reciterId"
+            return "$BULK_TAG_PREFIX${kind.name}:$reciterId"
+        }
+
+        fun parseBulkReciterTag(tag: String): Pair<RecitationAudioKind, String>? {
+            if (!tag.startsWith(BULK_TAG_PREFIX)) return null
+
+            val rest = tag.removePrefix(BULK_TAG_PREFIX)
+            val idx = rest.indexOf(':')
+
+            if (idx <= 0 || idx >= rest.length - 1) return null
+            val kindName = rest.substring(0, idx)
+            val reciterId = rest.substring(idx + 1)
+
+            val kind = try {
+                RecitationAudioKind.valueOf(kindName)
+            } catch (_: Exception) {
+                return null
+            }
+
+            return kind to reciterId
         }
 
         fun inputData(

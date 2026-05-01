@@ -13,7 +13,7 @@ internal object RecitationAudioFileDownloader {
     suspend fun downloadToFile(
         urlStr: String,
         finalFile: File,
-        onProgress: suspend (Int) -> Unit = {},
+        onProgress: suspend (Long, Long) -> Unit,
     ) = withContext(Dispatchers.IO) {
         val parent = finalFile.parentFile
             ?: throw IllegalStateException("Output path has no parent directory")
@@ -45,6 +45,7 @@ internal object RecitationAudioFileDownloader {
                     FileOutputStream(tempFile).buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
                         val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
                         var totalConsumed = 0L
+                        var lastEmitTime = 0L
 
                         while (true) {
                             ensureActive()
@@ -55,9 +56,22 @@ internal object RecitationAudioFileDownloader {
                             output.write(buffer, 0, bytes)
                             totalConsumed += bytes
 
-                            if (totalLength > 0L) {
-                                onProgress((totalConsumed * 100 / totalLength).toInt())
+                            val now = System.currentTimeMillis()
+                            if (now - lastEmitTime >= 200L) {
+                                lastEmitTime = now
+                                if (totalLength > 0L) {
+                                    onProgress(totalConsumed, totalLength)
+                                } else if (totalConsumed > 0L) {
+                                    onProgress(totalConsumed, -1L)
+                                }
                             }
+                        }
+
+                        // ensure final progress is emitted
+                        if (totalLength > 0L) {
+                            onProgress(totalConsumed, totalLength)
+                        } else if (totalConsumed > 0L) {
+                            onProgress(totalConsumed, -1L)
                         }
 
                         output.flush()

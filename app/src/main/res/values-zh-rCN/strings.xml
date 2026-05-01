@@ -232,7 +232,7 @@
     <string name="labelFreeUpSpace">释放空间</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s\n%2$s\n\n您需要重新下载。</string>
     <string name="titleRecitationCleanup">删除朗诵？</string>
-    <string name="msgRecitationCleanup" formatted="false">将删除 %s 中存储的所有朗诵。</string>
+    <string name="msgRecitationCleanup" formatted="false">将删除 %s 中存储的所有朗诵。如需按苏拉单独删除朗诵，请前往设置。</string>
     <string name="titleScriptCleanup">删除版本？</string>
     <string name="msgScriptCleanup" formatted="false">%s 个版本及其存储的所有字体将被删除。您需要重新下载才能使用它们。</string>
     <string name="nFiles" formatted="false">%d 个文件</string>
