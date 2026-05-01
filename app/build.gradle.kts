@@ -120,6 +120,8 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.foundation.layout)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material3.windowSizeClass)
+    implementation(libs.compose.material3.adaptive)
     implementation(libs.compose.runtime.livedata)
     implementation(libs.compose.ui.tooling)
     implementation(libs.lifecycle.viewmodel.compose)

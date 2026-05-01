@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -36,6 +35,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -62,6 +62,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.window.core.layout.WindowSizeClass
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.ReferenceVerseModel
@@ -218,157 +219,155 @@ private fun ReferenceScreenContent(
         }
     }
 
-    Box {
-        BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize(),
-        ) {
-            val isWideScreen = maxWidth >= 600.dp
+    val showTwoPane = currentWindowAdaptiveInfo().windowSizeClass.isAtLeastBreakpoint(
+        WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND,
+        WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
+    )
 
-            Scaffold(
+    Box {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                TopAppBar(
+                    modifier = Modifier.shadow(if (showTwoPane) 2.dp else 0.dp),
+                    title = {
+                        if (showCollapsedTitle) {
+                            Text(
+                                text = refModel.title,
+                                style = typography.titleMedium,
+                                fontWeight = FontWeight.Black,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        val back =
+                            LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
+                        SimpleTooltip(stringResource(R.string.strLabelBack)) {
+                            IconButton(
+                                onClick = { back?.onBackPressed() },
+                                painter = painterResource(R.drawable.dr_icon_arrow_left),
+                                contentDescription = stringResource(R.string.strLabelBack),
+                                tint = colorScheme.onSurface,
+                            )
+                        }
+                    },
+                    scrollBehavior = scrollBehavior,
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorScheme.surfaceContainer
+                    ),
+                )
+            },
+            containerColor = colorScheme.surfaceContainer
+        ) { padding ->
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
-                topBar = {
-                    TopAppBar(
-                        modifier = Modifier.shadow(if (isWideScreen) 2.dp else 0.dp),
-                        title = {
-                            if (showCollapsedTitle) {
-                                Text(
-                                    text = refModel.title,
-                                    style = typography.titleMedium,
-                                    fontWeight = FontWeight.Black,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        },
-                        navigationIcon = {
-                            val back =
-                                LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+                    .padding(padding)
+            ) {
+                val contentPane: @Composable (Modifier) -> Unit = { modifier ->
+                    Column(modifier = modifier) {
+                        if (translationSlugs.isEmpty()) {
+                            Text(
+                                text = stringResource(R.string.strMsgTranslNoneSelected),
+                                color = colorScheme.error,
+                                style = typography.bodySmall,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(colorScheme.surface)
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                            )
+                        }
 
-                            SimpleTooltip(stringResource(R.string.strLabelBack)) {
-                                IconButton(
-                                    onClick = { back?.onBackPressed() },
-                                    painter = painterResource(R.drawable.dr_icon_arrow_left),
-                                    contentDescription = stringResource(R.string.strLabelBack),
-                                    tint = colorScheme.onSurface,
-                                )
-                            }
-                        },
-                        scrollBehavior = scrollBehavior,
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = colorScheme.surfaceContainer
-                        ),
-                    )
-                },
-                containerColor = colorScheme.surfaceContainer
-            ) { padding ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding)
-                ) {
-                    val contentPane: @Composable (Modifier) -> Unit = { modifier ->
-                        Column(modifier = modifier) {
-                            if (translationSlugs.isEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.strMsgTranslNoneSelected),
-                                    color = colorScheme.error,
-                                    style = typography.bodySmall,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(colorScheme.surface)
-                                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                                )
-                            }
-
-                            val referencePageTextStyles = remember(rows) {
-                                buildMap {
-                                    for (row in rows) {
-                                        if (row is ReferenceRow.VerseRow) {
-                                            row.quranTextStyle?.let {
-                                                put(
-                                                    row.verseUi.verse.pageNo,
-                                                    it
-                                                )
-                                            }
+                        val referencePageTextStyles = remember(rows) {
+                            buildMap {
+                                for (row in rows) {
+                                    if (row is ReferenceRow.VerseRow) {
+                                        row.quranTextStyle?.let {
+                                            put(
+                                                row.verseUi.verse.pageNo,
+                                                it
+                                            )
                                         }
                                     }
                                 }
                             }
+                        }
 
-                            when {
-                                loading -> Loader(fill = true)
-                                else -> {
-                                    TextStyleProvider(referencePageTextStyles) {
-                                        LazyColumn(
-                                            state = listState,
-                                            modifier = Modifier.fillMaxSize(),
-                                            contentPadding = PaddingValues(bottom = 64.dp)
-                                        ) {
-                                            items(
-                                                items = rows,
-                                                key = { row ->
-                                                    when (row) {
-                                                        is ReferenceRow.Description -> "desc"
-                                                        is ReferenceRow.SectionTitle -> row.segmentKey
-                                                        is ReferenceRow.VerseRow -> row.verseUi.key
-                                                    }
-                                                },
-                                            ) { row ->
+                        when {
+                            loading -> Loader(fill = true)
+                            else -> {
+                                TextStyleProvider(referencePageTextStyles) {
+                                    LazyColumn(
+                                        state = listState,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentPadding = PaddingValues(bottom = 64.dp)
+                                    ) {
+                                        items(
+                                            items = rows,
+                                            key = { row ->
                                                 when (row) {
-                                                    is ReferenceRow.Description -> ReferenceDescription(
-                                                        row.title,
-                                                        row.desc
-                                                    )
-
-                                                    is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
-                                                        row = row,
-                                                        isBookmarked = bookmarkedKeys.contains(
-                                                            BookmarkKey(
-                                                                row.ref.chapterNo,
-                                                                row.ref.range.first,
-                                                                row.ref.range.last,
-                                                            ),
-                                                        ),
-                                                        onOpenInReader = { chapterNo, range ->
-                                                            val i =
-                                                                ReaderFactory.prepareVerseRangeIntent(
-                                                                    chapterNo,
-                                                                    range.first,
-                                                                    range.last
-                                                                )
-                                                                    .setClass(
-                                                                        context,
-                                                                        ActivityReader::class.java
-                                                                    )
-                                                                    .putExtra(
-                                                                        Keys.READER_KEY_TRANSL_SLUGS,
-                                                                        translationSlugs.toTypedArray()
-                                                                    )
-                                                                    .putExtra(
-                                                                        Keys.READER_KEY_SAVE_TRANSL_CHANGES,
-                                                                        false
-                                                                    )
-
-                                                            context.startActivity(i)
-                                                        },
-                                                    )
-
-                                                    is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
-                                                        verseUi = row.verseUi,
-                                                        isBookmarked = bookmarkedKeys.contains(
-                                                            BookmarkKey(
-                                                                row.verseUi.verse.chapterNo,
-                                                                row.verseUi.verse.verseNo,
-                                                                row.verseUi.verse.verseNo,
-                                                            ),
-                                                        ),
-                                                    )
+                                                    is ReferenceRow.Description -> "desc"
+                                                    is ReferenceRow.SectionTitle -> row.segmentKey
+                                                    is ReferenceRow.VerseRow -> row.verseUi.key
                                                 }
+                                            },
+                                        ) { row ->
+                                            when (row) {
+                                                is ReferenceRow.Description -> ReferenceDescription(
+                                                    row.title,
+                                                    row.desc
+                                                )
+
+                                                is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
+                                                    row = row,
+                                                    isBookmarked = bookmarkedKeys.contains(
+                                                        BookmarkKey(
+                                                            row.ref.chapterNo,
+                                                            row.ref.range.first,
+                                                            row.ref.range.last,
+                                                        ),
+                                                    ),
+                                                    onOpenInReader = { chapterNo, range ->
+                                                        val i =
+                                                            ReaderFactory.prepareVerseRangeIntent(
+                                                                chapterNo,
+                                                                range.first,
+                                                                range.last
+                                                            )
+                                                                .setClass(
+                                                                    context,
+                                                                    ActivityReader::class.java
+                                                                )
+                                                                .putExtra(
+                                                                    Keys.READER_KEY_TRANSL_SLUGS,
+                                                                    translationSlugs.toTypedArray()
+                                                                )
+                                                                .putExtra(
+                                                                    Keys.READER_KEY_SAVE_TRANSL_CHANGES,
+                                                                    false
+                                                                )
+
+                                                        context.startActivity(i)
+                                                    },
+                                                )
+
+                                                is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
+                                                    verseUi = row.verseUi,
+                                                    isBookmarked = bookmarkedKeys.contains(
+                                                        BookmarkKey(
+                                                            row.verseUi.verse.chapterNo,
+                                                            row.verseUi.verse.verseNo,
+                                                            row.verseUi.verse.verseNo,
+                                                        ),
+                                                    ),
+                                                )
                                             }
                                         }
                                     }
@@ -376,36 +375,36 @@ private fun ReferenceScreenContent(
                             }
                         }
                     }
+                }
 
-                    if (isWideScreen) {
-                        Row(modifier = Modifier.fillMaxSize()) {
-                            chapterNames?.let {
-                                ReferenceChapterChipsSidebar(
-                                    selectedChapterChip = selectedChapterChip,
-                                    chapterNames = it,
-                                    chapters = refModel.chapters,
-                                    onChapterChipChange = onChapterChipChange,
-                                    listState = chaptersGroupState,
-                                )
-                            }
-
-                            VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
-
-                            contentPane(Modifier.weight(1f))
+                if (showTwoPane) {
+                    Row(modifier = Modifier.fillMaxSize()) {
+                        chapterNames?.let {
+                            ReferenceChapterChipsSidebar(
+                                selectedChapterChip = selectedChapterChip,
+                                chapterNames = it,
+                                chapters = refModel.chapters,
+                                onChapterChipChange = onChapterChipChange,
+                                listState = chaptersGroupState,
+                            )
                         }
-                    } else {
-                        Column(modifier = Modifier.fillMaxSize()) {
-                            chapterNames?.let {
-                                ReferenceChapterChipsTopBar(
-                                    selectedChapterChip = selectedChapterChip,
-                                    chapterNames = it,
-                                    chapters = refModel.chapters,
-                                    onChapterChipChange = onChapterChipChange,
-                                    listState = chaptersGroupState,
-                                )
-                            }
-                            contentPane(Modifier.weight(1f))
+
+                        VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
+
+                        contentPane(Modifier.weight(1f))
+                    }
+                } else {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        chapterNames?.let {
+                            ReferenceChapterChipsTopBar(
+                                selectedChapterChip = selectedChapterChip,
+                                chapterNames = it,
+                                chapters = refModel.chapters,
+                                onChapterChipChange = onChapterChipChange,
+                                listState = chaptersGroupState,
+                            )
                         }
+                        contentPane(Modifier.weight(1f))
                     }
                 }
             }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,6 +35,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -64,6 +64,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.window.core.layout.WindowSizeClass
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
@@ -109,6 +110,11 @@ fun ReaderScreen(params: ReaderLaunchParams) {
 
     val miniPlayerHeight = if (isFullscreen || tajweedBarVisible) 0.dp else MINI_PLAYER_HEIGHT
 
+    val showTwoPane = currentWindowAdaptiveInfo().windowSizeClass.isAtLeastBreakpoint(
+        WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND,
+        WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
+    )
+
     BackHandler(enabled = isFullscreen) {
         isFullscreen = false
     }
@@ -127,102 +133,99 @@ fun ReaderScreen(params: ReaderLaunchParams) {
             }
         }
 
-        BoxWithConstraints {
-            val isWideScreen = maxWidth > 800.dp
-            val appBarDims = rememberAppBarDimensions(isWideScreen)
-            val density = LocalDensity.current
+        val appBarDims = rememberAppBarDimensions(showTwoPane)
+        val density = LocalDensity.current
 
-            val readerTopBarState = rememberTopAppBarState(
-                initialHeightOffsetLimit = with(density) { -appBarDims.expandedHeight.toPx() },
-            )
-            val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(readerTopBarState)
+        val readerTopBarState = rememberTopAppBarState(
+            initialHeightOffsetLimit = with(density) { -appBarDims.expandedHeight.toPx() },
+        )
+        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(readerTopBarState)
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
-                val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues()
-                    .calculateBottomPadding()
+        Box(modifier = Modifier.fillMaxSize()) {
+            val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
+            val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues()
+                .calculateBottomPadding()
 
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    topBar = {
-                        if (!isFullscreen) {
-                            ReaderAppBar(
-                                readerVm = readerVm,
-                                isWideScreen = isWideScreen,
-                                scrollBehavior = scrollBehavior,
-                            )
-                        }
-                    },
-                    containerColor = if (isDark || readerMode == ReaderMode.Translation) colorScheme.background
-                    else colorScheme.surface
-                ) { padding ->
-                    val contentModifier = Modifier
-                        .padding(padding)
-                        .padding(bottom = miniPlayerHeight * (1f - chromeCollapsedFraction))
+            Scaffold(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                topBar = {
+                    if (!isFullscreen) {
+                        ReaderAppBar(
+                            readerVm = readerVm,
+                            isWideScreen = showTwoPane,
+                            scrollBehavior = scrollBehavior,
+                        )
+                    }
+                },
+                containerColor = if (isDark || readerMode == ReaderMode.Translation) colorScheme.background
+                else colorScheme.surface
+            ) { padding ->
+                val contentModifier = Modifier
+                    .padding(padding)
+                    .padding(bottom = miniPlayerHeight * (1f - chromeCollapsedFraction))
 
-                    if (isWideScreen && !isFullscreen) {
-                        Row(
-                            modifier = contentModifier.fillMaxSize(),
-                        ) {
-                            ReaderWideSidebar(
-                                readerVm = readerVm,
-                            )
+                if (showTwoPane && !isFullscreen) {
+                    Row(
+                        modifier = contentModifier.fillMaxSize(),
+                    ) {
+                        ReaderWideSidebar(
+                            readerVm = readerVm,
+                        )
 
-                            VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
+                        VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
 
-                            ReaderContentColumn(
-                                modifier = Modifier.weight(1f),
-                                isFullscreen = isFullscreen,
-                                isWideScreen = true,
-                                readerMode = readerMode,
-                                readerVm = readerVm,
-                                scrollBehavior = scrollBehavior,
-                                onSyncStateChanged = { isSyncing = it },
-                            )
-                        }
-                    } else {
                         ReaderContentColumn(
-                            modifier = contentModifier,
+                            modifier = Modifier.weight(1f),
                             isFullscreen = isFullscreen,
-                            isWideScreen = false,
+                            isWideScreen = true,
                             readerMode = readerMode,
                             readerVm = readerVm,
                             scrollBehavior = scrollBehavior,
                             onSyncStateChanged = { isSyncing = it },
                         )
                     }
+                } else {
+                    ReaderContentColumn(
+                        modifier = contentModifier,
+                        isFullscreen = isFullscreen,
+                        isWideScreen = false,
+                        readerMode = readerMode,
+                        readerVm = readerVm,
+                        scrollBehavior = scrollBehavior,
+                        onSyncStateChanged = { isSyncing = it },
+                    )
                 }
-
-
-                val totalBottomOffset =
-                    navBarBottomInset + miniPlayerHeight * (1f - chromeCollapsedFraction)
-
-                FloatingBar(
-                    isFullscreen,
-                    onChangeFullscreen = { isFullscreen = it },
-                    tajweedBarVisible,
-                    onChangeTajweedBarVisible = { tajweedBarVisible = it },
-                    chromeCollapsedFraction,
-                    totalBottomOffset,
-                )
-
-                RecitationPlayerSheet(
-                    collapsedBottomInset = navBarBottomInset,
-                    barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
-                    showPlayer = !isFullscreen && !tajweedBarVisible,
-                    isSyncing = syncIndicatorLocked,
-                    onSyncRequest = {
-                        val willSync = !playerVerseSyncPref
-                        playerVerseSyncPref = willSync
-
-                        if (willSync) {
-                            coroutineScope.launch { readerVm.syncToPlayingVerse() }
-                        }
-                    }
-                )
             }
+
+
+            val totalBottomOffset =
+                navBarBottomInset + miniPlayerHeight * (1f - chromeCollapsedFraction)
+
+            FloatingBar(
+                isFullscreen,
+                onChangeFullscreen = { isFullscreen = it },
+                tajweedBarVisible,
+                onChangeTajweedBarVisible = { tajweedBarVisible = it },
+                chromeCollapsedFraction,
+                totalBottomOffset,
+            )
+
+            RecitationPlayerSheet(
+                collapsedBottomInset = navBarBottomInset,
+                barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
+                showPlayer = !isFullscreen && !tajweedBarVisible,
+                isSyncing = syncIndicatorLocked,
+                onSyncRequest = {
+                    val willSync = !playerVerseSyncPref
+                    playerVerseSyncPref = willSync
+
+                    if (willSync) {
+                        coroutineScope.launch { readerVm.syncToPlayingVerse() }
+                    }
+                }
+            )
         }
     }
 }
