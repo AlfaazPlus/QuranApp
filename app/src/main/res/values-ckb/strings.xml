@@ -28,7 +28,7 @@
     <string name="strTitleChapInfoRukus">سوژدەبردن</string>
     <string name="strTitleChapInfoJuzNo">ژمارەی جوزﺋ</string>
     <string name="strTitleChapInfoVerses">ئایەتەکان</string>
-    <string name="strMsgChapInfoFailedLoad">پیشاندانی زانیاری سورەت سەرکەوتوو نەنوو، دواتر هەوڵبدەرەوە.</string>
+    <string name="strMsgChapInfoFailedLoad">پیشاندانی زانیاری بەش سەرکەوتوو نەنوو، دواتر هەوڵبدەرەوە.</string>
     <string name="strTitleReaderSettings">ڕێکخستنەکانی خوێندنەوە</string>
     <string name="strTitleTheme">ڕووکار</string>
     <string name="strLabelBookmark">نیشانەکردن</string>
@@ -40,7 +40,7 @@
     <string name="strLabelLater">دواتر</string>
     <string name="strLabelIncludeFootnotes">زانیاری سورەت</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d ژمارەیەکی دروستی سورەت نییە.</string>
-    <string name="strHintSearchQuran">دەستەواژەیەک بنووسە بۆ نمونە.، \"ژیان\"</string>
+    <string name="strHintSearchQuran">دەستەواژەیەک بنووسە بۆ نمونە.. “ژیان”</string>
     <string name="strHintSearchProphet">گەڕان بۆ پێغەمبەر</string>
     <string name="strHintBookmarkViewerNote">زانیاریی زیاتر لەسەر ئەم نیشانەکراوە لێرەدا بنووسە…</string>
     <string name="strHintFromVerse">لە ئایەتی</string>
@@ -150,9 +150,9 @@
     <string name="strTitleReaderJuz">جوزئەکان</string>
     <string name="strTitleVerseOptions">ڕێکخستنی ئایەت</string>
     <string name="strTitleReaderVerseInformation" formatted="false">سورەتی %1$s : %2$d</string>
-    <string name="strMsgTranslFailedToDownload" formatted="false">سەرکەوتوو نەبوو داگرتنی \"%s\".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">سەرکەوتوو نەبوو داگرتنی “%s”.</string>
     <string name="strDescAddToBookmarks">زیادکردن بۆ نیشانەکراوەکان</string>
-    <string name="strMsgTranslDownloaded" formatted="false">داگیرا: \"%s\".</string>
+    <string name="strMsgTranslDownloaded" formatted="false">داگیرا: “%s”.</string>
     <string name="strDescGoBack">گەڕانەوە</string>
     <string name="strDescClose">داخستن</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s
@@ -165,7 +165,7 @@
     <string name="labelFreeUpSpace">خاوێنکردنەوەی بیرگەی زیاتر</string>
     <string name="strMsgReadHistoryNoItems">مێژووی خوێندنەوە نییە</string>
     <string name="strMsgReadHistoryDeleteAll">سەرجەم مێژووی خوێندنەوەکان لادەبرێن.</string>
-    <string name="strMsgHistoryRemoved" formatted="false">\"%s\" لابرا لە مێژووی خوێندنەوە</string>
+    <string name="strMsgHistoryRemoved" formatted="false">“%s” لابرا لە مێژووی خوێندنەوە</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">سەرجەم ئەنجامە دۆزراوەکان لە %1$s: %2$d</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">هیچ ئەنجامێک نەدۆزرایەوە، دڵنیابەرەوە لە دروستی ناوەکە.</string>
     <string name="strMsgSearchWordPart">گەڕان بۆ بەشێکی ووشەکە</string>
@@ -249,8 +249,8 @@
     <string name="downloadRecitations">داگرتنی دەنگی قورئانخوێن</string>
     <string name="suppressedLogs">تۆماری گشتی</string>
     <string name="audioOption">ڕێکخستنی لێدان</string>
-    <string name="audioOnlyArabic">تەنیا قورئانی پیرۆز</string>
-    <string name="audioBothArabicTranslation">لێدانی هەردووکیان پێکەوە</string>
+    <string name="audioOnlyArabic">تەنها قورئانی پیرۆز</string>
+    <string name="audioBothArabicTranslation">لێدانی هەردوکیان پێکەوە</string>
     <string name="logRemoved">تۆمار لابرا</string>
     <string name="place" formatted="false">%d شوێن</string>
     <string name="strMsgDuaFor" formatted="false">نزا بۆ %s</string>
@@ -285,7 +285,7 @@
     <string name="strTitleMajorSins">تاوانە گەورەکانی ناو قورئان</string>
     <string name="strLabelDownloaded">داگیرا</string>
     <string name="strTitleDeleteTafsir">سڕینەوەی تەفسیر؟</string>
-    <string name="strMsgDeleteTafsir" formatted="false">ئایا دڵنیایت لە سڕینەوەی \"%s\"؟ ئەمە دەبێتە هۆی سڕینەوەی تەفسیری داگیراو لەناو ئامێرەکەتدا.</string>
+    <string name="strMsgDeleteTafsir" formatted="false">ئایا دڵنیایت لە سڕینەوەی “%s”؟ ئەمە دەبێتە هۆی سڕینەوەی تەفسیرە داگیراوەکان لەناو ئامێرەکەتدا.</string>
     <string name="titleCancelDownload">هەڵوەشاندنەوەی داگرتن؟</string>
     <string name="yesCancelDownload">بەڵێ، هەڵیبوەشێنەوە</string>
     <string name="noContinueDownload">نەخێر، بەردەوامبە</string>
@@ -426,4 +426,3 @@
     <string name="filterTranslationsDisabledNote">کاتێک گەڕانی عەرەبی چالاکە، لە وەرگێڕانەکاندا نەگەڕێت.</string>
     <string name="filterTranslationsEmpty">هێشتا هیچ وەرگێڕانێک دابەزێندراوە نییە.</string>
 </resources>
-
