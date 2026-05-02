@@ -10,6 +10,8 @@ import com.quranapp.android.utils.extensions.asFontFamily
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
 import java.util.concurrent.ConcurrentHashMap
 
 private data class TypefaceResult(val typeface: Typeface?)
@@ -23,11 +25,11 @@ class FontResolver private constructor(val context: Context) {
 
     private val fileUtils by lazy { FileUtils.newInstance(context) }
 
-    private fun loadKfqpcTypeface(
+    private fun resolveKfqpcFontFile(
         script: String,
         pageNo: Int,
         isDark: Boolean,
-    ): Typeface {
+    ): File? {
         return try {
             val fontsDir = fileUtils.getKFQPCScriptFontDir(script)
             val useDark = isDark && script.getQuranScriptFontHasDark()
@@ -39,20 +41,47 @@ class FontResolver private constructor(val context: Context) {
             val fallbackTtf = if (useDark) lightFile else null
 
             when {
-                primary.exists() && primary.length() > 0L ->
-                    Typeface.createFromFile(primary)
-
-                fallbackTtf != null && fallbackTtf.exists() && fallbackTtf.length() > 0L ->
-                    Typeface.createFromFile(fallbackTtf)
-
-                oldFile.exists() && oldFile.length() > 0L ->
-                    Typeface.createFromFile(oldFile)
-
-                else -> Typeface.DEFAULT
+                primary.exists() && primary.length() > 0L -> primary
+                fallbackTtf != null && fallbackTtf.exists() && fallbackTtf.length() > 0L -> fallbackTtf
+                oldFile.exists() && oldFile.length() > 0L -> oldFile
+                else -> null
             }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun loadKfqpcTypeface(
+        script: String,
+        pageNo: Int,
+        isDark: Boolean,
+    ): Typeface {
+        return try {
+            val file = resolveKfqpcFontFile(script, pageNo, isDark)
+            if (file != null) Typeface.createFromFile(file) else Typeface.DEFAULT
         } catch (_: Exception) {
             Typeface.DEFAULT
         }
+    }
+
+    /**
+     * Opens a font stream for WebView `@font-face` interception.
+     * Atlas scripts use raster images in WebView instead — returns null
+     */
+    @Throws(IOException::class)
+    fun openQuranArabicFontInputStream(
+        script: String,
+        pageNo: Int,
+        isDark: Boolean,
+    ): InputStream? {
+        if (script.isQuranAtlasScript()) return null
+
+        if (script.isKFQPCScript()) {
+            val file = resolveKfqpcFontFile(script, pageNo, isDark) ?: return null
+            return file.inputStream()
+        }
+
+        return context.resources.openRawResource(script.getQuranScriptFontRes(isDark))
     }
 
 
@@ -85,6 +114,8 @@ class FontResolver private constructor(val context: Context) {
     }
 
     fun prefetch(script: String, pages: List<Int>, isDark: Boolean) {
+        if (script.isQuranAtlasScript()) return
+
         if (!script.isKFQPCScript()) {
             scriptFontCache.getOrPut(script) {
                 TypefaceResult(

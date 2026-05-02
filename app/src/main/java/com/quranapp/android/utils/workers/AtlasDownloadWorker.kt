@@ -33,6 +33,7 @@ import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.util.zip.ZipInputStream
 
@@ -179,6 +180,8 @@ class AtlasDownloadWorker(
         )
 
         val dao = db.atlasWordShapeDao()
+        val pngFile = AtlasManager.getBundlePngFile(ctx, bundleKey)
+        FileOutputStream(pngFile).use { it.write(pngBytes) }
 
         db.withTransaction {
             dao.deleteShapesForBundle(bundleKey)
@@ -203,7 +206,6 @@ class AtlasDownloadWorker(
                     bundleKey = bundleKey,
                     metaJson = metaJson,
                     layerJson = layerJson,
-                    imagePng = pngBytes,
                 ),
             )
         }

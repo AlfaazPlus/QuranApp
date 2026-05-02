@@ -12,10 +12,9 @@ object ExternalQuranDatabaseMigrations {
                         `bundle_key` TEXT NOT NULL,
                         `meta_json` TEXT NOT NULL,
                         `layer_json` TEXT NOT NULL,
-                        `image_png` BLOB NOT NULL,
                         PRIMARY KEY(`bundle_key`)
                     )
-                    """.trimIndent()
+                    """.trimIndent(),
             )
 
             db.execSQL(
@@ -26,13 +25,13 @@ object ExternalQuranDatabaseMigrations {
                         `placements_json` TEXT NOT NULL,
                         PRIMARY KEY(`bundle_key`, `word`)
                     )
-                    """.trimIndent()
+                    """.trimIndent(),
             )
             db.execSQL(
                 """
                     CREATE INDEX IF NOT EXISTS `idx_atlas_word_shapes_bundle`
                     ON `atlas_word_shapes` (`bundle_key`)
-                    """.trimIndent()
+                    """.trimIndent(),
             )
         }
     }

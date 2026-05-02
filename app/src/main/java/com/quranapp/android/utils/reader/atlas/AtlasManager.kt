@@ -27,4 +27,20 @@ object AtlasManager {
     fun getTempDownloadFile(context: Context, id: String): File {
         return File(getRootDir(context), "${id}.tmp")
     }
+
+    fun getBundlePngFile(context: Context, bundleKey: String): File {
+        return File(getRootDir(context), "${sanitize(bundleKey)}.png")
+    }
+
+    private fun sanitize(bundleKey: String): String =
+        buildString(bundleKey.length) {
+            for (c in bundleKey) {
+                append(
+                    when {
+                        c.isLetterOrDigit() || c == '-' || c == '_' -> c
+                        else -> '_'
+                    },
+                )
+            }
+        }
 }

@@ -33,20 +33,13 @@ object QuranScriptUtils {
     const val SCRIPT_KFQPC_V2 = "kfqpc_v2"
     const val SCRIPT_KFQPC_V4 = "kfqpc_v4_tajweed"
 
-    const val PREVIEW_TEXT_DK_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ \u06DD"
-    const val PREVIEW_TEXT_NASTALEEQ_INDOPAK = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ۟\uF61E"
-    const val PREVIEW_TEXT_UTHMANI = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ١"
-    const val PREVIEW_TEXT_KFQPC_V1 = "ﭑ ﭒ ﭓ ﭔ ﭕ"
-    const val PREVIEW_TEXT_KFQPC_V2 = "ﱰ ﱱ ﱲ ﱳ ﱴ"
-    const val PREVIEW_TEXT_KFQPC_V4 = "ﱗ ﱘ ﱙ ﱚ"
-
     const val SCRIPT_DEFAULT = SCRIPT_UTHMANI
 
     fun SCRIPT_NAMES(scriptCode: String): Map<String, String> {
         return when (scriptCode) {
             SCRIPT_NASTALEEQ_INDOPAK,
             SCRIPT_DK_INDOPAK -> mapOf(
-                "en" to "IndoPak (Beta)",
+                "en" to "IndoPak",
                 "ar" to "نستعليق",
                 "bn" to "ইন্দোপাক",
                 "ckb" to "هیندوپاک",
@@ -218,15 +211,6 @@ fun String.getQuranScriptName(): String {
         ?: ""
 }
 
-fun String.getScriptPreviewText(): String = when (this) {
-    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_NASTALEEQ_INDOPAK
-    QuranScriptUtils.SCRIPT_DK_INDOPAK -> QuranScriptUtils.PREVIEW_TEXT_DK_INDOPAK
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V1
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V2
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> QuranScriptUtils.PREVIEW_TEXT_KFQPC_V4
-    else -> QuranScriptUtils.PREVIEW_TEXT_UTHMANI
-}
-
 @DimenRes
 fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
@@ -237,17 +221,6 @@ fun String.getQuranScriptVerseTextSizeSmallRes(): Int = when (this) {
     QuranScriptUtils.SCRIPT_KFQPC_V4 -> R.dimen.dmnReaderTextSizeArQpcV2Small
 
     else -> R.dimen.dmnReaderTextSizeArUthmaniSmall
-}
-
-fun String.getQuranScriptVerseTextSizeWidgetSP(): Float = when (this) {
-    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK,
-    QuranScriptUtils.SCRIPT_DK_INDOPAK -> 21f
-
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> 20f
-    QuranScriptUtils.SCRIPT_KFQPC_V2,
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> 15f
-
-    else -> 21f
 }
 
 @DimenRes
@@ -262,13 +235,16 @@ fun String.getQuranScriptVerseTextSizeMediumRes(): Int = when (this) {
     else -> R.dimen.dmnReaderTextSizeArUthmaniMedium
 }
 
-fun String.getQuranScriptFontRes(isDark: Boolean): Int = when (this) {
-//    QuranScriptUtils.SCRIPT_NASTALEEQ_INDOPAK -> R.font.nastaleeq_indopak
-    QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.font.digital_khatt_indopak
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.font.qpc_v1_page_1
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.font.qpc_v2_page_604
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> if (isDark) R.font.qpc_v4_page_001_dark else R.font.qpc_v4_page_001
-    else -> R.font.uthmanic_hafs
+fun String.getQuranScriptFontRes(isDark: Boolean): Int = R.font.uthmanic_hafs
+
+fun String.getQuranScriptPreview(isDark: Boolean): Int = when (this) {
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> R.drawable.preview_dk_indopak
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> R.drawable.preview_kfqpc_v1
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> R.drawable.preview_kfqpc_v2
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> if (isDark) R.drawable.preview_kfqpc_v4_tajweed_dark
+    else R.drawable.preview_kfqpc_v4_tajweed
+
+    else -> R.drawable.preview_uthmani_hafs
 }
 
 /**

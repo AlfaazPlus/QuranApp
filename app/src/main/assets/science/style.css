@@ -107,6 +107,23 @@ html.dark .reference {
     --webkit-user-select: none;
 }
 
+.reference .arabic.atlas-img {
+    font-family: initial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reference .arabic.atlas-img img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+    border: none;
+    flex: 0 1 auto;
+    box-sizing: content-box;
+}
+
 .reference .translation {
     text-align: center;
     padding: 10px;

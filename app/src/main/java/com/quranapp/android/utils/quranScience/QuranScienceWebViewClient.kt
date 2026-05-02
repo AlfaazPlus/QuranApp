@@ -1,29 +1,27 @@
 package com.quranapp.android.utils.quranScience
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.reader.getQuranScriptFontHasDark
-import com.quranapp.android.utils.reader.getQuranScriptFontRes
-import com.quranapp.android.utils.reader.isKFQPCScript
-import com.quranapp.android.utils.reader.toKFQPCFontFilename
-import com.quranapp.android.utils.reader.toKFQPCFontFilenameOld
-import com.quranapp.android.utils.univ.FileUtils
-import java.io.File
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLConnection
+import java.util.concurrent.ConcurrentHashMap
 
+open class QuranScienceWebViewClient(
+    private val activity: ActivityQuranScienceContent,
+    private val atlasPngCache: ConcurrentHashMap<String, ByteArray> = ConcurrentHashMap(),
+) : WebViewClientCompat() {
 
-open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceContent) :
-    WebViewClientCompat() {
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
@@ -45,72 +43,71 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         val uri = request.url
         val host = uri.host ?: return null
         val ctx = view.context
-        var data: InputStream? = null
         val uriStr = uri.toString().lowercase(appPlatformLocale())
+
         when (host) {
-            "assets-file" -> data =
-                ctx.assets.open(uri.toString().substring("https://assets-file/".length))
+            "assets-file" -> {
+                val headers = request.requestHeaders.toMutableMap()
+                headers["Access-Control-Allow-Origin"] = "*"
+
+                val data = ctx.assets.open(uri.toString().substring("https://assets-file/".length))
+
+                return WebResourceResponse(
+                    URLConnection.guessContentTypeFromName(uri.path),
+                    "utf-8",
+                    200,
+                    "OK",
+                    headers,
+                    data
+                )
+            }
+
+            "assets-atlas" -> {
+                val headers = request.requestHeaders.toMutableMap()
+                val key = uri.toString()
+                val bytes = atlasPngCache[key] ?: return null
+
+                headers["Access-Control-Allow-Origin"] = "*"
+
+                return WebResourceResponse(
+                    "image/png",
+                    null,
+                    200,
+                    "OK",
+                    headers,
+                    ByteArrayInputStream(bytes)
+                )
+            }
 
             "assets-font" -> {
-                if (uriStr.contains("quran-arabic")) {
-                    val savedScript = ReaderPreferences.getQuranScript()
-                    val fileUtils = FileUtils.newInstance(ctx)
-                    if (savedScript.isKFQPCScript()) {
-                        val lastSeg = uri.lastPathSegment ?: return null
+                if (!uriStr.contains("quran-arabic")) return null
 
-                        val pageNo =
-                            if (lastSeg.startsWith("page_")) lastSeg.removePrefix("page_")
-                                .toIntOrNull()
-                            else null
+                val headers = request.requestHeaders.toMutableMap()
+                val savedScript = ReaderPreferences.getQuranScript()
+                val pageNo = extractQuranArabicPageNo(uri)
 
-                        if (pageNo != null) {
-                            val fontsDir = fileUtils.getKFQPCScriptFontDir(savedScript)
-                            val useDark =
-                                ThemeUtils.isDarkTheme(ctx) && savedScript.getQuranScriptFontHasDark()
-                            val primaryFile =
-                                File(fontsDir, pageNo.toKFQPCFontFilename(useDark))
-                            val lightFile =
-                                File(fontsDir, pageNo.toKFQPCFontFilename(false))
-                            val oldFile = File(fontsDir, pageNo.toKFQPCFontFilenameOld())
+                val data: InputStream? = FontResolver.getInstance(ctx.applicationContext)
+                    .openQuranArabicFontInputStream(
+                        savedScript,
+                        pageNo,
+                        ThemeUtils.isDarkTheme(ctx),
+                    )
+                    ?: return null
 
-                            data = when {
-                                primaryFile.exists() && primaryFile.length() > 0L ->
-                                    primaryFile.inputStream()
+                headers["Access-Control-Allow-Origin"] = "*"
 
-                                useDark && lightFile.exists() && lightFile.length() > 0L ->
-                                    lightFile.inputStream()
-
-                                oldFile.exists() && oldFile.length() > 0L ->
-                                    oldFile.inputStream()
-
-                                else -> null
-                            }
-                        }
-                    } else {
-                        data = ctx.resources.openRawResource(
-                            savedScript.getQuranScriptFontRes(ThemeUtils.isDarkTheme(ctx))
-                        )
-                    }
-                }
+                return WebResourceResponse(
+                    URLConnection.guessContentTypeFromName(uri.path),
+                    "utf-8",
+                    200,
+                    "OK",
+                    headers,
+                    data
+                )
             }
         }
 
-        if (data == null) {
-            return null
-        }
-
-        val headers = request.requestHeaders
-
-        headers["Access-Control-Allow-Origin"] = "*"
-
-        return WebResourceResponse(
-            URLConnection.guessContentTypeFromName(uri.path),
-            "utf-8",
-            200,
-            "OK",
-            headers,
-            data
-        )
+        return null
     }
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -144,5 +141,15 @@ open class QuranScienceWebViewClient(private val activity: ActivityQuranScienceC
         }
 
         return true
+    }
+}
+
+private fun extractQuranArabicPageNo(uri: android.net.Uri): Int {
+    val last = uri.lastPathSegment ?: return 1
+
+    return if (last.startsWith("page_")) {
+        last.removePrefix("page_").toIntOrNull() ?: 1
+    } else {
+        1
     }
 }

@@ -60,7 +60,7 @@
       },
       {
         "tableName": "atlas_bundles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bundle_key` TEXT NOT NULL, `meta_json` TEXT NOT NULL, `layer_json` TEXT NOT NULL, `image_png` BLOB NOT NULL, PRIMARY KEY(`bundle_key`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bundle_key` TEXT NOT NULL, `meta_json` TEXT NOT NULL, `layer_json` TEXT NOT NULL, PRIMARY KEY(`bundle_key`))",
         "fields": [
           {
             "fieldPath": "bundleKey",
@@ -78,12 +78,6 @@
             "fieldPath": "layerJson",
             "columnName": "layer_json",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "imagePng",
-            "columnName": "image_png",
-            "affinity": "BLOB",
             "notNull": true
           }
         ],

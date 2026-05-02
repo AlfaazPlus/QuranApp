@@ -340,10 +340,11 @@ private fun SpotlightQuranText(
         initialValue = emptyMap(),
         scriptCode,
         words,
+        context,
     ) {
         value = withContext(Dispatchers.IO) {
             val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                QuranAtlasLoader.getBundle(externalQuranDb, scriptCode)
+                QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
             } else null
 
             atlasBundle?.getPlacementsForWords(words) ?: emptyMap()

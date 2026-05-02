@@ -2,6 +2,8 @@ package com.quranapp.android.activities.reference
 
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.ConsoleMessage
@@ -24,18 +26,27 @@ import com.quranapp.android.utils.Log.d
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.extensions.serializableExtra
 import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
+import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.isKFQPCScript
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.roundToInt
 
 class ActivityQuranScienceContent : BaseActivity() {
     private lateinit var binding: ActivityChapterInfoBinding
     private lateinit var translFactory: QuranTranslationFactory
     private lateinit var quickRefHost: QuickReferenceHost
     private lateinit var colorScheme: ColorScheme
+
+    private val atlasAyahImageCache = ConcurrentHashMap<String, ByteArray>()
 
     override fun getLayoutResource() = R.layout.activity_chapter_info
 
@@ -92,6 +103,7 @@ class ActivityQuranScienceContent : BaseActivity() {
     private fun setupWebView(webView: WebView) {
         val settings = webView.settings
         settings.javaScriptEnabled = true
+        settings.useWideViewPort = true
         webView.overScrollMode = View.OVER_SCROLL_NEVER
         webView.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
@@ -101,7 +113,7 @@ class ActivityQuranScienceContent : BaseActivity() {
                 return true
             }
         }
-        webView.webViewClient = object : QuranScienceWebViewClient(this) {
+        webView.webViewClient = object : QuranScienceWebViewClient(this, atlasAyahImageCache) {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
                 hideLoader()
@@ -157,6 +169,23 @@ class ActivityQuranScienceContent : BaseActivity() {
 
         val scriptCode = ReaderPreferences.getQuranScript()
         val arabicEnabled = ReaderPreferences.getArabicTextEnabled()
+        val isAtlas = scriptCode.isQuranAtlasScript()
+        val atlasBundle = if (isAtlas) {
+            QuranAtlasLoader.getBundle(
+                this,
+                DatabaseProvider.getExternalQuranDatabase(this),
+                scriptCode,
+            )
+        } else {
+            null
+        }
+
+        atlasAyahImageCache.clear()
+
+        val atlasRasterParams =
+            if (isAtlas) quranScienceAtlasRasterParams(scriptCode) else null
+
+        val physicalPxPerWebCssPx = resources.displayMetrics.density
 
         var document = inputStream?.bufferedReader().use { it?.readText() ?: "" }
         document = base.replace("{{CONTENT}}", document)
@@ -174,6 +203,19 @@ class ActivityQuranScienceContent : BaseActivity() {
             repository.getVerseWithDetails(chapterNo, verseNo, scriptCode, arabicEnabled)
         }
 
+        val atlasPlacementsByVerse: Map<Pair<Int, Int>, Map<Int, List<AtlasGlyphPlacement>>> =
+            if (isAtlas && atlasBundle != null) {
+                buildMap {
+                    for ((key, details) in verseMap) {
+                        if (details?.words?.isNotEmpty() == true) {
+                            put(key, atlasBundle.getPlacementsForWords(details.words))
+                        }
+                    }
+                }
+            } else {
+                emptyMap()
+            }
+
         val referenceMap = nameMatches.map {
             it.groupValues[1].toInt() to it.groupValues[2].toInt()
         }.distinct().associateWith { (chapterNo, verse) ->
@@ -187,6 +229,7 @@ class ActivityQuranScienceContent : BaseActivity() {
         }
 
         val isKFQPC = scriptCode.isKFQPCScript()
+
         val fontPageNos = HashSet<Int>()
 
         document = regexAr.replace(document) { matchResult ->
@@ -201,19 +244,66 @@ class ActivityQuranScienceContent : BaseActivity() {
                 fontPageNos.add(details.pageNo)
             }
 
-            if (isKFQPC) {
-                "<p class='arabic' style='font-family:page_${details.pageNo}'>$quranText</p>"
-            } else {
-                "<p class='arabic' style='font-family:quran-arabic'>$quranText</p>"
+            when {
+                isAtlas -> {
+                    if (atlasBundle == null || details.words.isEmpty()) {
+                        "<p class='arabic'>$quranText</p>"
+                    } else {
+                        val p = atlasRasterParams!!
+
+                        val cacheUrl = scienceAtlasAyahImageUrl(
+                            scriptCode,
+                            chapterNo,
+                            verseNo,
+                            p.sizeCacheKey,
+                            p.maxLineCacheKey,
+                            p.colorHex,
+                        )
+
+                        val placements =
+                            atlasPlacementsByVerse[chapterNo to verseNo] ?: emptyMap()
+
+                        val png = AtlasAyahRasterizer.renderAyahToPng(
+                            atlasBundle,
+                            details.words,
+                            placements,
+                            p.fontSizePx,
+                            p.lineHeightPx,
+                            p.onSurfaceArgb,
+                            p.wordGapPx,
+                            maxLineWidthPx = p.maxLineWidthPx,
+                        )
+
+                        if (png != null) {
+                            atlasAyahImageCache[cacheUrl] = png
+                        }
+
+                        val atlasImgHtml = scienceAtlasAyahImgHtml(
+                            cacheUrl = cacheUrl,
+                            pngBytes = png,
+                            alt = "$chapterNo:$verseNo",
+                            physicalPxPerWebCssPx = physicalPxPerWebCssPx,
+                        )
+                        "<p class=\"arabic atlas-img\" dir=\"rtl\">$atlasImgHtml</p>"
+                    }
+                }
+
+                isKFQPC -> {
+                    "<p class='arabic' style='font-family:page_${details.pageNo}'>$quranText</p>"
+                }
+
+                else -> {
+                    "<p class='arabic' style='font-family:quran-arabic'>$quranText</p>"
+                }
             }
         }
 
-        var fontStyles = "";
-        if (isKFQPC) {
+        var fontStyles = ""
+        if (!isAtlas && isKFQPC) {
             fontPageNos.forEach {
                 fontStyles += "@font-face { font-family: page_$it; src: url('https://assets-font/quran-arabic/page_$it'); }"
             }
-        } else {
+        } else if (!isAtlas) {
             fontStyles =
                 "@font-face { font-family: quran-arabic; src: url('https://assets-font/quran-arabic'); }"
         }
@@ -253,4 +343,90 @@ class ActivityQuranScienceContent : BaseActivity() {
     private fun colorIntToCssHex(@ColorInt color: Int): String =
         StringUtils.formatInvariant("#%06X", 0xFFFFFF and color)
 
+    private fun quranScienceAtlasRasterParams(scriptCode: String): QuranScienceAtlasRasterParams {
+        val dm = resources.displayMetrics
+
+        val fontSizePx =
+            resources.getDimension(scriptCode.getQuranScriptVerseTextSizeMediumRes()) *
+                    ReaderPreferences.getArabicTextSizeMultiplier()
+        val lineHeightPx = fontSizePx * 1.8f
+        val wordGapPx = fontSizePx * 0.15f
+        val maxLineWidthPx =
+            (dm.widthPixels - 72f * dm.density).coerceAtLeast(240f)
+        val onSurfaceArgb = colorScheme.onSurface.toArgb()
+        val colorHex = String.format(
+            appPlatformLocale(),
+            "%06X",
+            0xFFFFFF and onSurfaceArgb,
+        )
+        return QuranScienceAtlasRasterParams(
+            fontSizePx = fontSizePx,
+            lineHeightPx = lineHeightPx,
+            wordGapPx = wordGapPx,
+            maxLineWidthPx = maxLineWidthPx,
+            onSurfaceArgb = onSurfaceArgb,
+            colorHex = colorHex,
+            sizeCacheKey = fontSizePx.roundToInt(),
+            maxLineCacheKey = maxLineWidthPx.roundToInt(),
+        )
+    }
+
 }
+
+private data class QuranScienceAtlasRasterParams(
+    val fontSizePx: Float,
+    val lineHeightPx: Float,
+    val wordGapPx: Float,
+    val maxLineWidthPx: Float,
+    val onSurfaceArgb: Int,
+    val colorHex: String,
+    val sizeCacheKey: Int,
+    val maxLineCacheKey: Int,
+)
+
+private fun scienceAtlasAyahImageUrl(
+    scriptCode: String,
+    chapterNo: Int,
+    verseNo: Int,
+    fontSizePx: Int,
+    maxLineWidthPx: Int,
+    colorHex: String,
+): String {
+    return Uri.parse("https://assets-atlas").buildUpon()
+        .appendPath("ayah")
+        .appendPath(scriptCode)
+        .appendPath("$chapterNo")
+        .appendPath("$verseNo")
+        .appendQueryParameter("s", "$fontSizePx")
+        .appendQueryParameter("w", "$maxLineWidthPx")
+        .appendQueryParameter("c", colorHex)
+        .build()
+        .toString()
+}
+
+private fun scienceAtlasAyahImgHtml(
+    cacheUrl: String,
+    pngBytes: ByteArray?,
+    alt: String,
+    physicalPxPerWebCssPx: Float,
+): String {
+    val dim = pngBytes?.let { pngIntrinsicPhysicalSizePx(it) }
+    return if (dim != null) {
+        val (wPhys, hPhys) = dim
+        val scale = physicalPxPerWebCssPx.coerceAtLeast(0.5f)
+        val w = (wPhys / scale).roundToInt().coerceAtLeast(1)
+        val h = (hPhys / scale).roundToInt().coerceAtLeast(1)
+        """<img src="$cacheUrl" width="$w" height="$h" alt="$alt" style="width:${w}px;max-width:100%;height:auto;" />"""
+    } else {
+        """<img src="$cacheUrl" alt="$alt" />"""
+    }
+}
+
+private fun pngIntrinsicPhysicalSizePx(pngBytes: ByteArray): Pair<Int, Int>? {
+    val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    BitmapFactory.decodeByteArray(pngBytes, 0, pngBytes.size, opts)
+    val w = opts.outWidth
+    val h = opts.outHeight
+    return if (w > 0 && h > 0) w to h else null
+}
+

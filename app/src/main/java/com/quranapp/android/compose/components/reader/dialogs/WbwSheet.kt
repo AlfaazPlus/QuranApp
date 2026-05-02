@@ -165,6 +165,7 @@ private fun Content(data: WbwSheetData) {
 
             val atlasBundle = if (script.isQuranAtlasScript()) {
                 QuranAtlasLoader.getBundle(
+                    context,
                     vm.externalQuranDb,
                     script
                 )

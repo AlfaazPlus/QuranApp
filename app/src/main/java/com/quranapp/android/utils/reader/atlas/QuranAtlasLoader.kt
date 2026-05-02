@@ -1,10 +1,12 @@
 package com.quranapp.android.utils.reader.atlas
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.utils.reader.isQuranAtlasScript
@@ -32,7 +34,11 @@ object QuranAtlasLoader {
         return decodePlacementsJson(entity.placementsJson)
     }
 
-    suspend fun getBundle(db: ExternalQuranDatabase, bundleKey: String): QuranAtlasBundle? =
+    suspend fun getBundle(
+        context: Context,
+        db: ExternalQuranDatabase,
+        bundleKey: String,
+    ): QuranAtlasBundle? =
         withContext(Dispatchers.IO) {
             bundleCache[bundleKey]?.let { return@withContext it }
 
@@ -42,8 +48,8 @@ object QuranAtlasLoader {
                 val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)
                 val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
 
-                val png = entity.imagePng
-                val bitmap = BitmapFactory.decodeByteArray(png, 0, png.size)
+                val pngFile = AtlasManager.getBundlePngFile(context, bundleKey)
+                val bitmap = BitmapFactory.decodeFile(pngFile.path)
                     ?: return@withContext null
 
                 val bundle = QuranAtlasBundle(
@@ -70,12 +76,13 @@ val LocalQuranAtlasBundle = staticCompositionLocalOf<QuranAtlasBundle?> { null }
 
 @Composable
 fun rememberQuranAtlasBundle(db: ExternalQuranDatabase): QuranAtlasBundle? {
+    val context = LocalContext.current
     val script = ReaderPreferences.observeQuranScript()
 
     if (!script.isQuranAtlasScript()) return null
 
-    val bundleState = produceState<QuranAtlasBundle?>(initialValue = null, script) {
-        value = QuranAtlasLoader.getBundle(db, script)
+    val bundleState = produceState<QuranAtlasBundle?>(initialValue = null, script, context) {
+        value = QuranAtlasLoader.getBundle(context, db, script)
     }
 
     return bundleState.value

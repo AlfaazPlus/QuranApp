@@ -160,7 +160,7 @@ fun SimilarVersesSheet(
                     val highlights = parseMatchWordIndices(s.matchWords)
 
                     val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                        QuranAtlasLoader.getBundle(externalQuranDb, scriptCode)
+                        QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
                     } else null
 
                     SimilarVerseListRow(

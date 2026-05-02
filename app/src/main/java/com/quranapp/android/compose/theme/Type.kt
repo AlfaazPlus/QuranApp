@@ -25,6 +25,15 @@ val fontUrdu by lazy {
     )
 }
 
+val fontArabic by lazy {
+    FontFamily(
+        Font(
+            R.font.scheherazadenew_regular,
+            weight = FontWeight.Normal,
+        ),
+    )
+}
+
 val fontCommon by lazy {
     FontFamily(
         Font(

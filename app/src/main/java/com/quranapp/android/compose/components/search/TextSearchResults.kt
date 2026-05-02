@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.alfaazplus.sunnah.ui.theme.appFontFamily
+import com.alfaazplus.sunnah.ui.theme.fontArabic
 import com.alfaazplus.sunnah.ui.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
@@ -217,11 +218,11 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = match.preview,
-                                style = typography.bodyMedium.copy(
-                                    textDirection = TextDirection.Rtl
+                                style = typography.bodyLarge.copy(
+                                    textDirection = TextDirection.Rtl,
+                                    fontFamily = fontArabic
                                 ),
                                 color = colorScheme.onSurface,
-                                maxLines = 4,
                                 overflow = TextOverflow.Ellipsis,
                             )
                         }

@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,7 +26,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,16 +34,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -57,16 +54,13 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.getQuranScriptFontPackSizeMb
-import com.quranapp.android.utils.reader.getQuranScriptFontRes
 import com.quranapp.android.utils.reader.getQuranScriptName
+import com.quranapp.android.utils.reader.getQuranScriptPreview
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
-import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
-import com.quranapp.android.utils.reader.getScriptPreviewText
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.viewModels.ScriptEvent
@@ -166,21 +160,13 @@ private fun ScriptItem(
     onSelect: (String, QuranScriptVariant?) -> Unit,
 ) {
     val appLocale = LocalAppLocale.current
-    val context = LocalContext.current
-    val density = LocalDensity.current
     val isDark = ThemeUtils.observeDarkTheme()
-
-    val previewStyle = TextStyle(
-        fontFamily = FontFamily(Font(script.getQuranScriptFontRes(isDark))),
-        fontSize = with(density) {
-            context.getDimenPx(script.getQuranScriptVerseTextSizeMediumRes()).toSp()
-        }
-    )
 
     val isSelected = script == selectedScript
     val downloadState = downloadStates[script] ?: ResourceDownloadStatus.Idle
     val isDownloading =
         downloadState is ResourceDownloadStatus.Started || downloadState is ResourceDownloadStatus.InProgress
+    val applyTint = script != QuranScriptUtils.SCRIPT_KFQPC_V4
 
     Surface(
         Modifier
@@ -197,16 +183,16 @@ private fun ScriptItem(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    text = script.getScriptPreviewText(),
-                    style = previewStyle,
-                    textAlign = TextAlign.Center
-                )
-            }
+            Image(
+                painter = painterResource(script.getQuranScriptPreview(isDark)),
+                contentDescription = script.getQuranScriptName(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(12.dp),
+                contentScale = ContentScale.Fit,
+                colorFilter = if (applyTint) ColorFilter.tint(colorScheme.onSurface) else null
+            )
 
             HorizontalDivider(
                 color = colorScheme.outline.alpha(0.2f),

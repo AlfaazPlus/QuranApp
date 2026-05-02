@@ -282,7 +282,7 @@ object ReaderItemsBuilder {
         val atlasWbw = coroutineScope {
             val atlasDef = async(Dispatchers.IO) {
                 if (isAtlasScript) {
-                    val bundle = QuranAtlasLoader.getBundle(externalQuranDb, scriptCode)
+                    val bundle = QuranAtlasLoader.getBundle(uiConfig.context, externalQuranDb, scriptCode)
                     val atlasWordTexts =
                         (fromVerse..toVerse).asSequence()
                             .flatMap { vn -> batch.wordsByVerseNo[vn].orEmpty().asSequence() }
@@ -473,6 +473,7 @@ object ReaderItemsBuilder {
 
         val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
             QuranAtlasLoader.getBundle(
+                context,
                 externalQuranDb,
                 scriptCode
             )
@@ -619,6 +620,7 @@ object ReaderItemsBuilder {
 
         val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
             QuranAtlasLoader.getBundle(
+                uiConfig.context,
                 externalQuranDb,
                 scriptCode
             )

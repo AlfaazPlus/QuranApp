@@ -171,7 +171,7 @@ internal fun VotdContent(
                 ?.let(translationFactory::getTranslationBookInfo)
 
             val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                QuranAtlasLoader.getBundle(vm.externalQuranDb, scriptCode)
+                QuranAtlasLoader.getBundle(context, vm.externalQuranDb, scriptCode)
             } else null
 
             VerseOfTheDayState(

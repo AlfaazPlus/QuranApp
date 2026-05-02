@@ -62,14 +62,15 @@ import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.dp2px
-import com.quranapp.android.utils.extensions.getDimenPx
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
 import kotlinx.coroutines.CoroutineScope
@@ -81,6 +82,9 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 private data class VotdWidgetUiState(
     val verseInfo: String,
@@ -354,7 +358,9 @@ private suspend fun buildVotdWidgetState(
             maxWidth = textMaxWidthPx,
             maxHeight = arabicHeightPx,
         )
-    } else null
+    } else {
+        null
+    }
 
     val chapterNo = vwd.chapterNo
     val verseNo = vwd.verseNo
@@ -405,39 +411,112 @@ private suspend fun buildVotdWidgetState(
 }
 
 
-internal fun prepareArabicTextBitmap(
+internal suspend fun prepareArabicTextBitmap(
     context: Context,
     vwd: VerseWithDetails,
     maxWidth: Int,
     maxHeight: Int,
 ): Bitmap? {
-    val pageNo = vwd.pageNo
-
     val quranScript = ReaderPreferences.getQuranScript()
-    val sizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier()
-    val txtSizePx =
-        (context.getDimenPx(quranScript.getQuranScriptVerseTextSizeMediumRes()) * sizeMultiplier)
-            .toInt()
+    val minTextSizePx = context.sp2px(12f)
+    val maxFontSearchPx = context.sp2px(36f)
 
-    // VOTD is always dark background, so we use the "dark" variant of KFQPC if available
-    var fontQuranText = FontResolver.getInstance(context)
-        .typeface(quranScript, pageNo, true)
+    val insetPx = arabicDynamicInsetPx(context, maxWidth, maxHeight)
+    val innerW = (maxWidth - 2 * insetPx).coerceAtLeast(1)
+    val innerH = (maxHeight - 2 * insetPx).coerceAtLeast(1)
 
-    if (fontQuranText == null) {
-        return null
+    if (quranScript.isQuranAtlasScript()) {
+        val bundle = QuranAtlasLoader.getBundle(
+            context,
+            DatabaseProvider.getExternalQuranDatabase(context),
+            quranScript,
+        ) ?: return null
+
+        val maxLineWidthPx = innerW.toFloat().coerceAtLeast(120f)
+
+        suspend fun renderAtlas(sizePx: Int): Bitmap? {
+            val fs = sizePx.toFloat()
+
+            return AtlasAyahRasterizer.renderAyahToBitmap(
+                bundle = bundle,
+                words = vwd.words,
+                placementsByWord = bundle.getPlacementsForWords(vwd.words),
+                fontSizePx = fs,
+                lineHeightPx = fs * 1.8f,
+                argbColor = Color.White.toArgb(),
+                wordGapPx = fs * 0.15f,
+                maxLineWidthPx = maxLineWidthPx,
+            )
+        }
+
+        var bestSize = minTextSizePx
+        var low = minTextSizePx
+        var high = maxFontSearchPx
+
+        while (low <= high) {
+            val mid = (low + high) / 2
+            val raw = renderAtlas(mid)
+
+            if (raw == null) {
+                high = mid - 1
+                continue
+            }
+
+            val fits = raw.width <= innerW && raw.height <= innerH
+
+            raw.recycle()
+
+            if (fits) {
+                bestSize = mid
+                low = mid + 1
+            } else {
+                high = mid - 1
+            }
+        }
+
+        val raw = renderAtlas(bestSize) ?: return null
+
+        val scaled = scaleWidgetBitmapToFit(raw, innerW, innerH)
+        return centerBitmapOnCanvas(scaled, maxWidth, maxHeight)
     }
 
-    val bitmap = createTextBitmap(
+    val pageNo = vwd.pageNo
+
+    val fontQuranText = FontResolver.getInstance(context)
+        .typeface(quranScript, pageNo, true)
+        ?: return null
+
+    val arabicInner = createTextBitmap(
         context,
         vwd.words.joinToString(" ") { it.text },
         fontQuranText,
-        txtSizePx,
+        maxFontSearchPx,
         Color.White.toArgb(),
-        maxWidth,
-        maxHeight
+        innerW,
+        innerH
     )
 
-    return bitmap
+    return centerBitmapOnCanvas(arabicInner, maxWidth, maxHeight)
+}
+
+private fun scaleWidgetBitmapToFit(src: Bitmap, maxW: Int, maxH: Int): Bitmap {
+    if (maxW <= 0 || maxH <= 0) {
+        src.recycle()
+        return createBitmap(1, 1)
+    }
+    val sw = src.width
+    val sh = src.height
+    if (sw <= 0 || sh <= 0) {
+        src.recycle()
+        return createBitmap(1, 1)
+    }
+    val scale = min(min(maxW / sw.toFloat(), maxH / sh.toFloat()), 1f)
+    val tw = max((sw * scale).roundToInt(), 1)
+    val th = max((sh * scale).roundToInt(), 1)
+    if (tw == sw && th == sh) return src
+    val scaled = Bitmap.createScaledBitmap(src, tw, th, true)
+    if (scaled != src) src.recycle()
+    return scaled
 }
 
 internal fun createTextBitmap(
@@ -541,4 +620,35 @@ internal fun createWidgetBackgroundBitmap(
     canvas.drawRoundRect(rect, cornerRadius, cornerRadius, overlayPaint)
 
     return bitmap
+}
+
+private fun arabicDynamicInsetPx(context: Context, maxWidth: Int, maxHeight: Int): Int {
+    val minSide = min(maxWidth, maxHeight)
+
+    if (minSide <= 0) return 0
+
+    val fromFraction = (minSide * 0.07f).roundToInt()
+
+    val minDp = context.dp2px(6f)
+    val maxDp = context.dp2px(24f)
+
+    return fromFraction.coerceIn(minDp, maxDp).coerceAtMost(minSide / 3)
+}
+
+private fun centerBitmapOnCanvas(src: Bitmap, destWidth: Int, destHeight: Int): Bitmap {
+    if (destWidth <= 0 || destHeight <= 0) {
+        src.recycle()
+        return createBitmap(1, 1)
+    }
+
+    val dest = createBitmap(destWidth, destHeight)
+    val canvas = Canvas(dest)
+    val left = (destWidth - src.width) / 2f
+    val top = (destHeight - src.height) / 2f
+
+    canvas.drawBitmap(src, left, top, null)
+
+    if (src !== dest) src.recycle()
+
+    return dest
 }

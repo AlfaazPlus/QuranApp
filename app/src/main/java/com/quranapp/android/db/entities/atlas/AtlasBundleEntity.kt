@@ -14,6 +14,4 @@ data class AtlasBundleEntity(
     val metaJson: String,
     @ColumnInfo(name = "layer_json")
     val layerJson: String,
-    @ColumnInfo(name = "image_png")
-    val imagePng: ByteArray,
 )
