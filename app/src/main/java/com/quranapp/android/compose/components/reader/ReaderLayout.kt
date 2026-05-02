@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -50,6 +47,7 @@ import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.delay
@@ -83,6 +81,7 @@ sealed class ReaderLayoutItem() {
 
     data class VerseUI(
         val verse: VerseWithDetails,
+        val atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
         // list of Pair<langCode, text>
         val parsedTranslationTexts: List<Pair<String, AnnotatedString>> = emptyList(),
         val wbwByWordIndex: Map<Int, WbwWordEntity>? = null,
@@ -376,7 +375,9 @@ private fun SectionMarkerRow(marker: ReaderLayoutItem.SectionMarker) {
         Image(
             painterResource(R.drawable.vector_1),
             contentDescription = null,
-            modifier = Modifier.height(24.dp).scale(-1f, 1f),
+            modifier = Modifier
+                .height(24.dp)
+                .scale(-1f, 1f),
             colorFilter = ColorFilter.tint(decorationTint)
         )
     }

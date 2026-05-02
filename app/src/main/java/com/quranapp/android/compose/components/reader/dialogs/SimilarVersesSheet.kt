@@ -50,6 +50,7 @@ import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
+import com.quranapp.android.compose.components.reader.QuranWordText
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.LocalAppLocale
@@ -61,11 +62,15 @@ import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
+import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -77,6 +82,7 @@ private data class SimilarVerseListRow(
     val surahNo: Int,
     val verseNo: Int,
     val words: List<AyahWordEntity>,
+    val atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
     val translation: Translation?,
     val highlightWordIndices: Set<Int>,
     val pageNo: Int,
@@ -96,6 +102,7 @@ fun SimilarVersesSheet(
     val viewModel = LocalReaderViewModel.current
     val fontResolver = viewModel.fontResolver
     val repository = viewModel.repository
+    val externalQuranDb = viewModel.externalQuranDb
 
     val arabicMult = ReaderPreferences.observeArabicTextSizeMultiplier()
     val translMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
@@ -152,12 +159,18 @@ fun SimilarVersesSheet(
 
                     val highlights = parseMatchWordIndices(s.matchWords)
 
+                    val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
+                        QuranAtlasLoader.getBundle(externalQuranDb, scriptCode)
+                    } else null
+
                     SimilarVerseListRow(
                         entity = s,
                         surahName = surah.getCurrentName(),
                         surahNo = ayah.surahNo,
                         verseNo = ayah.ayahNo,
                         words = vwd.words,
+                        atlasPlacements = atlasBundle?.getPlacementsForWords(vwd.words)
+                            ?: emptyMap(),
                         translation = translation,
                         highlightWordIndices = highlights,
                         pageNo = vwd.pageNo,
@@ -375,6 +388,7 @@ private fun SimilarVerseItem(
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 val ordered = row.words.sortedBy { it.wordIndex }
+
                 for (word in ordered) {
                     val highlight = word.wordIndex in row.highlightWordIndices
 
@@ -386,10 +400,11 @@ private fun SimilarVerseItem(
                         Modifier
                     }
 
-                    Text(
-                        text = word.text,
-                        style = arabicStyle,
+                    QuranWordText(
                         modifier = bgMod.padding(horizontal = 4.dp, vertical = 2.dp),
+                        word = word,
+                        atlasPlacements = row.atlasPlacements.getForWord(word),
+                        style = arabicStyle,
                     )
                 }
             }

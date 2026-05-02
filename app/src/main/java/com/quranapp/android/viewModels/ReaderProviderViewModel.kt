@@ -12,4 +12,5 @@ open class ReaderProviderViewModel(application: Application) : AndroidViewModel(
     val userRepository = DatabaseProvider.getUserRepository(application)
     val repository = DatabaseProvider.getQuranRepository(application)
     val fontResolver = FontResolver.getInstance(application)
+    val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(application)
 }

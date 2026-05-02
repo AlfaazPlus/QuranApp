@@ -15,10 +15,10 @@ import kotlinx.serialization.encodeToString
 import java.io.File
 
 object WbwManager {
-    const val DIR_NAME = "wbw"
-    const val MANIFEST_FILENAME = "available_wbw_info.json"
+    private const val DIR_NAME = "wbw"
+    private const val MANIFEST_FILENAME = "available_wbw_info.json"
 
-    val ROOT_DIR_PATH: String = FileUtils.createPath(
+    private val ROOT_DIR_PATH: String = FileUtils.createPath(
         AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
         DIR_NAME
     )

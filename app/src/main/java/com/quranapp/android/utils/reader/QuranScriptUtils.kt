@@ -194,6 +194,11 @@ fun String.isKFQPCScript(): Boolean = when (this) {
     else -> false
 }
 
+fun String.isQuranAtlasScript(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> true
+    else -> false
+}
+
 /**
  * When true, page mode draws a thin frame around the mushaf text block and horizontal rules between
  * lines.

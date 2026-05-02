@@ -18,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -57,8 +56,11 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING
 import com.quranapp.android.utils.reader.PageBuilderParams
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -68,7 +70,7 @@ import verticalFadingEdge
 
 data class MushafLineLayout(
     val fittedStyle: TextStyle,
-    val centeredGap: androidx.compose.ui.unit.Dp,
+    val centeredGap: Dp,
 )
 
 sealed class QuranPageLineItem {
@@ -86,6 +88,7 @@ sealed class QuranPageLineItem {
         override val lineNo: Int,
         val centered: Boolean,
         val words: List<AyahWordEntity>,
+        val atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
         val layout: MushafLineLayout
     ) : QuranPageLineItem()
 }
@@ -99,7 +102,6 @@ data class QuranPageItem(
 
 private data class MushafPageMeasurementKey(
     val pageNo: Int,
-    val script: String,
     val contentWidthPx: Int,
     val density: Float,
     val fontScale: Float,
@@ -136,15 +138,17 @@ fun ReaderLayoutPageMode(
     val pageBuilderParams =
         remember(colors, typography, textMeasurer, density, contentWidth, isDark) {
             PageBuilderParams(
-                context = context,
-                colors = colors,
-                type = typography,
-                textMeasurer = textMeasurer,
-                density = density,
+                uiConfig = ComposeUiConfig(
+                    context = context,
+                    colors = colors,
+                    type = typography,
+                    textMeasurer = textMeasurer,
+                    density = density,
+                ),
                 contentWidthPx = with(density) {
                     (contentWidth - MUSHAF_PAGE_HORIZONTAL_PADDING * 2).roundToPx()
                 },
-                isDark = isDark
+                isDark = isDark,
             )
         }
 
@@ -453,14 +457,13 @@ private fun MushafLineText(
     layout: MushafLineLayout,
     playingWordKeys: Set<Pair<Int, Int>>,
 ) {
-    val words = textLine.words
     val fittedStyle = layout.fittedStyle
     val centeredGap = layout.centeredGap
 
     if (textLine.centered) {
         Box(Modifier.fillMaxWidth()) {
             MushafWordsRow(
-                words = words,
+                textLine = textLine,
                 fittedStyle = fittedStyle,
                 playingWordKeys = playingWordKeys,
                 horizontalArrangement = Arrangement.spacedBy(
@@ -471,7 +474,7 @@ private fun MushafLineText(
         }
     } else {
         MushafWordsRow(
-            words = words,
+            textLine = textLine,
             fittedStyle = fittedStyle,
             playingWordKeys = playingWordKeys,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -482,12 +485,13 @@ private fun MushafLineText(
 
 @Composable
 private fun MushafWordsRow(
-    words: List<AyahWordEntity>,
+    textLine: QuranPageLineItem.Text,
     fittedStyle: TextStyle,
     playingWordKeys: Set<Pair<Int, Int>>,
     horizontalArrangement: Arrangement.Horizontal,
     modifier: Modifier = Modifier,
 ) {
+    val words = textLine.words
     val wordRects = remember(words) {
         mutableStateListOf<Rect?>().apply { repeat(words.size) { add(null) } }
     }
@@ -544,6 +548,7 @@ private fun MushafWordsRow(
                     Word(
                         active = true,
                         word = word,
+                        atlasPlacements = textLine.atlasPlacements.getForWord(word),
                         fittedStyle = fittedStyle,
                         onClick = { wbwState.onWordClick(word) },
                         modifier = positionModifier,
@@ -553,6 +558,7 @@ private fun MushafWordsRow(
                 Word(
                     active = wbwState.activeTooltipWord == word,
                     word = word,
+                    atlasPlacements = textLine.atlasPlacements.getForWord(word),
                     fittedStyle = fittedStyle,
                     onClick = { wbwState.onWordClick(word) },
                     modifier = positionModifier,
@@ -566,22 +572,21 @@ private fun MushafWordsRow(
 private fun Word(
     active: Boolean,
     word: AyahWordEntity,
+    atlasPlacements: List<AtlasGlyphPlacement>?,
     fittedStyle: TextStyle,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = word.text,
-        color = colorScheme.onBackground,
-        style = fittedStyle,
-        maxLines = 1,
-        softWrap = false,
+    QuranWordText(
         modifier = modifier
             .background(
                 if (active) colorScheme.primary.alpha(0.3f) else Color.Transparent,
                 shape = shapes.small
             )
-            .clickable { onClick() }
+            .clickable { onClick() },
+        word = word,
+        atlasPlacements = atlasPlacements,
+        style = fittedStyle,
     )
 }
 

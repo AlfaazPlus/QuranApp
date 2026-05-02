@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.ModalBottomSheet
@@ -34,17 +35,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,6 +60,7 @@ import com.quranapp.android.compose.components.reader.LocalQuranTextStyle
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.LocalWbwState
 import com.quranapp.android.compose.components.reader.LocalWbwStateData
+import com.quranapp.android.compose.components.reader.QuranWordText
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.reader.VerseView
@@ -71,10 +75,14 @@ import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderProviderViewModel
@@ -93,6 +101,7 @@ private data class WordInfoContent(
     val textStyles: Map<Int, TextStyle>,
     val word: AyahWordEntity,
     val wbwWord: WbwWordEntity?,
+    val atlasPlacements: List<AtlasGlyphPlacement>?,
     val chapterName: String,
     val prev: WbwSheetData?,
     val next: WbwSheetData?,
@@ -125,8 +134,11 @@ private fun Content(data: WbwSheetData) {
     var currentData by remember { mutableStateOf(data) }
 
     val context = LocalContext.current
-    val colors = colorScheme
-    val type = typography
+    val textMeasurer = rememberTextMeasurer()
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val type by rememberUpdatedState(MaterialTheme.typography)
+    val density = LocalDensity.current
+
     val vm = LocalReaderViewModel.current
     val verseActions = LocalVerseActions.current
 
@@ -136,6 +148,7 @@ private fun Content(data: WbwSheetData) {
         context,
         colors,
         type,
+        density,
         verseActions
     ) {
         withContext(Dispatchers.IO) {
@@ -149,6 +162,13 @@ private fun Content(data: WbwSheetData) {
             )
 
             val theWord = words[currentData.wordIndex]
+
+            val atlasBundle = if (script.isQuranAtlasScript()) {
+                QuranAtlasLoader.getBundle(
+                    vm.externalQuranDb,
+                    script
+                )
+            } else null
 
             val wbwRow = wbwId?.let {
                 val map =
@@ -208,20 +228,23 @@ private fun Content(data: WbwSheetData) {
             val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
                 context,
                 params = TextBuilderParams(
-                    context = context,
+                    uiConfig = ComposeUiConfig(
+                        context = context,
+                        colors = colors,
+                        type = type,
+                        textMeasurer = textMeasurer,
+                        density = density,
+                    ),
                     fontResolver = vm.fontResolver,
                     verseActions = verseActions,
-                    colors = colors,
-                    type = type,
                     arabicEnabled = ReaderPreferences.getArabicTextEnabled(),
                     script = ReaderPreferences.getQuranScript(),
                     arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
                     translationSizeMultiplier = ReaderPreferences.getTranslationTextSizeMultiplier(),
                     slugs = ReaderPreferences.getTranslations(),
                 ),
-                repository = vm.repository,
                 chapterNo = chapterNo,
-                verseNos = listOf(currentData.verseNo)
+                verseNos = listOf(currentData.verseNo),
             )
 
             val verseRows = prepared?.items.orEmpty().filterIsInstance<ReaderLayoutItem.VerseUI>()
@@ -231,6 +254,7 @@ private fun Content(data: WbwSheetData) {
                 verseUi = verseRows.first(),
                 textStyles = prepared.textStyles,
                 word = theWord,
+                atlasPlacements = atlasBundle?.getPlacements(theWord.text),
                 wbwWord = wbwRow,
                 chapterName = vm.repository.getChapterName(currentData.chapterNo),
                 prev = prev,
@@ -316,6 +340,7 @@ private fun WordContent(
         ArabicWordCard(
             wbwState = wbwState,
             word = word,
+            atlasPlacements = content.atlasPlacements,
             wbwRow = wbwRow,
             textStyle = content.textStyles.get(verseUi.verse.pageNo) ?: TextStyle.Default,
             hasPrev = content.prev != null,
@@ -404,6 +429,7 @@ private fun VerseContextHeader(
 @Composable
 private fun ArabicWordCard(
     word: AyahWordEntity,
+    atlasPlacements: List<AtlasGlyphPlacement>?,
     hasPrev: Boolean,
     hasNext: Boolean,
     onPrev: () -> Unit,
@@ -449,13 +475,12 @@ private fun ArabicWordCard(
                         modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(
-                            text = word.text,
+                        QuranWordText(
+                            word = word,
+                            atlasPlacements = atlasPlacements,
                             style = textStyle.copy(
                                 fontSize = 40.sp
                             ),
-                            color = colorScheme.onSurface,
-                            textAlign = TextAlign.Center,
                         )
                     }
                     IconButton(

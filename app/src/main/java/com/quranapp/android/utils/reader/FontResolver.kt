@@ -12,12 +12,14 @@ import com.quranapp.android.utils.univ.FileUtils
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
+private data class TypefaceResult(val typeface: Typeface?)
+
 class FontResolver private constructor(val context: Context) {
     // non-KFQPC: one font per script
-    private val scriptFontCache = ConcurrentHashMap<String, Typeface>()
+    private val scriptFontCache = ConcurrentHashMap<String, TypefaceResult>()
 
     // KFQPC: one font per (script, pageNo, dark/light resolution for UI)
-    private val kfqpcFontCache = ConcurrentHashMap<Triple<String, Int, Boolean>, Typeface>()
+    private val kfqpcFontCache = ConcurrentHashMap<Triple<String, Int, Boolean>, TypefaceResult>()
 
     private val fileUtils by lazy { FileUtils.newInstance(context) }
 
@@ -67,24 +69,30 @@ class FontResolver private constructor(val context: Context) {
         pageNo: Int,
         isDark: Boolean,
     ): Typeface? {
-        return if (script.isKFQPCScript()) {
+        return if (script.isQuranAtlasScript()) null
+        else if (script.isKFQPCScript()) {
             kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                loadKfqpcTypeface(script, pageNo, isDark)
-            }
+                TypefaceResult(loadKfqpcTypeface(script, pageNo, isDark))
+            }.typeface
         } else {
             scriptFontCache.getOrPut(script) {
-                context
-                    .getFont(script.getQuranScriptFontRes(isDark))
-            }
+                TypefaceResult(
+                    context
+                        .getFont(script.getQuranScriptFontRes(isDark))
+                )
+            }.typeface
         }
     }
 
     fun prefetch(script: String, pages: List<Int>, isDark: Boolean) {
         if (!script.isKFQPCScript()) {
             scriptFontCache.getOrPut(script) {
-                context
-                    .getFont(script.getQuranScriptFontRes(isDark))
+                TypefaceResult(
+                    context
+                        .getFont(script.getQuranScriptFontRes(isDark))
+                )
             }
+
             return
         }
 
@@ -92,7 +100,7 @@ class FontResolver private constructor(val context: Context) {
             .distinct()
             .forEach { pageNo ->
                 kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                    loadKfqpcTypeface(script, pageNo, isDark)
+                    TypefaceResult(loadKfqpcTypeface(script, pageNo, isDark))
                 }
             }
     }

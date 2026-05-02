@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,12 +38,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -55,6 +59,7 @@ import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.LocalWbwState
+import com.quranapp.android.compose.components.reader.QuranWordText
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
@@ -67,11 +72,15 @@ import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
+import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
+import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.verse.VerseUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.Dispatchers
@@ -79,6 +88,7 @@ import kotlinx.coroutines.withContext
 
 private data class VerseOfTheDayState(
     val verse: VerseWithDetails,
+    val atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
     val translation: Translation?,
     val translationBook: TranslationBookInfoModel?,
 )
@@ -160,8 +170,13 @@ internal fun VotdContent(
                 ?.takeIf { it.isNotBlank() }
                 ?.let(translationFactory::getTranslationBookInfo)
 
+            val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
+                QuranAtlasLoader.getBundle(vm.externalQuranDb, scriptCode)
+            } else null
+
             VerseOfTheDayState(
                 verse = verse,
+                atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words) ?: emptyMap(),
                 translation = translation,
                 translationBook = translationBook,
             )
@@ -218,10 +233,6 @@ internal fun VotdContent(
         )
     }
 
-    val arabicText = remember(verse.words) {
-        verse.words.joinToString(" ") { it.text }
-    }
-
     val translationText = remember(votdState.translation, verse, verseActions, colors) {
         val translation = votdState.translation ?: return@remember buildAnnotatedString { }
 
@@ -251,6 +262,8 @@ internal fun VotdContent(
         wbwState.warmUpWord(verse.chapterNo, verse.verseNo, 0)
     }
 
+    val words = votdState.verse.words
+
     Column {
         Box(
             modifier = Modifier
@@ -261,15 +274,30 @@ internal fun VotdContent(
             header()
         }
 
-        if (arabicEnabled && arabicText.isNotBlank()) {
-            Text(
-                text = arabicText,
-                style = quranTextStyle.copy(color = Color.White),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 8.dp),
-            )
+        if (arabicEnabled && words.isNotEmpty()) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        6.dp,
+                        Alignment.CenterHorizontally
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    words.forEach { word ->
+                        QuranWordText(
+                            word = word,
+                            atlasPlacements = votdState.atlasPlacements.getForWord(word),
+                            style = quranTextStyle.copy(
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            ),
+                        )
+                    }
+                }
+            }
         }
 
         if (translationText.isNotBlank()) {
@@ -348,14 +376,6 @@ internal fun VotdContent(
                 tint = if (votdEnabled) colorScheme.primary else iconTint,
                 small = true,
                 onClick = { showDailyReminderSheet = true }
-            )
-
-            IconButton(
-                painter = painterResource(R.drawable.dr_icon_tafsir),
-                contentDescription = stringResource(R.string.strTitleTafsir),
-                tint = null,
-                small = true,
-                onClick = { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
             )
 
             Spacer(Modifier.weight(1f))

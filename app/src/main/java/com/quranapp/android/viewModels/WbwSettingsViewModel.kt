@@ -8,7 +8,7 @@ import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
-import com.quranapp.android.utils.managers.WbwDownloadManager
+import com.quranapp.android.utils.reader.wbw.WbwDownloadManager
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

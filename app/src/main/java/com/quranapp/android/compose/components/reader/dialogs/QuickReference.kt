@@ -29,14 +29,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,6 +58,7 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.repository.UserRepository
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
@@ -202,8 +206,11 @@ private fun QuickReferenceContent(
     val context = LocalContext.current
     val viewModel = viewModel<ReaderProviderViewModel>()
 
-    val colors = MaterialTheme.colorScheme
-    val type = MaterialTheme.typography
+    val textMeasurer = rememberTextMeasurer()
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val type by rememberUpdatedState(MaterialTheme.typography)
+    val density = LocalDensity.current
+
     val verseActions = LocalVerseActions.current
 
     val verseNos = remember(parsed) { parsedVersesToList(parsed) }
@@ -220,16 +227,20 @@ private fun QuickReferenceContent(
         remember { mutableStateOf(false) }
     }
 
-    LaunchedEffect(data, verseActions) {
+    LaunchedEffect(data, verseActions, colors, type, density) {
         isLoading = true
 
         withContext(Dispatchers.IO) {
             val params = TextBuilderParams(
-                context = context,
+                uiConfig = ComposeUiConfig(
+                    context = context,
+                    colors = colors,
+                    type = type,
+                    density = density,
+                    textMeasurer = textMeasurer
+                ),
                 fontResolver = viewModel.fontResolver,
                 verseActions = verseActions,
-                colors = colors,
-                type = type,
                 arabicEnabled = ReaderPreferences.getArabicTextEnabled(),
                 script = ReaderPreferences.getQuranScript(),
                 arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
@@ -239,7 +250,7 @@ private fun QuickReferenceContent(
             )
 
             prepared = ReaderItemsBuilder.buildQuickReferenceItems(
-                context, params, viewModel.repository, data.chapterNo, verseNos
+                context, params, data.chapterNo, verseNos
             )
         }
         isLoading = false

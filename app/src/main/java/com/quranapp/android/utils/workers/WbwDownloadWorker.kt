@@ -1,3 +1,5 @@
+package com.quranapp.android.utils.workers
+
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -27,6 +29,7 @@ import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import kotlin.io.DEFAULT_BUFFER_SIZE
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.IOException
@@ -66,7 +69,7 @@ class WbwDownloadWorker(
         val tmpFile = WbwManager.getTempDownloadFile(ctx, info.id)
 
         try {
-            downloadToFile(
+            downloadGithubRawContentToFile(
                 url = info.url,
                 dest = tmpFile
             ) { progress ->
@@ -91,50 +94,6 @@ class WbwDownloadWorker(
         } finally {
             if (tmpFile.exists()) {
                 tmpFile.delete()
-            }
-        }
-    }
-
-    private suspend fun downloadToFile(
-        url: String,
-        dest: File,
-        setProgress: suspend (Int?) -> Unit,
-    ) = withContext(Dispatchers.IO) {
-        val response = if (url.startsWith("ghraw://")) {
-            RetrofitInstance.githubLike.getRawContent(
-                url.removePrefix("ghraw://").trimStart('/')
-            )
-        } else {
-            RetrofitInstance.any.downloadStreaming(url)
-        }
-
-        if (!response.isSuccessful) {
-            throw IOException("WBW download failed: HTTP ${response.code()}")
-        }
-
-        val body = response.body() ?: throw IOException("WBW response body is null")
-        val totalBytes = body.contentLength()
-        var downloaded = 0L
-
-        body.byteStream().use { input ->
-            dest.outputStream().buffered().use { output ->
-                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                while (true) {
-                    ensureActive()
-                    val bytes = input.read(buffer)
-                    if (bytes <= 0) break
-
-                    output.write(buffer, 0, bytes)
-                    downloaded += bytes
-
-                    val progress = if (totalBytes > 0) {
-                        ((downloaded * 100) / totalBytes).toInt()
-                    } else {
-                        null
-                    }
-                    setProgress(progress)
-                }
-                output.flush()
             }
         }
     }
@@ -176,21 +135,22 @@ class WbwDownloadWorker(
         }
 
         val activityIntent = Intent(ctx, ActivitySettings::class.java).apply {
-            putExtra(Keys.NAV_DESTINATION, SettingRoutes.TRANSLATIONS_DOWNLOAD)
+            putExtra(Keys.NAV_DESTINATION, SettingRoutes.WWB)
         }
-        val pendingIntent = PendingIntent.getActivity(
-            ctx,
-            info.id.hashCode(),
-            activityIntent,
-            flag
-        )
-        builder.setContentIntent(pendingIntent)
 
-        val cancelIntent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
+        builder.setContentIntent(
+            PendingIntent.getActivity(
+                ctx,
+                info.id.hashCode(),
+                activityIntent,
+                flag
+            )
+        )
+
         builder.addAction(
             R.drawable.dr_icon_close,
             ctx.getString(R.string.strLabelCancel),
-            cancelIntent
+            WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
         )
 
         return ForegroundInfo(
@@ -222,5 +182,62 @@ class WbwDownloadWorker(
             }
         }
         return out
+    }
+}
+
+
+suspend fun downloadGithubRawContentToFile(
+    url: String,
+    dest: File,
+    setProgress: suspend (Int?) -> Unit,
+) = withContext(Dispatchers.IO) {
+    val response = if (url.startsWith("ghraw://")) {
+        RetrofitInstance.githubLike.getRawContent(
+            url.removePrefix("ghraw://").trimStart('/')
+        )
+    } else {
+        RetrofitInstance.any.downloadStreaming(url)
+    }
+
+    if (!response.isSuccessful) {
+        throw IOException("WBW download failed: HTTP ${response.code()}")
+    }
+
+    val body = response.body() ?: throw IOException("WBW response body is null")
+    val totalBytes = body.contentLength()
+    var downloaded = 0L
+
+    body.byteStream().use { input ->
+        dest.outputStream().buffered().use { output ->
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            var lastUpdateTime = 0L
+
+            while (true) {
+                ensureActive()
+
+                val bytes = input.read(buffer)
+                if (bytes <= 0) break
+
+                output.write(buffer, 0, bytes)
+                downloaded += bytes
+
+                val now = System.currentTimeMillis()
+                val isFinished = totalBytes > 0L && downloaded == totalBytes
+
+                if (now - lastUpdateTime >= 2000L || isFinished) {
+                    lastUpdateTime = now
+
+                    val progress = if (totalBytes > 0) {
+                        ((downloaded * 100) / totalBytes).toInt()
+                    } else {
+                        null
+                    }
+
+                    setProgress(progress)
+                }
+            }
+
+            output.flush()
+        }
     }
 }

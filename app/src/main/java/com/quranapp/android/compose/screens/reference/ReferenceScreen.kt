@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -44,6 +45,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,10 +56,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -87,6 +91,7 @@ import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.db.entities.BookmarkKey
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.extensions.isSingleValue
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
@@ -143,8 +148,10 @@ private fun ReferenceScreenContent(
     val context = LocalContext.current
     val vm = LocalReaderViewModel.current
 
-    val colors = colorScheme
-    val type = typography
+    val textMeasurer = rememberTextMeasurer()
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val type by rememberUpdatedState(MaterialTheme.typography)
+    val density = LocalDensity.current
 
     var rows by remember { mutableStateOf<List<ReferenceRow>>(emptyList()) }
     var loading by remember { mutableStateOf(true) }
@@ -185,15 +192,19 @@ private fun ReferenceScreenContent(
             .toHashSet()
     }
 
-    LaunchedEffect(refModel, selectedChapterChip, translationSlugs) {
+    LaunchedEffect(refModel, selectedChapterChip, translationSlugs, colors, type, density) {
         loading = true
         rows = withContext(Dispatchers.IO) {
             val params = TextBuilderParams(
-                context = context,
+                uiConfig = ComposeUiConfig(
+                    context = context,
+                    colors = colors,
+                    type = type,
+                    density = density,
+                    textMeasurer = textMeasurer
+                ),
                 fontResolver = vm.fontResolver,
                 verseActions = verseActions,
-                colors = colors,
-                type = type,
                 arabicEnabled = ReaderPreferences.getArabicTextEnabled(),
                 script = ReaderPreferences.getQuranScript(),
                 arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
@@ -731,7 +742,6 @@ private suspend fun buildReferenceRows(
             val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
                 context,
                 params,
-                repository,
                 seg.chapterNo,
                 verseNos,
             ) ?: return@async Triple(seg, emptyList<ReaderLayoutItem.VerseUI>(), emptyMap())

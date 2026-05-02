@@ -1,6 +1,5 @@
-package com.quranapp.android.utils.managers
+package com.quranapp.android.utils.reader.wbw
 
-import WbwDownloadWorker
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -10,12 +9,15 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
+import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.utils.workers.WbwDownloadWorker
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
+import kotlin.collections.iterator
 
 object WbwDownloadManager {
     private const val TAG = "download_wbw"
@@ -38,7 +40,7 @@ object WbwDownloadManager {
     }
 
     fun startDownload(context: Context, info: WbwLanguageInfo) {
-        val data = workDataOf("wbwInfo" to Json.encodeToString(info))
+        val data = workDataOf("wbwInfo" to Json.Default.encodeToString(info))
         val itemTag = "${ITEM_TAG_PREFIX}${info.id}"
 
         val request = OneTimeWorkRequestBuilder<WbwDownloadWorker>()

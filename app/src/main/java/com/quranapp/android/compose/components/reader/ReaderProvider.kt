@@ -31,6 +31,8 @@ import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
+import com.quranapp.android.utils.reader.atlas.rememberQuranAtlasBundle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import com.quranapp.android.utils.univ.StringUtils
@@ -76,6 +78,7 @@ fun ReaderProvider(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val bundle = rememberQuranAtlasBundle(viewModel.externalQuranDb)
 
     val controller = viewModel.controller
     val recitationState by controller.state.collectAsStateWithLifecycle()
@@ -125,6 +128,7 @@ fun ReaderProvider(
 
     CompositionLocalProvider(
         LocalReaderViewModel provides viewModel,
+        LocalQuranAtlasBundle provides bundle,
         LocalVerseActions provides remember {
             VerseActions(
                 onReferenceClick = { slugs, chapterNo, verses ->

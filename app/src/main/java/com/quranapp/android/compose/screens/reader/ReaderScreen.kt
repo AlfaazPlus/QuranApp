@@ -57,6 +57,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -67,8 +68,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.window.core.layout.WindowSizeClass
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
-import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.player.MiniPlayerVisibility
+import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderMode
@@ -80,6 +81,7 @@ import com.quranapp.android.compose.components.reader.navigator.rememberAppBarDi
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderLaunchParams
@@ -94,8 +96,10 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    val textMeasurer = rememberTextMeasurer()
     val colors by rememberUpdatedState(MaterialTheme.colorScheme)
     val type by rememberUpdatedState(MaterialTheme.typography)
+    val density = LocalDensity.current
 
     val isDark = ThemeUtils.observeDarkTheme()
 
@@ -137,9 +141,18 @@ fun ReaderScreen(params: ReaderLaunchParams) {
     ReaderProvider {
         val verseActions = LocalVerseActions.current
 
-        LaunchedEffect(lifecycleOwner) {
+        LaunchedEffect(lifecycleOwner, colors, type, density) {
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                readerVm.observeChanges(context, colors, type, verseActions)
+                readerVm.observeChanges(
+                    uiConfig = ComposeUiConfig(
+                        context = context,
+                        colors = colors,
+                        type = type,
+                        textMeasurer = textMeasurer,
+                        density = density,
+                    ),
+                    verseActions
+                )
             }
         }
 

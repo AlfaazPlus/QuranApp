@@ -16,17 +16,14 @@ object ReaderTextSizeUtils {
     const val TEXT_SIZE_MULT_TRANSL_DEFAULT: Float = 1.0f
     const val TEXT_SIZE_MULT_TAFSIR_DEFAULT: Float = 1.0f
     const val TEXT_SIZE_MULT_WBW_DEFAULT: Float = 1.0f
-
-    @JvmStatic
+    
     val maxProgress: Int
         get() = TEXT_SIZE_MAX_PROGRESS - TEXT_SIZE_MIN_PROGRESS
-
-    @JvmStatic
+    
     fun normalizeProgress(seekbarProgress: Int): Int {
         return TEXT_SIZE_MIN_PROGRESS + seekbarProgress
     }
-
-    @JvmStatic
+    
     fun calculateMultiplier(
         progress: Int,
         min: Int = TEXT_SIZE_MIN_PROGRESS,
@@ -38,13 +35,11 @@ object ReaderTextSizeUtils {
 
         return progress.toFloat() / 100
     }
-
-    @JvmStatic
+    
     fun calculateProgressText(multiplier: Float): Int {
         return (multiplier * 100).toInt()
     }
-
-    @JvmStatic
+    
     fun calculateProgress(multiplier: Float): Int {
         return (multiplier * 100).toInt() - TEXT_SIZE_MIN_PROGRESS
     }

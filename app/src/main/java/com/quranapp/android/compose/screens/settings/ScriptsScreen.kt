@@ -68,6 +68,7 @@ import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.getQuranScriptVerseTextSizeMediumRes
 import com.quranapp.android.utils.reader.getScriptPreviewText
 import com.quranapp.android.utils.reader.isKFQPCScript
+import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.viewModels.ScriptEvent
 import com.quranapp.android.viewModels.ScriptsViewModel
 import kotlinx.coroutines.launch
@@ -84,6 +85,8 @@ fun ScriptsScreen() {
             null
         )
     }
+
+    var showAtlasDownloadAlert by remember { mutableStateOf<String?>(null) }
 
     val selectedScript = ReaderPreferences.observeQuranScript()
     val selectedVariant = ReaderPreferences.observeQuranScriptVariant()
@@ -126,6 +129,11 @@ fun ScriptsScreen() {
                     }
 
                     scope.launch {
+                        if (script.isQuranAtlasScript() && !viewModel.isAtlasInstalled(script)) {
+                            showAtlasDownloadAlert = script
+                            return@launch
+                        }
+
                         ReaderPreferences.setQuranScriptWithVariant(newScript, newVariant)
                     }
                 }
@@ -139,6 +147,12 @@ fun ScriptsScreen() {
     ) {
         showDownloadAlert = null
     }
+
+    ScriptAtlasDownloadRequestAlert(
+        viewModel = viewModel,
+        scriptKey = showAtlasDownloadAlert,
+        onDismiss = { showAtlasDownloadAlert = null },
+    )
 }
 
 @Composable
@@ -241,12 +255,22 @@ private fun ScriptItem(
                                 is ResourceDownloadStatus.InProgress -> if (downloadState.progress <= 100) {
                                     String.format(
                                         appLocale.platformLocale,
-                                        $$"%1$s (%2$d%%)",
-                                        stringResource(R.string.msgDownloadingFonts),
+                                        "%1\$s (%2\$d%%)",
+                                        stringResource(
+                                            if (script.isQuranAtlasScript()) {
+                                                R.string.textDownloading
+                                            } else {
+                                                R.string.msgDownloadingFonts
+                                            },
+                                        ),
                                         downloadState.progress
                                     )
                                 } else {
-                                    stringResource(R.string.msgExtractingFonts)
+                                    if (script.isQuranAtlasScript()) {
+                                        stringResource(R.string.textDownloading)
+                                    } else {
+                                        stringResource(R.string.msgExtractingFonts)
+                                    }
                                 }
 
                                 else -> stringResource(R.string.textDownloading)
@@ -324,5 +348,37 @@ private fun ScriptDownloadRequestAlert(
         }
 
         Text(msg.toString())
+    }
+}
+
+@Composable
+private fun ScriptAtlasDownloadRequestAlert(
+    viewModel: ScriptsViewModel,
+    scriptKey: String?,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        isOpen = scriptKey != null,
+        onClose = onDismiss,
+        title = stringResource(R.string.titleDownloadScriptResources),
+        actions = listOf(
+            AlertDialogAction(
+                text = stringResource(R.string.strLabelCancel)
+            ),
+            AlertDialogAction(
+                text = stringResource(R.string.labelDownload),
+                style = AlertDialogActionStyle.Primary,
+                onClick = {
+                    val key = scriptKey ?: return@AlertDialogAction
+                    viewModel.onEvent(
+                        ScriptEvent.DownloadAtlas(key, 6)
+                    )
+                }
+            )
+        )
+    ) {
+        if (scriptKey == null) return@AlertDialog
+
+        Text(scriptKey.getQuranScriptName())
     }
 }

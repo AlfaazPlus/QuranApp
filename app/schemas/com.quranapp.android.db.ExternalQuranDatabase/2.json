@@ -1,0 +1,145 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "5b1e4ba33d03a5b67df866076f17a643",
+    "entities": [
+      {
+        "tableName": "wbw_words",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ayah_id` INTEGER NOT NULL, `word_index` INTEGER NOT NULL, `wbw_id` TEXT NOT NULL, `translation` TEXT, `transliteration` TEXT, PRIMARY KEY(`wbw_id`, `ayah_id`, `word_index`))",
+        "fields": [
+          {
+            "fieldPath": "ayahId",
+            "columnName": "ayah_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wordIndex",
+            "columnName": "word_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wbwId",
+            "columnName": "wbw_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "translation",
+            "columnName": "translation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "transliteration",
+            "columnName": "transliteration",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "wbw_id",
+            "ayah_id",
+            "word_index"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_wbw_words_ayah_wbw",
+            "unique": false,
+            "columnNames": [
+              "ayah_id",
+              "wbw_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_wbw_words_ayah_wbw` ON `${TABLE_NAME}` (`ayah_id`, `wbw_id`)"
+          }
+        ]
+      },
+      {
+        "tableName": "atlas_bundles",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bundle_key` TEXT NOT NULL, `meta_json` TEXT NOT NULL, `layer_json` TEXT NOT NULL, `image_png` BLOB NOT NULL, PRIMARY KEY(`bundle_key`))",
+        "fields": [
+          {
+            "fieldPath": "bundleKey",
+            "columnName": "bundle_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "metaJson",
+            "columnName": "meta_json",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "layerJson",
+            "columnName": "layer_json",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imagePng",
+            "columnName": "image_png",
+            "affinity": "BLOB",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "bundle_key"
+          ]
+        }
+      },
+      {
+        "tableName": "atlas_word_shapes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bundle_key` TEXT NOT NULL, `word` TEXT NOT NULL, `placements_json` TEXT NOT NULL, PRIMARY KEY(`bundle_key`, `word`))",
+        "fields": [
+          {
+            "fieldPath": "bundleKey",
+            "columnName": "bundle_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "placementsJson",
+            "columnName": "placements_json",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "bundle_key",
+            "word"
+          ]
+        },
+        "indices": [
+          {
+            "name": "idx_atlas_word_shapes_bundle",
+            "unique": false,
+            "columnNames": [
+              "bundle_key"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `idx_atlas_word_shapes_bundle` ON `${TABLE_NAME}` (`bundle_key`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b1e4ba33d03a5b67df866076f17a643')"
+    ]
+  }
+}

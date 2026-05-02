@@ -32,6 +32,7 @@ import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
+import com.quranapp.android.utils.reader.atlas.getForWord
 
 @Composable
 fun QuranTextWbw(
@@ -50,8 +51,6 @@ fun QuranTextWbw(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             for (word in verseUi.verse.words) {
                 val wbwForWord = wbwMap[word.wordIndex]
@@ -108,6 +107,7 @@ private fun QuranTextWbwWordCell(
     onWordClick: ((AyahWordEntity) -> Unit)?,
 ) {
     val arabicStyle = textStyles.quran(verseUi.verse.pageNo) ?: TextStyle.Default
+    val atlasPlacements = verseUi.atlasPlacements.getForWord(word)
 
     val dividerColor = colorScheme.outlineVariant
 
@@ -120,10 +120,13 @@ private fun QuranTextWbwWordCell(
     }
 
     if (word.isLastWordOfAyah) {
-        Text(
-            text = word.text,
+        QuranWordText(
+            modifier = Modifier
+                .clickable { handleWordClick(word) }
+                .padding(horizontal = 3.dp, vertical = 6.dp),
+            word = word,
+            atlasPlacements = atlasPlacements,
             style = arabicStyle,
-            modifier = Modifier.clickable { handleWordClick(word) },
         )
     } else {
         val isThisWordLoading = wbwState.isWbwAudioLoading(
@@ -140,6 +143,7 @@ private fun QuranTextWbwWordCell(
                     shape = shapes.small
                 )
                 .clickable { handleWordClick(word) }
+                .padding(horizontal = 3.dp, vertical = 6.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -151,9 +155,7 @@ private fun QuranTextWbwWordCell(
                 val hasTranslation = !wbw?.translation.isNullOrBlank()
                 val showDividerUnderArabic = hasTransliteration || hasTranslation
 
-                Text(
-                    text = word.text,
-                    style = arabicStyle,
+                QuranWordText(
                     modifier = if (showDividerUnderArabic) {
                         Modifier.drawBehind {
                             val stroke = 1.dp.toPx()
@@ -168,6 +170,9 @@ private fun QuranTextWbwWordCell(
                     } else {
                         Modifier
                     },
+                    word = word,
+                    atlasPlacements = atlasPlacements,
+                    style = arabicStyle,
                 )
 
                 if (hasTranslation || hasTransliteration) {
