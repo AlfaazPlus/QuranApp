@@ -44,7 +44,7 @@ The quran translations used in the app are in a special format. If you would lik
        Example: `<reference chapter="2" verses="1,5,29">2:1,5,29</reference>`. This means that the reference is to chapter 1, verses 1, 5, and 29.
 
 ## Recitations
-You can provide free api links to recitations similar to [available_recitations_info.json](/inventory/recitations/available_recitations_info.json).
+You can provide free api links to recitations similar to [available_recitations_info_v2.json](/inventory/recitations/available_recitations_info_v2.json).
 
 ## App Translations
 If you would like to translate the app in your language, you may do so by visiting this [link](https://hosted.weblate.org/projects/QuranApp/#languages). You can add a new language or contribute to the existing languages. The following chart shows the current status of app language translations.

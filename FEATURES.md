@@ -11,15 +11,15 @@ The following features are the reason why you should use the QuranApp.
 - No data collection or sharing
 
 ### 📙 Translations
-- 40+ translations in 20+ languages
+- 45+ translations in 20+ languages
 - Read multiple translations together
 - Quick preview of footnotes
 - Quick preview of verse references
 - Fully offline once downloaded
 
 ### 🎙️ Recitations
-- 15+ recitations
-- 7+ translation audios
+- 18+ recitations
+- 10+ translation audios
   - Play only Quran
   - Play only translation
   - Play both Quran and translation
