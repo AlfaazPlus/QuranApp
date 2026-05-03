@@ -453,8 +453,8 @@ private fun ReciterDownloadCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colorScheme.surfaceContainerLow)
             .clip(shapes.medium)
+            .background(colorScheme.surfaceContainerLow)
             .clickable(onClick = onOpenChapters)
             .border(
                 width = 1.dp,
@@ -475,14 +475,9 @@ private fun ReciterDownloadCard(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .size(36.dp)
+                        .clip(CircleShape)
                         .background(
-                            brush = Brush.linearGradient(
-                                colors = listOf(
-                                    colorScheme.primary.copy(alpha = 0.2f),
-                                    colorScheme.tertiary.copy(alpha = 0.1f)
-                                )
-                            ),
-                            shape = CircleShape
+                            colorScheme.primary.copy(alpha = 0.2f),
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -513,7 +508,7 @@ private fun ReciterDownloadCard(
                         Text(
                             text = subtitle,
                             style = typography.bodyMedium,
-                            color = colorScheme.onSurfaceVariant,
+                            color = colorScheme.onSurface.alpha(0.75f),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -756,14 +751,9 @@ private fun ChapterDownloadsSheet(
                         modifier = Modifier
                             .padding(end = 10.dp)
                             .size(30.dp)
+                            .clip(CircleShape)
                             .background(
-                                brush = Brush.linearGradient(
-                                    colors = listOf(
-                                        colorScheme.primary.copy(alpha = 0.2f),
-                                        colorScheme.tertiary.copy(alpha = 0.1f)
-                                    )
-                                ),
-                                shape = CircleShape
+                                colorScheme.primary.copy(alpha = 0.2f)
                             ),
                         contentAlignment = Alignment.Center
                     ) {
