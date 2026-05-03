@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +17,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,42 +40,45 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.LocalWbwState
-import com.quranapp.android.compose.components.reader.QuranWordText
+import com.quranapp.android.compose.components.reader.QuranTextWbw
+import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
+import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.formattedStringResource
+import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.formatString
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
-import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -85,13 +89,6 @@ import com.quranapp.android.utils.verse.VerseUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-private data class VerseOfTheDayState(
-    val verse: VerseWithDetails,
-    val atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
-    val translation: Translation?,
-    val translationBook: TranslationBookInfoModel?,
-)
 
 @Composable
 fun VerseOfTheDay() {
@@ -114,8 +111,10 @@ internal fun VotdContent(
     header: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val colors = colorScheme
-    val type = typography
+    val resources = LocalResources.current
+    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
+    val type by rememberUpdatedState(MaterialTheme.typography)
+    val appLocale = LocalAppLocale.current
 
     val vm = viewModel<ReaderViewModel>()
     val verseActions = LocalVerseActions.current
@@ -133,7 +132,7 @@ internal fun VotdContent(
 
     val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
     val arabicTextMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
-    val translationTextMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
+    val translationSizeMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
     val scriptCode = preferences.get(ReaderPreferences.KEY_SCRIPT)
     val translationSlugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
     val votdEnabled = preferences.get(VersePreferences.KEY_VOTD_REMINDER_ENABLED)
@@ -147,12 +146,16 @@ internal fun VotdContent(
         },
     )
 
-    val state by produceState<VerseOfTheDayState?>(
+    val state by produceState<ReaderLayoutItem.VerseUI?>(
         initialValue = null,
         scriptCode,
         translationSlugs,
+        appLocale,
+        colors,
+        type,
     ) {
         val translationFactory = QuranTranslationFactory(context)
+
         value = withContext(Dispatchers.IO) {
             val verse = VerseUtils.getVOTD(context, vm.repository)
                 ?: return@withContext null
@@ -160,97 +163,105 @@ internal fun VotdContent(
             val optimalSlug = translationSlugs.firstOrNull { !TranslUtils.isTransliteration(it) }
                 ?: TranslUtils.TRANSL_SLUG_DEFAULT
 
-            val translation = translationFactory.getTranslationsSingleVerse(
-                setOf(optimalSlug),
+            val slugs = setOf(optimalSlug)
+
+            val translations = translationFactory.getTranslationsSingleVerse(
+                slugs,
                 verse.chapterNo,
                 verse.verseNo
-            ).firstOrNull()
+            )
 
-            val translationBook = translation?.bookSlug
-                ?.takeIf { it.isNotBlank() }
-                ?.let(translationFactory::getTranslationBookInfo)
+            val booksInfo = translationFactory.getTranslationBooksInfoValidated(slugs)
 
             val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
                 QuranAtlasLoader.getBundle(context, vm.externalQuranDb, scriptCode)
             } else null
 
-            VerseOfTheDayState(
+            val parsedTranslationTexts = translations.mapNotNull { translation ->
+                val bookInfo = booksInfo[translation.bookSlug] ?: return@mapNotNull null
+
+                val ts = getTranslationTextStyle(
+                    TranslationTextStyleParams(
+                        translation.bookSlug,
+                        type,
+                        translationSizeMultiplier,
+                    )
+                )
+
+                val text = buildAnnotatedString {
+                    withStyle(ts.toParagraphStyle()) {
+                        withStyle(ts.toSpanStyle()) {
+                            append(
+                                buildTranslationAnnotatedString(
+                                    translation,
+                                    colors,
+                                    actions = VerseActions(
+                                        verseActions.onReferenceClick,
+                                        onFootnoteClickRaw = { _, footnoteNo ->
+                                            verseActions.onFootnoteClick?.invoke(
+                                                verse,
+                                                translation.footnotes[footnoteNo]
+                                            )
+                                        }
+                                    )
+                                )
+                            )
+                        }
+
+                        withStyle(
+                            ParagraphStyle(lineHeight = 40.sp)
+                        ) {
+                            withStyle(
+                                SpanStyle(
+                                    color = Color.White.alpha(0.75f),
+                                    fontStyle = FontStyle.Italic,
+                                    fontSize = type.labelMedium.fontSize
+                                )
+                            ) {
+                                append(
+                                    formatString(
+                                        context,
+                                        appLocale,
+                                        pattern = resources.getString(R.string.strLabelVerseSerialWithChapter),
+                                        verse.chapter.getCurrentName(),
+                                        verse.chapterNo,
+                                        verse.verseNo
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Pair(
+                    bookInfo.langCode,
+                    text,
+                )
+            }
+
+            ReaderLayoutItem.VerseUI(
                 verse = verse,
                 atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words) ?: emptyMap(),
-                translation = translation,
-                translationBook = translationBook,
+                parsedTranslationTexts = parsedTranslationTexts,
+                wbwByWordIndex = null,
+                showDivider = false,
+                key = "verse-votd"
             )
         }
     }
 
-    val votdState = state
+    val verseUi = state
 
-    if (votdState == null) {
+    if (verseUi == null) {
         VerseOfTheDayLoading()
         return
     }
 
-    val verse = votdState.verse
+    val verse = verseUi.verse
     val isBookmarked by vm.userRepository.isBookmarkedFlow(
         verse.chapterNo,
         verse.verseNo..verse.verseNo
     ).collectAsStateWithLifecycle(false)
-
-    val quranTextStyle = remember(
-        context,
-        colors,
-        type,
-        scriptCode,
-        verse.pageNo,
-        arabicTextMultiplier,
-    ) {
-        getQuranTextStyle(
-            QuranTextStyleParams(
-                context = context,
-                fontResolver = vm.fontResolver,
-                colors = colors,
-                type = type,
-                pageNo = verse.pageNo,
-                script = scriptCode,
-                sizeMultiplier = arabicTextMultiplier,
-                useSmallSize = true,
-                isDark = true
-            )
-        )
-    }
-
-    val translationTextStyle = remember(
-        votdState.translation?.bookSlug,
-        translationTextMultiplier,
-        type
-    ) {
-        getTranslationTextStyle(
-            TranslationTextStyleParams(
-                slug = votdState.translation?.bookSlug.orEmpty(),
-                type = type,
-                sizeMultiplier = translationTextMultiplier,
-            )
-        )
-    }
-
-    val translationText = remember(votdState.translation, verse, verseActions, colors) {
-        val translation = votdState.translation ?: return@remember buildAnnotatedString { }
-
-        buildTranslationAnnotatedString(
-            translation = translation,
-            colorScheme = colors,
-            actions = VerseActions(
-                onReferenceClick = verseActions.onReferenceClick,
-                onFootnoteClickRaw = { _, footnoteNo ->
-                    verseActions.onFootnoteClick?.invoke(
-                        verse,
-                        translation.footnotes[footnoteNo],
-                    )
-                },
-            ),
-        )
-    }
-
 
     val iconTint = Color.White.alpha(0.7f)
 
@@ -262,81 +273,75 @@ internal fun VotdContent(
         wbwState.warmUpWord(verse.chapterNo, verse.verseNo, 0)
     }
 
-    val words = votdState.verse.words
-
     Column {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(start = 12.dp, end = 12.dp, top = 12.dp),
             contentAlignment = Alignment.Center
         ) {
             header()
         }
 
-        if (arabicEnabled && words.isNotEmpty()) {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                FlowRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        6.dp,
-                        Alignment.CenterHorizontally
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    words.forEach { word ->
-                        QuranWordText(
-                            word = word,
-                            atlasPlacements = votdState.atlasPlacements.getForWord(word),
-                            style = quranTextStyle.copy(
-                                color = Color.White,
-                                textAlign = TextAlign.Center
-                            ),
-                        )
-                    }
+        if (arabicEnabled) {
+            val quranTextStyle = remember(
+                context,
+                colors,
+                type,
+                scriptCode,
+                verse.pageNo,
+                arabicTextMultiplier,
+            ) {
+                getQuranTextStyle(
+                    QuranTextStyleParams(
+                        context = context,
+                        fontResolver = vm.fontResolver,
+                        colors = colors,
+                        type = type,
+                        pageNo = verse.pageNo,
+                        script = scriptCode,
+                        sizeMultiplier = arabicTextMultiplier,
+                        useSmallSize = true,
+                        isDark = true
+                    )
+                ).copy(
+                    color = Color.White
+                )
+            }
+
+            TextStyleProvider(
+                mapOf(
+                    verse.pageNo to quranTextStyle
+                )
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    QuranTextWbw(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        verseUi = verseUi,
+                        horizontalArrangement = Arrangement.Center,
+                    )
                 }
             }
         }
 
-        if (translationText.isNotBlank()) {
+        val translationText = verseUi.parsedTranslationTexts.firstOrNull()?.second
+
+        if (!translationText.isNullOrBlank()) {
             SelectionContainer {
-                Column(
+                Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = translationText,
-                        style = translationTextStyle,
-                        color = Color.White,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                    )
-
-                    Text(
-                        text = formattedStringResource(
-                            R.string.strLabelVerseSerialWithChapter,
-                            votdState.verse.chapter.getCurrentName(),
-                            verse.chapterNo,
-                            verse.verseNo
-                        ),
-                        style = translationTextStyle.copy(
-                            fontStyle = FontStyle.Italic,
-                            fontSize = typography.labelMedium.fontSize
-                        ),
-                        color = Color.White.alpha(0.6f),
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                    text = translationText,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                )
             }
         }
 
         HorizontalDivider(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.padding(top = 8.dp),
             color = Color.White.alpha(0.2f)
         )
 
@@ -364,8 +369,8 @@ internal fun VotdContent(
                 small = true,
                 onClick = {
                     verseActions.onBookmarkRequest?.invoke(
-                        votdState.verse.chapterNo,
-                        votdState.verse.verseNo..votdState.verse.verseNo
+                        verseUi.verse.chapterNo,
+                        verseUi.verse.verseNo..verseUi.verse.verseNo
                     )
                 }
             )

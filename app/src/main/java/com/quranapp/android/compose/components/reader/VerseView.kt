@@ -70,8 +70,8 @@ fun VerseView(
             VerseActionBar(verse = verse, isVersePlaying, isBookmarked)
 
             QuranTextWbw(
-                verseUi,
-                onWordClick
+                verseUi = verseUi,
+                onWordClick = onWordClick
             )
 
             TranslationText(verseUi = verseUi)
