@@ -36,6 +36,7 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
     companion object {
         private const val DB_NAME = "QuranTranslation.db"
         const val DB_VERSION = 1
+        private const val BUSY_TIMEOUT_MS = 5000
 
         /**
          * Escapes tables name as it may contain special characters.
@@ -50,6 +51,16 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         fun translationsOrderBy(): String {
             return "$COL_CHAPTER_NO ASC, $COL_VERSE_NO ASC"
         }
+    }
+
+    override fun onConfigure(db: SQLiteDatabase) {
+        super.onConfigure(db)
+
+        if (!db.isReadOnly) {
+            db.enableWriteAheadLogging()
+        }
+
+        db.rawQuery("PRAGMA busy_timeout=$BUSY_TIMEOUT_MS", null).close()
     }
 
     override fun onUpgrade(DB: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -208,15 +219,24 @@ class QuranTranslDBHelper(private val context: Context) : SQLiteOpenHelper(
         translData: String,
         DB: SQLiteDatabase?
     ) {
-        (DB ?: writableDatabase).let {
-            storeTranslationInfo(bookInfo, it)
-            createTranslTable(it, bookInfo)
+        fun runStore(db: SQLiteDatabase) {
+            storeTranslationInfo(bookInfo, db)
+            createTranslTable(db, bookInfo)
+
             try {
                 val root = JSONObject(translData)
-                readAndInsertChapters(it, bookInfo, root)
+                readAndInsertChapters(db, bookInfo, root)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+
+        if (DB == null) {
+            writableDatabase.transaction {
+                runStore(this)
+            }
+        } else {
+            runStore(DB)
         }
     }
 

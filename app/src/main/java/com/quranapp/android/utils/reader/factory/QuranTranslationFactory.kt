@@ -19,6 +19,7 @@ import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_FOOTNOTES
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
 import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
@@ -50,10 +51,10 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         }
     }
 
-    val dbHelper = QuranTranslDBHelper(context)
+    val dbHelper = DatabaseProvider.getQuranTranslDBHelper(context)
 
     override fun close() {
-        dbHelper.close()
+        // Shared process-wide helper; closing it from one factory would break all callers.
     }
 
     fun deleteTranslation(translSlug: String) {
