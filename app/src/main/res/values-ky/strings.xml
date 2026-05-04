@@ -339,12 +339,8 @@
     <string name="theme_purple">Саргылт</string>
     <string name="theme_violet">Кочкул кызыл</string>
     <string name="theme_yellow">Сары</string>
-    <string name="translationHelp">
-        Тилиңизди көрбөй жатасызбы? Аны которууга же жакшыртууга жардам бериңиз жана аны көбүрөөк адамдар үчүн жеткиликтүү кылыңыз!
-    </string>
-    <string name="learnMore">
-        Көбүрөөк билүү
-    </string>
+    <string name="translationHelp">Тилиңизди көрбөй жатасызбы? Аны которууга же жакшыртууга жардам бериңиз жана аны көбүрөөк адамдар үчүн жеткиликтүү кылыңыз!</string>
+    <string name="learnMore">Көбүрөөк билүү</string>
     <string name="strMsgReciterDownloadHint">Оффлайн угуу жана үзгүлтүксүз ойнотуу үчүн кыраат аудиосун жүктөп алыңыз.</string>
     <string name="previousHizb">Мурунку хизб</string>
     <string name="strMsgSearchHistoryDeleteAll">Издөө тарыхынын баары өчүрүлөт.</string>
@@ -422,4 +418,5 @@
     <string name="selectAll">Баарын тандаңыз</string>
     <string name="filterTranslationsDisabledNote">Арабча издөө күйүк болгондо котормолор изделбейт.</string>
     <string name="filterTranslationsEmpty">Азырынча котормолор жүктөлгөн эмес.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
