@@ -356,12 +356,12 @@
     <string name="quran_and_science">القرآن والعلم</string>
     <string name="topics">المواضيع</string>
     <string name="about_this_page">حول هذه الصفحة</string>
-    <string name="about_quran_science_msg">المحتويات في هذه الصفحة مأخوذة من كتاب الدكتور ذاكر نايك بعنوان "القرآن والعلم الحديث: متوافق أم غير متوافق"\n\nالصور المعروضة هي لأغراض توضيحية فقط.</string>
+    <string name="about_quran_science_msg">المحتويات في هذه الصفحة مأخوذة من كتاب الدكتور ذاكر نايك بعنوان القرآن والعلم الحديث: متوافق أم غير متوافق\n\nالصور المعروضة هي لأغراض توضيحية فقط.</string>
     <string name="strLabelScienceReferences" formatted="false">%d مراجع</string>
     <string name="once">مرة واحدة</string>
     <string name="twice">مرتين</string>
     <string name="nTimes" formatted="false">%d مرات</string>
-    <string name="msgRepeat">حدد عدد مرات تشغيل كل آية قبل الانتقال إلى الآية التالية. متاح فقط عند تمكين "تشغيل القرآن فقط" في خيارات الصوت.</string>
+    <string name="msgRepeat">حدد عدد مرات تشغيل كل آية قبل الانتقال إلى الآية التالية. متاح فقط عند تمكين تشغيل القرآن فقط في خيارات الصوت.</string>
     <string name="notSupported">غير مدعوم</string>
     <string name="missingTimingData" formatted="false">بيانات التوقيت مفقودة لـ %s — لا يمكن التشغيل.</string>
     <string name="expandedPlayerModeControls">عناصر التحكم</string>
@@ -404,7 +404,7 @@
     <string name="searchTipsTitle">نصائح البحث</string>
     <string name="searchTipDirectVerse">اقرأ آية أو تفسيراً مباشرة</string>
     <string name="searchTipChapter">ابحث عن السور</string>
-    <string name="searchTipDirectJuz">انتقل إلى "سورة 30" أو "جزء 30" أو "حزب 30"</string>
+    <string name="searchTipDirectJuz">انتقل إلى سورة 30 أو جزء 30 أو حزب 30</string>
     <string name="searchTipTranslation">ابحث في التراجم</string>
     <string name="searchTipArabic">ابحث في نص القرآن</string>
     <string name="enterFullscreen">ملء الشاشة</string>
@@ -428,4 +428,5 @@
     <string name="selectAll">تحديد الكل</string>
     <string name="filterTranslationsDisabledNote">لا يتم البحث في التراجم عند تفعيل البحث في النص العربي.</string>
     <string name="filterTranslationsEmpty">لم تُنزَّل أي ترجمات بعد.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
