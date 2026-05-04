@@ -186,7 +186,7 @@
     <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s से सम्बंधित आयात कुल %2$d स्थानों पर मिले।</string>
     <string name="strMsgReferenceDuas">क़ुरआन से कुछ दुआएं इकट्ठी की हैं।</string>
     <string name="strTitleRecitations">तिलावत</string>
-    <string name="titleDownloadScriptResources">इस स्क्रिप्ट के लिए संसाधन डाउनलोड करें\?</string>
+    <string name="titleDownloadScriptResources">इस स्क्रिप्ट के लिए संसाधन डाउनलोड करें?</string>
     <string name="msgDownloadKFQPCResources">इस स्क्रिप्ट का उपयोग करने से पहले निम्नलिखित संसाधनों को डाउनलोड करने की आवश्यकता है:</string>
     <string name="msgDownloadFontsSize" formatted="false">डाउनलोड आकार: ~%1$dMB\nडाउनलोड के बाद, ऐप लगभग ~%2$dMB उपयोग करेगा।</string>
     <string name="msgDownloadingFonts">फोंट्स डाउनलोड हो रही है</string>
@@ -201,16 +201,11 @@
     <string name="msgVerseReminderNotifPermission">आयात रिमाइंडर को इनैबल करने के लिए अधिसूचना अनुमति की आवश्यकता है।</string>
     <string name="translationCanBeFreedUp" formatted="false">%d डाउनलोड किए गए अनुवादों को मुक्त किया जा सकता है।</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d क़ारी के %1$d संग्रहीत तिलवत फ़ाइलों को मुक्त किया जा सकता है।</string>
-    <string name="storageCleanupMessage">अप्रयुक्त डाउनलोड किए गए संसाधनों को हटाकर जगह खाली करे। यह किसी भी बुकमार्क या सेटिंग्स को नहीं हटाएगा।
-\n
-\nनिम्नलिखित संसाधनों को मुक्त किया जा सकता है:</string>
+    <string name="storageCleanupMessage">अप्रयुक्त डाउनलोड किए गए संसाधनों को हटाकर जगह खाली करे। यह किसी भी बुकमार्क या सेटिंग्स को नहीं हटाएगा। \n \nनिम्नलिखित संसाधनों को मुक्त किया जा सकता है:</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d डाउनलोड की गई स्क्रिप्ट और उनके फोंट को मुक्त किया जा सकता है।</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d सहेजे गए तफ़सीर को हटाया किया जा सकता है।</string>
     <string name="labelFreeUpSpace">जगह खाली करें</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nआपको इसे फिर से डाउनलोड करना होगा।</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nआपको इसे फिर से डाउनलोड करना होगा।</string>
     <string name="github">GitHub</string>
     <string name="strPreviewTextTransl">अल्लाह के नाम से, जो अत्यन्त कृपाशील तथा दयावान् है</string>
     <string name="nItem">%d आइटम</string>
@@ -219,8 +214,8 @@
     <string name="verseSyncOff">आयत सिंक: बंद</string>
     <string name="msgScriptCleanup" formatted="false">%s स्क्रिप्ट और इसके सभी डाउनलोड किए गए फ़ॉन्ट हटा दिए जाएँगे। इनका उपयोग करने के लिए आपको पुनः डाउनलोड करना होगा।</string>
     <string name="msgRecitationCleanup" formatted="false">%s के सभी डाउनलोड किए तिलावत हटा दिए जाएंगे। सूरह द्वारा व्यक्तिगत रूप से तिलावत को हटाने के लिए, सेटिंग्स में जाएं।</string>
-    <string name="titleRecitationCleanup">तिलावत हटाना चाहते हैं\?</string>
-    <string name="titleScriptCleanup">स्क्रिप्ट मिटाना चाहते हैं\?</string>
+    <string name="titleRecitationCleanup">तिलावत हटाना चाहते हैं?</string>
+    <string name="titleScriptCleanup">स्क्रिप्ट मिटाना चाहते हैं?</string>
     <string name="nFiles" formatted="false">%d फ़ाइलें</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d स्क्रिप्ट और %2$d फ़ॉन्ट</string>
     <string name="nothingToCleanup">साफ करने के लिए कुछ भी नहीं है।</string>
@@ -259,10 +254,7 @@
     <string name="titleSolutionVerses">क़ुरआन से समाधान</string>
     <string name="strMsgDuaFor" formatted="false">%s के लिए दुआ</string>
     <string name="titleEtiquetteVerses">क़ुरआन में शिष्टाचार</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp अनुवाद के साथ क़ुरआन करीम को पढ़ने और एक्सप्लोर करने के लिए एक नि: शुल्क और ओपन-सोर्स ऐप है। इस ऐप में तफ़सीर, तिलावात, रिमाइंडर और कई अन्य सुविधाओं के साथ एक अच्छा और साफ इंटरफ़ेस है।
-\n
-\nअभी डाउनलोड करो:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp अनुवाद के साथ क़ुरआन करीम को पढ़ने और एक्सप्लोर करने के लिए एक नि: शुल्क और ओपन-सोर्स ऐप है। इस ऐप में तफ़सीर, तिलावात, रिमाइंडर और कई अन्य सुविधाओं के साथ एक अच्छा और साफ इंटरफ़ेस है। \n \nअभी डाउनलोड करो: \n%s</string>
     <string name="strMsgDuaOf" formatted="false">%s की दुआ</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">कुरान में %s की दुआ</string>
     <string name="titleArabicTextToggle">कुरान की आयत सक्षम करें</string>
