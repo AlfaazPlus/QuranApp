@@ -197,10 +197,7 @@
     <string name="onboardDescTranslations">همیشه می توانید بعداً این را تغییر دهید. می توانید ترجمه های بیشتری را از تنظیمات دانلود کنید.</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">تفسیر آیه %d را بخوانید</string>
     <string name="lastCrashLog">آخرین گزارش خرابی</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n %2$s
-\n
-\nباید دوباره آن‌را بارگیری کنید.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n %2$s \n \nباید دوباره آن‌را بارگیری کنید.</string>
     <string name="onboardDescTheme">همیشه می توانید بعداً این را تغییر دهید.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d اسکریپت دانلود شده و فونت آنها را می توان آزاد کرد.</string>
     <string name="verseSyncOff">همگام سازی آیه: خاموش</string>
