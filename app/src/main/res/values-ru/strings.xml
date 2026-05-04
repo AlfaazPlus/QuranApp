@@ -325,9 +325,7 @@
     <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — в очереди %2$d из %3$d</string>
     <string name="playbackCount">Количество повторов</string>
     <string name="titleRecitationGroupSize">Размер группы аятов</string>
-    <string name="msgRecitationGroupSize">
-        Выберите, сколько аятов Корана будет воспроизводиться перед началом перевода. Например: если вы выберете 3, прозвучат 3 аята Корана, а затем их переводы.
-    </string>
+    <string name="msgRecitationGroupSize">Выберите, сколько аятов Корана будет воспроизводиться перед началом перевода. Например: если вы выберете 3, прозвучат 3 аята Корана, а затем их переводы.</string>
     <string name="labelRecommended">Рекомендуется</string>
     <string name="modeVerseByVerse">Поаятный режим</string>
     <string name="modeMushaf">Режим Мусхафа</string>
@@ -353,13 +351,9 @@
     <string name="once">Один раз</string>
     <string name="twice">Дважды</string>
     <string name="nTimes" formatted="false">%d раз(а)</string>
-    <string name="msgRepeat">
-        Установите количество повторов каждого аята перед переходом к следующему. Доступно только при включенной опции «Только арабский» в настройках аудио.
-    </string>
+    <string name="msgRepeat">Установите количество повторов каждого аята перед переходом к следующему. Доступно только при включенной опции «Только арабский» в настройках аудио.</string>
     <string name="notSupported">Не поддерживается</string>
-    <string name="missingTimingData" formatted="false">
-        Отсутствуют данные о времени для %s — воспроизведение невозможно.
-    </string>
+    <string name="missingTimingData" formatted="false">Отсутствуют данные о времени для %s — воспроизведение невозможно.</string>
     <string name="expandedPlayerModeControls">Управление</string>
     <string name="expandedPlayerModeSpotlight">Фокус</string>
     <string name="theme_default">По умолчанию</string>
@@ -377,9 +371,7 @@
     <string name="sortBy">Сортировать по</string>
     <string name="alphabetically">По алфавиту</string>
     <string name="chronological">В хронологическом порядке</string>
-    <string name="translationHelp">
-        Не видите своего языка? Помогите перевести или улучшить его, чтобы сделать Коран доступным для большего числа людей!
-    </string>
+    <string name="translationHelp">Не видите своего языка? Помогите перевести или улучшить его, чтобы сделать Коран доступным для большего числа людей!</string>
     <string name="learnMore">Узнать больше</string>
     <string name="wordByWord">Пословно</string>
     <string name="selectWbwLanguage">Выберите язык</string>
@@ -426,4 +418,5 @@
     <string name="selectAll">Выбрать все</string>
     <string name="filterTranslationsDisabledNote">Переводы не ищутся, пока включён поиск по арабскому тексту.</string>
     <string name="filterTranslationsEmpty">Переводы ещё не загружены.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
