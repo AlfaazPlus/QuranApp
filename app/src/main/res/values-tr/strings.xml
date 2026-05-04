@@ -418,5 +418,4 @@
     <string name="selectAll">Tümünü seç</string>
     <string name="filterTranslationsDisabledNote">Arapça arama açıkken çevirilerde arama yapılmaz.</string>
     <string name="filterTranslationsEmpty">Henüz indirilmiş çeviri yok.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

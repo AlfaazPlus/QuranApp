@@ -418,5 +418,4 @@
     <string name="selectAll">Выбрать все</string>
     <string name="filterTranslationsDisabledNote">Переводы не ищутся, пока включён поиск по арабскому тексту.</string>
     <string name="filterTranslationsEmpty">Переводы ещё не загружены.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

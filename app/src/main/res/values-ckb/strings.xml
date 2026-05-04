@@ -418,5 +418,4 @@
     <string name="selectAll">هەموویان هەڵبژێرە</string>
     <string name="filterTranslationsDisabledNote">کاتێک گەڕانی عەرەبی چالاکە، لە وەرگێڕانەکاندا نەگەڕێت.</string>
     <string name="filterTranslationsEmpty">هێشتا هیچ وەرگێڕانێک دابەزێندراوە نییە.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

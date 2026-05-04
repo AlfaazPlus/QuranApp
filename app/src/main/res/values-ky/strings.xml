@@ -418,5 +418,4 @@
     <string name="selectAll">Баарын тандаңыз</string>
     <string name="filterTranslationsDisabledNote">Арабча издөө күйүк болгондо котормолор изделбейт.</string>
     <string name="filterTranslationsEmpty">Азырынча котормолор жүктөлгөн эмес.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

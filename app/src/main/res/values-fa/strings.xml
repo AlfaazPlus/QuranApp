@@ -418,5 +418,4 @@
     <string name="selectAll">انتخاب همه</string>
     <string name="filterTranslationsDisabledNote">وقتی جستجوی عربی روشن است، در ترجمه‌ها جستجو نمی‌شود.</string>
     <string name="filterTranslationsEmpty">هنوز ترجمه‌ای دانلود نشده است.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
