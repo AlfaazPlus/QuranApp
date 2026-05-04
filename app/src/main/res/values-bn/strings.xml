@@ -418,5 +418,4 @@
     <string name="selectAll">সব নির্বাচন করুন</string>
     <string name="filterTranslationsDisabledNote">আরবি অনুসন্ধান চালু থাকলে অনুবাদে অনুসন্ধান করা হয় না।</string>
     <string name="filterTranslationsEmpty">এখনও কোনো অনুবাদ ডাউনলোড হয়নি।</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

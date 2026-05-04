@@ -418,5 +418,4 @@
     <string name="selectAll">Piliin lahat</string>
     <string name="filterTranslationsDisabledNote">Hindi kasama sa paghahanap ang mga pagsasalin kapag naka-on ang paghahanap sa Arabic.</string>
     <string name="filterTranslationsEmpty">Wala pang na-download na pagsasalin.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

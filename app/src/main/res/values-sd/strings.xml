@@ -418,5 +418,4 @@
     <string name="selectAll">سڀ چونڊيو</string>
     <string name="filterTranslationsDisabledNote">عربي ڳولا چالو هجي ته ترجمن ۾ نٿي ڳوليو وڃي.</string>
     <string name="filterTranslationsEmpty">اڃان تائين ڪو به ترجمي ڊائون لوڊ ناهي.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

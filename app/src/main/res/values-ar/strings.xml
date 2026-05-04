@@ -418,5 +418,4 @@
     <string name="selectAll">تحديد الكل</string>
     <string name="filterTranslationsDisabledNote">لا يتم البحث في التراجم عند تفعيل البحث في النص العربي.</string>
     <string name="filterTranslationsEmpty">لم تُنزَّل أي ترجمات بعد.</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>

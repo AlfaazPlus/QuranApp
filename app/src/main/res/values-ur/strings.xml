@@ -418,5 +418,4 @@
     <string name="selectAll">سب منتخب کریں</string>
     <string name="filterTranslationsDisabledNote">عربی تلاش آن ہونے پر تراجم میں تلاش نہیں ہوتی۔</string>
     <string name="filterTranslationsEmpty">ابھی تک کوئی ترجمہ ڈاؤن لوڈ نہیں ہوا۔</string>
-    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
