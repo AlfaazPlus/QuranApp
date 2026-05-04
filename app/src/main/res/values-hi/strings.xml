@@ -420,4 +420,5 @@
     <string name="selectAll">सभी चुनें</string>
     <string name="filterTranslationsDisabledNote">अरबी खोज चालू होने पर अनुवादों में खोज नहीं की जाती।</string>
     <string name="filterTranslationsEmpty">अभी तक कोई अनुवाद डाउनलोड नहीं हुआ।</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
