@@ -187,7 +187,7 @@
     <string name="strTitleRecitations">പാരായണങ്ങൾ</string>
     <string name="strTitleScripts">സ്ക്രിപ്റ്റുകൾ</string>
     <string name="msgDownloadKFQPCResources">നിങ്ങൾക്ക് ഈ സ്ക്രിപ്റ്റ് ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഈപ്പറയുന്ന റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്:</string>
-    <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ\?</string>
+    <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ?</string>
     <string name="nItem">%d ഇനം</string>
     <string name="nItems">%d ഇനങ്ങൾ</string>
     <string name="verseSyncOff">വാക്യ സമന്വയം: ഓഫാണ്</string>
@@ -196,9 +196,7 @@
     <string name="scriptCanBeFreedUp" formatted="false">%d ഡൗൺലോഡ് ചെയ്ത സ്ക്രിപ്റ്റുകളും അവയുടെ ഫോണ്ടുകളും ഇല്ലാതാക്കാം.</string>
     <string name="msgDownloadingFonts">ഫോണ്ടുകൾ ഡൗൺലോഡ് ചെയ്യുന്നു</string>
     <string name="textDownloading">ഡൗൺലോഡ് ചെയ്യുന്നു…</string>
-    <string name="storageCleanupMessage">ഡൗൺലോഡ് ചെയ്ത ഉപയോഗിക്കാത്ത റിസോഴ്സ്സുകൾ ഡിലീറ്റ് ചെയ്ത് സ്പേസ് ഉണ്ടാക്കുക. ഇത് ബുക്ക്‌മാർക്കുകളോ ക്രമീകരണങ്ങളോ ഇല്ലാതാക്കില്ല.
-\n
-\nഇനിപ്പറയുന്ന റിസോഴ്സ്സുകൾ ഇല്ലാതാക്കാം:</string>
+    <string name="storageCleanupMessage">ഡൗൺലോഡ് ചെയ്ത ഉപയോഗിക്കാത്ത റിസോഴ്സ്സുകൾ ഡിലീറ്റ് ചെയ്ത് സ്പേസ് ഉണ്ടാക്കുക. ഇത് ബുക്ക്‌മാർക്കുകളോ ക്രമീകരണങ്ങളോ ഇല്ലാതാക്കില്ല. \n \nഇനിപ്പറയുന്ന റിസോഴ്സ്സുകൾ ഇല്ലാതാക്കാം:</string>
     <string name="translationCanBeFreedUp" formatted="false">ഡൗൺലോഡ് ചെയ്ത %d വിവർത്തനങ്ങൾ ഇല്ലാതാക്കാം.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d റിസൈറ്റേർസ് ഇല്ലാതാക്കാം %1$d സ്റ്റോർ ചെയ്ത പാരായണം ഫയലുകളിൽ നിന്നും.</string>
     <string name="msgVerseReminderNotifPermission">വാക്യം ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനക്ഷമമാക്കാൻ നോട്ടിഫിക്കേഷൻ അനുമതി ആവശ്യമാണ്.</string>
@@ -213,13 +211,10 @@
     <string name="nothingToCleanup">ഇല്ലാതാക്കാൻ ഒന്നുമില്ല.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d സേവ് ചെയ്ത തഫ്സീറുകൾ ഇല്ലാതാക്കാം.</string>
     <string name="labelFreeUpSpace">സ്പേസ് ഉണ്ടാക്കുക</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nനിങ്ങൾ അത് വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
-    <string name="titleRecitationCleanup">പാരായണം ഇല്ലാതാക്കണോ\?</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nനിങ്ങൾ അത് വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
+    <string name="titleRecitationCleanup">പാരായണം ഇല്ലാതാക്കണോ?</string>
     <string name="msgRecitationCleanup" formatted="false">%sൽ നിന്ന് സേവ് ചെയ്ത എല്ലാ പാരായണങ്ങളും ഇല്ലാതാക്കപ്പെടും. ഓരോ സൂറത്തും പ്രത്യേകം ഡിലീറ്റ് ചെയ്യാൻ സെറ്റിംഗ്സിൽ പോകുക.</string>
-    <string name="titleScriptCleanup">സ്ക്രിപ്റ്റ് ഇല്ലാതാക്കണോ\?</string>
+    <string name="titleScriptCleanup">സ്ക്രിപ്റ്റ് ഇല്ലാതാക്കണോ?</string>
     <string name="msgScriptCleanup" formatted="false">%s സ്‌ക്രിപ്റ്റും അതിന്റെ സംഭരിച്ചിരിക്കുന്ന എല്ലാ ഫോണ്ടുകളും ഇല്ലാതാക്കപ്പെടും. അവ ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ വീണ്ടും ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്.</string>
     <string name="github">ഗിറ്റ്ഹബ്</string>
     <string name="inPlaces">%sൽ</string>
@@ -424,4 +419,3 @@
     <string name="filterTranslationsDisabledNote">അറബി തിരയൽ ഓണായിരിക്കുമ്പോൾ വിവർത്തനങ്ങളിൽ തിരയുന്നില്ല.</string>
     <string name="filterTranslationsEmpty">ഇതുവരെ വിവർത്തനങ്ങളൊന്നും ഡൗൺലോഡ് ചെയ്തിട്ടില്ല.</string>
 </resources>
-
