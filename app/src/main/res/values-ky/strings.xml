@@ -151,7 +151,7 @@
     <string name="scriptCanBeFreedUp" formatted="false">Жүктөлгөн %d шрифт өчүрүлө алат</string>
     <string name="tafseerCanBeFreedUp" formatted="false">Сакталган %d тафсир тазаланат</string>
     <string name="labelFreeUpSpace">Орун бошотуу</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s  %2$s    Калыбына келтирүү үчүн кайра жүктөшүңүз керек.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s %2$s Калыбына келтирүү үчүн кайра жүктөшүңүз керек.</string>
     <string name="titleRecitationCleanup">Окуу файлын өчүрүңүзбү?</string>
     <string name="titleScriptCleanup">Шрифт өчүрүңүзбү?</string>
     <string name="msgScriptCleanup" formatted="false">%s шрифт өчүрүлөт, кайра жүктөшүңүз керек.</string>
