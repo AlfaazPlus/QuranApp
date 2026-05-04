@@ -276,7 +276,7 @@
     <string name="autoScrollSpeed">Régler la vitesse</string>
     <string name="msgExtractingFonts">Extraction des polices</string>
     <string name="strLabelDownloaded">Téléchargé</string>
-    <string name="strTitleDeleteTafsir">Supprimer le tafsir ?</string>
+    <string name="strTitleDeleteTafsir">Supprimer le tafsir ?</string>
     <string name="clear">Effacer</string>
     <string name="strMsgDeleteTafsir">Êtes-vous sûr de vouloir supprimer « %s » ? Cela supprimera les données du tafsir téléchargé de votre appareil.</string>
     <string name="strLabelAll">Tout</string>
