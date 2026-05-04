@@ -426,4 +426,5 @@
     <string name="selectAll">Selecionar tudo</string>
     <string name="filterTranslationsDisabledNote">As traduções não são pesquisadas enquanto a pesquisa em árabe estiver ativa.</string>
     <string name="filterTranslationsEmpty">Ainda não há traduções baixadas.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
