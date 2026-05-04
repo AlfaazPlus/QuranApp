@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
@@ -27,6 +29,7 @@ import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.mediaplayer.WbwAudioPlayResult
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -35,6 +38,7 @@ import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.rememberQuranAtlasBundle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.wbw.WbwManager
+import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderProviderViewModel
 import kotlinx.coroutines.launch
@@ -60,7 +64,6 @@ data class LocalWbwStateData(
     val onDismissTooltip: () -> Unit,
     val onForcePlay: (AyahWordEntity) -> Unit,
     val onWordClick: (AyahWordEntity) -> Unit,
-    val warmUpWord: (Int, Int, Int) -> Unit,
     val isWbwAudioLoading: (Int, Int, Int) -> Boolean,
     val toggleWbwSheet: (WbwSheetData?) -> Unit,
     val isWbwSheetOpen: Boolean,
@@ -112,12 +115,33 @@ fun ReaderProvider(
             wbwWordLoadingKey = key
 
             try {
-                WbwAudioPlayer.play(
-                    context,
-                    chapterNo,
-                    verseNo,
-                    word.wordIndex,
-                )
+                when (
+                    WbwAudioPlayer.play(
+                        context,
+                        chapterNo,
+                        verseNo,
+                        word.wordIndex,
+                    )
+                ) {
+                    WbwAudioPlayResult.Success -> Unit
+                    WbwAudioPlayResult.NoInternet ->
+                        MessageUtils.popNoInternetMessage(context, true, null)
+
+                    WbwAudioPlayResult.TimingsNotLoaded ->
+                        MessageUtils.showRemovableToast(
+                            context,
+                            R.string.wbwAudioTimingsCouldNotLoad,
+                            Toast.LENGTH_LONG,
+                        )
+
+                    WbwAudioPlayResult.InvalidTiming,
+                    WbwAudioPlayResult.NoChapterAudio ->
+                        MessageUtils.showRemovableToast(
+                            context,
+                            R.string.wbwAudioCouldNotPlay,
+                            Toast.LENGTH_LONG,
+                        )
+                }
             } finally {
                 if (wbwWordLoadingKey == key) {
                     wbwWordLoadingKey = null
@@ -174,16 +198,6 @@ fun ReaderProvider(
         ),
         LocalWbwState provides LocalWbwStateData(
             isWbwRtl = isWbwRtl,
-            warmUpWord = { chapterNo, verseNo, wordIndex ->
-                coroutineScope.launch {
-                    WbwAudioPlayer.warmUp(
-                        context,
-                        chapterNo,
-                        verseNo,
-                        wordIndex,
-                    )
-                }
-            },
             isWbwAudioLoading = { chapterNo, verseNo, wordIndex ->
                 wbwWordLoadingKey == "$chapterNo:$verseNo:$wordIndex"
             },
