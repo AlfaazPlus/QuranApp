@@ -187,9 +187,7 @@
     <string name="createIssue">إنشاء مشكلة</string>
     <string name="msgVerseReminderNotifPermission">صلاحية الإشعارات مطلوبة لتفعيل تنبيه الآيات.</string>
     <string name="titleStorageCleanup">تنظيف مساحة التخزين</string>
-    <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات.
-\n
-\nيمكن تحرير المصادر التالية:</string>
+    <string name="storageCleanupMessage">حرر مساحة التخزين بحذف المصادر الغير مستخدمة التي تم تنزيلها. لن يؤدي هذا إلى حذف أي من الإشارات مرجعية أو الإعدادات. \n \nيمكن تحرير المصادر التالية:</string>
     <string name="recitationCanBeFreedUp" formatted="false">تم تخزين %1$d من التلاوات لعدد %2$d من القراء التي يمكن حذفها.</string>
     <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nتحتاج إلى تنزيله مرة آخرى.</string>
     <string name="titleRecitationCleanup">هل تريد حذف التلاوة؟</string>
