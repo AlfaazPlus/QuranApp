@@ -1,0 +1,97 @@
+.reference {
+    margin-block: 30px;
+}
+
+.verse-ref-card {
+    position: relative;
+    background-color: var(--surface-container, #e0e0e0);
+    border: 1px solid var(--outline-variant, #d8d8d8);
+    padding: 10px 10px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-block: 30px;
+}
+
+.verse-ref-card--embedded {
+    margin-block: 0 24px;
+}
+
+.verse-ref-card p {
+    margin: 0;
+}
+
+.verse-ref-card .arabic {
+    font-family: quran-arabic;
+    text-align: center;
+    padding: 5px;
+    line-height: 1.7;
+    direction: rtl;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: calc(1.55em * var(--tafsir-ar-size-mult, 1));
+}
+
+.verse-ref-card .arabic.atlas-img {
+    font-family: initial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.verse-ref-card .arabic.atlas-img img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+    border: none;
+    flex: 0 1 auto;
+    box-sizing: content-box;
+}
+
+.verse-ref-card .translation {
+    text-align: center;
+    padding: 10px;
+    font-size: calc(1em * var(--tafsir-tr-size-mult, 1));
+    line-height: 1.55;
+    color: var(--on-surface, inherit);
+}
+
+.verse-ref-card .translation-attribution {
+    text-align: center;
+    margin: 0;
+    padding: 2px 10px 10px;
+    font-size: 0.72em;
+    line-height: 1.35;
+    color: var(--on-surface-variant, #666);
+    opacity: 0.88;
+}
+
+.verse-ref-card .footer {
+    border-top: 1px solid var(--outline-variant, #d8d8d8);
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.verse-ref-card .footer span {
+    font-size: 13px;
+    color: var(--on-surface-variant, #353535);
+    text-align: center;
+}
+
+.verse-ref-card .footer .sep {
+    flex-grow: 1;
+    font-size: 14px;
+    color: var(--outline, #555555);
+}
+
+.verse-ref-card .footer a {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 16px;
+    text-decoration: none;
+}

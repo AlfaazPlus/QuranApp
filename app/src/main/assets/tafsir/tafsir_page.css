@@ -13,9 +13,11 @@ body {
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    line-height: 1.5;
    margin: 0;
-   padding: 10px 20px;
+   padding: 20px;
    padding-bottom: 280px;
    transition: font-size 0.3s;
+   background-color: var(--background);
+   color: var(--on-background);
 }
 
 :lang(ar),
@@ -30,14 +32,10 @@ body {
 }
 
 html,
-html.light {
-   background-color: transparent;
-   color: #000;
-}
-
+html.light,
 html.dark {
-   background-color: #151515 !important;
-   color: #BBBBBB;
+   background-color: var(--background);
+   color: var(--on-background);
 }
 
 p {
@@ -46,35 +44,33 @@ p {
 
 h1 {
    font-size: 1.5em;
+   color: var(--primary);
 }
 
 h2 {
    font-size: 1.2em;
+   color: var(--on-surface);
 }
 
 a[href] {
    text-decoration: none;
    border-radius: 5px;
    padding: 1px 3px;
-   color: #008B5B;
+   color: var(--primary);
    font-weight: bold;
-   background-color: rgba(0, 139, 90, .20);
+   background-color: var(--primary-container);
 }
 
 a[href]:active {
-   color: #006944;
-   background-color: rgba(0, 139, 90, .30);
+   color: var(--on-primary-container);
+   background-color: var(--primary-container);
+   filter: brightness(0.92);
 }
 
 hr {
    margin: 20px 0;
    border: none;
-   border-top: 1px solid var(--border);
-   border-color: #c4c4c4;
-}
-
-html.dark hr {
-   border-color: #3d3d3d !important;
+   border-top: 1px solid var(--outline-variant);
 }
 
 .arabic {
@@ -99,7 +95,8 @@ html.dark hr {
 .navigator .btn-action {
    height: 55px;
    cursor: pointer;
-   background-color: #F0F0F0;
+   background-color: var(--surface-container-high);
+   color: var(--on-surface);
    margin: 3px;
    border-radius: 10px;
    display: flex;
@@ -108,21 +105,13 @@ html.dark hr {
    justify-content: center;
 }
 
-html.dark .navigator .btn-action {
-   background-color: #252525 !important;
-}
-
 .navigator .btn-action.go-to-top {
    flex-grow: 1;
    width: 50px;
 }
 
 .navigator .btn-action:active {
-   background-color: #d4d4d4;
-}
-
-html.dark .navigator .btn-action:active {
-   background-color: #424242 !important;
+   background-color: var(--surface-container-highest);
 }
 
 .navigator .btn-action.disabled {
@@ -143,6 +132,7 @@ html.dark .navigator .btn-action:active {
    display: flex;
    align-items: center;
    justify-content: center;
+   color: var(--on-surface-variant);
 }
 
 .content {
@@ -150,19 +140,11 @@ html.dark .navigator .btn-action:active {
 }
 
 .multiple-verse-alert {
-   background-color: #F5EFE6;
-   border: 1px solid #E2D8C6;
+   background-color: var(--secondary-container);
+   border: 1px solid var(--outline-variant);
    padding: 12px 16px;
    border-radius: 10px;
    margin: 12px 0;
-   color: #6B5E4A;
+   color: var(--on-secondary-container);
    line-height: 1.5;
-   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-}
-
-html.dark .multiple-verse-alert {
-   background-color: #2F2A25 !important;
-   border-color: #4A4238 !important;
-   color: #E9DDC9 !important;
-   box-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }

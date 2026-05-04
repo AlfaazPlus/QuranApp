@@ -1,12 +1,12 @@
 html,
 html.light {
-    background-color: var(--background);
-    color: var(--on-background);
+    background-color: var(--surface);
+    color: var(--on-surface);
 }
 
 html.dark {
-    background-color: var(--background) !important;
-    color: var(--on-background);
+    background-color: var(--surface) !important;
+    color: var(--on-surface);
 }
 
 body {
@@ -75,96 +75,6 @@ ul {
 
 li {
     margin: 10px 0;
-}
-
-.reference {
-    position: relative;
-    background-color: #e0e0e0;
-    padding: 10px;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-bottom: 0px;
-}
-
-html.dark .reference {
-    background-color: #252525;
-}
-
-.reference p {
-    margin: 0;
-}
-
-.reference .arabic {
-    font-family: quran-arabic;
-    text-align: center;
-    margin-bottom: 5px;
-    font-size: 25px;
-    padding: 5px;
-    line-height: 1.7;
-    direction: rtl;
-    --webkit-user-select: none;
-}
-
-.reference .arabic.atlas-img {
-    font-family: initial;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.reference .arabic.atlas-img img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-inline: auto;
-    border: none;
-    flex: 0 1 auto;
-    box-sizing: content-box;
-}
-
-.reference .translation {
-    text-align: center;
-    padding: 10px;
-}
-
-.reference .footer {
-    border-top: 1px solid #c2c2c2;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-html.dark .reference .footer {
-    border-top-color: #353535;
-}
-
-.reference .footer span {
-    font-size: 13px;
-    color: #353535;
-}
-
-html.dark .reference .footer span {
-    font-size: 13px;
-    color: #aaaaaa;
-}
-
-.reference .footer .sep {
-    font-size: 14px;
-    color: #555555;
-    flex-grow: 1;
-}
-
-.reference .footer a {
-    background-color: var(--primary);
-    color: var(--on-primary);
-    font-size: 14px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-decoration: none;
 }
 
 .toc,

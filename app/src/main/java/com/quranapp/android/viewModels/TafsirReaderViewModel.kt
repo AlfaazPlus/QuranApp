@@ -7,11 +7,15 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.reader.QuranVerseWebItem
+import com.quranapp.android.utils.reader.QuranVerseWebRequest
+import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.tafsir.TafsirUtils
@@ -26,10 +30,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.ConcurrentHashMap
 
 sealed interface TafsirContentState {
     object Loading : TafsirContentState
-    data class Success(val tafsir: TafsirModel) : TafsirContentState
+    data class Success(
+        val tafsir: TafsirModel,
+        val verseHeaderHtml: String,
+        val extraHeadCss: String,
+        val atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>,
+    ) : TafsirContentState
+
     data class Error(val message: String, val canRetry: Boolean) : TafsirContentState
     object NoInternet : TafsirContentState
 }
@@ -273,8 +284,12 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                     val dbHelper = QuranTafsirDBHelper(context)
 
                     try {
-                        dbHelper.getTafsirByVerse(tafsirKey, chapterNo, verseNo)?.let {
-                            return@withContext LoadOutcome.Success(it)
+                        dbHelper.getTafsirByVerse(tafsirKey, chapterNo, verseNo)?.let { model ->
+                            return@withContext loadOutcomeSuccessWithHeader(
+                                model,
+                                chapterNo,
+                                verseNo,
+                            )
                         }
 
                         if (!NetworkStateReceiver.isNetworkConnected(context)) {
@@ -295,8 +310,11 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                             t.verseKey == verseKey || t.verses.contains(verseKey)
                         }
 
-                        if (match != null) LoadOutcome.Success(match)
-                        else LoadOutcome.NotFound
+                        if (match != null) {
+                            loadOutcomeSuccessWithHeader(match, chapterNo, verseNo)
+                        } else {
+                            LoadOutcome.NotFound
+                        }
                     } finally {
                         dbHelper.close()
                     }
@@ -310,7 +328,12 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
             when (outcome) {
                 is LoadOutcome.Success -> _uiState.update {
                     it.copy(
-                        contentState = TafsirContentState.Success(outcome.model)
+                        contentState = TafsirContentState.Success(
+                            tafsir = outcome.model,
+                            verseHeaderHtml = outcome.verseHeaderHtml,
+                            extraHeadCss = outcome.extraHeadCss,
+                            atlasAyahImageCache = outcome.atlasAyahImageCache,
+                        )
                     )
                 }
 
@@ -331,8 +354,60 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private suspend fun loadOutcomeSuccessWithHeader(
+        model: TafsirModel,
+        chapterNo: Int,
+        verseNo: Int,
+    ): LoadOutcome {
+        val atlasAyahImageCache = ConcurrentHashMap<String, ByteArray>()
+
+        val scriptCode = ReaderPreferences.getQuranScript()
+        val arabicEnabled = ReaderPreferences.getArabicTextEnabled()
+
+        val details = repository.getVerseWithDetails(
+            chapterNo,
+            verseNo,
+            scriptCode,
+            arabicEnabled,
+        ) ?: return LoadOutcome.Failed("Something went wrong!")
+
+        val verseWeb = buildQuranVerseWebAssets(
+            QuranVerseWebRequest(
+                context = context,
+                colorScheme = ThemeUtils.colorSchemeFromPreferences(context),
+                repository = repository,
+                scriptCode = scriptCode,
+                atlasAyahImageCache = atlasAyahImageCache,
+                includeOpenInReaderLink = false,
+                verses = listOf(
+                    QuranVerseWebItem(
+                        details = details,
+                    ),
+                ),
+            ),
+        )
+
+        val verseHeaderHtml = verseWeb.verseCardHtmlByRef[chapterNo to verseNo].orEmpty()
+
+        val extraHeadCss = if (verseWeb.css.isNotEmpty()) "<style>${verseWeb.css}</style>"
+        else ""
+
+        return LoadOutcome.Success(
+            model = model,
+            verseHeaderHtml = verseHeaderHtml,
+            extraHeadCss = extraHeadCss,
+            atlasAyahImageCache = atlasAyahImageCache,
+        )
+    }
+
     private sealed interface LoadOutcome {
-        data class Success(val model: TafsirModel) : LoadOutcome
+        data class Success(
+            val model: TafsirModel,
+            val verseHeaderHtml: String,
+            val extraHeadCss: String,
+            val atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>,
+        ) : LoadOutcome
+
         object NotFound : LoadOutcome
         object NoNetwork : LoadOutcome
         data class Failed(val message: String) : LoadOutcome

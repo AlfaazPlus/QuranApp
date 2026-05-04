@@ -2,8 +2,18 @@
 <html class="{{THEME}}" dir="{{DIR}}" lang="{{LANG}}">
     <head>
         <meta charset="UTF-8">
-        <link type="text/css" href="https://assets-file/tafsir/tafsir_page.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://assets-file/tafsir/tafsir_script.js"></script>
+
+        <style>
+            :root {
+                {{ROOT_VARS}}
+            }
+        </style>
+        {{EXTRA_HEAD}}
+
+        <link type="text/css" href="https://assets-file/common/verse_reference_card.css" rel="stylesheet">
+        <link type="text/css" href="https://assets-file/tafsir/tafsir_page.css" rel="stylesheet">
     </head>
 
     <style>
@@ -13,6 +23,7 @@
     </style>
 
     <body>
+        {{VERSE_HEADER}}
         <div class="content">{{CONTENT}}</div>
     </body>
 

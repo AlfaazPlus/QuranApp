@@ -4,10 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{STYLE}}
+    <style>
+        :root {
+            {{ROOT_VARS}}
+        }
+    </style>
+    {{EXTRA_HEAD}}
+
+    <link type="text/css" href="https://assets-file/common/verse_reference_card.css" rel="stylesheet">
     <link type="text/css" href="https://assets-file/science/style.css" rel="stylesheet">
     <script src="https://assets-file/science/script.js"></script>
-    <style>{{STYLE}}</style>
 </head>
 
 <body>{{CONTENT}}</body>
