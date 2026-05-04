@@ -349,12 +349,8 @@
     <string name="sortBy">इसके अनुसार क्रमबद्ध करें</string>
     <string name="alphabetically">अंग्रेज़ी वर्णमाला</string>
     <string name="chronological">कालानुक्रमिक क्रम में</string>
-    <string name="translationHelp">
-        क्या आपको अपनी भाषा नहीं दिख रही? इसे अनुवाद करने या बेहतर बनाने में मदद करें, और इसे ज़्यादा लोगों तक पहुँचाएँ!
-    </string>
-    <string name="learnMore">
-        और अधिक जानें
-    </string>
+    <string name="translationHelp">क्या आपको अपनी भाषा नहीं दिख रही? इसे अनुवाद करने या बेहतर बनाने में मदद करें, और इसे ज़्यादा लोगों तक पहुँचाएँ!</string>
+    <string name="learnMore">और अधिक जानें</string>
     <string name="clear">साफ़ करें</string>
     <string name="strLabelAll">सभी</string>
     <string name="strLabelPrevious">पिछला</string>
@@ -432,4 +428,5 @@
     <string name="selectAll">सभी चुनें</string>
     <string name="filterTranslationsDisabledNote">अरबी खोज चालू होने पर अनुवादों में खोज नहीं की जाती।</string>
     <string name="filterTranslationsEmpty">अभी तक कोई अनुवाद डाउनलोड नहीं हुआ।</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
