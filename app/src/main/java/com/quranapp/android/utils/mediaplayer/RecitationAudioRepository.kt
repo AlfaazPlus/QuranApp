@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.work.WorkManager
 import com.quranapp.android.api.JsonHelper
-import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
@@ -361,21 +361,11 @@ class RecitationAudioRepository(private val context: Context) {
         }
     }
 
-    /**
-     * `ghraw://` is stripped to a relative path and fetched via GithubLikeApi (mirror root from user settings).
-     * Any other string is treated as a full URL and fetched via AnyApi.
-     */
     private suspend fun downloadTimingMetadata(
         file: File,
         timingUrl: String,
     ) = withContext(Dispatchers.IO) {
-        val response = if (timingUrl.startsWith("ghraw://")) {
-            RetrofitInstance.githubLike.getRawContent(
-                timingUrl.removePrefix("ghraw://").trimStart('/')
-            )
-        } else {
-            RetrofitInstance.any.downloadStreaming(timingUrl)
-        }
+        val response = fetchInventoryStreamingResponse(timingUrl)
 
         if (!response.isSuccessful) {
             if (response.code() == 404) throw HttpNotFoundException()

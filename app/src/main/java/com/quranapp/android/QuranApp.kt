@@ -15,6 +15,7 @@ import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.viewModels.ReaderIndexViewModel
 import com.quranapp.android.views.reader.startVotdWidgetPreferenceObserver
@@ -54,6 +55,7 @@ class QuranApp : Application() {
         ReaderPreferences.migrateFromLegacyIfNeeded(this)
         ReaderPreferences.repairStoredPreferencesIfNeeded(applicationContext)
         RecitationModelManager.get(this).migrateLegacyData()
+        WbwAudioRepository.migrateLegacyData(applicationContext)
         ReaderIndexViewModel.migrateFavourites(this)
         UserDataMigrationManager(this).migrate()
 

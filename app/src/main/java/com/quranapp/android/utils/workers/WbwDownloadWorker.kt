@@ -14,7 +14,7 @@ import androidx.work.workDataOf
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.JsonHelper
-import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.api.models.wbw.WbwPayloadModel
 import com.quranapp.android.compose.navigation.SettingRoutes
@@ -192,13 +192,7 @@ suspend fun downloadGithubRawContentToFile(
     dest: File,
     setProgress: suspend (Int?) -> Unit,
 ) = withContext(Dispatchers.IO) {
-    val response = if (url.startsWith("ghraw://")) {
-        RetrofitInstance.githubLike.getRawContent(
-            url.removePrefix("ghraw://").trimStart('/')
-        )
-    } else {
-        RetrofitInstance.any.downloadStreaming(url)
-    }
+    val response = fetchInventoryStreamingResponse(url)
 
     if (!response.isSuccessful) {
         throw IOException("WBW download failed: HTTP ${response.code()}")

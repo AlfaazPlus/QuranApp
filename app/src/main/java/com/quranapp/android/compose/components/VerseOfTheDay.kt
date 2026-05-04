@@ -73,6 +73,7 @@ import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.formatString
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
+import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
@@ -268,9 +269,8 @@ internal fun VotdContent(
     val recState = LocalRecitation.current
     val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
 
-    val wbwState = LocalWbwState.current
     LaunchedEffect(verse) {
-        wbwState.warmUpWord(verse.chapterNo, verse.verseNo, 0)
+        WbwAudioPlayer.warmUp(context)
     }
 
     Column {

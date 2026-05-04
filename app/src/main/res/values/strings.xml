@@ -443,6 +443,9 @@
     <string name="selectAll">Select all</string>
     <string name="filterTranslationsDisabledNote">Translations aren\'t searched while Arabic search is on.</string>
     <string name="filterTranslationsEmpty">No translations downloaded yet.</string>
-    
+
     <string name="byteProgress" formatted="false" translatable="false">%1$s / %2$s</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Word timings could not be loaded. Check your connection and try again.</string>
+    <string name="wbwAudioCouldNotPlay">Could not play word audio.</string>
 </resources>
