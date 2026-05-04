@@ -196,10 +196,8 @@
     <string name="strMsgNoInternetLong">ئینتەرنێت بەردەست نییە، دڵنیابەرەوە لەوەی هێڵی ئینتەرنێتەکەت چالاککراوە لەڕێی وایفای یان داتای مۆبایل، پاشان دووبارە هەوڵبدەرەوە.</string>
     <string name="strTextPleaseWait">تکایە چاوەڕوانبە…</string>
     <string name="strMsgUpdateAvailable">وەشانی نوێ بەردەستە! تکایە بەرنامەکە تازە بکەرەوە بۆ بینینی تایبەتمەندیە نوێیەکان.</string>
-    <string name="strMsgUpdateAvailable4Dialog">نوێکردنەوە بەردەستە!
-\nتکایە بەرنامەکە تازە بکەرەوە.</string>
-    <string name="strMsgUpdateAvailable2Continue">نوێکردنەوە پێویستە!
-\nتکایە بەرنامەکە تازە بکەرەوە بۆ بەردەوامبوون.</string>
+    <string name="strMsgUpdateAvailable4Dialog">نوێکردنەوە بەردەستە! \nتکایە بەرنامەکە تازە بکەرەوە.</string>
+    <string name="strMsgUpdateAvailable2Continue">نوێکردنەوە پێویستە! \nتکایە بەرنامەکە تازە بکەرەوە بۆ بەردەوامبوون.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s لە قورئاندا</string>
     <string name="strMsgHistoryRemove">لابردنی مێژووی خوێندنەوە؟</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">هیچ ئەنجامێک نەدۆزرایەوە لە %s، دا تکایە دڵنیابەرەوە لەوەی بەدروستی نوسیوتە یان لە شوێنێکی ترا بگەڕێ.</string>
@@ -426,4 +424,3 @@
     <string name="filterTranslationsDisabledNote">کاتێک گەڕانی عەرەبی چالاکە، لە وەرگێڕانەکاندا نەگەڕێت.</string>
     <string name="filterTranslationsEmpty">هێشتا هیچ وەرگێڕانێک دابەزێندراوە نییە.</string>
 </resources>
-
