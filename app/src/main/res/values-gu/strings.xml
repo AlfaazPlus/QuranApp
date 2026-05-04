@@ -88,7 +88,7 @@
     <string name="strMsgReadHistoryNoItems">વાંચનનો ઇતિહાસ નથી</string>
     <string name="strMsgReadHistoryDeleteAll">બધા વાંચેલા ઇતિહાસ દૂર કરવામાં આવશે.</string>
     <string name="strMsgBookmarkDateToday" formatted="false">આજે %s વાગ્યે</string>
-    <string name="strMsgHistoryRemove">આ ઇતિહાસ કાઢી નાખીએ\?</string>
+    <string name="strMsgHistoryRemove">આ ઇતિહાસ કાઢી નાખીએ?</string>
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s માં કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો અથવા અન્ય અનુવાદમાં શોધો.</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો.</string>
     <string name="strMsgSearchWordPart">શબ્દ ભાગ માટે શોધો</string>
@@ -115,7 +115,7 @@
     <string name="strMsgSearchOneResultFoundIn" formatted="false">%s માં માત્ર 1 પરિણામ મળ્યું</string>
     <string name="strMsgSearchNoResultsFound">કોઈ પરિણામો મળ્યા નથી. કૃપા કરીને શોધ ફિલ્ટર્સ તપાસો અથવા અન્ય અનુવાદમાં શોધો.</string>
     <string name="strMsgSearchWordPartExample">ઉદાહરણ માટે: \'માણસ\' માં \'માનવજાત\'</string>
-    <string name="titleScriptCleanup">સ્ક્રિપ્ટ કાઢી નાખીએ\?</string>
+    <string name="titleScriptCleanup">સ્ક્રિપ્ટ કાઢી નાખીએ?</string>
     <string name="msgScriptCleanup" formatted="false">%s સ્ક્રિપ્ટ અને તેના બધા સંગ્રહિત ફોન્ટ્સ કાઢી નાખવામાં આવશે. તેનો ઉપયોગ કરવા માટે તમારે ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
     <string name="onboardDescTranslations">તમે આને પછીથી હંમેશા બદલી શકો છો. તમે સેટિંગ્સમાંથી વધુ અનુવાદો ડાઉનલોડ કરી શકો છો.</string>
     <string name="nItem" formatted="false">%d આઇટમ</string>
@@ -126,11 +126,11 @@
     <string name="labelArabic">અરબી</string>
     <string name="labelTranslation">અનુવાદ</string>
     <string name="msgNoFavouriteChapters">અહીં જોવા માટે મનપસંદમાં એક પ્રકરણ ઉમેરો.</string>
-    <string name="strTitleBookmarkDeleteAll">બધા બુકમાર્ક્સ દૂર કરીએ\?</string>
+    <string name="strTitleBookmarkDeleteAll">બધા બુકમાર્ક્સ દૂર કરીએ?</string>
     <string name="strTitleScripts">સ્ક્રિપ્ટો</string>
     <string name="audioOnlyArabic">ફક્ત અરબી રમો</string>
     <string name="audioOnlyTranslation">ફક્ત અનુવાદ ચલાવો</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">%d બુકમાર્ક્સ દૂર કરીએ\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%d બુકમાર્ક્સ દૂર કરીએ?</string>
     <string name="strMsgChapInfoFailedLoad">સુરાહ માહિતી લોડ કરવામાં નિષ્ફળ. પછીથી ફરી પ્રયત્ન કરો.</string>
     <string name="strTitleFeaturedDuas">કુરાનમાં દુઆઓ</string>
     <string name="strTitlePrivacyPolicy">ગોપનીયતા નીતિ</string>
@@ -160,9 +160,7 @@
     <string name="createIssue">મુદ્દો બનાવો</string>
     <string name="copiedToClipboard">ક્લિપબોર્ડ પર કૉપિ કરી.</string>
     <string name="msgVerseReminderNotifPermission">આયત રીમાઇન્ડર સક્ષમ કરવા માટે સૂચના પરવાનગી જરૂરી છે.</string>
-    <string name="storageCleanupMessage">ન વપરાયેલ ડાઉનલોડ કરેલ સંસાધનો કાઢી નાખીને જગ્યા ખાલી કરો. આ કોઈપણ બુકમાર્ક્સ અથવા સેટિંગ્સને કાઢી નાખશે નહીં.
-\n
-\nનીચેના સંસાધનો મુક્ત કરી શકાય છે:</string>
+    <string name="storageCleanupMessage">ન વપરાયેલ ડાઉનલોડ કરેલ સંસાધનો કાઢી નાખીને જગ્યા ખાલી કરો. આ કોઈપણ બુકમાર્ક્સ અથવા સેટિંગ્સને કાઢી નાખશે નહીં. \n \nનીચેના સંસાધનો મુક્ત કરી શકાય છે:</string>
     <string name="titleStorageCleanup">સંગ્રહ સફાઈ</string>
     <string name="recitationCanBeFreedUp" formatted="false">%2$d વાચકોની %1$d સંગ્રહિત પઠન ફાઇલો ખાલી કરી શકાય છે.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d ડાઉનલોડ કરેલ સ્ક્રિપ્ટો અને તેમના ફોન્ટ્સ મુક્ત કરી શકાય છે.</string>
@@ -194,8 +192,8 @@
     <string name="audioOption">ઓડિયો વિકલ્પ</string>
     <string name="playbackSpeed">પ્લેબેક ઝડપ</string>
     <string name="audioBothArabicTranslation">અરબી અને અનુવાદ બંને ચલાવો</string>
-    <string name="strTitleBookmarkDeleteThis">આ બુકમાર્ક દૂર કરીએ\?</string>
-    <string name="strTitleTranslDelete">અનુવાદ કાઢી નાખીએ\?</string>
+    <string name="strTitleBookmarkDeleteThis">આ બુકમાર્ક દૂર કરીએ?</string>
+    <string name="strTitleTranslDelete">અનુવાદ કાઢી નાખીએ?</string>
     <string name="strTitleShareVerse">આયત શેર કરો</string>
     <string name="strTitleFeaturedQuran">ફીચર્ડ વાંચન</string>
     <string name="strTitleVOTD">દિવસનો આયત</string>
@@ -228,13 +226,11 @@
     <string name="strTitleInfo">માહિતી!</string>
     <string name="strTitleOops">અરે!</string>
     <string name="strMsgUpdateAvailable">અપડેટ ઉપલબ્ધ! નવીનતમ સુવિધાઓ મેળવવા માટે કૃપા કરીને એપ્લિકેશનને અપડેટ કરો.</string>
-    <string name="strMsgUpdateAvailable4Dialog">અપડેટ ઉપલબ્ધ!
-\nકૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
-    <string name="strMsgUpdateAvailable2Continue">અપડેટ જરૂરી!
-\nચાલુ રાખવા માટે કૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
+    <string name="strMsgUpdateAvailable4Dialog">અપડેટ ઉપલબ્ધ! \nકૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
+    <string name="strMsgUpdateAvailable2Continue">અપડેટ જરૂરી! \nચાલુ રાખવા માટે કૃપા કરીને એપ્લિકેશન અપડેટ કરો.</string>
     <string name="strMsgReferenceInQuran" formatted="false">કુરાનમાં %s</string>
     <string name="strMsgReferenceFoundPlaces" formatted="false">કુલ %2$d સ્થાનો પર %1$s થી સંબંધિત આયત મળ્યા.</string>
-    <string name="titleDownloadScriptResources">આ સ્ક્રિપ્ટ માટે સંસાધનો ડાઉનલોડ કરીએ\?</string>
+    <string name="titleDownloadScriptResources">આ સ્ક્રિપ્ટ માટે સંસાધનો ડાઉનલોડ કરીએ?</string>
     <string name="msgDownloadingFonts">ફોન્ટ ડાઉનલોડ કરી રહ્યું છે</string>
     <string name="textDownloading">ડાઉનલોડ કરી રહ્યું છે…</string>
     <string name="lastCrashLog">છેલ્લો ક્રેશ લોગ</string>
@@ -243,11 +239,8 @@
     <string name="github">ગીટહબ</string>
     <string name="translationCanBeFreedUp" formatted="false">%d ડાઉનલોડ કરેલ અનુવાદો મુક્ત કરી શકાય છે.</string>
     <string name="labelFreeUpSpace">જગ્યા ખાલી કરો</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nતમારે તેને ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
-    <string name="titleRecitationCleanup">પઠન ડિલીટ કરીએ\?</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nતમારે તેને ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
+    <string name="titleRecitationCleanup">પઠન ડિલીટ કરીએ?</string>
     <string name="msgChapterAddedToFavourites">મનપસંદમાં સૂરા ઉમેરાઈ.</string>
     <string name="msgChapterRemovedFromFavourites">મનપસંદમાંથી સૂરા દૂર કરી.</string>
     <string name="textNoLogsFound">કોઈ લોગ મળ્યા નથી</string>
@@ -261,10 +254,7 @@
     <string name="strMsgDuaFor" formatted="false">%s માટે દુઆ</string>
     <string name="titleSolutionVerses">કુરાનમાંથી ઉકેલો</string>
     <string name="titleEtiquetteVerses">કુરાનમાં શિષ્ટાચાર</string>
-    <string name="strMsgShareApp" formatted="false">કુરાન એપ અનુવાદો સાથે નોબલ કુરાન વાંચવા અને અન્વેષણ કરવા માટે એક મફત અને ઓપન સોર્સ એપ્લિકેશન છે. આ એપમાં તફસીર, પઠન, રીમાઇન્ડર અને બીજી ઘણી સુવિધાઓ સાથે સરસ અને સ્વચ્છ ઈન્ટરફેસ છે.
-\n
-\nડાઉનલોડ કરો:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">કુરાન એપ અનુવાદો સાથે નોબલ કુરાન વાંચવા અને અન્વેષણ કરવા માટે એક મફત અને ઓપન સોર્સ એપ્લિકેશન છે. આ એપમાં તફસીર, પઠન, રીમાઇન્ડર અને બીજી ઘણી સુવિધાઓ સાથે સરસ અને સ્વચ્છ ઈન્ટરફેસ છે. \n \nડાઉનલોડ કરો: \n%s</string>
     <string name="clear">સાફ કરો</string>
     <string name="strLabelDownloaded">ડાઉનલોડ કરેલ</string>
     <string name="strTitleDeleteTafsir">તફસીર કાઢી નાખવી છે?</string>
@@ -429,4 +419,3 @@
     <string name="filterTranslationsDisabledNote">અરબી શોધ ચાલુ હોય ત્યાં સુધી અનુવાદોમાં શોધ થતી નથી.</string>
     <string name="filterTranslationsEmpty">હજુ સુધી કોઈ અનુવાદ ડાઉનલોડ થયું નથી.</string>
 </resources>
-
