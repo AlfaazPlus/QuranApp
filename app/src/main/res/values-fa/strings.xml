@@ -174,10 +174,8 @@
     <string name="strTextPleaseWait">لطفا صبر کنید…</string>
     <string name="strAyatulKursi">آیت الکرسی</string>
     <string name="strTitleOops">اوه!</string>
-    <string name="strMsgUpdateAvailable4Dialog">به روز رسانی در دسترس است!
-\nلطفا برنامه را به روز کنید.</string>
-    <string name="strMsgUpdateAvailable2Continue">به روزرسانی نیاز است!
-\nبرای ادامه، لطفاً برنامه را به‌روزرسانی کنید.</string>
+    <string name="strMsgUpdateAvailable4Dialog">به روز رسانی در دسترس است! \nلطفا برنامه را به روز کنید.</string>
+    <string name="strMsgUpdateAvailable2Continue">به روزرسانی نیاز است! \nبرای ادامه، لطفاً برنامه را به‌روزرسانی کنید.</string>
     <string name="strLabelAllChapters">همه فصل ها</string>
     <string name="strMsgTranslNoneSelected">ترجمه ای انتخاب نشده است. برای یافتن ترجمه ها به تنظیمات بروید.</string>
     <string name="strDescAddToBookmarks">افزودن به نشانک ها</string>
@@ -426,4 +424,3 @@
     <string name="filterTranslationsDisabledNote">وقتی جستجوی عربی روشن است، در ترجمه‌ها جستجو نمی‌شود.</string>
     <string name="filterTranslationsEmpty">هنوز ترجمه‌ای دانلود نشده است.</string>
 </resources>
-
