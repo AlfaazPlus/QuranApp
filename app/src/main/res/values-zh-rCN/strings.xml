@@ -418,4 +418,5 @@
     <string name="selectAll">全选</string>
     <string name="filterTranslationsDisabledNote">开启阿拉伯文搜索时，不会搜索译本。</string>
     <string name="filterTranslationsEmpty">尚未下载任何译本。</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
