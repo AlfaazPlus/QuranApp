@@ -163,7 +163,7 @@
     <string name="strMsgBookmarkAddFailed">আয়াত বুকমার্কে যুক্ত করতে ব্যর্থ হয়েছে</string>
     <string name="strMsgBookmarkDate" formatted="false">%2$s-এ %1$s</string>
     <string name="strMsgBookmarkDateToday" formatted="false">আজ %s-এ</string>
-    <string name="strMsgHistoryRemove">এই ইতিহাস মুছে ফেলবেন\?</string>
+    <string name="strMsgHistoryRemove">এই ইতিহাস মুছে ফেলবেন?</string>
     <string name="strMsgHistoryRemoved" formatted="false">ইতিহাস থেকে \"%s\" অপসারিত হয়েছে</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">%1$s-এ খুঁজে পাওয়া মোট ফলাফল: %2$d</string>
     <string name="strMsgSearchNoResultsFound">কোন ফলাফল পাওয়া যায়নি। অনুগ্রহ করে অনুসন্ধান ফিল্টারগুলি পরীক্ষা করুন বা অন্য অনুবাদে অনুসন্ধান করুন।</string>
@@ -177,8 +177,7 @@
     <string name="strDescVerseNoWithChapter" formatted="false">সূরা %1$s, আয়াত নম্বর %2$d।</string>
     <string name="strMsgSomethingWrong">কিছু একটা সমস্যা হয়েছে!</string>
     <string name="strMsgTryLater">অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।</string>
-    <string name="strMsgUpdateAvailable4Dialog">আপডেট উপলব্ধ!
-\nঅনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
+    <string name="strMsgUpdateAvailable4Dialog">আপডেট উপলব্ধ! \nঅনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
     <string name="strMsgUpdateAvailable2Continue">আপডেট প্রয়োজন!
 \nচালিয়ে যেতে অনুগ্রহ করে অ্যাপটি আপডেট করুন।</string>
     <string name="strLabelAllChapters">সকল সূরা</string>
@@ -426,4 +425,3 @@
     <string name="filterTranslationsDisabledNote">আরবি অনুসন্ধান চালু থাকলে অনুবাদে অনুসন্ধান করা হয় না।</string>
     <string name="filterTranslationsEmpty">এখনও কোনো অনুবাদ ডাউনলোড হয়নি।</string>
 </resources>
-
