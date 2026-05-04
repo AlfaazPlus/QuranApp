@@ -155,10 +155,7 @@
     <string name="strMsgTranslDownloaded" formatted="false">داگیرا: \"%s\".</string>
     <string name="strDescGoBack">گەڕانەوە</string>
     <string name="strDescClose">داخستن</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nپێویستە دووبارە دایبگریتەوە.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nپێویستە دووبارە دایبگریتەوە.</string>
     <string name="strMsgTranslNoneSelected">هیچ وەرگێڕانێک دیارینەکراوە، بچۆ بۆ بەشی ڕێکخستن بۆ دانانی وەرگێڕان.</string>
     <string name="strMsgEnterValidRange">تکایە مەودایەکی دروست بنووسە</string>
     <string name="strMsgNoInternet">تکایە تۆڕی ئینتەرنێتەکەت بپشکنە.</string>
@@ -208,9 +205,7 @@
     <string name="copiedToClipboard">هەڵگیرا بۆ بەشی لەبەرگیراوەکان.</string>
     <string name="pasteCrashLogGithubIssue">تۆماری لەکارکەوتن لەبەشی لەبەرگیراوەکاندا هەڵگیرا، تکایە لە گیتهەب دایبنێ وەک کێشە.</string>
     <string name="titleStorageCleanup">خاوێنکردنەوەی بیرگە</string>
-    <string name="storageCleanupMessage">خاوێنکردنەوەی بیرگەی زیاتر بە سڕینەوەی فایلە داگیراوە نا پێویستەکان. ئەمە هیچ لە نیشانەکراوەکان یان ڕێکخستنەکان ناسڕێتەوە.
-\n
-\nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
+    <string name="storageCleanupMessage">خاوێنکردنەوەی بیرگەی زیاتر بە سڕینەوەی فایلە داگیراوە نا پێویستەکان. ئەمە هیچ لە نیشانەکراوەکان یان ڕێکخستنەکان ناسڕێتەوە. \n \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="msgDownloadFontsSize" formatted="false">قەبارەی داگرتن: ~%1$dMB\nدوای داگرتن، ئەپەکە نزیکەی ~%2$dMB بەکاردێنێت.</string>
     <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە.</string>
     <string name="nItem" formatted="false">%d بابەت</string>
