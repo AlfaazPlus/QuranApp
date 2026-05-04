@@ -418,4 +418,5 @@
     <string name="selectAll">બધું પસંદ કરો</string>
     <string name="filterTranslationsDisabledNote">અરબી શોધ ચાલુ હોય ત્યાં સુધી અનુવાદોમાં શોધ થતી નથી.</string>
     <string name="filterTranslationsEmpty">હજુ સુધી કોઈ અનુવાદ ડાઉનલોડ થયું નથી.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
