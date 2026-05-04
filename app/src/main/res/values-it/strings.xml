@@ -351,7 +351,7 @@
     <string name="once">Una volta</string>
     <string name="twice">Due volte</string>
     <string name="nTimes">%d volte</string>
-    <string name="msgRepeat">Imposta quante volte ogni versetto deve essere riprodotto prima di passare al successivo. Disponibile solo quando "Riproduci solo Corano" è abilitato nelle Opzioni Audio.</string>
+    <string name="msgRepeat">Imposta quante volte ogni versetto deve essere riprodotto prima di passare al successivo. Disponibile solo quando Riproduci solo Corano è abilitato nelle Opzioni Audio.</string>
     <string name="notSupported">Non supportato</string>
     <string name="missingTimingData">Dati di temporizzazione mancanti per %s — impossibile riprodurre.</string>
     <string name="expandedPlayerModeControls">Controlli</string>
@@ -394,7 +394,7 @@
     <string name="searchTipsTitle">Suggerimenti di ricerca</string>
     <string name="searchTipDirectVerse">Leggere direttamente un versetto o un tafsir</string>
     <string name="searchTipChapter">Cerca capitoli</string>
-    <string name="searchTipDirectJuz">Passa a "Capitolo 30", "Juz 30" o "Hizb 30"</string>
+    <string name="searchTipDirectJuz">Passa a Capitolo 30, Juz 30 o Hizb 30</string>
     <string name="searchTipTranslation">Cerca nelle traduzioni</string>
     <string name="searchTipArabic">Cerca nel testo del Corano</string>
     <string name="enterFullscreen">Schermo intero</string>
@@ -418,4 +418,5 @@
     <string name="selectAll">Seleziona tutto</string>
     <string name="filterTranslationsDisabledNote">Le traduzioni non vengono cercate mentre la ricerca in arabo è attiva.</string>
     <string name="filterTranslationsEmpty">Nessuna traduzione scaricata finora.</string>
+    <string name="byteProgress" formatted="false" translatable="false"></string>
 </resources>
