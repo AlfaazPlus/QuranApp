@@ -78,10 +78,8 @@
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">No se han encontrado resultados en %s. Por favor revise los filtros de busqueda o busque otra traduccion.</string>
     <string name="strMsgNoInternetLong">Sin conexion a internet. Asegurece de tener conexion a Wi-Fi o datos moviles e intentarlo nuevamente.</string>
     <string name="strMsgUpdateAvailable">¡ACTUALIZACIÓN DISPONIBLE! Actualice la aplicación para obtener las funciones más recientes.</string>
-    <string name="strMsgUpdateAvailable4Dialog">¡ACTUALIZACIÓN DISPONIBLE!
-\nActualice la aplicación.</string>
-    <string name="strMsgUpdateAvailable2Continue">¡ACTUALIZACIÓN REQUERIDA!
-\nActualice la aplicación para continuar.</string>
+    <string name="strMsgUpdateAvailable4Dialog">¡ACTUALIZACIÓN DISPONIBLE! \nActualice la aplicación.</string>
+    <string name="strMsgUpdateAvailable2Continue">¡ACTUALIZACIÓN REQUERIDA! \nActualice la aplicación para continuar.</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">Capitulo Nro. %1$d | Versos %2$d–%3$d</string>
     <string name="strTitleReadVerseRange" formatted="false">Leer Versos %1$d - %2$d</string>
     <string name="strMsgChapInfoFailedLoad">No se pudo cargar la información del Capitulo. Por favor, inténtelo más tarde.</string>
@@ -91,17 +89,17 @@
     <string name="strMsgReadShowupHere">Su historial de lectura aparecerá aquí.</string>
     <string name="strTitleChapInfoVerses">Versos</string>
     <string name="strTitleChapInfoRukus">Reverencia (Rukūʿs)</string>
-    <string name="strTitleBookmarkDeleteThis">¿Quitar este marcador\?</string>
+    <string name="strTitleBookmarkDeleteThis">¿Quitar este marcador?</string>
     <string name="strMsgSearchWordPart">Buscar parte de la palabra</string>
-    <string name="strTitleBookmarkDeleteCount" formatted="false">¿Quitar %d marcadores\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">¿Quitar %d marcadores?</string>
     <string name="strMsgCouldNotOpenPage">No se pudo abrir la página.</string>
     <string name="strTitleHolyQuran">El sagrado Corán</string>
     <string name="strMsgHistoryRemoved" formatted="false">\"%s\" eliminado del historial</string>
     <string name="strMsgShareRange" formatted="false">Ingrese el rango entre %1$d–%2$d</string>
     <string name="strTitleAboutSurah">Acerca de Surah</string>
-    <string name="strTitleBookmarkDeleteAll">¿Quitar todos los marcadores\?</string>
+    <string name="strTitleBookmarkDeleteAll">¿Quitar todos los marcadores?</string>
     <string name="strMsgBookmarkDate" formatted="false">%1$s a %2$s</string>
-    <string name="strMsgHistoryRemove">¿Eliminar este historial\?</string>
+    <string name="strMsgHistoryRemove">¿Eliminar este historial?</string>
     <string name="strTitleChapInfoJuzNo">Juz Nro.</string>
     <string name="strMsgBookmarkDateToday" formatted="false">Hoy a las %s</string>
     <string name="strMsgReadHistoryNoItems">Sin historial de lectura</string>
@@ -109,7 +107,7 @@
     <string name="strDescAddToBookmarks">Añadir a marcadores</string>
     <string name="strTitleSelectReciter">Seleccionar recitador</string>
     <string name="strTitleShareVerse">Compartir verso</string>
-    <string name="strTitleTranslDelete">¿Eliminar traducción\?</string>
+    <string name="strTitleTranslDelete">¿Eliminar traducción?</string>
     <string name="strTitleFeaturedQuran">Lectura destacada</string>
     <string name="strTitlePrivacyPolicy">Directiva de privacidad</string>
     <string name="strTitleChapInfoChapterNo">Número de capítulo</string>
@@ -429,4 +427,3 @@
     <string name="filterTranslationsDisabledNote">No se busca en las traducciones mientras la búsqueda en árabe está activa.</string>
     <string name="filterTranslationsEmpty">Aún no hay traducciones descargadas.</string>
 </resources>
-
