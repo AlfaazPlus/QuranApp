@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strTitleAppVersion">Версия приложения</string>
-    <string name="strMsgShareApp" formatted="false">QuranApp – бесплатное open-source приложение для чтения и изучения Священного Корана с переводами. Приложение имеет удобный и чистый интерфейс с такими функциями, как толкование, декламация, напоминания и многое другое.
-\n
-\nСКАЧАТЬ СЕЙЧАС:
-\n%s</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp – бесплатное open-source приложение для чтения и изучения Священного Корана с переводами. Приложение имеет удобный и чистый интерфейс с такими функциями, как толкование, декламация, напоминания и многое другое. \n \nСКАЧАТЬ СЕЙЧАС: \n%s</string>
     <string name="strLabelRemove">Убрать</string>
     <string name="strLabelDelete">Удалить</string>
     <string name="strLabelRemoveAll">Удалить все</string>
@@ -111,9 +108,7 @@
     <string name="strMsgSomethingWrong">Что-то пошло не так!</string>
     <string name="verseSyncOff">Синхронизация аятов : ВЫКЛ</string>
     <string name="pasteCrashLogGithubIssue">Журнал был скопирован в буфер обмена. Пожалуйста, вставьте его в жалобу на GitHub.</string>
-    <string name="storageCleanupMessage">Освободите место, удалив неиспользуемые ресурсы. Закладки и настройки удалены не будут.
-\n
-\nСледующие ресурсы могут быть очищены:</string>
+    <string name="storageCleanupMessage">Освободите место, удалив неиспользуемые ресурсы. Закладки и настройки удалены не будут. \n \nСледующие ресурсы могут быть очищены:</string>
     <string name="msgRecitationCleanup" formatted="false">Все сохранённые чтения %s будут удалены. Чтобы удалить чтения отдельно по сурам, перейдите в настройки.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d шрифтов и %2$d суб-шрифтов</string>
     <string name="msgNoFavouriteChapters">Избранные главы будут отображаться здесь.</string>
@@ -212,10 +207,8 @@
     <string name="strTitleInfo">Информация!</string>
     <string name="strTitleOops">Ой!</string>
     <string name="strMsgUpdateAvailable">ДОСТУПНО ОБНОВЛЕНИЕ! Пожалуйста, обновите приложение для доступа к новейшим функциям.</string>
-    <string name="strMsgUpdateAvailable4Dialog">ДОСТУПНО ОБНОВЛЕНИЕ!
-\nПожалуйста, обновите приложение.</string>
-    <string name="strMsgUpdateAvailable2Continue">ТРЕБУЕТСЯ ОБНОВЛЕНИЕ!
-\nПожалуста, обновите приложение, чтобы продолжить.</string>
+    <string name="strMsgUpdateAvailable4Dialog">ДОСТУПНО ОБНОВЛЕНИЕ! \nПожалуйста, обновите приложение.</string>
+    <string name="strMsgUpdateAvailable2Continue">ТРЕБУЕТСЯ ОБНОВЛЕНИЕ! \nПожалуста, обновите приложение, чтобы продолжить.</string>
     <string name="strLabelAllChapters">Все главы</string>
     <string name="strMsgDuaFor" formatted="false">Дуа за %s</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s в Коране</string>
@@ -224,10 +217,7 @@
     <string name="suppressedLogs">Журналы выгрузки</string>
     <string name="logRemoved">Журнал удалён</string>
     <string name="labelFreeUpSpace">Освободить место</string>
-    <string name="msgDeleteTranslation" formatted="false">%1$s
-\n%2$s
-\n
-\nВам будет необходимо загрузить это снова.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nВам будет необходимо загрузить это снова.</string>
     <string name="onboardDescTranslations">Вы всегда можете изменить это позже. Вы можете загрузить больше переводов в настройках.</string>
     <string name="labelArabic">Арабский</string>
     <string name="labelTranslation">Перевод</string>
