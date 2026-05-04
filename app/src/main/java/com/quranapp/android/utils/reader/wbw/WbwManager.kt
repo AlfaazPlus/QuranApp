@@ -16,7 +16,7 @@ import java.io.File
 
 object WbwManager {
     private const val DIR_NAME = "wbw"
-    private const val MANIFEST_FILENAME = "available_wbw_info.json"
+    private const val MANIFEST_FILENAME = "available_wbw_info_v2.json"
 
     private val ROOT_DIR_PATH: String = FileUtils.createPath(
         AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,

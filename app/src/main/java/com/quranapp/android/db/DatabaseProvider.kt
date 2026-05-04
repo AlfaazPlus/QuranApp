@@ -67,6 +67,7 @@ object DatabaseProvider {
         )
             .addMigrations(
                 ExternalQuranDatabaseMigrations.MIGRATION_1_2,
+                ExternalQuranDatabaseMigrations.MIGRATION_2_3,
             )
             .fallbackToDestructiveMigration(false)
             .build()

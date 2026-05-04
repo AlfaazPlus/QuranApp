@@ -34,8 +34,7 @@ data class WbwPayloadModel(
     @SerialName("version")
     val version: Int,
 
-    // verse id -> ordered words
-    // each word -> [string, string] -> [translation, transliteration];
+    // verse_id -> word_index -> [translation, transliteration]
     @SerialName("verses")
-    val verses: Map<Int, List<List<String?>>>,
+    val verses: Map<Int, Map<Int, List<String?>>>,
 )

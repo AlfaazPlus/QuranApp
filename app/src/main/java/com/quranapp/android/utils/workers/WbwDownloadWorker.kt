@@ -29,7 +29,6 @@ import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import kotlin.io.DEFAULT_BUFFER_SIZE
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.IOException
@@ -167,13 +166,14 @@ class WbwDownloadWorker(
         for ((ayahId, words) in payload.verses) {
             if (ayahId <= 0) continue
 
-            words.forEachIndexed { index, pair ->
+            for ((wordIndex, pair) in words) {
                 val translation = pair.getOrNull(0)?.takeIf { it.isNotBlank() }
                 val transliteration = pair.getOrNull(1)?.takeIf { it.isNotBlank() }
+
                 out.add(
                     WbwWordEntity(
                         ayahId = ayahId,
-                        wordIndex = index,
+                        wordIndex = wordIndex,
                         wbwId = wbwId,
                         translation = translation,
                         transliteration = transliteration,
@@ -181,6 +181,7 @@ class WbwDownloadWorker(
                 )
             }
         }
+
         return out
     }
 }
