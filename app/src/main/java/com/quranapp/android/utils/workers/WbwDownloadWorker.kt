@@ -14,7 +14,7 @@ import androidx.work.workDataOf
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.JsonHelper
-import com.quranapp.android.api.RetrofitInstance
+import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.api.models.wbw.WbwPayloadModel
 import com.quranapp.android.compose.navigation.SettingRoutes
@@ -29,7 +29,6 @@ import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import kotlin.io.DEFAULT_BUFFER_SIZE
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.IOException
@@ -167,13 +166,14 @@ class WbwDownloadWorker(
         for ((ayahId, words) in payload.verses) {
             if (ayahId <= 0) continue
 
-            words.forEachIndexed { index, pair ->
+            for ((wordIndex, pair) in words) {
                 val translation = pair.getOrNull(0)?.takeIf { it.isNotBlank() }
                 val transliteration = pair.getOrNull(1)?.takeIf { it.isNotBlank() }
+
                 out.add(
                     WbwWordEntity(
                         ayahId = ayahId,
-                        wordIndex = index,
+                        wordIndex = wordIndex,
                         wbwId = wbwId,
                         translation = translation,
                         transliteration = transliteration,
@@ -181,6 +181,7 @@ class WbwDownloadWorker(
                 )
             }
         }
+
         return out
     }
 }
@@ -191,13 +192,7 @@ suspend fun downloadGithubRawContentToFile(
     dest: File,
     setProgress: suspend (Int?) -> Unit,
 ) = withContext(Dispatchers.IO) {
-    val response = if (url.startsWith("ghraw://")) {
-        RetrofitInstance.githubLike.getRawContent(
-            url.removePrefix("ghraw://").trimStart('/')
-        )
-    } else {
-        RetrofitInstance.any.downloadStreaming(url)
-    }
+    val response = fetchInventoryStreamingResponse(url)
 
     if (!response.isSuccessful) {
         throw IOException("WBW download failed: HTTP ${response.code()}")

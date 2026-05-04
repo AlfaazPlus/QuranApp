@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.quranapp.android.db.entities.wbw.WbwAudioTimingEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 
 @Dao
@@ -56,4 +57,33 @@ interface WbwDao {
         """
     )
     suspend fun getDownloadedWbwIds(wbwIds: List<String>): List<String>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertTimings(timings: List<WbwAudioTimingEntity>)
+
+    @Query("DELETE FROM wbw_audio_timing WHERE audio_id = :audioId")
+    suspend fun deleteTimingByAudioId(audioId: String)
+
+    @Query(
+        """
+        SELECT * FROM wbw_audio_timing
+        WHERE audio_id = :audioId AND ayah_id = :ayahId AND word_index = :wordIndex
+        LIMIT 1
+        """,
+    )
+    suspend fun getWordTiming(audioId: String, ayahId: Int, wordIndex: Int): WbwAudioTimingEntity?
+
+    @Query("SELECT COUNT(*) FROM wbw_audio_timing WHERE audio_id = :audioId")
+    suspend fun getTimingCount(audioId: String): Int
+
+    @Transaction
+    suspend fun replaceTimingByAudioId(audioId: String, timings: List<WbwAudioTimingEntity>) {
+        deleteTimingByAudioId(audioId)
+        
+        if (timings.isEmpty()) return
+
+        timings.chunked(750).forEach { chunk ->
+            upsertTimings(chunk)
+        }
+    }
 }

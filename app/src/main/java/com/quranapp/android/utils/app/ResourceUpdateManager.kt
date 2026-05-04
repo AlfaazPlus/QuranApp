@@ -7,6 +7,7 @@ import com.quranapp.android.api.models.ResourcesVersions
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import com.quranapp.android.utils.univ.FileUtils
@@ -88,7 +89,8 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                 remote.recitationsVersion > local.recitationsVersion ||
                 remote.recitationTranslationsVersion > local.recitationTranslationsVersion ||
                 remote.tafsirsVersion > local.tafsirsVersion ||
-                remote.wbwVersion > local.wbwVersion
+                remote.wbwVersion > local.wbwVersion ||
+                remote.wbwAudioVersion > local.wbwAudioVersion
     }
 
     private suspend fun performUpdates(
@@ -139,6 +141,17 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                         WbwManager.getAvailable(ctx, forceRefresh = true)
                     } catch (e: Exception) {
                         Log.saveError(e, "ResourceUpdateManager.updateWbw")
+                    }
+                }
+            }
+
+            // WBW chapter word-audio timings (cleared on inventory version bump; re-fetched on next play)
+            launch {
+                if (force || local == null || remote.wbwAudioVersion > local.wbwAudioVersion) {
+                    try {
+                        WbwAudioRepository.clearImportedTimings(ctx)
+                    } catch (e: Exception) {
+                        Log.saveError(e, "ResourceUpdateManager.updateWbwAudio")
                     }
                 }
             }

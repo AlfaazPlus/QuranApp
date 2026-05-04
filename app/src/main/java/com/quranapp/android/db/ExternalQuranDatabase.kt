@@ -8,15 +8,17 @@ import com.quranapp.android.db.dao.AtlasWordShapeDao
 import com.quranapp.android.db.dao.WbwDao
 import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
 import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
+import com.quranapp.android.db.entities.wbw.WbwAudioTimingEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 
 @Database(
     entities = [
         WbwWordEntity::class,
+        WbwAudioTimingEntity::class,
         AtlasBundleEntity::class,
         AtlasWordShapeEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(QuranConverters::class)

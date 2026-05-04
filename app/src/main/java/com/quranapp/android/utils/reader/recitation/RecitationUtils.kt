@@ -5,7 +5,6 @@ import com.quranapp.android.utils.univ.FileUtils
 import java.util.regex.Pattern
 
 object RecitationUtils {
-    @JvmField
     val DIR_NAME: String = FileUtils.createPath(
         AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
         "recitations"

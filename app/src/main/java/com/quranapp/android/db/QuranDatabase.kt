@@ -44,7 +44,7 @@ import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
         MutashabihatPhraseEntity::class,
         MutashabihatPhraseAyahEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 @TypeConverters(QuranConverters::class)

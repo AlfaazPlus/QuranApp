@@ -33,6 +33,6 @@ interface GithubApi {
     @GET("inventory/recitations/available_recitation_translations_info_v2.json")
     suspend fun getAvailableRecitationTranslations(): ResponseBody
 
-    @GET("inventory/wbw/available_wbw_info.json")
+    @GET("inventory/wbw/available_wbw_info_v2.json")
     suspend fun getAvailableWbwInfo(): AvailableWbwInfoModel
 }

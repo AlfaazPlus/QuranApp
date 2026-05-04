@@ -32,6 +32,7 @@ data class TranslationUiState(
 
 sealed interface TranslationEvent {
     object Refresh : TranslationEvent
+    object RefreshQuiet : TranslationEvent
     data class Initialize(
         val initialSlugs: Set<String>,
         val saveTranslationChanges: Boolean
@@ -61,6 +62,7 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
     fun onEvent(event: TranslationEvent) {
         when (event) {
             is TranslationEvent.Refresh -> loadTranslations()
+            is TranslationEvent.RefreshQuiet -> loadTranslations(silent = true)
             is TranslationEvent.Initialize -> _uiState.update {
                 it.copy(
                     selectedSlugs = event.initialSlugs,
