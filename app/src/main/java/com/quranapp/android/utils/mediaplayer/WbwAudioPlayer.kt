@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.content.Context
+import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -21,7 +22,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
 
-@UnstableApi
+@OptIn(UnstableApi::class)
 object WbwAudioPlayer {
     private val mutex = Mutex()
     private var player: ExoPlayer? = null

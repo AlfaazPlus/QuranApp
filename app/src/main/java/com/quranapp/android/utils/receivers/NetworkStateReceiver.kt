@@ -63,6 +63,7 @@ class NetworkStateReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        @Suppress("DEPRECATION")
         @JvmStatic
         fun isNetworkConnected(context: Context): Boolean {
             val mgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -87,14 +88,11 @@ class NetworkStateReceiver : BroadcastReceiver() {
         @JvmStatic
         val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
 
-        @JvmOverloads
         fun canProceed(
             context: Context,
-            cancelable: Boolean = true,
-            runOnDismissIfCantProceed: Runnable? = null
         ): Boolean {
             if (!isNetworkConnected(context)) {
-                MessageUtils.popNoInternetMessage(context, cancelable, runOnDismissIfCantProceed)
+                MessageUtils.popNoInternetToast(context)
                 return false
             }
 

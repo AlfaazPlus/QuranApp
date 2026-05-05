@@ -1,15 +1,12 @@
 package com.quranapp.android.utils.univ
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.view.View
 import android.widget.Toast
-import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.peacedesign.android.widget.dialog.base.PeaceDialog.DialogGravity
 import com.quranapp.android.R
-import com.quranapp.android.components.bookmark.BookmarkModel
 import java.lang.ref.WeakReference
 
 object MessageUtils {
@@ -25,6 +22,10 @@ object MessageUtils {
         }
         toast = WeakReference(Toast.makeText(context, msg, duration))
         toast!!.get()!!.show()
+    }
+
+    fun popNoInternetToast(ctx: Context) {
+        showRemovableToast(ctx, R.string.strMsgNoInternetLong, Toast.LENGTH_LONG)
     }
 
     fun popNoInternetMessage(ctx: Context, cancelable: Boolean, runOnDismiss: Runnable? = null) {

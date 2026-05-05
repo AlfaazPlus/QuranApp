@@ -115,32 +115,26 @@ fun ReaderProvider(
             wbwWordLoadingKey = key
 
             try {
-                when (
-                    WbwAudioPlayer.play(
-                        context,
-                        chapterNo,
-                        verseNo,
-                        word.wordIndex,
-                    )
-                ) {
+                when (WbwAudioPlayer.play(
+                    context,
+                    chapterNo,
+                    verseNo,
+                    word.wordIndex,
+                )) {
                     WbwAudioPlayResult.Success -> Unit
-                    WbwAudioPlayResult.NoInternet ->
-                        MessageUtils.popNoInternetMessage(context, true, null)
+                    WbwAudioPlayResult.NoInternet -> MessageUtils.popNoInternetToast(context)
 
-                    WbwAudioPlayResult.TimingsNotLoaded ->
-                        MessageUtils.showRemovableToast(
-                            context,
-                            R.string.wbwAudioTimingsCouldNotLoad,
-                            Toast.LENGTH_LONG,
-                        )
+                    WbwAudioPlayResult.TimingsNotLoaded -> MessageUtils.showRemovableToast(
+                        context,
+                        R.string.wbwAudioTimingsCouldNotLoad,
+                        Toast.LENGTH_LONG,
+                    )
 
-                    WbwAudioPlayResult.InvalidTiming,
-                    WbwAudioPlayResult.NoChapterAudio ->
-                        MessageUtils.showRemovableToast(
-                            context,
-                            R.string.wbwAudioCouldNotPlay,
-                            Toast.LENGTH_LONG,
-                        )
+                    WbwAudioPlayResult.InvalidTiming, WbwAudioPlayResult.NoChapterAudio -> MessageUtils.showRemovableToast(
+                        context,
+                        R.string.wbwAudioCouldNotPlay,
+                        Toast.LENGTH_LONG,
+                    )
                 }
             } finally {
                 if (wbwWordLoadingKey == key) {
@@ -156,21 +150,19 @@ fun ReaderProvider(
         LocalVerseActions provides remember {
             VerseActions(
                 onReferenceClick = { slugs, chapterNo, verses ->
-                    quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
-                },
+                quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
+            },
                 onVerseOption = { verse -> verseOptionsVerse = verse },
                 onFootnoteClick = { verse, footnote ->
                     Log.d("FOOTNOTE", verse, footnote)
                     footnotePresenterData = FootnotePresenterData(
-                        verse,
-                        footnote
+                        verse, footnote
                     )
                 },
                 onBookmarkRequest = { chapterNo, verseRange ->
                     coroutineScope.launch {
                         if (viewModel.userRepository.isBookmarked(
-                                chapterNo,
-                                verseRange
+                                chapterNo, verseRange
                             )
                         ) {
                             bookmarkViewerData = BookmarkViewerData(
@@ -181,15 +173,12 @@ fun ReaderProvider(
                             )
                         } else {
                             viewModel.userRepository.addToBookmark(
-                                chapterNo = chapterNo,
-                                verseRange,
-                                note = null
+                                chapterNo = chapterNo, verseRange, note = null
                             )
                         }
                     }
 
-                }
-            )
+                })
         },
         LocalRecitation provides LocalRecitationStateData(
             controller = controller,
@@ -211,8 +200,8 @@ fun ReaderProvider(
                     playWord(word)
                 }
 
-                val tooltipEnabled = ReaderPreferences.getWbwTooltipShowTranslation() ||
-                        ReaderPreferences.getWbwTooltipShowTransliteration()
+                val tooltipEnabled =
+                    ReaderPreferences.getWbwTooltipShowTranslation() || ReaderPreferences.getWbwTooltipShowTransliteration()
 
                 activeTooltipWord = if (tooltipEnabled) {
                     word
