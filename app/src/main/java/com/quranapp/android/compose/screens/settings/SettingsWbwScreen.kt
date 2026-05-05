@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -26,7 +28,9 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +38,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,19 +46,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
+import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.SwitchItem
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.compose.components.settings.ListItemCategoryLabel
+import com.quranapp.android.compose.components.settings.WbwAudioDownloadSheet
 import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
+import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.viewModels.WbwAudioDownloadUiEvent
+import com.quranapp.android.viewModels.WbwAudioDownloadViewModel
 import com.quranapp.android.viewModels.WbwSettingsUiState
 import com.quranapp.android.viewModels.WbwSettingsViewModel
 import com.quranapp.android.viewModels.WbwUiModel
@@ -63,7 +74,24 @@ import com.quranapp.android.compose.components.common.IconButton as AppIconButto
 @Composable
 fun SettingsWbwScreen() {
     val viewModel = viewModel<WbwSettingsViewModel>()
+    val wbwAudioDownloadViewModel = viewModel<WbwAudioDownloadViewModel>()
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    val context = LocalContext.current
+    var wbwAudioSheetOpen by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        wbwAudioDownloadViewModel.events.collect { event ->
+            when (event) {
+                is WbwAudioDownloadUiEvent.ShowMessage -> {
+                    MessageUtils.showRemovableToast(
+                        context,
+                        msg = event.message,
+                        Toast.LENGTH_LONG
+                    )
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -84,39 +112,27 @@ fun SettingsWbwScreen() {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            when {
-                uiState.isLoading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                uiState.error != null -> ErrorMessageCard(
-                    error = uiState.error,
-                    onRetry = {
-                        viewModel.load(true)
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                )
-
-                else -> {
-                    WbwRows(
-                        viewModel,
-                        uiState,
-                    )
-                }
-            }
+            WbwRows(
+                viewModel,
+                uiState,
+                onOpenWbwAudioDownloadSheet = { wbwAudioSheetOpen = true },
+            )
         }
+
+        WbwAudioDownloadSheet(
+            isOpen = wbwAudioSheetOpen,
+            onDismiss = { wbwAudioSheetOpen = false },
+            viewModel = wbwAudioDownloadViewModel,
+        )
     }
 }
 
 @Composable
-private fun WbwRows(viewModel: WbwSettingsViewModel, uiState: WbwSettingsUiState) {
+private fun WbwRows(
+    viewModel: WbwSettingsViewModel,
+    uiState: WbwSettingsUiState,
+    onOpenWbwAudioDownloadSheet: () -> Unit,
+) {
     var deleteDialogData by remember { mutableStateOf<WbwUiModel?>(null) }
     val downloadStates = uiState.downloadStates
     val rows = uiState.rows
@@ -127,25 +143,52 @@ private fun WbwRows(viewModel: WbwSettingsViewModel, uiState: WbwSettingsUiState
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(top = 16.dp, bottom = 64.dp),
+        contentPadding = PaddingValues(bottom = 64.dp),
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         item {
-            Configurations()
+            Configurations(onOpenWbwAudioDownloadSheet = onOpenWbwAudioDownloadSheet)
         }
-        items(rows, key = { it.info.id }) { row ->
-            val status = downloadStates[row.info.id] ?: ResourceDownloadStatus.Idle
-            WbwRow(
-                row,
-                status,
-                viewModel,
-                uiState,
-                isAnyDownloading,
-                onDeleteRequest = {
-                    deleteDialogData = row
+
+        when {
+            uiState.isLoading -> {
+                item(key = "loading") {
+                    Loader(fill = true)
                 }
-            )
+            }
+
+            uiState.error != null -> {
+                item(key = "error") {
+                    ErrorMessageCard(
+                        error = uiState.error,
+                        onRetry = {
+                            viewModel.load(true)
+                        },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    )
+                }
+            }
+
+            else -> {
+                items(rows, key = { it.info.id }) { row ->
+                    val status = downloadStates[row.info.id] ?: ResourceDownloadStatus.Idle
+
+                    WbwRow(
+                        row,
+                        status,
+                        viewModel,
+                        uiState,
+                        isAnyDownloading,
+                        onDeleteRequest = {
+                            deleteDialogData = row
+                        }
+                    )
+                }
+            }
         }
+
     }
 
     AlertDialog(
@@ -327,22 +370,38 @@ private fun WbwRow(
 }
 
 @Composable
-private fun Configurations() {
+private fun Configurations(onOpenWbwAudioDownloadSheet: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     val appLocale = LocalAppLocale.current
-    val showTranslation = ReaderPreferences.observeWbwShowTranslation()
-    val showTransliteration = ReaderPreferences.observeWbwShowTransliteration()
-    val showTooltipTranslation = ReaderPreferences.observeWbwTooltipShowTranslation()
-    val showTooltipTransliteration = ReaderPreferences.observeWbwTooltipShowTransliteration()
-    val recitation = ReaderPreferences.observeWbwRecitationEnabled()
-    val wbwTextMult = ReaderPreferences.observeWbwTextSizeMultiplier()
+
+    val prefs by DataStoreManager.flowMultiple(
+        ReaderPreferences.KEY_WBW_SHOW_TRANSLATION,
+        ReaderPreferences.KEY_WBW_SHOW_TRANSLITERATION,
+        ReaderPreferences.KEY_WBW_TOOLTIP_SHOW_TRANSLATION,
+        ReaderPreferences.KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION,
+        ReaderPreferences.KEY_WBW_RECITATION,
+        ReaderPreferences.KEY_TEXT_SIZE_MULT_WBW,
+    ).collectAsStateWithLifecycle(null)
+
+    val preferences = prefs ?: return
+
+    val showTranslation = preferences.get(ReaderPreferences.KEY_WBW_SHOW_TRANSLATION)
+    val showTransliteration = preferences.get(ReaderPreferences.KEY_WBW_SHOW_TRANSLITERATION)
+    val showTooltipTr = preferences.get(ReaderPreferences.KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
+    val showTooltipTrlt = preferences.get(ReaderPreferences.KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION)
+    val recitation = preferences.get(ReaderPreferences.KEY_WBW_RECITATION)
+    val wbwTextMult = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_WBW)
 
     val min = 100
     val max = 160
     val steps = max - min
     val wbwProgress = wbwTextMult * 100
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 6.dp, vertical = 16.dp)
+    ) {
         SwitchItem(
             title = R.string.wbwRecitation,
             subtitle = R.string.wbwRecitationMsg,
@@ -354,13 +413,34 @@ private fun Configurations() {
             },
         )
 
-        Spacer(Modifier.height(12.dp))
+        TextButton(
+            onClick = onOpenWbwAudioDownloadSheet,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .height(36.dp),
+            colors = ButtonDefaults.textButtonColors(
+                containerColor = colorScheme.surfaceContainer,
+                contentColor = colorScheme.onSurfaceVariant
+            ),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+        ) {
+            Text(stringResource(R.string.labelDownload))
+            Icon(
+                painterResource(R.drawable.dr_icon_download),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(18.dp)
+            )
+        }
+
+        HorizontalDivider(Modifier.padding(top = 24.dp, bottom = 12.dp))
 
         ListItemCategoryLabel(stringResource(R.string.inTooltip))
 
         SwitchItem(
             title = R.string.wbwShowTranslation,
-            checked = showTooltipTranslation,
+            checked = showTooltipTr,
             onCheckedChange = { checked ->
                 coroutineScope.launch {
                     ReaderPreferences.setWbwTooltipShowTranslation(checked)
@@ -371,7 +451,7 @@ private fun Configurations() {
         SwitchItem(
             title = R.string.wbwShowTransliteration,
             subtitle = R.string.wbwShowTransliterationMgs,
-            checked = showTooltipTransliteration,
+            checked = showTooltipTrlt,
             onCheckedChange = { checked ->
                 coroutineScope.launch {
                     ReaderPreferences.setWbwTooltipShowTransliteration(checked)
@@ -379,7 +459,7 @@ private fun Configurations() {
             },
         )
 
-        Spacer(Modifier.height(12.dp))
+        HorizontalDivider(Modifier.padding(top = 24.dp, bottom = 12.dp))
 
         ListItemCategoryLabel(stringResource(R.string.belowWord))
 
@@ -404,7 +484,7 @@ private fun Configurations() {
             },
         )
 
-        Spacer(Modifier.height(12.dp))
+        HorizontalDivider(Modifier.padding(top = 24.dp, bottom = 12.dp))
 
         ListItemCategoryLabel(stringResource(R.string.wbwTextSize))
 
@@ -445,7 +525,7 @@ private fun Configurations() {
         Spacer(Modifier.height(8.dp))
 
         AlertCard(
-            Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+            Modifier.padding(horizontal = 12.dp)
         ) {
             Text(
                 stringResource(R.string.noWbwAvailable),

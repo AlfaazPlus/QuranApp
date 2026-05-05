@@ -418,5 +418,13 @@
     <string name="selectAll">அனைத்தையும் தேர்ந்தெடு</string>
     <string name="filterTranslationsDisabledNote">அரபு தேடல் இயக்கத்தில் இருக்கும்போது மொழிபெயர்ப்புகளில் தேடப்படாது.</string>
     <string name="filterTranslationsEmpty">இதுவரை மொழிபெயர்ப்புகள் எதுவும் பதிவிறக்கப்படவில்லை.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">சொல் நேர அட்டவணையை ஏற்ற முடியவில்லை. இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="wbwAudioCouldNotPlay">சொல் ஒலியை இயக்க முடியவில்லை.</string>
+    <string name="wbwAudioDownloadHint">ஆஃப்லைனில் கேட்கவும் சீரான இயக்கத்திற்கும் சொல்-சொல்லாக ஒலியைப் பதிவிறக்கவும்.</string>
+    <string name="wbwAudio">சொல்-சொல்லாக ஒலி</string>
+    <string name="wbwAudioDownloadAll">அனைத்தையும் பதிவிறக்கவும்</string>
+    <string name="wbwAudioDownloadAllConfirm">அனைத்து ஸூராக்களுக்கும் சொல்-சொல்லாக திலாவத் ஒலியைப் பதிவிறக்கவா? இது அதிக சேமிப்பு மற்றும் மொபைல் டேட்டாவை பயன்படுத்தலாம்.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">அனைத்தையும் பதிவிறக்குவதற்கு முன் தனித் ஸூராக்களின் பதிவிறக்கம் முடியும் வரை காத்திருக்கவும்.</string>
+    <string name="wbwAudioChapterWaitForBulk">ஒரு ஸூராவைப் பதிவிறக்குவதற்கு முன் முழு பதிவிறக்கம் முடியும் வரை காத்திருக்கவும்.</string>
+</resources>

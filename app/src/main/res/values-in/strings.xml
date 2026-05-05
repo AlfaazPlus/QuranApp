@@ -420,4 +420,13 @@
     <string name="selectAll">Pilih semua</string>
     <string name="filterTranslationsDisabledNote">Terjemahan tidak dicari saat pencarian Arab diaktifkan.</string>
     <string name="filterTranslationsEmpty">Belum ada terjemahan yang diunduh.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Timing per kata tidak dapat dimuat. Periksa koneksi Anda lalu coba lagi.</string>
+    <string name="wbwAudioCouldNotPlay">Audio kata tidak dapat diputar.</string>
+    <string name="wbwAudioDownloadHint">Unduh audio kata-per-kata untuk didengarkan offline dan pemutaran yang lebih lancar.</string>
+    <string name="wbwAudio">Audio kata-per-kata</string>
+    <string name="wbwAudioDownloadAll">Unduh semua</string>
+    <string name="wbwAudioDownloadAllConfirm">Unduh audio tilawah kata-per-kata untuk semua surah? Ini dapat menggunakan banyak penyimpanan dan data seluler.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Tunggu unduhan surah satuan selesai sebelum mengunduh semuanya.</string>
+    <string name="wbwAudioChapterWaitForBulk">Tunggu unduhan penuh selesai sebelum mengunduh satu surah.</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -18,11 +19,12 @@ fun SwitchItem(
     subtitle: Int? = null,
     checked: Boolean,
     enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.small,
     onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(shape)
             .clickable(enabled = enabled) {
                 if (enabled) onCheckedChange(!checked)
             }

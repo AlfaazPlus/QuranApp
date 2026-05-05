@@ -428,4 +428,13 @@
     <string name="selectAll">تحديد الكل</string>
     <string name="filterTranslationsDisabledNote">لا يتم البحث في التراجم عند تفعيل البحث في النص العربي.</string>
     <string name="filterTranslationsEmpty">لم تُنزَّل أي ترجمات بعد.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">تعذّر تحميل توقيتات الكلمات. تحقّق من اتصالك ثم حاول مرة أخرى.</string>
+    <string name="wbwAudioCouldNotPlay">تعذّر تشغيل صوت الكلمة.</string>
+    <string name="wbwAudioDownloadHint">نزّل الصوت كلمة بكلمة للاستماع دون اتصال وتشغيل أكثر سلاسة.</string>
+    <string name="wbwAudio">الصوت كلمة بكلمة</string>
+    <string name="wbwAudioDownloadAll">تنزيل الكل</string>
+    <string name="wbwAudioDownloadAllConfirm">هل تريد تنزيل الصوت كلمة بكلمة لجميع السور؟ قد يستهلك هذا مساحة تخزين وبيانات جوال بشكل كبير.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">انتظر حتى تنتهي تنزيلات السور الفردية قبل تنزيل الكل.</string>
+    <string name="wbwAudioChapterWaitForBulk">انتظر حتى يكتمل التنزيل الشامل قبل تنزيل سورة واحدة.</string>
 </resources>

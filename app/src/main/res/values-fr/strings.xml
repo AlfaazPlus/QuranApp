@@ -428,5 +428,13 @@
     <string name="selectAll">Tout sélectionner</string>
     <string name="filterTranslationsDisabledNote">Les traductions ne sont pas recherchées tant que la recherche en arabe est activée.</string>
     <string name="filterTranslationsEmpty">Aucune traduction téléchargée pour le moment.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">Les timings mot à mot n\'ont pas pu être chargés. Vérifiez votre connexion et réessayez.</string>
+    <string name="wbwAudioCouldNotPlay">Impossible de lire l\'audio du mot.</string>
+    <string name="wbwAudioDownloadHint">Téléchargez l\'audio mot à mot pour une écoute hors ligne et une lecture plus fluide.</string>
+    <string name="wbwAudio">Audio mot à mot</string>
+    <string name="wbwAudioDownloadAll">Tout télécharger</string>
+    <string name="wbwAudioDownloadAllConfirm">Télécharger l\'audio de récitation mot à mot de toutes les sourates ? Cela peut consommer beaucoup de stockage et de données mobiles.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Attendez la fin des téléchargements de sourates individuelles avant de tout télécharger.</string>
+    <string name="wbwAudioChapterWaitForBulk">Attendez la fin du téléchargement complet avant de télécharger une seule sourate.</string>
+</resources>

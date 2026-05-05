@@ -425,5 +425,13 @@
     <string name="selectAll">هەموویان هەڵبژێرە</string>
     <string name="filterTranslationsDisabledNote">کاتێک گەڕانی عەرەبی چالاکە، لە وەرگێڕانەکاندا نەگەڕێت.</string>
     <string name="filterTranslationsEmpty">هێشتا هیچ وەرگێڕانێک دابەزێندراوە نییە.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">کات‌بەندیی وشەکان بار نەکرا. تکایە پەیوەندیی ئینتەرنێت بپشکنە و دووبارە هەوڵبدە.</string>
+    <string name="wbwAudioCouldNotPlay">لێدانی دەنگی وشەکە سەرکەوتوو نەبوو.</string>
+    <string name="wbwAudioDownloadHint">بۆ گوێگرتنی ئۆفلاین و لێدانێکی نەرمتەر، دەنگی وشە بە وشە دابەزێنە.</string>
+    <string name="wbwAudio">دەنگی وشە بە وشە</string>
+    <string name="wbwAudioDownloadAll">دابەزاندنی هەموو</string>
+    <string name="wbwAudioDownloadAllConfirm">دەتەوێت دەنگی تلاوەتی وشە بە وشەی هەموو سوورەتەکان دابەزێنیت؟ ئەمە ڕەنگە بەتوندی شوێنی هەڵگرتن و داتای مۆبایل بەکاربهێنێت.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">پێش دابەزاندنی هەموو، چاوەڕوانی تەواوبوونی دابەزاندنی سوورەتە تاکەکان بکە.</string>
+    <string name="wbwAudioChapterWaitForBulk">پێش دابەزاندنی سوورەتێکی تاک، چاوەڕوانی تەواوبوونی دابەزاندنی گشتی بکە.</string>
+</resources>

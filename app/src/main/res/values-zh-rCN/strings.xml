@@ -418,4 +418,13 @@
     <string name="selectAll">全选</string>
     <string name="filterTranslationsDisabledNote">开启阿拉伯文搜索时，不会搜索译本。</string>
     <string name="filterTranslationsEmpty">尚未下载任何译本。</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">词级时间轴加载失败。请检查网络后重试。</string>
+    <string name="wbwAudioCouldNotPlay">无法播放该词语音频。</string>
+    <string name="wbwAudioDownloadHint">下载逐词音频，可离线收听并获得更流畅的播放体验。</string>
+    <string name="wbwAudio">逐词音频</string>
+    <string name="wbwAudioDownloadAll">全部下载</string>
+    <string name="wbwAudioDownloadAllConfirm">要下载所有苏拉的逐词诵读音频吗？这可能会占用较多存储空间和移动数据。</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">请先等待单个苏拉下载完成，再执行全部下载。</string>
+    <string name="wbwAudioChapterWaitForBulk">请先等待完整下载结束，再下载单个苏拉。</string>
 </resources>

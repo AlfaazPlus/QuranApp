@@ -418,4 +418,13 @@
     <string name="selectAll">سڀ چونڊيو</string>
     <string name="filterTranslationsDisabledNote">عربي ڳولا چالو هجي ته ترجمن ۾ نٿي ڳوليو وڃي.</string>
     <string name="filterTranslationsEmpty">اڃان تائين ڪو به ترجمي ڊائون لوڊ ناهي.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">لفظن جي ٽائمنگ لوڊ نه ٿي سگهي۔ پنهنجو ڪنيڪشن چيڪ ڪري ٻيهر ڪوشش ڪريو۔</string>
+    <string name="wbwAudioCouldNotPlay">لفظ جو آڊيو هلائي نه سگهيو۔</string>
+    <string name="wbwAudioDownloadHint">آف لائين ٻڌڻ ۽ وڌيڪ هموار پلے بيڪ لاءِ لفظ بہ لفظ آڊيو ڊائون لوڊ ڪريو۔</string>
+    <string name="wbwAudio">لفظ بہ لفظ آڊيو</string>
+    <string name="wbwAudioDownloadAll">سڀ ڊائون لوڊ ڪريو</string>
+    <string name="wbwAudioDownloadAllConfirm">ڇا سڀني سورتن جي لفظ بہ لفظ تلاوت آڊيو ڊائون لوڊ ڪجي؟ هن سان گهڻي اسٽوريج ۽ موبائل ڊيٽا استعمال ٿي سگهي ٿي۔</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">سڀ ڊائون لوڊ ڪرڻ کان اڳ انفرادي سورتن جا ڊائون لوڊ مڪمل ٿيڻ ڏيو۔</string>
+    <string name="wbwAudioChapterWaitForBulk">هڪ سورت ڊائون لوڊ ڪرڻ کان اڳ مڪمل ڊائون لوڊ ختم ٿيڻ جو انتظار ڪريو۔</string>
 </resources>

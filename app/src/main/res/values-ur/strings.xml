@@ -432,4 +432,13 @@
     <string name="selectAll">سب منتخب کریں</string>
     <string name="filterTranslationsDisabledNote">عربی تلاش آن ہونے پر تراجم میں تلاش نہیں ہوتی۔</string>
     <string name="filterTranslationsEmpty">ابھی تک کوئی ترجمہ ڈاؤن لوڈ نہیں ہوا۔</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">الفاظ کی ٹائمنگ لوڈ نہیں ہو سکی۔ کنکشن چیک کریں اور دوبارہ کوشش کریں۔</string>
+    <string name="wbwAudioCouldNotPlay">لفظ کا آڈیو چلایا نہیں جا سکا۔</string>
+    <string name="wbwAudioDownloadHint">آف لائن سننے اور زیادہ ہموار پلے بیک کے لیے لفظ بہ لفظ آڈیو ڈاؤن لوڈ کریں۔</string>
+    <string name="wbwAudio">لفظ بہ لفظ آڈیو</string>
+    <string name="wbwAudioDownloadAll">سب ڈاؤن لوڈ کریں</string>
+    <string name="wbwAudioDownloadAllConfirm">کیا تمام سورتوں کی لفظ بہ لفظ تلاوت آڈیو ڈاؤن لوڈ کرنی ہے؟ اس سے کافی اسٹوریج اور موبائل ڈیٹا استعمال ہو سکتا ہے۔</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">سب ڈاؤن لوڈ کرنے سے پہلے انفرادی سورتوں کے ڈاؤن لوڈ مکمل ہونے دیں۔</string>
+    <string name="wbwAudioChapterWaitForBulk">ایک سورت ڈاؤن لوڈ کرنے سے پہلے مکمل ڈاؤن لوڈ ختم ہونے دیں۔</string>
 </resources>

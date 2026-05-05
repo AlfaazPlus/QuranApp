@@ -425,5 +425,13 @@
     <string name="selectAll">انتخاب همه</string>
     <string name="filterTranslationsDisabledNote">وقتی جستجوی عربی روشن است، در ترجمه‌ها جستجو نمی‌شود.</string>
     <string name="filterTranslationsEmpty">هنوز ترجمه‌ای دانلود نشده است.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">زمان‌بندی کلمات بارگذاری نشد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="wbwAudioCouldNotPlay">پخش صوت کلمه ممکن نشد.</string>
+    <string name="wbwAudioDownloadHint">برای گوش‌دادن آفلاین و پخش روان‌تر، صوت کلمه‌به‌کلمه را دانلود کنید.</string>
+    <string name="wbwAudio">صوت کلمه‌به‌کلمه</string>
+    <string name="wbwAudioDownloadAll">دانلود همه</string>
+    <string name="wbwAudioDownloadAllConfirm">صوت تلاوت کلمه‌به‌کلمه همه سوره‌ها دانلود شود؟ این کار ممکن است حجم زیادی از حافظه و دیتای موبایل مصرف کند.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">پیش از دانلود همه، صبر کنید دانلود سوره‌های تکی تمام شود.</string>
+    <string name="wbwAudioChapterWaitForBulk">پیش از دانلود یک سوره، صبر کنید دانلود کامل به پایان برسد.</string>
+</resources>

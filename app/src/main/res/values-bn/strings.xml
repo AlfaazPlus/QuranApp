@@ -425,5 +425,13 @@
     <string name="selectAll">সব নির্বাচন করুন</string>
     <string name="filterTranslationsDisabledNote">আরবি অনুসন্ধান চালু থাকলে অনুবাদে অনুসন্ধান করা হয় না।</string>
     <string name="filterTranslationsEmpty">এখনও কোনো অনুবাদ ডাউনলোড হয়নি।</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">শব্দের টাইমিং লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</string>
+    <string name="wbwAudioCouldNotPlay">শব্দের অডিও চালানো যায়নি।</string>
+    <string name="wbwAudioDownloadHint">অফলাইনে শোনা ও মসৃণ প্লেব্যাকের জন্য শব্দভিত্তিক অডিও ডাউনলোড করুন।</string>
+    <string name="wbwAudio">শব্দভিত্তিক অডিও</string>
+    <string name="wbwAudioDownloadAll">সব ডাউনলোড করুন</string>
+    <string name="wbwAudioDownloadAllConfirm">শব্দভিত্তিক তিলাওয়াতের সব সূরার অডিও ডাউনলোড করবেন? এতে বেশি স্টোরেজ ও মোবাইল ডেটা লাগতে পারে।</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">সব ডাউনলোড করার আগে পৃথক সূরার ডাউনলোড শেষ হতে দিন।</string>
+    <string name="wbwAudioChapterWaitForBulk">একক সূরা ডাউনলোডের আগে পূর্ণ ডাউনলোড শেষ হওয়া পর্যন্ত অপেক্ষা করুন।</string>
+</resources>

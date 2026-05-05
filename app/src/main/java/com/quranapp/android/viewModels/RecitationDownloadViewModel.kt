@@ -311,6 +311,7 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
                     val quranPairs = state.quranReciters.map { model ->
                         async(io) {
                             val key = stateKey(RecitationAudioKind.QURAN, model.id)
+
                             key to computeStateForReciter(
                                 model.id,
                                 key,
@@ -636,6 +637,7 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
     private suspend fun getMergedWorkInfos(): List<WorkInfo> {
         val audio = workManager.getWorkInfosByTag(RecitationAudioDownloadWorker.TAG).await()
         val bulk = workManager.getWorkInfosByTag(RecitationBulkDownloadWorker.TAG).await()
+
         return mergeWorkInfos(audio, bulk)
     }
 
