@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import com.quranapp.android.R
@@ -83,8 +82,6 @@ class ActivityExportImport : BaseActivity() {
     override fun shouldInflateAsynchronously() = false
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-
         setContent {
             QuranAppTheme {
                 ExportImportScreen(

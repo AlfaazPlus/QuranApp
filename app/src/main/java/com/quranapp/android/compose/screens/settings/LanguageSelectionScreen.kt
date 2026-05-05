@@ -116,7 +116,7 @@ fun LanguageSelectionScreen() {
 
         setAppLocale(context, applied)
 
-        committed = applied.languageTag to applied.numeralSystem
+        committed = applied.rawLanguageTag to applied.numeralSystem
     }
 
     val selectedTag = committed.first

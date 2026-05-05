@@ -1,9 +1,9 @@
 package com.quranapp.android.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.compose.screens.MainScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
@@ -36,8 +36,6 @@ class MainActivity : BaseActivity() {
             return
         }
 
-        enableEdgeToEdge()
-
         initActions()
         updateAllVotdWidgets(this)
 
@@ -58,7 +56,7 @@ class MainActivity : BaseActivity() {
     private val isOnboardingRequired get() = SPAppActions.getRequireOnboarding(this)
 
     private fun initOnboarding() {
-        launchActivity(ActivityOnboarding::class.java)
+        startActivity(Intent(this, ActivityOnboarding::class.java))
         finish()
     }
 }

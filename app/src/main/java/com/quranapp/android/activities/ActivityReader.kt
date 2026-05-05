@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,8 +28,6 @@ class ActivityReader : BaseActivity() {
     override fun getLayoutResource() = 0
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(isTaskRoot) {
             override fun handleOnBackPressed() {
                 launchMainActivity()

@@ -57,7 +57,7 @@
         <item>ta</item>
         <item>tr</item>
         <item>ur</item>
-        <item>zh-rCN</item>
-        <item>zh-rTW</item>
+        <item>zh-CN</item>
+        <item>zh-TW</item>
     </string-array>
 </resources>

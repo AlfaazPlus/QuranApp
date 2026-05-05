@@ -40,7 +40,4 @@ data class ReadHistoryEntity(
 
     @ColumnInfo(name = "datetime")
     val datetime: Long = System.currentTimeMillis(),
-) {
-    @Ignore
-    var chapterName: String? = null
-}
+)

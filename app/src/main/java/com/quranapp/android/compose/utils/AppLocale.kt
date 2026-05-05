@@ -28,7 +28,7 @@ enum class NumeralSystem(val storageKey: String) {
 }
 
 data class AppLocale(
-    val languageTag: String,
+    val rawLanguageTag: String,
     val numeralSystem: NumeralSystem?,
     private val baseLocale: Locale,
 ) {
@@ -94,7 +94,7 @@ fun readAppLocale(context: Context): AppLocale {
     val storedNumeral = NumeralSystem.fromStorage(SPAppConfigs.getNumeralSystem(context))
 
     return AppLocale(
-        languageTag = languageTag,
+        rawLanguageTag = languageTag,
         baseLocale = baseLocale,
         numeralSystem = coerceNumeralForLanguage(baseLocale.language, storedNumeral),
     )
@@ -112,7 +112,7 @@ fun appLocaleForLanguageChange(
     }
 
     return AppLocale(
-        languageTag = languageTag,
+        rawLanguageTag = languageTag,
         baseLocale = baseLocale,
         numeralSystem = coerceNumeralForLanguage(baseLocale.language, numberSystem),
     )
@@ -123,7 +123,7 @@ private val _appLocaleFlow = MutableStateFlow(
         val base = systemDisplayLocale()
 
         AppLocale(
-            languageTag = SPAppConfigs.LOCALE_DEFAULT,
+            rawLanguageTag = SPAppConfigs.LOCALE_DEFAULT,
             baseLocale = base,
             numeralSystem = coerceNumeralForLanguage(base.language, null),
         )
@@ -137,13 +137,13 @@ fun refreshAppLocale(context: Context) {
 }
 
 fun setAppLocale(context: Context, locale: AppLocale) {
-    SPAppConfigs.setLocale(context, locale.languageTag)
+    SPAppConfigs.setLocale(context, locale.rawLanguageTag)
     SPAppConfigs.setNumeralSystem(context, locale.numeralSystem?.storageKey)
 
-    if (locale.languageTag == SPAppConfigs.LOCALE_DEFAULT) {
+    if (locale.rawLanguageTag == SPAppConfigs.LOCALE_DEFAULT) {
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
     } else {
-        val normalized = locale.languageTag.normalizedLanguageTag()
+        val normalized = locale.rawLanguageTag.normalizedLanguageTag()
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(normalized))
     }
 

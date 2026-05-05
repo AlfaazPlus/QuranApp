@@ -52,8 +52,8 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 fun AppBar(
     title: String? = null,
     titleContent: (@Composable () -> Unit)? = null,
-    bgColor: Color? = null,
-    color: Color? = null,
+    bgColor: Color = colorScheme.surfaceContainer,
+    color: Color = colorScheme.onSurface,
     searchQuery: String = "",
     onSearchQueryChange: ((String) -> Unit)? = null,
     searchPlaceholder: String? = null,
@@ -81,11 +81,11 @@ fun AppBar(
     TopAppBar(
         modifier = Modifier.shadow(shadowElevation),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = bgColor ?: colorScheme.surfaceContainer,
-            scrolledContainerColor = bgColor ?: colorScheme.surfaceContainer,
-            navigationIconContentColor = color ?: colorScheme.onSurface,
-            titleContentColor = color ?: colorScheme.onSurface,
-            actionIconContentColor = color ?: colorScheme.onSurface,
+            containerColor = bgColor,
+            scrolledContainerColor = bgColor,
+            navigationIconContentColor = color,
+            titleContentColor = color,
+            actionIconContentColor = color,
         ),
         title = {
             if (searchEnabled && searchExpanded) {

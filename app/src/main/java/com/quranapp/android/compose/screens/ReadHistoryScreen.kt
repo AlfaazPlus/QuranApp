@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
@@ -65,6 +66,8 @@ private sealed interface HistoryDeleteTarget {
 fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    val chapterNames by vm.chapterNames.collectAsStateWithLifecycle()
     val allHistories = vm.allHistories.collectAsLazyPagingItems()
 
     var deleteTarget by remember { mutableStateOf<HistoryDeleteTarget?>(null) }
@@ -138,7 +141,7 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = viewModel()) {
                         if (history != null) {
                             ReadHistoryCard(
                                 history = history,
-                                chapterName = history.chapterName.orEmpty(),
+                                chapterName = chapterNames.get(history.chapterNo).orEmpty(),
                                 onOpen = {
                                     ReaderFactory.prepareHistoryIntent(history)?.let {
                                         it.setClass(context, ActivityReader::class.java)

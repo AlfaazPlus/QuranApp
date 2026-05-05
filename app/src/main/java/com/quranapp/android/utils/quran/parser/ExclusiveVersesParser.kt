@@ -2,6 +2,7 @@ package com.quranapp.android.utils.quran.parser
 
 import android.content.Context
 import com.quranapp.android.components.quran.ExclusiveVerse
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
 import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.db.DatabaseProvider
 import kotlinx.coroutines.sync.Mutex
@@ -52,42 +53,25 @@ object ExclusiveVersesParser {
             it.readText()
         }
 
-        val fallbackLangCode = "en"
-        val locale = appPlatformLocale()
-        val currentLangCode = with(locale.language) {
-            if (this == "in") "id" else this // Hosted weblate uses "id" for Indonesian but Android uses "in"
-        }
-        val currentCountry = locale.country
-
-        val fullPath0 = "verses/$filename/$currentLangCode-r$currentCountry"
-        val fullPath1 = "verses/$filename/$currentLangCode"
-        val fallbackPath = "verses/$filename/$fallbackLangCode"
         val filenameWithExt = "$filename.json"
+        val fallbackPath = "verses/$filename/en/$filenameWithExt"
 
-        val fallbackTexts = assets.open("$fallbackPath/$filenameWithExt")
-            .bufferedReader().use {
-                it.readText()
-            }
+        val fallbackTexts = assets.open(fallbackPath).bufferedReader().use { it.readText() }
 
-        val resolvedPath = if (currentLangCode != fallbackLangCode) {
-            if (assets.list(fullPath0)?.contains(filenameWithExt) == true) {
-                fullPath0
-            } else if (assets.list(fullPath1)?.contains(filenameWithExt) == true) {
-                fullPath1
-            } else null
-        } else null
-
-        val localeTexts = resolvedPath?.let {
-            assets.open("$it/$filenameWithExt")
-                .bufferedReader().use { reader ->
-                    reader.readText()
-                }
-        }
+        val localeTexts = appFallbackLanguageCodes().firstNotNullOfOrNull { code ->
+            runCatching {
+                assets.open("verses/$filename/$code/$filenameWithExt")
+                    .bufferedReader()
+                    .use {
+                        it.readText()
+                    }
+            }.getOrNull()
+        } ?: fallbackTexts
 
         return parseVersesInternal(
             context,
             map,
-            localeTexts ?: fallbackTexts,
+            localeTexts,
             fallbackTexts,
         )
     }
