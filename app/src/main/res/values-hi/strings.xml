@@ -432,4 +432,13 @@
     <string name="selectAll">सभी चुनें</string>
     <string name="filterTranslationsDisabledNote">अरबी खोज चालू होने पर अनुवादों में खोज नहीं की जाती।</string>
     <string name="filterTranslationsEmpty">अभी तक कोई अनुवाद डाउनलोड नहीं हुआ।</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">शब्दों की टाइमिंग लोड नहीं हो सकी। कनेक्शन जांचें और फिर कोशिश करें।</string>
+    <string name="wbwAudioCouldNotPlay">शब्द का ऑडियो चलाया नहीं जा सका।</string>
+    <string name="wbwAudioDownloadHint">ऑफलाइन सुनने और ज्यादा स्मूथ प्लेबैक के लिए शब्द-दर-शब्द ऑडियो डाउनलोड करें।</string>
+    <string name="wbwAudio">शब्द-दर-शब्द ऑडियो</string>
+    <string name="wbwAudioDownloadAll">सब डाउनलोड करें</string>
+    <string name="wbwAudioDownloadAllConfirm">क्या सभी सूरह का शब्द-दर-शब्द तिलावत ऑडियो डाउनलोड करना है? इससे काफी स्टोरेज और मोबाइल डेटा खर्च हो सकता है।</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">सब डाउनलोड करने से पहले अलग-अलग सूरह के डाउनलोड पूरे होने दें।</string>
+    <string name="wbwAudioChapterWaitForBulk">एक सूरह डाउनलोड करने से पहले पूरा डाउनलोड खत्म होने दें।</string>
 </resources>

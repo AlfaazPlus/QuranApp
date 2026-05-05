@@ -436,4 +436,13 @@
     <string name="selectAll">Выбрать все</string>
     <string name="filterTranslationsDisabledNote">Переводы не ищутся, пока включён поиск по арабскому тексту.</string>
     <string name="filterTranslationsEmpty">Переводы ещё не загружены.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Не удалось загрузить тайминги слов. Проверьте подключение и попробуйте снова.</string>
+    <string name="wbwAudioCouldNotPlay">Не удалось воспроизвести аудио слова.</string>
+    <string name="wbwAudioDownloadHint">Скачайте пословное аудио для офлайн-прослушивания и более плавного воспроизведения.</string>
+    <string name="wbwAudio">Пословное аудио</string>
+    <string name="wbwAudioDownloadAll">Скачать все</string>
+    <string name="wbwAudioDownloadAllConfirm">Скачать пословное аудио чтения для всех сур? Это может занять много памяти и мобильного трафика.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Дождитесь завершения загрузки отдельных сур перед загрузкой всего.</string>
+    <string name="wbwAudioChapterWaitForBulk">Дождитесь завершения полной загрузки перед загрузкой одной суры.</string>
 </resources>

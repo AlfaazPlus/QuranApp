@@ -428,4 +428,13 @@
     <string name="selectAll">Selecionar tudo</string>
     <string name="filterTranslationsDisabledNote">As traduções não são pesquisadas enquanto a pesquisa em árabe estiver ativa.</string>
     <string name="filterTranslationsEmpty">Ainda não há traduções baixadas.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Não foi possível carregar os tempos palavra por palavra. Verifique a ligação e tente novamente.</string>
+    <string name="wbwAudioCouldNotPlay">Não foi possível reproduzir o áudio da palavra.</string>
+    <string name="wbwAudioDownloadHint">Baixe o áudio palavra por palavra para ouvir offline e ter uma reprodução mais fluida.</string>
+    <string name="wbwAudio">Áudio palavra por palavra</string>
+    <string name="wbwAudioDownloadAll">Baixar tudo</string>
+    <string name="wbwAudioDownloadAllConfirm">Baixar o áudio de recitação palavra por palavra de todas as suratas? Isto pode consumir bastante armazenamento e dados móveis.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Aguarde o fim dos downloads de suratas individuais antes de baixar tudo.</string>
+    <string name="wbwAudioChapterWaitForBulk">Aguarde o download completo terminar antes de baixar uma única surata.</string>
 </resources>

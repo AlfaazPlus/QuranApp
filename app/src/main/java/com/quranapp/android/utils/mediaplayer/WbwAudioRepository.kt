@@ -31,18 +31,21 @@ import java.util.zip.GZIPInputStream
 object WbwAudioRepository {
     private const val DIR_NAME = "wbw_audio"
 
-    private val ROOT_DIR_PATH: String = FileUtils.createPath(
+    private val ROOT_DIR_PATH = FileUtils.createPath(
         AppUtils.BASE_APP_DOWNLOADED_SAVED_DATA_DIR,
         DIR_NAME
     )
 
-    private const val AUDIO_ID: String = "wbw_a1"
+    const val AUDIO_ID = "wbw_a1"
 
     private const val TIMING_URL =
         "ghraw://AlfaazPlus/QuranAppInventory/master/wbw_timings/wbw_a1.json.gz"
 
     private const val AUDIO_URL_TEMPLATE =
         "https://github.com/dabatase/wbw_a1/releases/download/v1/{chapNo:%03d}.webm"
+
+    const val ONE_OFF_AUDIO_URL_BASE =
+        "https://audio.qurancdn.com/wbw/"
 
 
     private val timingLoadMutex = Mutex()
@@ -66,9 +69,45 @@ object WbwAudioRepository {
         return dir
     }
 
-    private fun chapterAudioFile(context: Context, chapterNo: Int): File {
+    fun getChapterAudioFile(context: Context, chapterNo: Int): File {
         return File(getRootDir(context), StringUtils.formatInvariant("%03d.webm", chapterNo))
     }
+
+    private fun hasValidChapterAudioFile(file: File): Boolean {
+        return file.exists() && file.length() > 0L
+    }
+
+    fun isChapterAudioDownloaded(context: Context, chapterNo: Int): Boolean {
+        val f = getChapterAudioFile(context.applicationContext, chapterNo)
+        return hasValidChapterAudioFile(f)
+    }
+
+    fun prepareOneOffWordAudioUrl(
+        chapterNo: Int,
+        verseNo: Int,
+        appWordIndex: Int,
+    ): String? {
+        if (chapterNo <= 0 || verseNo <= 0 || appWordIndex < 0) {
+            return null
+        }
+
+        val sourceWordIndex = appWordIndex + 1
+        val fileName = StringUtils.formatInvariant(
+            "%03d_%03d_%03d.mp3",
+            chapterNo,
+            verseNo,
+            sourceWordIndex,
+        )
+        return ONE_OFF_AUDIO_URL_BASE + fileName
+    }
+
+    suspend fun deleteChapterAudio(context: Context, chapterNo: Int) =
+        withContext(Dispatchers.IO) {
+            val f = getChapterAudioFile(context.applicationContext, chapterNo)
+            if (f.exists()) {
+                f.delete()
+            }
+        }
 
     fun prepareChapterAudioUrl(chapterNo: Int): String? {
         var url = AUDIO_URL_TEMPLATE
@@ -103,9 +142,9 @@ object WbwAudioRepository {
         withContext(Dispatchers.IO) {
             val app = context.applicationContext
 
-            val local = chapterAudioFile(app, chapterNo)
+            val local = getChapterAudioFile(app, chapterNo)
 
-            if (local.exists() && local.length() > 0L) {
+            if (hasValidChapterAudioFile(local)) {
                 return@withContext local.toUri()
             }
 
@@ -117,6 +156,29 @@ object WbwAudioRepository {
 
             url.toUri()
         }
+
+    suspend fun resolveWordPlaybackSource(
+        context: Context,
+        chapterNo: Int,
+        verseNo: Int,
+        appWordIndex: Int,
+    ): WbwWordPlaybackSource? = withContext(Dispatchers.IO) {
+        val app = context.applicationContext
+        val local = getChapterAudioFile(app, chapterNo)
+
+        if (hasValidChapterAudioFile(local)) {
+            return@withContext WbwWordPlaybackSource.Chapter(local.toUri())
+        }
+
+        if (!NetworkStateReceiver.isNetworkConnected(app)) {
+            return@withContext null
+        }
+
+        val oneOffUrl = prepareOneOffWordAudioUrl(chapterNo, verseNo, appWordIndex)
+            ?: return@withContext null
+
+        WbwWordPlaybackSource.OneOff(oneOffUrl.toUri())
+    }
 
     suspend fun getWordTiming(
         context: Context,
@@ -282,4 +344,9 @@ object WbwAudioRepository {
 
         return Triple(chapter, verse, wordIndex)
     }
+}
+
+sealed interface WbwWordPlaybackSource {
+    data class Chapter(val uri: Uri) : WbwWordPlaybackSource
+    data class OneOff(val uri: Uri) : WbwWordPlaybackSource
 }

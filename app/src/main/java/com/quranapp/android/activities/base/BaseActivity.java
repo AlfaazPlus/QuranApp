@@ -8,45 +8,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.ColorInt;
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedListener;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 
-import com.peacedesign.android.utils.WindowUtils;
-import com.quranapp.android.R;
 import com.quranapp.android.activities.MainActivity;
-import com.quranapp.android.interfaceUtils.ActivityResultStarter;
-import com.quranapp.android.utils.receivers.NetworkStateReceiver;
-import com.quranapp.android.utils.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
-public abstract class BaseActivity extends ResHelperActivity implements NetworkStateReceiverListener,
-    ActivityResultStarter {
-    private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        this::onActivityResult2
-    );
+public abstract class BaseActivity extends AppCompatActivity {
     protected final AsyncLayoutInflater mAsyncInflater = new AsyncLayoutInflater(this);
-    private NetworkStateReceiver mNetworkReceiver;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -72,33 +50,11 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        mNetworkReceiver = new NetworkStateReceiver();
-        mNetworkReceiver.addListener(this);
-        ContextCompat.registerReceiver(
-            this,
-            mNetworkReceiver,
-            NetworkStateReceiver.getIntentFilter(),
-            ContextCompat.RECEIVER_EXPORTED
-        );
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mNetworkReceiver != null) {
-            mNetworkReceiver.removeListener(this);
-            unregisterReceiver(mNetworkReceiver);
-        }
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(getThemeId());
         super.onCreate(savedInstanceState);
-        adjustSystemBars();
+
+        EdgeToEdge.enable(this);
+
         initCreate(savedInstanceState);
     }
 
@@ -140,128 +96,14 @@ public abstract class BaseActivity extends ResHelperActivity implements NetworkS
 
     protected abstract void onActivityInflated(@NonNull View activityView, @Nullable Bundle savedInstanceState);
 
-    public void adjustSystemBars() {
-        Window window = getWindow();
-        boolean isLight = isStatusBarLight();
-
-        int statusBarBG = getStatusBarBG();
-        int navBarBG = getNavBarBG();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            View decorView = window.getDecorView();
-
-            window.setStatusBarColor(statusBarBG);
-            window.setNavigationBarColor(navBarBG);
-
-            WindowInsetsControllerCompat wic = new WindowInsetsControllerCompat(window, decorView);
-
-            wic.setAppearanceLightStatusBars(isLight);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                wic.setAppearanceLightNavigationBars(isLight);
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                window.setNavigationBarContrastEnforced(true);
-            }
-        } else {
-            if (isLight) {
-                window.setStatusBarColor(Color.BLACK);
-            } else {
-                window.setStatusBarColor(statusBarBG);
-            }
-        }
-    }
-
-    public void setStatusBarBG(@ColorInt int color, boolean isLight) {
-        Window window = getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            View decorView = window.getDecorView();
-
-            window.setStatusBarColor(color);
-
-            WindowInsetsControllerCompat wic = new WindowInsetsControllerCompat(window, decorView);
-            wic.setAppearanceLightStatusBars(isLight);
-        } else {
-            if (isLight) {
-                window.setStatusBarColor(Color.BLACK);
-            } else {
-                window.setStatusBarColor(color);
-            }
-        }
-    }
-
-    protected boolean isStatusBarLight() {
-        return !WindowUtils.isNightMode(this) || WindowUtils.isNightUndefined(this);
-    }
-
-    @ColorInt
-    protected int getStatusBarBG() {
-        return getWindowBackgroundColor();
-    }
-
-    @StyleRes
-    protected int getThemeId() {
-        return R.style.Theme_QuranApp;
-    }
-
-    @ColorInt
-    protected int getNavBarBG() {
-        return getStatusBarBG();
-    }
-
-    public void launchActivity(Class<?> cls) {
-        Intent intent = new Intent(this, cls);
-        startActivity(intent);
-    }
-
-    protected void hideSystemBars() {
-        Window window = getWindow();
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    /**
-     * Returns window background color for the current theme,
-     * which is the value of {@code @android:attr/windowBackground}
-     */
-    @ColorInt
-    private int getWindowBackgroundColor() {
-        TypedArray attributes = obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
-        @ColorInt int backgroundColor = attributes.getColor(0, ContextCompat.getColor(this, R.color.colorBGPage));
-        attributes.recycle();
-        return backgroundColor;
-    }
-
     public void launchMainActivity() {
-        launchActivity(MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void restartMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    public boolean isDestroyed2() {
-        return isDestroyed() || isFinishing() || isChangingConfigurations();
-    }
-
-
-    @Override
-    public void startActivity4Result(Intent intent, ActivityOptionsCompat options) {
-        mActivityResultLauncher.launch(intent, options);
-    }
-
-    protected void onActivityResult2(ActivityResult result) {
-    }
-
-    @Override
-    public void networkAvailable() {
-    }
-
-    @Override
-    public void networkUnavailable() {
     }
 }

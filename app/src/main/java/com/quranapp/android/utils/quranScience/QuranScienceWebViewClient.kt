@@ -5,7 +5,6 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -18,8 +17,8 @@ import java.net.URLConnection
 import java.util.concurrent.ConcurrentHashMap
 
 open class QuranScienceWebViewClient(
-    private val activity: ActivityQuranScienceContent,
     private val atlasPngCache: ConcurrentHashMap<String, ByteArray> = ConcurrentHashMap(),
+    private val onOpenReference: (chapterNo: Int, fromVerse: Int, toVerse: Int) -> Unit,
 ) : WebViewClientCompat() {
 
     override fun shouldInterceptRequest(
@@ -126,15 +125,15 @@ open class QuranScienceWebViewClient(
             }
 
             if (host == "quranapp.verse.ref") {
-                activity.showQuickReference(chapterNo, fromVerse, toVerse)
+                onOpenReference(chapterNo, fromVerse, toVerse)
             } else if (host == "quranapp.verse.reader") {
-                activity.startActivity(
+                view.context.startActivity(
                     ReaderFactory.prepareVerseRangeIntent(
                         chapterNo,
                         fromVerse,
                         toVerse
                     ).apply {
-                        setClass(activity, ActivityReader::class.java)
+                        setClass(view.context, ActivityReader::class.java)
                     }
                 )
             }

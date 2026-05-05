@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,6 +52,7 @@ import com.quranapp.android.viewModels.ReadHistoryViewModel
 @Composable
 fun HomeSectionReadHistory() {
     val viewModel = viewModel<ReadHistoryViewModel>()
+    val chapterNames by viewModel.chapterNames.collectAsStateWithLifecycle()
     val recentHistories by viewModel.recentHistories.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
@@ -87,7 +87,7 @@ fun HomeSectionReadHistory() {
                     items(recentHistories, key = { it.id }) { history ->
                         ItemCard(
                             history = history,
-                            chapterName = history.chapterName.orEmpty(),
+                            chapterName = chapterNames.get(history.chapterNo).orEmpty(),
                             onOpen = {
                                 ReaderFactory.prepareHistoryIntent(history)?.let {
                                     it.setClass(context, ActivityReader::class.java)

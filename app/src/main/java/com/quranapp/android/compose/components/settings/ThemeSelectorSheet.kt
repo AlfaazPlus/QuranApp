@@ -1,6 +1,5 @@
 package com.quranapp.android.compose.components.settings
 
-import com.quranapp.android.compose.utils.ThemeUtils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,9 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheet
-import kotlinx.coroutines.Dispatchers
+import com.quranapp.android.compose.utils.ThemeUtils
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
 fun ThemeSelectorSheet(isOpen: Boolean, onDismiss: () -> Unit) {
@@ -46,13 +44,15 @@ fun ThemeSelectorSheet(isOpen: Boolean, onDismiss: () -> Unit) {
                     subtitle = description,
                     selected = themeMode == theme,
                     onClick = {
+                        onDismiss()
+
                         coroutineScope.launch {
                             ThemeUtils.setThemeMode(theme)
-                            AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate(theme))
-
-                            withContext(Dispatchers.Main) {
-                                onDismiss()
-                            }
+                            AppCompatDelegate.setDefaultNightMode(
+                                ThemeUtils.resolveThemeModeForDelegate(
+                                    theme
+                                )
+                            )
                         }
                     }
                 )

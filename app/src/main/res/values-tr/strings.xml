@@ -425,5 +425,13 @@
     <string name="selectAll">Tümünü seç</string>
     <string name="filterTranslationsDisabledNote">Arapça arama açıkken çevirilerde arama yapılmaz.</string>
     <string name="filterTranslationsEmpty">Henüz indirilmiş çeviri yok.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">Kelime zamanlamaları yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="wbwAudioCouldNotPlay">Kelime sesi oynatılamadı.</string>
+    <string name="wbwAudioDownloadHint">Çevrimdışı dinleme ve daha akıcı oynatma için kelime kelime sesi indirin.</string>
+    <string name="wbwAudio">Kelime kelime ses</string>
+    <string name="wbwAudioDownloadAll">Hepsini indir</string>
+    <string name="wbwAudioDownloadAllConfirm">Tüm sureler için kelime kelime tilavet sesini indirmek istiyor musunuz? Bu işlem önemli miktarda depolama ve mobil veri kullanabilir.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Hepsini indirmeden önce tek tek sure indirmelerinin bitmesini bekleyin.</string>
+    <string name="wbwAudioChapterWaitForBulk">Tek bir sure indirmeden önce toplu indirmenin tamamlanmasını bekleyin.</string>
+</resources>

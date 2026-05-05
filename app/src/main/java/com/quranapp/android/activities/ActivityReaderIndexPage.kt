@@ -2,7 +2,6 @@ package com.quranapp.android.activities
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.activities.base.BaseActivity
@@ -16,8 +15,6 @@ class ActivityReaderIndexPage : BaseActivity() {
     }
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-
         setContentView(ComposeView(this).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 

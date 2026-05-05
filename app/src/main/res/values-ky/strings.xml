@@ -422,4 +422,13 @@
     <string name="selectAll">Баарын тандаңыз</string>
     <string name="filterTranslationsDisabledNote">Арабча издөө күйүк болгондо котормолор изделбейт.</string>
     <string name="filterTranslationsEmpty">Азырынча котормолор жүктөлгөн эмес.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Сөздөрдүн убакыт белгилерин жүктөө мүмкүн болгон жок. Байланышыңызды текшерип, кайра аракет кылыңыз.</string>
+    <string name="wbwAudioCouldNotPlay">Сөздүн аудиосун ойнотуу мүмкүн болгон жок.</string>
+    <string name="wbwAudioDownloadHint">Оффлайн угуу жана туруктуураак ойнотуу үчүн сөзмө-сөз аудиону жүктөп алыңыз.</string>
+    <string name="wbwAudio">Сөзмө-сөз аудио</string>
+    <string name="wbwAudioDownloadAll">Баарын жүктөп алуу</string>
+    <string name="wbwAudioDownloadAllConfirm">Бардык сүрөлөр үчүн сөзмө-сөз кыраат аудиосун жүктөп алайынбы? Бул көп сактагычты жана мобилдик трафикти колдонушу мүмкүн.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Баарын жүктөөдөн мурда өз-өзүнчө сүрө жүктөөлөрү бүтүшүн күтүңүз.</string>
+    <string name="wbwAudioChapterWaitForBulk">Бир сүрөнү жүктөөдөн мурда толук жүктөө бүтүшүн күтүңүз.</string>
 </resources>

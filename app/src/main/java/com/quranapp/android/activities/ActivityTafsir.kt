@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import com.quranapp.android.R
@@ -39,8 +38,6 @@ class ActivityTafsir : BaseActivity() {
         activityView: View,
         savedInstanceState: Bundle?
     ) {
-        enableEdgeToEdge()
-
         setContent {
             QuranAppTheme {
                 TafsirReaderScreen(

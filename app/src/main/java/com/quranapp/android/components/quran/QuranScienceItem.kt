@@ -1,6 +1,7 @@
 package com.quranapp.android.components.quran
 
-import com.quranapp.android.compose.utils.appPlatformLocale
+import com.quranapp.android.compose.utils.appFallbackLanguageCodes
+import com.quranapp.android.utils.Log
 import java.io.Serializable
 
 data class QuranScienceItem(
@@ -11,21 +12,8 @@ data class QuranScienceItem(
     val translations: Map<String, String>
 ) : Serializable {
     fun getTitle(): String {
-        val locale = appPlatformLocale()
-        val langCode1 = with(locale.language) {
-            // Hosted weblate uses "id" for Indonesian but Android uses "in"
-            if (this == "in") "id" else this
-        }
-        val langCode2 = "$langCode1-r${locale.country}"
-
-        var name = translations.getOrElse(langCode2, {
-            translations.getOrDefault(
-                langCode1,
-                title
-            )
-        })
-
-        return name
+        return appFallbackLanguageCodes().firstNotNullOfOrNull {
+            translations.get(it)
+        } ?: title
     }
-
 }

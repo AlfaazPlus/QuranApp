@@ -428,4 +428,13 @@
     <string name="selectAll">Alle auswählen</string>
     <string name="filterTranslationsDisabledNote">Übersetzungen werden nicht durchsucht, solange die arabische Suche aktiv ist.</string>
     <string name="filterTranslationsEmpty">Noch keine Übersetzungen heruntergeladen.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Wort-Timings konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
+    <string name="wbwAudioCouldNotPlay">Wort-Audio konnte nicht abgespielt werden.</string>
+    <string name="wbwAudioDownloadHint">Lade Wort-für-Wort-Audio für Offline-Hören und flüssigere Wiedergabe herunter.</string>
+    <string name="wbwAudio">Wort-für-Wort-Audio</string>
+    <string name="wbwAudioDownloadAll">Alles herunterladen</string>
+    <string name="wbwAudioDownloadAllConfirm">Wort-für-Wort-Rezitationsaudio für alle Suren herunterladen? Das kann viel Speicher und mobile Daten verbrauchen.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Warte, bis einzelne Suren-Downloads abgeschlossen sind, bevor du alles herunterlädst.</string>
+    <string name="wbwAudioChapterWaitForBulk">Warte, bis der vollständige Download abgeschlossen ist, bevor du eine einzelne Sure herunterlädst.</string>
 </resources>

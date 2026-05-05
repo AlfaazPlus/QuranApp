@@ -45,7 +45,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -89,6 +88,7 @@ import com.alfaazplus.sunnah.ui.theme.tightTextStyle
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch
+import com.quranapp.android.compose.components.common.CenteredSecondaryScrollableTabRow
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.dialogs.BottomSheet
@@ -405,30 +405,30 @@ private fun ReaderIndexTabs(
             },
         shadowElevation = 2.dp,
     ) {
-        SecondaryScrollableTabRow(
+        CenteredSecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = colorScheme.surfaceContainer,
-            edgePadding = 0.dp
-        ) {
-            tabs.forEachIndexed { index, titleRes ->
-                val isSelected = selectedTabIndex == index
+            tabCount = tabs.size,
+            containerColor = colorScheme.surfaceContainer
+        ) { index, tabModifier ->
+            val isSelected = selectedTabIndex == index
+            val titleRes = tabs[index]
 
-                Tab(
-                    selected = isSelected,
-                    selectedContentColor = colorScheme.primary,
-                    unselectedContentColor = colorScheme.onSurfaceVariant,
-                    onClick = { onTabSelected(index) },
-                    text = {
-                        Text(
-                            text = stringResource(titleRes),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                )
-            }
+            Tab(
+                modifier = tabModifier,
+                selected = isSelected,
+                selectedContentColor = colorScheme.primary,
+                unselectedContentColor = colorScheme.onSurfaceVariant,
+                onClick = { onTabSelected(index) },
+                text = {
+                    Text(
+                        text = stringResource(titleRes),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            )
         }
     }
 }

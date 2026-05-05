@@ -428,5 +428,13 @@
     <string name="selectAll">બધું પસંદ કરો</string>
     <string name="filterTranslationsDisabledNote">અરબી શોધ ચાલુ હોય ત્યાં સુધી અનુવાદોમાં શોધ થતી નથી.</string>
     <string name="filterTranslationsEmpty">હજુ સુધી કોઈ અનુવાદ ડાઉનલોડ થયું નથી.</string>
-</resources>
 
+    <string name="wbwAudioTimingsCouldNotLoad">શબ્દોના સમયચિહ્નો લોડ થઈ શક્યા નથી. કનેક્શન તપાસો અને ફરી પ્રયાસ કરો.</string>
+    <string name="wbwAudioCouldNotPlay">શબ્દનો ઓડિયો ચલાવી શકાયો નથી.</string>
+    <string name="wbwAudioDownloadHint">ઓફલાઇન સાંભળવા અને વધુ સ્મૂથ પ્લેબેક માટે શબ્દ-દર-શબ્દ ઓડિયો ડાઉનલોડ કરો.</string>
+    <string name="wbwAudio">શબ્દ-દર-શબ્દ ઓડિયો</string>
+    <string name="wbwAudioDownloadAll">બધું ડાઉનલોડ કરો</string>
+    <string name="wbwAudioDownloadAllConfirm">બધી સૂરાઓ માટે શબ્દ-દર-શબ્દ તિલાવત ઓડિયો ડાઉનલોડ કરશો? તે વધુ સ્ટોરેજ અને મોબાઇલ ડેટા વાપરી શકે છે.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">બધું ડાઉનલોડ કરતા પહેલાં અલગ સૂરાઓના ડાઉનલોડ પૂર્ણ થવા દો.</string>
+    <string name="wbwAudioChapterWaitForBulk">એક જ સૂરા ડાઉનલોડ કરતા પહેલાં સંપૂર્ણ ડાઉનલોડ પૂર્ણ થવાની રાહ જુઓ.</string>
+</resources>

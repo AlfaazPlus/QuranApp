@@ -421,4 +421,13 @@
     <string name="selectAll">Piliin lahat</string>
     <string name="filterTranslationsDisabledNote">Hindi kasama sa paghahanap ang mga pagsasalin kapag naka-on ang paghahanap sa Arabic.</string>
     <string name="filterTranslationsEmpty">Wala pang na-download na pagsasalin.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Hindi ma-load ang timings ng bawat salita. Suriin ang koneksyon at subukang muli.</string>
+    <string name="wbwAudioCouldNotPlay">Hindi ma-play ang audio ng salita.</string>
+    <string name="wbwAudioDownloadHint">I-download ang word-by-word audio para sa offline na pakikinig at mas maayos na playback.</string>
+    <string name="wbwAudio">Word-by-word audio</string>
+    <string name="wbwAudioDownloadAll">I-download lahat</string>
+    <string name="wbwAudioDownloadAllConfirm">I-download ang word-by-word recitation audio ng lahat ng surah? Maaaring malaki ang magamit nitong storage at mobile data.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Hintayin munang matapos ang mga indibidwal na download ng surah bago i-download lahat.</string>
+    <string name="wbwAudioChapterWaitForBulk">Hintayin munang matapos ang buong download bago mag-download ng isang surah.</string>
 </resources>

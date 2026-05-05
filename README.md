@@ -1,8 +1,3 @@
-[<img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg"
-alt='Tech For Palestine'
-width="100%">](https://techforpalestine.org/learn-more)
-<a>
-</a>
 <div align="center">
 
 <img src="app/src/main/res/mipmap-xxxhdpi/icon_launcher_round.webp" alt='QuranApp logo' height="140"/>
@@ -101,8 +96,6 @@ See an overview of all the features [here](/FEATURES.md).
 - [QuranEnc](https://quranenc.com/en/home)
 - [Tanzil](https://tanzil.net/)
 - [quran.com](https://quran.com/)
-- [quran-data-noorehuda](https://codeberg.org/Luciogi/quran-data-noorehuda)
-- [Noorehuda](http://www.noorehidayat.org/)
 - [qurandb.com](https://qurandb.com)
 - [tarteel.ai](https://tarteel.ai)
 - [quranicaudio.com](https://quranicaudio.com)
@@ -113,19 +106,6 @@ See [this page](/CONTRIBUTORS.md) to know about the contributors.
 ## Contributing
 
 If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started. For a more comprehensive guide to the codebase, please refer to the [DeepWiki documentation](https://deepwiki.com/AlfaazPlus/QuranApp).
-
-## App Translations
-App translations are hosted at Weblate. If you want to translate the app in your language, you may visit [here](https://hosted.weblate.org/projects/QuranApp)
-
-<a href="https://hosted.weblate.org/projects/QuranApp/">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/287x66-black.png" alt="Translation status" />
-</a>
-
-<br>
-
-<a href="https://hosted.weblate.org/projects/QuranApp/#compoments">
-<img src="https://hosted.weblate.org/widgets/QuranApp/-/QuranApp/horizontal-auto.svg" alt="Translation status" />
-</a>
 
 
 ## License

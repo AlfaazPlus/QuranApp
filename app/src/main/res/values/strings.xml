@@ -448,4 +448,12 @@
 
     <string name="wbwAudioTimingsCouldNotLoad">Word timings could not be loaded. Check your connection and try again.</string>
     <string name="wbwAudioCouldNotPlay">Could not play word audio.</string>
+    <string name="wbwAudioDownloadHint">Download word-by-word audios for offline listening and smoother playback.</string>
+    <string name="wbwAudio">Word-by-word audio</string>
+    <string name="wbwAudioDownloadAll">Download all</string>
+    <string name="wbwAudioDownloadAllConfirm">
+        Download all chapters of word-by-word recitation audio? This may use significant storage and mobile data.
+    </string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Wait for individual chapter downloads to finish before downloading all.</string>
+    <string name="wbwAudioChapterWaitForBulk">Wait for the full download to finish before downloading a single chapter.</string>
 </resources>

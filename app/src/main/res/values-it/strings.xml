@@ -419,4 +419,13 @@
     <string name="selectAll">Seleziona tutto</string>
     <string name="filterTranslationsDisabledNote">Le traduzioni non vengono cercate mentre la ricerca in arabo è attiva.</string>
     <string name="filterTranslationsEmpty">Nessuna traduzione scaricata finora.</string>
+
+    <string name="wbwAudioTimingsCouldNotLoad">Impossibile caricare la temporizzazione parola per parola. Controlla la connessione e riprova.</string>
+    <string name="wbwAudioCouldNotPlay">Impossibile riprodurre l\'audio della parola.</string>
+    <string name="wbwAudioDownloadHint">Scarica l\'audio parola per parola per ascoltare offline e avere una riproduzione più fluida.</string>
+    <string name="wbwAudio">Audio parola per parola</string>
+    <string name="wbwAudioDownloadAll">Scarica tutto</string>
+    <string name="wbwAudioDownloadAllConfirm">Scaricare l\'audio di recitazione parola per parola per tutte le sure? Potrebbe consumare molto spazio e dati mobili.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Attendi il completamento dei download delle singole sure prima di scaricare tutto.</string>
+    <string name="wbwAudioChapterWaitForBulk">Attendi il completamento del download completo prima di scaricare una singola sura.</string>
 </resources>
