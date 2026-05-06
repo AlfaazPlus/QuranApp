@@ -20,6 +20,7 @@ import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
+import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import java.io.File
 
 class WbwAudioDownloadWorker(
@@ -48,6 +49,8 @@ class WbwAudioDownloadWorker(
         if (downloadUrl == null || outputPath == null || audioId == null) {
             return Result.failure()
         }
+
+        WbwAudioRepository.ensureTimingsAvailable(applicationContext)
 
         val outputFile = File(outputPath)
         val parent = outputFile.parentFile

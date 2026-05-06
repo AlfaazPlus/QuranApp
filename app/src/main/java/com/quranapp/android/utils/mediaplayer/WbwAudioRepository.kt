@@ -201,11 +201,14 @@ object WbwAudioRepository {
         ensureTimingsInDb(context.applicationContext)
     }
 
-    suspend fun clearImportedTimings(context: Context) {
-        withContext(Dispatchers.IO) {
-            DatabaseProvider.getExternalQuranDatabase(context.applicationContext)
-                .wbwDao()
-                .deleteTimingByAudioId(AUDIO_ID)
+    /**
+     * Intended when the published WBW audio timings version increases.
+     */
+    suspend fun refreshTimingsFromRemote(context: Context) {
+        val app = context.applicationContext
+        timingLoadMutex.withLock {
+            if (!NetworkStateReceiver.isNetworkConnected(app)) return@withLock
+            downloadAndImportTimings(app)
         }
     }
 

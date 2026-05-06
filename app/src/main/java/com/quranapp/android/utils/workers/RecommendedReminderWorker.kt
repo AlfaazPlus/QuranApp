@@ -105,8 +105,8 @@ class RecommendedReminderWorker(
 
             is RecommendationRef.Verses -> {
                 val ranges = ref.spec.split(',')
-                val chapters = mutableListOf<Int>()
-                val verseSpecs = mutableListOf<String>()
+                val chapters = mutableSetOf<Int>()
+                val verseSpecs = mutableSetOf<String>()
 
                 for (rangeSpec in ranges) {
                     val trimmed = rangeSpec.trim()
@@ -121,7 +121,7 @@ class RecommendedReminderWorker(
                 ReaderFactory.prepareReferenceVerseIntent(
                     recommendation.title,
                     desc,
-                    emptyArray(),
+                    emptySet(),
                     chapters,
                     verseSpecs,
                 ).apply {

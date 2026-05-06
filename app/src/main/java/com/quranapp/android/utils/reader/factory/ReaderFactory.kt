@@ -136,9 +136,9 @@ object ReaderFactory {
         context: Context,
         title: String,
         desc: String?,
-        translSlug: Array<String>,
-        chapters: List<Int>,
-        verses: List<String>
+        translSlug: Set<String>,
+        chapters: Set<Int>,
+        verses: Set<String>
     ) {
         val intent = prepareReferenceVerseIntent(
             title, desc, translSlug, chapters, verses
@@ -156,9 +156,9 @@ object ReaderFactory {
     fun prepareReferenceVerseIntent(
         title: String,
         desc: String?,
-        translSlug: Array<String>,
-        chapters: List<Int>,
-        verses: List<String>
+        translSlug: Set<String>,
+        chapters: Set<Int>,
+        verses: Set<String>
     ): Intent {
         val referenceVerseModel = ReferenceVerseModel(
             title, desc, translSlug, chapters, verses

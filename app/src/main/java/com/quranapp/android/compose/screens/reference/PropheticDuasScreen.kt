@@ -197,7 +197,7 @@ private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
             val intent = prepareReferenceVerseIntent(
                 refTitle,
                 resources.getString(R.string.strMsgReferenceDuas),
-                arrayOf(),
+                emptySet(),
                 prophet.chapters,
                 prophet.verses,
             ).apply {

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -182,7 +183,7 @@ private fun ReferenceScreenContent(
     }
 
     val chapterNames by produceState<Map<Int, String>?>(null, refModel.chapters) {
-        value = vm.repository.getChapterNames(refModel.chapters)
+        value = vm.repository.getChapterNames(refModel.chapters.toList())
     }
 
     val bookmarkedKeys = remember(allBookmarks, referenceBookmarkKeys) {
@@ -445,9 +446,9 @@ private fun ReferenceScreenContent(
 private fun ReferenceChapterChipsTopBar(
     selectedChapterChip: Int,
     chapterNames: Map<Int, String>,
-    chapters: List<Int>,
+    chapters: Set<Int>,
     onChapterChipChange: (Int) -> Unit,
-    listState: androidx.compose.foundation.lazy.LazyListState,
+    listState: LazyListState,
 ) {
     Box(
         Modifier
@@ -471,7 +472,7 @@ private fun ReferenceChapterChipsTopBar(
                 )
             }
 
-            items(chapters) {
+            items(chapters.toList()) {
                 Chip(
                     selected = selectedChapterChip == it,
                     onClick = { onChapterChipChange(it) },
@@ -492,9 +493,9 @@ private fun ReferenceChapterChipsTopBar(
 private fun ReferenceChapterChipsSidebar(
     selectedChapterChip: Int,
     chapterNames: Map<Int, String>,
-    chapters: List<Int>,
+    chapters: Set<Int>,
     onChapterChipChange: (Int) -> Unit,
-    listState: androidx.compose.foundation.lazy.LazyListState,
+    listState: LazyListState,
 ) {
     val sidebarWidth = 220.dp
 
@@ -514,7 +515,7 @@ private fun ReferenceChapterChipsSidebar(
             )
         }
 
-        items(chapters) {
+        items(chapters.toList()) {
             ReferenceSidebarItem(
                 selected = selectedChapterChip == it,
                 onClick = { onChapterChipChange(it) },

@@ -199,7 +199,7 @@ private fun ProphetListItem(prophet: QuranProphet.Prophet) {
             val intent = prepareReferenceVerseIntent(
                 title,
                 desc,
-                arrayOf(),
+                emptySet(),
                 prophet.chapters,
                 prophet.verses,
             ).apply {

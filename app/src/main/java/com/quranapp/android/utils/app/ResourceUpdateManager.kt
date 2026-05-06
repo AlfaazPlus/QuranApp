@@ -145,11 +145,11 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                 }
             }
 
-            // WBW chapter word-audio timings (cleared on inventory version bump; re-fetched on next play)
+            // WBW chapter word-audio timings
             launch {
                 if (force || local == null || remote.wbwAudioVersion > local.wbwAudioVersion) {
                     try {
-                        WbwAudioRepository.clearImportedTimings(ctx)
+                        WbwAudioRepository.refreshTimingsFromRemote(ctx)
                     } catch (e: Exception) {
                         Log.saveError(e, "ResourceUpdateManager.updateWbwAudio")
                     }

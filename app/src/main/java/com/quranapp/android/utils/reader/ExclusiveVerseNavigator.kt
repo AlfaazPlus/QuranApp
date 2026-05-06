@@ -48,7 +48,7 @@ object ExclusiveVerseNavigator {
             context,
             nameTitle,
             description,
-            arrayOf(),
+            emptySet(),
             verse.chapters,
             verse.versesRaw,
         )
@@ -70,7 +70,7 @@ object ExclusiveVerseNavigator {
             context,
             verse.title,
             verse.description,
-            arrayOf(),
+            emptySet(),
             verse.chapters,
             verse.versesRaw,
         )
@@ -90,7 +90,7 @@ object ExclusiveVerseNavigator {
             context,
             nameTitle,
             description,
-            arrayOf(),
+            emptySet(),
             verse.chapters,
             verse.versesRaw,
         )

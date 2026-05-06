@@ -129,6 +129,8 @@ object WbwAudioPlayer {
             }
         }
 
+        Log.d("Wbw Audio Source", source)
+
         when (source) {
             is WbwWordPlaybackSource.OneOff -> {
                 mutex.withLock {

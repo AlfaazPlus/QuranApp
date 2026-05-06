@@ -9,8 +9,9 @@ import com.quranapp.android.repository.QuranRepository
 
 object ParserUtils {
     @JvmStatic
-    fun prepareVersesList(text: String, sort: Boolean = true): List<String> {
+    fun prepareVersesList(text: String, sort: Boolean = true): Set<String> {
         var verses = text.split(",")
+
         if (sort) {
             verses = verses.sortedWith { o1, o2 ->
                 val split1 = o1.split(":")
@@ -35,31 +36,33 @@ object ParserUtils {
                 comp
             }
         }
-        return verses
+
+        return verses.toSet()
     }
 
-    @JvmStatic
-    fun prepareChaptersList(verses: List<String>): List<Int> {
-        val chapters = ArrayList<Int>()
+    fun prepareChaptersList(verses: Set<String>): Set<Int> {
+        val chapters = mutableSetOf<Int>()
+
         for (verseStr in verses) {
             val chapterNo = verseStr.split(":")[0].trim().toInt()
             if (!chapters.contains(chapterNo)) {
                 chapters.add(chapterNo)
             }
         }
+
         return chapters
     }
 
     suspend fun prepareChapterText(
         ctx: Context,
         repository: QuranRepository,
-        chapters: List<Int>,
+        chapters: Set<Int>,
         limit: Int
     ): String {
         val count = chapters.size
         if (count == 0) return ""
 
-        val firstNChapters = chapters.subList(0, minOf(count, limit))
+        val firstNChapters = chapters.toList().subList(0, minOf(count, limit))
         val inChapters = firstNChapters
             .map { repository.getChapterName(it) }
             .joinToString(", ")

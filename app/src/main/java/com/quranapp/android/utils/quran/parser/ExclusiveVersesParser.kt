@@ -126,10 +126,9 @@ object ExclusiveVersesParser {
                     comp = comp2
                 }
                 comp
-            }
+            }.toSet()
 
-            val chapters = ArrayList<Int>()
-            verses.forEach { if (!chapters.contains(it.first)) chapters.add(it.first) }
+            val chapters = verses.map { it.first }.toSet()
 
             val inChapters = ParserUtils.prepareChapterText(context, repository, chapters, 1)
 

@@ -75,8 +75,8 @@ private fun RecommendationCard(
 
                     is RecommendationRef.Verses -> {
                         val ranges = ref.spec.split(',')
-                        val chapters = mutableListOf<Int>()
-                        val verseSpecs = mutableListOf<String>()
+                        val chapters = mutableSetOf<Int>()
+                        val verseSpecs = mutableSetOf<String>()
 
                         ranges.forEach { rangeSpec ->
                             val trimmed = rangeSpec.trim()
@@ -91,8 +91,8 @@ private fun RecommendationCard(
                             context = context,
                             title = recommendation.title,
                             desc = recommendation.description,
-                            translSlug = emptyArray(),
-                            chapters = chapters.distinct(),
+                            translSlug = emptySet(),
+                            chapters = chapters,
                             verses = verseSpecs
                         )
 

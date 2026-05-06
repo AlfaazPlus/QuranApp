@@ -4,12 +4,12 @@ data class ExclusiveVerse(
     val id: Int,
     var title: String,
     var description: String? = null,
-    var versesRaw: List<String>,
+    var versesRaw: Set<String>,
     /**
      * (chapterNo, fromVerse, toVerse)
      */
-    var verses: List<Triple<Int, Int, Int>>,
-    var chapters: List<Int>,
+    var verses: Set<Triple<Int, Int, Int>>,
+    var chapters: Set<Int>,
     /**
      * To display in recycler view
      */

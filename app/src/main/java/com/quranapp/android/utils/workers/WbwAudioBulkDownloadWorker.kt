@@ -42,6 +42,7 @@ class WbwAudioBulkDownloadWorker(
         val audioId = inputData.getString(KEY_AUDIO_ID) ?: return Result.failure()
 
         val app = applicationContext
+        WbwAudioRepository.ensureTimingsAvailable(app)
 
         val pendingChapters = buildList {
             for (chapterNo in QuranMeta.chapterRange) {

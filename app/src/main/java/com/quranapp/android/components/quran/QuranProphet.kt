@@ -56,12 +56,12 @@ class QuranProphet(val prophets: List<Prophet>) {
          * To display in recycler view
          */
         var inChapters: String? = null
-        var chapters: List<Int> = ArrayList()
+        var chapters: Set<Int> = setOf()
 
         /**
          * Item format -> chapNo:VERSE or chapNo:fromVERSE-toVERSE
          */
-        var verses: List<String> = ArrayList()
+        var verses: Set<String> = setOf()
         override fun toString(): String {
             return MessageFormat.format(
                 "Prophet: {0} ({1}) {2} : [order={3}, iconRes={4}]", name, nameEn,
