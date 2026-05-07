@@ -248,12 +248,14 @@ fun String.getQuranScriptPreview(isDark: Boolean): Int = when (this) {
 }
 
 /**
+ * In KBs
  * Download size -> Uncompressed size
  */
 fun String.getQuranScriptFontPackSizeMb(): Pair<Int, Int> = when (this) {
-    QuranScriptUtils.SCRIPT_KFQPC_V1 -> Pair(52, 90)
-    QuranScriptUtils.SCRIPT_KFQPC_V2 -> Pair(129, 200)
-    QuranScriptUtils.SCRIPT_KFQPC_V4 -> Pair(132, 320)
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> Pair(1835, 1835)
+    QuranScriptUtils.SCRIPT_KFQPC_V1 -> Pair(52000, 90000)
+    QuranScriptUtils.SCRIPT_KFQPC_V2 -> Pair(129000, 200000)
+    QuranScriptUtils.SCRIPT_KFQPC_V4 -> Pair(132000, 320000)
     else -> Pair(0, 0)
 }
 

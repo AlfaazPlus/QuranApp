@@ -429,4 +429,8 @@
     <string name="wbwAudioDownloadAllConfirm">Unduh audio tilawah kata-per-kata untuk semua surah? Ini dapat menggunakan banyak penyimpanan dan data seluler.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Tunggu unduhan surah satuan selesai sebelum mengunduh semuanya.</string>
     <string name="wbwAudioChapterWaitForBulk">Tunggu unduhan penuh selesai sebelum mengunduh satu surah.</string>
+    <string name="ontologyExplorer">Penjelajah Topik</string>
+    <string name="thematicTopics">Topik berdasarkan tema</string>
+    <string name="englishContentOnly">Konten di halaman ini hanya tersedia dalam bahasa Inggris.</string>
+    <string name="estimatedSize">Perkiraan ukuran: %s</string>
 </resources>

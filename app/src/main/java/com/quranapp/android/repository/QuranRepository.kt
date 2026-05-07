@@ -25,6 +25,10 @@ class QuranRepository(
     private val database: QuranDatabase,
     private val extDatabase: ExternalQuranDatabase
 ) {
+    companion object {
+        private const val ARBITRARY_BATCH_CHUNK_SIZE = 400
+    }
+
     private val mushafDao get() = database.mushafDao()
     private val arabicSearchDao get() = database.arabicSearchDao()
     private val ayahDao get() = database.ayahDao()
@@ -175,11 +179,27 @@ class QuranRepository(
         scriptCode: String,
         arabicEnabled: Boolean,
     ): ChapterVerseBatch? {
-        val distinct = verseNos.distinct()
+        val distinct = verseNos.asSequence()
+            .filter { it > 0 }
+            .distinct()
+            .sorted()
+            .toList()
         if (distinct.isEmpty()) return null
 
+        if (distinct.isContiguousRange()) {
+            return loadVersesBatch(
+                chapterNo = chapterNo,
+                fromVerse = distinct.first(),
+                toVerse = distinct.last(),
+                scriptCode = scriptCode,
+                arabicEnabled = arabicEnabled,
+            )
+        }
+
         val ayahIds = distinct.map { QuranMeta.getAyahId(chapterNo, it) }
-        val ayahs = ayahDao.getAyahsByIds(ayahIds)
+        val ayahs = ayahIds.chunked(ARBITRARY_BATCH_CHUNK_SIZE).flatMap { idsChunk ->
+            ayahDao.getAyahsByIds(idsChunk)
+        }
 
         if (ayahs.isEmpty()) return null
 
@@ -189,13 +209,19 @@ class QuranRepository(
         val ayahByVerse = ayahs.associateBy { it.ayahNo }
         val verseIds = ayahs.map { it.ayahId }
 
-        val wordsFlat = if (arabicEnabled) ayahWordDao.getWordsForAyahs(verseIds, scriptCode)
-        else emptyList()
+        val wordsFlat = if (arabicEnabled) {
+            verseIds.chunked(ARBITRARY_BATCH_CHUNK_SIZE).flatMap { verseIdChunk ->
+                ayahWordDao.getWordsForAyahs(verseIdChunk, scriptCode)
+            }
+        } else emptyList()
 
         val wordsByAyahId = groupWordsByAyahIdWithLastFlags(wordsFlat)
 
         val pageByAyahId = if (verseIds.isNotEmpty()) {
-            mushafDao.getPagesForAyahIds(mushafId, verseIds)
+            verseIds.chunked(ARBITRARY_BATCH_CHUNK_SIZE)
+                .flatMap { verseIdChunk ->
+                    mushafDao.getPagesForAyahIds(mushafId, verseIdChunk)
+                }
                 .associate { it.ayahId to it.pageNumber }
         } else {
             emptyMap()
@@ -756,6 +782,14 @@ class QuranRepository(
     suspend fun isVerseValid4Chapter(chapterNo: Int, verseNo: Int): Boolean {
         return getSurah(chapterNo)?.isVerseValid(verseNo) == true
     }
+}
+
+private fun List<Int>.isContiguousRange(): Boolean {
+    if (size <= 1) return true
+    for (i in 1 until size) {
+        if (this[i] != this[i - 1] + 1) return false
+    }
+    return true
 }
 
 private fun mergeAyahIdIntervals(intervals: List<Pair<Int, Int>>): List<Pair<Int, Int>> {

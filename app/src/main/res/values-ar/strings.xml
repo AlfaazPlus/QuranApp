@@ -437,4 +437,8 @@
     <string name="wbwAudioDownloadAllConfirm">هل تريد تنزيل الصوت كلمة بكلمة لجميع السور؟ قد يستهلك هذا مساحة تخزين وبيانات جوال بشكل كبير.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">انتظر حتى تنتهي تنزيلات السور الفردية قبل تنزيل الكل.</string>
     <string name="wbwAudioChapterWaitForBulk">انتظر حتى يكتمل التنزيل الشامل قبل تنزيل سورة واحدة.</string>
+    <string name="ontologyExplorer">مستكشف موضوعات القرآن</string>
+    <string name="thematicTopics">الموضوعات حسب التصنيف</string>
+    <string name="englishContentOnly">محتوى هذه الصفحة متاح باللغة الإنجليزية فقط.</string>
+    <string name="estimatedSize">الحجم التقريبي: %s</string>
 </resources>

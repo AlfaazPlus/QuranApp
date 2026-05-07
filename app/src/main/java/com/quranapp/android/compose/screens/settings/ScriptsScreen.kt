@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
+import android.text.format.Formatter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -327,8 +328,8 @@ private fun ScriptDownloadRequestAlert(
             msg.append("\n").append(
                 stringResource(
                     R.string.msgDownloadFontsSize,
-                    downloadSize.first,
-                    downloadSize.second
+                    downloadSize.first / 1000,
+                    downloadSize.second / 1000
                 )
             )
         }
@@ -343,6 +344,9 @@ private fun ScriptAtlasDownloadRequestAlert(
     scriptKey: String?,
     onDismiss: () -> Unit,
 ) {
+    val estimatedSizeBytes = scriptKey?.getQuranScriptFontPackSizeMb()?.first ?: 0
+    val context = LocalContext.current
+
     AlertDialog(
         isOpen = scriptKey != null,
         onClose = onDismiss,
@@ -365,6 +369,12 @@ private fun ScriptAtlasDownloadRequestAlert(
     ) {
         if (scriptKey == null) return@AlertDialog
 
-        Text(scriptKey.getQuranScriptName())
+        Text(
+            scriptKey.getQuranScriptName() + "\n" +
+                    stringResource(
+                        R.string.estimatedSize,
+                        Formatter.formatFileSize(context, estimatedSizeBytes * 1000L)
+                    )
+        )
     }
 }

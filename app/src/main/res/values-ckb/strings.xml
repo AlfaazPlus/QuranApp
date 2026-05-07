@@ -434,4 +434,8 @@
     <string name="wbwAudioDownloadAllConfirm">دەتەوێت دەنگی تلاوەتی وشە بە وشەی هەموو سوورەتەکان دابەزێنیت؟ ئەمە ڕەنگە بەتوندی شوێنی هەڵگرتن و داتای مۆبایل بەکاربهێنێت.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">پێش دابەزاندنی هەموو، چاوەڕوانی تەواوبوونی دابەزاندنی سوورەتە تاکەکان بکە.</string>
     <string name="wbwAudioChapterWaitForBulk">پێش دابەزاندنی سوورەتێکی تاک، چاوەڕوانی تەواوبوونی دابەزاندنی گشتی بکە.</string>
+    <string name="ontologyExplorer">گەڕانی بابەتەکانی قورئان</string>
+    <string name="thematicTopics">بابەتەکان بە پێی تێما</string>
+    <string name="englishContentOnly">ناوەڕۆکی ئەم پەڕەیە تەنها بە زمانی ئینگلیزی بەردەستە.</string>
+    <string name="estimatedSize">قەبارەی خەمڵێندراو: %s</string>
 </resources>

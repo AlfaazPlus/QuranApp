@@ -427,4 +427,8 @@
     <string name="wbwAudioDownloadAllConfirm">ڇا سڀني سورتن جي لفظ بہ لفظ تلاوت آڊيو ڊائون لوڊ ڪجي؟ هن سان گهڻي اسٽوريج ۽ موبائل ڊيٽا استعمال ٿي سگهي ٿي۔</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">سڀ ڊائون لوڊ ڪرڻ کان اڳ انفرادي سورتن جا ڊائون لوڊ مڪمل ٿيڻ ڏيو۔</string>
     <string name="wbwAudioChapterWaitForBulk">هڪ سورت ڊائون لوڊ ڪرڻ کان اڳ مڪمل ڊائون لوڊ ختم ٿيڻ جو انتظار ڪريو۔</string>
+    <string name="ontologyExplorer">موضوعن جو ڳولاڪار</string>
+    <string name="thematicTopics">موضوع موجب عنوان</string>
+    <string name="englishContentOnly">هن صفحي جو مواد صرف انگريزي ٻولي ۾ موجود آهي.</string>
+    <string name="estimatedSize">اندازي مطابق سائيز: %s</string>
 </resources>

@@ -178,4 +178,6 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.glance)
     implementation(libs.glance.appwidget)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }

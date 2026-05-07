@@ -368,7 +368,7 @@ private suspend fun buildVotdWidgetState(
     val verseNo = vwd.verseNo
 
     val translation = QuranTranslationFactory(context).use { factory ->
-        val bookInfo = factory.getTranslationBookInfo(VerseUtils.obtainOptimalSlugForVotd())
+        val bookInfo = factory.getTranslationBookInfo(ReaderPreferences.primaryTranslationSlug())
         factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
     }
 

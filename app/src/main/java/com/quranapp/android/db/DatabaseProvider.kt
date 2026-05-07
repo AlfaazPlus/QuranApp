@@ -131,9 +131,8 @@ object DatabaseProvider {
     fun getTopicsRepository(context: Context): TopicsRepository {
         return topicsRepository ?: synchronized(this) {
             topicsRepository ?: TopicsRepository(
-                context,
+                context.applicationContext,
                 getTopicsDatabase(context),
-                getQuranRepository(context)
             ).also { topicsRepository = it }
         }
     }

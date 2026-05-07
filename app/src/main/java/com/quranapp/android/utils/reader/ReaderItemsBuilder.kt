@@ -529,6 +529,13 @@ object ReaderItemsBuilder {
                     )
                 } else emptyMap()
 
+            val translationsByVerseNo = loadQuickReferenceTranslationsByVerseNo(
+                factory = factory,
+                slugs = params.slugs,
+                chapterNo = chapterNo,
+                verseNos = verseNos,
+            )
+
             for ((idx, verseNo) in verseNos.withIndex()) {
                 val ayah = batch.ayahByVerseNo[verseNo] ?: continue
                 val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
@@ -538,9 +545,7 @@ object ReaderItemsBuilder {
                     ensureQuranTextStyleForPage(pageNo)
                 }
 
-                val translations = factory.getTranslationsVerseRange(
-                    params.slugs, chapterNo, verseNo, verseNo
-                ).firstOrNull() ?: emptyList()
+                val translations = translationsByVerseNo[verseNo].orEmpty()
 
                 val verse = VerseWithDetails(
                     words = words,
@@ -587,6 +592,49 @@ object ReaderItemsBuilder {
         }
 
         return ReaderPreparedData(out, textStyles)
+    }
+
+    private fun loadQuickReferenceTranslationsByVerseNo(
+        factory: QuranTranslationFactory,
+        slugs: Set<String>,
+        chapterNo: Int,
+        verseNos: List<Int>,
+    ): Map<Int, List<Translation>> {
+        if (verseNos.isEmpty() || slugs.isEmpty()) return emptyMap()
+
+        val uniqueSorted = verseNos.asSequence()
+            .filter { it > 0 }
+            .distinct()
+            .sorted()
+            .toList()
+
+        if (uniqueSorted.isEmpty()) return emptyMap()
+
+        val out = HashMap<Int, List<Translation>>(uniqueSorted.size)
+        var runStart = uniqueSorted.first()
+        var prev = runStart
+
+        fun flushRange(start: Int, end: Int) {
+            val grouped = factory.getTranslationsVerseRange(slugs, chapterNo, start, end)
+            for ((idx, verseNo) in (start..end).withIndex()) {
+                out[verseNo] = grouped.getOrNull(idx).orEmpty()
+            }
+        }
+
+        for (i in 1 until uniqueSorted.size) {
+            val verseNo = uniqueSorted[i]
+            if (verseNo == prev + 1) {
+                prev = verseNo
+                continue
+            }
+
+            flushRange(runStart, prev)
+            runStart = verseNo
+            prev = verseNo
+        }
+
+        flushRange(runStart, prev)
+        return out
     }
 
     /**

@@ -428,4 +428,8 @@
     <string name="wbwAudioDownloadAllConfirm">Scaricare l\'audio di recitazione parola per parola per tutte le sure? Potrebbe consumare molto spazio e dati mobili.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Attendi il completamento dei download delle singole sure prima di scaricare tutto.</string>
     <string name="wbwAudioChapterWaitForBulk">Attendi il completamento del download completo prima di scaricare una singola sura.</string>
+    <string name="ontologyExplorer">Esplora argomenti</string>
+    <string name="thematicTopics">Argomenti per tema</string>
+    <string name="englishContentOnly">I contenuti di questa pagina sono disponibili solo in inglese.</string>
+    <string name="estimatedSize">Dimensione stimata: %s</string>
 </resources>

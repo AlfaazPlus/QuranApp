@@ -430,4 +430,8 @@
     <string name="wbwAudioDownloadAllConfirm">I-download ang word-by-word recitation audio ng lahat ng surah? Maaaring malaki ang magamit nitong storage at mobile data.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Hintayin munang matapos ang mga indibidwal na download ng surah bago i-download lahat.</string>
     <string name="wbwAudioChapterWaitForBulk">Hintayin munang matapos ang buong download bago mag-download ng isang surah.</string>
+    <string name="ontologyExplorer">Tagahanap ng mga Paksa</string>
+    <string name="thematicTopics">Mga paksa ayon sa tema</string>
+    <string name="englishContentOnly">Ang nilalaman sa pahinang ito ay magagamit lamang sa wikang Ingles.</string>
+    <string name="estimatedSize">Tinatayang laki: %s</string>
 </resources>

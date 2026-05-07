@@ -434,4 +434,8 @@
     <string name="wbwAudioDownloadAllConfirm">শব্দভিত্তিক তিলাওয়াতের সব সূরার অডিও ডাউনলোড করবেন? এতে বেশি স্টোরেজ ও মোবাইল ডেটা লাগতে পারে।</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">সব ডাউনলোড করার আগে পৃথক সূরার ডাউনলোড শেষ হতে দিন।</string>
     <string name="wbwAudioChapterWaitForBulk">একক সূরা ডাউনলোডের আগে পূর্ণ ডাউনলোড শেষ হওয়া পর্যন্ত অপেক্ষা করুন।</string>
+    <string name="ontologyExplorer">কুরআনিক বিষয় অনুসন্ধান</string>
+    <string name="thematicTopics">বিষয়ভিত্তিক টপিকসমূহ</string>
+    <string name="englishContentOnly">এই পৃষ্ঠার বিষয়বস্তু কেবল ইংরেজি ভাষায় উপলব্ধ।</string>
+    <string name="estimatedSize">আনুমানিক আকার: %s</string>
 </resources>

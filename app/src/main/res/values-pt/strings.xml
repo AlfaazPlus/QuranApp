@@ -437,4 +437,8 @@
     <string name="wbwAudioDownloadAllConfirm">Baixar o áudio de recitação palavra por palavra de todas as suratas? Isto pode consumir bastante armazenamento e dados móveis.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Aguarde o fim dos downloads de suratas individuais antes de baixar tudo.</string>
     <string name="wbwAudioChapterWaitForBulk">Aguarde o download completo terminar antes de baixar uma única surata.</string>
+    <string name="ontologyExplorer">Explorador de temas</string>
+    <string name="thematicTopics">Tópicos por tema</string>
+    <string name="englishContentOnly">O conteúdo desta página está disponível apenas em inglês.</string>
+    <string name="estimatedSize">Tamanho estimado: %s</string>
 </resources>

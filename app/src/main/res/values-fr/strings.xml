@@ -437,4 +437,8 @@
     <string name="wbwAudioDownloadAllConfirm">Télécharger l\'audio de récitation mot à mot de toutes les sourates ? Cela peut consommer beaucoup de stockage et de données mobiles.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Attendez la fin des téléchargements de sourates individuelles avant de tout télécharger.</string>
     <string name="wbwAudioChapterWaitForBulk">Attendez la fin du téléchargement complet avant de télécharger une seule sourate.</string>
+    <string name="ontologyExplorer">Explorateur de thèmes</string>
+    <string name="thematicTopics">Thèmes par catégorie</string>
+    <string name="englishContentOnly">Le contenu de cette page est disponible uniquement en anglais.</string>
+    <string name="estimatedSize">Taille estimée : %s</string>
 </resources>

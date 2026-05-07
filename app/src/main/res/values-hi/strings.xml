@@ -441,4 +441,8 @@
     <string name="wbwAudioDownloadAllConfirm">क्या सभी सूरह का शब्द-दर-शब्द तिलावत ऑडियो डाउनलोड करना है? इससे काफी स्टोरेज और मोबाइल डेटा खर्च हो सकता है।</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">सब डाउनलोड करने से पहले अलग-अलग सूरह के डाउनलोड पूरे होने दें।</string>
     <string name="wbwAudioChapterWaitForBulk">एक सूरह डाउनलोड करने से पहले पूरा डाउनलोड खत्म होने दें।</string>
+    <string name="ontologyExplorer">विषय अन्वेषक</string>
+    <string name="thematicTopics">विषयवार टॉपिक</string>
+    <string name="englishContentOnly">इस पेज की सामग्री केवल अंग्रेज़ी भाषा में उपलब्ध है।</string>
+    <string name="estimatedSize">अनुमानित आकार: %s</string>
 </resources>

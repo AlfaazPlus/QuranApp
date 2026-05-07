@@ -437,4 +437,8 @@
     <string name="wbwAudioDownloadAllConfirm">Wort-für-Wort-Rezitationsaudio für alle Suren herunterladen? Das kann viel Speicher und mobile Daten verbrauchen.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Warte, bis einzelne Suren-Downloads abgeschlossen sind, bevor du alles herunterlädst.</string>
     <string name="wbwAudioChapterWaitForBulk">Warte, bis der vollständige Download abgeschlossen ist, bevor du eine einzelne Sure herunterlädst.</string>
+    <string name="ontologyExplorer">Themen-Explorer</string>
+    <string name="thematicTopics">Themen nach Kategorie</string>
+    <string name="englishContentOnly">Die Inhalte auf dieser Seite sind nur auf Englisch verfügbar.</string>
+    <string name="estimatedSize">Geschätzte Größe: %s</string>
 </resources>

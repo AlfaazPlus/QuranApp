@@ -427,4 +427,8 @@
     <string name="wbwAudioDownloadAllConfirm">要下載所有蘇拉的逐詞誦讀音訊嗎？這可能會耗用較多儲存空間與行動數據。</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">請先等待單個蘇拉下載完成，再執行全部下載。</string>
     <string name="wbwAudioChapterWaitForBulk">請先等待完整下載結束，再下載單個蘇拉。</string>
+    <string name="ontologyExplorer">主題導覽</string>
+    <string name="thematicTopics">依主題分類</string>
+    <string name="englishContentOnly">本頁內容僅提供英文版本。</string>
+    <string name="estimatedSize">預估大小：%s</string>
 </resources>

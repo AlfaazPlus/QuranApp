@@ -62,7 +62,6 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalRecitation
-import com.quranapp.android.compose.components.reader.LocalWbwState
 import com.quranapp.android.compose.components.reader.QuranTextWbw
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -76,7 +75,6 @@ import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
@@ -161,7 +159,7 @@ internal fun VotdContent(
             val verse = VerseUtils.getVOTD(context, vm.repository)
                 ?: return@withContext null
 
-            val slugs = setOf(VerseUtils.obtainOptimalSlugForVotd())
+            val slugs = setOf(ReaderPreferences.primaryTranslationSlug())
 
             val translations = translationFactory.getTranslationsSingleVerse(
                 slugs,

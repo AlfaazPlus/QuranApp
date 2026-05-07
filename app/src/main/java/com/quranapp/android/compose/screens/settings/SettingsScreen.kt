@@ -31,24 +31,24 @@ import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.univ.Keys
 
 
-val enterTransition = slideInHorizontally(
+private val enterTransition = slideInHorizontally(
     initialOffsetX = { fullWidth -> fullWidth },
     animationSpec = tween(durationMillis = 100),
 )
-val exitTransition = slideOutHorizontally(
+private val exitTransition = slideOutHorizontally(
     targetOffsetX = { fullWidth -> -fullWidth },
     animationSpec = tween(durationMillis = 100),
 )
-val popEnterTransition = slideInHorizontally(
+private val popEnterTransition = slideInHorizontally(
     initialOffsetX = { fullWidth -> -fullWidth },
     animationSpec = tween(durationMillis = 100),
 )
-val popExitTransition = slideOutHorizontally(
+private val popExitTransition = slideOutHorizontally(
     targetOffsetX = { fullWidth -> fullWidth },
     animationSpec = tween(durationMillis = 100),
 )
 
-private fun NavGraphBuilder.route(
+fun NavGraphBuilder.route(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),

@@ -53,6 +53,84 @@ object ParserUtils {
         return chapters
     }
 
+    /**
+     * Compresses verse references by chapter, collapsing contiguous verses into ranges.
+     * Example: 1:1, 1:2, 1:3, 2:5 -> [1:1-3, 2:5]
+     */
+    @JvmStatic
+    fun compressVerseRefsByChapter(verseRefs: Collection<String>): List<String> {
+        if (verseRefs.isEmpty()) return emptyList()
+
+        val grouped = linkedMapOf<Int, MutableSet<Int>>()
+
+        verseRefs.forEach { ref ->
+            val chapter = ref.substringBefore(':').trim().toIntOrNull() ?: return@forEach
+            val versePart = ref.substringAfter(':', "").trim()
+
+            if (versePart.isBlank()) return@forEach
+
+            val verses = grouped.getOrPut(chapter) { linkedSetOf() }
+
+            versePart.split(',').forEach { token ->
+                val piece = token.trim()
+                if (piece.isBlank()) return@forEach
+
+                val rangeParts = piece.split('-')
+
+                when (rangeParts.size) {
+                    1 -> {
+                        rangeParts[0].toIntOrNull()?.let(verses::add)
+                    }
+
+                    2 -> {
+                        val from = rangeParts[0].toIntOrNull()
+                        val to = rangeParts[1].toIntOrNull()
+                        if (from != null && to != null) {
+                            val start = minOf(from, to)
+                            val end = maxOf(from, to)
+                            for (verseNo in start..end) {
+                                verses.add(verseNo)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return grouped.entries.flatMap { (chapter, versesSet) ->
+            val sorted = versesSet.toList().sorted()
+            if (sorted.isEmpty()) return@flatMap emptyList<String>()
+
+            val collapsed = mutableListOf<String>()
+            var start = sorted.first()
+            var prev = start
+
+            for (i in 1 until sorted.size) {
+                val current = sorted[i]
+
+                if (current == prev + 1) {
+                    prev = current
+                } else {
+                    collapsed += if (start == prev) {
+                        "$chapter:$start"
+                    } else {
+                        "$chapter:$start-$prev"
+                    }
+                    start = current
+                    prev = current
+                }
+            }
+
+            collapsed += if (start == prev) {
+                "$chapter:$start"
+            } else {
+                "$chapter:$start-$prev"
+            }
+
+            collapsed
+        }
+    }
+
     suspend fun prepareChapterText(
         ctx: Context,
         repository: QuranRepository,

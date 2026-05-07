@@ -434,4 +434,8 @@
     <string name="wbwAudioDownloadAllConfirm">صوت تلاوت کلمه‌به‌کلمه همه سوره‌ها دانلود شود؟ این کار ممکن است حجم زیادی از حافظه و دیتای موبایل مصرف کند.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">پیش از دانلود همه، صبر کنید دانلود سوره‌های تکی تمام شود.</string>
     <string name="wbwAudioChapterWaitForBulk">پیش از دانلود یک سوره، صبر کنید دانلود کامل به پایان برسد.</string>
+    <string name="ontologyExplorer">کاوش موضوعات قرآن</string>
+    <string name="thematicTopics">موضوعات بر اساس دسته‌بندی</string>
+    <string name="englishContentOnly">محتوای این صفحه فقط به زبان انگلیسی در دسترس است.</string>
+    <string name="estimatedSize">حجم تخمینی: %s</string>
 </resources>

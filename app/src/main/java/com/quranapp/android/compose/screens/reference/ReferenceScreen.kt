@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.reference
 
+import android.content.Context
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,7 +27,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -43,8 +43,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -90,7 +90,7 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.db.entities.user.BookmarkKey
-import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.isSingleValue
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -105,7 +105,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import java.util.concurrent.ConcurrentHashMap
+import java.util.Locale
+import kotlin.math.min
 
 private sealed class ReferenceRow {
     data class Description(val title: String, val desc: String?) : ReferenceRow()
@@ -120,6 +121,24 @@ private sealed class ReferenceRow {
         val quranTextStyle: TextStyle? = null,
     ) : ReferenceRow()
 }
+
+private const val REFERENCE_VERSE_CHUNK_SIZE = 32
+private const val REFERENCE_MAX_IN_FLIGHT_CHUNKS = 2
+
+private data class ReferenceSegment(
+    val segmentIndex: Int,
+    val chapterNo: Int,
+    val versesRangeStr: String,
+    val ref: QuickReferenceVerses.Range,
+    val chapterName: String,
+)
+
+private data class ReferenceChunkRequest(
+    val segment: ReferenceSegment,
+    val verseNos: List<Int>,
+    val isFirstChunk: Boolean,
+    val isLastChunk: Boolean,
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -150,40 +169,39 @@ private fun ReferenceScreenContent(
     val vm = LocalReaderViewModel.current
 
     val textMeasurer = rememberTextMeasurer()
-    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
-    val type by rememberUpdatedState(MaterialTheme.typography)
+    val colors by rememberUpdatedState(colorScheme)
+    val type by rememberUpdatedState(typography)
     val density = LocalDensity.current
 
-    var rows by remember { mutableStateOf<List<ReferenceRow>>(emptyList()) }
+    val rows = remember { mutableStateListOf<ReferenceRow>() }
     var loading by remember { mutableStateOf(true) }
+    var chapterNames by remember { mutableStateOf<Map<Int, String>>(emptyMap()) }
 
     val verseActions = LocalVerseActions.current
 
     val allBookmarks by vm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
-    val referenceBookmarkKeys = remember(rows) {
-        rows.asSequence().mapNotNull { row ->
-            when (row) {
-                is ReferenceRow.SectionTitle -> BookmarkKey(
-                    row.ref.chapterNo,
-                    row.ref.range.first,
-                    row.ref.range.last,
-                )
+    val referenceBookmarkKeys by remember {
+        derivedStateOf {
+            rows.asSequence().mapNotNull { row ->
+                when (row) {
+                    is ReferenceRow.SectionTitle -> BookmarkKey(
+                        row.ref.chapterNo,
+                        row.ref.range.first,
+                        row.ref.range.last,
+                    )
 
-                is ReferenceRow.VerseRow -> BookmarkKey(
-                    row.verseUi.verse.chapterNo,
-                    row.verseUi.verse.verseNo,
-                    row.verseUi.verse.verseNo,
-                )
+                    is ReferenceRow.VerseRow -> BookmarkKey(
+                        row.verseUi.verse.chapterNo,
+                        row.verseUi.verse.verseNo,
+                        row.verseUi.verse.verseNo,
+                    )
 
-                else -> null
-            }
-        }.toHashSet()
-    }
-
-    val chapterNames by produceState<Map<Int, String>?>(null, refModel.chapters) {
-        value = vm.repository.getChapterNames(refModel.chapters.toList())
+                    else -> null
+                }
+            }.toHashSet()
+        }
     }
 
     val bookmarkedKeys = remember(allBookmarks, referenceBookmarkKeys) {
@@ -193,34 +211,47 @@ private fun ReferenceScreenContent(
             .toHashSet()
     }
 
-    LaunchedEffect(refModel, selectedChapterChip, translationSlugs, colors, type, density) {
+    LaunchedEffect(refModel, selectedChapterChip, translationSlugs) {
         loading = true
-        rows = withContext(Dispatchers.IO) {
-            val params = TextBuilderParams(
-                uiConfig = ComposeUiConfig(
-                    context = context,
-                    colors = colors,
-                    type = type,
-                    density = density,
-                    textMeasurer = textMeasurer
-                ),
-                fontResolver = vm.fontResolver,
-                verseActions = verseActions,
-                arabicEnabled = ReaderPreferences.getArabicTextEnabled(),
-                script = ReaderPreferences.getQuranScript(),
-                arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
-                translationSizeMultiplier = ReaderPreferences.getTranslationTextSizeMultiplier(),
-                slugs = translationSlugs,
-            )
 
-            buildReferenceRows(
-                context = context,
-                refModel = refModel,
-                selectedChapterFilter = selectedChapterChip,
-                params = params,
-                repository = vm.repository,
-            )
+        rows.clear()
+        rows.add(ReferenceRow.Description(refModel.title, refModel.desc))
+
+        chapterNames = withContext(Dispatchers.IO) {
+            vm.repository.getChapterNames(refModel.chapters.toList())
         }
+
+        val params = TextBuilderParams(
+            uiConfig = ComposeUiConfig(
+                context = context,
+                colors = colors,
+                type = type,
+                density = density,
+                textMeasurer = textMeasurer
+            ),
+            fontResolver = vm.fontResolver,
+            verseActions = verseActions,
+            arabicEnabled = ReaderPreferences.getArabicTextEnabled(),
+            script = ReaderPreferences.getQuranScript(),
+            arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
+            translationSizeMultiplier = ReaderPreferences.getTranslationTextSizeMultiplier(),
+            slugs = translationSlugs,
+        )
+
+        buildReferenceRows(
+            context = context,
+            refModel = refModel,
+            selectedChapterFilter = selectedChapterChip,
+            params = params,
+            chapterNamesByNo = chapterNames,
+            onChunkBuilt = { chunkRows ->
+                if (chunkRows.isNotEmpty()) {
+                    rows.addAll(chunkRows)
+                    loading = false
+                }
+            },
+        )
+
         loading = false
     }
 
@@ -296,103 +327,110 @@ private fun ReferenceScreenContent(
                     .padding(padding)
             ) {
                 val contentPane: @Composable (Modifier) -> Unit = { modifier ->
-                    Column(modifier = modifier) {
-                        if (translationSlugs.isEmpty()) {
-                            Text(
-                                text = stringResource(R.string.strMsgTranslNoneSelected),
-                                color = colorScheme.error,
-                                style = typography.bodySmall,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(colorScheme.surface)
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                            )
-                        }
+                    if (loading) {
+                        Loader(fill = true)
+                    } else {
+                        Column(modifier = modifier) {
+                            if (translationSlugs.isEmpty()) {
+                                Text(
+                                    text = stringResource(R.string.strMsgTranslNoneSelected),
+                                    color = colorScheme.error,
+                                    style = typography.bodySmall,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(colorScheme.surface)
+                                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                                )
+                            }
 
-                        val referencePageTextStyles = remember(rows) {
-                            buildMap {
-                                for (row in rows) {
-                                    if (row is ReferenceRow.VerseRow) {
-                                        row.quranTextStyle?.let {
-                                            put(
-                                                row.verseUi.verse.pageNo,
-                                                it
-                                            )
+                            val referencePageTextStyles by remember {
+                                derivedStateOf {
+                                    buildMap {
+                                        for (row in rows) {
+                                            if (row is ReferenceRow.VerseRow) {
+                                                row.quranTextStyle?.let {
+                                                    put(
+                                                        row.verseUi.verse.pageNo,
+                                                        it
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        when {
-                            loading -> Loader(fill = true)
-                            else -> {
-                                TextStyleProvider(referencePageTextStyles) {
-                                    LazyColumn(
-                                        state = listState,
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentPadding = PaddingValues(bottom = dynamicBottomPadding + 64.dp)
-                                    ) {
-                                        items(
-                                            items = rows,
-                                            key = { row ->
-                                                when (row) {
-                                                    is ReferenceRow.Description -> "desc"
-                                                    is ReferenceRow.SectionTitle -> row.segmentKey
-                                                    is ReferenceRow.VerseRow -> row.verseUi.key
-                                                }
-                                            },
-                                        ) { row ->
+                            TextStyleProvider(referencePageTextStyles) {
+                                LazyColumn(
+                                    state = listState,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentPadding = PaddingValues(bottom = dynamicBottomPadding + 64.dp)
+                                ) {
+                                    items(
+                                        items = rows,
+                                        key = { row ->
                                             when (row) {
-                                                is ReferenceRow.Description -> ReferenceDescription(
-                                                    row.title,
-                                                    row.desc
-                                                )
-
-                                                is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
-                                                    row = row,
-                                                    isBookmarked = bookmarkedKeys.contains(
-                                                        BookmarkKey(
-                                                            row.ref.chapterNo,
-                                                            row.ref.range.first,
-                                                            row.ref.range.last,
-                                                        ),
-                                                    ),
-                                                    onOpenInReader = { chapterNo, range ->
-                                                        val i =
-                                                            ReaderFactory.prepareVerseRangeIntent(
-                                                                chapterNo,
-                                                                range.first,
-                                                                range.last
-                                                            )
-                                                                .setClass(
-                                                                    context,
-                                                                    ActivityReader::class.java
-                                                                )
-                                                                .putExtra(
-                                                                    Keys.READER_KEY_TRANSL_SLUGS,
-                                                                    translationSlugs.toTypedArray()
-                                                                )
-                                                                .putExtra(
-                                                                    Keys.READER_KEY_SAVE_TRANSL_CHANGES,
-                                                                    false
-                                                                )
-
-                                                        context.startActivity(i)
-                                                    },
-                                                )
-
-                                                is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
-                                                    verseUi = row.verseUi,
-                                                    isBookmarked = bookmarkedKeys.contains(
-                                                        BookmarkKey(
-                                                            row.verseUi.verse.chapterNo,
-                                                            row.verseUi.verse.verseNo,
-                                                            row.verseUi.verse.verseNo,
-                                                        ),
-                                                    ),
-                                                )
+                                                is ReferenceRow.Description -> "desc"
+                                                is ReferenceRow.SectionTitle -> row.segmentKey
+                                                is ReferenceRow.VerseRow -> row.verseUi.key
                                             }
+                                        },
+                                    ) { row ->
+                                        when (row) {
+                                            is ReferenceRow.Description -> ReferenceDescription(
+                                                row.title,
+                                                row.desc
+                                            )
+
+                                            is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
+                                                row = row,
+                                                isBookmarked = bookmarkedKeys.contains(
+                                                    BookmarkKey(
+                                                        row.ref.chapterNo,
+                                                        row.ref.range.first,
+                                                        row.ref.range.last,
+                                                    ),
+                                                ),
+                                                onOpenInReader = { chapterNo, range ->
+                                                    val i =
+                                                        ReaderFactory.prepareVerseRangeIntent(
+                                                            chapterNo,
+                                                            range.first,
+                                                            range.last
+                                                        )
+                                                            .setClass(
+                                                                context,
+                                                                ActivityReader::class.java
+                                                            )
+                                                            .putExtra(
+                                                                Keys.READER_KEY_TRANSL_SLUGS,
+                                                                translationSlugs.toTypedArray()
+                                                            )
+                                                            .putExtra(
+                                                                Keys.READER_KEY_SAVE_TRANSL_CHANGES,
+                                                                false
+                                                            )
+
+                                                    context.startActivity(i)
+                                                },
+                                            )
+
+                                            is ReferenceRow.VerseRow -> ReferenceVerseViewWrapped(
+                                                verseUi = row.verseUi,
+                                                isBookmarked = bookmarkedKeys.contains(
+                                                    BookmarkKey(
+                                                        row.verseUi.verse.chapterNo,
+                                                        row.verseUi.verse.verseNo,
+                                                        row.verseUi.verse.verseNo,
+                                                    ),
+                                                ),
+                                            )
+                                        }
+                                    }
+
+                                    if (loading) {
+                                        item("loading-footer") {
+                                            Loader(fill = false)
                                         }
                                     }
                                 }
@@ -403,15 +441,13 @@ private fun ReferenceScreenContent(
 
                 if (showTwoPane) {
                     Row(modifier = Modifier.fillMaxSize()) {
-                        chapterNames?.let {
-                            ReferenceChapterChipsSidebar(
-                                selectedChapterChip = selectedChapterChip,
-                                chapterNames = it,
-                                chapters = refModel.chapters,
-                                onChapterChipChange = onChapterChipChange,
-                                listState = chaptersGroupState,
-                            )
-                        }
+                        ReferenceChapterChipsSidebar(
+                            selectedChapterChip = selectedChapterChip,
+                            chapterNames = chapterNames,
+                            chapters = refModel.chapters,
+                            onChapterChipChange = onChapterChipChange,
+                            listState = chaptersGroupState,
+                        )
 
                         VerticalDivider(color = colorScheme.outlineVariant.alpha(0.6f))
 
@@ -419,15 +455,13 @@ private fun ReferenceScreenContent(
                     }
                 } else {
                     Column(modifier = Modifier.fillMaxSize()) {
-                        chapterNames?.let {
-                            ReferenceChapterChipsTopBar(
-                                selectedChapterChip = selectedChapterChip,
-                                chapterNames = it,
-                                chapters = refModel.chapters,
-                                onChapterChipChange = onChapterChipChange,
-                                listState = chaptersGroupState,
-                            )
-                        }
+                        ReferenceChapterChipsTopBar(
+                            selectedChapterChip = selectedChapterChip,
+                            chapterNames = chapterNames,
+                            chapters = refModel.chapters,
+                            onChapterChipChange = onChapterChipChange,
+                            listState = chaptersGroupState,
+                        )
                         contentPane(Modifier.weight(1f))
                     }
                 }
@@ -685,27 +719,101 @@ private fun resolveTranslationSlugs(
 }
 
 private suspend fun buildReferenceRows(
-    context: android.content.Context,
+    context: Context,
     refModel: ReferenceVerseModel,
     selectedChapterFilter: Int,
     params: TextBuilderParams,
-    repository: QuranRepository,
-): List<ReferenceRow> = coroutineScope {
-    val out = ArrayList<ReferenceRow>()
-
-    out.add(ReferenceRow.Description(refModel.title, refModel.desc))
-
-    data class Segment(
-        val segmentIndex: Int,
-        val chapterNo: Int,
-        val versesRangeStr: String,
-        val ref: QuickReferenceVerses.Range,
-        val chapterName: String,
+    chapterNamesByNo: Map<Int, String>,
+    onChunkBuilt: suspend (List<ReferenceRow>) -> Unit,
+) = coroutineScope {
+    var segments = parseReferenceSegments(
+        refModel = refModel,
+        selectedChapterFilter = selectedChapterFilter,
+        chapterNamesByNo = chapterNamesByNo,
     )
 
-    val segments = ArrayList<Segment>()
+    if (segments.isEmpty()) return@coroutineScope
+
+    val locale = readAppLocale(context).platformLocale
+    val chunkRequests = buildChunkRequests(segments)
+    val sectionTitleBySegmentIndex = buildSectionTitlesBySegment(
+        segments = segments,
+        locale = locale,
+    )
+
+    val totalChunkCount = chunkRequests.size
+    val buildStartNs = System.nanoTime()
+    var firstChunkDone = false
+    var windowStart = 0
+
+    while (windowStart < totalChunkCount) {
+        val windowEnd = min(windowStart + REFERENCE_MAX_IN_FLIGHT_CHUNKS, totalChunkCount)
+        val window = chunkRequests.subList(windowStart, windowEnd)
+
+        val builtWindow = withContext(Dispatchers.IO) {
+            window.map { req ->
+                async {
+                    val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
+                        context = context,
+                        params = params,
+                        chapterNo = req.segment.chapterNo,
+                        verseNos = req.verseNos,
+                    )
+                    req to prepared
+                }
+            }.awaitAll()
+        }
+
+        for ((req, prepared) in builtWindow) {
+            val verseUis =
+                prepared?.items?.filterIsInstance<ReaderLayoutItem.VerseUI>().orEmpty()
+            val textStyles = prepared?.textStyles.orEmpty()
+            val chunkRows = ArrayList<ReferenceRow>(verseUis.size + 1)
+
+            if (req.isFirstChunk) {
+                chunkRows.add(
+                    ReferenceRow.SectionTitle(
+                        segmentKey = "st-${req.segment.segmentIndex}-${req.segment.chapterNo}-${req.segment.versesRangeStr}",
+                        ref = req.segment.ref,
+                        titleText = sectionTitleBySegmentIndex[req.segment.segmentIndex].orEmpty(),
+                    ),
+                )
+            }
+
+            for ((idx, verseUi) in verseUis.withIndex()) {
+                val showDivider = if (req.isLastChunk) idx != verseUis.lastIndex else true
+                chunkRows.add(
+                    ReferenceRow.VerseRow(
+                        verseUi = verseUi.copy(
+                            key = "ref-${req.segment.segmentIndex}-${verseUi.key}",
+                            showDivider = showDivider,
+                        ),
+                        quranTextStyle = textStyles[verseUi.verse.pageNo],
+                    ),
+                )
+            }
+
+            if (chunkRows.isNotEmpty()) {
+                onChunkBuilt(chunkRows)
+                if (!firstChunkDone) {
+                    val firstChunkMs = (System.nanoTime() - buildStartNs) / 1_000_000
+                    Log.d("ReferenceScreen first chunk ready in ms =", firstChunkMs)
+                    firstChunkDone = true
+                }
+            }
+        }
+
+        windowStart = windowEnd
+    }
+}
+
+private fun parseReferenceSegments(
+    refModel: ReferenceVerseModel,
+    selectedChapterFilter: Int,
+    chapterNamesByNo: Map<Int, String>,
+): List<ReferenceSegment> {
+    val segments = ArrayList<ReferenceSegment>()
     var segmentIndex = 0
-    val chapterNoCache = ConcurrentHashMap<Int, String>()
 
     for (refStr in refModel.verses) {
         val parts = refStr.split(":")
@@ -716,83 +824,79 @@ private suspend fun buildReferenceRows(
 
         val versesRangeStr = parts[1]
         val ref = parseVerses(chapterNo, versesRangeStr)
-
         if (ref !is QuickReferenceVerses.Range) continue
 
-        val chapterName = chapterNoCache.getOrPut(
-            chapterNo,
-            { repository.getChapterName(chapterNo) },
-        )
-
         segments.add(
-            Segment(
+            ReferenceSegment(
                 segmentIndex = segmentIndex,
                 chapterNo = chapterNo,
                 versesRangeStr = versesRangeStr,
                 ref = ref,
-                chapterName = chapterName,
+                chapterName = chapterNamesByNo[chapterNo].orEmpty(),
             ),
         )
-
         segmentIndex++
     }
 
-    val built = segments.map { seg ->
-        async {
-            val verseNos = seg.ref.range.toList()
-            val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
-                context,
-                params,
-                seg.chapterNo,
-                verseNos,
-            ) ?: return@async Triple(seg, emptyList<ReaderLayoutItem.VerseUI>(), emptyMap())
-            val verseUis = prepared.items.filterIsInstance<ReaderLayoutItem.VerseUI>()
-            Triple(seg, verseUis, prepared.textStyles)
-        }
-    }.awaitAll()
+    return segments
+}
 
-    val locale = readAppLocale(context).platformLocale
+private fun buildChunkRequests(
+    segments: List<ReferenceSegment>,
+): List<ReferenceChunkRequest> {
+    val requests = ArrayList<ReferenceChunkRequest>()
 
-    for ((seg, verseUis, textStyles) in built) {
-        val titleText = if (seg.ref.range.isSingleValue) {
-            String.format(
-                locale,
-                $$"%1$s %2$d:%3$d",
-                seg.chapterName,
-                seg.chapterNo,
-                seg.ref.range.first
-            )
-        } else {
-            String.format(
-                locale,
-                $$"%1$s %2$d:%3$d-%4$d",
-                seg.chapterName,
-                seg.chapterNo,
-                seg.ref.range.first,
-                seg.ref.range.last
-            )
-        }
+    for (segment in segments) {
+        val startVerse = segment.ref.range.first
+        val endVerse = segment.ref.range.last
+        if (startVerse > endVerse) continue
 
-        out.add(
-            ReferenceRow.SectionTitle(
-                segmentKey = "st-${seg.segmentIndex}-${seg.chapterNo}-${seg.versesRangeStr}",
-                ref = seg.ref,
-                titleText = titleText,
-            ),
-        )
-
-        for ((i, v) in verseUis.withIndex()) {
-            out.add(
-                ReferenceRow.VerseRow(
-                    verseUi = v.copy(
-                        key = "ref-${seg.segmentIndex}-${v.key}",
-                        showDivider = i != verseUis.lastIndex,
-                    ),
-                    quranTextStyle = textStyles[v.verse.pageNo],
+        val chunkCount = ((endVerse - startVerse) / REFERENCE_VERSE_CHUNK_SIZE) + 1
+        for (chunkIndex in 0 until chunkCount) {
+            val chunkStart = startVerse + (chunkIndex * REFERENCE_VERSE_CHUNK_SIZE)
+            val chunkEnd = min(chunkStart + REFERENCE_VERSE_CHUNK_SIZE - 1, endVerse)
+            val chunkVerseNos = (chunkStart..chunkEnd).toList()
+            requests.add(
+                ReferenceChunkRequest(
+                    segment = segment,
+                    verseNos = chunkVerseNos,
+                    isFirstChunk = chunkIndex == 0,
+                    isLastChunk = chunkIndex == chunkCount - 1,
                 ),
             )
         }
     }
 
-    out
+    return requests
+}
+
+private fun buildSectionTitlesBySegment(
+    segments: List<ReferenceSegment>,
+    locale: Locale,
+): Map<Int, String> {
+    return buildMap(segments.size) {
+        for (segment in segments) {
+            val chapterLabel = segment.chapterName.ifBlank { segment.chapterNo.toString() }
+            val text = if (segment.ref.range.isSingleValue) {
+                String.format(
+                    locale,
+                    $$"%1$s %2$d:%3$d",
+                    chapterLabel,
+                    segment.chapterNo,
+                    segment.ref.range.first
+                )
+            } else {
+                String.format(
+                    locale,
+                    $$"%1$s %2$d:%3$d-%4$d",
+                    chapterLabel,
+                    segment.chapterNo,
+                    segment.ref.range.first,
+                    segment.ref.range.last
+                )
+            }
+
+            put(segment.segmentIndex, text)
+        }
+    }
 }

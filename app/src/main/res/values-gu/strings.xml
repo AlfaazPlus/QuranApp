@@ -437,4 +437,8 @@
     <string name="wbwAudioDownloadAllConfirm">બધી સૂરાઓ માટે શબ્દ-દર-શબ્દ તિલાવત ઓડિયો ડાઉનલોડ કરશો? તે વધુ સ્ટોરેજ અને મોબાઇલ ડેટા વાપરી શકે છે.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">બધું ડાઉનલોડ કરતા પહેલાં અલગ સૂરાઓના ડાઉનલોડ પૂર્ણ થવા દો.</string>
     <string name="wbwAudioChapterWaitForBulk">એક જ સૂરા ડાઉનલોડ કરતા પહેલાં સંપૂર્ણ ડાઉનલોડ પૂર્ણ થવાની રાહ જુઓ.</string>
+    <string name="ontologyExplorer">વિષય એક્સપ્લોરર</string>
+    <string name="thematicTopics">થીમ મુજબ વિષયો</string>
+    <string name="englishContentOnly">આ પેજનું સામગ્રી માત્ર અંગ્રેજી ભાષામાં ઉપલબ્ધ છે.</string>
+    <string name="estimatedSize">અંદાજિત કદ: %s</string>
 </resources>

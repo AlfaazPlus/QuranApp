@@ -434,4 +434,8 @@
     <string name="wbwAudioDownloadAllConfirm">Tüm sureler için kelime kelime tilavet sesini indirmek istiyor musunuz? Bu işlem önemli miktarda depolama ve mobil veri kullanabilir.</string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Hepsini indirmeden önce tek tek sure indirmelerinin bitmesini bekleyin.</string>
     <string name="wbwAudioChapterWaitForBulk">Tek bir sure indirmeden önce toplu indirmenin tamamlanmasını bekleyin.</string>
+    <string name="ontologyExplorer">Konu Gezgini</string>
+    <string name="thematicTopics">Temaya göre konular</string>
+    <string name="englishContentOnly">Bu sayfadaki içerikler yalnızca İngilizce dilinde mevcuttur.</string>
+    <string name="estimatedSize">Tahmini boyut: %s</string>
 </resources>
