@@ -185,6 +185,17 @@
         "downloadPath": "inventory/translations/gu/gu_omari.json"
       }
     },
+    "ha": {
+      "ha_gummi": {
+        "book": "Abu Bakr Jumi",
+        "author": "Abu Bakr Jumi",
+        "displayName": "Abu Bakr Jumi",
+        "langCode": "ha",
+        "langName": "Hausa",
+        "lastUpdated": 1778150224802,
+        "downloadPath": "inventory/translations/ha/ha_gummi.json"
+      }
+    },
     "hi": {
       "hi_azizul-haque": {
         "book": "मौलाना अज़ीज़ुल हक़ अल-उमरी",
@@ -446,6 +457,17 @@
         "langName": "українська",
         "lastUpdated": 1707048963878,
         "downloadPath": "inventory/translations/uk/uk_mikhailo.json"
+      }
+    },
+    "yo": {
+      "yo_mikail": {
+        "book": "Abu Rahimah Mikael",
+        "author": "Abu Rahimah Mikael",
+        "displayName": "Abu Rahimah Mikael",
+        "langCode": "yo",
+        "langName": "Yoruba",
+        "lastUpdated": 1778150224802,
+        "downloadPath": "inventory/translations/yo/yo_mikail.json"
       }
     },
     "zh": {
