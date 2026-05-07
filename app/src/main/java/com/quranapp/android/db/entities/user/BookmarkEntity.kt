@@ -1,4 +1,4 @@
-package com.quranapp.android.db.entities
+package com.quranapp.android.db.entities.user
 
 import androidx.compose.runtime.Immutable
 import androidx.room.ColumnInfo

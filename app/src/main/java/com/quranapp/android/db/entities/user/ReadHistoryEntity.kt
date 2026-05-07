@@ -1,8 +1,7 @@
-package com.quranapp.android.db.entities
+package com.quranapp.android.db.entities.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "read_history")

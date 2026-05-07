@@ -28,8 +28,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class ReaderIndexViewModel(application: Application) : AndroidViewModel(application) {
-    val repository = DatabaseProvider.getQuranRepository(application)
+class ReaderIndexViewModel(private val application: Application) : AndroidViewModel(application) {
+    val repository get() = DatabaseProvider.getQuranRepository(application)
 
     private val filtersJson = Json {
         ignoreUnknownKeys = true

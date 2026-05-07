@@ -7,8 +7,9 @@ import com.quranapp.android.db.DatabaseProvider
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
-class ChapterNavigatorViewModel(application: Application) : AndroidViewModel(application) {
-    val repository = DatabaseProvider.getQuranRepository(application)
+class ChapterNavigatorViewModel(private val application: Application) :
+    AndroidViewModel(application) {
+    val repository get() = DatabaseProvider.getQuranRepository(application)
 
     val surahs = repository.getAllSurahs()
         .stateIn(

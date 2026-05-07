@@ -41,8 +41,8 @@ import kotlinx.coroutines.withContext
 
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class QuranSearchViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = DatabaseProvider.getQuranRepository(application)
+class QuranSearchViewModel(private val application: Application) : AndroidViewModel(application) {
+    private val repository get() = DatabaseProvider.getQuranRepository(application)
     private val searchHistoryStore = SearchHistoryStore(application)
 
     private val _searchQuery = MutableStateFlow("")
@@ -59,6 +59,11 @@ class QuranSearchViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
     val availableTranslations: StateFlow<List<TranslationOption>> = _availableTranslations
+
+    override fun onCleared() {
+        searchHistoryStore.close()
+        super.onCleared()
+    }
 
     init {
         loadAvailableTranslations()

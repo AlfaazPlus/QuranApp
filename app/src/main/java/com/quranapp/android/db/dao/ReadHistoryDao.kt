@@ -5,8 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.quranapp.android.db.entities.BookmarkEntity
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -161,10 +161,7 @@ internal fun VotdContent(
             val verse = VerseUtils.getVOTD(context, vm.repository)
                 ?: return@withContext null
 
-            val optimalSlug = translationSlugs.firstOrNull { !TranslUtils.isTransliteration(it) }
-                ?: TranslUtils.TRANSL_SLUG_DEFAULT
-
-            val slugs = setOf(optimalSlug)
+            val slugs = setOf(VerseUtils.obtainOptimalSlugForVotd())
 
             val translations = translationFactory.getTranslationsSingleVerse(
                 slugs,

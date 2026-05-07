@@ -2,7 +2,7 @@ package com.quranapp.android.components.bookmark
 
 import android.content.Context
 import com.quranapp.android.R
-import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.utils.univ.DateUtils
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.contentOrNull

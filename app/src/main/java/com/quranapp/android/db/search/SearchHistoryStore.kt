@@ -4,6 +4,7 @@ import android.content.Context
 import com.quranapp.android.components.search.SearchHistoryModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.Closeable
 
 data class SearchHistoryEntry(
     val id: Int,
@@ -11,10 +12,14 @@ data class SearchHistoryEntry(
     val date: String,
 )
 
-class SearchHistoryStore(context: Context) {
+class SearchHistoryStore(context: Context) : Closeable {
     private val appContext = context.applicationContext
 
     private val helper: SearchHistoryDBHelper by lazy { SearchHistoryDBHelper(appContext) }
+
+    override fun close() {
+        helper.close()
+    }
 
     suspend fun loadAll(): List<SearchHistoryEntry> = withContext(Dispatchers.IO) {
         helper.getHistories("").mapNotNull { model ->

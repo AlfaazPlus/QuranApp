@@ -63,7 +63,7 @@ import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
-import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.viewModels.BookmarksViewModel
 import kotlinx.coroutines.launch
 import java.util.Calendar

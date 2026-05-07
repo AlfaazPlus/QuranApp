@@ -43,7 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
-import com.quranapp.android.db.entities.BookmarkKey
+import com.quranapp.android.db.entities.user.BookmarkKey
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.MUSHAF_FONT_WIDTH_DP_MAX

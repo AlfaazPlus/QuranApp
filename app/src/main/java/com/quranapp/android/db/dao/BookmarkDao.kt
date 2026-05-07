@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

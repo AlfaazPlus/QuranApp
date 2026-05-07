@@ -3,7 +3,7 @@ package com.quranapp.android.db.bookmark
 import android.content.Context
 import androidx.core.content.edit
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.db.readHistory.ReadHistoryMigration
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.univ.DateUtils

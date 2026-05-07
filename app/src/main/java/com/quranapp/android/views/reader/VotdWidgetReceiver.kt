@@ -90,7 +90,7 @@ private data class VotdWidgetUiState(
     val verseInfo: String,
     val backgroundBitmap: Bitmap,
     val arabicTextBitmap: Bitmap?,
-    val translationBitmap: Bitmap,
+    val translationBitmap: Bitmap?,
     val openReaderIntent: Intent,
     val headerHeightDp: Float,
     val footerHeightDp: Float,
@@ -218,9 +218,9 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                state.arabicTextBitmap?.let { arabicBitmap ->
+                state.arabicTextBitmap?.let {
                     Image(
-                        provider = ImageProvider(arabicBitmap),
+                        provider = ImageProvider(it),
                         contentDescription = null,
                         modifier = GlanceModifier.fillMaxWidth()
                             .height(state.arabicHeightDp.dp),
@@ -230,13 +230,15 @@ private fun VotdGlanceContent(context: Context, state: VotdWidgetUiState?) {
                     Spacer(modifier = GlanceModifier.height(state.textVerticalSpacingDp.dp))
                 }
 
-                Image(
-                    provider = ImageProvider(state.translationBitmap),
-                    contentDescription = null,
-                    modifier = GlanceModifier.fillMaxWidth()
-                        .height(state.translationHeightDp.dp),
-                    contentScale = ContentScale.Fit
-                )
+                state.translationBitmap?.let {
+                    Image(
+                        provider = ImageProvider(it),
+                        contentDescription = null,
+                        modifier = GlanceModifier.fillMaxWidth()
+                            .height(state.translationHeightDp.dp),
+                        contentScale = ContentScale.Fit
+                    )
+                }
             }
 
             Box(
@@ -370,17 +372,15 @@ private suspend fun buildVotdWidgetState(
         factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
     }
 
-    val translationText = translation.text
-
-    val translationBitmap = createTextBitmap(
+    val translationBitmap = if (translation != null) createTextBitmap(
         context = context,
-        text = StringUtils.removeHTML(translationText, false),
+        text = StringUtils.removeHTML(translation.text, false),
         typeface = if (translation.isUrdu) context.getFont(R.font.noto_nastaliq_urdu_regular) else null,
         textSize = context.sp2px(20f),
         color = Color.White.toArgb(),
         targetMaxWidth = textMaxWidthPx,
         targetMaxHeight = translationHeightPx
-    )
+    ) else null
 
     val openIntent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
         setClass(context, ActivityReader::class.java)

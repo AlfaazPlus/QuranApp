@@ -7,10 +7,10 @@ import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 
 
-open class ReaderProviderViewModel(application: Application) : AndroidViewModel(application) {
+open class ReaderProviderViewModel(private val application: Application) : AndroidViewModel(application) {
     val controller = RecitationController.getInstance(application)
-    val userRepository = DatabaseProvider.getUserRepository(application)
-    val repository = DatabaseProvider.getQuranRepository(application)
+    val userRepository get() = DatabaseProvider.getUserRepository(application)
+    val repository get() = DatabaseProvider.getQuranRepository(application)
     val fontResolver = FontResolver.getInstance(application)
-    val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(application)
+    val externalQuranDb get() = DatabaseProvider.getExternalQuranDatabase(application)
 }

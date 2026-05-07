@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.UserDatabase
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReadType
 import java.io.File

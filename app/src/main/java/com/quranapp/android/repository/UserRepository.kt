@@ -7,8 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.quranapp.android.R
 import com.quranapp.android.db.UserDatabase
-import com.quranapp.android.db.entities.BookmarkEntity
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest

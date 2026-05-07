@@ -32,6 +32,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityExclusiveVerses
 import com.quranapp.android.activities.reference.ActivityProphets
 import com.quranapp.android.activities.reference.ActivityQuranScience
+import com.quranapp.android.activities.reference.ActivityQuranicTopics
 import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
 import com.quranapp.android.compose.theme.alpha
 
@@ -103,7 +104,29 @@ fun HomeSectionVersesCollections() {
                 context.startActivity(
                     Intent(context, ActivityQuranScience::class.java)
                 )
-            }
+            },
+            VersesCollectionCard(
+                R.string.ontologyExplorer,
+                R.drawable.dr_icon_read_quran,
+            ) {
+                context.startActivity(
+                    Intent(context, ActivityQuranicTopics::class.java).putExtra(
+                        ActivityQuranicTopics.KEY_SCREEN_TYPE,
+                        ActivityQuranicTopics.TopicsScreenType.ONTOLOGY_EXPLORER.name
+                    )
+                )
+            },
+            VersesCollectionCard(
+                R.string.thematicTopics,
+                R.drawable.dr_icon_read_quran,
+            ) {
+                context.startActivity(
+                    Intent(context, ActivityQuranicTopics::class.java).putExtra(
+                        ActivityQuranicTopics.KEY_SCREEN_TYPE,
+                        ActivityQuranicTopics.TopicsScreenType.THEMATIC_TOPICS.name
+                    )
+                )
+            },
         )
     }
 

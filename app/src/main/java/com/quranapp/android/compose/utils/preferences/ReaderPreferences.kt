@@ -17,6 +17,7 @@ import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
@@ -193,6 +194,7 @@ object ReaderPreferences {
                 val appCtx = context.applicationContext
                 val storedScript = DataStoreManager.read(KEY_SCRIPT)
                 val storedVariant = DataStoreManager.read(KEY_SCRIPT_VARIANT)
+                val storedTranslations = DataStoreManager.read(KEY_TRANSLATIONS)
 
                 var working = QuranScriptUtils.validatePreferredScript(storedScript)
 
@@ -226,7 +228,19 @@ object ReaderPreferences {
                     else -> ""
                 }
 
-                if (working != storedScript || targetVariant != storedVariant) {
+                val availableTranslationSlugs = QuranTranslationFactory(appCtx).use { factory ->
+                    factory.getAvailableTranslationBooksInfo().keys
+                }
+                val repairedTranslations = storedTranslations.filterTo(hashSetOf()) {
+                    it in availableTranslationSlugs
+                }.ifEmpty {
+                    TranslUtils.defaultTranslationSlugs()
+                }
+
+                if (working != storedScript ||
+                    targetVariant != storedVariant ||
+                    repairedTranslations != storedTranslations
+                ) {
                     DataStoreManager.edit {
                         if (working != storedScript) {
                             this[KEY_SCRIPT.key] = working
@@ -234,6 +248,10 @@ object ReaderPreferences {
 
                         if (targetVariant != storedVariant) {
                             this[KEY_SCRIPT_VARIANT.key] = targetVariant
+                        }
+
+                        if (repairedTranslations != storedTranslations) {
+                            this[KEY_TRANSLATIONS.key] = repairedTranslations
                         }
                     }
                 }

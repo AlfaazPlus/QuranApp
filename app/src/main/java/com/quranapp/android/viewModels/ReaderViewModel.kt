@@ -16,7 +16,7 @@ import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta

@@ -9,6 +9,7 @@ import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.refreshAppLocale
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.DownloadSourceUtils
@@ -60,5 +61,14 @@ class QuranApp : Application() {
         UserDataMigrationManager(this).migrate()
 
         SearchIndexScheduler.scheduleTranslationSearchIndexIfNeeded(applicationContext)
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE && level == TRIM_MEMORY_COMPLETE) {
+            DatabaseProvider.closeAll()
+        }
     }
 }

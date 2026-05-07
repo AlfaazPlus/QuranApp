@@ -8,8 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.quranapp.android.db.converters.DbConverters
 import com.quranapp.android.db.dao.BookmarkDao
 import com.quranapp.android.db.dao.ReadHistoryDao
-import com.quranapp.android.db.entities.BookmarkEntity
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 
 @Database(
     entities = [BookmarkEntity::class, ReadHistoryEntity::class],

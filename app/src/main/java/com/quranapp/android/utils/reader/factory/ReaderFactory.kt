@@ -9,7 +9,7 @@ import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReadType

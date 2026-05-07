@@ -12,7 +12,7 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.ReadType

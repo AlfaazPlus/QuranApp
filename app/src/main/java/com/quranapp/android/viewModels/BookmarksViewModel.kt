@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.entities.BookmarkEntity
+import com.quranapp.android.db.entities.user.BookmarkEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

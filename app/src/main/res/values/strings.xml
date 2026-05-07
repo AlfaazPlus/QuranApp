@@ -456,4 +456,13 @@
     </string>
     <string name="wbwAudioBulkWaitForChapterDownloads">Wait for individual chapter downloads to finish before downloading all.</string>
     <string name="wbwAudioChapterWaitForBulk">Wait for the full download to finish before downloading a single chapter.</string>
+    <string name="ontologyExplorer">Ontology Explorer</string>
+    <string name="thematicTopics">Thematic Topics</string>
+    <string name="topicsSearchHint">Search topics or concepts</string>
+    <string name="topicsVerses">Verses</string>
+    <string name="topicsSubtopics">Subtopics</string>
+    <string name="topicsVersesTitle">Verses</string>
+    <string name="topicsRelatedTopics">Related Topics</string>
+    <string name="topicsRelations">Relations</string>
+    <string name="topicsCenterTopic">Center topic</string>
 </resources>

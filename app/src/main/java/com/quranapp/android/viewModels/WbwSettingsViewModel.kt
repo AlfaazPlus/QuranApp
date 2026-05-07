@@ -35,8 +35,8 @@ data class WbwSettingsUiState(
 class WbwSettingsViewModel(
     application: Application
 ) : AndroidViewModel(application) {
-    private val db = DatabaseProvider.getExternalQuranDatabase(context)
     private val context get() = getApplication<Application>()
+    private val db get() = DatabaseProvider.getExternalQuranDatabase(context)
 
     private val _uiState = MutableStateFlow(WbwSettingsUiState())
     val uiState: StateFlow<WbwSettingsUiState> = _uiState.asStateFlow()

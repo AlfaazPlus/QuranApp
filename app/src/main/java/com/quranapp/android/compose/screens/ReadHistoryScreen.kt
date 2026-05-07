@@ -50,7 +50,7 @@ import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
-import com.quranapp.android.db.entities.ReadHistoryEntity
+import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptName

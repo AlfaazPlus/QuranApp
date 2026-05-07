@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ReadHistoryViewModel(application: Application) : AndroidViewModel(application) {
-    private val userRepository = DatabaseProvider.getUserRepository(application)
-    private val quranRepository = DatabaseProvider.getQuranRepository(application)
+class ReadHistoryViewModel(private val application: Application) : AndroidViewModel(application) {
+    private val userRepository get() = DatabaseProvider.getUserRepository(application)
+    private val quranRepository get() = DatabaseProvider.getQuranRepository(application)
 
     val chapterNames = appLocaleFlow.mapLatest {
         quranRepository.getChapterNames(QuranMeta.chapterRange.toList())

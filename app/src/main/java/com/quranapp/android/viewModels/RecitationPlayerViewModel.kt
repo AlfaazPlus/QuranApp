@@ -11,9 +11,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class RecitationPlayerViewModel(application: Application) : AndroidViewModel(application) {
+class RecitationPlayerViewModel(private val application: Application) :
+    AndroidViewModel(application) {
     val controller = RecitationController.getInstance(application)
-    val repository = DatabaseProvider.getQuranRepository(application)
+    val repository get() = DatabaseProvider.getQuranRepository(application)
 
     init {
         controller.connect()

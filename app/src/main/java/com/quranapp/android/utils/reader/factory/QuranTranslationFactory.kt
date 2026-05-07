@@ -16,13 +16,14 @@ import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.components.quran.subcomponents.Translation
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_FOOTNOTES
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
-import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
 import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.db.translation.QuranTranslInfoContract.QuranTranslInfoEntry
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import org.json.JSONArray
@@ -199,8 +200,12 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         return getTranslationsSingleVerse(ReaderPreferences.getTranslations(), chapNo, verseNo)
     }
 
-    fun getTranslationsSingleSlugVerse(slug: String, chapNo: Int, verseNo: Int): Translation {
-        return getTranslationsSingleVerse(Collections.singleton(slug), chapNo, verseNo)[0]
+    fun getTranslationsSingleSlugVerse(slug: String, chapNo: Int, verseNo: Int): Translation? {
+        return getTranslationsSingleVerse(
+            Collections.singleton(slug),
+            chapNo,
+            verseNo
+        ).firstOrNull()
     }
 
     /**
@@ -374,7 +379,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
             )
             getTranslationsFromCursor(translSlug, cursor)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.saveError(e, "getTranslationsFromQuery")
             null
         }
     }
