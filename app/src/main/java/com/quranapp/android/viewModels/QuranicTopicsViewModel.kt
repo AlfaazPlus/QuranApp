@@ -8,13 +8,18 @@ import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.db.relations.topics.TopicRelationshipRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.repository.TopicVersePreview
+import com.quranapp.android.repository.TopicsRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-enum class QuranicTopicsTree(
+private const val MAX_TOPIC_DETAIL_CACHE_ENTRIES = 64
+
+enum class TopicsTree(
     val routeName: String,
     val parentType: RelationshipType,
 ) {
@@ -22,12 +27,12 @@ enum class QuranicTopicsTree(
     Thematic("thematic", RelationshipType.THEMATIC_PARENT);
 
     companion object {
-        fun fromRouteName(value: String?): QuranicTopicsTree =
+        fun fromRouteName(value: String?): TopicsTree =
             entries.firstOrNull { it.routeName == value } ?: Ontology
     }
 }
 
-data class QuranicTopicNode(
+data class TopicNode(
     val id: Int,
     val slug: String,
     val title: String,
@@ -43,30 +48,73 @@ data class QuranicTopicNode(
     val isLeaf: Boolean get() = childCount == 0
 }
 
-data class QuranicTopicRelationship(
+data class TopicRelationship(
     val type: RelationshipType,
-    val topic: QuranicTopicNode,
+    val topic: TopicNode,
 )
 
-data class QuranicTopicsUiState(
+data class TopicsUiState(
     val isLoadingRoots: Boolean = true,
-    val isLoadingTopic: Boolean = false,
-    val ontologyRoots: List<QuranicTopicNode> = emptyList(),
-    val thematicRoots: List<QuranicTopicNode> = emptyList(),
-    val currentTopic: QuranicTopicNode? = null,
-    val childTopics: List<QuranicTopicNode> = emptyList(),
-    val verseRefs: List<String> = emptyList(),
-    val versePreviews: List<TopicVersePreview> = emptyList(),
-    val breadcrumbs: List<QuranicTopicNode> = emptyList(),
-    val relationships: List<QuranicTopicRelationship> = emptyList(),
+    val ontologyRoots: List<TopicNode> = emptyList(),
+    val thematicRoots: List<TopicNode> = emptyList(),
+
+    val ontologyPrimaryRootCount: Int = 0,
+    val ontologySupplementalTotal: Int = 0,
+    val ontologySupplementalLoaded: Int = 0,
+    val hasMoreOntologySupplemental: Boolean = false,
+    val isLoadingMoreOntologySupplemental: Boolean = false,
+
+    val thematicPrimaryRootCount: Int = 0,
+    val thematicSupplementalTotal: Int = 0,
+    val thematicSupplementalLoaded: Int = 0,
+    val hasMoreThematicSupplemental: Boolean = false,
+    val isLoadingMoreThematicSupplemental: Boolean = false,
+
+    val topicDetails: Map<String, TopicDetailUiState> = emptyMap(),
     val error: String? = null,
 )
 
+data class TopicDetailUiState(
+    val isLoading: Boolean = false,
+    val topic: TopicNode? = null,
+    val childTopics: List<TopicNode> = emptyList(),
+    val broaderCatalogChildren: List<TopicNode> = emptyList(),
+    val verseRefs: List<String> = emptyList(),
+    val versePreviews: List<TopicVersePreview> = emptyList(),
+    val breadcrumbs: List<TopicNode> = emptyList(),
+    val relationships: List<TopicRelationship> = emptyList(),
+    val error: String? = null,
+)
+
+private data class TopicLoadResult(
+    val topic: TopicNode?,
+    val children: List<TopicNode>,
+    val broaderCatalogChildren: List<TopicNode>,
+    val verseRefs: List<String>,
+    val versePreviews: List<TopicVersePreview>,
+    val breadcrumbs: List<TopicNode>,
+    val relationships: List<TopicRelationship>,
+)
+
+private data class RootsLoadResult(
+    val ontologyPrimary: List<TopicNode>,
+    val ontologySupplementalTotal: Int,
+    val ontologySupplementalFirstPage: List<TopicNode>,
+
+    val thematicPrimary: List<TopicNode>,
+    val thematicSupplementalTotal: Int,
+    val thematicSupplementalFirstPage: List<TopicNode>,
+) {
+    val ontologySupplementalLoaded: Int get() = ontologySupplementalFirstPage.size
+    val thematicSupplementalLoaded: Int get() = thematicSupplementalFirstPage.size
+}
+
 class QuranicTopicsViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = DatabaseProvider.getTopicsRepository(application)
+    private val inFlightTopicLoads = mutableSetOf<String>()
 
-    private val _uiState = MutableStateFlow(QuranicTopicsUiState())
-    val uiState: StateFlow<QuranicTopicsUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(TopicsUiState())
+    val uiState: StateFlow<TopicsUiState> = _uiState.asStateFlow()
 
     init {
         loadRoots()
@@ -75,15 +123,53 @@ class QuranicTopicsViewModel(application: Application) : AndroidViewModel(applic
     fun loadRoots() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoadingRoots = true, error = null) }
+
             runCatching {
-                repository.getOntologyRootTopics().toTopicNodes() to
-                    repository.getThematicRootTopics().toTopicNodes()
-            }.onSuccess { (ontology, thematic) ->
+                val assign = repository.warmSupplementalAssignment()
+
+                val ontologyPrimary = repository.getOntologyRootTopics().toTopicNodes()
+                val thematicPrimary = repository.getThematicRootTopics().toTopicNodes()
+
+                val pageSize = TopicsRepository.SUPPLEMENTAL_ROOT_PAGE_SIZE
+
+                val ontologyExtra = repository
+                    .getSupplementalRootTopicsPage(
+                        TopicsTree.Ontology.parentType,
+                        offset = 0,
+                        limit = pageSize,
+                    )
+                    .toTopicNodes()
+
+                val thematicExtra = repository
+                    .getSupplementalRootTopicsPage(
+                        TopicsTree.Thematic.parentType,
+                        offset = 0,
+                        limit = pageSize,
+                    )
+                    .toTopicNodes()
+
+                RootsLoadResult(
+                    ontologyPrimary = ontologyPrimary,
+                    thematicPrimary = thematicPrimary,
+                    ontologySupplementalTotal = assign.ontologySupplementalRootIds.size,
+                    thematicSupplementalTotal = assign.thematicSupplementalRootIds.size,
+                    ontologySupplementalFirstPage = ontologyExtra,
+                    thematicSupplementalFirstPage = thematicExtra,
+                )
+            }.onSuccess { result ->
                 _uiState.update {
                     it.copy(
                         isLoadingRoots = false,
-                        ontologyRoots = ontology,
-                        thematicRoots = thematic,
+                        ontologyPrimaryRootCount = result.ontologyPrimary.size,
+                        thematicPrimaryRootCount = result.thematicPrimary.size,
+                        ontologySupplementalTotal = result.ontologySupplementalTotal,
+                        thematicSupplementalTotal = result.thematicSupplementalTotal,
+                        ontologySupplementalLoaded = result.ontologySupplementalFirstPage.size,
+                        thematicSupplementalLoaded = result.thematicSupplementalFirstPage.size,
+                        hasMoreOntologySupplemental = result.ontologySupplementalLoaded < result.ontologySupplementalTotal,
+                        hasMoreThematicSupplemental = result.thematicSupplementalLoaded < result.thematicSupplementalTotal,
+                        ontologyRoots = result.ontologyPrimary + result.ontologySupplementalFirstPage,
+                        thematicRoots = result.thematicPrimary + result.thematicSupplementalFirstPage,
                     )
                 }
             }.onFailure { throwable ->
@@ -97,82 +183,238 @@ class QuranicTopicsViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun loadTopic(topicId: Int, tree: QuranicTopicsTree, breadcrumbIds: List<Int> = emptyList()) {
+    fun loadMoreSupplementalRoots(tree: TopicsTree) {
+        viewModelScope.launch {
+            val snap = _uiState.value
+            when (tree) {
+                TopicsTree.Ontology -> {
+                    if (!snap.hasMoreOntologySupplemental || snap.isLoadingMoreOntologySupplemental) return@launch
+
+                    _uiState.update { it.copy(isLoadingMoreOntologySupplemental = true) }
+
+                    runCatching {
+                        val pageSize = TopicsRepository.SUPPLEMENTAL_ROOT_PAGE_SIZE
+                        val offset = snap.ontologySupplementalLoaded
+
+                        repository.getSupplementalRootTopicsPage(
+                            TopicsTree.Ontology.parentType,
+                            offset = offset,
+                            limit = pageSize,
+                        ).toTopicNodes()
+                    }.onSuccess { more ->
+                        _uiState.update {
+                            val newLoaded = it.ontologySupplementalLoaded + more.size
+
+                            it.copy(
+                                ontologyRoots = it.ontologyRoots + more,
+                                ontologySupplementalLoaded = newLoaded,
+                                hasMoreOntologySupplemental = newLoaded < it.ontologySupplementalTotal,
+                                isLoadingMoreOntologySupplemental = false,
+                            )
+                        }
+                    }.onFailure {
+                        _uiState.update { it.copy(isLoadingMoreOntologySupplemental = false) }
+                    }
+                }
+
+                TopicsTree.Thematic -> {
+                    if (!snap.hasMoreThematicSupplemental || snap.isLoadingMoreThematicSupplemental) return@launch
+
+                    _uiState.update { it.copy(isLoadingMoreThematicSupplemental = true) }
+
+                    runCatching {
+                        val pageSize = TopicsRepository.SUPPLEMENTAL_ROOT_PAGE_SIZE
+                        val offset = snap.thematicSupplementalLoaded
+
+                        repository.getSupplementalRootTopicsPage(
+                            TopicsTree.Thematic.parentType,
+                            offset = offset,
+                            limit = pageSize,
+                        ).toTopicNodes()
+                    }.onSuccess { more ->
+                        _uiState.update {
+                            val newLoaded = it.thematicSupplementalLoaded + more.size
+
+                            it.copy(
+                                thematicRoots = it.thematicRoots + more,
+                                thematicSupplementalLoaded = newLoaded,
+                                hasMoreThematicSupplemental = newLoaded < it.thematicSupplementalTotal,
+                                isLoadingMoreThematicSupplemental = false,
+                            )
+                        }
+                    }.onFailure {
+                        _uiState.update { it.copy(isLoadingMoreThematicSupplemental = false) }
+                    }
+                }
+            }
+        }
+    }
+
+    fun loadTopic(topicId: Int, tree: TopicsTree, breadcrumbIds: List<Int> = emptyList()) {
+        val detailKey = buildTopicDetailKey(tree, topicId, breadcrumbIds)
+
+        val cached = _uiState.value.topicDetails[detailKey]
+
+        if (cached?.topic != null) return
+
+        val shouldLoad = synchronized(inFlightTopicLoads) {
+            inFlightTopicLoads.add(detailKey)
+        }
+
+        if (!shouldLoad) return
+
         viewModelScope.launch {
             _uiState.update {
-                it.copy(
-                    isLoadingTopic = true,
-                    currentTopic = null,
-                    childTopics = emptyList(),
-                    verseRefs = emptyList(),
-                    versePreviews = emptyList(),
-                    breadcrumbs = emptyList(),
-                    relationships = emptyList(),
+                val currentDetails = it.topicDetails[detailKey] ?: TopicDetailUiState()
+
+                val nextDetails = currentDetails.copy(
+                    isLoading = true,
                     error = null,
+                )
+
+                it.copy(
+                    topicDetails = putDetailWithCap(
+                        current = it.topicDetails,
+                        key = detailKey,
+                        value = nextDetails,
+                    )
                 )
             }
 
             runCatching {
-                val topic = repository.getTopicById(topicId, tree.parentType)?.toTopicNode()
-                val children = topic?.let {
-                    repository.getChildTopics(it.id, tree.parentType).toTopicNodes()
-                }.orEmpty()
-                val breadcrumbs = breadcrumbIds
-                    .distinct()
-                    .filter { it != topicId }
-                    .mapNotNull { repository.getTopicById(it, tree.parentType)?.toTopicNode() }
+                repository.warmSupplementalAssignment()
 
-                val verseRefs = topic?.let { repository.getAllTopicVerseRefs(it.id) }.orEmpty()
-                val versePreviews = topic?.let { repository.getTopicVersePreviews(it.id) }.orEmpty()
-                val relationships = topic?.let {
-                    repository.getTopicRelationships(it.id, tree.parentType).toTopicRelationships()
-                }.orEmpty()
-                    .distinctBy { it.topic.id }
-                    .filterNot { relationship ->
-                        relationship.topic.id == topic?.id ||
-                            children.any { child -> child.id == relationship.topic.id } ||
-                            breadcrumbs.any { breadcrumb -> breadcrumb.id == relationship.topic.id }
+                val topic = repository.getTopicSummaryForExplorer(topicId, tree.parentType)
+                    ?.toTopicNode()
+
+                if (topic == null) {
+                    TopicLoadResult(
+                        topic = null,
+                        children = emptyList(),
+                        broaderCatalogChildren = emptyList(),
+                        verseRefs = emptyList(),
+                        versePreviews = emptyList(),
+                        breadcrumbs = emptyList(),
+                        relationships = emptyList(),
+                    )
+                } else {
+                    coroutineScope {
+                        val normalizedBreadcrumbIds = breadcrumbIds
+                            .distinct()
+                            .filter { it != topicId }
+
+                        val childrenDeferred = async {
+                            repository.getChildTopicsRespectingSupplemental(
+                                topic.id,
+                                tree.parentType
+                            ).toTopicNodes()
+                        }
+
+                        val breadcrumbsDeferred = async {
+                            repository.getTopicSummariesForExplorer(
+                                topicIds = normalizedBreadcrumbIds,
+                                parentType = tree.parentType,
+                            ).toTopicNodes()
+                        }
+
+                        val verseRefsDeferred = async {
+                            repository.getAllTopicVerseRefs(topic.id)
+                        }
+
+                        val versePreviewsDeferred = async {
+                            repository.getTopicVersePreviews(topic.id)
+                        }
+
+                        val relationshipsDeferred = async {
+                            repository.getTopicRelationships(topic.id, tree.parentType)
+                                .toTopicRelationships()
+                        }
+
+                        val children = childrenDeferred.await()
+                        val breadcrumbs = breadcrumbsDeferred.await()
+
+                        val broaderCatalogChildren = repository.getBroaderCatalogChildren(
+                            topicId = topic.id,
+                            parentType = tree.parentType,
+                            excludeTopicIds = buildSet {
+                                add(topic.id)
+                                addAll(children.map { child -> child.id })
+                                addAll(breadcrumbs.map { breadcrumb -> breadcrumb.id })
+                            },
+                        ).toTopicNodes()
+
+                        val relationships = relationshipsDeferred.await()
+                            .distinctBy { it.topic.id }
+                            .filterNot { relationship ->
+                                relationship.topic.id == topic.id ||
+                                        children.any { child -> child.id == relationship.topic.id } ||
+                                        broaderCatalogChildren.any { child -> child.id == relationship.topic.id } ||
+                                        breadcrumbs.any { breadcrumb -> breadcrumb.id == relationship.topic.id }
+                            }
+
+                        TopicLoadResult(
+                            topic = topic,
+                            children = children,
+                            broaderCatalogChildren = broaderCatalogChildren,
+                            verseRefs = verseRefsDeferred.await(),
+                            versePreviews = versePreviewsDeferred.await(),
+                            breadcrumbs = breadcrumbs,
+                            relationships = relationships,
+                        )
                     }
-
-                TopicLoadResult(topic, children, verseRefs, versePreviews, breadcrumbs, relationships)
+                }
             }.onSuccess { result ->
                 _uiState.update {
-                    it.copy(
-                        isLoadingTopic = false,
-                        currentTopic = result.topic,
+                    val nextDetails = TopicDetailUiState(
+                        isLoading = false,
+                        topic = result.topic,
                         childTopics = result.children,
+                        broaderCatalogChildren = result.broaderCatalogChildren,
                         verseRefs = result.verseRefs,
                         versePreviews = result.versePreviews,
                         breadcrumbs = result.breadcrumbs,
                         relationships = result.relationships,
                     )
+
+                    it.copy(
+                        topicDetails = putDetailWithCap(
+                            current = it.topicDetails,
+                            key = detailKey,
+                            value = nextDetails,
+                        ),
+                    )
                 }
             }.onFailure { throwable ->
                 _uiState.update {
-                    it.copy(
-                        isLoadingTopic = false,
+                    val currentDetails = it.topicDetails[detailKey] ?: TopicDetailUiState()
+
+                    val nextDetails = currentDetails.copy(
+                        isLoading = false,
                         error = throwable.localizedMessage ?: throwable.javaClass.simpleName,
                     )
+
+                    it.copy(
+                        topicDetails = putDetailWithCap(
+                            current = it.topicDetails,
+                            key = detailKey,
+                            value = nextDetails,
+                        ),
+                    )
+                }
+            }.also {
+                synchronized(inFlightTopicLoads) {
+                    inFlightTopicLoads.remove(detailKey)
                 }
             }
         }
     }
-
-    private data class TopicLoadResult(
-        val topic: QuranicTopicNode?,
-        val children: List<QuranicTopicNode>,
-        val verseRefs: List<String>,
-        val versePreviews: List<TopicVersePreview>,
-        val breadcrumbs: List<QuranicTopicNode>,
-        val relationships: List<QuranicTopicRelationship>,
-    )
 }
 
-private fun List<TopicSummaryRow>.toTopicNodes(): List<QuranicTopicNode> =
+private fun List<TopicSummaryRow>.toTopicNodes(): List<TopicNode> =
     map { it.toTopicNode() }
 
-private fun TopicSummaryRow.toTopicNode(): QuranicTopicNode =
-    QuranicTopicNode(
+private fun TopicSummaryRow.toTopicNode(): TopicNode =
+    TopicNode(
         id = topicId,
         slug = slug.orEmpty(),
         title = title,
@@ -186,11 +428,11 @@ private fun TopicSummaryRow.toTopicNode(): QuranicTopicNode =
         relatedCount = relatedCount,
     )
 
-private fun List<TopicRelationshipRow>.toTopicRelationships(): List<QuranicTopicRelationship> =
+private fun List<TopicRelationshipRow>.toTopicRelationships(): List<TopicRelationship> =
     map {
-        QuranicTopicRelationship(
+        TopicRelationship(
             type = it.relationshipType,
-            topic = QuranicTopicNode(
+            topic = TopicNode(
                 id = it.topicId,
                 slug = it.slug.orEmpty(),
                 title = it.title,
@@ -205,3 +447,35 @@ private fun List<TopicRelationshipRow>.toTopicRelationships(): List<QuranicTopic
             ),
         )
     }
+
+private fun putDetailWithCap(
+    current: Map<String, TopicDetailUiState>,
+    key: String,
+    value: TopicDetailUiState,
+): Map<String, TopicDetailUiState> {
+    val mutable = LinkedHashMap(current)
+
+    mutable.remove(key)
+    mutable[key] = value
+
+    while (mutable.size > MAX_TOPIC_DETAIL_CACHE_ENTRIES) {
+        val oldestKey = mutable.keys.firstOrNull() ?: break
+
+        mutable.remove(oldestKey)
+    }
+
+    return mutable
+}
+
+fun buildTopicDetailKey(
+    tree: TopicsTree,
+    topicId: Int,
+    breadcrumbIds: List<Int>,
+): String {
+    val normalizedTrail = breadcrumbIds
+        .distinct()
+        .filter { it != topicId }
+        .joinToString(",")
+
+    return "${tree.routeName}|$topicId|$normalizedTrail"
+}

@@ -1,10 +1,10 @@
-package com.quranapp.android.compose.screens.quranictopics.components
+package com.quranapp.android.compose.components.quranic_topics
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -18,22 +18,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.viewModels.QuranicTopicNode
+import com.quranapp.android.viewModels.TopicNode
 import horizontalFadingEdge
 
 
 @Composable
 fun BreadcrumbTrail(
     rootLabel: String,
-    breadcrumbs: List<QuranicTopicNode>,
-    currentTopic: QuranicTopicNode,
+    breadcrumbs: List<TopicNode>,
+    currentTopic: TopicNode,
     onRootClick: () -> Unit,
-    onBreadcrumbClick: (QuranicTopicNode, Int) -> Unit,
+    onBreadcrumbClick: (TopicNode, Int) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
+    val currentItemIndex = (breadcrumbs.size * 2) + 2
 
-    LaunchedEffect(currentTopic) {
-        scrollState.scrollToItem(breadcrumbs.size)
+    LaunchedEffect(currentTopic.id, breadcrumbs.size) {
+        scrollState.scrollToItem(currentItemIndex)
     }
 
     Box(
@@ -44,8 +45,8 @@ fun BreadcrumbTrail(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
         ) {
             item {
                 BreadcrumbText(

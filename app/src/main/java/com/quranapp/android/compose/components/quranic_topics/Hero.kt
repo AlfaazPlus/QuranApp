@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.screens.quranictopics.components
+package com.quranapp.android.compose.components.quranic_topics
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -32,20 +32,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.alfaazplus.sunnah.ui.theme.fontArabic
 import com.quranapp.android.R
+import com.quranapp.android.api.resolveInventoryUrl
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.extensions.bottomBorder
 import com.quranapp.android.compose.screens.quranictopics.QuranicTopicRoutes
+import com.quranapp.android.compose.screens.quranictopics.topicsNavOptions
+import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.viewModels.QuranicTopicNode
-import com.quranapp.android.viewModels.QuranicTopicsTree
+import com.quranapp.android.viewModels.TopicNode
+import com.quranapp.android.viewModels.TopicsTree
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
@@ -54,13 +58,25 @@ import java.io.StringReader
 @Composable
 internal fun TopicHeroCard(
     navController: NavController,
-    topic: QuranicTopicNode,
-    tree: QuranicTopicsTree,
-    breadcrumbs: List<QuranicTopicNode>,
+    topic: TopicNode,
+    tree: TopicsTree,
+    breadcrumbs: List<TopicNode>,
     visibleRelatedCount: Int,
 ) {
     val context = LocalContext.current
+    val downloadSource = AppPreferences.observeResourceDownloadProxy()
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
+
+    val heroImageData = remember(topic.imageUrl, downloadSource) {
+        topic.imageUrl?.let(::resolveInventoryUrl) ?: R.drawable.topic_thumbnail
+    }
+
+    val heroImageModel = remember(heroImageData, context) {
+        ImageRequest.Builder(context)
+            .data(heroImageData)
+            .crossfade(true)
+            .build()
+    }
 
     val kindLabel = topic.kindLabel()
     val typeLabel = topic.type.readableType()
@@ -73,15 +89,20 @@ internal fun TopicHeroCard(
         ) {
             if (breadcrumbs.isNotEmpty()) {
                 BreadcrumbTrail(
-                    rootLabel = if (tree == QuranicTopicsTree.Ontology) "Ontology" else "Themes",
+                    rootLabel = if (tree == TopicsTree.Ontology) "Ontology" else "Themes",
                     breadcrumbs = breadcrumbs,
                     currentTopic = topic,
                     onRootClick = {
                         navController.navigate(
-                            if (tree == QuranicTopicsTree.Ontology) {
+                            if (tree == TopicsTree.Ontology) {
                                 QuranicTopicRoutes.ONTOLOGY
                             } else {
                                 QuranicTopicRoutes.THEMATIC
+                            },
+                            topicsNavOptions {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
                             }
                         )
                     },
@@ -91,7 +112,8 @@ internal fun TopicHeroCard(
                                 tree = tree,
                                 topicId = breadcrumb.id,
                                 trail = breadcrumbs.take(index).map { it.id },
-                            )
+                            ),
+                            topicsNavOptions()
                         )
                     },
                 )
@@ -102,10 +124,7 @@ internal fun TopicHeroCard(
                 shape = shapes.medium,
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(topic.imageUrl ?: R.drawable.dr_quran_wallpaper)
-                        .crossfade(true)
-                        .build(),
+                    model = heroImageModel,
                     contentDescription = topic.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -347,7 +366,7 @@ private fun stripTagsFallback(input: String): String {
 
 @Composable
 private fun TopicStatsRow(
-    topic: QuranicTopicNode,
+    topic: TopicNode,
     visibleRelatedCount: Int,
     modifier: Modifier = Modifier,
 ) {

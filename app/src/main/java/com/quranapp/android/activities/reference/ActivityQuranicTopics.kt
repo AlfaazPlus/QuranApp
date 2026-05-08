@@ -9,10 +9,6 @@ import com.quranapp.android.compose.screens.quranictopics.QuranicTopicsStart
 import com.quranapp.android.compose.theme.QuranAppTheme
 
 class ActivityQuranicTopics : BaseActivity() {
-    enum class TopicsScreenType {
-        ONTOLOGY_EXPLORER,
-        THEMATIC_TOPICS,
-    }
 
     companion object {
         const val KEY_SCREEN_TYPE = "screen_type"
@@ -24,16 +20,13 @@ class ActivityQuranicTopics : BaseActivity() {
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
         val screenType = intent.getStringExtra(KEY_SCREEN_TYPE)?.let {
-            runCatching { TopicsScreenType.valueOf(it) }.getOrNull()
-        } ?: TopicsScreenType.THEMATIC_TOPICS
+            runCatching { QuranicTopicsStart.valueOf(it) }.getOrNull()
+        } ?: QuranicTopicsStart.Ontology
 
         setContent {
             QuranAppTheme {
                 QuranicTopicsScreen(
-                    start = when (screenType) {
-                        TopicsScreenType.ONTOLOGY_EXPLORER -> QuranicTopicsStart.Ontology
-                        TopicsScreenType.THEMATIC_TOPICS -> QuranicTopicsStart.Thematic
-                    },
+                    start = screenType,
                 )
             }
         }

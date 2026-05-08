@@ -18,7 +18,7 @@ import com.quranapp.android.db.entities.topics.TopicLocalizationEntity
         TopicAyahEntity::class,
         RelationshipEntity::class,
     ],
-    version = 3,
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(QuranConverters::class, TopicsDbConverters::class)

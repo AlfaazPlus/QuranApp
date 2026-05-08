@@ -1,36 +1,47 @@
-package com.quranapp.android.compose.screens.quranictopics.components
+package com.quranapp.android.compose.screens.quranictopics
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.Loader
-import com.quranapp.android.compose.screens.quranictopics.QuranicTopicRoutes
-import com.quranapp.android.viewModels.QuranicTopicsTree
-import com.quranapp.android.viewModels.QuranicTopicsUiState
+import com.quranapp.android.compose.components.quranic_topics.EmptyContent
+import com.quranapp.android.compose.components.quranic_topics.RelationshipItem
+import com.quranapp.android.compose.components.quranic_topics.SectionHeader
+import com.quranapp.android.compose.components.quranic_topics.TopicExploreCard
+import com.quranapp.android.compose.components.quranic_topics.TopicHeroCard
+import com.quranapp.android.compose.components.quranic_topics.TopicListItem
+import com.quranapp.android.compose.components.quranic_topics.VerseRefsCard
+import com.quranapp.android.viewModels.TopicDetailUiState
+import com.quranapp.android.viewModels.TopicNode
+import com.quranapp.android.viewModels.TopicsTree
 
 @Composable
 internal fun QuranicTopicDetailRoute(
-    state: QuranicTopicsUiState,
-    tree: QuranicTopicsTree,
-    navController: NavController,
+    state: TopicDetailUiState,
+    roots: List<TopicNode>,
+    tree: TopicsTree,
+    topicId: Int,
 ) {
-    val topic = state.currentTopic
+    val navController = LocalTopicsNavController.current
+    val topic = state.topic
     val currentTrail = state.breadcrumbs.map { it.id }
-    val listState = rememberLazyListState()
+    val listState = rememberSaveable(topicId, saver = LazyListState.Saver) {
+        LazyListState()
+    }
 
     val showTitleInTopBar by remember {
         derivedStateOf {
@@ -49,8 +60,11 @@ internal fun QuranicTopicDetailRoute(
         containerColor = colorScheme.background,
     ) { padding ->
         when {
-            state.isLoadingTopic -> Loader(true)
-            topic == null -> EmptyContent(message = "Topic not found")
+            state.isLoading && topic == null -> Loader(true)
+            topic == null -> EmptyContent(
+                message = "Topic not found"
+            )
+
             else -> {
                 LazyColumn(
                     modifier = Modifier
@@ -76,7 +90,7 @@ internal fun QuranicTopicDetailRoute(
                         TopicExploreCard(
                             topic = topic,
                             hasVerses = state.verseRefs.isNotEmpty(),
-                            hasSubtopics = state.childTopics.isNotEmpty(),
+                            hasSubtopics = state.childTopics.isNotEmpty() || state.broaderCatalogChildren.isNotEmpty(),
                             hasRelated = state.relationships.isNotEmpty(),
                         )
                     }
@@ -103,7 +117,7 @@ internal fun QuranicTopicDetailRoute(
                         items(state.childTopics, key = { it.id }) { child ->
                             TopicListItem(
                                 topic = child,
-                                accent = if (tree == QuranicTopicsTree.Ontology) {
+                                accent = if (tree == TopicsTree.Ontology) {
                                     colorScheme.primary
                                 } else {
                                     colorScheme.tertiary
@@ -111,8 +125,8 @@ internal fun QuranicTopicDetailRoute(
                                 onClick = {
                                     val (targetTopicId, targetTrail) = resolveChildTopicNavigationTarget(
                                         child = child,
-                                        state = state,
-                                        tree = tree,
+                                        detailState = state,
+                                        roots = roots,
                                         fallbackTrail = currentTrail + topic.id,
                                     )
                                     navController.navigate(
@@ -120,7 +134,44 @@ internal fun QuranicTopicDetailRoute(
                                             tree = tree,
                                             topicId = targetTopicId,
                                             trail = targetTrail,
-                                        )
+                                        ),
+                                        topicsNavOptions()
+                                    )
+                                },
+                            )
+                        }
+                    }
+
+                    if (state.broaderCatalogChildren.isNotEmpty()) {
+                        item {
+                            SectionHeader(
+                                title = "More from broader catalog",
+                                count = state.broaderCatalogChildren.size,
+                            )
+                        }
+
+                        items(state.broaderCatalogChildren, key = { "broader_${it.id}" }) { child ->
+                            TopicListItem(
+                                topic = child,
+                                accent = if (tree == TopicsTree.Ontology) {
+                                    colorScheme.primary
+                                } else {
+                                    colorScheme.tertiary
+                                },
+                                onClick = {
+                                    val (targetTopicId, targetTrail) = resolveChildTopicNavigationTarget(
+                                        child = child,
+                                        detailState = state,
+                                        roots = roots,
+                                        fallbackTrail = currentTrail + topic.id,
+                                    )
+                                    navController.navigate(
+                                        QuranicTopicRoutes.topic(
+                                            tree = tree,
+                                            topicId = targetTopicId,
+                                            trail = targetTrail,
+                                        ),
+                                        topicsNavOptions()
                                     )
                                 },
                             )
@@ -147,7 +198,8 @@ internal fun QuranicTopicDetailRoute(
                                             tree = tree,
                                             topicId = relationship.topic.id,
                                             trail = currentTrail + topic.id,
-                                        )
+                                        ),
+                                        topicsNavOptions()
                                     )
                                 },
                             )
@@ -160,27 +212,22 @@ internal fun QuranicTopicDetailRoute(
 }
 
 private fun resolveChildTopicNavigationTarget(
-    child: com.quranapp.android.viewModels.QuranicTopicNode,
-    state: QuranicTopicsUiState,
-    tree: QuranicTopicsTree,
+    child: TopicNode,
+    detailState: TopicDetailUiState,
+    roots: List<TopicNode>,
     fallbackTrail: List<Int>,
 ): Pair<Int, List<Int>> {
     if (child.childCount > 0 || child.verseCount > 0) {
         return child.id to fallbackTrail
     }
 
-    val roots = if (tree == QuranicTopicsTree.Ontology) {
-        state.ontologyRoots
-    } else {
-        state.thematicRoots
-    }
-
     val candidates = buildList {
-        addAll(state.breadcrumbs)
-        state.currentTopic?.let(::add)
+        addAll(detailState.breadcrumbs)
+        detailState.topic?.let(::add)
         addAll(roots)
-        addAll(state.childTopics)
-        addAll(state.relationships.map { it.topic })
+        addAll(detailState.childTopics)
+        addAll(detailState.broaderCatalogChildren)
+        addAll(detailState.relationships.map { it.topic })
     }
 
     val normalizedChildTitle = normalizeTopicLabel(child.title)

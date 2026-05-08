@@ -64,7 +64,6 @@ import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
-import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.MessageUtils
@@ -414,7 +413,7 @@ private fun TranslationRow(
 
 @Composable
 private fun DownloadTranslationsButton() {
-    val navController = LocalSettingsNavHostController.current
+    val navController = LocalSettingsNavController.current
 
     Box(
         modifier = Modifier

@@ -30,7 +30,6 @@ import com.quranapp.android.compose.components.settings.ListItemCategoryLabel
 import com.quranapp.android.compose.components.settings.ResourceDownloadSrcSheet
 import com.quranapp.android.compose.components.settings.SettingsItem
 import com.quranapp.android.compose.components.settings.TextSizeSheet
-import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.ThemeUtils
@@ -52,7 +51,7 @@ fun SettingsMainScreen(
     showReaderSettingsOnly: Boolean
 ) {
     val context = LocalContext.current
-    val navController = LocalSettingsNavHostController.current
+    val navController = LocalSettingsNavController.current
     val coroutineScope = rememberCoroutineScope()
     val appLocale = LocalAppLocale.current
 

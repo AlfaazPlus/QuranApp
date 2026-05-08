@@ -22,7 +22,6 @@ import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.settings.TranslationDownloadList
-import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TranslationDownloadEvent
@@ -35,7 +34,7 @@ import com.quranapp.android.viewModels.TranslationViewModel
 fun TranslationDownloadScreen() {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val navController = LocalSettingsNavHostController.current
+    val navController = LocalSettingsNavController.current
     val viewModel = viewModel<TranslationDownloadViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 

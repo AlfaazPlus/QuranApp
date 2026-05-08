@@ -2,12 +2,15 @@ package com.quranapp.android.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.RewriteQueriesToDropUnusedColumns
 import com.quranapp.android.db.entities.topics.RelationshipType
+import com.quranapp.android.db.relations.topics.TopicParentEdgeRow
 import com.quranapp.android.db.relations.topics.TopicRelationshipRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.db.relations.topics.TopicVerseRow
 
 @Dao
+@RewriteQueriesToDropUnusedColumns
 interface TopicsDao {
     @Query(
         """
@@ -264,4 +267,104 @@ interface TopicsDao {
         langCode: String,
         limit: Int,
     ): List<TopicRelationshipRow>
+
+    @Query("SELECT id FROM topics")
+    suspend fun getAllTopicIds(): List<Int>
+
+    @Query(
+        """
+        SELECT r.src_topic_id AS childTopicId, r.tgt_topic_id AS parentTopicId
+        FROM relationships r
+        WHERE r.type = 'parent'
+        """
+    )
+    suspend fun getAllParentEdges(): List<TopicParentEdgeRow>
+
+    @Query(
+        """
+        WITH RECURSIVE ontology_tree(id) AS (
+            SELECT t.id
+            FROM topics t
+            WHERE (COALESCE(t.flags, 0) & 2) != 0
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM relationships pr
+                    WHERE pr.src_topic_id = t.id
+                        AND pr.type = 'ontology_parent'
+                )
+            UNION ALL
+            SELECT r.src_topic_id
+            FROM relationships r
+            INNER JOIN ontology_tree ot ON r.tgt_topic_id = ot.id
+            WHERE r.type = 'ontology_parent'
+        )
+        SELECT id FROM ontology_tree
+        """
+    )
+    suspend fun getVisibleOntologyTopicIds(): List<Int>
+
+    @Query(
+        """
+        WITH RECURSIVE thematic_tree(id) AS (
+            SELECT t.id
+            FROM topics t
+            WHERE (COALESCE(t.flags, 0) & 1) != 0
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM relationships pr
+                    WHERE pr.src_topic_id = t.id
+                        AND pr.type = 'thematic_parent'
+                )
+            UNION ALL
+            SELECT r.src_topic_id
+            FROM relationships r
+            INNER JOIN thematic_tree tt ON r.tgt_topic_id = tt.id
+            WHERE r.type = 'thematic_parent'
+        )
+        SELECT id FROM thematic_tree
+        """
+    )
+    suspend fun getVisibleThematicTopicIds(): List<Int>
+
+    @Query(
+        """
+        SELECT
+            t.id AS topicId,
+            t.slug AS slug,
+            t.type AS type,
+            t.image_url AS imageUrl,
+            t.icon AS icon,
+            t.flags AS flags,
+            COALESCE(loc.title, en.title, ar.title, t.slug, '') AS title,
+            ar.title AS arabicTitle,
+            COALESCE(loc.short_description, en.short_description) AS shortDescription,
+            COALESCE(loc.description, en.description) AS description,
+            (SELECT COUNT(*) FROM topic_ayahs ta WHERE ta.topic_id = t.id) AS ayahCount,
+            (
+                SELECT COUNT(*)
+                FROM relationships child_rel
+                WHERE child_rel.tgt_topic_id = t.id
+                    AND child_rel.type = :childCountRelType
+            ) AS childCount,
+            (
+                SELECT COUNT(*)
+                FROM relationships related_rel
+                WHERE related_rel.type = 'related'
+                    AND (related_rel.src_topic_id = t.id OR related_rel.tgt_topic_id = t.id)
+            ) AS relatedCount
+        FROM topics t
+        LEFT JOIN topic_localizations loc
+            ON loc.topic_id = t.id AND loc.lang_code = :langCode
+        LEFT JOIN topic_localizations en
+            ON en.topic_id = t.id AND en.lang_code = 'en'
+        LEFT JOIN topic_localizations ar
+            ON ar.topic_id = t.id AND ar.lang_code = 'ar'
+        WHERE t.id IN (:topicIds)
+        """
+    )
+    suspend fun getTopicSummariesByIds(
+        topicIds: List<Int>,
+        childCountRelType: RelationshipType,
+        langCode: String,
+    ): List<TopicSummaryRow>
 }

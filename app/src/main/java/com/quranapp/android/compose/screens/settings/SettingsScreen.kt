@@ -2,11 +2,7 @@ package com.quranapp.android.compose.screens.settings
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,18 +11,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.quranapp.android.compose.navigation.LocalSettingsNavHostController
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.univ.Keys
 
@@ -66,6 +62,10 @@ fun NavGraphBuilder.route(
     )
 }
 
+val LocalSettingsNavController = compositionLocalOf<NavHostController> {
+    error("NavHostController is not provided")
+}
+
 @Composable
 fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
     val navController = rememberNavController()
@@ -86,7 +86,7 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
     val startDestination = intent?.getStringExtra(Keys.NAV_DESTINATION)
         ?: SettingRoutes.MAIN.arg(false)
 
-    CompositionLocalProvider(LocalSettingsNavHostController provides navController) {
+    CompositionLocalProvider(LocalSettingsNavController provides navController) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             NavHost(
                 modifier = Modifier.fillMaxSize(),

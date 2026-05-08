@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.screens.quranictopics.components
+package com.quranapp.android.compose.components.quranic_topics
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
@@ -6,83 +6,54 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
-import com.alfaazplus.sunnah.ui.theme.fontArabic
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityReference
-import com.quranapp.android.compose.components.reader.dialogs.QuickReference
-import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
-import com.quranapp.android.compose.extensions.bottomBorder
-import com.quranapp.android.compose.screens.quranictopics.QuranicTopicRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.repository.TopicVersePreview
-import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.quran.parser.ParserUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.StringUtils
-import com.quranapp.android.viewModels.QuranicTopicNode
-import com.quranapp.android.viewModels.QuranicTopicRelationship
-import com.quranapp.android.viewModels.QuranicTopicsTree
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.StringReader
+import com.quranapp.android.viewModels.TopicNode
+import com.quranapp.android.viewModels.TopicRelationship
+import com.quranapp.android.viewModels.TopicsTree
 
 @Composable
-internal fun ListIntroCard(
-    tree: QuranicTopicsTree,
-    count: Int,
-) {
+internal fun ListIntroCard(tree: TopicsTree) {
     val title = when (tree) {
-        QuranicTopicsTree.Ontology -> "Browse from general to specific"
-        QuranicTopicsTree.Thematic -> "Browse by meaning and theme"
+        TopicsTree.Ontology -> "Browse from general to specific"
+        TopicsTree.Thematic -> "Browse by meaning and theme"
     }
 
     val body = when (tree) {
-        QuranicTopicsTree.Ontology -> "Open a category to move gradually into focused concepts."
-        QuranicTopicsTree.Thematic -> "Themes organize meanings people usually explore together."
+        TopicsTree.Ontology -> "Open a category to move gradually into focused concepts."
+        TopicsTree.Thematic -> "Themes organize meanings people usually explore together."
     }
 
     Column(
@@ -91,27 +62,20 @@ internal fun ListIntroCard(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleSmall,
+            style = typography.titleSmall,
         )
 
         Text(
             text = body,
-            style = MaterialTheme.typography.bodyMedium,
+            style = typography.bodyMedium,
             color = colorScheme.onSurface.alpha(0.7f),
-        )
-
-        Text(
-            text = plural(count, "starting point"),
-            style = MaterialTheme.typography.labelMedium,
-            color = colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 8.dp),
         )
     }
 }
 
 @Composable
 internal fun TopicListItem(
-    topic: QuranicTopicNode,
+    topic: TopicNode,
     accent: Color,
     onClick: () -> Unit,
 ) {
@@ -121,11 +85,11 @@ internal fun TopicListItem(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clickable(onClick = onClick),
+            .padding(horizontal = 16.dp),
         shape = shapes.medium,
         color = colorScheme.surface,
         border = BorderStroke(1.dp, colorScheme.outlineVariant.copy(alpha = 0.45f)),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
@@ -142,7 +106,7 @@ internal fun TopicListItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = topic.title,
-                    style = MaterialTheme.typography.titleSmall,
+                    style = typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                 )
 
@@ -172,7 +136,7 @@ internal fun TopicListItem(
 
 @Composable
 internal fun TopicExploreCard(
-    topic: QuranicTopicNode,
+    topic: TopicNode,
     hasVerses: Boolean,
     hasSubtopics: Boolean,
     hasRelated: Boolean,
@@ -227,12 +191,12 @@ private fun ExploreLine(
     Column(modifier = modifier) {
         Text(
             text = title,
-            style = MaterialTheme.typography.labelLarge,
+            style = typography.labelLarge,
         )
 
         Text(
             text = body,
-            style = MaterialTheme.typography.bodySmall,
+            style = typography.bodySmall,
             color = colorScheme.onSurface.alpha(0.8f),
             modifier = Modifier.padding(top = 2.dp),
         )
@@ -241,7 +205,7 @@ private fun ExploreLine(
 
 @Composable
 internal fun VerseRefsCard(
-    topic: QuranicTopicNode,
+    topic: TopicNode,
     totalCount: Int,
     verseRefs: List<String>,
     previews: List<TopicVersePreview>,
@@ -251,7 +215,7 @@ internal fun VerseRefsCard(
 
     fun openTopicReference(
         context: Context,
-        topic: QuranicTopicNode,
+        topic: TopicNode,
     ) {
         val compressedRefs = ParserUtils.compressVerseRefsByChapter(verseRefs)
         val chapters = compressedRefs
@@ -293,7 +257,7 @@ internal fun VerseRefsCard(
         ) {
             Text(
                 text = "Verses ($totalCount)",
-                style = MaterialTheme.typography.titleSmall,
+                style = typography.titleSmall,
                 modifier = Modifier.weight(1f)
             )
 
@@ -345,7 +309,7 @@ internal fun VerseRefsCard(
                         if (translationText.isNotEmpty()) {
                             Text(
                                 text = translationText,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = typography.bodyMedium,
                                 color = colorScheme.onSurfaceVariant,
                                 maxLines = 3,
                                 overflow = TextOverflow.Ellipsis,
@@ -359,7 +323,7 @@ internal fun VerseRefsCard(
             if (totalCount > previews.size) {
                 Text(
                     text = "+${totalCount - previews.size} more verses",
-                    style = MaterialTheme.typography.labelMedium,
+                    style = typography.labelMedium,
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
                 )
@@ -370,13 +334,13 @@ internal fun VerseRefsCard(
 
 @Composable
 internal fun RelationshipItem(
-    relationship: QuranicTopicRelationship,
+    relationship: TopicRelationship,
     onClick: () -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Text(
             text = relationship.type.readableLabel(),
-            style = MaterialTheme.typography.labelSmall,
+            style = typography.labelSmall,
             color = colorScheme.onSurfaceVariant,
         )
 
@@ -406,7 +370,7 @@ internal fun SectionHeader(
     ) {
         Text(
             text = "$title ($count)",
-            style = MaterialTheme.typography.titleSmall,
+            style = typography.titleSmall,
             fontWeight = FontWeight.SemiBold,
         )
 

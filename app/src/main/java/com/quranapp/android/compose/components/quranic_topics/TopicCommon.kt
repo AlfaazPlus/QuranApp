@@ -1,4 +1,4 @@
-package com.quranapp.android.compose.screens.quranictopics.components
+package com.quranapp.android.compose.components.quranic_topics
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.db.entities.topics.RelationshipType
-import com.quranapp.android.viewModels.QuranicTopicNode
+import com.quranapp.android.viewModels.TopicNode
 import java.util.Locale
 
 @Composable
@@ -82,7 +82,7 @@ internal fun TopicIcon(
 }
 
 @Composable
-internal fun NodeCount(topic: QuranicTopicNode) {
+internal fun NodeCount(topic: TopicNode) {
     val labels = buildList {
         if (topic.childCount > 0) add(plural(topic.childCount, "subtopic"))
         if (topic.verseCount > 0) add(plural(topic.verseCount, "verse"))
@@ -110,7 +110,6 @@ private fun CountPill(text: String) {
             style = MaterialTheme.typography.labelSmall,
             color = colorScheme.onSurfaceVariant,
             maxLines = 1,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
         )
     }
 }
@@ -140,7 +139,7 @@ internal fun plural(count: Int, singular: String): String {
     return "$count $suffix"
 }
 
-internal fun QuranicTopicNode.kindLabel(): String =
+internal fun TopicNode.kindLabel(): String =
     when {
         childCount > 0 && verseCount > 0 -> "Hybrid"
         childCount > 0 -> "Category"
@@ -177,7 +176,7 @@ internal fun String.asPreviewText(): String =
         .replace(Regex("\\s+"), " ")
         .trim()
 
-internal fun QuranicTopicNode.explorationHint(
+internal fun TopicNode.explorationHint(
     hasVerses: Boolean,
     hasSubtopics: Boolean,
     hasRelated: Boolean,
