@@ -24,9 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
+import com.quranapp.android.activities.reference.ActivityQuranicTopics
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
+import com.quranapp.android.compose.screens.quranictopics.QuranicTopicsStart
+import com.quranapp.android.compose.utils.formattedStringResource
+import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.utils.reader.ExclusiveVerseNavigator
 import com.quranapp.android.viewModels.QuranSearchViewModel
@@ -58,6 +61,7 @@ fun ExclusiveSearchResults(
             items = results,
             key = {
                 when (it) {
+                    is CollectionSearchResult.TopicsDbItem -> "topics-db:${it.hit.topicId}"
                     is CollectionSearchResult.ExclusiveVerseItem -> "${it.dataset.name}:${it.verse.id}"
                     is CollectionSearchResult.ScienceTopicItem -> "science:${it.item.path}"
                 }
@@ -85,6 +89,25 @@ private fun ExclusiveSearchResultCard(
         onClick = {
             onClick()
             when (result) {
+                is CollectionSearchResult.TopicsDbItem -> {
+                    context.startActivity(
+                        Intent(context, ActivityQuranicTopics::class.java).apply {
+                            putExtra(
+                                ActivityQuranicTopics.KEY_SCREEN_TYPE,
+                                when (result.hit.preferredTree) {
+                                    RelationshipType.THEMATIC_PARENT -> QuranicTopicsStart.Thematic.name
+                                    else -> QuranicTopicsStart.Ontology.name
+                                }
+                            )
+                            putExtra(ActivityQuranicTopics.KEY_TOPIC_ID, result.hit.topicId)
+                            putExtra(
+                                ActivityQuranicTopics.KEY_TOPIC_TRAIL,
+                                result.hit.breadcrumbIds.joinToString(",")
+                            )
+                        }
+                    )
+                }
+
                 is CollectionSearchResult.ExclusiveVerseItem -> {
                     ExclusiveVerseNavigator.open(context, result.dataset, result.verse)
                 }
@@ -117,15 +140,29 @@ private fun ExclusiveSearchResultCard(
                 fontWeight = FontWeight.SemiBold,
             )
 
-            if (result is CollectionSearchResult.ScienceTopicItem) {
-                Text(
-                    text = formattedStringResource(
-                        R.string.strLabelScienceReferences,
-                        result.item.referencesCount
-                    ),
-                    style = typography.bodyMedium,
-                    color = colorScheme.onSurfaceVariant,
-                )
+            when (result) {
+                is CollectionSearchResult.TopicsDbItem -> {
+                    Text(
+                        text = result.hit.pathLabel,
+                        style = typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                is CollectionSearchResult.ScienceTopicItem -> {
+                    Text(
+                        text = formattedStringResource(
+                            R.string.strLabelScienceReferences,
+                            result.item.referencesCount
+                        ),
+                        style = typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                else -> {
+                    // noop
+                }
             }
         }
     }
@@ -133,6 +170,7 @@ private fun ExclusiveSearchResultCard(
 
 private fun datasetTitleRes(result: CollectionSearchResult): Int {
     return when (result) {
+        is CollectionSearchResult.TopicsDbItem -> R.string.topics
         is CollectionSearchResult.ExclusiveVerseItem -> {
             when (result.dataset) {
                 ExclusiveVersesDataset.Dua -> R.string.strTitleFeaturedDuas
@@ -148,6 +186,7 @@ private fun datasetTitleRes(result: CollectionSearchResult): Int {
 
 private fun resultTitle(result: CollectionSearchResult): String {
     return when (result) {
+        is CollectionSearchResult.TopicsDbItem -> result.hit.title
         is CollectionSearchResult.ExclusiveVerseItem -> result.verse.title
         is CollectionSearchResult.ScienceTopicItem -> result.item.getTitle()
     }

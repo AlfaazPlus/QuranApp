@@ -33,9 +33,12 @@ internal object QuranicTopicRoutes {
     const val ONTOLOGY = "ontology"
     const val THEMATIC = "thematic"
     const val TOPIC = "topic/{tree}/{topicId}?trail={trail}"
+    const val TOPIC_SEARCH = "topic_search/{tree}"
 
     fun topic(tree: TopicsTree, topicId: Int, trail: List<Int> = emptyList()): String =
         "topic/${tree.routeName}/$topicId?trail=${trail.joinToString(",")}"
+
+    fun topicSearch(tree: TopicsTree): String = "topic_search/${tree.routeName}"
 }
 
 val LocalTopicsNavController = compositionLocalOf<NavHostController> {
@@ -51,6 +54,8 @@ fun topicsNavOptions(optionsBuilder: (NavOptionsBuilder.() -> Unit)? = null) =
 @Composable
 fun QuranicTopicsScreen(
     start: QuranicTopicsStart,
+    initialTopicId: Int? = null,
+    initialTrail: List<Int> = emptyList(),
     viewModel: QuranicTopicsViewModel = viewModel(),
 ) {
     val navController = rememberNavController()
@@ -63,7 +68,16 @@ fun QuranicTopicsScreen(
         ) {
             NavHost(
                 navController = navController,
-                startDestination = when (start) {
+                startDestination = initialTopicId?.let { topicId ->
+                    QuranicTopicRoutes.topic(
+                        tree = when (start) {
+                            QuranicTopicsStart.Thematic -> TopicsTree.Thematic
+                            QuranicTopicsStart.Ontology -> TopicsTree.Ontology
+                        },
+                        topicId = topicId,
+                        trail = initialTrail,
+                    )
+                } ?: when (start) {
                     QuranicTopicsStart.Thematic -> QuranicTopicRoutes.THEMATIC
                     else -> QuranicTopicRoutes.ONTOLOGY
                 },
@@ -78,6 +92,12 @@ fun QuranicTopicsScreen(
                         hasMoreSupplementalPages = uiState.hasMoreOntologySupplemental,
                         isLoadingMoreSupplemental = uiState.isLoadingMoreOntologySupplemental,
                         onLoadMoreSupplemental = { viewModel.loadMoreSupplementalRoots(TopicsTree.Ontology) },
+                        onOpenSearch = {
+                            navController.navigate(
+                                QuranicTopicRoutes.topicSearch(TopicsTree.Ontology),
+                                navOptions = topicsNavOptions()
+                            )
+                        },
                     )
                 }
                 route(QuranicTopicRoutes.THEMATIC) {
@@ -90,6 +110,25 @@ fun QuranicTopicsScreen(
                         hasMoreSupplementalPages = uiState.hasMoreThematicSupplemental,
                         isLoadingMoreSupplemental = uiState.isLoadingMoreThematicSupplemental,
                         onLoadMoreSupplemental = { viewModel.loadMoreSupplementalRoots(TopicsTree.Thematic) },
+                        onOpenSearch = {
+                            navController.navigate(
+                                QuranicTopicRoutes.topicSearch(TopicsTree.Thematic),
+                                navOptions = topicsNavOptions()
+                            )
+                        },
+                    )
+                }
+                route(
+                    route = QuranicTopicRoutes.TOPIC_SEARCH,
+                    arguments = listOf(
+                        navArgument("tree") { type = NavType.StringType },
+                    ),
+                ) { entry ->
+                    val tree = TopicsTree.fromRouteName(entry.arguments?.getString("tree"))
+
+                    QuranicTopicsSearchRoute(
+                        tree = tree,
+                        onSearchTopics = { query -> viewModel.searchTopicsForTree(query, tree) },
                     )
                 }
                 route(

@@ -51,6 +51,7 @@ internal fun QuranicTopicListRoute(
     hasMoreSupplementalPages: Boolean,
     isLoadingMoreSupplemental: Boolean,
     onLoadMoreSupplemental: () -> Unit,
+    onOpenSearch: () -> Unit,
 ) {
     var infoDialogShown by remember { mutableStateOf(false) }
     val navController = LocalTopicsNavController.current
@@ -89,6 +90,11 @@ internal fun QuranicTopicListRoute(
             AppBar(
                 title = title,
                 actions = {
+                    IconButton(
+                        painter = painterResource(R.drawable.dr_icon_search)
+                    ) {
+                        onOpenSearch()
+                    }
                     IconButton(
                         painter = painterResource(R.drawable.dr_icon_info)
                     ) {
@@ -137,7 +143,7 @@ internal fun QuranicTopicListRoute(
                                     ),
                                     navOptions = topicsNavOptions()
                                 )
-                            },
+                            }
                         )
                     }
 

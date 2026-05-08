@@ -96,7 +96,9 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
 
     val topicResults: StateFlow<List<CollectionSearchResult>> = debouncedQuery
         .mapLatest { query ->
-            ExclusiveVersesSearchProvider.search(getApplication(), query)
+            withContext(Dispatchers.IO) {
+                ExclusiveVersesSearchProvider.search(getApplication(), query)
+            }
         }
         .stateIn(
             viewModelScope,
@@ -212,15 +214,19 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
         quickLinks: List<QuickLinkItem>,
     ): List<SearchHistoryEntry> {
         val q = query.trim()
+
         if (q.isEmpty() || quickLinks.isNotEmpty()) return emptyList()
+
         val ql = q.lowercase()
         val filtered = _searchHistory.value
             .asSequence()
             .filter { it.text.lowercase() != ql }
             .filter { it.text.contains(q, ignoreCase = true) }
             .toList()
+
         val prefix = filtered.filter { it.text.startsWith(q, ignoreCase = true) }
         val rest = filtered.filter { !it.text.startsWith(q, ignoreCase = true) }
+
         return (prefix + rest).distinctBy { it.id }.take(5)
     }
 }

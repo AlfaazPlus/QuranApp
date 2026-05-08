@@ -5,7 +5,9 @@ import androidx.room.Query
 import androidx.room.RewriteQueriesToDropUnusedColumns
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.db.relations.topics.TopicParentEdgeRow
+import com.quranapp.android.db.relations.topics.TopicHierarchyEdgeRow
 import com.quranapp.android.db.relations.topics.TopicRelationshipRow
+import com.quranapp.android.db.relations.topics.TopicSearchCandidateRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.db.relations.topics.TopicVerseRow
 
@@ -282,6 +284,18 @@ interface TopicsDao {
 
     @Query(
         """
+        SELECT
+            r.src_topic_id AS childTopicId,
+            r.tgt_topic_id AS parentTopicId,
+            r.type AS relationshipType
+        FROM relationships r
+        WHERE r.type IN ('parent', 'ontology_parent', 'thematic_parent')
+        """
+    )
+    suspend fun getAllHierarchyEdges(): List<TopicHierarchyEdgeRow>
+
+    @Query(
+        """
         WITH RECURSIVE ontology_tree(id) AS (
             SELECT t.id
             FROM topics t
@@ -367,4 +381,52 @@ interface TopicsDao {
         childCountRelType: RelationshipType,
         langCode: String,
     ): List<TopicSummaryRow>
+
+    @Query(
+        """
+        SELECT
+            t.id AS topicId,
+            t.slug AS slug,
+            t.type AS type,
+            t.image_url AS imageUrl,
+            t.icon AS icon,
+            t.flags AS flags,
+            COALESCE(loc.title, en.title, ar.title, t.slug, '') AS title,
+            COALESCE(loc.short_description, en.short_description) AS shortDescription,
+            COALESCE(loc.description, en.description) AS description,
+            (SELECT COUNT(*) FROM topic_ayahs ta WHERE ta.topic_id = t.id) AS ayahCount
+        FROM topics t
+        LEFT JOIN topic_localizations loc
+            ON loc.topic_id = t.id AND loc.lang_code = :langCode
+        LEFT JOIN topic_localizations en
+            ON en.topic_id = t.id AND en.lang_code = 'en'
+        LEFT JOIN topic_localizations ar
+            ON ar.topic_id = t.id AND ar.lang_code = 'ar'
+        WHERE
+            COALESCE(loc.title, en.title, ar.title, t.slug, '') LIKE '%' || :query || '%'
+            OR COALESCE(loc.short_description, en.short_description, '') LIKE '%' || :query || '%'
+            OR COALESCE(loc.description, en.description, '') LIKE '%' || :query || '%'
+        ORDER BY LOWER(COALESCE(loc.title, en.title, ar.title, t.slug, ''))
+        LIMIT :limit
+        """
+    )
+    suspend fun searchTopicCandidates(
+        query: String,
+        langCode: String,
+        limit: Int,
+    ): List<TopicSearchCandidateRow>
+
+    @Query(
+        """
+        SELECT
+            r.src_topic_id AS childTopicId,
+            r.tgt_topic_id AS parentTopicId
+        FROM relationships r
+        WHERE r.type IN ('ontology_parent', 'thematic_parent', 'parent')
+            AND r.src_topic_id IN (:topicIds)
+        """
+    )
+    suspend fun getDirectParentsByChildTopicIds(
+        topicIds: List<Int>,
+    ): List<TopicParentEdgeRow>
 }

@@ -12,6 +12,8 @@ class ActivityQuranicTopics : BaseActivity() {
 
     companion object {
         const val KEY_SCREEN_TYPE = "screen_type"
+        const val KEY_TOPIC_ID = "topic_id"
+        const val KEY_TOPIC_TRAIL = "topic_trail"
     }
 
     override fun getLayoutResource() = 0
@@ -22,11 +24,19 @@ class ActivityQuranicTopics : BaseActivity() {
         val screenType = intent.getStringExtra(KEY_SCREEN_TYPE)?.let {
             runCatching { QuranicTopicsStart.valueOf(it) }.getOrNull()
         } ?: QuranicTopicsStart.Ontology
+        val initialTopicId = intent.getIntExtra(KEY_TOPIC_ID, -1)
+            .takeIf { it > 0 }
+        val initialTrail = intent.getStringExtra(KEY_TOPIC_TRAIL)
+            .orEmpty()
+            .split(',')
+            .mapNotNull { it.toIntOrNull() }
 
         setContent {
             QuranAppTheme {
                 QuranicTopicsScreen(
                     start = screenType,
+                    initialTopicId = initialTopicId,
+                    initialTrail = initialTrail,
                 )
             }
         }

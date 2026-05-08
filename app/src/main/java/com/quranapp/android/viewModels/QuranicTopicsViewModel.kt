@@ -8,6 +8,7 @@ import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.db.relations.topics.TopicRelationshipRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.repository.TopicVersePreview
+import com.quranapp.android.repository.TopicSearchHit
 import com.quranapp.android.repository.TopicsRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -406,6 +407,33 @@ class QuranicTopicsViewModel(application: Application) : AndroidViewModel(applic
                     inFlightTopicLoads.remove(detailKey)
                 }
             }
+        }
+    }
+
+    suspend fun searchTopicsForTree(
+        query: String,
+        tree: TopicsTree,
+        limit: Int = 60,
+    ): List<TopicSearchHit> {
+        val normalized = query.trim()
+        if (normalized.isEmpty()) return emptyList()
+
+        val preferred = when (tree) {
+            TopicsTree.Ontology -> RelationshipType.ONTOLOGY_PARENT
+            TopicsTree.Thematic -> RelationshipType.THEMATIC_PARENT
+        }
+
+        val hits = repository.searchTopicHits(
+            query = normalized,
+            limit = limit,
+        )
+
+        val matchingTree = hits.filter { it.preferredTree == preferred }
+
+        return if (matchingTree.isNotEmpty()) {
+            matchingTree
+        } else {
+            hits
         }
     }
 }

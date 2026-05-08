@@ -7,6 +7,7 @@ import com.quranapp.android.db.dao.TopicsDao
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.db.entities.topics.TopicFlags
 import com.quranapp.android.db.relations.topics.TopicRelationshipRow
+import com.quranapp.android.db.relations.topics.TopicSearchCandidateRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
@@ -20,6 +21,19 @@ data class TopicVersePreview(
     val chapterNo: Int,
     val verseNo: Int,
     val translation: String,
+)
+
+data class TopicSearchHit(
+    val topicId: Int,
+    val slug: String?,
+    val title: String,
+    val shortDescription: String?,
+    val description: String?,
+    val ayahCount: Int,
+    val pathLabel: String,
+    val breadcrumbIds: List<Int>,
+    val preferredTree: RelationshipType,
+    val score: Int,
 )
 
 /**
@@ -57,6 +71,10 @@ private class IntDisjointSet {
     }
 }
 
+private data class TopicHierarchyGraph(
+    val parentsByChild: Map<Int, List<Pair<Int, RelationshipType>>>,
+)
+
 class TopicsRepository(
     private val context: Context,
     private val database: TopicsDatabase,
@@ -66,11 +84,22 @@ class TopicsRepository(
     @Volatile
     private var supplementalAssignment: SupplementalTopicAssignment? = null
 
+    @Volatile
+    private var hierarchyGraph: TopicHierarchyGraph? = null
+
     private val supplementalBuildMutex = Mutex()
+    private val hierarchyGraphMutex = Mutex()
 
     companion object {
         const val SUPPLEMENTAL_ROOT_PAGE_SIZE: Int = 40
         private const val TOPIC_IDS_QUERY_CHUNK: Int = 450
+        private const val TOPIC_SEARCH_CANDIDATE_LIMIT: Int = 140
+        private const val TOPIC_SEARCH_MAX_PATH_DEPTH: Int = 8
+    }
+
+    private fun preferredLanguageCode(): String {
+        // For now, only English is supported
+        return "en"
     }
 
     suspend fun getOntologyRootTopics(): List<TopicSummaryRow> = withContext(Dispatchers.IO) {
@@ -298,10 +327,242 @@ class TopicsRepository(
         )
     }
 
-    private fun preferredLanguageCode(): String {
-        // For now, only English is supported
-        return "en"
+    suspend fun searchTopicHits(
+        query: String,
+        limit: Int = 30,
+    ): List<TopicSearchHit> = withContext(Dispatchers.IO) {
+        val normalizedQuery = query.trim()
+        if (normalizedQuery.isEmpty() || limit <= 0) return@withContext emptyList()
+
+        val candidates = topicsDao.searchTopicCandidates(
+            query = normalizedQuery,
+            langCode = preferredLanguageCode(),
+            limit = TOPIC_SEARCH_CANDIDATE_LIMIT,
+        )
+        if (candidates.isEmpty()) return@withContext emptyList()
+
+        val graph = getOrBuildHierarchyGraphLocked()
+
+        val trailsByTopic = candidates.associate { candidate ->
+            candidate.topicId to findBestAncestorTrail(
+                topicId = candidate.topicId,
+                graph = graph,
+                maxDepth = TOPIC_SEARCH_MAX_PATH_DEPTH,
+            )
+        }
+
+        val allTopicIdsNeeded = buildSet {
+            candidates.forEach { add(it.topicId) }
+            trailsByTopic.values.forEach { trail -> addAll(trail) }
+        }
+
+        val topicTitles = getTopicSummariesByIdsBatched(
+            topicIds = allTopicIdsNeeded.toList(),
+            parentType = RelationshipType.ONTOLOGY_PARENT,
+        ).associate { it.topicId to it.title }
+
+        candidates
+            .asSequence()
+            .map { candidate ->
+                val ancestorTrail = trailsByTopic[candidate.topicId].orEmpty()
+                val fullPathIds = ancestorTrail + candidate.topicId
+                val pathText = fullPathIds
+                    .mapNotNull { topicTitles[it] }
+                    .joinToString(" » ")
+
+                val preferredTree = inferPreferredTree(candidate, ancestorTrail, graph)
+                val score = scoreTopicSearchCandidate(candidate, normalizedQuery, pathText)
+
+                TopicSearchHit(
+                    topicId = candidate.topicId,
+                    slug = candidate.slug,
+                    title = candidate.title,
+                    shortDescription = candidate.shortDescription,
+                    description = candidate.description,
+                    ayahCount = candidate.ayahCount,
+                    pathLabel = pathText.ifBlank { candidate.title },
+                    breadcrumbIds = ancestorTrail,
+                    preferredTree = preferredTree,
+                    score = score,
+                )
+            }
+            .sortedWith(
+                compareByDescending<TopicSearchHit> { it.score }
+                    .thenByDescending { it.ayahCount }
+                    .thenBy { it.title.lowercase() }
+            )
+            .take(limit)
+            .toList()
     }
+
+    private suspend fun getOrBuildHierarchyGraphLocked(): TopicHierarchyGraph {
+        hierarchyGraph?.let { return it }
+
+        return hierarchyGraphMutex.withLock {
+            hierarchyGraph?.let { return@withLock it }
+
+            val edges = topicsDao.getAllHierarchyEdges()
+            val parentsByChild = edges
+                .groupBy { it.childTopicId }
+                .mapValues { (_, rows) ->
+                    rows
+                        .map { row -> row.parentTopicId to row.relationshipType }
+                        .distinctBy { it.first to it.second }
+                        .sortedWith(
+                            compareBy<Pair<Int, RelationshipType>> { relationshipOrder(it.second) }
+                                .thenBy { it.first }
+                        )
+                }
+
+            TopicHierarchyGraph(
+                parentsByChild = parentsByChild,
+            ).also { hierarchyGraph = it }
+        }
+    }
+
+    private fun findBestAncestorTrail(
+        topicId: Int,
+        graph: TopicHierarchyGraph,
+        maxDepth: Int,
+    ): List<Int> {
+        val paths = mutableListOf<List<Pair<Int, RelationshipType>>>()
+
+        fun dfs(
+            nodeId: Int,
+            depth: Int,
+            visited: MutableSet<Int>,
+            path: MutableList<Pair<Int, RelationshipType>>,
+        ) {
+            if (depth >= maxDepth) {
+                paths += path.toList()
+                return
+            }
+
+            val parents = graph.parentsByChild[nodeId].orEmpty()
+                .filter { (parentId, _) -> parentId !in visited }
+            if (parents.isEmpty()) {
+                paths += path.toList()
+                return
+            }
+
+            parents.forEach { (parentId, relType) ->
+                visited += parentId
+                path += parentId to relType
+                dfs(
+                    nodeId = parentId,
+                    depth = depth + 1,
+                    visited = visited,
+                    path = path,
+                )
+                path.removeAt(path.lastIndex)
+                visited.remove(parentId)
+            }
+        }
+
+        dfs(
+            nodeId = topicId,
+            depth = 0,
+            visited = mutableSetOf(topicId),
+            path = mutableListOf(),
+        )
+
+        val best = paths.maxWithOrNull(
+            compareBy<List<Pair<Int, RelationshipType>>> { relationStrength(it) }
+                .thenBy { it.size }
+        ).orEmpty()
+
+        return best.map { it.first }.reversed()
+    }
+
+    private fun inferPreferredTree(
+        candidate: TopicSearchCandidateRow,
+        ancestorTrail: List<Int>,
+        graph: TopicHierarchyGraph,
+    ): RelationshipType {
+        val path = ancestorTrail + candidate.topicId
+        val edgeTypes = path.windowed(size = 2, step = 1, partialWindows = false)
+            .mapNotNull { (parentId, childId) ->
+                graph.parentsByChild[childId]
+                    ?.firstOrNull { (pId, _) -> pId == parentId }
+                    ?.second
+            }
+
+        return when {
+            edgeTypes.any { it == RelationshipType.ONTOLOGY_PARENT } -> RelationshipType.ONTOLOGY_PARENT
+            edgeTypes.any { it == RelationshipType.THEMATIC_PARENT } -> RelationshipType.THEMATIC_PARENT
+            candidate.flags?.isOntology == true -> RelationshipType.ONTOLOGY_PARENT
+            candidate.flags?.isThematic == true -> RelationshipType.THEMATIC_PARENT
+            else -> RelationshipType.ONTOLOGY_PARENT
+        }
+    }
+
+    private fun scoreTopicSearchCandidate(
+        candidate: TopicSearchCandidateRow,
+        query: String,
+        pathText: String,
+    ): Int {
+        val normalizedQuery = normalizeSearchText(query)
+        val normalizedTitle = normalizeSearchText(candidate.title)
+        val normalizedShort = normalizeSearchText(candidate.shortDescription.orEmpty())
+        val normalizedDescription = normalizeSearchText(candidate.description.orEmpty())
+        val normalizedPath = normalizeSearchText(pathText)
+
+        val base = when {
+            normalizedTitle == normalizedQuery -> 1000
+            normalizedTitle.startsWith(normalizedQuery) -> 900
+            Regex("\\b${Regex.escape(normalizedQuery)}\\b").containsMatchIn(normalizedTitle) -> 820
+            normalizedTitle.contains(normalizedQuery) -> 760
+            normalizedShort.contains(normalizedQuery) -> 540
+            normalizedDescription.contains(normalizedQuery) -> 380
+            else -> 120
+        }
+
+        val pathBonus = when {
+            normalizedPath.startsWith(normalizedQuery) -> 55
+            normalizedPath.contains(normalizedQuery) -> 35
+            else -> 0
+        }
+
+        val positionBonus = normalizedTitle.indexOf(normalizedQuery)
+            .takeIf { it >= 0 }
+            ?.let { 40 - it.coerceAtMost(40) }
+            ?: 0
+
+        val lengthPenalty = (normalizedTitle.length - normalizedQuery.length)
+            .coerceAtLeast(0)
+            .coerceAtMost(80)
+
+        val verseBonus = (candidate.ayahCount * 2).coerceAtMost(50)
+
+        return base + pathBonus + positionBonus + verseBonus - lengthPenalty
+    }
+
+    private fun normalizeSearchText(value: String): String =
+        value
+            .lowercase()
+            .replace(Regex("[^\\p{L}\\p{N}\\s]"), " ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+
+    private fun relationStrength(path: List<Pair<Int, RelationshipType>>): Int =
+        path.sumOf { (_, rel) ->
+            when (rel) {
+                RelationshipType.ONTOLOGY_PARENT -> 6
+                RelationshipType.THEMATIC_PARENT -> 5
+                RelationshipType.PARENT -> 3
+                RelationshipType.RELATED -> 1
+                RelationshipType.NONE -> 0
+            }
+        }
+
+    private fun relationshipOrder(type: RelationshipType): Int =
+        when (type) {
+            RelationshipType.ONTOLOGY_PARENT -> 0
+            RelationshipType.THEMATIC_PARENT -> 1
+            RelationshipType.PARENT -> 2
+            RelationshipType.RELATED -> 3
+            RelationshipType.NONE -> 4
+        }
 
     private fun assignedSetFor(
         parentType: RelationshipType,
