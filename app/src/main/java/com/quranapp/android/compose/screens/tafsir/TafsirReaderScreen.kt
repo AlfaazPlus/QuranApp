@@ -72,6 +72,7 @@ import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.quran.parser.ParserUtils.compressVerseRefsByChapter
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.Keys
@@ -431,16 +432,10 @@ private fun buildTafsirHtml(
     val theme = if (isDark) "dark" else "light"
     val direction = if (isRtlLanguage(langCode)) "rtl" else "ltr"
 
-    val multiVerseAlert = if (verseHeaderHtml.isNotEmpty()) {
-        ""
-    } else if (verses.size > 1) {
+    val multiVerseAlert = if (verses.size > 1) {
         val alertMsg = context.getString(R.string.readingTafsirMultiVerses)
-        val versesSorted = verses.sortedWith(
-            compareBy(
-                { it.substringBefore(':').toIntOrNull() ?: 0 },
-                { it.substringAfter(':').toIntOrNull() ?: 0 }
-            )
-        )
+        val versesSorted = compressVerseRefsByChapter(verses)
+
         """
         <div class="multiple-verse-alert">
             <strong>$alertMsg</strong> ${versesSorted.joinToString(", ")}

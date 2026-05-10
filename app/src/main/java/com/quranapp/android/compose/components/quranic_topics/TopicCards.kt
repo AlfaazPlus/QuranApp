@@ -31,7 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.activities.reference.ActivityReference
+import com.quranapp.android.components.ReferenceThumbnail
+import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.entities.topics.RelationshipType
@@ -224,17 +225,16 @@ internal fun VerseRefsCard(
 
         val description = topic.shortDescription ?: ""
 
-        val intent = ReaderFactory.prepareReferenceVerseIntent(
-            title = topic.title,
-            desc = StringUtils.removeHTML(description, true),
-            translSlug = emptySet(),
-            chapters = chapters,
-            verses = compressedRefs.toSet(),
-        ).apply {
-            setClass(context, ActivityReference::class.java)
-        }
-
-        context.startActivity(intent)
+        ReaderFactory.startReferenceVerse(
+            context,
+            ReferenceVerseModel(
+                title = topic.title,
+                desc = StringUtils.removeHTML(description, true),
+                chapters = chapters,
+                verses = compressedRefs.toSet(),
+                thumbnail = topic.imageUrl?.let { ReferenceThumbnail.RemoteUrl(it) }
+            )
+        )
     }
 
 

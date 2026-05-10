@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.quranapp.android.R
 import com.quranapp.android.activities.reference.ActivityPropheticDuas
+import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -46,33 +47,36 @@ object ExclusiveVerseNavigator {
 
         ReaderFactory.startReferenceVerse(
             context,
-            nameTitle,
-            description,
-            emptySet(),
-            verse.chapters,
-            verse.versesRaw,
+            ReferenceVerseModel(
+                title = nameTitle,
+                desc = description,
+                chapters = verse.chapters,
+                verses = verse.versesRaw,
+            ),
         )
     }
 
     private fun openEtiquette(context: Context, verse: ExclusiveVerse) {
-        verse.verses.firstOrNull()?.let { reference ->
-            ReaderFactory.startVerseRange(
-                context,
-                reference.first,
-                reference.second,
-                reference.third,
-            )
-        }
+        ReaderFactory.startReferenceVerse(
+            context,
+            ReferenceVerseModel(
+                title = verse.title,
+                desc = verse.description,
+                chapters = verse.chapters,
+                verses = verse.versesRaw,
+            ),
+        )
     }
 
     private fun openMajorSins(context: Context, verse: ExclusiveVerse) {
         ReaderFactory.startReferenceVerse(
             context,
-            verse.title,
-            verse.description,
-            emptySet(),
-            verse.chapters,
-            verse.versesRaw,
+            ReferenceVerseModel(
+                title = verse.title,
+                desc = verse.description,
+                chapters = verse.chapters,
+                verses = verse.versesRaw,
+            )
         )
     }
 
@@ -88,11 +92,12 @@ object ExclusiveVerseNavigator {
         )
         ReaderFactory.startReferenceVerse(
             context,
-            nameTitle,
-            description,
-            emptySet(),
-            verse.chapters,
-            verse.versesRaw,
+            ReferenceVerseModel(
+                title = nameTitle,
+                desc = description,
+                chapters = verse.chapters,
+                verses = verse.versesRaw,
+            )
         )
     }
 }

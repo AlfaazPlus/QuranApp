@@ -56,6 +56,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -68,8 +69,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.window.core.layout.WindowSizeClass
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
+import com.quranapp.android.api.resolveInventoryUrl
+import com.quranapp.android.components.ReferenceThumbnail
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.IconButton
@@ -87,6 +93,7 @@ import com.quranapp.android.compose.components.reader.VerseView
 import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceVerses
 import com.quranapp.android.compose.components.reader.dialogs.parseVerses
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.readAppLocale
 import com.quranapp.android.db.entities.user.BookmarkKey
@@ -109,7 +116,12 @@ import java.util.Locale
 import kotlin.math.min
 
 private sealed class ReferenceRow {
-    data class Description(val title: String, val desc: String?) : ReferenceRow()
+    data class Description(
+        val title: String,
+        val desc: String?,
+        val thumbnail: ReferenceThumbnail?
+    ) : ReferenceRow()
+
     data class SectionTitle(
         val segmentKey: String,
         val ref: QuickReferenceVerses.Range,
@@ -215,7 +227,7 @@ private fun ReferenceScreenContent(
         loading = true
 
         rows.clear()
-        rows.add(ReferenceRow.Description(refModel.title, refModel.desc))
+        rows.add(ReferenceRow.Description(refModel.title, refModel.desc, refModel.thumbnail))
 
         chapterNames = withContext(Dispatchers.IO) {
             vm.repository.getChapterNames(refModel.chapters.toList())
@@ -377,10 +389,7 @@ private fun ReferenceScreenContent(
                                         },
                                     ) { row ->
                                         when (row) {
-                                            is ReferenceRow.Description -> ReferenceDescription(
-                                                row.title,
-                                                row.desc
-                                            )
+                                            is ReferenceRow.Description -> ReferenceDescription(row)
 
                                             is ReferenceRow.SectionTitle -> ReferenceSectionTitle(
                                                 row = row,
@@ -588,13 +597,33 @@ private fun ReferenceSidebarItem(
 }
 
 @Composable
-private fun ReferenceDescription(title: String, desc: String?) {
+private fun ReferenceDescription(row: ReferenceRow.Description) {
+    val context = LocalContext.current
+    val downloadSource = AppPreferences.observeResourceDownloadProxy()
+
     val gradient = Brush.verticalGradient(
         colors = listOf(
             colorScheme.surfaceContainer,
             Color.Transparent,
         ),
     )
+
+
+    val heroImageModel = remember(context, row.thumbnail, downloadSource) {
+        val heroImageData =
+            when (row.thumbnail) {
+                is ReferenceThumbnail.RemoteUrl -> resolveInventoryUrl(row.thumbnail.url)
+                is ReferenceThumbnail.ResourceId -> row.thumbnail.id
+                else -> null
+            }
+
+        if (heroImageData == null) return@remember null
+
+        ImageRequest.Builder(context)
+            .data(heroImageData)
+            .crossfade(true)
+            .build()
+    }
 
     Column(
         modifier = Modifier
@@ -603,15 +632,28 @@ private fun ReferenceDescription(title: String, desc: String?) {
             .padding(start = 16.dp, end = 16.dp, top = 20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        if (heroImageModel != null) {
+            Surface(shape = shapes.medium) {
+                AsyncImage(
+                    model = heroImageModel,
+                    contentDescription = row.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(210.dp),
+                )
+            }
+        }
+
         Text(
-            text = title,
+            text = row.title,
             style = typography.titleMedium,
             color = colorScheme.primary,
         )
 
-        if (!desc.isNullOrBlank()) {
+        if (!row.desc.isNullOrBlank()) {
             Text(
-                text = desc,
+                text = row.desc,
                 color = colorScheme.onSurface.copy(alpha = 0.85f),
             )
         }

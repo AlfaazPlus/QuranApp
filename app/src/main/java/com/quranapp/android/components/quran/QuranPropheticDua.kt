@@ -45,7 +45,8 @@ class QuranPropheticDua(val prophets: List<Prophet>) {
         val order: Int = 0,
         val name: String,
         val honorific: String,
-        @param:DrawableRes val iconRes: Int = 0
+        @param:DrawableRes val iconRes: Int = 0,
+        val thumbnail: String?
     ) : Serializable {
         var references: String? = null
 

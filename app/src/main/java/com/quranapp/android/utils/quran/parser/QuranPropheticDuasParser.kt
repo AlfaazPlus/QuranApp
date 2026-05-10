@@ -26,6 +26,7 @@ object QuranPropheticDuasParser {
     private const val PROPHETS_ATTR_ORDER = "order"
     private const val PROPHETS_ATTR_NAME = "name"
     private const val PROPHETS_ATTR_ICON_RES = "drawable"
+    private const val PROPHETS_ATTR_THUMBNAIL = "thumbnail"
 
     /**
      * Parsed strings and chapter labels depend on [appPlatformLocale]. Cached per locale tag.
@@ -84,6 +85,11 @@ object QuranPropheticDuasParser {
                             PROPHETS_ATTR_ICON_RES,
                             -1
                         ),
+                        thumbnail = parser.getAttributeValue(null,
+                            PROPHETS_ATTR_THUMBNAIL
+                        )?.let {
+                            "ghraw://AlfaazPlus/QuranAppInventory/master/images/" + it
+                        }
                     )
 
                     lastReference = lastProphet

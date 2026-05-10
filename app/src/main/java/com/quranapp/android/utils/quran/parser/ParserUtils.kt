@@ -116,6 +116,7 @@ object ParserUtils {
                     } else {
                         "$chapter:$start-$prev"
                     }
+
                     start = current
                     prev = current
                 }

@@ -48,7 +48,8 @@ class QuranProphet(val prophets: List<Prophet>) {
         val nameEn: String,
         val name: String,
         val honorific: String,
-        @param:DrawableRes val iconRes: Int = 0
+        @param:DrawableRes val iconRes: Int = 0,
+        val thumbnail: String?
     ) : Serializable {
         var references: String? = null
 

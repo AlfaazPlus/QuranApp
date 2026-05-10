@@ -10,7 +10,7 @@ import androidx.work.WorkerParameters
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.reference.ActivityReference
-import com.quranapp.android.compose.utils.appFallbackLanguageCodes
+import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.ReaderIntentData
@@ -119,11 +119,13 @@ class RecommendedReminderWorker(
                 val desc = recommendation.description.takeIf { it.isNotBlank() }
 
                 ReaderFactory.prepareReferenceVerseIntent(
-                    recommendation.title,
-                    desc,
-                    emptySet(),
-                    chapters,
-                    verseSpecs,
+                    ReferenceVerseModel(
+                        recommendation.title,
+                        desc,
+                        emptySet(),
+                        chapters,
+                        verseSpecs,
+                    )
                 ).apply {
                     setClass(context, ActivityReference::class.java)
                 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.activities.ActivityTafsir
 import com.quranapp.android.activities.reference.ActivityReference
+import com.quranapp.android.components.ReferenceThumbnail
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.reader.ReaderMode
@@ -43,7 +44,7 @@ object ReaderFactory {
     fun startMushafPage(context: Context, pageNo: Int) {
         val mushafCode = ReaderPreferences.getQuranScript()
         val variant = ReaderPreferences.getQuranScriptVariant()
-       
+
         context.startActivity(
             ReaderLaunchParams(
                 data = ReaderIntentData.MushafPage(
@@ -132,38 +133,10 @@ object ReaderFactory {
         return prepareVerseRangeIntent(chapterNo, range.first, range.second)
     }
 
-    fun startReferenceVerse(
-        context: Context,
-        title: String,
-        desc: String?,
-        translSlug: Set<String>,
-        chapters: Set<Int>,
-        verses: Set<String>
-    ) {
-        val intent = prepareReferenceVerseIntent(
-            title, desc, translSlug, chapters, verses
-        )
-        intent.setClass(context, ActivityReference::class.java)
-        context.startActivity(intent)
-    }
-
     fun startReferenceVerse(context: Context, referenceVerseModel: ReferenceVerseModel) {
         val intent = prepareReferenceVerseIntent(referenceVerseModel)
         intent.setClass(context, ActivityReference::class.java)
         context.startActivity(intent)
-    }
-
-    fun prepareReferenceVerseIntent(
-        title: String,
-        desc: String?,
-        translSlug: Set<String>,
-        chapters: Set<Int>,
-        verses: Set<String>
-    ): Intent {
-        val referenceVerseModel = ReferenceVerseModel(
-            title, desc, translSlug, chapters, verses
-        )
-        return prepareReferenceVerseIntent(referenceVerseModel)
     }
 
     fun prepareReferenceVerseIntent(referenceVerseModel: ReferenceVerseModel): Intent {

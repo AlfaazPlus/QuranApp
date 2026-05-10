@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.recommended.Recommendation
@@ -89,11 +90,12 @@ private fun RecommendationCard(
 
                         ReaderFactory.startReferenceVerse(
                             context = context,
-                            title = recommendation.title,
-                            desc = recommendation.description,
-                            translSlug = emptySet(),
-                            chapters = chapters,
-                            verses = verseSpecs
+                            ReferenceVerseModel(
+                                title = recommendation.title,
+                                desc = recommendation.description,
+                                chapters = chapters,
+                                verses = verseSpecs
+                            )
                         )
 
                         return@clickable
