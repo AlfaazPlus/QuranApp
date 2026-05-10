@@ -86,12 +86,12 @@ fun FootnotePresenter(
         contentColor = colorScheme.onSurface,
         contentWindowInsets = { WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom) },
     ) {
-        PresentSheetContent(data)
+        SheetContent(data)
     }
 }
 
 @Composable
-private fun PresentSheetContent(data: FootnotePresenterData) {
+private fun SheetContent(data: FootnotePresenterData) {
     val context = LocalContext.current
     val translFactory = QuranTranslationFactory.remember(context)
 

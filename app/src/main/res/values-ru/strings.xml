@@ -165,6 +165,7 @@
     <string name="strLabelSelectVerse">Выберите аяты</string>
     <string name="strLabelCurrentVerse">Текущий аят</string>
     <string name="strLabelIncludeFootnotes">Включая примечания</string>
+    <string name="includeBookmarkNote">Включить заметку закладки (если есть)</string>
     <string name="strLabelQuickLinks">Быстрый переход</string>
     <string name="strLabelLater">Позже</string>
     <string name="strHintSearch">Поиск</string>

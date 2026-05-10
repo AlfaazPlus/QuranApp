@@ -117,6 +117,7 @@
     <string name="strLabelWhatsappStyling">واٹس ایپ اسٹائلنگ</string>
     <string name="strLabelIncludeArabic">عربی شامل کریں</string>
     <string name="strLabelIncludeFootnotes">حاشیہ شامل کریں</string>
+    <string name="includeBookmarkNote">بک مارک نوٹ شامل کریں (اگر موجود ہو)</string>
     <string name="strHintSearch">تلاش کریں</string>
     <string name="strHintSearchQuran">ایک اصطلاح ٹائپ کریں جیسے، \"قیامت\"</string>
     <string name="strHintSearchProphet">نبی تلاش کریں</string>

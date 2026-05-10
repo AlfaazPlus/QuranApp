@@ -103,6 +103,7 @@
     <string name="strLabelWhatsappStyling">Gaya Whatsapp</string>
     <string name="strLabelIncludeArabic">Sertakan Bahasa Arab</string>
     <string name="strLabelIncludeFootnotes">Sertakan catatan kaki</string>
+    <string name="includeBookmarkNote">Sertakan catatan bookmark (jika ada)</string>
     <string name="strLabelQuickLinks">Tautan cepat</string>
     <string name="strLabelLater">Nanti</string>
     <string name="strHintSearchQuran">Ketik kata kunci (contoh: \"Kehidupan\")</string>

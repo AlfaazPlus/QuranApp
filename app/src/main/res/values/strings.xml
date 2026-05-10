@@ -189,6 +189,7 @@
     <string name="strLabelWhatsappStyling">Whatsapp styling</string>
     <string name="strLabelIncludeArabic">Include arabic</string>
     <string name="strLabelIncludeFootnotes">Include footnotes</string>
+    <string name="includeBookmarkNote">Include bookmark note (if any)</string>
     <string name="strLabelQuickLinks">Quick links</string>
     <string name="strLabelLater">Later</string>
     <string name="titleGlobalSearch">Global Search</string>

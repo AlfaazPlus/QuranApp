@@ -80,6 +80,7 @@
     <string name="strTitleReaderTextSizeTransl">অনুবাদ লেখার আকার</string>
     <string name="strTitleShareApp">অ্যাপটি শেয়ার করুন</string>
     <string name="strLabelIncludeFootnotes">পাদটীকা অন্তর্ভুক্ত করুন</string>
+    <string name="includeBookmarkNote">বুকমার্ক নোট অন্তর্ভুক্ত করুন (যদি থাকে)</string>
     <string name="strTitlePrivacyPolicy">গোপনীয়তা নীতি</string>
     <string name="strTitleChapInfoJuzNo">পারা নং</string>
     <string name="strTitleFeaturedDuas">কুরআনে বর্ণিত দোয়া</string>

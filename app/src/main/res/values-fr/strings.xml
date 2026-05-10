@@ -102,6 +102,7 @@
     <string name="strLabelWhatsappStyling">Style Whatsapp</string>
     <string name="strLabelIncludeArabic">Inclure l\'arabe</string>
     <string name="strLabelIncludeFootnotes">Inclure des notes de bas de page</string>
+    <string name="includeBookmarkNote">Inclure la note du signet (le cas échéant)</string>
     <string name="strLabelQuickLinks">Liens rapides</string>
     <string name="strHintSearchQuran">Saisissez un terme, ex. : \"Vie\"</string>
     <string name="strHintSearchChapter">Chercher une sourate</string>

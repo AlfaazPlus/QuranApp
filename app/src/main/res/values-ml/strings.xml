@@ -163,6 +163,7 @@
     <string name="strLabelSelectTranslations">വിവർത്തനങ്ങൾ തിരഞ്ഞെടുക്കുക</string>
     <string name="strLabelSelectTranslation">വിവർത്തനങ്ങൾ തിരഞ്ഞെടുക്കുക</string>
     <string name="strLabelIncludeFootnotes">അടിക്കുറിപ്പുകൾ ഉൾപ്പെടുത്തുക</string>
+    <string name="includeBookmarkNote">ബുക്ക്മാർക്ക് കുറിപ്പ് ഉൾപ്പെടുത്തുക (ഉണ്ടെങ്കിൽ)</string>
     <string name="strLabelQuickLinks">ദ്രുത ലിങ്കുകൾ</string>
     <string name="strHintFromVerse">വാക്യത്തിൽ നിന്ന്</string>
     <string name="strHintToVerse">വാക്യത്തിലേക്ക്</string>

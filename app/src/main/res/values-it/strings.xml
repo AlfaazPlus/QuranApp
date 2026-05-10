@@ -55,6 +55,7 @@
     <string name="strLabelSelectTranslation">Seleziona le traduzione</string>
     <string name="strLabelWhatsappStyling">Stile Whatsapp</string>
     <string name="strLabelIncludeFootnotes">Includi note a piè di pagina</string>
+    <string name="includeBookmarkNote">Includi nota del segnalibro (se presente)</string>
     <string name="strLabelIncludeArabic">Includi l\'arabo</string>
     <string name="strLabelQuickLinks">Link veloci</string>
     <string name="strLabelLater">Dopo</string>

@@ -104,6 +104,7 @@
     <string name="strMsgBookmarkDate" formatted="false">%2$s પર %1$s</string>
     <string name="strLabelVerseRange">આયત શ્રેણી</string>
     <string name="strLabelIncludeFootnotes">પાદટીપ શામેલ કરો</string>
+    <string name="includeBookmarkNote">બુકમાર્ક નોંધ ઉમેરો (જો હોય તો)</string>
     <string name="strLabelSelectTranslations">અનુવાદો પસંદ કરો</string>
     <string name="strLabelQuickLinks">ઝડપી સંપર્ક</string>
     <string name="strHintSearchProphet">પ્રોફેટ શોધો</string>

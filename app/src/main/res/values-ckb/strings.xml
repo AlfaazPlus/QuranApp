@@ -39,6 +39,7 @@
     <string name="strLabelVerseRange">مەودای ئایەت</string>
     <string name="strLabelLater">دواتر</string>
     <string name="strLabelIncludeFootnotes">زانیاری سورەت</string>
+    <string name="includeBookmarkNote">تێبینی دڵخوازکراوەکە بخەرە ناوەوە (ئەگەر هەبوو)</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d ژمارەیەکی دروستی سورەت نییە.</string>
     <string name="strHintSearchQuran">دەستەواژەیەک بنووسە بۆ نمونە.، \"ژیان\"</string>
     <string name="strHintSearchProphet">گەڕان بۆ پێغەمبەر</string>

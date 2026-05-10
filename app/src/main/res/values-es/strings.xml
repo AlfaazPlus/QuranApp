@@ -122,6 +122,7 @@
     <string name="strLabelWhatsappStyling">Estilo whatsapp</string>
     <string name="strLabelIncludeArabic">Incluir Árabe</string>
     <string name="strLabelIncludeFootnotes">Incluir notas al pie</string>
+    <string name="includeBookmarkNote">Incluir nota del marcador (si existe)</string>
     <string name="strHintSearchProphet">Buscar profeta</string>
     <string name="strHintFromVerse">Del verso</string>
     <string name="strTitleMadani">Medinesa</string>

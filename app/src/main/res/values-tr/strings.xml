@@ -117,6 +117,7 @@
     <string name="strLabelSelectTranslation">Meal seç</string>
     <string name="strLabelIncludeArabic">Arapça dahil</string>
     <string name="strLabelIncludeFootnotes">Dipnotlar dahil</string>
+    <string name="includeBookmarkNote">Yer imi notunu ekle (varsa)</string>
     <string name="strLabelLater">Daha sonra</string>
     <string name="strHintSearch">Ara</string>
     <string name="strHintSearchQuran">Bir terim yaz, örn. \"Hayat\"</string>

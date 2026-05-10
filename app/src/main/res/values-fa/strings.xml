@@ -138,6 +138,7 @@
     <string name="strLabelWhatsappStyling">استایل واتساپ</string>
     <string name="strLabelIncludeArabic">شامل عربی</string>
     <string name="strLabelIncludeFootnotes">شامل پاورقی ها</string>
+    <string name="includeBookmarkNote">یادداشت نشانک را شامل شود (در صورت وجود)</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d سوره شماره معتبر نیست.</string>
     <string name="strMsgInvalidJuzNo" formatted="false">%d یک شماره جزء(پارا) معتبر نیست.</string>
     <string name="strMsgBookmarkAdded">آیه با موفقیت به نشانک ها اضافه شد</string>

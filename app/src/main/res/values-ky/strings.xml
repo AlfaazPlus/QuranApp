@@ -245,6 +245,7 @@
     <string name="strLabelWhatsappStyling">WhatsApp стили</string>
     <string name="strLabelIncludeArabic">Арабча текстти кошуу</string>
     <string name="strLabelIncludeFootnotes">Шилтемелерди камтуу</string>
+    <string name="includeBookmarkNote">Кыстарма эскертүүсүн кошуу (эгер бар болсо)</string>
     <string name="strLabelQuickLinks">Ыкчам шилтемелер</string>
     <string name="strLabelLater">Кийинчерээк</string>
     <string name="strHintSearch">Издөө</string>

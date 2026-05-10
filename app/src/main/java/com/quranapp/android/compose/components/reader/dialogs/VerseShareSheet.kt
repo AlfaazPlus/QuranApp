@@ -16,6 +16,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,19 +46,20 @@ import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation
-import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.MessageUtils
+import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 private val footnoteTagPattern = Regex("""(?s)<fn.*?>(.*?)<.*?fn>""")
 
@@ -68,6 +70,7 @@ private data class VerseShareState(
     val whatsappStyling: Boolean = false,
     val includeArabic: Boolean = true,
     val includeFootnotes: Boolean = false,
+    val includeBookmarkNote: Boolean = false,
     val selectedSlugs: Set<String> = setOf(),
 )
 
@@ -90,7 +93,6 @@ fun VerseShareSheet(
     val translationBooks = remember(translFactory) {
         translFactory.getAvailableTranslationBooksInfo()
     }
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
 
     var state by remember { mutableStateOf(VerseShareState()) }
 
@@ -162,7 +164,6 @@ fun VerseShareSheet(
                         coroutineScope.launch {
                             val text = buildShareText(
                                 context,
-                                repository,
                                 translFactory,
                                 state = state,
                                 vwd = vwd,
@@ -189,7 +190,6 @@ fun VerseShareSheet(
                         coroutineScope.launch {
                             val text = buildShareText(
                                 context,
-                                repository,
                                 translFactory = translFactory,
                                 state = state,
                                 vwd = vwd,
@@ -202,10 +202,14 @@ fun VerseShareSheet(
                                 .setChooserTitle(shareTitle)
                                 .setPlatform(AppBridge.Platform.SYSTEM_SHARE)
                                 .share()
-                        }
 
-                        onDismiss()
+                            onDismiss()
+                        }
                     },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorScheme.secondaryContainer,
+                        contentColor = colorScheme.onSecondaryContainer,
+                    )
                 ) {
                     Text(stringResource(R.string.strLabelShare))
                 }
@@ -256,7 +260,11 @@ private fun AdvancedShareForm(
 
     if (state.useVerseRange) {
         Text(
-            text = formattedStringResource(R.string.strMsgShareRange, 1, vwd.chapter.surah.ayahCount),
+            text = formattedStringResource(
+                R.string.strMsgShareRange,
+                1,
+                vwd.chapter.surah.ayahCount
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 6.dp),
@@ -324,6 +332,16 @@ private fun AdvancedShareForm(
             }
         },
         label = stringResource(R.string.strLabelIncludeFootnotes),
+    )
+
+    CheckboxRow(
+        checked = state.includeBookmarkNote,
+        onCheckedChange = {
+            updateState {
+                copy(includeBookmarkNote = it)
+            }
+        },
+        label = stringResource(R.string.includeBookmarkNote),
     )
 
     Text(
@@ -405,7 +423,6 @@ private fun resolveVerseRange(
 
 private suspend fun buildShareText(
     context: Context,
-    repository: QuranRepository,
     translFactory: QuranTranslationFactory,
     state: VerseShareState,
     vwd: VerseWithDetails,
@@ -442,8 +459,8 @@ private suspend fun buildShareText(
 
     for (verseNo in fromVerse..toVerse) {
         appendVerseBlock(
+            context = context,
             sb = sb,
-            repository = repository,
             translFactory = translFactory,
             chapterNo = vwd.chapterNo,
             verseNo = verseNo,
@@ -462,19 +479,21 @@ private suspend fun buildShareText(
 }
 
 private suspend fun appendVerseBlock(
+    context: Context,
     sb: StringBuilder,
-    repository: QuranRepository,
     translFactory: QuranTranslationFactory,
     chapterNo: Int,
     verseNo: Int,
     isSingleVerse: Boolean,
     state: VerseShareState,
 ) {
+    val repository = DatabaseProvider.getQuranRepository(context)
+
     val transls = translFactory.getTranslationsSingleVerse(state.selectedSlugs, chapterNo, verseNo)
     val hasMultiTransls = transls.size > 1
 
     if (!isSingleVerse || hasMultiTransls) {
-        sb.append("(Quran, Verse ").append(chapterNo).append(":").append(verseNo).append(")\n")
+        sb.append("(Quran, Verse ").append(chapterNo).append(":").append(verseNo).append(")")
     }
 
     if (state.includeArabic) {
@@ -482,13 +501,14 @@ private suspend fun appendVerseBlock(
         val text = words.joinToString(" ") { it.text }
 
         if (text.isNotEmpty()) {
-            sb.append(text)
+            sb.append("\n\n").append(text)
         }
     }
 
     for (i in transls.indices) {
         sb.append(
             makeTranslText(
+                context,
                 translFactory,
                 transls[i],
                 hasMultiTransls,
@@ -496,18 +516,31 @@ private suspend fun appendVerseBlock(
                 state.whatsappStyling
             )
         )
-        if (i < transls.lastIndex) {
-            sb.append("\n\n")
-        }
     }
 
     if (isSingleVerse && !hasMultiTransls) {
-        sb.append("\n").append(StringUtils.HYPHEN).append(" Quran ")
-            .append(chapterNo).append(":").append(verseNo)
+        sb.append("\n\n").append("${StringUtils.HYPHEN} Quran $chapterNo:$verseNo")
+    }
+
+    if (state.includeBookmarkNote) {
+        val userRepository = DatabaseProvider.getUserRepository(context)
+
+        userRepository.getBookmark(chapterNo, verseNo, verseNo)?.let { bookmark ->
+            val bookmarkNote = bookmark.note?.trim().orEmpty()
+
+            if (bookmarkNote.isNotBlank()) {
+                sb.append("\n\n")
+
+                appendBold(sb, "Notes:", state.whatsappStyling)
+                    .append("\n")
+                    .append(bookmarkNote)
+            }
+        }
     }
 }
 
 private fun makeTranslText(
+    context: Context,
     translFactory: QuranTranslationFactory,
     transl: Translation,
     inclAuthor: Boolean,
@@ -515,20 +548,33 @@ private fun makeTranslText(
     whatsappStyle: Boolean,
 ): CharSequence {
     val sb = StringBuilder()
-    sb.append("\n").append(cleanHtml(transl.text, inclFootnotes))
+    sb.append("\n\n").append(cleanHtml(transl.text, inclFootnotes))
 
     val footnotes = transl.footnotes
+    val bookInfo = translFactory.getTranslationBookInfo(transl.bookSlug)
     val hasFootnotes = footnotes.isNotEmpty()
 
     if (inclAuthor || (inclFootnotes && hasFootnotes)) {
-        val author = translFactory.getTranslationBookInfo(transl.bookSlug).getDisplayName(false)
+        val author = bookInfo.getDisplayName(false)
+
         sb.append("\n")
+
         appendItalic(sb, author, whatsappStyle)
     }
 
     if (inclFootnotes && hasFootnotes) {
         sb.append("\n\n")
-        appendBold(sb, "FOOTNOTES:", whatsappStyle)
+
+
+        val title =
+            ResUtils.getLocalizedString(
+                context,
+                R.string.strTitleFootnotes,
+                Locale.forLanguageTag(bookInfo.langCode)
+            ) ?: "FOOTNOTES"
+
+        appendBold(sb, title, whatsappStyle)
+
         footnotes.entries.sortedBy { it.key }.forEach { (number, footnote) ->
             sb.append("\n\t\t[").append(number).append("] ")
             sb.append(
@@ -543,21 +589,34 @@ private fun cleanHtml(string: String, inclFootnotes: Boolean): String {
     val replaced = footnoteTagPattern.replace(string) { match ->
         if (inclFootnotes) "[${match.groupValues[1]}]" else ""
     }
+
     return HtmlCompat.fromHtml(replaced, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
 }
 
-private fun appendBold(sb: StringBuilder, text: CharSequence, whatsappStyle: Boolean) {
+private fun appendBold(
+    sb: StringBuilder,
+    text: CharSequence,
+    whatsappStyle: Boolean
+): StringBuilder {
     if (whatsappStyle) {
         sb.append('*').append(text).append('*')
     } else {
         sb.append(text)
     }
+
+    return sb
 }
 
-private fun appendItalic(sb: StringBuilder, text: CharSequence, whatsappStyle: Boolean) {
+private fun appendItalic(
+    sb: StringBuilder,
+    text: CharSequence,
+    whatsappStyle: Boolean
+): StringBuilder {
     if (whatsappStyle) {
         sb.append('_').append(text).append('_')
     } else {
         sb.append(text)
     }
+
+    return sb
 }

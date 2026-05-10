@@ -109,6 +109,7 @@
     <string name="strTitleAppSettings">إعدادات التطبيق</string>
     <string name="strTitleReaderSettings">إعدادات المصحف</string>
     <string name="strLabelIncludeFootnotes">تضمين الهواميش</string>
+    <string name="includeBookmarkNote">تضمين ملاحظة الإشارة المرجعية (إن وجدت)</string>
     <string name="strLabelLater">لاحقًا</string>
     <string name="strHintSearch">بحث</string>
     <string name="strHintSearchChapter">البحث عن سورة</string>

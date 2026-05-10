@@ -110,6 +110,7 @@
     <string name="strLabelWhatsappStyling">WhatsApp-Styling</string>
     <string name="strLabelIncludeArabic">Arabisch einschließen</string>
     <string name="strLabelIncludeFootnotes">Fußnoten einschließen</string>
+    <string name="includeBookmarkNote">Lesezeichennotiz einschließen (falls vorhanden)</string>
     <string name="strLabelQuickLinks">Weiterführende Links</string>
     <string name="strLabelLater">Später</string>
     <string name="strHintSearch">Suche</string>

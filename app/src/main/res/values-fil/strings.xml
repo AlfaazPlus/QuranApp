@@ -87,6 +87,7 @@
     <string name="strLabelWhatsappStyling">Pag-istilo ng Whatsapp</string>
     <string name="strLabelIncludeArabic">Isama ang arabic</string>
     <string name="strLabelIncludeFootnotes">Isama ang mga talababa</string>
+    <string name="includeBookmarkNote">Isama ang tala ng bookmark (kung mayroon)</string>
     <string name="strHintSearch">Hanapin</string>
     <string name="strHintSearchQuran">Mag-type ng termino e.g., \"Buhay\"</string>
     <string name="strHintSearchProphet">Hanapin ang prophet</string>

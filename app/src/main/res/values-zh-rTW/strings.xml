@@ -139,6 +139,7 @@
     <string name="strLabelWhatsappStyling">Whatsapp 風格</string>
     <string name="strLabelIncludeArabic">包括阿拉伯語</string>
     <string name="strLabelIncludeFootnotes">包括腳註</string>
+    <string name="includeBookmarkNote">包含書籤備註（如有）</string>
     <string name="strLabelQuickLinks">快捷連結</string>
     <string name="strLabelLater">稍後</string>
     <string name="strHintSearch">搜尋</string>

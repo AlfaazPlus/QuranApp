@@ -120,6 +120,7 @@
     <string name="strLabelWhatsappStyling">व्हाट्सप्प स्टाइलिंग</string>
     <string name="strLabelIncludeArabic">अरबी शामिल करें</string>
     <string name="strLabelIncludeFootnotes">फुटनोट शामिल करें</string>
+    <string name="includeBookmarkNote">बुकमार्क नोट शामिल करें (यदि कोई हो)</string>
     <string name="strHintSearch">खोजें</string>
     <string name="strHintSearchQuran">क़ुरआन मे खोजें</string>
     <string name="strHintSearchProphet">अम्बिया खोजें</string>
