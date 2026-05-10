@@ -33,6 +33,11 @@
         android:theme="@style/Theme.QuranApp.Splash"
         android:usesCleartextTraffic="@string/cleartextTrafficPermitted"
         tools:targetApi="s">
+        
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
         <receiver
             android:name=".views.reader.VotdWidgetReceiver"
             android:description="@string/desc_votd_widget"
@@ -182,7 +187,9 @@
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
+                <action android:name="androidx.media3.session.MediaLibraryService" />
                 <action android:name="androidx.media3.session.MediaSessionService" />
+                <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
     </application>

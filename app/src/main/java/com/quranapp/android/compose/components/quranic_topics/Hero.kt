@@ -68,7 +68,7 @@ internal fun TopicHeroCard(
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
 
     val heroImageData = remember(topic.imageUrl, downloadSource) {
-        topic.imageUrl?.let(::resolveInventoryUrl) ?: R.drawable.topic_thumbnail
+        topic.imageUrl?.let(::resolveInventoryUrl) ?: R.drawable.quran_wallpaper
     }
 
     val heroImageModel = remember(heroImageData, context) {
