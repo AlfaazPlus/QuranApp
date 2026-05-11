@@ -52,7 +52,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.theme.alpha

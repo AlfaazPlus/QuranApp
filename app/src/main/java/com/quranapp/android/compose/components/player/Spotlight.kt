@@ -54,7 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader

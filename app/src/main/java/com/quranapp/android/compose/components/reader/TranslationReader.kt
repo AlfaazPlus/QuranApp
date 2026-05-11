@@ -61,7 +61,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alfaazplus.sunnah.ui.theme.tightTextStyle
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha

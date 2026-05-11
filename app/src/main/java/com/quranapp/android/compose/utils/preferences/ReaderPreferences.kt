@@ -9,8 +9,6 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
-import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.reader.QuranScriptUtils

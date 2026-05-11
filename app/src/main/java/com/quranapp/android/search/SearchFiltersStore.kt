@@ -1,8 +1,8 @@
 package com.quranapp.android.search
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
-import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.PrefKey
 
 object SearchFiltersStore {
     private val KEY_SLUGS =

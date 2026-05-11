@@ -18,6 +18,12 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutResource() = 0
 
+    override fun onResume() {
+        super.onResume()
+
+        updateAllVotdWidgets(this)
+    }
+
     override fun initCreate(savedInstanceState: Bundle?) {
         if (UpdateManager.getInstance(this).check4CriticalUpdate()) {
             return
@@ -37,7 +43,6 @@ class MainActivity : BaseActivity() {
         }
 
         initActions()
-        updateAllVotdWidgets(this)
 
         setContent {
             QuranAppTheme {

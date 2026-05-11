@@ -37,9 +37,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.alfaazplus.sunnah.ui.theme.appFontFamily
-import com.alfaazplus.sunnah.ui.theme.fontArabic
-import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.compose.theme.appFontFamily
+import com.quranapp.android.compose.theme.fontArabic
+import com.quranapp.android.compose.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.QuickReference

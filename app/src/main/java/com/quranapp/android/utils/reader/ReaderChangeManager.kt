@@ -2,7 +2,7 @@
 
 package com.quranapp.android.utils.reader
 
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

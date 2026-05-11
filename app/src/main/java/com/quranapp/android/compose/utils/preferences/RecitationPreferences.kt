@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption

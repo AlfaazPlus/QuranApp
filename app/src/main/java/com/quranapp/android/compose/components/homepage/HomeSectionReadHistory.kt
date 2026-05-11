@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.alfaazplus.sunnah.ui.theme.tightTextStyle
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReadHistory
 import com.quranapp.android.activities.ActivityReader

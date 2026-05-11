@@ -40,7 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.alfaazplus.sunnah.ui.theme.tightTextStyle
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.components.quran.ExclusiveVerse

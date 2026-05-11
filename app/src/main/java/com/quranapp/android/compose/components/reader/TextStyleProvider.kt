@@ -13,8 +13,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alfaazplus.sunnah.ui.theme.appFontFamily
-import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.compose.theme.appFontFamily
+import com.quranapp.android.compose.theme.fontUrdu
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.isUrduLanguageCode

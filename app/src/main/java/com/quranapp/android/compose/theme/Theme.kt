@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.alfaazplus.sunnah.ui.theme.getAppTypography
+import com.quranapp.android.compose.theme.getAppTypography
 import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.appLocaleFlow

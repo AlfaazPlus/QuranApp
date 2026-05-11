@@ -1,4 +1,4 @@
-package com.alfaazplus.sunnah.ui.theme.colors
+package com.quranapp.android.compose.theme.colors
 
 import androidx.compose.material3.ColorScheme
 

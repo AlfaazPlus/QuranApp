@@ -84,7 +84,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.alfaazplus.sunnah.ui.theme.tightTextStyle
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySearch

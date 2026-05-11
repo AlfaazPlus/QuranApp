@@ -11,8 +11,8 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alfaazplus.sunnah.ui.theme.appFontFamily
-import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.compose.theme.appFontFamily
+import com.quranapp.android.compose.theme.fontUrdu
 import com.quranapp.android.compose.components.reader.MushafLineLayout
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.univ.StringUtils

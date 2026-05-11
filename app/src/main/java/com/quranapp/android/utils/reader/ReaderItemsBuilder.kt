@@ -13,7 +13,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
-import com.alfaazplus.sunnah.ui.theme.fontUrdu
+import com.quranapp.android.compose.theme.fontUrdu
 import com.quranapp.android.R
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Translation

@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
-import com.alfaazplus.sunnah.ui.utils.shared_preference.PrefKey
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
+import com.quranapp.android.compose.utils.preferences.PrefKey
 import com.quranapp.android.components.reader.ChapterVersePair
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

@@ -35,7 +35,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alfaazplus.sunnah.ui.theme.tightTextStyle
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.LocalAppLocale

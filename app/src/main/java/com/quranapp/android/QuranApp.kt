@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager
 import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.refreshAppLocale
 import com.quranapp.android.db.DatabaseProvider

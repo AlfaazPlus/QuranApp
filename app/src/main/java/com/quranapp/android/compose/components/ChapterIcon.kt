@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import com.alfaazplus.sunnah.ui.theme.fontSurah
+import com.quranapp.android.compose.theme.fontSurah
 import com.quranapp.android.utils.quran.QuranGlyphs
 
 @Composable

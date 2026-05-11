@@ -1,4 +1,4 @@
-package com.alfaazplus.sunnah.ui.utils.shared_preference
+package com.quranapp.android.compose.utils.preferences
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alfaazplus.sunnah.ui.utils.shared_preference.DataStoreManager.flowMultiple
+import com.quranapp.android.compose.utils.preferences.DataStoreManager.flowMultiple
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

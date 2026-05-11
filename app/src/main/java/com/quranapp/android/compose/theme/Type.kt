@@ -1,4 +1,4 @@
-package com.alfaazplus.sunnah.ui.theme
+package com.quranapp.android.compose.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
