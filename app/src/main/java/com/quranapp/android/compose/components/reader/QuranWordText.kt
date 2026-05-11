@@ -19,12 +19,12 @@ fun QuranWordText(
 
     if (bundle != null && atlasPlacements != null) {
         QuranAtlasText(
+            modifier = modifier,
             placements = atlasPlacements,
             bundle = bundle,
             fontSize = style.fontSize,
             lineHeight = style.lineHeight,
             color = style.color,
-            modifier = modifier
         )
     } else {
         Text(

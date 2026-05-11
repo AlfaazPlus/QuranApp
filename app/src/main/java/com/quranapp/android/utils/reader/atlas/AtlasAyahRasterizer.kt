@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import androidx.core.graphics.createBitmap
 
 private data class WordGlyphLayout(
     val widthPx: Float,
@@ -27,6 +28,20 @@ private data class AtlasPreparedGlyphRaster(
     val glyph: AtlasGlyphJson,
 )
 
+/**
+ * A software-backed rasterizer for rendering Quran Ayahs from a texture atlas.
+ *
+ * IMPORTANT PERFORMANCE NOTE:
+ * This rasterizer uses a software [Canvas] and [Bitmap] for rendering. This means all drawing
+ * operations happen on the CPU.
+ *
+ * Use cases:
+ * - Static widgets (e.g., VotdWidgetReceiver)
+ * - Image sharing/export (e.g., QuranVerseWebHtml)
+ *
+ * AVOID using this in the main UI reader or scrollable lists, as it will cause jank and high
+ * memory pressure. For the main UI, use QuranAtlasText which is hardware-accelerated.
+ */
 object AtlasAyahRasterizer {
 
     /**
@@ -109,7 +124,7 @@ object AtlasAyahRasterizer {
 
         val bitmapH = totalHeight.roundToInt().coerceAtLeast(1)
 
-        val bitmap = Bitmap.createBitmap(bitmapW, bitmapH, Bitmap.Config.ARGB_8888)
+        val bitmap = createBitmap(bitmapW, bitmapH)
         val canvas = Canvas(bitmap)
 
         val androidAtlas = bundle.bitmap.asAndroidBitmap()

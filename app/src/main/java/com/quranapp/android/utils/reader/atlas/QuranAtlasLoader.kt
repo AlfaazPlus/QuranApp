@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.reader.atlas
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -71,7 +72,13 @@ object QuranAtlasLoader {
                 val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
 
                 val pngFile = AtlasManager.getBundlePngFile(context, bundleKey)
-                val bitmap = BitmapFactory.decodeFile(pngFile.path)
+                val options = BitmapFactory.Options().apply {
+                    inScaled = false
+                    // Since the atlas is "L" (Luminance), ALPHA_8 is the most efficient.
+                    // It uses 1 byte per pixel instead of 4, saving ~48MB for a 4096px atlas.
+                    inPreferredConfig = Bitmap.Config.ALPHA_8
+                }
+                val bitmap = BitmapFactory.decodeFile(pngFile.path, options)
                     ?: return@withContext null
 
                 val bundle = QuranAtlasBundle(
