@@ -163,7 +163,7 @@ private data class VerseWebAtlasRasterParams(
     val density: Float,
 )
 
-private fun verseWebAtlasRasterParams(
+private suspend fun verseWebAtlasRasterParams(
     context: Context,
     colorScheme: ColorScheme,
     scriptCode: String,

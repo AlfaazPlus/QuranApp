@@ -58,15 +58,31 @@ object DataStoreManager {
             )
     }
 
+    /**
+     * Blocking read — uses [runBlocking]. Do not call from the main thread; it can cause ANRs.
+     * Prefer [readFirst] from a coroutine instead.
+     */
     fun <T> read(prefKey: PrefKey<T>): T {
         return read(prefKey.key, prefKey.default)
     }
 
+    /**
+     * Blocking read — uses [runBlocking]. Do not call from the main thread; it can cause ANRs.
+     * Prefer [readFirst] from a coroutine instead.
+     */
     fun <T> read(key: Preferences.Key<T>, defaultValue: T): T {
         return runBlocking {
-            val preferences = appContext.dataStore.data.first()
-            preferences[key] ?: defaultValue
+            readFirst(key, defaultValue)
         }
+    }
+
+    suspend fun <T> readFirst(prefKey: PrefKey<T>): T {
+        return readFirst(prefKey.key, prefKey.default)
+    }
+
+    suspend fun <T> readFirst(key: Preferences.Key<T>, defaultValue: T): T {
+        val preferences = appContext.dataStore.data.first()
+        return preferences[key] ?: defaultValue
     }
 
     suspend fun <T> write(prefKey: PrefKey<T>, value: T) {

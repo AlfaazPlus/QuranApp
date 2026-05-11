@@ -156,7 +156,10 @@ private data class ReferenceChunkRequest(
 @Composable
 fun ReferenceScreen(refModel: ReferenceVerseModel) {
     var selectedChapterChip by rememberSaveable { mutableIntStateOf(0) }
-    val translationSlugs = remember(refModel) { resolveTranslationSlugs(refModel) }
+    val savedTranslations = ReaderPreferences.observeTranslations()
+    val translationSlugs = remember(refModel, savedTranslations) {
+        resolveTranslationSlugs(refModel, savedTranslations)
+    }
 
     ReaderProvider {
         ReferenceScreenContent(
@@ -748,12 +751,13 @@ private fun ReferenceVerseViewWrapped(
 }
 
 private fun resolveTranslationSlugs(
-    refModel: ReferenceVerseModel
+    refModel: ReferenceVerseModel,
+    savedTranslations: Set<String>,
 ): Set<String> {
     val fromModel = refModel.translSlugs.filter { it.isNotBlank() }.toSet()
     if (fromModel.isNotEmpty()) return fromModel
 
-    val first = ReaderPreferences.getTranslations().firstOrNull().orEmpty()
+    val first = savedTranslations.firstOrNull().orEmpty()
 
     if (first.isNotBlank()) return setOf(first)
 

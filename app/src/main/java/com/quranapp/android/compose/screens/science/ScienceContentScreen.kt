@@ -52,6 +52,7 @@ fun ScienceContentScreen(
 ) {
     val context = LocalContext.current
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
+    val translationSlugs = ReaderPreferences.observeTranslations()
 
     Scaffold(
         modifier = modifier,
@@ -69,7 +70,7 @@ fun ScienceContentScreen(
                 item = item,
                 onOpenReference = { chapterNo, fromVerse, toVerse ->
                     quickRefData = QuickReferenceData(
-                        slugs = ReaderPreferences.getTranslations(),
+                        slugs = translationSlugs,
                         chapterNo = chapterNo,
                         parsedVerses = QuickReferenceVerses.Range(
                             chapterNo = chapterNo,
@@ -159,6 +160,7 @@ private fun ScienceContentWebView(
             webViewRef = webView
             webView.webViewClient = QuranScienceWebViewClient(
                 atlasPngCache = atlasAyahImageCache,
+                quranArabicScriptCode = scriptCode,
                 onOpenReference = onOpenReference,
             )
         },

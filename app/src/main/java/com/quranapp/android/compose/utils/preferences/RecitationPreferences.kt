@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
@@ -38,8 +37,8 @@ object RecitationPreferences {
         return raw.ifEmpty { null }
     }
 
-    fun getReciterId(): String? {
-        val raw = DataStoreManager.read(KEY_RECITER, "")
+    suspend fun getReciterId(): String? {
+        val raw = DataStoreManager.readFirst(KEY_RECITER, "")
         return raw.ifEmpty { null }
     }
 
@@ -53,8 +52,8 @@ object RecitationPreferences {
         return raw.ifEmpty { null }
     }
 
-    fun getTranslationReciterId(): String? {
-        val raw = DataStoreManager.read(KEY_TRANSLATION_RECITER, "")
+    suspend fun getTranslationReciterId(): String? {
+        val raw = DataStoreManager.readFirst(KEY_TRANSLATION_RECITER, "")
         return raw.ifEmpty { null }
     }
 
@@ -67,10 +66,8 @@ object RecitationPreferences {
         return DataStoreManager.observe(KEY_SPEED, RECITATION_DEFAULT_SPEED)
     }
 
-    fun getSpeed(): Float {
-        return DataStoreManager.read(
-            KEY_SPEED, RECITATION_DEFAULT_SPEED
-        ).coerceAtLeast(0.1f)
+    suspend fun getSpeed(): Float {
+        return DataStoreManager.readFirst(KEY_SPEED, RECITATION_DEFAULT_SPEED).coerceAtLeast(0.1f)
     }
 
     suspend fun setSpeed(speed: Float) {
@@ -85,7 +82,7 @@ object RecitationPreferences {
     }
 
     suspend fun getRepeatCount(): Int {
-        return DataStoreManager.read(
+        return DataStoreManager.readFirst(
             KEY_REPEAT_COUNT, RECITATION_DEFAULT_REPEAT_COUNT
         ).coerceAtLeast(0)
     }
@@ -101,10 +98,10 @@ object RecitationPreferences {
         }
     }
 
-    fun getAudioOption(): AudioOption {
-        return DataStoreManager.read(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value).let {
-            AudioOption.fromValue(it)
-        }
+    suspend fun getAudioOption(): AudioOption {
+        return AudioOption.fromValue(
+            DataStoreManager.readFirst(KEY_AUDIO_OPTION, AudioOption.DEFAULT.value),
+        )
     }
 
     suspend fun setAudioOption(option: AudioOption) {
@@ -119,10 +116,10 @@ object RecitationPreferences {
             }
     }
 
-    fun getAudioEndBehaviour(): AudioEndBehaviour {
-        return DataStoreManager.read(KEY_AUDIO_END_BEHAVIOUR, AudioEndBehaviour.DEFAULT.value).let {
-            AudioEndBehaviour.fromValue(it)
-        }
+    suspend fun getAudioEndBehaviour(): AudioEndBehaviour {
+        return AudioEndBehaviour.fromValue(
+            DataStoreManager.readFirst(KEY_AUDIO_END_BEHAVIOUR, AudioEndBehaviour.DEFAULT.value),
+        )
     }
 
     suspend fun setAudioEndBehaviour(option: AudioEndBehaviour) {
@@ -138,7 +135,7 @@ object RecitationPreferences {
     }
 
     suspend fun getVerseGroupSize(): Int {
-        return DataStoreManager.read(
+        return DataStoreManager.readFirst(
             KEY_VERSE_GROUP_SIZE,
             RECITATION_DEFAULT_VERSE_GROUP_SIZE
         ).coerceAtLeast(1)
@@ -148,12 +145,10 @@ object RecitationPreferences {
         DataStoreManager.write(KEY_VERSE_GROUP_SIZE, size.coerceAtLeast(1))
     }
 
-    fun getLastPlayedVerse(): ChapterVersePair? {
-        val chapter = DataStoreManager.read(KEY_LAST_PLAYED_CHAPTER, -1)
-        val verse = DataStoreManager.read(KEY_LAST_PLAYED_VERSE, -1)
-
+    suspend fun getLastPlayedVerse(): ChapterVersePair? {
+        val chapter = DataStoreManager.readFirst(KEY_LAST_PLAYED_CHAPTER, -1)
+        val verse = DataStoreManager.readFirst(KEY_LAST_PLAYED_VERSE, -1)
         if (chapter == -1 || verse == -1) return null
-
         return ChapterVersePair(chapter, verse)
     }
 

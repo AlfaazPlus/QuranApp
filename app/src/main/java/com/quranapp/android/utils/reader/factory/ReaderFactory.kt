@@ -41,7 +41,7 @@ object ReaderFactory {
         )
     }
 
-    fun startMushafPage(context: Context, pageNo: Int) {
+    suspend fun startMushafPage(context: Context, pageNo: Int) {
         val mushafCode = ReaderPreferences.getQuranScript()
         val variant = ReaderPreferences.getQuranScriptVariant()
 

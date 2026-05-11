@@ -76,7 +76,9 @@ object TafsirManager {
                     return
                 }
 
-                postTafsirsLoad(ctx, stringData, callback)
+                CoroutineScope(Dispatchers.Main).launch {
+                    postTafsirsLoad(ctx, stringData, callback)
+                }
             } catch (e: IOException) {
                 Log.saveError(e, "loadTafsirs")
                 e.printStackTrace()
@@ -85,7 +87,7 @@ object TafsirManager {
         }
     }
 
-    private fun postTafsirsLoad(
+    private suspend fun postTafsirsLoad(
         ctx: Context,
         stringData: String,
         callback: (AvailableTafsirsModel?) -> Unit

@@ -52,11 +52,14 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     private var initialTafsirKey: String? = null
 
     init {
-        initialTafsirKey = ReaderPreferences.getTafsirId()
         TafsirDownloadManager.initialize(context)
         loadDownloadedTafsirKeys()
-        loadTafsirs(force = SPAppActions.getFetchTafsirsForce(context))
         observeDownloadStates()
+  
+        viewModelScope.launch {
+            initialTafsirKey = ReaderPreferences.getTafsirId()
+            loadTafsirs(force = SPAppActions.getFetchTafsirsForce(context))
+        }
     }
 
     private fun loadDownloadedTafsirKeys() {
@@ -104,30 +107,34 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
 
         viewModelScope.launch {
             TafsirManager.prepare(context, force) {
-                val models = TafsirManager.getModels()
+                viewModelScope.launch {
+                    val models = TafsirManager.getModels()
 
-                if (!models.isNullOrEmpty()) {
-                    val savedKey = ReaderPreferences.getTafsirId()
-                    val groups = parseAvailableTafsirs(models)
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            tafsirGroups = groups,
-                            selectedTafsirKey = savedKey,
-                            error = null
-                        )
-                    }
-                } else {
-                    _uiState.update {
-                        it.copy(isLoading = false, error = DataLoadError.NoData)
+                    if (!models.isNullOrEmpty()) {
+                        val savedKey = ReaderPreferences.getTafsirId()
+                        val groups = parseAvailableTafsirs(models, savedKey)
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                tafsirGroups = groups,
+                                selectedTafsirKey = savedKey,
+                                error = null
+                            )
+                        }
+                    } else {
+                        _uiState.update {
+                            it.copy(isLoading = false, error = DataLoadError.NoData)
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun parseAvailableTafsirs(tafsirs: Map<String, List<TafsirInfoModel>>): List<TafsirGroupModel> {
-        val savedTafsirKey = ReaderPreferences.getTafsirId()
+    private fun parseAvailableTafsirs(
+        tafsirs: Map<String, List<TafsirInfoModel>>,
+        savedTafsirKey: String?,
+    ): List<TafsirGroupModel> {
         val tafsirGroups = LinkedList<TafsirGroupModel>()
 
         for (langCode in tafsirs.keys) {

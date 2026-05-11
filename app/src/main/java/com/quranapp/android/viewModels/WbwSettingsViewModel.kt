@@ -146,7 +146,7 @@ class WbwSettingsViewModel(
             }
     }
 
-    private fun resolveSelectedId(rows: List<WbwUiModel>): String? {
+    private suspend fun resolveSelectedId(rows: List<WbwUiModel>): String? {
         val downloadedIds = rows.filter { it.isDownloaded }.map { it.info.id }.toSet()
         val preferred = ReaderPreferences.getWbwId()
 

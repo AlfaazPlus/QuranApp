@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.dialogs.WaitingDialog
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
 import com.quranapp.android.compose.components.reader.dialogs.FootnotePresenter
@@ -25,7 +26,6 @@ import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheet
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
-import com.quranapp.android.compose.components.dialogs.WaitingDialog
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -154,8 +154,8 @@ fun ReaderProvider(
         LocalVerseActions provides remember {
             VerseActions(
                 onReferenceClick = { slugs, chapterNo, verses ->
-                quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
-            },
+                    quickReferenceData = QuickReferenceData(slugs, chapterNo, verses)
+                },
                 onVerseOption = { verse -> verseOptionsVerse = verse },
                 onFootnoteClick = { verse, footnote ->
                     Log.d("FOOTNOTE", verse, footnote)
@@ -198,19 +198,21 @@ fun ReaderProvider(
             onDismissTooltip = { activeTooltipWord = null },
             onForcePlay = ::playWord,
             onWordClick = { word ->
-                val shouldPlay = ReaderPreferences.getWbwRecitationEnabled()
+                coroutineScope.launch {
+                    val shouldPlay = ReaderPreferences.getWbwRecitationEnabled()
 
-                if (shouldPlay) {
-                    playWord(word)
-                }
+                    if (shouldPlay) {
+                        playWord(word)
+                    }
 
-                val tooltipEnabled =
-                    ReaderPreferences.getWbwTooltipShowTranslation() || ReaderPreferences.getWbwTooltipShowTransliteration()
+                    val tooltipEnabled =
+                        ReaderPreferences.getWbwTooltipShowTranslation() || ReaderPreferences.getWbwTooltipShowTransliteration()
 
-                activeTooltipWord = if (tooltipEnabled) {
-                    word
-                } else {
-                    null
+                    activeTooltipWord = if (tooltipEnabled) {
+                        word
+                    } else {
+                        null
+                    }
                 }
             },
             toggleWbwSheet = { data ->

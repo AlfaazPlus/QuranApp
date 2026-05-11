@@ -112,7 +112,7 @@ object ReaderPreferences {
 
     fun migrateFromLegacyIfNeeded(context: Context) {
         runBlocking {
-            if (DataStoreManager.read(KEY_LEGACY_MIGRATED)) return@runBlocking
+            if (DataStoreManager.readFirst(KEY_LEGACY_MIGRATED)) return@runBlocking
 
             val appCtx = context.applicationContext
 
@@ -190,9 +190,9 @@ object ReaderPreferences {
         runBlocking {
             withContext(Dispatchers.IO) {
                 val appCtx = context.applicationContext
-                val storedScript = DataStoreManager.read(KEY_SCRIPT)
-                val storedVariant = DataStoreManager.read(KEY_SCRIPT_VARIANT)
-                val storedTranslations = DataStoreManager.read(KEY_TRANSLATIONS)
+                val storedScript = DataStoreManager.readFirst(KEY_SCRIPT)
+                val storedVariant = DataStoreManager.readFirst(KEY_SCRIPT_VARIANT)
+                val storedTranslations = DataStoreManager.readFirst(KEY_TRANSLATIONS)
 
                 var working = QuranScriptUtils.validatePreferredScript(storedScript)
 
@@ -257,8 +257,8 @@ object ReaderPreferences {
         }
     }
 
-    fun getArabicTextEnabled(): Boolean {
-        return DataStoreManager.read(KEY_ARABIC_TEXT_ENABLED)
+    suspend fun getArabicTextEnabled(): Boolean {
+        return DataStoreManager.readFirst(KEY_ARABIC_TEXT_ENABLED)
     }
 
     suspend fun setArabicTextEnabled(enabled: Boolean) {
@@ -270,8 +270,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_ARABIC_TEXT_ENABLED)
     }
 
-    fun getAutoScrollSpeed(): Float {
-        return DataStoreManager.read(KEY_AUTO_SCROLL_SPEED)
+    suspend fun getAutoScrollSpeed(): Float {
+        return DataStoreManager.readFirst(KEY_AUTO_SCROLL_SPEED)
     }
 
     suspend fun setAutoScrollSpeed(speed: Float) {
@@ -283,8 +283,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_AUTO_SCROLL_SPEED)
     }
 
-    fun getArabicTextSizeMultiplier(): Float {
-        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_ARABIC)
+    suspend fun getArabicTextSizeMultiplier(): Float {
+        return DataStoreManager.readFirst(KEY_TEXT_SIZE_MULT_ARABIC)
     }
 
     suspend fun setArabicTextSizeMultiplier(sizeMult: Float) {
@@ -296,8 +296,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_ARABIC)
     }
 
-    fun getTranslationTextSizeMultiplier(): Float {
-        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_TRANSL)
+    suspend fun getTranslationTextSizeMultiplier(): Float {
+        return DataStoreManager.readFirst(KEY_TEXT_SIZE_MULT_TRANSL)
     }
 
     suspend fun setTranslationTextSizeMultiplier(sizeMult: Float) {
@@ -309,8 +309,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_TRANSL)
     }
 
-    fun getTafsirTextSizeMultiplier(): Float {
-        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_TAFSIR)
+    suspend fun getTafsirTextSizeMultiplier(): Float {
+        return DataStoreManager.readFirst(KEY_TEXT_SIZE_MULT_TAFSIR)
     }
 
     suspend fun setTafsirTextSizeMultiplier(sizeMult: Float) {
@@ -322,11 +322,11 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_TEXT_SIZE_MULT_TAFSIR)
     }
 
-    fun getTranslations(): Set<String> {
-        return DataStoreManager.read(KEY_TRANSLATIONS)
+    suspend fun getTranslations(): Set<String> {
+        return DataStoreManager.readFirst(KEY_TRANSLATIONS)
     }
 
-    fun primaryTranslationSlug(): String {
+    suspend fun primaryTranslationSlug(): String {
         val saved = getTranslations()
         return saved.firstOrNull { !TranslUtils.isTransliteration(it) }
             ?: TranslUtils.TRANSL_SLUG_DEFAULT
@@ -352,8 +352,8 @@ object ReaderPreferences {
         return DataStoreManager.flow(KEY_TRANSLATIONS)
     }
 
-    fun getQuranScript(): String {
-        return QuranScriptUtils.validatePreferredScript(DataStoreManager.read(KEY_SCRIPT))
+    suspend fun getQuranScript(): String {
+        return QuranScriptUtils.validatePreferredScript(DataStoreManager.readFirst(KEY_SCRIPT))
     }
 
     suspend fun setQuranScript(font: String?) {
@@ -389,8 +389,8 @@ object ReaderPreferences {
     }
 
 
-    fun getQuranScriptVariant(): QuranScriptVariant? {
-        return QuranScriptVariant.fromValue(DataStoreManager.read(KEY_SCRIPT_VARIANT))
+    suspend fun getQuranScriptVariant(): QuranScriptVariant? {
+        return QuranScriptVariant.fromValue(DataStoreManager.readFirst(KEY_SCRIPT_VARIANT))
     }
 
     suspend fun setQuranScriptVariant(variant: QuranScriptVariant?) {
@@ -411,8 +411,8 @@ object ReaderPreferences {
         return QuranScriptVariant.fromValue(value)
     }
 
-    fun getReaderMode(): ReaderMode {
-        return DataStoreManager.read(KEY_READER_MODE).let { ReaderMode.fromValue(it) }
+    suspend fun getReaderMode(): ReaderMode {
+        return ReaderMode.fromValue(DataStoreManager.readFirst(KEY_READER_MODE))
     }
 
     suspend fun setReaderMode(mode: ReaderMode) {
@@ -428,8 +428,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_READER_MODE).let { ReaderMode.fromValue(it) }
     }
 
-    fun getTafsirId(): String? {
-        val s = DataStoreManager.read(KEY_TAFSIR)
+    suspend fun getTafsirId(): String? {
+        val s = DataStoreManager.readFirst(KEY_TAFSIR)
         return s.ifEmpty { null }
     }
 
@@ -448,8 +448,8 @@ object ReaderPreferences {
         return raw.ifEmpty { null }
     }
 
-    fun getWbwId(): String? {
-        return DataStoreManager.read(KEY_WBW).takeIf { it.isNotEmpty() }
+    suspend fun getWbwId(): String? {
+        return DataStoreManager.readFirst(KEY_WBW).takeIf { it.isNotEmpty() }
     }
 
     suspend fun setWbwId(id: String) {
@@ -465,17 +465,17 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_WBW)
     }
 
-    fun getWbwContentEpoch(): Long {
-        return DataStoreManager.read(KEY_WBW_CONTENT_EPOCH)
+    suspend fun getWbwContentEpoch(): Long {
+        return DataStoreManager.readFirst(KEY_WBW_CONTENT_EPOCH)
     }
 
     suspend fun bumpWbwContentEpoch() {
-        val next = DataStoreManager.read(KEY_WBW_CONTENT_EPOCH) + 1L
+        val next = DataStoreManager.readFirst(KEY_WBW_CONTENT_EPOCH) + 1L
         DataStoreManager.write(KEY_WBW_CONTENT_EPOCH, next)
     }
 
-    fun getWbwShowTranslation(): Boolean {
-        return DataStoreManager.read(KEY_WBW_SHOW_TRANSLATION)
+    suspend fun getWbwShowTranslation(): Boolean {
+        return DataStoreManager.readFirst(KEY_WBW_SHOW_TRANSLATION)
     }
 
     suspend fun setWbwShowTranslation(show: Boolean) {
@@ -491,8 +491,8 @@ object ReaderPreferences {
         return DataStoreManager.flow(KEY_WBW_SHOW_TRANSLATION)
     }
 
-    fun getWbwShowTransliteration(): Boolean {
-        return DataStoreManager.read(KEY_WBW_SHOW_TRANSLITERATION)
+    suspend fun getWbwShowTransliteration(): Boolean {
+        return DataStoreManager.readFirst(KEY_WBW_SHOW_TRANSLITERATION)
     }
 
     suspend fun setWbwShowTransliteration(show: Boolean) {
@@ -508,8 +508,8 @@ object ReaderPreferences {
         return DataStoreManager.flow(KEY_WBW_SHOW_TRANSLITERATION)
     }
 
-    fun getWbwTooltipShowTranslation(): Boolean {
-        return DataStoreManager.read(KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
+    suspend fun getWbwTooltipShowTranslation(): Boolean {
+        return DataStoreManager.readFirst(KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
     }
 
     suspend fun setWbwTooltipShowTranslation(show: Boolean) {
@@ -521,8 +521,8 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_WBW_TOOLTIP_SHOW_TRANSLATION)
     }
 
-    fun getWbwTooltipShowTransliteration(): Boolean {
-        return DataStoreManager.read(KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION)
+    suspend fun getWbwTooltipShowTransliteration(): Boolean {
+        return DataStoreManager.readFirst(KEY_WBW_TOOLTIP_SHOW_TRANSLITERATION)
     }
 
     suspend fun setWbwTooltipShowTransliteration(show: Boolean) {
@@ -535,8 +535,8 @@ object ReaderPreferences {
     }
 
 
-    fun getWbwRecitationEnabled(): Boolean {
-        return DataStoreManager.read(KEY_WBW_RECITATION)
+    suspend fun getWbwRecitationEnabled(): Boolean {
+        return DataStoreManager.readFirst(KEY_WBW_RECITATION)
     }
 
     suspend fun setWbwRecitationEnabled(enabled: Boolean) {
@@ -552,8 +552,8 @@ object ReaderPreferences {
         return DataStoreManager.flow(KEY_WBW_RECITATION)
     }
 
-    fun getWbwTextSizeMultiplier(): Float {
-        return DataStoreManager.read(KEY_TEXT_SIZE_MULT_WBW)
+    suspend fun getWbwTextSizeMultiplier(): Float {
+        return DataStoreManager.readFirst(KEY_TEXT_SIZE_MULT_WBW)
     }
 
     suspend fun setWbwTextSizeMultiplier(sizeMult: Float) {

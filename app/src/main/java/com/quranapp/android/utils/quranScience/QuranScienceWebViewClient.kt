@@ -7,7 +7,6 @@ import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.appPlatformLocale
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import java.io.ByteArrayInputStream
@@ -18,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 open class QuranScienceWebViewClient(
     private val atlasPngCache: ConcurrentHashMap<String, ByteArray> = ConcurrentHashMap(),
+    private val quranArabicScriptCode: String,
     private val onOpenReference: (chapterNo: Int, fromVerse: Int, toVerse: Int) -> Unit,
 ) : WebViewClientCompat() {
 
@@ -82,12 +82,11 @@ open class QuranScienceWebViewClient(
                 if (!uriStr.contains("quran-arabic")) return null
 
                 val headers = request.requestHeaders.toMutableMap()
-                val savedScript = ReaderPreferences.getQuranScript()
                 val pageNo = extractQuranArabicPageNo(uri)
 
                 val data: InputStream? = FontResolver.getInstance(ctx.applicationContext)
                     .openQuranArabicFontInputStream(
-                        savedScript,
+                        quranArabicScriptCode,
                         pageNo,
                         ThemeUtils.isDarkTheme(ctx),
                     )

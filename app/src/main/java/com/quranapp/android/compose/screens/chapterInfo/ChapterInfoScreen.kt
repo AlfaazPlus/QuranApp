@@ -92,6 +92,7 @@ fun ChapterInfoScreen(
 
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
     var showChapterNavigator by rememberSaveable { mutableStateOf(false) }
+    val translationSlugs = ReaderPreferences.observeTranslations()
 
     Scaffold(
         modifier = modifier,
@@ -116,8 +117,8 @@ fun ChapterInfoScreen(
                         contentState = contentState,
                         onOpenReference = { chapterNo, fromVerse, toVerse ->
                             quickRefData = QuickReferenceData(
-                                ReaderPreferences.getTranslations(),
-                                chapterNo,
+                                slugs = translationSlugs,
+                                chapterNo = chapterNo,
                                 parsedVerses = QuickReferenceVerses.Range(
                                     chapterNo,
                                     fromVerse..toVerse

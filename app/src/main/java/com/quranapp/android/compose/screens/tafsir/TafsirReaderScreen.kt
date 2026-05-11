@@ -313,6 +313,7 @@ private fun TafsirWebViewContent(
 ) {
     val context = LocalContext.current
     val isDarkTheme = ThemeUtils.observeDarkTheme()
+    val quranArabicScript = ReaderPreferences.observeQuranScript()
     val arabicReaderSizeMult = ReaderPreferences.observeArabicTextSizeMultiplier()
     val translationReaderSizeMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
     val text = contentState.tafsir.text
@@ -370,6 +371,7 @@ private fun TafsirWebViewContent(
             update = { webView ->
                 webView.webViewClient = TafsirWebViewClient(
                     tafsirKey = uiState.tafsirKey,
+                    quranArabicScriptCode = quranArabicScript,
                     atlasAyahImageCache = contentState.atlasAyahImageCache.takeIf { it.isNotEmpty() },
                     onPageFinished = { isLoading = false },
                 )

@@ -318,7 +318,7 @@ class ActivityExportImport : BaseActivity() {
         return BookmarkModel.toJson(bookmarks.map { BookmarkModel.fromEntity(it) })
     }
 
-    private fun prepareSettingsForExport(): JSONObject {
+    private suspend fun prepareSettingsForExport(): JSONObject {
         val settings = JSONObject()
 
         settings.put(ExportKeys.LOCALE, SPAppConfigs.getLocale(this))
@@ -347,7 +347,7 @@ class ActivityExportImport : BaseActivity() {
         )
         settings.put(
             ExportKeys.RECITATION_AUDIO_END_BEHAVIOUR,
-            RecitationPreferences.getAudioEndBehaviour()
+            RecitationPreferences.getAudioEndBehaviour().value
         )
 
         settings.put(

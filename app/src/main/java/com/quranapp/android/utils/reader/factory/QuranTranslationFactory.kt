@@ -196,7 +196,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         return bookInfos
     }
 
-    fun getTranslationsSingleVerse(chapNo: Int, verseNo: Int): List<Translation> {
+    suspend fun getTranslationsSingleVerse(chapNo: Int, verseNo: Int): List<Translation> {
         return getTranslationsSingleVerse(ReaderPreferences.getTranslations(), chapNo, verseNo)
     }
 
@@ -234,7 +234,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
         return transls
     }
 
-    fun getTranslationsVerseRange(
+    suspend fun getTranslationsVerseRange(
         chapNo: Int,
         fromVerse: Int,
         toVerse: Int
@@ -289,7 +289,7 @@ class QuranTranslationFactory(private val context: Context) : Closeable {
     /*
     * The returned verses will be sorted by verse number regardless of order of the passed verse numbers..
     * */
-    fun getTranslationsDistinctVerses(chapNo: Int, vararg verses: Int): List<List<Translation>> {
+    suspend fun getTranslationsDistinctVerses(chapNo: Int, vararg verses: Int): List<List<Translation>> {
         return getTranslationsDistinctVerses(
             ReaderPreferences.getTranslations(),
             chapNo,

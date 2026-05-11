@@ -54,9 +54,12 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
     private val context get() = getApplication<Application>()
 
     init {
-        val initialSlugs = ReaderPreferences.getTranslations()
-        _uiState.update { it.copy(selectedSlugs = initialSlugs) }
-        loadTranslations()
+        viewModelScope.launch {
+            val initialSlugs = ReaderPreferences.getTranslations()
+            _uiState.update { it.copy(selectedSlugs = initialSlugs) }
+        
+            loadTranslations()
+        }
     }
 
     fun onEvent(event: TranslationEvent) {

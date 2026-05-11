@@ -23,6 +23,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.PageBuilderParams
 import com.quranapp.android.utils.reader.QuranScript
+import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.ReaderChangeManager
 import com.quranapp.android.utils.reader.ReaderIntentData
@@ -126,14 +127,11 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
     private val _mushafSession = MutableStateFlow(
         MushafSession(
-            layout = QuranScript(
-                ReaderPreferences.getQuranScript(),
-                ReaderPreferences.getQuranScriptVariant(),
-            ),
+            layout = QuranScript(QuranScriptUtils.SCRIPT_DEFAULT, null),
             pageCount = 0,
             currentPageNo = null,
             version = 0,
-        )
+        ),
     )
     val mushafSession = _mushafSession.asStateFlow()
     private val mushafSessionMutex = Mutex()
@@ -154,6 +152,17 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
     init {
         controller.connect()
+        
+        viewModelScope.launch {
+            val code = ReaderPreferences.getQuranScript()
+            val variant = ReaderPreferences.getQuranScriptVariant()
+           
+            _mushafSession.update {
+                it.copy(
+                    layout = QuranScript(code, variant),
+                )
+            }
+        }
     }
 
     override fun onCleared() {

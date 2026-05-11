@@ -44,7 +44,7 @@ class VerseOfTheDayWorker constructor(
         return@withContext Result.success()
     }
 
-    private fun sendNotification(votd: VerseWithDetails) {
+    private suspend fun sendNotification(votd: VerseWithDetails) {
         val context = applicationContext
 
         var slugs = ReaderPreferences.getTranslations()
