@@ -434,4 +434,5 @@
     <string name="thematicTopics">Topik berdasarkan tema</string>
     <string name="englishContentOnly">Konten di halaman ini hanya tersedia dalam bahasa Inggris.</string>
     <string name="estimatedSize">Perkiraan ukuran: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Sedang menyiapkan teks Al-Qur\'an untuk pertama kali. Ini akan memakan beberapa detik.</string>
 </resources>

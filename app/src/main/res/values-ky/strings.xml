@@ -436,4 +436,5 @@
     <string name="thematicTopics">Темалар боюнча бөлүмдөр</string>
     <string name="englishContentOnly">Бул беттеги мазмун англис тилинде гана жеткиликтүү.</string>
     <string name="estimatedSize">Болжолдуу өлчөмү: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Куран тексти биринчи жолу даярдалууда. Бул бир нече секунд талап кылат.</string>
 </resources>

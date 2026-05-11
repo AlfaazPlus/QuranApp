@@ -439,4 +439,5 @@
     <string name="thematicTopics">بابەتەکان بە پێی تێما</string>
     <string name="englishContentOnly">ناوەڕۆکی ئەم پەڕەیە تەنها بە زمانی ئینگلیزی بەردەستە.</string>
     <string name="estimatedSize">قەبارەی خەمڵێندراو: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">بۆ یەکەم جار دەقی قورئان ئامادە دەکرێت. ئەمە چەند چرکەیەک دەخایەنێت.</string>
 </resources>

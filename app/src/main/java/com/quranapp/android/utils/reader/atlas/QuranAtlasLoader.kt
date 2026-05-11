@@ -3,12 +3,14 @@ package com.quranapp.android.utils.reader.atlas
 import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ExternalQuranDatabase
+import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 object QuranAtlasLoader {
     private val bundleCache = ConcurrentHashMap<String, QuranAtlasBundle>()
+    val isImporting = mutableStateOf(false)
 
     internal fun decodePlacementsJson(placementsJson: String): List<AtlasGlyphPlacement> {
         return try {
@@ -42,7 +45,26 @@ object QuranAtlasLoader {
         withContext(Dispatchers.IO) {
             bundleCache[bundleKey]?.let { return@withContext it }
 
-            val entity = db.atlasWordShapeDao().getBundleByKey(bundleKey) ?: return@withContext null
+            var ent = db.atlasWordShapeDao().getBundleByKey(bundleKey)
+
+            if (ent == null && bundleKey.isPrebuiltAtlas()) {
+                try {
+                    withContext(Dispatchers.Main) { isImporting.value = true }
+
+                    val assetPath = AtlasManager.getPrebuiltAtlasAssetPath(bundleKey)
+
+                    context.assets.open(assetPath).use {
+                        ent = AtlasManager.importAtlasFromZip(context, it, bundleKey, db)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) { isImporting.value = false }
+                }
+            }
+
+            val entity = ent
+            if (entity == null) return@withContext null
 
             try {
                 val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)

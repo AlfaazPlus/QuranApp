@@ -439,4 +439,5 @@
     <string name="thematicTopics">موضوعات بر اساس دسته‌بندی</string>
     <string name="englishContentOnly">محتوای این صفحه فقط به زبان انگلیسی در دسترس است.</string>
     <string name="estimatedSize">حجم تخمینی: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">در حال آماده‌سازی متن قرآن برای اولین بار. این کار چند ثانیه طول می‌کشد.</string>
 </resources>

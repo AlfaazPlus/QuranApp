@@ -442,4 +442,5 @@
     <string name="thematicTopics">Tópicos por tema</string>
     <string name="englishContentOnly">O conteúdo desta página está disponível apenas em inglês.</string>
     <string name="estimatedSize">Tamanho estimado: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Preparando o texto do Alcorão pela primeira vez. Isso levará alguns segundos.</string>
 </resources>

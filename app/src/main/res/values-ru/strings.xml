@@ -450,4 +450,5 @@
     <string name="thematicTopics">Темы по категориям</string>
     <string name="englishContentOnly">Содержимое этой страницы доступно только на английском языке.</string>
     <string name="estimatedSize">Предполагаемый размер: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Подготавливается текст Корана в первый раз. Это займет несколько секунд.</string>
 </resources>

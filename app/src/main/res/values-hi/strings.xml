@@ -446,4 +446,5 @@
     <string name="thematicTopics">विषयवार टॉपिक</string>
     <string name="englishContentOnly">इस पेज की सामग्री केवल अंग्रेज़ी भाषा में उपलब्ध है।</string>
     <string name="estimatedSize">अनुमानित आकार: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">पहली बार क़ुरआन की लिपि तैयार की जा रही है। इसमें कुछ सेकंड लग सकते हैं।</string>
 </resources>

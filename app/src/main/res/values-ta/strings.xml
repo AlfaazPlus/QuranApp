@@ -432,4 +432,5 @@
     <string name="thematicTopics">கருப்பொருள் அடிப்படையிலான தலைப்புகள்</string>
     <string name="englishContentOnly">இந்தப் பக்கத்தின் உள்ளடக்கம் ஆங்கில மொழியில் மட்டுமே கிடைக்கும்.</string>
     <string name="estimatedSize">மதிப்பிடப்பட்ட அளவு: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">குர்ஆன் உரை முதல் முறையாக தயார் செய்யப்படுகிறது. இதற்கு சில விநாடிகள் ஆகலாம்.</string>
 </resources>

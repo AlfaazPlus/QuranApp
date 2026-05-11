@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
@@ -24,6 +25,7 @@ import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.dialogs.VerseOptionsSheet
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheet
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
+import com.quranapp.android.compose.components.dialogs.WaitingDialog
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -35,6 +37,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
+import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.atlas.rememberQuranAtlasBundle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.wbw.WbwManager
@@ -82,6 +85,7 @@ fun ReaderProvider(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val bundle = rememberQuranAtlasBundle(viewModel.externalQuranDb)
+    val isAtlasImporting by QuranAtlasLoader.isImporting
 
     val controller = viewModel.controller
     val recitationState by controller.state.collectAsStateWithLifecycle()
@@ -216,6 +220,11 @@ fun ReaderProvider(
         )
     ) {
         content()
+
+        WaitingDialog(
+            isOpen = isAtlasImporting,
+            text = stringResource(R.string.msgPreparingPrebuiltAtlas)
+        )
 
         VerseOptionsSheet(
             vwd = verseOptionsVerse,

@@ -442,4 +442,5 @@
     <string name="thematicTopics">الموضوعات حسب التصنيف</string>
     <string name="englishContentOnly">محتوى هذه الصفحة متاح باللغة الإنجليزية فقط.</string>
     <string name="estimatedSize">الحجم التقريبي: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">جارٍ تجهيز نص القرآن لأول مرة. قد يستغرق هذا بضع ثوانٍ.</string>
 </resources>

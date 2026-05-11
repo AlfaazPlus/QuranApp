@@ -439,4 +439,5 @@
     <string name="thematicTopics">বিষয়ভিত্তিক টপিকসমূহ</string>
     <string name="englishContentOnly">এই পৃষ্ঠার বিষয়বস্তু কেবল ইংরেজি ভাষায় উপলব্ধ।</string>
     <string name="estimatedSize">আনুমানিক আকার: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">প্রথমবারের মতো কুরআনের লেখা প্রস্তুত করা হচ্ছে। এতে কয়েক সেকেন্ড সময় লাগতে পারে।</string>
 </resources>

@@ -437,4 +437,5 @@
     <string name="thematicTopics">തീം അടിസ്ഥാനത്തിലുള്ള വിഷയങ്ങൾ</string>
     <string name="englishContentOnly">ഈ പേജിലെ ഉള്ളടക്കം ഇംഗ്ലീഷ് ഭാഷയിൽ മാത്രമാണ് ലഭ്യം.</string>
     <string name="estimatedSize">അനുമാനിത വലുപ്പം: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">ഖുർആൻ ലിപി ആദ്യമായി തയ്യാറാക്കുന്നു. ഇതിന് കുറച്ച് സെക്കൻഡ് എടുക്കും.</string>
 </resources>

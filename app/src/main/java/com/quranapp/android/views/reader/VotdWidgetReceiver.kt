@@ -21,7 +21,10 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 import androidx.core.graphics.withSave
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
@@ -35,7 +38,9 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
+import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.background
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -47,16 +52,17 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
+import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.db.DatabaseProvider
@@ -80,12 +86,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
-import androidx.core.graphics.scale
 
 private data class VotdWidgetUiState(
     val verseInfo: String,
@@ -124,19 +128,25 @@ class VotdWidgetReceiver : GlanceAppWidgetReceiver() {
 
 private class VotdGlanceWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
+    override val stateDefinition = PreferencesGlanceStateDefinition
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-
         provideContent {
             val sizes = LocalSize.current
+            val glanceState = currentState<Preferences>()
 
-            val state by produceState<VotdWidgetUiState?>(null, sizes) {
-                value = buildVotdWidgetState(
-                    context,
-                    id,
-                    sizes.width.value,
-                    sizes.height.value,
-                )
+            val state by produceState<VotdWidgetUiState?>(null, sizes, glanceState) {
+                try {
+                    value = buildVotdWidgetState(
+                        context,
+                        id,
+                        sizes.width.value,
+                        sizes.height.value,
+                    )
+                } catch (e: Exception) {
+                    if (e is kotlinx.coroutines.CancellationException) throw e
+                    e.printStackTrace()
+                }
             }
 
             VotdGlanceContent(context, state = state)
@@ -278,6 +288,12 @@ fun updateAllVotdWidgets(context: Context) {
         val glanceIds = manager.getGlanceIds(widget.javaClass)
 
         glanceIds.forEach { glanceId ->
+            updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) { prefs ->
+                prefs.toMutablePreferences().apply {
+                    this[longPreferencesKey("last_update")] = System.currentTimeMillis()
+                }
+            }
+
             widget.update(context, glanceId)
         }
     }
@@ -304,8 +320,7 @@ fun startVotdWidgetPreferenceObserver(context: Context) {
             "${prefs.toKey()}|${theme.first}|${theme.second}|${theme.third}|${votd.first}|${votd.second}|${votd.third}"
         }
             .distinctUntilChanged()
-            .drop(1)
-            .debounce(250)
+            .debounce(1000)
             .collect {
                 updateAllVotdWidgets(app)
             }

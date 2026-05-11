@@ -446,4 +446,5 @@
     <string name="thematicTopics">موضوع کے لحاظ سے عنوانات</string>
     <string name="englishContentOnly">اس صفحے کا مواد صرف انگریزی زبان میں دستیاب ہے۔</string>
     <string name="estimatedSize">اندازاً سائز: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">پہلی بار قرآن کا متن تیار کیا جا رہا ہے۔ اس میں چند سیکنڈ لگ سکتے ہیں۔</string>
 </resources>

@@ -442,4 +442,5 @@
     <string name="thematicTopics">Thèmes par catégorie</string>
     <string name="englishContentOnly">Le contenu de cette page est disponible uniquement en anglais.</string>
     <string name="estimatedSize">Taille estimée : %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Préparation du texte du Coran pour la première fois. Cela prendra quelques secondes.</string>
 </resources>

@@ -439,4 +439,5 @@
     <string name="thematicTopics">Temaya göre konular</string>
     <string name="englishContentOnly">Bu sayfadaki içerikler yalnızca İngilizce dilinde mevcuttur.</string>
     <string name="estimatedSize">Tahmini boyut: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Kur\'an metni ilk kez hazırlanıyor. Bu işlem birkaç saniye sürebilir.</string>
 </resources>

@@ -461,4 +461,5 @@
     <string name="thematicTopics">Topics by Theme</string>
     <string name="englishContentOnly">Content on this page is available in English only.</string>
     <string name="estimatedSize">Estimated size: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Preparing Quran script for the first time. This will take a few seconds.</string>
 </resources>

@@ -442,4 +442,5 @@
     <string name="thematicTopics">થીમ મુજબ વિષયો</string>
     <string name="englishContentOnly">આ પેજનું સામગ્રી માત્ર અંગ્રેજી ભાષામાં ઉપલબ્ધ છે.</string>
     <string name="estimatedSize">અંદાજિત કદ: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">પ્રથમ વખત કુરાનનું લખાણ તૈયાર કરવામાં આવી રહ્યું છે. તેમાં થોડા સેકન્ડ લાગી શકે છે.</string>
 </resources>

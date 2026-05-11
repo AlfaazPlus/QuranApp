@@ -432,4 +432,5 @@
     <string name="thematicTopics">依主題分類</string>
     <string name="englishContentOnly">本頁內容僅提供英文版本。</string>
     <string name="estimatedSize">預估大小：%s</string>
+    <string name="msgPreparingPrebuiltAtlas">正在首次準備《古蘭經》文本。這可能需要幾秒鐘。</string>
 </resources>

@@ -188,7 +188,14 @@ fun String.isKFQPCScript(): Boolean = when (this) {
 }
 
 fun String.isQuranAtlasScript(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_UTHMANI,
     QuranScriptUtils.SCRIPT_DK_INDOPAK -> true
+
+    else -> false
+}
+
+fun String.isPrebuiltAtlas(): Boolean = when (this) {
+    QuranScriptUtils.SCRIPT_UTHMANI -> true
     else -> false
 }
 

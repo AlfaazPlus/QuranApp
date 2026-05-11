@@ -432,4 +432,5 @@
     <string name="thematicTopics">موضوع موجب عنوان</string>
     <string name="englishContentOnly">هن صفحي جو مواد صرف انگريزي ٻولي ۾ موجود آهي.</string>
     <string name="estimatedSize">اندازي مطابق سائيز: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">پهريون ڀيرو قرآن جو متن تيار ڪيو پيو وڃي۔ هن ۾ ڪجهه سيڪنڊ لڳندا۔</string>
 </resources>

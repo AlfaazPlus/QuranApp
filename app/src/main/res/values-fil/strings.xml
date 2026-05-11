@@ -435,4 +435,5 @@
     <string name="thematicTopics">Mga paksa ayon sa tema</string>
     <string name="englishContentOnly">Ang nilalaman sa pahinang ito ay magagamit lamang sa wikang Ingles.</string>
     <string name="estimatedSize">Tinatayang laki: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">Inihahanda ang teksto ng Quran sa unang pagkakataon. Aabutin ito ng ilang segundo.</string>
 </resources>

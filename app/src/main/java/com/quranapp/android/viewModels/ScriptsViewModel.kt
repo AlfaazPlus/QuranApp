@@ -11,6 +11,7 @@ import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -58,6 +59,8 @@ class ScriptsViewModel(application: Application) : AndroidViewModel(application)
     }
 
     suspend fun isAtlasInstalled(script: String): Boolean = withContext(Dispatchers.IO) {
+        if (script.isPrebuiltAtlas()) return@withContext true
+
         DatabaseProvider.getExternalQuranDatabase(context)
             .atlasWordShapeDao()
             .getBundleByKey(script) != null
