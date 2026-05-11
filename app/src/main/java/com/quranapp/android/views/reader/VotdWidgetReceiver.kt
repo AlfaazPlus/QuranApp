@@ -85,6 +85,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import androidx.core.graphics.scale
 
 private data class VotdWidgetUiState(
     val verseInfo: String,
@@ -423,7 +424,7 @@ internal suspend fun prepareArabicTextBitmap(
 
     val insetPx = arabicDynamicInsetPx(context, maxWidth, maxHeight)
     val innerW = (maxWidth - 2 * insetPx).coerceAtLeast(1)
-    val innerH = (maxHeight - 2 * insetPx).coerceAtLeast(1)
+    val innerH = maxHeight.coerceAtLeast(1)
 
     if (quranScript.isQuranAtlasScript()) {
         val bundle = QuranAtlasLoader.getBundle(
@@ -442,7 +443,7 @@ internal suspend fun prepareArabicTextBitmap(
                 words = vwd.words,
                 placementsByWord = bundle.getPlacementsForWords(vwd.words),
                 fontSizePx = fs,
-                lineHeightPx = fs * 1.8f,
+                lineHeightPx = fs * 1.6f,
                 argbColor = Color.White.toArgb(),
                 wordGapPx = fs * 0.15f,
                 maxLineWidthPx = maxLineWidthPx,
@@ -514,7 +515,7 @@ private fun scaleWidgetBitmapToFit(src: Bitmap, maxW: Int, maxH: Int): Bitmap {
     val tw = max((sw * scale).roundToInt(), 1)
     val th = max((sh * scale).roundToInt(), 1)
     if (tw == sw && th == sh) return src
-    val scaled = Bitmap.createScaledBitmap(src, tw, th, true)
+    val scaled = src.scale(tw, th)
     if (scaled != src) src.recycle()
     return scaled
 }

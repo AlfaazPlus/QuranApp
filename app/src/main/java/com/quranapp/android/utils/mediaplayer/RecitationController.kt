@@ -58,15 +58,13 @@ class RecitationController private constructor(private val appContext: Context) 
     val currentPositionMs: Long
         get() {
             val c = mediaController ?: return 0L
-            val plan = state.value.clipPlan ?: return c.currentPosition
-            return plan.virtualPositionAt(c.currentMediaItemIndex, c.currentPosition)
+            return c.currentPosition
         }
 
     val durationMs: Long
         get() {
             val c = mediaController ?: return 0L
-            val plan = state.value.clipPlan
-            return plan?.virtualDurationMs ?: c.duration
+            return c.duration
         }
 
     // ==================== Connection ====================

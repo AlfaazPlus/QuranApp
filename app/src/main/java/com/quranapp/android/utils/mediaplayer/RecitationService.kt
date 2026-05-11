@@ -38,7 +38,6 @@ import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.PlayerMessage
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
-import androidx.media3.session.CommandButton
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
@@ -111,8 +110,6 @@ class RecitationService : MediaLibraryService() {
         const val EXTRA_SEEK_AMOUNT = "seek_amount"
         const val EXTRA_FROM_USER = "from_user"
 
-        private const val SEEK_STEP_MS = 5000L
-
         /** Max bytes for HTTP chapter audio in [SimpleCache] (LRU evicted when full). */
         private const val RECITATION_CACHE_MAX_BYTES = 512L * 1024 * 1024
 
@@ -148,7 +145,8 @@ class RecitationService : MediaLibraryService() {
     }
 
     private var mediaLibrarySession: MediaLibrarySession? = null
-    private lateinit var player: ExoPlayer
+    private lateinit var player: SessionPlayer
+
     private lateinit var audioRepository: RecitationAudioRepository
     private lateinit var fileUtils: FileUtils
 
@@ -164,10 +162,9 @@ class RecitationService : MediaLibraryService() {
     }
 
     private var _singleTrackTimingMetadata = MutableStateFlow<ChapterTimingMetadata?>(null)
-    private var _verseClipPlan = MutableStateFlow<VerseClipPlan?>(null)
+    internal var _verseClipPlan = MutableStateFlow<VerseClipPlan?>(null)
 
     private val singleTrackTimingMetadata get() = _singleTrackTimingMetadata.value
-    private val verseClipPlan get() = _verseClipPlan.value
 
     private var verseTrackingJob: Job? = null
     private var latestPlaybackRequestId: Long = 0L
@@ -261,7 +258,7 @@ class RecitationService : MediaLibraryService() {
         val dataSourceFactory = DefaultDataSource.Factory(this, cacheDataSourceFactory)
         val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
 
-        player = ExoPlayer.Builder(this)
+        val basePlayer = ExoPlayer.Builder(this)
             .setMediaSourceFactory(mediaSourceFactory)
             .setLoadControl(loadControl)
             .build().apply {
@@ -272,6 +269,8 @@ class RecitationService : MediaLibraryService() {
                 )
                 addListener(playerListener)
             }
+
+        player = SessionPlayer(this, basePlayer)
     }
 
     private fun initializeMediaSession() {
@@ -350,10 +349,6 @@ class RecitationService : MediaLibraryService() {
         _state.value = state.value.block()
     }
 
-    private fun currentPosition(): Long =
-        verseClipPlan?.virtualPosition(player) ?: player.currentPosition
-
-    private fun currentDuration(): Long = verseClipPlan?.virtualDurationMs ?: player.duration
 
     // ==================== Playback controls ====================
 
@@ -368,7 +363,10 @@ class RecitationService : MediaLibraryService() {
     }
 
     fun playControl() {
-        if (currentDuration() > 0 && currentPosition() < currentDuration()) {
+        val duration = player.duration
+        val position = player.currentPosition
+
+        if (duration > 0 && position < duration) {
             if (player.isPlaying) pauseMedia() else playMedia()
         } else {
             restartVerse()
@@ -385,52 +383,19 @@ class RecitationService : MediaLibraryService() {
         _singleTrackTimingMetadata.value = null
         _verseClipPlan.value = null
 
-        updateState { copy(clipPlan = null) }
-
         repeatRemainingPlaysForCurrentItem = 0
         chapterResolutionRequests.values.forEach { it.cancel() }
         chapterResolutionRequests.clear()
     }
 
-    fun seek(amountOrDirection: Long) {
-        if (state.value.resolvingChapterNo != null) return
-
-        invalidateRepeatSchedule()
-
-        val isRelative =
-            amountOrDirection == ACTION_SEEK_LEFT || amountOrDirection == ACTION_SEEK_RIGHT
-
-        val plan = verseClipPlan
-        if (plan != null && !plan.isEmpty) {
-            val maxDuration = plan.virtualDurationMs.coerceAtLeast(0L)
-            val target = if (isRelative) {
-                val delta =
-                    if (amountOrDirection == ACTION_SEEK_RIGHT) SEEK_STEP_MS else -SEEK_STEP_MS
-                (plan.virtualPosition(player) + delta).coerceIn(0L, maxDuration)
-            } else {
-                amountOrDirection.coerceIn(0L, maxDuration)
-            }
-            plan.seekToVirtualPosition(player, target)
-        } else {
-            val d = player.duration
-            val upper = if (d == C.TIME_UNSET || d < 0) Long.MAX_VALUE else d
-
-            val target = if (isRelative) {
-                val delta =
-                    if (amountOrDirection == ACTION_SEEK_RIGHT) SEEK_STEP_MS else -SEEK_STEP_MS
-                (player.currentPosition + delta).coerceIn(0L, upper)
-            } else {
-                amountOrDirection.coerceIn(0L, upper)
-            }
-
-            player.seekTo(target)
-        }
+    private fun seek(amountOrDirection: Long) {
+        player.seekTo(amountOrDirection)
     }
 
     fun seekToVerse(verseNo: Int) {
         invalidateRepeatSchedule()
 
-        val plan = verseClipPlan
+        val plan = _verseClipPlan.value
 
         if (plan != null && !plan.isEmpty) {
             player.seekTo(plan.firstIndexForVerse(verseNo), 0L)
@@ -601,13 +566,13 @@ class RecitationService : MediaLibraryService() {
             state.value.resolvingChapterNo != null ||
             state.value.currentVerse.chapterNo != chapterNo ||
             player.mediaItemCount == 0 ||
-            player.playbackState == Player.STATE_IDLE
+            this@RecitationService.player.playbackState == Player.STATE_IDLE
         ) return false
 
         val timingMeta = singleTrackTimingMetadata ?: return false
         if (timingMeta.chapterNo != chapterNo) return false
 
-        val plan = verseClipPlan
+        val plan = _verseClipPlan.value
         val canSeekWithPlan = plan != null && !plan.isEmpty
         val canSeekWithTiming = timingMeta.getVerseTiming(verseNo) != null
         if (!canSeekWithPlan && !canSeekWithTiming) return false
@@ -676,7 +641,6 @@ class RecitationService : MediaLibraryService() {
                 settings = updatedSettings,
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
                 pausedByHeadset = false,
-                clipPlan = plan,
             )
         }
     }
@@ -957,7 +921,7 @@ class RecitationService : MediaLibraryService() {
     private fun startVerseTracking() {
         verseTrackingJob?.cancel()
 
-        if (verseClipPlan != null) return
+        if (_verseClipPlan.value != null) return
 
         val timing = singleTrackTimingMetadata
         if (timing == null || !timing.hasVerseTiming) {
@@ -1000,7 +964,7 @@ class RecitationService : MediaLibraryService() {
      */
     private suspend fun invalidateChapterPlayback() {
         if (state.value.resolvingChapterNo != null) return
-        if (player.mediaItemCount == 0 || player.playbackState == Player.STATE_IDLE) return
+        if (player.mediaItemCount == 0 || this@RecitationService.player.playbackState == Player.STATE_IDLE) return
 
         val current = state.value.currentVerse
 
@@ -1024,7 +988,7 @@ class RecitationService : MediaLibraryService() {
         }
     }
 
-    private fun invalidateRepeatSchedule() {
+    fun invalidateRepeatSchedule() {
         repeatScheduleGeneration++
         repeatMessage?.cancel()
         repeatMessage = null
@@ -1039,12 +1003,12 @@ class RecitationService : MediaLibraryService() {
 
         val myGeneration = repeatScheduleGeneration
 
-        val message = player.createMessage { _, _ ->
+        val message = player.exoPlayer.createMessage { _, _ ->
             if (myGeneration != repeatScheduleGeneration || !isSingleTrackRepeatEligible()) return@createMessage
 
             repeatRemainingPlaysForCurrentItem--
 
-            player.seekTo(startMs)
+            this@RecitationService.player.seekTo(startMs)
 
             // reschedule for next repeat
             scheduleRepeatForVerse(startMs, endMs)
@@ -1081,15 +1045,16 @@ class RecitationService : MediaLibraryService() {
      * Only needed for single-track mode where one media item spans the whole chapter.
      */
     private fun updateNotificationMetadata(chapterNo: Int, verseNo: Int) {
-        if (player.mediaItemCount == 0) return
-
         scoped {
-            val updated = player.currentMediaItem?.buildUpon()
-                ?.setMediaMetadata(buildMediaMetadata(chapterNo, verseNo).build())
+            val meta = buildMediaMetadata(chapterNo, verseNo).build()
+
+            val realPlayer = player.exoPlayer
+            val updated = realPlayer.currentMediaItem?.buildUpon()
+                ?.setMediaMetadata(meta)
                 ?.build()
                 ?: return@scoped
 
-            player.replaceMediaItem(player.currentMediaItemIndex, updated)
+            realPlayer.replaceMediaItem(realPlayer.currentMediaItemIndex, updated)
         }
     }
 
@@ -1099,7 +1064,7 @@ class RecitationService : MediaLibraryService() {
      * Only meaningful for clip-plan playlists where each item is a verse.
      */
     private fun checkVerseChanged() {
-        val mediaId = player.currentMediaItem?.mediaId ?: return
+        val mediaId = player.exoPlayer.currentMediaItem?.mediaId ?: return
         val parts = mediaId.split(':')
         if (parts.size != 2) return
 
@@ -1109,6 +1074,7 @@ class RecitationService : MediaLibraryService() {
         val resolved = ChapterVersePair(chapter, verse)
         if (resolved != state.value.currentVerse) {
             updateState { copy(currentVerse = resolved) }
+            updateNotificationMetadata(chapter, verse)
         }
     }
 
@@ -1188,29 +1154,6 @@ class RecitationService : MediaLibraryService() {
             val resultBuilder = MediaSession.ConnectionResult.AcceptedResultBuilder(session)
                 .setAvailableSessionCommands(sessionCommands)
                 .setAvailablePlayerCommands(connectionResult.availablePlayerCommands)
-
-            if (session.isMediaNotificationController(controller) ||
-                session.isAutomotiveController(controller) ||
-                session.isAutoCompanionController(controller)
-            ) {
-                val previousVerseButton = CommandButton.Builder(CommandButton.ICON_PREVIOUS)
-                    .setDisplayName(getString(R.string.strLabelPreviousVerse))
-                    .setSessionCommand(
-                        SessionCommand(PreviousVerseCommand.ACTION, Bundle.EMPTY),
-                    )
-                    .build()
-
-                val nextVerseButton = CommandButton.Builder(CommandButton.ICON_NEXT)
-                    .setDisplayName(getString(R.string.strLabelNextVerse))
-                    .setSessionCommand(
-                        SessionCommand(NextVerseCommand.ACTION, Bundle.EMPTY),
-                    )
-                    .build()
-
-                resultBuilder.setCustomLayout(
-                    ImmutableList.of(previousVerseButton, nextVerseButton),
-                )
-            }
 
             return resultBuilder.build()
         }

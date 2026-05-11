@@ -214,8 +214,6 @@ fun ExpandedPlayer(
                         ) {
                             val isWideLayout = maxWidth >= 600.dp && maxWidth > maxHeight
 
-                            Log.d(maxWidth, this.constraints)
-
                             if (isWideLayout) {
                                 Column(
                                     modifier = Modifier.fillMaxSize(),
