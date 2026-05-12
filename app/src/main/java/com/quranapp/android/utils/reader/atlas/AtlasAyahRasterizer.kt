@@ -7,26 +7,27 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.core.graphics.createBitmap
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import java.io.ByteArrayOutputStream
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
-import androidx.core.graphics.createBitmap
 
-private data class WordGlyphLayout(
-    val widthPx: Float,
-    val glyphScale: Float,
-    val prepared: List<AtlasPreparedGlyphRaster>,
-    val tightMinY: Float,
-    val tightHeightPx: Float,
-)
-
-private data class AtlasPreparedGlyphRaster(
+data class AtlasPreparedGlyph(
     val x: Float,
     val y: Float,
     val glyph: AtlasGlyphJson,
 )
+
+private data class WordGlyphLayout(
+    val widthPx: Float,
+    val glyphScale: Float,
+    val prepared: List<AtlasPreparedGlyph>,
+    val tightMinY: Float,
+    val tightHeightPx: Float,
+)
+
 
 /**
  * A software-backed rasterizer for rendering Quran Ayahs from a texture atlas.
@@ -255,7 +256,7 @@ object AtlasAyahRasterizer {
         fallbackHeightPx: Float,
         fontSizePx: Float,
     ): WordGlyphLayout {
-        val prepared = ArrayList<AtlasPreparedGlyphRaster>(placements.size)
+        val prepared = ArrayList<AtlasPreparedGlyph>(placements.size)
         var currentX = 0f
 
         for (p in placements) {
@@ -265,7 +266,7 @@ object AtlasAyahRasterizer {
                 val x = currentX + p.xOffsetFu * fontScale + glyph.bearingX * glyphScale
                 val y = baselineY - p.yOffsetFu * fontScale - glyph.bearingY * glyphScale
 
-                prepared.add(AtlasPreparedGlyphRaster(x.toFloat(), y.toFloat(), glyph))
+                prepared.add(AtlasPreparedGlyph(x.toFloat(), y.toFloat(), glyph))
             }
 
             currentX += p.xAdvanceFu.toFloat() * fontScale

@@ -15,18 +15,12 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
-import com.quranapp.android.utils.reader.atlas.AtlasGlyphJson
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
+import com.quranapp.android.utils.reader.atlas.AtlasPreparedGlyph
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
-
-private data class AtlasPreparedGlyph(
-    val x: Float,
-    val y: Float,
-    val glyph: AtlasGlyphJson,
-)
 
 @Composable
 fun QuranAtlasText(
@@ -119,6 +113,7 @@ fun QuranAtlasText(
             val colorFilter = ColorFilter.tint(color)
             for (d in layout.prepared) {
                 val g = d.glyph
+
                 drawImage(
                     image = bundle.bitmap,
                     srcOffset = IntOffset(g.x, g.y),

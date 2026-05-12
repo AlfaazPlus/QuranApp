@@ -13,16 +13,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.BufferedInputStream
+import kotlinx.serialization.json.JsonElement
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.InputStream
 import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.decodeFromStream
-import kotlinx.serialization.json.jsonObject
 
 object AtlasManager {
     private const val DIR_NAME = "atlas"
@@ -87,7 +82,8 @@ object AtlasManager {
                     layerJson = zip.getInputStream(it).bufferedReader().use { r -> r.readText() }
                 }
                 zip.getEntry("words.json")?.let {
-                    words = atlasJson.decodeFromStream<Map<String, JsonElement>>(zip.getInputStream(it))
+                    val text = zip.getInputStream(it).bufferedReader().use { r -> r.readText() }
+                    words = atlasJson.decodeFromString<Map<String, JsonElement>>(text)
                 }
                 zip.getEntry("atlas.png")?.let { entry ->
                     zip.getInputStream(entry).use { input ->
@@ -127,9 +123,10 @@ object AtlasManager {
                     when (name) {
                         "meta.json" -> metaJson = zis.readBytes().decodeToString()
                         "atlas.json" -> layerJson = zis.readBytes().decodeToString()
-                        "words.json" -> words = atlasJson.decodeFromString<Map<String, JsonElement>>(
-                            zis.readBytes().decodeToString()
-                        )
+                        "words.json" -> words =
+                            atlasJson.decodeFromString<Map<String, JsonElement>>(
+                                zis.readBytes().decodeToString()
+                            )
 
                         "atlas.png" -> {
                             pngFile.outputStream().use { fos ->
