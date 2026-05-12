@@ -16,13 +16,24 @@ interface AtlasWordShapeDao {
     suspend fun upsertBundle(row: AtlasBundleEntity)
 
     @Query("SELECT COUNT(*) FROM atlas_word_shapes WHERE bundle_key = :bundleKey")
-    suspend fun countWordsForBundle(bundleKey: String): Long
+    suspend fun countShapesForBundle(bundleKey: String): Long
 
-    @Query("SELECT * FROM atlas_word_shapes WHERE bundle_key = :bundleKey AND word = :word LIMIT 1")
-    suspend fun getShape(bundleKey: String, word: String): AtlasWordShapeEntity?
+    @Query(
+        """
+        SELECT * FROM atlas_word_shapes
+        WHERE bundle_key = :bundleKey AND word = :word AND page = :page
+        LIMIT 1
+        """,
+    )
+    suspend fun getShape(bundleKey: String, word: String, page: Int): AtlasWordShapeEntity?
 
-    @Query("SELECT * FROM atlas_word_shapes WHERE bundle_key = :bundleKey AND word IN (:words)")
-    suspend fun getShapesForWords(bundleKey: String, words: List<String>): List<AtlasWordShapeEntity>
+    @Query(
+        """
+        SELECT * FROM atlas_word_shapes
+        WHERE bundle_key = :bundleKey AND page = :page AND word IN (:words)
+        """,
+    )
+    suspend fun getShapesForWords(bundleKey: String, words: List<String>, page: Int): List<AtlasWordShapeEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShapes(rows: List<AtlasWordShapeEntity>)

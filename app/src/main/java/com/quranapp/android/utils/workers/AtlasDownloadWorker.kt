@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.room.withTransaction
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
@@ -16,35 +15,20 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.ExternalQuranDatabase
-import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
-import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
+import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
-import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
-import com.quranapp.android.utils.reader.atlas.AtlasLayerJson
 import com.quranapp.android.utils.reader.atlas.AtlasManager
-import com.quranapp.android.utils.reader.atlas.AtlasMetaRoot
-import com.quranapp.android.utils.reader.atlas.atlasJson
-import com.quranapp.android.utils.reader.atlas.atlasPlacementListSerializer
+import com.quranapp.android.utils.reader.toAtlasBundleDownloadKey
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.BufferedInputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.util.zip.ZipInputStream
 
 class AtlasDownloadWorker(
     private val ctx: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(ctx, params) {
-    companion object {
-        private const val INSERT_CHUNK = 500
-    }
-
     override suspend fun getForegroundInfo(): ForegroundInfo {
         val scriptKey = inputData.getString("scriptKey") ?: return createForegroundInfoFallback(ctx)
 
@@ -82,7 +66,7 @@ class AtlasDownloadWorker(
 
         try {
             downloadGithubRawContentToFile(
-                url = "ghraw://AlfaazPlus/QuranAppInventory/master/atlas/$scriptKey/${densityLevel}x.zip",
+                url = "ghraw://AlfaazPlus/QuranAppInventory/master/atlas/${scriptKey.toAtlasBundleDownloadKey()}/${densityLevel}x.zip",
                 dest = tmpFile,
             ) { progress ->
                 if (!isStopped) {
@@ -93,6 +77,8 @@ class AtlasDownloadWorker(
 
             val db = DatabaseProvider.getExternalQuranDatabase(ctx)
             AtlasManager.importAtlasFromZip(ctx, tmpFile, scriptKey, db)
+        } catch (e: Exception) {
+            Log.saveError(e, "AtlasDownloadWorker.downloadAndStore")
         } finally {
             if (tmpFile.exists()) {
                 tmpFile.delete()

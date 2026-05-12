@@ -237,7 +237,7 @@ internal fun VotdContent(
 
             ReaderLayoutItem.VerseUI(
                 verse = verse,
-                atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words) ?: emptyMap(),
+                atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words, verse.pageNo) ?: emptyMap(),
                 parsedTranslationTexts = parsedTranslationTexts,
                 wbwByWordIndex = null,
                 showDivider = false,

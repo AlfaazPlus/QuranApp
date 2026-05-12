@@ -283,13 +283,16 @@ object ReaderItemsBuilder {
             val atlasDef = async(Dispatchers.IO) {
                 if (isAtlasScript) {
                     val bundle = QuranAtlasLoader.getBundle(uiConfig.context, externalQuranDb, scriptCode)
-                    val atlasWordTexts =
+                    val prefetchPairs =
                         (fromVerse..toVerse).asSequence()
-                            .flatMap { vn -> batch.wordsByVerseNo[vn].orEmpty().asSequence() }
-                            .map { it.text }
+                            .flatMap { vn ->
+                                val pg = batch.pageByVerseNo[vn] ?: -1
+                                (batch.wordsByVerseNo[vn] ?: emptyList()).asSequence()
+                                    .map { it.text to pg }
+                            }
                             .toList()
 
-                    bundle?.prefetchShapes(atlasWordTexts)
+                    bundle?.prefetchShapes(prefetchPairs)
                     bundle
                 } else {
                     null
@@ -422,7 +425,7 @@ object ReaderItemsBuilder {
             out.add(
                 ReaderLayoutItem.VerseUI(
                     verse = verse,
-                    atlasPlacements = atlasBundle?.getPlacementsForWords(words) ?: emptyMap(),
+                    atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo) ?: emptyMap(),
                     parsedTranslationTexts = parsedTranslationTexts,
                     wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
                     showDivider = verseNo != toVerse,
@@ -581,7 +584,7 @@ object ReaderItemsBuilder {
                 out.add(
                     ReaderLayoutItem.VerseUI(
                         verse = verse,
-                        atlasPlacements = atlasBundle?.getPlacementsForWords(words) ?: emptyMap(),
+                        atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo) ?: emptyMap(),
                         parsedTranslationTexts = parsedTranslationTexts,
                         wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
                         showDivider = idx != verseNos.lastIndex,
@@ -709,11 +712,25 @@ object ReaderItemsBuilder {
                     quranRepository.resolveMushafLineWords(row, scriptCode, wordCache).map { it }
 
                 ayahWordsByLineNo[row.lineNumber] = lineWords
+            }
 
-                atlasBundle?.let {
-                    atlasPlacementsByLineNo[row.lineNumber] =
-                        it.getPlacementsForWords(lineWords)
+            atlasBundle?.prefetchShapes(
+                ayahWordsByLineNo.values
+                    .asSequence()
+                    .flatten()
+                    .map { it.text to pageNo }
+                    .toList()
+            )
+
+            atlasBundle?.let { bundle ->
+                for ((lineNo, lineWords) in ayahWordsByLineNo) {
+                    atlasPlacementsByLineNo[lineNo] =
+                        bundle.getPrefetchedPlacementsForWords(lineWords, pageNo)
                 }
+
+                bundle.prefetchTexturesForPlacementLists(
+                    atlasPlacementsByLineNo.values.flatMap { it.values }
+                )
             }
 
             val pageScale = textMeasurer.computeMushafPageScale(

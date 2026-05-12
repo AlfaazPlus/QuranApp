@@ -32,6 +32,7 @@ fun QuranAtlasText(
     color: Color,
 ) {
     val density = LocalDensity.current
+    val colorFilter = remember(color) { ColorFilter.tint(color) }
 
     val layout = remember(placements, bundle, fontSize, lineHeight, density) {
         val fontSizePx = with(density) {
@@ -110,21 +111,24 @@ fun QuranAtlasText(
             .height(with(density) { layout.boxHeightPx.toDp() })
     ) {
         translate(0f, layout.verticalInsetPx - layout.tightMinY) {
-            val colorFilter = ColorFilter.tint(color)
             for (d in layout.prepared) {
                 val g = d.glyph
 
-                drawImage(
-                    image = bundle.bitmap,
-                    srcOffset = IntOffset(g.x, g.y),
-                    srcSize = IntSize(g.w, g.h),
-                    dstOffset = IntOffset(d.x.roundToInt(), d.y.roundToInt()),
-                    dstSize = IntSize(
-                        (g.w * layout.glyphScale).roundToInt(),
-                        (g.h * layout.glyphScale).roundToInt()
-                    ),
-                    colorFilter = colorFilter
-                )
+                val texture = bundle.textureForGlyph(g)
+
+                if (texture != null) {
+                    drawImage(
+                        image = texture,
+                        srcOffset = IntOffset(g.x, g.y),
+                        srcSize = IntSize(g.w, g.h),
+                        dstOffset = IntOffset(d.x.roundToInt(), d.y.roundToInt()),
+                        dstSize = IntSize(
+                            (g.w * layout.glyphScale).roundToInt(),
+                            (g.h * layout.glyphScale).roundToInt()
+                        ),
+                        colorFilter = colorFilter
+                    )
+                }
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.quranapp.android.utils.reader.atlas
 
+import android.graphics.Bitmap
 import androidx.compose.ui.graphics.ImageBitmap
 import com.quranapp.android.db.ExternalQuranDatabase
+import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -16,54 +18,135 @@ class QuranAtlasBundle(
     val key: String,
     val meta: AtlasMetaRoot,
     val layer: AtlasLayerJson,
-    val bitmap: ImageBitmap
+    private val textureStore: QuranAtlasTextureStore,
 ) {
+    val textureCount: Int
+        get() = textureStore.size
+
+    fun textureForGlyph(glyph: AtlasGlyphJson): ImageBitmap? =
+        textureStore.get(glyph.textureIndex)?.imageBitmap
+
+    fun androidTextureForGlyph(glyph: AtlasGlyphJson): Bitmap? =
+        textureStore.get(glyph.textureIndex)?.bitmap
+
+    fun singleAndroidTexture(): Bitmap? =
+        textureStore.onlyIndex?.let { textureStore.get(it)?.bitmap }
+
     private val shapeCache = ConcurrentHashMap<String, List<AtlasGlyphPlacement>>()
 
-    suspend fun getPlacements(word: String): List<AtlasGlyphPlacement> {
-        return shapeCache.getOrPut(word) {
-            QuranAtlasLoader.fetchShape(db, key, word) ?: emptyList()
+    private fun resolveQueryPage(readerPage: Int): Int =
+        if (meta.isPageScopedGlyphAtlas() && readerPage > 0) {
+            readerPage
+        } else {
+            AtlasWordShapeEntity.ATLAS_PAGE_NONE
         }
+
+    private fun cacheKey(page: Int, word: String): String = "$page\u0000$word"
+
+    suspend fun getPlacements(word: String, pageNo: Int): List<AtlasGlyphPlacement> {
+        val queryPage = resolveQueryPage(pageNo)
+        val ck = cacheKey(queryPage, word)
+
+        val placements = shapeCache.getOrPut(ck) {
+            QuranAtlasLoader.fetchShape(db, key, word, queryPage) ?: emptyList()
+        }
+
+        prefetchTexturesForPlacements(placements)
+
+        return placements
     }
 
-    suspend fun prefetchShapes(wordTexts: Collection<String>) {
-        val pending = wordTexts.asSequence()
-            .filter { it.isNotEmpty() }
-            .distinct()
-            .filter { !shapeCache.containsKey(it) }
+    suspend fun prefetchShapes(pairs: Collection<Pair<String, Int>>) {
+        val distinct = pairs
+            .asSequence()
+            .filter { it.first.isNotEmpty() }
+            .map { (w, rp) -> w to resolveQueryPage(rp) }
+            .distinctBy { cacheKey(it.second, it.first) }
+            .filter { !shapeCache.containsKey(cacheKey(it.second, it.first)) }
             .toList()
 
-        if (pending.isEmpty()) return
+        if (distinct.isEmpty()) return
 
         coroutineScope {
-            pending.chunked(ATLAS_PREFETCH_CHUNK).map { chunk ->
+            distinct.groupBy { it.second }.map { (page, group) ->
                 async(Dispatchers.IO) {
-                    val rows = db.atlasWordShapeDao().getShapesForWords(key, chunk)
+                    val words = group.map { it.first }.distinct()
 
-                    val byWord = rows.associateBy { it.word }
+                    words.chunked(ATLAS_PREFETCH_CHUNK).forEach { chunk ->
+                        val rows = db.atlasWordShapeDao().getShapesForWords(key, chunk, page)
 
-                    for (w in chunk) {
-                        val list = byWord[w]?.let { entity ->
-                            QuranAtlasLoader.decodePlacementsJson(entity.placementsJson)
-                        } ?: emptyList()
+                        val byWord = rows.associateBy { it.word }
 
-                        shapeCache.putIfAbsent(w, list)
+                        for (w in chunk) {
+                            val list = byWord[w]?.let { entity ->
+                                QuranAtlasLoader.decodePlacementsJson(entity.placementsJson)
+                            } ?: emptyList()
+
+                            shapeCache.putIfAbsent(cacheKey(page, w), list)
+                        }
                     }
                 }
             }.awaitAll()
         }
     }
 
-    suspend fun getPlacementsForWords(words: List<AyahWordEntity>): Map<Int, List<AtlasGlyphPlacement>> {
+    suspend fun getPlacementsForWords(
+        words: List<AyahWordEntity>,
+        readerPage: Int,
+    ): Map<Int, List<AtlasGlyphPlacement>> {
         if (words.isEmpty()) return emptyMap()
 
-        prefetchShapes(words.map { it.text })
+        prefetchShapes(words.map { it.text to readerPage })
+
+        val placements = getPrefetchedPlacementsForWords(words, readerPage)
+
+        prefetchTexturesForPlacementLists(placements.values)
+
+        return placements
+    }
+
+    fun getPrefetchedPlacementsForWords(
+        words: List<AyahWordEntity>,
+        readerPage: Int,
+    ): Map<Int, List<AtlasGlyphPlacement>> {
+        if (words.isEmpty()) return emptyMap()
+
+        val page = resolveQueryPage(readerPage)
 
         return buildMap(words.size) {
             for (word in words) {
-                put(word.atlasPlacementMapKey(), shapeCache[word.text] ?: emptyList())
+                put(
+                    word.atlasPlacementMapKey(),
+                    shapeCache[cacheKey(page, word.text)] ?: emptyList()
+                )
             }
         }
+    }
+
+    suspend fun prefetchTexturesForPlacementLists(
+        placementLists: Collection<List<AtlasGlyphPlacement>>,
+    ) {
+        val textureIndices = placementLists
+            .asSequence()
+            .flatten()
+            .mapNotNull { placement -> layer.glyphs[placement.gid.toString()]?.textureIndex }
+            .toList()
+
+        textureStore.prefetch(textureIndices)
+    }
+
+    private suspend fun prefetchTexturesForPlacements(
+        placements: List<AtlasGlyphPlacement>,
+    ) {
+        val textureIndices = placements.mapNotNull { placement ->
+            layer.glyphs[placement.gid.toString()]?.textureIndex
+        }
+
+        textureStore.prefetch(textureIndices)
+    }
+
+    fun clearTextureCache() {
+        textureStore.clear()
     }
 }
 

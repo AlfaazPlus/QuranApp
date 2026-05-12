@@ -169,7 +169,7 @@ fun SimilarVersesSheet(
                         surahNo = ayah.surahNo,
                         verseNo = ayah.ayahNo,
                         words = vwd.words,
-                        atlasPlacements = atlasBundle?.getPlacementsForWords(vwd.words)
+                        atlasPlacements = atlasBundle?.getPlacementsForWords(vwd.words, vwd.pageNo)
                             ?: emptyMap(),
                         translation = translation,
                         highlightWordIndices = highlights,

@@ -18,7 +18,7 @@ import com.quranapp.android.db.entities.wbw.WbwWordEntity
         AtlasBundleEntity::class,
         AtlasWordShapeEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 @TypeConverters(QuranConverters::class)

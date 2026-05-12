@@ -2,6 +2,12 @@ package com.quranapp.android.db.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.QuranScriptUtils
+import com.quranapp.android.utils.reader.isQuranAtlasScript
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 object ExternalQuranDatabaseMigrations {
     val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -56,6 +62,38 @@ object ExternalQuranDatabaseMigrations {
                     ON `wbw_audio_timing` (`ayah_id`, `word_index`)
                     """.trimIndent(),
             )
+        }
+    }
+
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DELETE FROM `atlas_bundles`")
+            db.execSQL("DROP TABLE IF EXISTS `atlas_word_shapes`")
+            db.execSQL(
+                """
+                    CREATE TABLE IF NOT EXISTS `atlas_word_shapes` (
+                        `bundle_key` TEXT NOT NULL,
+                        `word` TEXT NOT NULL,
+                        `page` INTEGER NOT NULL,
+                        `placements_json` TEXT NOT NULL,
+                        PRIMARY KEY(`bundle_key`, `word`, `page`)
+                    )
+                    """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                    CREATE INDEX IF NOT EXISTS `idx_atlas_word_shapes_bundle`
+                    ON `atlas_word_shapes` (`bundle_key`)
+                    """.trimIndent(),
+            )
+
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    if (ReaderPreferences.getQuranScript().isQuranAtlasScript()) {
+                        ReaderPreferences.setQuranScript(QuranScriptUtils.SCRIPT_DEFAULT)
+                    }
+                }
+            }
         }
     }
 }

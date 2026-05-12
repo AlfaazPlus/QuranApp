@@ -255,7 +255,7 @@ private fun Content(data: WbwSheetData) {
                 verseUi = verseRows.first(),
                 textStyles = prepared.textStyles,
                 word = theWord,
-                atlasPlacements = atlasBundle?.getPlacements(theWord.text),
+                atlasPlacements = atlasBundle?.getPlacements(theWord.text, verseRows.first().verse.pageNo),
                 wbwWord = wbwRow,
                 chapterName = vm.repository.getChapterName(currentData.chapterNo),
                 prev = prev,

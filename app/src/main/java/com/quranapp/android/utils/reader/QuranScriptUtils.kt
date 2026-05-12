@@ -199,6 +199,11 @@ fun String.isPrebuiltAtlas(): Boolean = when (this) {
     else -> false
 }
 
+fun String.toAtlasBundleDownloadKey(): String = when (this) {
+    QuranScriptUtils.SCRIPT_DK_INDOPAK -> "dk_indopak_v2"
+    else -> this
+}
+
 /**
  * When true, page mode draws a thin frame around the mushaf text block and horizontal rules between
  * lines.

@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.core.graphics.createBitmap
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import java.io.ByteArrayOutputStream
@@ -128,13 +127,14 @@ object AtlasAyahRasterizer {
         val bitmap = createBitmap(bitmapW, bitmapH)
         val canvas = Canvas(bitmap)
 
-        val androidAtlas = bundle.bitmap.asAndroidBitmap()
-
         val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
             colorFilter = PorterDuffColorFilter(argbColor, PorterDuff.Mode.SRC_IN)
         }
 
         var yLine = 0f
+
+        val singleTexture = if (bundle.textureCount == 1) bundle.singleAndroidTexture()
+        else null
 
         for ((lineIndex, triple) in lineMetrics.withIndex()) {
             val (line, contentW, lbH) = triple
@@ -154,12 +154,16 @@ object AtlasAyahRasterizer {
                     val dstW = (glyph.w * layout.glyphScale).roundToInt().coerceAtLeast(1)
                     val dstH = (glyph.h * layout.glyphScale).roundToInt().coerceAtLeast(1)
 
-                    canvas.drawBitmap(
-                        androidAtlas,
-                        Rect(glyph.x, glyph.y, glyph.x + glyph.w, glyph.y + glyph.h),
-                        Rect(dstLeft, dstTop, dstLeft + dstW, dstTop + dstH),
-                        paint,
-                    )
+                    val texture = singleTexture ?: bundle.androidTextureForGlyph(glyph)
+
+                    if (texture != null) {
+                        canvas.drawBitmap(
+                            texture,
+                            Rect(glyph.x, glyph.y, glyph.x + glyph.w, glyph.y + glyph.h),
+                            Rect(dstLeft, dstTop, dstLeft + dstW, dstTop + dstH),
+                            paint,
+                        )
+                    }
                 }
 
                 if (i != line.lastIndex) {

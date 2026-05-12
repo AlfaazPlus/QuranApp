@@ -5,16 +5,36 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+/** Generator / meta.json `kind` for page-split glyph layouts (see layout document `page`). */
+const val KIND_PAGE_GLYPH_ATLAS = "page_glyph_atlas"
+
+/** Generator / meta.json `kind` for word-global glyph layouts. */
+const val KIND_WORD_GLYPH_ATLAS = "word_glyph_atlas"
+
+fun AtlasMetaRoot.isPageScopedGlyphAtlas(): Boolean = kind == KIND_PAGE_GLYPH_ATLAS
+
 @Serializable
 data class AtlasMetaRoot(
+    @SerialName("schema_version")
+    val schemaVersion: Int? = null,
+    @SerialName("kind")
+    val kind: String? = null,
     @SerialName("font")
     val font: AtlasFontMeta,
     @SerialName("base_ppem")
     val basePpem: Int = 32,
+    @SerialName("layout")
+    val layout: AtlasMetaLayoutRef,
     @SerialName("sizes")
     val sizes: List<AtlasSizeEntry> = emptyList(),
     @SerialName("bundle")
     val bundle: AtlasBundleRef? = null,
+)
+
+@Serializable
+data class AtlasMetaLayoutRef(
+    val kind: String,
+    val file: String,
 )
 
 @Serializable
@@ -27,6 +47,8 @@ data class AtlasFontMeta(
     val descenderFu: Int = 0,
     @SerialName("line_gap_fu")
     val lineGapFu: Int = 0,
+    @SerialName("height_fu")
+    val heightFu: Int? = null,
 )
 
 @Serializable
@@ -40,7 +62,21 @@ data class AtlasSizeEntry(
     @SerialName("atlas")
     val atlas: String,
     @SerialName("meta")
-    val meta: String,
+    val meta: String = "",
+    @SerialName("textures")
+    val textures: List<AtlasTextureSlice> = emptyList(),
+)
+
+/** One entry in `atlas.json` `textures[]` or `meta.sizes[].textures[]` (generator shape). */
+@Serializable
+data class AtlasTextureSlice(
+    val index: Int,
+    val width: Int,
+    val height: Int,
+    val padding: Int = 0,
+    val channels: String = "L",
+    val format: String = "png",
+    val image: String,
 )
 
 @Serializable
@@ -51,30 +87,27 @@ data class AtlasBundleRef(
     val ppem: Int,
 )
 
+/** Root of zip `atlas.json` (generator schema). Persisted as `layer_json`. */
 @Serializable
 data class AtlasLayerJson(
+    @SerialName("schema_version")
+    val schemaVersion: Int? = null,
     @SerialName("ppem")
     val ppem: Int,
-    @SerialName("atlas")
-    val atlas: AtlasTextureJson,
+    @SerialName("textures")
+    val textures: List<AtlasTextureSlice>,
     @SerialName("glyphs")
     val glyphs: Map<String, AtlasGlyphJson> = emptyMap(),
-)
-
-@Serializable
-data class AtlasTextureJson(
-    @SerialName("width")
-    val width: Int,
-    @SerialName("height")
-    val height: Int,
-    @SerialName("padding")
-    val padding: Int = 0,
-    @SerialName("channels")
-    val channels: String = "L",
+    @SerialName("label")
+    val label: String? = null,
+    @SerialName("scale")
+    val scale: Int? = null,
 )
 
 @Serializable
 data class AtlasGlyphJson(
+    @SerialName("atlas")
+    val textureIndex: Int = 0,
     @SerialName("x")
     val x: Int,
     @SerialName("y")
@@ -105,6 +138,24 @@ data class AtlasGlyphPlacement(
     val yOffsetFu: Double = 0.0,
 )
 
+/** Root of zip layout JSON (`layout.json` or `meta.layout.file`). */
+@Serializable
+data class AtlasLayoutRoot(
+    @SerialName("schema_version")
+    val schemaVersion: Int? = null,
+    @SerialName("documents")
+    val documents: Map<String, AtlasLayoutDocument>,
+)
+
+@Serializable
+data class AtlasLayoutDocument(
+    @SerialName("text")
+    val text: String,
+    @SerialName("glyphs")
+    val glyphs: List<AtlasGlyphPlacement> = emptyList(),
+    @SerialName("page")
+    val page: Int? = null,
+)
 
 val atlasJson = Json {
     ignoreUnknownKeys = true

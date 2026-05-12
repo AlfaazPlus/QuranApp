@@ -2,6 +2,7 @@ package com.quranapp.android.utils.reader
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.LruCache
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
@@ -14,14 +15,34 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.concurrent.ConcurrentHashMap
 
-private data class TypefaceResult(val typeface: Typeface?)
+private const val KFQPC_TYPEFACE_CACHE_SIZE = 24
+
+private data class TypefaceResult(
+    val typeface: Typeface?,
+    val fontFamily: FontFamily,
+)
+
+private data class ScriptFontKey(
+    val script: String,
+    val isDark: Boolean,
+)
+
+private data class KfqpcFontKey(
+    val script: String,
+    val pageNo: Int,
+    val isDark: Boolean,
+)
 
 class FontResolver private constructor(val context: Context) {
     // non-KFQPC: one font per script
-    private val scriptFontCache = ConcurrentHashMap<String, TypefaceResult>()
+    private val scriptFontCache = ConcurrentHashMap<ScriptFontKey, TypefaceResult>()
 
-    // KFQPC: one font per (script, pageNo, dark/light resolution for UI)
-    private val kfqpcFontCache = ConcurrentHashMap<Triple<String, Int, Boolean>, TypefaceResult>()
+    // KFQPC has hundreds of page fonts, so keep only the recent reader window resident.
+    private val kfqpcFontCache = object : LruCache<KfqpcFontKey, TypefaceResult>(
+        KFQPC_TYPEFACE_CACHE_SIZE
+    ) {}
+
+    private val kfqpcFontCacheLock = Any()
 
     private val fileUtils by lazy { FileUtils.newInstance(context) }
 
@@ -90,7 +111,7 @@ class FontResolver private constructor(val context: Context) {
         pageNo: Int,
         isDark: Boolean,
     ): FontFamily {
-        return typeface(script, pageNo, isDark)?.asFontFamily() ?: FontFamily.Default
+        return resolve(script, pageNo, isDark)?.fontFamily ?: FontFamily.Default
     }
 
     fun typeface(
@@ -98,30 +119,63 @@ class FontResolver private constructor(val context: Context) {
         pageNo: Int,
         isDark: Boolean,
     ): Typeface? {
-        return if (script.isQuranAtlasScript()) null
-        else if (script.isKFQPCScript()) {
-            kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                TypefaceResult(loadKfqpcTypeface(script, pageNo, isDark))
-            }.typeface
+        return resolve(script, pageNo, isDark)?.typeface
+    }
+
+    private fun resolve(
+        script: String,
+        pageNo: Int,
+        isDark: Boolean,
+    ): TypefaceResult? {
+        if (script.isQuranAtlasScript()) return null
+
+        return if (script.isKFQPCScript()) {
+            getKfqpcFont(KfqpcFontKey(script, pageNo, isDark))
         } else {
-            scriptFontCache.getOrPut(script) {
-                TypefaceResult(
-                    context
-                        .getFont(script.getQuranScriptFontRes(isDark))
-                )
-            }.typeface
+            scriptFontCache.getOrPut(ScriptFontKey(script, isDark)) {
+                loadScriptFont(script, isDark)
+            }
         }
+    }
+
+    private fun loadScriptFont(
+        script: String,
+        isDark: Boolean,
+    ): TypefaceResult {
+        return context
+            .getFont(script.getQuranScriptFontRes(isDark))
+            .toTypefaceResult()
+    }
+
+    private fun getKfqpcFont(key: KfqpcFontKey): TypefaceResult {
+        synchronized(kfqpcFontCacheLock) {
+            kfqpcFontCache.get(key)?.let { return it }
+        }
+
+        val loaded = loadKfqpcTypeface(key.script, key.pageNo, key.isDark)
+            .toTypefaceResult()
+
+        synchronized(kfqpcFontCacheLock) {
+            kfqpcFontCache.get(key)?.let { return it }
+            kfqpcFontCache.put(key, loaded)
+        }
+
+        return loaded
+    }
+
+    private fun Typeface?.toTypefaceResult(): TypefaceResult {
+        return TypefaceResult(
+            typeface = this,
+            fontFamily = this?.asFontFamily() ?: FontFamily.Default,
+        )
     }
 
     fun prefetch(script: String, pages: List<Int>, isDark: Boolean) {
         if (script.isQuranAtlasScript()) return
 
         if (!script.isKFQPCScript()) {
-            scriptFontCache.getOrPut(script) {
-                TypefaceResult(
-                    context
-                        .getFont(script.getQuranScriptFontRes(isDark))
-                )
+            scriptFontCache.getOrPut(ScriptFontKey(script, isDark)) {
+                loadScriptFont(script, isDark)
             }
 
             return
@@ -129,10 +183,9 @@ class FontResolver private constructor(val context: Context) {
 
         pages
             .distinct()
+            .take(KFQPC_TYPEFACE_CACHE_SIZE)
             .forEach { pageNo ->
-                kfqpcFontCache.getOrPut(Triple(script, pageNo, isDark)) {
-                    TypefaceResult(loadKfqpcTypeface(script, pageNo, isDark))
-                }
+                getKfqpcFont(KfqpcFontKey(script, pageNo, isDark))
             }
     }
 

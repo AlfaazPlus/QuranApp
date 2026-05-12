@@ -347,7 +347,7 @@ private fun SpotlightQuranText(
                 QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
             } else null
 
-            atlasBundle?.getPlacementsForWords(words) ?: emptyMap()
+            atlasBundle?.getPlacementsForWords(words, vwd.pageNo) ?: emptyMap()
         }
     }
 

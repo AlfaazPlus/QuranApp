@@ -231,7 +231,7 @@ private suspend fun buildVerseArabicParagraphHtml(
     val quranText = vwd.words.joinToString(" ") { it.text }
 
     val placements = if (isAtlas && atlasBundle != null && vwd.words.isNotEmpty()) {
-        atlasBundle.getPlacementsForWords(vwd.words)
+        atlasBundle.getPlacementsForWords(vwd.words, vwd.pageNo)
     } else {
         emptyMap()
     }

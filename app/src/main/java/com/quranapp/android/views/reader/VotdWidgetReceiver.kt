@@ -456,7 +456,7 @@ internal suspend fun prepareArabicTextBitmap(
             return AtlasAyahRasterizer.renderAyahToBitmap(
                 bundle = bundle,
                 words = vwd.words,
-                placementsByWord = bundle.getPlacementsForWords(vwd.words),
+                placementsByWord = bundle.getPlacementsForWords(vwd.words, vwd.pageNo),
                 fontSizePx = fs,
                 lineHeightPx = fs * 1.6f,
                 argbColor = Color.White.toArgb(),

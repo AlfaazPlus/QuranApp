@@ -1,13 +1,10 @@
 package com.quranapp.android.utils.reader.atlas
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.ExternalQuranDatabase
@@ -32,9 +29,11 @@ object QuranAtlasLoader {
     suspend fun fetchShape(
         db: ExternalQuranDatabase,
         bundleKey: String,
-        word: String
+        word: String,
+        page: Int,
     ): List<AtlasGlyphPlacement>? {
-        val entity = db.atlasWordShapeDao().getShape(bundleKey, word) ?: return null
+        val entity = db.atlasWordShapeDao().getShape(bundleKey, word, page) ?: return null
+
         return decodePlacementsJson(entity.placementsJson)
     }
 
@@ -71,22 +70,28 @@ object QuranAtlasLoader {
                 val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)
                 val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
 
-                val pngFile = AtlasManager.getBundlePngFile(context, bundleKey)
-                val options = BitmapFactory.Options().apply {
-                    inScaled = false
-                    // Since the atlas is "L" (Luminance), ALPHA_8 is the most efficient.
-                    // It uses 1 byte per pixel instead of 4, saving ~48MB for a 4096px atlas.
-                    inPreferredConfig = Bitmap.Config.ALPHA_8
+                val textureFiles = linkedMapOf<Int, java.io.File>()
+
+                for (t in layer.textures.sortedBy { it.index }) {
+                    val imageFile = AtlasManager.atlasTextureFile(context, bundleKey, t.index)
+
+                    if (!imageFile.isFile || imageFile.length() == 0L) {
+                        return@withContext null
+                    }
+
+                    textureFiles[t.index] = imageFile
                 }
-                val bitmap = BitmapFactory.decodeFile(pngFile.path, options)
-                    ?: return@withContext null
+
+                if (textureFiles.isEmpty()) {
+                    return@withContext null
+                }
 
                 val bundle = QuranAtlasBundle(
                     db,
                     key = bundleKey,
                     meta = meta,
                     layer = layer,
-                    bitmap = bitmap.asImageBitmap()
+                    textureStore = QuranAtlasTextureStore(textureFiles),
                 )
 
                 bundleCache[bundleKey] = bundle
@@ -97,6 +102,7 @@ object QuranAtlasLoader {
         }
 
     fun clearCache() {
+        bundleCache.values.forEach { it.clearTextureCache() }
         bundleCache.clear()
     }
 }

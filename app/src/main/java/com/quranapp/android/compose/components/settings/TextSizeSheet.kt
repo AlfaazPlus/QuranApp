@@ -171,7 +171,7 @@ private fun ArabicTextPreview(textSizeMult: Float) {
             val placements = if (script.isQuranAtlasScript()) {
                 val b =
                     atlasBundle ?: return@withContext ArabicPreviewLoaded(words, emptyMap(), pageNo)
-                b.getPlacementsForWords(words)
+                b.getPlacementsForWords(words, pageNo)
             } else {
                 emptyMap()
             }
