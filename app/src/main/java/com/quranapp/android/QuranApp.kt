@@ -19,6 +19,7 @@ import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.viewModels.ReaderIndexViewModel
+import com.quranapp.android.views.player.startRecitationPlayerWidgetObserver
 import com.quranapp.android.views.reader.startVotdWidgetPreferenceObserver
 
 class QuranApp : Application() {
@@ -43,6 +44,7 @@ class QuranApp : Application() {
         NotificationUtils.createNotificationChannels(this)
         updateTheme()
         startVotdWidgetPreferenceObserver(this)
+        startRecitationPlayerWidgetObserver(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val process = getProcessName()

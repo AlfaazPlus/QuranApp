@@ -1,26 +1,14 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.app.PendingIntent
-import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.text.TextPaint
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.createBitmap
-import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -47,7 +35,6 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
-import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
@@ -63,7 +50,6 @@ import com.quranapp.android.compose.utils.preferences.RecitationPreferences
 import com.quranapp.android.compose.utils.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.Log
-import com.quranapp.android.utils.quran.QuranGlyphs
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.univ.ErrorEvent
@@ -86,7 +72,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import java.io.File
 
 @OptIn(UnstableApi::class)
@@ -349,6 +334,17 @@ class RecitationService : MediaLibraryService() {
         _state.value = state.value.block()
     }
 
+    private fun updatePlaybackSnapshot(
+        isPlaying: Boolean = player.isPlaying,
+        isBuffering: Boolean = state.value.isBuffering,
+    ) {
+        updateState {
+            copy(
+                isPlaying = isPlaying,
+                isBuffering = isBuffering,
+            )
+        }
+    }
 
     // ==================== Playback controls ====================
 
@@ -386,6 +382,8 @@ class RecitationService : MediaLibraryService() {
         repeatRemainingPlaysForCurrentItem = 0
         chapterResolutionRequests.values.forEach { it.cancel() }
         chapterResolutionRequests.clear()
+
+        updatePlaybackSnapshot(isPlaying = false, isBuffering = false)
     }
 
     private fun seek(amountOrDirection: Long) {
@@ -815,99 +813,12 @@ class RecitationService : MediaLibraryService() {
             .setAlbumTitle(getString(R.string.strTitleHolyQuran))
             .setTitle(buildTitle(chapterNo, verseNo))
             .setArtist(buildArtist())
-            .setArtworkUri(getChapterArtworkData(chapterNo))
-    }
-
-    private fun getChapterArtworkData(chapterNo: Int): Uri {
-        try {
-            val version = 2
-            val context = this@RecitationService
-
-            val file = File(context.cacheDir, "artwork_surah_v${version}_$chapterNo.png")
-
-            val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-
-            try {
-                context.grantUriPermission(
-                    "com.google.android.projection.gearhead",
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+            .setArtworkUri(
+                RecitationChapterArtwork.getChapterArtworkUri(
+                    this,
+                    chapterNo
                 )
-                context.grantUriPermission(
-                    "com.google.android.autosimulator",
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
-            } catch (e: Exception) {
-            }
-
-            if (file.exists()) {
-                return uri
-            }
-
-            val size = 600
-            val bitmap = createBitmap(size, size)
-            val canvas = Canvas(bitmap)
-
-            ContextCompat.getDrawable(context, R.drawable.quran_wallpaper)?.let {
-                it.setBounds(0, 0, size, size)
-                it.draw(canvas)
-            }
-
-            if (chapterNo > 0) {
-                val typeface = ResourcesCompat.getFont(context, R.font.suracon)
-
-                val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-                    this.typeface = typeface
-                    this.color = ColorUtils.createAlphaColor(Color.WHITE, 0.75f)
-                    this.textAlign = Paint.Align.CENTER
-                }
-
-                val chapterText = QuranGlyphs.Chapter.get(chapterNo)
-
-                val padding = size * 0.15f
-                val maxTextWidth = size - (padding * 2)
-
-                var textSize = size * 0.5f
-                paint.textSize = textSize
-                val textWidth = paint.measureText(chapterText)
-
-                if (textWidth > maxTextWidth) {
-                    val scale = maxTextWidth / textWidth
-                    textSize *= scale
-                    paint.textSize = textSize
-                }
-
-                val textY = (size / 2f) - ((paint.descent() + paint.ascent()) / 2f)
-                canvas.drawText(chapterText, size / 2f, textY, paint)
-            }
-
-            val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            bitmap.recycle()
-
-            val bytes = outputStream.toByteArray()
-
-            try {
-                file.writeBytes(bytes)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return uri
-        } catch (_: Exception) {
-            val resId = R.drawable.quran_wallpaper
-            val uri = (
-                    ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
-                            resources.getResourcePackageName(resId) +
-                            '/' +
-                            resources.getResourceTypeName(resId) +
-                            '/' +
-                            resources.getResourceEntryName(resId)
-                    ).toUri();
-
-            return uri
-        }
+            )
     }
 
     // ==================== Verse tracking ====================
@@ -1120,14 +1031,22 @@ class RecitationService : MediaLibraryService() {
         }
 
         override fun onPlaybackStateChanged(playbackState: Int) {
+            updatePlaybackSnapshot(isBuffering = playbackState == Player.STATE_BUFFERING)
+
             if (playbackState == Player.STATE_ENDED) {
                 handlePlaybackEnded()
             }
         }
 
         override fun onIsPlayingChanged(isPlaying: Boolean) {
+            updateState {
+                copy(
+                    isPlaying = isPlaying,
+                    pausedByHeadset = if (isPlaying) false else pausedByHeadset,
+                )
+            }
+
             if (isPlaying) {
-                updateState { copy(pausedByHeadset = false) }
                 startVerseTracking()
             } else {
                 stopTrackings()
@@ -1311,7 +1230,12 @@ class RecitationService : MediaLibraryService() {
                                     .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                                     .setIsPlayable(true)
                                     .setIsBrowsable(false)
-                                    .setArtworkUri(getChapterArtworkData(i))
+                                    .setArtworkUri(
+                                        RecitationChapterArtwork.getChapterArtworkUri(
+                                            this@RecitationService,
+                                            i
+                                        )
+                                    )
                                     .build()
                             )
                             .build()

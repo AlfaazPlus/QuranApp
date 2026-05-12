@@ -30,6 +30,8 @@ data class RecitationServiceState(
     val resolvingChapterNo: Int? = null,
     /** 0–100 while chapter audio is downloading from the network; null otherwise. */
     val downloadProgress: Int? = null,
+    val isPlaying: Boolean = false,
+    val isBuffering: Boolean = false,
     val pausedByHeadset: Boolean = false,
     /** False when single-file chapter audio has no timing and no verse clip playlist is in use. */
     val isVerseSyncAvailable: Boolean = true,
@@ -110,6 +112,8 @@ data class RecitationServiceState(
         putInt(KEY_CURRENT_VERSE, currentVerse.verseNo)
         putInt(KEY_RESOLVING_CHAPTER_NO, resolvingChapterNo ?: -1)
         putInt(KEY_AUDIO_DOWNLOAD_PROGRESS, downloadProgress ?: -1)
+        putBoolean(KEY_IS_PLAYING, isPlaying)
+        putBoolean(KEY_IS_BUFFERING, isBuffering)
         putBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, isVerseSyncAvailable)
         putBoolean(KEY_PAUSED_BY_HEADSET, pausedByHeadset)
         putString(KEY_CURRENT_RECITER, settings.reciter)
@@ -127,6 +131,8 @@ data class RecitationServiceState(
         private const val KEY_CURRENT_TRANSLATION_RECITER = "state_current_translation_reciter"
         private const val KEY_RESOLVING_CHAPTER_NO = "state_resolving_chapter_no"
         private const val KEY_AUDIO_DOWNLOAD_PROGRESS = "state_audio_download_progress"
+        private const val KEY_IS_PLAYING = "state_is_playing"
+        private const val KEY_IS_BUFFERING = "state_is_buffering"
         private const val KEY_IS_VERSE_SYNC_AVAILABLE = "state_is_verse_sync_available"
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
@@ -145,6 +151,8 @@ data class RecitationServiceState(
                     .takeIf { it != -1 },
                 downloadProgress = bundle.getInt(KEY_AUDIO_DOWNLOAD_PROGRESS, -1)
                     .takeIf { it >= 0 },
+                isPlaying = bundle.getBoolean(KEY_IS_PLAYING, false),
+                isBuffering = bundle.getBoolean(KEY_IS_BUFFERING, false),
                 isVerseSyncAvailable = bundle.getBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, true),
                 pausedByHeadset = bundle.getBoolean(KEY_PAUSED_BY_HEADSET, false),
                 settings = PlayerSettings(

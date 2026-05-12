@@ -462,4 +462,7 @@
     <string name="englishContentOnly">Content on this page is available in English only.</string>
     <string name="estimatedSize">Estimated size: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Preparing Quran script for the first time. This will take a few seconds.</string>
+
+    <string name="recitationPlayer">Recitation Player</string>
+    <string name="desc_recitation_player_widget">Control Quran recitation from your home screen</string>
 </resources>

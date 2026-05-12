@@ -19,6 +19,8 @@ import androidx.core.net.toUri
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.utils.quran.QuranGlyphs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.math.max
@@ -27,75 +29,78 @@ import kotlin.math.roundToInt
 object RecitationChapterArtwork {
     const val ARTWORK_VERSION = 2
 
-    fun getChapterArtworkUri(context: Context, chapterNo: Int): Uri {
+    suspend fun getChapterArtworkUri(context: Context, chapterNo: Int): Uri {
         val appContext = context.applicationContext
-        return try {
-            val file =
-                File(appContext.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
 
-            val uri = FileProvider.getUriForFile(
-                appContext,
-                "${appContext.packageName}.provider",
-                file,
-            )
+        return withContext(Dispatchers.IO) {
+            try {
+                val file =
+                    File(appContext.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
 
-            grantGearheadAutoRead(appContext, uri)
+                val uri = FileProvider.getUriForFile(
+                    appContext,
+                    "${appContext.packageName}.provider",
+                    file,
+                )
 
-            if (file.exists()) {
-                return uri
-            }
+                grantGearheadAutoRead(appContext, uri)
 
-            val size = 600
-            val bitmap = createBitmap(size, size)
-            val canvas = Canvas(bitmap)
-
-            ContextCompat.getDrawable(appContext, R.drawable.quran_wallpaper)?.let {
-                it.setBounds(0, 0, size, size)
-                it.draw(canvas)
-            }
-
-            if (chapterNo > 0) {
-                val typeface = ResourcesCompat.getFont(appContext, R.font.suracon)
-
-                val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-                    this.typeface = typeface
-                    this.color = ColorUtils.createAlphaColor(Color.WHITE, 0.75f)
-                    textAlign = Paint.Align.CENTER
+                if (file.exists()) {
+                    return@withContext uri
                 }
 
-                val chapterText = QuranGlyphs.Chapter.get(chapterNo)
+                val size = 600
+                val bitmap = createBitmap(size, size)
+                val canvas = Canvas(bitmap)
 
-                val padding = size * 0.15f
-                val maxTextWidth = size - padding * 2
+                ContextCompat.getDrawable(appContext, R.drawable.quran_wallpaper)?.let {
+                    it.setBounds(0, 0, size, size)
+                    it.draw(canvas)
+                }
 
-                var textSize = size * 0.5f
-                paint.textSize = textSize
-                val textWidth = paint.measureText(chapterText)
+                if (chapterNo > 0) {
+                    val typeface = ResourcesCompat.getFont(appContext, R.font.suracon)
 
-                if (textWidth > maxTextWidth) {
-                    val scale = maxTextWidth / textWidth
-                    textSize *= scale
+                    val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+                        this.typeface = typeface
+                        this.color = ColorUtils.createAlphaColor(Color.WHITE, 0.75f)
+                        textAlign = Paint.Align.CENTER
+                    }
+
+                    val chapterText = QuranGlyphs.Chapter.get(chapterNo)
+
+                    val padding = size * 0.15f
+                    val maxTextWidth = size - padding * 2
+
+                    var textSize = size * 0.5f
                     paint.textSize = textSize
+                    val textWidth = paint.measureText(chapterText)
+
+                    if (textWidth > maxTextWidth) {
+                        val scale = maxTextWidth / textWidth
+                        textSize *= scale
+                        paint.textSize = textSize
+                    }
+
+                    val textY = (size / 2f) - ((paint.descent() + paint.ascent()) / 2f)
+                    canvas.drawText(chapterText, size / 2f, textY, paint)
                 }
 
-                val textY = (size / 2f) - ((paint.descent() + paint.ascent()) / 2f)
-                canvas.drawText(chapterText, size / 2f, textY, paint)
-            }
-
-            ByteArrayOutputStream().use { outputStream ->
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                try {
-                    file.writeBytes(outputStream.toByteArray())
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                ByteArrayOutputStream().use { outputStream ->
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    try {
+                        file.writeBytes(outputStream.toByteArray())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
+
+                bitmap.recycle()
+
+                uri
+            } catch (_: Exception) {
+                androidFallbackWallpaperUri(appContext)
             }
-
-            bitmap.recycle()
-
-            uri
-        } catch (_: Exception) {
-            androidFallbackWallpaperUri(appContext)
         }
     }
 
@@ -115,7 +120,7 @@ object RecitationChapterArtwork {
         }
     }
 
-    fun loadChapterArtworkThumbnailBitmap(
+    suspend fun getChapterArtworkBitmap(
         context: Context,
         chapterNo: Int,
         maxSidePx: Int,
@@ -123,35 +128,40 @@ object RecitationChapterArtwork {
         val app = context.applicationContext
         getChapterArtworkUri(app, chapterNo)
 
-        val file = File(app.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
+        return withContext(Dispatchers.IO) {
+            val file = File(app.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
 
-        val raw = try {
-            if (file.exists() && file.length() > 0L) {
-                BitmapFactory.decodeFile(file.absolutePath)
-            } else {
+            val raw = try {
+                if (file.exists() && file.length() > 0L) {
+                    BitmapFactory.decodeFile(file.absolutePath)
+                } else {
+                    null
+                }
+            } catch (_: Exception) {
                 null
-            }
-        } catch (_: Exception) {
-            null
-        } ?: try {
-            BitmapFactory.decodeResource(app.resources, R.drawable.quran_wallpaper)
-        } catch (_: Exception) {
-            null
-        } ?: createBitmap(1, 1)
+            } ?: try {
+                BitmapFactory.decodeResource(app.resources, R.drawable.quran_wallpaper)
+            } catch (_: Exception) {
+                null
+            } ?: createBitmap(1, 1)
 
-        val w = raw.width
-        val h = raw.height
-        if (w <= 0 || h <= 0) return raw
+            val w = raw.width
+            val h = raw.height
 
-        val cap = max(1, maxSidePx)
-        if (w <= cap && h <= cap) return raw
+            if (w <= 0 || h <= 0) return@withContext raw
 
-        val scale = minOf(cap.toFloat() / w, cap.toFloat() / h)
-        val nw = max(1, (w * scale).roundToInt())
-        val nh = max(1, (h * scale).roundToInt())
-        val scaled = raw.scale(nw, nh)
-        if (scaled != raw) raw.recycle()
-        return scaled
+            val cap = max(1, maxSidePx)
+            if (w <= cap && h <= cap) return@withContext raw
+
+            val scale = minOf(cap.toFloat() / w, cap.toFloat() / h)
+            val nw = max(1, (w * scale).roundToInt())
+            val nh = max(1, (h * scale).roundToInt())
+            val scaled = raw.scale(nw, nh)
+
+            if (scaled != raw) raw.recycle()
+
+            return@withContext scaled
+        }
     }
 
     fun androidFallbackWallpaperUri(context: Context): Uri {

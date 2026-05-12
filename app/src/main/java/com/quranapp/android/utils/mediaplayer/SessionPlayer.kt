@@ -27,10 +27,14 @@ class SessionPlayer(
     private var cachedTimelineDuration: Long = -1L
     private var cachedSessionMediaItem: MediaItem? = null
 
-    override fun getDuration(): Long = clipPlan?.virtualDurationMs ?: exoPlayer.duration
+    override fun getDuration(): Long = clipPlan?.virtualDurationMs ?: exoPlayer.duration.let {
+        if (it > 0 && it != C.TIME_UNSET) it else 0L
+    }
 
     override fun getCurrentPosition(): Long =
-        clipPlan?.virtualPosition(exoPlayer) ?: exoPlayer.currentPosition
+        clipPlan?.virtualPosition(exoPlayer) ?: exoPlayer.currentPosition.let {
+            if (it > 0 && it != C.TIME_UNSET) it else 0L
+        }
 
     override fun getContentPosition(): Long = getCurrentPosition()
 

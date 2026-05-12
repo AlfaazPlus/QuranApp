@@ -52,6 +52,20 @@
                 android:resource="@xml/votd_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".views.player.RecitationPlayerWidgetReceiver"
+            android:description="@string/desc_recitation_player_widget"
+            android:exported="true"
+            android:label="@string/recitationPlayer">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recitation_player_widget_info" />
+        </receiver>
+
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
