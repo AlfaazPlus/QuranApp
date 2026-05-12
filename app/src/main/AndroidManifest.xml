@@ -76,6 +76,18 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.popup.PopupQuranActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/Theme.QuranPopup">
+            <intent-filter>
+                <action android:name="com.quranapp.android.action.SHOW_POPUP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.ActivityBookmark" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity

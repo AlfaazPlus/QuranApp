@@ -35,4 +35,19 @@
         <item name="android:navigationBarColor">@color/colorBGPage</item>
     </style>
 
+    <!-- Translucent host for cross-app verse sheet; dimming comes from ModalBottomSheet scrim. -->
+    <style name="Theme.QuranPopup" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/QuranPopupAnimation</item>
+    </style>
+
+    <style name="QuranPopupAnimation">
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
