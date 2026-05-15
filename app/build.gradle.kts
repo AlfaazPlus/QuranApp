@@ -20,8 +20,8 @@ android {
         // I don't know why I've used such a weird versioning scheme in the beginning,
         // but I can't change it now as the app is already in the Play Store
         // now just incrementing from there
-        versionCode = 23_11_11_140
-        versionName = "2026.05.03.1"
+        versionCode = 23_11_11_142
+        versionName = "2026.05.13.2"
 
         resValue("string", "app_name", "QuranApp")
 
