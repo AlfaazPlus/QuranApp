@@ -130,6 +130,17 @@
       "translations": {
         "tr": "Türkçe Kur'an çevirisi ses kaydı"
       }
+    },
+    {
+      "id": "ks_mohommed_ahmed",
+      "lang_code": "ks",
+      "lang_name": "کٲشُر",
+      "reciter": "Molvi Mohammed Ahmed",
+      "url_template": "https://github.com/dabatase/ks_mohammed_ahmed/releases/download/v2/{chapNo:%03d}.mp3",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ks_mohammed_ahmed.json.gz",
+      "timing_version": 1,
+      "audio_version": 1,
+      "translations": {}
     }
   ]
 }
