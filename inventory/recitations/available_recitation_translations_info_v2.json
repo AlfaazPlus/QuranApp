@@ -137,7 +137,7 @@
       "lang_name": "کٲشُر",
       "reciter": "Molvi Mohammed Ahmed",
       "url_template": "https://github.com/dabatase/ks_mohammed_ahmed/releases/download/v2/{chapNo:%03d}.mp3",
-      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/ks_mohammed_ahmed.json.gz",
+      "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/mohammed_ahmed.json.gz",
       "timing_version": 1,
       "audio_version": 1,
       "translations": {}
