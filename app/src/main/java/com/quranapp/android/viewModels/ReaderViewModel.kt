@@ -17,7 +17,7 @@ import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
-import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -34,8 +34,10 @@ import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.toQuranMushafId
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -73,6 +75,10 @@ data class MushafSession(
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ReaderViewModel(application: Application) : ReaderProviderViewModel(application) {
+    companion object {
+        private val readHistoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
+
     private val _uiState = MutableStateFlow(ReaderUiState())
     val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
 
@@ -143,6 +149,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     val translationPageItems = _translationPageItems.asStateFlow()
 
     private var lastTranslationReaderContentKey: String? = null
+    private var lastPersistedReadHistory: ReadHistoryEntity? = null
+    private val readHistorySessionMutex = Mutex()
 
     private val pagesLoadingMutex = Mutex()
     private val initReaderMutex = Mutex()
@@ -314,13 +322,19 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     }
 
     suspend fun initReader(params: ReaderLaunchParams) {
-        Log.d("INIT Reader with params: $params")
+        Logger.d("INIT Reader with params: $params")
+        Logger.d("with data: ${params.data}")
+
         playerVerseSync.value = true
 
         params.readerMode?.let { ReaderPreferences.setReaderMode(it) }
         params.slugs?.let { ReaderPreferences.setTranslations(it) }
 
         val data = params.data
+        val effectiveReaderMode = params.readerMode ?: ReaderPreferences.getReaderMode()
+
+        consumePageNavigation()
+        consumeVerseNavigation()
 
         selectedNavigationTabIndex.intValue = when (data) {
             is ReaderIntentData.FullJuz -> 1
@@ -338,34 +352,89 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         val state = ReaderUiState().resolveIntent(data)
         _uiState.update { state }
 
-        // Try to navigate to initial verse (works in both mode)
-        if (data.initialVerse != null) {
-            requestVerseNavigation(data.initialVerse!!.chapterNo, data.initialVerse!!.verseNo)
-        }
-        // fallback to manual resolution for reader mode
-        else if (ReaderPreferences.getReaderMode() != ReaderMode.VerseByVerse) {
-            val targetPage = when (state.viewType) {
-                is ReaderViewType.Chapter -> {
-                    resolvePageNo(state.viewType.chapterNo)
-                }
+        when (effectiveReaderMode) {
+            ReaderMode.Reading,
+            ReaderMode.Translation -> {
+                val script = QuranScript(
+                    ReaderPreferences.getQuranScript(),
+                    ReaderPreferences.getQuranScriptVariant(),
+                )
 
-                is ReaderViewType.Juz -> {
-                    withContext(Dispatchers.IO) {
-                        repository.getFirstPageOfJuz(state.viewType.juzNo)
+                if (_mushafSession.value.layout != script) {
+                    val pageCount = mushafPageCount(script.toMushafId())
+
+                    _pageItems.value = emptyMap()
+                    _translationPageItems.value = emptyMap()
+                    lastTranslationReaderContentKey = null
+
+                    _mushafSession.update {
+                        it.copy(
+                            layout = script,
+                            pageCount = pageCount,
+                            version = it.version + 1,
+                        )
                     }
+                } else {
+                    ensureSessionPageCount(script)
                 }
 
-                is ReaderViewType.Hizb -> {
-                    withContext(Dispatchers.IO) {
-                        repository.getFirstPageOfHizb(state.viewType.hizbNo)
-                    }
+                resolveInitialPage(data, state)?.let { targetPage ->
+                    setInitialPageTarget(targetPage, data.initialVerse)
                 }
-
-                else -> null
             }
 
-            targetPage?.let { requestPageNavigation(it) }
+            ReaderMode.VerseByVerse -> {
+                data.initialVerse?.takeIf { it.isValid }?.let {
+                    requestVerseNavigation(it.chapterNo, it.verseNo)
+                }
+            }
         }
+    }
+
+    private suspend fun resolveInitialPage(
+        data: ReaderIntentData,
+        state: ReaderUiState,
+    ): Int? {
+        data.initialVerse?.takeIf { it.isValid }?.let {
+            return resolvePageNo(it.chapterNo, it.verseNo)
+        }
+
+        return when (val viewType = state.viewType) {
+            is ReaderViewType.Chapter -> resolvePageNo(viewType.chapterNo)
+            is ReaderViewType.Juz -> withContext(Dispatchers.IO) {
+                repository.getFirstPageOfJuz(viewType.juzNo)
+            }
+
+            is ReaderViewType.Hizb -> withContext(Dispatchers.IO) {
+                repository.getFirstPageOfHizb(viewType.hizbNo)
+            }
+
+            null -> null
+        }
+    }
+
+    private suspend fun setInitialPageTarget(
+        pageNo: Int,
+        initialVerse: ChapterVersePair?,
+    ) {
+        _mushafSession.update {
+            it.copy(currentPageNo = pageNo)
+        }
+
+        lastKnownVerse = initialVerse?.takeIf { it.isValid }
+            ?: resolveFirstVerseOnPage(pageNo)
+
+        requestPageNavigation(pageNo)
+    }
+
+    private suspend fun resolveFirstVerseOnPage(pageNo: Int): ChapterVersePair? {
+        val mushafId = _mushafSession.value.layout.toMushafId()
+        val ayahId = withContext(Dispatchers.IO) {
+            repository.getFirstAyahIdOnPage(mushafId, pageNo)
+        } ?: return null
+
+        val (chapterNo, verseNo) = QuranMeta.getVerseNoFromAyahId(ayahId)
+        return ChapterVersePair(chapterNo, verseNo)
     }
 
     private suspend fun initMushafPage(
@@ -517,10 +586,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         val state = _uiState.value
         val mushafSession = _mushafSession.value
         val viewType = state.viewType ?: return
-        val mode = readerMode.value ?: return
         val verse = lastKnownVerse
 
-        viewModelScope.launch(Dispatchers.IO) {
+        readHistoryScope.launch {
+            val mode = readerMode.value ?: ReaderPreferences.getReaderMode()
             val mushafCode = ReaderPreferences.getQuranScript()
             val mushafVariant = ReaderPreferences.getQuranScriptVariant()?.value
 
@@ -561,8 +630,21 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 )
             }
 
-            userRepository.saveReadHistory(entity)
-            ShortcutUtils.pushLastVersesShortcut(context, entity)
+            val didSave = readHistorySessionMutex.withLock {
+                if (lastPersistedReadHistory == entity) {
+                    false
+                } else {
+                    lastPersistedReadHistory?.let { userRepository.deleteHistory(it.id) }
+
+                    val id = userRepository.saveReadHistory(entity)
+                    lastPersistedReadHistory = entity.copy(id = id)
+                    true
+                }
+            }
+
+            if (didSave) {
+                ShortcutUtils.pushLastVersesShortcut(context, entity)
+            }
         }
     }
 

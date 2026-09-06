@@ -58,6 +58,14 @@ class ActivityReader : BaseActivity() {
         readerVm.saveReadHistory()
     }
 
+    override fun onDestroy() {
+        if (!isChangingConfigurations && isFinishing) {
+            readerVm.saveReadHistory()
+        }
+
+        super.onDestroy()
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 

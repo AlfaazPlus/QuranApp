@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.compose.theme.appFontFamily
 import com.quranapp.android.compose.theme.fontUrdu
-import com.quranapp.android.compose.components.reader.MushafLineLayout
 import com.quranapp.android.utils.extensions.getDimension
 import com.quranapp.android.utils.univ.StringUtils
 
@@ -129,7 +128,8 @@ fun getQuranTextStyle(
             alignment = LineHeightStyle.Alignment.Center,
             trim = LineHeightStyle.Trim.Both,
             mode = LineHeightStyle.Mode.Tight
-        )
+        ),
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
     )
 }
 

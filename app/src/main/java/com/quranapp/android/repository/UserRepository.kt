@@ -184,7 +184,7 @@ class UserRepository(
     }
 
     // ── Read History ──
-    suspend fun saveReadHistory(entity: ReadHistoryEntity) {
+    suspend fun saveReadHistory(entity: ReadHistoryEntity): Long {
         readHistoryDao.deleteDuplicate(
             readType = entity.readType,
             readerMode = entity.readerMode,
@@ -193,8 +193,11 @@ class UserRepository(
             fromVerseNo = entity.fromVerseNo,
             toVerseNo = entity.toVerseNo,
         )
-        readHistoryDao.insert(entity)
+
+        val id = readHistoryDao.insert(entity)
         readHistoryDao.trimToSize(HISTORY_LIMIT)
+
+        return id
     }
 
     fun getHistoriesFlow(limit: Int): Flow<List<ReadHistoryEntity>> {
