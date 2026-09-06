@@ -30,8 +30,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.UUID
+import kotlin.time.Duration.Companion.milliseconds
 
-private const val WORK_INFO_DEBOUNCE_MS = 300L
+private val WORK_INFO_DEBOUNCE_MS = 300.milliseconds
 
 private val WORK_ACTIVE_STATES = setOf(
     WorkInfo.State.RUNNING,

@@ -41,9 +41,10 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration.Companion.milliseconds
 
 /** WorkManager emits often during batching; debounce expensive per-reciter disk scans. */
-private const val WORK_INFO_DEBOUNCE_MS = 300L
+private val WORK_INFO_DEBOUNCE_MS = 300.milliseconds
 
 private const val RECITER_STATS_PARALLELISM = 4
 
@@ -647,8 +648,18 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
                 workManager.cancelUniqueWork(
                     RecitationBulkDownloadWorker.uniqueWorkName(reciterId, kind),
                 )
-                workManager.cancelAllWorkByTag(RecitationAudioDownloadWorker.reciterTag(reciterId, kind))
-                workManager.cancelAllWorkByTag(RecitationBulkDownloadWorker.reciterTag(reciterId, kind))
+                workManager.cancelAllWorkByTag(
+                    RecitationAudioDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
+                workManager.cancelAllWorkByTag(
+                    RecitationBulkDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
 
                 modelManager.deleteReciterAudioDirectory(reciterId)
                 downloadedCache.remove(reciterId)

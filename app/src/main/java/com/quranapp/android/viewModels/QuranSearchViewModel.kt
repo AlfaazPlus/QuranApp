@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -70,7 +71,7 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
     }
 
     private val debouncedQuery = _searchQuery
-        .debounce(200)
+        .debounce(200.milliseconds)
         .distinctUntilChanged()
         .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
 
@@ -165,7 +166,7 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
                         .map { (slug, info) ->
                             TranslationOption(
                                 slug = slug,
-                                displayName = info.displayName ?: slug,
+                                displayName = info.displayName,
                             )
                         }
                         .sortedBy { it.displayName.lowercase() }

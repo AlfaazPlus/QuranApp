@@ -110,6 +110,10 @@ object SearchQuickLinksParser {
             }
         }
 
+        repository.searchSurahs(rawQuery).take(2).forEach {
+            out.add(QuickLinkItem.Chapter(it))
+        }
+
         return out.distinctBy { it.stableKey() }
     }
 }
