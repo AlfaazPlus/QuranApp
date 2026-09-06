@@ -121,7 +121,7 @@ private fun ItemCard(
 
     Surface(
         modifier = Modifier
-            .height(100.dp)
+            .height(120.dp)
             .width(280.dp)
             .clip(shapes.medium)
             .border(1.dp, colorScheme.outlineVariant.alpha(0.5f), shapes.medium)

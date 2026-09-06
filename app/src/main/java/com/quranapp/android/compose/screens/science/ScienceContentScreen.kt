@@ -141,9 +141,13 @@ private fun ScienceContentWebView(
     AndroidView(
         factory = { ctx ->
             WebView(ctx).apply {
-                val settings = this.settings
-                settings.javaScriptEnabled = true
-                settings.useWideViewPort = true
+                settings.apply {
+                    javaScriptEnabled = true
+                    setSupportZoom(false);
+                    setBuiltInZoomControls(false);
+                    setDisplayZoomControls(false);
+                    setUseWideViewPort(false);
+                }
 
                 overScrollMode = View.OVER_SCROLL_NEVER
                 webChromeClient = object : WebChromeClient() {

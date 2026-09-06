@@ -66,6 +66,7 @@ import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
+import com.quranapp.android.compose.components.tafsir.dialogs.TafsirTextSizeSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.toCssVariables
 import com.quranapp.android.compose.utils.LocalAppLocale
@@ -86,14 +87,14 @@ import java.util.Locale
 
 @Composable
 fun TafsirReaderScreen(
-    showFontSizeDialog: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val viewModel = viewModel<TafsirReaderViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var webViewScrollY by rememberSaveable { mutableIntStateOf(0) }
     var webViewRef by remember { mutableStateOf<WebView?>(null) }
     var showChapterVerseNavigator by rememberSaveable { mutableStateOf(false) }
+    var showFontSizeSheet by rememberSaveable { mutableStateOf(false) }
 
     val onEvent = viewModel::onEvent
     val context = LocalContext.current
@@ -146,7 +147,9 @@ fun TafsirReaderScreen(
                 }
 
                 FloatingActionButton(
-                    onClick = showFontSizeDialog,
+                    onClick = {
+                        showFontSizeSheet = true
+                    },
                     containerColor = colorScheme.primaryContainer,
                     contentColor = colorScheme.onPrimaryContainer,
                     elevation = FloatingActionButtonDefaults.elevation(2.dp),
@@ -220,6 +223,15 @@ fun TafsirReaderScreen(
                     verseNo,
                 )
             )
+        },
+    )
+
+    TafsirTextSizeSheet(
+        isOpen = showFontSizeSheet,
+        onDismiss = { showFontSizeSheet = false },
+        textSizeMultiplier = uiState.textSizeMultiplier,
+        onUpdateTextSize = { multiplier ->
+            viewModel.onEvent(TafsirReaderEvent.UpdateTextSize(multiplier))
         },
     )
 }
@@ -324,12 +336,13 @@ private fun TafsirWebViewContent(
     val langCode = uiState.tafsirInfo?.langCode
     val colors = MaterialTheme.colorScheme
 
+    val fontSizePercent = (textSizeMultiplier * 100).toInt()
+
     val htmlContent = remember(
         text,
         verses,
         verseHeaderHtml,
         extraHeadCss,
-        textSizeMultiplier,
         isDarkTheme,
         langCode,
         arabicReaderSizeMult,
@@ -342,7 +355,7 @@ private fun TafsirWebViewContent(
             verses = verses,
             verseHeaderHtml = verseHeaderHtml,
             extraHeadCss = extraHeadCss,
-            fontSizePercent = (textSizeMultiplier * 100).toInt(),
+            fontSizePercent = fontSizePercent,
             arabicReaderSizeMult = arabicReaderSizeMult,
             translationReaderSizeMult = translationReaderSizeMult,
             colorScheme = colors,
@@ -352,19 +365,39 @@ private fun TafsirWebViewContent(
     }
 
     var isLoading by remember { mutableStateOf(true) }
-    var lastLoad by remember { mutableStateOf<Pair<String, String>?>(null) }
+    var lastLoadSignature by remember { mutableStateOf<String?>(null) }
+    var lastAppliedFontSize by remember { mutableIntStateOf(-1) }
+
+    val pageSignature = remember(
+        uiState.tafsirKey,
+        uiState.chapterNo,
+        uiState.verseNo,
+        htmlContent,
+    ) {
+        "${uiState.tafsirKey}_${uiState.chapterNo}_${uiState.verseNo}_${htmlContent.hashCode()}"
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             factory = { ctx ->
                 WebView(ctx).apply {
                     setBackgroundColor(0x00000000)
-                    settings.javaScriptEnabled = true
+
+                    settings.apply {
+                        javaScriptEnabled = true
+                        setSupportZoom(false);
+                        setBuiltInZoomControls(false);
+                        setDisplayZoomControls(false);
+                        setUseWideViewPort(false);
+                    }
+
                     overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
                     webChromeClient = WebChromeClient()
+
                     setOnScrollChangeListener { _, _, scrollY, _, _ ->
                         onScrollChanged(scrollY)
                     }
+
                     onWebViewCreated(this)
                 }
             },
@@ -375,16 +408,22 @@ private fun TafsirWebViewContent(
                     atlasAyahImageCache = contentState.atlasAyahImageCache.takeIf { it.isNotEmpty() },
                     onPageFinished = { isLoading = false },
                 )
-                val signature = htmlContent to uiState.tafsirKey
 
-                if (lastLoad != signature) {
-                    lastLoad = signature
+                if (lastLoadSignature != pageSignature) {
+                    lastLoadSignature = pageSignature
+                    lastAppliedFontSize = fontSizePercent
                     isLoading = true
                     webView.loadDataWithBaseURL(
                         null,
                         htmlContent,
                         "text/html; charset=UTF-8",
                         "utf-8",
+                        null
+                    )
+                } else if (lastAppliedFontSize != fontSizePercent) {
+                    lastAppliedFontSize = fontSizePercent
+                    webView.evaluateJavascript(
+                        "document.body.style.fontSize = '${fontSizePercent}%';",
                         null
                     )
                 }

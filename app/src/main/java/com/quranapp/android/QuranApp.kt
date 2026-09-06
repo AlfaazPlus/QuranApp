@@ -64,13 +64,4 @@ class QuranApp : Application() {
 
         SearchIndexScheduler.scheduleTranslationSearchIndexIfNeeded(applicationContext)
     }
-
-    override fun onTrimMemory(level: Int) {
-        super.onTrimMemory(level)
-
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE && level == TRIM_MEMORY_COMPLETE) {
-            DatabaseProvider.closeAll()
-        }
-    }
 }

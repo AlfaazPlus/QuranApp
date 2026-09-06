@@ -68,6 +68,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(UnstableApi::class)
 class RecitationService : MediaLibraryService() {
@@ -818,7 +819,7 @@ class RecitationService : MediaLibraryService() {
                     }
                 }
 
-                delay(200)
+                delay(200.milliseconds)
             }
         }
     }

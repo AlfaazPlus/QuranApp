@@ -2,7 +2,7 @@
 coreKtx = "1.15.0"
 gradle = "9.4.0"
 kotlinGradlePlugin = "2.2.21"
-lifecycle = "2.8.7"
+lifecycle = "2.11.0"
 desugaring = "2.1.4"
 annotation = "1.9.1"
 legacySupport = "1.0.0"
@@ -22,16 +22,14 @@ kotlinxSerialization = "1.4.1"
 kotlinxRetrofit = "0.8.0"
 commonsCompress = "1.24.0"
 workManager = "2.8.1"
-composeBom = "2026.05.00"
+composeBom = "2026.08.00"
 dataStore = "1.1.7"
 activityKtx = "1.12.1"
 fragmentKtx = "1.8.9"
 room = "2.8.4"
 paging = "3.4.2"
 
-compose-navigation = "2.9.7"
-navigation-fragment-ktx = "2.9.7"
-navigation-ui-ktx = "2.9.7"
+navigation = "2.9.7"
 
 accompanist = "0.37.3"
 glance = "1.2.0-rc01"
@@ -105,9 +103,9 @@ roomPaging = { module = "androidx.room:room-paging", version.ref = "room" }
 paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 glance = { module = "androidx.glance:glance", version.ref = "glance" }

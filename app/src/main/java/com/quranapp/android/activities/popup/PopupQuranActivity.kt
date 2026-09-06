@@ -1,6 +1,7 @@
 package com.quranapp.android.activities.popup
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
@@ -15,8 +16,12 @@ class PopupQuranActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0)
-        overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0)
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        } else {
+            overridePendingTransition(0, 0)
+        }
     }
 
     override fun getLayoutResource(): Int = 0
@@ -51,7 +56,8 @@ class PopupQuranActivity : BaseActivity() {
 private fun Intent.toQuickReferenceData(): QuickReferenceData {
     val chapterNo =
         getIntExtra(QuranPopupContract.EXTRA_CHAPTER_NUMBER, 1).coerceIn(QuranMeta.chapterRange)
-    val slugs = getStringArrayExtra(QuranPopupContract.EXTRA_TRANSLATION_SLUGS)?.toSet() ?: emptySet()
+    val slugs =
+        getStringArrayExtra(QuranPopupContract.EXTRA_TRANSLATION_SLUGS)?.toSet() ?: emptySet()
 
     return QuickReferenceData(
         slugs = slugs,

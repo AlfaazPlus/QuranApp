@@ -3,29 +3,15 @@ package com.quranapp.android.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.SeekBar
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
-import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.screens.tafsir.TafsirReaderScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.compose.utils.readAppLocale
-import com.quranapp.android.databinding.LytTafsirTextSizeBinding
-import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.simplified.SimpleSeekbarChangeListener
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.TafsirReaderEvent
 import com.quranapp.android.viewModels.TafsirReaderViewModel
-import com.quranapp.android.widgets.bottomSheet.PeaceBottomSheet
-import androidx.lifecycle.lifecycleScope
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ActivityTafsir : BaseActivity() {
 
@@ -44,9 +30,7 @@ class ActivityTafsir : BaseActivity() {
     ) {
         setContent {
             QuranAppTheme {
-                TafsirReaderScreen(
-                    showFontSizeDialog = { showFontSizeDialog() },
-                )
+                TafsirReaderScreen()
             }
         }
 
@@ -72,51 +56,5 @@ class ActivityTafsir : BaseActivity() {
                 verseNo,
             ),
         )
-    }
-
-    private fun showFontSizeDialog() {
-        val binding = LytTafsirTextSizeBinding.inflate(layoutInflater)
-        val locale = readAppLocale(this).platformLocale
-
-        PeaceBottomSheet().apply {
-            params.apply {
-                headerTitleResource = R.string.titleReaderTextSizeTafsir
-                contentView = binding.root
-            }
-        }.show(supportFragmentManager, "TafsirFontSize")
-
-        lifecycleScope.launch {
-            val multiplier = ReaderPreferences.getTafsirTextSizeMultiplier()
-            withContext(Dispatchers.Main.immediate) {
-                val text = String.format(
-                    locale,
-                    "%d%%",
-                    ReaderTextSizeUtils.calculateProgressText(multiplier)
-                )
-                binding.progressText.text = text
-
-                binding.seekBar.apply {
-                    max = ReaderTextSizeUtils.maxProgress
-                    progress = ReaderTextSizeUtils.calculateProgress(multiplier)
-                    setOnSeekBarChangeListener(object : SimpleSeekbarChangeListener() {
-                        override fun onProgressChanged(
-                            seekBar: SeekBar,
-                            progress: Int,
-                            fromUser: Boolean,
-                        ) {
-                            val nProgress = ReaderTextSizeUtils.normalizeProgress(progress)
-                            val t = String.format(locale, "%d%%", nProgress)
-                            binding.progressText.text = t
-
-                            viewModel.onEvent(
-                                TafsirReaderEvent.UpdateTextSize(
-                                    ReaderTextSizeUtils.calculateMultiplier(nProgress)
-                                )
-                            )
-                        }
-                    })
-                }
-            }
-        }
     }
 }

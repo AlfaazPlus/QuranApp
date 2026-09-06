@@ -254,10 +254,19 @@ private fun ChapterInfoWebViewContent(
             factory = { ctx ->
                 WebView(ctx).apply {
                     setBackgroundColor(0x00000000)
-                    settings.javaScriptEnabled = true
-                    settings.allowUniversalAccessFromFileURLs = true
-                    settings.allowFileAccess = true
-                    settings.domStorageEnabled = true
+
+                    settings.apply {
+                        javaScriptEnabled = true
+                        allowUniversalAccessFromFileURLs = true
+                        allowFileAccess = true
+                        domStorageEnabled = true
+
+                        setSupportZoom(false);
+                        setBuiltInZoomControls(false);
+                        setDisplayZoomControls(false);
+                        setUseWideViewPort(false);
+                    }
+
                     overScrollMode = View.OVER_SCROLL_NEVER
 
                     addJavascriptInterface(

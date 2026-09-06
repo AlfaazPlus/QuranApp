@@ -14,28 +14,45 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
-import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
 import com.quranapp.android.utils.quran.QuranGlyphs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import kotlin.math.max
-import kotlin.math.roundToInt
 
 object RecitationChapterArtwork {
-    const val ARTWORK_VERSION = 2
 
-    suspend fun getChapterArtworkUri(context: Context, chapterNo: Int): Uri {
+    private const val ARTWORK_VERSION = 2
+    private const val SIZE = 600
+
+    private val artworkMutex = Mutex()
+
+    private fun artworkFile(context: Context, chapterNo: Int): File {
+        return File(
+            context.applicationContext.cacheDir,
+            "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png"
+        )
+    }
+
+    suspend fun getChapterArtworkUri(
+        context: Context,
+        chapterNo: Int,
+    ): Uri {
         val appContext = context.applicationContext
+        val file = artworkFile(appContext, chapterNo)
 
-        return withContext(Dispatchers.IO) {
+        return artworkMutex.withLock {
             try {
-                val file =
-                    File(appContext.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
+                if (!file.exists() || file.length() == 0L) {
+                    createArtwork(appContext, chapterNo, file)
+                }
 
                 val uri = FileProvider.getUriForFile(
                     appContext,
@@ -45,72 +62,191 @@ object RecitationChapterArtwork {
 
                 grantGearheadAutoRead(appContext, uri)
 
-                if (file.exists()) {
-                    return@withContext uri
-                }
-
-                val size = 600
-                val bitmap = createBitmap(size, size)
-                val canvas = Canvas(bitmap)
-
-                ContextCompat.getDrawable(appContext, R.drawable.quran_wallpaper)?.let {
-                    it.setBounds(0, 0, size, size)
-                    it.draw(canvas)
-                }
-
-                if (chapterNo > 0) {
-                    val typeface = ResourcesCompat.getFont(appContext, R.font.suracon)
-
-                    val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-                        this.typeface = typeface
-                        this.color = ColorUtils.createAlphaColor(Color.WHITE, 0.75f)
-                        textAlign = Paint.Align.CENTER
-                    }
-
-                    val chapterText = QuranGlyphs.Chapter.get(chapterNo)
-
-                    val padding = size * 0.15f
-                    val maxTextWidth = size - padding * 2
-
-                    var textSize = size * 0.5f
-                    paint.textSize = textSize
-                    val textWidth = paint.measureText(chapterText)
-
-                    if (textWidth > maxTextWidth) {
-                        val scale = maxTextWidth / textWidth
-                        textSize *= scale
-                        paint.textSize = textSize
-                    }
-
-                    val textY = (size / 2f) - ((paint.descent() + paint.ascent()) / 2f)
-                    canvas.drawText(chapterText, size / 2f, textY, paint)
-                }
-
-                ByteArrayOutputStream().use { outputStream ->
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                    try {
-                        file.writeBytes(outputStream.toByteArray())
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                bitmap.recycle()
-
                 uri
-            } catch (_: Exception) {
+            } catch (e: Exception) {
+                e.printStackTrace()
                 androidFallbackWallpaperUri(appContext)
             }
         }
     }
 
-    private fun grantGearheadAutoRead(context: Context, uri: Uri) {
+    private fun createArtwork(
+        context: Context,
+        chapterNo: Int,
+        file: File,
+    ) {
+        val bitmap = createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888)
+
+        try {
+            val canvas = Canvas(bitmap)
+
+            ContextCompat
+                .getDrawable(context, R.drawable.quran_wallpaper)
+                ?.let { drawable ->
+                    drawable.setBounds(0, 0, SIZE, SIZE)
+                    drawable.draw(canvas)
+                }
+
+            if (chapterNo > 0) {
+                drawChapterNumber(
+                    context = context,
+                    canvas = canvas,
+                    chapterNo = chapterNo,
+                )
+            }
+
+            // Write atomically so another coroutine never reads
+            // a partially-written PNG.
+            val tempFile = File(file.parentFile, "${file.name}.tmp")
+
+            FileOutputStream(tempFile).use { output ->
+                check(
+                    bitmap.compress(
+                        Bitmap.CompressFormat.PNG,
+                        100,
+                        output,
+                    )
+                ) {
+                    "Failed to compress artwork"
+                }
+
+                output.flush()
+                output.fd.sync()
+            }
+
+            if (!tempFile.renameTo(file)) {
+                tempFile.delete()
+                throw IOException("Could not rename artwork file")
+            }
+        } finally {
+            bitmap.recycle()
+        }
+    }
+
+    private fun drawChapterNumber(
+        context: Context,
+        canvas: Canvas,
+        chapterNo: Int,
+    ) {
+        val typeface = ResourcesCompat.getFont(
+            context,
+            R.font.suracon,
+        )
+
+        val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.typeface = typeface
+            this.color = ColorUtils.createAlphaColor(
+                Color.WHITE,
+                0.75f,
+            )
+            textAlign = Paint.Align.CENTER
+        }
+
+        val chapterText = QuranGlyphs.Chapter.get(chapterNo)
+
+        val padding = SIZE * 0.15f
+        val maxTextWidth = SIZE - padding * 2
+
+        var textSize = SIZE * 0.5f
+
+        paint.textSize = textSize
+
+        val textWidth = paint.measureText(chapterText)
+
+        if (textWidth > maxTextWidth) {
+            textSize *= maxTextWidth / textWidth
+            paint.textSize = textSize
+        }
+
+        val textY =
+            SIZE / 2f -
+                    (paint.descent() + paint.ascent()) / 2f
+
+        canvas.drawText(
+            chapterText,
+            SIZE / 2f,
+            textY,
+            paint,
+        )
+    }
+
+    suspend fun getChapterArtworkBitmap(
+        context: Context,
+        chapterNo: Int,
+        maxSidePx: Int,
+    ): Bitmap {
+        val app = context.applicationContext
+
+        getChapterArtworkUri(app, chapterNo)
+
+        return withContext(Dispatchers.IO) {
+            val file = artworkFile(app, chapterNo)
+
+            decodeSampledBitmap(
+                file = file,
+                maxSidePx = maxSidePx,
+            ) ?: BitmapFactory.decodeResource(
+                app.resources,
+                R.drawable.quran_wallpaper,
+            ) ?: createBitmap(1, 1)
+        }
+    }
+
+    private fun decodeSampledBitmap(
+        file: File,
+        maxSidePx: Int,
+    ): Bitmap? {
+        if (!file.exists() || file.length() <= 0L) {
+            return null
+        }
+
+        val cap = max(1, maxSidePx)
+
+        // First determine dimensions without allocating pixels.
+        val bounds = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+
+        BitmapFactory.decodeFile(
+            file.absolutePath,
+            bounds,
+        )
+
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) {
+            return null
+        }
+
+        var sampleSize = 1
+
+        while (
+            bounds.outWidth / (sampleSize * 2) >= cap &&
+            bounds.outHeight / (sampleSize * 2) >= cap
+        ) {
+            sampleSize *= 2
+        }
+
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSize
+            inPreferredConfig = Bitmap.Config.ARGB_8888
+        }
+
+        return BitmapFactory.decodeFile(
+            file.absolutePath,
+            options,
+        )
+    }
+
+    private fun grantGearheadAutoRead(
+        context: Context,
+        uri: Uri,
+    ) {
         try {
             context.grantUriPermission(
                 "com.google.android.projection.gearhead",
                 uri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION,
             )
+
             context.grantUriPermission(
                 "com.google.android.autosimulator",
                 uri,
@@ -120,52 +256,11 @@ object RecitationChapterArtwork {
         }
     }
 
-    suspend fun getChapterArtworkBitmap(
+    fun androidFallbackWallpaperUri(
         context: Context,
-        chapterNo: Int,
-        maxSidePx: Int,
-    ): Bitmap {
-        val app = context.applicationContext
-        getChapterArtworkUri(app, chapterNo)
-
-        return withContext(Dispatchers.IO) {
-            val file = File(app.cacheDir, "artwork_surah_v${ARTWORK_VERSION}_$chapterNo.png")
-
-            val raw = try {
-                if (file.exists() && file.length() > 0L) {
-                    BitmapFactory.decodeFile(file.absolutePath)
-                } else {
-                    null
-                }
-            } catch (_: Exception) {
-                null
-            } ?: try {
-                BitmapFactory.decodeResource(app.resources, R.drawable.quran_wallpaper)
-            } catch (_: Exception) {
-                null
-            } ?: createBitmap(1, 1)
-
-            val w = raw.width
-            val h = raw.height
-
-            if (w <= 0 || h <= 0) return@withContext raw
-
-            val cap = max(1, maxSidePx)
-            if (w <= cap && h <= cap) return@withContext raw
-
-            val scale = minOf(cap.toFloat() / w, cap.toFloat() / h)
-            val nw = max(1, (w * scale).roundToInt())
-            val nh = max(1, (h * scale).roundToInt())
-            val scaled = raw.scale(nw, nh)
-
-            if (scaled != raw) raw.recycle()
-
-            return@withContext scaled
-        }
-    }
-
-    fun androidFallbackWallpaperUri(context: Context): Uri {
+    ): Uri {
         val resId = R.drawable.quran_wallpaper
+
         return (
                 ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
                         context.resources.getResourcePackageName(resId) +

@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.quranapp.android"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.quranapp.android"
@@ -113,7 +113,6 @@ dependencies {
 
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
 
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
