@@ -45,6 +45,34 @@ android {
         buildConfig = true
     }
 
+    val keystorePath = System.getenv("QURANAPP_KEYSTORE_FILE")
+        ?: (project.findProperty("QURANAPP_KEYSTORE_FILE") as String?)
+    val releaseStorePassword = System.getenv("QURANAPP_KEYSTORE_PASSWORD")
+        ?: (project.findProperty("QURANAPP_KEYSTORE_PASSWORD") as String?)
+    val releaseKeyAlias = System.getenv("QURANAPP_KEY_ALIAS")
+        ?: (project.findProperty("QURANAPP_KEY_ALIAS") as String?)
+    val releaseKeyPassword = System.getenv("QURANAPP_KEY_PASSWORD")
+        ?: (project.findProperty("QURANAPP_KEY_PASSWORD") as String?)
+
+    val keystoreFile = keystorePath?.let { rootProject.file(it) }
+
+    val canSignRelease = keystoreFile != null
+            && keystoreFile.exists()
+            && !releaseStorePassword.isNullOrBlank()
+            && !releaseKeyAlias.isNullOrBlank()
+            && !releaseKeyPassword.isNullOrBlank()
+
+    signingConfigs {
+        if (canSignRelease) {
+            create("release") {
+                storeFile = keystoreFile
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isDebuggable = true
@@ -64,6 +92,12 @@ android {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
+
+            isCrunchPngs = false
+
+            if (canSignRelease) {
+                signingConfig = signingConfigs.getByName("release")
+            }
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -98,10 +132,6 @@ android {
         // Disables dependency metadata when building Android App Bundles (for Google Play)
         includeInBundle = false
     }
-}
-
-base {
-    archivesName = android.defaultConfig.versionName
 }
 
 dependencies {

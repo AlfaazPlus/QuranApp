@@ -15,4 +15,7 @@
 .cxx
 local.properties
 /keys
+*.jks
+*.keystore
+keystore.jks
 ktlint.jar
