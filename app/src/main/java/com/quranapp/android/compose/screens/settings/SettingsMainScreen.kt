@@ -192,6 +192,16 @@ fun SettingsMainScreen(
                 navController.navigate(SettingRoutes.WWB)
             }
 
+            SwitchItem(
+                title = R.string.titleKeepScreenOnWhileReading,
+                subtitle = R.string.msgKeepScreenOnWhileReading,
+                checked = ReaderPreferences.observeKeepScreenOn(),
+            ) {
+                coroutineScope.launch {
+                    ReaderPreferences.setKeepScreenOn(it)
+                }
+            }
+
             if (!showReaderSettingsOnly) {
                 ListItemCategoryLabel(title = stringResource(R.string.titleOtherSettings))
 

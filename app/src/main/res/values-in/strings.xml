@@ -264,6 +264,8 @@
     <string name="msgClearReadHistory">Hapus riwayat bacaan</string>
     <string name="titleArabicTextToggle">Tampilkan Teks Ayat Arab</string>
     <string name="msgArabicTextToggle">Menonaktifkan fitur ini akan menyembunyikan teks ayat Arab di seluruh aplikasi.</string>
+    <string name="titleKeepScreenOnWhileReading">Biarkan layar tetap menyala saat membaca</string>
+    <string name="msgKeepScreenOnWhileReading">Mencegah layar mati selama pembaca terbuka. Matikan untuk menghemat baterai.</string>
     <string name="autoScrollSpeed">Atur kecepatan</string>
     <string name="msgExportImportBookmarks">Ekspor atau Impor bookmark dengan catatan.</string>
     <string name="startAutoScroll">Mulai gulir otomatis</string>

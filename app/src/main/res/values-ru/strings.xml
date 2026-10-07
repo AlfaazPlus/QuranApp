@@ -121,6 +121,8 @@
     <string name="msgResourceDownloadSource">Используйте эту опцию чтобы загрузить Коран из другого источника, если этот не работает</string>
     <string name="titleArabicTextToggle">Показать арабский текст аята</string>
     <string name="msgArabicTextToggle">Отключение этой опции скроет арабский текст аятов во всём приложении.</string>
+    <string name="titleKeepScreenOnWhileReading">Не выключать экран при чтении</string>
+    <string name="msgKeepScreenOnWhileReading">Экран не будет гаснуть, пока открыт режим чтения. Отключите, чтобы экономить заряд.</string>
     <string name="strTitleTheme">Тема</string>
     <string name="strLabelShare">Поделиться</string>
     <string name="strLabelReport">Пожаловаться</string>

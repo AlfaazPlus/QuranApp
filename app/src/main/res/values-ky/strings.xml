@@ -179,6 +179,8 @@
     <string name="titleResourceDownloadSource">Ресурстарды жүктөө булагы</string>
     <string name="titleArabicTextToggle">Арабча аятты көрсөтүү</string>
     <string name="msgArabicTextToggle">Бул функцияны өчүрүү колдонмодогу бардык арабча аяттарды жашырат.</string>
+    <string name="titleKeepScreenOnWhileReading">Окуганда экранды өчүрбөө</string>
+    <string name="msgKeepScreenOnWhileReading">Окуу ачык турганда экран өчпөйт. Батареяны үнөмдөө үчүн өчүрүңүз.</string>
     <string name="labelExport">Экспорт</string>
     <string name="labelImport">Импорт</string>
     <string name="msgExportSuccess">Ийгиликтүү экспорттолду</string>

@@ -223,6 +223,8 @@
     <string name="titleResourceDownloadSource">مواد ڊائون لوڊ جو ذريعو</string>
     <string name="titleArabicTextToggle">عربي آيت جو متن ڏيکاريو</string>
     <string name="msgArabicTextToggle">هن خصوصيت کي غير فعال ڪرڻ سان سڄي ايپ مان عربي آيت جو متن لڪجي ويندو.</string>
+    <string name="titleKeepScreenOnWhileReading">پڙهڻ دوران اسڪرين آن رکو</string>
+    <string name="msgKeepScreenOnWhileReading">ريڊر کليل هجڻ تي اسڪرين بند نه ٿيندي. بيٽري بچائڻ لاءِ بند ڪريو.</string>
     <string name="labelExport">برآمد ڪريو</string>
     <string name="labelImport">درآمد ڪريو</string>
     <string name="labelImportExportEverything">سڀ ڪجهه</string>

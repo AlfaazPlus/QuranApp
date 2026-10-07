@@ -230,6 +230,8 @@
     <string name="strPreviewTextTransl">Sa Ngalan ng Allâh, ang Pinakamaawain, ang Pinakamaawain</string>
     <string name="msgClearSearchHistory">I-clear ang kasaysayan ng paghahanap</string>
     <string name="msgArabicTextToggle">Ang pag-disable sa feature na ito ay magtatago ng Arabic verse text mula sa buong app.</string>
+    <string name="titleKeepScreenOnWhileReading">Panatilihing bukas ang screen habang nagbabasa</string>
+    <string name="msgKeepScreenOnWhileReading">Pinipigilan nitong mag-off ang screen habang bukas ang reader. I-off para makatipid ng baterya.</string>
     <string name="labelExport">I-export</string>
     <string name="labelImport">Mag-import</string>
     <string name="msgExportImportBookmarks">I-export o i-import ang iyong mga bookmark kasama ng mga tala.</string>

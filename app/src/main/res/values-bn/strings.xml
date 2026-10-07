@@ -260,6 +260,8 @@
     <string name="msgResourceDownloadSource">বর্তমান উৎস কাজ না করলে ভিন্ন উৎস থেকে কুরআনের কনটেন্ট ডাউনলোড করতে এই অপশনটি ব্যবহার করুন</string>
     <string name="msgClearReadHistory">পড়ার ইতিহাস মুছে ফেলুন</string>
     <string name="titleArabicTextToggle">আরবি আয়াতের লেখা দেখান</string>
+    <string name="titleKeepScreenOnWhileReading">পড়ার সময় স্ক্রিন চালু রাখুন</string>
+    <string name="msgKeepScreenOnWhileReading">রিডার খোলা থাকলে স্ক্রিন বন্ধ হবে না। ব্যাটারি বাঁচাতে এটি বন্ধ করুন।</string>
     <string name="msgArabicTextToggle">এই ফিচারটি বন্ধ করলে অ্যাপের সব জায়গা থেকে আরবি আয়াতের লেখা সরিয়ে ফেলা হবে।</string>
     <string name="desc_votd_widget">প্রতিদিন একটি নতুন আয়াত পান</string>
     <string name="startAutoScroll">স্ক্রিন অটো উপর থেকে নিচে নামা শুরু করুন</string>

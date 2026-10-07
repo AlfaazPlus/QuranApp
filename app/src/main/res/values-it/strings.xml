@@ -275,6 +275,8 @@
     <string name="topics">Argomenti</string>
     <string name="donate">Donaci</string>
     <string name="msgArabicTextToggle">Disattivare questa funzione nasconderà il testo arabo in ogni parte dell\'app.</string>
+    <string name="titleKeepScreenOnWhileReading">Mantieni lo schermo acceso durante la lettura</string>
+    <string name="msgKeepScreenOnWhileReading">Impedisce allo schermo di spegnersi mentre il lettore è aperto. Disattiva per risparmiare batteria.</string>
     <string name="clear">Cancella</string>
     <string name="strLabelAll">Tutto</string>
     <string name="strLabelPrevious">Precedente</string>

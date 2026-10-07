@@ -272,6 +272,8 @@
     <string name="msgClearSearchHistory">Suchverlauf löschen</string>
     <string name="titleArabicTextToggle">Arabischen Verstext anzeigen</string>
     <string name="msgArabicTextToggle">Deaktivieren dieser Funktion wird arabischen Verstext in der ganzen App ausblenden.</string>
+    <string name="titleKeepScreenOnWhileReading">Bildschirm beim Lesen anlassen</string>
+    <string name="msgKeepScreenOnWhileReading">Verhindert, dass sich der Bildschirm ausschaltet, solange der Reader geöffnet ist. Zum Akkusparen deaktivieren.</string>
     <string name="msgExtractingFonts">Schriftarten extrahieren</string>
     <string name="titleExportData">Exportieren &amp; Importieren</string>
     <string name="labelExport">Export</string>

@@ -36,6 +36,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,6 +54,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -105,6 +107,7 @@ fun ReaderScreen(
     val density = LocalDensity.current
 
     val isDark = ThemeUtils.observeDarkTheme()
+    val shouldKeepScreenOn = ReaderPreferences.observeKeepScreenOn()
 
     val scope = rememberCoroutineScope()
 
@@ -127,7 +130,7 @@ fun ReaderScreen(
 
     val miniPlayerHeight = if (playerVisibilityState.isVisible) MINI_PLAYER_HEIGHT else 0.dp
 
-    val showTwoPane = currentWindowAdaptiveInfo().windowSizeClass.isAtLeastBreakpoint(
+    val showTwoPane = currentWindowAdaptiveInfoV2().windowSizeClass.isAtLeastBreakpoint(
         WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND,
         WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
     )
@@ -175,6 +178,7 @@ fun ReaderScreen(
             Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
+                    .then(if (shouldKeepScreenOn) Modifier.keepScreenOn() else Modifier)
                     .then(
                         if (!isFullscreen) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
                         else Modifier

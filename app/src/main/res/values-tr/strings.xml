@@ -265,6 +265,8 @@
     <string name="strMsgPropheticDuaInQuran" formatted="false">Kuran\'daki %s duası</string>
     <string name="titleArabicTextToggle">Arapça Ayet Metnini Göster</string>
     <string name="msgArabicTextToggle">Bu özelliğin devre dışı bırakılması, Arapça ayet metnini uygulamanın her yerinde gizleyecektir.</string>
+    <string name="titleKeepScreenOnWhileReading">Okurken ekranı açık tut</string>
+    <string name="msgKeepScreenOnWhileReading">Okuyucu açıkken ekranın kapanmasını engeller. Pil tasarrufu için kapatın.</string>
     <string name="msgClearSearchHistory">Arama geçmişini temizle</string>
     <string name="msgClearReadHistory">Okuma geçmişini temizle</string>
     <string name="titleResourceDownloadSource">Kaynak indirme kaynağı</string>

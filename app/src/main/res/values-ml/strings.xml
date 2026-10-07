@@ -331,6 +331,8 @@
     <string name="msgResourceDownloadSource">ഒന്ന് പ്രവർത്തിക്കുന്നില്ലെങ്കിൽ ഖുർആൻ വിവരങ്ങൾ മറ്റൊരു സ്രോതസ്സിൽ നിന്ന് ഡൗൺലോഡ് ചെയ്യാൻ ഈ ഓപ്ഷൻ ഉപയോഗിക്കുക</string>
     <string name="titleArabicTextToggle">അറബിക് വചനങ്ങൾ കാണിക്കുക</string>
     <string name="msgArabicTextToggle">ഇത് ഒഴിവാക്കുന്നത് ആപ്പിൽ ഉടനീളം അറബിക് വചനങ്ങൾ മറയ്ക്കാൻ കാരണമാകും.</string>
+    <string name="titleKeepScreenOnWhileReading">വായിക്കുമ്പോൾ സ്ക്രീൻ ഓണാക്കി വയ്ക്കുക</string>
+    <string name="msgKeepScreenOnWhileReading">റീഡർ തുറന്നിരിക്കുമ്പോൾ സ്ക്രീൻ ഓഫ് ആകുന്നത് തടയുന്നു. ബാറ്ററി ലാഭിക്കാൻ ഓഫ് ചെയ്യുക.</string>
     <string name="labelExport">എക്സ്പോർട്ട്</string>
     <string name="labelImport">ഇമ്പോർട്ട്</string>
     <string name="labelImportExportEverything">എല്ലാം ഇമ്പോർട്ട്/എക്സ്പോർട്ട് ചെയ്യുക</string>

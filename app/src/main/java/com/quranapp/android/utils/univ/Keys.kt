@@ -16,6 +16,7 @@ object Keys {
     const val READER_KEY_SETTING_IS_FROM_READER = "reader.setting_is_from_reader"
     const val READER_KEY_ARABIC_TEXT_ENABLED = "reader.arabic_text_enabled"
     const val READER_KEY_AUTO_SCROLL_SPEED = "reader.auto_scroll_speed"
+    const val READER_KEY_KEEP_SCREEN_ON = "reader.keep_screen_on"
 
     // Keys still referenced by old ActivityReader.java — remove when that class is deleted
     @Deprecated("Used only by legacy ActivityReader")

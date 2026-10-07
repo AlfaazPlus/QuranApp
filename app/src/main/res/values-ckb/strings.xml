@@ -268,6 +268,8 @@
     <string name="msgClearSearchHistory">پاککردنەوەی مێژووی گەڕان</string>
     <string name="msgClearReadHistory">پاککردنەوەی مێژووی خوێندنەوە</string>
     <string name="msgArabicTextToggle">ناچالاککردنی ئەم تایبەتمەندییە نووسینی ئایەتی عەرەبی لە گشت بەرنامەکە دەشارێتەوە.</string>
+    <string name="titleKeepScreenOnWhileReading">لە کاتی خوێندنەوە شاشە داگیرساو بهێڵەرەوە</string>
+    <string name="msgKeepScreenOnWhileReading">رێگە دەگرێت شاشە بکوژێتەوە کاتێک خوێنەرەکە کراوەیە. بۆ پاراستنی باتری ناچالاکی بکە.</string>
     <string name="titleArabicTextToggle">نووسینی ئایەتی عەرەبی نیشان بدە</string>
     <string name="msgExtractingFonts">دەرهێنانی فۆنتەکان</string>
     <string name="labelImportExportSettings">هێنان/هەڵگرتنی ڕێکخستنەکان</string>

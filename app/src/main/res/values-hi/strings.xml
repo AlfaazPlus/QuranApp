@@ -272,6 +272,8 @@
     <string name="msgResourceDownloadSource">यदि एक स्रोत काम नहीं कर रहा है तो किसी भिन्न स्रोत से कुरान डेटा डाउनलोड करने के लिए इस विकल्प का उपयोग करें</string>
     <string name="msgClearSearchHistory">सर्च हिस्ट्री हटाएं</string>
     <string name="msgArabicTextToggle">इस सुविधा को अक्षम करने से कुरान की आयतें पूरे ऐप से छिप जाएंगी।</string>
+    <string name="titleKeepScreenOnWhileReading">पढ़ते समय स्क्रीन चालू रखें</string>
+    <string name="msgKeepScreenOnWhileReading">रीडर खुला होने पर स्क्रीन बंद नहीं होगी। बैटरी बचाने के लिए इसे बंद करें।</string>
     <string name="desc_votd_widget">हर दिन एक नया आयात प्राप्त करें</string>
     <string name="autoScroll">स्वतः स्क्रॉल</string>
     <string name="startAutoScroll">स्वतः स्क्रॉल प्रारंभ करें</string>

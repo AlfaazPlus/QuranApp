@@ -202,6 +202,8 @@
     <string name="strMsgDuaFor" formatted="false">Dua para %s</string>
     <string name="titleArabicTextToggle">Mostrar texto do verso árabe</string>
     <string name="msgArabicTextToggle">Se desativar esta funcionalidade, o texto dos versos em árabe ficará oculto em toda a aplicação.</string>
+    <string name="titleKeepScreenOnWhileReading">Manter o ecrã ligado durante a leitura</string>
+    <string name="msgKeepScreenOnWhileReading">Impede que o ecrã se desligue enquanto o leitor está aberto. Desative para poupar bateria.</string>
     <string name="strTitleReaderTextSizeTransl">Tamanho do texto da tradução</string>
     <string name="strTitleChapInfoRevType">Tipo de Revelação</string>
     <string name="strMsgChapInfoFailedLoad">Falha ao carregar a informação da surah. Por favor, tente novamente mais tarde.</string>

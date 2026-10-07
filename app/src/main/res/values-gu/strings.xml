@@ -336,6 +336,8 @@
     <string name="msgResourceDownloadSource">જો કોઈ કામ ન કરી રહ્યું હોય તો અલગ સ્ત્રોતમાંથી કુરાન ડેટા ડાઉનલોડ કરવા માટે આ વિકલ્પનો ઉપયોગ કરો</string>
     <string name="titleArabicTextToggle">અરબી આયત લખાણ બતાવો</string>
     <string name="msgArabicTextToggle">આ સુવિધાને અક્ષમ કરવાથી આખી એપ્લિકેશનમાંથી અરબી આયત લખાણ છુપાવવામાં આવશે.</string>
+    <string name="titleKeepScreenOnWhileReading">વાંચતી વખતે સ્ક્રીન ચાલુ રાખો</string>
+    <string name="msgKeepScreenOnWhileReading">રીડર ખુલ્લું હોય ત્યારે સ્ક્રીન બંધ થશે નહીં. બેટરી બચાવવા માટે બંધ કરો.</string>
     <string name="labelExport">નિકાસ કરો</string>
     <string name="labelImport">આયાત કરો</string>
     <string name="labelImportExportEverything">બધું આયાત/નિકાસ કરો</string>

@@ -262,6 +262,8 @@
     <string name="msgResourceDownloadSource">ஒருவர் வேலை செய்யவில்லை என்றால் குர்ஆன் தரவை வேறு மூலத்திலிருந்து பதிவிறக்கம் செய்ய இந்த விருப்பத்தைப் பயன்படுத்தவும்</string>
     <string name="titleArabicTextToggle">அரபு உரையாடல் உரையைக் காட்டு</string>
     <string name="msgArabicTextToggle">இந்த அம்சத்தை முடக்குவது பயன்பாடு முழுவதிலிருந்தும் அரபு வசன உரையை மறைக்கும்.</string>
+    <string name="titleKeepScreenOnWhileReading">படிக்கும்போது திரையை இயக்கத்தில் வைக்கவும்</string>
+    <string name="msgKeepScreenOnWhileReading">ரீடர் திறந்திருக்கும்போது திரை அணையாது. பேட்டரியை சேமிக்க அணைக்கவும்.</string>
     <string name="clear">அழி</string>
     <string name="strLabelDownloaded">பதிவிறக்கம் செய்யப்பட்டது</string>
     <string name="strTitleDeleteTafsir">விரிவுரையை நீக்கவா?</string>

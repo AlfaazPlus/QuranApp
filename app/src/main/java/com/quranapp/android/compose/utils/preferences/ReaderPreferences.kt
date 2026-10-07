@@ -41,6 +41,9 @@ object ReaderPreferences {
     val KEY_ARABIC_TEXT_ENABLED =
         PrefKey(booleanPreferencesKey(Keys.READER_KEY_ARABIC_TEXT_ENABLED), true)
 
+    val KEY_KEEP_SCREEN_ON =
+        PrefKey(booleanPreferencesKey(Keys.READER_KEY_KEEP_SCREEN_ON), true)
+
     val KEY_AUTO_SCROLL_SPEED =
         PrefKey(floatPreferencesKey(Keys.READER_KEY_AUTO_SCROLL_SPEED), 7f)
 
@@ -268,6 +271,15 @@ object ReaderPreferences {
     @Composable
     fun observeArabicTextEnabled(): Boolean {
         return DataStoreManager.observe(KEY_ARABIC_TEXT_ENABLED)
+    }
+
+    suspend fun setKeepScreenOn(enabled: Boolean) {
+        DataStoreManager.write(KEY_KEEP_SCREEN_ON, enabled)
+    }
+
+    @Composable
+    fun observeKeepScreenOn(): Boolean {
+        return DataStoreManager.observe(KEY_KEEP_SCREEN_ON)
     }
 
     suspend fun getAutoScrollSpeed(): Float {

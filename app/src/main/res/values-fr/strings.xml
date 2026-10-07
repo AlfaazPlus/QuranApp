@@ -270,6 +270,8 @@
     <string name="msgClearReadHistory">Effacer l\'historique de lecture</string>
     <string name="msgClearSearchHistory">Effacer l\'historique de recherche</string>
     <string name="msgArabicTextToggle">Désactiver cette fonction masquera le texte des versets arabes dans l\'ensemble de l\'application.</string>
+    <string name="titleKeepScreenOnWhileReading">Garder l\'écran allumé pendant la lecture</string>
+    <string name="msgKeepScreenOnWhileReading">Empêche l\'écran de s\'éteindre lorsque le lecteur est ouvert. Désactivez pour économiser la batterie.</string>
     <string name="msgResourceDownloadSource">Utilisez cette option pour télécharger les données du Coran à partir d\'une autre source si l\'une d\'entre elles ne fonctionne pas</string>
     <string name="titleResourceDownloadSource">Source de téléchargement des ressources</string>
     <string name="titleExportData">Importer &amp; Exporter</string>

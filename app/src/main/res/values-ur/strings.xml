@@ -270,6 +270,8 @@
     <string name="msgClearReadHistory">پڑھا ہوا ہسٹری مٹا دیں</string>
     <string name="msgClearSearchHistory">تلاش کی ہسٹری کو مٹا دیں</string>
     <string name="msgArabicTextToggle">اس خصوصیت کو غیر فعال کرنے سے قرآن کی آیت پوری ایپ سے چھپ جائے گی۔</string>
+    <string name="titleKeepScreenOnWhileReading">مطالعہ کے دوران اسکرین آن رکھیں</string>
+    <string name="msgKeepScreenOnWhileReading">ریڈر کھلا ہونے پر اسکرین بند نہیں ہوگی۔ بیٹری بچانے کے لیے بند کریں۔</string>
     <string name="msgResourceDownloadSource">اگر ایک ذریعہ کام نہیں کررہا ہے تو قرآن کا ڈیٹا ڈاؤن لوڈ کرنے کے لیے سورس کو تبدیل کریں</string>
     <string name="titleResourceDownloadSource">وسیلہ ڈاؤن لوڈ کا ذریعہ</string>
     <string name="strTitleMajorSins">قرآن میں کبیرہ گناہ</string>

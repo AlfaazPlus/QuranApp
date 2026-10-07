@@ -265,6 +265,8 @@
     <string name="msgResourceDownloadSource">如果一个源无法正常工作，请使用此选项从另一个源下载古兰经数据</string>
     <string name="titleArabicTextToggle">显示阿拉伯文经文</string>
     <string name="msgArabicTextToggle">禁用此功能后，将隐藏整个应用中的阿拉伯文经文。</string>
+    <string name="titleKeepScreenOnWhileReading">阅读时保持屏幕常亮</string>
+    <string name="msgKeepScreenOnWhileReading">阅读器打开时屏幕不会自动关闭。关闭此选项可节省电量。</string>
     <string name="labelExport">导出</string>
     <string name="labelImport">导入</string>
     <string name="labelImportExportEverything">导入/导出全部</string>

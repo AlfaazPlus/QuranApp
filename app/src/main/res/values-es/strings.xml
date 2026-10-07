@@ -272,6 +272,8 @@
     <string name="msgClearReadHistory">Borrar el historial de lectura</string>
     <string name="msgClearSearchHistory">Borrar historial de búsqueda</string>
     <string name="msgArabicTextToggle">Al desactivar esta función, se ocultará el texto en verso árabe de toda la aplicación.</string>
+    <string name="titleKeepScreenOnWhileReading">Mantener la pantalla encendida al leer</string>
+    <string name="msgKeepScreenOnWhileReading">Evita que la pantalla se apague mientras el lector está abierto. Desactívalo para ahorrar batería.</string>
     <string name="msgExtractingFonts">Extracción de fuentes</string>
     <string name="titleExportData">Exportación e importación</string>
     <string name="labelExport">Exportar</string>
