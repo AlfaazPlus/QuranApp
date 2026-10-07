@@ -96,6 +96,7 @@ fun HizbNavigationList(
         )
         NavigationVerseList(
             ayahs = ayahs,
+            activeVerse = readerVm.lastKnownVerse,
             onVerseSelected = onVerseSelected
         )
     }
@@ -146,7 +147,7 @@ private fun RowScope.HizbGrid(
             FilterField(
                 value = filterText,
                 onValueChange = { filterText = it },
-                hint = stringResource(R.string.strTitleReaderHizb),
+                hint = stringResource(R.string.strHintSearchHizb),
                 keyboardType = KeyboardType.Text,
             )
         }

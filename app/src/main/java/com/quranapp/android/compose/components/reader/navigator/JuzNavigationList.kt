@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.navigator
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -109,6 +110,7 @@ fun JuzNavigationList(
         )
         NavigationVerseList(
             ayahs = ayahs,
+            activeVerse = readerVm.lastKnownVerse,
             onVerseSelected = onVerseSelected
         )
     }
@@ -199,6 +201,7 @@ private fun RowScope.JuzList(
 @Composable
 internal fun NavigationVerseList(
     ayahs: List<ChapterVersePair>,
+    activeVerse: ChapterVersePair?,
     onVerseSelected: (Int, Int) -> Unit
 ) {
     if (ayahs.isEmpty()) return
@@ -223,6 +226,13 @@ internal fun NavigationVerseList(
 
             state.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(filteredAyahs, activeVerse, searchQuery) {
+        if (searchQuery.isNotBlank() || activeVerse == null) return@LaunchedEffect
+
+        val idx = filteredAyahs.indexOf(activeVerse)
+        if (idx >= 0) state.scrollToItem(idx)
     }
 
     Column(
@@ -259,6 +269,8 @@ internal fun NavigationVerseList(
                 state = state
             ) {
                 items(filteredAyahs) {
+                    val isActive = it == activeVerse
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -266,6 +278,7 @@ internal fun NavigationVerseList(
                         colors = CardDefaults.cardColors(
                             containerColor = colorScheme.surface
                         ),
+                        border = if (isActive) BorderStroke(1.dp, colorScheme.primary) else null,
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     ) {
                         Text(

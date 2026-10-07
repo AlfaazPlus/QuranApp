@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.navigator
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -104,6 +105,9 @@ fun ChapterNavigatorList(
 
         ChapterVerseList(
             currentChapter = activeChapterNo?.let { surahs.getOrNull(it - 1) }?.surah,
+            activeVerseNo = readerVm.lastKnownVerse
+                ?.takeIf { it.chapterNo == activeChapterNo }
+                ?.verseNo,
             onVerseSelected = onVerseSelected
         )
     }
@@ -190,7 +194,11 @@ private fun RowScope.ChapterList(
 }
 
 @Composable
-private fun ChapterVerseList(currentChapter: SurahEntity?, onVerseSelected: (Int, Int) -> Unit) {
+private fun ChapterVerseList(
+    currentChapter: SurahEntity?,
+    activeVerseNo: Int?,
+    onVerseSelected: (Int, Int) -> Unit,
+) {
     if (currentChapter == null) return
 
     val state = rememberLazyListState()
@@ -213,6 +221,13 @@ private fun ChapterVerseList(currentChapter: SurahEntity?, onVerseSelected: (Int
 
             state.scrollToItem(0)
         }
+    }
+
+    LaunchedEffect(filteredAyahs, activeVerseNo, searchQuery) {
+        if (searchQuery.isNotBlank() || activeVerseNo == null) return@LaunchedEffect
+
+        val idx = filteredAyahs.indexOf(activeVerseNo)
+        if (idx >= 0) state.scrollToItem(idx)
     }
 
     Column(
@@ -249,6 +264,8 @@ private fun ChapterVerseList(currentChapter: SurahEntity?, onVerseSelected: (Int
                 state = state
             ) {
                 items(filteredAyahs) { verseNo ->
+                    val isActive = verseNo == activeVerseNo
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -256,6 +273,7 @@ private fun ChapterVerseList(currentChapter: SurahEntity?, onVerseSelected: (Int
                         colors = CardDefaults.cardColors(
                             containerColor = colorScheme.surface
                         ),
+                        border = if (isActive) BorderStroke(1.dp, colorScheme.primary) else null,
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     ) {
                         Text(

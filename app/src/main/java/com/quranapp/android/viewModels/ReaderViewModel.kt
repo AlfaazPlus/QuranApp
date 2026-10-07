@@ -2,8 +2,10 @@ package com.quranapp.android.viewModels
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.R
@@ -115,7 +117,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     var playerVerseSync = mutableStateOf(false)
 
     /** Continuously updated by the active mode to track the user's reading position. */
-    var lastKnownVerse: ChapterVersePair? = null
+    var lastKnownVerse: ChapterVersePair? by mutableStateOf(null)
         private set
 
     private val _navigateToPage = MutableStateFlow<Int?>(null)
@@ -155,6 +157,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     private val pagesLoadingMutex = Mutex()
     private val initReaderMutex = Mutex()
     private var lastInitReaderSignature: String? = null
+    private var pendingInitMode: ReaderMode? = null
 
     private val context get() = application
 
@@ -327,6 +330,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         playerVerseSync.value = true
 
+        // A mode change caused by init must not be treated as a user-driven mode switch, because
+        // handleModeTransition() would navigate using a stale lastKnownVerse.
+        pendingInitMode = params.readerMode?.takeIf { it != readerMode.value }
         params.readerMode?.let { ReaderPreferences.setReaderMode(it) }
         params.slugs?.let { ReaderPreferences.setTranslations(it) }
 
@@ -385,6 +391,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
             ReaderMode.VerseByVerse -> {
                 data.initialVerse?.takeIf { it.isValid }?.let {
+                    lastKnownVerse = it
                     requestVerseNavigation(it.chapterNo, it.verseNo)
                 }
             }
@@ -441,22 +448,65 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         data: ReaderIntentData.MushafPage,
         readerMode: ReaderMode?,
     ) {
-        ReaderPreferences.setReaderMode(readerMode ?: ReaderMode.Reading)
+        val targetMode = readerMode ?: ReaderMode.Reading
+        pendingInitMode = targetMode.takeIf { it != this.readerMode.value }
+        ReaderPreferences.setReaderMode(targetMode)
+
+        val hasFallbackVerse =
+            QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0
 
         if (data.mushafCode != null) {
-            ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
-
+            // Apply the session (layout, page, anchor verse) BEFORE writing the script pref, so
+            // that the pref observer sees layout == script and never runs switchScript(), which
+            // would otherwise navigate to page 1 and override the history position.
             val script = QuranScript(
-                ReaderPreferences.getQuranScript(),
-                ReaderPreferences.getQuranScriptVariant(),
+                QuranScriptUtils.validatePreferredScript(data.mushafCode),
+                data.mushafVariant,
             )
-            val pageCount = mushafPageCount(script.toMushafId())
+            val mushafId = script.toMushafId()
+            val pageCount = mushafPageCount(mushafId)
 
-            _mushafSession.update {
-                it.copy(
+            val targetPage = when {
+                data.pageNo > 0 -> data.pageNo
+                hasFallbackVerse -> resolvePageNo(
+                    data.fallbackChapterNo,
+                    data.fallbackVerseNo,
+                    mushafId,
+                )
+
+                else -> null
+            }
+
+            val anchorVerse = data.initialVerse?.takeIf { it.isValid }
+                ?: if (hasFallbackVerse) {
+                    ChapterVersePair(data.fallbackChapterNo, data.fallbackVerseNo)
+                } else if (targetPage != null) {
+                    withContext(Dispatchers.IO) {
+                        repository.getFirstAyahIdOnPage(mushafId, targetPage)
+                    }?.let {
+                        QuranMeta.getVerseNoFromAyahId(it).let { (c, v) -> ChapterVersePair(c, v) }
+                    }
+                } else null
+
+            mushafSessionMutex.withLock {
+                val old = _mushafSession.value
+
+                if (old.layout != script) {
+                    _pageItems.value = emptyMap()
+                    _translationPageItems.value = emptyMap()
+                    lastTranslationReaderContentKey = null
+                }
+
+                _mushafSession.value = old.copy(
                     layout = script,
                     pageCount = pageCount,
+                    currentPageNo = targetPage ?: old.currentPageNo,
+                    version = if (old.layout != script) old.version + 1 else old.version,
                 )
+
+                anchorVerse?.let { lastKnownVerse = it }
+
+                ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
             }
         }
 
@@ -472,7 +522,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             // history/sync — do not call [requestVerseNavigation] or translation/mushaf UI will
             // resolve the verse to a (possibly different) page after scroll.
             data.initialVerse?.takeIf { it.isValid }?.let { lastKnownVerse = it }
-        } else if (QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0) {
+        } else if (hasFallbackVerse) {
             val page = resolvePageNo(
                 data.fallbackChapterNo,
                 data.fallbackVerseNo,
@@ -649,6 +699,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     }
 
     suspend fun handleModeTransition(to: ReaderMode) {
+        val initDriven = pendingInitMode
+        pendingInitMode = null
+        if (initDriven == to) return
+
         val verse = lastKnownVerse ?: return
         val (chapterNo, verseNo) = verse
 
@@ -866,12 +920,18 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         mushafSessionMutex.withLock {
             val old = _mushafSession.value
 
+            // Already applied (e.g. by initReader/initMushafPage); don't override its navigation.
+            if (old.layout == newScript) {
+                if (old.pageCount <= 0) ensureSessionPageCount(newScript)
+                return
+            }
+
             val verse = resolveAnchorVerse(old)
             val newCount = mushafPageCount(newScript.toMushafId())
 
             val newPage = verse?.let {
                 repository.getPageForVerse(verse.chapterNo, verse.verseNo, newScript.toMushafId())
-            } ?: 1
+            }
 
             _pageItems.value = emptyMap()
             _translationPageItems.value = emptyMap()
@@ -881,11 +941,16 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             _mushafSession.value = old.copy(
                 layout = newScript,
                 pageCount = newCount,
-                currentPageNo = newPage,
+                currentPageNo = newPage ?: old.currentPageNo?.takeIf { it <= newCount } ?: 1,
                 version = old.version + 1,
             )
 
-            requestPageNavigation(newPage)
+            // Without an anchor verse keep whatever navigation is already pending.
+            if (newPage != null) {
+                requestPageNavigation(newPage)
+            } else if (_navigateToPage.value == null) {
+                requestPageNavigation(1)
+            }
         }
     }
 
