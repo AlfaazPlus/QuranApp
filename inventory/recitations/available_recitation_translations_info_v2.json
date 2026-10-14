@@ -97,6 +97,7 @@
       "lang_code": "fr",
       "lang_name": "Français",
       "reciter": "French Quran translation audio",
+      "book": "Muhammad Hamidullah",
       "url_template": "https://github.com/dabatase/fr_french/releases/download/v2/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/french.json.gz",
       "timing_version": 2,

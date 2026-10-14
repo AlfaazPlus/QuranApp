@@ -58,7 +58,6 @@ a[href] {
    padding: 1px 3px;
    color: var(--primary);
    font-weight: bold;
-   background-color: var(--primary-container);
 }
 
 a[href]:active {

@@ -65,6 +65,8 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.reader.dialogs.QuickReference
+import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
 import com.quranapp.android.compose.components.tafsir.dialogs.TafsirTextSizeSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
@@ -74,6 +76,7 @@ import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.parser.ParserUtils.compressVerseRefsByChapter
+import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.tafsir.TafsirWebViewClient
 import com.quranapp.android.utils.univ.Keys
@@ -98,6 +101,8 @@ fun TafsirReaderScreen(
 
     val onEvent = viewModel::onEvent
     val context = LocalContext.current
+    var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
+    val translationSlugs = ReaderPreferences.observeTranslations()
 
     Scaffold(
         modifier = modifier,
@@ -178,6 +183,13 @@ fun TafsirReaderScreen(
                         uiState = uiState,
                         onWebViewCreated = { webViewRef = it },
                         onScrollChanged = { scrollY -> webViewScrollY = scrollY },
+                        onOpenReference = { chapterNo, verses ->
+                            quickRefData = QuickReferenceData(
+                                slugs = translationSlugs,
+                                chapterNo = chapterNo,
+                                verses = verses,
+                            )
+                        },
                     )
                 }
 
@@ -233,6 +245,20 @@ fun TafsirReaderScreen(
         onUpdateTextSize = { multiplier ->
             viewModel.onEvent(TafsirReaderEvent.UpdateTextSize(multiplier))
         },
+    )
+
+    QuickReference(
+        data = quickRefData,
+        onOpenInReader = { chapterNo, range ->
+            quickRefData = null
+            ReaderFactory.startVerseRange(
+                context = context,
+                chapterNo = chapterNo,
+                fromVerse = range.first,
+                toVerse = range.last,
+            )
+        },
+        onClose = { quickRefData = null },
     )
 }
 
@@ -322,6 +348,7 @@ private fun TafsirWebViewContent(
     uiState: TafsirReaderUiState,
     onWebViewCreated: (WebView) -> Unit,
     onScrollChanged: (Int) -> Unit,
+    onOpenReference: (chapterNo: Int, verses: String) -> Unit,
 ) {
     val context = LocalContext.current
     val isDarkTheme = ThemeUtils.observeDarkTheme()
@@ -407,6 +434,7 @@ private fun TafsirWebViewContent(
                     quranArabicScriptCode = quranArabicScript,
                     atlasAyahImageCache = contentState.atlasAyahImageCache.takeIf { it.isNotEmpty() },
                     onPageFinished = { isLoading = false },
+                    onOpenReference = onOpenReference,
                 )
 
                 if (lastLoadSignature != pageSignature) {
@@ -452,6 +480,34 @@ private fun TafsirWebViewContent(
     }
 }
 
+private val tafsirReferenceTagPattern = Regex(
+    """<reference\b([^>]*)>(.*?)</reference>""",
+    setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL),
+)
+
+private fun referenceAttr(attrs: String, name: String): String? {
+    val match = Regex(
+        """\b${Regex.escape(name)}\s*=\s*(?:"([^"]*)"|'([^']*)')""",
+        RegexOption.IGNORE_CASE,
+    ).find(attrs) ?: return null
+    return match.groupValues[1].ifEmpty { match.groupValues[2] }
+}
+
+private fun linkifyTafsirReferences(html: String): String {
+    if (!html.contains("<reference", ignoreCase = true)) return html
+    return tafsirReferenceTagPattern.replace(html) { match ->
+        val attrs = match.groupValues[1]
+        val inner = match.groupValues[2]
+        val chapterNo = referenceAttr(attrs, "chapter")?.trim()?.toIntOrNull()
+        val verses = referenceAttr(attrs, "verses")?.trim().orEmpty()
+        if (chapterNo == null || verses.isEmpty()) {
+            inner
+        } else {
+            """<a href="https://quranapp.verse.ref/$chapterNo/$verses">$inner</a>"""
+        }
+    }
+}
+
 private fun readerTextSizeMultForCss(mult: Float): String {
     val m = mult.coerceIn(0.25f, 5f).toDouble()
     return String.format(Locale.US, "%.6f", m).trimEnd('0').trimEnd('.').ifEmpty { "1" }
@@ -486,7 +542,7 @@ private fun buildTafsirHtml(
         ""
     }
 
-    val fullContent = multiVerseAlert + content
+    val fullContent = multiVerseAlert + linkifyTafsirReferences(content)
 
     val boilerplate = ResUtils.readAssetsTextFile(context, "tafsir/tafsir_page.html")
 

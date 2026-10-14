@@ -6,9 +6,11 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.webkit.WebViewClientCompat
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.appPlatformLocale
 import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.factory.ReaderFactory
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
@@ -20,12 +22,14 @@ import java.util.concurrent.ConcurrentHashMap
  * - Asset file loading (CSS, JS)
  * - Font loading (Uthmani, content fonts based on language)
  * - Optional verse header: Quran Arabic page fonts and Atlas ayah PNGs
+ * - quranapp.verse.ref / quranapp.verse.reader links
  */
 class TafsirWebViewClient(
     private val tafsirKey: String,
     private val quranArabicScriptCode: String,
     private val atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>? = null,
     private val onPageFinished: (() -> Unit)? = null,
+    private val onOpenReference: (chapterNo: Int, verses: String) -> Unit = { _, _ -> },
 ) : WebViewClientCompat() {
 
     override fun shouldInterceptRequest(
@@ -46,6 +50,43 @@ class TafsirWebViewClient(
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
         onPageFinished?.invoke()
+    }
+
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        val uri = request.url
+        val host = uri.host ?: return false
+        val pathSegments = uri.pathSegments
+
+        if (pathSegments.size != 2 || !host.contains("quranapp.verse")) {
+            return false
+        }
+
+        val chapterNo = pathSegments[0].toIntOrNull() ?: return true
+        val verses = pathSegments[1]
+        if (verses.isEmpty()) return true
+
+        if (host == "quranapp.verse.ref") {
+            onOpenReference(chapterNo, verses)
+        } else if (host == "quranapp.verse.reader") {
+            val parts = verses.split("-")
+            val fromVerse = parts[0].toIntOrNull() ?: return true
+            val toVerse = if (parts.size > 1) {
+                parts[1].toIntOrNull() ?: return true
+            } else {
+                fromVerse
+            }
+            view.context.startActivity(
+                ReaderFactory.prepareVerseRangeIntent(
+                    chapterNo,
+                    fromVerse,
+                    toVerse,
+                ).apply {
+                    setClass(view.context, ActivityReader::class.java)
+                }
+            )
+        }
+
+        return true
     }
 
     @Throws(IOException::class)
