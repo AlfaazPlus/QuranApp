@@ -416,6 +416,24 @@
         "langName": "Türkçe",
         "downloadPath": "inventory/translations/tr/tr_elmalili.json",
         "version": 1
+      },
+      "tr_rowwad": {
+        "book": "Rowwad Translation Center",
+        "author": "Rowwad Translation Center",
+        "displayName": "Rowwad Translation Center",
+        "langCode": "tr",
+        "langName": "Türkçe",
+        "downloadPath": "inventory/translations/tr/tr_rowwad.json",
+        "version": 1
+      },
+      "tr_mokhtasar": {
+        "book": "Turkish Translation of Al-Mukhtasar",
+        "author": "Tafsir Center for Quranic Studies",
+        "displayName": "Turkish Al-Mukhtasar",
+        "langCode": "tr",
+        "langName": "Türkçe",
+        "downloadPath": "inventory/translations/tr/tr_mokhtasar.json",
+        "version": 1
       }
     },
     "ur": {
