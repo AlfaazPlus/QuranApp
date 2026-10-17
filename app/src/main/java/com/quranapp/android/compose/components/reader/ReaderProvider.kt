@@ -55,6 +55,7 @@ data class LocalRecitationStateData(
     val controller: RecitationController,
     val isAnyPlaying: Boolean,
     val playingVerse: ChapterVersePair,
+    val playingWordIndex: Int,
 )
 
 val LocalRecitation = staticCompositionLocalOf<LocalRecitationStateData> {
@@ -188,6 +189,7 @@ fun ReaderProvider(
             controller = controller,
             isAnyPlaying = isPlaying,
             playingVerse = recitationState.currentVerse,
+            playingWordIndex = recitationState.currentWordIndex,
         ),
         LocalWbwState provides LocalWbwStateData(
             isWbwRtl = isWbwRtl,

@@ -58,6 +58,7 @@ import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
+import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.QuranWordText
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.theme.alpha
@@ -187,6 +188,7 @@ private fun SpotlightVersePanel(
 
     ReaderProvider {
         val vm = LocalReaderViewModel.current
+        val recitation = LocalRecitation.current
 
         Box(
             modifier = modifier
@@ -200,12 +202,12 @@ private fun SpotlightVersePanel(
                 transitionSpec = {
                     fadeIn(
                         animationSpec = tween(
-                            durationMillis = 1000,
-                            delayMillis = 500,
+                            durationMillis = 500,
+                            delayMillis = 200,
                             easing = FastOutSlowInEasing,
                         ),
                     ) togetherWith fadeOut(
-                        animationSpec = tween(1000, easing = FastOutSlowInEasing),
+                        animationSpec = tween(500, easing = FastOutSlowInEasing),
                     )
                 },
                 contentAlignment = Alignment.Center,
@@ -216,6 +218,13 @@ private fun SpotlightVersePanel(
                 } else {
                     val chapterNo = pair.chapterNo
                     val verseNo = pair.verseNo
+                    val activeWordIndex = if (
+                        recitation.isAnyPlaying && recitation.playingVerse == pair
+                    ) {
+                        recitation.playingWordIndex
+                    } else {
+                        -1
+                    }
 
                     val verse by produceState<VerseWithDetails?>(
                         initialValue = null,
@@ -277,7 +286,8 @@ private fun SpotlightVersePanel(
                                     fontResolver = vm.fontResolver,
                                     scriptCode = scriptCode,
                                     arabicMultiplier = arabicMultiplier,
-                                    externalQuranDb = vm.externalQuranDb
+                                    externalQuranDb = vm.externalQuranDb,
+                                    activeWordIndex = activeWordIndex,
                                 )
 
                                 SpotlightTranslationText(
@@ -301,6 +311,7 @@ private fun SpotlightQuranText(
     scriptCode: String,
     arabicMultiplier: Float,
     externalQuranDb: ExternalQuranDatabase,
+    activeWordIndex: Int,
 ) {
     if (!arabicEnabled) return
 
@@ -357,13 +368,25 @@ private fun SpotlightQuranText(
                 .fillMaxWidth()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(
-                6.dp,
+                3.dp,
                 Alignment.CenterHorizontally
             ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             words.forEach { word ->
+                val isActiveWord = word.wordIndex == activeWordIndex
                 QuranWordText(
+                    modifier = Modifier
+                        .then(
+                            if (isActiveWord) {
+                                Modifier
+                                    .clip(MaterialTheme.shapes.small)
+                                    .background(colorScheme.primary.alpha(0.55f))
+                            } else {
+                                Modifier
+                            }
+                        )
+                        .padding(3.dp),
                     word = word,
                     atlasPlacements = atlasPlacements.getForWord(word),
                     style = style,

@@ -248,8 +248,12 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
+                val model = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
                     file.readText(Charsets.UTF_8)
+                )
+
+                AvailableRecitationsModel(
+                    reciters = model.reciters.sortedBy { it.reciter }
                 )
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadQuranFromLocal")
@@ -266,8 +270,12 @@ class RecitationModelManager private constructor(
             }
 
             try {
-                JsonHelper.json.decodeFromString<AvailableRecitationTranslationsModel>(
+                val model = JsonHelper.json.decodeFromString<AvailableRecitationTranslationsModel>(
                     file.readText(Charsets.UTF_8)
+                )
+
+                AvailableRecitationTranslationsModel(
+                    reciters = model.reciters.sortedBy { it.reciter }
                 )
             } catch (e: Exception) {
                 Log.saveError(e, "RecitationManager.loadTranslationFromLocal")

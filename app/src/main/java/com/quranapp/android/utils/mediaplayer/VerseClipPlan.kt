@@ -8,7 +8,8 @@ import androidx.media3.exoplayer.ExoPlayer
  * Each item is a verse (or verse+translation pair) clipped from a full chapter file.
  * This class maps per-clip positions to a single continuous timeline for UI progress/seek.
  *
- * Verse identity is encoded in each item's [MediaItem.mediaId] as "chapterNo:verseNo".
+ * Verse identity is encoded in each item's [MediaItem.mediaId] with the verse number
+ * as its final segment (for example, "kind:2:255").
  */
 class VerseClipPlan private constructor(
     val items: List<MediaItem>,

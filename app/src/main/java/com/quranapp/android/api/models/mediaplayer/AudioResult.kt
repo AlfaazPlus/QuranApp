@@ -27,6 +27,9 @@ data class VerseTiming(
     @SerialName("segments")
     private val segments: List<List<Long>>? = null
 ) {
+    val hasWordSegments: Boolean
+        get() = !segments.isNullOrEmpty()
+
     val durationMs: Long
         get() {
             if (
@@ -44,7 +47,7 @@ data class VerseTiming(
             }
         }
 
-    val seg: List<VerseSegment> by lazy {
+    private val seg: List<VerseSegment> by lazy {
         segments?.map {
             VerseSegment(
                 index = it[0].toInt(),
@@ -59,7 +62,22 @@ data class VerseTiming(
     }
 
     fun getSegmentAtPosition(positionMs: Long): VerseSegment? {
-        return seg.find { positionMs >= it.startMs && positionMs < it.endMs }
+        val list = seg
+        var lo = 0
+        var hi = list.lastIndex
+
+        while (lo <= hi) {
+            val mid = (lo + hi) ushr 1
+            val segment = list[mid]
+
+            when {
+                positionMs < segment.startMs -> hi = mid - 1
+                positionMs >= segment.endMs -> lo = mid + 1
+                else -> return segment
+            }
+        }
+
+        return null
     }
 }
 
@@ -75,6 +93,9 @@ data class ChapterTimingMetadata(
     val verses: List<VerseTiming>? = null
 ) {
     val hasVerseTiming: Boolean get() = !verses.isNullOrEmpty()
+    val hasWordTiming: Boolean by lazy {
+        verses?.any { it.hasWordSegments } == true
+    }
 
     @Transient
     private val verseByNo: Map<Int, VerseTiming> =
@@ -84,15 +105,18 @@ data class ChapterTimingMetadata(
         val list = verses ?: return null
         var lo = 0
         var hi = list.size - 1
+
         while (lo <= hi) {
             val mid = (lo + hi) ushr 1
             val v = list[mid]
+
             when {
                 positionMs < v.startMs -> hi = mid - 1
                 positionMs >= v.endMs -> lo = mid + 1
                 else -> return v
             }
         }
+
         return null
     }
 
@@ -112,9 +136,9 @@ data class AudioTimingMetadata(
     val chapters: List<ChapterTimingMetadata> = emptyList()
 ) {}
 
-enum class RecitationAudioKind {
-    QURAN,
-    TRANSLATION,
+enum class RecitationAudioKind(val type: String) {
+    QURAN("quran"),
+    TRANSLATION("transl"),
 }
 
 class RecitationAudioTrack(

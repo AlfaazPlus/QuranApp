@@ -569,9 +569,9 @@ class RecitationService : MediaLibraryService() {
         player.clearMediaItems()
 
         if (plan != null) {
-            // Multi-track clipped playlist: verse boundaries are encoded in the clips themselves,
-            // so per-track timing metadata is not needed at the service level.
-            _singleTrackTimingMetadata.value = null
+            // Verse boundaries come from clip transitions. Retain Quran timing only
+            // for optional Quran-word highlighting.
+            _singleTrackTimingMetadata.value = result.quran?.timingMetadata
             player.setMediaItems(plan.items)
             player.seekTo(plan.firstIndexForVerse(startVerse), 0L)
         } else {
@@ -603,6 +603,7 @@ class RecitationService : MediaLibraryService() {
             copy(
                 settings = updatedSettings,
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
+                currentWordIndex = -1,
                 pausedByHeadset = false,
             )
         }
@@ -697,7 +698,12 @@ class RecitationService : MediaLibraryService() {
 
                     items.add(
                         MediaItem.Builder()
-                            .setMediaId("$chapterNo:$verseNo")
+                            .setMediaId(
+                                "${
+                                    if (track.kind == RecitationAudioKind.QURAN) RecitationAudioKind.QURAN.type
+                                    else RecitationAudioKind.TRANSLATION.type
+                                }:$chapterNo:$verseNo"
+                            )
                             .setUri(track.audioUri)
                             .setMediaMetadata(
                                 metadataBuilder
@@ -789,37 +795,77 @@ class RecitationService : MediaLibraryService() {
     // ==================== Verse tracking ====================
 
     /**
-     * Starts position-based verse tracking for single-track mode.
-     * Clip-plan mode does not need polling — verse changes are detected
-     * via [checkVerseChanged] on media item transitions, and each clip
-     * already has per-verse MediaMetadata baked in.
+     * Starts position-based verse tracking for single-track mode and, when
+     * available, word-segment tracking for both playback modes. Clip-plan
+     * verse changes still come from [checkVerseChanged] media transitions.
      */
     private fun startVerseTracking() {
         verseTrackingJob?.cancel()
-
-        if (_verseClipPlan.value != null) return
 
         val timing = singleTrackTimingMetadata
         if (timing == null || !timing.hasVerseTiming) {
             return
         }
 
+        val isClippedPlaylist = _verseClipPlan.value != null
+        val hasWordTiming = timing.hasWordTiming
+
+        // Clipped playlists already receive verse changes from media-item
+        // transitions. Only keep this job for word highlighting in that mode.
+        if (isClippedPlaylist && !hasWordTiming) {
+            return
+        }
+
+        // A newly started single-file chapter begins inside its current verse,
+        // so there is no verse transition yet to trigger repeat scheduling.
+        // Resume from the remaining repeat budget after pauses as well.
+        if (!isClippedPlaylist) {
+            rescheduleRepeatForCurrentPosition()
+        }
+
         verseTrackingJob = serviceScope.launch {
             while (isActive && player.isPlaying) {
-                val vt = timing.getVerseAtPosition(player.currentPosition)
                 val current = state.value.currentVerse
+                val vt = timing.getVerseTiming(current.verseNo)
+                val isQuranClip = !isClippedPlaylist ||
+                        player.exoPlayer.currentMediaItem?.mediaId?.startsWith("${RecitationAudioKind.QURAN.type}:") == true
+                val position = if (isClippedPlaylist && vt != null) {
+                    // SessionPlayer exposes a virtual position for playlists.
+                    // Segment timestamps are chapter-relative, so use the raw
+                    // position within the active clipped media item here.
+                    vt.startMs + player.exoPlayer.currentPosition
+                } else {
+                    player.currentPosition
+                }
 
-                if (vt != null) {
-                    if (vt.verseNo != current.verseNo) {
-                        val newVerse = ChapterVersePair(timing.chapterNo, vt.verseNo)
-                        updateState { copy(currentVerse = newVerse) }
-                        updateNotificationMetadata(timing.chapterNo, vt.verseNo)
-                        invalidateRepeatSchedule()
-                        scheduleRepeatForVerse(vt.startMs, vt.endMs)
+                if (hasWordTiming && isQuranClip) {
+                    val segment = vt?.getSegmentAtPosition(position)
+                    val wordIndex = segment?.index ?: -1
+                    if (wordIndex != state.value.currentWordIndex) {
+                        updateState { copy(currentWordIndex = wordIndex) }
+                    }
+                } else if (state.value.currentWordIndex != -1) {
+                    updateState { copy(currentWordIndex = -1) }
+                }
+
+                if (!isClippedPlaylist) {
+                    val verseAtPosition = timing.getVerseAtPosition(position)
+                    if (verseAtPosition != null) {
+                        if (verseAtPosition.verseNo != current.verseNo) {
+                            val newVerse =
+                                ChapterVersePair(timing.chapterNo, verseAtPosition.verseNo)
+                            updateState { copy(currentVerse = newVerse) }
+                            updateNotificationMetadata(timing.chapterNo, verseAtPosition.verseNo)
+                            invalidateRepeatSchedule()
+                            scheduleRepeatForVerse(verseAtPosition.startMs, verseAtPosition.endMs)
+                        }
                     }
                 }
 
-                delay(200.milliseconds)
+                // Word segments may be shorter than a verse-tracking interval.
+                // Poll more closely only when this reciter actually has them;
+                // UI state is still emitted solely at word boundaries.
+                delay(if (hasWordTiming) 50.milliseconds else 200.milliseconds)
             }
         }
     }
@@ -831,6 +877,9 @@ class RecitationService : MediaLibraryService() {
         // only cancel the job without resetting state of repeat schedule
         repeatMessage?.cancel()
         repeatMessage = null
+        if (state.value.currentWordIndex != -1) {
+            updateState { copy(currentWordIndex = -1) }
+        }
     }
 
 
@@ -884,7 +933,10 @@ class RecitationService : MediaLibraryService() {
 
             repeatRemainingPlaysForCurrentItem--
 
-            this@RecitationService.player.seekTo(startMs)
+            // Do not use SessionPlayer.seekTo: it correctly invalidates repeat
+            // state for user seeks, but doing so here would reset this verse's
+            // remaining repeat budget and make it repeat forever.
+            player.exoPlayer.seekTo(startMs)
 
             // reschedule for next repeat
             scheduleRepeatForVerse(startMs, endMs)
@@ -913,6 +965,7 @@ class RecitationService : MediaLibraryService() {
     private fun isSingleTrackRepeatEligible(): Boolean {
         return state.value.settings.audioOption == AudioOption.ONLY_QURAN &&
                 repeatRemainingPlaysForCurrentItem > 0 &&
+                _verseClipPlan.value == null &&
                 singleTrackTimingMetadata != null
     }
 
@@ -936,21 +989,34 @@ class RecitationService : MediaLibraryService() {
 
     /**
      * Called on media item transitions and seek discontinuities.
-     * Parses the mediaId ("chapterNo:verseNo") to update the current verse.
+     * Parses the mediaId ("kind:chapterNo:verseNo") to update the current verse.
      * Only meaningful for clip-plan playlists where each item is a verse.
      */
     private fun checkVerseChanged() {
         val mediaId = player.exoPlayer.currentMediaItem?.mediaId ?: return
         val parts = mediaId.split(':')
-        if (parts.size != 2) return
+        val isQuranClip = parts.size != 3 || parts[0] == RecitationAudioKind.QURAN.type
+        val (chapterText, verseText) = when (parts.size) {
+            // Supports an already-built legacy clip queue during service recreation.
+            2 -> parts[0] to parts[1]
+            3 -> parts[1] to parts[2]
+            else -> return
+        }
 
-        val chapter = parts[0].toIntOrNull() ?: return
-        val verse = parts[1].toIntOrNull() ?: return
+        val chapter = chapterText.toIntOrNull() ?: return
+        val verse = verseText.toIntOrNull() ?: return
 
         val resolved = ChapterVersePair(chapter, verse)
         if (resolved != state.value.currentVerse) {
-            updateState { copy(currentVerse = resolved) }
+            updateState {
+                copy(
+                    currentVerse = resolved,
+                    currentWordIndex = -1,
+                )
+            }
             updateNotificationMetadata(chapter, verse)
+        } else if (!isQuranClip && state.value.currentWordIndex != -1) {
+            updateState { copy(currentWordIndex = -1) }
         }
     }
 

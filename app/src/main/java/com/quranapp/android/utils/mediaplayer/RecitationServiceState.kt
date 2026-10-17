@@ -26,6 +26,8 @@ data class AudioResolutionRequest(val chapterNo: Int, val settings: PlayerSettin
 
 data class RecitationServiceState(
     val currentVerse: ChapterVersePair = ChapterVersePair(-1, -1),
+    /** App word index currently covered by the recitation segment, or -1 when unavailable. */
+    val currentWordIndex: Int = -1,
     /** Helps in indiacating if the player is resolving and also for which chapter no */
     val resolvingChapterNo: Int? = null,
     /** 0–100 while chapter audio is downloading from the network; null otherwise. */
@@ -110,6 +112,7 @@ data class RecitationServiceState(
     fun toBundle(): Bundle = Bundle().apply {
         putInt(KEY_CURRENT_CHAPTER, currentVerse.chapterNo)
         putInt(KEY_CURRENT_VERSE, currentVerse.verseNo)
+        putInt(KEY_CURRENT_WORD_INDEX, currentWordIndex)
         putInt(KEY_RESOLVING_CHAPTER_NO, resolvingChapterNo ?: -1)
         putInt(KEY_AUDIO_DOWNLOAD_PROGRESS, downloadProgress ?: -1)
         putBoolean(KEY_IS_PLAYING, isPlaying)
@@ -127,6 +130,7 @@ data class RecitationServiceState(
     companion object {
         private const val KEY_CURRENT_CHAPTER = "state_current_chapter"
         private const val KEY_CURRENT_VERSE = "state_current_verse"
+        private const val KEY_CURRENT_WORD_INDEX = "state_current_word_index"
         private const val KEY_CURRENT_RECITER = "state_current_reciter"
         private const val KEY_CURRENT_TRANSLATION_RECITER = "state_current_translation_reciter"
         private const val KEY_RESOLVING_CHAPTER_NO = "state_resolving_chapter_no"
@@ -147,6 +151,7 @@ data class RecitationServiceState(
                     chapterNo = bundle.getInt(KEY_CURRENT_CHAPTER, -1),
                     verseNo = bundle.getInt(KEY_CURRENT_VERSE, -1),
                 ),
+                currentWordIndex = bundle.getInt(KEY_CURRENT_WORD_INDEX, -1),
                 resolvingChapterNo = bundle.getInt(KEY_RESOLVING_CHAPTER_NO, -1)
                     .takeIf { it != -1 },
                 downloadProgress = bundle.getInt(KEY_AUDIO_DOWNLOAD_PROGRESS, -1)

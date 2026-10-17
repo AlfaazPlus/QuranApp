@@ -54,6 +54,7 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -318,15 +319,9 @@ private fun PageModePage(
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
 
-    val playingWordKeys = remember(isPlaying, item.lines, playingVerse) {
-        if (!isPlaying) return@remember emptySet()
-
-        item.lines
-            .filterIsInstance<QuranPageLineItem.Text>()
-            .flatMap { it.words }
-            .filter { word -> playingVerse.doesEqual(word.ayahId) }
-            .map { word -> word.ayahId to word.wordIndex }
-            .toSet()
+    val playingWordKey = remember(isPlaying, item.lines, playingVerse, playerState.playingWordIndex) {
+        if (!isPlaying || playerState.playingWordIndex < 0) return@remember NO_PLAYING_WORD_KEY
+        encodePlayingWordKey(playingVerse, playerState.playingWordIndex)
     }
 
     TextStyleProvider(emptyMap()) {
@@ -411,14 +406,14 @@ private fun PageModePage(
                                                 ) {
                                                     MushafLineContent(
                                                         line = line,
-                                                        playingWordKeys = playingWordKeys,
+                                                        playingWordKey = playingWordKey,
                                                         ruledPageDecoration = ruledPageDecoration,
                                                     )
                                                 }
                                             } else {
                                                 MushafLineContent(
                                                     line = line,
-                                                    playingWordKeys = playingWordKeys,
+                                                    playingWordKey = playingWordKey,
                                                     ruledPageDecoration = ruledPageDecoration,
                                                 )
                                             }
@@ -437,7 +432,7 @@ private fun PageModePage(
 @Composable
 private fun MushafLineContent(
     line: QuranPageLineItem,
-    playingWordKeys: Set<Pair<Int, Int>>,
+    playingWordKey: Long,
     ruledPageDecoration: Boolean,
 ) {
     when (line) {
@@ -446,7 +441,7 @@ private fun MushafLineContent(
         is QuranPageLineItem.Text -> MushafLineText(
             textLine = line,
             layout = line.layout,
-            playingWordKeys = playingWordKeys,
+            playingWordKey = playingWordKey,
         )
     }
 }
@@ -455,7 +450,7 @@ private fun MushafLineContent(
 private fun MushafLineText(
     textLine: QuranPageLineItem.Text,
     layout: MushafLineLayout,
-    playingWordKeys: Set<Pair<Int, Int>>,
+    playingWordKey: Long,
 ) {
     val fittedStyle = layout.fittedStyle
     val centeredGap = layout.centeredGap
@@ -465,7 +460,7 @@ private fun MushafLineText(
             MushafWordsRow(
                 textLine = textLine,
                 fittedStyle = fittedStyle,
-                playingWordKeys = playingWordKeys,
+                playingWordKey = playingWordKey,
                 horizontalArrangement = Arrangement.spacedBy(
                     centeredGap, Alignment.CenterHorizontally
                 ),
@@ -476,7 +471,7 @@ private fun MushafLineText(
         MushafWordsRow(
             textLine = textLine,
             fittedStyle = fittedStyle,
-            playingWordKeys = playingWordKeys,
+            playingWordKey = playingWordKey,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -487,7 +482,7 @@ private fun MushafLineText(
 private fun MushafWordsRow(
     textLine: QuranPageLineItem.Text,
     fittedStyle: TextStyle,
-    playingWordKeys: Set<Pair<Int, Int>>,
+    playingWordKey: Long,
     horizontalArrangement: Arrangement.Horizontal,
     modifier: Modifier = Modifier,
 ) {
@@ -496,7 +491,7 @@ private fun MushafWordsRow(
         mutableStateListOf<Rect?>().apply { repeat(words.size) { add(null) } }
     }
 
-    val highlightRects = mergedMushafHighlightRects(words, wordRects, playingWordKeys)
+    val highlightRects = mergedMushafHighlightRects(words, wordRects, playingWordKey)
     val highlightColor = colorScheme.primary.alpha(0.3f)
 
     val wbwState = LocalWbwState.current
@@ -593,7 +588,7 @@ private fun Word(
 private fun mergedMushafHighlightRects(
     words: List<AyahWordEntity>,
     wordRects: List<Rect?>,
-    playingWordKeys: Set<Pair<Int, Int>>,
+    playingWordKey: Long,
 ): List<Rect> {
     if (words.isEmpty()) return emptyList()
 
@@ -602,7 +597,7 @@ private fun mergedMushafHighlightRects(
 
     while (i < words.size) {
         val w = words[i]
-        val highlighted = (w.ayahId to w.wordIndex) in playingWordKeys
+        val highlighted = encodePlayingWordKey(w.ayahId, w.wordIndex) == playingWordKey
 
         if (!highlighted) {
             i++
@@ -620,7 +615,7 @@ private fun mergedMushafHighlightRects(
 
         while (j < words.size) {
             val w2 = words[j]
-            if ((w2.ayahId to w2.wordIndex) !in playingWordKeys || w2.ayahId != ayahId) {
+            if (encodePlayingWordKey(w2.ayahId, w2.wordIndex) != playingWordKey || w2.ayahId != ayahId) {
                 break
             }
             val r2 = wordRects.getOrNull(j) ?: break
@@ -640,6 +635,14 @@ private fun mergedMushafHighlightRects(
 
     return result
 }
+
+private const val NO_PLAYING_WORD_KEY = Long.MIN_VALUE
+
+private fun encodePlayingWordKey(verse: ChapterVersePair, wordIndex: Int): Long =
+    encodePlayingWordKey(QuranMeta.getAyahId(verse.chapterNo, verse.verseNo), wordIndex)
+
+private fun encodePlayingWordKey(ayahId: Int, wordIndex: Int): Long =
+    (ayahId.toLong() shl 32) xor (wordIndex.toLong() and 0xffffffffL)
 
 private fun Modifier.mushafHorizontalRuleBelow(
     color: Color,

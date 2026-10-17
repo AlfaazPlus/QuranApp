@@ -44,6 +44,7 @@ fun QuranTextWbw(
     val wbwMap = verseUi.wbwByWordIndex ?: emptyMap()
     val textStyles = LocalQuranTextStyle.current
     val wbwState = LocalWbwState.current
+    val recitationState = LocalRecitation.current
 
     val withinWbwSheet = onWordClick != null
     val shouldShowTooltip = !withinWbwSheet && !wbwState.isWbwSheetOpen
@@ -57,6 +58,10 @@ fun QuranTextWbw(
         ) {
             for (word in verseUi.verse.words) {
                 val wbwForWord = wbwMap[word.wordIndex]
+                val playing =
+                    recitationState.isAnyPlaying && recitationState.playingVerse.doesEqual(
+                        verseUi.verse
+                    ) && recitationState.playingWordIndex == word.wordIndex
 
                 if (wbwState.activeTooltipWord == word && shouldShowTooltip) {
                     WbwTooltip(
@@ -85,7 +90,7 @@ fun QuranTextWbw(
                     }
                 } else {
                     QuranTextWbwWordCell(
-                        active = wbwState.activeTooltipWord == word,
+                        active = wbwState.activeTooltipWord == word || playing,
                         word = word,
                         verseUi = verseUi,
                         wbw = wbwForWord,
