@@ -311,10 +311,10 @@
       "id": "al_qatami",
       "reciter": "Nasser Al Qatami",
       "style": null,
-      "url_template": "https://download.quranicaudio.com/quran/nasser_bin_ali_alqatami/{chapNo:%03d}.mp3",
+      "url_template": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/{chapNo:%03d}.mp3",
       "timing_url": "ghraw://AlfaazPlus/QuranAppInventory/master/audio_timings/al_qatami.json.gz",
-      "timing_version": 1,
-      "audio_version": 1,
+      "timing_version": 2,
+      "audio_version": 2,
       "translations": {
         "ar": "ناصر القطامي",
         "bn": "নাসের আল কাতামি",
