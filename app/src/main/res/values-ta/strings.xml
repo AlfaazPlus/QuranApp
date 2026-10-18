@@ -122,7 +122,7 @@
     <string name="strChapInfoSeeMore">மேலும் தகவலைக் காண்க</string>
     <string name="strTitleChapInfoChapterNo">அத்தியாயம் எண்</string>
     <string name="strTitleChapInfoJuzNo">நீதிபதி எண்.</string>
-    <string name="strTitleChapInfoVerses">வசனங்கள்</string>
+    <string name="verses">வசனங்கள்</string>
     <string name="strTitleChapInfoRukus">லண்டன்</string>
     <string name="strTitleChapInfoPages">பக்கங்கள்</string>
     <string name="strTitleChapInfoRevOrder">வெளிப்பாடு ஒழுங்கு</string>

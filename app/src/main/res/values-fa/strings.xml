@@ -85,7 +85,7 @@
     <string name="strChapInfoSeeMore">مشاهده اطلاعات بیشتر ›</string>
     <string name="strTitleChapInfoChapterNo">شماره فصل</string>
     <string name="strTitleChapInfoJuzNo">شماره جزء.</string>
-    <string name="strTitleChapInfoVerses">آیات</string>
+    <string name="verses">آیات</string>
     <string name="strTitleChapInfoRukus">رکوس</string>
     <string name="strTitleChapInfoRevType">نوع مکاشفه</string>
     <string name="strTitleAppSettings">تنظیمات برنامه</string>

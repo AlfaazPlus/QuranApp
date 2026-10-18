@@ -101,7 +101,7 @@
     <string name="strTitleFeaturedProphets">الأنبياء في القرآن</string>
     <string name="strTitlePrivacyPolicy">‮سياسة الخصوصية</string>
     <string name="strTitleSuccess">نجح</string>
-    <string name="strTitleChapInfoVerses">الآيات</string>
+    <string name="verses">الآيات</string>
     <string name="strTitleChapInfoRukus">الركوعات</string>
     <string name="strTitleChapInfoPages">الصفحات</string>
     <string name="strTitleChapInfoRevType">نوعها</string>

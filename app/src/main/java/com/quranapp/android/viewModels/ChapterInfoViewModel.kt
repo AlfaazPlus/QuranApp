@@ -268,7 +268,7 @@ class ChapterInfoViewModel(application: Application) : AndroidViewModel(applicat
             .replace("{{JUZ_VALUE}}", juzStr)
             .replace(
                 "{{VERSES_TITLE}}",
-                context.getString(R.string.strTitleChapInfoVerses)
+                context.getString(R.string.verses)
             )
             .replace("{{VERSES_VALUE}}", surah.ayahCount.toString())
             .replace(

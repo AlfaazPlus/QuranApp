@@ -27,7 +27,7 @@
     <string name="strTitleSuccess">سەرکەوتوو بوو</string>
     <string name="strTitleChapInfoRukus">سوژدەبردن</string>
     <string name="strTitleChapInfoJuzNo">ژمارەی جوزﺋ</string>
-    <string name="strTitleChapInfoVerses">ئایەتەکان</string>
+    <string name="verses">ئایەتەکان</string>
     <string name="strMsgChapInfoFailedLoad">پیشاندانی زانیاری سورەت سەرکەوتوو نەنوو، دواتر هەوڵبدەرەوە.</string>
     <string name="strTitleReaderSettings">ڕێکخستنەکانی خوێندنەوە</string>
     <string name="strTitleTheme">ڕووکار</string>

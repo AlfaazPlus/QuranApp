@@ -90,7 +90,7 @@
     <string name="strHintBookmarkViewerNote">Escriba una nota adicional enel marcador de aquí…</string>
     <string name="strMsgInvalidChapterNo" formatted="false">%d es un Nro. de capitulo no valido.</string>
     <string name="strMsgReadShowupHere">Su historial de lectura aparecerá aquí.</string>
-    <string name="strTitleChapInfoVerses">Versos</string>
+    <string name="verses">Versos</string>
     <string name="strTitleChapInfoRukus">Reverencia (Rukūʿs)</string>
     <string name="strTitleBookmarkDeleteThis">¿Quitar este marcador\?</string>
     <string name="strMsgSearchWordPart">Buscar parte de la palabra</string>

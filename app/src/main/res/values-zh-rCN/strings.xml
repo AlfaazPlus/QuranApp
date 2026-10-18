@@ -109,7 +109,7 @@
     <string name="strChapInfoSeeMore">查看更多信息 ›</string>
     <string name="strTitleChapInfoChapterNo">章节号</string>
     <string name="strTitleChapInfoJuzNo">卷</string>
-    <string name="strTitleChapInfoVerses">节</string>
+    <string name="verses">节</string>
     <string name="strTitleChapInfoRukus">段落</string>
     <string name="strTitleChapInfoPages">页</string>
     <string name="strTitleChapInfoRevOrder">启示顺序</string>

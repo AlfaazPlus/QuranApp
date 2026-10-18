@@ -162,7 +162,7 @@
     <string name="strChapInfoSeeMore">See more info ›</string>
     <string name="strTitleChapInfoChapterNo">Chapter Number</string>
     <string name="strTitleChapInfoJuzNo">Juz No.</string>
-    <string name="strTitleChapInfoVerses">Verses</string>
+    <string name="verses">Verses</string>
     <string name="strTitleChapInfoRukus">Rukus</string>
     <string name="strTitleChapInfoPages">Pages</string>
     <string name="strTitleChapInfoRevOrder">Revelation Order</string>

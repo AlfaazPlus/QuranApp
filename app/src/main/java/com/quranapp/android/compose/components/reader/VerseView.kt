@@ -46,12 +46,18 @@ import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
+enum class VerseActionBarMode {
+    Full,
+    Minimal,
+}
+
 @Composable
 fun VerseView(
     verseUi: ReaderLayoutItem.VerseUI,
     isBookmarked: Boolean,
     showDivider: Boolean = false,
     onWordClick: ((AyahWordEntity) -> Unit)? = null,
+    actionBarMode: VerseActionBarMode = VerseActionBarMode.Full,
 ) {
     val verse = verseUi.verse
 
@@ -67,7 +73,7 @@ fun VerseView(
                 )
                 .padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
-            VerseActionBar(verse = verse, isVersePlaying, isBookmarked)
+            VerseActionBar(verse, isVersePlaying, isBookmarked, actionBarMode)
 
             QuranTextWbw(
                 verseUi = verseUi,
@@ -91,7 +97,8 @@ fun VerseView(
 private fun VerseActionBar(
     verse: VerseWithDetails,
     isVersePlaying: Boolean,
-    isBookmarked: Boolean
+    isBookmarked: Boolean,
+    actionBarMode: VerseActionBarMode,
 ) {
     val context = LocalContext.current
     val verseActions = LocalVerseActions.current
@@ -112,13 +119,15 @@ private fun VerseActionBar(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            VerseActionIconButton(
-                painter = painterResource(R.drawable.dr_icon_menu),
-                contentDescription = stringResource(R.string.strTitleVerseOptions),
-                tint = iconTint,
-                iconModifier = Modifier.rotate(90f),
-            ) {
-                verseActions.onVerseOption?.invoke(verse)
+            if (actionBarMode == VerseActionBarMode.Full) {
+                VerseActionIconButton(
+                    painter = painterResource(R.drawable.dr_icon_menu),
+                    contentDescription = stringResource(R.string.strTitleVerseOptions),
+                    tint = iconTint,
+                    iconModifier = Modifier.rotate(90f),
+                ) {
+                    verseActions.onVerseOption?.invoke(verse)
+                }
             }
 
             PlayControlButton(controller, isVersePlaying, iconTint, verse)
@@ -129,22 +138,27 @@ private fun VerseActionBar(
                 tint = Color.Unspecified,
             ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
 
-            VerseActionIconButton(
-                painter = painterResource(
-                    if (isBookmarked) R.drawable.ic_bookmark_added
-                    else R.drawable.ic_bookmark
-                ),
-                contentDescription = stringResource(R.string.strLabelBookmark),
-                tint = bookmarkTint,
-            ) {
-                verseActions.onBookmarkRequest?.invoke(
-                    verse.chapterNo,
-                    verse.verseNo..verse.verseNo
-                )
+            if (actionBarMode == VerseActionBarMode.Full) {
+                VerseActionIconButton(
+                    painter = painterResource(
+                        if (isBookmarked) R.drawable.ic_bookmark_added
+                        else R.drawable.ic_bookmark
+                    ),
+                    contentDescription = stringResource(R.string.strLabelBookmark),
+                    tint = bookmarkTint,
+                ) {
+                    verseActions.onBookmarkRequest?.invoke(
+                        verse.chapterNo,
+                        verse.verseNo..verse.verseNo
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.width(10.dp))
-        VerseSerial(verse = verse)
+        VerseSerial(
+            verse = verse,
+            canCopy = actionBarMode == VerseActionBarMode.Full,
+        )
     }
 }
 
@@ -218,7 +232,10 @@ private fun VerseActionIconButton(
 }
 
 @Composable
-private fun VerseSerial(verse: VerseWithDetails) {
+private fun VerseSerial(
+    verse: VerseWithDetails,
+    canCopy: Boolean,
+) {
     val context = LocalContext.current
     val chapterNo = verse.chapterNo
     val verseNo = verse.verseNo
@@ -247,10 +264,12 @@ private fun VerseSerial(verse: VerseWithDetails) {
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
             .background(colorScheme.surface)
-            .clickable(
-                onClick = {
-                    context.copyToClipboard(verse.id.toString())
-                },
+            .then(
+                if (canCopy) {
+                    Modifier.clickable { context.copyToClipboard(verse.id.toString()) }
+                } else {
+                    Modifier
+                }
             )
             .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorScheme.onSurface,

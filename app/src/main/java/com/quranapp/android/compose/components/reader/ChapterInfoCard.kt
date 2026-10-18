@@ -160,7 +160,7 @@ fun ChapterInfoCard(chapterNo: Int) {
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             ChapterInfoStatChip(
-                                text = stringResource(R.string.strTitleChapInfoVerses) + ": " +
+                                text = stringResource(R.string.verses) + ": " +
                                         String.format(
                                             appLocale.platformLocale,
                                             "%d",

@@ -88,7 +88,7 @@
     <string name="strChapInfoSeeMore">مزید معلومات دیکھیں ›</string>
     <string name="strTitleChapInfoChapterNo">سورہ نمبر</string>
     <string name="strTitleChapInfoJuzNo">پارہ نمبر</string>
-    <string name="strTitleChapInfoVerses">آیات</string>
+    <string name="verses">آیات</string>
     <string name="strTitleChapInfoRukus">رکوع</string>
     <string name="strTitleChapInfoPages">صفحات</string>
     <string name="strTitleChapInfoRevOrder">ترتیب نزولی</string>

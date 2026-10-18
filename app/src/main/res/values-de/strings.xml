@@ -81,7 +81,7 @@
     <string name="strTitleFailed">Fehlgeschlagen</string>
     <string name="strTitleFeaturedDuas">Bittgebete im Koran</string>
     <string name="strTitleChapInfoChapterNo">Kapitelnummer</string>
-    <string name="strTitleChapInfoVerses">Verse</string>
+    <string name="verses">Verse</string>
     <string name="strTitleChapInfoPages">Seiten</string>
     <string name="strTitleChapInfoRevType">Art der Offenbarung</string>
     <string name="strTitleAppSettings">App-Einstellungen</string>

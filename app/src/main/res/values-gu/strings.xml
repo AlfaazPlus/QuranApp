@@ -205,7 +205,7 @@
     <string name="strTitleSuccess">સફળતા</string>
     <string name="strChapInfoSeeMore">વધુ માહિતી જુઓ ›</string>
     <string name="strTitleChapInfoChapterNo">પ્રકરણ નંબર</string>
-    <string name="strTitleChapInfoVerses">આયત</string>
+    <string name="verses">આયત</string>
     <string name="strTitleChapInfoPages">પન્ના</string>
     <string name="strTitleChapInfoRevType">સાક્ષાત્કાર પ્રકાર</string>
     <string name="strTitleChapInfoRevOrder">સાક્ષાત્કાર ઓર્ડર</string>

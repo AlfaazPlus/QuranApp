@@ -89,7 +89,7 @@
     <string name="strTitleSuccess">Ийгиликтүү болду</string>
     <string name="strChapInfoSeeMore">Көбүрөөк маалымат көрүү ›</string>
     <string name="strTitleChapInfoJuzNo">Жүз номери</string>
-    <string name="strTitleChapInfoVerses">Аяттар</string>
+    <string name="verses">Аяттар</string>
     <string name="strTitleChapInfoRukus">Рукулар</string>
     <string name="strTitleChapInfoPages">Барактар</string>
     <string name="strTitleChapInfoRevOrder">Вахий ирети боюнча</string>

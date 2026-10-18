@@ -145,7 +145,7 @@
     <string name="strChapInfoSeeMore">Tingnan ang higit pang impormasyon ›</string>
     <string name="strTitleChapInfoChapterNo">Numero ng Kabanata</string>
     <string name="strTitleChapInfoJuzNo">Numero ng Juz.</string>
-    <string name="strTitleChapInfoVerses">Mga Taludtod</string>
+    <string name="verses">Mga Taludtod</string>
     <string name="strLabelOrder">Ang Order</string>
     <string name="strTitleChapInfoRukus">Mga Ruku</string>
     <string name="strTitleChapInfoRevType">Uri ng Pahayag</string>

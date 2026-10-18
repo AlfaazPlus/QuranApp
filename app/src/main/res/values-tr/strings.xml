@@ -96,7 +96,7 @@
     <string name="strTitleSuccess">Başarılı</string>
     <string name="strChapInfoSeeMore">Daha fazla bilgi gör ›</string>
     <string name="strTitleChapInfoChapterNo">Bölüm numarası</string>
-    <string name="strTitleChapInfoVerses">Ayet</string>
+    <string name="verses">Ayet</string>
     <string name="strTitleChapInfoRevOrder">Vahiy sırası</string>
     <string name="strTitleChapInfoRevType">Vahiy türü</string>
     <string name="strTitleAppSettings">Uygulama ayarları</string>

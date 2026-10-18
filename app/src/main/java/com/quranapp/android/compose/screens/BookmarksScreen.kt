@@ -80,6 +80,8 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
     val scope = rememberCoroutineScope()
     val uiState by vm.uiState.collectAsStateWithLifecycle()
 
+    val chapterNames by vm.chapterNames.collectAsStateWithLifecycle()
+
     var selectedIds by remember { mutableStateOf<Set<Long>>(emptySet()) }
     var viewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var deleteTarget by remember { mutableStateOf<BookmarkDeleteTarget?>(null) }
@@ -175,7 +177,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
                     items(uiState.bookmarks, key = { it.id }) { bookmark ->
                         BookmarkItemCard(
                             bookmark = bookmark,
-                            chapterName = uiState.chapterNames[bookmark.chapterNo].orEmpty(),
+                            chapterName = chapterNames[bookmark.chapterNo].orEmpty(),
                             selected = selectedIds.contains(bookmark.id),
                             selecting = selecting,
                             onClick = {

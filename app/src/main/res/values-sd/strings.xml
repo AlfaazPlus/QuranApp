@@ -264,7 +264,7 @@
     <string name="strTitleFeaturedProphets">قرآن ۾ انبياءَ</string>
     <string name="strMsgThemeDark">اونداهو روپ بجلي جي استعمال کي گھٽائي ٿو.</string>
     <string name="strMsgSearchNoResultsFound">ڪو به نتيجو نه مليو. مھرباني ڪري ڳولا فلٽر چيڪ ڪريو يا ٻئي ترجمي ۾ ڳولا ڪريو.</string>
-    <string name="strTitleChapInfoVerses">آيتون</string>
+    <string name="verses">آيتون</string>
     <string name="strTitleChapInfoRukus">رڪوع</string>
     <string name="audioOnlyTranslation">صرف ترجمو هلايو</string>
     <string name="strTitleFeaturedDuas">قرآن ۾ دعائون</string>

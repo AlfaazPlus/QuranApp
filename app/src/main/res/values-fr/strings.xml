@@ -77,7 +77,7 @@
     <string name="strChapInfoSeeMore">Voir plus d\'informations ›</string>
     <string name="strTitleChapInfoChapterNo">Numéro de chapitre</string>
     <string name="strTitleChapInfoJuzNo">Juz n°</string>
-    <string name="strTitleChapInfoVerses">Versets</string>
+    <string name="verses">Versets</string>
     <string name="strTitleChapInfoRukus">Rukus</string>
     <string name="strTitleChapInfoPages">Pages</string>
     <string name="strTitleChapInfoRevOrder">Ordre de révélation</string>

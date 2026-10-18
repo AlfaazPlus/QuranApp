@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.homepage.HomeSectionBookmarks
 import com.quranapp.android.compose.components.homepage.HomeSectionReadHistory
 
 private const val HOME_HISTORY_LIMIT = 10
@@ -45,6 +46,7 @@ fun LibraryScreen() {
                     .padding(bottom = 64.dp),
             ) {
                 HomeSectionReadHistory()
+                HomeSectionBookmarks()
             }
         }
     }

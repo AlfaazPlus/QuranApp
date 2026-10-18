@@ -101,7 +101,7 @@
     <string name="strTitleSuccess">Successo</string>
     <string name="strChapInfoSeeMore">Vedi maggiori informazioni ›</string>
     <string name="strTitleChapInfoChapterNo">Numero di capitolo</string>
-    <string name="strTitleChapInfoVerses">Versi</string>
+    <string name="verses">Versi</string>
     <string name="strTitleChapInfoRukus">Rukus</string>
     <string name="strTitleChapInfoPages">Pagine</string>
     <string name="strTitleChapInfoRevOrder">Ordine di rivelazione</string>

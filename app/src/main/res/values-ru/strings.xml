@@ -144,7 +144,7 @@
     <string name="strChapInfoSeeMore">Узнать больше ›</string>
     <string name="strTitleChapInfoChapterNo">Номер главы</string>
     <string name="strTitleChapInfoJuzNo">Джуз Нет.</string>
-    <string name="strTitleChapInfoVerses">Аятов</string>
+    <string name="verses">Аятов</string>
     <string name="strTitleChapInfoRevType">По периоду ниспосылания</string>
     <string name="strMsgChapInfoFailedLoad">Не удалось загрузить сведения о суре. Пожалуйста, попробуйте позже.</string>
     <string name="strTitleAppSettings">Настройки приложения</string>

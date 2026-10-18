@@ -128,7 +128,7 @@
     <string name="strTitleSuccess">সফল হয়েছে</string>
     <string name="strChapInfoSeeMore">আরও তথ্য দেখুন ›</string>
     <string name="strTitleChapInfoChapterNo">সূরার নম্বর</string>
-    <string name="strTitleChapInfoVerses">আয়াতসমূহ</string>
+    <string name="verses">আয়াতসমূহ</string>
     <string name="strTitleChapInfoRukus">রুকুসমূহ</string>
     <string name="strTitleChapInfoPages">পৃষ্ঠাসমূহ</string>
     <string name="strTitleChapInfoRevOrder">নাযিলের ক্রম</string>

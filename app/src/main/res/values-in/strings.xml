@@ -83,7 +83,7 @@
     <string name="strTitleSuccess">Berhasil</string>
     <string name="strChapInfoSeeMore">Lihat info selengkapnya ›</string>
     <string name="strTitleChapInfoJuzNo">Nomor Juz</string>
-    <string name="strTitleChapInfoVerses">Ayat</string>
+    <string name="verses">Ayat</string>
     <string name="strTitleChapInfoPages">Halaman</string>
     <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
     <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
