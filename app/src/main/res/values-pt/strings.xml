@@ -107,6 +107,7 @@
     <string name="strTextPleaseWait">Por favor, aguarde…</string>
     <string name="strLabelNavHome">Início</string>
     <string name="strLabelNavSearch">Procurar</string>
+    <string name="library">Biblioteca</string>
     <string name="strLabelAllChapters">Todos os capítulos</string>
     <string name="strTitleChapInfoChapterNo">Número de capítulo</string>
     <string name="strMsgSearchOneResultFoundIn" formatted="false">Apenas 1 resultado encontrado em %s</string>

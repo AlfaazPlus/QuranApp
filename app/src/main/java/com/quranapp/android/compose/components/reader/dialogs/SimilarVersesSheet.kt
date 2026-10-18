@@ -63,14 +63,13 @@ import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
-import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.reader.isQuranAtlasScript
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -102,7 +101,7 @@ fun SimilarVersesSheet(
     val viewModel = LocalReaderViewModel.current
     val fontResolver = viewModel.fontResolver
     val repository = viewModel.repository
-    val externalQuranDb = viewModel.externalQuranDb
+    val atlasBundle = LocalQuranAtlasBundle.current
 
     val arabicMult = ReaderPreferences.observeArabicTextSizeMultiplier()
     val translMult = ReaderPreferences.observeTranlationTextSizeMultiplier()
@@ -114,7 +113,7 @@ fun SimilarVersesSheet(
     var rows by remember { mutableStateOf<List<SimilarVerseListRow>>(emptyList()) }
     var loading by remember { mutableStateOf(true) }
 
-    LaunchedEffect(sourceVerse, scriptCode, primarySlug, appLocale) {
+    LaunchedEffect(sourceVerse, scriptCode, primarySlug, appLocale, atlasBundle) {
         val v = sourceVerse
 
         if (v == null) {
@@ -158,10 +157,6 @@ fun SimilarVersesSheet(
                     }
 
                     val highlights = parseMatchWordIndices(s.matchWords)
-
-                    val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                        QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
-                    } else null
 
                     SimilarVerseListRow(
                         entity = s,

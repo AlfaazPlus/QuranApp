@@ -169,6 +169,7 @@
     <string name="strMsgCouldNotOpenPage">صفحو کُلي نه سگهيو.</string>
     <string name="strLabelNavHome">گهر</string>
     <string name="strLabelNavSearch">کوجنا</string>
+    <string name="library">لائبريري</string>
     <string name="textDownloading">ڊائونلوڊنگ…</string>
     <string name="lastCrashLog">آخري ڪريش جو لاگ</string>
     <string name="crashLogs">ڪريش لاگ</string>

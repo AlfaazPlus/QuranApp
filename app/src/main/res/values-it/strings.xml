@@ -156,6 +156,7 @@
     <string name="strMsgTryLater">Per favore riprova più tardi.</string>
     <string name="strMsgCouldNotOpenPage">Impossibile aprire la pagina.</string>
     <string name="strLabelNavHome">Casa</string>
+    <string name="library">Libreria</string>
     <string name="strMsgEnterValidRange">Inserisci un intervallo valido</string>
     <string name="strTextPleaseWait">Attendere prego…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>

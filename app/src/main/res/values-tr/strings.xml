@@ -151,6 +151,7 @@
     <string name="strMsgCouldNotOpenPage">Sayfa açılamadı.</string>
     <string name="strLabelNavHome">Ana ekran</string>
     <string name="strLabelNavSearch">Ara</string>
+    <string name="library">Kütüphane</string>
     <string name="strTextPleaseWait">Lütfen bekleyin…</string>
     <string name="strAyatulKursi">Ayet-el Kürsi</string>
     <string name="strTitleOops">Eyvah!</string>

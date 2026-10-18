@@ -223,7 +223,24 @@ private fun ReaderLayoutVerseMode(
             }
 
             if (currentPlayingIndex >= 0) {
-                listState.animateScrollToItem(currentPlayingIndex)
+                val layoutInfo = listState.layoutInfo
+                val playingItem = layoutInfo.visibleItemsInfo
+                    .firstOrNull { it.index == currentPlayingIndex }
+
+                val isFullyVisible = playingItem != null &&
+                        playingItem.offset >= layoutInfo.viewportStartOffset &&
+                        playingItem.offset + playingItem.size <= layoutInfo.viewportEndOffset
+
+                if (!isFullyVisible) {
+                    // Keep some already-read content above the active ayah so the
+                    // transition is easier to follow than repeatedly pinning it to the top.
+                    val viewportHeight =
+                        layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
+                    listState.animateScrollToItem(
+                        index = currentPlayingIndex,
+                        scrollOffset = -(viewportHeight / 3),
+                    )
+                }
             }
         }
     }

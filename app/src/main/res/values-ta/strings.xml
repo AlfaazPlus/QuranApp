@@ -195,6 +195,7 @@
     <string name="strMsgCouldNotOpenPage">பக்கத்தைத் திறக்க முடியவில்லை.</string>
     <string name="strLabelNavHome">வீடு</string>
     <string name="strLabelNavSearch">தேடல்</string>
+    <string name="library">நூலகம்</string>
     <string name="strTextPleaseWait">தயவுசெய்து காத்திருங்கள்…</string>
     <string name="strAyatulKursi">அயதுல் நாற்காலிகள்</string>
     <string name="strTitleInfo">தகவல்!</string>

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.HomePremiumBannerContainer
 import com.quranapp.android.compose.components.VerseOfTheDay
@@ -25,10 +26,13 @@ import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.utils.recommended.Recommendation
 import com.quranapp.android.utils.recommended.Recommended
+import com.quranapp.android.viewModels.ReaderProviderViewModel
+import com.quranapp.android.viewModels.VotdViewModel
 
 @Composable
 fun HomeTabbedSection() {
     val context = LocalContext.current
+    val votdVm = viewModel<VotdViewModel>()
     var recommendations by remember { mutableStateOf(emptyList<Recommendation>()) }
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
@@ -37,7 +41,7 @@ fun HomeTabbedSection() {
     }
 
     if (recommendations.isEmpty()) {
-        VerseOfTheDay()
+        VerseOfTheDay(vm = votdVm)
         return
     }
 
@@ -80,7 +84,10 @@ fun HomeTabbedSection() {
                 HomeSectionRecommended(recommendations)
             } else {
                 ReaderProvider {
-                    VotdContent(header = {})
+                    VotdContent(
+                        header = {},
+                        vm = votdVm,
+                    )
                 }
             }
         }

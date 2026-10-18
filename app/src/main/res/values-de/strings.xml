@@ -153,6 +153,7 @@
     <string name="strMsgCouldNotOpenPage">Konnte die Seite nicht öffnen.</string>
     <string name="strLabelNavHome">Startseite</string>
     <string name="strLabelNavSearch">Suche</string>
+    <string name="library">Bibliothek</string>
     <string name="strAyatulKursi">Ayatul Kurs</string>
     <string name="strTitleInfo">Info!</string>
     <string name="strTitleOops">Ups!</string>

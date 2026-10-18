@@ -255,6 +255,7 @@
     <string name="strMsgCouldNotOpenPage">Could not open the page.</string>
     <string name="strLabelNavHome">Home</string>
     <string name="strLabelNavSearch">Search</string>
+    <string name="library">Library</string>
     <string name="strTextPleaseWait">Please wait…</string>
     <string name="strAyatulKursi">Ayatul Kursi</string>
     <string name="strTitleInfo">Info!</string>

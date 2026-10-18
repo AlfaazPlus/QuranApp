@@ -167,6 +167,7 @@
     <string name="strMsgCouldNotOpenPage">पेज नहीं खोल सके।</string>
     <string name="strLabelNavHome">होम</string>
     <string name="strLabelNavSearch">खोजें</string>
+    <string name="library">लाइब्रेरी</string>
     <string name="strTextPleaseWait">कृपया प्रतीक्षा करें…</string>
     <string name="strAyatulKursi">आयतुल कुर्सी</string>
     <string name="strTitleInfo">सूचना!</string>

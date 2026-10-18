@@ -24,25 +24,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.compose.screens.main.enterTransition
+import com.quranapp.android.compose.screens.main.exitTransition
+import com.quranapp.android.compose.screens.main.popEnterTransition
+import com.quranapp.android.compose.screens.main.popExitTransition
 import com.quranapp.android.utils.univ.Keys
 
 
-private val enterTransition = slideInHorizontally(
-    initialOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(durationMillis = 100),
-)
-private val exitTransition = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(durationMillis = 100),
-)
-private val popEnterTransition = slideInHorizontally(
-    initialOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(durationMillis = 100),
-)
-private val popExitTransition = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(durationMillis = 100),
-)
 
 fun NavGraphBuilder.route(
     route: String,

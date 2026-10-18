@@ -58,6 +58,7 @@ fun AppBar(
     onSearchQueryChange: ((String) -> Unit)? = null,
     searchPlaceholder: String? = null,
     shadowElevation: Dp = 4.dp,
+    showNavigationIcon: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
@@ -102,11 +103,13 @@ fun AppBar(
             }
         },
         navigationIcon = {
-            BackButton() {
-                if (searchEnabled && searchExpanded) {
-                    searchExpanded = false
-                } else {
-                    backPressedDispatcher?.onBackPressed()
+            if (showNavigationIcon) {
+                BackButton() {
+                    if (searchEnabled && searchExpanded) {
+                        searchExpanded = false
+                    } else {
+                        backPressedDispatcher?.onBackPressed()
+                    }
                 }
             }
         },

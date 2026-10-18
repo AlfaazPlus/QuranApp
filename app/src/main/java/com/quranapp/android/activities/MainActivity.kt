@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.MainScreen
+import com.quranapp.android.compose.screens.main.MainScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
 import com.quranapp.android.utils.app.AppActions.scheduleActions

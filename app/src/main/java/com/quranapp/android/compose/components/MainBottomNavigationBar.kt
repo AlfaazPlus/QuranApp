@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,10 +32,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReaderIndexPage
-import com.quranapp.android.activities.ActivitySearch
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.utils.univ.Routes
 
 val MainBottomNavBarHeight = 70.dp
 
@@ -45,8 +50,21 @@ fun mainBottomNavigationOuterHeight(): Dp {
 }
 
 @Composable
-fun MainBottomNavigationBar() {
+fun MainBottomNavigationBar(navController: NavHostController) {
     val context = LocalContext.current
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val handleClick = { route: String ->
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -61,8 +79,12 @@ fun MainBottomNavigationBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            BottomItem(R.string.strLabelNavHome, R.drawable.dr_icon_home, true) {
-                // noop
+            BottomItem(
+                R.string.strLabelNavHome,
+                R.drawable.dr_icon_home,
+                currentDestination?.hierarchy?.any { it.route == Routes.HOME } == true,
+            ) {
+                handleClick(Routes.HOME)
             }
 
             Box(
@@ -84,8 +106,11 @@ fun MainBottomNavigationBar() {
                 )
             }
 
-            BottomItem(R.string.strLabelNavSearch, R.drawable.dr_icon_search, false) {
-                context.startActivity(Intent(context, ActivitySearch::class.java))
+            BottomItem(
+                R.string.library, R.drawable.ic_library,
+                currentDestination?.hierarchy?.any { it.route == Routes.LIBRARY } == true,
+            ) {
+                handleClick(Routes.LIBRARY)
             }
         }
     }

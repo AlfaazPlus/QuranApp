@@ -110,6 +110,7 @@
     <string name="strLabelContinueReading">വായിക്കുന്നത് തുടരുക »</string>
     <string name="strMsgNoInternetLong">ഇന്റർനെറ്റ് കണക്ഷനില്ല. Wi-Fi അല്ലെങ്കിൽ സെല്ലുലാർ ഡാറ്റ ഓണാക്കിയിട്ടുണ്ടെന്ന് ഉറപ്പുവരുത്തുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="strLabelNavHome">ഹോം</string>
+    <string name="library">ലൈബ്രറി</string>
     <string name="strTextPleaseWait">കാത്തിരിക്കൂ…</string>
     <string name="strLabelOrder">ക്രമം</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d കൂടുതൽ വിവർത്തനങ്ങൾ</string>

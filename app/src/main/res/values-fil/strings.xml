@@ -188,6 +188,7 @@
     <string name="strMsgCouldNotOpenPage">Hindi mabuksan ang pahina.</string>
     <string name="strMsgEnterValidRange">Mangyaring magpasok ng wastong hanay</string>
     <string name="strLabelNavSearch">Maghanap</string>
+    <string name="library">Library</string>
     <string name="strMsgTranslNoneSelected">Walang napiling pagsasalin. Pumunta sa mga setting para maghanap ng mga pagsasalin.</string>
     <string name="strMsgTranslSelectionLimit" formatted="false">Ang maximum na %d na pagsasalin ay maaaring piliin nang sabay-sabay. Mangyaring alisin sa pagkakapili ang isa bago pumili ng isa pa. Ito ay upang maiwasan ang pagkawala ng pagganap.</string>
     <string name="strMsgSomethingWrong">Nagkaproblema!</string>

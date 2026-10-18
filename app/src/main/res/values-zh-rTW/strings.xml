@@ -193,6 +193,7 @@
     <string name="strMsgCouldNotOpenPage">無法開啟頁面。</string>
     <string name="strLabelNavHome">主頁</string>
     <string name="strLabelNavSearch">搜尋</string>
+    <string name="library">收藏</string>
     <string name="strTextPleaseWait">請稍候……</string>
     <string name="strAyatulKursi">寶座經文</string>
     <string name="strTitleInfo">資訊！</string>

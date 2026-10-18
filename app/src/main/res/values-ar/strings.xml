@@ -158,6 +158,7 @@
     <string name="strMsgNoInternet">الرجاء التحقق من اتصالك بالإنترنت.</string>
     <string name="strMsgReferenceInQuran" formatted="false">%s في القرآن</string>
     <string name="strLabelNavSearch">البحث</string>
+    <string name="library">مكتبتي</string>
     <string name="strMsgBookmarkRemoved">تمت إزالة الآية من الإشارات المرجعية</string>
     <string name="strMsgHistoryRemoved" formatted="false">تمت إزالة \"%s\" من السجل</string>
     <string name="strMsgSearchMultResultsFound" formatted="false">إجمالي النتائج التي تم العثور عليها في %1$s:%2$d</string>

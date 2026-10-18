@@ -28,9 +28,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,58 +37,42 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quranapp.android.compose.theme.tightTextStyle
-import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.QuranTextWbw
-import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.reader.TextStyleProvider
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.compose.utils.LocalAppLocale
-import com.quranapp.android.compose.utils.formatString
-import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.compose.utils.preferences.VersePreferences
+import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
+import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranTextStyleParams
-import com.quranapp.android.utils.reader.TranslationTextStyleParams
-import com.quranapp.android.utils.reader.VerseActions
-import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
-import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.reader.isQuranAtlasScript
-import com.quranapp.android.utils.verse.VerseUtils
-import com.quranapp.android.viewModels.ReaderViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.quranapp.android.viewModels.VotdViewModel
 
 @Composable
-fun VerseOfTheDay() {
+fun VerseOfTheDay(
+    vm: VotdViewModel = viewModel(),
+) {
     ReaderProvider {
         HomePremiumBannerContainer {
             VotdContent(
@@ -99,7 +81,8 @@ fun VerseOfTheDay() {
                         icon = R.drawable.dr_icon_heart_filled,
                         title = stringResource(R.string.strTitleVOTD)
                     )
-                }
+                },
+                vm = vm,
             )
         }
     }
@@ -107,34 +90,40 @@ fun VerseOfTheDay() {
 
 @Composable
 internal fun VotdContent(
-    header: @Composable () -> Unit
+    header: @Composable () -> Unit,
+    vm: VotdViewModel = viewModel(),
 ) {
     val context = LocalContext.current
-    val resources = LocalResources.current
-    val colors by rememberUpdatedState(MaterialTheme.colorScheme)
-    val type by rememberUpdatedState(MaterialTheme.typography)
-    val appLocale = LocalAppLocale.current
+    val colors = MaterialTheme.colorScheme
+    val type = MaterialTheme.typography
+    val density = LocalDensity.current
+    val textMeasurer = rememberTextMeasurer()
 
-    val vm = viewModel<ReaderViewModel>()
+    val readerVm = LocalReaderViewModel.current
+    val atlasBundle = LocalQuranAtlasBundle.current
     val verseActions = LocalVerseActions.current
+    val uiState by vm.uiState.collectAsStateWithLifecycle()
 
-    val prefs by DataStoreManager.flowMultiple(
-        ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
-        ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
-        ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
-        ReaderPreferences.KEY_SCRIPT,
-        ReaderPreferences.KEY_TRANSLATIONS,
-        VersePreferences.KEY_VOTD_REMINDER_ENABLED,
-    ).collectAsStateWithLifecycle(null)
+    val verseUi = uiState.verseUi
+    val verse = verseUi?.verse
+    val arabicEnabled = uiState.arabicEnabled
+    val arabicTextMultiplier = uiState.arabicTextMultiplier
+    val scriptCode = uiState.scriptCode
+    val votdEnabled = uiState.votdReminderEnabled
 
-    val preferences = prefs ?: return
-
-    val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
-    val arabicTextMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
-    val translationSizeMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
-    val scriptCode = preferences.get(ReaderPreferences.KEY_SCRIPT)
-    val translationSlugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
-    val votdEnabled = preferences.get(VersePreferences.KEY_VOTD_REMINDER_ENABLED)
+    LaunchedEffect(colors, type, density, verseActions, atlasBundle) {
+        vm.observeVerseUi(
+            uiConfig = ComposeUiConfig(
+                context = context,
+                textMeasurer = textMeasurer,
+                density = density,
+                colors = colors,
+                type = type,
+            ),
+            verseActions = verseActions,
+            atlasBundle = atlasBundle,
+        )
+    }
 
     var showDailyReminderSheet by rememberSaveable { mutableStateOf(false) }
 
@@ -145,116 +134,12 @@ internal fun VotdContent(
         },
     )
 
-    val state by produceState<ReaderLayoutItem.VerseUI?>(
-        initialValue = null,
-        scriptCode,
-        translationSlugs,
-        appLocale,
-        colors,
-        type,
-    ) {
-        val translationFactory = QuranTranslationFactory(context)
-
-        value = withContext(Dispatchers.IO) {
-            val verse = VerseUtils.getVOTD(context, vm.repository)
-                ?: return@withContext null
-
-            val slugs = setOf(ReaderPreferences.primaryTranslationSlug())
-
-            val translations = translationFactory.getTranslationsSingleVerse(
-                slugs,
-                verse.chapterNo,
-                verse.verseNo
-            )
-
-            val booksInfo = translationFactory.getTranslationBooksInfoValidated(slugs)
-
-            val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                QuranAtlasLoader.getBundle(context, vm.externalQuranDb, scriptCode)
-            } else null
-
-            val parsedTranslationTexts = translations.mapNotNull { translation ->
-                val bookInfo = booksInfo[translation.bookSlug] ?: return@mapNotNull null
-
-                val ts = getTranslationTextStyle(
-                    TranslationTextStyleParams(
-                        translation.bookSlug,
-                        type,
-                        translationSizeMultiplier,
-                    )
-                )
-
-                val text = buildAnnotatedString {
-                    withStyle(ts.toParagraphStyle()) {
-                        withStyle(ts.toSpanStyle()) {
-                            append(
-                                buildTranslationAnnotatedString(
-                                    translation,
-                                    colors,
-                                    actions = VerseActions(
-                                        verseActions.onReferenceClick,
-                                        onFootnoteClickRaw = { _, footnoteNo ->
-                                            verseActions.onFootnoteClick?.invoke(
-                                                verse,
-                                                translation.footnotes[footnoteNo]
-                                            )
-                                        }
-                                    )
-                                )
-                            )
-                        }
-
-                        withStyle(
-                            ParagraphStyle(lineHeight = 40.sp)
-                        ) {
-                            withStyle(
-                                SpanStyle(
-                                    color = Color.White.alpha(0.75f),
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = type.labelMedium.fontSize
-                                )
-                            ) {
-                                append(
-                                    formatString(
-                                        context,
-                                        appLocale,
-                                        pattern = resources.getString(R.string.strLabelVerseSerialWithChapter),
-                                        verse.chapter.getCurrentName(),
-                                        verse.chapterNo,
-                                        verse.verseNo
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
-
-                Pair(
-                    bookInfo.langCode,
-                    text,
-                )
-            }
-
-            ReaderLayoutItem.VerseUI(
-                verse = verse,
-                atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words, verse.pageNo) ?: emptyMap(),
-                parsedTranslationTexts = parsedTranslationTexts,
-                wbwByWordIndex = null,
-                showDivider = false,
-                key = "verse-votd"
-            )
-        }
-    }
-
-    val verseUi = state
-
-    if (verseUi == null) {
+    if (verse == null) {
         VerseOfTheDayLoading()
         return
     }
 
-    val verse = verseUi.verse
-    val isBookmarked by vm.userRepository.isBookmarkedFlow(
+    val isBookmarked by readerVm.userRepository.isBookmarkedFlow(
         verse.chapterNo,
         verse.verseNo..verse.verseNo
     ).collectAsStateWithLifecycle(false)
@@ -290,7 +175,7 @@ internal fun VotdContent(
                 getQuranTextStyle(
                     QuranTextStyleParams(
                         context = context,
-                        fontResolver = vm.fontResolver,
+                        fontResolver = readerVm.fontResolver,
                         colors = colors,
                         type = type,
                         pageNo = verse.pageNo,

@@ -64,7 +64,6 @@ import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
@@ -72,14 +71,12 @@ import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
-import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
-import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.reader.isQuranAtlasScript
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -286,7 +283,6 @@ private fun SpotlightVersePanel(
                                     fontResolver = vm.fontResolver,
                                     scriptCode = scriptCode,
                                     arabicMultiplier = arabicMultiplier,
-                                    externalQuranDb = vm.externalQuranDb,
                                     activeWordIndex = activeWordIndex,
                                 )
 
@@ -310,7 +306,6 @@ private fun SpotlightQuranText(
     fontResolver: FontResolver,
     scriptCode: String,
     arabicMultiplier: Float,
-    externalQuranDb: ExternalQuranDatabase,
     activeWordIndex: Int,
 ) {
     if (!arabicEnabled) return
@@ -346,20 +341,15 @@ private fun SpotlightQuranText(
     }
 
     val words = vwd.words
+    val atlasBundle = LocalQuranAtlasBundle.current
 
-    val atlasPlacements by produceState<Map<Int, List<AtlasGlyphPlacement>>>(
+    val atlasPlacements by produceState(
         initialValue = emptyMap(),
-        scriptCode,
+        atlasBundle,
         words,
-        context,
+        vwd.pageNo,
     ) {
-        value = withContext(Dispatchers.IO) {
-            val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-                QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
-            } else null
-
-            atlasBundle?.getPlacementsForWords(words, vwd.pageNo) ?: emptyMap()
-        }
+        value = atlasBundle?.getPlacementsForWords(words, vwd.pageNo) ?: emptyMap()
     }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {

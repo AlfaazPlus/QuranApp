@@ -210,6 +210,7 @@
     <string name="strMsgCouldNotOpenPage">Не удалось открыть страницу.</string>
     <string name="strLabelNavHome">Главная</string>
     <string name="strLabelNavSearch">Поиск</string>
+    <string name="library">Библиотека</string>
     <string name="strTextPleaseWait">Пожалуйста, подождите…</string>
     <string name="strAyatulKursi">Аят аль-Курсий</string>
     <string name="strTitleInfo">Информация!</string>

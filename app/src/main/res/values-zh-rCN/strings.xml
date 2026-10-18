@@ -193,6 +193,7 @@
     <string name="strMsgCouldNotOpenPage">无法打开页面。</string>
     <string name="strLabelNavHome">主页</string>
     <string name="strLabelNavSearch">搜索</string>
+    <string name="library">收藏</string>
     <string name="strTextPleaseWait">请稍候……</string>
     <string name="strAyatulKursi">宝座经文</string>
     <string name="strTitleInfo">信息！</string>

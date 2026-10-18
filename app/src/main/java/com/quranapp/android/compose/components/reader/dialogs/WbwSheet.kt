@@ -81,8 +81,7 @@ import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
-import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.isQuranAtlasScript
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.ReaderProviderViewModel
@@ -141,6 +140,7 @@ private fun Content(data: WbwSheetData) {
 
     val vm = LocalReaderViewModel.current
     val verseActions = LocalVerseActions.current
+    val atlasBundle = LocalQuranAtlasBundle.current
 
     val content by produceState<WordInfoContent?>(
         null,
@@ -149,7 +149,8 @@ private fun Content(data: WbwSheetData) {
         colors,
         type,
         density,
-        verseActions
+        verseActions,
+        atlasBundle,
     ) {
         withContext(Dispatchers.IO) {
             val script = ReaderPreferences.getQuranScript()
@@ -162,14 +163,6 @@ private fun Content(data: WbwSheetData) {
             )
 
             val theWord = words[currentData.wordIndex]
-
-            val atlasBundle = if (script.isQuranAtlasScript()) {
-                QuranAtlasLoader.getBundle(
-                    context,
-                    vm.externalQuranDb,
-                    script
-                )
-            } else null
 
             val wbwRow = wbwId?.let {
                 val map =

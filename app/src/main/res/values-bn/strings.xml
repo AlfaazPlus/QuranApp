@@ -115,6 +115,7 @@
     <string name="strMsgSearchNoResultsFoundIn" formatted="false">%s-এ কিছু খুঁজে পাওয়া যায়নি। দয়া করে সার্চ ফিল্টার দেখুন বা অন্য অনুবাদে খোঁজার চেষ্টা করুন।</string>
     <string name="strMsgSearchNoResultsFoundAbsolute">কিছু পাওয়া যায়নি। দয়া করে সার্চ ফিল্টারগুলো দেখুন।</string>
     <string name="strLabelNavHome">মূলপাতা</string>
+    <string name="library">লাইব্রেরি</string>
     <string name="strAyatulKursi">আয়াতুল কুরসি</string>
     <string name="strMsgCouldNotOpenPage">পৃষ্ঠাটি খোলা সম্ভব হয়নি।</string>
     <string name="strMsgReferenceDuas">আপনার জন্য কুরআন থেকে কিছু দোয়া একত্র করেছি।</string>
