@@ -143,7 +143,7 @@
     <string name="strLabelRemoveBookmark">বুকমার্ক অপসারণ করুন</string>
     <string name="strLabelShare">শেয়ার করুন</string>
     <string name="strLabelReport">অভিযোগ প্রেরণ করুন</string>
-    <string name="strLabelContinueReading">পড়া চালিয়ে যান »</string>
+    <string name="continue_reading_2">পড়া চালিয়ে যান »</string>
     <string name="strLabelSelectedCount" formatted="false">%dটা সিলেক্ট করা আছে</string>
     <string name="strLabelSelectVerse">আয়াত নির্বাচন করুন</string>
     <string name="strLabelCurrentVerse">বর্তমান আয়াত</string>
@@ -203,7 +203,6 @@
     <string name="audioBothArabicTranslation">কুরআন ও অনুবাদ উভয়ই শ্রবণ করুন</string>
     <string name="titleDownloadScriptResources">আপনি কি এই ধরনের লেখার কনটেন্ট ডাউনলোড করতে ইচ্ছুক?</string>
     <string name="noItems">কোনো আইটেম নেই</string>
-    <string name="places" formatted="false">%dটি স্থান</string>
     <string name="createIssue">সমস্যা জানান</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%dটি সংরক্ষিত তাফসির মুছে জায়গা খালি করা যাবে।</string>
     <string name="labelFreeUpSpace">ফোনের জায়গা খালি করুন</string>
@@ -219,7 +218,6 @@
     <string name="crashLogs">ক্র্যাশ লগ</string>
     <string name="suppressedLogs">সাপ্রেসড লগ</string>
     <string name="logRemoved">লগ মুছে ফেলা হয়েছে</string>
-    <string name="place" formatted="false">%d তম স্থান</string>
     <string name="labelArabic">আরবি</string>
     <string name="titleEtiquetteVerses">কুরআনে আদব-কায়দা</string>
     <string name="msgChapterAddedToFavourites">সূরাটি পছন্দের তালিকায় যোগ করা হয়েছে।</string>
@@ -229,8 +227,6 @@
     <string name="titleStorageCleanup">অপ্রয়োজনীয় ফাইলগুলো মুছে ফেলুন</string>
     <string name="translationCanBeFreedUp" formatted="false">%dটা ডাউনলোড করা অনুবাদ মুছে ফেলা যাবে।</string>
     <string name="labelNextTafsir">পরবর্তী তাফসীরে যান</string>
-    <string name="nItem" formatted="false">%dটি আইটেম</string>
-    <string name="nItems" formatted="false">%dটি আইটেম</string>
     <string name="strPreviewTextTransl">পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে</string>
     <string name="pasteCrashLogGithubIssue">লগ ক্লিপবোর্ডে কপি করা হয়েছে। অনুগ্রহ করে GitHub ইস্যুতে এটি পেস্ট করুন।</string>
     <string name="titleRemoveFromFavourites">পছন্দের তালিকা থেকে বাদ দিন</string>
@@ -421,4 +417,76 @@
     <string name="selectAll">সবগুলো একসাথে নির্বাচন করুন</string>
     <string name="filterTranslationsDisabledNote">আরবি অনুসন্ধান ব্যবস্থা চালু থাকা অবস্থায় অনুবাদসমূহের মধ্যে অনুসন্ধান করা হবে না।</string>
     <string name="filterTranslationsEmpty">এখনো কোনো অনুবাদ ডাউনলোড করা হয়নি।</string>
+
+    <string name="create">তৈরি করুন</string>
+    <string name="strLabelManage">পরিচালনা করুন</string>
+    <string name="update_note">নোট আপডেট করুন</string>
+    <string name="updateAvailable">আপডেট এসেছে</string>
+    <string name="recitationDownloadUpdateConfirmTitle">তিলাওয়াত আপডেট করুন</string>
+    <string name="recitationDownloadUpdateConfirmMessage">এই ক্বারির নতুন অডিও পাওয়া গেছে। আপডেট করলে আগে ডাউনলোড করা সূরাগুলো বদলে যাবে।</string>
+    <string name="recitationDownloadBannerUpdateAvailable">ডাউনলোড করা তিলাওয়াতের আপডেট এসেছে।</string>
+    <string name="continue_reading">পড়া চালিয়ে যান</string>
+    <string name="includeBookmarkNote">বুকমার্কের নোটও রাখুন (যদি থাকে)</string>
+    <string name="wbwAudioTimingsCouldNotLoad">শব্দের সময় জানা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।</string>
+    <string name="wbwAudioCouldNotPlay">শব্দের অডিও চালানো যায়নি।</string>
+    <string name="wbwAudioDownloadHint">অফলাইনে শুনতে ও সহজে চালাতে শব্দ ধরে ধরে অডিও ডাউনলোড করুন।</string>
+    <string name="wbwAudio">শব্দ ধরে ধরে অডিও</string>
+    <string name="wbwAudioDownloadAll">সব ডাউনলোড করুন</string>
+    <string name="wbwAudioDownloadAllConfirm">সব সূরার শব্দ ধরে ধরে তিলাওয়াত ডাউনলোড করবেন? এতে অনেক স্টোরেজ ও মোবাইল ডেটা লাগতে পারে।</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">সব একসাথে ডাউনলোড করার আগে আলাদা সূরার ডাউনলোড শেষ হতে দিন।</string>
+    <string name="wbwAudioChapterWaitForBulk">একটি সূরা ডাউনলোড করার আগে পুরো ডাউনলোড শেষ হতে দিন।</string>
+    <string name="ontologyExplorer">বিষয়ভিত্তিক অনুসন্ধান</string>
+    <string name="thematicTopics">বিষয় অনুযায়ী</string>
+    <string name="englishContentOnly">এই পাতার লেখা শুধু ইংরেজিতে পাওয়া যাচ্ছে।</string>
+    <string name="estimatedSize">আনুমানিক আকার: %s</string>
+    <string name="msgPreparingPrebuiltAtlas">প্রথমবার কুরআনের লেখা তৈরি হচ্ছে। কয়েক সেকেন্ড লাগতে পারে।</string>
+    <string name="recitationPlayer">তিলাওয়াত প্লেয়ার</string>
+    <string name="desc_recitation_player_widget">হোম স্ক্রিন থেকে কুরআনের তিলাওয়াত চালান</string>
+    <string name="my_collections">আমার সংগ্রহ</string>
+    <string name="add_to_collection">সংগ্রহে যোগ করুন</string>
+    <string name="remove_from_collection">সংগ্রহ থেকে সরান</string>
+    <string name="msg_remove_from_collection">এই আয়াত সংগ্রহ থেকে সরে যাবে। এর নোটও মুছে যাবে।</string>
+    <string name="no_collections">এখনো কোনো সংগ্রহ তৈরি হয়নি।</string>
+    <string name="no_collection_items">এই সংগ্রহে কোনো আয়াত নেই। পছন্দের আয়াতগুলো সংগ্রহে রেখে সহজে খুঁজে পাবেন।</string>
+    <string name="create_collection">সংগ্রহ তৈরি করুন</string>
+    <string name="update_collection">সংগ্রহ আপডেট করুন</string>
+    <string name="select_color">রং বেছে নিন</string>
+    <string name="select_icon">আইকন বেছে নিন</string>
+    <string name="create_new_collection">নতুন সংগ্রহ তৈরি করুন</string>
+    <string name="collection_name">সংগ্রহের নাম</string>
+    <string name="collection_name_hint">সংগ্রহের নাম লিখুন</string>
+    <string name="description">বিবরণ</string>
+    <string name="collection_description_hint">সংগ্রহের বিবরণ লিখুন</string>
+    <string name="msg_collection_deleted">সংগ্রহ মুছে ফেলা হয়েছে।</string>
+    <string name="delete_collection">সংগ্রহ মুছুন</string>
+    <string name="msg_delete_collection">সংগ্রহ ও তার আয়াতগুলো সরে যাবে। আপনার বুকমার্ক থাকবে।</string>
+    <string name="collection_note_hint">এই আয়াত সম্পর্কে অতিরিক্ত নোট এখানে লিখুন…</string>
+    <string name="collection_updated">সংগ্রহ আপডেট হয়েছে</string>
+    <string name="updated_just_now">এইমাত্র আপডেট হয়েছে</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%dটি আয়াত</item>
+        <item quantity="other">%dটি আয়াত</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d মিনিট আগে আপডেট হয়েছে</item>
+        <item quantity="other">%d মিনিট আগে আপডেট হয়েছে</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d ঘণ্টা আগে আপডেট হয়েছে</item>
+        <item quantity="other">%d ঘণ্টা আগে আপডেট হয়েছে</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d দিন আগে আপডেট হয়েছে</item>
+        <item quantity="other">%d দিন আগে আপডেট হয়েছে</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%dটি আইটেম</item>
+        <item quantity="other">%dটি আইটেম</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%dটি স্থান</item>
+        <item quantity="other">%dটি স্থান</item>
+    </plurals>
 </resources>

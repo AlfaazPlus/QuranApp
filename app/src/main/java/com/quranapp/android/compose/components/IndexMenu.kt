@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityAbout
-import com.quranapp.android.activities.ActivityBookmark
 import com.quranapp.android.activities.ActivityExportImport
 import com.quranapp.android.activities.ActivitySettings
 import com.quranapp.android.activities.ActivityStorageCleanup
@@ -82,13 +81,6 @@ private fun getItems(): List<IndexMenuItemGroup> {
     return listOf<IndexMenuItemGroup>(
         IndexMenuItemGroup(
             listOf(
-                IndexMenuItem(
-                    R.drawable.ic_bookmarks,
-                    R.string.strTitleBookmarks,
-                    onClick = {
-                        it.startActivity(Intent(it, ActivityBookmark::class.java))
-                    }
-                ),
                 IndexMenuItem(
                     R.drawable.dr_icon_settings,
                     R.string.strTitleSettings,

@@ -29,7 +29,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,9 +50,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AppBar
-import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.MessageCard
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
@@ -78,18 +77,13 @@ private sealed interface BookmarkDeleteTarget {
 @Composable
 fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
     val scope = rememberCoroutineScope()
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val allBookmarks = vm.allBookmarks.collectAsLazyPagingItems()
 
     val chapterNames by vm.chapterNames.collectAsStateWithLifecycle()
 
     var selectedIds by remember { mutableStateOf<Set<Long>>(emptySet()) }
     var viewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var deleteTarget by remember { mutableStateOf<BookmarkDeleteTarget?>(null) }
-
-    LaunchedEffect(uiState.bookmarks) {
-        val existingIds = uiState.bookmarks.map { it.id }.toSet()
-        selectedIds = selectedIds.intersect(existingIds)
-    }
 
     val selecting = selectedIds.isNotEmpty()
 
@@ -126,7 +120,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
                 } else {
                     stringResource(R.string.strTitleBookmarks)
                 }, actions = {
-                    if (uiState.bookmarks.isNotEmpty()) {
+                    if (allBookmarks.itemCount > 0) {
                         val tooltip = if (selecting) {
                             stringResource(R.string.strLabelRemove)
                         } else {
@@ -152,8 +146,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
                 })
         }) { paddingValues ->
         when {
-            uiState.isLoading -> Loader(fill = true)
-            uiState.bookmarks.isEmpty() -> {
+            allBookmarks.itemCount == 0 -> {
                 MessageCard(
                     icon = R.drawable.ic_bookmark,
                     message = stringResource(R.string.strMsgBookmarkNoItems),
@@ -174,7 +167,13 @@ fun BookmarksScreen(vm: BookmarksViewModel = viewModel()) {
                     ),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(uiState.bookmarks, key = { it.id }) { bookmark ->
+                    items(
+                        allBookmarks.itemCount,
+                        key = { index ->
+                            allBookmarks[index]?.id ?: index
+                        },
+                    ) { index ->
+                        val bookmark = allBookmarks[index] ?: return@items
                         BookmarkItemCard(
                             bookmark = bookmark,
                             chapterName = chapterNames[bookmark.chapterNo].orEmpty(),

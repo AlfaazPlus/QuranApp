@@ -123,6 +123,16 @@ private fun buildAnnotatedTranslationWithTranslatorLine(
 }
 
 object ReaderItemsBuilder {
+
+    /**
+     * Identifies a verse that needs quick-reference reader content. Callers keep their own key,
+     * while this builder groups requests by chapter so a collection page is loaded in batches.
+     */
+    data class QuickReferenceRequest(
+        val key: Long,
+        val chapterNo: Int,
+        val verseNo: Int,
+    )
     suspend fun buildChapterVersesForTranslationMode(
         context: Context,
         params: TextBuilderParams,
@@ -595,6 +605,42 @@ object ReaderItemsBuilder {
         }
 
         return ReaderPreparedData(out, textStyles)
+    }
+
+    /**
+     * Prepares a set of independently keyed quick-reference verses. The data is fetched once per
+     * chapter, allowing callers such as collections to avoid doing reader setup for every row.
+     */
+    suspend fun buildQuickReferenceItems(
+        context: Context,
+        params: TextBuilderParams,
+        requests: Collection<QuickReferenceRequest>,
+    ): Map<Long, ReaderPreparedData> {
+        if (requests.isEmpty()) return emptyMap()
+
+        val preparedByKey = HashMap<Long, ReaderPreparedData>(requests.size)
+        for ((chapterNo, chapterRequests) in requests.groupBy { it.chapterNo }) {
+            val prepared = buildQuickReferenceItems(
+                context = context,
+                params = params,
+                chapterNo = chapterNo,
+                verseNos = chapterRequests.map { it.verseNo }.distinct(),
+            ) ?: continue
+
+            val verseByNumber = prepared.items
+                .filterIsInstance<ReaderLayoutItem.VerseUI>()
+                .associateBy { it.verse.verseNo }
+
+            for (request in chapterRequests) {
+                val verse = verseByNumber[request.verseNo] ?: continue
+                preparedByKey[request.key] = ReaderPreparedData(
+                    items = listOf(verse),
+                    textStyles = prepared.textStyles,
+                )
+            }
+        }
+
+        return preparedByKey
     }
 
     private fun loadQuickReferenceTranslationsByVerseNo(

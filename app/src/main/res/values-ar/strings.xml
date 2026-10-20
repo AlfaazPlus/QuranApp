@@ -92,7 +92,7 @@
     <string name="strLabelOrder">الترتيب</string>
     <string name="strLabelReport">إبلاغ</string>
     <string name="strLabelShare">شارك</string>
-    <string name="strLabelContinueReading">متابعة القراءة »</string>
+    <string name="continue_reading_2">متابعة القراءة »</string>
     <string name="strTitleFailed">فشل</string>
     <string name="strTitleShareVerse">شارك الآية</string>
     <string name="strTitleVOTD">آية اليوم</string>
@@ -230,8 +230,6 @@
     <string name="noItems">لا توجد عناصر</string>
     <string name="msgChapterRemovedFromFavourites">تم إزالة السورة من المفضلة.</string>
     <string name="msgChapterAddedToFavourites">تم إضافة السورة إلى المفضلة.</string>
-    <string name="nItem" formatted="false">%d عنصر</string>
-    <string name="nItems" formatted="false">%d عناصر</string>
     <string name="titleReaderTextSizeTafsir">حجم خط التفسير</string>
     <string name="downloadRecitations">تنزيل التلاوات</string>
     <string name="audioOption">خيارات الصوت</string>
@@ -254,12 +252,10 @@
     <string name="verseSyncOn">متابعة الآية: مفعل</string>
     <string name="strTitleFeaturedQuran">قراءة مختارة</string>
     <string name="verseSyncOff">متابعة الآية: متوقف</string>
-    <string name="places" formatted="false">عدد المواضع:%d</string>
     <string name="strMsgDuaFor" formatted="false">دعاء للـ%s</string>
     <string name="labelNextTafsir">التفسير التالي</string>
     <string name="labelPreviousTafsir">التفسير السابق</string>
     <string name="titleSolutionVerses">حلول من القرآن</string>
-    <string name="place" formatted="false">موضع %d</string>
     <string name="titleEtiquetteVerses">الأخلاق في القرآن</string>
     <string name="strMsgShareApp" formatted="false">تطبيق قرآن، تطبيق مجاني ومفتوح المصدر لقراءة وتصفح القرآن الكريم مع الترجمات بمختلف اللغات. للتطبيق واجهة سهلة وسلسة مع مميزات مثل التفسير والتلاوة والتنبه والمزيد.
 \n
@@ -446,4 +442,86 @@
     <string name="englishContentOnly">محتوى هذه الصفحة متاح باللغة الإنجليزية فقط.</string>
     <string name="estimatedSize">الحجم التقريبي: %s</string>
     <string name="msgPreparingPrebuiltAtlas">جارٍ تجهيز نص القرآن لأول مرة. قد يستغرق هذا بضع ثوانٍ.</string>
+
+    <string name="create">إنشاء</string>
+    <string name="strLabelManage">إدارة</string>
+    <string name="update_note">تحديث الملاحظة</string>
+    <string name="updateAvailable">يتوفر تحديث</string>
+    <string name="recitationDownloadUpdateConfirmTitle">تحديث التلاوات</string>
+    <string name="recitationDownloadUpdateConfirmMessage">تتوفر تلاوة أحدث لهذا القارئ. التحديث سيستبدل السور المنزّلة.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">تتوفر تحديثات للتلاوات المنزّلة.</string>
+    <string name="continue_reading">متابعة القراءة</string>
+    <string name="recitationPlayer">مشغّل التلاوة</string>
+    <string name="desc_recitation_player_widget">تحكّم في تلاوة القرآن من الشاشة الرئيسية</string>
+    <string name="my_collections">مجموعاتي</string>
+    <string name="add_to_collection">إضافة إلى مجموعة</string>
+    <string name="remove_from_collection">إزالة من المجموعة</string>
+    <string name="msg_remove_from_collection">ستُزال هذه الآية من المجموعة، وستُحذف ملاحظاتها أيضًا.</string>
+    <string name="no_collections">لم تُنشئ أي مجموعة بعد.</string>
+    <string name="no_collection_items">لا توجد آيات في هذه المجموعة. اجمع آياتك المفضلة في مجموعات للرجوع إليها بسهولة.</string>
+    <string name="create_collection">إنشاء مجموعة</string>
+    <string name="update_collection">تعديل المجموعة</string>
+    <string name="select_color">اختيار اللون</string>
+    <string name="select_icon">اختيار الأيقونة</string>
+    <string name="create_new_collection">إنشاء مجموعة جديدة</string>
+    <string name="collection_name">اسم المجموعة</string>
+    <string name="collection_name_hint">أدخل اسم المجموعة</string>
+    <string name="description">الوصف</string>
+    <string name="collection_description_hint">أدخل وصف المجموعة</string>
+    <string name="msg_collection_deleted">تم حذف المجموعة.</string>
+    <string name="delete_collection">حذف المجموعة</string>
+    <string name="msg_delete_collection">ستُحذف المجموعة والآيات المحفوظة فيها. إشاراتك المرجعية لن تتأثر.</string>
+    <string name="collection_note_hint">اكتب ملاحظة إضافية على هذه الآية هنا…</string>
+    <string name="collection_updated">تم تحديث المجموعات</string>
+    <string name="updated_just_now">تم التحديث الآن</string>
+
+    <plurals name="verse_count">
+        <item quantity="zero">%d آيات</item>
+        <item quantity="one">%d آية</item>
+        <item quantity="two">%d آيتان</item>
+        <item quantity="few">%d آيات</item>
+        <item quantity="many">%d آية</item>
+        <item quantity="other">%d آية</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="zero">حُدّث قبل %d دقيقة</item>
+        <item quantity="one">حُدّث قبل %d دقيقة</item>
+        <item quantity="two">حُدّث قبل %d دقيقتين</item>
+        <item quantity="few">حُدّث قبل %d دقائق</item>
+        <item quantity="many">حُدّث قبل %d دقيقة</item>
+        <item quantity="other">حُدّث قبل %d دقيقة</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="zero">حُدّث قبل %d ساعة</item>
+        <item quantity="one">حُدّث قبل %d ساعة</item>
+        <item quantity="two">حُدّث قبل %d ساعتين</item>
+        <item quantity="few">حُدّث قبل %d ساعات</item>
+        <item quantity="many">حُدّث قبل %d ساعة</item>
+        <item quantity="other">حُدّث قبل %d ساعة</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="zero">حُدّث قبل %d يوم</item>
+        <item quantity="one">حُدّث قبل %d يوم</item>
+        <item quantity="two">حُدّث قبل %d يومين</item>
+        <item quantity="few">حُدّث قبل %d أيام</item>
+        <item quantity="many">حُدّث قبل %d يومًا</item>
+        <item quantity="other">حُدّث قبل %d يوم</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="zero">%d عناصر</item>
+        <item quantity="one">%d عنصر</item>
+        <item quantity="two">%d عنصران</item>
+        <item quantity="few">%d عناصر</item>
+        <item quantity="many">%d عنصرًا</item>
+        <item quantity="other">%d عنصر</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="zero">%d مواضع</item>
+        <item quantity="one">%d موضع</item>
+        <item quantity="two">%d موضعان</item>
+        <item quantity="few">%d مواضع</item>
+        <item quantity="many">%d موضعًا</item>
+        <item quantity="other">%d موضع</item>
+    </plurals>
 </resources>

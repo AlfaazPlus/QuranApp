@@ -92,6 +92,9 @@ interface BookmarkDao {
     @Query("SELECT * FROM  user_bookmarks ORDER BY id DESC")
     fun getBookmarksFlow(): Flow<List<BookmarkEntity>>
 
+    @Query("SELECT * FROM user_bookmarks ORDER BY id DESC LIMIT :limit")
+    fun getFlow(limit: Int): Flow<List<BookmarkEntity>>
+
     @Query("SELECT * FROM user_bookmarks ORDER BY id DESC")
     suspend fun getBookmarks(): List<BookmarkEntity>
 

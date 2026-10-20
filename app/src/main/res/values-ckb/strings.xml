@@ -33,7 +33,7 @@
     <string name="strTitleTheme">ڕووکار</string>
     <string name="strLabelBookmark">نیشانەکردن</string>
     <string name="strLabelRemoveBookmark">لابردنی نیشانەکراو</string>
-    <string name="strLabelContinueReading">بەردەوامبون لە خوێندنەوە »</string>
+    <string name="continue_reading_2">بەردەوامبون لە خوێندنەوە »</string>
     <string name="strLabelShare">بڵاوکردنەوە</string>
     <string name="strLabelSelectedCount" formatted="false">%d دیاریکراوە</string>
     <string name="strLabelVerseRange">مەودای ئایەت</string>
@@ -217,8 +217,6 @@
 \nئەم فایلانە ئەتوانرێت بسڕێتەوە:</string>
     <string name="msgDownloadFontsSize" formatted="false">قەبارەی داگرتن: ~%1$dMB\nدوای داگرتن، ئەپەکە نزیکەی ~%2$dMB بەکاردێنێت.</string>
     <string name="nothingToCleanup">هیچ شتێک نییە بۆ خاوێنکردنەوە.</string>
-    <string name="nItem" formatted="false">%d بابەت</string>
-    <string name="nItems" formatted="false">%d لە بابەتەکان</string>
     <string name="verseSyncOn">هاوکاتکردنی ئایەت : چالاک</string>
     <string name="verseSyncOff">هاوکاتکردنی ئایەت : نا چالاک</string>
     <string name="strPreviewTextTransl">بەناوی خوای بەخشندەی میهرەبان</string>
@@ -254,9 +252,7 @@
     <string name="audioOnlyArabic">تەنیا قورئانی پیرۆز</string>
     <string name="audioBothArabicTranslation">لێدانی هەردووکیان پێکەوە</string>
     <string name="logRemoved">تۆمار لابرا</string>
-    <string name="place" formatted="false">%d شوێن</string>
     <string name="strMsgDuaFor" formatted="false">نزا بۆ %s</string>
-    <string name="places" formatted="false">%d لە شوێنەکان</string>
     <string name="titleSolutionVerses">چارەسەرەکانی ناو قورئان</string>
     <string name="labelPreviousTafsir">تەفسیری پێشوو</string>
     <string name="labelNextTafsir">تەفسیری دواتر</string>
@@ -443,4 +439,62 @@
     <string name="englishContentOnly">ناوەڕۆکی ئەم پەڕەیە تەنها بە زمانی ئینگلیزی بەردەستە.</string>
     <string name="estimatedSize">قەبارەی خەمڵێندراو: %s</string>
     <string name="msgPreparingPrebuiltAtlas">بۆ یەکەم جار دەقی قورئان ئامادە دەکرێت. ئەمە چەند چرکەیەک دەخایەنێت.</string>
+
+    <string name="create">دروستکردن</string>
+    <string name="strLabelManage">بەڕێوەبردن</string>
+    <string name="update_note">نوێکردنەوەی تێبینی</string>
+    <string name="updateAvailable">نوێکردنەوە بەردەستە</string>
+    <string name="recitationDownloadUpdateConfirmTitle">نوێکردنەوەی خوێندنەوەکان</string>
+    <string name="recitationDownloadUpdateConfirmMessage">وەشانی نوێتری دەنگی ئەم قورئانخوێنە بەردەستە. نوێکردنەوە سورەتە دابەزێنراوەکان دەگۆڕێت.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">نوێکردنەوە بۆ خوێندنەوە دابەزێنراوەکان بەردەستە.</string>
+    <string name="continue_reading">بەردەوام بە لە خوێندنەوە</string>
+    <string name="recitationPlayer">لێدەری خوێندنەوە</string>
+    <string name="desc_recitation_player_widget">خوێندنەوەی قورئان لە شاشەی سەرەکییەوە کۆنترۆڵ بکە</string>
+    <string name="my_collections">کۆکراوەکانم</string>
+    <string name="add_to_collection">زیادکردن بۆ کۆکراوە</string>
+    <string name="remove_from_collection">لابردن لە کۆکراوە</string>
+    <string name="msg_remove_from_collection">ئەم ئایەتە لە کۆکراوەکە لادەبرێت. تێبینییەکانی لەسەریش دەسڕدرێنەوە.</string>
+    <string name="no_collections">هێشتا هیچ کۆکراوەیەک دروست نەکراوە.</string>
+    <string name="no_collection_items">هیچ ئایەتێک لەم کۆکراوەیەدا نییە. ئایەتە دڵخوازەکانت لە کۆکراوەدا کۆبکەرەوە تا بە ئاسانی بیدۆزیتەوە.</string>
+    <string name="create_collection">دروستکردنی کۆکراوە</string>
+    <string name="update_collection">دەستکاری کۆکراوە</string>
+    <string name="select_color">هەڵبژاردنی ڕەنگ</string>
+    <string name="select_icon">هەڵبژاردنی ئایکۆن</string>
+    <string name="create_new_collection">دروستکردنی کۆکراوەی نوێ</string>
+    <string name="collection_name">ناوی کۆکراوە</string>
+    <string name="collection_name_hint">ناوی کۆکراوە بنووسە</string>
+    <string name="description">وەسف</string>
+    <string name="collection_description_hint">وەسفی کۆکراوە بنووسە</string>
+    <string name="msg_collection_deleted">کۆکراوەکە سڕایەوە.</string>
+    <string name="delete_collection">سڕینەوەی کۆکراوە</string>
+    <string name="msg_delete_collection">کۆکراوەکە و ئایەتە پاشەکەوتکراوەکانی دەسڕدرێنەوە. نیشانەکراوەکان ناگۆڕدرێن.</string>
+    <string name="collection_note_hint">تێبینییەکی زیادە لەسەر ئەم ئایەتە لێرە بنووسە…</string>
+    <string name="collection_updated">کۆکراوەکان نوێکرانەوە</string>
+    <string name="updated_just_now">هەر ئێستا نوێکرایەوە</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d ئایەت</item>
+        <item quantity="other">%d ئایەت</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d خولەک لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%d خولەک لەمەوبەر نوێکرایەوە</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d کاتژمێر لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%d کاتژمێر لەمەوبەر نوێکرایەوە</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d ڕۆژ لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%d ڕۆژ لەمەوبەر نوێکرایەوە</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d بابەت</item>
+        <item quantity="other">%d بابەت</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d شوێن</item>
+        <item quantity="other">%d شوێن</item>
+    </plurals>
 </resources>

@@ -157,14 +157,13 @@ private fun VerseActionBar(
         Spacer(modifier = Modifier.width(10.dp))
         VerseSerial(
             verse = verse,
-            canCopy = actionBarMode == VerseActionBarMode.Full,
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PlayControlButton(
+fun PlayControlButton(
     controller: RecitationController,
     isVersePlaying: Boolean,
     iconTint: Color,
@@ -200,7 +199,7 @@ private fun PlayControlButton(
 }
 
 @Composable
-private fun VerseActionIconButton(
+fun VerseActionIconButton(
     painter: Painter,
     contentDescription: String,
     modifier: Modifier = Modifier,
@@ -232,9 +231,8 @@ private fun VerseActionIconButton(
 }
 
 @Composable
-private fun VerseSerial(
+fun VerseSerial(
     verse: VerseWithDetails,
-    canCopy: Boolean,
 ) {
     val context = LocalContext.current
     val chapterNo = verse.chapterNo
@@ -264,13 +262,7 @@ private fun VerseSerial(
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
             .background(colorScheme.surface)
-            .then(
-                if (canCopy) {
-                    Modifier.clickable { context.copyToClipboard(verse.id.toString()) }
-                } else {
-                    Modifier
-                }
-            )
+            .clickable { context.copyToClipboard(verse.id.toString()) }
             .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorScheme.onSurface,
         style = typography.labelLarge,

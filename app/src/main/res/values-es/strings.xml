@@ -178,7 +178,7 @@
     <string name="strTitleChapInfoRevType">Tipo de revelación</string>
     <string name="strTitleAppSettings">Ajustes de Aplicacion</string>
     <string name="strTitleReaderSettings">Configuración del lector</string>
-    <string name="strLabelContinueReading">Seguir leyendo »</string>
+    <string name="continue_reading_2">Seguir leyendo »</string>
     <string name="strLabelRemoveBookmark">Quitar marcador</string>
     <string name="strLabelQuickLinks">Enlaces rápidos</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">Descarga fallida \"%s\".</string>
@@ -215,8 +215,6 @@
 \n
 \nDeberá descargarlo de nuevo.</string>
     <string name="strPreviewTextTransl">En el nombre de Dios, el Compasivo con toda la creación, el Misericordioso con los creyentes</string>
-    <string name="nItems">%d artículos</string>
-    <string name="nItem">%d artículo</string>
     <string name="verseSyncOn">Sincronización de los versos : ON</string>
     <string name="verseSyncOff">Sincronización de los versos : OFF</string>
     <string name="titleScriptCleanup">¿Borrar el script\?</string>
@@ -254,8 +252,6 @@
     <string name="msgChapterRemovedFromFavourites">Surah eliminado de favoritos.</string>
     <string name="labelArabic">Árabe</string>
     <string name="msgChapterAddedToFavourites">Surah añadido a favoritos.</string>
-    <string name="places" formatted="false">Lugares %d</string>
-    <string name="place" formatted="false">Lugar %d</string>
     <string name="strMsgDuaFor" formatted="false">Súplica por %s</string>
     <string name="titleSolutionVerses">Soluciones del Corán</string>
     <string name="labelPreviousTafsir">interpretación (tafsir) anterior</string>
@@ -446,4 +442,68 @@
     <string name="englishContentOnly">El contenido de esta página solo está disponible en inglés.</string>
     <string name="estimatedSize">Tamaño estimado: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Preparando el texto del Corán por primera vez. Esto tardará unos segundos.</string>
+
+    <string name="create">Crear</string>
+    <string name="strLabelManage">Gestionar</string>
+    <string name="update_note">Actualizar nota</string>
+    <string name="updateAvailable">Actualización disponible</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Actualizar recitaciones</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Hay un audio más reciente de este recitador. Al actualizar se reemplazarán las suras descargadas.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Hay actualizaciones de las recitaciones descargadas.</string>
+    <string name="continue_reading">Seguir leyendo</string>
+    <string name="recitationPlayer">Reproductor de recitación</string>
+    <string name="desc_recitation_player_widget">Controla la recitación del Corán desde la pantalla de inicio</string>
+    <string name="my_collections">Mis colecciones</string>
+    <string name="add_to_collection">Añadir a una colección</string>
+    <string name="remove_from_collection">Quitar de la colección</string>
+    <string name="msg_remove_from_collection">Este verso se quitará de la colección y también se borrarán sus notas.</string>
+    <string name="no_collections">Aún no hay colecciones.</string>
+    <string name="no_collection_items">Esta colección no tiene versos. Agrupa tus versos favoritos para encontrarlos fácilmente.</string>
+    <string name="create_collection">Crear colección</string>
+    <string name="update_collection">Editar colección</string>
+    <string name="select_color">Elegir color</string>
+    <string name="select_icon">Elegir icono</string>
+    <string name="create_new_collection">Crear una colección nueva</string>
+    <string name="collection_name">Nombre de la colección</string>
+    <string name="collection_name_hint">Escribe el nombre</string>
+    <string name="description">Descripción</string>
+    <string name="collection_description_hint">Escribe una descripción</string>
+    <string name="msg_collection_deleted">Colección eliminada.</string>
+    <string name="delete_collection">Eliminar colección</string>
+    <string name="msg_delete_collection">Se eliminará la colección y los versos guardados en ella. Los marcadores no se verán afectados.</string>
+    <string name="collection_note_hint">Escribe aquí una nota adicional sobre este verso…</string>
+    <string name="collection_updated">Colecciones actualizadas</string>
+    <string name="updated_just_now">Actualizado ahora mismo</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d verso</item>
+        <item quantity="many">%d versos</item>
+        <item quantity="other">%d versos</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Actualizado hace %d minuto</item>
+        <item quantity="many">Actualizado hace %d minutos</item>
+        <item quantity="other">Actualizado hace %d minutos</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Actualizado hace %d hora</item>
+        <item quantity="many">Actualizado hace %d horas</item>
+        <item quantity="other">Actualizado hace %d horas</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Actualizado hace %d día</item>
+        <item quantity="many">Actualizado hace %d días</item>
+        <item quantity="other">Actualizado hace %d días</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d artículo</item>
+        <item quantity="many">%d artículos</item>
+        <item quantity="other">%d artículos</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d lugar</item>
+        <item quantity="many">%d lugares</item>
+        <item quantity="other">%d lugares</item>
+    </plurals>
 </resources>

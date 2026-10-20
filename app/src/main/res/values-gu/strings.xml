@@ -60,7 +60,8 @@
     <string name="strLabelVerseWithChapNameWithBar" formatted="false">સૂરહ %1$s │ આયત %2$d</string>
     <string name="strLabelFeatureQuranMiniInfo" formatted="false">સૂરહ નંબર %1$d │ આયત %2$d–%3$d</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">આયત %d ની તફસીર વાંચો</string>
-    <string name="strLabelContinueReading">વાંચન ચાલુ રાખો »</string>
+    <string name="continue_reading">વાંચન ચાલુ રાખો</string>
+    <string name="continue_reading_2">વાંચન ચાલુ રાખો »</string>
     <string name="strLabelOrder">ઓર્ડર</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d વધુ અનુવાદો</string>
     <string name="strLabelCurrentVerse">વર્તમાન આયત</string>
@@ -119,9 +120,7 @@
     <string name="titleScriptCleanup">સ્ક્રિપ્ટ કાઢી નાખીએ\?</string>
     <string name="msgScriptCleanup" formatted="false">%s સ્ક્રિપ્ટ અને તેના બધા સંગ્રહિત ફોન્ટ્સ કાઢી નાખવામાં આવશે. તેનો ઉપયોગ કરવા માટે તમારે ફરીથી ડાઉનલોડ કરવાની જરૂર પડશે.</string>
     <string name="onboardDescTranslations">તમે આને પછીથી હંમેશા બદલી શકો છો. તમે સેટિંગ્સમાંથી વધુ અનુવાદો ડાઉનલોડ કરી શકો છો.</string>
-    <string name="nItem" formatted="false">%d આઇટમ</string>
     <string name="inPlacesMore">%1$s અને %2$d વધુ માં</string>
-    <string name="nItems" formatted="false">%d આઇટમ</string>
     <string name="noItems">કોઈ આઇટમ નથી</string>
     <string name="inPlaces">%s માં</string>
     <string name="labelArabic">અરબી</string>
@@ -256,9 +255,7 @@
     <string name="strPreviewTextTransl">અલ્લાહના નામથી, (શરૂ કરું છું), જે અત્યંત કૃપાળુ અને દયાળુ છે</string>
     <string name="labelNextTafsir">આગામી તફસીર</string>
     <string name="labelPreviousTafsir">અગાઉની તફસીર</string>
-    <string name="place" formatted="false">%d સ્થાન</string>
     <string name="strMsgDuaOf" formatted="false">%s ની દુઆ</string>
-    <string name="places" formatted="false">%d સ્થાનો</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">કુરાનમાં %s ની દુઆ</string>
     <string name="strMsgDuaFor" formatted="false">%s માટે દુઆ</string>
     <string name="titleSolutionVerses">કુરાનમાંથી ઉકેલો</string>
@@ -446,4 +443,61 @@
     <string name="englishContentOnly">આ પેજનું સામગ્રી માત્ર અંગ્રેજી ભાષામાં ઉપલબ્ધ છે.</string>
     <string name="estimatedSize">અંદાજિત કદ: %s</string>
     <string name="msgPreparingPrebuiltAtlas">પ્રથમ વખત કુરાનનું લખાણ તૈયાર કરવામાં આવી રહ્યું છે. તેમાં થોડા સેકન્ડ લાગી શકે છે.</string>
+
+    <string name="create">બનાવો</string>
+    <string name="strLabelManage">વ્યવસ્થા કરો</string>
+    <string name="update_note">નોંધ અપડેટ કરો</string>
+    <string name="updateAvailable">અપડેટ ઉપલબ્ધ છે</string>
+    <string name="recitationDownloadUpdateConfirmTitle">તિલાવત અપડેટ કરો</string>
+    <string name="recitationDownloadUpdateConfirmMessage">આ કારીની નવી ઑડિયો ઉપલબ્ધ છે. અપડેટ કરવાથી ડાઉનલોડ કરેલી સૂરાઓ બદલાઈ જશે.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">ડાઉનલોડ કરેલી તિલાવત માટે અપડેટ ઉપલબ્ધ છે.</string>
+    <string name="recitationPlayer">તિલાવત પ્લેયર</string>
+    <string name="desc_recitation_player_widget">હોમ સ્ક્રીનથી કુરાનની તિલાવત ચલાવો</string>
+    <string name="my_collections">મારા સંગ્રહ</string>
+    <string name="add_to_collection">સંગ્રહમાં ઉમેરો</string>
+    <string name="remove_from_collection">સંગ્રહમાંથી કાઢો</string>
+    <string name="msg_remove_from_collection">આ આયત સંગ્રહમાંથી દૂર થશે. તેની નોંધ પણ કાઢી નાખવામાં આવશે.</string>
+    <string name="no_collections">હજી કોઈ સંગ્રહ બન્યો નથી.</string>
+    <string name="no_collection_items">આ સંગ્રહમાં કોઈ આયત નથી. પસંદની આયતો સંગ્રહમાં રાખીને સહેલાઈથી ખોલો.</string>
+    <string name="create_collection">સંગ્રહ બનાવો</string>
+    <string name="update_collection">સંગ્રહ સુધારો</string>
+    <string name="select_color">રંગ પસંદ કરો</string>
+    <string name="select_icon">આઇકન પસંદ કરો</string>
+    <string name="create_new_collection">નવો સંગ્રહ બનાવો</string>
+    <string name="collection_name">સંગ્રહનું નામ</string>
+    <string name="collection_name_hint">નામ લખો</string>
+    <string name="description">વર્ણન</string>
+    <string name="collection_description_hint">વર્ણન લખો</string>
+    <string name="msg_collection_deleted">સંગ્રહ કાઢી નાખ્યો.</string>
+    <string name="delete_collection">સંગ્રહ કાઢી નાખો</string>
+    <string name="msg_delete_collection">સંગ્રહ અને તેમાં સાચવેલી આયતો દૂર થશે. બુકમાર્ક રહેશે.</string>
+    <string name="collection_note_hint">આ આયત વિશે વધારાની નોંધ અહીં લખો…</string>
+    <string name="collection_updated">સંગ્રહ અપડેટ થયા</string>
+    <string name="updated_just_now">હમણાં જ અપડેટ થયું</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d આયત</item>
+        <item quantity="other">%d આયતો</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d મિનિટ પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%d મિનિટ પહેલાં અપડેટ થયું</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d કલાક પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%d કલાક પહેલાં અપડેટ થયું</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d દિવસ પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%d દિવસ પહેલાં અપડેટ થયું</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d આઇટમ</item>
+        <item quantity="other">%d આઇટમ</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d સ્થાન</item>
+        <item quantity="other">%d સ્થાનો</item>
+    </plurals>
 </resources>

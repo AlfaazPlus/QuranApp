@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
-import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.dialogs.AlertDialog
@@ -150,7 +150,11 @@ fun StorageCleanupRecitationScreen(
                                 style = MaterialTheme.typography.titleSmall,
                             )
                             Text(
-                                text = formattedStringResource(R.string.nItems, row.downloadedCount),
+                                text = pluralStringResource(
+                                    R.plurals.item_count,
+                                    row.downloadedCount,
+                                    row.downloadedCount,
+                                ),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                             )

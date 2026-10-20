@@ -31,6 +31,7 @@
     <string name="strLabelStart">Start</string>
     <string name="labelDownload">Download</string>
     <string name="strLabelUpdate">Update</string>
+    <string name="create">Create</string>
     <string name="strLabelManage">Manage</string>
     <string name="strLabelOn">On</string>
     <string name="strLabelOff">Off</string>
@@ -95,6 +96,7 @@
     <string name="strTitleBookmarks">Bookmarks</string>
     <string name="strTitleShareApp">Share App</string>
     <string name="strTitleAddNote">Add note</string>
+    <string name="update_note">Update note</string>
     <string name="strTitleNote">Note</string>
     <string name="strTitleRateApp">Rate App</string>
     <string name="strTitleFilters">Filters</string>
@@ -180,7 +182,8 @@
     <string name="strLabelRemoveBookmark">Remove Bookmark</string>
     <string name="strLabelShare">Share</string>
     <string name="strLabelReport">Report</string>
-    <string name="strLabelContinueReading">Continue Reading »</string>
+    <string name="continue_reading">Continue reading</string>
+    <string name="continue_reading_2">Continue reading »</string>
     <string name="modeVerseByVerse">Verse by verse mode</string>
     <string name="modeMushaf">Mushaf mode</string>
     <string name="strLabelOrder">Order</string>
@@ -307,14 +310,10 @@
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d scripts and %2$d fonts</string>
     <string name="nothingToCleanup">There is nothing to clean up.</string>
-    <string name="nItem" formatted="false">%d item</string>
-    <string name="nItems" formatted="false">%d items</string>
     <string name="noItems">No items</string>
     <string name="noResults">No results</string>
     <string name="verseSyncOn">Verse sync : ON</string>
     <string name="verseSyncOff">Verse sync : OFF</string>
-    <string name="place" formatted="false">%d place</string>
-    <string name="places" formatted="false">%d places</string>
     <string name="inPlaces" formatted="false">in %s</string>
     <string name="inPlacesMore" formatted="false">in %1$s &amp; %2$d more</string>
     <string name="onboardDescLanguage">Personalize the app in your language. You can always change this later.</string>
@@ -473,4 +472,57 @@
 
     <string name="recitationPlayer">Recitation Player</string>
     <string name="desc_recitation_player_widget">Control Quran recitation from your home screen</string>
+
+    <string name="my_collections">My Collections</string>
+    <string name="add_to_collection">Add to Collection</string>
+    <string name="remove_from_collection">Remove from Collection</string>
+    <string name="msg_remove_from_collection">This verse will be removed from the collection. Notes on it will be deleted too.</string>
+    <string name="no_collections">No collections created yet.</string>
+    <string name="no_collection_items">
+        No verses in this collection. You can organize your favorite verses into collections for easy access.
+    </string>
+    <string name="create_collection">Create Collection</string>
+    <string name="update_collection">Update Collection</string>
+    <string name="select_color">Select Color</string>
+    <string name="select_icon">Select Icon</string>
+
+    <string name="create_new_collection">Create new collection</string>
+    <string name="collection_name">Collection Name</string>
+    <string name="collection_name_hint">Enter collection name</string>
+    <string name="description">Description</string>
+    <string name="collection_description_hint">Enter collection description</string>
+    <string name="msg_collection_deleted">Collection deleted successfully.</string>
+
+    <string name="delete_collection">Delete collection</string>
+    <string name="msg_delete_collection">This removes the collection and its saved verses. Your bookmarks are not affected.</string>
+    <string name="collection_note_hint">Write an additional note on this verse here…</string>
+
+    <string name="collection_updated">Collections updated</string>
+    <string name="updated_just_now">Updated just now</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d verse</item>
+        <item quantity="other">%d verses</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Updated %d minute ago</item>
+        <item quantity="other">Updated %d minutes ago</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Updated %d hour ago</item>
+        <item quantity="other">Updated %d hours ago</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Updated %d day ago</item>
+        <item quantity="other">Updated %d days ago</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+    </plurals>
 </resources>

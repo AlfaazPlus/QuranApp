@@ -113,7 +113,7 @@
     <string name="strLabelRemoveBookmark">بُڪ مارڪ هٽايو</string>
     <string name="strLabelShare">ورڇ ڪريو</string>
     <string name="strLabelReport">اطلاع</string>
-    <string name="strLabelContinueReading">پڙهڻ جاري رکو »</string>
+    <string name="continue_reading_2">پڙهڻ جاري رکو »</string>
     <string name="strLabelOrder">سلسلو</string>
     <string name="strLabelSelectedCount" formatted="false">%d چونڊيل</string>
     <string name="strLabelCurrentVerse">روان آيت</string>
@@ -203,11 +203,7 @@
     <string name="nFiles" formatted="false">%d فائلون</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسڪرپٽ ۽ %2$d فانٽ</string>
     <string name="nothingToCleanup">هتي صاف ڪرڻ لاءِ ڪجهه به ناهي.</string>
-    <string name="nItem" formatted="false">%d آئٽم</string>
-    <string name="nItems" formatted="false">%d آئٽمَ</string>
     <string name="noItems">ڪوبه آئٽم ناهي</string>
-    <string name="place" formatted="false">%d جڳهه</string>
-    <string name="places" formatted="false">%d جڳھون</string>
     <string name="inPlaces" formatted="false">%s ۾</string>
     <string name="inPlacesMore" formatted="false">%1$s ۾ %2$d وڌيڪ</string>
     <string name="onboardDescLanguage">ايپ کي پنهنجي ٻولي ۾ سنواريو. پوءِ توهان ڪڏهن به ٻولي بدلائي سگهو ٿا.</string>
@@ -436,4 +432,62 @@
     <string name="englishContentOnly">هن صفحي جو مواد صرف انگريزي ٻولي ۾ موجود آهي.</string>
     <string name="estimatedSize">اندازي مطابق سائيز: %s</string>
     <string name="msgPreparingPrebuiltAtlas">پهريون ڀيرو قرآن جو متن تيار ڪيو پيو وڃي۔ هن ۾ ڪجهه سيڪنڊ لڳندا۔</string>
+
+    <string name="create">ٺاهيو</string>
+    <string name="strLabelManage">سنڀاليو</string>
+    <string name="update_note">نوٽ اپڊيٽ ڪريو</string>
+    <string name="updateAvailable">اپڊيٽ موجود آهي</string>
+    <string name="recitationDownloadUpdateConfirmTitle">تلاوت اپڊيٽ ڪريو</string>
+    <string name="recitationDownloadUpdateConfirmMessage">هن قاري جي نئين آڊيو موجود آهي. اپڊيٽ ڪرڻ سان ڊائونلوڊ ٿيل سورتون بدلجي وينديون.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">ڊائونلوڊ ٿيل تلاوت لاءِ اپڊيٽ موجود آهي.</string>
+    <string name="continue_reading">پڙهڻ جاري رکو</string>
+    <string name="recitationPlayer">تلاوت پليئر</string>
+    <string name="desc_recitation_player_widget">هوم اسڪرين تان قرآن جي تلاوت هلايو</string>
+    <string name="my_collections">منهنجا مجموعا</string>
+    <string name="add_to_collection">مجموعي ۾ شامل ڪريو</string>
+    <string name="remove_from_collection">مجموعي مان هٽايو</string>
+    <string name="msg_remove_from_collection">هي آيت مجموعي مان هٽي ويندي. ان جو نوٽ به ڊهي ويندو.</string>
+    <string name="no_collections">اڃا ڪو مجموعو نه ٺهيو آهي.</string>
+    <string name="no_collection_items">هن مجموعي ۾ ڪا به آيت ناهي. پسند جي آيتن کي مجموعن ۾ رکي آساني سان کوليو.</string>
+    <string name="create_collection">مجموعو ٺاهيو</string>
+    <string name="update_collection">مجموعو سنواريو</string>
+    <string name="select_color">رنگ چونڊيو</string>
+    <string name="select_icon">آئڪن چونڊيو</string>
+    <string name="create_new_collection">نئون مجموعو ٺاهيو</string>
+    <string name="collection_name">مجموعي جو نالو</string>
+    <string name="collection_name_hint">نالو لکو</string>
+    <string name="description">وضاحت</string>
+    <string name="collection_description_hint">وضاحت لکو</string>
+    <string name="msg_collection_deleted">مجموعو ڊهي ويو.</string>
+    <string name="delete_collection">مجموعو ڊاهيو</string>
+    <string name="msg_delete_collection">مجموعو ۽ ان ۾ محفوظ آيتون هٽي وينديون. بُڪ مارڪ نه هٽندا.</string>
+    <string name="collection_note_hint">هن آيت تي اضافي نوٽ هتي لکو…</string>
+    <string name="collection_updated">مجموعا اپڊيٽ ٿي ويا</string>
+    <string name="updated_just_now">هاڻي ئي اپڊيٽ ٿيو</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d آيت</item>
+        <item quantity="other">%d آيتون</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d منٽ اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%d منٽ اڳ اپڊيٽ ٿيو</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d ڏينهن اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%d ڏينهن اڳ اپڊيٽ ٿيو</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d آئٽم</item>
+        <item quantity="other">%d آئٽمَ</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d جڳهه</item>
+        <item quantity="other">%d جڳھون</item>
+    </plurals>
 </resources>

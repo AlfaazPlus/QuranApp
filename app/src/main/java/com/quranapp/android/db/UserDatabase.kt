@@ -7,18 +7,27 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.quranapp.android.db.converters.DbConverters
 import com.quranapp.android.db.dao.BookmarkDao
+import com.quranapp.android.db.dao.CollectionDao
 import com.quranapp.android.db.dao.ReadHistoryDao
 import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.db.entities.user.CollectionEntity
+import com.quranapp.android.db.entities.user.CollectionItemEntity
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
 
 @Database(
-    entities = [BookmarkEntity::class, ReadHistoryEntity::class],
-    version = 2,
+    entities = [
+        BookmarkEntity::class,
+        ReadHistoryEntity::class,
+        CollectionEntity::class,
+        CollectionItemEntity::class,
+    ],
+    version = 3,
 )
 @TypeConverters(DbConverters::class)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun readHistoryDao(): ReadHistoryDao
+    abstract fun collectionDao(): CollectionDao
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -37,6 +46,52 @@ abstract class UserDatabase : RoomDatabase() {
                         `page_no` INTEGER,
                         `datetime` INTEGER NOT NULL DEFAULT 0
                     )
+                    """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `user_collections` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `description` TEXT,
+                        `icon_key` TEXT,
+                        `color` TEXT,
+                        `sort_index` INTEGER,
+                        `created_at` INTEGER NOT NULL,
+                        `updated_at` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `user_collection_items` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `collection_id` INTEGER NOT NULL,
+                        `chapter_no` INTEGER NOT NULL,
+                        `verse_no` INTEGER NOT NULL,
+                        `note` TEXT,
+                        `sort_index` INTEGER NOT NULL,
+                        `added_at` INTEGER NOT NULL,
+                        FOREIGN KEY(`collection_id`) REFERENCES `user_collections`(`id`)
+                            ON UPDATE NO ACTION ON DELETE CASCADE
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE UNIQUE INDEX IF NOT EXISTS `index_user_collection_items_collection_id_chapter_no_verse_no`
+                    ON `user_collection_items` (`collection_id`, `chapter_no`, `verse_no`)
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE INDEX IF NOT EXISTS `index_user_collection_items_collection_id`
+                    ON `user_collection_items` (`collection_id`)
                     """.trimIndent()
                 )
             }

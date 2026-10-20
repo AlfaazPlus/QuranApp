@@ -77,7 +77,7 @@
     <string name="strLabelPause">Itigil</string>
     <string name="strLabelBookmark">I-bookmark</string>
     <string name="strLabelRemoveBookmark">Alisin ang Bookmark</string>
-    <string name="strLabelContinueReading">Ipagpatuloy ang pagbabasa »</string>
+    <string name="continue_reading_2">Ipagpatuloy ang pagbabasa »</string>
     <string name="strLabelSelectedCount" formatted="false">%d ang napili</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d pang pagsasalin</string>
     <string name="strLabelSelectVerse">Piliin ang Mga Taludtod</string>
@@ -208,18 +208,14 @@
     <string name="nFiles" formatted="false">%d files</string>
     <string name="nothingToCleanup">Walang dapat linisin.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d script and %2$d font</string>
-    <string name="nItem" formatted="false">%d item</string>
     <string name="onboardDescLanguage">I-personalize ang app sa iyong wika. Maaari mong baguhin ito palagi sa ibang pagkakataon.</string>
     <string name="msgChapterAddedToFavourites">Idinagdag ang Surah sa mga paborito.</string>
     <string name="msgChapterRemovedFromFavourites">Inalis ang Surah sa mga paborito.</string>
     <string name="textNoLogsFound">Walang nakitang mga log</string>
     <string name="msgScriptCleanup" formatted="false">%s script at lahat ng nakaimbak nitong font ay tatanggalin. Kakailanganin mong muling i-download upang magamit ang mga ito.</string>
-    <string name="nItems" formatted="false">%d items</string>
     <string name="noItems">Walang item</string>
     <string name="verseSyncOn">Pag-sync ng taludtod : NAKA-ON</string>
     <string name="verseSyncOff">Pag-sync ng taludtod : NAKA-OFF</string>
-    <string name="place" formatted="false">%d lugar</string>
-    <string name="places" formatted="false">%d lugars</string>
     <string name="inPlaces" formatted="false">in %s</string>
     <string name="inPlacesMore" formatted="false">sa %1$s &amp; %2$d pa</string>
     <string name="onboardDescTheme">Maaari mong baguhin ito palagi sa ibang pagkakataon.</string>
@@ -439,4 +435,62 @@
     <string name="englishContentOnly">Ang nilalaman sa pahinang ito ay magagamit lamang sa wikang Ingles.</string>
     <string name="estimatedSize">Tinatayang laki: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Inihahanda ang teksto ng Quran sa unang pagkakataon. Aabutin ito ng ilang segundo.</string>
+
+    <string name="create">Gumawa</string>
+    <string name="strLabelManage">Pamahalaan</string>
+    <string name="update_note">I-update ang tala</string>
+    <string name="updateAvailable">May update</string>
+    <string name="recitationDownloadUpdateConfirmTitle">I-update ang mga pagbigkas</string>
+    <string name="recitationDownloadUpdateConfirmMessage">May mas bagong audio para sa reciter na ito. Papalitan nito ang mga nadownload na kabanata.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">May update ang nadownload na audio ng pagbigkas.</string>
+    <string name="continue_reading">Ituloy ang pagbabasa</string>
+    <string name="recitationPlayer">Player ng pagbigkas</string>
+    <string name="desc_recitation_player_widget">Kontrolin ang pagbigkas ng Quran mula sa home screen</string>
+    <string name="my_collections">Mga koleksyon ko</string>
+    <string name="add_to_collection">Idagdag sa koleksyon</string>
+    <string name="remove_from_collection">Alisin sa koleksyon</string>
+    <string name="msg_remove_from_collection">Aalisin ang taludtod na ito sa koleksyon. Mabubura rin ang mga tala rito.</string>
+    <string name="no_collections">Wala pang koleksyon.</string>
+    <string name="no_collection_items">Walang taludtod sa koleksyong ito. Tipunin ang mga paborito mong taludtod para madaling mabalikan.</string>
+    <string name="create_collection">Gumawa ng koleksyon</string>
+    <string name="update_collection">I-edit ang koleksyon</string>
+    <string name="select_color">Pumili ng kulay</string>
+    <string name="select_icon">Pumili ng icon</string>
+    <string name="create_new_collection">Gumawa ng bagong koleksyon</string>
+    <string name="collection_name">Pangalan ng koleksyon</string>
+    <string name="collection_name_hint">Ilagay ang pangalan</string>
+    <string name="description">Paglalarawan</string>
+    <string name="collection_description_hint">Ilagay ang paglalarawan</string>
+    <string name="msg_collection_deleted">Nabura na ang koleksyon.</string>
+    <string name="delete_collection">Burahin ang koleksyon</string>
+    <string name="msg_delete_collection">Mabubura ang koleksyon at ang mga taludtod dito. Hindi maaapektuhan ang mga bookmark.</string>
+    <string name="collection_note_hint">Sumulat ng karagdagang tala tungkol sa taludtod na ito dito…</string>
+    <string name="collection_updated">Na-update ang mga koleksyon</string>
+    <string name="updated_just_now">Kaka-update lang</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d taludtod</item>
+        <item quantity="other">%d taludtod</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Na-update %d minuto ang nakalipas</item>
+        <item quantity="other">Na-update %d minuto ang nakalipas</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Na-update %d oras ang nakalipas</item>
+        <item quantity="other">Na-update %d oras ang nakalipas</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Na-update %d araw ang nakalipas</item>
+        <item quantity="other">Na-update %d araw ang nakalipas</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d lugar</item>
+        <item quantity="other">mga %d lugar</item>
+    </plurals>
 </resources>

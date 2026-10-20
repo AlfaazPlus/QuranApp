@@ -117,7 +117,7 @@
     <string name="strTitleFailed">ناموفق</string>
     <string name="strMsgChapInfoFailedLoad">اطلاعات سوره بارگیری نشد. لطفاً بعداً دوباره امتحان کنید.</string>
     <string name="strTitleTheme">تم</string>
-    <string name="strLabelContinueReading">ادامه مطلب »</string>
+    <string name="continue_reading_2">ادامه مطلب »</string>
     <string name="strTitleChapInfoRevOrder">دستور وحی</string>
     <string name="strTitleChapInfoPages">صفحات</string>
     <string name="strLabelNavHome">صفحه اصلی</string>
@@ -220,8 +220,6 @@
     <string name="recitationCanBeFreedUp" formatted="false">%1$d فایل تلاوت ذخیره شده از %2$d تلاوت کننده را می توان آزاد کرد.</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d تفسیر ذخیره شده قابل پاکسازی است.</string>
     <string name="msgRecitationCleanup" formatted="false">تمام تلاوت ذخیره شده از %s حذف خواهد شد. برای حذف جداگانه تلاوت‌ها بر اساس سوره، به تنظیمات بروید.</string>
-    <string name="nItems" formatted="false">%d موارد</string>
-    <string name="nItem" formatted="false">%d مورد</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d اسکریپت و %2$d قلم</string>
     <string name="noFootnotesForThisVerse">هیچ پاورقی برای این آیه وجود ندارد.</string>
     <string name="github">گیتهاب</string>
@@ -265,7 +263,6 @@
     <string name="msgResourceDownloadSource">اگر یکی کار نکرد از این گزینه برای بارگیری داده‌های قرآن از منبعی متفاوت استفاده کنید</string>
     <string name="titleArabicTextToggle">نمایش متن عربی آیه</string>
     <string name="titleSolutionVerses">راه‌حل‌هایی از قرآن</string>
-    <string name="place" formatted="false">محل %d</string>
     <string name="strMsgDuaOf" formatted="false">دعای %s</string>
     <string name="strMsgPropheticDuaInQuran" formatted="false">دعای %s در قرآن</string>
     <string name="msgArabicTextToggle">غیرفعال کردن این قابلیت متن‌های عربی آیات را از کل برنامه پنهان خواهد کرد.</string>
@@ -331,7 +328,6 @@
     <string name="notification_permission">مجوز اعلان</string>
     <string name="titleExportData">پشتیبان‌گیری و بازیابی</string>
     <string name="noResults">بدون نتیجه</string>
-    <string name="places">%d مکان</string>
     <string name="onboardDescTafsir">یک تفسیر را برای مطالعه در کنار آیات انتخاب کنید. می‌توانید تفاسیر را در تنظیمات مدیریت و دانلود کنید.</string>
     <string name="labelTransliteration">نویسه‌گردانی (فینگلیش)</string>
     <string name="favourites">علاقه‌مندی‌ها</string>
@@ -443,4 +439,62 @@
     <string name="englishContentOnly">محتوای این صفحه فقط به زبان انگلیسی در دسترس است.</string>
     <string name="estimatedSize">حجم تخمینی: %s</string>
     <string name="msgPreparingPrebuiltAtlas">در حال آماده‌سازی متن قرآن برای اولین بار. این کار چند ثانیه طول می‌کشد.</string>
+
+    <string name="create">ایجاد</string>
+    <string name="strLabelManage">مدیریت</string>
+    <string name="update_note">ویرایش یادداشت</string>
+    <string name="updateAvailable">به‌روزرسانی موجود است</string>
+    <string name="recitationDownloadUpdateConfirmTitle">به‌روزرسانی تلاوت‌ها</string>
+    <string name="recitationDownloadUpdateConfirmMessage">نسخهٔ جدیدتری از صوت این قاری موجود است. با به‌روزرسانی، سوره‌های دانلودشده جایگزین می‌شوند.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">برای تلاوت‌های دانلودشده به‌روزرسانی موجود است.</string>
+    <string name="continue_reading">ادامهٔ مطالعه</string>
+    <string name="recitationPlayer">پخش‌کنندهٔ تلاوت</string>
+    <string name="desc_recitation_player_widget">تلاوت قرآن را از صفحهٔ اصلی کنترل کنید</string>
+    <string name="my_collections">مجموعه‌های من</string>
+    <string name="add_to_collection">افزودن به مجموعه</string>
+    <string name="remove_from_collection">حذف از مجموعه</string>
+    <string name="msg_remove_from_collection">این آیه از مجموعه برداشته می‌شود و یادداشت آن هم پاک می‌شود.</string>
+    <string name="no_collections">هنوز مجموعه‌ای نساخته‌اید.</string>
+    <string name="no_collection_items">در این مجموعه آیه‌ای نیست. آیه‌های مورد علاقه‌تان را در مجموعه‌ها بچینید تا راحت پیدا کنید.</string>
+    <string name="create_collection">ایجاد مجموعه</string>
+    <string name="update_collection">ویرایش مجموعه</string>
+    <string name="select_color">انتخاب رنگ</string>
+    <string name="select_icon">انتخاب نماد</string>
+    <string name="create_new_collection">ایجاد مجموعهٔ جدید</string>
+    <string name="collection_name">نام مجموعه</string>
+    <string name="collection_name_hint">نام مجموعه را بنویسید</string>
+    <string name="description">توضیحات</string>
+    <string name="collection_description_hint">توضیحات مجموعه را بنویسید</string>
+    <string name="msg_collection_deleted">مجموعه حذف شد.</string>
+    <string name="delete_collection">حذف مجموعه</string>
+    <string name="msg_delete_collection">مجموعه و آیه‌های ذخیره‌شده در آن حذف می‌شوند. نشانک‌ها دست‌نخورده می‌مانند.</string>
+    <string name="collection_note_hint">یادداشتی دربارهٔ این آیه اینجا بنویسید…</string>
+    <string name="collection_updated">مجموعه‌ها به‌روز شد</string>
+    <string name="updated_just_now">همین الان به‌روز شد</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d آیه</item>
+        <item quantity="other">%d آیه</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d دقیقه پیش به‌روز شد</item>
+        <item quantity="other">%d دقیقه پیش به‌روز شد</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d ساعت پیش به‌روز شد</item>
+        <item quantity="other">%d ساعت پیش به‌روز شد</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d روز پیش به‌روز شد</item>
+        <item quantity="other">%d روز پیش به‌روز شد</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d مورد</item>
+        <item quantity="other">%d موارد</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d محل</item>
+        <item quantity="other">%d مکان</item>
+    </plurals>
 </resources>

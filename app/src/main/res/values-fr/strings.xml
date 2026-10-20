@@ -94,7 +94,7 @@
     <string name="strLabelRemoveBookmark">Supprimer le marque-page</string>
     <string name="strLabelShare">Partager</string>
     <string name="strLabelReport">Signaler</string>
-    <string name="strLabelContinueReading">Continuer la lecture »</string>
+    <string name="continue_reading_2">Continuer la lecture »</string>
     <string name="strLabelOrder">Ordre</string>
     <string name="strLabelSelectedCount" formatted="false">%d sélectionné</string>
     <string name="strLabelSelectVerse">Sélectionner des versets</string>
@@ -208,8 +208,6 @@
     <string name="translationCanBeFreedUp" formatted="false">%d traductions téléchargées peuvent être libérées.</string>
     <string name="recitationCanBeFreedUp" formatted="false">%1$d fichiers de récitations sauvegardées de %2$d récitateurs peuvent être libérés.</string>
     <string name="scriptCanBeFreedUp" formatted="false">%d types d\'écritures et leurs polices d\'écriture peuvent être libérés.</string>
-    <string name="nItem">%d objet</string>
-    <string name="nItems">%d objets</string>
     <string name="verseSyncOn">Synchronisation de verset : ACTIVEE</string>
     <string name="nFiles" formatted="false">%d fichiers</string>
     <string name="verseSyncOff">Synchronisation de verset : DESACTIVEE</string>
@@ -255,8 +253,6 @@
     <string name="crashLogs">Journaux de plantage</string>
     <string name="logRemoved">Journal supprimé</string>
     <string name="strMsgDuaFor" formatted="false">Invocation pour %s</string>
-    <string name="places" formatted="false">%d endroits</string>
-    <string name="place" formatted="false">%d endroit</string>
     <string name="labelPreviousTafsir">Tafsir précédent</string>
     <string name="labelNextTafsir">Tafsir suivant</string>
     <string name="strMsgShareApp" formatted="false">QuranApp est une application gratuite et open-source pour lire et explorer le Coran avec une interface pure et agréable et des fonctionnalités comme les traductions, le tafsir, les rappels et bien d\'autres.
@@ -446,4 +442,68 @@
     <string name="englishContentOnly">Le contenu de cette page est disponible uniquement en anglais.</string>
     <string name="estimatedSize">Taille estimée : %s</string>
     <string name="msgPreparingPrebuiltAtlas">Préparation du texte du Coran pour la première fois. Cela prendra quelques secondes.</string>
+
+    <string name="create">Créer</string>
+    <string name="strLabelManage">Gérer</string>
+    <string name="update_note">Modifier la note</string>
+    <string name="updateAvailable">Mise à jour disponible</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Mettre à jour les récitations</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Une version audio plus récente est disponible pour ce récitateur. La mise à jour remplacera les sourates téléchargées.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Des mises à jour sont disponibles pour les récitations téléchargées.</string>
+    <string name="continue_reading">Continuer la lecture</string>
+    <string name="recitationPlayer">Lecteur de récitation</string>
+    <string name="desc_recitation_player_widget">Contrôlez la récitation du Coran depuis l\'écran d\'accueil</string>
+    <string name="my_collections">Mes collections</string>
+    <string name="add_to_collection">Ajouter à une collection</string>
+    <string name="remove_from_collection">Retirer de la collection</string>
+    <string name="msg_remove_from_collection">Ce verset sera retiré de la collection. Les notes associées seront aussi supprimées.</string>
+    <string name="no_collections">Aucune collection pour le moment.</string>
+    <string name="no_collection_items">Cette collection ne contient aucun verset. Regroupez vos versets préférés pour les retrouver facilement.</string>
+    <string name="create_collection">Créer une collection</string>
+    <string name="update_collection">Modifier la collection</string>
+    <string name="select_color">Choisir une couleur</string>
+    <string name="select_icon">Choisir une icône</string>
+    <string name="create_new_collection">Créer une nouvelle collection</string>
+    <string name="collection_name">Nom de la collection</string>
+    <string name="collection_name_hint">Saisissez le nom</string>
+    <string name="description">Description</string>
+    <string name="collection_description_hint">Saisissez une description</string>
+    <string name="msg_collection_deleted">Collection supprimée.</string>
+    <string name="delete_collection">Supprimer la collection</string>
+    <string name="msg_delete_collection">La collection et les versets qu\'elle contient seront supprimés. Vos marques-pages ne seront pas affectés.</string>
+    <string name="collection_note_hint">Écrivez ici une note supplémentaire sur ce verset…</string>
+    <string name="collection_updated">Collections mises à jour</string>
+    <string name="updated_just_now">Mis à jour à l\'instant</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d verset</item>
+        <item quantity="many">%d versets</item>
+        <item quantity="other">%d versets</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Mis à jour il y a %d minute</item>
+        <item quantity="many">Mis à jour il y a %d minutes</item>
+        <item quantity="other">Mis à jour il y a %d minutes</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Mis à jour il y a %d heure</item>
+        <item quantity="many">Mis à jour il y a %d heures</item>
+        <item quantity="other">Mis à jour il y a %d heures</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Mis à jour il y a %d jour</item>
+        <item quantity="many">Mis à jour il y a %d jours</item>
+        <item quantity="other">Mis à jour il y a %d jours</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d objet</item>
+        <item quantity="many">%d objets</item>
+        <item quantity="other">%d objets</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d endroit</item>
+        <item quantity="many">%d endroits</item>
+        <item quantity="other">%d endroits</item>
+    </plurals>
 </resources>

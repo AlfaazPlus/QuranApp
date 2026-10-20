@@ -234,7 +234,7 @@ private fun ReadHistoryCard(
                     }
 
                     Text(
-                        text = stringResource(R.string.strLabelContinueReading),
+                        text = stringResource(R.string.continue_reading_2),
                         modifier = Modifier.padding(top = 12.dp),
                         style = MaterialTheme.typography.labelMedium,
                         color = colorScheme.onSurface.alpha(0.65f),

@@ -26,7 +26,12 @@ data class MultiArgRoute(private val route: String, private val argNames: List<S
     }"
 }
 
-object Routes {
+object MainRoutes {
     const val HOME = "home"
     const val LIBRARY = "library"
+}
+
+object CollectionRoutes {
+    const val HOME = "home"
+    val DETAIL = SingleArgRoute("detail", Keys.COLLECTION_ID)
 }

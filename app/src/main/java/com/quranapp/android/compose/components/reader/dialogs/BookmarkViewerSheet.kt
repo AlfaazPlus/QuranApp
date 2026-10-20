@@ -132,7 +132,6 @@ private fun BookmarkViewerSheetContent(
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var chapterName by remember { mutableStateOf("") }
     var prepared by remember(bookmark.id) { mutableStateOf<ReaderPreparedData?>(null) }
-    var isLoading by remember(bookmark.id) { mutableStateOf(true) }
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
     var selectedTab by remember(data) { mutableStateOf(BookmarkTab.Note) }
@@ -144,7 +143,6 @@ private fun BookmarkViewerSheetContent(
     }
 
     LaunchedEffect(chapterNo, fromVerseNo, toVerseNo, verseActions, colors, type, density) {
-        isLoading = true
         prepared = withContext(Dispatchers.IO) {
             val params = TextBuilderParams(
                 uiConfig = ComposeUiConfig(
@@ -160,14 +158,13 @@ private fun BookmarkViewerSheetContent(
                 script = ReaderPreferences.getQuranScript(),
                 arabicSizeMultiplier = ReaderPreferences.getArabicTextSizeMultiplier(),
                 translationSizeMultiplier = ReaderPreferences.getTranslationTextSizeMultiplier(),
-                slugs = ReaderPreferences.getTranslations(),
+                slugs = setOf(ReaderPreferences.primaryTranslationSlug()),
             )
+
             ReaderItemsBuilder.buildQuickReferenceItems(
                 context, params, chapterNo, (fromVerseNo..toVerseNo).toList(),
             )
         }
-
-        isLoading = false
     }
 
     LaunchedEffect(editing) {
@@ -270,7 +267,6 @@ private fun BookmarkViewerSheetContent(
 
                 BookmarkTab.Verses -> Box(Modifier.weight(1f)) {
                     BookmarkVersesTab(
-                        isLoading = isLoading,
                         prepared = prepared,
                         verses = verses,
                     )
@@ -397,11 +393,10 @@ private fun BookmarkNoteTab(
 
 @Composable
 private fun BookmarkVersesTab(
-    isLoading: Boolean,
     prepared: ReaderPreparedData?,
     verses: List<ReaderLayoutItem.VerseUI>,
 ) {
-    if (isLoading) {
+    if (prepared == null) {
         Box(
             Modifier
                 .fillMaxWidth()

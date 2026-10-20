@@ -50,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,7 +66,6 @@ import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.utils.LocalAppLocale
-import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TafsirEvent
@@ -225,12 +225,11 @@ private fun LanguageGroupCard(
                         Spacer(modifier = Modifier.height(2.dp))
 
                         Text(
-                            text =
-                                formattedStringResource(
-                                    if (group.tafsirs.size > 1)
-                                        R.string.nItems else
-                                        R.string.nItem, group.tafsirs.size
-                                ),
+                            text = pluralStringResource(
+                                R.plurals.item_count,
+                                group.tafsirs.size,
+                                group.tafsirs.size,
+                            ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

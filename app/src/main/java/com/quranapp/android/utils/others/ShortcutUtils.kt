@@ -62,8 +62,8 @@ object ShortcutUtils {
             intent.action = Intent.ACTION_VIEW
 
             val builder = ShortcutInfoCompat.Builder(ctx, id)
-                .setShortLabel(ctx.getString(R.string.strLabelContinueReading))
-                .setLongLabel(ctx.getString(R.string.strLabelContinueReading))
+                .setShortLabel(ctx.getString(R.string.continue_reading_2))
+                .setLongLabel(ctx.getString(R.string.continue_reading_2))
                 .setIntent(intent)
 
             try {

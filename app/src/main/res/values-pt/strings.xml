@@ -67,7 +67,7 @@
     <string name="verses">Versículos</string>
     <string name="strTitleBookmark">Favoritos</string>
     <string name="strTitleTranslations">Traduções</string>
-    <string name="strLabelContinueReading">Continuar Lendo »</string>
+    <string name="continue_reading_2">Continuar Lendo »</string>
     <string name="strTitleChapInfoPages">Páginas</string>
     <string name="strTitleAppLanguage">Idioma do app</string>
     <string name="strLabelShare">Compartilhar</string>
@@ -238,8 +238,6 @@
     <string name="logRemoved">Registo removido</string>
     <string name="labelTranslation">Tradução</string>
     <string name="titleEtiquetteVerses">Etiqueta no Alcorão</string>
-    <string name="place" formatted="false">Local %d</string>
-    <string name="places" formatted="false">Lugares %d</string>
     <string name="copiedToClipboard">Copiado para a área de transferência.</string>
     <string name="msgDownloadingFonts">A transferir fontes</string>
     <string name="msgVerseReminderNotifPermission">A permissão de notificação é necessária para ativar o lembrete de versos.</string>
@@ -270,8 +268,6 @@
 \n
 \nTerá de o transferir novamente.</string>
     <string name="nFiles" formatted="false">%d ficheiros</string>
-    <string name="nItem" formatted="false">%d item</string>
-    <string name="nItems" formatted="false">%d itens</string>
     <string name="labelArabic">Árabe</string>
     <string name="titleRemoveFromFavourites">Remover dos favoritos</string>
     <string name="titleResourceDownloadSource">Fonte de descarregamento de recursos</string>
@@ -446,4 +442,68 @@
     <string name="englishContentOnly">O conteúdo desta página está disponível apenas em inglês.</string>
     <string name="estimatedSize">Tamanho estimado: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Preparando o texto do Alcorão pela primeira vez. Isso levará alguns segundos.</string>
+
+    <string name="create">Criar</string>
+    <string name="strLabelManage">Gerir</string>
+    <string name="update_note">Atualizar nota</string>
+    <string name="updateAvailable">Atualização disponível</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Atualizar recitações</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Há um áudio mais recente deste recitador. A atualização irá substituir os capítulos descarregados.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Há atualizações das recitações descarregadas.</string>
+    <string name="continue_reading">Continuar a ler</string>
+    <string name="recitationPlayer">Leitor de recitação</string>
+    <string name="desc_recitation_player_widget">Controle a recitação do Alcorão a partir do ecrã inicial</string>
+    <string name="my_collections">As minhas coleções</string>
+    <string name="add_to_collection">Adicionar à coleção</string>
+    <string name="remove_from_collection">Remover da coleção</string>
+    <string name="msg_remove_from_collection">Este versículo será removido da coleção. As notas associadas também serão apagadas.</string>
+    <string name="no_collections">Ainda não há coleções.</string>
+    <string name="no_collection_items">Esta coleção não tem versículos. Organize os seus versículos favoritos em coleções para os encontrar facilmente.</string>
+    <string name="create_collection">Criar coleção</string>
+    <string name="update_collection">Editar coleção</string>
+    <string name="select_color">Escolher cor</string>
+    <string name="select_icon">Escolher ícone</string>
+    <string name="create_new_collection">Criar nova coleção</string>
+    <string name="collection_name">Nome da coleção</string>
+    <string name="collection_name_hint">Introduza o nome</string>
+    <string name="description">Descrição</string>
+    <string name="collection_description_hint">Introduza a descrição</string>
+    <string name="msg_collection_deleted">Coleção eliminada.</string>
+    <string name="delete_collection">Apagar coleção</string>
+    <string name="msg_delete_collection">A coleção e os versículos guardados serão removidos. Os favoritos não são afetados.</string>
+    <string name="collection_note_hint">Escreva aqui uma nota adicional sobre este versículo…</string>
+    <string name="collection_updated">Coleções atualizadas</string>
+    <string name="updated_just_now">Atualizado agora mesmo</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d versículo</item>
+        <item quantity="many">%d versículos</item>
+        <item quantity="other">%d versículos</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Atualizado há %d minuto</item>
+        <item quantity="many">Atualizado há %d minutos</item>
+        <item quantity="other">Atualizado há %d minutos</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Atualizado há %d hora</item>
+        <item quantity="many">Atualizado há %d horas</item>
+        <item quantity="other">Atualizado há %d horas</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Atualizado há %d dia</item>
+        <item quantity="many">Atualizado há %d dias</item>
+        <item quantity="other">Atualizado há %d dias</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="many">%d itens</item>
+        <item quantity="other">%d itens</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d local</item>
+        <item quantity="many">%d locais</item>
+        <item quantity="other">%d locais</item>
+    </plurals>
 </resources>

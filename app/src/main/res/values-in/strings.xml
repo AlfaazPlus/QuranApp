@@ -122,7 +122,7 @@
     <string name="strMsgBookmarkAddedAlready">Ayat sudah ditambahkan ke Bookmark</string>
     <string name="strMsgBookmarkRemoved">Ayat berhasil dihapus dari Bookmark</string>
     <string name="strMsgBookmarkRemoveFailed">Ayat gagal dihapus dari Bookmark</string>
-    <string name="strLabelContinueReading">Lanjutkan membaca »</string>
+    <string name="continue_reading_2">Lanjutkan membaca »</string>
     <string name="strLabelOrder">Urutan</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d lebih banyak terjemahan</string>
     <string name="strLabelBookmark">Bookmark</string>
@@ -209,8 +209,6 @@
     <string name="createIssue">Buat permasalahan</string>
     <string name="copiedToClipboard">Disalin ke papan klip.</string>
     <string name="github">GitHub</string>
-    <string name="nItem">%d item</string>
-    <string name="nItems">%d item</string>
     <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
     <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
     <string name="titleScriptCleanup">Hapus jenis cetakan?</string>
@@ -250,8 +248,6 @@
     <string name="labelTranslation">Terjemahan</string>
     <string name="msgChapterAddedToFavourites">Surah telah ditambah ke favorit.</string>
     <string name="strMsgDuaFor" formatted="false">Doa untuk %s</string>
-    <string name="place" formatted="false">%d tempat</string>
-    <string name="places" formatted="false">%d tempat</string>
     <string name="labelNextTafsir">Tafsir selanjutnya</string>
     <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
     <string name="titleSolutionVerses">Solusi dari Al Quran</string>
@@ -438,4 +434,56 @@
     <string name="englishContentOnly">Konten di halaman ini hanya tersedia dalam bahasa Inggris.</string>
     <string name="estimatedSize">Perkiraan ukuran: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Sedang menyiapkan teks Al-Qur\'an untuk pertama kali. Ini akan memakan beberapa detik.</string>
+
+    <string name="create">Buat</string>
+    <string name="strLabelManage">Kelola</string>
+    <string name="update_note">Perbarui catatan</string>
+    <string name="updateAvailable">Pembaruan tersedia</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Perbarui murattal</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Ada audio terbaru untuk qari ini. Memperbarui akan mengganti surah yang sudah diunduh.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Audio murattal yang diunduh punya pembaruan.</string>
+    <string name="continue_reading">Lanjutkan membaca</string>
+    <string name="recitationPlayer">Pemutar murattal</string>
+    <string name="desc_recitation_player_widget">Kendalikan murattal Al-Qur\'an dari layar utama</string>
+    <string name="my_collections">Koleksi saya</string>
+    <string name="add_to_collection">Tambahkan ke koleksi</string>
+    <string name="remove_from_collection">Hapus dari koleksi</string>
+    <string name="msg_remove_from_collection">Ayat ini akan dihapus dari koleksi. Catatannya juga akan terhapus.</string>
+    <string name="no_collections">Belum ada koleksi.</string>
+    <string name="no_collection_items">Koleksi ini masih kosong. Kumpulkan ayat favorit agar mudah ditemukan.</string>
+    <string name="create_collection">Buat koleksi</string>
+    <string name="update_collection">Ubah koleksi</string>
+    <string name="select_color">Pilih warna</string>
+    <string name="select_icon">Pilih ikon</string>
+    <string name="create_new_collection">Buat koleksi baru</string>
+    <string name="collection_name">Nama koleksi</string>
+    <string name="collection_name_hint">Masukkan nama koleksi</string>
+    <string name="description">Deskripsi</string>
+    <string name="collection_description_hint">Masukkan deskripsi</string>
+    <string name="msg_collection_deleted">Koleksi berhasil dihapus.</string>
+    <string name="delete_collection">Hapus koleksi</string>
+    <string name="msg_delete_collection">Koleksi beserta ayat di dalamnya akan dihapus. Bookmark tidak terpengaruh.</string>
+    <string name="collection_note_hint">Tulis catatan tambahan untuk ayat ini di sini…</string>
+    <string name="collection_updated">Koleksi diperbarui</string>
+    <string name="updated_just_now">Baru saja diperbarui</string>
+
+    <plurals name="verse_count">
+        <item quantity="other">%d ayat</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="other">Diperbarui %d menit yang lalu</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="other">Diperbarui %d jam yang lalu</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="other">Diperbarui %d hari yang lalu</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="other">%d item</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="other">%d tempat</item>
+    </plurals>
 </resources>

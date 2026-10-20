@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.components.collections.AddToCollectionSheet
 import com.quranapp.android.compose.components.dialogs.WaitingDialog
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerData
 import com.quranapp.android.compose.components.reader.dialogs.BookmarkViewerSheet
@@ -94,6 +95,7 @@ fun ReaderProvider(
     var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
     var verseOptionsVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
+    var addCollectionVerse by remember { mutableStateOf<VerseWithDetails?>(null) }
     var quickReferenceData by remember { mutableStateOf<QuickReferenceData?>(null) }
     var wbwSheetData by remember { mutableStateOf<WbwSheetData?>(null) }
 
@@ -235,7 +237,18 @@ fun ReaderProvider(
                 verseOptionsVerse = null
                 footnotePresenterData = FootnotePresenterData(v, null)
             },
-        ) { verseOptionsVerse = null }
+            onAddToCollection = { verse ->
+                verseOptionsVerse = null
+                addCollectionVerse = verse
+            },
+            onClose = { verseOptionsVerse = null },
+        )
+
+        AddToCollectionSheet(
+            chapterNo = addCollectionVerse?.chapterNo,
+            verseNo = addCollectionVerse?.verseNo,
+            onDismiss = { addCollectionVerse = null },
+        )
 
         FootnotePresenter(footnotePresenterData) {
             footnotePresenterData = null

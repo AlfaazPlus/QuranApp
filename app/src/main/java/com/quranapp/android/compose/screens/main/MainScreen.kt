@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.quranapp.android.compose.components.MainBottomNavigationBar
 import com.quranapp.android.compose.components.mainBottomNavigationOuterHeight
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
-import com.quranapp.android.utils.univ.Routes
+import com.quranapp.android.utils.univ.MainRoutes
 
 
 val enterTransition = slideInHorizontally(
@@ -42,15 +42,15 @@ fun MainScreen() {
         Column {
             NavHost(
                 navController = navController,
-                startDestination = Routes.HOME,
+                startDestination = MainRoutes.HOME,
                 modifier = Modifier.weight(1f),
                 enterTransition = { enterTransition },
                 exitTransition = { exitTransition },
                 popEnterTransition = { popEnterTransition },
                 popExitTransition = { popExitTransition },
             ) {
-                composable(Routes.HOME) { HomeScreen() }
-                composable(Routes.LIBRARY) { LibraryScreen() }
+                composable(MainRoutes.HOME) { HomeScreen() }
+                composable(MainRoutes.LIBRARY) { LibraryScreen() }
             }
 
             MainBottomNavigationBar(navController)

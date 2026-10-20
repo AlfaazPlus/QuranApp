@@ -49,7 +49,7 @@
     <string name="strTitleChapInfoJuzNo">Juz N.</string>
     <string name="strMsgChapInfoFailedLoad">Impossibile caricare le informazioni sulla sura. Per favore riprova più tardi.</string>
     <string name="strLabelBookmark">Segnalibro</string>
-    <string name="strLabelContinueReading">Continua a leggere</string>
+    <string name="continue_reading_2">Continua a leggere</string>
     <string name="strLabelSelectedCount" formatted="false">%d selezionato</string>
     <string name="strLabelSelectVerse">Seleziona Versetti</string>
     <string name="strLabelSelectTranslation">Seleziona le traduzione</string>
@@ -332,11 +332,7 @@
     <string name="textPreparingAudio">Preparazione audio…</string>
     <string name="notification_permission">Permesso di notifica</string>
     <string name="nScriptsAndFonts">%1$d script e %2$d font</string>
-    <string name="nItem">%d elemento</string>
-    <string name="nItems">%d elementi</string>
     <string name="noResults">Nessun risultato</string>
-    <string name="place">%d luogo</string>
-    <string name="places">%d luoghi</string>
     <string name="onboardDescTafsir">Seleziona un commento da leggere accanto ai versetti. Puoi scaricare e gestire i tafsir nelle impostazioni.</string>
     <string name="labelTransliteration">Traslitterazione</string>
     <string name="favourites">Preferiti</string>
@@ -437,4 +433,68 @@
     <string name="englishContentOnly">I contenuti di questa pagina sono disponibili solo in inglese.</string>
     <string name="estimatedSize">Dimensione stimata: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Preparazione del testo del Corano per la prima volta. Potrebbero volerci alcuni secondi.</string>
+
+    <string name="create">Crea</string>
+    <string name="strLabelManage">Gestisci</string>
+    <string name="update_note">Aggiorna nota</string>
+    <string name="updateAvailable">Aggiornamento disponibile</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Aggiorna le recitazioni</string>
+    <string name="recitationDownloadUpdateConfirmMessage">È disponibile un audio più recente per questo recitatore. L\'aggiornamento sostituirà le sure scaricate.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Sono disponibili aggiornamenti per le recitazioni scaricate.</string>
+    <string name="continue_reading">Continua a leggere</string>
+    <string name="recitationPlayer">Lettore di recitazione</string>
+    <string name="desc_recitation_player_widget">Controlla la recitazione del Corano dalla schermata Home</string>
+    <string name="my_collections">Le mie raccolte</string>
+    <string name="add_to_collection">Aggiungi a una raccolta</string>
+    <string name="remove_from_collection">Rimuovi dalla raccolta</string>
+    <string name="msg_remove_from_collection">Questo versetto verrà rimosso dalla raccolta. Anche le note verranno eliminate.</string>
+    <string name="no_collections">Non hai ancora creato raccolte.</string>
+    <string name="no_collection_items">Questa raccolta non contiene versetti. Raggruppa i versetti che ti interessano per ritrovarli facilmente.</string>
+    <string name="create_collection">Crea raccolta</string>
+    <string name="update_collection">Modifica raccolta</string>
+    <string name="select_color">Scegli il colore</string>
+    <string name="select_icon">Scegli l\'icona</string>
+    <string name="create_new_collection">Crea una nuova raccolta</string>
+    <string name="collection_name">Nome della raccolta</string>
+    <string name="collection_name_hint">Inserisci il nome</string>
+    <string name="description">Descrizione</string>
+    <string name="collection_description_hint">Inserisci una descrizione</string>
+    <string name="msg_collection_deleted">Raccolta eliminata.</string>
+    <string name="delete_collection">Elimina raccolta</string>
+    <string name="msg_delete_collection">La raccolta e i versetti salvati verranno rimossi. I segnalibri non verranno toccati.</string>
+    <string name="collection_note_hint">Scrivi qui una nota aggiuntiva su questo versetto…</string>
+    <string name="collection_updated">Raccolte aggiornate</string>
+    <string name="updated_just_now">Aggiornato adesso</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d versetto</item>
+        <item quantity="many">%d versetti</item>
+        <item quantity="other">%d versetti</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Aggiornato %d minuto fa</item>
+        <item quantity="many">Aggiornato %d minuti fa</item>
+        <item quantity="other">Aggiornato %d minuti fa</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Aggiornato %d ora fa</item>
+        <item quantity="many">Aggiornato %d ore fa</item>
+        <item quantity="other">Aggiornato %d ore fa</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Aggiornato %d giorno fa</item>
+        <item quantity="many">Aggiornato %d giorni fa</item>
+        <item quantity="other">Aggiornato %d giorni fa</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d elemento</item>
+        <item quantity="many">%d elementi</item>
+        <item quantity="other">%d elementi</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d luogo</item>
+        <item quantity="many">%d luoghi</item>
+        <item quantity="other">%d luoghi</item>
+    </plurals>
 </resources>

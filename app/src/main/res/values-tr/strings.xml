@@ -107,7 +107,7 @@
     <string name="strLabelBookmark">Yer imi</string>
     <string name="strLabelRemoveBookmark">Yer imini Kaldır</string>
     <string name="strLabelReport">Bildir</string>
-    <string name="strLabelContinueReading">Okumaya Devam Et »</string>
+    <string name="continue_reading_2">Okumaya Devam Et »</string>
     <string name="strLabelSelectedCount" formatted="false">%d tane seçildi</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d daha fazla meal</string>
     <string name="strLabelSelectVerse">Ayet seç</string>
@@ -219,8 +219,6 @@
     <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
     <string name="msgRecitationCleanup" formatted="false">%s\'e ait depolanmış tüm tilavet dosyaları silinecek. Tilavetleri sure bazında tek tek silmek için ayarlara gidin.</string>
     <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
-    <string name="nItem">%d öğe</string>
-    <string name="nItems">%d öğeler</string>
     <string name="verseSyncOn">Ayet takibi : AÇIK</string>
     <string name="verseSyncOff">Ayet takibi : KAPALI</string>
     <string name="nFiles" formatted="false">%d dosya</string>
@@ -255,8 +253,6 @@
     <string name="labelArabic">Arapça</string>
     <string name="labelTranslation">Meal</string>
     <string name="strMsgDuaFor" formatted="false">%s için dua ediniz</string>
-    <string name="place" formatted="false">%d yeri</string>
-    <string name="places" formatted="false">%d yerleri</string>
     <string name="strMsgShareApp" formatted="false">QuranApp, Kur\'an-ı Kerim\'i meali ile okumak ve keşfetmek için ücretsiz ve açık kaynaklı bir uygulamadır. Bu uygulama, tefsir, tilavet, hatırlatma ve daha birçok özelliğiyle zarif ve sade bir arayüze sahiptir. \n \nŞİMDİ İNDİR: \n%s</string>
     <string name="labelNextTafsir">Sonraki tefsir</string>
     <string name="labelPreviousTafsir">Önceki tefsir</string>
@@ -443,4 +439,62 @@
     <string name="englishContentOnly">Bu sayfadaki içerikler yalnızca İngilizce dilinde mevcuttur.</string>
     <string name="estimatedSize">Tahmini boyut: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Kur\'an metni ilk kez hazırlanıyor. Bu işlem birkaç saniye sürebilir.</string>
+
+    <string name="create">Oluştur</string>
+    <string name="strLabelManage">Yönet</string>
+    <string name="update_note">Notu güncelle</string>
+    <string name="updateAvailable">Güncelleme var</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Kıraatleri güncelle</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Bu kâri için daha yeni bir ses kaydı var. Güncelleme, indirilen surelerin yerine yenisini koyar.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">İndirilen kıraatler için güncelleme var.</string>
+    <string name="continue_reading">Okumaya devam et</string>
+    <string name="recitationPlayer">Kıraat oynatıcı</string>
+    <string name="desc_recitation_player_widget">Ana ekrandan Kur\'an kıraatini yönetin</string>
+    <string name="my_collections">Koleksiyonlarım</string>
+    <string name="add_to_collection">Koleksiyona ekle</string>
+    <string name="remove_from_collection">Koleksiyondan çıkar</string>
+    <string name="msg_remove_from_collection">Bu ayet koleksiyondan çıkarılacak. Ayetin notları da silinecek.</string>
+    <string name="no_collections">Henüz koleksiyon yok.</string>
+    <string name="no_collection_items">Bu koleksiyonda ayet yok. Sevdiğiniz ayetleri koleksiyonlarda toplayıp kolayca bulabilirsiniz.</string>
+    <string name="create_collection">Koleksiyon oluştur</string>
+    <string name="update_collection">Koleksiyonu düzenle</string>
+    <string name="select_color">Renk seç</string>
+    <string name="select_icon">Simge seç</string>
+    <string name="create_new_collection">Yeni koleksiyon oluştur</string>
+    <string name="collection_name">Koleksiyon adı</string>
+    <string name="collection_name_hint">Ad girin</string>
+    <string name="description">Açıklama</string>
+    <string name="collection_description_hint">Açıklama girin</string>
+    <string name="msg_collection_deleted">Koleksiyon silindi.</string>
+    <string name="delete_collection">Koleksiyonu sil</string>
+    <string name="msg_delete_collection">Koleksiyon ve içindeki ayetler kaldırılır. Yer imleriniz etkilenmez.</string>
+    <string name="collection_note_hint">Bu ayet için ek notunuzu buraya yazın…</string>
+    <string name="collection_updated">Koleksiyonlar güncellendi</string>
+    <string name="updated_just_now">Az önce güncellendi</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d ayet</item>
+        <item quantity="other">%d ayet</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d dakika önce güncellendi</item>
+        <item quantity="other">%d dakika önce güncellendi</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d saat önce güncellendi</item>
+        <item quantity="other">%d saat önce güncellendi</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d gün önce güncellendi</item>
+        <item quantity="other">%d gün önce güncellendi</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d öğe</item>
+        <item quantity="other">%d öğe</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d yer</item>
+        <item quantity="other">%d yer</item>
+    </plurals>
 </resources>

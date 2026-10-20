@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -174,12 +175,11 @@ private fun LanguageGroupCard(
                         Spacer(modifier = Modifier.height(2.dp))
 
                         Text(
-                            text =
-                                stringResource(
-                                    if (group.translations.size > 1)
-                                        R.string.nItems else
-                                        R.string.nItem, group.translations.size
-                                ),
+                            text = pluralStringResource(
+                                R.plurals.item_count,
+                                group.translations.size,
+                                group.translations.size,
+                            ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = colorScheme.onSurfaceVariant
                         )

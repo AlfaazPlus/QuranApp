@@ -28,7 +28,7 @@ class ReadHistoryViewModel(private val application: Application) : AndroidViewMo
     val allHistories = userRepository.getHistoriesPaginated()
         .cachedIn(viewModelScope)
 
-    val recentHistories = userRepository.getHistoriesFlow(10)
+    val recentHistories = userRepository.getHistoriesFlow(4)
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),

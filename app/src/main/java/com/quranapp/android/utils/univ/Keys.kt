@@ -46,4 +46,5 @@ object Keys {
 
     const val NAV_DESTINATION = "nav_destination"
     const val SHOW_READER_SETTINGS_ONLY = "reader_settings_only"
+    const val COLLECTION_ID = "collection_id"
 }

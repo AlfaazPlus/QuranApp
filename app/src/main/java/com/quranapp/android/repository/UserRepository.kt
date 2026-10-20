@@ -5,14 +5,19 @@ import android.widget.Toast
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.room.withTransaction
 import com.quranapp.android.R
 import com.quranapp.android.db.UserDatabase
 import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.db.entities.user.CollectionEntity
+import com.quranapp.android.db.entities.user.CollectionItemEntity
+import com.quranapp.android.db.entities.user.CollectionWithCount
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
+import java.util.Date
 
 class UserRepository(
     private val context: Context,
@@ -20,6 +25,7 @@ class UserRepository(
 ) {
     private val bookmarkDao get() = database.bookmarkDao()
     private val readHistoryDao get() = database.readHistoryDao()
+    private val collectionDao get() = database.collectionDao()
 
     companion object {
         private const val HISTORY_LIMIT = 40
@@ -163,6 +169,10 @@ class UserRepository(
         return bookmarkDao.getBookmarksFlow()
     }
 
+    fun getBookmarksFlow(limit: Int): Flow<List<BookmarkEntity>> {
+        return bookmarkDao.getFlow(limit)
+    }
+
     fun getBookmarksPagingFlow(
         pageSize: Int = 20
     ): Flow<PagingData<BookmarkEntity>> {
@@ -217,5 +227,106 @@ class UserRepository(
 
     suspend fun deleteAllHistories() {
         readHistoryDao.deleteAll()
+    }
+
+    fun getCollectionsFlow(limit: Int): Flow<List<CollectionWithCount>> {
+        return collectionDao.getFlow(limit)
+    }
+
+    fun getCollectionsPaginated(query: String = ""): Flow<PagingData<CollectionWithCount>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { collectionDao.getAllPaginated(query.trim()) }
+        ).flow
+    }
+
+
+    suspend fun getCollection(id: Long): CollectionEntity? {
+        return collectionDao.getCollection(id)
+    }
+
+    fun observeCollection(id: Long): Flow<CollectionWithCount?> {
+        return collectionDao.observeWithCount(id)
+    }
+
+    fun getCollectionItems(collectionId: Long): Flow<PagingData<CollectionItemEntity>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                initialLoadSize = 20,
+                prefetchDistance = 5,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { collectionDao.getItemsPaginated(collectionId) }
+        ).flow
+    }
+
+    fun observeCollectionIdsForVerse(chapterNo: Int, verseNo: Int): Flow<List<Long>> {
+        return collectionDao.observeCollectionIdsForVerse(chapterNo, verseNo)
+    }
+
+    suspend fun addCollection(collection: CollectionEntity) {
+        collectionDao.createCollection(collection)
+    }
+
+    suspend fun updateCollection(collection: CollectionEntity) {
+        collectionDao.updateCollection(collection)
+    }
+
+    suspend fun deleteCollection(id: Long) {
+        collectionDao.deleteCollection(id)
+    }
+
+
+    suspend fun updateItemNote(itemId: Long, note: String?) {
+        val item = collectionDao.getItem(itemId) ?: return
+        val cleaned = note?.trim()?.ifBlank { null }
+        collectionDao.updateItem(item.copy(note = cleaned))
+        collectionDao.touch(item.collectionId, System.currentTimeMillis())
+    }
+
+    suspend fun removeItem(itemId: Long) {
+        val item = collectionDao.getItem(itemId) ?: return
+        collectionDao.deleteItemById(itemId)
+        collectionDao.touch(item.collectionId, System.currentTimeMillis())
+    }
+
+    suspend fun applyVerseMembership(
+        chapterNo: Int,
+        verseNo: Int,
+        selectedIds: Set<Long>,
+    ) {
+        database.withTransaction {
+            val current = collectionDao.collectionIdsForVerse(chapterNo, verseNo).toSet()
+            val toAdd = selectedIds - current
+            val toRemove = current - selectedIds
+            val now = Date()
+            val touched = mutableSetOf<Long>()
+
+            for (collectionId in toAdd) {
+                val rowId = collectionDao.insertItem(
+                    CollectionItemEntity(
+                        collectionId = collectionId,
+                        chapterNo = chapterNo,
+                        verseNo = verseNo,
+                        note = null,
+                        sortIndex = (collectionDao.maxItemSort(collectionId) ?: -1) + 1,
+                        addedAt = now,
+                    )
+                )
+                if (rowId != -1L) touched += collectionId
+            }
+
+            for (collectionId in toRemove) {
+                collectionDao.deleteItem(collectionId, chapterNo, verseNo)
+                touched += collectionId
+            }
+
+            val time = System.currentTimeMillis()
+            touched.forEach { collectionDao.touch(it, time) }
+        }
     }
 }

@@ -57,6 +57,7 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import java.text.MessageFormat
 import java.util.regex.Pattern
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun ProphetsScreen() {
@@ -66,7 +67,7 @@ fun ProphetsScreen() {
     var debouncedQuery by remember { mutableStateOf("") }
 
     LaunchedEffect(searchQuery) {
-        delay(150)
+        delay(150.milliseconds)
         debouncedQuery = searchQuery
     }
 

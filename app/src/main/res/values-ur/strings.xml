@@ -105,7 +105,7 @@
     <string name="strLabelRemoveBookmark">بک مارک ہٹایں</string>
     <string name="strLabelShare">شیئر کریں</string>
     <string name="strLabelReport">رپورٹ</string>
-    <string name="strLabelContinueReading">پڑھنا جاری رکھیں »</string>
+    <string name="continue_reading_2">پڑھنا جاری رکھیں »</string>
     <string name="strLabelOrder">ترتیب</string>
     <string name="strLabelSelectedCount" formatted="false">%d منتخب کیا گیا</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d مزید ترجمے</string>
@@ -215,8 +215,6 @@
     <string name="scriptCanBeFreedUp" formatted="false">%d ڈاؤن لوڈ کردہ اسکرپٹس اور ان کے فونٹس کو خالی کیا جا سکتا ہے۔</string>
     <string name="tafseerCanBeFreedUp" formatted="false">%d محفوظ شدہ تفسیروں کو صاف کیا جا سکتا ہے۔</string>
     <string name="nothingToCleanup">صاف کرنے کے لیے کچھ نہیں ہے۔</string>
-    <string name="nItem" formatted="false">%d آئٹم</string>
-    <string name="nItems" formatted="false">%d آئٹم</string>
     <string name="verseSyncOn">آیت کی مطابقت پذیری: آن</string>
     <string name="verseSyncOff">آیت کی مطابقت پذیری: آف</string>
     <string name="strPreviewTextTransl">شروع کرتا ہوں اللہ تعالیٰ کے نام سے جو بڑا مہربان نہایت رحم واﻻ ہے</string>
@@ -255,8 +253,6 @@
     <string name="audioBothArabicTranslation">قرآن اور ترجمہ دونوں کی تلاوت کریں</string>
     <string name="logRemoved">لاگ ہٹا دیا گیا</string>
     <string name="strMsgDuaFor" formatted="false">%s کے لیے دعا</string>
-    <string name="places" formatted="false">%d جگہ</string>
-    <string name="place" formatted="false">%d جگہ</string>
     <string name="labelPreviousTafsir">پچھلی تفسیر</string>
     <string name="labelNextTafsir">اگلی تفسیر</string>
     <string name="titleSolutionVerses">قرآن سے حل</string>
@@ -450,4 +446,62 @@
     <string name="englishContentOnly">اس صفحے کا مواد صرف انگریزی زبان میں دستیاب ہے۔</string>
     <string name="estimatedSize">اندازاً سائز: %s</string>
     <string name="msgPreparingPrebuiltAtlas">پہلی بار قرآن کا متن تیار کیا جا رہا ہے۔ اس میں چند سیکنڈ لگ سکتے ہیں۔</string>
+
+    <string name="create">بنائیں</string>
+    <string name="strLabelManage">منظم کریں</string>
+    <string name="update_note">نوٹ اپ ڈیٹ کریں</string>
+    <string name="updateAvailable">اپ ڈیٹ دستیاب ہے</string>
+    <string name="recitationDownloadUpdateConfirmTitle">تلاوت اپ ڈیٹ کریں</string>
+    <string name="recitationDownloadUpdateConfirmMessage">اس قاری کی نئی آڈیو دستیاب ہے۔ اپ ڈیٹ کرنے سے ڈاؤن لوڈ شدہ سورتیں بدل جائیں گی۔</string>
+    <string name="recitationDownloadBannerUpdateAvailable">ڈاؤن لوڈ شدہ تلاوت کے لیے اپ ڈیٹ دستیاب ہے۔</string>
+    <string name="continue_reading">پڑھنا جاری رکھیں</string>
+    <string name="recitationPlayer">تلاوت پلیئر</string>
+    <string name="desc_recitation_player_widget">ہوم اسکرین سے قرآن کی تلاوت چلائیں</string>
+    <string name="my_collections">میرے مجموعے</string>
+    <string name="add_to_collection">مجموعے میں شامل کریں</string>
+    <string name="remove_from_collection">مجموعے سے ہٹائیں</string>
+    <string name="msg_remove_from_collection">یہ آیت مجموعے سے ہٹا دی جائے گی۔ اس کا نوٹ بھی مٹ جائے گا۔</string>
+    <string name="no_collections">ابھی کوئی مجموعہ نہیں بنا۔</string>
+    <string name="no_collection_items">اس مجموعے میں کوئی آیت نہیں۔ پسندیدہ آیات کو مجموعوں میں رکھ کر آسانی سے کھولیں۔</string>
+    <string name="create_collection">مجموعہ بنائیں</string>
+    <string name="update_collection">مجموعہ تبدیل کریں</string>
+    <string name="select_color">رنگ منتخب کریں</string>
+    <string name="select_icon">آئیکن منتخب کریں</string>
+    <string name="create_new_collection">نیا مجموعہ بنائیں</string>
+    <string name="collection_name">مجموعے کا نام</string>
+    <string name="collection_name_hint">نام لکھیں</string>
+    <string name="description">تفصیل</string>
+    <string name="collection_description_hint">تفصیل لکھیں</string>
+    <string name="msg_collection_deleted">مجموعہ حذف ہو گیا۔</string>
+    <string name="delete_collection">مجموعہ حذف کریں</string>
+    <string name="msg_delete_collection">مجموعہ اور اس میں محفوظ آیات ہٹ جائیں گی۔ بک مارکس نہیں ہٹیں گے۔</string>
+    <string name="collection_note_hint">اس آیت پر اضافی نوٹ یہاں لکھیں…</string>
+    <string name="collection_updated">مجموعے اپ ڈیٹ ہو گئے</string>
+    <string name="updated_just_now">ابھی اپ ڈیٹ ہوا</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d آیت</item>
+        <item quantity="other">%d آیات</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d منٹ پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%d منٹ پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d گھنٹا پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%d گھنٹے پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d دن پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%d دن پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d آئٹم</item>
+        <item quantity="other">%d آئٹم</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d جگہ</item>
+        <item quantity="other">%d جگہ</item>
+    </plurals>
 </resources>

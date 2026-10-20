@@ -126,7 +126,7 @@
     <string name="strTitleTheme">Тема</string>
     <string name="strLabelShare">Поделиться</string>
     <string name="strLabelReport">Пожаловаться</string>
-    <string name="strLabelContinueReading">Продолжить читать »</string>
+    <string name="continue_reading_2">Продолжить читать »</string>
     <string name="strTitleFeaturedDuas">Дуа в Коране</string>
     <string name="strTitleProphets">Пророки</string>
     <string name="titleSolutionVerses">Решения в Коране</string>
@@ -266,13 +266,9 @@
     <string name="msgScriptCleanup" formatted="false">%s шрифт будет удалён. Для использования вам будет необходимо его перезагрузить.</string>
     <string name="nFiles" formatted="false">%d файлов</string>
     <string name="nothingToCleanup">Нет данных для очистки.</string>
-    <string name="nItem" formatted="false">%d предмет</string>
-    <string name="nItems" formatted="false">%d предметов</string>
     <string name="noItems">Нет предметов</string>
     <string name="noResults">Результатов не найдено</string>
     <string name="verseSyncOn">Синхронизация аятов : ВКЛ</string>
-    <string name="place" formatted="false">%d место</string>
-    <string name="places" formatted="false">%d мест</string>
     <string name="inPlaces" formatted="false">в %s</string>
     <string name="inPlacesMore" formatted="false">в %1$s и ещё в %2$d других</string>
     <string name="onboardDescLanguage">Используйте приложение на вашем языке. Вы всегда сможете изменить его позже.</string>
@@ -454,4 +450,74 @@
     <string name="englishContentOnly">Содержимое этой страницы доступно только на английском языке.</string>
     <string name="estimatedSize">Предполагаемый размер: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Подготавливается текст Корана в первый раз. Это займет несколько секунд.</string>
+
+    <string name="create">Создать</string>
+    <string name="strLabelManage">Управлять</string>
+    <string name="update_note">Изменить заметку</string>
+    <string name="updateAvailable">Доступно обновление</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Обновить аудио</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Для этого чтеца доступна новая версия аудио. При обновлении скачанные суры будут заменены.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Для скачанных чтений доступны обновления.</string>
+    <string name="continue_reading">Продолжить чтение</string>
+    <string name="recitationPlayer">Плеер чтения</string>
+    <string name="desc_recitation_player_widget">Управляйте чтением Корана с главного экрана</string>
+    <string name="my_collections">Мои подборки</string>
+    <string name="add_to_collection">Добавить в подборку</string>
+    <string name="remove_from_collection">Убрать из подборки</string>
+    <string name="msg_remove_from_collection">Аят будет убран из подборки. Заметки к нему тоже удалятся.</string>
+    <string name="no_collections">Подборок пока нет.</string>
+    <string name="no_collection_items">В этой подборке нет аятов. Соберите любимые аяты в подборки, чтобы быстро к ним возвращаться.</string>
+    <string name="create_collection">Создать подборку</string>
+    <string name="update_collection">Изменить подборку</string>
+    <string name="select_color">Выбрать цвет</string>
+    <string name="select_icon">Выбрать значок</string>
+    <string name="create_new_collection">Новая подборка</string>
+    <string name="collection_name">Название</string>
+    <string name="collection_name_hint">Введите название</string>
+    <string name="description">Описание</string>
+    <string name="collection_description_hint">Введите описание</string>
+    <string name="msg_collection_deleted">Подборка удалена.</string>
+    <string name="delete_collection">Удалить подборку</string>
+    <string name="msg_delete_collection">Подборка и сохранённые в ней аяты будут удалены. Закладки останутся.</string>
+    <string name="collection_note_hint">Напишите здесь дополнительную заметку к этому аяту…</string>
+    <string name="collection_updated">Подборки обновлены</string>
+    <string name="updated_just_now">Обновлено только что</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d аят</item>
+        <item quantity="few">%d аята</item>
+        <item quantity="many">%d аятов</item>
+        <item quantity="other">%d аята</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Обновлено %d минуту назад</item>
+        <item quantity="few">Обновлено %d минуты назад</item>
+        <item quantity="many">Обновлено %d минут назад</item>
+        <item quantity="other">Обновлено %d минуты назад</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Обновлено %d час назад</item>
+        <item quantity="few">Обновлено %d часа назад</item>
+        <item quantity="many">Обновлено %d часов назад</item>
+        <item quantity="other">Обновлено %d часа назад</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Обновлено %d день назад</item>
+        <item quantity="few">Обновлено %d дня назад</item>
+        <item quantity="many">Обновлено %d дней назад</item>
+        <item quantity="other">Обновлено %d дня назад</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d предмет</item>
+        <item quantity="few">%d предмета</item>
+        <item quantity="many">%d предметов</item>
+        <item quantity="other">%d предмета</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d место</item>
+        <item quantity="few">%d места</item>
+        <item quantity="many">%d мест</item>
+        <item quantity="other">%d места</item>
+    </plurals>
 </resources>

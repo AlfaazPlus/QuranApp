@@ -1,7 +1,6 @@
 package com.quranapp.android.compose.screens.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,12 +18,9 @@ import com.quranapp.android.compose.components.MainAppBar
 import com.quranapp.android.compose.components.homepage.AppUpdateBanner
 import com.quranapp.android.compose.components.homepage.HomeResourceUpdatesBanner
 import com.quranapp.android.compose.components.homepage.HomeSectionFeaturedReading
-import com.quranapp.android.compose.components.homepage.HomeSectionReadHistory
 import com.quranapp.android.compose.components.homepage.HomeSectionVersesCollections
 import com.quranapp.android.compose.components.homepage.HomeTabbedSection
-import com.quranapp.android.compose.components.mainBottomNavigationOuterHeight
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
-import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 
 private const val HOME_HISTORY_LIMIT = 10
 

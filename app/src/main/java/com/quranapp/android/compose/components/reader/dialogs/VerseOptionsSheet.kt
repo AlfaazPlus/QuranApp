@@ -52,6 +52,7 @@ import com.quranapp.android.db.relations.VerseWithDetails
 fun VerseOptionsSheet(
     vwd: VerseWithDetails?,
     onFootnotes: (VerseWithDetails) -> Unit,
+    onAddToCollection: (VerseWithDetails) -> Unit,
     onClose: () -> Unit,
 ) {
     var shareSheetData by remember { mutableStateOf<VerseWithDetails?>(null) }
@@ -92,6 +93,10 @@ fun VerseOptionsSheet(
                 shareSheetData = vwd
                 onClose()
             },
+            onAddToCollection = {
+                onAddToCollection(vwd)
+                onClose()
+            },
         )
     }
 }
@@ -103,6 +108,7 @@ private fun VodSheetContent(
     onFootnotes: (VerseWithDetails) -> Unit,
     onSimilarVerses: (VerseWithDetails) -> Unit,
     onShare: () -> Unit,
+    onAddToCollection: () -> Unit,
 ) {
     val repository = LocalReaderViewModel.current.repository
     val context = LocalContext.current
@@ -180,6 +186,12 @@ private fun VodSheetContent(
                 iconRes = R.drawable.dr_icon_share,
                 labelRes = R.string.strLabelShare,
                 onClick = onShare,
+            )
+
+            VodOptionItem(
+                iconRes = R.drawable.ic_library,
+                labelRes = R.string.add_to_collection,
+                onClick = onAddToCollection,
             )
 
             VodOptionItem(

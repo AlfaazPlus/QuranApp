@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.screens.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -18,8 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AppBar
-import com.quranapp.android.compose.components.homepage.HomeSectionBookmarks
-import com.quranapp.android.compose.components.homepage.HomeSectionReadHistory
+import com.quranapp.android.compose.components.library.LibrarySectionBookmarks
+import com.quranapp.android.compose.components.library.LibrarySectionCollections
+import com.quranapp.android.compose.components.library.LibrarySectionReadHistory
 
 private const val HOME_HISTORY_LIMIT = 10
 
@@ -43,10 +45,12 @@ fun LibraryScreen() {
                     .fillMaxSize()
                     .background(colorScheme.background)
                     .verticalScroll(rememberScrollState())
-                    .padding(bottom = 64.dp),
+                    .padding(bottom = 192.dp, top = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(30.dp),
             ) {
-                HomeSectionReadHistory()
-                HomeSectionBookmarks()
+                LibrarySectionReadHistory()
+                LibrarySectionBookmarks()
+                LibrarySectionCollections()
             }
         }
     }

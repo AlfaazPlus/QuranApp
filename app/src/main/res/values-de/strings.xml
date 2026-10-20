@@ -95,7 +95,7 @@
     <string name="strLabelRemoveBookmark">Lesezeichen entfernen</string>
     <string name="strLabelShare">Teilen</string>
     <string name="strLabelReport">Melden</string>
-    <string name="strLabelContinueReading">Weiterlesen »</string>
+    <string name="continue_reading_2">Weiterlesen »</string>
     <string name="strLabelSelectedCount" formatted="false">%d ausgewählt</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d weitere Übersetzungen</string>
     <string name="strLabelSelectVerse">Verse auswählen</string>
@@ -220,10 +220,8 @@
     <string name="msgScriptCleanup" formatted="false">%s Schriftsystem und alle gespeicherten Schriftarten werden gelöscht. Um diese wieder verwenden zu können müssen sie erneut heruntergeladen werden.</string>
     <string name="msgRecitationCleanup" formatted="false">Alle gespeicherten Rezitationen von %s werden gelöscht. Um Rezitationen einzeln nach Sura zu löschen, gehen Sie in die Einstellungen.</string>
     <string name="nothingToCleanup">Es gibt nichts zu bereinigen.</string>
-    <string name="nItems">%d Objekte</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d Schriftsysteme und %2$d Schriftarten</string>
     <string name="nFiles" formatted="false">%d Dateien</string>
-    <string name="nItem">%d Objekt</string>
     <string name="verseSyncOn">Verssynchronisation : AN</string>
     <string name="verseSyncOff">Verssynchronisation : AUS</string>
     <string name="inPlaces">in %s</string>
@@ -234,7 +232,6 @@
     <string name="noFootnotesForThisVerse">Für diesen Vers gibt es keine Fußnoten.</string>
     <string name="strTitleReadTafsirOfVerse" formatted="false">Lesen Sie die Erläuterung des Verses %d</string>
     <string name="strTitleSelectTafsir">Erläuterung auswählen</string>
-    <string name="places" formatted="false">%d Orte</string>
     <string name="strMsgShareApp" formatted="false">QuranApp ist eine kostenlose Open-Source-App zum Lesen und Erkunden des edlen Korans mit Übersetzungen. Diese App hat eine schöne und übersichtliche Benutzeroberfläche mit Funktionen wie Tafsir, Rezitation, Erinnerung und vielem mehr.
 \n
 \nJETZT HERUNTERLADEN:
@@ -252,7 +249,6 @@
     <string name="labelPreviousTafsir">Vorheriger Tafsir</string>
     <string name="labelNextTafsir">Nächster Tafsir</string>
     <string name="titleSolutionVerses">Lösungen aus dem Koran</string>
-    <string name="place" formatted="false">%d Ort</string>
     <string name="titleEtiquetteVerses">Etikette im Koran</string>
     <string name="audioOption">Audio-Option</string>
     <string name="suppressedLogs">Unterdrückte Protokolle</string>
@@ -446,4 +442,62 @@
     <string name="englishContentOnly">Die Inhalte auf dieser Seite sind nur auf Englisch verfügbar.</string>
     <string name="estimatedSize">Geschätzte Größe: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Das Quran-Skript wird zum ersten Mal vorbereitet. Dies dauert nur ein paar Sekunden.</string>
+
+    <string name="create">Erstellen</string>
+    <string name="strLabelManage">Verwalten</string>
+    <string name="update_note">Notiz aktualisieren</string>
+    <string name="updateAvailable">Update verfügbar</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Rezitationen aktualisieren</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Für diesen Rezitator gibt es eine neuere Audioversion. Beim Aktualisieren werden die heruntergeladenen Kapitel ersetzt.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Für heruntergeladene Rezitationen sind Updates verfügbar.</string>
+    <string name="continue_reading">Weiterlesen</string>
+    <string name="recitationPlayer">Rezitationsplayer</string>
+    <string name="desc_recitation_player_widget">Koranrezitation vom Startbildschirm steuern</string>
+    <string name="my_collections">Meine Sammlungen</string>
+    <string name="add_to_collection">Zur Sammlung hinzufügen</string>
+    <string name="remove_from_collection">Aus Sammlung entfernen</string>
+    <string name="msg_remove_from_collection">Dieser Vers wird aus der Sammlung entfernt. Die zugehörigen Notizen werden ebenfalls gelöscht.</string>
+    <string name="no_collections">Noch keine Sammlungen.</string>
+    <string name="no_collection_items">Diese Sammlung enthält noch keine Verse. Legen Sie Lieblingsverse in Sammlungen ab, um sie schnell wiederzufinden.</string>
+    <string name="create_collection">Sammlung erstellen</string>
+    <string name="update_collection">Sammlung bearbeiten</string>
+    <string name="select_color">Farbe wählen</string>
+    <string name="select_icon">Symbol wählen</string>
+    <string name="create_new_collection">Neue Sammlung erstellen</string>
+    <string name="collection_name">Name der Sammlung</string>
+    <string name="collection_name_hint">Name eingeben</string>
+    <string name="description">Beschreibung</string>
+    <string name="collection_description_hint">Beschreibung eingeben</string>
+    <string name="msg_collection_deleted">Sammlung wurde gelöscht.</string>
+    <string name="delete_collection">Sammlung löschen</string>
+    <string name="msg_delete_collection">Die Sammlung und die darin gespeicherten Verse werden entfernt. Ihre Lesezeichen bleiben erhalten.</string>
+    <string name="collection_note_hint">Schreiben Sie hier eine zusätzliche Notiz zu diesem Vers…</string>
+    <string name="collection_updated">Sammlungen aktualisiert</string>
+    <string name="updated_just_now">Gerade aktualisiert</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d Vers</item>
+        <item quantity="other">%d Verse</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Vor %d Minute aktualisiert</item>
+        <item quantity="other">Vor %d Minuten aktualisiert</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Vor %d Stunde aktualisiert</item>
+        <item quantity="other">Vor %d Stunden aktualisiert</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Vor %d Tag aktualisiert</item>
+        <item quantity="other">Vor %d Tagen aktualisiert</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d Objekt</item>
+        <item quantity="other">%d Objekte</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d Ort</item>
+        <item quantity="other">%d Orte</item>
+    </plurals>
 </resources>

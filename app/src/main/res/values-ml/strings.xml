@@ -107,7 +107,7 @@
     <string name="strLabelShare">പങ്കിടുക</string>
     <string name="strLabelReport">റിപ്പോർട്ട് ചെയ്യുക</string>
     <string name="strLabelRemoveBookmark">ബുക്ക്മാർക്ക് നീക്കം ചെയ്യുക</string>
-    <string name="strLabelContinueReading">വായിക്കുന്നത് തുടരുക »</string>
+    <string name="continue_reading_2">വായിക്കുന്നത് തുടരുക »</string>
     <string name="strMsgNoInternetLong">ഇന്റർനെറ്റ് കണക്ഷനില്ല. Wi-Fi അല്ലെങ്കിൽ സെല്ലുലാർ ഡാറ്റ ഓണാക്കിയിട്ടുണ്ടെന്ന് ഉറപ്പുവരുത്തുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="strLabelNavHome">ഹോം</string>
     <string name="library">ലൈബ്രറി</string>
@@ -190,8 +190,6 @@
     <string name="strTitleScripts">സ്ക്രിപ്റ്റുകൾ</string>
     <string name="msgDownloadKFQPCResources">നിങ്ങൾക്ക് ഈ സ്ക്രിപ്റ്റ് ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഈപ്പറയുന്ന റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യേണ്ടതുണ്ട്:</string>
     <string name="titleDownloadScriptResources">ഈ സ്ക്രിപ്റ്റിനായുള്ള റിസോർസുകൾ ഡൗൺലോഡ് ചെയ്യണോ\?</string>
-    <string name="nItem">%d ഇനം</string>
-    <string name="nItems">%d ഇനങ്ങൾ</string>
     <string name="verseSyncOff">വാക്യ സമന്വയം: ഓഫാണ്</string>
     <string name="verseSyncOn">വാക്യ സമന്വയം: ഓൺ</string>
     <string name="strPreviewTextTransl">പരമകാരുണികനും കരുണാനിധിയുമായ അല്ലാഹുവിന്റെ തിരുനാമത്തില്‍</string>
@@ -310,8 +308,6 @@
     <string name="titleExportData">കയറ്റുമതിയും ഇറക്കുമതിയും</string>
     <string name="noItems">ഇനങ്ങളൊന്നുമില്ല</string>
     <string name="noResults">ഫലങ്ങളൊന്നുമില്ല</string>
-    <string name="place">%d സ്ഥലം</string>
-    <string name="places">%d സ്ഥലങ്ങൾ</string>
     <string name="onboardDescLanguage">നിങ്ങളുടെ ഭാഷയിൽ ആപ്പ് ക്രമീകരിക്കുക. നിങ്ങൾക്ക് ഇത് പിന്നീട് മാറ്റാവുന്നതാണ്.</string>
     <string name="onboardDescTheme">നിങ്ങൾക്ക് ഇത് പിന്നീട് മാറ്റാവുന്നതാണ്.</string>
     <string name="onboardDescTranslations">നിങ്ങൾക്ക് ഇത് പിന്നീട് മാറ്റാവുന്നതാണ്. സജ്ജീകരണങ്ങളിൽ നിന്ന് കൂടുതൽ പരിഭാഷകൾ ഡൗൺലോഡ് ചെയ്യാം.</string>
@@ -441,4 +437,62 @@
     <string name="englishContentOnly">ഈ പേജിലെ ഉള്ളടക്കം ഇംഗ്ലീഷ് ഭാഷയിൽ മാത്രമാണ് ലഭ്യം.</string>
     <string name="estimatedSize">അനുമാനിത വലുപ്പം: %s</string>
     <string name="msgPreparingPrebuiltAtlas">ഖുർആൻ ലിപി ആദ്യമായി തയ്യാറാക്കുന്നു. ഇതിന് കുറച്ച് സെക്കൻഡ് എടുക്കും.</string>
+
+    <string name="create">സൃഷ്ടിക്കുക</string>
+    <string name="strLabelManage">കൈകാര്യം ചെയ്യുക</string>
+    <string name="update_note">കുറിപ്പ് പുതുക്കുക</string>
+    <string name="updateAvailable">അപ്ഡേറ്റ് ലഭ്യമാണ്</string>
+    <string name="recitationDownloadUpdateConfirmTitle">പാരായണം അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="recitationDownloadUpdateConfirmMessage">ഈ ഖാരിയുടെ പുതിയ ഓഡിയോ ലഭ്യമാണ്. അപ്ഡേറ്റ് ചെയ്താൽ ഡൗൺലോഡ് ചെയ്ത അധ്യായങ്ങൾ മാറും.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">ഡൗൺലോഡ് ചെയ്ത പാരായണത്തിന് അപ്ഡേറ്റ് ഉണ്ട്.</string>
+    <string name="continue_reading">വായന തുടരുക</string>
+    <string name="recitationPlayer">പാരായണ പ്ലേയർ</string>
+    <string name="desc_recitation_player_widget">ഹോം സ്ക്രീനിൽ നിന്ന് ഖുർആൻ പാരായണം നിയന്ത്രിക്കുക</string>
+    <string name="my_collections">എന്റെ ശേഖരങ്ങൾ</string>
+    <string name="add_to_collection">ശേഖരത്തിലേക്ക് ചേർക്കുക</string>
+    <string name="remove_from_collection">ശേഖരത്തിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+    <string name="msg_remove_from_collection">ഈ വാക്യം ശേഖരത്തിൽ നിന്ന് നീക്കം ചെയ്യും. അതിന്റെ കുറിപ്പും മായ്ക്കും.</string>
+    <string name="no_collections">ഇതുവരെ ശേഖരങ്ങളൊന്നും ഇല്ല.</string>
+    <string name="no_collection_items">ഈ ശേഖരത്തിൽ വാക്യങ്ങളില്ല. ഇഷ്ടപ്പെട്ട വാക്യങ്ങൾ ശേഖരങ്ങളിലാക്കി എളുപ്പം കണ്ടെത്തുക.</string>
+    <string name="create_collection">ശേഖരം ഉണ്ടാക്കുക</string>
+    <string name="update_collection">ശേഖരം തിരുത്തുക</string>
+    <string name="select_color">നിറം തിരഞ്ഞെടുക്കുക</string>
+    <string name="select_icon">ഐക്കൺ തിരഞ്ഞെടുക്കുക</string>
+    <string name="create_new_collection">പുതിയ ശേഖരം ഉണ്ടാക്കുക</string>
+    <string name="collection_name">ശേഖരത്തിന്റെ പേര്</string>
+    <string name="collection_name_hint">പേര് നൽകുക</string>
+    <string name="description">വിവരണം</string>
+    <string name="collection_description_hint">വിവരണം നൽകുക</string>
+    <string name="msg_collection_deleted">ശേഖരം ഡിലീറ്റ് ചെയ്തു.</string>
+    <string name="delete_collection">ശേഖരം ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="msg_delete_collection">ശേഖരവും അതിലെ വാക്യങ്ങളും നീക്കം ചെയ്യും. ബുക്ക്മാർക്കുകൾ നിലനിൽക്കും.</string>
+    <string name="collection_note_hint">ഈ വാക്യത്തെക്കുറിച്ചുള്ള കുറിപ്പ് ഇവിടെ എഴുതുക…</string>
+    <string name="collection_updated">ശേഖരങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="updated_just_now">ഇപ്പോൾ അപ്ഡേറ്റ് ചെയ്തു</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d വാക്യം</item>
+        <item quantity="other">%d വാക്യങ്ങൾ</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d ഇനം</item>
+        <item quantity="other">%d ഇനങ്ങൾ</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d സ്ഥലം</item>
+        <item quantity="other">%d സ്ഥലങ്ങൾ</item>
+    </plurals>
 </resources>

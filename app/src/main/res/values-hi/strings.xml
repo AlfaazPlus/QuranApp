@@ -108,7 +108,7 @@
     <string name="strLabelRemoveBookmark">बुकमार्क हटायें</string>
     <string name="strLabelShare">साझा करें</string>
     <string name="strLabelReport">रिपोर्ट</string>
-    <string name="strLabelContinueReading">पढ़ना जारी करें »</string>
+    <string name="continue_reading_2">पढ़ना जारी करें »</string>
     <string name="strLabelOrder">क्रम</string>
     <string name="strLabelSelectedCount" formatted="false">%d चुना गया</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d और अनुवाद</string>
@@ -215,8 +215,6 @@
 \nआपको इसे फिर से डाउनलोड करना होगा।</string>
     <string name="github">GitHub</string>
     <string name="strPreviewTextTransl">अल्लाह के नाम से, जो अत्यन्त कृपाशील तथा दयावान् है</string>
-    <string name="nItem">%d आइटम</string>
-    <string name="nItems">%d आइटम</string>
     <string name="verseSyncOn">आयत सिंक: चालू</string>
     <string name="verseSyncOff">आयत सिंक: बंद</string>
     <string name="msgScriptCleanup" formatted="false">%s स्क्रिप्ट और इसके सभी डाउनलोड किए गए फ़ॉन्ट हटा दिए जाएँगे। इनका उपयोग करने के लिए आपको पुनः डाउनलोड करना होगा।</string>
@@ -254,8 +252,6 @@
     <string name="msgNoFavouriteChapters">यहां देखने के लिए पसंदीदा में कोई सूरत जोड़ें।</string>
     <string name="textNoLogsFound">कोई लॉग नहीं मिला</string>
     <string name="msgChapterAddedToFavourites">सूरत को पसंदीदा में जोड़ा गया।</string>
-    <string name="places" formatted="false">%d जगह</string>
-    <string name="place" formatted="false">%d जगह</string>
     <string name="labelPreviousTafsir">पिछली तफ़सीर</string>
     <string name="labelNextTafsir">अगली तफ़सीर</string>
     <string name="titleSolutionVerses">क़ुरआन से समाधान</string>
@@ -450,4 +446,62 @@
     <string name="englishContentOnly">इस पेज की सामग्री केवल अंग्रेज़ी भाषा में उपलब्ध है।</string>
     <string name="estimatedSize">अनुमानित आकार: %s</string>
     <string name="msgPreparingPrebuiltAtlas">पहली बार क़ुरआन की लिपि तैयार की जा रही है। इसमें कुछ सेकंड लग सकते हैं।</string>
+
+    <string name="create">बनाएँ</string>
+    <string name="strLabelManage">प्रबंधित करें</string>
+    <string name="update_note">नोट अपडेट करें</string>
+    <string name="updateAvailable">अपडेट उपलब्ध है</string>
+    <string name="recitationDownloadUpdateConfirmTitle">तिलावत अपडेट करें</string>
+    <string name="recitationDownloadUpdateConfirmMessage">इस क़ारी की नई ऑडियो उपलब्ध है। अपडेट करने पर डाउनलोड किए अध्याय बदल जाएँगे।</string>
+    <string name="recitationDownloadBannerUpdateAvailable">डाउनलोड की गई तिलावत के लिए अपडेट उपलब्ध है।</string>
+    <string name="continue_reading">पढ़ना जारी रखें</string>
+    <string name="recitationPlayer">तिलावत प्लेयर</string>
+    <string name="desc_recitation_player_widget">होम स्क्रीन से क़ुरआन की तिलावत चलाएँ</string>
+    <string name="my_collections">मेरे संग्रह</string>
+    <string name="add_to_collection">संग्रह में जोड़ें</string>
+    <string name="remove_from_collection">संग्रह से हटाएँ</string>
+    <string name="msg_remove_from_collection">यह आयत संग्रह से हटा दी जाएगी। इससे जुड़ा नोट भी मिट जाएगा।</string>
+    <string name="no_collections">अभी कोई संग्रह नहीं है।</string>
+    <string name="no_collection_items">इस संग्रह में कोई आयत नहीं है। पसंदीदा आयतें संग्रह में रखकर आसानी से खोलें।</string>
+    <string name="create_collection">संग्रह बनाएँ</string>
+    <string name="update_collection">संग्रह बदलें</string>
+    <string name="select_color">रंग चुनें</string>
+    <string name="select_icon">आइकन चुनें</string>
+    <string name="create_new_collection">नया संग्रह बनाएँ</string>
+    <string name="collection_name">संग्रह का नाम</string>
+    <string name="collection_name_hint">नाम लिखें</string>
+    <string name="description">विवरण</string>
+    <string name="collection_description_hint">विवरण लिखें</string>
+    <string name="msg_collection_deleted">संग्रह हटा दिया गया।</string>
+    <string name="delete_collection">संग्रह हटाएँ</string>
+    <string name="msg_delete_collection">संग्रह और उसमें सहेजी आयतें हट जाएँगी। बुकमार्क नहीं हटेंगे।</string>
+    <string name="collection_note_hint">इस आयत पर अतिरिक्त नोट यहाँ लिखें…</string>
+    <string name="collection_updated">संग्रह अपडेट हो गए</string>
+    <string name="updated_just_now">अभी अपडेट हुआ</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d आयत</item>
+        <item quantity="other">%d आयतें</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d मिनट पहले अपडेट हुआ</item>
+        <item quantity="other">%d मिनट पहले अपडेट हुआ</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d घंटा पहले अपडेट हुआ</item>
+        <item quantity="other">%d घंटे पहले अपडेट हुआ</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d दिन पहले अपडेट हुआ</item>
+        <item quantity="other">%d दिन पहले अपडेट हुआ</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d आइटम</item>
+        <item quantity="other">%d आइटम</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d जगह</item>
+        <item quantity="other">%d जगह</item>
+    </plurals>
 </resources>

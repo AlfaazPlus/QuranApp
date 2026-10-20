@@ -127,7 +127,7 @@
     <string name="strLabelRemoveBookmark">刪除書籤</string>
     <string name="strLabelShare">分享</string>
     <string name="strLabelReport">報告</string>
-    <string name="strLabelContinueReading">繼續閱讀 »</string>
+    <string name="continue_reading_2">繼續閱讀 »</string>
     <string name="strLabelOrder">順序</string>
     <string name="strLabelSelectedCount" formatted="false">已選擇 %d</string>
     <string name="strLabelMoreTranslations" formatted="false">更多翻譯 +%d</string>
@@ -240,13 +240,9 @@
     <string name="nFiles" formatted="false">%d 個檔案</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d 個版本與 %2$d 個字型</string>
     <string name="nothingToCleanup">無需清理。</string>
-    <string name="nItem" formatted="false">第 %d 項</string>
-    <string name="nItems" formatted="false">共 %d 項</string>
     <string name="noItems">無專案</string>
     <string name="verseSyncOn">經文同步：開</string>
     <string name="verseSyncOff">經文同步：關</string>
-    <string name="place" formatted="false">第 %d 處</string>
-    <string name="places" formatted="false">共 %d 處</string>
     <string name="inPlaces" formatted="false">在 %s</string>
     <string name="inPlacesMore" formatted="false">在 %1$s 及另外 %2$d 處</string>
     <string name="onboardDescLanguage">用您的語言個性化應用。您可以隨時更改。</string>
@@ -436,4 +432,56 @@
     <string name="englishContentOnly">本頁內容僅提供英文版本。</string>
     <string name="estimatedSize">預估大小：%s</string>
     <string name="msgPreparingPrebuiltAtlas">正在首次準備《古蘭經》文本。這可能需要幾秒鐘。</string>
+
+    <string name="create">建立</string>
+    <string name="strLabelManage">管理</string>
+    <string name="update_note">更新筆記</string>
+    <string name="updateAvailable">有可用更新</string>
+    <string name="recitationDownloadUpdateConfirmTitle">更新誦讀</string>
+    <string name="recitationDownloadUpdateConfirmMessage">這位誦讀者有較新的音訊。更新後會取代已下載的章節。</string>
+    <string name="recitationDownloadBannerUpdateAvailable">已下載的誦讀音訊有更新。</string>
+    <string name="continue_reading">繼續閱讀</string>
+    <string name="recitationPlayer">誦讀播放器</string>
+    <string name="desc_recitation_player_widget">從主畫面控制古蘭經誦讀</string>
+    <string name="my_collections">我的合集</string>
+    <string name="add_to_collection">加入合集</string>
+    <string name="remove_from_collection">移出合集</string>
+    <string name="msg_remove_from_collection">此節經文將從合集中移除，相關筆記也會一併刪除。</string>
+    <string name="no_collections">還沒有合集。</string>
+    <string name="no_collection_items">這個合集裡還沒有經文。把常讀的經文放進合集，以後更好找。</string>
+    <string name="create_collection">建立合集</string>
+    <string name="update_collection">編輯合集</string>
+    <string name="select_color">選擇顏色</string>
+    <string name="select_icon">選擇圖示</string>
+    <string name="create_new_collection">新增合集</string>
+    <string name="collection_name">合集名稱</string>
+    <string name="collection_name_hint">輸入合集名稱</string>
+    <string name="description">簡介</string>
+    <string name="collection_description_hint">輸入合集簡介</string>
+    <string name="msg_collection_deleted">合集已刪除。</string>
+    <string name="delete_collection">刪除合集</string>
+    <string name="msg_delete_collection">將刪除此合集及其中儲存的經文。書籤不受影響。</string>
+    <string name="collection_note_hint">在此寫下關於這節經文的補充筆記…</string>
+    <string name="collection_updated">合集已更新</string>
+    <string name="updated_just_now">剛剛更新</string>
+
+    <plurals name="verse_count">
+        <item quantity="other">共 %d 節</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="other">%d 分鐘前更新</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="other">%d 小時前更新</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="other">%d 天前更新</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="other">共 %d 項</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="other">共 %d 處</item>
+    </plurals>
 </resources>

@@ -36,13 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
-import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.components.quran.ExclusiveVerse
 import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.components.quran.QuranExclusiveVerses
@@ -216,10 +216,10 @@ private fun DuaListItem(verse: ExclusiveVerse) {
         verse.title
     }
     val count = verse.verses.size
-    val placesLine = when {
-        verse.id == 1 -> null
-        count > 1 -> formattedStringResource(R.string.places, count)
-        else -> formattedStringResource(R.string.place, count)
+    val placesLine = if (verse.id == 1) {
+        null
+    } else {
+        pluralStringResource(R.plurals.place_count, count, count)
     }
     val inChaptersLine = if (verse.id == 1) null else verse.inChapters.takeIf { it.isNotBlank() }
 
@@ -349,11 +349,7 @@ private fun MajorSinsListItem(verse: ExclusiveVerse) {
 private fun SolutionListItem(verse: ExclusiveVerse) {
     val context = LocalContext.current
     val count = verse.verses.size
-    val placesLine = if (count > 1) {
-        formattedStringResource(R.string.places, count)
-    } else {
-        formattedStringResource(R.string.place, count)
-    }
+    val placesLine = pluralStringResource(R.plurals.place_count, count, count)
 
     Card(
         onClick = {

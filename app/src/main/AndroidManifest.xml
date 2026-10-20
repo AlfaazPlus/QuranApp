@@ -89,6 +89,7 @@
         </activity>
 
         <activity android:name=".activities.ActivityBookmark" />
+        <activity android:name=".activities.ActivityCollections" />
         <activity android:name=".activities.ActivityReadHistory" />
         <activity
             android:name=".activities.reference.ActivityReference"

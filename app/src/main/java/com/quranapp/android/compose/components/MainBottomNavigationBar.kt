@@ -39,7 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReaderIndexPage
 import com.quranapp.android.compose.theme.alpha
-import com.quranapp.android.utils.univ.Routes
+import com.quranapp.android.utils.univ.MainRoutes
 
 val MainBottomNavBarHeight = 70.dp
 
@@ -82,9 +82,9 @@ fun MainBottomNavigationBar(navController: NavHostController) {
             BottomItem(
                 R.string.strLabelNavHome,
                 R.drawable.dr_icon_home,
-                currentDestination?.hierarchy?.any { it.route == Routes.HOME } == true,
+                currentDestination?.hierarchy?.any { it.route == MainRoutes.HOME } == true,
             ) {
-                handleClick(Routes.HOME)
+                handleClick(MainRoutes.HOME)
             }
 
             Box(
@@ -108,9 +108,9 @@ fun MainBottomNavigationBar(navController: NavHostController) {
 
             BottomItem(
                 R.string.library, R.drawable.ic_library,
-                currentDestination?.hierarchy?.any { it.route == Routes.LIBRARY } == true,
+                currentDestination?.hierarchy?.any { it.route == MainRoutes.LIBRARY } == true, // fixme
             ) {
-                handleClick(Routes.LIBRARY)
+                handleClick(MainRoutes.LIBRARY)
             }
         }
     }

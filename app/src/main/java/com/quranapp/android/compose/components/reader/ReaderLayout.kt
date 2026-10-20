@@ -238,7 +238,7 @@ private fun ReaderLayoutVerseMode(
                         layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
                     listState.animateScrollToItem(
                         index = currentPlayingIndex,
-                        scrollOffset = -(viewportHeight / 3),
+                        scrollOffset = -(viewportHeight / 5),
                     )
                 }
             }

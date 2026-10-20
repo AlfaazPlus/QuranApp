@@ -106,7 +106,7 @@
     <string name="strLabelRemoveBookmark">Кыстырманы өчүрүү</string>
     <string name="strLabelShare">Бөлүшүү</string>
     <string name="strLabelReport">Арыздануу</string>
-    <string name="strLabelContinueReading">Окууну улантуу</string>
+    <string name="continue_reading_2">Окууну улантуу</string>
     <string name="strMsgTranslFailedToDownload" formatted="false">"%s" жүктөө ийгиликсиз болду.</string>
     <string name="strMsgTranslDownloaded" formatted="false">Жүктөлдү: "%s".</string>
     <string name="strDescAddToBookmarks">Кыстырмаларга кошуу</string>
@@ -157,12 +157,8 @@
     <string name="titleScriptCleanup">Шрифт өчүрүңүзбү?</string>
     <string name="msgScriptCleanup" formatted="false">%s шрифт өчүрүлөт, кайра жүктөшүңүз керек.</string>
     <string name="nothingToCleanup">Тазалоочу эч нерсе жок</string>
-    <string name="nItem" formatted="false">%d котормо</string>
-    <string name="nItems" formatted="false">%d котормо</string>
     <string name="noItems">Эч нерсе жок</string>
     <string name="verseSyncOn">Аят синхрон: күйгүзүлгөн</string>
-    <string name="place" formatted="false">%d жерде</string>
-    <string name="places" formatted="false">%d жерде</string>
     <string name="inPlaces" formatted="false">%s сүрөсүндө</string>
     <string name="inPlacesMore" formatted="false">%1$s жана %2$d жерде</string>
     <string name="onboardDescTheme">Бул жөндөөнү кийинчерээк өзгөртсөңүз болот.</string>
@@ -440,4 +436,62 @@
     <string name="englishContentOnly">Бул беттеги мазмун англис тилинде гана жеткиликтүү.</string>
     <string name="estimatedSize">Болжолдуу өлчөмү: %s</string>
     <string name="msgPreparingPrebuiltAtlas">Куран тексти биринчи жолу даярдалууда. Бул бир нече секунд талап кылат.</string>
+
+    <string name="create">Түзүү</string>
+    <string name="strLabelManage">Башкаруу</string>
+    <string name="update_note">Эскертмени жаңыртуу</string>
+    <string name="updateAvailable">Жаңыртуу бар</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Кыраатты жаңыртуу</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Бул карынын жаңыраак аудиосу бар. Жаңыртсаңыз, жүктөлгөн сүрөлөр алмашат.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Жүктөлгөн кырааттар үчүн жаңыртуу бар.</string>
+    <string name="continue_reading">Окууну улантуу</string>
+    <string name="recitationPlayer">Кыраат ойноткуч</string>
+    <string name="desc_recitation_player_widget">Куран кыраатын башкы экрандан башкарыңыз</string>
+    <string name="my_collections">Менин жыйнактарым</string>
+    <string name="add_to_collection">Жыйнакка кошуу</string>
+    <string name="remove_from_collection">Жыйнактан алуу</string>
+    <string name="msg_remove_from_collection">Бул аят жыйнактан алынат. Ага жазылган эскертме да өчөт.</string>
+    <string name="no_collections">Азырынча жыйнак жок.</string>
+    <string name="no_collection_items">Бул жыйнакта аят жок. Сүйүктүү аяттарыңызды жыйнакка чогултуп, оңой таба аласыз.</string>
+    <string name="create_collection">Жыйнак түзүү</string>
+    <string name="update_collection">Жыйнакты оңдоо</string>
+    <string name="select_color">Түс тандоо</string>
+    <string name="select_icon">Сүрөтчө тандоо</string>
+    <string name="create_new_collection">Жаңы жыйнак түзүү</string>
+    <string name="collection_name">Жыйнактын аталышы</string>
+    <string name="collection_name_hint">Аталышын жазыңыз</string>
+    <string name="description">Сүрөттөмө</string>
+    <string name="collection_description_hint">Сүрөттөмө жазыңыз</string>
+    <string name="msg_collection_deleted">Жыйнак өчүрүлдү.</string>
+    <string name="delete_collection">Жыйнакты өчүрүү</string>
+    <string name="msg_delete_collection">Жыйнак жана андагы аяттар өчөт. Кыстырмалар сакталат.</string>
+    <string name="collection_note_hint">Бул аят боюнча кошумча эскертмени бул жерге жазыңыз…</string>
+    <string name="collection_updated">Жыйнактар жаңыртылды</string>
+    <string name="updated_just_now">Жаңы эле жаңыртылды</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d аят</item>
+        <item quantity="other">%d аят</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d мүнөт мурун жаңыртылды</item>
+        <item quantity="other">%d мүнөт мурун жаңыртылды</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d саат мурун жаңыртылды</item>
+        <item quantity="other">%d саат мурун жаңыртылды</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d күн мурун жаңыртылды</item>
+        <item quantity="other">%d күн мурун жаңыртылды</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d котормо</item>
+        <item quantity="other">%d котормо</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d жер</item>
+        <item quantity="other">%d жер</item>
+    </plurals>
 </resources>

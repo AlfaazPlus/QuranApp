@@ -139,7 +139,7 @@
     <string name="strLabelBookmark">புத்தககுறி</string>
     <string name="strLabelShare">பங்கு</string>
     <string name="strLabelReport">அறிக்கை</string>
-    <string name="strLabelContinueReading">தொடர்ந்து படிக்க »</string>
+    <string name="continue_reading_2">தொடர்ந்து படிக்க »</string>
     <string name="strLabelOrder">ஒழுங்கு</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d மேலும் மொழிபெயர்ப்புகள்</string>
     <string name="strLabelSelectedCount" formatted="false">%d தேர்ந்தெடுக்கப்பட்டது</string>
@@ -237,13 +237,9 @@
     <string name="msgScriptCleanup" formatted="false">%s ஸ்கிரிப்ட் மற்றும் அதன் சேமிக்கப்பட்ட அனைத்து எழுத்துருக்களும் நீக்கப்படும். அவற்றைப் பயன்படுத்த நீங்கள் மீண்டும் பதிவிறக்க வேண்டும்.</string>
     <string name="nScriptsAndFonts" formatted="false">%1$d ச்கிரிப்டுகள் மற்றும் %2$d எழுத்துருக்கள்</string>
     <string name="nothingToCleanup">தூய்மை செய்ய எதுவும் இல்லை.</string>
-    <string name="nItem" formatted="false">%d உருப்படி</string>
-    <string name="nItems" formatted="false">%d உருப்படிகள்</string>
     <string name="noItems">உருப்படிகள் இல்லை</string>
     <string name="verseSyncOn">உரையாடல் ஒத்திசைவு: ஆன்</string>
     <string name="verseSyncOff">உரையாடல் ஒத்திசைவு: ஆஃப்</string>
-    <string name="place" formatted="false">%d இடம்</string>
-    <string name="places" formatted="false">%d இடங்கள்</string>
     <string name="inPlaces" formatted="false">%s இல்</string>
     <string name="inPlacesMore" formatted="false">%1$s &amp; %2$d இல்</string>
     <string name="onboardDescLanguage">உங்கள் மொழியில் பயன்பாட்டை தனிப்பயனாக்குங்கள். இதை நீங்கள் எப்போதும் பின்னர் மாற்றலாம்.</string>
@@ -436,4 +432,62 @@
     <string name="englishContentOnly">இந்தப் பக்கத்தின் உள்ளடக்கம் ஆங்கில மொழியில் மட்டுமே கிடைக்கும்.</string>
     <string name="estimatedSize">மதிப்பிடப்பட்ட அளவு: %s</string>
     <string name="msgPreparingPrebuiltAtlas">குர்ஆன் உரை முதல் முறையாக தயார் செய்யப்படுகிறது. இதற்கு சில விநாடிகள் ஆகலாம்.</string>
+
+    <string name="create">உருவாக்கு</string>
+    <string name="strLabelManage">நிர்வகி</string>
+    <string name="update_note">குறிப்பைப் புதுப்பி</string>
+    <string name="updateAvailable">புதுப்பிப்பு உள்ளது</string>
+    <string name="recitationDownloadUpdateConfirmTitle">பாராயணத்தைப் புதுப்பி</string>
+    <string name="recitationDownloadUpdateConfirmMessage">இந்த ஓதுகருக்கு புதிய ஒலிக்கோப்பு உள்ளது. புதுப்பித்தால் பதிவிறக்கிய அத்தியாயங்கள் மாறும்.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">பதிவிறக்கிய பாராயணத்திற்கு புதுப்பிப்பு உள்ளது.</string>
+    <string name="continue_reading">தொடர்ந்து படிக்க</string>
+    <string name="recitationPlayer">பாராயண இயக்கி</string>
+    <string name="desc_recitation_player_widget">முகப்புத் திரையிலிருந்து குர்ஆன் பாராயணத்தை இயக்குங்கள்</string>
+    <string name="my_collections">என் தொகுப்புகள்</string>
+    <string name="add_to_collection">தொகுப்பில் சேர்</string>
+    <string name="remove_from_collection">தொகுப்பிலிருந்து நீக்கு</string>
+    <string name="msg_remove_from_collection">இந்த உரையாடல் தொகுப்பிலிருந்து நீக்கப்படும். அதன் குறிப்பும் அழிக்கப்படும்.</string>
+    <string name="no_collections">இன்னும் தொகுப்புகள் இல்லை.</string>
+    <string name="no_collection_items">இந்த தொகுப்பில் உரையாடல்கள் இல்லை. விருப்பமானவற்றை தொகுப்பாகச் சேர்த்து எளிதாகத் திறக்கலாம்.</string>
+    <string name="create_collection">தொகுப்பை உருவாக்கு</string>
+    <string name="update_collection">தொகுப்பைத் திருத்து</string>
+    <string name="select_color">நிறத்தைத் தேர்ந்தெடு</string>
+    <string name="select_icon">ஐகானைத் தேர்ந்தெடு</string>
+    <string name="create_new_collection">புதிய தொகுப்பை உருவாக்கு</string>
+    <string name="collection_name">தொகுப்பின் பெயர்</string>
+    <string name="collection_name_hint">பெயரை உள்ளிடுக</string>
+    <string name="description">விளக்கம்</string>
+    <string name="collection_description_hint">விளக்கத்தை உள்ளிடுக</string>
+    <string name="msg_collection_deleted">தொகுப்பு நீக்கப்பட்டது.</string>
+    <string name="delete_collection">தொகுப்பை நீக்கு</string>
+    <string name="msg_delete_collection">தொகுப்பும் அதில் சேமித்த உரையாடல்களும் நீக்கப்படும். புக்மார்க்குகள் அப்படியே இருக்கும்.</string>
+    <string name="collection_note_hint">இந்த உரையாடலுக்கு கூடுதல் குறிப்பை இங்கே எழுதுங்கள்…</string>
+    <string name="collection_updated">தொகுப்புகள் புதுப்பிக்கப்பட்டன</string>
+    <string name="updated_just_now">இப்போதுதான் புதுப்பிக்கப்பட்டது</string>
+
+    <plurals name="verse_count">
+        <item quantity="one">%d உரையாடல்</item>
+        <item quantity="other">%d உரையாடல்கள்</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%d நிமிடத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%d நிமிடங்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%d நாளுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%d நாட்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+
+    <plurals name="item_count">
+        <item quantity="one">%d உருப்படி</item>
+        <item quantity="other">%d உருப்படிகள்</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%d இடம்</item>
+        <item quantity="other">%d இடங்கள்</item>
+    </plurals>
 </resources>
