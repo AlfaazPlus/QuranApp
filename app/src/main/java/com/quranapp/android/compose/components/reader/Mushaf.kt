@@ -578,7 +578,8 @@ private fun Word(
                 if (active) colorScheme.primary.alpha(0.3f) else Color.Transparent,
                 shape = shapes.small
             )
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .padding(vertical = 1.dp),
         word = word,
         atlasPlacements = atlasPlacements,
         style = fittedStyle,

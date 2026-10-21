@@ -2,7 +2,6 @@ package com.quranapp.android.utils.mediaplayer
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,7 +9,6 @@ import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
@@ -173,7 +171,17 @@ class RecitationController private constructor(private val appContext: Context) 
         }
     }
 
-    private fun ensureServiceStarted(onReady: Runnable? = null) {
+    /**
+     * Connect to the media session without explicitly starting its foreground service.
+     *
+     * Media3 binds a [MediaController] to [RecitationService] as part of building the
+     * controller.  Once playback begins, Media3 promotes the media session service to a
+     * `mediaPlayback` foreground service itself.  Calling `startForegroundService` here
+     * can happen after the app has moved to the background (for example from a widget or
+     * a delayed UI callback), which Android 12+ rejects with
+     * ForegroundServiceStartNotAllowedException.
+     */
+    private fun ensureServiceConnected(onReady: Runnable? = null) {
         if (mediaController != null && _isConnected.value) {
             onReady?.run()
             return
@@ -183,13 +191,7 @@ class RecitationController private constructor(private val appContext: Context) 
             synchronized(pendingCallbacks) { pendingCallbacks.add(onReady) }
         }
 
-        if (controllerFuture == null) {
-            ContextCompat.startForegroundService(
-                appContext,
-                Intent(appContext, RecitationService::class.java)
-            )
-            handler.postDelayed({ establishConnection() }, 100)
-        }
+        if (controllerFuture == null) establishConnection()
     }
 
     private fun executePendingCallbacks() {
@@ -328,7 +330,7 @@ class RecitationController private constructor(private val appContext: Context) 
         if (mediaController != null) {
             sendCommand(cmd)
         } else {
-            ensureServiceStarted { sendCommand(cmd) }
+            ensureServiceConnected { sendCommand(cmd) }
         }
     }
 
@@ -339,7 +341,7 @@ class RecitationController private constructor(private val appContext: Context) 
         if (mediaController != null) {
             action()
         } else {
-            ensureServiceStarted { action() }
+            ensureServiceConnected { action() }
         }
     }
 

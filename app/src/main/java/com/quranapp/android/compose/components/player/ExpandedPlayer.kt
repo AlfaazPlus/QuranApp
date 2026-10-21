@@ -2,6 +2,7 @@ package com.quranapp.android.compose.components.player
 
 
 import android.app.Activity
+import android.os.SystemClock
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -45,6 +46,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -88,6 +90,8 @@ import com.quranapp.android.utils.univ.formatDuration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 
 val PlayerBgColor = Color(0xFF000000)
 val PlayerContentColor = Color.White
@@ -676,26 +680,48 @@ private fun ProgressSeekBar(
 ) {
     var positionMs by remember { mutableLongStateOf(controller.currentPositionMs) }
     var durationMs by remember { mutableLongStateOf(controller.durationMs) }
+    var isDragging by remember { mutableStateOf(false) }
+    var dragProgress by remember { mutableFloatStateOf(0f) }
+    var pendingSeekMs by remember { mutableStateOf<Long?>(null) }
+    var pendingSeekAt by remember { mutableLongStateOf(0L) }
 
     LaunchedEffect(isPlaying) {
-        positionMs = controller.currentPositionMs
-        durationMs = controller.durationMs
-        while (isPlaying && isActive) {
-            positionMs = controller.currentPositionMs
+        fun syncFromPlayer() {
             durationMs = controller.durationMs
-            delay(100)
+
+            if (isDragging) return
+
+            val pending = pendingSeekMs
+            val actual = controller.currentPositionMs
+
+            val seekSettled = pending == null ||
+                    abs(actual - pending) < 750L ||
+                    SystemClock.elapsedRealtime() - pendingSeekAt > 1500L
+
+            if (seekSettled) {
+                pendingSeekMs = null
+                positionMs = actual
+            }
         }
 
-        if (!isPlaying) {
-            positionMs = controller.currentPositionMs
-            durationMs = controller.durationMs
+        syncFromPlayer()
+
+        while (isPlaying && isActive) {
+            syncFromPlayer()
+            delay(100.milliseconds)
         }
+
+        if (!isPlaying) syncFromPlayer()
     }
 
     val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
-    val animatedProgress by animateFloatAsState(
-        targetValue = progress, animationSpec = tween(300), label = ""
-    )
+    val sliderValue = (if (isDragging) dragProgress else progress).coerceIn(0f, 1f)
+
+    val displayedPositionMs = if (isDragging) {
+        (dragProgress * durationMs).toLong().coerceIn(0L, durationMs)
+    } else {
+        positionMs
+    }
 
     Column(
         modifier = Modifier
@@ -703,11 +729,24 @@ private fun ProgressSeekBar(
             .padding(horizontal = 24.dp)
     ) {
         Slider(
-            value = animatedProgress, onValueChange = {
-                val seekPosition = (it * durationMs).toLong()
-                controller.seekTo(seekPosition)
-                positionMs = seekPosition
-            }, modifier = Modifier
+            value = sliderValue,
+            onValueChange = { value ->
+                isDragging = true
+                dragProgress = value
+            },
+            onValueChangeFinished = {
+                if (durationMs > 0) {
+                    val seekPosition = (dragProgress * durationMs).toLong().coerceIn(0L, durationMs)
+
+                    positionMs = seekPosition
+                    pendingSeekMs = seekPosition
+                    pendingSeekAt = SystemClock.elapsedRealtime()
+                    controller.seekTo(seekPosition)
+                }
+
+                isDragging = false
+            },
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(28.dp),
 
@@ -756,7 +795,7 @@ private fun ProgressSeekBar(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = formatDuration(positionMs),
+                text = formatDuration(displayedPositionMs),
                 style = MaterialTheme.typography.labelMedium,
                 color = PlayerContentColor.alpha(0.7f),
             )
