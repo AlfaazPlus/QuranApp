@@ -349,6 +349,17 @@
         "version": 1
       }
     },
+    "sq": {
+      "sq_nahi": {
+        "book": "Kurani i Madhërishëm",
+        "author": "Hasan Efendi Nahi",
+        "displayName": "Hasan Efendi Nahi",
+        "langCode": "sq",
+        "langName": "Shqip",
+        "downloadPath": "inventory/translations/sq/sq_nahi.json",
+        "version": 1
+      }
+    },
     "ta": {
       "ta_omar-sharif": {
         "book": "ஷேக் உமர் ஷெரீப் பின் அப்துல் சலாம்",
