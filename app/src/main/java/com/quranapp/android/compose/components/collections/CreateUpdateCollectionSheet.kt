@@ -59,12 +59,17 @@ private val COLOR_PRESETS = listOf(
 )
 
 private val ICON_PRESETS = listOf(
-    "mic",
-    "book",
-    "heart",
-    "sun",
-    "leaf",
-    "mosque",
+    "reading",
+    "growth",
+    "day",
+    "devotion",
+    "saved",
+    "reflection",
+    "night",
+    "protection",
+    "favorite",
+    "learning",
+    "recitation",
 )
 
 fun collectionColor(hex: String?): Color {
@@ -80,13 +85,18 @@ fun collectionColor(hex: String?): Color {
 
 fun collectionIcon(iconKey: String?): Int {
     return when (iconKey) {
-        "mic" -> R.drawable.col_mic
-        "book" -> R.drawable.col_book
-        "heart" -> R.drawable.col_heart
-        "sun" -> R.drawable.col_sun
-        "leaf" -> R.drawable.col_leaf
-        "mosque" -> R.drawable.col_mosque
-        else -> R.drawable.col_book
+        "reading" -> R.drawable.col_book_open
+        "growth" -> R.drawable.col_sprout
+        "day" -> R.drawable.col_sun
+        "devotion" -> R.drawable.col_heart
+        "saved" -> R.drawable.col_bookmark
+        "reflection" -> R.drawable.col_brain
+        "night" -> R.drawable.col_moon_star
+        "protection" -> R.drawable.col_shield_check
+        "favorite" -> R.drawable.col_star
+        "learning" -> R.drawable.col_graduation
+        "recitation" -> R.drawable.col_mic_vocal
+        else -> R.drawable.col_folder_open
     }
 }
 
@@ -268,9 +278,7 @@ private fun IconSelector(
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painter = painterResource(
-                                if (key == null) R.drawable.circle_minus else collectionIcon(key)
-                            ),
+                            painter = painterResource(collectionIcon(key)),
                             contentDescription = null,
                             modifier = Modifier.size(22.dp),
                         )

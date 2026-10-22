@@ -3,6 +3,7 @@ package com.quranapp.android.compose.screens.collections
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -168,68 +171,82 @@ private fun CollectionsHome(
             )
 
             else -> {
-                LazyColumn(
+                BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    stickyHeader {
-                        SearchTextField(
-                            value = query,
-                            onValueChange = { query = it },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = stringResource(R.string.strHintSearch),
-                            leadingIcon = {
-                                Icon(
-                                    painterResource(R.drawable.dr_icon_search),
-                                    contentDescription = null
-                                )
-                            }
-                        )
+                    val columns = when {
+                        maxWidth >= 840.dp -> 3
+                        maxWidth >= 600.dp -> 2
+                        else -> 1
                     }
 
-                    if ((isRefreshing || query != debouncedQuery) && collections.itemCount == 0) {
-                        item(key = "search-loader") {
-                            Box(
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(columns),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        stickyHeader {
+                            SearchTextField(
+                                value = query,
+                                onValueChange = { query = it },
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(32.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Loader()
-                            }
+                                    .background(colorScheme.background),
+                                placeholder = stringResource(R.string.strHintSearch),
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.dr_icon_search),
+                                        contentDescription = null
+                                    )
+                                }
+                            )
                         }
-                    } else if (collections.itemCount == 0) {
-                        item(key = "no-results") {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(32.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.noResults),
-                                    style = typography.bodyMedium,
-                                    color = colorScheme.onSurfaceVariant,
+
+                        if ((isRefreshing || query != debouncedQuery) && collections.itemCount == 0) {
+                            item(key = "search-loader", span = { GridItemSpan(maxLineSpan) }) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(32.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Loader()
+                                }
+                            }
+                        } else if (collections.itemCount == 0) {
+                            item(key = "no-results", span = { GridItemSpan(maxLineSpan) }) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(32.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.noResults),
+                                        style = typography.bodyMedium,
+                                        color = colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        } else {
+                            items(
+                                count = collections.itemCount,
+                                key = { index ->
+                                    collections.peek(index)?.collection?.id?.let { "col-$it" }
+                                        ?: "col-index-$index"
+                                },
+                            ) { index ->
+                                val item = collections[index] ?: return@items
+
+                                CollectionCard(
+                                    item = item,
+                                    onClick = { onOpenCollection(item.collection.id) },
                                 )
                             }
-                        }
-                    } else {
-                        items(
-                            count = collections.itemCount,
-                            key = { index ->
-                                collections.peek(index)?.collection?.id?.let { "col-$it" }
-                                    ?: "col-index-$index"
-                            },
-                        ) { index ->
-                            val item = collections[index] ?: return@items
-
-                            CollectionCard(
-                                item = item,
-                                onClick = { onOpenCollection(item.collection.id) },
-                            )
                         }
                     }
                 }
@@ -258,7 +275,7 @@ fun CollectionCard(
         onClick = onClick,
         shape = shapes.medium,
         color = colorScheme.surfaceContainerLow,
-        modifier = Modifier,
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

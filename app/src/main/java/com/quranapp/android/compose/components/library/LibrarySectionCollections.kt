@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -28,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -88,33 +86,16 @@ fun LibrarySectionCollections() {
             }
 
             else -> {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .clip(shapes.medium)
-                        .border(1.dp, colorScheme.outlineVariant.alpha(0.3f), shapes.medium),
-                    color = colorScheme.surfaceContainer.alpha(0.5f),
-                ) {
-                    Column() {
-                        collections.forEachIndexed { index, item ->
-                            CollectionCard(
-                                item = item,
-                            ) {
-                                context.startActivity(
-                                    Intent(
-                                        context,
-                                        ActivityCollections::class.java
-                                    ).apply {
-                                        putExtra(Keys.COLLECTION_ID, item.collection.id)
-                                    }
-                                )
+                LibraryPreviewList(items = collections) { item ->
+                    CollectionCard(item = item) {
+                        context.startActivity(
+                            Intent(
+                                context,
+                                ActivityCollections::class.java
+                            ).apply {
+                                putExtra(Keys.COLLECTION_ID, item.collection.id)
                             }
-
-                            if (index < collections.lastIndex) {
-                                HorizontalDivider(color = colorScheme.outlineVariant.alpha(0.3f))
-                            }
-                        }
+                        )
                     }
                 }
             }

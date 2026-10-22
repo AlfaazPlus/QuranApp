@@ -1,7 +1,6 @@
 package com.quranapp.android.compose.components.library
 
 import android.content.Intent
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,11 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -73,32 +70,17 @@ fun LibrarySectionReadHistory() {
             }
 
             else -> {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .clip(shapes.medium)
-                        .border(1.dp, colorScheme.outlineVariant.alpha(0.3f), shapes.medium),
-                    color = colorScheme.surfaceContainer.alpha(0.5f),
-                ) {
-                    Column() {
-                        recentHistories.forEachIndexed { index, history ->
-                            ItemCard(
-                                history = history,
-                                chapterName = chapterNames.get(history.chapterNo).orEmpty(),
-                                onOpen = {
-                                    ReaderFactory.prepareHistoryIntent(history)?.let {
-                                        it.setClass(context, ActivityReader::class.java)
-                                        context.startActivity(it)
-                                    }
-                                },
-                            )
-
-                            if (index < recentHistories.lastIndex) {
-                                HorizontalDivider(color = colorScheme.outlineVariant.alpha(0.3f))
+                LibraryPreviewList(items = recentHistories) { history ->
+                    ItemCard(
+                        history = history,
+                        chapterName = chapterNames.get(history.chapterNo).orEmpty(),
+                        onOpen = {
+                            ReaderFactory.prepareHistoryIntent(history)?.let {
+                                it.setClass(context, ActivityReader::class.java)
+                                context.startActivity(it)
                             }
-                        }
-                    }
+                        },
+                    )
                 }
             }
         }
@@ -162,6 +144,8 @@ private fun ItemCard(
                     style = typography.labelLarge.merge(tightTextStyle),
                     fontWeight = FontWeight.Bold,
                     color = colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 subtitle?.let {
@@ -169,6 +153,8 @@ private fun ItemCard(
                         text = it,
                         style = typography.bodyMedium.merge(tightTextStyle),
                         color = colorScheme.onSurface.alpha(0.75f),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
