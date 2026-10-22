@@ -313,6 +313,14 @@
     <string name="modeVerseByVerse">આયત-દર-આયત મોડ</string>
     <string name="modeMushaf">મુસહફ મોડ</string>
     <string name="titleGlobalSearch">વૈશ્વિક શોધ</string>
+    <string name="searchIndexingInProgress">શોધ તૈયાર થઈ રહી છે. ઇન્ડેક્સ બનાવવાનું પૂર્ણ ન થાય ત્યાં સુધી કેટલાક પરિણામો દેખાય નહીં.</string>
+    <string name="search_match">મેળનો પ્રકાર</string>
+    <string name="search_match_any_words">કોઈપણ શબ્દ</string>
+    <string name="search_match_any_words_desc">શોધના એક અથવા વધુ શબ્દો ધરાવતા પરિણામો શોધો.</string>
+    <string name="search_match_all_words">બધા શબ્દો</string>
+    <string name="search_match_all_words_desc">શોધના બધા શબ્દો ધરાવતા પરિણામો શોધો.</string>
+    <string name="search_match_exact_phrase">ચોક્કસ શબ્દસમૂહ</string>
+    <string name="search_match_exact_phrase_desc">શબ્દો એ જ ક્રમમાં હોય તેવા પરિણામો શોધો, જેમ કે “પુનરુત્થાનનો દિવસ”.</string>
     <string name="strHintSearchBy">જુઝ અથવા સુરાહ શોધો</string>
     <string name="strHintSearchHizb">હિઝબ અથવા સુરાહ શોધો</string>
     <string name="strHintSearchPage">પૃષ્ઠ શોધો</string>

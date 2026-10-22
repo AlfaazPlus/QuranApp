@@ -368,6 +368,14 @@
     <string name="titleRecitationGroupSize">Ukuran Grup Ayat Al Quran</string>
     <string name="labelRecommended">Disarankan</string>
     <string name="titleGlobalSearch">Pencarian Global</string>
+    <string name="searchIndexingInProgress">Menyiapkan pencarian. Beberapa hasil mungkin belum muncul hingga proses pengindeksan selesai.</string>
+    <string name="search_match">Jenis kecocokan</string>
+    <string name="search_match_any_words">Kata apa saja</string>
+    <string name="search_match_any_words_desc">Temukan hasil yang mengandung satu atau beberapa kata pencarian.</string>
+    <string name="search_match_all_words">Semua kata</string>
+    <string name="search_match_all_words_desc">Temukan hasil yang mengandung semua kata pencarian.</string>
+    <string name="search_match_exact_phrase">Frasa persis</string>
+    <string name="search_match_exact_phrase_desc">Temukan kata-kata dengan urutan yang sama, seperti “hari kebangkitan”.</string>
     <string name="textPreparingAudio">Mempersiapkan audio…</string>
     <string name="noResults">Tidak ada hasil</string>
     <string name="labelTransliteration">Transliterasi</string>

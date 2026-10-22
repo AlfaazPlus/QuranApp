@@ -16,6 +16,7 @@ import com.quranapp.android.search.ExclusiveVersesSearchProvider
 import com.quranapp.android.search.QuickLinkItem
 import com.quranapp.android.search.SearchFilters
 import com.quranapp.android.search.SearchFiltersStore
+import com.quranapp.android.search.SearchIndexMonitor
 import com.quranapp.android.search.SearchPagingSource
 import com.quranapp.android.search.SearchQuickLinksParser
 import com.quranapp.android.search.SearchResult
@@ -43,6 +44,9 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class QuranSearchViewModel(private val application: Application) : AndroidViewModel(application) {
+    companion object {
+        const val SEARCH_PAGE_SIZE = 10
+    }
     private val repository get() = DatabaseProvider.getQuranRepository(application)
     private val searchHistoryStore = SearchHistoryStore(application)
 
@@ -61,6 +65,14 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
     private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
     val availableTranslations: StateFlow<List<TranslationOption>> = _availableTranslations
 
+    private val indexingFlow = SearchIndexMonitor.isIndexingFlow(application)
+    val isSearchIndexing: StateFlow<Boolean> = indexingFlow.stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+    )
+    private val ftsIndexGeneration = MutableStateFlow(0)
+
     override fun onCleared() {
         searchHistoryStore.close()
         super.onCleared()
@@ -68,6 +80,18 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
 
     init {
         loadAvailableTranslations()
+
+        viewModelScope.launch {
+            var wasIndexing = false
+
+            indexingFlow.collect { indexing ->
+                if (wasIndexing && !indexing) {
+                    ftsIndexGeneration.value += 1
+                }
+
+                wasIndexing = indexing
+            }
+        }
     }
 
     private val debouncedQuery = _searchQuery
@@ -111,7 +135,8 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
         debouncedQuery,
         _quranTextEnabled,
         _currentFilters,
-    ) { query, sourceQuran, filters ->
+        ftsIndexGeneration,
+    ) { query, sourceQuran, filters, _ ->
         Triple(query, sourceQuran, filters)
     }
         .flatMapLatest { (query, sourceQuran, filters) ->
@@ -121,7 +146,9 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
 
             Pager(
                 config = PagingConfig(
-                    pageSize = 50,
+                    pageSize = SEARCH_PAGE_SIZE,
+                    initialLoadSize = SEARCH_PAGE_SIZE,
+                    prefetchDistance = 1,
                     enablePlaceholders = false,
                 )
             ) {

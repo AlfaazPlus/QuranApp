@@ -288,6 +288,14 @@
     <string name="modeVerseByVerse">Bersikulo-por-bersikulo na mode</string>
     <string name="modeMushaf">Mushaf mode</string>
     <string name="titleGlobalSearch">Pandaigdigang Paghahanap</string>
+    <string name="searchIndexingInProgress">Inihahanda ang paghahanap. Maaaring hindi pa lumabas ang lahat ng resulta hangga\'t hindi tapos ang pag-index.</string>
+    <string name="search_match">Uri ng pagtutugma</string>
+    <string name="search_match_any_words">Anumang salita</string>
+    <string name="search_match_any_words_desc">Maghanap ng mga resultang naglalaman ng isa o higit pang salita mula sa iyong paghahanap.</string>
+    <string name="search_match_all_words">Lahat ng salita</string>
+    <string name="search_match_all_words_desc">Maghanap ng mga resultang naglalaman ng lahat ng salita mula sa iyong paghahanap.</string>
+    <string name="search_match_exact_phrase">Eksaktong parirala</string>
+    <string name="search_match_exact_phrase_desc">Maghanap ng mga salitang nasa eksaktong parehong pagkakasunod-sunod, gaya ng “araw ng muling pagkabuhay”.</string>
     <string name="strHintSearchBy">Maghanap ng juz o surah</string>
     <string name="strHintSearchHizb">Maghanap ng hizb o surah</string>
     <string name="strHintSearchPage">Maghanap ng pahina</string>

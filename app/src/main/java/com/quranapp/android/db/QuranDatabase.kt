@@ -27,6 +27,9 @@ import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
 import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
 
+const val QURAN_DATABASE_NAME = "quranapp"
+const val QURAN_DATABASE_VERSION = 11
+
 @Database(
     entities = [
         SurahEntity::class,
@@ -44,7 +47,7 @@ import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
         MutashabihatPhraseEntity::class,
         MutashabihatPhraseAyahEntity::class,
     ],
-    version = 10,
+    version = QURAN_DATABASE_VERSION,
     exportSchema = false
 )
 @ColumnTypeConverters(QuranConverters::class)

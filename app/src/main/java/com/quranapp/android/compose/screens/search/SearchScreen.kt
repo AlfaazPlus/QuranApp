@@ -3,6 +3,7 @@ package com.quranapp.android.compose.screens.search
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -61,9 +62,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.AppBar
+import com.quranapp.android.compose.components.common.Loader
+import com.quranapp.android.compose.components.dialogs.AlertDialog
+import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.search.ExclusiveSearchResults
 import com.quranapp.android.compose.components.search.QuickLinks
@@ -73,10 +78,26 @@ import com.quranapp.android.compose.components.search.SearchHistorySuggestionStr
 import com.quranapp.android.compose.components.search.SurahSearchResults
 import com.quranapp.android.compose.components.search.TextSearchResults
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.search.SearchResult
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.QuranSearchViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+
+
+private fun LazyPagingItems<SearchResult>.resultsCountLabel(): String? {
+    if (loadState.refresh is LoadState.Loading) return null
+
+    val count = itemCount
+    val initialLoadSize = QuranSearchViewModel.SEARCH_PAGE_SIZE
+    val hasMoreThanInitialLoad =
+        count >= initialLoadSize && !loadState.append.endOfPaginationReached
+    return if (hasMoreThanInitialLoad) "$initialLoadSize+" else count.toString()
+}
+
+private enum class SearchResultTab {
+    results, chapters, topics,
+}
 
 @Composable
 fun SearchScreen(
@@ -86,6 +107,8 @@ fun SearchScreen(
 ) {
     val viewModel = viewModel<QuranSearchViewModel>()
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
+    val isSearchIndexing by viewModel.isSearchIndexing.collectAsState()
+    var showIndexingMsg by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.refreshSearchHistory()
@@ -101,6 +124,16 @@ fun SearchScreen(
             AppBar(
                 title = stringResource(R.string.titleGlobalSearch),
                 actions = {
+                    if (isSearchIndexing) {
+                        Box(
+                            Modifier.clickable {
+                                showIndexingMsg = true
+                            }
+                        ) {
+                            Loader()
+                        }
+                    }
+
                     if (supportsVoiceSearch) {
                         IconButton(
                             onClick = {
@@ -168,14 +201,14 @@ fun SearchScreen(
         }
     }
 
-    val filtersState by viewModel.currentFilters.collectAsState()
+    val currentFilters by viewModel.currentFilters.collectAsState()
     val availableTranslations by viewModel.availableTranslations.collectAsState()
     val quranTextEnabledState by viewModel.quranTextEnabled.collectAsState()
 
     SearchFiltersSheet(
         isOpen = showFilterSheet,
         onDismiss = { showFilterSheet = false },
-        filters = filtersState,
+        currentFilters = currentFilters,
         availableTranslations = availableTranslations,
         quranTextEnabled = quranTextEnabledState,
         onApplyFilters = {
@@ -183,6 +216,20 @@ fun SearchScreen(
             showFilterSheet = false
         }
     )
+
+
+    AlertDialog(
+        isOpen = showIndexingMsg,
+        onClose = { showIndexingMsg = false },
+        title = stringResource(R.string.strTitleInfo),
+        actions = listOf(
+            AlertDialogAction(
+                stringResource(R.string.strLabelGotIt),
+            )
+        )
+    ) {
+        Text(stringResource(R.string.searchIndexingInProgress))
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -318,10 +365,6 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
     )
 }
 
-private enum class SearchResultTab {
-    results, chapters, topics,
-}
-
 @Composable
 private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
     val query by viewModel.searchQuery.collectAsState()
@@ -360,9 +403,9 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
     SearchResultTabs(
         tabs,
         counts = mapOf(
-            SearchResultTab.results to if (searchResults.loadState.refresh is LoadState.Loading) null else searchResults.itemCount,
-            SearchResultTab.chapters to surahResults?.size,
-            SearchResultTab.topics to exclusiveResults.size,
+            SearchResultTab.results to searchResults.resultsCountLabel(),
+            SearchResultTab.chapters to surahResults?.size?.toString(),
+            SearchResultTab.topics to exclusiveResults.size.toString(),
         ),
         selectedTabIndex = pagerState.currentPage,
     ) {
@@ -389,7 +432,7 @@ private fun ColumnScope.TabbedResults(viewModel: QuranSearchViewModel) {
 @Composable
 private fun SearchResultTabs(
     tabs: List<SearchResultTab>,
-    counts: Map<SearchResultTab, Int?>,
+    counts: Map<SearchResultTab, String?>,
     selectedTabIndex: Int,
     onTabSelected: (Int) -> Unit,
 ) {
@@ -437,7 +480,7 @@ private fun SearchResultTabs(
                                     containerColor = Color.Gray.alpha(0.5f),
                                     contentColor = colorScheme.onBackground
                                 ) {
-                                    Text("$count")
+                                    Text(count)
                                 }
                             }
                         }

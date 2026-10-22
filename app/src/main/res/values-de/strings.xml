@@ -377,6 +377,14 @@
     <string name="strMsgReciterDownloadHint">Lade Rezitations-Audio für Offline-Audio und flüssigerer Wiedergabe herunter.</string>
     <string name="labelRecommended">Empfohlen</string>
     <string name="titleGlobalSearch">Globale Suche</string>
+    <string name="searchIndexingInProgress">Suche wird vorbereitet. Bis die Indexierung abgeschlossen ist, werden möglicherweise nicht alle Ergebnisse angezeigt.</string>
+    <string name="search_match">Suchübereinstimmung</string>
+    <string name="search_match_any_words">Beliebige Wörter</string>
+    <string name="search_match_any_words_desc">Ergebnisse finden, die mindestens eines der Suchwörter enthalten.</string>
+    <string name="search_match_all_words">Alle Wörter</string>
+    <string name="search_match_all_words_desc">Ergebnisse finden, die alle Suchwörter enthalten.</string>
+    <string name="search_match_exact_phrase">Exakte Wortgruppe</string>
+    <string name="search_match_exact_phrase_desc">Wörter in genau derselben Reihenfolge finden, z. B. „Tag der Auferstehung“.</string>
     <string name="textPreparingAudio">Audio wird vorbereitet…</string>
     <string name="noResults">Keine Ergebnisse</string>
     <string name="labelTransliteration">Transkription</string>

@@ -201,6 +201,14 @@
     <string name="strLabelQuickLinks">Quick links</string>
     <string name="strLabelLater">Later</string>
     <string name="titleGlobalSearch">Global Search</string>
+    <string name="searchIndexingInProgress">Preparing search. Results may be incomplete until indexing finishes.</string>
+    <string name="search_match">Match</string>
+    <string name="search_match_any_words">Any words</string>
+    <string name="search_match_any_words_desc">Find results that contain one or more search words.</string>
+    <string name="search_match_all_words">All words</string>
+    <string name="search_match_all_words_desc">Find results that contain every search word.</string>
+    <string name="search_match_exact_phrase">Exact phrase</string>
+    <string name="search_match_exact_phrase_desc">Find words in the same order, like “day of resurrection”.</string>
     <string name="strHintSearch">Search</string>
     <string name="strHintSearchQuran">Type a term e.g., “Life”</string>
     <string name="strHintSearchProphet">Search prophet</string>

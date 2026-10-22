@@ -8,7 +8,6 @@ import androidx.room3.RawQuery
 import androidx.room3.RoomRawQuery
 import androidx.room3.Transaction
 import com.quranapp.android.db.relations.SearchResultSearchRow
-import com.quranapp.android.db.relations.SearchResultVerseRow
 
 @Dao
 interface SearchIndexDao {
@@ -28,11 +27,15 @@ interface SearchIndexDao {
     @Query("DELETE FROM translation_index_meta WHERE slug = :slug")
     suspend fun deleteMeta(slug: String)
 
+    @Query("INSERT INTO translation_search_fts(translation_search_fts) VALUES('rebuild')")
+    suspend fun rebuildFtsIndex()
+
     @Transaction
     suspend fun replaceSlugIndex(
         slug: String,
         rows: List<TranslationSearchContentEntity>,
-        fingerprint: String
+        fingerprint: String,
+        rebuildFts: Boolean = true,
     ) {
         deleteTranslationRowsForSlug(slug)
 
@@ -45,84 +48,44 @@ interface SearchIndexDao {
         } else {
             upsertMeta(TranslationIndexMetaEntity(slug = slug, fingerprint = fingerprint))
         }
+
+        if (rebuildFts) {
+            rebuildFtsIndex()
+        }
     }
 
     @RawQuery
-    suspend fun pageMatchedVersesRaw(query: RoomRawQuery): List<SearchResultVerseRow>
+    suspend fun pageMatchedRowsRaw(query: RoomRawQuery): List<SearchResultSearchRow>
 
-    @RawQuery
-    suspend fun rowsForPagedVersesRaw(query: RoomRawQuery): List<SearchResultSearchRow>
-
-    suspend fun pageMatchedVersesFiltered(
+    suspend fun pageMatchedRows(
         ftsQuery: String,
         slugs: Collection<String>?,
-        surahNo: Int?,
         limit: Int,
         offset: Int,
-    ): List<SearchResultVerseRow> {
-        val args = mutableListOf<Any>()
-        val sb = StringBuilder()
-
-        sb.append("SELECT surahNo, ayahNo FROM translation_search_fts WHERE text MATCH ?")
-        args += ftsQuery
-
-        if (!slugs.isNullOrEmpty()) {
-            sb.append(" AND slug IN (")
-            sb.append(slugs.joinToString(",") { "?" })
-            sb.append(")")
-
-            args.addAll(slugs)
-        }
-
-        if (surahNo != null) {
-            sb.append(" AND surahNo = ?")
-            args += surahNo
-        }
-
-        sb.append(" GROUP BY surahNo, ayahNo ORDER BY surahNo, ayahNo LIMIT ? OFFSET ?")
-
-        args += limit
-        args += offset
-
-        val sql = sb.toString()
-
-        return pageMatchedVersesRaw(buildRawQuery(sql, args))
-    }
-
-    suspend fun rowsForPagedVersesFiltered(
-        ftsQuery: String,
-        keys: List<String>,
-        slugs: Collection<String>?,
     ): List<SearchResultSearchRow> {
         val args = mutableListOf<Any>()
-        val sb = StringBuilder()
+        val sql = buildString {
+            append("WITH matched AS MATERIALIZED (")
+            append("SELECT slug, surahNo, ayahNo, text FROM translation_search_fts WHERE text MATCH ?")
+            args += ftsQuery
 
-        sb.append(
-            "SELECT slug, surahNo, ayahNo, text FROM translation_search_fts " +
-                "WHERE text MATCH ?",
-        )
+            if (!slugs.isNullOrEmpty()) {
+                append(" AND slug IN (")
+                append(slugs.joinToString(",") { "?" })
+                append(")")
+                args.addAll(slugs)
+            }
 
-        args += ftsQuery
-
-        sb.append(" AND (surahNo || ':' || ayahNo) IN (")
-        sb.append(keys.joinToString(",") { "?" })
-        sb.append(")")
-
-        args.addAll(keys)
-
-        if (!slugs.isNullOrEmpty()) {
-            sb.append(" AND slug IN (")
-            sb.append(slugs.joinToString(",") { "?" })
-            sb.append(")")
-
-            args.addAll(slugs)
+            append(") SELECT slug, surahNo, ayahNo, text FROM matched ")
+            append("WHERE surahNo || ':' || ayahNo IN (")
+            append("SELECT surahNo || ':' || ayahNo FROM matched ")
+            append("GROUP BY surahNo, ayahNo ORDER BY surahNo, ayahNo LIMIT ? OFFSET ?")
+            append(") ORDER BY surahNo, ayahNo, slug")
+            args += limit
+            args += offset
         }
 
-        sb.append(" ORDER BY surahNo, ayahNo, slug")
-
-        val sql = sb.toString()
-
-        return rowsForPagedVersesRaw(buildRawQuery(sql, args))
+        return pageMatchedRowsRaw(buildRawQuery(sql, args))
     }
 }
 

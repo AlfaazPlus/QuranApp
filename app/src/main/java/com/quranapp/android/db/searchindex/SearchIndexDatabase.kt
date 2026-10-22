@@ -3,7 +3,8 @@ package com.quranapp.android.db.searchindex
 import androidx.room3.Database
 import androidx.room3.RoomDatabase
 
-const val SEARCH_INDEX_DB_VERSION = 2
+const val SEARCH_INDEX_DB_VERSION = 3
+const val SEARCH_INDEX_CONTENT_VERSION = 4
 
 @Database(
     entities = [

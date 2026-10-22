@@ -342,6 +342,14 @@
     <string name="modeVerseByVerse">Ayet ayet modu</string>
     <string name="modeMushaf">Mushaf modu</string>
     <string name="titleGlobalSearch">Genel Arama</string>
+    <string name="searchIndexingInProgress">Arama hazırlanıyor. Dizine ekleme tamamlanana kadar bazı sonuçlar görünmeyebilir.</string>
+    <string name="search_match">Eşleşme türü</string>
+    <string name="search_match_any_words">Herhangi bir kelime</string>
+    <string name="search_match_any_words_desc">Arama kelimelerinden birini veya birkaçını içeren sonuçları bulun.</string>
+    <string name="search_match_all_words">Tüm kelimeler</string>
+    <string name="search_match_all_words_desc">Arama kelimelerinin tamamını içeren sonuçları bulun.</string>
+    <string name="search_match_exact_phrase">Tam ifade</string>
+    <string name="search_match_exact_phrase_desc">“Diriliş günü” gibi kelimeleri aynı sırayla içeren sonuçları bulun.</string>
     <string name="strHintSearchBy">Cüz veya sure ara</string>
     <string name="strHintSearchHizb">Hizb veya sure ara</string>
     <string name="strHintSearchPage">Sayfa ara</string>

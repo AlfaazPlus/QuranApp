@@ -335,6 +335,14 @@
     <string name="modeVerseByVerse">شێوازی ئایەت بە ئایەت</string>
     <string name="modeMushaf">شێوازی مۆسحەف</string>
     <string name="titleGlobalSearch">گەڕانی گشتگیر</string>
+    <string name="searchIndexingInProgress">ئامادەکاری بۆ گەڕان بەردەوامە. تا تەواوبوونی پێڕستکردن، ڕەنگە هەموو ئەنجامەکان پیشان نەدرێن.</string>
+    <string name="search_match">جۆری هاوتایی</string>
+    <string name="search_match_any_words">هەر وشەیەک</string>
+    <string name="search_match_any_words_desc">ئەو ئەنجامانە بدۆزەرەوە کە یەک یان زیاتر لە وشەکانی گەڕان لەخۆ دەگرن.</string>
+    <string name="search_match_all_words">هەموو وشەکان</string>
+    <string name="search_match_all_words_desc">ئەو ئەنجامانە بدۆزەرەوە کە هەموو وشەکانی گەڕانیان تێدایە.</string>
+    <string name="search_match_exact_phrase">دەستەواژەی تەواو هاوتا</string>
+    <string name="search_match_exact_phrase_desc">وشەکان بە هەمان ڕیزبەندی بدۆزەرەوە، وەک «ڕۆژی زیندووبوونەوە».</string>
     <string name="strHintSearchBy">گەڕان بۆ جوزء یان سورەت</string>
     <string name="strHintSearchHizb">گەڕان بۆ حیزب یان سورەت</string>
     <string name="strHintSearchPage">گەڕان بۆ لاپەڕە</string>

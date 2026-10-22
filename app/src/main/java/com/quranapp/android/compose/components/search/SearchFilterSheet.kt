@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,16 +28,18 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.common.RadioItem
 import com.quranapp.android.compose.components.dialogs.BottomSheet
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.search.SearchFilters
+import com.quranapp.android.search.SearchMatchingStrategy
 import com.quranapp.android.search.TranslationOption
 
 @Composable
 fun SearchFiltersSheet(
     isOpen: Boolean,
     onDismiss: () -> Unit,
-    filters: SearchFilters,
+    currentFilters: SearchFilters,
     availableTranslations: List<TranslationOption>,
     quranTextEnabled: Boolean,
     onApplyFilters: (SearchFilters) -> Unit,
@@ -48,7 +51,7 @@ fun SearchFiltersSheet(
         title = stringResource(R.string.strTitleFilters),
         headerArrangement = Arrangement.Start,
     ) {
-        var draft by remember(filters, isOpen) { mutableStateOf(filters) }
+        var draft by remember(currentFilters, isOpen) { mutableStateOf(currentFilters) }
 
         Column {
             Column(
@@ -58,6 +61,11 @@ fun SearchFiltersSheet(
                     .padding(top = 16.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
+                MatchingStrategySection(
+                    draft = draft,
+                    onChange = { draft = it },
+                )
+
                 TranslationsSection(
                     available = availableTranslations,
                     draft = draft,
@@ -78,7 +86,7 @@ fun SearchFiltersSheet(
                 }
 
                 Button(
-                    enabled = draft.selectedSlugs == null || draft.selectedSlugs!!.isNotEmpty(),
+                    enabled = draft.isValid && draft != currentFilters,
                     onClick = { onApplyFilters(draft) }
                 ) {
                     Text(stringResource(R.string.strLabelApply))
@@ -100,6 +108,41 @@ private fun SectionTitle(
         modifier = modifier
             .padding(horizontal = 16.dp),
     )
+}
+
+
+@Composable
+private fun MatchingStrategySection(
+    draft: SearchFilters,
+    onChange: (SearchFilters) -> Unit,
+) {
+    Column {
+        SectionTitle(
+            stringResource(R.string.search_match),
+            modifier = Modifier.padding(bottom = 10.dp),
+        )
+
+        SearchMatchingStrategy.entries.forEach { strategy ->
+            RadioItem(
+                modifier = Modifier.padding(horizontal = 10.dp),
+                title = when (strategy) {
+                    SearchMatchingStrategy.ANY_WORD -> R.string.search_match_any_words
+                    SearchMatchingStrategy.ALL_WORDS -> R.string.search_match_all_words
+                    SearchMatchingStrategy.EXACT_PHRASE -> R.string.search_match_exact_phrase
+                },
+                subtitle = when (strategy) {
+                    SearchMatchingStrategy.ANY_WORD -> R.string.search_match_any_words_desc
+                    SearchMatchingStrategy.ALL_WORDS -> R.string.search_match_all_words_desc
+                    SearchMatchingStrategy.EXACT_PHRASE -> R.string.search_match_exact_phrase_desc
+                },
+                selected = draft.matchingStrategy == strategy,
+                onClick = {
+                    onChange(draft.copy(matchingStrategy = strategy))
+                },
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 8.dp),
+            )
+        }
+    }
 }
 
 @Composable

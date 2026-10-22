@@ -338,6 +338,14 @@
     <string name="modeVerseByVerse">وضع آية بآية</string>
     <string name="modeMushaf">وضع المصحف</string>
     <string name="titleGlobalSearch">البحث العام</string>
+    <string name="searchIndexingInProgress">جارٍ تجهيز البحث. قد لا تظهر جميع النتائج حتى يكتمل الفهرس.</string>
+    <string name="search_match">مطابقة</string>
+    <string name="search_match_any_words">أي كلمة</string>
+    <string name="search_match_any_words_desc">اعثر على النتائج التي تحتوي على كلمة واحدة أو أكثر من كلمات البحث.</string>
+    <string name="search_match_all_words">كل الكلمات</string>
+    <string name="search_match_all_words_desc">اعثر على النتائج التي تحتوي على جميع كلمات البحث.</string>
+    <string name="search_match_exact_phrase">العبارة المطابقة تمامًا</string>
+    <string name="search_match_exact_phrase_desc">اعثر على الكلمات بالترتيب نفسه، مثل «يوم القيامة».</string>
     <string name="strHintSearchBy">ابحث عن جزء أو سورة</string>
     <string name="strHintSearchHizb">ابحث عن حزب أو سورة</string>
     <string name="strHintSearchPage">ابحث عن صفحة</string>

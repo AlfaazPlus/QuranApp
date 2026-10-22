@@ -388,6 +388,14 @@
     <string name="theme_yellow">پيلو</string>
     <string name="titleCancelDownload">ڊائون لوڊ رد ڪريو؟</string>
     <string name="titleGlobalSearch">عالمي ڳولا</string>
+    <string name="searchIndexingInProgress">ڳولا تيار ٿي رهي آهي. انڊيڪسنگ مڪمل ٿيڻ تائين ڪجهه نتيجا ظاهر نه ٿي سگهن ٿا.</string>
+    <string name="search_match">ميلاپ جو قسم</string>
+    <string name="search_match_any_words">ڪو به لفظ</string>
+    <string name="search_match_any_words_desc">اهي نتيجا ڳوليو جن ۾ ڳولا جا هڪ يا وڌيڪ لفظ شامل هجن.</string>
+    <string name="search_match_all_words">سڀ لفظ</string>
+    <string name="search_match_all_words_desc">اهي نتيجا ڳوليو جن ۾ ڳولا جا سڀئي لفظ شامل هجن.</string>
+    <string name="search_match_exact_phrase">بلڪل ساڳيو جملو</string>
+    <string name="search_match_exact_phrase_desc">لفظن کي ساڳئي ترتيب ۾ ڳوليو، مثال طور ”قيامت جو ڏينهن“.</string>
     <string name="titleRecentSearches">تازيون ڳولائون</string>
     <string name="titleRecitationGroupSize">قرآني آيتن جي گروپ جي سائيز</string>
     <string name="translationHelp">توهان کي پنهنجي ٻولي نظر نه ٿي اچي؟ ان کي ترجمو ڪرڻ يا بهتر ڪرڻ ۾ مدد ڪريو ۽ ان کي وڌيڪ ماڻهن تائين پهچائڻ لائق بڻايو!</string>

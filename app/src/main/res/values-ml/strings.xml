@@ -289,6 +289,14 @@
     <string name="modeVerseByVerse">വചനം തിരിച്ച്</string>
     <string name="modeMushaf">മുസ്ഹഫ് രീതി</string>
     <string name="titleGlobalSearch">സെർച്ച്</string>
+    <string name="searchIndexingInProgress">തിരയൽ തയ്യാറാക്കുന്നു. ഇൻഡെക്സിംഗ് പൂർത്തിയാകുന്നതുവരെ ചില ഫലങ്ങൾ കാണാനായേക്കില്ല.</string>
+    <string name="search_match">പൊരുത്തത്തിന്റെ തരം</string>
+    <string name="search_match_any_words">ഏതെങ്കിലും വാക്കുകൾ</string>
+    <string name="search_match_any_words_desc">തിരഞ്ഞ വാക്കുകളിൽ ഒന്നോ അതിലധികമോ ഉൾപ്പെടുന്ന ഫലങ്ങൾ കണ്ടെത്തുക.</string>
+    <string name="search_match_all_words">എല്ലാ വാക്കുകളും</string>
+    <string name="search_match_all_words_desc">തിരഞ്ഞ എല്ലാ വാക്കുകളും ഉൾപ്പെടുന്ന ഫലങ്ങൾ കണ്ടെത്തുക.</string>
+    <string name="search_match_exact_phrase">കൃത്യമായ വാക്യഭാഗം</string>
+    <string name="search_match_exact_phrase_desc">വാക്കുകൾ അതേ ക്രമത്തിൽ വരുന്ന ഫലങ്ങൾ കണ്ടെത്തുക. ഉദാഹരണം: “ഉയിർത്തെഴുന്നേൽപ്പിന്റെ ദിവസം”.</string>
     <string name="strHintSearchBy">ജുസ്അ് അല്ലെങ്കിൽ സൂറ സെർച്ച് ചെയ്യുക</string>
     <string name="strHintSearchHizb">ഹിസ്ബ് അല്ലെങ്കിൽ സൂറ സെർച്ച് ചെയ്യുക</string>
     <string name="strHintSearchPage">പേജ് സെർച്ച് ചെയ്യുക</string>

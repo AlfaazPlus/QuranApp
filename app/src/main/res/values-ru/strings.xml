@@ -344,6 +344,14 @@
     <string name="noNoteProvided">Заметка отсутствует…</string>
     <string name="dailyReminderMsg">Получать ежедневное уведомление-напоминание.</string>
     <string name="titleGlobalSearch">Глобальный поиск</string>
+    <string name="searchIndexingInProgress">Подготовка поиска. Пока индексация не завершена, некоторые результаты могут не отображаться.</string>
+    <string name="search_match">Тип совпадения</string>
+    <string name="search_match_any_words">Любые слова</string>
+    <string name="search_match_any_words_desc">Найти результаты, содержащие одно или несколько слов из запроса.</string>
+    <string name="search_match_all_words">Все слова</string>
+    <string name="search_match_all_words_desc">Найти результаты, содержащие все слова из запроса.</string>
+    <string name="search_match_exact_phrase">Точная фраза</string>
+    <string name="search_match_exact_phrase_desc">Найти слова в том же порядке, например «день воскресения».</string>
     <string name="strHintSearchBy">Поиск джуза или суры</string>
     <string name="strHintSearchHizb">Поиск хизба или суры</string>
     <string name="strHintSearchPage">Поиск страницы</string>

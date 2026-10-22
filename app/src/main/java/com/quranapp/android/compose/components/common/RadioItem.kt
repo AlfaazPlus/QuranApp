@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.common
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,13 +21,14 @@ fun RadioItem(
     subtitleStr: String? = null,
     selected: Boolean,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
     onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .clickable(enabled = enabled) { onClick() }
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            .padding(contentPadding),
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
     ) {
         ListItemContent(
@@ -40,7 +42,6 @@ fun RadioItem(
             modifier = Modifier
                 .padding(start = 16.dp)
                 .size(24.dp),
-            enabled = enabled,
             selected = selected,
             onClick = onClick,
         )

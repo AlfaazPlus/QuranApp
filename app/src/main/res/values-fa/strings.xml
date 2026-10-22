@@ -317,6 +317,14 @@
     <string name="modeVerseByVerse">حالت آیه به آیه</string>
     <string name="modeMushaf">حالت مصحف</string>
     <string name="titleGlobalSearch">جستجوی سراسری</string>
+    <string name="searchIndexingInProgress">در حال آماده‌سازی جستجو هستیم. تا پایان نمایه‌سازی ممکن است همهٔ نتایج نمایش داده نشوند.</string>
+    <string name="search_match">نوع تطبیق</string>
+    <string name="search_match_any_words">هر کدام از کلمات</string>
+    <string name="search_match_any_words_desc">نتایجی را پیدا کنید که شامل یک یا چند کلمه از عبارت جستجو باشند.</string>
+    <string name="search_match_all_words">همهٔ کلمات</string>
+    <string name="search_match_all_words_desc">نتایجی را پیدا کنید که شامل تمام کلمات عبارت جستجو باشند.</string>
+    <string name="search_match_exact_phrase">عبارت دقیق</string>
+    <string name="search_match_exact_phrase_desc">کلمات را با همان ترتیب پیدا کنید؛ مانند «روز رستاخیز».</string>
     <string name="strHintSearchBy">جستجوی جزء یا سوره</string>
     <string name="strHintSearchHizb">جستجوی حزب یا سوره</string>
     <string name="strHintSearchPage">جستجوی صفحه</string>

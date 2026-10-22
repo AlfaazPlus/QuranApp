@@ -7,13 +7,14 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.quranapp.android.R
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.searchindex.SEARCH_INDEX_DB_VERSION
+import com.quranapp.android.db.searchindex.SEARCH_INDEX_CONTENT_VERSION
 import com.quranapp.android.db.searchindex.TranslationSearchContentEntity
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
 import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
 import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.search.SearchNormalizer
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.StringUtils
@@ -69,17 +70,24 @@ class TranslationSearchIndexWorker(
                     val slugs = factory.getAvailableTranslationBooksInfo().keys
 
                     for (slug in slugs) {
-                        if (isStopped) break
+                        if (isStopped) return@withContext Result.retry()
 
                         if (factory.isTranslationDownloaded(slug)) {
                             buildIndexForSlugIfNeeded(
                                 applicationContext,
                                 slug,
+                                rebuildFts = false,
                             )
                         } else {
-                            removeSlug(applicationContext, slug)
+                            removeSlug(applicationContext, slug, rebuildFts = false)
                         }
                     }
+
+                    DatabaseProvider.getSearchIndexDatabase(applicationContext)
+                        .searchIndexDao()
+                        .rebuildFtsIndex()
+
+                    SearchIndexScheduler.markIndexUpToDate(applicationContext)
                 }
 
                 Result.success()
@@ -89,22 +97,25 @@ class TranslationSearchIndexWorker(
         }
     }
 
-    private suspend fun buildIndexForSlugIfNeeded(context: Context, slug: String): Unit =
-        withContext(Dispatchers.IO) {
+    private suspend fun buildIndexForSlugIfNeeded(
+        context: Context,
+        slug: String,
+        rebuildFts: Boolean = true,
+    ): Boolean = withContext(Dispatchers.IO) {
             val dao = DatabaseProvider.getSearchIndexDatabase(context).searchIndexDao()
 
             QuranTranslationFactory(context).use { factory ->
                 if (!factory.isTranslationDownloaded(slug)) {
-                    dao.replaceSlugIndex(slug, emptyList(), "")
-                    return@use
+                    dao.replaceSlugIndex(slug, emptyList(), "", rebuildFts)
+                    return@use true
                 }
 
                 val book = factory.getTranslationBookInfo(slug)
                 val rowCount = countRows(factory, slug)
-                val fingerprint = "${book.version}|$rowCount|${SEARCH_INDEX_DB_VERSION}"
+                val fingerprint = "${book.version}|$rowCount|$SEARCH_INDEX_CONTENT_VERSION"
 
                 val existing = dao.getMeta(slug)?.fingerprint
-                if (existing == fingerprint) return@use
+                if (existing == fingerprint) return@use false
 
                 val rows = ArrayList<TranslationSearchContentEntity>(rowCount.coerceAtMost(7000))
                 val table = QuranTranslDBHelper.escapeTableName(slug)
@@ -119,7 +130,7 @@ class TranslationSearchIndexWorker(
                         val raw = c.getString(2) ?: ""
                         val plain = StringUtils.removeHTML(raw, false)
 
-                        val norm = SearchNormalizer.normalize(plain)
+                        val norm = SearchNormalizer.normalizeForTranslationIndex(plain)
                         if (norm.isBlank()) continue
 
                         rows.add(
@@ -133,13 +144,19 @@ class TranslationSearchIndexWorker(
                     }
                 }
 
-                dao.replaceSlugIndex(slug, rows, fingerprint)
+                dao.replaceSlugIndex(slug, rows, fingerprint, rebuildFts)
+                true
             }
         }
 
-    private suspend fun removeSlug(context: Context, slug: String) = withContext(Dispatchers.IO) {
+    private suspend fun removeSlug(
+        context: Context,
+        slug: String,
+        rebuildFts: Boolean = true,
+    ): Boolean = withContext(Dispatchers.IO) {
         val dao = DatabaseProvider.getSearchIndexDatabase(context).searchIndexDao()
-        dao.replaceSlugIndex(slug, emptyList(), "")
+        dao.replaceSlugIndex(slug, emptyList(), "", rebuildFts)
+        true
     }
 
     private fun countRows(factory: QuranTranslationFactory, slug: String): Int {

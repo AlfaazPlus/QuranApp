@@ -326,6 +326,14 @@
     <string name="modeVerseByVerse">এক আয়াত করে পড়ুন</string>
     <string name="modeMushaf">কুরআনের পৃষ্ঠার মতো</string>
     <string name="titleGlobalSearch">সবখানে খুঁজুন</string>
+    <string name="searchIndexingInProgress">অনুসন্ধানের প্রস্তুতি চলছে। ইনডেক্স তৈরি সম্পূর্ণ না হওয়া পর্যন্ত কিছু ফলাফল নাও দেখা যেতে পারে।</string>
+    <string name="search_match">মিলের ধরন</string>
+    <string name="search_match_any_words">যেকোনো শব্দ</string>
+    <string name="search_match_any_words_desc">অনুসন্ধানের এক বা একাধিক শব্দ রয়েছে এমন ফলাফল খুঁজুন।</string>
+    <string name="search_match_all_words">সব শব্দ</string>
+    <string name="search_match_all_words_desc">অনুসন্ধানের প্রতিটি শব্দ রয়েছে এমন ফলাফল খুঁজুন।</string>
+    <string name="search_match_exact_phrase">হুবহু বাক্যাংশ</string>
+    <string name="search_match_exact_phrase_desc">একই ক্রমে থাকা শব্দ খুঁজুন, যেমন “পুনরুত্থানের দিন”।</string>
     <string name="strHintSearchBy">পারা বা সূরা খুঁজুন</string>
     <string name="strHintSearchHizb">হিজ্ব বা সূরা খুঁজুন</string>
     <string name="strHintSearchPage">পৃষ্ঠা খুঁজুন</string>

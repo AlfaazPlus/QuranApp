@@ -383,6 +383,14 @@
     <string name="strMsgReciterDownloadHint">ऑफ़लाइन सुनने और बेहतर प्लेबैक के लिए तिलावत का ऑडियो डाउनलोड करें।</string>
     <string name="labelRecommended">सुझाए गए</string>
     <string name="titleGlobalSearch">खोजें</string>
+    <string name="searchIndexingInProgress">खोज तैयार की जा रही है। इंडेक्सिंग पूरी होने तक कुछ नतीजे दिखाई नहीं दे सकते।</string>
+    <string name="search_match">मिलान का प्रकार</string>
+    <string name="search_match_any_words">कोई भी शब्द</string>
+    <string name="search_match_any_words_desc">ऐसे नतीजे खोजें जिनमें खोजे गए शब्दों में से एक या अधिक शब्द हों।</string>
+    <string name="search_match_all_words">सभी शब्द</string>
+    <string name="search_match_all_words_desc">ऐसे नतीजे खोजें जिनमें खोजे गए सभी शब्द हों।</string>
+    <string name="search_match_exact_phrase">सटीक वाक्यांश</string>
+    <string name="search_match_exact_phrase_desc">शब्दों को उसी क्रम में खोजें, जैसे “पुनरुत्थान का दिन”।</string>
     <string name="textPreparingAudio">ऑडियो तैयार हो रहा है…</string>
     <string name="noResults">कोई परिणाम नहीं</string>
     <string name="labelTransliteration">लिप्यंतरण</string>

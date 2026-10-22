@@ -310,6 +310,14 @@
     <string name="modeVerseByVerse">வசனம் வாரியாக</string>
     <string name="modeMushaf">முஸஹஃப் முறை</string>
     <string name="titleGlobalSearch">பொதுத் தேடல்</string>
+    <string name="searchIndexingInProgress">தேடல் தயாராகிறது. அட்டவணைப்படுத்தல் முடியும் வரை சில முடிவுகள் காட்டப்படாமல் இருக்கலாம்.</string>
+    <string name="search_match">பொருத்த வகை</string>
+    <string name="search_match_any_words">ஏதேனும் சொற்கள்</string>
+    <string name="search_match_any_words_desc">தேடல் சொற்களில் ஒன்று அல்லது அதற்கு மேற்பட்ட சொற்களைக் கொண்ட முடிவுகளைக் கண்டறியவும்.</string>
+    <string name="search_match_all_words">அனைத்துச் சொற்களும்</string>
+    <string name="search_match_all_words_desc">தேடல் சொற்கள் அனைத்தையும் கொண்ட முடிவுகளைக் கண்டறியவும்.</string>
+    <string name="search_match_exact_phrase">சரியான சொற்றொடர்</string>
+    <string name="search_match_exact_phrase_desc">“உயிர்த்தெழும் நாள்” போன்ற சொற்கள் அதே வரிசையில் உள்ள முடிவுகளைக் கண்டறியவும்.</string>
     <string name="strHintSearchBy">ஜூஸ்உ அல்லது சூராவைத் தேடு</string>
     <string name="strHintSearchHizb">ஹிஸ்பு அல்லது சூராவைத் தேடு</string>
     <string name="strHintSearchPage">பக்கத்தைத் தேடு</string>

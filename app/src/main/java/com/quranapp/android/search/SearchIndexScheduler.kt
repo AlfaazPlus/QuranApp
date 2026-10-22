@@ -11,12 +11,13 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.BuildConfig
-import com.quranapp.android.db.searchindex.SEARCH_INDEX_DB_VERSION
+import com.quranapp.android.db.searchindex.SEARCH_INDEX_CONTENT_VERSION
 import com.quranapp.android.utils.workers.TranslationSearchIndexWorker
 import java.util.concurrent.TimeUnit
 
 object SearchIndexScheduler {
     private const val UNIQUE_SYNC = "translation_search_index_sync_all"
+    const val INDEXING_TAG = "translation_search_indexing"
 
     private fun workManager(context: Context): WorkManager =
         WorkManager.getInstance(context.applicationContext)
@@ -36,6 +37,11 @@ object SearchIndexScheduler {
         }
 
         return OneTimeWorkRequestBuilder<TranslationSearchIndexWorker>()
+            .apply {
+                if (mode != TranslationSearchIndexWorker.MODE_REMOVE) {
+                    addTag(INDEXING_TAG)
+                }
+            }
             .setInputData(data)
             .apply {
                 backoffMs?.let {
@@ -83,17 +89,15 @@ object SearchIndexScheduler {
         val lastSchema = sp.getInt("translation_fts_schema", 0)
         val lastVc = sp.getInt("translation_fts_vc", 0)
 
-        if (lastSchema != SEARCH_INDEX_DB_VERSION || lastVc != BuildConfig.VERSION_CODE) {
-            sp.edit {
-                putInt(
-                    "translation_fts_schema",
-                    SEARCH_INDEX_DB_VERSION
-                )
-
-                putInt("translation_fts_vc", BuildConfig.VERSION_CODE)
-            }
-
+        if (lastSchema != SEARCH_INDEX_CONTENT_VERSION || lastVc != BuildConfig.VERSION_CODE) {
             enqueueSyncAll(context)
+        }
+    }
+
+    fun markIndexUpToDate(context: Context) {
+        context.getSharedPreferences("search_index_prefs", MODE_PRIVATE).edit {
+            putInt("translation_fts_schema", SEARCH_INDEX_CONTENT_VERSION)
+            putInt("translation_fts_vc", BuildConfig.VERSION_CODE)
         }
     }
 }

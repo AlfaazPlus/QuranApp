@@ -323,6 +323,14 @@
     <string name="modeVerseByVerse">Modalità versetto per versetto</string>
     <string name="modeMushaf">Modalità Mushaf</string>
     <string name="titleGlobalSearch">Ricerca globale</string>
+    <string name="searchIndexingInProgress">Preparazione della ricerca in corso. Alcuni risultati potrebbero non essere disponibili fino al completamento dell\'indicizzazione.</string>
+    <string name="search_match">Tipo di corrispondenza</string>
+    <string name="search_match_any_words">Qualsiasi parola</string>
+    <string name="search_match_any_words_desc">Trova i risultati che contengono una o più parole della ricerca.</string>
+    <string name="search_match_all_words">Tutte le parole</string>
+    <string name="search_match_all_words_desc">Trova i risultati che contengono tutte le parole della ricerca.</string>
+    <string name="search_match_exact_phrase">Frase esatta</string>
+    <string name="search_match_exact_phrase_desc">Trova le parole nello stesso ordine, ad esempio «giorno della resurrezione».</string>
     <string name="strHintSearchBy">Cerca juz o sura</string>
     <string name="strHintSearchHizb">Cerca hizb o sura</string>
     <string name="strHintSearchPage">Cerca pagina</string>

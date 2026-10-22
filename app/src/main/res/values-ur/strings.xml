@@ -383,6 +383,14 @@
     <string name="strMsgReciterDownloadHint">آف لائن سننے اور ہموار پلے بیک کے لیے تلاوت آڈیو ڈاؤن لوڈ کریں۔</string>
     <string name="labelRecommended">تجویز کردہ</string>
     <string name="titleGlobalSearch">گلوبل تلاش</string>
+    <string name="searchIndexingInProgress">تلاش تیار کی جا رہی ہے۔ انڈیکسنگ مکمل ہونے تک کچھ نتائج نظر نہیں آ سکتے۔</string>
+    <string name="search_match">تلاش کے مطابقت کا طریقہ</string>
+    <string name="search_match_any_words">کوئی بھی لفظ</string>
+    <string name="search_match_any_words_desc">ایسے نتائج تلاش کریں جن میں تلاش کے ایک یا زیادہ الفاظ شامل ہوں۔</string>
+    <string name="search_match_all_words">تمام الفاظ</string>
+    <string name="search_match_all_words_desc">ایسے نتائج تلاش کریں جن میں تلاش کے تمام الفاظ شامل ہوں۔</string>
+    <string name="search_match_exact_phrase">بالکل وہی عبارت</string>
+    <string name="search_match_exact_phrase_desc">الفاظ کو اسی ترتیب میں تلاش کریں، جیسے ”قیامت کا دن“۔</string>
     <string name="textPreparingAudio">آڈیو تیار ہو رہا ہے…</string>
     <string name="noResults">کوئی نتیجہ نہیں</string>
     <string name="labelTransliteration">ٹرانسلیٹریشن</string>

@@ -328,6 +328,14 @@
     <string name="modeVerseByVerse">逐節模式</string>
     <string name="modeMushaf">穆斯哈夫模式</string>
     <string name="titleGlobalSearch">全局搜索</string>
+    <string name="searchIndexingInProgress">正在準備搜尋。索引建立完成前，部分結果可能無法顯示。</string>
+    <string name="search_match">比對方式</string>
+    <string name="search_match_any_words">任意詞語</string>
+    <string name="search_match_any_words_desc">尋找包含一個或多個搜尋詞語的結果。</string>
+    <string name="search_match_all_words">所有詞語</string>
+    <string name="search_match_all_words_desc">尋找包含所有搜尋詞語的結果。</string>
+    <string name="search_match_exact_phrase">完全符合的詞組</string>
+    <string name="search_match_exact_phrase_desc">尋找詞語順序完全相同的結果，例如「復活之日」。</string>
     <string name="strHintSearchBy">搜索 juz 或蘇拉 (surah)</string>
     <string name="strHintSearchHizb">搜索 hizb 或蘇拉 (surah)</string>
     <string name="strHintSearchPage">搜索頁面</string>

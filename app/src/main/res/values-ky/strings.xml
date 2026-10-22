@@ -358,6 +358,14 @@
     <string name="strLabelAll">Баары</string>
     <string name="clear">Тазалоо</string>
     <string name="titleGlobalSearch">Жалпы издөө</string>
+    <string name="searchIndexingInProgress">Издөө даярдалып жатат. Индекстөө аяктаганга чейин айрым натыйжалар көрүнбөй калышы мүмкүн.</string>
+    <string name="search_match">Дал келүү түрү</string>
+    <string name="search_match_any_words">Каалаган сөздөр</string>
+    <string name="search_match_any_words_desc">Издөө сөздөрүнүн бирин же бир нечесин камтыган натыйжаларды табыңыз.</string>
+    <string name="search_match_all_words">Бардык сөздөр</string>
+    <string name="search_match_all_words_desc">Издөө сөздөрүнүн баарын камтыган натыйжаларды табыңыз.</string>
+    <string name="search_match_exact_phrase">Так сөз айкашы</string>
+    <string name="search_match_exact_phrase_desc">Сөздөрдү ошол эле тартипте табыңыз, мисалы, «кайра тирилүү күнү».</string>
     <string name="labelRecommended">Сунушталгандар</string>
     <string name="strLabelPrevious">Мурунку</string>
     <string name="nextChapter">Кийинки сүрө</string>
