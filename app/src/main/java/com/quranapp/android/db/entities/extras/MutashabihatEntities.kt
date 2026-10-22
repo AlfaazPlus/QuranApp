@@ -1,10 +1,10 @@
 package com.quranapp.android.db.entities.extras
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.ForeignKey
+import androidx.room3.Index
+import androidx.room3.PrimaryKey
 import com.quranapp.android.db.entities.quran.AyahEntity
 
 @Entity(

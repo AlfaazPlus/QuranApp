@@ -1,10 +1,13 @@
 package com.quranapp.android.db
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room3.DaoReturnTypeConverters
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.ColumnTypeConverters
+import androidx.room3.migration.Migration
+import androidx.room3.paging.PagingSourceDaoReturnTypeConverter
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
 import com.quranapp.android.db.converters.DbConverters
 import com.quranapp.android.db.dao.BookmarkDao
 import com.quranapp.android.db.dao.CollectionDao
@@ -23,7 +26,8 @@ import com.quranapp.android.db.entities.user.ReadHistoryEntity
     ],
     version = 3,
 )
-@TypeConverters(DbConverters::class)
+@ColumnTypeConverters(DbConverters::class)
+@DaoReturnTypeConverters(PagingSourceDaoReturnTypeConverter::class)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun readHistoryDao(): ReadHistoryDao
@@ -31,8 +35,8 @@ abstract class UserDatabase : RoomDatabase() {
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL(
+            override suspend fun migrate(connection: SQLiteConnection) {
+                connection.execSQL(
                     """
                     CREATE TABLE IF NOT EXISTS `read_history` (
                         `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -52,8 +56,8 @@ abstract class UserDatabase : RoomDatabase() {
         }
 
         val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL(
+            override suspend fun migrate(connection: SQLiteConnection) {
+                connection.execSQL(
                     """
                     CREATE TABLE IF NOT EXISTS `user_collections` (
                         `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -67,7 +71,7 @@ abstract class UserDatabase : RoomDatabase() {
                     )
                     """.trimIndent()
                 )
-                db.execSQL(
+                connection.execSQL(
                     """
                     CREATE TABLE IF NOT EXISTS `user_collection_items` (
                         `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -82,13 +86,13 @@ abstract class UserDatabase : RoomDatabase() {
                     )
                     """.trimIndent()
                 )
-                db.execSQL(
+                connection.execSQL(
                     """
                     CREATE UNIQUE INDEX IF NOT EXISTS `index_user_collection_items_collection_id_chapter_no_verse_no`
                     ON `user_collection_items` (`collection_id`, `chapter_no`, `verse_no`)
                     """.trimIndent()
                 )
-                db.execSQL(
+                connection.execSQL(
                     """
                     CREATE INDEX IF NOT EXISTS `index_user_collection_items_collection_id`
                     ON `user_collection_items` (`collection_id`)

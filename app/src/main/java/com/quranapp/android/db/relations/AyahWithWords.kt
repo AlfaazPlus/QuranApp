@@ -1,7 +1,7 @@
 package com.quranapp.android.db.relations
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room3.Embedded
+import androidx.room3.Relation
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 
@@ -10,8 +10,8 @@ data class AyahWithWords(
     val ayah: AyahEntity,
 
     @Relation(
-        parentColumn = "ayah_id",
-        entityColumn = "ayah_id"
+        parentColumns = ["ayah_id"],
+        entityColumns = ["ayah_id"],
     )
-    val words: List<AyahWordEntity>
+    val words: List<AyahWordEntity>,
 )

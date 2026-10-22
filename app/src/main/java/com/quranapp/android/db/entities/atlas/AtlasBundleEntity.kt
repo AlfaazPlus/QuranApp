@@ -1,7 +1,7 @@
 package com.quranapp.android.db.entities.atlas
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
 
 @Entity(
     tableName = "atlas_bundles",

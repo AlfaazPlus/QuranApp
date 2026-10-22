@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import com.quranapp.android.R
 import com.quranapp.android.db.UserDatabase
 import com.quranapp.android.db.entities.user.BookmarkEntity
@@ -299,7 +299,7 @@ class UserRepository(
         verseNo: Int,
         selectedIds: Set<Long>,
     ) {
-        database.withTransaction {
+        database.withWriteTransaction {
             val current = collectionDao.collectionIdsForVerse(chapterNo, verseNo).toSet()
             val toAdd = selectedIds - current
             val toRemove = current - selectedIds

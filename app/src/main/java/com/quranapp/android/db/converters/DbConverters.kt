@@ -1,12 +1,12 @@
 package com.quranapp.android.db.converters
 
-import androidx.room.TypeConverter
+import androidx.room3.ColumnTypeConverter
 import java.util.Date
 
 class DbConverters {
-    @TypeConverter
+    @ColumnTypeConverter
     fun fromTimestamp(value: Long?): Date? = value?.let { Date(it) }
 
-    @TypeConverter
+    @ColumnTypeConverter
     fun dateToTimestamp(date: Date?): Long? = date?.time
 }

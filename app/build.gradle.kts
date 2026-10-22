@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("org.jetbrains.kotlin.android")
     id("kotlinx-serialization")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+    alias(libs.plugins.androidx.room3)
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.compose.compiler)
 }
@@ -28,14 +28,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.generatedDensities()
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas", "room.incremental" to "true"
-                )
-            }
-        }
     }
 
     buildFeatures {
@@ -122,16 +114,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     dependenciesInfo {
         // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
         includeInApk = false
         // Disables dependency metadata when building Android App Bundles (for Google Play)
         includeInBundle = false
     }
+}
+
+room3 {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -191,13 +183,14 @@ dependencies {
     implementation(libs.dataStore)
 
     // Room
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room3.common)
+    implementation(libs.androidx.room3.runtime)
+    ksp(libs.androidx.room3.compiler)
 
     implementation(libs.paging)
     implementation(libs.pagingCompose)
-    implementation(libs.roomPaging)
+    implementation(libs.androidx.room3.paging)
+    implementation(libs.androidx.sqlite.bundled)
 
 
     implementation(libs.compose.navigation)

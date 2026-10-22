@@ -1,8 +1,8 @@
 package com.quranapp.android.db.dao
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room3.Dao
+import androidx.room3.Query
+import androidx.room3.Transaction
 import com.quranapp.android.db.entities.quran.SurahEntity
 import com.quranapp.android.db.entities.quran.SurahLocalizationEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations

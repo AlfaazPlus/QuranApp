@@ -1,7 +1,7 @@
 package com.quranapp.android.db.dao
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room3.Dao
+import androidx.room3.Query
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 
 @Dao

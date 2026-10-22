@@ -1,8 +1,8 @@
 package com.quranapp.android.db.dao
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.RewriteQueriesToDropUnusedColumns
+import androidx.room3.Dao
+import androidx.room3.Query
+import androidx.room3.RewriteQueriesToDropUnusedColumns
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.db.relations.topics.TopicParentEdgeRow
 import com.quranapp.android.db.relations.topics.TopicHierarchyEdgeRow

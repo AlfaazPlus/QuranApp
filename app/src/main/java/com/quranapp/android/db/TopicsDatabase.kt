@@ -1,8 +1,8 @@
 package com.quranapp.android.db
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.ColumnTypeConverters
 import com.quranapp.android.db.converters.QuranConverters
 import com.quranapp.android.db.converters.TopicsDbConverters
 import com.quranapp.android.db.dao.TopicsDao
@@ -21,7 +21,7 @@ import com.quranapp.android.db.entities.topics.TopicLocalizationEntity
     version = 1,
     exportSchema = false
 )
-@TypeConverters(QuranConverters::class, TopicsDbConverters::class)
+@ColumnTypeConverters(QuranConverters::class, TopicsDbConverters::class)
 abstract class TopicsDatabase : RoomDatabase() {
     abstract fun topicsDao(): TopicsDao
 }

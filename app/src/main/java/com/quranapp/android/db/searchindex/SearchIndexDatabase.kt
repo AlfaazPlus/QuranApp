@@ -1,7 +1,7 @@
 package com.quranapp.android.db.searchindex
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
 
 const val SEARCH_INDEX_DB_VERSION = 2
 

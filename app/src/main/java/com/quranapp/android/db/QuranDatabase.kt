@@ -1,8 +1,8 @@
 package com.quranapp.android.db
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.ColumnTypeConverters
 import com.quranapp.android.db.converters.QuranConverters
 import com.quranapp.android.db.dao.ArabicSearchDao
 import com.quranapp.android.db.dao.AyahDao
@@ -47,7 +47,7 @@ import com.quranapp.android.db.entities.quran.SurahSearchAliasEntity
     version = 10,
     exportSchema = false
 )
-@TypeConverters(QuranConverters::class)
+@ColumnTypeConverters(QuranConverters::class)
 abstract class QuranDatabase : RoomDatabase() {
     abstract fun arabicSearchDao(): ArabicSearchDao
     abstract fun surahDao(): SurahDao

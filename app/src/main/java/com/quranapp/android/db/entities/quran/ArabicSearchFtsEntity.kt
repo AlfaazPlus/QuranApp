@@ -1,11 +1,13 @@
 package com.quranapp.android.db.entities.quran
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Fts4
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.Fts5
+import androidx.room3.FtsOptions
 
-@Fts4(
-    tokenizer = "unicode61"
+@Fts5(
+    tokenizer = FtsOptions.TOKENIZER_UNICODE61,
+    notIndexed = ["ayah_id"]
 )
 @Entity(tableName = "arabic_search")
 data class ArabicSearchFtsEntity(

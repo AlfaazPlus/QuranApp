@@ -1,14 +1,16 @@
 package com.quranapp.android.db.searchindex
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Fts4
-import androidx.room.FtsOptions
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.Fts5
+import androidx.room3.FtsOptions
 
-@Fts4(
+@Fts5(
     contentEntity = TranslationSearchContentEntity::class,
+    contentRowId = "id",
     tokenizer = FtsOptions.TOKENIZER_UNICODE61,
-    tokenizerArgs = ["remove_diacritics=2"]
+    tokenizerArgs = ["remove_diacritics", "2"],
+    notIndexed = ["slug", "surahNo", "ayahNo"],
 )
 @Entity(tableName = "translation_search_fts")
 data class TranslationSearchFtsEntity(

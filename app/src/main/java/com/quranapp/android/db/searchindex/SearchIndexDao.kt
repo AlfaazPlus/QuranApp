@@ -1,13 +1,12 @@
 package com.quranapp.android.db.searchindex
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.RawQuery
-import androidx.room.Transaction
-import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.room3.Dao
+import androidx.room3.Insert
+import androidx.room3.OnConflictStrategy
+import androidx.room3.Query
+import androidx.room3.RawQuery
+import androidx.room3.RoomRawQuery
+import androidx.room3.Transaction
 import com.quranapp.android.db.relations.SearchResultSearchRow
 import com.quranapp.android.db.relations.SearchResultVerseRow
 
@@ -49,10 +48,10 @@ interface SearchIndexDao {
     }
 
     @RawQuery
-    suspend fun pageMatchedVersesRaw(query: SupportSQLiteQuery): List<SearchResultVerseRow>
+    suspend fun pageMatchedVersesRaw(query: RoomRawQuery): List<SearchResultVerseRow>
 
     @RawQuery
-    suspend fun rowsForPagedVersesRaw(query: SupportSQLiteQuery): List<SearchResultSearchRow>
+    suspend fun rowsForPagedVersesRaw(query: RoomRawQuery): List<SearchResultSearchRow>
 
     suspend fun pageMatchedVersesFiltered(
         ftsQuery: String,
@@ -87,7 +86,7 @@ interface SearchIndexDao {
 
         val sql = sb.toString()
 
-        return pageMatchedVersesRaw(SimpleSQLiteQuery(sql, args.toTypedArray()))
+        return pageMatchedVersesRaw(buildRawQuery(sql, args))
     }
 
     suspend fun rowsForPagedVersesFiltered(
@@ -123,6 +122,24 @@ interface SearchIndexDao {
 
         val sql = sb.toString()
 
-        return rowsForPagedVersesRaw(SimpleSQLiteQuery(sql, args.toTypedArray()))
+        return rowsForPagedVersesRaw(buildRawQuery(sql, args))
+    }
+}
+
+private fun buildRawQuery(sql: String, args: List<Any>): RoomRawQuery {
+    return RoomRawQuery(sql) { statement ->
+        args.forEachIndexed { index, arg ->
+            val bindIndex = index + 1
+            when (arg) {
+                is String -> statement.bindText(bindIndex, arg)
+                is Int -> statement.bindInt(bindIndex, arg)
+                is Long -> statement.bindLong(bindIndex, arg)
+                is Double -> statement.bindDouble(bindIndex, arg)
+                is Float -> statement.bindFloat(bindIndex, arg)
+                is Boolean -> statement.bindBoolean(bindIndex, arg)
+                is ByteArray -> statement.bindBlob(bindIndex, arg)
+                else -> statement.bindText(bindIndex, arg.toString())
+            }
+        }
     }
 }

@@ -1,10 +1,14 @@
 package com.quranapp.android.db.entities.quran
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Fts4
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.Fts5
 
-@Fts4(contentEntity = SurahSearchAliasEntity::class)
+@Fts5(
+    contentEntity = SurahSearchAliasEntity::class,
+    contentRowId = "id",
+    notIndexed = ["lang_code", "surah_no"],
+)
 @Entity(tableName = "surah_search_aliases_fts")
 data class SurahAliasFtsEntity(
     @ColumnInfo(name = "alias")

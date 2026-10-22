@@ -3,7 +3,7 @@ package com.quranapp.android.utils.reader.atlas
 import android.content.Context
 import android.util.JsonReader
 import android.util.JsonToken
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
 import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
@@ -186,7 +186,7 @@ object AtlasManager {
     ): AtlasBundleEntity = withContext(Dispatchers.IO) {
         val dao = db.atlasWordShapeDao()
 
-        db.withTransaction {
+        db.withWriteTransaction {
             dao.deleteShapesForBundle(bundleKey)
 
             zip.getInputStream(layoutEntry).use { input ->

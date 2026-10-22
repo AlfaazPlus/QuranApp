@@ -1,8 +1,8 @@
 package com.quranapp.android.db
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room3.ColumnTypeConverters
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
 import com.quranapp.android.db.converters.QuranConverters
 import com.quranapp.android.db.dao.AtlasWordShapeDao
 import com.quranapp.android.db.dao.WbwDao
@@ -21,7 +21,7 @@ import com.quranapp.android.db.entities.wbw.WbwWordEntity
     version = 4,
     exportSchema = true
 )
-@TypeConverters(QuranConverters::class)
+@ColumnTypeConverters(QuranConverters::class)
 abstract class ExternalQuranDatabase : RoomDatabase() {
     abstract fun wbwDao(): WbwDao
     abstract fun atlasWordShapeDao(): AtlasWordShapeDao

@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.JsonReader
 import androidx.core.net.toUri
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.wbw.WbwAudioTimingEntity
@@ -281,7 +281,7 @@ object WbwAudioRepository {
 
             rawStream.use { raw ->
                 JsonReader(InputStreamReader(raw, StandardCharsets.UTF_8)).use { reader ->
-                    db.withTransaction {
+                    db.withWriteTransaction {
                         dao.deleteTimingByAudioId(AUDIO_ID)
 
                         val buffer = ArrayList<WbwAudioTimingEntity>(INSERT_CHUNK)

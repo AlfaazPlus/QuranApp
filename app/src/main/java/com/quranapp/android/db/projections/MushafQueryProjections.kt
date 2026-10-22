@@ -1,6 +1,6 @@
 package com.quranapp.android.db.projections
 
-import androidx.room.ColumnInfo
+import androidx.room3.ColumnInfo
 
 data class AyahPageProjection(
     @ColumnInfo(name = "ayah_id") val ayahId: Int,

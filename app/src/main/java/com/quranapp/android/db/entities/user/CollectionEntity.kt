@@ -1,9 +1,9 @@
 package com.quranapp.android.db.entities.user
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room3.ColumnInfo
+import androidx.room3.Embedded
+import androidx.room3.Entity
+import androidx.room3.PrimaryKey
 import java.util.Date
 
 @Entity(tableName = "user_collections")
