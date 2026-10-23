@@ -81,7 +81,7 @@ interface CollectionDao {
         """
         SELECT * FROM user_collection_items
         WHERE collection_id = :collectionId
-        ORDER BY sort_index ASC, id ASC
+        ORDER BY added_at DESC, id DESC
         """
     )
     fun getItemsPaginated(collectionId: Long): PagingSource<Int, CollectionItemEntity>

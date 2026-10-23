@@ -134,7 +134,9 @@ private fun BookmarkViewerSheetContent(
     var prepared by remember(bookmark.id) { mutableStateOf<ReaderPreparedData?>(null) }
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
-    var selectedTab by remember(data) { mutableStateOf(BookmarkTab.Note) }
+    var selectedTab by remember(data) {
+        mutableStateOf(if (note.isNotEmpty()) BookmarkTab.Note else BookmarkTab.Verses)
+    }
 
     LaunchedEffect(chapterNo) {
         chapterName = withContext(Dispatchers.IO) {

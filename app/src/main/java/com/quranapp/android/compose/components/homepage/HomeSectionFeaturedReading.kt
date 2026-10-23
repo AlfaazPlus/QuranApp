@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -47,6 +48,7 @@ fun HomeSectionFeaturedReading(
     val featuredItems by vm.featured.collectAsStateWithLifecycle()
 
     if (featuredItems == null) return
+    val wallpaperPainter = painterResource(R.drawable.dr_quran_wallpaper)
 
     Column(
         modifier = Modifier
@@ -65,7 +67,7 @@ fun HomeSectionFeaturedReading(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             items(featuredItems!!, key = { it.chapterNo.toString() + it.subtext }) {
-                FeaturedQuranCard(it)
+                FeaturedQuranCard(it, wallpaperPainter)
             }
         }
     }
@@ -74,7 +76,8 @@ fun HomeSectionFeaturedReading(
 
 @Composable
 private fun FeaturedQuranCard(
-    model: FeaturedQuranModel
+    model: FeaturedQuranModel,
+    wallpaperPainter: Painter,
 ) {
     val context = LocalContext.current
 
@@ -89,7 +92,7 @@ private fun FeaturedQuranCard(
             },
     ) {
         Image(
-            painter = painterResource(R.drawable.dr_quran_wallpaper),
+            painter = wallpaperPainter,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

@@ -4,8 +4,6 @@ package com.quranapp.android.compose.utils.preferences
 
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.quranapp.android.compose.utils.preferences.DataStoreManager
-import com.quranapp.android.compose.utils.preferences.PrefKey
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

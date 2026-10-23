@@ -11,6 +11,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.quranapp.android.R
 import com.quranapp.android.compose.theme.colors.BaseColors
 import com.quranapp.android.compose.theme.colors.ThemeBlueColors
 import com.quranapp.android.compose.theme.colors.ThemeDefaultColors
@@ -19,9 +20,8 @@ import com.quranapp.android.compose.theme.colors.ThemePurpleColors
 import com.quranapp.android.compose.theme.colors.ThemeRedColors
 import com.quranapp.android.compose.theme.colors.ThemeVioletColors
 import com.quranapp.android.compose.theme.colors.ThemeYellowColors
-import com.quranapp.android.compose.utils.preferences.DataStoreManager
-import com.quranapp.android.R
 import com.quranapp.android.compose.utils.ThemeUtils.observeDarkTheme
+import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged

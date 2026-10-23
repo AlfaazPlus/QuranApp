@@ -94,6 +94,9 @@ object QuranAtlasLoader {
                     textureStore = QuranAtlasTextureStore(textureFiles),
                 )
 
+                // Keep parsed metadata for previous scripts, but release their native bitmap
+                // allocations before retaining another atlas bundle.
+                bundleCache.values.forEach { it.clearTextureCache() }
                 bundleCache[bundleKey] = bundle
                 bundle
             } catch (e: Exception) {

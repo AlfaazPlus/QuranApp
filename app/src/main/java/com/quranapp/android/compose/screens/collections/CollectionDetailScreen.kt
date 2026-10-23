@@ -98,6 +98,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private data class CollectionScrollAnchor(
+    val itemId: Long,
+    val offset: Int,
+)
+
 @Composable
 fun CollectionDetailScreen(
     vm: CollectionsViewModel,
@@ -127,6 +132,39 @@ private fun CollectionDetailContent(
 
 
     val listState = rememberLazyListState()
+    var refreshAnchor by remember(collectionId) {
+        mutableStateOf<CollectionScrollAnchor?>(null)
+    }
+
+    LaunchedEffect(items.loadState.refresh) {
+        when (items.loadState.refresh) {
+            is LoadState.Loading -> {
+                if (refreshAnchor == null && listState.firstVisibleItemIndex > 0) {
+                    items.peek(listState.firstVisibleItemIndex - 1)?.let { item ->
+                        refreshAnchor = CollectionScrollAnchor(
+                            itemId = item.id,
+                            offset = listState.firstVisibleItemScrollOffset,
+                        )
+                    }
+                }
+            }
+
+            is LoadState.NotLoading -> {
+                refreshAnchor?.let { anchor ->
+                    val itemIndex = items.itemSnapshotList.items.indexOfFirst {
+                        it.id == anchor.itemId
+                    }
+                    if (itemIndex >= 0) {
+                        listState.scrollToItem(itemIndex + 1, anchor.offset)
+                    }
+                }
+
+                refreshAnchor = null
+            }
+
+            is LoadState.Error -> refreshAnchor = null
+        }
+    }
 
     val context = LocalContext.current
     val density = LocalDensity.current
@@ -288,8 +326,8 @@ private fun CollectionDetailContent(
         ) {
             item(key = "hero-${detail.collection.id}") { Hero(detail) }
 
-            when {
-                items.loadState.refresh is LoadState.Loading -> item(key = "initial-loader") {
+            if (items.loadState.refresh is LoadState.Loading && items.itemCount == 0) {
+                item(key = "initial-loader") {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -299,22 +337,19 @@ private fun CollectionDetailContent(
                         CircularProgressIndicator()
                     }
                 }
-
-                items.itemCount == 0 -> item(key = "empty") { CollectionItemsEmptyState() }
-
-                else -> {
-                    items(
-                        count = items.itemCount,
-                        key = { index -> items[index]?.id ?: "placeholder-$index" },
-                    ) { index ->
-                        val item = items[index] ?: return@items
-
-                        CollectionVerseItem(
-                            vm = vm,
-                            item = item,
-                            prepared = preparedItems[item.id],
-                        )
-                    }
+            } else if (items.itemCount == 0) {
+                item(key = "empty") { CollectionItemsEmptyState() }
+            } else {
+                items(
+                    count = items.itemCount,
+                    key = { index -> items[index]?.id ?: "placeholder-$index" },
+                ) { index ->
+                    val item = items[index] ?: return@items
+                    CollectionVerseItem(
+                        vm = vm,
+                        item = item,
+                        prepared = preparedItems[item.id],
+                    )
                 }
             }
         }

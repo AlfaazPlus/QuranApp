@@ -13,10 +13,10 @@ object SearchFiltersStore {
             SearchMatchingStrategy.ANY_WORD.value,
         )
 
-    fun read(): SearchFilters {
-        val slugsCsv = DataStoreManager.read(KEY_SLUGS)
+    suspend fun readFirst(): SearchFilters {
+        val slugsCsv = DataStoreManager.readFirst(KEY_SLUGS)
         val matchingStrategy = SearchMatchingStrategy.fromValue(
-            DataStoreManager.read(KEY_MATCHING_STRATEGY),
+            DataStoreManager.readFirst(KEY_MATCHING_STRATEGY),
         )
 
         val slugs = slugsCsv

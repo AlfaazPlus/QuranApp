@@ -17,13 +17,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
@@ -65,7 +71,17 @@ private fun ColumnScope.Content(
     onClose: () -> Unit,
 ) {
     val viewModel = viewModel<CollectionsViewModel>()
-    var note by remember(itemToUpdate) { mutableStateOf(itemToUpdate.note ?: "") }
+    val focusRequester = remember { FocusRequester() }
+    val keyboard = LocalSoftwareKeyboardController.current
+    var note by remember(itemToUpdate) {
+        val text = itemToUpdate.note ?: ""
+        mutableStateOf(TextFieldValue(text, TextRange(text.length)))
+    }
+
+    LaunchedEffect(itemToUpdate.id) {
+        focusRequester.requestFocus()
+        keyboard?.show()
+    }
 
     Column(
         modifier = Modifier
@@ -84,6 +100,7 @@ private fun ColumnScope.Content(
             )
         )
         TextInput(
+            modifier = Modifier.focusRequester(focusRequester),
             value = note,
             onValueChange = { note = it },
             maxLines = 5,
@@ -116,7 +133,7 @@ private fun ColumnScope.Content(
             onClick = {
                 viewModel.updateItemNote(
                     itemId = itemToUpdate.id,
-                    note = note
+                    note = note.text
                 )
                 onClose()
             },

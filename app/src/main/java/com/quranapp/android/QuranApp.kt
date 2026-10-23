@@ -9,7 +9,6 @@ import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.DataStoreManager
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.refreshAppLocale
-import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.DownloadSourceUtils

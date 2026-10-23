@@ -9,16 +9,20 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.utils.preferences.DataStoreManager.flowMultiple
+import com.quranapp.android.compose.utils.preferences.DataStoreManager.read
+import com.quranapp.android.compose.utils.preferences.DataStoreManager.readFirst
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
 
 private const val DATASTORE_NAME = "app_preferences"
@@ -43,13 +47,22 @@ class PrefResult(private val map: Map<PrefKey<*>, Any?>) {
 
 object DataStoreManager {
     private lateinit var appContext: Context
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val cachedPreferences = MutableStateFlow<Preferences?>(null)
 
     fun init(context: Context) {
         appContext = context.applicationContext
+
+        if (cachedPreferences.value == null) {
+            scope.launch {
+                appContext.dataStore.data.collect { cachedPreferences.value = it }
+            }
+        }
     }
 
     private val dataFlow by lazy {
-        appContext.dataStore.data
+        cachedPreferences
+            .filterNotNull()
             .distinctUntilChanged()
             .shareIn(
                 scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
@@ -59,21 +72,19 @@ object DataStoreManager {
     }
 
     /**
-     * Blocking read — uses [runBlocking]. Do not call from the main thread; it can cause ANRs.
-     * Prefer [readFirst] from a coroutine instead.
+     * Returns the most recently loaded value without blocking the caller. Until DataStore has
+     * completed its first read, the supplied default is returned. Use [readFirst] when a
+     * background operation must wait for the persisted value.
      */
     fun <T> read(prefKey: PrefKey<T>): T {
         return read(prefKey.key, prefKey.default)
     }
 
     /**
-     * Blocking read — uses [runBlocking]. Do not call from the main thread; it can cause ANRs.
-     * Prefer [readFirst] from a coroutine instead.
+     * See [read]. This deliberately never performs disk I/O on the calling thread.
      */
     fun <T> read(key: Preferences.Key<T>, defaultValue: T): T {
-        return runBlocking {
-            readFirst(key, defaultValue)
-        }
+        return cachedPreferences.value?.get(key) ?: defaultValue
     }
 
     suspend fun <T> readFirst(prefKey: PrefKey<T>): T {

@@ -8,6 +8,7 @@ import java.text.Normalizer
 
 /** Converts user input into safe FTS5 MATCH expressions and matching highlight terms. */
 object FtsQueryBuilder {
+    const val MAX_QUERY_LENGTH = 256
     private val tokenRegex = Regex(
         """("[^"]+"|\bNEAR(?:[/:]\d+)?\b|[\p{L}\p{N}\p{M}_]+)""",
         RegexOption.IGNORE_CASE,
@@ -83,8 +84,11 @@ object FtsQueryBuilder {
             ?.joinToString(operator)
     }
 
-    internal fun foldedHighlightTerms(query: String, strategy: SearchMatchingStrategy): List<String> {
-        return highlightTerms(query, strategy)
+    internal fun foldedHighlightTerms(
+        query: String,
+        strategy: SearchMatchingStrategy
+    ): List<String> {
+        return highlightTerms(query.take(MAX_QUERY_LENGTH), strategy)
             .map { it.foldForSearchHighlight() }
             .filter { it.isNotBlank() }
             .distinct()
@@ -98,25 +102,30 @@ object FtsQueryBuilder {
             return listOf(query.normalizeSearchPhrase()).filter { it.isNotBlank() }
         }
 
-        val quotedPhrases = quotedPhraseRegex
-            .findAll(query)
-            .mapNotNull { match ->
-                match.groupValues.getOrNull(1)
-                    ?.normalizeSearchPhrase()
-                    ?.takeIf { it.isNotBlank() }
+        val terms = mutableListOf<String>()
+        var hasPreviousTerm = false
+        val tokens = parse(query)
+
+        tokens.forEachIndexed { index, token ->
+            when (token) {
+                is QueryToken.Term -> {
+                    terms += token.highlightText
+                    hasPreviousTerm = true
+                }
+
+                is QueryToken.Near -> {
+                    val isOperator =
+                        hasPreviousTerm && tokens.getOrNull(index + 1) is QueryToken.Term
+                    if (!isOperator) {
+                        // FTS treats NEAR as a regular prefix term unless it appears between terms.
+                        terms += "near"
+                        hasPreviousTerm = true
+                    }
+                }
             }
-            .toList()
+        }
 
-        val unquoted = query.replace(quotedPhraseRegex, " ")
-        val cleanedUnquoted = unquoted.replace(nearOperatorRegex, " ")
-        val terms = searchableWordRegex
-            .findAll(cleanedUnquoted)
-            .map { it.value }
-            .filter { it.isNotBlank() }
-            .distinct()
-            .toList()
-
-        return (quotedPhrases + terms).distinct()
+        return terms.distinct()
     }
 
     private fun parse(rawQuery: String): List<QueryToken> = tokenRegex
@@ -129,15 +138,18 @@ object FtsQueryBuilder {
                         .substring(1, text.length - 1)
                         .normalizeSearchPhrase()
                     if (normalized.isNotBlank()) {
-                        QueryToken.Term("\"${normalized.replace("\"", "\"\"")}\"")
+                        QueryToken.Term(
+                            text = "\"${normalized.replace("\"", "\"\"")}\"",
+                            highlightText = normalized,
+                        )
                     } else {
                         null
                     }
                 }
 
                 text.equals("NEAR", ignoreCase = true) ||
-                    text.startsWith("NEAR/", ignoreCase = true) ||
-                    text.startsWith("NEAR:", ignoreCase = true) -> {
+                        text.startsWith("NEAR/", ignoreCase = true) ||
+                        text.startsWith("NEAR:", ignoreCase = true) -> {
                     QueryToken.Near(
                         text.substring(4)
                             .removePrefix("/")
@@ -149,7 +161,7 @@ object FtsQueryBuilder {
                 else -> {
                     val normalized = text.foldArabicLetters().lowercase()
                     if (normalized.isNotBlank()) {
-                        QueryToken.Term("$normalized*")
+                        QueryToken.Term(text = "$normalized*", highlightText = normalized)
                     } else {
                         null
                     }
@@ -172,12 +184,14 @@ object FtsQueryBuilder {
     }
 
     private sealed interface QueryToken {
-        data class Term(val text: String) : QueryToken
+        data class Term(
+            val text: String,
+            val highlightText: String,
+        ) : QueryToken
+
         data class Near(val distance: Int?) : QueryToken
     }
 
-    private val quotedPhraseRegex = Regex("\"([^\"]+)\"")
-    private val nearOperatorRegex = Regex("(?i)\\bNEAR(?:[/:]\\d+)?\\b")
 }
 
 internal fun String.toSearchSnippet(
@@ -334,7 +348,8 @@ private fun Char.isCombiningMark(): Boolean {
         Character.NON_SPACING_MARK.toInt(),
         Character.COMBINING_SPACING_MARK.toInt(),
         Character.ENCLOSING_MARK.toInt(),
-        -> true
+            -> true
+
         else -> false
     }
 }

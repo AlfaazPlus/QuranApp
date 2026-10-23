@@ -9,9 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-private const val ATLAS_TEXTURE_CACHE_FRACTION = 8
-private const val ATLAS_TEXTURE_CACHE_MIN_BYTES = 8 * 1024 * 1024
-private const val ATLAS_TEXTURE_CACHE_MAX_BYTES = 32 * 1024 * 1024
+private const val ATLAS_TEXTURE_CACHE_FRACTION = 16
+private const val ATLAS_TEXTURE_CACHE_MIN_BYTES = 4 * 1024 * 1024
+private const val ATLAS_TEXTURE_CACHE_MAX_BYTES = 16 * 1024 * 1024
+private const val MAX_TEXTURE_BYTES = 16 * 1024 * 1024
 
 data class QuranAtlasTexture(
     val bitmap: Bitmap,
@@ -37,12 +38,33 @@ class QuranAtlasTextureStore(
         cache.get(index)?.let { return it }
 
         val file = filesByIndex[index]?.takeIf { it.isFile && it.length() > 0L } ?: return null
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+
+        BitmapFactory.decodeFile(file.path, bounds)
+
+        val estimatedBytes = bounds.outWidth.toLong() * bounds.outHeight.toLong()
+
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0 || estimatedBytes > MAX_TEXTURE_BYTES) {
+            return null
+        }
+
         val decodeOptions = BitmapFactory.Options().apply {
             inScaled = false
             inPreferredConfig = Bitmap.Config.ALPHA_8
         }
-        val bitmap = BitmapFactory.decodeFile(file.path, decodeOptions) ?: return null
-        val texture = QuranAtlasTexture(bitmap, bitmap.asImageBitmap())
+
+        val bitmap = try {
+            BitmapFactory.decodeFile(file.path, decodeOptions)
+        } catch (_: OutOfMemoryError) {
+            null
+        } ?: return null
+
+        val texture = try {
+            QuranAtlasTexture(bitmap, bitmap.asImageBitmap())
+        } catch (_: OutOfMemoryError) {
+            bitmap.recycle()
+            return null
+        }
 
         cache.put(index, texture)
 

@@ -13,6 +13,7 @@ import com.quranapp.android.db.search.SearchHistoryEntry
 import com.quranapp.android.db.search.SearchHistoryStore
 import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.search.ExclusiveVersesSearchProvider
+import com.quranapp.android.search.FtsQueryBuilder
 import com.quranapp.android.search.QuickLinkItem
 import com.quranapp.android.search.SearchFilters
 import com.quranapp.android.search.SearchFiltersStore
@@ -47,6 +48,7 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
     companion object {
         const val SEARCH_PAGE_SIZE = 10
     }
+
     private val repository get() = DatabaseProvider.getQuranRepository(application)
     private val searchHistoryStore = SearchHistoryStore(application)
 
@@ -59,7 +61,7 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
     private val _searchHistory = MutableStateFlow<List<SearchHistoryEntry>>(emptyList())
     val searchHistory: StateFlow<List<SearchHistoryEntry>> = _searchHistory
 
-    private val _currentFilters = MutableStateFlow(SearchFiltersStore.read())
+    private val _currentFilters = MutableStateFlow(SearchFilters())
     val currentFilters: StateFlow<SearchFilters> = _currentFilters
 
     private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
@@ -80,6 +82,10 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
 
     init {
         loadAvailableTranslations()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _currentFilters.value = SearchFiltersStore.readFirst()
+        }
 
         viewModelScope.launch {
             var wasIndexing = false
@@ -163,6 +169,8 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
         .cachedIn(viewModelScope)
 
     fun onQueryChange(value: String, isQuranText: Boolean = false) {
+        if (value.length > FtsQueryBuilder.MAX_QUERY_LENGTH) return
+
         _searchQuery.value = value
 
         if (isQuranText) {

@@ -1,11 +1,9 @@
 package com.quranapp.android.utils.app
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.compose.utils.preferences.AppPreferences
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 
 enum class ResourceDownloadProxy(val value: String) {
     ALFAAZ_PLUS("alfaazplus"),
@@ -56,7 +54,6 @@ object DownloadSourceUtils {
         resetDownloadSourceBaseUrl()
     }
 
-    @JvmStatic
     fun resetDownloadSourceBaseUrl() {
         RetrofitInstance.githubProxyBaseUrl = getDownloadSourceBaseUrl()
         RetrofitInstance.githubLikeProxyBaseUrl = getDownloadSourceRoot()
