@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import androidx.work.await
 import com.quranapp.android.R
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
@@ -34,6 +33,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -712,8 +712,8 @@ class RecitationDownloadViewModel(application: Application) : AndroidViewModel(a
     }
 
     private suspend fun getMergedWorkInfos(): List<WorkInfo> {
-        val audio = workManager.getWorkInfosByTag(RecitationAudioDownloadWorker.TAG).await()
-        val bulk = workManager.getWorkInfosByTag(RecitationBulkDownloadWorker.TAG).await()
+        val audio = workManager.getWorkInfosByTagFlow(RecitationAudioDownloadWorker.TAG).first()
+        val bulk = workManager.getWorkInfosByTagFlow(RecitationBulkDownloadWorker.TAG).first()
 
         return mergeWorkInfos(audio, bulk)
     }

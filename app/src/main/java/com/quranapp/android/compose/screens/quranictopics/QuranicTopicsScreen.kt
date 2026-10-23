@@ -18,6 +18,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navOptions
+import com.quranapp.android.compose.screens.main.predictivePopEnterTransition
+import com.quranapp.android.compose.screens.main.predictivePopExitTransition
 import com.quranapp.android.compose.screens.settings.route
 import com.quranapp.android.viewModels.TopicDetailUiState
 import com.quranapp.android.viewModels.TopicsTree
@@ -68,6 +70,8 @@ fun QuranicTopicsScreen(
         ) {
             NavHost(
                 navController = navController,
+                predictivePopEnterTransition = predictivePopEnterTransition,
+                predictivePopExitTransition = predictivePopExitTransition,
                 startDestination = initialTopicId?.let { topicId ->
                     QuranicTopicRoutes.topic(
                         tree = when (start) {

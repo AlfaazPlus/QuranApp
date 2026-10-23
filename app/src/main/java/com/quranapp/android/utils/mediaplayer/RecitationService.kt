@@ -1095,17 +1095,18 @@ class RecitationService : MediaLibraryService() {
             session: MediaSession,
             controller: MediaSession.ControllerInfo,
         ): MediaSession.ConnectionResult {
-            val connectionResult = super.onConnect(session, controller)
+            val connectionResult = MediaSession.ConnectionResult.AcceptedResultBuilder(
+                session, controller
+            ).build()
+
             val sessionCommands = connectionResult.availableSessionCommands.buildUpon()
                 .apply {
                     ALL_PLAYER_ACTIONS.forEach { add(SessionCommand(it, Bundle.EMPTY)) }
                 }.build()
 
-            val resultBuilder = MediaSession.ConnectionResult.AcceptedResultBuilder(session)
+            return MediaSession.ConnectionResult.AcceptedResultBuilder(session, controller)
                 .setAvailableSessionCommands(sessionCommands)
-                .setAvailablePlayerCommands(connectionResult.availablePlayerCommands)
-
-            return resultBuilder.build()
+                .build()
         }
 
         override fun onCustomCommand(

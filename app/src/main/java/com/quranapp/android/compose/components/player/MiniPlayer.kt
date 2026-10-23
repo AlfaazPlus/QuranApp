@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceIn
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
@@ -60,6 +61,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -311,7 +313,7 @@ fun rememberTimestamp(
         while (isPlaying && isActive) {
             positionMs = controller.currentPositionMs
             durationMs = controller.durationMs
-            delay(250)
+            delay(250.milliseconds)
         }
 
         if (!isPlaying) {
@@ -320,5 +322,5 @@ fun rememberTimestamp(
         }
     }
 
-    return positionMs to durationMs
+    return positionMs.fastCoerceIn(0, durationMs) to durationMs
 }

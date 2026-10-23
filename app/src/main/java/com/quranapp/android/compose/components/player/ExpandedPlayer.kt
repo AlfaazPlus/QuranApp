@@ -68,6 +68,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceIn
 import androidx.core.view.WindowCompat
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
@@ -717,10 +718,10 @@ private fun ProgressSeekBar(
     val progress = if (durationMs > 0) positionMs.toFloat() / durationMs.toFloat() else 0f
     val sliderValue = (if (isDragging) dragProgress else progress).coerceIn(0f, 1f)
 
-    val displayedPositionMs = if (isDragging) {
-        (dragProgress * durationMs).toLong().coerceIn(0L, durationMs)
+    val displayedPositionMs = if (isDragging && durationMs > 0L) {
+        (dragProgress * durationMs).toLong().fastCoerceIn(0L, durationMs)
     } else {
-        positionMs
+        positionMs.fastCoerceIn(0, durationMs)
     }
 
     Column(

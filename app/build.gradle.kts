@@ -153,9 +153,7 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.legacySupport)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.webkit)
-    implementation(libs.androidx.media)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.activityKtx)
     implementation(libs.androidx.activityCompose)
@@ -169,7 +167,6 @@ dependencies {
 
     coreLibraryDesugaring(libs.desugaring)
     implementation(libs.material)
-    implementation(libs.apache.commons)
     implementation(libs.guava)
     implementation(libs.viewbinding)
 
@@ -178,7 +175,8 @@ dependencies {
     implementation(libs.kotlinxSerialization)
     implementation(libs.kotlinxRetrofit)
 
-    implementation(libs.commonsCompress)
+    implementation(libs.commons.lang)
+    implementation(libs.commons.compress)
     implementation(libs.workManager)
     implementation(libs.dataStore)
 

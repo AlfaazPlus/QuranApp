@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import androidx.work.await
 import com.quranapp.android.R
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
@@ -25,6 +24,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -329,8 +329,8 @@ class WbwAudioDownloadViewModel(application: Application) : AndroidViewModel(app
     }
 
     private suspend fun getMergedWorkInfos(): List<WorkInfo> {
-        val audio = workManager.getWorkInfosByTag(WbwAudioDownloadWorker.TAG).await()
-        val bulk = workManager.getWorkInfosByTag(WbwAudioBulkDownloadWorker.TAG).await()
+        val audio = workManager.getWorkInfosByTagFlow(WbwAudioDownloadWorker.TAG).first()
+        val bulk = workManager.getWorkInfosByTagFlow(WbwAudioBulkDownloadWorker.TAG).first()
 
         return mergeWorkInfos(audio, bulk)
     }

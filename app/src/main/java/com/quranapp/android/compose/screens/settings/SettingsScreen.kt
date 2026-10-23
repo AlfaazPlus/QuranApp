@@ -28,6 +28,8 @@ import com.quranapp.android.compose.screens.main.enterTransition
 import com.quranapp.android.compose.screens.main.exitTransition
 import com.quranapp.android.compose.screens.main.popEnterTransition
 import com.quranapp.android.compose.screens.main.popExitTransition
+import com.quranapp.android.compose.screens.main.predictivePopEnterTransition
+import com.quranapp.android.compose.screens.main.predictivePopExitTransition
 import com.quranapp.android.utils.univ.Keys
 
 
@@ -80,6 +82,8 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
                 startDestination = startDestination,
+                predictivePopEnterTransition = predictivePopEnterTransition,
+                predictivePopExitTransition = predictivePopExitTransition,
             ) {
                 route(
                     SettingRoutes.MAIN(), arguments = listOf(

@@ -1,5 +1,8 @@
 package com.quranapp.android.compose.screens.main
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,6 +38,14 @@ val popExitTransition = slideOutHorizontally(
     animationSpec = tween(durationMillis = 100),
 )
 
+val predictivePopEnterTransition:
+    AnimatedContentTransitionScope<NavBackStackEntry>.(Int) -> EnterTransition =
+    { _ -> popEnterTransition }
+
+val predictivePopExitTransition:
+    AnimatedContentTransitionScope<NavBackStackEntry>.(Int) -> ExitTransition =
+    { _ -> popExitTransition }
+
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -48,6 +60,8 @@ fun MainScreen() {
                 exitTransition = { exitTransition },
                 popEnterTransition = { popEnterTransition },
                 popExitTransition = { popExitTransition },
+                predictivePopEnterTransition = predictivePopEnterTransition,
+                predictivePopExitTransition = predictivePopExitTransition,
             ) {
                 composable(MainRoutes.HOME) { HomeScreen() }
                 composable(MainRoutes.LIBRARY) { LibraryScreen() }

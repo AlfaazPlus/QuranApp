@@ -55,6 +55,8 @@ import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.common.SearchTextField
 import com.quranapp.android.compose.components.library.CollectionsEmptyState
+import com.quranapp.android.compose.screens.main.predictivePopEnterTransition
+import com.quranapp.android.compose.screens.main.predictivePopExitTransition
 import com.quranapp.android.compose.screens.settings.route
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.entities.user.CollectionWithCount
@@ -79,6 +81,8 @@ fun CollectionsScreen(
         navController = navController,
         startDestination = initialCollectionId?.let { CollectionRoutes.DETAIL.arg(it) }
             ?: CollectionRoutes.HOME,
+        predictivePopEnterTransition = predictivePopEnterTransition,
+        predictivePopExitTransition = predictivePopExitTransition,
     ) {
         route(CollectionRoutes.HOME) {
             CollectionsHome(

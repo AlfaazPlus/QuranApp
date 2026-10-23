@@ -56,13 +56,15 @@ class RecitationController private constructor(private val appContext: Context) 
     val currentPositionMs: Long
         get() {
             val c = mediaController ?: return 0L
-            return c.currentPosition
+            return c.currentPosition.coerceAtLeast(0L)
         }
 
     val durationMs: Long
         get() {
             val c = mediaController ?: return 0L
-            return c.duration
+            // Media3 reports C.TIME_UNSET (Long.MIN_VALUE + 1) until duration is known.
+            val duration = c.duration
+            return if (duration > 0L) duration else 0L
         }
 
     // ==================== Connection ====================
