@@ -6,7 +6,6 @@
 
 The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place.
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/AlfaazPlus/QuranApp)
 [![CI](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml/badge.svg)](https://github.com/AlfaazPlus/QuranApp/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/release/AlfaazPlus/QuranApp?include_prereleases&sort=semver&color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/releases/latest)
 [![Downloads (QuranApp)](https://img.shields.io/github/downloads/AlfaazPlus/QuranApp/total?logo=github&color=025e3e&style=flat-square)](https://github.com/AlfaazPlus/QuranApp/releases/latest)
@@ -100,12 +99,13 @@ See an overview of all the features [here](/FEATURES.md).
 - [tarteel.ai](https://tarteel.ai)
 - [quranicaudio.com](https://quranicaudio.com)
 - [everyayah.com](https://everyayah.com/)
+- [qud.dev](https://qud.dev/)
 
 See [this page](/CONTRIBUTORS.md) to know about the contributors.
 
 ## Contributing
 
-If you want to contribute, kindly visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started. For a more comprehensive guide to the codebase, please refer to the [DeepWiki documentation](https://deepwiki.com/AlfaazPlus/QuranApp).
+If you want to contribute, please visit [CONTRIBUTING.md](/CONTRIBUTING.md) to learn the ways to get started.
 
 
 ## License

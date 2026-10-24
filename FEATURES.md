@@ -1,79 +1,92 @@
 <img src="/repo_assets/banner2.jpg" alt='QuranApp banner' />
 
-## Features of the QuranApp
-The following features are the reason why you should use the QuranApp.
+## Features of QuranApp
+A private, offline-ready app for reading, listening to, and studying the Quran.
 
-### 🛡️ Pure
-- No ads or purchases
-- No phone permission is required
-  <br>_(Permissions that affect your privacy such as storage, gps, camera etc. are not required.)_
-- No analytics or tracking
-- No data collection or sharing
+### 🛡️ Privacy
+- Free of advertisements and in-app purchases
+- No phone permission required
+  <br>_(Privacy-sensitive permissions such as storage, location, and camera are not requested.)_
+- Free of analytics and tracking
+- Personal data is neither collected nor shared
 
 ### 📙 Translations
-- 45+ translations in 20+ languages
+- 51 translations in 25 languages
 - Read multiple translations together
-- Quick preview of footnotes
-- Quick preview of verse references
-- Fully offline once downloaded
+- Preview footnotes without leaving the verse
+- Preview referenced verses in place
+- Available offline after download
 
 ### 🎙️ Recitations
-- 18+ recitations
-- 10+ translation audios
-  - Play only Quran
-  - Play only translation
-  - Play both Quran and translation
+- 21 recitations
+- 11 translation audio tracks
+  - Quran only
+  - Translation only
+  - Quran and translation together
 - Custom repeat
-- Automatic scroll to match current verse
-- Playback speed control
+- Auto-scroll that follows the current verse
+- Adjustable playback speed
 - Spotlight mode
-- Background player
-- Fully offline once downloaded
+- Background playback
+- Available offline after download
 
 ### 📖️ Tafsir
-- 10+ tafsirs in 5+ langauges
-- Fully offline once downloaded
+- 10 tafsirs in 6 languages
+- Available offline after download
+
+### 🔤 Word by Word
+- Available in 14 languages
+- Word meanings and transliteration
+- Word audio
 
 ### 🎨 Fonts
-- Multiple fonts
+- Multiple Arabic scripts
   - Uthmani Hafs
   - Indopak
-  - KFQPC (v1 and v2)
-- Customize Arabic text size
-- Customise translation text size
+  - KFQPC (v1, v2, and v4)
+- Adjustable Arabic text size
+- Adjustable translation text size
 
 ### ⚙ Layout
-- Verse-by-verse mode
-- Mushaf mode with variable lines
-- Read Qur'an in different views (chapter, juz, hizb)
+- Verse-by-verse reading
+- Mushaf layout with adjustable lines per page
+- Read by chapter, juz, or hizb
 
 ### ➡️ Navigation
-- Quickly jump to any verse, chapter, juz, hizb or page
+- Jump directly to any verse, chapter, juz, hizb, or page
 
-### ❤️ Contents from the Quran
+### ❤️ From the Quran
 - Duas from the Quran
-- Solutions from the Quran
+- Verses on solutions
 - Prophets mentioned in the Quran
-- Etiquette from the Quran
-- Major sins in Quran
-- Quran and Science
+- Etiquette in the Quran
+- Major sins mentioned in the Quran
+- Quran and science
+
+### 🧭 Topics
+- Ontology explorer
+- Topics by theme
 
 ### 🔍 Search
-- Advanced search
+- Advanced search across translations
+- Search the Arabic text of the Quran
 - Voice search
 - Search history
-- Easily navigate to any translation in search results
-- Search for full word or word part
+- Open any translation directly from the results
+- Different matching strategies
 
-### 📝 Bookmarking
-- Bookmark verses for later
-- Bookmark single verse
-- Bookmark a verse range
-- Add custom notes to bookmarks
-- Export/Import bookmarks
+### 📝 Bookmarks
+- Save verses for later reading
+- Bookmark a single verse or a range of verses
+- Add notes to bookmarks
+- Export and import bookmarks
 
-### 🔥 Other Features
-- Verse of the Day Reminder
-- Advanced sharing
-- Dark and light themes. 5+ material colors with dynamic support.
-- App is available in 22 languages
+### 📂 Collections
+- Create personal verse collections
+- Add notes to collected verses
+
+### 🔥 Additional features
+- Daily verse reminder
+- Flexible sharing options
+- Light and dark themes, with 7 Material colors and dynamic color
+- Available in 23 languages
