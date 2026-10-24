@@ -352,7 +352,7 @@
     <string name="labelImportExportEverything">Import/Export Everything</string>
     <string name="labelImportExportBookmarks">Import/Export Bookmarks</string>
     <string name="labelImportExportSettings">Import/Export Settings</string>
-    <string name="warnImportSettings">WARNING: Importing settings will override your current settings.</string>
+    <string name="warnImportSettings">WARNING: Importing settings will replace your current settings.</string>
     <string name="msgExportImportBookmarks">Export or import your bookmarks along with notes.</string>
     <string name="msgExportSuccess">Exported successfully</string>
     <string name="desc_votd_widget">Get a new verse every day</string>
