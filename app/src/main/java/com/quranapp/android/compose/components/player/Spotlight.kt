@@ -356,12 +356,12 @@ private fun SpotlightQuranText(
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(horizontal = 8.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(
-                3.dp,
+                4.dp,
                 Alignment.CenterHorizontally
             ),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             words.forEach { word ->
                 val isActiveWord = word.wordIndex == activeWordIndex
@@ -376,7 +376,7 @@ private fun SpotlightQuranText(
                                 Modifier
                             }
                         )
-                        .padding(3.dp),
+                        .padding(horizontal = 2.dp, vertical = 1.5.dp),
                     word = word,
                     atlasPlacements = atlasPlacements.getForWord(word),
                     style = style,

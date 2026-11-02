@@ -333,6 +333,7 @@
     <string name="strTitleMajorSins">Grands péchés dans le Coran</string>
     <string name="modeVerseByVerse">Mode verset par verset</string>
     <string name="modeMushaf">Mode Mushaf</string>
+    <string name="readingLayoutFlow">Défilement</string>
     <string name="titleGlobalSearch">Recherche globale</string>
     <string name="searchIndexingInProgress">Préparation de la recherche. Certains résultats peuvent manquer tant que l’indexation n’est pas terminée.</string>
     <string name="search_match">Type de correspondance</string>

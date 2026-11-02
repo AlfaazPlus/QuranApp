@@ -341,6 +341,7 @@
     <string name="labelRecommended">Рекомендуется</string>
     <string name="modeVerseByVerse">Поаятный режим</string>
     <string name="modeMushaf">Режим Мусхафа</string>
+    <string name="readingLayoutFlow">Прокрутка</string>
     <string name="noNoteProvided">Заметка отсутствует…</string>
     <string name="dailyReminderMsg">Получать ежедневное уведомление-напоминание.</string>
     <string name="titleGlobalSearch">Глобальный поиск</string>

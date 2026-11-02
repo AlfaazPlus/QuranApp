@@ -316,6 +316,7 @@
     <string name="strTitleMajorSins">گناهان کبیره در قرآن</string>
     <string name="modeVerseByVerse">حالت آیه به آیه</string>
     <string name="modeMushaf">حالت مصحف</string>
+    <string name="readingLayoutFlow">پیمایش</string>
     <string name="titleGlobalSearch">جستجوی سراسری</string>
     <string name="searchIndexingInProgress">در حال آماده‌سازی جستجو هستیم. تا پایان نمایه‌سازی ممکن است همهٔ نتایج نمایش داده نشوند.</string>
     <string name="search_match">نوع تطبیق</string>

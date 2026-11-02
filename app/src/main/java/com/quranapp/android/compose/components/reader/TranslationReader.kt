@@ -369,7 +369,12 @@ private fun TranslationModePage(
                     .fillMaxWidth()
             ) {
                 Column(Modifier.fillMaxWidth()) {
-                    TranslationBookPageHeader(item)
+                    TranslationBookPageHeader(
+                        pageNo = item.pageNo,
+                        chapterNames = item.chapterNames,
+                        juzNo = item.juzNo,
+                        hizbNos = item.hizbNos,
+                    )
 
                     HorizontalDivider(
                         color = colorScheme.outlineVariant,
@@ -404,14 +409,19 @@ private fun TranslationModePage(
 }
 
 @Composable
-private fun TranslationBookPageHeader(item: TranslationPageItem) {
+internal fun TranslationBookPageHeader(
+    pageNo: Int,
+    chapterNames: String,
+    juzNo: Int,
+    hizbNos: List<Int>,
+) {
     val appLocale = LocalAppLocale.current
     val typography = MaterialTheme.typography
     val scheme = colorScheme
     val juzLabel =
-        if (item.juzNo > 0) formattedStringResource(R.string.strLabelJuzNo, item.juzNo) else ""
+        if (juzNo > 0) formattedStringResource(R.string.strLabelJuzNo, juzNo) else ""
     val hizbLabel =
-        item.hizbNos
+        hizbNos
             .filter { it > 0 }
             .distinct()
             .sorted()
@@ -437,7 +447,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
             contentAlignment = Alignment.CenterStart,
         ) {
             Text(
-                text = item.chapterNames,
+                text = chapterNames,
                 style = typography.labelSmall.merge(tightTextStyle),
                 color = scheme.onSurface.alpha(0.75f),
                 maxLines = 2,
@@ -452,7 +462,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
         }
 
         Text(
-            text = formattedStringResource(R.string.strLabelPageNo, item.pageNo),
+            text = formattedStringResource(R.string.strLabelPageNo, pageNo),
             style = typography.labelMedium.merge(tightTextStyle),
             color = scheme.onBackground.alpha(0.75f),
             modifier = Modifier
@@ -480,7 +490,7 @@ private fun TranslationBookPageHeader(item: TranslationPageItem) {
 
 
 @Composable
-private fun TranslationPageLoadingSkeleton() {
+internal fun TranslationPageLoadingSkeleton() {
     val scheme = colorScheme
     val transition = rememberInfiniteTransition(label = "translation_page_sk")
     val pulse by transition.animateFloat(

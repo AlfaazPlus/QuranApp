@@ -337,6 +337,7 @@
     <string name="labelRecommended">موصى به</string>
     <string name="modeVerseByVerse">وضع آية بآية</string>
     <string name="modeMushaf">وضع المصحف</string>
+    <string name="readingLayoutFlow">تمرير</string>
     <string name="titleGlobalSearch">البحث العام</string>
     <string name="searchIndexingInProgress">جارٍ تجهيز البحث. قد لا تظهر جميع النتائج حتى يكتمل الفهرس.</string>
     <string name="search_match">مطابقة</string>

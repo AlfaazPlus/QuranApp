@@ -310,6 +310,7 @@
     <string name="msgRecitationGroupSize">ترجمہ شروع ہونے سے پہلے منتخب کریں کہ قرآن کی کتنی آیات چلیں۔ مثال: اگر آپ 3 کو منتخب کرتے ہیں، تو یہ 3 قرآنی آیات چلاتا ہے اور اس کے بعد ان کا ترجمہ ہوتا ہے۔</string>
     <string name="modeVerseByVerse">آیت بہ آیت موڈ</string>
     <string name="modeMushaf">صفحہ موڈ</string>
+    <string name="readingLayoutFlow">سکرول</string>
     <string name="strHintSearchBy">پارہ یا سورہ تلاش کریں</string>
     <string name="strHintSearchHizb">حزب یا سورہ تلاش کریں</string>
     <string name="strHintSearchPage">صفحہ تلاش کریں</string>

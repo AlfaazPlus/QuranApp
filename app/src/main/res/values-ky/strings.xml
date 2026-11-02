@@ -233,6 +233,7 @@
     <string name="msgResourceDownloadSource">Эгер биринчи булак иштебей жатса, башка булакты тандап көрүңүз</string>
     <string name="msgChapterRemovedFromFavourites">Сүрө сүйүктүүлөрдөн өчүрүлдү</string>
     <string name="modeMushaf">Мусхаф режими</string>
+    <string name="readingLayoutFlow">Сыдыруу</string>
     <string name="strLabelOrder">Тартип</string>
     <string name="strLabelSelectedCount" formatted="false">%d тандалды</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d котормо</string>

@@ -310,6 +310,7 @@
     <string name="msgRecitationGroupSize">चुनें कि अनुवाद शुरू होने से पहले कुरान की कितनी आयतें चलेंगी। उदाहरण: यदि आप 3 चुनते हैं, तो कुरान की 3 आयतें बजेंगी, और उसके बाद उनका अनुवाद होगा।</string>
     <string name="modeVerseByVerse">आयत-दर-आयत मोड</string>
     <string name="modeMushaf">पृष्ठ मोड</string>
+    <string name="readingLayoutFlow">स्क्रॉल</string>
     <string name="strHintSearchBy">पारा या सूरह खोजें</string>
     <string name="strHintSearchHizb">हिज़्ब या सूरह खोजें</string>
     <string name="strHintSearchPage">पृष्ठ खोजें</string>

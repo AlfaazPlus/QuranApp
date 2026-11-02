@@ -309,6 +309,7 @@
     <string name="strTitleMajorSins">குர்ஆனில் பெரும் பாவங்கள்</string>
     <string name="modeVerseByVerse">வசனம் வாரியாக</string>
     <string name="modeMushaf">முஸஹஃப் முறை</string>
+    <string name="readingLayoutFlow">உருட்டு</string>
     <string name="titleGlobalSearch">பொதுத் தேடல்</string>
     <string name="searchIndexingInProgress">தேடல் தயாராகிறது. அட்டவணைப்படுத்தல் முடியும் வரை சில முடிவுகள் காட்டப்படாமல் இருக்கலாம்.</string>
     <string name="search_match">பொருத்த வகை</string>

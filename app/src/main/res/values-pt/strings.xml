@@ -333,6 +333,7 @@
     <string name="strTitleMajorSins">Maiores Pecados no Alcorão</string>
     <string name="modeVerseByVerse">Modo versículo por versículo</string>
     <string name="modeMushaf">Modo Mushaf</string>
+    <string name="readingLayoutFlow">Rolagem</string>
     <string name="titleGlobalSearch">Pesquisa Global</string>
     <string name="searchIndexingInProgress">A preparar a pesquisa. Alguns resultados poderão não aparecer até a indexação estar concluída.</string>
     <string name="search_match">Tipo de correspondência</string>

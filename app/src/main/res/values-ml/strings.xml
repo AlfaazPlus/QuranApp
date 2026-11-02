@@ -288,6 +288,7 @@
     <string name="titleOtherSettings">മറ്റ് ക്രമീകരണങ്ങൾ</string>
     <string name="modeVerseByVerse">വചനം തിരിച്ച്</string>
     <string name="modeMushaf">മുസ്ഹഫ് രീതി</string>
+    <string name="readingLayoutFlow">സ്ക്രോൾ</string>
     <string name="titleGlobalSearch">സെർച്ച്</string>
     <string name="searchIndexingInProgress">തിരയൽ തയ്യാറാക്കുന്നു. ഇൻഡെക്സിംഗ് പൂർത്തിയാകുന്നതുവരെ ചില ഫലങ്ങൾ കാണാനായേക്കില്ല.</string>
     <string name="search_match">പൊരുത്തത്തിന്റെ തരം</string>

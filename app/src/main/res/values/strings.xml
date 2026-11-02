@@ -186,6 +186,8 @@
     <string name="continue_reading_2">Continue reading »</string>
     <string name="modeVerseByVerse">Verse by verse mode</string>
     <string name="modeMushaf">Mushaf mode</string>
+    <string name="readingLayoutPage">Mushaf page</string>
+    <string name="readingLayoutFlow">Scroll</string>
     <string name="strLabelOrder">Order</string>
     <string name="strLabelSelectedCount" formatted="false">%d selected</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d more translations</string>

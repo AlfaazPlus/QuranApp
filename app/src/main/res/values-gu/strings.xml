@@ -312,6 +312,7 @@
     <string name="strTitleMajorSins">કુરાનમાં મોટા ગુનાઓ</string>
     <string name="modeVerseByVerse">આયત-દર-આયત મોડ</string>
     <string name="modeMushaf">મુસહફ મોડ</string>
+    <string name="readingLayoutFlow">સ્ક્રોલ</string>
     <string name="titleGlobalSearch">વૈશ્વિક શોધ</string>
     <string name="searchIndexingInProgress">શોધ તૈયાર થઈ રહી છે. ઇન્ડેક્સ બનાવવાનું પૂર્ણ ન થાય ત્યાં સુધી કેટલાક પરિણામો દેખાય નહીં.</string>
     <string name="search_match">મેળનો પ્રકાર</string>

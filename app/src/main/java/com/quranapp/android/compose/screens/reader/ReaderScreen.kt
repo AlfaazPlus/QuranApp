@@ -75,6 +75,7 @@ import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.compose.components.reader.ReadingLayout
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.reader.navigator.FullscreenMushafHeader
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
@@ -116,6 +117,9 @@ fun ReaderScreen(
     val syncIndicatorLocked = playerVerseSyncPref && isSyncing
 
     val readerMode by readerVm.readerMode.collectAsStateWithLifecycle()
+    val readingLayout = ReaderPreferences.observeReadingLayout()
+    val usesFlowingPages = readerMode == ReaderMode.Translation ||
+            (readerMode == ReaderMode.Reading && readingLayout == ReadingLayout.Flow)
 
     var isFullscreen by rememberSaveable { mutableStateOf(false) }
     var tajweedBarVisible by rememberSaveable { mutableStateOf(false) }
@@ -192,7 +196,7 @@ fun ReaderScreen(
                         )
                     }
                 },
-                containerColor = if (isDark || readerMode == ReaderMode.Translation) colorScheme.background
+                containerColor = if (isDark || usesFlowingPages) colorScheme.background
                 else colorScheme.surface
             ) { padding ->
                 val contentModifier = Modifier

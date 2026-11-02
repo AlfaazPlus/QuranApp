@@ -311,6 +311,7 @@
     <string name="msgRecitationGroupSize">Wählen aus, wie viele Koranverse abgespielt werden sollen, bevor die Übersetzung beginnt. Beispiel: Wenn 3 ausgewählt, werden 3 Koranverse abgespielt, gefolgt von deren Übersetzungen.</string>
     <string name="modeVerseByVerse">Vers für Vers Modus</string>
     <string name="modeMushaf">Kodex Stil</string>
+    <string name="readingLayoutFlow">Scrollen</string>
     <string name="strHintSearchPage">Suchseite</string>
     <string name="noNoteProvided">Keine Notiz vorhanden…</string>
     <string name="dailyReminderMsg">Erhalte eine tägliche Erinnerungsbenachrichtigung.</string>

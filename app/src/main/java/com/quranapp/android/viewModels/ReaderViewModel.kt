@@ -15,6 +15,8 @@ import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
+import com.quranapp.android.compose.components.reader.ReadingFlowPageItem
+import com.quranapp.android.compose.components.reader.ReadingFlowSection
 import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -149,6 +151,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
     private var _translationPageItems = MutableStateFlow<Map<Int, TranslationPageItem>>(emptyMap())
     val translationPageItems = _translationPageItems.asStateFlow()
+
+    private var _readingFlowPageItems = MutableStateFlow<Map<Int, ReadingFlowPageItem>>(emptyMap())
+    val readingFlowPageItems = _readingFlowPageItems.asStateFlow()
 
     private var lastTranslationReaderContentKey: String? = null
     private var lastPersistedReadHistory: ReadHistoryEntity? = null
@@ -371,6 +376,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
                     _pageItems.value = emptyMap()
                     _translationPageItems.value = emptyMap()
+                    _readingFlowPageItems.value = emptyMap()
                     lastTranslationReaderContentKey = null
 
                     _mushafSession.update {
@@ -494,6 +500,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 if (old.layout != script) {
                     _pageItems.value = emptyMap()
                     _translationPageItems.value = emptyMap()
+                    _readingFlowPageItems.value = emptyMap()
                     lastTranslationReaderContentKey = null
                 }
 
@@ -629,6 +636,27 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             lastKnownVerse = QuranMeta.getVerseNoFromAyahId(ayahId).let {
                 ChapterVersePair(it.first, it.second)
             }
+        }
+    }
+
+    fun updateLastKnownVerseFromReadingFlowPage(pageNo: Int) {
+        val page = _readingFlowPageItems.value[pageNo]
+        val firstWord = page?.sections
+            ?.filterIsInstance<ReadingFlowSection.Words>()
+            ?.firstOrNull()
+            ?.words
+            ?.firstOrNull()
+
+        if (firstWord != null) {
+            val pair = QuranMeta.getVerseNoFromAyahId(firstWord.ayahId)
+            lastKnownVerse = ChapterVersePair(pair.first, pair.second)
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
+            val pair = QuranMeta.getVerseNoFromAyahId(ayahId)
+            lastKnownVerse = ChapterVersePair(pair.first, pair.second)
         }
     }
 
@@ -901,6 +929,47 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
     }
 
+    suspend fun fetchReadingFlowPages(
+        context: Context,
+        anchorPages: Collection<Int>,
+        isDark: Boolean,
+    ) {
+        val session = _mushafSession.value
+        val totalPages = session.pageCount
+        val targets = mushafPrefetchTargets(anchorPages, totalPages)
+        if (targets.isEmpty()) return
+
+        val cacheKey = "${session.layout.scriptCode}_${session.layout.variant}"
+
+        val missing = pagesLoadingMutex.withLock {
+            targets.filter { page ->
+                val item = _readingFlowPageItems.value[page]
+                item == null || item.cacheKey != cacheKey
+            }
+        }
+
+        val built = withContext(Dispatchers.IO) {
+            fontResolver.prefetch(session.layout.scriptCode, targets.toList(), isDark)
+
+            if (missing.isEmpty()) {
+                emptyMap()
+            } else {
+                ReaderItemsBuilder.buildReadingFlowPages(
+                    context,
+                    repository,
+                    missing,
+                    cacheKey,
+                )
+            }
+        }
+
+        if (built.isEmpty()) return
+
+        withContext(Dispatchers.Main.immediate) {
+            _readingFlowPageItems.update { old -> old + built }
+        }
+    }
+
     private suspend fun ensureSessionPageCount(script: QuranScript) {
         val current = _mushafSession.value
 
@@ -935,6 +1004,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
             _pageItems.value = emptyMap()
             _translationPageItems.value = emptyMap()
+            _readingFlowPageItems.value = emptyMap()
 
             lastKnownVerse = verse
 

@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.compose.components.reader.ReadingLayout
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
@@ -78,6 +79,9 @@ object ReaderPreferences {
 
     val KEY_READER_MODE =
         PrefKey(stringPreferencesKey(Keys.READER_KEY_READER_MODE), ReaderMode.VerseByVerse.value)
+
+    val KEY_READING_LAYOUT =
+        PrefKey(stringPreferencesKey(Keys.READER_KEY_READING_LAYOUT), ReadingLayout.Page.value)
 
     val KEY_TAFSIR =
         PrefKey(stringPreferencesKey(TafsirUtils.KEY_TAFSIR), "")
@@ -438,6 +442,19 @@ object ReaderPreferences {
     @Composable
     fun observeReaderMode(): ReaderMode {
         return DataStoreManager.observe(KEY_READER_MODE).let { ReaderMode.fromValue(it) }
+    }
+
+    suspend fun getReadingLayout(): ReadingLayout {
+        return ReadingLayout.fromValue(DataStoreManager.readFirst(KEY_READING_LAYOUT))
+    }
+
+    suspend fun setReadingLayout(layout: ReadingLayout) {
+        DataStoreManager.write(KEY_READING_LAYOUT, layout.value)
+    }
+
+    @Composable
+    fun observeReadingLayout(): ReadingLayout {
+        return ReadingLayout.fromValue(DataStoreManager.observe(KEY_READING_LAYOUT))
     }
 
     suspend fun getTafsirId(): String? {

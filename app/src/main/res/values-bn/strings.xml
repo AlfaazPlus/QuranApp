@@ -325,6 +325,7 @@
     <string name="labelRecommended">প্রস্তাবিত</string>
     <string name="modeVerseByVerse">এক আয়াত করে পড়ুন</string>
     <string name="modeMushaf">কুরআনের পৃষ্ঠার মতো</string>
+    <string name="readingLayoutFlow">স্ক্রল</string>
     <string name="titleGlobalSearch">সবখানে খুঁজুন</string>
     <string name="searchIndexingInProgress">অনুসন্ধানের প্রস্তুতি চলছে। ইনডেক্স তৈরি সম্পূর্ণ না হওয়া পর্যন্ত কিছু ফলাফল নাও দেখা যেতে পারে।</string>
     <string name="search_match">মিলের ধরন</string>

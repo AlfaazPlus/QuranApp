@@ -334,6 +334,7 @@
     <string name="labelRecommended">پێشنیارکراو</string>
     <string name="modeVerseByVerse">شێوازی ئایەت بە ئایەت</string>
     <string name="modeMushaf">شێوازی مۆسحەف</string>
+    <string name="readingLayoutFlow">سکرۆڵ</string>
     <string name="titleGlobalSearch">گەڕانی گشتگیر</string>
     <string name="searchIndexingInProgress">ئامادەکاری بۆ گەڕان بەردەوامە. تا تەواوبوونی پێڕستکردن، ڕەنگە هەموو ئەنجامەکان پیشان نەدرێن.</string>
     <string name="search_match">جۆری هاوتایی</string>

@@ -43,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
+import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.entities.user.BookmarkKey
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -66,6 +67,18 @@ enum class ReaderMode(val value: String) {
         fun fromLegacyStyleInt(style: Int): ReaderMode = when (style) {
             0x2 -> Reading
             else -> VerseByVerse
+        }
+    }
+}
+
+/* Layout used inside [ReaderMode.Reading]. */
+enum class ReadingLayout(val value: String) {
+    Page("page"),
+    Flow("flow");
+
+    companion object {
+        fun fromValue(value: String): ReadingLayout {
+            return entries.find { it.value == value } ?: Page
         }
     }
 }
@@ -129,20 +142,30 @@ fun ReaderLayout(
 
     when (readerMode) {
         ReaderMode.Reading -> {
-            BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxHeight()
-            ) {
-                val contentWidth =
-                    (maxWidth.coerceAtMost(MUSHAF_FONT_WIDTH_DP_MAX.dp))
-                        .coerceAtLeast(1.dp)
+            val readingLayout = ReaderPreferences.observeReadingLayout()
 
-                ReaderLayoutPageMode(
+            if (readingLayout == ReadingLayout.Flow) {
+                ReaderLayoutReadingFlow(
                     readerVm,
-                    contentWidth,
                     nestedScrollConnection,
                     onSyncStateChanged,
                 )
+            } else {
+                BoxWithConstraints(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                ) {
+                    val contentWidth =
+                        (maxWidth.coerceAtMost(MUSHAF_FONT_WIDTH_DP_MAX.dp))
+                            .coerceAtLeast(1.dp)
+
+                    ReaderLayoutPageMode(
+                        readerVm,
+                        contentWidth,
+                        nestedScrollConnection,
+                        onSyncStateChanged,
+                    )
+                }
             }
         }
 

@@ -341,6 +341,7 @@
     <string name="labelRecommended">Önerilen</string>
     <string name="modeVerseByVerse">Ayet ayet modu</string>
     <string name="modeMushaf">Mushaf modu</string>
+    <string name="readingLayoutFlow">Kaydırma</string>
     <string name="titleGlobalSearch">Genel Arama</string>
     <string name="searchIndexingInProgress">Arama hazırlanıyor. Dizine ekleme tamamlanana kadar bazı sonuçlar görünmeyebilir.</string>
     <string name="search_match">Eşleşme türü</string>

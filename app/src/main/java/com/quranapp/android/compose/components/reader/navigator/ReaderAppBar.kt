@@ -72,6 +72,7 @@ import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.compose.components.reader.ReadingLayout
 import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
@@ -515,8 +516,11 @@ private fun StickyHeaderModeMushaf(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        ReadingLayoutSwitch()
+
         Text(
             chaptersOfPage,
             style = typography.labelMedium.copy(
@@ -531,10 +535,9 @@ private fun StickyHeaderModeMushaf(
             color = colorScheme.onSurface.alpha(0.85f)
         )
 
-
         Box(
             Modifier.weight(0.6f),
-            contentAlignment = Alignment.CenterEnd
+            contentAlignment = Alignment.CenterEnd,
         ) {
             TextButton(
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
@@ -557,6 +560,8 @@ private fun StickyHeaderModeMushaf(
                                 )
                             ),
                             color = colorScheme.primary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
 
@@ -570,6 +575,8 @@ private fun StickyHeaderModeMushaf(
                                 )
                             ),
                             color = colorScheme.onSurface.alpha(0.85f),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }
@@ -783,7 +790,8 @@ fun FullscreenMushafHeader(
         )
 
         Text(
-            text = currentPageNo?.let { formattedStringResource(R.string.strLabelPageNo, it) }.orEmpty(),
+            text = currentPageNo?.let { formattedStringResource(R.string.strLabelPageNo, it) }
+                .orEmpty(),
             modifier = Modifier.weight(1f),
             style = MaterialTheme.typography.titleSmall,
             color = colorScheme.primary,
@@ -806,6 +814,63 @@ fun FullscreenMushafHeader(
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.End,
         )
+    }
+}
+
+@Composable
+private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
+    val layout = ReaderPreferences.observeReadingLayout()
+    val scope = rememberCoroutineScope()
+
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(999.dp))
+            .background(colorScheme.background)
+            .padding(3.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ReadingLayout.entries.forEach { option ->
+            val selected = option == layout
+            val label = stringResource(
+                if (option == ReadingLayout.Page) R.string.readingLayoutPage
+                else R.string.readingLayoutFlow
+            )
+            val icon = if (option == ReadingLayout.Page) {
+                R.drawable.ic_mode_mushaf
+            } else {
+                R.drawable.ic_reading_flow
+            }
+
+            SimpleTooltip(label) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(
+                            if (selected) colorScheme.surface else Color.Transparent,
+                        )
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {
+                                if (!selected) {
+                                    scope.launch { ReaderPreferences.setReadingLayout(option) }
+                                }
+                            },
+                        )
+                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = label,
+                        modifier = Modifier.size(22.dp),
+                        tint = if (selected) colorScheme.onSurface
+                        else colorScheme.onSurface.alpha(0.6f),
+                    )
+                }
+            }
+        }
     }
 }
 

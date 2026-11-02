@@ -327,6 +327,7 @@
     <string name="labelRecommended">推荐</string>
     <string name="modeVerseByVerse">逐节模式</string>
     <string name="modeMushaf">穆斯哈夫模式</string>
+    <string name="readingLayoutFlow">滚动</string>
     <string name="titleGlobalSearch">全局搜索</string>
     <string name="searchIndexingInProgress">正在准备搜索。索引建立完成前，部分结果可能无法显示。</string>
     <string name="search_match">匹配方式</string>

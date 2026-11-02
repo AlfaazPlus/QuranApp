@@ -10,6 +10,7 @@ object Keys {
 
     // Reader keys used by settings, translation fragments, and other non-reader screens
     const val READER_KEY_READER_MODE = "reader.mode"
+    const val READER_KEY_READING_LAYOUT = "reader.reading_layout"
     const val READER_KEY_READ_TYPE = "reader.read_type"
     const val READER_KEY_TRANSL_SLUGS = "reader.translation_slugs"
     const val READER_KEY_SAVE_TRANSL_CHANGES = "reader.save_translation_changes"

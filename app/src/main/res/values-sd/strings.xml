@@ -306,6 +306,7 @@
     <string name="learnMore">وڌيڪ ڄاڻو</string>
     <string name="missingTimingData">%s لاءِ ٽائيمنگ ڊيٽا موجود ناهي – هلائي نٿو سگهجي.</string>
     <string name="modeMushaf">مصحف موڊ</string>
+    <string name="readingLayoutFlow">اسڪرول</string>
     <string name="modeVerseByVerse">آيت به آيت موڊ</string>
     <string name="msgRecitationGroupSize">چونڊيو ته ترجمو شروع ٿيڻ کان اڳ ڪيتريون قرآني آيتون هلن. مثال طور: جيڪڏهن توهان 3 چونڊيندا آهيو، ته اها 3 قرآني آيتون هلائيندي ۽ پوءِ انهن جا ترجما.</string>
     <string name="msgRepeat">سيٽ ڪريو ته هر آيت ايندڙ آيت ڏانهن وڃڻ کان اڳ ڪيترا ڀيرا هلڻ گهرجي. صرف تڏهن دستياب هوندو جڏهن آڊيو آپشنز ۾ \"صرف قرآن هلايو\" فعال هجي.</string>

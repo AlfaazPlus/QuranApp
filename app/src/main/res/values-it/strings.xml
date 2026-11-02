@@ -322,6 +322,7 @@
     <string name="labelRecommended">Consigliato</string>
     <string name="modeVerseByVerse">Modalità versetto per versetto</string>
     <string name="modeMushaf">Modalità Mushaf</string>
+    <string name="readingLayoutFlow">Scorrimento</string>
     <string name="titleGlobalSearch">Ricerca globale</string>
     <string name="searchIndexingInProgress">Preparazione della ricerca in corso. Alcuni risultati potrebbero non essere disponibili fino al completamento dell\'indicizzazione.</string>
     <string name="search_match">Tipo di corrispondenza</string>

@@ -21,6 +21,8 @@ import com.quranapp.android.compose.components.reader.QuranPageItem
 import com.quranapp.android.compose.components.reader.QuranPageLineItem
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
+import com.quranapp.android.compose.components.reader.ReadingFlowPageItem
+import com.quranapp.android.compose.components.reader.ReadingFlowSection
 import com.quranapp.android.compose.components.reader.TranslationPageItem
 import com.quranapp.android.compose.components.reader.TranslationPageSection
 import com.quranapp.android.compose.components.reader.TranslationPageVerse
@@ -946,7 +948,6 @@ object ReaderItemsBuilder {
         val sections = ArrayList<TranslationPageSection>()
         val drafts = ArrayList<TranslationVerseDraft>()
         val seenAyahIds = mutableSetOf<Int>()
-        var hasChapterTitleOnPage = false
 
         fun flushDrafts() {
             if (drafts.isEmpty()) return
@@ -989,12 +990,11 @@ object ReaderItemsBuilder {
                     val chapter = row.surahNo.takeIf { it != null && it > 0 } ?: continue
 
                     surahByNo.get(chapter)?.let { swl ->
-                        if (hasChapterTitleOnPage) {
+                        if (sections.isNotEmpty()) {
                             sections.add(TranslationPageSection.Divider)
                         }
 
                         sections.add(TranslationPageSection.Title(swl))
-                        hasChapterTitleOnPage = true
                     }
                 }
 
@@ -1090,6 +1090,162 @@ object ReaderItemsBuilder {
             chapterNames = chapterNames,
             translationSlug = translationSlug,
             sections = sections,
+        )
+    }
+
+    /**
+     * Mushaf pages as free-flowing Arabic. Same page breaks, chapter titles, and bismillah
+     * as the translation reader, with words in reading order instead of justified lines.
+     */
+    suspend fun buildReadingFlowPages(
+        context: Context,
+        quranRepository: QuranRepository,
+        pageNumbers: Collection<Int>,
+        cacheKey: String,
+    ): Map<Int, ReadingFlowPageItem> {
+        val distinct = pageNumbers.filter { it > 0 }.distinct().sorted()
+        if (distinct.isEmpty()) return emptyMap()
+
+        val scriptCode = ReaderPreferences.getQuranScript()
+        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        if (mushafId <= 0) return emptyMap()
+
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
+        val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
+        val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
+        val hizbByPage = quranRepository.getHizbForMushafPages(mushafId, distinct)
+
+        val ayahRows = linesByPage.values.asSequence()
+            .flatten()
+            .filter { it.lineType == MushafLineType.ayah }
+            .toList()
+        val wordCache = quranRepository.preloadMushafLineWordCache(ayahRows, scriptCode)
+            .takeIf { it.isNotEmpty() }
+
+        val titleChapters = linesByPage.values.asSequence()
+            .flatten()
+            .filter { it.lineType == MushafLineType.surah_name }
+            .mapNotNull { it.surahNo?.takeIf { chapterNo -> chapterNo > 0 } }
+            .distinct()
+            .toList()
+        val surahByNo = quranRepository.getSurahsWithLocalizationsByChapterNos(titleChapters)
+
+        val chapterNamesByPage = LinkedHashMap<Int, String>(distinct.size)
+        for (pageNo in distinct) {
+            chapterNamesByPage[pageNo] =
+                quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
+        }
+
+        val wordsByLine = LinkedHashMap<Pair<Int, Int>, List<AyahWordEntity>>()
+        for (pageNo in distinct) {
+            for (row in linesByPage[pageNo].orEmpty()) {
+                if (row.lineType != MushafLineType.ayah) continue
+                wordsByLine[pageNo to row.lineNumber] =
+                    quranRepository.resolveMushafLineWords(row, scriptCode, wordCache)
+            }
+        }
+
+        val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
+            QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
+        } else {
+            null
+        }
+
+        atlasBundle?.prefetchShapes(
+            wordsByLine.entries.flatMap { (key, words) ->
+                words.map { it.text to key.first }
+            }
+        )
+
+        val out = LinkedHashMap<Int, ReadingFlowPageItem>(distinct.size)
+        val placementLists = ArrayList<List<AtlasGlyphPlacement>>()
+
+        for (pageNo in distinct) {
+            val item = buildOneReadingFlowPage(
+                pageNo = pageNo,
+                rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber },
+                wordsByLine = wordsByLine,
+                surahByNo = surahByNo,
+                atlasBundle = atlasBundle,
+                juzNo = juzByPage[pageNo] ?: -1,
+                hizbNos = hizbByPage[pageNo].orEmpty(),
+                chapterNames = chapterNamesByPage[pageNo].orEmpty(),
+                cacheKey = cacheKey,
+                placementLists = placementLists,
+            )
+            out[pageNo] = item
+        }
+
+        atlasBundle?.prefetchTexturesForPlacementLists(placementLists)
+        return out
+    }
+
+    private fun buildOneReadingFlowPage(
+        pageNo: Int,
+        rows: List<MushafMapEntity>,
+        wordsByLine: Map<Pair<Int, Int>, List<AyahWordEntity>>,
+        surahByNo: Map<Int, SurahWithLocalizations>,
+        atlasBundle: QuranAtlasBundle?,
+        juzNo: Int,
+        hizbNos: List<Int>,
+        chapterNames: String,
+        cacheKey: String,
+        placementLists: MutableList<List<AtlasGlyphPlacement>>,
+    ): ReadingFlowPageItem {
+        val sections = ArrayList<ReadingFlowSection>()
+        val wordBuffer = ArrayList<AyahWordEntity>()
+
+        fun flushWords() {
+            if (wordBuffer.isEmpty()) return
+
+            val placements = atlasBundle
+                ?.getPrefetchedPlacementsForWords(wordBuffer, pageNo)
+                .orEmpty()
+
+            placementLists.addAll(placements.values)
+            sections.add(
+                ReadingFlowSection.Words(
+                    words = wordBuffer.toList(),
+                    atlasPlacements = placements,
+                )
+            )
+            wordBuffer.clear()
+        }
+
+        for (row in rows) {
+            when (row.lineType) {
+                MushafLineType.surah_name -> {
+                    flushWords()
+                    val chapter = row.surahNo?.takeIf { it > 0 } ?: continue
+                    val swl = surahByNo[chapter] ?: continue
+
+                    if (sections.isNotEmpty()) {
+                        sections.add(ReadingFlowSection.Divider)
+                    }
+
+                    sections.add(ReadingFlowSection.Title(swl))
+                }
+
+                MushafLineType.basmallah -> {
+                    flushWords()
+                    sections.add(ReadingFlowSection.Bismillah)
+                }
+
+                MushafLineType.ayah -> {
+                    wordBuffer.addAll(wordsByLine[pageNo to row.lineNumber].orEmpty())
+                }
+            }
+        }
+
+        flushWords()
+
+        return ReadingFlowPageItem(
+            pageNo = pageNo,
+            juzNo = juzNo,
+            hizbNos = hizbNos,
+            chapterNames = chapterNames,
+            sections = sections,
+            cacheKey = cacheKey,
         )
     }
 
