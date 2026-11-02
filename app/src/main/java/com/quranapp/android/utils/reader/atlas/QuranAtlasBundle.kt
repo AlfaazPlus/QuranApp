@@ -23,14 +23,15 @@ class QuranAtlasBundle(
     val textureCount: Int
         get() = textureStore.size
 
+    /** Already-decoded page, or null. Drawing must not decode. */
     fun textureForGlyph(glyph: AtlasGlyphJson): ImageBitmap? =
-        textureStore.get(glyph.textureIndex)?.imageBitmap
+        textureStore.cached(glyph.textureIndex)?.imageBitmap
 
     fun androidTextureForGlyph(glyph: AtlasGlyphJson): Bitmap? =
-        textureStore.get(glyph.textureIndex)?.bitmap
+        textureStore.load(glyph.textureIndex)?.bitmap
 
     fun singleAndroidTexture(): Bitmap? =
-        textureStore.onlyIndex?.let { textureStore.get(it)?.bitmap }
+        textureStore.onlyIndex?.let { textureStore.load(it)?.bitmap }
 
     private val shapeCache = ConcurrentHashMap<String, List<AtlasGlyphPlacement>>()
 

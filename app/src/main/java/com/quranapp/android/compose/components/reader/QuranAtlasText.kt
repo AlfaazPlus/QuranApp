@@ -113,36 +113,30 @@ fun QuranAtlasText(
         translate(0f, layout.verticalInsetPx - layout.tightMinY) {
             for (d in layout.prepared) {
                 val g = d.glyph
+                val page = bundle.textureForGlyph(g) ?: continue
 
-                val texture = bundle.textureForGlyph(g)
-
-                if (texture != null) {
-                    val srcX = g.x
-                    val srcY = g.y
-                    val srcW = g.w
-                    val srcH = g.h
-
-                    if (
-                        srcW <= 0 ||
-                        srcH <= 0 ||
-                        srcX < 0 ||
-                        srcY < 0 ||
-                        srcX + srcW > texture.width ||
-                        srcY + srcH > texture.height
-                    ) continue
-
-                    val dstW = (srcW * layout.glyphScale).roundToInt().coerceAtLeast(1)
-                    val dstH = (srcH * layout.glyphScale).roundToInt().coerceAtLeast(1)
-
-                    drawImage(
-                        image = texture,
-                        srcOffset = IntOffset(srcX, srcY),
-                        srcSize = IntSize(srcW, srcH),
-                        dstOffset = IntOffset(d.x.roundToInt(), d.y.roundToInt()),
-                        dstSize = IntSize(dstW, dstH),
-                        colorFilter = colorFilter
-                    )
+                if (
+                    g.w <= 0 ||
+                    g.h <= 0 ||
+                    g.x < 0 ||
+                    g.y < 0 ||
+                    g.x + g.w > page.width ||
+                    g.y + g.h > page.height
+                ) {
+                    continue
                 }
+
+                drawImage(
+                    image = page,
+                    srcOffset = IntOffset(g.x, g.y),
+                    srcSize = IntSize(g.w, g.h),
+                    dstOffset = IntOffset(d.x.roundToInt(), d.y.roundToInt()),
+                    dstSize = IntSize(
+                        (g.w * layout.glyphScale).roundToInt().coerceAtLeast(1),
+                        (g.h * layout.glyphScale).roundToInt().coerceAtLeast(1),
+                    ),
+                    colorFilter = colorFilter,
+                )
             }
         }
     }

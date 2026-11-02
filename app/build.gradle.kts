@@ -122,6 +122,14 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(
+            org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        )
+    }
+}
+
 room3 {
     schemaDirectory("$projectDir/schemas")
 }
